@@ -1,9 +1,9 @@
 <definition>
 	<command name="addCP">
-		<execute action="PGIFrameConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
-		<execute action="PGIFrameConfiguration#type" locator1="SOURCE_URL_FIELD" value1="${sourceURL}" />
-		<execute action="PGIFrameConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGIFrameConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="#selectFrame" locator1="PGIFrameConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="#type" locator1="PGIFrameConfiguration#SOURCE_URL_FIELD" value1="${sourceURL}" />
+		<execute function="#assertClick" locator1="PGIFrameConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="PGIFrameConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute action="PGIFrameConfiguration#selectFrame" value1="relative=top" />
 	</command>
 </definition>

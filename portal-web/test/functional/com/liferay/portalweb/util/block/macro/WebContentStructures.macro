@@ -1,30 +1,30 @@
 <definition>
 	<command name="addCP">
-		<execute action="CPWebcontent#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPWebcontent#assertClick" locator1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
+		<execute function="#assertClick" locator1="CPWebcontent#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="#assertClick" locator1="CPWebcontent#MANAGE_MENULIST_STRUCTURES" value1="Structures" />
 
-		<execute action="CPWebcontentStructures#selectFrame" locator1="STRUCTURES_IFRAME" />
-		<execute action="CPWebcontentStructures#assertClick" locator1="ADD" value1="Add" />
+		<execute function="#selectFrame" locator1="CPWebcontentStructures#STRUCTURES_IFRAME" />
+		<execute function="#assertClick" locator1="CPWebcontentStructures#ADD" value1="Add" />
 		<execute action="CPWebcontentStructures#selectFrame" />
 
-		<execute action="CPWebcontentStructuresAddstructure#selectFrame" locator1="STRUCTURES_IFRAME" />
-		<execute action="CPWebcontentStructuresAddstructure#type" locator1="NAME_FIELD" value1="${structureName}" />
+		<execute function="#selectFrame" locator1="CPWebcontentStructuresAddstructure#STRUCTURES_IFRAME" />
+		<execute function="#type" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${structureName}" />
 
 		<if>
 			<isset var="localization1NameKey" />
 			<then>
 				<var name="key_localizationName" value="${localization1NameKey}" />
 
-				<execute action="CPWebcontentStructuresAddstructure#click" locator1="LOCALIZATION_NAME" />
-				<execute action="CPWebcontentStructuresAddstructure#type" locator1="NAME_FIELD" value1="${localization1Name}" />
+				<execute function="#click" locator1="CPWebcontentStructuresAddstructure#LOCALIZATION_NAME" />
+				<execute function="#type" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${localization1Name}" />
 
 				<if>
 					<isset var="localization2NameKey" />
 					<then>
 						<var name="key_localizationName" value="${localization2NameKey}" />
 
-						<execute action="CPWebcontentStructuresAddstructure#click" locator1="LOCALIZATION_NAME" />
-						<execute action="CPWebcontentStructuresAddstructure#type" locator1="NAME_FIELD" value1="${localization2Name}" />
+						<execute function="#click" locator1="CPWebcontentStructuresAddstructure#LOCALIZATION_NAME" />
+						<execute function="#type" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${localization2Name}" />
 					</then>
 				</if>
 			</then>
@@ -35,23 +35,23 @@
 		<if>
 			<isset var="structureDescription" />
 			<then>
-				<execute action="CPWebcontentStructuresAddstructure#type" locator1="DESCRIPTION_FIELD" value1="${structureDescription}" />
+				<execute function="#type" locator1="CPWebcontentStructuresAddstructure#DESCRIPTION_FIELD" value1="${structureDescription}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${substructure}" arg2="true" />
 			<then>
-				<execute action="CPWebcontentStructuresAddstructure#assertClick" locator1="PARENT_STRUCTURE_SELECT_BUTTON" value1="Select" />
+				<execute function="#assertClick" locator1="CPWebcontentStructuresAddstructure#PARENT_STRUCTURE_SELECT_BUTTON" value1="Select" />
 				<execute action="CPWebcontentStructuresAddstructure#selectFrame" value1="relative=top" />
 
-				<execute action="CPWebcontentStructuresAddStructureChoosestructure#selectFrame" locator1="STRUCTURE_IFRAME" />
+				<execute function="#selectFrame" locator1="CPWebcontentStructuresAddStructureChoosestructure#STRUCTURE_IFRAME" />
 
 				<var name="key_structureName" value="${parentStructureName}" />
 
-				<execute action="CPWebcontentStructuresAddStructureChoosestructure#assertClick" locator1="STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+				<execute function="#assertClick" locator1="CPWebcontentStructuresAddStructureChoosestructure#STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
-				<execute action="CPWebcontentStructuresAddstructure#selectFrame" locator1="STRUCTURES_IFRAME" />
+				<execute function="#selectFrame" locator1="CPWebcontentStructuresAddstructure#STRUCTURES_IFRAME" />
 			</then>
 		</if>
 
@@ -66,21 +66,21 @@
 		</for>
 
 		<execute action="CPWebcontentStructuresAddstructure#selectFrame" value1="relative=top" />
-		<execute action="CPWebcontentStructuresAddstructure#selectFrame" locator1="STRUCTURES_IFRAME" />
+		<execute function="#selectFrame" locator1="CPWebcontentStructuresAddstructure#STRUCTURES_IFRAME" />
 
-		<execute action="CPWebcontentStructuresAddstructure#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute function="#assertClick" locator1="CPWebcontentStructuresAddstructure#SAVE_BUTTON" value1="Save" />
 		<execute action="CPWebcontentStructuresAddstructure#selectFrame" />
 
-		<execute action="CPWebcontentStructuresAddstructure#selectFrame" locator1="STRUCTURES_IFRAME" />
-		<execute action="CPWebcontentStructures#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#selectFrame" locator1="CPWebcontentStructuresAddstructure#STRUCTURES_IFRAME" />
+		<execute function="#assertTextEquals" locator1="CPWebcontentStructures#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<if>
 			<isset var="addRoleViewPermissions" />
 			<then>
 				<var name="key_structureName" value="${structureName}" />
 
-				<execute action="CPWebcontentStructures#click" locator1="STRUCTURE_TABLE_ACTIONS" />
-				<execute action="CPWebcontentStructures#assertClick" locator1="STRUCTURE_MENULIST_PERMISSIONS" value1="Permissions" />
+				<execute function="#click" locator1="CPWebcontentStructures#STRUCTURE_TABLE_ACTIONS" />
+				<execute function="#assertClick" locator1="CPWebcontentStructures#STRUCTURE_MENULIST_PERMISSIONS" value1="Permissions" />
 
 				<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 					<var name="addOrRemoveViewPermission" value="Add" />
@@ -91,85 +91,85 @@
 	</command>
 
 	<command name="addNullCP">
-		<execute action="CPWebcontent#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPWebcontent#assertClick" locator1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
+		<execute function="#assertClick" locator1="CPWebcontent#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="#assertClick" locator1="CPWebcontent#MANAGE_MENULIST_STRUCTURES" value1="Structures" />
 
-		<execute action="CPWebcontentStructures#selectFrame" locator1="STRUCTURES_IFRAME" />
-		<execute action="CPWebcontentStructures#assertClick" locator1="ADD" value1="Add" />
+		<execute function="#selectFrame" locator1="CPWebcontentStructures#STRUCTURES_IFRAME" />
+		<execute function="#assertClick" locator1="CPWebcontentStructures#ADD" value1="Add" />
 		<execute action="CPWebcontentStructures#selectFrame" value1="relative=top" />
 
-		<execute action="CPWebcontentStructuresAddstructure#selectFrame" locator1="STRUCTURES_IFRAME" />
-		<execute action="CPWebcontentStructuresAddstructure#assertElementNotPresent" locator1="NAME_FIELD_REQUIRED" />
-		<execute action="CPWebcontentStructuresAddstructure#assertClick" locator1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPWebcontentStructuresAddstructure#assertTextEquals" locator1="NAME_FIELD_REQUIRED" value1="This field is required." />
+		<execute function="#selectFrame" locator1="CPWebcontentStructuresAddstructure#STRUCTURES_IFRAME" />
+		<execute function="#assertElementNotPresent" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD_REQUIRED" />
+		<execute function="#assertClick" locator1="CPWebcontentStructuresAddstructure#SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD_REQUIRED" value1="This field is required." />
 
 		<execute action="CPWebcontentStructures#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="advancedSearchCP">
-		<execute action="CPWebcontent#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPWebcontent#assertClick" locator1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
+		<execute function="#assertClick" locator1="CPWebcontent#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="#assertClick" locator1="CPWebcontent#MANAGE_MENULIST_STRUCTURES" value1="Structures" />
 
-		<execute action="CPWebcontentStructures#selectFrame" locator1="STRUCTURES_IFRAME" />
+		<execute function="#selectFrame" locator1="CPWebcontentStructures#STRUCTURES_IFRAME" />
 
 		<var name="key_structureName" value="${structureName}" />
 
-		<execute action="CPWebcontentStructures#assertTextEquals" locator1="STRUCTURE_TABLE_NAME" value1="${structureName}" />
-		<execute action="CPWebcontentStructures#click" locator1="ADVANCED_SEARCH_ICON" />
+		<execute function="#assertTextEquals" locator1="CPWebcontentStructures#STRUCTURE_TABLE_NAME" value1="${structureName}" />
+		<execute function="#click" locator1="CPWebcontentStructures#ADVANCED_SEARCH_ICON" />
 
 		<if>
 			<isset var="structureName" />
 			<then>
-				<execute action="CPWebcontentStructures#type" locator1="ADVANCED_SEARCH_NAME_FIELD" value1="${structureName}" />
+				<execute function="#type" locator1="CPWebcontentStructures#ADVANCED_SEARCH_NAME_FIELD" value1="${structureName}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="structureDescription" />
 			<then>
-				<execute action="CPWebcontentStructures#type" locator1="ADVANCED_SEARCH_DESCRIPTION_FIELD" value1="${structureDescription}" />
+				<execute function="#type" locator1="CPWebcontentStructures#ADVANCED_SEARCH_DESCRIPTION_FIELD" value1="${structureDescription}" />
 			</then>
 		</if>
 
-		<execute action="CPWebcontentStructures#assertClick" locator1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPWebcontentStructures#assertTextEquals" locator1="STRUCTURE_TABLE_NAME" value1="${structureName}" />
-		<execute action="CPWebcontentStructures#assertTextEquals" locator1="STRUCTURE_TABLE_DESCRIPTION" value1="${structureDescription}" />
+		<execute function="#assertClick" locator1="CPWebcontentStructures#SEARCH_BUTTON" value1="Search" />
+		<execute function="#assertTextEquals" locator1="CPWebcontentStructures#STRUCTURE_TABLE_NAME" value1="${structureName}" />
+		<execute function="#assertTextEquals" locator1="CPWebcontentStructures#STRUCTURE_TABLE_DESCRIPTION" value1="${structureDescription}" />
 	</command>
 
 	<command name="deleteCP">
-		<execute action="CPWebcontent#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPWebcontent#assertClick" locator1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
+		<execute function="#assertClick" locator1="CPWebcontent#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="#assertClick" locator1="CPWebcontent#MANAGE_MENULIST_STRUCTURES" value1="Structures" />
 
 		<var name="key_structureName" value="${structureName}" />
 
-		<execute action="CPWebcontentStructures#selectFrame" locator1="STRUCTURES_IFRAME" />
+		<execute function="#selectFrame" locator1="CPWebcontentStructures#STRUCTURES_IFRAME" />
 
-		<execute action="CPWebcontentStructures#type" locator1="SEARCH_FIELD" value1="${structureName}" />
-		<execute action="CPWebcontentStructures#assertClick" locator1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPWebcontentStructures#click" locator1="STRUCTURE_TABLE_ACTIONS" />
-		<execute action="CPWebcontentStructures#assertClickNoError" locator1="STRUCTURE_MENULIST_DELETE" value1="Delete" />
+		<execute function="#type" locator1="CPWebcontentStructures#SEARCH_FIELD" value1="${structureName}" />
+		<execute function="#assertClick" locator1="CPWebcontentStructures#SEARCH_BUTTON" value1="Search" />
+		<execute function="#click" locator1="CPWebcontentStructures#STRUCTURE_TABLE_ACTIONS" />
+		<execute function="#assertClickNoError" locator1="CPWebcontentStructures#STRUCTURE_MENULIST_DELETE" value1="Delete" />
 
 		<if>
 			<equals arg1="${webContentHasReference}" arg2="true" />
 			<then>
-				<execute action="CPWebcontentStructures#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="CPWebcontentStructures#assertTextEquals" locator1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-				<execute action="CPWebcontentStructures#assertTextEquals" locator1="ERROR_MESSAGE_2" value1="Required structures could not be deleted. They are referenced by templates." />
+				<execute function="#confirm" locator1="CPWebcontentStructures#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="#assertTextEquals" locator1="CPWebcontentStructures#ERROR_MESSAGE_1" value1="Your request failed to complete." />
+				<execute function="#assertTextEquals" locator1="CPWebcontentStructures#ERROR_MESSAGE_2" value1="Required structures could not be deleted. They are referenced by templates." />
 			</then>
 			<else>
-				<execute action="CPWebcontentStructures#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="#assertTextEquals" locator1="CPWebcontentStructures#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
 
 	<command name="editFieldSettingCP">
-		<execute action="CPWebcontent#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPWebcontent#assertClick" locator1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
+		<execute function="#assertClick" locator1="CPWebcontent#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="#assertClick" locator1="CPWebcontent#MANAGE_MENULIST_STRUCTURES" value1="Structures" />
 
 		<var name="key_structureName" value="${structureName}" />
 
-		<execute action="CPWebcontentStructures#selectFrame" locator1="STRUCTURES_IFRAME" />
-		<execute action="CPWebcontentStructures#assertClick" locator1="STRUCTURE_TABLE_NAME" value1="${structureName}" />
+		<execute function="#selectFrame" locator1="CPWebcontentStructures#STRUCTURES_IFRAME" />
+		<execute function="#assertClick" locator1="CPWebcontentStructures#STRUCTURE_TABLE_NAME" value1="${structureName}" />
 
 		<execute action="CPWebcontentStructuresAddstructure#selectFrame" value1="relative=top" />
 
@@ -206,51 +206,51 @@
 			</then>
 		</if>
 
-		<execute action="CPWebcontentStructures#selectFrame" locator1="STRUCTURES_IFRAME" />
+		<execute function="#selectFrame" locator1="CPWebcontentStructures#STRUCTURES_IFRAME" />
 
-		<execute action="CPWebcontentStructuresAddstructure#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute function="#assertClick" locator1="CPWebcontentStructuresAddstructure#SAVE_BUTTON" value1="Save" />
 		<execute action="CPWebcontentStructuresAddstructure#selectFrame" value1="relative=top" />
-		<execute action="CPWebcontentStructuresAddstructure#selectFrame" locator1="STRUCTURES_IFRAME" />
+		<execute function="#selectFrame" locator1="CPWebcontentStructuresAddstructure#STRUCTURES_IFRAME" />
 
-		<execute action="CPWebcontentStructures#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertTextEquals" locator1="CPWebcontentStructures#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editSubstructureDefaultValuesCP">
 		<var name="key_structureName" value="${substructureName}" />
 
-		<execute action="CPWebcontent#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPWebcontent#assertClick" locator1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
+		<execute function="#assertClick" locator1="CPWebcontent#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="#assertClick" locator1="CPWebcontent#MANAGE_MENULIST_STRUCTURES" value1="Structures" />
 
-		<execute action="CPWebcontentStructures#selectFrame" locator1="STRUCTURES_IFRAME" />
-		<execute action="CPWebcontentStructures#type" locator1="SEARCH_FIELD" value1="${substructureName}" />
-		<execute action="CPWebcontentStructures#assertClick" locator1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPWebcontentStructures#click" locator1="STRUCTURE_TABLE_ACTIONS" />
-		<execute action="CPWebcontentStructures#assertClick" locator1="STRUCTURE_MENULIST_EDIT_DEFAULT_VALUES" value1="Edit Default Values" />
+		<execute function="#selectFrame" locator1="CPWebcontentStructures#STRUCTURES_IFRAME" />
+		<execute function="#type" locator1="CPWebcontentStructures#SEARCH_FIELD" value1="${substructureName}" />
+		<execute function="#assertClick" locator1="CPWebcontentStructures#SEARCH_BUTTON" value1="Search" />
+		<execute function="#click" locator1="CPWebcontentStructures#STRUCTURE_TABLE_ACTIONS" />
+		<execute function="#assertClick" locator1="CPWebcontentStructures#STRUCTURE_MENULIST_EDIT_DEFAULT_VALUES" value1="Edit Default Values" />
 
 		<execute action="CPWebcontentStructuresEditdefaultvalues#selectFrame" />
-		<execute action="CPWebcontentStructuresEditdefaultvalues#selectFrame" locator1="STRUCTURES_IFRAME" />
+		<execute function="#selectFrame" locator1="CPWebcontentStructuresEditdefaultvalues#STRUCTURES_IFRAME" />
 
 		<for list="${editSubstructureFieldNames}" param="structureFieldName">
 			<var name="key_fieldDefaultValue" value="${structureFieldName}" />
 			<var name="structureFieldName" value="${structureFieldName?replace(' ', '_')}" />
 
-			<execute action="CPWebcontentStructuresEditdefaultvalues#type" locator1="FIELD_NAME_FIELD" value1="Edited ${structureFieldName} Field" />
+			<execute function="#type" locator1="CPWebcontentStructuresEditdefaultvalues#FIELD_NAME_FIELD" value1="Edited ${structureFieldName} Field" />
 		</for>
 
-		<execute action="CPWebcontentStructuresEditdefaultvalues#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute function="#assertClick" locator1="CPWebcontentStructuresEditdefaultvalues#SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPWebcontentStructures#selectFrame" value1="relative=top" />
-		<execute action="CPWebcontentStructures#selectFrame" locator1="STRUCTURES_IFRAME" />
-		<execute action="CPWebcontentStructures#click" locator1="STRUCTURE_TABLE_ACTIONS" />
-		<execute action="CPWebcontentStructures#assertClick" locator1="STRUCTURE_MENULIST_EDIT_DEFAULT_VALUES" value1="Edit Default Values" />
+		<execute function="#selectFrame" locator1="CPWebcontentStructures#STRUCTURES_IFRAME" />
+		<execute function="#click" locator1="CPWebcontentStructures#STRUCTURE_TABLE_ACTIONS" />
+		<execute function="#assertClick" locator1="CPWebcontentStructures#STRUCTURE_MENULIST_EDIT_DEFAULT_VALUES" value1="Edit Default Values" />
 
 		<execute action="CPWebcontentStructuresEditdefaultvalues#selectFrame" value1="relative=top" />
-		<execute action="CPWebcontentStructuresEditdefaultvalues#selectFrame" locator1="STRUCTURES_IFRAME" />
+		<execute function="#selectFrame" locator1="CPWebcontentStructuresEditdefaultvalues#STRUCTURES_IFRAME" />
 
 		<for list="${editSubstructureFieldNames}" param="structureFieldName">
 			<var name="key_fieldDefaultValue" value="${structureFieldName}" />
 
-			<execute action="CPWebcontentStructuresEditdefaultvalues#assertTextEquals" locator1="FIELD_NAME_FIELD" value1="Edited ${structureFieldName} Field" />
+			<execute function="#assertTextEquals" locator1="CPWebcontentStructuresEditdefaultvalues#FIELD_NAME_FIELD" value1="Edited ${structureFieldName} Field" />
 		</for>
 	</command>
 
@@ -259,70 +259,70 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute action="CPWebcontent#click" locator1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPWebcontent#assertClick" locator1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
+		<execute function="#click" locator1="CPWebcontent#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="#assertClick" locator1="CPWebcontent#MANAGE_MENULIST_STRUCTURES" value1="Structures" />
 
-		<execute action="CPWebcontentStructures#selectFrame" locator1="STRUCTURES_IFRAME" />
+		<execute function="#selectFrame" locator1="CPWebcontentStructures#STRUCTURES_IFRAME" />
 
-		<execute action="CPWebcontentStructures#type" locator1="SEARCH_FIELD" value1="2" />
-		<execute action="CPWebcontentStructures#assertClick" locator1="SEARCH_BUTTON" value1="Search" />
+		<execute function="#type" locator1="CPWebcontentStructures#SEARCH_FIELD" value1="2" />
+		<execute function="#assertClick" locator1="CPWebcontentStructures#SEARCH_BUTTON" value1="Search" />
 
 		<while>
-			<condition action="CPWebcontentStructures#isElementPresent" locator1="STRUCTURE_TABLE_ACTIONS_GENERIC" />
+			<condition function="#isElementPresent" locator1="CPWebcontentStructures#STRUCTURE_TABLE_ACTIONS_GENERIC" />
 			<then>
-				<execute action="CPWebcontentStructures#check" locator1="STRUCTURE_TABLE_SELECT_ALL_CHECKBOX" />
-				<execute action="CPWebcontentStructures#assertClickNoError" locator1="DELETE_BUTTON" value1="Delete" />
+				<execute function="#check" locator1="CPWebcontentStructures#STRUCTURE_TABLE_SELECT_ALL_CHECKBOX" />
+				<execute function="#assertClickNoError" locator1="CPWebcontentStructures#DELETE_BUTTON" value1="Delete" />
 				<execute action="CPWebcontentStructures#confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="CPWebcontentStructures#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="#assertTextEquals" locator1="CPWebcontentStructures#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
 
-		<execute action="CPWebcontentStructures#type" locator1="SEARCH_FIELD" value1="structure" />
-		<execute action="CPWebcontentStructures#assertClick" locator1="SEARCH_BUTTON" value1="Search" />
+		<execute function="#type" locator1="CPWebcontentStructures#SEARCH_FIELD" value1="structure" />
+		<execute function="#assertClick" locator1="CPWebcontentStructures#SEARCH_BUTTON" value1="Search" />
 
 		<while>
-			<condition action="CPWebcontentStructures#isElementPresent" locator1="STRUCTURE_TABLE_ACTIONS_GENERIC" />
+			<condition function="#isElementPresent" locator1="CPWebcontentStructures#STRUCTURE_TABLE_ACTIONS_GENERIC" />
 			<then>
-				<execute action="CPWebcontentStructures#check" locator1="STRUCTURE_TABLE_SELECT_ALL_CHECKBOX" />
-				<execute action="CPWebcontentStructures#assertClickNoError" locator1="DELETE_BUTTON" value1="Delete" />
+				<execute function="#check" locator1="CPWebcontentStructures#STRUCTURE_TABLE_SELECT_ALL_CHECKBOX" />
+				<execute function="#assertClickNoError" locator1="CPWebcontentStructures#DELETE_BUTTON" value1="Delete" />
 				<execute action="CPWebcontentStructures#confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="CPWebcontentStructures#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="#assertTextEquals" locator1="CPWebcontentStructures#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
 
-		<execute action="CPWebcontentStructures#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no results." />
+		<execute function="#assertTextEquals" locator1="CPWebcontentStructures#INFO_MESSAGE" value1="There are no results." />
 	</command>
 
 	<command name="viewCP">
-		<execute action="CPWebcontent#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPWebcontent#assertClick" locator1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
+		<execute function="#assertClick" locator1="CPWebcontent#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="#assertClick" locator1="CPWebcontent#MANAGE_MENULIST_STRUCTURES" value1="Structures" />
 
-		<execute action="CPWebcontentStructures#selectFrame" locator1="STRUCTURES_IFRAME" />
+		<execute function="#selectFrame" locator1="CPWebcontentStructures#STRUCTURES_IFRAME" />
 
 		<var name="key_structureName" value="${structureName}" />
 
 		<if>
 			<isset var="structureName" />
 			<then>
-				<execute action="CPWebcontentStructures#assertTextEquals" locator1="STRUCTURE_TABLE_NAME" value1="${structureName}" />
+				<execute function="#assertTextEquals" locator1="CPWebcontentStructures#STRUCTURE_TABLE_NAME" value1="${structureName}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="structureDescription" />
 			<then>
-				<execute action="CPWebcontentStructures#assertTextEquals" locator1="STRUCTURE_TABLE_DESCRIPTION" value1="${structureDescription}" />
+				<execute function="#assertTextEquals" locator1="CPWebcontentStructures#STRUCTURE_TABLE_DESCRIPTION" value1="${structureDescription}" />
 			</then>
 		</if>
 
-		<execute action="CPWebcontentStructures#assertClick" locator1="STRUCTURE_TABLE_NAME" value1="${structureName}" />
+		<execute function="#assertClick" locator1="CPWebcontentStructures#STRUCTURE_TABLE_NAME" value1="${structureName}" />
 
 		<execute macro="CPWebcontentStructuresAddstructure#showDetails" />
 
 		<if>
 			<isset var="structureDescription" />
 			<then>
-				<execute action="CPWebcontentStructuresEditstructure#assertTextEquals" locator1="DESCRIPTION_FIELD" value1="${structureDescription}" />
+				<execute function="#assertTextEquals" locator1="CPWebcontentStructuresEditstructure#DESCRIPTION_FIELD" value1="${structureDescription}" />
 			</then>
 		</if>
 

@@ -1,6 +1,6 @@
 <definition>
 	<command name="viewPG">
-		<execute action="PGRecentbloggers#assertTextEquals" locator1="RECENT_BLOGGER_USER_NAME" value1="${entryAuthor}" />
-		<execute action="PGRecentbloggers#assertTextEquals" locator1="RECENT_BLOGGER_POSTS" value1="Posts: ${postCount}" />
+		<execute function="#assertTextEquals" locator1="PGRecentbloggers#RECENT_BLOGGER_USER_NAME" value1="${entryAuthor}" />
+		<execute function="#assertTextEquals" locator1="PGRecentbloggers#RECENT_BLOGGER_POSTS" value1="Posts: ${postCount}" />
 	</command>
 </definition>

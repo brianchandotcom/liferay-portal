@@ -1,20 +1,20 @@
 <definition>
 	<command name="addCP">
-		<execute action="MobileDevice#click" locator1="ADD_DEVICE_FAMILY_BUTTON" />
-		<execute action="MobileDevice#type" locator1="ADD_DEVICE_FAMILY_NAME_FIELD" value1="Device Family Name" />
-		<execute action="MobileDevice#type" locator1="ADD_DEVICE_FAMILY_DESCRIPTION_FIELD" value1="Device Family Description" />
-		<execute action="MobileDevice#assertClick" locator1="SAVE_BUTTON" value1="Save" />
-		<execute action="MobileDevice#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="MobileDevice#click" locator1="MANAGE_CLASSIFICATION_RULES" />
-		<execute action="MobileDevice#click" locator1="ADD_CLASSIFICATION_RULE_BUTTON" />
-		<execute action="MobileDevice#type" locator1="ADD_CLASSIFICATION_RULE_NAME_FIELD" value1="Classification Name" />
-		<execute action="MobileDevice#type" locator1="ADD_CLASSIFICATION_RULE_DESCRIPTION_FIELD" value1="Classification Description" />
-		<execute action="MobileDevice#assertClick" locator1="SAVE_BUTTON" value1="Save" />
-		<execute action="MobileDevice#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#click" locator1="MobileDevice#ADD_DEVICE_FAMILY_BUTTON" />
+		<execute function="#type" locator1="MobileDevice#ADD_DEVICE_FAMILY_NAME_FIELD" value1="Device Family Name" />
+		<execute function="#type" locator1="MobileDevice#ADD_DEVICE_FAMILY_DESCRIPTION_FIELD" value1="Device Family Description" />
+		<execute function="#assertClick" locator1="MobileDevice#SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="MobileDevice#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#click" locator1="MobileDevice#MANAGE_CLASSIFICATION_RULES" />
+		<execute function="#click" locator1="MobileDevice#ADD_CLASSIFICATION_RULE_BUTTON" />
+		<execute function="#type" locator1="MobileDevice#ADD_CLASSIFICATION_RULE_NAME_FIELD" value1="Classification Name" />
+		<execute function="#type" locator1="MobileDevice#ADD_CLASSIFICATION_RULE_DESCRIPTION_FIELD" value1="Classification Description" />
+		<execute function="#assertClick" locator1="MobileDevice#SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="MobileDevice#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<var name="key_classificationName" value="${classificationName}" />
 
-		<execute action="MobileDevice#assertTextEquals" locator1="ADD_CLASSIFICATION_RULE_TABLE_NAME" value1="Classification Name" />
+		<execute function="#assertTextEquals" locator1="MobileDevice#ADD_CLASSIFICATION_RULE_TABLE_NAME" value1="Classification Name" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Mobile Device Families" />
@@ -23,11 +23,11 @@
 
 		<var name="key_deviceFamilyName" value="${deviceFamilyName}" />
 
-		<execute action="MobileDevice#assertTextEquals" locator1="DEVICE_FAMILY_TABLE_NAME" value1="${deviceFamilyName}" />
+		<execute function="#assertTextEquals" locator1="MobileDevice#DEVICE_FAMILY_TABLE_NAME" value1="${deviceFamilyName}" />
 	</command>
 
 	<command name="previewPG">
-		<execute action="Dockbar#click" locator1="PREVIEW" />
+		<execute function="#click" locator1="Dockbar#PREVIEW" />
 
 		<if>
 			<equals arg1="${deviceType}" arg2="smartphone" />
@@ -36,7 +36,7 @@
 
 				<take-screenshot />
 
-				<execute action="DockbarPreviewpanel#click" locator1="PREVIEW_SMARTPHONE" />
+				<execute function="#click" locator1="DockbarPreviewpanel#PREVIEW_SMARTPHONE" />
 				<execute function="#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 400px;') and contains(@style,'width: 640px;')]" />
 
 				<take-screenshot />
@@ -44,12 +44,12 @@
 			<elseif>
 				<equals arg1="${deviceType}" arg2="tablet" />
 				<then>
-					<execute action="DockbarPreviewpanel#click" locator1="PREVIEW_TABLET" />
+					<execute function="#click" locator1="DockbarPreviewpanel#PREVIEW_TABLET" />
 					<execute function="#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 900px;') and contains(@style,'width: 760px;')]" />
 
 					<take-screenshot />
 
-					<execute action="DockbarPreviewpanel#click" locator1="PREVIEW_TABLET" />
+					<execute function="#click" locator1="DockbarPreviewpanel#PREVIEW_TABLET" />
 					<execute function="#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 760px;') and contains(@style,'width: 900px;')]" />
 
 					<take-screenshot />
@@ -58,7 +58,7 @@
 			<elseif>
 				<equals arg1="${deviceType}" arg2="desktop" />
 				<then>
-					<execute action="DockbarPreviewpanel#click" locator1="PREVIEW_DESKTOP" />
+					<execute function="#click" locator1="DockbarPreviewpanel#PREVIEW_DESKTOP" />
 					<execute function="#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 1050px;') and contains(@style,'width: 1300px;')]" />
 
 					<take-screenshot />
@@ -67,14 +67,14 @@
 			<elseif>
 				<equals arg1="${deviceType}" arg2="custom" />
 				<then>
-					<execute action="DockbarPreviewpanel#click" locator1="PREVIEW_CUSTOM" />
+					<execute function="#click" locator1="DockbarPreviewpanel#PREVIEW_CUSTOM" />
 
 					<take-screenshot />
 
 					<if>
 						<isset var="height" />
 						<then>
-							<execute action="DockbarPreviewpanel#type" locator1="PREVIEW_CUSTOM_HEIGHT_FIELD" value1="${height}" />
+							<execute function="#type" locator1="DockbarPreviewpanel#PREVIEW_CUSTOM_HEIGHT_FIELD" value1="${height}" />
 						</then>
 						<else>
 							<var name="height" value="400" />
@@ -84,7 +84,7 @@
 					<if>
 						<isset var="width" />
 						<then>
-							<execute action="DockbarPreviewpanel#type" locator1="PREVIEW_CUSTOM_WIDTH_FIELD" value1="${width}" />
+							<execute function="#type" locator1="DockbarPreviewpanel#PREVIEW_CUSTOM_WIDTH_FIELD" value1="${width}" />
 						</then>
 						<else>
 							<var name="width" value="400" />
@@ -98,11 +98,11 @@
 			</elseif>
 		</if>
 
-		<execute action="DockbarPreviewpanel#assertTextEquals" locator1="PREVIEW_MESSAGE" value1="Preview may not be accurate." />
+		<execute function="#assertTextEquals" locator1="DockbarPreviewpanel#PREVIEW_MESSAGE" value1="Preview may not be accurate." />
 		<execute function="#selectFrame" locator1="//iframe[@id='devicePreviewIframe']" />
 	</command>
 
 	<command name="selectMobileDevice">
-		<execute action="MobileDevice#sikuliClick" locator1="MOBILE_DEVICE_SCREENSHOT" />
+		<execute function="#sikuliClick" locator1="MobileDevice#MOBILE_DEVICE_SCREENSHOT" />
 	</command>
 </definition>

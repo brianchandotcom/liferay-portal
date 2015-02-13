@@ -5,58 +5,58 @@
 		<if>
 			<equals arg1="${taskPriority}" arg2="High" />
 			<then>
-				<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
+				<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
 			</then>
 			<elseif>
 				<equals arg1="${taskPriority}" arg2="Low" />
 				<then>
-					<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
+					<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
+				<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 			</else>
 		</if>
 
-		<execute action="SOTasksTask#selectFrame" locator1="TASK_IFRAME" />
+		<execute function="#selectFrame" locator1="SOTasksTask#TASK_IFRAME" />
 
 		<if>
-			<condition action="SOTasksTask#isElementPresent" locator1="COMMENT_BE_THE_FIRST_LINK" />
+			<condition function="#isElementPresent" locator1="SOTasksTask#COMMENT_BE_THE_FIRST_LINK" />
 			<then>
-				<execute action="SOTasksTask#assertClick" locator1="COMMENT_BE_THE_FIRST_LINK" value1="Be the first." />
+				<execute function="#assertClick" locator1="SOTasksTask#COMMENT_BE_THE_FIRST_LINK" value1="Be the first." />
 			</then>
 			<else>
-				<execute action="SOTasksTask#assertClick" locator1="COMMENT_ADD_COMMENT_LINK" value1="Add Comment" />
+				<execute function="#assertClick" locator1="SOTasksTask#COMMENT_ADD_COMMENT_LINK" value1="Add Comment" />
 			</else>
 		</if>
 
-		<execute action="SOTasksTask#type" locator1="COMMENT_FIELD" value1="${taskComment}" />
-		<execute action="SOTasksTask#click" locator1="COMMENT_SUBMIT_BUTTON" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="COMMENT_BODY" value1="${taskComment}" />
+		<execute function="#type" locator1="SOTasksTask#COMMENT_FIELD" value1="${taskComment}" />
+		<execute function="#click" locator1="SOTasksTask#COMMENT_SUBMIT_BUTTON" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#COMMENT_BODY" value1="${taskComment}" />
 		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addTask">
 		<if>
-			<condition action="SOTasks#isElementNotPresent" locator1="TASK_DESCRIPTION" />
+			<condition function="#isElementNotPresent" locator1="SOTasks#TASK_DESCRIPTION" />
 			<then>
-				<execute action="SOTasks#assertTextEquals" locator1="INFO_MESSAGE" value1="No tasks were found." />
+				<execute function="#assertTextEquals" locator1="SOTasks#INFO_MESSAGE" value1="No tasks were found." />
 			</then>
 		</if>
 
-		<execute action="SOTasks#click" locator1="ADD_TASK_BUTTON" />
+		<execute function="#click" locator1="SOTasks#ADD_TASK_BUTTON" />
 
-		<execute action="SOTasksAdd#selectFrame" locator1="ADD_TASK_IFRAME" />
-		<execute action="SOTasksAdd#type" locator1="TASK_DESCRIPTION_FIELD" value1="${taskDescription}" />
-		<execute action="SOTasksAdd#select" locator1="TASK_ASSIGNEE_SELECT_MENU" value1="${taskAssignee}" />
+		<execute function="#selectFrame" locator1="SOTasksAdd#ADD_TASK_IFRAME" />
+		<execute function="#type" locator1="SOTasksAdd#TASK_DESCRIPTION_FIELD" value1="${taskDescription}" />
+		<execute function="#select" locator1="SOTasksAdd#TASK_ASSIGNEE_SELECT_MENU" value1="${taskAssignee}" />
 
 		<if>
 			<isset var="taskPriority" />
 			<then>
-				<execute action="SOTasksAdd#select" locator1="TASK_PRIORITY_SELECT_MENU" value1="${taskPriority}" />
+				<execute function="#select" locator1="SOTasksAdd#TASK_PRIORITY_SELECT_MENU" value1="${taskPriority}" />
 			</then>
 			<else>
-				<execute action="SOTasksAdd#select" locator1="TASK_PRIORITY_SELECT_MENU" value1="Normal" />
+				<execute function="#select" locator1="SOTasksAdd#TASK_PRIORITY_SELECT_MENU" value1="Normal" />
 			</else>
 		</if>
 
@@ -64,13 +64,13 @@
 			<equals arg1="${dueDate}" arg2="true" />
 			<then>
 				<if>
-					<condition action="SOTasksAdd#isTextEqual" locator1="TASK_ADD_DUE_DATE_LINK" value1="Add Due Date" />
+					<condition function="#isTextEqual" locator1="SOTasksAdd#TASK_ADD_DUE_DATE_LINK" value1="Add Due Date" />
 					<then>
-						<execute action="SOTasksAdd#assertClick" locator1="TASK_ADD_DUE_DATE_LINK" value1="Add Due Date" />
+						<execute function="#assertClick" locator1="SOTasksAdd#TASK_ADD_DUE_DATE_LINK" value1="Add Due Date" />
 					</then>
 				</if>
 
-				<execute action="SOTasksAdd#type" locator1="DUE_DATE_FIELD" value1="3/16/2016" />
+				<execute function="#type" locator1="SOTasksAdd#DUE_DATE_FIELD" value1="3/16/2016" />
 			</then>
 		</if>
 
@@ -78,9 +78,9 @@
 			<equals arg1="${dueTime}" arg2="true" />
 			<then>
 				<if>
-					<condition action="SOTasksAdd#isElementNotPresent" locator1="DUE_DATE_FIELD" />
+					<condition function="#isElementNotPresent" locator1="SOTasksAdd#DUE_DATE_FIELD" />
 					<then>
-						<execute action="SOTasksAdd#assertClick" locator1="TASK_ADD_DUE_DATE_LINK" value1="Add Due Date" />
+						<execute function="#assertClick" locator1="SOTasksAdd#TASK_ADD_DUE_DATE_LINK" value1="Add Due Date" />
 					</then>
 				</if>
 
@@ -112,7 +112,7 @@
 
 				<var name="displayDate" value="${displayDateHour}:${displayDateMinuteFuture} ${displayDateMeridian}" />
 
-				<execute action="SOTasksAdd#type" locator1="DUE_DATE_TIME_FIELD" value1="${displayDate}" />
+				<execute function="#type" locator1="SOTasksAdd#DUE_DATE_TIME_FIELD" value1="${displayDate}" />
 			</then>
 		</if>
 
@@ -128,12 +128,12 @@
 					<then>
 						<var name="tagNumber" value="${tagNumber?increment()}" />
 
-						<execute action="SOTasksAdd#type" locator1="TASK_TAG_FIELD" value1="tag${tagNumber}" />
-						<execute action="SOTasksAdd#click" locator1="TASK_ADD_TAG_BUTTON" />
+						<execute function="#type" locator1="SOTasksAdd#TASK_TAG_FIELD" value1="tag${tagNumber}" />
+						<execute function="#click" locator1="SOTasksAdd#TASK_ADD_TAG_BUTTON" />
 
 						<var name="key_tagNumber" value="${tagNumber}" />
 
-						<execute action="SOTasksAdd#assertTextEquals" locator1="TASK_TAG" value1="tag${tagNumber}" />
+						<execute function="#assertTextEquals" locator1="SOTasksAdd#TASK_TAG" value1="tag${tagNumber}" />
 					</then>
 				</while>
 			</then>
@@ -144,60 +144,60 @@
 			<then>
 				<var name="key_tagNumber" value="${tagNumber}" />
 
-				<execute action="SOTasksAdd#type" locator1="TASK_TAG_FIELD" value1="tag${tagNumber}" />
-				<execute action="SOTasksAdd#click" locator1="TASK_ADD_TAG_BUTTON" />
-				<execute action="SOTasksAdd#assertTextEquals" locator1="TASK_TAG" value1="tag${tagNumber}" />
+				<execute function="#type" locator1="SOTasksAdd#TASK_TAG_FIELD" value1="tag${tagNumber}" />
+				<execute function="#click" locator1="SOTasksAdd#TASK_ADD_TAG_BUTTON" />
+				<execute function="#assertTextEquals" locator1="SOTasksAdd#TASK_TAG" value1="tag${tagNumber}" />
 			</then>
 		</if>
 
-		<execute action="SOTasksAdd#click" locator1="SAVE_BUTTON" />
+		<execute function="#click" locator1="SOTasksAdd#SAVE_BUTTON" />
 
 		<var name="key_taskDescription" value="${taskDescription}" />
 
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_DESCRIPTION" value1="${taskDescription}" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_DESCRIPTION" value1="${taskDescription}" />
 
 		<if>
 			<equals arg1="${taskAssignee}" arg2="Unassigned" />
 			<then>
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_ASSIGNEE" value1="Unassigned" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_ASSIGNEE" value1="Unassigned" />
 			</then>
 			<else>
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
 			</else>
 		</if>
 
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_REPORTER" value1="Created by ${taskReporter}" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_REPORTER" value1="Created by ${taskReporter}" />
 		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 
 		<execute macro="Page#openURL" />
 	</command>
 
 	<command name="completeTask">
-		<execute action="SOTasks#click" locator1="ASSIGNED_TO_ME_LINK" />
+		<execute function="#click" locator1="SOTasks#ASSIGNED_TO_ME_LINK" />
 
 		<var name="key_taskDescription" value="${taskDescription}" />
 
 		<if>
 			<equals arg1="${taskPriority}" arg2="High" />
 			<then>
-				<execute action="SOTasks#assertTextEquals" locator1="TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
+				<execute function="#assertTextEquals" locator1="SOTasks#TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
 			</then>
 			<elseif>
 				<equals arg1="${taskPriority}" arg2="Low" />
 				<then>
-					<execute action="SOTasks#assertTextEquals" locator1="TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
+					<execute function="#assertTextEquals" locator1="SOTasks#TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="SOTasks#assertTextEquals" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
+				<execute function="#assertTextEquals" locator1="SOTasks#TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 			</else>
 		</if>
 
 		<var name="key_percentCompletion" value="${percentCompletion}" />
 
-		<execute action="SOTasks#click" locator1="TASK_PROGRESS_BAR_VISIBLE" />
-		<execute action="SOTasks#makeVisible" locator1="TASK_PROGRESS_BAR" />
-		<execute action="SOTasks#click" locator1="TASK_PROGRESS_BAR_PERCENT_CLICK" />
+		<execute function="#click" locator1="SOTasks#TASK_PROGRESS_BAR_VISIBLE" />
+		<execute function="#makeVisible" locator1="SOTasks#TASK_PROGRESS_BAR" />
+		<execute function="#click" locator1="SOTasks#TASK_PROGRESS_BAR_PERCENT_CLICK" />
 		<execute function="#pause" locator1="1000" />
 
 		<var name="key_taskDescription" value="${taskDescription}" />
@@ -205,32 +205,32 @@
 		<if>
 			<equals arg1="${percentCompletion}" arg2="100" />
 			<then>
-				<execute action="SOTasks#assertTextEquals" locator1="INFO_MESSAGE" value1="No tasks were found." />
-				<execute action="SOTasks#check" locator1="SHOW_COMPLETED_TASKS_CHECKBOX" />
+				<execute function="#assertTextEquals" locator1="SOTasks#INFO_MESSAGE" value1="No tasks were found." />
+				<execute function="#check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
 
 				<var name="key_taskDescription" value="${taskDescription}" />
 
 				<if>
 					<equals arg1="${taskPriority}" arg2="High" />
 					<then>
-						<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
+						<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
 					</then>
 					<elseif>
 						<equals arg1="${taskPriority}" arg2="Low" />
 						<then>
-							<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
+							<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
 						</then>
 					</elseif>
 					<else>
-						<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
+						<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 					</else>
 				</if>
 
-				<execute action="SOTasksTask#selectFrame" locator1="TASK_IFRAME" />
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_DESCRIPTION" value1="${taskDescription}" />
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_REPORTER" value1="Created by ${taskReporter}" />
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_STATUS" value1="Resolved" />
+				<execute function="#selectFrame" locator1="SOTasksTask#TASK_IFRAME" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_DESCRIPTION" value1="${taskDescription}" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_REPORTER" value1="Created by ${taskReporter}" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_STATUS" value1="Resolved" />
 
 				<if>
 					<isset var="taskPriority" />
@@ -238,47 +238,47 @@
 						<if>
 							<equals arg1="${taskPriority}" arg2="High" />
 							<then>
-								<execute action="SOTasksTask#assertTextEquals" locator1="TASK_PRIORITY_HIGH" value1="${taskPriority}" />
+								<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_PRIORITY_HIGH" value1="${taskPriority}" />
 							</then>
 							<elseif>
 								<equals arg1="${taskPriority}" arg2="Low" />
 								<then>
-									<execute action="SOTasksTask#assertTextEquals" locator1="TASK_PRIORITY_LOW" value1="${taskPriority}" />
+									<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_PRIORITY_LOW" value1="${taskPriority}" />
 								</then>
 							</elseif>
 						</if>
 					</then>
 					<else>
-						<execute action="SOTasksTask#assertTextEquals" locator1="TASK_PRIORITY_NORMAL" value1="Normal" />
+						<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_PRIORITY_NORMAL" value1="Normal" />
 					</else>
 				</if>
 			</then>
 			<else>
-				<execute action="SOTasks#assertElementPresent" locator1="TASK_PROGRESS_BAR_PERCENT_COMPLETION" />
+				<execute function="#assertElementPresent" locator1="SOTasks#TASK_PROGRESS_BAR_PERCENT_COMPLETION" />
 
 				<var name="key_taskDescription" value="${taskDescription}" />
 
 				<if>
 					<equals arg1="${taskPriority}" arg2="High" />
 					<then>
-						<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
+						<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
 					</then>
 					<elseif>
 						<equals arg1="${taskPriority}" arg2="Low" />
 						<then>
-							<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
+							<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
 						</then>
 					</elseif>
 					<else>
-						<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
+						<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 					</else>
 				</if>
 
-				<execute action="SOTasksTask#selectFrame" locator1="TASK_IFRAME" />
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_DESCRIPTION" value1="${taskDescription}" />
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_REPORTER" value1="Created by ${taskReporter}" />
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_STATUS" value1="${percentCompletion}% Complete" />
+				<execute function="#selectFrame" locator1="SOTasksTask#TASK_IFRAME" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_DESCRIPTION" value1="${taskDescription}" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_REPORTER" value1="Created by ${taskReporter}" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_STATUS" value1="${percentCompletion}% Complete" />
 
 				<if>
 					<isset var="taskPriority" />
@@ -286,18 +286,18 @@
 						<if>
 							<equals arg1="${taskPriority}" arg2="High" />
 							<then>
-								<execute action="SOTasksTask#assertTextEquals" locator1="TASK_PRIORITY_HIGH" value1="${taskPriority}" />
+								<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_PRIORITY_HIGH" value1="${taskPriority}" />
 							</then>
 							<elseif>
 								<equals arg1="${taskPriority}" arg2="Low" />
 								<then>
-									<execute action="SOTasksTask#assertTextEquals" locator1="TASK_PRIORITY_LOW" value1="${taskPriority}" />
+									<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_PRIORITY_LOW" value1="${taskPriority}" />
 								</then>
 							</elseif>
 						</if>
 					</then>
 					<else>
-						<execute action="SOTasksTask#assertTextEquals" locator1="TASK_PRIORITY_NORMAL" value1="Normal" />
+						<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_PRIORITY_NORMAL" value1="Normal" />
 					</else>
 				</if>
 			</else>
@@ -312,24 +312,24 @@
 		<if>
 			<equals arg1="${taskPriority}" arg2="High" />
 			<then>
-				<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
+				<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
 			</then>
 			<elseif>
 				<equals arg1="${taskPriority}" arg2="Low" />
 				<then>
-					<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
+					<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
+				<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 			</else>
 		</if>
 
-		<execute action="SOTasksTask#selectFrame" locator1="TASK_IFRAME" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="COMMENT_BODY" value1="${taskComment}" />
-		<execute action="SOTasksTask#assertClickNoError" locator1="COMMENT_DELETE_LINK" value1="Delete" />
-		<execute action="SOTasksTask#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete the selected comment?" />
-		<execute action="SOTasksTask#assertElementNotPresent" locator1="COMMENT_BODY" />
+		<execute function="#selectFrame" locator1="SOTasksTask#TASK_IFRAME" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#COMMENT_BODY" value1="${taskComment}" />
+		<execute function="#assertClickNoError" locator1="SOTasksTask#COMMENT_DELETE_LINK" value1="Delete" />
+		<execute function="#confirm" locator1="SOTasksTask#CONFIRMATION" value1="Are you sure you want to delete the selected comment?" />
+		<execute function="#assertElementNotPresent" locator1="SOTasksTask#COMMENT_BODY" />
 		<execute action="SOTasksTask#assertTextNotPresent" value1="${taskComment}" />
 		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 
@@ -342,21 +342,21 @@
 		<if>
 			<equals arg1="${taskPriority}" arg2="High" />
 			<then>
-				<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
+				<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
 			</then>
 			<elseif>
 				<equals arg1="${taskPriority}" arg2="Low" />
 				<then>
-					<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
+					<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
+				<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 			</else>
 		</if>
 
-		<execute action="SOTasksTask#selectFrame" locator1="TASK_IFRAME" />
-		<execute action="SOTasksTask#assertElementNotPresent" locator1="COMMENT_BODY" />
+		<execute function="#selectFrame" locator1="SOTasksTask#TASK_IFRAME" />
+		<execute function="#assertElementNotPresent" locator1="SOTasksTask#COMMENT_BODY" />
 		<execute action="SOTasksTask#assertTextNotPresent" value1="${taskComment}" />
 		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 	</command>
@@ -364,34 +364,34 @@
 	<command name="deleteTask">
 		<var name="key_taskDescription" value="${taskDescription}" />
 
-		<execute action="SOTasks#click" locator1="I_HAVE_CREATED_LINK" />
-		<execute action="SOTasks#check" locator1="SHOW_COMPLETED_TASKS_CHECKBOX" />
-		<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION" value1="${taskDescription}" />
+		<execute function="#click" locator1="SOTasks#I_HAVE_CREATED_LINK" />
+		<execute function="#check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
+		<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION" value1="${taskDescription}" />
 
-		<execute action="SOTasksTask#selectFrame" locator1="TASK_IFRAME" />
-		<execute action="SOTasksTask#clickNoError" locator1="TASK_DELETE_BUTTON" />
-		<execute action="SOTasksTask#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this entry?" />
+		<execute function="#selectFrame" locator1="SOTasksTask#TASK_IFRAME" />
+		<execute function="#clickNoError" locator1="SOTasksTask#TASK_DELETE_BUTTON" />
+		<execute function="#confirm" locator1="SOTasksTask#CONFIRMATION" value1="Are you sure you want to delete this entry?" />
 		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 
-		<execute action="SOTasks#click" locator1="ASSIGNED_TO_ME_LINK" />
-		<execute action="SOTasks#check" locator1="SHOW_COMPLETED_TASKS_CHECKBOX" />
+		<execute function="#click" locator1="SOTasks#ASSIGNED_TO_ME_LINK" />
+		<execute function="#check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
 
 		<if>
-			<condition action="SOTasks#isElementNotPresent" locator1="TASK_DESCRIPTION" />
+			<condition function="#isElementNotPresent" locator1="SOTasks#TASK_DESCRIPTION" />
 			<then>
-				<execute action="SOTasks#assertTextEquals" locator1="INFO_MESSAGE" value1="No tasks were found." />
+				<execute function="#assertTextEquals" locator1="SOTasks#INFO_MESSAGE" value1="No tasks were found." />
 			</then>
 		</if>
 
 		<execute action="SOTasks#assertTextNotPresent" value1="${taskDescription}" />
 
-		<execute action="SOTasks#click" locator1="I_HAVE_CREATED_LINK" />
-		<execute action="SOTasks#check" locator1="SHOW_COMPLETED_TASKS_CHECKBOX" />
+		<execute function="#click" locator1="SOTasks#I_HAVE_CREATED_LINK" />
+		<execute function="#check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
 
 		<if>
-			<condition action="SOTasks#isElementNotPresent" locator1="TASK_DESCRIPTION" />
+			<condition function="#isElementNotPresent" locator1="SOTasks#TASK_DESCRIPTION" />
 			<then>
-				<execute action="SOTasks#assertTextEquals" locator1="INFO_MESSAGE" value1="No tasks were found." />
+				<execute function="#assertTextEquals" locator1="SOTasks#INFO_MESSAGE" value1="No tasks were found." />
 			</then>
 		</if>
 
@@ -404,59 +404,59 @@
 		<if>
 			<equals arg1="${taskPriority}" arg2="High" />
 			<then>
-				<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
+				<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
 			</then>
 			<elseif>
 				<equals arg1="${taskPriority}" arg2="Low" />
 				<then>
-					<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
+					<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
+				<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 			</else>
 		</if>
 
-		<execute action="SOTasksTask#selectFrame" locator1="TASK_IFRAME" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="COMMENT_BODY" value1="${taskComment}" />
-		<execute action="SOTasksTask#assertClick" locator1="COMMENT_EDIT_LINK" value1="Edit" />
-		<execute action="SOTasksTask#type" locator1="COMMENT_EDIT_FIELD" value1="${taskCommentEdit}" />
-		<execute action="SOTasksTask#click" locator1="COMMENT_PUBLISH_BUTTON" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="COMMENT_BODY" value1="${taskCommentEdit}" />
+		<execute function="#selectFrame" locator1="SOTasksTask#TASK_IFRAME" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#COMMENT_BODY" value1="${taskComment}" />
+		<execute function="#assertClick" locator1="SOTasksTask#COMMENT_EDIT_LINK" value1="Edit" />
+		<execute function="#type" locator1="SOTasksTask#COMMENT_EDIT_FIELD" value1="${taskCommentEdit}" />
+		<execute function="#click" locator1="SOTasksTask#COMMENT_PUBLISH_BUTTON" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#COMMENT_BODY" value1="${taskCommentEdit}" />
 		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editTask">
 		<var name="key_taskDescription" value="${taskDescription}" />
 
-		<execute action="SOTasks#click" locator1="I_HAVE_CREATED_LINK" />
-		<execute action="SOTasks#check" locator1="SHOW_COMPLETED_TASKS_CHECKBOX" />
-		<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION" value1="${taskDescription}" />
+		<execute function="#click" locator1="SOTasks#I_HAVE_CREATED_LINK" />
+		<execute function="#check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
+		<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION" value1="${taskDescription}" />
 
-		<execute action="SOTasksTask#selectFrame" locator1="TASK_IFRAME" />
-		<execute action="SOTasksTask#click" locator1="TASK_EDIT_BUTTON" />
+		<execute function="#selectFrame" locator1="SOTasksTask#TASK_IFRAME" />
+		<execute function="#click" locator1="SOTasksTask#TASK_EDIT_BUTTON" />
 
 		<if>
 			<isset var="taskDescriptionEdit" />
 			<then>
-				<execute action="SOTasksAdd#type" locator1="TASK_DESCRIPTION_FIELD" value1="${taskDescriptionEdit}" />
+				<execute function="#type" locator1="SOTasksAdd#TASK_DESCRIPTION_FIELD" value1="${taskDescriptionEdit}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="taskAssigneeEdit" />
 			<then>
-				<execute action="SOTasksAdd#select" locator1="TASK_ASSIGNEE_SELECT_MENU" value1="${taskAssigneeEdit}" />
+				<execute function="#select" locator1="SOTasksAdd#TASK_ASSIGNEE_SELECT_MENU" value1="${taskAssigneeEdit}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="taskPriorityEdit" />
 			<then>
-				<execute action="SOTasksAdd#select" locator1="TASK_PRIORITY_SELECT_MENU" value1="${taskPriorityEdit}" />
+				<execute function="#select" locator1="SOTasksAdd#TASK_PRIORITY_SELECT_MENU" value1="${taskPriorityEdit}" />
 			</then>
 			<else>
-				<execute action="SOTasksAdd#select" locator1="TASK_PRIORITY_SELECT_MENU" value1="Normal" />
+				<execute function="#select" locator1="SOTasksAdd#TASK_PRIORITY_SELECT_MENU" value1="Normal" />
 			</else>
 		</if>
 
@@ -464,36 +464,36 @@
 			<equals arg1="${dueDateEdit}" arg2="true" />
 			<then>
 				<if>
-					<condition action="SOTasksAdd#isTextEqual" locator1="TASK_ADD_DUE_DATE_LINK" value1="Add Due Date" />
+					<condition function="#isTextEqual" locator1="SOTasksAdd#TASK_ADD_DUE_DATE_LINK" value1="Add Due Date" />
 					<then>
-						<execute action="SOTasksAdd#assertClick" locator1="TASK_ADD_DUE_DATE_LINK" value1="Add Due Date" />
+						<execute function="#assertClick" locator1="SOTasksAdd#TASK_ADD_DUE_DATE_LINK" value1="Add Due Date" />
 					</then>
 				</if>
 
-				<execute action="SOTasksAdd#type" locator1="DUE_DATE_FIELD" value1="4/17/2017" />
+				<execute function="#type" locator1="SOTasksAdd#DUE_DATE_FIELD" value1="4/17/2017" />
 			</then>
 		</if>
 
-		<execute action="SOTasksAdd#click" locator1="SAVE_BUTTON" />
+		<execute function="#click" locator1="SOTasksAdd#SAVE_BUTTON" />
 
 		<if>
 			<isset var="taskDescriptionEdit" />
 			<then>
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_DESCRIPTION" value1="${taskDescriptionEdit}" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_DESCRIPTION" value1="${taskDescriptionEdit}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="taskAssigneeEdit" />
 			<then>
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_ASSIGNEE" value1="Assigned to ${taskAssigneeEdit}" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_ASSIGNEE" value1="Assigned to ${taskAssigneeEdit}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${dueDateEdit}" arg2="true" />
 			<then>
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_DUE_DATE" value1="4/17/17" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_DUE_DATE" value1="4/17/17" />
 			</then>
 		</if>
 
@@ -506,18 +506,18 @@
 		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
 		<var name="key_taskDescription" value="${taskDescription}" />
 
-		<execute action="SOTasks#assertClick" locator1="ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
-		<execute action="SOTasks#check" locator1="SHOW_COMPLETED_TASKS_CHECKBOX" />
-		<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
+		<execute function="#assertClick" locator1="SOTasks#ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
+		<execute function="#check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
+		<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 
-		<execute action="SOTasksTask#selectFrame" locator1="TASK_IFRAME" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_DESCRIPTION" value1="${taskDescription}" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_REPORTER" value1="Created by ${taskReporter}" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_PRIORITY_NORMAL" value1="Normal" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_STATUS" value1="Resolved" />
-		<execute action="SOTasksTask#click" locator1="TASK_REOPEN_BUTTON" value1="Reopen" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_STATUS" value1="Reopened" />
+		<execute function="#selectFrame" locator1="SOTasksTask#TASK_IFRAME" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_DESCRIPTION" value1="${taskDescription}" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_REPORTER" value1="Created by ${taskReporter}" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_PRIORITY_NORMAL" value1="Normal" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_STATUS" value1="Resolved" />
+		<execute function="#click" locator1="SOTasksTask#TASK_REOPEN_BUTTON" value1="Reopen" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_STATUS" value1="Reopened" />
 		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 	</command>
 
@@ -525,18 +525,18 @@
 		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
 		<var name="key_taskDescription" value="${taskDescription}" />
 
-		<execute action="SOTasks#assertClick" locator1="ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
-		<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
+		<execute function="#assertClick" locator1="SOTasks#ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
+		<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 
-		<execute action="SOTasksTask#selectFrame" locator1="TASK_IFRAME" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_DESCRIPTION" value1="${taskDescription}" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_REPORTER" value1="Created by ${taskReporter}" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_PRIORITY_NORMAL" value1="Normal" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_STATUS" value1="Open" />
+		<execute function="#selectFrame" locator1="SOTasksTask#TASK_IFRAME" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_DESCRIPTION" value1="${taskDescription}" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_REPORTER" value1="Created by ${taskReporter}" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_PRIORITY_NORMAL" value1="Normal" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_STATUS" value1="Open" />
 		<execute action="SOTasksTask#assertTextNotPresent" value1="Resolved" />
-		<execute action="SOTasksTask#click" locator1="TASK_RESOLVE_BUTTON" value1="Resolve" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_STATUS" value1="Resolved" />
+		<execute function="#click" locator1="SOTasksTask#TASK_RESOLVE_BUTTON" value1="Resolve" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_STATUS" value1="Resolved" />
 		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 	</command>
 
@@ -549,39 +549,39 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="SOTasks#click" locator1="ASSIGNED_TO_ME_LINK" />
-		<execute action="SOTasks#check" locator1="SHOW_COMPLETED_TASKS_CHECKBOX" />
+		<execute function="#click" locator1="SOTasks#ASSIGNED_TO_ME_LINK" />
+		<execute function="#check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
 
 		<while>
-			<condition action="SOTasks#isElementPresent" locator1="TASK_DESCRIPTION" />
+			<condition function="#isElementPresent" locator1="SOTasks#TASK_DESCRIPTION" />
 			<then>
-				<execute action="SOTasks#click" locator1="TASK_DESCRIPTION" />
+				<execute function="#click" locator1="SOTasks#TASK_DESCRIPTION" />
 
-				<execute action="SOTasksTask#selectFrame" locator1="TASK_IFRAME" />
-				<execute action="SOTasksTask#clickNoError" locator1="TASK_DELETE_BUTTON" />
-				<execute action="SOTasksTask#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this entry?" />
+				<execute function="#selectFrame" locator1="SOTasksTask#TASK_IFRAME" />
+				<execute function="#clickNoError" locator1="SOTasksTask#TASK_DELETE_BUTTON" />
+				<execute function="#confirm" locator1="SOTasksTask#CONFIRMATION" value1="Are you sure you want to delete this entry?" />
 				<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 
-				<execute action="SOTasks#click" locator1="ASSIGNED_TO_ME_LINK" />
-				<execute action="SOTasks#check" locator1="SHOW_COMPLETED_TASKS_CHECKBOX" />
+				<execute function="#click" locator1="SOTasks#ASSIGNED_TO_ME_LINK" />
+				<execute function="#check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
 			</then>
 		</while>
 
-		<execute action="SOTasks#click" locator1="I_HAVE_CREATED_LINK" />
-		<execute action="SOTasks#check" locator1="SHOW_COMPLETED_TASKS_CHECKBOX" />
+		<execute function="#click" locator1="SOTasks#I_HAVE_CREATED_LINK" />
+		<execute function="#check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
 
 		<while>
-			<condition action="SOTasks#isElementPresent" locator1="TASK_DESCRIPTION" />
+			<condition function="#isElementPresent" locator1="SOTasks#TASK_DESCRIPTION" />
 			<then>
-				<execute action="SOTasks#click" locator1="TASK_DESCRIPTION" />
+				<execute function="#click" locator1="SOTasks#TASK_DESCRIPTION" />
 
-				<execute action="SOTasksTask#selectFrame" locator1="TASK_IFRAME" />
-				<execute action="SOTasksTask#clickNoError" locator1="TASK_DELETE_BUTTON" />
-				<execute action="SOTasksTask#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this entry?" />
+				<execute function="#selectFrame" locator1="SOTasksTask#TASK_IFRAME" />
+				<execute function="#clickNoError" locator1="SOTasksTask#TASK_DELETE_BUTTON" />
+				<execute function="#confirm" locator1="SOTasksTask#CONFIRMATION" value1="Are you sure you want to delete this entry?" />
 				<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 
-				<execute action="SOTasks#click" locator1="I_HAVE_CREATED_LINK" />
-				<execute action="SOTasks#check" locator1="SHOW_COMPLETED_TASKS_CHECKBOX" />
+				<execute function="#click" locator1="SOTasks#I_HAVE_CREATED_LINK" />
+				<execute function="#check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
 			</then>
 		</while>
 	</command>
@@ -589,12 +589,12 @@
 	<command name="viewResolveTaskNotification">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#assertElementPresent" locator1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_COUNT" value1="1" />
-		<execute action="SOUserBar#click" locator1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${taskAssignee} resolved the task." />
-		<execute action="SOUserBar#assertClick" locator1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${taskDescription}" />
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_COUNT" value1="0" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="1" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${taskAssignee} resolved the task." />
+		<execute function="#assertClick" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${taskDescription}" />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
 	</command>
 
 	<command name="viewTask">
@@ -602,7 +602,7 @@
 
 		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
 
-		<execute action="SOTasks#assertClick" locator1="ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
+		<execute function="#assertClick" locator1="SOTasks#ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
 
 		<if>
 			<equals arg1="${taskAssignee}" arg2="${currentUser}" />
@@ -615,28 +615,28 @@
 						<if>
 							<equals arg1="${percentCompletion}" arg2="100" />
 							<then>
-								<execute action="SOTasks#assertTextEquals" locator1="INFO_MESSAGE" value1="No tasks were found." />
-								<execute action="SOTasks#check" locator1="SHOW_COMPLETED_TASKS_CHECKBOX" />
+								<execute function="#assertTextEquals" locator1="SOTasks#INFO_MESSAGE" value1="No tasks were found." />
+								<execute function="#check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
 							</then>
 						</if>
 
-						<execute action="SOTasks#assertElementPresent" locator1="TASK_PROGRESS_BAR_PERCENT_COMPLETION" />
+						<execute function="#assertElementPresent" locator1="SOTasks#TASK_PROGRESS_BAR_PERCENT_COMPLETION" />
 					</then>
 				</if>
 
-				<execute action="SOTasks#assertTextEquals" locator1="TASK_REPORTER" value1="Reporter: ${taskReporter}" />
+				<execute function="#assertTextEquals" locator1="SOTasks#TASK_REPORTER" value1="Reporter: ${taskReporter}" />
 
 				<if>
 					<equals arg1="${dueDateUpcoming}" arg2="true" />
 					<then>
-						<execute action="SOTasks#assertVisible" locator1="TASK_DUE_DATE" />
-						<execute action="SOTasks#assertElementNotPresent" locator1="TASK_DUE_DATE_PAST_DUE" />
+						<execute function="#assertVisible" locator1="SOTasks#TASK_DUE_DATE" />
+						<execute function="#assertElementNotPresent" locator1="SOTasks#TASK_DUE_DATE_PAST_DUE" />
 					</then>
 					<elseif>
 						<equals arg1="${dueDatePastDue}" arg2="true" />
 						<then>
-							<execute action="SOTasks#assertVisible" locator1="TASK_DUE_DATE_PAST_DUE" />
-							<execute action="SOTasks#assertElementNotPresent" locator1="TASK_DUE_DATE" />
+							<execute function="#assertVisible" locator1="SOTasks#TASK_DUE_DATE_PAST_DUE" />
+							<execute function="#assertElementNotPresent" locator1="SOTasks#TASK_DUE_DATE" />
 						</then>
 					</elseif>
 				</if>
@@ -644,31 +644,31 @@
 				<if>
 					<equals arg1="${taskPriority}" arg2="High" />
 					<then>
-						<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
+						<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
 					</then>
 					<elseif>
 						<equals arg1="${taskPriority}" arg2="Low" />
 						<then>
-							<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
+							<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
 						</then>
 					</elseif>
 					<else>
-						<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
+						<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 					</else>
 				</if>
 
 				<execute macro="SOTasks#viewTaskDetails" />
 			</then>
 			<else>
-				<execute action="SOTasks#assertTextEquals" locator1="INFO_MESSAGE" value1="No tasks were found." />
+				<execute function="#assertTextEquals" locator1="SOTasks#INFO_MESSAGE" value1="No tasks were found." />
 			</else>
 		</if>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#click" locator1="NAVIGATION_TASKS" value1="Tasks" />
+		<execute function="#click" locator1="SODashboard#NAVIGATION_TASKS" value1="Tasks" />
 
-		<execute action="SOTasks#assertClick" locator1="I_HAVE_CREATED_LINK" value1="I Have Created" />
+		<execute function="#assertClick" locator1="SOTasks#I_HAVE_CREATED_LINK" value1="I Have Created" />
 
 		<if>
 			<equals arg1="${taskReporter}" arg2="${currentUser}" />
@@ -681,56 +681,56 @@
 						<if>
 							<equals arg1="${percentCompletion}" arg2="100" />
 							<then>
-								<execute action="SOTasks#assertTextEquals" locator1="INFO_MESSAGE" value1="No tasks were found." />
-								<execute action="SOTasks#check" locator1="SHOW_COMPLETED_TASKS_CHECKBOX" />
+								<execute function="#assertTextEquals" locator1="SOTasks#INFO_MESSAGE" value1="No tasks were found." />
+								<execute function="#check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
 							</then>
 						</if>
 
-						<execute action="SOTasks#assertElementPresent" locator1="TASK_PROGRESS_BAR_PERCENT_COMPLETION" />
+						<execute function="#assertElementPresent" locator1="SOTasks#TASK_PROGRESS_BAR_PERCENT_COMPLETION" />
 					</then>
 				</if>
 
-				<execute action="SOTasks#assertTextEquals" locator1="TASK_ASSIGNEE" value1="Assignee: ${taskAssignee}" />
+				<execute function="#assertTextEquals" locator1="SOTasks#TASK_ASSIGNEE" value1="Assignee: ${taskAssignee}" />
 
 				<if>
 					<equals arg1="${taskPriority}" arg2="High" />
 					<then>
-						<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
+						<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
 					</then>
 					<elseif>
 						<equals arg1="${taskPriority}" arg2="Low" />
 						<then>
-							<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
+							<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
 						</then>
 					</elseif>
 					<else>
-						<execute action="SOTasks#assertClick" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
+						<execute function="#assertClick" locator1="SOTasks#TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 					</else>
 				</if>
 
 				<execute macro="SOTasks#viewTaskDetails" />
 			</then>
 			<else>
-				<execute action="SOTasks#assertTextEquals" locator1="INFO_MESSAGE" value1="No tasks were found." />
+				<execute function="#assertTextEquals" locator1="SOTasks#INFO_MESSAGE" value1="No tasks were found." />
 			</else>
 		</if>
 	</command>
 
 	<command name="viewTaskDetails">
-		<execute action="SOTasksTask#selectFrame" locator1="TASK_IFRAME" />
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_DESCRIPTION" value1="${taskDescription}" />
+		<execute function="#selectFrame" locator1="SOTasksTask#TASK_IFRAME" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_DESCRIPTION" value1="${taskDescription}" />
 
 		<if>
 			<equals arg1="${taskAssignee}" arg2="Unassigned" />
 			<then>
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_ASSIGNEE" value1="Unassigned" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_ASSIGNEE" value1="Unassigned" />
 			</then>
 			<else>
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
 			</else>
 		</if>
 
-		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_REPORTER" value1="Created by ${taskReporter}" />
+		<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_REPORTER" value1="Created by ${taskReporter}" />
 
 		<if>
 			<isset var="percentCompletion" />
@@ -738,15 +738,15 @@
 				<if>
 					<equals arg1="${percentCompletion}" arg2="100" />
 					<then>
-						<execute action="SOTasksTask#assertTextEquals" locator1="TASK_STATUS" value1="Resolved" />
+						<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_STATUS" value1="Resolved" />
 					</then>
 					<else>
-						<execute action="SOTasksTask#assertTextEquals" locator1="TASK_STATUS" value1="${percentCompletion}% Complete" />
+						<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_STATUS" value1="${percentCompletion}% Complete" />
 					</else>
 				</if>
 			</then>
 			<else>
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_STATUS" value1="Open" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_STATUS" value1="Open" />
 			</else>
 		</if>
 
@@ -756,46 +756,46 @@
 				<if>
 					<equals arg1="${taskPriority}" arg2="High" />
 					<then>
-						<execute action="SOTasksTask#assertTextEquals" locator1="TASK_PRIORITY_HIGH" value1="${taskPriority}" />
+						<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_PRIORITY_HIGH" value1="${taskPriority}" />
 					</then>
 					<elseif>
 						<equals arg1="${taskPriority}" arg2="Low" />
 						<then>
-							<execute action="SOTasksTask#assertTextEquals" locator1="TASK_PRIORITY_LOW" value1="${taskPriority}" />
+							<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_PRIORITY_LOW" value1="${taskPriority}" />
 						</then>
 					</elseif>
 				</if>
 			</then>
 			<else>
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_PRIORITY_NORMAL" value1="Normal" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_PRIORITY_NORMAL" value1="Normal" />
 			</else>
 		</if>
 
 		<if>
 			<equals arg1="${dueDate}" arg2="true" />
 			<then>
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_DUE_DATE" value1="3/16/16" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_DUE_DATE" value1="3/16/16" />
 			</then>
 			<elseif>
 				<equals arg1="${dueDateEdit}" arg2="true" />
 				<then>
-					<execute action="SOTasksTask#assertTextEquals" locator1="TASK_DUE_DATE" value1="4/17/17" />
+					<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_DUE_DATE" value1="4/17/17" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${dueDateUpcoming}" arg2="true" />
 				<then>
-					<execute action="SOTasksTask#assertVisible" locator1="TASK_DUE_DATE" />
+					<execute function="#assertVisible" locator1="SOTasksTask#TASK_DUE_DATE" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${dueDatePastDue}" arg2="true" />
 				<then>
-					<execute action="SOTasksTask#assertVisible" locator1="TASK_DUE_DATE" />
+					<execute function="#assertVisible" locator1="SOTasksTask#TASK_DUE_DATE" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="SOTasksTask#assertElementNotPresent" locator1="TASK_DUE_DATE" />
+				<execute function="#assertElementNotPresent" locator1="SOTasksTask#TASK_DUE_DATE" />
 			</else>
 		</if>
 
@@ -813,7 +813,7 @@
 
 						<var name="key_tagNumber" value="${tagNumber}" />
 
-						<execute action="SOTasksTask#assertTextEquals" locator1="TASK_TAG" value1="tag${tagNumber}" />
+						<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_TAG" value1="tag${tagNumber}" />
 					</then>
 				</while>
 			</then>
@@ -824,14 +824,14 @@
 			<then>
 				<var name="key_tagNumber" value="${tagNumber}" />
 
-				<execute action="SOTasksTask#assertTextEquals" locator1="TASK_TAG" value1="tag${tagNumber}" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_TAG" value1="tag${tagNumber}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="taskComment" />
 			<then>
-				<execute action="SOTasksTask#assertTextEquals" locator1="COMMENT_BODY" value1="${taskComment}" />
+				<execute function="#assertTextEquals" locator1="SOTasksTask#COMMENT_BODY" value1="${taskComment}" />
 			</then>
 		</if>
 
@@ -841,31 +841,31 @@
 	<command name="viewTaskNotification">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#assertElementPresent" locator1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_COUNT" value1="1" />
-		<execute action="SOUserBar#click" locator1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${taskReporter} assigned you a task." />
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${taskDescription}" />
-		<execute action="SOUserBar#click" locator1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${taskReporter} assigned you a task." />
+		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="1" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${taskReporter} assigned you a task." />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${taskDescription}" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${taskReporter} assigned you a task." />
 
 		<var name="key_taskDescription" value="${taskDescription}" />
 
 		<if>
 			<equals arg1="${taskPriority}" arg2="High" />
 			<then>
-				<execute action="SOTasks#assertTextEquals" locator1="TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
+				<execute function="#assertTextEquals" locator1="SOTasks#TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
 			</then>
 			<elseif>
 				<equals arg1="${taskPriority}" arg2="Low" />
 				<then>
-					<execute action="SOTasks#assertTextEquals" locator1="TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
+					<execute function="#assertTextEquals" locator1="SOTasks#TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="SOTasks#assertTextEquals" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
+				<execute function="#assertTextEquals" locator1="SOTasks#TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 			</else>
 		</if>
 
-		<execute action="SOTasks#assertTextEquals" locator1="TASK_REPORTER" value1="Reporter: ${taskReporter}" />
+		<execute function="#assertTextEquals" locator1="SOTasks#TASK_REPORTER" value1="Reporter: ${taskReporter}" />
 	</command>
 </definition>

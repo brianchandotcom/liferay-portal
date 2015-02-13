@@ -1,9 +1,9 @@
 <definition>
 	<command name="showCategorization">
 		<if>
-			<condition action="PGDocumentsandmediaEditdocument#isElementNotPresent" locator1="CATEGORIZATION_TAGS_FIELD" />
+			<condition function="#isElementNotPresent" locator1="PGDocumentsandmediaEditdocument#CATEGORIZATION_TAGS_FIELD" />
 			<then>
-				<execute action="PGDocumentsandmediaEditdocument#assertClick" locator1="CATEGORIZATION_PANEL_COLLAPSED" value1="Categorization" />
+				<execute function="#assertClick" locator1="PGDocumentsandmediaEditdocument#CATEGORIZATION_PANEL_COLLAPSED" value1="Categorization" />
 			</then>
 		</if>
 	</command>

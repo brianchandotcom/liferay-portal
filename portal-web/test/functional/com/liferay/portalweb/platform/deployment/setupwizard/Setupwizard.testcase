@@ -12,14 +12,14 @@
 			<var name="setupWizardAddSampleData" value="false" />
 		</execute>
 
-		<execute action="Home#assertTextEquals" locator1="BREADCRUMB_1" value1="Welcome" />
+		<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_1" value1="Welcome" />
 
-		<execute action="PGSignin#assertTextEquals" locator1="PORTLET_TITLE" value1="Sign In" />
-		<execute action="PGSignin#assertTextEquals" locator1="PORTLET_CONTENT" value1="You are signed in as" />
-		<execute action="PGSignin#assertTextEquals" locator1="PORTLET_CONTENT_USER_NAME" value1="${administratorFirstName} ${administratorLastName}" />
+		<execute function="#assertTextEquals" locator1="PGSignin#PORTLET_TITLE" value1="Sign In" />
+		<execute function="#assertTextEquals" locator1="PGSignin#PORTLET_CONTENT" value1="You are signed in as" />
+		<execute function="#assertTextEquals" locator1="PGSignin#PORTLET_CONTENT_USER_NAME" value1="${administratorFirstName} ${administratorLastName}" />
 
-		<execute action="PGHelloworld#assertTextEquals" locator1="PORTLET_TITLE" value1="Hello World" />
-		<execute action="PGHelloworld#assertTextEquals" locator1="PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
+		<execute function="#assertTextEquals" locator1="PGHelloworld#PORTLET_TITLE" value1="Hello World" />
+		<execute function="#assertTextEquals" locator1="PGHelloworld#PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -44,14 +44,14 @@
 			<var name="setupWizardAddSampleData" value="true" />
 		</execute>
 
-		<execute action="Home#assertTextEquals" locator1="BREADCRUMB_1" value1="Welcome" />
+		<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_1" value1="Welcome" />
 
-		<execute action="PGSignin#assertTextEquals" locator1="PORTLET_TITLE" value1="Sign In" />
-		<execute action="PGSignin#assertTextEquals" locator1="PORTLET_CONTENT" value1="You are signed in as" />
-		<execute action="PGSignin#assertTextEquals" locator1="PORTLET_CONTENT_USER_NAME" value1="Joe Bloggs" />
+		<execute function="#assertTextEquals" locator1="PGSignin#PORTLET_TITLE" value1="Sign In" />
+		<execute function="#assertTextEquals" locator1="PGSignin#PORTLET_CONTENT" value1="You are signed in as" />
+		<execute function="#assertTextEquals" locator1="PGSignin#PORTLET_CONTENT_USER_NAME" value1="Joe Bloggs" />
 
-		<execute action="PGHelloworld#assertTextEquals" locator1="PORTLET_TITLE" value1="Hello World" />
-		<execute action="PGHelloworld#assertTextEquals" locator1="PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
+		<execute function="#assertTextEquals" locator1="PGHelloworld#PORTLET_TITLE" value1="Hello World" />
+		<execute function="#assertTextEquals" locator1="PGHelloworld#PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

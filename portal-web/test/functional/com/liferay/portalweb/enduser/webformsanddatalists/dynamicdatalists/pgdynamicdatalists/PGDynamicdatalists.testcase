@@ -191,7 +191,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGDynamicdatalists#assertElementNotPresent" locator1="ADD_RECORD_BUTTON" />
+		<execute function="#assertElementNotPresent" locator1="PGDynamicdatalists#ADD_RECORD_BUTTON" />
 	</command>
 
 	<command name="ConfigureSpreadsheetListPG" priority="5">
@@ -245,7 +245,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGDynamicdatalists#assertElementPresent" locator1="SPREADSHEET_CONTAINER" />
+		<execute function="#assertElementPresent" locator1="PGDynamicdatalists#SPREADSHEET_CONTAINER" />
 	</command>
 
 	<command name="DeleteList" priority="5">
@@ -628,7 +628,7 @@
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinition1Name}" />
+		<execute function="#assertTextEquals" locator1="PGDynamicdatalists#ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinition1Name}" />
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlList2Name}" />
@@ -644,8 +644,8 @@
 			<var name="ddlListName" value="${ddlList2Name}" />
 		</execute>
 
-		<execute action="PGDynamicdatalistsConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
-		<execute action="PGDynamicdatalistsConfiguration#assertChecked" locator1="TEMPLATES_EDITABLE_CHECKBOX" />
+		<execute function="#selectFrame" locator1="PGDynamicdatalistsConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="#assertChecked" locator1="PGDynamicdatalistsConfiguration#TEMPLATES_EDITABLE_CHECKBOX" />
 	</command>
 
 	<command name="ViewBooleanFieldPredefinedValue" priority="4">
@@ -1213,7 +1213,7 @@
 		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
 		<execute function="#assertClick" locator1="//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a" value1="${ddlRecordFieldData}" />
-		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator1="FIELD_1" value1="Text ${ddlRecordFieldData}" />
+		<execute function="#assertTextEquals" locator1="PGDynamicdatalistsDisplayrecord#FIELD_1" value1="Text ${ddlRecordFieldData}" />
 	</command>
 
 	<command known-issues="LPS-51615" name="ViewListRecordWithUploadedFreeMarkerDisplayTemplate" priority="5">

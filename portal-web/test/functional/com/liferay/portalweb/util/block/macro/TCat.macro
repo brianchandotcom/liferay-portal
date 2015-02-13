@@ -2,41 +2,41 @@
 	<command name="deployLiferayPortalWar">
 		<echo message="Deploying liferay-portal.war to TCat..." />
 
-		<execute action="TCat#type" locator1="USER_NAME_FIELD" value1="admin" />
-		<execute action="TCat#type" locator1="PASSWORD_FIELD" value1="admin" />
-		<execute action="TCat#click" locator1="LOG_IN_BUTTON" value1="Login" />
+		<execute function="#type" locator1="TCat#USER_NAME_FIELD" value1="admin" />
+		<execute function="#type" locator1="TCat#PASSWORD_FIELD" value1="admin" />
+		<execute function="#click" locator1="TCat#LOG_IN_BUTTON" value1="Login" />
 
-		<execute action="TCat#click" locator1="SERVER_TAB" />
-		<execute action="TCat#click" locator1="UNREGISTERED" />
-		<execute action="TCat#click" locator1="UNREGISTERED_CHECK" />
-		<execute action="TCat#click" locator1="REGISTER_BUTTON" />
+		<execute function="#click" locator1="TCat#SERVER_TAB" />
+		<execute function="#click" locator1="TCat#UNREGISTERED" />
+		<execute function="#click" locator1="TCat#UNREGISTERED_CHECK" />
+		<execute function="#click" locator1="TCat#REGISTER_BUTTON" />
 
-		<execute action="TCat#click" locator1="REPOSITORY_TAB" />
-		<execute action="TCat#click" locator1="APPLICATION_FOLDER" />
-		<execute action="TCat#click" locator1="NEW_WORKSPACE_BUTTON" />
-		<execute action="TCat#sikuliType" locator1="NEW_WORKSPACE_NAME_FIELD" value1="Liferay" />
-		<execute action="TCat#sikuliClick" locator1="NEW_WORKSPACE_ADD_BUTTON" />
+		<execute function="#click" locator1="TCat#REPOSITORY_TAB" />
+		<execute function="#click" locator1="TCat#APPLICATION_FOLDER" />
+		<execute function="#click" locator1="TCat#NEW_WORKSPACE_BUTTON" />
+		<execute function="#sikuliType" locator1="TCat#NEW_WORKSPACE_NAME_FIELD" value1="Liferay" />
+		<execute function="#sikuliClick" locator1="TCat#NEW_WORKSPACE_ADD_BUTTON" />
 
-		<execute action="TCat#click" locator1="NEW_ARTIFACT_BUTTON" />
-		<execute action="TCat#sikuliClick" locator1="NEW_ARTIFACT_BROWSE_BUTTON" />
-		<execute action="TCat#sikuliClick" locator1="FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_CLICKED" />
-		<execute action="TCat#sikuliClick" locator1="FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON" />
-		<execute action="TCat#sikuliClick" locator1="FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_LINUX" />
-		<execute action="TCat#sikuliUploadTCatFile" locator1="FILE_DIALOG_BOX_FILE_NAME_FIELD" value1="ROOT.war" />
-		<execute action="TCat#sikuliClick" locator1="NEW_ARTIFACT_ADD_BUTTON" />
+		<execute function="#click" locator1="TCat#NEW_ARTIFACT_BUTTON" />
+		<execute function="#sikuliClick" locator1="TCat#NEW_ARTIFACT_BROWSE_BUTTON" />
+		<execute function="#sikuliClick" locator1="TCat#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_CLICKED" />
+		<execute function="#sikuliClick" locator1="TCat#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON" />
+		<execute function="#sikuliClick" locator1="TCat#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_LINUX" />
+		<execute function="#sikuliUploadTCatFile" locator1="TCat#FILE_DIALOG_BOX_FILE_NAME_FIELD" value1="ROOT.war" />
+		<execute function="#sikuliClick" locator1="TCat#NEW_ARTIFACT_ADD_BUTTON" />
 
 		<execute function="#pause" locator1="5000" />
-		<execute action="TCat#click" locator1="DEPLOYMENT_TAB" />
-		<execute action="TCat#click" locator1="NEW_DEPLOYMENT_BUTTON" />
-		<execute action="TCat#type" locator1="NEW_DEPLOYMENT_NAME_FIELD" value1="Liferay" />
-		<execute action="TCat#click" locator1="ADD_FROM_REPOSITORY_BUTTON" />
-		<execute action="TCat#sikuliClick" locator1="SELECT_WEB_APPLICATION_FIELD" />
-		<execute action="TCat#sikuliClick" locator1="LIFERAY_ROOT_OPTION" />
-		<execute action="TCat#sikuliClick" locator1="SELECT_WEB_APPLICATION_BUTTON" />
+		<execute function="#click" locator1="TCat#DEPLOYMENT_TAB" />
+		<execute function="#click" locator1="TCat#NEW_DEPLOYMENT_BUTTON" />
+		<execute function="#type" locator1="TCat#NEW_DEPLOYMENT_NAME_FIELD" value1="Liferay" />
+		<execute function="#click" locator1="TCat#ADD_FROM_REPOSITORY_BUTTON" />
+		<execute function="#sikuliClick" locator1="TCat#SELECT_WEB_APPLICATION_FIELD" />
+		<execute function="#sikuliClick" locator1="TCat#LIFERAY_ROOT_OPTION" />
+		<execute function="#sikuliClick" locator1="TCat#SELECT_WEB_APPLICATION_BUTTON" />
 
-		<execute action="TCat#sikuliClick" locator1="SELECT_SERVER_DROPDOWN" />
-		<execute action="TCat#sikuliClick" locator1="TOMCAT_SERVER_OPTION" />
-		<execute action="TCat#click" locator1="SERVER_DEPLOY_BUTTON" />
+		<execute function="#sikuliClick" locator1="TCat#SELECT_SERVER_DROPDOWN" />
+		<execute function="#sikuliClick" locator1="TCat#TOMCAT_SERVER_OPTION" />
+		<execute function="#click" locator1="TCat#SERVER_DEPLOY_BUTTON" />
 
 		<execute function="#pause" locator1="160000" />
 	</command>

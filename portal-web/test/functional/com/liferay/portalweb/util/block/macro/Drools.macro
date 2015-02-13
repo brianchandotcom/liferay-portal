@@ -1,18 +1,18 @@
 <definition>
 	<command name="viewContentPG">
-		<execute action="Drools#assertTextEquals" locator1="WELCOME_MESSAGE" value1="${welcomeMessage}" />
-		<execute action="Drools#assertTextEquals" locator1="DROOLS_CONTENT" value1="${droolsContent}" />
+		<execute function="#assertTextEquals" locator1="Drools#WELCOME_MESSAGE" value1="${welcomeMessage}" />
+		<execute function="#assertTextEquals" locator1="Drools#DROOLS_CONTENT" value1="${droolsContent}" />
 
 		<if>
 			<isset var="screenshotFileName" />
 			<then>
-				<execute action="Drools#sikuliAssertElementPresent" locator1="SCREENSHOTS_SAMPLEDROOLS_WEB_CONTENT_IMAGE_FIELD_PNG" />
+				<execute function="#sikuliAssertElementPresent" locator1="Drools#SCREENSHOTS_SAMPLEDROOLS_WEB_CONTENT_IMAGE_FIELD_PNG" />
 			</then>
 		</if>
 	</command>
 
 	<command name="viewDefaultPG">
-		<execute action="Drools#assertTextEquals" locator1="WELCOME_MESSAGE" value1="${welcomeMessage}" />
-		<execute action="Drools#assertTextEquals" locator1="DROOLS_CONTENT" value1="There are no results." />
+		<execute function="#assertTextEquals" locator1="Drools#WELCOME_MESSAGE" value1="${welcomeMessage}" />
+		<execute function="#assertTextEquals" locator1="Drools#DROOLS_CONTENT" value1="There are no results." />
 	</command>
 </definition>

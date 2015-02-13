@@ -92,22 +92,22 @@
 
 		<execute macro="Notifications#gotoDockbar" />
 
-		<execute action="SOUserBar#click" locator1="NOTIFICATION_MENU_REQUEST_CONFIRM" />
-		<execute action="SOUserBar#click" locator1="NOTIFICATION_MENU_REQUEST_CONFIRM" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION_MENU_REQUEST_CONFIRM" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION_MENU_REQUEST_CONFIRM" />
 
 		<execute macro="Notifications#viewCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_REQUEST_NONE_MESSAGE" value1="You do not have any requests." />
-		<execute action="SOUserBar#assertElementPresent" locator1="USER_BAR" />
-		<execute action="SOUserBar#assertElementPresent" locator1="SOCIAL_OFFICE_LOGO" />
-		<execute action="SOUserBar#assertElementPresent" locator1="DASHBOARD" />
-		<execute action="SOUserBar#assertElementPresent" locator1="CONTACT_CENTER" />
-		<execute action="SOUserBar#assertElementPresent" locator1="MESSAGES" />
-		<execute action="SOUserBar#assertElementPresent" locator1="MY_DOCUMENTS" />
-		<execute action="SOUserBar#assertElementPresent" locator1="TASKS" />
-		<execute action="SOUserBar#assertElementPresent" locator1="GO_TO" />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_REQUEST_NONE_MESSAGE" value1="You do not have any requests." />
+		<execute function="#assertElementPresent" locator1="SOUserBar#USER_BAR" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#SOCIAL_OFFICE_LOGO" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#DASHBOARD" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#CONTACT_CENTER" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#MESSAGES" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#MY_DOCUMENTS" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#TASKS" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#GO_TO" />
 	</command>
 
 	<command name="ConfirmMultipleConnectionRequests" priority="4">
@@ -181,15 +181,15 @@
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_REQUEST_NONE_MESSAGE" value1="You do not have any requests." />
-		<execute action="SOUserBar#assertElementPresent" locator1="USER_BAR" />
-		<execute action="SOUserBar#assertElementPresent" locator1="SOCIAL_OFFICE_LOGO" />
-		<execute action="SOUserBar#assertElementPresent" locator1="DASHBOARD" />
-		<execute action="SOUserBar#assertElementPresent" locator1="CONTACT_CENTER" />
-		<execute action="SOUserBar#assertElementPresent" locator1="MESSAGES" />
-		<execute action="SOUserBar#assertElementPresent" locator1="MY_DOCUMENTS" />
-		<execute action="SOUserBar#assertElementPresent" locator1="TASKS" />
-		<execute action="SOUserBar#assertElementPresent" locator1="GO_TO" />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_REQUEST_NONE_MESSAGE" value1="You do not have any requests." />
+		<execute function="#assertElementPresent" locator1="SOUserBar#USER_BAR" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#SOCIAL_OFFICE_LOGO" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#DASHBOARD" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#CONTACT_CENTER" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#MESSAGES" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#MY_DOCUMENTS" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#TASKS" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#GO_TO" />
 	</command>
 
 	<command name="MarkAllAsReadContactsCenterNotifications" priority="5">
@@ -589,9 +589,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -615,9 +615,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="commentCount" value="1" />
@@ -642,9 +642,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="commentCount" value="2" />
@@ -669,9 +669,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="commentCount" value="3" />
@@ -696,9 +696,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="commentCount" value="4" />
@@ -723,9 +723,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="commentCount" value="5" />
@@ -802,9 +802,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -1007,11 +1007,11 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#assertElementPresent" locator1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_COUNT" value1="0" />
-		<execute action="SOUserBar#click" locator1="NOTIFICATION" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${entryAuthor} sent a new announcement." />
-		<execute action="SOUserBar#assertElementNotPresent" locator1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
+		<execute function="#assertElementNotPresent" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
 	</command>
 
 	<command name="MarkAsReadTaskAssignedToConnectionNotification" priority="5">
@@ -1386,7 +1386,7 @@
 
 		<execute macro="Notifications#navigateToViewAllNotifications" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_NONE_MESSAGE" value1="You do not have any notifications." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_NONE_MESSAGE" value1="You do not have any notifications." />
 	</command>
 
 	<command name="ViewBlogsEntryNotifications" priority="5">
@@ -1487,8 +1487,8 @@
 			<var name="contentBody" value="${entryTitle}" />
 		</execute>
 
-		<execute action="PGBlogsEntry#assertTextEquals" locator1="ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="PGBlogsEntry#assertTextEquals" locator1="ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 
 		<execute macro="Notifications#viewCount">
 			<var name="notificationCount" value="0" />
@@ -1532,8 +1532,8 @@
 			<var name="contentBody" value="${entryTitleEdit}" />
 		</execute>
 
-		<execute action="PGBlogsEntry#assertTextEquals" locator1="ENTRY_TITLE" value1="${entryTitleEdit}" />
-		<execute action="PGBlogsEntry#assertTextEquals" locator1="ENTRY_CONTENT" value1="${entryContentEdit}" />
+		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitleEdit}" />
+		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContentEdit}" />
 
 		<execute macro="Notifications#viewCount">
 			<var name="notificationCount" value="0" />
@@ -1637,7 +1637,7 @@
 			<var name="user" value="${adminName}" />
 		</execute>
 
-		<execute action="SONotifications#sikuliAssertElementPresent" locator1="SCREENSHOTS_NOTIFICATIONS_LONG_FORUM_THREAD_SUBJECT_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="SONotifications#SCREENSHOTS_NOTIFICATIONS_LONG_FORUM_THREAD_SUBJECT_PNG" />
 	</command>
 
 	<command name="ViewCategoryThreadNotifications" priority="5">
@@ -1743,10 +1743,10 @@
 			<var name="contentBody" value="${threadSubject}" />
 		</execute>
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="TITLE_HEADER" value1="${threadSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_1" value1="${adminName}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_1" value1="${threadBody}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" value1="${adminName}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
 
 		<execute macro="Notifications#viewCount">
 			<var name="notificationCount" value="0" />
@@ -1794,10 +1794,10 @@
 			<var name="contentBody" value="${threadSubjectEdit}" />
 		</execute>
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="TITLE_HEADER" value1="${threadSubjectEdit}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_1" value1="${adminName}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_1" value1="${threadSubjectEdit}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_1" value1="${threadBodyEdit}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSubjectEdit}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" value1="${adminName}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubjectEdit}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBodyEdit}" />
 
 		<execute macro="Notifications#viewCount">
 			<var name="notificationCount" value="0" />
@@ -1841,10 +1841,10 @@
 
 		<execute macro="Notifications#gotoDockbar" />
 
-		<execute action="SOUserBar#assertClick" locator1="NOTIFICATION_MENU_REQUEST_ENTRY_SENDER" value1="${userName}" />
+		<execute function="#assertClick" locator1="SOUserBar#NOTIFICATION_MENU_REQUEST_ENTRY_SENDER" value1="${userName}" />
 
-		<execute action="SOProfile#assertTextEquals" locator1="USER_NAME" value1="${userName}" />
-		<execute action="SOProfile#assertTextEquals" locator1="USER_EMAIL" value1="${userEmailAddress}" />
+		<execute function="#assertTextEquals" locator1="SOProfile#USER_NAME" value1="${userName}" />
+		<execute function="#assertTextEquals" locator1="SOProfile#USER_EMAIL" value1="${userEmailAddress}" />
 	</command>
 
 	<command name="ViewConnectionRequestNotificationNoMarkAsReadOption" priority="4">
@@ -1870,9 +1870,9 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOContactscenter#type" locator1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
-		<execute action="SOContactscenter#select" locator1="CONTACTS_LIST_FILTER" value1="Connections" />
-		<execute action="SOContactscenter#assertTextEquals" locator1="CONTACTS_LIST_EMPTY" value1="There are no results." />
+		<execute function="#type" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute function="#select" locator1="SOContactscenter#CONTACTS_LIST_FILTER" value1="Connections" />
+		<execute function="#assertTextEquals" locator1="SOContactscenter#CONTACTS_LIST_EMPTY" value1="There are no results." />
 
 		<execute macro="SOContactsCenter#requestToConnect">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -1886,12 +1886,12 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator1="NOTIFICATION" />
-		<execute action="SOUserBar#assertNotVisible" locator1="NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="#assertNotVisible" locator1="SOUserBar#NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_COUNT" value1="1" />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="1" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -2137,91 +2137,91 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#assertElementPresent" locator1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_COUNT" value1="12" />
-		<execute action="SOUserBar#click" locator1="NOTIFICATION" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="12" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
 
 		<var name="key_row" value="1" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} sent you a message." />
 
 		<var name="key_row" value="2" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} sent you a message." />
 
 		<var name="key_row" value="3" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} sent you a message." />
 
-		<execute action="SOUserBar#assertClick" locator1="NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK" value1="Notifications (6)" />
+		<execute function="#assertClick" locator1="SOUserBar#NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK" value1="Notifications (6)" />
 
 		<var name="key_row" value="1" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} sent you a message." />
 
 		<var name="key_row" value="2" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} sent you a message." />
 
 		<var name="key_row" value="3" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} sent you a message." />
 
 		<var name="key_row" value="4" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName3} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName3} sent you a message." />
 
 		<var name="key_row" value="5" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName2} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName2} sent you a message." />
 
 		<var name="key_row" value="6" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} sent you a message." />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#assertElementPresent" locator1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_COUNT" value1="12" />
-		<execute action="SOUserBar#click" locator1="NOTIFICATION" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="12" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
 
 		<var name="key_row" value="4" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} would like to add you as a connection." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} would like to add you as a connection." />
 
 		<var name="key_row" value="5" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} would like to add you as a connection." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} would like to add you as a connection." />
 
 		<var name="key_row" value="6" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} would like to add you as a connection." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} would like to add you as a connection." />
 
-		<execute action="SOUserBar#assertClick" locator1="NOTIFICATION_MENU_VIEW_REQUESTS_LINK" value1="Requests (6)" />
+		<execute function="#assertClick" locator1="SOUserBar#NOTIFICATION_MENU_VIEW_REQUESTS_LINK" value1="Requests (6)" />
 
 		<var name="key_row" value="1" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} would like to add you as a connection." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} would like to add you as a connection." />
 
 		<var name="key_row" value="2" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} would like to add you as a connection." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} would like to add you as a connection." />
 
 		<var name="key_row" value="3" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} would like to add you as a connection." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} would like to add you as a connection." />
 
 		<var name="key_row" value="4" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName3} would like to add you as a connection." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName3} would like to add you as a connection." />
 
 		<var name="key_row" value="5" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName2} would like to add you as a connection." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName2} would like to add you as a connection." />
 
 		<var name="key_row" value="6" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} would like to add you as a connection." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} would like to add you as a connection." />
 	</command>
 
 	<command name="ViewDeletedMessageNotification" priority="4">
@@ -2275,10 +2275,10 @@
 
 		<var name="key_messageBody" value="${messageBody}" />
 
-		<execute action="SOMessages#check" locator1="MESSAGE_CHECKBOX" />
-		<execute action="SOMessages#assertClickNoError" locator1="DELETE_BUTTON" value1="Delete" />
-		<execute action="SOMessages#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
-		<execute action="SOMessages#assertTextEquals" locator1="INFO_MESSAGE" value1="No messages found." />
+		<execute function="#check" locator1="SOMessages#MESSAGE_CHECKBOX" />
+		<execute function="#assertClickNoError" locator1="SOMessages#DELETE_BUTTON" value1="Delete" />
+		<execute function="#confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
+		<execute function="#assertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -2302,9 +2302,9 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
-		<execute action="PGNotificationsdelivery#click" locator1="NOTIFICATION_DELIVERY_CONTACTS_CENTER_WEBSITE_CHECKBOX" />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_CONTACTS_CENTER_WEBSITE_CHECKBOX" />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
+		<execute function="#click" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CONTACTS_CENTER_WEBSITE_CHECKBOX" />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CONTACTS_CENTER_WEBSITE_CHECKBOX" />
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -2334,9 +2334,9 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
-		<execute action="PGNotificationsdelivery#click" locator1="NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
+		<execute function="#click" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
 
 		<execute macro="SOUserBar#addSOSite">
 			<var name="siteDescription" value="${siteDescription}" />
@@ -2596,12 +2596,12 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator1="NOTIFICATION" />
-		<execute action="SOUserBar#assertNotVisible" locator1="NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="#assertNotVisible" locator1="SOUserBar#NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_COUNT" value1="1" />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="1" />
 
 		<execute macro="SOMembersAdministration#viewIgnoreMemberInvite" />
 
@@ -2959,9 +2959,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -2979,7 +2979,7 @@
 
 		<execute macro="Notifications#gotoDockbar" />
 
-		<execute action="SONotifications#sikuliAssertElementPresent" locator1="SCREENSHOTS_NOTIFICATIONS_LONG_MICROBLOGS_COMMENT_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="SONotifications#SCREENSHOTS_NOTIFICATIONS_LONG_MICROBLOGS_COMMENT_PNG" />
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotification">
 			<var name="microblogsEntryCommentAuthorName" value="${userName}" />
@@ -3127,8 +3127,8 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="commentCount" value="2" />
@@ -3172,8 +3172,8 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -3260,7 +3260,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SODashboard#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -3395,9 +3395,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryCommentMention">
 			<var name="mentionUserEmailAddress" value="${adminEmailAddress}" />
@@ -3458,9 +3458,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -3525,9 +3525,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryCommentMention">
 			<var name="mentionUserEmailAddress" value="${adminEmailAddress}" />
@@ -3672,9 +3672,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -3698,9 +3698,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="commentCount" value="1" />
@@ -3725,9 +3725,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="commentCount" value="2" />
@@ -3752,9 +3752,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="commentCount" value="3" />
@@ -3779,9 +3779,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="commentCount" value="4" />
@@ -3806,9 +3806,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="commentCount" value="5" />
@@ -3833,83 +3833,83 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#assertElementPresent" locator1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_COUNT" value1="12" />
-		<execute action="SOUserBar#click" locator1="NOTIFICATION" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="12" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
 
 		<var name="key_row" value="1" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} sent you a message." />
 
 		<var name="key_row" value="2" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} commented on your post." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} commented on your post." />
 
 		<var name="key_row" value="3" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} sent you a message." />
 
-		<execute action="SOUserBar#assertClick" locator1="NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK" value1="Notifications (12)" />
+		<execute function="#assertClick" locator1="SOUserBar#NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK" value1="Notifications (12)" />
 
 		<var name="key_row" value="1" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} sent you a message." />
 
 		<var name="key_row" value="2" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} commented on your post." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} commented on your post." />
 
 		<var name="key_row" value="3" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} sent you a message." />
 
 		<var name="key_row" value="4" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} commented on your post." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} commented on your post." />
 
 		<var name="key_row" value="5" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} sent you a message." />
 
 		<var name="key_row" value="6" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} commented on your post." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} commented on your post." />
 
 		<var name="key_row" value="7" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName3} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName3} sent you a message." />
 
 		<var name="key_row" value="8" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName3} commented on your post." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName3} commented on your post." />
 
 		<var name="key_row" value="9" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName2} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName2} sent you a message." />
 
 		<var name="key_row" value="10" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName2} commented on your post." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName2} commented on your post." />
 
 		<var name="key_row" value="11" />
 
-		<execute action="SONotifications#assertElementNotPresent" locator1="NOTIFICATIONS_ENTRY_INCREMENT" />
+		<execute function="#assertElementNotPresent" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="SEARCH_RESULTS" value1="Showing 1 - 10 of 12 results." />
-		<execute action="SONotifications#click" locator1="NEXT_BUTTON" />
-		<execute action="SONotifications#assertTextEquals" locator1="SEARCH_RESULTS" value1="Showing 11 - 12 of 12 results." />
+		<execute function="#assertTextEquals" locator1="SONotifications#SEARCH_RESULTS" value1="Showing 1 - 10 of 12 results." />
+		<execute function="#click" locator1="SONotifications#NEXT_BUTTON" />
+		<execute function="#assertTextEquals" locator1="SONotifications#SEARCH_RESULTS" value1="Showing 11 - 12 of 12 results." />
 
 		<var name="key_row" value="1" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} sent you a message." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} sent you a message." />
 
 		<var name="key_row" value="2" />
 
-		<execute action="SONotifications#assertTextEquals" locator1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} commented on your post." />
+		<execute function="#assertTextEquals" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} commented on your post." />
 
 		<var name="key_row" value="3" />
 
-		<execute action="SONotifications#assertElementNotPresent" locator1="NOTIFICATIONS_ENTRY_INCREMENT" />
+		<execute function="#assertElementNotPresent" locator1="SONotifications#NOTIFICATIONS_ENTRY_INCREMENT" />
 	</command>
 
 	<command name="ViewNoBlogsEntryNotifications" priority="4">
@@ -4767,7 +4767,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SODashboard#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -4835,9 +4835,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -4915,7 +4915,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SODashboard#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -5111,7 +5111,7 @@
 
 		<execute macro="SOProfile#viewProfilePicture" />
 
-		<execute action="SOProfile#sikuliAssertElementPresent" locator1="SCREENSHOTS_PROFILE_PICTURE_EDIT_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="SOProfile#SCREENSHOTS_PROFILE_PICTURE_EDIT_PNG" />
 
 		<execute macro="SOContactsCenter#requestToConnect">
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
@@ -5147,9 +5147,9 @@
 
 		<execute macro="Notifications#navigateToViewAllNotifications" />
 
-		<execute action="SONotifications#sikuliAssertElementPresent" locator1="SCREENSHOTS_NOTIFICATIONS_PROFILE_PICTURE_PNG" />
-		<execute action="SONotifications#click" locator1="REQUESTS_LIST_LINK" />
-		<execute action="SONotifications#sikuliAssertElementPresent" locator1="SCREENSHOTS_NOTIFICATIONS_PROFILE_PICTURE_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="SONotifications#SCREENSHOTS_NOTIFICATIONS_PROFILE_PICTURE_PNG" />
+		<execute function="#click" locator1="SONotifications#REQUESTS_LIST_LINK" />
+		<execute function="#sikuliAssertElementPresent" locator1="SONotifications#SCREENSHOTS_NOTIFICATIONS_PROFILE_PICTURE_PNG" />
 	</command>
 
 	<command name="ViewNoWikiPageNotifications" priority="4">
@@ -5778,11 +5778,11 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#assertElementPresent" locator1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_COUNT" value1="0" />
-		<execute action="SOUserBar#click" locator1="NOTIFICATION" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${entryAuthor} sent a new announcement." />
-		<execute action="SOUserBar#assertElementNotPresent" locator1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
+		<execute function="#assertElementNotPresent" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -5902,7 +5902,7 @@
 
 		<execute macro="Notifications#gotoDockbar" />
 
-		<execute action="SONotifications#sikuliAssertElementPresent" locator1="SCREENSHOTS_NOTIFICATIONS_LONG_ANNOUNCEMENT_ENTRY_TITLE_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="SONotifications#SCREENSHOTS_NOTIFICATIONS_LONG_ANNOUNCEMENT_ENTRY_TITLE_PNG" />
 
 		<execute macro="SOAnnouncementsEntry#viewNotificationPG">
 			<var name="entryAuthor" value="${adminName}" />
@@ -6024,11 +6024,11 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#assertElementPresent" locator1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator1="NOTIFICATION_MENU_COUNT" value1="0" />
-		<execute action="SOUserBar#click" locator1="NOTIFICATION" />
+		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${entryAuthor} sent a new announcement." />
-		<execute action="SOUserBar#assertElementNotPresent" locator1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
+		<execute function="#assertElementNotPresent" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
 	</command>
 
 	<command name="ViewSOSiteAnnouncementsEntrySOUserNotification" priority="5">
@@ -6265,8 +6265,8 @@
 			<var name="contentBody" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute action="PGWiki#assertTextEquals" locator1="WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
-		<execute action="PGWiki#assertTextEquals" locator1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
+		<execute function="#assertTextEquals" locator1="PGWiki#WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+		<execute function="#assertTextEquals" locator1="PGWiki#WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 
 		<execute macro="Notifications#viewCount">
 			<var name="notificationCount" value="0" />
@@ -6317,8 +6317,8 @@
 			<var name="contentBody" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute action="PGWiki#assertTextEquals" locator1="WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
-		<execute action="PGWiki#assertTextEquals" locator1="WIKI_PAGE_BODY" value1="${wikiPageContentEdit}" />
+		<execute function="#assertTextEquals" locator1="PGWiki#WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+		<execute function="#assertTextEquals" locator1="PGWiki#WIKI_PAGE_BODY" value1="${wikiPageContentEdit}" />
 
 		<execute macro="Notifications#viewCount">
 			<var name="notificationCount" value="0" />

@@ -1,11 +1,11 @@
 <definition>
 	<command name="addPG">
-		<execute action="MobilePGBlogs#click" locator1="REORDER_ICON" />
-		<execute action="MobilePGBlogs#assertClick" locator1="ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
+		<execute function="#click" locator1="MobilePGBlogs#REORDER_ICON" />
+		<execute function="#assertClick" locator1="MobilePGBlogs#ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
 
-		<execute action="PGBlogsAdd#type" locator1="TITLE_FIELD" value1="${entryTitle}" />
-		<execute action="PGBlogsAdd#type" locator1="CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="PGBlogsAdd#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute function="#type" locator1="PGBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="#type" locator1="PGBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="#assertClick" locator1="PGBlogsAdd#PUBLISH_BUTTON" value1="Publish" />
 	</command>
 
 	<command name="tearDownCP">
@@ -13,14 +13,14 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute action="MobileCPBlogs#click" locator1="REORDER_ICON" />
+		<execute function="#click" locator1="MobileCPBlogs#REORDER_ICON" />
 
 		<if>
-			<condition action="MobileCPBlogs#isElementPresent" locator1="ENTRY_TABLE_ALL_CHECKBOX" />
+			<condition function="#isElementPresent" locator1="MobileCPBlogs#ENTRY_TABLE_ALL_CHECKBOX" />
 			<then>
-				<execute action="MobileCPBlogs#click" locator1="ENTRY_TABLE_ALL_CHECKBOX" />
-				<execute action="MobileCPBlogs#assertClick" locator1="RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
-				<execute action="MobileCPBlogs#assertTextEquals" locator1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
+				<execute function="#click" locator1="MobileCPBlogs#ENTRY_TABLE_ALL_CHECKBOX" />
+				<execute function="#assertClick" locator1="MobileCPBlogs#RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
+				<execute function="#assertTextEquals" locator1="MobileCPBlogs#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</if>
 	</command>

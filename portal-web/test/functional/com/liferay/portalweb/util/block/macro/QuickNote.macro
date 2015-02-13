@@ -1,10 +1,10 @@
 <definition>
 	<command name="addPG">
-		<execute action="Quicknote#assertTextEquals" locator1="NOTE_CONTENT" value1="Click to edit me..." />
-		<execute action="Quicknote#click" locator1="NOTE_CONTENT" />
-		<execute action="Quicknote#type" locator1="NOTE_CONTENT_TEXTAREA" value1="${noteContent}" />
-		<execute action="Quicknote#click" locator1="OK_BUTTON" />
+		<execute function="#assertTextEquals" locator1="Quicknote#NOTE_CONTENT" value1="Click to edit me..." />
+		<execute function="#click" locator1="Quicknote#NOTE_CONTENT" />
+		<execute function="#type" locator1="Quicknote#NOTE_CONTENT_TEXTAREA" value1="${noteContent}" />
+		<execute function="#click" locator1="Quicknote#OK_BUTTON" />
 
-		<execute action="Quicknote#assertTextEquals" locator1="NOTE_CONTENT" value1="${noteContent}" />
+		<execute function="#assertTextEquals" locator1="Quicknote#NOTE_CONTENT" value1="${noteContent}" />
 	</command>
 </definition>

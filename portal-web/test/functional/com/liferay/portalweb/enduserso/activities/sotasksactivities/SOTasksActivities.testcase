@@ -506,7 +506,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#sikuliAssertElementPresent" locator1="SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_NORMAL_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="SOActivities#SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_NORMAL_PNG" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -519,7 +519,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#sikuliAssertElementPresent" locator1="SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_NORMAL_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="SOActivities#SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_NORMAL_PNG" />
 
 		<execute macro="Page#gotoMyProfile" />
 
@@ -532,7 +532,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#sikuliAssertElementPresent" locator1="SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_NORMAL_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="SOActivities#SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_NORMAL_PNG" />
 	</command>
 
 	<command name="ViewTaskAssignedToMe100PercentComplete" priority="4">
@@ -1136,7 +1136,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#sikuliAssertElementPresent" locator1="SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_HIGH_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="SOActivities#SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_HIGH_PNG" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -1149,7 +1149,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#sikuliAssertElementPresent" locator1="SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_HIGH_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="SOActivities#SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_HIGH_PNG" />
 
 		<execute macro="Page#gotoMyProfile" />
 
@@ -1162,7 +1162,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#sikuliAssertElementPresent" locator1="SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_HIGH_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="SOActivities#SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_HIGH_PNG" />
 	</command>
 
 	<command name="ViewTaskAssignedToMePriorityLow" priority="4">
@@ -1218,7 +1218,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#sikuliAssertElementPresent" locator1="SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_LOW_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="SOActivities#SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_LOW_PNG" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -1231,7 +1231,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#sikuliAssertElementPresent" locator1="SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_LOW_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="SOActivities#SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_LOW_PNG" />
 
 		<execute macro="Page#gotoMyProfile" />
 
@@ -1244,7 +1244,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#sikuliAssertElementPresent" locator1="SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_LOW_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="SOActivities#SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_LOW_PNG" />
 	</command>
 
 	<command name="ViewTaskAssignedToMeReopened" priority="5">

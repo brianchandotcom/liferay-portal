@@ -2,28 +2,28 @@
 	<command name="deactivateAppCP">
 		<var name="key_appName" value="${appName}" />
 
-		<execute action="CPAppmanager#assertClick" locator1="APP_ACTIONS" value1="Actions" />
-		<execute action="CPAppmanager#assertClick" locator1="APP_ACTIONS_MENULIST_DEACTIVATE" value1="Deactivate" />
+		<execute function="#assertClick" locator1="CPAppmanager#APP_ACTIONS" value1="Actions" />
+		<execute function="#assertClick" locator1="CPAppmanager#APP_ACTIONS_MENULIST_DEACTIVATE" value1="Deactivate" />
 	</command>
 
 	<command name="uninstallAppCP">
 		<var name="key_appName" value="${appName}" />
 
-		<execute action="CPAppmanager#assertClick" locator1="APP_ACTIONS" value1="Actions" />
-		<execute action="CPAppmanager#assertClickNoError" locator1="APP_ACTIONS_MENULIST_UNINSTALL" value1="Uninstall" />
-		<execute action="CPAppmanager#confirm" locator1="CONFIRMATION" value1="Are you sure you want to uninstall this?" />
+		<execute function="#assertClick" locator1="CPAppmanager#APP_ACTIONS" value1="Actions" />
+		<execute function="#assertClickNoError" locator1="CPAppmanager#APP_ACTIONS_MENULIST_UNINSTALL" value1="Uninstall" />
+		<execute function="#confirm" locator1="CPAppmanager#CONFIRMATION" value1="Are you sure you want to uninstall this?" />
 		<execute function="#pause" locator1="15000" />
 	</command>
 
 	<command name="viewAppCP">
 		<var name="key_appName" value="${appName}" />
 
-		<execute action="CPAppmanager#assertTextEquals" locator1="APP_NAME" value1="${appName}" />
+		<execute function="#assertTextEquals" locator1="CPAppmanager#APP_NAME" value1="${appName}" />
 	</command>
 
 	<command name="viewUninstallAppCP">
 		<var name="key_appName" value="${appName}" />
 
-		<execute action="CPAppmanager#assertElementNotPresent" locator1="APP_NAME" value1="${appName}" />
+		<execute function="#assertElementNotPresent" locator1="CPAppmanager#APP_NAME" value1="${appName}" />
 	</command>
 </definition>

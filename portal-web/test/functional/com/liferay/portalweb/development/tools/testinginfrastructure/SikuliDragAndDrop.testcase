@@ -42,9 +42,9 @@
 			<var name="eventType" value="${eventType}" />
 		</execute>
 
-		<execute action="DragAndDrop#scrollWebElementIntoView" locator1="CALENDAR_EVENT" />
+		<execute function="#scrollWebElementIntoView" locator1="DragAndDrop#CALENDAR_EVENT" />
 
-		<execute action="SikuliDragAndDrop#sikuliDragAndDrop" locator1="CALENDAR_EVENT_IMAGE" value1="80,0" />
+		<execute function="#sikuliDragAndDrop" locator1="SikuliDragAndDrop#CALENDAR_EVENT_IMAGE" value1="80,0" />
 
 		<execute function="#pause" locator1="5000" />
 	</command>

@@ -767,7 +767,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertTextNotPresent" value1="${eventTitle}" />
 	</command>
 </definition>

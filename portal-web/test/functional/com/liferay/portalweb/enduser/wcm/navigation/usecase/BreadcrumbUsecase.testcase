@@ -250,9 +250,9 @@
 		</execute>
 
 		<var name="key_URL" value="http://localhost:8080" />
-		<execute action="PGBreadcrumb#assertElementNotPresent" locator1="BREADCRUMB_PAGE_LINK" />
+		<execute function="#assertElementNotPresent" locator1="PGBreadcrumb#BREADCRUMB_PAGE_LINK" />
 
 		<var name="key_URL" value="/web/guest" />
-		<execute action="PGBreadcrumb#assertTextEquals" locator1="BREADCRUMB_PAGE_LINK" value1="Liferay" />
+		<execute function="#assertTextEquals" locator1="PGBreadcrumb#BREADCRUMB_PAGE_LINK" value1="Liferay" />
 	</command>
 </definition>

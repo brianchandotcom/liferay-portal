@@ -87,19 +87,19 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute action="CPUsersandorganizations#assertClick" locator1="SEARCH_ALL_USERS" value1="All Users" />
+		<execute function="#assertClick" locator1="CPUsersandorganizations#SEARCH_ALL_USERS" value1="All Users" />
 
 		<var name="key_userScreenName" value="${adminScreenName}" />
 
-		<execute action="CPUsersandorganizationsViewusers#type" locator1="BASIC_SEARCH_FIELD" value1="${adminScreenName}" />
-		<execute action="CPUsersandorganizationsViewusers#assertClick" locator1="BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator1="USER_TABLE_SCREEN_NAME" value1="${adminScreenName}" />
-		<execute action="CPUsersandorganizationsViewusers#assertClick" locator1="USER_TABLE_SCREEN_NAME" value1="${adminScreenName}" />
+		<execute function="#type" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_FIELD" value1="${adminScreenName}" />
+		<execute function="#assertClick" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_SCREEN_NAME" value1="${adminScreenName}" />
+		<execute function="#assertClick" locator1="CPUsersandorganizationsViewusers#USER_TABLE_SCREEN_NAME" value1="${adminScreenName}" />
 
-		<execute action="CPUsersandorganizationsUser#type" locator1="DETAILS_FIRST_NAME_FIELD" value1="${adminFirstName}" />
-		<execute action="CPUsersandorganizationsUser#type" locator1="DETAILS_LAST_NAME_FIELD" value1="${adminLastName}" />
-		<execute action="CPUsersandorganizationsUser#assertClick" locator1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#type" locator1="CPUsersandorganizationsUser#DETAILS_FIRST_NAME_FIELD" value1="${adminFirstName}" />
+		<execute function="#type" locator1="CPUsersandorganizationsUser#DETAILS_LAST_NAME_FIELD" value1="${adminLastName}" />
+		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -203,9 +203,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator1="PROFILE_URL" />
+		<execute function="#open" locator1="SOProfile#PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute action="SOMicroblogsProfile#assertAlertNotPresent" />
 
@@ -224,20 +224,20 @@
 		<var name="key_userFirstName" value="${userFirstName1}" />
 		<var name="key_userName" value="${userName1}" />
 
-		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_COMMENT" value1="1 Comment" />
+		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
 
 		<var name="key_row" value="02" />
 		<var name="key_userName" value="${adminName}" />
 
-		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_COMMENT" value1="1 Comment" />
+		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
 		<execute action="SOActivities#assertAlertNotPresent" />
-		<execute action="SOActivities#assertClick" locator1="NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute action="SOActivities#assertAlertNotPresent" />
 
 		<var name="key_row" value="01" />
 		<var name="key_userName" value="${adminName}" />
 
-		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_COMMENT" value1="1 Comment" />
+		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -261,13 +261,13 @@
 		<var name="key_userFirstName" value="${userFirstName1}" />
 		<var name="key_userName" value="${userName1}" />
 
-		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_COMMENT" value1="1 Comment" />
+		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
 		<execute action="SOActivities#assertAlertNotPresent" />
 
 		<var name="key_row" value="02" />
 		<var name="key_userName" value="${adminName}" />
 
-		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_COMMENT" value1="1 Comment" />
+		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
 		<execute action="SOActivities#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
@@ -354,12 +354,12 @@
 
 		<var name="key_messageBody" value="${messageReplyBody}" />
 
-		<execute action="SOMessages#assertElementPresent" locator1="MESSAGE_UNREAD" />
-		<execute action="SOMessages#check" locator1="MESSAGE_CHECKBOX" />
-		<execute action="SOMessages#assertClickNoError" locator1="MARK_AS_READ_BUTTON" value1="Mark as Read" />
-		<execute action="SOMessages#confirm" locator1="CONFIRMATION" value1="Are you sure you want to mark the selected messages as read?" />
+		<execute function="#assertElementPresent" locator1="SOMessages#MESSAGE_UNREAD" />
+		<execute function="#check" locator1="SOMessages#MESSAGE_CHECKBOX" />
+		<execute function="#assertClickNoError" locator1="SOMessages#MARK_AS_READ_BUTTON" value1="Mark as Read" />
+		<execute function="#confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to mark the selected messages as read?" />
 		<execute function="#pause" locator1="1000" />
-		<execute action="SOMessages#assertElementNotPresent" locator1="MESSAGE_UNREAD" />
+		<execute function="#assertElementNotPresent" locator1="SOMessages#MESSAGE_UNREAD" />
 
 		<execute macro="SOMessages#viewMessageNotification">
 			<var name="messageBody" value="${messageReplyBody}" />
@@ -373,10 +373,10 @@
 
 		<execute action="SOMessages#assertAlertNotPresent" />
 
-		<execute action="SOMessages#check" locator1="MESSAGE_CHECKBOX" />
-		<execute action="SOMessages#assertClickNoError" locator1="DELETE_BUTTON" value1="Delete" />
-		<execute action="SOMessages#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
-		<execute action="SOMessages#assertTextEquals" locator1="INFO_MESSAGE" value1="No messages found." />
+		<execute function="#check" locator1="SOMessages#MESSAGE_CHECKBOX" />
+		<execute function="#assertClickNoError" locator1="SOMessages#DELETE_BUTTON" value1="Delete" />
+		<execute function="#confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
+		<execute function="#assertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="My Documents" />
@@ -397,7 +397,7 @@
 
 		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="BREADCRUMB_HOME" value1="Home" />
+		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_HOME" value1="Home" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
@@ -448,7 +448,7 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
+		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="commentBody" value="${commentBody}" />
@@ -569,8 +569,8 @@
 		</execute>
 
 		<execute action="SOUserBar#assertAlertNotPresent" />
-		<execute action="SOUserBar#click" locator1="NOTIFICATION" />
-		<execute action="SOUserBar#click" locator1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" />
 		<execute action="SOUserBar#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
@@ -610,8 +610,8 @@
 		</execute>
 
 		<execute action="SOUserBar#assertAlertNotPresent" />
-		<execute action="SOUserBar#click" locator1="NOTIFICATION" />
-		<execute action="SOUserBar#click" locator1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="#click" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" />
 		<execute action="SOUserBar#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
@@ -643,20 +643,20 @@
 		<var name="key_userFirstName" value="${userFirstName1}" />
 		<var name="key_userName" value="${userName1}" />
 
-		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_COMMENT" value1="1 Comment" />
+		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
 		<execute action="SOActivities#assertAlertNotPresent" />
 
 		<var name="key_row" value="02" />
 		<var name="key_userName" value="${adminName}" />
 
-		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_COMMENT" value1="1 Comment" />
-		<execute action="SOActivities#assertClick" locator1="NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
+		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute action="SOActivities#assertAlertNotPresent" />
 
 		<var name="key_row" value="01" />
 		<var name="key_userName" value="${adminName}" />
 
-		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_COMMENT" value1="1 Comment" />
+		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
 		<execute action="SOActivities#assertAlertNotPresent" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription}" />
@@ -666,9 +666,9 @@
 		<execute action="SOActivities#assertTextNotPresent" value1="${taskDescription1}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${taskDescription2}" />
 
-		<execute action="SOActivities#assertClick" locator1="NAVIGATION_FOLLOWING" value1="Following" />
+		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
 		<execute action="SOActivities#assertAlertNotPresent" />
-		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
@@ -682,18 +682,18 @@
 		<var name="key_row" value="01" />
 		<var name="key_userName" value="${adminName}" />
 
-		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_COMMENT" value1="1 Comment" />
+		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
 		<execute action="SOActivities#assertAlertNotPresent" />
-		<execute action="SOActivities#assertClick" locator1="NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute action="SOActivities#assertAlertNotPresent" />
-		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#assertClick" locator1="NAVIGATION_FOLLOWING" value1="Following" />
+		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
 		<execute action="SOActivities#assertAlertNotPresent" />
 
 		<var name="key_row" value="01" />
 		<var name="key_userName" value="${adminName}" />
 
-		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_COMMENT" value1="1 Comment" />
+		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
 		<execute action="SOActivities#assertAlertNotPresent" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription}" />
@@ -712,7 +712,7 @@
 
 		<execute action="SOActivities#assertAlertNotPresent" />
 
-		<execute action="SOActivities#assertClick" locator1="NAVIGATION_ME" value1="Me" />
+		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_ME" value1="Me" />
 		<execute action="SOActivities#assertAlertNotPresent" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
@@ -721,13 +721,13 @@
 		<var name="key_userFirstName" value="${userFirstName1}" />
 		<var name="key_userName" value="${userName1}" />
 
-		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_COMMENT" value1="1 Comment" />
+		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
 		<execute action="SOActivities#assertAlertNotPresent" />
 
 		<var name="key_row" value="02" />
 		<var name="key_userName" value="${adminName}" />
 
-		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_COMMENT" value1="1 Comment" />
+		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
 		<execute action="SOActivities#assertAlertNotPresent" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription}" />
@@ -758,12 +758,12 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertAlertNotPresent" />
-		<execute action="SOActivities#assertClick" locator1="NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute action="SOActivities#assertAlertNotPresent" />
-		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#assertClick" locator1="NAVIGATION_FOLLOWING" value1="Following" />
+		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
 		<execute action="SOActivities#assertAlertNotPresent" />
-		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
@@ -773,12 +773,12 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertAlertNotPresent" />
-		<execute action="SOActivities#assertClick" locator1="NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute action="SOActivities#assertAlertNotPresent" />
-		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#assertClick" locator1="NAVIGATION_FOLLOWING" value1="Following" />
+		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
 		<execute action="SOActivities#assertAlertNotPresent" />
-		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 	</command>
 
 	<command name="ProfileXSSDemo" priority="4">
@@ -825,19 +825,19 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute action="CPUsersandorganizations#assertClick" locator1="SEARCH_ALL_USERS" value1="All Users" />
+		<execute function="#assertClick" locator1="CPUsersandorganizations#SEARCH_ALL_USERS" value1="All Users" />
 
 		<var name="key_userScreenName" value="${adminScreenName}" />
 
-		<execute action="CPUsersandorganizationsViewusers#type" locator1="BASIC_SEARCH_FIELD" value1="${adminScreenName}" />
-		<execute action="CPUsersandorganizationsViewusers#assertClick" locator1="BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator1="USER_TABLE_SCREEN_NAME" value1="${adminScreenName}" />
-		<execute action="CPUsersandorganizationsViewusers#assertClick" locator1="USER_TABLE_SCREEN_NAME" value1="${adminScreenName}" />
+		<execute function="#type" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_FIELD" value1="${adminScreenName}" />
+		<execute function="#assertClick" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_SCREEN_NAME" value1="${adminScreenName}" />
+		<execute function="#assertClick" locator1="CPUsersandorganizationsViewusers#USER_TABLE_SCREEN_NAME" value1="${adminScreenName}" />
 
-		<execute action="CPUsersandorganizationsUser#type" locator1="DETAILS_FIRST_NAME_FIELD" value1="${adminFirstName}" />
-		<execute action="CPUsersandorganizationsUser#type" locator1="DETAILS_LAST_NAME_FIELD" value1="${adminLastName}" />
-		<execute action="CPUsersandorganizationsUser#assertClick" locator1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#type" locator1="CPUsersandorganizationsUser#DETAILS_FIRST_NAME_FIELD" value1="${adminFirstName}" />
+		<execute function="#type" locator1="CPUsersandorganizationsUser#DETAILS_LAST_NAME_FIELD" value1="${adminLastName}" />
+		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -946,16 +946,16 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="Dockbar#click" locator1="USER_NAME" />
-		<execute action="Dockbar#click" locator1="USER_MY_PROFILE" value1="My Profile" />
+		<execute function="#click" locator1="Dockbar#USER_NAME" />
+		<execute function="#click" locator1="Dockbar#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute action="SOProfile#assertAlertNotPresent" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
 		<execute action="SOProfile#assertAlertNotPresent" />
 
-		<execute action="SOProfile#click" locator1="NAVIGATION_CONTACTS" />
+		<execute function="#click" locator1="SOProfile#NAVIGATION_CONTACTS" />
 
 		<execute action="SOProfile#assertAlertNotPresent" />
 	</command>
@@ -1015,19 +1015,19 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute action="CPUsersandorganizations#assertClick" locator1="SEARCH_ALL_USERS" value1="All Users" />
+		<execute function="#assertClick" locator1="CPUsersandorganizations#SEARCH_ALL_USERS" value1="All Users" />
 
 		<var name="key_userScreenName" value="${adminScreenName}" />
 
-		<execute action="CPUsersandorganizationsViewusers#type" locator1="BASIC_SEARCH_FIELD" value1="${adminScreenName}" />
-		<execute action="CPUsersandorganizationsViewusers#assertClick" locator1="BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator1="USER_TABLE_SCREEN_NAME" value1="${adminScreenName}" />
-		<execute action="CPUsersandorganizationsViewusers#assertClick" locator1="USER_TABLE_SCREEN_NAME" value1="${adminScreenName}" />
+		<execute function="#type" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_FIELD" value1="${adminScreenName}" />
+		<execute function="#assertClick" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_SCREEN_NAME" value1="${adminScreenName}" />
+		<execute function="#assertClick" locator1="CPUsersandorganizationsViewusers#USER_TABLE_SCREEN_NAME" value1="${adminScreenName}" />
 
-		<execute action="CPUsersandorganizationsUser#type" locator1="DETAILS_FIRST_NAME_FIELD" value1="${adminFirstName}" />
-		<execute action="CPUsersandorganizationsUser#type" locator1="DETAILS_LAST_NAME_FIELD" value1="${adminLastName}" />
-		<execute action="CPUsersandorganizationsUser#assertClick" locator1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#type" locator1="CPUsersandorganizationsUser#DETAILS_FIRST_NAME_FIELD" value1="${adminFirstName}" />
+		<execute function="#type" locator1="CPUsersandorganizationsUser#DETAILS_LAST_NAME_FIELD" value1="${adminLastName}" />
+		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute macro="SOUser#addUserWithSORole">
 			<var name="userEmailAddress" value="${userEmailAddress1}" />
@@ -1111,7 +1111,7 @@
 
 		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="BREADCRUMB_HOME" value1="Home" />
+		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_HOME" value1="Home" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
@@ -1144,7 +1144,7 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
+		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentAuthor" value="${adminName}" />

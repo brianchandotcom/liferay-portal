@@ -12,7 +12,7 @@
 		<while>
 			<not>
 				<or>
-					<condition action="Home#isElementPresent" locator1="${portletTypeKey}" />
+					<condition function="#isElementPresent" locator1="Home#${portletTypeKey}" />
 					<equals arg1="${i}" arg2="3" />
 				</or>
 			</not>
@@ -29,23 +29,23 @@
 			</then>
 		</while>
 
-		<execute action="MobiledockbarAddpanelapplications#assertTextEquals" locator1="PORTLET_ADDED_SUCCESS_MESSAGE" value1="${portletName} Added Skip to Content" />
+		<execute function="#assertTextEquals" locator1="MobiledockbarAddpanelapplications#PORTLET_ADDED_SUCCESS_MESSAGE" value1="${portletName} Added Skip to Content" />
 		<execute function="#pause" locator1="4000" />
-		<execute action="MobiledockbarAddpanelapplications#assertNotVisible" locator1="PORTLET_ADDED_SUCCESS_MESSAGE" />
-		<execute action="MobiledockbarAddpanelapplications#click" locator1="CLOSE_BUTTON" />
+		<execute function="#assertNotVisible" locator1="MobiledockbarAddpanelapplications#PORTLET_ADDED_SUCCESS_MESSAGE" />
+		<execute function="#click" locator1="MobiledockbarAddpanelapplications#CLOSE_BUTTON" />
 
-		<execute action="Home#assertElementPresent" locator1="${portletTypeKey}" />
+		<execute function="#assertElementPresent" locator1="Home#${portletTypeKey}" />
 	</command>
 
 	<command name="addPGCmd">
 		<description message="Add a ${portletName} portlet." />
 
-		<execute action="Mobiledockbar#click" locator1="PENCIL_ICON" />
-		<execute action="Mobiledockbar#assertClick" locator1="ADD" value1="Add" />
+		<execute function="#click" locator1="Mobiledockbar#PENCIL_ICON" />
+		<execute function="#assertClick" locator1="Mobiledockbar#ADD" value1="Add" />
 
-		<execute action="MobiledockbarAddpanelcontent#assertClick" locator1="NAVIGATION_APPLICATIONS" value1="Applications" />
+		<execute function="#assertClick" locator1="MobiledockbarAddpanelcontent#NAVIGATION_APPLICATIONS" value1="Applications" />
 
-		<execute action="MobiledockbarAddpanelapplications#type" locator1="SEARCH_FIELD" value1="${portletName}" />
+		<execute function="#type" locator1="MobiledockbarAddpanelapplications#SEARCH_FIELD" value1="${portletName}" />
 
 		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
 

@@ -337,7 +337,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOEvents#assertTextEquals" locator1="EVENTS_DISPLAY_NO_EVENTS" value1="There are no more events today." />
+		<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS" value1="There are no more events today." />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName2}" />
@@ -819,8 +819,8 @@
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 
-		<execute action="PGCalendar#assertClick" locator1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
-		<execute action="PGCalendar#assertClick" locator1="SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON" value1="View Details" />
+		<execute function="#assertClick" locator1="PGCalendar#SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
+		<execute function="#assertClick" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON" value1="View Details" />
 
 		<execute action="PGCalendarVieweventdetails#assertTextNotPresent" value1="${eventComment}" />
 	</command>
@@ -958,7 +958,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOEvents#assertTextEquals" locator1="EVENTS_DISPLAY_NO_EVENTS" value1="There are no more events today." />
+		<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS" value1="There are no more events today." />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName2}" />
@@ -1712,9 +1712,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOEvents#assertTextEquals" locator1="EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
-		<execute action="SOEvents#assertElementNotPresent" locator1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
-		<execute action="SOEvents#assertElementNotPresent" locator1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
+		<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
+		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
+		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
 		<execute action="SOEvents#assertTextNotPresent" value1="${eventTitle}" />
 
 		<execute macro="Page#gotoPG">
@@ -1744,7 +1744,7 @@
 			<var name="viewType" value="Agenda" />
 		</execute>
 
-		<execute action="PGCalendarAgendaView#assertTextEquals" locator1="EMPTY_MESSAGE" value1="No events." />
+		<execute function="#assertTextEquals" locator1="PGCalendarAgendaView#EMPTY_MESSAGE" value1="No events." />
 		<execute action="PGCalendarAgendaView#assertTextNotPresent" value1="${eventTitle}" />
 	</command>
 

@@ -1,13 +1,13 @@
 <definition>
 	<command name="convertPG">
-		<execute action="Currencyconverter#assertTextEquals" locator1="INFO_MESSAGE" value1="Please select a currency." />
-		<execute action="Currencyconverter#type" locator1="CURRENCY_CONVERTER_NUMBER_FIELD" value1="${currencyValue}" />
-		<execute action="Currencyconverter#select" locator1="CURRENCY_CONVERTER_FROM_SELECT" value1="${currencyFrom}" />
-		<execute action="Currencyconverter#select" locator1="CURRENCY_CONVERTER_TO_SELECT" value1="${currencyTo}" />
-		<execute action="Currencyconverter#assertClick" locator1="CONVERT_BUTTON" value1="Convert" />
+		<execute function="#assertTextEquals" locator1="Currencyconverter#INFO_MESSAGE" value1="Please select a currency." />
+		<execute function="#type" locator1="Currencyconverter#CURRENCY_CONVERTER_NUMBER_FIELD" value1="${currencyValue}" />
+		<execute function="#select" locator1="Currencyconverter#CURRENCY_CONVERTER_FROM_SELECT" value1="${currencyFrom}" />
+		<execute function="#select" locator1="Currencyconverter#CURRENCY_CONVERTER_TO_SELECT" value1="${currencyTo}" />
+		<execute function="#assertClick" locator1="Currencyconverter#CONVERT_BUTTON" value1="Convert" />
 
-		<execute action="Currencyconverter#assertTextEquals" locator1="CURRENCY_DATA_TABLE_FROM" value1="${currencyDataFrom}" />
-		<execute action="Currencyconverter#assertTextEquals" locator1="CURRENCY_DATA_TABLE_TO" value1="${currencyDataTo}" />
-		<execute action="Currencyconverter#assertElementPresent" locator1="CURRENCY_DATA_GRAPH" />
+		<execute function="#assertTextEquals" locator1="Currencyconverter#CURRENCY_DATA_TABLE_FROM" value1="${currencyDataFrom}" />
+		<execute function="#assertTextEquals" locator1="Currencyconverter#CURRENCY_DATA_TABLE_TO" value1="${currencyDataTo}" />
+		<execute function="#assertElementPresent" locator1="Currencyconverter#CURRENCY_DATA_GRAPH" />
 	</command>
 </definition>

@@ -4155,7 +4155,7 @@
 		</execute>
 
 		<execute function="#assertClick" locator1="//div[@id='_167_ocerSearchContainer']//tr/td[1]/a" value1="${ddlRecordFieldData}" />
-		<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator1="FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsListRecord#FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 	</command>
 
 	<command name="ViewNoDuplicatesInOriginalAfterCopy" priority="5">

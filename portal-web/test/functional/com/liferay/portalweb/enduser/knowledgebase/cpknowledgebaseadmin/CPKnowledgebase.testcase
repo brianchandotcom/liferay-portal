@@ -223,7 +223,7 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute action="CPKnowledgebaseadminArticle#assertTextNotEquals" locator1="CONTENT" value1="${kbArticleContentSource}" />
+		<execute function="#assertTextNotEquals" locator1="CPKnowledgebaseadminArticle#CONTENT" value1="${kbArticleContentSource}" />
 	</command>
 
 	<command name="AddTemplateCP" priority="5">

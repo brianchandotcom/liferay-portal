@@ -1,23 +1,23 @@
 <definition>
 	<command name="addCP">
-		<execute action="CPKnowledgebaseadmin#assertClick" locator1="NAVIGATION_TEMPLATES" value1="Templates" />
+		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#NAVIGATION_TEMPLATES" value1="Templates" />
 
-		<execute action="CPKnowledgebaseadminTemplates#assertClick" locator1="ADD_TEMPLATE_BUTTON" value1="Add Template" />
+		<execute function="#assertClick" locator1="CPKnowledgebaseadminTemplates#ADD_TEMPLATE_BUTTON" value1="Add Template" />
 
-		<execute action="CPKnowledgebaseadminAddtemplate#type" locator1="TITLE_FIELD" value1="${kbTemplateTitle}" />
-		<execute action="CPKnowledgebaseadminAddtemplate#type" locator1="CONTENT_FIELD" value1="${kbTemplateContent}" />
-		<execute action="CPKnowledgebaseadminAddtemplate#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute function="#type" locator1="CPKnowledgebaseadminAddtemplate#TITLE_FIELD" value1="${kbTemplateTitle}" />
+		<execute function="#type" locator1="CPKnowledgebaseadminAddtemplate#CONTENT_FIELD" value1="${kbTemplateContent}" />
+		<execute function="#assertClick" locator1="CPKnowledgebaseadminAddtemplate#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="CPKnowledgebaseadminTemplates#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminTemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="gotoCP">
-		<execute action="CPKnowledgebaseadmin#assertClick" locator1="NAVIGATION_TEMPLATES" value1="Templates" />
+		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#NAVIGATION_TEMPLATES" value1="Templates" />
 
 		<var name="key_kbTemplateTitle" value="${kbTemplateTitle}" />
 
-		<execute action="CPKnowledgebaseadminTemplates#click" locator1="TEMPLATE_TABLE_ACTIONS" />
-		<execute action="CPKnowledgebaseadminTemplates#assertClick" locator1="ACTIONS_MENULIST_VIEW" value1="View" />
+		<execute function="#click" locator1="CPKnowledgebaseadminTemplates#TEMPLATE_TABLE_ACTIONS" />
+		<execute function="#assertClick" locator1="CPKnowledgebaseadminTemplates#ACTIONS_MENULIST_VIEW" value1="View" />
 	</command>
 
 	<command name="tearDownCP">
@@ -25,15 +25,15 @@
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
-		<execute action="CPKnowledgebaseadmin#assertClick" locator1="NAVIGATION_TEMPLATES" value1="Templates" />
+		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#NAVIGATION_TEMPLATES" value1="Templates" />
 
 		<if>
-			<condition action="CPKnowledgebaseadminTemplates#isElementPresent" locator1="TEMPLATE_TABLE_CHECKBOX_ALL" />
+			<condition function="#isElementPresent" locator1="CPKnowledgebaseadminTemplates#TEMPLATE_TABLE_CHECKBOX_ALL" />
 			<then>
-				<execute action="CPKnowledgebaseadminTemplates#check" locator1="TEMPLATE_TABLE_CHECKBOX_ALL" />
-				<execute action="CPKnowledgebaseadminTemplates#assertClick" locator1="DELETE_BUTTON" value1="Delete" />
-				<execute action="CPKnowledgebaseadminTemplates#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete the selected templates?" />
-				<execute action="CPKnowledgebaseadminTemplates#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="#check" locator1="CPKnowledgebaseadminTemplates#TEMPLATE_TABLE_CHECKBOX_ALL" />
+				<execute function="#assertClick" locator1="CPKnowledgebaseadminTemplates#DELETE_BUTTON" value1="Delete" />
+				<execute function="#confirm" locator1="CPKnowledgebaseadminTemplates#CONFIRMATION" value1="Are you sure you want to delete the selected templates?" />
+				<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminTemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</if>
 	</command>
@@ -43,17 +43,17 @@
 			<var name="key_kbTemplateTitle" value="${kbTemplateTitle}" />
 		</execute>
 
-		<execute action="CPKnowledgebaseadminTemplate#assertTextEquals" locator1="TEMPLATE_TITLE" value1="${kbTemplateTitle}" />
-		<execute action="CPKnowledgebaseadminTemplate#assertTextEquals" locator1="TEMPLATE_CONTENT" value1="${kbTemplateContent}" />
+		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminTemplate#TEMPLATE_TITLE" value1="${kbTemplateTitle}" />
+		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminTemplate#TEMPLATE_CONTENT" value1="${kbTemplateContent}" />
 	</command>
 
 	<command name="viewCPViaAddTemplate">
-		<execute action="CPKnowledgebaseadmin#assertClick" locator1="ADD_BUTTON" value1="Add" />
-		<execute action="CPKnowledgebaseadmin#assertClick" locator1="ADD_MENULIST_TEMPLATE" value1="${kbTemplateTitle}" />
+		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ADD_BUTTON" value1="Add" />
+		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ADD_MENULIST_TEMPLATE" value1="${kbTemplateTitle}" />
 
-		<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator1="TITLE_FIELD" value1="" />
+		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD" value1="" />
 
-		<execute action="CPKnowledgebaseadminAddarticle#selectFrame" locator1="CONTENT_FIELD" />
-		<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator1="CONTENT_BODY" value1="${kbTemplateContent}" />
+		<execute function="#selectFrame" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" />
+		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminAddarticle#CONTENT_BODY" value1="${kbTemplateContent}" />
 	</command>
 </definition>

@@ -14,15 +14,15 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute action="Home#assertElementNotPresent" locator1="ERROR_MESSAGE_EXPIRED_SESSION" />
+		<execute function="#assertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
 
-		<execute action="PGLogin#assertElementNotPresent" locator1="SIGN_IN_BUTTON" />
+		<execute function="#assertElementNotPresent" locator1="PGLogin#SIGN_IN_BUTTON" />
 
 		<execute function="#pause" locator1="60000" />
-		<execute action="Home#assertTextEquals" locator1="ERROR_MESSAGE_EXPIRED_SESSION" value1="Warning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+		<execute function="#assertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="Warning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
 		<execute action="Home#refresh" />
 
-		<execute action="PGLogin#assertElementPresent" locator1="SIGN_IN_BUTTON" value1="Sign In" />
+		<execute function="#assertElementPresent" locator1="PGLogin#SIGN_IN_BUTTON" value1="Sign In" />
 
 		<execute macro="User#loginPG">
 			<var name="rememberMeChecked" value="true" />
@@ -31,24 +31,24 @@
 		<execute macro="Page#openURL" />
 
 		<execute function="#pause" locator1="60000" />
-		<execute action="Home#assertElementNotPresent" locator1="ERROR_MESSAGE_EXPIRED_SESSION" />
+		<execute function="#assertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
 		<execute action="Home#refresh" />
 
-		<execute action="Dockbar#assertTextEquals" locator1="USER_NAME" value1="Test Test" />
+		<execute function="#assertTextEquals" locator1="Dockbar#USER_NAME" value1="Test Test" />
 
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG" />
 
 		<execute macro="Page#openURL" />
 
-		<execute action="Home#assertElementNotPresent" locator1="ERROR_MESSAGE_EXPIRED_SESSION" />
+		<execute function="#assertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
 
-		<execute action="PGLogin#assertElementNotPresent" locator1="SIGN_IN_BUTTON" />
+		<execute function="#assertElementNotPresent" locator1="PGLogin#SIGN_IN_BUTTON" />
 
 		<execute function="#pause" locator1="60000" />
-		<execute action="Home#assertTextEquals" locator1="ERROR_MESSAGE_EXPIRED_SESSION" value1="Warning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+		<execute function="#assertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="Warning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
 		<execute action="Home#refresh" />
 
-		<execute action="PGLogin#assertElementPresent" locator1="SIGN_IN_BUTTON" value1="Sign In" />
+		<execute function="#assertElementPresent" locator1="PGLogin#SIGN_IN_BUTTON" value1="Sign In" />
 	</command>
 </definition>

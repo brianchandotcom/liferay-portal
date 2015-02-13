@@ -2,39 +2,39 @@
 	<command name="addCP">
 		<var name="key_webContentTitle" value="${folderName}" />
 
-		<execute action="CPWebcontent#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
-		<execute action="CPWebcontent#assertClick" locator1="ADD_MENULIST_FOLDER" value1="Folder" />
+		<execute function="#assertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
+		<execute function="#assertClick" locator1="CPWebcontent#ADD_MENULIST_FOLDER" value1="Folder" />
 
-		<execute action="CPWebcontentAddfolder#type" locator1="NAME_FIELD" value1="${folderName}" />
-		<execute action="CPWebcontentAddfolder#type" locator1="DESCRIPTION_FIELD" value1="${folderDescription}" />
-		<execute action="CPWebcontentAddfolder#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute function="#type" locator1="CPWebcontentAddfolder#NAME_FIELD" value1="${folderName}" />
+		<execute function="#type" locator1="CPWebcontentAddfolder#DESCRIPTION_FIELD" value1="${folderDescription}" />
+		<execute function="#assertClick" locator1="CPWebcontentAddfolder#SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPWebcontent#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPWebcontent#click" locator1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute action="CPWebcontent#assertClick" locator1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute action="CPWebcontent#assertElementPresent" locator1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
-		<execute action="CPWebcontent#assertTextEquals" locator1="ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
+		<execute function="#assertTextEquals" locator1="CPWebcontent#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute function="#assertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute function="#assertElementPresent" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_THUMBNAIL" />
+		<execute function="#assertTextEquals" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
 	</command>
 
 	<command name="addSubfolderCP">
 		<var name="key_webContentTitle" value="${folderName}" />
 
-		<execute action="CPWebcontent#click" locator1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute action="CPWebcontent#assertClick" locator1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute action="CPWebcontent#click" locator1="ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
-		<execute action="CPWebcontent#assertTextEquals" locator1="FILTER_SELECTED" value1="${folderName}" />
-		<execute action="CPWebcontent#click" locator1="TOOLBAR_ADD" />
-		<execute action="CPWebcontent#click" locator1="ADD_MENULIST_SUBFOLDER" value1="Subfolder" />
+		<execute function="#click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute function="#assertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute function="#click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
+		<execute function="#assertTextEquals" locator1="CPWebcontent#FILTER_SELECTED" value1="${folderName}" />
+		<execute function="#click" locator1="CPWebcontent#TOOLBAR_ADD" />
+		<execute function="#click" locator1="CPWebcontent#ADD_MENULIST_SUBFOLDER" value1="Subfolder" />
 
-		<execute action="CPWebcontentAddfolder#type" locator1="NAME_FIELD" value1="${subfolderName}" />
-		<execute action="CPWebcontentAddfolder#type" locator1="DESCRIPTION_FIELD" value1="${subfolderDescription}" />
-		<execute action="CPWebcontentAddfolder#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute function="#type" locator1="CPWebcontentAddfolder#NAME_FIELD" value1="${subfolderName}" />
+		<execute function="#type" locator1="CPWebcontentAddfolder#DESCRIPTION_FIELD" value1="${subfolderDescription}" />
+		<execute function="#assertClick" locator1="CPWebcontentAddfolder#SAVE_BUTTON" value1="Save" />
 
 		<var name="key_webContentTitle" value="${subfolderName}" />
 
-		<execute action="CPWebcontent#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPWebcontent#assertElementPresent" locator1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
-		<execute action="CPWebcontent#assertTextEquals" locator1="ENTRY_DESCRIPTIVE_TITLE" value1="${subfolderName}" />
+		<execute function="#assertTextEquals" locator1="CPWebcontent#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertElementPresent" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_THUMBNAIL" />
+		<execute function="#assertTextEquals" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${subfolderName}" />
 	</command>
 
 	<command name="configureWorkflowCP">
@@ -46,68 +46,68 @@
 		<if>
 			<equals arg1="${workflowRestriction}" arg2="Parent Folder" />
 			<then>
-				<execute action="CPWebcontentEditfolder#click" locator1="WORKFLOW_PARENT_FOLDER_RADIO" />
+				<execute function="#click" locator1="CPWebcontentEditfolder#WORKFLOW_PARENT_FOLDER_RADIO" />
 			</then>
 			<elseif>
 				<equals arg1="${workflowRestriction}" arg2="Specific Restrictions" />
 				<then>
-					<execute action="CPWebcontentEditfolder#click" locator1="WORKFLOW_SPECIFIC_RESTRICTIONS_RADIO" />
-					<execute action="CPWebcontentEditfolder#assertClick" locator1="WORKFLOW_SPECIFIC_RESTRICTIONS_CHOOSE_STRUCTURE_BUTTON" value1="Choose Structure" />
+					<execute function="#click" locator1="CPWebcontentEditfolder#WORKFLOW_SPECIFIC_RESTRICTIONS_RADIO" />
+					<execute function="#assertClick" locator1="CPWebcontentEditfolder#WORKFLOW_SPECIFIC_RESTRICTIONS_CHOOSE_STRUCTURE_BUTTON" value1="Choose Structure" />
 
 					<execute action="CPWebcontentStructuresAddstructure#selectFrame" value1="relative=top" />
 
-					<execute action="CPWebcontentStructuresAddStructureChoosestructure#selectFrame" locator1="STRUCTURE_IFRAME" />
+					<execute function="#selectFrame" locator1="CPWebcontentStructuresAddStructureChoosestructure#STRUCTURE_IFRAME" />
 
 					<var name="key_structureName" value="${structureName}" />
 
-					<execute action="CPWebcontentStructuresAddStructureChoosestructure#assertClick" locator1="STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+					<execute function="#assertClick" locator1="CPWebcontentStructuresAddStructureChoosestructure#STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
-					<execute action="CPWebcontentEditfolder#select" locator1="WORKFLOW_SPECIFIC_RESTRICTIONS_STRUCTURE_WORKFLOW_SELECT" value1="${workflowDefinition}" />
+					<execute function="#select" locator1="CPWebcontentEditfolder#WORKFLOW_SPECIFIC_RESTRICTIONS_STRUCTURE_WORKFLOW_SELECT" value1="${workflowDefinition}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${workflowRestriction}" arg2="Default Workflow" />
 				<then>
-					<execute action="CPWebcontentEditfolder#click" locator1="WORKFLOW_DEFAULT_WORKFLOW_RADIO" />
-					<execute action="CPWebcontentEditfolder#select" locator1="WORKFLOW_DEFAULT_WORKFLOW_WORKFLOW_SELECT" value1="${workflowDefinition}" />
+					<execute function="#click" locator1="CPWebcontentEditfolder#WORKFLOW_DEFAULT_WORKFLOW_RADIO" />
+					<execute function="#select" locator1="CPWebcontentEditfolder#WORKFLOW_DEFAULT_WORKFLOW_WORKFLOW_SELECT" value1="${workflowDefinition}" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute action="CPWebcontentEditfolder#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute function="#assertClick" locator1="CPWebcontentEditfolder#SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPWebcontent#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertTextEquals" locator1="CPWebcontent#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="gotoCP">
-		<execute action="CPWebcontent#click" locator1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute action="CPWebcontent#assertClick" locator1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute function="#click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute function="#assertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute action="CPWebcontent#assertTextEquals" locator1="ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
-		<execute action="CPWebcontent#assertClick" locator1="ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
+		<execute function="#assertTextEquals" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
+		<execute function="#assertClick" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
 	</command>
 
 	<command name="gotoEditCP">
 		<var name="key_webContentTitle" value="${folderName}" />
 
-		<execute action="CPWebcontent#click" locator1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute action="CPWebcontent#assertClick" locator1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute action="CPWebcontent#assertTextEquals" locator1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
-		<execute action="CPWebcontent#click" locator1="ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
-		<execute action="CPWebcontent#assertClick" locator1="ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="#click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute function="#assertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute function="#assertTextEquals" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute function="#click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
+		<execute function="#assertClick" locator1="CPWebcontent#ENTRY_MENULIST_EDIT" value1="Edit" />
 	</command>
 
 	<command name="moveToRecycleBinCP">
-		<execute action="CPWebcontent#click" locator1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute action="CPWebcontent#assertClick" locator1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute function="#click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute function="#assertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
 
 		<var name="key_webContentTitle" value="${folderName}" />
 
-		<execute action="CPWebcontent#assertTextEquals" locator1="ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
-		<execute action="CPWebcontent#click" locator1="ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
-		<execute action="CPWebcontent#assertClick" locator1="ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute action="CPWebcontent#assertTextEquals" locator1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Web Content Folder ${folderName} was moved to the Recycle Bin. Undo" />
+		<execute function="#assertTextEquals" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
+		<execute function="#click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
+		<execute function="#assertClick" locator1="CPWebcontent#ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="#assertTextEquals" locator1="CPWebcontent#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Web Content Folder ${folderName} was moved to the Recycle Bin. Undo" />
 	</command>
 </definition>

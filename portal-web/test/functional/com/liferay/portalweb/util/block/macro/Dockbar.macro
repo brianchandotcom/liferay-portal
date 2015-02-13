@@ -3,7 +3,7 @@
 		<if>
 			<condition function="#isElementNotPresent" locator1="//div[@id='_145_${fieldLabel}Content']" value1="${fieldName}" />
 			<then>
-				<execute action="DockbarEditpanel#assertClick" locator1="${fieldKey}" value1="${fieldName}" />
+				<execute function="#assertClick" locator1="DockbarEditpanel#${fieldKey}" value1="${fieldName}" />
 			</then>
 		</if>
 
@@ -11,26 +11,26 @@
 	</command>
 
 	<command name="viewAddTabsWithNoAddPagePermission">
-		<execute action="Dockbar#click" locator1="ADD" value1="Add" />
+		<execute function="#click" locator1="Dockbar#ADD" value1="Add" />
 
-		<execute action="DockbarAddpanelcontent#assertTextEquals" locator1="NAVIGATION_CONTENT" value1="Content" />
-		<execute action="DockbarAddpanelcontent#assertTextEquals" locator1="NAVIGATION_APPLICATIONS" value1="Applications" />
-		<execute action="DockbarAddpanelcontent#assertElementNotPresent" locator1="NAVIGATION_PAGE" value1="Page" />
+		<execute function="#assertTextEquals" locator1="DockbarAddpanelcontent#NAVIGATION_CONTENT" value1="Content" />
+		<execute function="#assertTextEquals" locator1="DockbarAddpanelcontent#NAVIGATION_APPLICATIONS" value1="Applications" />
+		<execute function="#assertElementNotPresent" locator1="DockbarAddpanelcontent#NAVIGATION_PAGE" value1="Page" />
 	</command>
 
 	<command name="viewLocalizationOptionsAdd">
-		<execute action="DockbarAddpanelpage#assertElementPresent" locator1="NAME_FIELD" />
+		<execute function="#assertElementPresent" locator1="DockbarAddpanelpage#NAME_FIELD" />
 
 		<for list="${localizationOptions}" param="localizationOption">
 			<var name="key_localizationName" value="${localizationOption}" />
 
-			<execute action="DockbarAddpanelpage#assertElementPresent" locator1="LOCALIZED_FLAG_ICON" />
+			<execute function="#assertElementPresent" locator1="DockbarAddpanelpage#LOCALIZED_FLAG_ICON" />
 		</for>
 	</command>
 
 	<command name="viewLocalizationOptionsEdit">
-		<execute action="DockbarEditpanel#assertElementPresent" locator1="DETAILS_NAME_FIELD" />
-		<execute action="DockbarEditpanel#assertElementPresent" locator1="DETAILS_FRIENDLY_URL_TITLE" />
+		<execute function="#assertElementPresent" locator1="DockbarEditpanel#DETAILS_NAME_FIELD" />
+		<execute function="#assertElementPresent" locator1="DockbarEditpanel#DETAILS_FRIENDLY_URL_TITLE" />
 
 		<for list="${localizationOptions}" param="localizationOption">
 			<var name="key_localizationName" value="${localizationOption}" />
@@ -38,10 +38,10 @@
 			<if>
 				<isset var="friendlyURL" />
 				<then>
-					<execute action="DockbarEditpanel#assertElementPresent" locator1="DETAILS_FRIENDLYURL_LOCALIZED" />
+					<execute function="#assertElementPresent" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL_LOCALIZED" />
 				</then>
 				<else>
-					<execute action="DockbarEditpanel#assertElementPresent" locator1="DETAILS_LOCALIZED_FLAG_ICON" />
+					<execute function="#assertElementPresent" locator1="DockbarEditpanel#DETAILS_LOCALIZED_FLAG_ICON" />
 				</else>
 			</if>
 		</for>
@@ -50,13 +50,13 @@
 	<command name="viewMySitesDropDownSiteName">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="Dockbar#click" locator1="MY_SITES" value1="My Sites" />
-		<execute action="Dockbar#assertTextEquals" locator1="MY_SITES_SITE_NAME_2" value1="${siteName}" />
+		<execute function="#click" locator1="Dockbar#MY_SITES" value1="My Sites" />
+		<execute function="#assertTextEquals" locator1="Dockbar#MY_SITES_SITE_NAME_2" value1="${siteName}" />
 	</command>
 
 	<command name="viewSitesViaMySitesDropDown">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="Dockbar#assertTextEquals" locator1="MY_SITES_PUBLIC_SITE" value1="${siteName}" />
+		<execute function="#assertTextEquals" locator1="Dockbar#MY_SITES_PUBLIC_SITE" value1="${siteName}" />
 	</command>
 </definition>

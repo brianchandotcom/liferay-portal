@@ -66,8 +66,8 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute action="CPDocumentsandmedia#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPDocumentsandmedia#assertClick" locator1="MANAGE_MENULIST_DOCUMENT_TYPES" value1="Document Types" />
+		<execute function="#assertClick" locator1="CPDocumentsandmedia#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="#assertClick" locator1="CPDocumentsandmedia#MANAGE_MENULIST_DOCUMENT_TYPES" value1="Document Types" />
 
 		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 

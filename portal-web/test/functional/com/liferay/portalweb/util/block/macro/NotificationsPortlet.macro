@@ -6,7 +6,7 @@
 			<var name="notificationCount" value="${notificationCount}" />
 		</execute>
 
-		<execute action="PGNotifications#assertClick" locator1="NAVIGATION_NOTIFICATION_DELIVERY" value1="Notification Delivery" />
+		<execute function="#assertClick" locator1="PGNotifications#NAVIGATION_NOTIFICATION_DELIVERY" value1="Notification Delivery" />
 	</command>
 
 	<command name="setUserDeliveries">
@@ -17,12 +17,12 @@
 		<if>
 			<equals arg1="${enableDelivery}" arg2="true" />
 			<then>
-				<execute action="PGNotificationsdelivery#check" locator1="NOTIFICATION_DELIVERY_CHECKBOX" />
+				<execute function="#check" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${enableDelivery}" arg2="false" />
 				<then>
-					<execute action="PGNotificationsdelivery#uncheck" locator1="NOTIFICATION_DELIVERY_CHECKBOX" />
+					<execute function="#uncheck" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
@@ -44,7 +44,7 @@
 				<for list="${notificationList}" param="notificationType" >
 					<var name="key_notificationType" value="${notificationType}" />
 
-					<execute action="PGNotificationsdelivery#check" locator1="NOTIFICATION_DELIVERY_CHECKBOX" />
+					<execute function="#check" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX" />
 				</for>
 			</for>
 		</for>
@@ -53,65 +53,65 @@
 	<command name="viewDefaultNotificationDeliveries">
 		<var name="key_contentType" value="Blogs" />
 
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new blog entry in a blog you are subscribed to." />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_TEXT_2" value1="updates a blog entry you are subscribed to." />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_CHECKBOX_1" />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_CHECKBOX_2" />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new blog entry in a blog you are subscribed to." />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a blog entry you are subscribed to." />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_1" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_2" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
 
 		<var name="key_contentType" value="Bookmarks" />
 
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new bookmark in a folder you are subscribed to." />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_TEXT_2" value1="updates a bookmark you are subscribed to." />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_CHECKBOX_1" />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_CHECKBOX_2" />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new bookmark in a folder you are subscribed to." />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a bookmark you are subscribed to." />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_1" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_2" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
 
 		<var name="key_contentType" value="Comments" />
 
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new comment to comments you are subscribed to." />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_TEXT_2" value1="updates a comment you are subscribed to." />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_CHECKBOX_1" />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_CHECKBOX_2" />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new comment to comments you are subscribed to." />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a comment you are subscribed to." />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_1" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_2" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
 
 		<var name="key_contentType" value="Documents and Media " />
 
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new document in a folder you are subscribed to." />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_TEXT_2" value1="updates a document you are subscribed to." />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_CHECKBOX_1" />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_CHECKBOX_2" />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new document in a folder you are subscribed to." />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a document you are subscribed to." />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_1" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_2" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
 
 		<var name="key_contentType" value="Message Boards" />
 
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new post in a thread or category you are subscribed to." />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_TEXT_2" value1="updates a post you are subscribed to." />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_CHECKBOX_1" />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_CHECKBOX_2" />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new post in a thread or category you are subscribed to." />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a post you are subscribed to." />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_1" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_2" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
 
 		<var name="key_contentType" value="Web Content" />
 
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new content in a folder you are subscribed to." />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_TEXT_2" value1="updates a web content you are subscribed to." />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_CHECKBOX_1" />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_CHECKBOX_2" />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new content in a folder you are subscribed to." />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a web content you are subscribed to." />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_1" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_2" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
 
 		<var name="key_contentType" value="Wiki" />
 
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new wiki page in a wiki you are subscribed to." />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_TEXT_2" value1="updates a wiki page you are subscribed to." />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_CHECKBOX_1" />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
-		<execute action="PGNotificationsdelivery#assertChecked" locator1="NOTIFICATION_DELIVERY_CHECKBOX_2" />
-		<execute action="PGNotificationsdelivery#assertTextEquals" locator1="NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new wiki page in a wiki you are subscribed to." />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a wiki page you are subscribed to." />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_1" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
+		<execute function="#assertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_2" />
+		<execute function="#assertTextEquals" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
 	</command>
 </definition>

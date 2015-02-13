@@ -2003,7 +2003,7 @@
 		</execute>
 
 		<execute action="PGWiki#assertTextNotPresent" value1="${wikiChildPageTitle2}" />
-		<execute action="PGWiki#assertClick" locator1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute function="#assertClick" locator1="PGWiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
 
 		<execute action="PGWikiAllpages#assertTextNotPresent" value1="${wikiChildPageTitle2}" />
 	</command>
@@ -3191,11 +3191,11 @@
 
 		<var name="key_attachmentFileName" value="${attachmentFileName}" />
 
-		<execute action="PGWiki#assertElementNotPresent" locator1="EDIT_BUTTON" value1="Edit" />
-		<execute action="PGWiki#assertClick" locator1="ATTACHMENTS_BUTTON" value1="1 Attachment" />
+		<execute function="#assertElementNotPresent" locator1="PGWiki#EDIT_BUTTON" value1="Edit" />
+		<execute function="#assertClick" locator1="PGWiki#ATTACHMENTS_BUTTON" value1="1 Attachment" />
 
-		<execute action="PGWikiWikipageAttachments#assertElementNotPresent" locator1="ADD_ATTACHMENTS_BUTTON" />
-		<execute action="PGWikiWikipageAttachments#assertElementNotPresent" locator1="ATTACHMENT_TABLE_REMOVE" value1="Remove" />
+		<execute function="#assertElementNotPresent" locator1="PGWikiWikipageAttachments#ADD_ATTACHMENTS_BUTTON" />
+		<execute function="#assertElementNotPresent" locator1="PGWikiWikipageAttachments#ATTACHMENT_TABLE_REMOVE" value1="Remove" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -3204,13 +3204,13 @@
 
 		<var name="key_wikiPageTitle" value="${wikiChildPageTitle}" />
 
-		<execute action="PGWiki#assertClick" locator1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute function="#assertClick" locator1="PGWiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
 
-		<execute action="PGWikiAllpages#assertElementNotPresent" locator1="WIKI_PAGE_TABLE_ACTIONS" />
-		<execute action="PGWikiAllpages#assertElementNotPresent" locator1="WIKI_PAGE_MENULIST_EDIT" />
-		<execute action="PGWikiAllpages#assertClick" locator1="WIKI_PAGE_TABLE_PAGE" value1="${wikiChildPageTitle}" />
+		<execute function="#assertElementNotPresent" locator1="PGWikiAllpages#WIKI_PAGE_TABLE_ACTIONS" />
+		<execute function="#assertElementNotPresent" locator1="PGWikiAllpages#WIKI_PAGE_MENULIST_EDIT" />
+		<execute function="#assertClick" locator1="PGWikiAllpages#WIKI_PAGE_TABLE_PAGE" value1="${wikiChildPageTitle}" />
 
-		<execute action="PGWiki#assertElementNotPresent" locator1="EDIT_BUTTON" value1="Edit" />
+		<execute function="#assertElementNotPresent" locator1="PGWiki#EDIT_BUTTON" value1="Edit" />
 	</command>
 
 	<command known-issues="LPS-45435" name="ViewSOWikiFrontPageChildPageAsGuest" priority="4">
@@ -3317,7 +3317,7 @@
 		</execute>
 
 		<execute action="PGWiki#assertTextNotPresent" value1="${wikiChildPageTitle2}" />
-		<execute action="PGWiki#assertClick" locator1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute function="#assertClick" locator1="PGWiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
 
 		<execute action="PGWikiAllpages#assertTextNotPresent" value1="${wikiChildPageTitle2}" />
 	</command>

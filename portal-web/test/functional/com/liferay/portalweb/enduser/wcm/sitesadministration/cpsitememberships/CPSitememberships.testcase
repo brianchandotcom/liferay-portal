@@ -273,18 +273,18 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="CPSites#type" locator1="BASIC_SEARCH_FIELD" value1="Liferay" />
-		<execute action="CPSites#assertClick" locator1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="#type" locator1="CPSites#BASIC_SEARCH_FIELD" value1="Liferay" />
+		<execute function="#assertClick" locator1="CPSites#BASIC_SEARCH_BUTTON" value1="Search" />
 
-		<execute action="CPSites#assertTextEquals" locator1="SITE_TABLE_NAME" value1="${siteName}" />
-		<execute action="CPSites#assertElementPresent" locator1="SITE_TABLE_CHECKBOX_DISABLED" />
-		<execute action="CPSites#click" locator1="SITE_TABLE_ACTIONS" />
-		<execute action="CPSites#assertElementNotPresent" locator1="SITE_MENULIST_DELETE" value1="Delete" />
-		<execute action="CPSites#assertClickNoError" locator1="SITE_MENULIST_DEACTIVATE" value1="Deactivate" />
-		<execute action="CPSites#confirm" locator1="CONFIRMATION" value1="Are you sure you want to deactivate this?" />
+		<execute function="#assertTextEquals" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="#assertElementPresent" locator1="CPSites#SITE_TABLE_CHECKBOX_DISABLED" />
+		<execute function="#click" locator1="CPSites#SITE_TABLE_ACTIONS" />
+		<execute function="#assertElementNotPresent" locator1="CPSites#SITE_MENULIST_DELETE" value1="Delete" />
+		<execute function="#assertClickNoError" locator1="CPSites#SITE_MENULIST_DEACTIVATE" value1="Deactivate" />
+		<execute function="#confirm" locator1="CPSites#CONFIRMATION" value1="Are you sure you want to deactivate this?" />
 
-		<execute action="CPSites#assertTextEquals" locator1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-		<execute action="CPSites#assertTextEquals" locator1="ERROR_MESSAGE_2" value1="The site cannot be deleted or deactivated because you are accessing the site." />
+		<execute function="#assertTextEquals" locator1="CPSites#ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute function="#assertTextEquals" locator1="CPSites#ERROR_MESSAGE_2" value1="The site cannot be deleted or deactivated because you are accessing the site." />
 	</command>
 
 	<command name="DeleteSiteTeam" priority="5">
@@ -551,7 +551,7 @@
 			<var name="siteScopeName" value="${orgName1}" />
 		</execute>
 
-		<execute action="CPSitememberships#assertTextEquals" locator1="USER_TABLE_LABEL" value1="1 User" />
+		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_TABLE_LABEL" value1="1 User" />
 
 		<execute macro="Site#viewMemberOrganizationCP">
 			<var name="orgName" value="${orgName1}" />
@@ -692,8 +692,8 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute action="Dockbar#assertClick" locator1="ADMIN" value1="Admin" />
-		<execute action="Dockbar#assertElementNotPresent" locator1="ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
+		<execute function="#assertClick" locator1="Dockbar#ADMIN" value1="Admin" />
+		<execute function="#assertElementNotPresent" locator1="Dockbar#ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
 	</command>
 
 	<command name="WebContentAdministrationSiteMembershipsPagination" priority="3">
@@ -744,12 +744,12 @@
 			<var name="userScreenName" value="${adminScreenName}" />
 		</execute>
 
-		<execute action="CPSitememberships#assertClick" locator1="NAVIGATION_USERS" value1="Users" />
-		<execute action="CPSitememberships#assertClick" locator1="USER_PAGE_NAVIGATION_ITEMS_PER_PAGE" value1="20 Items per Page" />
-		<execute action="CPSitememberships#click" locator1="USER_ITEMS_PER_PAGE_MENULIST_FIVE_ITEMS_PER_PAGE" />
-		<execute action="CPSitememberships#assertTextEquals" locator1="USER_PAGE_NAVIGATION_PAGE_NUMBER" value1="Page 1 of 3" />
-		<execute action="CPSitememberships#assertClick" locator1="USER_PAGE_NAVIGATION_NEXT_BUTTON" value1="Next" />
-		<execute action="CPSitememberships#assertTextEquals" locator1="USER_PAGE_NAVIGATION_PAGE_NUMBER" value1="Page 2 of 3" />
+		<execute function="#assertClick" locator1="CPSitememberships#NAVIGATION_USERS" value1="Users" />
+		<execute function="#assertClick" locator1="CPSitememberships#USER_PAGE_NAVIGATION_ITEMS_PER_PAGE" value1="20 Items per Page" />
+		<execute function="#click" locator1="CPSitememberships#USER_ITEMS_PER_PAGE_MENULIST_FIVE_ITEMS_PER_PAGE" />
+		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_PAGE_NAVIGATION_PAGE_NUMBER" value1="Page 1 of 3" />
+		<execute function="#assertClick" locator1="CPSitememberships#USER_PAGE_NAVIGATION_NEXT_BUTTON" value1="Next" />
+		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_PAGE_NAVIGATION_PAGE_NUMBER" value1="Page 2 of 3" />
 
 		<execute macro="Site#assertMemberListNotVisibleCP">
 			<var name="usersEmailsList" value="${usersEmailsFirstPageList}" />
@@ -763,8 +763,8 @@
 			<var name="usersEmailsList" value="${usersEmailsThirdPageList}" />
 		</execute>
 
-		<execute action="CPSitememberships#click" locator1="USER_PAGE_NAVIGATION_FIRST_BUTTON" />
-		<execute action="CPSitememberships#assertTextEquals" locator1="USER_PAGE_NAVIGATION_PAGE_NUMBER" value1="Page 1 of 3" />
+		<execute function="#click" locator1="CPSitememberships#USER_PAGE_NAVIGATION_FIRST_BUTTON" />
+		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_PAGE_NAVIGATION_PAGE_NUMBER" value1="Page 1 of 3" />
 
 		<execute macro="Site#viewMemberListCP">
 			<var name="usersEmailsList" value="${usersEmailsFirstPageList}" />
@@ -784,8 +784,8 @@
 			<var name="userScreenName" value="${adminScreenName}" />
 		</execute>
 
-		<execute action="CPSitememberships#click" locator1="USER_PAGE_NAVIGATION_LAST_BUTTON" />
-		<execute action="CPSitememberships#assertTextEquals" locator1="USER_PAGE_NAVIGATION_PAGE_NUMBER" value1="Page 3 of 3" />
+		<execute function="#click" locator1="CPSitememberships#USER_PAGE_NAVIGATION_LAST_BUTTON" />
+		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_PAGE_NAVIGATION_PAGE_NUMBER" value1="Page 3 of 3" />
 
 		<execute macro="Site#assertMemberListNotVisibleCP">
 			<var name="usersEmailsList" value="${usersEmailsFirstPageList}" />
@@ -799,8 +799,8 @@
 			<var name="usersEmailsList" value="${usersEmailsThirdPageList}" />
 		</execute>
 
-		<execute action="CPSitememberships#assertClick" locator1="USER_PAGE_NAVIGATION_PREVIOUS_BUTTON" value1="Previous" />
-		<execute action="CPSitememberships#assertTextEquals" locator1="USER_PAGE_NAVIGATION_PAGE_NUMBER" value1="Page 2 of 3" />
+		<execute function="#assertClick" locator1="CPSitememberships#USER_PAGE_NAVIGATION_PREVIOUS_BUTTON" value1="Previous" />
+		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_PAGE_NAVIGATION_PAGE_NUMBER" value1="Page 2 of 3" />
 
 		<execute macro="Site#assertMemberListNotVisibleCP">
 			<var name="usersEmailsList" value="${usersEmailsFirstPageList}" />

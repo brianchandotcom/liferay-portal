@@ -374,8 +374,8 @@
 
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator1="WORKFLOW_TABLE_TITLE" value1="Single Approver" />
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator1="WORKFLOW_TABLE_ACTIONS" value1="Actions" />
+		<execute function="#assertTextEquals" locator1="CPKaleoformsadminNewprocess#WORKFLOW_TABLE_TITLE" value1="Single Approver" />
+		<execute function="#assertTextEquals" locator1="CPKaleoformsadminNewprocess#WORKFLOW_TABLE_ACTIONS" value1="Actions" />
 
 		<execute macro="KaleoFormsAdmin#viewNoUnpublishedWorkflowDefinitions" />
 	</command>
@@ -1341,15 +1341,15 @@
 
 		<var name="key_workflowTask" value="create" />
 
-		<execute action="CPKaleoformsadminNewprocess#assertClick" locator1="FORMS_TABLE_ASSIGN_FORM_BUTTON" value1="Assign Form" />
+		<execute function="#assertClick" locator1="CPKaleoformsadminNewprocess#FORMS_TABLE_ASSIGN_FORM_BUTTON" value1="Assign Form" />
 
 		<var name="key_kfFormName" value="Created Task Form Edit" />
 		<var name="kfFormName" value="Created Task Form Edit" />
 
-		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator1="FORM_TABLE_NAME" value1="${kfFormName}" />
-		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator1="FORM_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator1="FORM_MENULIST_EDIT" value1="Edit" />
-		<execute action="CPKaleoformsadminNewprocessSelectformNewform#selectFrame" locator1="FORM_IFRAME" />
+		<execute function="#assertClick" locator1="CPKaleoformsadminNewprocessSelectform#FORM_TABLE_NAME" value1="${kfFormName}" />
+		<execute function="#assertClick" locator1="CPKaleoformsadminNewprocessSelectform#FORM_TABLE_ACTIONS" value1="Actions" />
+		<execute function="#assertClick" locator1="CPKaleoformsadminNewprocessSelectform#FORM_MENULIST_EDIT" value1="Edit" />
+		<execute function="#selectFrame" locator1="CPKaleoformsadminNewprocessSelectformNewform#FORM_IFRAME" />
 
 		<execute macro="DynamicDataMapping#viewField">
 			<var name="fieldFieldLabel" value="Text" />
@@ -2335,10 +2335,10 @@
 
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitleEdit}" />
 
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator1="WORKFLOW_TABLE_TITLE" value1="${workflowDefinitionTitleEdit}" />
-		<execute action="CPKaleoformsadminNewprocess#assertClick" locator1="WORKFLOW_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPKaleoformsadminNewprocess#assertClick" locator1="WORKFLOW_MENULIST_CHOOSE" value1="Choose" />
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator1="SELECTED_WORKFLOW" value1="${workflowDefinitionTitleEdit} (Version 2)" />
+		<execute function="#assertTextEquals" locator1="CPKaleoformsadminNewprocess#WORKFLOW_TABLE_TITLE" value1="${workflowDefinitionTitleEdit}" />
+		<execute function="#assertClick" locator1="CPKaleoformsadminNewprocess#WORKFLOW_TABLE_ACTIONS" value1="Actions" />
+		<execute function="#assertClick" locator1="CPKaleoformsadminNewprocess#WORKFLOW_MENULIST_CHOOSE" value1="Choose" />
+		<execute function="#assertTextEquals" locator1="CPKaleoformsadminNewprocess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitleEdit} (Version 2)" />
 
 		<execute macro="KaleoFormsAdmin#next" />
 
@@ -2965,7 +2965,7 @@
 
 		<execute macro="KaleoFormsAdmin#saveForm" />
 
-		<execute action="CPKaleoformsadminNewprocessSelectform#click" locator1="BACK_BUTTON" />
+		<execute function="#click" locator1="CPKaleoformsadminNewprocessSelectform#BACK_BUTTON" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
@@ -3247,7 +3247,7 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute action="CPKaleoformsadminNewprocessAddfieldset#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute function="#assertClick" locator1="CPKaleoformsadminNewprocessAddfieldset#SAVE_BUTTON" value1="Save" />
 
 		<execute macro="KaleoFormsAdmin#viewInvalidDefinitionMessage" />
 	</command>
@@ -3321,8 +3321,8 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertClick" locator1="DETAILS" value1="Details" />
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertClick" locator1="DETAILS_PARENT_SELECT_BUTTON" value1="Select" />
+		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS" value1="Details" />
+		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS_PARENT_SELECT_BUTTON" value1="Select" />
 		<execute function="#assertTextEquals" locator1="//div[contains(@class,'modal-header')]/h3" value1="Field Set" />
 	</command>
 
@@ -3559,11 +3559,11 @@
 
 		<execute macro="KaleoFormsAdmin#viewNextFieldSetPage" />
 
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator1="SELECTED_FIELD_SET" value1="To Do" />
+		<execute function="#assertTextEquals" locator1="CPKaleoformsadminNewprocess#SELECTED_FIELD_SET" value1="To Do" />
 
 		<execute macro="KaleoFormsAdmin#viewPreviousFieldSetPage" />
 
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator1="SELECTED_FIELD_SET" value1="To Do" />
+		<execute function="#assertTextEquals" locator1="CPKaleoformsadminNewprocess#SELECTED_FIELD_SET" value1="To Do" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="Inventory" />
@@ -3572,7 +3572,7 @@
 
 		<execute macro="KaleoFormsAdmin#viewNextFieldSetPage" />
 
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator1="SELECTED_FIELD_SET" value1="Inventory" />
+		<execute function="#assertTextEquals" locator1="CPKaleoformsadminNewprocess#SELECTED_FIELD_SET" value1="Inventory" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="Contacts" />
@@ -3581,11 +3581,11 @@
 
 		<execute macro="KaleoFormsAdmin#viewPreviousFieldSetPage" />
 
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator1="SELECTED_FIELD_SET" value1="Contacts" />
+		<execute function="#assertTextEquals" locator1="CPKaleoformsadminNewprocess#SELECTED_FIELD_SET" value1="Contacts" />
 
 		<execute macro="KaleoFormsAdmin#viewNextFieldSetPage" />
 
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator1="SELECTED_FIELD_SET" value1="Contacts" />
+		<execute function="#assertTextEquals" locator1="CPKaleoformsadminNewprocess#SELECTED_FIELD_SET" value1="Contacts" />
 
 		<execute macro="KaleoFormsAdmin#next" />
 	</command>
@@ -3619,7 +3619,7 @@
 
 		<execute macro="KaleoFormsAdmin#saveAsDraftWorkflow" />
 
-		<execute action="Kaleodesigner#click" locator1="BACK" />
+		<execute function="#click" locator1="Kaleodesigner#BACK" />
 
 		<execute macro="KaleoFormsAdmin#editWorkflowDraft">
 			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
@@ -3627,7 +3627,7 @@
 
 		<execute macro="KaleoFormsAdmin#saveAsDraftWorkflow" />
 
-		<execute action="Kaleodesigner#click" locator1="BACK" />
+		<execute function="#click" locator1="Kaleodesigner#BACK" />
 
 		<execute macro="KaleoFormsAdmin#deleteWorkflowDraft">
 			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />

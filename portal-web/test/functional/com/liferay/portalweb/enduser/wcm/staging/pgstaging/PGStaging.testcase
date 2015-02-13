@@ -190,7 +190,7 @@
 
 		<var name="siteID" value="siteID" />
 
-		<execute action="CPSitesEdit#copy" locator1="SITE_ID" value1="siteID" />
+		<execute function="#copy" locator1="CPSitesEdit#SITE_ID" value1="siteID" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
@@ -824,7 +824,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGBlogs#assertElementNotPresent" locator1="PORTLET_TITLE" />
+		<execute function="#assertElementNotPresent" locator1="PGBlogs#PORTLET_TITLE" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -848,7 +848,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGBlogs#assertElementPresent" locator1="PORTLET_TITLE" />
+		<execute function="#assertElementPresent" locator1="PGBlogs#PORTLET_TITLE" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -875,7 +875,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGBlogs#assertElementNotPresent" locator1="ENTRY_TITLE_1" />
+		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE_1" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -906,7 +906,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGBlogs#assertElementNotPresent" locator1="ENTRY_TITLE_1" />
+		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE_1" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -930,7 +930,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGBlogs#assertElementPresent" locator1="ENTRY_TITLE_1" />
+		<execute function="#assertElementPresent" locator1="PGBlogs#ENTRY_TITLE_1" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -1042,8 +1042,8 @@
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertElementPresent" locator1="ENTRY_ICON_DOCUMENT_THUMBNAIL" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="#assertElementPresent" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_THUMBNAIL" />
+		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1075,7 +1075,7 @@
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator1="ENTRY_ICON_DOCUMENT_THUMBNAIL" />
+		<execute function="#assertElementNotPresent" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_THUMBNAIL" />
 	</command>
 
 	<command name="LayoutScope" priority="5">
@@ -1193,7 +1193,7 @@
 			<var name="sitePagesVariationName" value="Test Site Pages Variation" />
 		</execute>
 
-		<execute action="BasePortlet#assertElementNotPresent" locator1="TITLE" value1="Web Content Display" />
+		<execute function="#assertElementNotPresent" locator1="BasePortlet#TITLE" value1="Web Content Display" />
 
 		<execute macro="Staging#changeSitePageVariationPG">
 			<var name="sitePagesVariationMenulistName" value="Test Site Pages Variation" />
@@ -1236,7 +1236,7 @@
 			<var name="pageVariationNameMenulistName" value="Main Variation" />
 		</execute>
 
-		<execute action="BasePortlet#assertElementNotPresent" locator1="TITLE" value1="Blogs" />
+		<execute function="#assertElementNotPresent" locator1="BasePortlet#TITLE" value1="Blogs" />
 
 		<execute macro="Staging#changePageVariationPG">
 			<var name="pageVariationName" value="Main Variation" />
@@ -1323,6 +1323,6 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertElementPresent" locator1="PORTLET_1" />
+		<execute function="#assertElementPresent" locator1="Home#PORTLET_1" />
 	</command>
 </definition>

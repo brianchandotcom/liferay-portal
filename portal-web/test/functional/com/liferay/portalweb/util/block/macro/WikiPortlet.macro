@@ -1,19 +1,19 @@
 <definition>
 	<command name="configureSharingAllowUsersToAddWikiToAnyWebsite">
-		<execute action="BasePortletConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
-		<execute action="BasePortletConfiguration#assertClick" locator1="NAVIGATION_SHARING" value1="Sharing" />
+		<execute function="#selectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="#assertClick" locator1="BasePortletConfiguration#NAVIGATION_SHARING" value1="Sharing" />
 
 		<if>
 			<equals arg1="${enabled}" arg2="true" />
 			<then>
-				<execute action="PGWikidisplayConfigurationSharing#check" locator1="ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
+				<execute function="#check" locator1="PGWikidisplayConfigurationSharing#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
 			</then>
 			<else>
-				<execute action="PGWikidisplayConfigurationSharing#uncheck" locator1="ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
+				<execute function="#uncheck" locator1="PGWikidisplayConfigurationSharing#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
 			</else>
 		</if>
 
-		<execute action="PGWikidisplayConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute function="#assertClick" locator1="PGWikidisplayConfiguration#SAVE_BUTTON" value1="Save" />
 
 		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
 	</command>
@@ -21,11 +21,11 @@
 	<command name="subscribeToNodeCP">
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
-		<execute action="CPWiki#click" locator1="WIKI_NODE_TABLE_ACTIONS" />
-		<execute action="CPWiki#assertClick" locator1="WIKI_NODE_MENULIST_SUBSCRIBE" value1="Subscribe" />
-		<execute action="CPWiki#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPWiki#click" locator1="WIKI_NODE_TABLE_ACTIONS" />
-		<execute action="CPWiki#assertTextEquals" locator1="WIKI_NODE_MENULIST_UNSUBSCRIBE" value1="Unsubscribe" />
+		<execute function="#click" locator1="CPWiki#WIKI_NODE_TABLE_ACTIONS" />
+		<execute function="#assertClick" locator1="CPWiki#WIKI_NODE_MENULIST_SUBSCRIBE" value1="Subscribe" />
+		<execute function="#assertTextEquals" locator1="CPWiki#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#click" locator1="CPWiki#WIKI_NODE_TABLE_ACTIONS" />
+		<execute function="#assertTextEquals" locator1="CPWiki#WIKI_NODE_MENULIST_UNSUBSCRIBE" value1="Unsubscribe" />
 	</command>
 
 	<command name="tearDownCP">
@@ -35,24 +35,24 @@
 
 		<var name="key_wikiNodeName" value="Main" />
 
-		<execute action="CPWiki#click" locator1="WIKI_NODE_TABLE_ACTIONS" />
-		<execute action="CPWiki#assertClick" locator1="WIKI_NODE_MENULIST_UNSUBSCRIBE" value1="Unsubscribe" />
-		<execute action="CPWiki#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPWiki#click" locator1="WIKI_NODE_TABLE_ACTIONS" />
-		<execute action="CPWiki#assertTextEquals" locator1="WIKI_NODE_MENULIST_SUBSCRIBE" value1="Subscribe" />
+		<execute function="#click" locator1="CPWiki#WIKI_NODE_TABLE_ACTIONS" />
+		<execute function="#assertClick" locator1="CPWiki#WIKI_NODE_MENULIST_UNSUBSCRIBE" value1="Unsubscribe" />
+		<execute function="#assertTextEquals" locator1="CPWiki#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#click" locator1="CPWiki#WIKI_NODE_TABLE_ACTIONS" />
+		<execute function="#assertTextEquals" locator1="CPWiki#WIKI_NODE_MENULIST_SUBSCRIBE" value1="Subscribe" />
 	</command>
 
 	<command name="viewConfigureSharingAllowUsersToAddWikiToAnyWebsite">
-		<execute action="BasePortletConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
-		<execute action="BasePortletConfiguration#assertClick" locator1="NAVIGATION_SHARING" value1="Sharing" />
+		<execute function="#selectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="#assertClick" locator1="BasePortletConfiguration#NAVIGATION_SHARING" value1="Sharing" />
 
 		<if>
 			<equals arg1="${enabled}" arg2="true" />
 			<then>
-				<execute action="PGWikidisplayConfigurationSharing#assertChecked" locator1="ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
+				<execute function="#assertChecked" locator1="PGWikidisplayConfigurationSharing#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
 			</then>
 			<else>
-				<execute action="PGWikidisplayConfigurationSharing#assertNotChecked" locator1="ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
+				<execute function="#assertNotChecked" locator1="PGWikidisplayConfigurationSharing#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
 			</else>
 		</if>
 
@@ -60,8 +60,8 @@
 	</command>
 
 	<command name="viewNoPermissionCP">
-		<execute action="CPWiki#assertTextEquals" locator1="PORTLET_TITLE" value1="Wiki" />
-		<execute action="CPWiki#assertElementNotPresent" locator1="ADD_WIKI_BUTTON" />
-		<execute action="CPWiki#assertElementNotPresent" locator1="PERMISSIONS_BUTTON" />
+		<execute function="#assertTextEquals" locator1="CPWiki#PORTLET_TITLE" value1="Wiki" />
+		<execute function="#assertElementNotPresent" locator1="CPWiki#ADD_WIKI_BUTTON" />
+		<execute function="#assertElementNotPresent" locator1="CPWiki#PERMISSIONS_BUTTON" />
 	</command>
 </definition>

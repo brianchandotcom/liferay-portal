@@ -5,9 +5,9 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="SOWelcomeConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
-		<execute action="SOWelcomeConfiguration#type" locator1="CONTENT_FIELD" value1="${welcomeContent}" />
-		<execute action="SOWelcomeConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
-		<execute action="SOWelcomeConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="#selectFrame" locator1="SOWelcomeConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="#type" locator1="SOWelcomeConfiguration#CONTENT_FIELD" value1="${welcomeContent}" />
+		<execute function="#assertClick" locator1="SOWelcomeConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="SOWelcomeConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 </definition>

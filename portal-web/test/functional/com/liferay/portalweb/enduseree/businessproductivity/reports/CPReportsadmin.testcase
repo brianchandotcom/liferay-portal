@@ -33,22 +33,22 @@
 
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute action="CPReportsadmin#assertClick" locator1="DEFINITIONS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPReportsadmin#assertClick" locator1="DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT" value1="Add Report" />
+		<execute function="#assertClick" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute function="#assertClick" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT" value1="Add Report" />
 
-		<execute action="CPReportsadminAddreportentry#select" locator1="REPORT_FORMAT_SELECT" value1="csv" />
-		<execute action="CPReportsadminAddreportentry#type" locator1="EMAIL_NOTIFICATIONS_FIELD" value1="InvalidEmail" />
-		<execute action="CPReportsadminAddreportentry#assertClick" locator1="GENERATE_BUTTON" value1="Generate" />
+		<execute function="#select" locator1="CPReportsadminAddreportentry#REPORT_FORMAT_SELECT" value1="csv" />
+		<execute function="#type" locator1="CPReportsadminAddreportentry#EMAIL_NOTIFICATIONS_FIELD" value1="InvalidEmail" />
+		<execute function="#assertClick" locator1="CPReportsadminAddreportentry#GENERATE_BUTTON" value1="Generate" />
 
-		<execute action="CPReportsadmin#assertTextEquals" locator1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-		<execute action="CPReportsadmin#assertTextEquals" locator1="ERROR_MESSAGE_2" value1="Please enter a valid email address." />
+		<execute function="#assertTextEquals" locator1="CPReportsadmin#ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute function="#assertTextEquals" locator1="CPReportsadmin#ERROR_MESSAGE_2" value1="Please enter a valid email address." />
 
-		<execute action="CPReportsadminAddreportentry#type" locator1="EMAIL_NOTIFICATIONS_FIELD" value1="liferay.qa1@gmail.com" />
-		<execute action="CPReportsadminAddreportentry#type" locator1="EMAIL_RECIPIENT_FIELD" value1="InvalidEmail" />
-		<execute action="CPReportsadminAddreportentry#assertClick" locator1="GENERATE_BUTTON" value1="Generate" />
+		<execute function="#type" locator1="CPReportsadminAddreportentry#EMAIL_NOTIFICATIONS_FIELD" value1="liferay.qa1@gmail.com" />
+		<execute function="#type" locator1="CPReportsadminAddreportentry#EMAIL_RECIPIENT_FIELD" value1="InvalidEmail" />
+		<execute function="#assertClick" locator1="CPReportsadminAddreportentry#GENERATE_BUTTON" value1="Generate" />
 
-		<execute action="CPReportsadmin#assertTextEquals" locator1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-		<execute action="CPReportsadmin#assertTextEquals" locator1="ERROR_MESSAGE_2" value1="Please enter a valid email address." />
+		<execute function="#assertTextEquals" locator1="CPReportsadmin#ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute function="#assertTextEquals" locator1="CPReportsadmin#ERROR_MESSAGE_2" value1="Please enter a valid email address." />
 	</command>
 
 	<command name="AddSchedule" priority="5">
@@ -80,7 +80,7 @@
 			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name" />
 		</execute>
 
-		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator1="INFO_MESSAGE" value1="Processing report. This may take several minutes." />
+		<execute function="#assertTextEquals" locator1="CPReportsadminViewreportentry#INFO_MESSAGE" value1="Processing report. This may take several minutes." />
 		<execute function="#pause" locator1="180000" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -615,7 +615,7 @@
 		<var name="key_gmailAssetType" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
 		<var name="key_pageNameURL" value="report" />
 
-		<execute action="Gmail#assertClick" locator1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK" value1="report" />
+		<execute function="#assertClick" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK" value1="report" />
 
 		<execute function="#selectWindow" locator1="title=Reports Admin - Liferay" />
 
@@ -695,7 +695,7 @@
 		<var name="key_gmailAssetType" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
 		<var name="key_pageNameURL" value="report" />
 
-		<execute action="Gmail#assertElementNotPresent" locator1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK" />
+		<execute function="#assertElementNotPresent" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK" />
 
 		<execute macro="Gmail#tearDown">
 			<var name="userEmailAddress" value="${emailAddress2}" />
@@ -716,8 +716,8 @@
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
 
-		<execute action="CPReportsadmin#assertClick" locator1="DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
+		<execute function="#assertClick" locator1="CPReportsadmin#DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
 
-		<execute action="CPReportsadminAddreportdefinition#sikuliAssertElementPresent" locator1="REPORT_DEFINITION_PARAMETERS_FIELDS_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="CPReportsadminAddreportdefinition#REPORT_DEFINITION_PARAMETERS_FIELDS_PNG" />
 	</command>
 </definition>

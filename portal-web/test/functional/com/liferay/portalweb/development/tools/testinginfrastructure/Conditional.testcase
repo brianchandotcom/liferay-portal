@@ -9,7 +9,7 @@
 		<var name="test" value="test" />
 
 		<if>
-			<condition action="Dockbar#isElementPresent" locator1="ADD" />
+			<condition function="#isElementPresent" locator1="Dockbar#ADD" />
 			<then>
 				<execute macro="TestUtils#pass" />
 			</then>
@@ -19,7 +19,7 @@
 		</if>
 
 		<if>
-			<condition action="Dockbar#isElementNotPresent" locator1="ADD" />
+			<condition function="#isElementNotPresent" locator1="Dockbar#ADD" />
 			<then>
 				<execute macro="TestUtils#fail" />
 			</then>

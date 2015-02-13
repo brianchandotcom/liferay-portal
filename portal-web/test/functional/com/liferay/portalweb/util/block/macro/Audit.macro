@@ -31,11 +31,11 @@
 			</elseif>
 		</if>
 
-		<execute action="CPAuditreports#click" locator1="ADVANCED_SEARCH_ICON" />
-		<execute action="CPAuditreports#select" locator1="ADVANCED_SEARCH_MATCH_SELECT" value1="Any" />
-		<execute action="CPAuditreports#type" locator1="ADVANCED_SEARCH_${reportFieldKey}_FIELD" value1="${searchTerm}" />
+		<execute function="#click" locator1="CPAuditreports#ADVANCED_SEARCH_ICON" />
+		<execute function="#select" locator1="CPAuditreports#ADVANCED_SEARCH_MATCH_SELECT" value1="Any" />
+		<execute function="#type" locator1="CPAuditreports#ADVANCED_SEARCH_${reportFieldKey}_FIELD" value1="${searchTerm}" />
 
-		<execute action="CPAuditreports#assertClick" locator1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPAuditreports#assertTextEquals" locator1="REPORTS_TABLE_${reportFieldKey}_1" value1="${searchTerm}" />
+		<execute function="#assertClick" locator1="CPAuditreports#SEARCH_BUTTON" value1="Search" />
+		<execute function="#assertTextEquals" locator1="CPAuditreports#REPORTS_TABLE_${reportFieldKey}_1" value1="${searchTerm}" />
 	</command>
 </definition>

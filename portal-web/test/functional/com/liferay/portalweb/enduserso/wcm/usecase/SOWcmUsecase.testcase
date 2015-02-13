@@ -43,7 +43,7 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute action="SODashboard#assertElementNotPresent" locator1="PORTLET_TITLE" />
+		<execute function="#assertElementNotPresent" locator1="SODashboard#PORTLET_TITLE" />
 		<execute action="SODashboard#assertTextNotPresent" value1="${portletName}" />
 	</command>
 
@@ -85,7 +85,7 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute action="SODashboard#assertElementNotPresent" locator1="PORTLET_TITLE" />
+		<execute function="#assertElementNotPresent" locator1="SODashboard#PORTLET_TITLE" />
 		<execute action="SODashboard#assertTextNotPresent" value1="${portletName}" />
 	</command>
 
@@ -107,7 +107,7 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute action="SODashboard#assertElementNotPresent" locator1="PORTLET_TITLE" />
+		<execute function="#assertElementNotPresent" locator1="SODashboard#PORTLET_TITLE" />
 		<execute action="SODashboard#assertTextNotPresent" value1="${portletName}" />
 	</command>
 
@@ -149,7 +149,7 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute action="SODashboard#assertElementNotPresent" locator1="PORTLET_TITLE" />
+		<execute function="#assertElementNotPresent" locator1="SODashboard#PORTLET_TITLE" />
 		<execute action="SODashboard#assertTextNotPresent" value1="${portletName}" />
 	</command>
 
@@ -190,7 +190,7 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute action="SOSite#assertElementNotPresent" locator1="PORTLET_TITLE" />
+		<execute function="#assertElementNotPresent" locator1="SOSite#PORTLET_TITLE" />
 		<execute action="SOSite#assertTextNotPresent" value1="${portletName}" />
 	</command>
 
@@ -251,7 +251,7 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute action="SOSite#assertElementNotPresent" locator1="PORTLET_TITLE" />
+		<execute function="#assertElementNotPresent" locator1="SOSite#PORTLET_TITLE" />
 		<execute action="SOSite#assertTextNotPresent" value1="${portletName}" />
 	</command>
 </definition>

@@ -47,11 +47,11 @@
 	<command name="typeIntoField">
 		<execute macro="Page#openURL" />
 
-		<execute action="Dockbar#click" locator1="ADD" value1="Add" />
+		<execute function="#click" locator1="Dockbar#ADD" value1="Add" />
 
-		<execute action="DockbarAddpanelpage#assertClick" locator1="NAVIGATION_PAGE" value1="Page" />
-		<execute action="DockbarAddpanelpage#type" locator1="NAME_FIELD" value1="${text}" />
+		<execute function="#assertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
+		<execute function="#type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${text}" />
 
-		<execute action="DockbarAddpanelpage#assertTextEquals" locator1="NAME_FIELD" value1="${text}" />
+		<execute function="#assertTextEquals" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${text}" />
 	</command>
 </definition>

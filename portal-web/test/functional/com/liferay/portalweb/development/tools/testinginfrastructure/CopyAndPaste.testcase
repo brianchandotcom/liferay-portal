@@ -3,20 +3,20 @@
 	<property name="testray.main.component.name" value="Tools" />
 
 	<command name="CopyAndPaste" priority="5">
-		<execute action="CopyAndPaste#selectFrame" locator1="EDITOR_IFRAME" />
+		<execute function="#selectFrame" locator1="CopyAndPaste#EDITOR_IFRAME" />
 
-		<execute action="CopyAndPaste#assertTextEquals" locator1="PASTE_TEXT_AREA" value1="Your content goes here." />
+		<execute function="#assertTextEquals" locator1="CopyAndPaste#PASTE_TEXT_AREA" value1="Your content goes here." />
 
 		<execute function="#selectFrame" locator1="//body" />
 
-		<execute action="CopyAndPaste#assertTextEquals" locator1="COPY_TEST_LABEL" value1="An iFrame containing the TinyMCE WYSIWYG Editor" />
+		<execute function="#assertTextEquals" locator1="CopyAndPaste#COPY_TEST_LABEL" value1="An iFrame containing the TinyMCE WYSIWYG Editor" />
 
-		<execute action="CopyAndPaste#copy" locator1="COPY_TEST_LABEL" />
+		<execute function="#copy" locator1="CopyAndPaste#COPY_TEST_LABEL" />
 
-		<execute action="CopyAndPaste#selectFrame" locator1="EDITOR_IFRAME" />
+		<execute function="#selectFrame" locator1="CopyAndPaste#EDITOR_IFRAME" />
 
-		<execute action="CopyAndPaste#paste" locator1="PASTE_TEXT_AREA" />
+		<execute function="#paste" locator1="CopyAndPaste#PASTE_TEXT_AREA" />
 
-		<execute action="CopyAndPaste#assertTextEquals" locator1="PASTE_TEXT_AREA" value1="An iFrame containing the TinyMCE WYSIWYG Editor" />
+		<execute function="#assertTextEquals" locator1="CopyAndPaste#PASTE_TEXT_AREA" value1="An iFrame containing the TinyMCE WYSIWYG Editor" />
 	</command>
 </definition>

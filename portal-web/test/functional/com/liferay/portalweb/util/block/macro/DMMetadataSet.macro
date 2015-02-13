@@ -6,26 +6,26 @@
 
 		<var name="key_fieldFieldLabel" value="${field}" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#click" locator1="FORM_FIELD" />
+		<execute function="#click" locator1="PGDocumentsandmediaManageDocumenttypesAdd#FORM_FIELD" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#doubleClick" locator1="SETTINGS_FIELD_LABEL" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldFieldLabel}" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertTextEquals" locator1="SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#doubleClick" locator1="SETTINGS_NAME" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldName}" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertTextEquals" locator1="SETTINGS_NAME" value1="${fieldName}" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator1="FIELDS_LINK" value1="Fields" />
-		<execute action="PGDocumentsandmediaManageMetadatasetsAdd#click" locator1="METADATA_SET_NAME_FIELD" />
+		<execute function="#doubleClick" locator1="PGDocumentsandmediaManageDocumenttypesAdd#SETTINGS_FIELD_LABEL" />
+		<execute function="#type" locator1="PGDocumentsandmediaManageDocumenttypesAdd#SETTINGS_CELL_EDITOR_FIELD" value1="${fieldFieldLabel}" />
+		<execute function="#assertClick" locator1="PGDocumentsandmediaManageDocumenttypesAdd#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaManageDocumenttypesAdd#SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
+		<execute function="#doubleClick" locator1="PGDocumentsandmediaManageDocumenttypesAdd#SETTINGS_NAME" />
+		<execute function="#type" locator1="PGDocumentsandmediaManageDocumenttypesAdd#SETTINGS_CELL_EDITOR_FIELD" value1="${fieldName}" />
+		<execute function="#assertClick" locator1="PGDocumentsandmediaManageDocumenttypesAdd#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaManageDocumenttypesAdd#SETTINGS_NAME" value1="${fieldName}" />
+		<execute function="#assertClick" locator1="PGDocumentsandmediaManageDocumenttypesAdd#FIELDS_LINK" value1="Fields" />
+		<execute function="#click" locator1="PGDocumentsandmediaManageMetadatasetsAdd#METADATA_SET_NAME_FIELD" />
 	</command>
 
 	<command name="addPG">
 		<execute macro="DMMetadataSet#selectMetadataSetsFrame" />
 
-		<execute action="PGDocumentsandmediaManageMetadatasets#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
+		<execute function="#assertClick" locator1="PGDocumentsandmediaManageMetadatasets#TOOLBAR_ADD" value1="Add" />
 
-		<execute action="PGDocumentsandmediaManageMetadatasetsAdd#type" locator1="METADATA_SET_NAME_FIELD" value1="${metadataSetName}" />
+		<execute function="#type" locator1="PGDocumentsandmediaManageMetadatasetsAdd#METADATA_SET_NAME_FIELD" value1="${metadataSetName}" />
 
 		<for list="${dmMetadataSetFieldNames}" param="dmMetadataSetFieldName">
 			<execute macro="DMMetadataSet#addField">
@@ -35,8 +35,8 @@
 			</execute>
 		</for>
 
-		<execute action="PGDocumentsandmediaManageMetadatasetsAdd#assertClick" locator1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGDocumentsandmediaManageMetadatasets#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertClick" locator1="PGDocumentsandmediaManageMetadatasetsAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaManageMetadatasets#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGDocumentsandmediaManageMetadatasets#selectFrameTop" value1="relative=top" />
 	</command>
 
@@ -45,15 +45,15 @@
 
 		<var name="key_metadataSetName" value="${metadataSetName}" />
 
-		<execute action="PGDocumentsandmediaManageMetadatasets#assertClick" locator1="METADATA_SETS_TABLE_ACTIONS" value1="Actions" />
+		<execute function="#assertClick" locator1="PGDocumentsandmediaManageMetadatasets#METADATA_SETS_TABLE_ACTIONS" value1="Actions" />
 
-		<execute action="PGDocumentsandmediaManageMetadatasets#assertClickNoError" locator1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute function="#assertClickNoError" locator1="PGDocumentsandmediaManageMetadatasets#ACTIONS_MENULIST_DELETE" value1="Delete" />
 
-		<execute action="PGDocumentsandmedia#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="#confirm" locator1="PGDocumentsandmedia#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaManageDocumenttypes#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextNotPresent" locator1="DOCUMENT_TYPES_TABLE_NAME" value1="${key_dmDocumentTypeName}" />
+		<execute function="#assertTextNotPresent" locator1="PGDocumentsandmediaManageDocumenttypes#DOCUMENT_TYPES_TABLE_NAME" value1="${key_dmDocumentTypeName}" />
 	</command>
 
 	<command name="deletePGFailure">
@@ -61,34 +61,34 @@
 
 		<var name="key_metadataSetName" value="${metadataSetName}" />
 
-		<execute action="PGDocumentsandmediaManageMetadatasets#assertClick" locator1="METADATA_SETS_TABLE_ACTIONS" value1="Actions" />
+		<execute function="#assertClick" locator1="PGDocumentsandmediaManageMetadatasets#METADATA_SETS_TABLE_ACTIONS" value1="Actions" />
 
-		<execute action="PGDocumentsandmediaManageMetadatasets#assertClickNoError" locator1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute function="#assertClickNoError" locator1="PGDocumentsandmediaManageMetadatasets#ACTIONS_MENULIST_DELETE" value1="Delete" />
 
-		<execute action="PGDocumentsandmedia#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="#confirm" locator1="PGDocumentsandmedia#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-		<execute action="PGDocumentsandmediaManageMetadatasets#assertTextEquals" locator1="ERROR_MESSAGE" value1="Your request failed to complete." />
+		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaManageMetadatasets#ERROR_MESSAGE" value1="Your request failed to complete." />
 
-		<execute action="PGDocumentsandmediaManageMetadatasets#assertTextEquals" locator1="REQUIRED_STRUCTURES_ERROR_MESSAGE" value1="Required structures could not be deleted." />
+		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaManageMetadatasets#REQUIRED_STRUCTURES_ERROR_MESSAGE" value1="Required structures could not be deleted." />
 
-		<execute action="PGDocumentsandmediaManageMetadatasets#assertTextEquals" locator1="METADATA_SETS_TABLE_NAME" value1="${key_metadataSetName}" />
+		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaManageMetadatasets#METADATA_SETS_TABLE_NAME" value1="${key_metadataSetName}" />
 	</command>
 
 	<command name="gotoCP">
-		<execute action="CPDocumentsandmedia#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPDocumentsandmedia#assertClick" locator1="MANAGE_MENULIST_METADATA_SETS" value1="Metadata Sets" />
+		<execute function="#assertClick" locator1="CPDocumentsandmedia#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="#assertClick" locator1="CPDocumentsandmedia#MANAGE_MENULIST_METADATA_SETS" value1="Metadata Sets" />
 	</command>
 
 	<command name="gotoPG">
-		<execute action="PGDocumentsandmedia#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="PGDocumentsandmedia#assertClick" locator1="MANAGE_MENULIST_METADATA_SETS" value1="Metadata Sets" />
+		<execute function="#assertClick" locator1="PGDocumentsandmedia#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="#assertClick" locator1="PGDocumentsandmedia#MANAGE_MENULIST_METADATA_SETS" value1="Metadata Sets" />
 	</command>
 
 	<command name="selectMetadataSetsFrame">
 		<if>
-			<condition action="PGDocumentsandmediaManageMetadatasets#isElementPresent" locator1="METADATA_SETS_IFRAME" />
+			<condition function="#isElementPresent" locator1="PGDocumentsandmediaManageMetadatasets#METADATA_SETS_IFRAME" />
 			<then>
-				<execute action="PGDocumentsandmediaManageMetadatasets#selectFrame" locator1="METADATA_SETS_IFRAME" />
+				<execute function="#selectFrame" locator1="PGDocumentsandmediaManageMetadatasets#METADATA_SETS_IFRAME" />
 			</then>
 		</if>
 	</command>
@@ -102,16 +102,16 @@
 
 		<execute macro="DMMetadataSet#selectMetadataSetsFrame" />
 
-		<execute action="PGDocumentsandmediaManageMetadatasets#type" locator1="BASIC_SEARCH_FIELD" value1="DM" />
-		<execute action="PGDocumentsandmediaManageMetadatasets#assertClick" locator1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="#type" locator1="PGDocumentsandmediaManageMetadatasets#BASIC_SEARCH_FIELD" value1="DM" />
+		<execute function="#assertClick" locator1="PGDocumentsandmediaManageMetadatasets#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<while>
-			<condition action="PGDocumentsandmediaManageMetadatasets#isElementPresent" locator1="METADATA_SETS_TABLE_ACTIONS_1" />
+			<condition function="#isElementPresent" locator1="PGDocumentsandmediaManageMetadatasets#METADATA_SETS_TABLE_ACTIONS_1" />
 			<then>
-				<execute action="PGDocumentsandmediaManageMetadatasets#assertClick" locator1="METADATA_SETS_TABLE_ACTIONS_1" value1="Actions" />
-				<execute action="PGDocumentsandmediaManageMetadatasets#assertClickNoError" locator1="ACTIONS_MENULIST_DELETE" value1="Delete" />
-				<execute action="PGDocumentsandmediaManageMetadatasets#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="PGDocumentsandmediaManageMetadatasets#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="#assertClick" locator1="PGDocumentsandmediaManageMetadatasets#METADATA_SETS_TABLE_ACTIONS_1" value1="Actions" />
+				<execute function="#assertClickNoError" locator1="PGDocumentsandmediaManageMetadatasets#ACTIONS_MENULIST_DELETE" value1="Delete" />
+				<execute function="#confirm" locator1="PGDocumentsandmediaManageMetadatasets#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="#assertTextEquals" locator1="PGDocumentsandmediaManageMetadatasets#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
 	</command>

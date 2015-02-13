@@ -68,7 +68,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="CPWebcontent#assertElementNotPresent" locator1="TOOLBAR_ADD" />
+		<execute function="#assertElementNotPresent" locator1="CPWebcontent#TOOLBAR_ADD" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
@@ -110,7 +110,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="CPWebcontent#assertElementNotPresent" locator1="TOOLBAR_ADD" />
+		<execute function="#assertElementNotPresent" locator1="CPWebcontent#TOOLBAR_ADD" />
 	</command>
 
 	<command name="AddStructureSiteRole" priority="5">
@@ -162,7 +162,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="CPWebcontent#assertElementNotPresent" locator1="TOOLBAR_MANAGE" />
+		<execute function="#assertElementNotPresent" locator1="CPWebcontent#TOOLBAR_MANAGE" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
@@ -206,7 +206,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="CPWebcontent#assertElementNotPresent" locator1="TOOLBAR_MANAGE" />
+		<execute function="#assertElementNotPresent" locator1="CPWebcontent#TOOLBAR_MANAGE" />
 	</command>
 
 	<command name="AddTemplateSiteRole" priority="5">
@@ -256,7 +256,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="CPWebcontent#assertElementNotPresent" locator1="TOOLBAR_MANAGE" />
+		<execute function="#assertElementNotPresent" locator1="CPWebcontent#TOOLBAR_MANAGE" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
@@ -298,7 +298,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="CPWebcontent#assertElementNotPresent" locator1="TOOLBAR_MANAGE" />
+		<execute function="#assertElementNotPresent" locator1="CPWebcontent#TOOLBAR_MANAGE" />
 	</command>
 
 	<command name="AddWebContentSiteRole" priority="5">
@@ -348,7 +348,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="CPWebcontent#assertElementNotPresent" locator1="TOOLBAR_ADD" />
+		<execute function="#assertElementNotPresent" locator1="CPWebcontent#TOOLBAR_ADD" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
@@ -390,7 +390,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="CPWebcontent#assertElementNotPresent" locator1="TOOLBAR_ADD" />
+		<execute function="#assertElementNotPresent" locator1="CPWebcontent#TOOLBAR_ADD" />
 	</command>
 
 	<command name="ViewWebContentPortletRegRole" priority="5">
@@ -416,7 +416,7 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute action="Dockbar#assertElementNotPresent" locator1="ADMIN" />
+		<execute function="#assertElementNotPresent" locator1="Dockbar#ADMIN" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
@@ -448,7 +448,7 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute action="Dockbar#assertElementNotPresent" locator1="ADMIN" />
+		<execute function="#assertElementNotPresent" locator1="Dockbar#ADMIN" />
 	</command>
 
 	<command name="ViewWebContentPortletSiteRole" priority="5">
@@ -486,7 +486,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Dockbar#assertElementNotPresent" locator1="ADMIN" />
+		<execute function="#assertElementNotPresent" locator1="Dockbar#ADMIN" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
@@ -525,6 +525,6 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Dockbar#assertElementNotPresent" locator1="ADMIN" />
+		<execute function="#assertElementNotPresent" locator1="Dockbar#ADMIN" />
 	</command>
 </definition>

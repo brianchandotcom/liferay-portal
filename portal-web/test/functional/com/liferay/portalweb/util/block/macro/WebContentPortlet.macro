@@ -1,34 +1,34 @@
 <definition>
 	<command name="viewEmailConfigurationCP">
-		<execute action="CPWebcontent#click" locator1="OPTIONS_WRENCH_ICON" />
-		<execute action="CPWebcontent#assertClick" locator1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="#click" locator1="CPWebcontent#OPTIONS_WRENCH_ICON" />
+		<execute function="#assertClick" locator1="CPWebcontent#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute action="CPWebcontentConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
-		<execute action="CPWebcontentConfiguration#assertTextEquals" locator1="NAVIGATION_EMAIL_FROM" value1="Email From" />
-		<execute action="CPWebcontentConfiguration#assertTextEquals" locator1="NAVIGATION_WEB_CONTENT_ADDED_EMAIL" value1="Web Content Added Email" />
-		<execute action="CPWebcontentConfiguration#assertTextEquals" locator1="NAVIGATION_WEB_CONTENT_REVIEW_EMAIL" value1="Web Content Review Email" />
-		<execute action="CPWebcontentConfiguration#assertTextEquals" locator1="NAVIGATION_WEB_CONTENT_UPDATED_EMAIL" value1="Web Content Updated Email" />
-		<execute action="CPWebcontentConfiguration#assertTextEquals" locator1="NAME_FIELD" value1="${authorName}" />
-		<execute action="CPWebcontentConfiguration#assertTextEquals" locator1="ADDRESS_FIELD" value1="${authorAddress}" />
+		<execute function="#selectFrame" locator1="CPWebcontentConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="#assertTextEquals" locator1="CPWebcontentConfiguration#NAVIGATION_EMAIL_FROM" value1="Email From" />
+		<execute function="#assertTextEquals" locator1="CPWebcontentConfiguration#NAVIGATION_WEB_CONTENT_ADDED_EMAIL" value1="Web Content Added Email" />
+		<execute function="#assertTextEquals" locator1="CPWebcontentConfiguration#NAVIGATION_WEB_CONTENT_REVIEW_EMAIL" value1="Web Content Review Email" />
+		<execute function="#assertTextEquals" locator1="CPWebcontentConfiguration#NAVIGATION_WEB_CONTENT_UPDATED_EMAIL" value1="Web Content Updated Email" />
+		<execute function="#assertTextEquals" locator1="CPWebcontentConfiguration#NAME_FIELD" value1="${authorName}" />
+		<execute function="#assertTextEquals" locator1="CPWebcontentConfiguration#ADDRESS_FIELD" value1="${authorAddress}" />
 
 		<if>
 			<equals arg1="${webContentWorkflowEnabled}" arg2="true" />
 			<then>
-				<execute action="CPWebcontentConfiguration#assertTextEquals" locator1="NAVIGATION_WEB_CONTENT_DENIED_EMAIL" value1="Web Content Denied Email" />
-				<execute action="CPWebcontentConfiguration#assertTextEquals" locator1="NAVIGATION_WEB_CONTENT_GRANTED_EMAIL" value1="Web Content Granted Email" />
-				<execute action="CPWebcontentConfiguration#assertTextEquals" locator1="NAVIGATION_WEB_CONTENT_REQUESTED_EMAIL" value1="Web Content Requested Email" />
+				<execute function="#assertTextEquals" locator1="CPWebcontentConfiguration#NAVIGATION_WEB_CONTENT_DENIED_EMAIL" value1="Web Content Denied Email" />
+				<execute function="#assertTextEquals" locator1="CPWebcontentConfiguration#NAVIGATION_WEB_CONTENT_GRANTED_EMAIL" value1="Web Content Granted Email" />
+				<execute function="#assertTextEquals" locator1="CPWebcontentConfiguration#NAVIGATION_WEB_CONTENT_REQUESTED_EMAIL" value1="Web Content Requested Email" />
 			</then>
 			<else>
-				<execute action="CPWebcontentConfiguration#assertElementNotPresent" locator1="NAVIGATION_WEB_CONTENT_DENIED_EMAIL" />
-				<execute action="CPWebcontentConfiguration#assertElementNotPresent" locator1="NAVIGATION_WEB_CONTENT_GRANTED_EMAIL" />
-				<execute action="CPWebcontentConfiguration#assertElementNotPresent" locator1="NAVIGATION_WEB_CONTENT_REQUESTED_EMAIL" />
+				<execute function="#assertElementNotPresent" locator1="CPWebcontentConfiguration#NAVIGATION_WEB_CONTENT_DENIED_EMAIL" />
+				<execute function="#assertElementNotPresent" locator1="CPWebcontentConfiguration#NAVIGATION_WEB_CONTENT_GRANTED_EMAIL" />
+				<execute function="#assertElementNotPresent" locator1="CPWebcontentConfiguration#NAVIGATION_WEB_CONTENT_REQUESTED_EMAIL" />
 			</else>
 		</if>
 	</command>
 
 	<command name="viewNoPermissionCP">
-		<execute action="CPWebcontent#assertTextEquals" locator1="PORTLET_TITLE" value1="Web Content" />
-		<execute action="CPWebcontent#assertElementPresent" locator1="NAVBAR_CONTAINER" />
-		<execute action="CPWebcontent#assertTextEquals" locator1="INFO_MESSAGE" value1="No web content was found" />
+		<execute function="#assertTextEquals" locator1="CPWebcontent#PORTLET_TITLE" value1="Web Content" />
+		<execute function="#assertElementPresent" locator1="CPWebcontent#NAVBAR_CONTAINER" />
+		<execute function="#assertTextEquals" locator1="CPWebcontent#INFO_MESSAGE" value1="No web content was found" />
 	</command>
 </definition>

@@ -37,19 +37,19 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGWiki#assertClick" locator1="ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
+		<execute function="#assertClick" locator1="PGWiki#ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute action="PGWikiWikipageDetails#assertClick" locator1="NAVIGATION_CONTENT" value1="Content" />
+		<execute function="#assertClick" locator1="PGWikiWikipageDetails#NAVIGATION_CONTENT" value1="Content" />
 
 		<execute macro="DMDocument#linkImage">
 			<var name="documentName" value="Document_1.jpg" />
 		</execute>
 
-		<execute action="PGWikiEditpage#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute function="#assertClick" locator1="PGWikiEditpage#PUBLISH_BUTTON" value1="Publish" />
 
 		<var name="key_htmlTags" value="p/img[contains(@src,'Document_1.jpg')]" />
 
-		<execute action="PGWikiWikipage#assertElementPresent" locator1="WIKI_PAGE_HTML_BODY" />
+		<execute function="#assertElementPresent" locator1="PGWikiWikipage#WIKI_PAGE_HTML_BODY" />
 	</command>
 
 	<command name="AddWikiFrontPageWithImageViaURL" priority="4">
@@ -65,17 +65,17 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGWiki#assertClick" locator1="ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
+		<execute function="#assertClick" locator1="PGWiki#ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute action="CKEditor#click" locator1="CONTENT_IMAGE_LINK" />
-		<execute action="CKEditor#type" locator1="CONTENT_IMAGE_LINK_URL_FIELD" value1="https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg" />
-		<execute action="CKEditor#assertClick" locator1="CONTENT_IMAGE_LINK_OK_BUTTON" value1="OK" />
+		<execute function="#click" locator1="CKEditor#CONTENT_IMAGE_LINK" />
+		<execute function="#type" locator1="CKEditor#CONTENT_IMAGE_LINK_URL_FIELD" value1="https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg" />
+		<execute function="#assertClick" locator1="CKEditor#CONTENT_IMAGE_LINK_OK_BUTTON" value1="OK" />
 
-		<execute action="PGWikiEditpage#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute function="#assertClick" locator1="PGWikiEditpage#PUBLISH_BUTTON" value1="Publish" />
 
 		<var name="key_htmlTags" value="p/img[contains(@src,'Document_1.jpg')]" />
 
-		<execute action="PGWikiWikipage#assertElementPresent" locator1="WIKI_PAGE_HTML_BODY" />
+		<execute function="#assertElementPresent" locator1="PGWikiWikipage#WIKI_PAGE_HTML_BODY" />
 	</command>
 
 	<command name="ViewCKEditorsInheritanceNo" priority="5">
@@ -109,15 +109,15 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGMessageboards#click" locator1="POST_NEW_THREAD_BUTTON" />
+		<execute function="#click" locator1="PGMessageboards#POST_NEW_THREAD_BUTTON" />
 
 		<var name="key_portletName" value="${portlet1Name}" />
 
-		<execute action="CKEditor#assertTextEquals" locator1="TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
-		<execute action="CKEditor#assertTextEquals" locator1="TOOLBAR_SIZE_BUTTON_PORTLET" value1="Size" />
+		<execute function="#assertTextEquals" locator1="CKEditor#TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
+		<execute function="#assertTextEquals" locator1="CKEditor#TOOLBAR_SIZE_BUTTON_PORTLET" value1="Size" />
 		<execute function="#assertElementPresent" locator1="" value1="//script[contains(@src,'/html/js/editor/ckeditor/plugins/bbcode/bbcode_parser.js')]" />
-		<execute action="CKEditor#assertClick" locator1="TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
-		<execute action="CKEditor#selectFrame" locator1="TOOLBAR_FORMAT_IFRAME" />
+		<execute function="#assertClick" locator1="CKEditor#TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
+		<execute function="#selectFrame" locator1="CKEditor#TOOLBAR_FORMAT_IFRAME" />
 
 		<for list="${ckEditorFormatOptionsValid},${ckEditorFormatOptionsInvalid}" param="optionList" >
 			<var name="key_format" value="${optionList}" />
@@ -125,22 +125,22 @@
 			<if>
 				<contains string="${optionList}" substring="${invalidSubstring}" />
 				<then>
-					<execute action="CKEditor#assertElementNotPresent" locator1="TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
+					<execute function="#assertElementNotPresent" locator1="CKEditor#TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
 				</then>
 				<else>
-					<execute action="CKEditor#assertTextEquals" locator1="TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
+					<execute function="#assertTextEquals" locator1="CKEditor#TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
 				</else>
 			</if>
 		</for>
 
 		<execute action="CKEditor#selectFrame" value1="relative=top" />
 
-		<execute action="PGWiki#assertClick" locator1="ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
+		<execute function="#assertClick" locator1="PGWiki#ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute action="CKEditor#assertTextEquals" locator1="TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
-		<execute action="CKEditor#assertTextEquals" locator1="TOOLBAR_SIZE_BUTTON_PORTLET" value1="Size" />
-		<execute action="CKEditor#assertClick" locator1="TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
-		<execute action="CKEditor#selectFrame" locator1="TOOLBAR_FORMAT_IFRAME" />
+		<execute function="#assertTextEquals" locator1="CKEditor#TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
+		<execute function="#assertTextEquals" locator1="CKEditor#TOOLBAR_SIZE_BUTTON_PORTLET" value1="Size" />
+		<execute function="#assertClick" locator1="CKEditor#TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
+		<execute function="#selectFrame" locator1="CKEditor#TOOLBAR_FORMAT_IFRAME" />
 
 		<for list="${ckEditorFormatOptionsValid},${ckEditorFormatOptionsInvalid}" param="optionList" >
 			<var name="key_format" value="${optionList}" />
@@ -148,10 +148,10 @@
 			<if>
 				<contains string="${optionList}" substring="${invalidSubstring}" />
 				<then>
-					<execute action="CKEditor#assertElementNotPresent" locator1="TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
+					<execute function="#assertElementNotPresent" locator1="CKEditor#TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
 				</then>
 				<else>
-					<execute action="CKEditor#assertTextEquals" locator1="TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
+					<execute function="#assertTextEquals" locator1="CKEditor#TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
 				</else>
 			</if>
 		</for>

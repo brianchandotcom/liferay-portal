@@ -292,7 +292,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertTextNotPresent" locator1="PAGE_2_GUEST_VIEW" value1="New Page Name" />
+		<execute function="#assertTextNotPresent" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
 
 		<execute macro="User#logoutPG">
 			<var name="password" value="test" />
@@ -315,7 +315,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertTextNotPresent" locator1="PAGE_2_GUEST_VIEW" value1="New Page Name" />
+		<execute function="#assertTextNotPresent" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
 		<execute function="#pause" locator1="120000" />
 
 		<execute macro="Page#gotoPG">
@@ -324,7 +324,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertTextEquals" locator1="PAGE_2_GUEST_VIEW" value1="New Page Name" />
+		<execute function="#assertTextEquals" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="nodePort" value="9080" />

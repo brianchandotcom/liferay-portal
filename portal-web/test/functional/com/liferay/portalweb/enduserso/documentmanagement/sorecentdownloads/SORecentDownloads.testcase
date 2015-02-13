@@ -87,6 +87,6 @@
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="SORecentDownloads#assertTextEquals" locator1="RECENT_DOWNLOADS_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="#assertTextEquals" locator1="SORecentDownloads#RECENT_DOWNLOADS_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 </definition>

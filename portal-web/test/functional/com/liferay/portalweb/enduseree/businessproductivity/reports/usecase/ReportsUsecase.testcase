@@ -25,11 +25,11 @@
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
 
-		<execute action="CPReportsadmin#assertClick" locator1="DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
-		<execute action="CPReportsadminAddreportdefinition#type" locator1="DEFINITION_NAME_FIELD" value1="Reports Definition Name" />
-		<execute action="CPReportsadminAddreportdefinition#assertClick" locator1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPReportsadminAddreportdefinition#assertTextEquals" locator1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-		<execute action="CPReportsadminAddreportdefinition#assertTextEquals" locator1="ERROR_MESSAGE_2" value1="Please enter a valid file." />
+		<execute function="#assertClick" locator1="CPReportsadmin#DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
+		<execute function="#type" locator1="CPReportsadminAddreportdefinition#DEFINITION_NAME_FIELD" value1="Reports Definition Name" />
+		<execute function="#assertClick" locator1="CPReportsadminAddreportdefinition#SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="CPReportsadminAddreportdefinition#ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute function="#assertTextEquals" locator1="CPReportsadminAddreportdefinition#ERROR_MESSAGE_2" value1="Please enter a valid file." />
 	</command>
 
 	<command name="DownloadReportPG" priority="5">
@@ -91,22 +91,22 @@
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
 
-		<execute action="CPReportsadmin#assertTextEquals" locator1="DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON" value1="20 Items per Page" />
-		<execute action="CPReportsadmin#click" locator1="DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON" />
+		<execute function="#assertTextEquals" locator1="CPReportsadmin#DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON" value1="20 Items per Page" />
+		<execute function="#click" locator1="CPReportsadmin#DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON" />
 
 		<var name="key_itemsPerPage" value="5" />
 
-		<execute action="CPReportsadmin#click" locator1="DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_MENU_ITEM" />
-		<execute action="CPReportsadmin#assertTextEquals" locator1="DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON" value1="5 Items per Page" />
-		<execute action="CPReportsadmin#assertTextEquals" locator1="DEFINITIONS_PAGINATION_PAGE_NUMBER_DROPDOWN_BUTTON" value1="Page 1 of 2" />
+		<execute function="#click" locator1="CPReportsadmin#DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_MENU_ITEM" />
+		<execute function="#assertTextEquals" locator1="CPReportsadmin#DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON" value1="5 Items per Page" />
+		<execute function="#assertTextEquals" locator1="CPReportsadmin#DEFINITIONS_PAGINATION_PAGE_NUMBER_DROPDOWN_BUTTON" value1="Page 1 of 2" />
 
 		<var name="key_reportsDefinitionName" value="Reports Definition 6" />
 
-		<execute action="CPReportsadmin#assertElementNotPresent" locator1="DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" />
-		<execute action="CPReportsadmin#assertClick" locator1="DEFINITIONS_PAGINATION_NEXT_BUTTON" value1="Next" />
-		<execute action="CPReportsadmin#assertTextEquals" locator1="DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" value1="Reports Definition 6" />
-		<execute action="CPReportsadmin#assertClick" locator1="DEFINITIONS_PAGINATION_PREVIOUS_BUTTON" value1="Previous" />
-		<execute action="CPReportsadmin#assertElementNotPresent" locator1="DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" />
+		<execute function="#assertElementNotPresent" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" />
+		<execute function="#assertClick" locator1="CPReportsadmin#DEFINITIONS_PAGINATION_NEXT_BUTTON" value1="Next" />
+		<execute function="#assertTextEquals" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" value1="Reports Definition 6" />
+		<execute function="#assertClick" locator1="CPReportsadmin#DEFINITIONS_PAGINATION_PREVIOUS_BUTTON" value1="Previous" />
+		<execute function="#assertElementNotPresent" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" />
 	</command>
 
 	<command name="ViewReportEmailNewConfiguration" priority="5">

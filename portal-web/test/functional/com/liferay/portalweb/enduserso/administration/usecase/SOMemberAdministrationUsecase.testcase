@@ -144,16 +144,16 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOSite#assertTextEquals" locator1="SITE_NAME" value1="${siteName}" />
-		<execute action="SOSite#assertElementNotPresent" locator1="JOIN_SITE_BUTTON" />
-		<execute action="SOSite#assertElementNotPresent" locator1="REQUEST_MEMBERSHIP_BUTTON" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_HOME" value1="Home" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_CALENDAR" value1="Calendar" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_DOCUMENTS" value1="Documents" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_FORUMS" value1="Forums" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_BLOGS" value1="Blogs" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_WIKI" value1="Wiki" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_MEMBERS" value1="Members" />
+		<execute function="#assertTextEquals" locator1="SOSite#SITE_NAME" value1="${siteName}" />
+		<execute function="#assertElementNotPresent" locator1="SOSite#JOIN_SITE_BUTTON" />
+		<execute function="#assertElementNotPresent" locator1="SOSite#REQUEST_MEMBERSHIP_BUTTON" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_HOME" value1="Home" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_CALENDAR" value1="Calendar" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_DOCUMENTS" value1="Documents" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_FORUMS" value1="Forums" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_BLOGS" value1="Blogs" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_WIKI" value1="Wiki" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_MEMBERS" value1="Members" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />

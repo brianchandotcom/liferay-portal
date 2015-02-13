@@ -1,12 +1,12 @@
 <definition>
 	<command name="addPG">
-		<execute action="PGOpensocialgadget#assertClick" locator1="OPTIONS_ICON" value1="Options" />
-		<execute action="PGOpensocialgadget#assertClick" locator1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="#assertClick" locator1="PGOpensocialgadget#OPTIONS_ICON" value1="Options" />
+		<execute function="#assertClick" locator1="PGOpensocialgadget#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute action="PGOpensocialgadgetConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
-		<execute action="PGOpensocialgadgetConfiguration#type" locator1="URL_FIELD" value1="${opensocialGadgetURL}" />
-		<execute action="PGOpensocialgadgetConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGOpensocialgadgetConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="#selectFrame" locator1="PGOpensocialgadgetConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="#type" locator1="PGOpensocialgadgetConfiguration#URL_FIELD" value1="${opensocialGadgetURL}" />
+		<execute function="#assertClick" locator1="PGOpensocialgadgetConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="PGOpensocialgadgetConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute action="PGOpensocialgadgetConfiguration#selectFrame" value1="relative=top" />
 	</command>
 </definition>

@@ -45,7 +45,7 @@
 
 		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
 
-		<execute action="CPPolls#assertTextEquals" locator1="POLLS_TABLE_TITLE" value1="${pollsQuestionTitle}" />
+		<execute function="#assertTextEquals" locator1="CPPolls#POLLS_TABLE_TITLE" value1="${pollsQuestionTitle}" />
 
 		<execute macro="Page#openURL" />
 
@@ -168,7 +168,7 @@
 
 		<var name="key_portletName" value="User Statistics" />
 
-		<execute action="PGUserstatistics#assertTextEquals" locator1="PORTLET_BODY" value1="There are no active users for this period." />
+		<execute function="#assertTextEquals" locator1="PGUserstatistics#PORTLET_BODY" value1="There are no active users for this period." />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Blogs Page" />
@@ -382,9 +382,9 @@
 			<var name="portletName" value="Account Settings" />
 		</execute>
 
-		<execute action="Myaccount#selectFrame" locator1="MY_ACCOUNT_IFRAME" />
-		<execute action="Myaccount#assertClick" locator1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
-		<execute action="Myaccount#assertSelectedLabel" locator1="LANGUAGE_SELECT" value1="English (United States)" />
+		<execute function="#selectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
+		<execute function="#assertClick" locator1="Myaccount#MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
+		<execute function="#assertSelectedLabel" locator1="Myaccount#LANGUAGE_SELECT" value1="English (United States)" />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
 	</command>
 
@@ -410,7 +410,7 @@
 
 		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
 
-		<execute action="CPPolls#assertTextEquals" locator1="POLLS_TABLE_TITLE" value1="${pollsQuestionTitle}" />
+		<execute function="#assertTextEquals" locator1="CPPolls#POLLS_TABLE_TITLE" value1="${pollsQuestionTitle}" />
 
 		<execute macro="Page#openURL" />
 
@@ -441,11 +441,11 @@
 			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
 		</execute>
 
-		<execute action="PGPollsdisplay#assertClick" locator1="INFO_MESSAGE_LINK" value1="Please sign in to vote." />
+		<execute function="#assertClick" locator1="PGPollsdisplay#INFO_MESSAGE_LINK" value1="Please sign in to vote." />
 
-		<execute action="PGLogin#type" locator1="EMAIL_ADDRESS_FIELD" value1="test@liferay.com" />
-		<execute action="PGLogin#type" locator1="PASSWORD_FIELD" value1="test" />
-		<execute action="PGLogin#click" locator1="SIGN_IN_BUTTON" value1="Sign In" />
+		<execute function="#type" locator1="PGLogin#EMAIL_ADDRESS_FIELD" value1="test@liferay.com" />
+		<execute function="#type" locator1="PGLogin#PASSWORD_FIELD" value1="test" />
+		<execute function="#click" locator1="PGLogin#SIGN_IN_BUTTON" value1="Sign In" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Polls" />

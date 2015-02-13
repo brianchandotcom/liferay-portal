@@ -5,13 +5,13 @@
 		<var name="key_year" value="${year}" />
 
 		<while>
-			<condition action="YUICalendarwidget#isElementNotPresent" locator1="DATEPICKER_SPECIFIC_MONTH_YEAR" />
+			<condition function="#isElementNotPresent" locator1="YUICalendarwidget#DATEPICKER_SPECIFIC_MONTH_YEAR" />
 			<then>
-				<execute action="YUICalendarwidget#click" locator1="NEXT_MONTH_ARROW" />
+				<execute function="#click" locator1="YUICalendarwidget#NEXT_MONTH_ARROW" />
 			</then>
 		</while>
 
-		<execute action="YUICalendarwidget#assertTextEquals" locator1="DATEPICKER_SPECIFIC_MONTH_YEAR" value1="${month} ${year}" />
-		<execute action="YUICalendarwidget#assertClick" locator1="DATEPICKER_SPECIFIC_DAY" value1="${day}" />
+		<execute function="#assertTextEquals" locator1="YUICalendarwidget#DATEPICKER_SPECIFIC_MONTH_YEAR" value1="${month} ${year}" />
+		<execute function="#assertClick" locator1="YUICalendarwidget#DATEPICKER_SPECIFIC_DAY" value1="${day}" />
 	</command>
 </definition>

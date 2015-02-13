@@ -38,18 +38,18 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Dockbar#assertClick" locator1="ADMIN" value1="Admin" />
-		<execute action="Dockbar#assertClick" locator1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="#assertClick" locator1="Dockbar#ADMIN" value1="Admin" />
+		<execute function="#assertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 		<execute function="#click" locator1="//a[@title='Back']" />
 
-		<execute action="SOSite#assertTextEquals" locator1="SITE_NAME" value1="${siteName}" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_HOME" value1="Home" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_CALENDAR" value1="Calendar" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_DOCUMENTS" value1="Documents" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_FORUMS" value1="Forums" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_BLOGS" value1="Blogs" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_WIKI" value1="Wiki" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_MEMBERS" value1="Members" />
+		<execute function="#assertTextEquals" locator1="SOSite#SITE_NAME" value1="${siteName}" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_HOME" value1="Home" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_CALENDAR" value1="Calendar" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_DOCUMENTS" value1="Documents" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_FORUMS" value1="Forums" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_BLOGS" value1="Blogs" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_WIKI" value1="Wiki" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_MEMBERS" value1="Members" />
 	</command>
 
 	<command known-issues="LIFERAYQA-11550" name="ViewSOSiteLocalized" priority="4">

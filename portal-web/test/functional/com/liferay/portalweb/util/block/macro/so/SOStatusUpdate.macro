@@ -5,25 +5,25 @@
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
 		<if>
-			<condition action="SOStatusUpdate#isElementNotPresent" locator1="STATUS_UPDATE_ENTRY_CONTENT" />
+			<condition function="#isElementNotPresent" locator1="SOStatusUpdate#STATUS_UPDATE_ENTRY_CONTENT" />
 			<then>
-				<execute action="SOStatusUpdate#assertTextEquals" locator1="STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
+				<execute function="#assertTextEquals" locator1="SOStatusUpdate#STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
 			</then>
 		</if>
 
-		<execute action="SOStatusUpdate#click" locator1="STATUS_UPDATE_CONTENT_FIELD" />
+		<execute function="#click" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_FIELD" />
 
 		<execute macro="SOStatusUpdate#selectViewableByCmd">
 			<var name="statusUpdateEntryViewableBy" value="${statusUpdateEntryViewableBy}" />
 		</execute>
 
-		<execute action="SOStatusUpdate#click" locator1="STATUS_UPDATE_CONTENT_INPUT_FIELD" />
-		<execute action="SOStatusUpdate#type" locator1="STATUS_UPDATE_CONTENT_INPUT_FIELD" value1="${statusUpdateEntryContent}" />
+		<execute function="#click" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_INPUT_FIELD" />
+		<execute function="#type" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_INPUT_FIELD" value1="${statusUpdateEntryContent}" />
 
 		<execute macro="SOMicroblogs#viewCharacterCountdownCmd" />
 
-		<execute action="SOStatusUpdate#click" locator1="STATUS_UPDATE_POST_BUTTON" />
-		<execute action="SOStatusUpdate#assertTextEquals" locator1="STATUS_UPDATE_ENTRY_CONTENT" value1="${statusUpdateEntryContent}" />
+		<execute function="#click" locator1="SOStatusUpdate#STATUS_UPDATE_POST_BUTTON" />
+		<execute function="#assertTextEquals" locator1="SOStatusUpdate#STATUS_UPDATE_ENTRY_CONTENT" value1="${statusUpdateEntryContent}" />
 	</command>
 
 	<command name="addStatusUpdateEntryInvalid">
@@ -32,32 +32,32 @@
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
 		<if>
-			<condition action="SOStatusUpdate#isElementNotPresent" locator1="STATUS_UPDATE_ENTRY_CONTENT" />
+			<condition function="#isElementNotPresent" locator1="SOStatusUpdate#STATUS_UPDATE_ENTRY_CONTENT" />
 			<then>
-				<execute action="SOStatusUpdate#assertTextEquals" locator1="STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
+				<execute function="#assertTextEquals" locator1="SOStatusUpdate#STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
 			</then>
 		</if>
 
-		<execute action="SOStatusUpdate#click" locator1="STATUS_UPDATE_CONTENT_FIELD" />
+		<execute function="#click" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_FIELD" />
 
 		<execute macro="SOStatusUpdate#selectViewableByCmd">
 			<var name="statusUpdateEntryViewableBy" value="${statusUpdateEntryViewableBy}" />
 		</execute>
 
-		<execute action="SOStatusUpdate#click" locator1="STATUS_UPDATE_CONTENT_INPUT_FIELD" />
-		<execute action="SOStatusUpdate#type" locator1="STATUS_UPDATE_CONTENT_INPUT_FIELD" value1="${statusUpdateEntryContent}" />
+		<execute function="#click" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_INPUT_FIELD" />
+		<execute function="#type" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_INPUT_FIELD" value1="${statusUpdateEntryContent}" />
 
 		<execute macro="SOMicroblogs#viewCharacterCountdownCmd" />
 
-		<execute action="SOStatusUpdate#click" locator1="STATUS_UPDATE_POST_BUTTON" />
+		<execute function="#click" locator1="SOStatusUpdate#STATUS_UPDATE_POST_BUTTON" />
 		<execute action="SODashboard#pause" value1="1000" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<if>
-			<condition action="SOStatusUpdate#isElementNotPresent" locator1="STATUS_UPDATE_ENTRY_CONTENT" />
+			<condition function="#isElementNotPresent" locator1="SOStatusUpdate#STATUS_UPDATE_ENTRY_CONTENT" />
 			<then>
-				<execute action="SOStatusUpdate#assertTextEquals" locator1="STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
+				<execute function="#assertTextEquals" locator1="SOStatusUpdate#STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
 			</then>
 		</if>
 
@@ -66,47 +66,47 @@
 
 	<command name="configureStatusUpdateDisplayPG">
 		<if>
-			<condition action="SOStatusUpdate#isElementNotPresent" locator1="STATUS_UPDATE" />
+			<condition function="#isElementNotPresent" locator1="SOStatusUpdate#STATUS_UPDATE" />
 			<then>
 				<if>
-					<condition action="SOUserBar#isElementNotPresent" locator1="VISIBLE_PAGE_CONTROLS" />
+					<condition function="#isElementNotPresent" locator1="SOUserBar#VISIBLE_PAGE_CONTROLS" />
 					<then>
-						<execute action="SOUserBar#click" locator1="TOGGLE_DOCKBAR" />
+						<execute function="#click" locator1="SOUserBar#TOGGLE_DOCKBAR" />
 					</then>
 				</if>
 
 				<if>
-					<condition action="SOUserBar#isElementPresent" locator1="EDIT_CONTROLS_NOT_FLAGGED" />
+					<condition function="#isElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 					<then>
-						<execute action="Dockbar#mouseOver" locator1="EDIT_CONTROLS" />
-						<execute action="Dockbar#click" locator1="EDIT_CONTROLS" />
+						<execute function="#mouseOver" locator1="Dockbar#EDIT_CONTROLS" />
+						<execute function="#click" locator1="Dockbar#EDIT_CONTROLS" />
 					</then>
 				</if>
 
-				<execute action="SOStatusUpdate#makeVisible" locator1="STATUS_UPDATE_OPTIONS" />
-				<execute action="SOStatusUpdate#click" locator1="STATUS_UPDATE_OPTIONS_LINK" />
+				<execute function="#makeVisible" locator1="SOStatusUpdate#STATUS_UPDATE_OPTIONS" />
+				<execute function="#click" locator1="SOStatusUpdate#STATUS_UPDATE_OPTIONS_LINK" />
 
-				<execute action="BasePortlet#click" locator1="OPTIONS_MENULIST_CONFIGURATION" />
+				<execute function="#click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
 
-				<execute action="SOStatusUpdateConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
-				<execute action="SOStatusUpdateConfiguration#check" locator1="DISPLAY_SETTINGS_DISPLAY_MOST_RECENT_STATUS_CHECKBOX" />
-				<execute action="SOStatusUpdateConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
-				<execute action="SOStatusUpdateConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+				<execute function="#selectFrame" locator1="SOStatusUpdateConfiguration#CONFIGURATION_IFRAME" />
+				<execute function="#check" locator1="SOStatusUpdateConfiguration#DISPLAY_SETTINGS_DISPLAY_MOST_RECENT_STATUS_CHECKBOX" />
+				<execute function="#assertClick" locator1="SOStatusUpdateConfiguration#SAVE_BUTTON" value1="Save" />
+				<execute function="#assertTextEquals" locator1="SOStatusUpdateConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 				<execute action="SOStatusUpdateConfiguration#selectFrameTop" />
-				<execute action="SOStatusUpdateConfiguration#click" locator1="CLOSE_BUTTON" />
+				<execute function="#click" locator1="SOStatusUpdateConfiguration#CLOSE_BUTTON" />
 
 				<if>
-					<condition action="SOUserBar#isElementNotPresent" locator1="VISIBLE_PAGE_CONTROLS" />
+					<condition function="#isElementNotPresent" locator1="SOUserBar#VISIBLE_PAGE_CONTROLS" />
 					<then>
-						<execute action="SOUserBar#click" locator1="TOGGLE_DOCKBAR" />
+						<execute function="#click" locator1="SOUserBar#TOGGLE_DOCKBAR" />
 					</then>
 				</if>
 
 				<if>
-					<condition action="SOUserBar#isElementNotPresent" locator1="EDIT_CONTROLS_NOT_FLAGGED" />
+					<condition function="#isElementNotPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 					<then>
-						<execute action="Dockbar#mouseOver" locator1="EDIT_CONTROLS" />
-						<execute action="Dockbar#click" locator1="EDIT_CONTROLS" />
+						<execute function="#mouseOver" locator1="Dockbar#EDIT_CONTROLS" />
+						<execute function="#click" locator1="Dockbar#EDIT_CONTROLS" />
 					</then>
 				</if>
 			</then>
@@ -119,10 +119,10 @@
 				<contains string="${statusUpdateEntryViewableBy}" substring="{statusUpdateEntryViewableBy}" />
 			</not>
 			<then>
-				<execute action="SOStatusUpdate#select" locator1="STATUS_UPDATE_CONTENT_VIEW_FILTER" value1="${statusUpdateEntryViewableBy}" />
+				<execute function="#select" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_VIEW_FILTER" value1="${statusUpdateEntryViewableBy}" />
 			</then>
 			<else>
-				<execute action="SOStatusUpdate#select" locator1="STATUS_UPDATE_CONTENT_VIEW_FILTER" value1="Everyone" />
+				<execute function="#select" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_VIEW_FILTER" value1="Everyone" />
 			</else>
 		</if>
 	</command>
@@ -133,6 +133,6 @@
 
 		<var method="MathUtil#difference(&quot;150&quot;, &quot;${textFieldContentLength}&quot;)" name="characterCountdown" />
 
-		<execute action="SOStatusUpdate#assertTextEquals" locator1="STATUS_UPDATE_CONTENT_COUNTDOWN" value1="${characterCountdown}" />
+		<execute function="#assertTextEquals" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_COUNTDOWN" value1="${characterCountdown}" />
 	</command>
 </definition>

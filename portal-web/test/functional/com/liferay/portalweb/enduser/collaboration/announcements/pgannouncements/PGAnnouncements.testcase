@@ -72,16 +72,16 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGAnnouncements#click" locator1="NAVIGATION_MANAGE_ENTRIES" />
+		<execute function="#click" locator1="PGAnnouncements#NAVIGATION_MANAGE_ENTRIES" />
 
-		<execute action="PGAnnouncementsManageentries#select" locator1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute action="PGAnnouncementsManageentries#click" locator1="ADD_ENTRY_BUTTON" />
+		<execute function="#select" locator1="PGAnnouncementsManageentries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute function="#click" locator1="PGAnnouncementsManageentries#ADD_ENTRY_BUTTON" />
 
-		<execute action="PGAnnouncementsAddentry#type" locator1="TITLE_FIELD" value1="${entryTitle}" />
-		<execute action="PGAnnouncementsAddentry#type" locator1="URL_FIELD" value1="${entryURL}" />
-		<execute action="PGAnnouncementsAddentry#type" locator1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="#type" locator1="PGAnnouncementsAddentry#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="#type" locator1="PGAnnouncementsAddentry#URL_FIELD" value1="${entryURL}" />
+		<execute function="#type" locator1="PGAnnouncementsAddentry#CONTENT_FIELD" value1="${entryContent}" />
 
-		<execute action="PGAnnouncementsAddentry#uncheck" locator1="DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX" />
+		<execute function="#uncheck" locator1="PGAnnouncementsAddentry#DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX" />
 
 		<var attribute="value" locator="//input[@id='_84_displayDateHour']" name="displayDateHour" />
 		<var name="displayDateHourLength" value="${displayDateHour?length()}" />
@@ -111,8 +111,8 @@
 
 		<var name="displayDate" value="${displayDateHour}:${displayDateMinuteFuture} ${displayDateAMPM}" />
 
-		<execute action="PGAnnouncementsAddentry#type" locator1="DISPLAY_DATE_TIME_INPUT" value1="${displayDate}" />
-		<execute action="PGAnnouncementsAddentry#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute function="#type" locator1="PGAnnouncementsAddentry#DISPLAY_DATE_TIME_INPUT" value1="${displayDate}" />
+		<execute function="#assertClick" locator1="PGAnnouncementsAddentry#SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -158,14 +158,14 @@
 		</execute>
 
 		<execute action="PGAnnouncements#assertTextNotPresent" value1="${entryTitle}" />
-		<execute action="PGAnnouncements#click" locator1="NAVIGATION_MANAGE_ENTRIES" />
+		<execute function="#click" locator1="PGAnnouncements#NAVIGATION_MANAGE_ENTRIES" />
 
-		<execute action="PGAnnouncementsManageentries#select" locator1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute function="#select" locator1="PGAnnouncementsManageentries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator1="ENTRY_TABLE_TYPE" value1="${distributionScope}" />
+		<execute function="#assertTextEquals" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute function="#assertTextEquals" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_TYPE" value1="${distributionScope}" />
 	</command>
 
 	<command name="AddAnnouncementsEntryPriorityImportant" priority="5">

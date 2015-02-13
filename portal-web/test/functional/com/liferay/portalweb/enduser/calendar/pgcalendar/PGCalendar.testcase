@@ -25,7 +25,7 @@
 
 	<tear-down>
 		<if>
-			<condition action="PGCalendar#isElementPresent" locator1="SCHEDULER_EVENT_GENERIC" />
+			<condition function="#isElementPresent" locator1="PGCalendar#SCHEDULER_EVENT_GENERIC" />
 			<then>
 				<execute macro="CalendarEvent#tearDownPG" />
 			</then>

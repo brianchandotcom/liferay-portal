@@ -3,132 +3,132 @@
 	<var name="userName" value="Test Test" />
 
 	<command name="addCP">
-		<execute action="CPMessageboards#assertClick" locator1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="#assertClick" locator1="CPMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
-		<execute action="CPMessageboardsPostthread#type" locator1="SUBJECT_FIELD" value1="${threadSubject}" />
-		<execute action="CPMessageboardsPostthread#type" locator1="BODY_FIELD" value1="${threadBody}" />
-		<execute action="CPMessageboardsPostthread#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute function="#type" locator1="CPMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
+		<execute function="#type" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
+		<execute function="#assertClick" locator1="CPMessageboardsPostthread#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addCPWithAttachment">
-		<execute action="CPMessageboards#assertClick" locator1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="#assertClick" locator1="CPMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
-		<execute action="CPMessageboardsPostthread#type" locator1="SUBJECT_FIELD" value1="${threadSubject}" />
-		<execute action="CPMessageboardsPostthread#type" locator1="BODY_FIELD" value1="${threadBody}" />
+		<execute function="#type" locator1="CPMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
+		<execute function="#type" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
 
 		<if>
-			<condition action="CPMessageboardsPostthread#isElementPresent" locator1="ATTACHMENTS_BROWSE_FIELD" />
+			<condition function="#isElementPresent" locator1="CPMessageboardsPostthread#ATTACHMENTS_BROWSE_FIELD" />
 			<then>
-				<execute action="CPMessageboardsPostthread#click" locator1="ATTACHMENTS_DROPDOWN" />
+				<execute function="#click" locator1="CPMessageboardsPostthread#ATTACHMENTS_DROPDOWN" />
 			</then>
 		</if>
 
-		<execute action="CPMessageboardsPostthread#uploadCommonFile" locator1="ATTACHMENTS_BROWSE_FIELD" value1="${mbAttachmentFile}" />
-		<execute action="CPMessageboardsPostthread#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute function="#uploadCommonFile" locator1="CPMessageboardsPostthread#ATTACHMENTS_BROWSE_FIELD" value1="${mbAttachmentFile}" />
+		<execute function="#assertClick" locator1="CPMessageboardsPostthread#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addInvalidAttachmentPG">
-		<execute action="PGMessageboards#click" locator1="POST_NEW_THREAD_BUTTON" />
+		<execute function="#click" locator1="PGMessageboards#POST_NEW_THREAD_BUTTON" />
 
-		<execute action="PGMessageboardsPostthread#type" locator1="SUBJECT_FIELD" value1="${threadSubject}" />
+		<execute function="#type" locator1="PGMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
 
 		<if>
-			<condition action="PGMessageboardsPostthread#isElementPresent" locator1="ATTACHMENTS_DROPDOWN_COLLAPSED" />
+			<condition function="#isElementPresent" locator1="PGMessageboardsPostthread#ATTACHMENTS_DROPDOWN_COLLAPSED" />
 			<then>
-				<execute action="PGMessageboardsPostthread#assertClick" locator1="ATTACHMENTS_DROPDOWN" value1="Attachments" />
+				<execute function="#assertClick" locator1="PGMessageboardsPostthread#ATTACHMENTS_DROPDOWN" value1="Attachments" />
 			</then>
 		</if>
 
-		<execute action="PGMessageboardsPostthread#uploadCommonFile" locator1="ATTACHMENTS_FILE_FIELD_1" value1="${mbThreadAttachment}" />
-		<execute action="PGMessageboardsPostthread#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGMessageboardsPostthread#assertTextEquals" locator1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute function="#uploadCommonFile" locator1="PGMessageboardsPostthread#ATTACHMENTS_FILE_FIELD_1" value1="${mbThreadAttachment}" />
+		<execute function="#assertClick" locator1="PGMessageboardsPostthread#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsPostthread#ERROR_MESSAGE_1" value1="Your request failed to complete." />
 
 		<if>
 			<equals arg1="${invalidSize}" arg2="true" />
 			<then>
-				<execute action="PGMessageboardsPostthread#assertTextEquals" locator1="ERROR_MESSAGE_2" value1="Please enter a file with a valid file size no larger than ${maxAttachmentFileSize}KB." />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsPostthread#ERROR_MESSAGE_2" value1="Please enter a file with a valid file size no larger than ${maxAttachmentFileSize}KB." />
 			</then>
 		</if>
 	</command>
 
 	<command name="addPG">
-		<execute action="PGMessageboards#click" locator1="POST_NEW_THREAD_BUTTON" />
+		<execute function="#click" locator1="PGMessageboards#POST_NEW_THREAD_BUTTON" />
 
-		<execute action="PGMessageboardsPostthread#type" locator1="SUBJECT_FIELD" value1="${threadSubject}" />
+		<execute function="#type" locator1="PGMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
 
 		<if>
 			<isset var="source" />
 			<then>
-				<execute action="PGMessageboardsPostthread#click" locator1="SOURCE_BUTTON" />
-				<execute action="PGMessageboardsPostthread#type" locator1="BODY_FIELD_SOURCE_ON" value1="${threadBody}" />
-				<execute action="PGMessageboardsPostthread#click" locator1="SOURCE_BUTTON" />
+				<execute function="#click" locator1="PGMessageboardsPostthread#SOURCE_BUTTON" />
+				<execute function="#type" locator1="PGMessageboardsPostthread#BODY_FIELD_SOURCE_ON" value1="${threadBody}" />
+				<execute function="#click" locator1="PGMessageboardsPostthread#SOURCE_BUTTON" />
 
 				<if>
 					<isset var="fontSize" />
 					<then>
 						<var name="key_fontSize" value="${fontSize}" />
 
-						<execute action="PGMessageboardsPostthread#assertClick" locator1="FONT_SIZE_DROPDOWN" value1="Size" />
-						<execute action="PGMessageboardsPostthread#assertTextEquals" locator1="FONT_SIZE_DROPDOWN_SELECT" value1="${key_fontSize}" />
+						<execute function="#assertClick" locator1="PGMessageboardsPostthread#FONT_SIZE_DROPDOWN" value1="Size" />
+						<execute function="#assertTextEquals" locator1="PGMessageboardsPostthread#FONT_SIZE_DROPDOWN_SELECT" value1="${key_fontSize}" />
 					</then>
 				</if>
 			</then>
 			<else>
-				<execute action="PGMessageboardsPostthread#type" locator1="BODY_FIELD" value1="${threadBody}" />
+				<execute function="#type" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
 			</else>
 		</if>
 
 		<if>
 			<equals arg1="${markAsQuestion}" arg2="true" />
 			<then>
-				<execute action="PGMessageboardsPostthread#check" locator1="MARK_AS_A_QUESTION_CHECKBOX" />
+				<execute function="#check" locator1="PGMessageboardsPostthread#MARK_AS_A_QUESTION_CHECKBOX" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${anonymous}" arg2="true" />
 			<then>
-				<execute action="PGMessageboardsPostthread#check" locator1="ANONYMOUS_CHECKBOX" />
+				<execute function="#check" locator1="PGMessageboardsPostthread#ANONYMOUS_CHECKBOX" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${priority}" arg2="true" />
 			<then>
-				<execute action="PGMessageboardsPostthread#select" locator1="PRIORITY_SELECT" value1="${threadPriority}" />
+				<execute function="#select" locator1="PGMessageboardsPostthread#PRIORITY_SELECT" value1="${threadPriority}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${source}" arg2="true" />
 			<then>
-				<execute action="PGMessageboardsPostthread#click" locator1="SOURCE_BUTTON" />
-				<execute action="PGMessageboardsPostthread#type" locator1="BODY_FIELD_SOURCE_ON" value1="${threadBody}" />
-				<execute action="PGMessageboardsPostthread#click" locator1="SOURCE_BUTTON" />
+				<execute function="#click" locator1="PGMessageboardsPostthread#SOURCE_BUTTON" />
+				<execute function="#type" locator1="PGMessageboardsPostthread#BODY_FIELD_SOURCE_ON" value1="${threadBody}" />
+				<execute function="#click" locator1="PGMessageboardsPostthread#SOURCE_BUTTON" />
 
 				<if>
 					<isset var="fontSize" />
 					<then>
 						<var name="key_fontSize" value="${fontSize}" />
 
-						<execute action="PGMessageboardsPostthread#assertClick" locator1="FONT_SIZE_DROPDOWN" value1="Size" />
-						<execute action="PGMessageboardsPostthread#assertTextEquals" locator1="FONT_SIZE_DROPDOWN_SELECT" value1="${key_fontSize}" />
+						<execute function="#assertClick" locator1="PGMessageboardsPostthread#FONT_SIZE_DROPDOWN" value1="Size" />
+						<execute function="#assertTextEquals" locator1="PGMessageboardsPostthread#FONT_SIZE_DROPDOWN_SELECT" value1="${key_fontSize}" />
 					</then>
 				</if>
 			</then>
 			<else>
-				<execute action="PGMessageboardsPostthread#type" locator1="BODY_FIELD" value1="${threadBody}" />
+				<execute function="#type" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
 			</else>
 		</if>
 
 		<if>
 			<equals arg1="${viewableBy}" arg2="true" />
 			<then>
-				<execute action="PGMessageboardsPostthread#select" locator1="PERMISSIONS_VIEWABLE_BY_DROPDOWN" value1="${viewableBySelection}" />
+				<execute function="#select" locator1="PGMessageboardsPostthread#PERMISSIONS_VIEWABLE_BY_DROPDOWN" value1="${viewableBySelection}" />
 			</then>
 		</if>
 
@@ -136,13 +136,13 @@
 			<isset var="mbThreadAttachment" />
 			<then>
 				<if>
-					<condition action="PGMessageboardsPostthread#isElementPresent" locator1="ATTACHMENTS_DROPDOWN_COLLAPSED" />
+					<condition function="#isElementPresent" locator1="PGMessageboardsPostthread#ATTACHMENTS_DROPDOWN_COLLAPSED" />
 					<then>
-						<execute action="PGMessageboardsPostthread#assertClick" locator1="ATTACHMENTS_DROPDOWN" value1="Attachments" />
+						<execute function="#assertClick" locator1="PGMessageboardsPostthread#ATTACHMENTS_DROPDOWN" value1="Attachments" />
 					</then>
 				</if>
 
-				<execute action="PGMessageboardsPostthread#uploadCommonFile" locator1="ATTACHMENTS_FILE_FIELD_1" value1="${mbThreadAttachment}" />
+				<execute function="#uploadCommonFile" locator1="PGMessageboardsPostthread#ATTACHMENTS_FILE_FIELD_1" value1="${mbThreadAttachment}" />
 			</then>
 		</if>
 
@@ -156,39 +156,39 @@
 		<if>
 			<equals arg1="${saveAsDraft}" arg2="true" />
 			<then>
-				<execute action="PGMessageboardsPostthread#assertClick" locator1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+				<execute function="#assertClick" locator1="PGMessageboardsPostthread#SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
 			</then>
 			<elseif>
 				<equals arg1="${preview}" arg2="true" />
 				<then>
-					<execute action="PGMessageboardsPostthread#assertClick" locator1="PREVIEW_BUTTON" value1="Preview" />
+					<execute function="#assertClick" locator1="PGMessageboardsPostthread#PREVIEW_BUTTON" value1="Preview" />
 
 					<var name="key_threadSubject" value="${threadSubject}" />
 
-					<execute action="PGMessageboardsThread#assertTextEquals" locator1="TITLE_HEADER" value1="Edit ${threadSubject}" />
-					<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_1" value1="${userName}" />
-					<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-					<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_WORKFLOW_STATUS_1" value1="Draft" />
-					<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_1" value1="${threadBody}" />
+					<execute function="#assertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="Edit ${threadSubject}" />
+					<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
+					<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+					<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_WORKFLOW_STATUS_1" value1="Draft" />
+					<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="PGMessageboardsPostthread#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+				<execute function="#assertClick" locator1="PGMessageboardsPostthread#PUBLISH_BUTTON" value1="Publish" />
 			</else>
 		</if>
 
-		<execute action="PGMessageboards#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addTagPGCmd">
-		<execute action="PGMessageboardsPostthread#assertTextEquals" locator1="SUBJECT_FIELD" value1="${threadSubject}" />
-		<execute action="PGMessageboardsPostthread#assertElementPresent" locator1="BODY_FIELD" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
+		<execute function="#assertElementPresent" locator1="PGMessageboardsPostthread#BODY_FIELD" />
 
 		<if>
-			<condition action="PGMessageboardsPostthread#isElementNotPresent" locator1="CATEGORIZATION_TAGS_ADD_BUTTON" />
+			<condition function="#isElementNotPresent" locator1="PGMessageboardsPostthread#CATEGORIZATION_TAGS_ADD_BUTTON" />
 			<then>
-				<execute action="PGMessageboardsPostthread#assertClick" locator1="CATEGORIZATION_TOGGLE" value1="Categorization" />
-				<execute action="PGMessageboardsPostthread#assertElementPresent" locator1="CATEGORIZATION_TAGS_ADD_BUTTON" />
+				<execute function="#assertClick" locator1="PGMessageboardsPostthread#CATEGORIZATION_TOGGLE" value1="Categorization" />
+				<execute function="#assertElementPresent" locator1="PGMessageboardsPostthread#CATEGORIZATION_TAGS_ADD_BUTTON" />
 			</then>
 		</if>
 
@@ -196,38 +196,38 @@
 			<isset var="tagNameList" />
 			<then>
 				<for list="${tagNameList}" param="tagName">
-					<execute action="PGMessageboardsPostthread#type" locator1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
-					<execute action="PGMessageboardsPostthread#assertClick" locator1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
+					<execute function="#type" locator1="PGMessageboardsPostthread#CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+					<execute function="#assertClick" locator1="PGMessageboardsPostthread#CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
 				</for>
 			</then>
 			<else>
 				<var name="key_tagName" value="${tagName}" />
 
-				<execute action="PGMessageboardsPostthread#type" locator1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
-				<execute action="PGMessageboardsPostthread#assertClick" locator1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
-				<execute action="PGMessageboardsPostthread#assertElementPresent" locator1="CATEGORIZATION_TAG" value1="${tagName}" />
+				<execute function="#type" locator1="PGMessageboardsPostthread#CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+				<execute function="#assertClick" locator1="PGMessageboardsPostthread#CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
+				<execute function="#assertElementPresent" locator1="PGMessageboardsPostthread#CATEGORIZATION_TAG" value1="${tagName}" />
 			</else>
 		</if>
 	</command>
 
 	<command name="addWithWorkflowCP">
-		<execute action="CPMessageboards#assertClick" locator1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="#assertClick" locator1="CPMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
-		<execute action="CPMessageboardsPostthread#type" locator1="SUBJECT_FIELD" value1="${threadSubject}" />
-		<execute action="CPMessageboardsPostthread#type" locator1="BODY_FIELD" value1="${threadBody}" />
-		<execute action="CPMessageboardsPostthread#click" locator1="SUBMIT_FOR_PUBLICATION_BUTTON" />
+		<execute function="#type" locator1="CPMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
+		<execute function="#type" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
+		<execute function="#click" locator1="CPMessageboardsPostthread#SUBMIT_FOR_PUBLICATION_BUTTON" />
 
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addWithWorkflowPG">
-		<execute action="PGMessageboards#click" locator1="POST_NEW_THREAD_BUTTON" />
+		<execute function="#click" locator1="PGMessageboards#POST_NEW_THREAD_BUTTON" />
 
-		<execute action="PGMessageboardsPostthread#type" locator1="SUBJECT_FIELD" value1="${threadSubject}" />
-		<execute action="PGMessageboardsPostthread#type" locator1="BODY_FIELD" value1="${threadBody}" />
-		<execute action="PGMessageboardsPostthread#click" locator1="SUBMIT_FOR_PUBLICATION_BUTTON" />
+		<execute function="#type" locator1="PGMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
+		<execute function="#type" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
+		<execute function="#click" locator1="PGMessageboardsPostthread#SUBMIT_FOR_PUBLICATION_BUTTON" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="assertAlertNotPresent">
@@ -238,37 +238,37 @@
 		<var name="key_userName" value="${userName}" />
 
 		<if>
-			<condition action="PGMessageboardsThread#isNotVisible" locator1="MESSAGE_USER_DETAILS" />
+			<condition function="#isNotVisible" locator1="PGMessageboardsThread#MESSAGE_USER_DETAILS" />
 			<then>
-				<execute action="PGMessageboardsThread#makeVisible" locator1="MESSAGE_USER_DETAILS" />
+				<execute function="#makeVisible" locator1="PGMessageboardsThread#MESSAGE_USER_DETAILS" />
 			</then>
 		</if>
 
-		<execute action="PGMessageboardsThread#assertClick" locator1="MESSAGE_BAN_THIS_USER" value1="Ban This User" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertClick" locator1="PGMessageboardsThread#MESSAGE_BAN_THIS_USER" value1="Ban This User" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deletePG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="PGMessageboards#click" locator1="THREAD_TABLE_ACTIONS" />
-		<execute action="PGMessageboards#click" locator1="THREAD_MENULIST_RECYCLE_BIN" />
-		<execute action="PGMessageboards#assertTextEquals" locator1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${threadSubject} was moved to the Recycle Bin. Undo" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_THREAD" />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#click" locator1="PGMessageboards#THREAD_TABLE_ACTIONS" />
+		<execute function="#click" locator1="PGMessageboards#THREAD_MENULIST_RECYCLE_BIN" />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${threadSubject} was moved to the Recycle Bin. Undo" />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboards#THREAD_TABLE_THREAD" />
 
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
 	<command name="editCP">
 		<if>
-			<condition action="CPMessageboardsThread#isElementNotPresent" locator1="MESSAGE_EDIT_1" />
+			<condition function="#isElementNotPresent" locator1="CPMessageboardsThread#MESSAGE_EDIT_1" />
 			<then>
-				<execute action="CPMessageboardsThread#makeVisible" locator1="MESSAGE_EDIT_1" value1="Edit" />
-				<execute action="CPMessageboardsThread#assertClick" locator1="MESSAGE_EDIT_1" value1="Edit" />
+				<execute function="#makeVisible" locator1="CPMessageboardsThread#MESSAGE_EDIT_1" value1="Edit" />
+				<execute function="#assertClick" locator1="CPMessageboardsThread#MESSAGE_EDIT_1" value1="Edit" />
 			</then>
 			<else>
-				<execute action="CPMessageboardsThread#assertClick" locator1="MESSAGE_EDIT_1" value1="Edit" />
+				<execute function="#assertClick" locator1="CPMessageboardsThread#MESSAGE_EDIT_1" value1="Edit" />
 			</else>
 		</if>
 
@@ -276,83 +276,83 @@
 			<equals arg1="${threadAttachmentRemove}" arg2="true" />
 			<then>
 				<if>
-					<condition action="CPMessageboardsPostthread#isNotVisible" locator1="ATTACHMENTS_REMOVE_LINK" />
+					<condition function="#isNotVisible" locator1="CPMessageboardsPostthread#ATTACHMENTS_REMOVE_LINK" />
 					<then>
-						<execute action="CPMessageboardsPostthread#click" locator1="ATTACHMENTS_DROPDOWN" />
+						<execute function="#click" locator1="CPMessageboardsPostthread#ATTACHMENTS_DROPDOWN" />
 					</then>
 				</if>
 
-				<execute action="CPMessageboardsPostthread#assertTextEquals" locator1="ATTACHMENTS_NAME" value1="${mbAttachmentFile}" />
-				<execute action="CPMessageboardsPostthread#assertClick" locator1="ATTACHMENTS_REMOVE_LINK" value1="Remove" />
+				<execute function="#assertTextEquals" locator1="CPMessageboardsPostthread#ATTACHMENTS_NAME" value1="${mbAttachmentFile}" />
+				<execute function="#assertClick" locator1="CPMessageboardsPostthread#ATTACHMENTS_REMOVE_LINK" value1="Remove" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="threadSubjectEdit" />
 			<then>
-				<execute action="CPMessageboardsPostthread#type" locator1="SUBJECT_FIELD" value1="${threadSubjectEdit}" />
+				<execute function="#type" locator1="CPMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubjectEdit}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="threadBodyEdit" />
 			<then>
-				<execute action="CPMessageboardsPostthread#type" locator1="BODY_FIELD" value1="${threadBodyEdit}" />
+				<execute function="#type" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBodyEdit}" />
 			</then>
 		</if>
 
-		<execute action="CPMessageboardsPostthread#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute function="#assertClick" locator1="CPMessageboardsPostthread#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="CPMessageboards#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertTextEquals" locator1="CPMessageboards#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editPG">
-		<execute action="PGMessageboardsThread#assertClick" locator1="MESSAGE_EDIT_1" value1="Edit" />
+		<execute function="#assertClick" locator1="PGMessageboardsThread#MESSAGE_EDIT_1" value1="Edit" />
 
 		<if>
 			<isset var="threadSubjectEdit" />
 			<then>
-				<execute action="PGMessageboardsPostthread#type" locator1="SUBJECT_FIELD" value1="${threadSubjectEdit}" />
+				<execute function="#type" locator1="PGMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubjectEdit}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="threadBodyEdit" />
 			<then>
-				<execute action="PGMessageboardsPostthread#type" locator1="BODY_FIELD" value1="${threadBodyEdit}" />
+				<execute function="#type" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadBodyEdit}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${saveAsDraft}" arg2="true" />
 			<then>
-				<execute action="PGMessageboardsPostthread#assertClick" locator1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+				<execute function="#assertClick" locator1="PGMessageboardsPostthread#SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
 			</then>
 			<elseif>
 				<equals arg1="${preview}" arg2="true" />
 				<then>
-					<execute action="PGMessageboardsPostthread#assertClickNoError" locator1="PREVIEW_BUTTON" value1="Preview" />
-					<execute action="PGMessageboardsPostthread#confirm" locator1="CONFIRMATION" value1="In order to preview your changes, the message will be saved as a draft and other users may not be able to see it. Are you sure you want to do this?" />
+					<execute function="#assertClickNoError" locator1="PGMessageboardsPostthread#PREVIEW_BUTTON" value1="Preview" />
+					<execute function="#confirm" locator1="PGMessageboardsPostthread#CONFIRMATION" value1="In order to preview your changes, the message will be saved as a draft and other users may not be able to see it. Are you sure you want to do this?" />
 
 					<var name="key_threadSubject" value="${threadSubject}" />
 
-					<execute action="PGMessageboardsThread#assertTextEquals" locator1="TITLE_HEADER" value1="Edit ${threadSubject}" />
-					<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_1" value1="${userName}" />
-					<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-					<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_WORKFLOW_STATUS_1" value1="Draft" />
-					<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_1" value1="${threadBodyEdit}" />
+					<execute function="#assertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="Edit ${threadSubject}" />
+					<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
+					<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+					<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_WORKFLOW_STATUS_1" value1="Draft" />
+					<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBodyEdit}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="PGMessageboardsPostthread#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+				<execute function="#assertClick" locator1="PGMessageboardsPostthread#PUBLISH_BUTTON" value1="Publish" />
 			</else>
 		</if>
 
-		<execute action="PGMessageboards#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editViaMyPosts">
-		<execute action="PGMessageboards#assertClick" locator1="NAVIGATION_MY_POSTS" value1="My Posts" />
+		<execute function="#assertClick" locator1="PGMessageboards#NAVIGATION_MY_POSTS" value1="My Posts" />
 
 		<var name="key_threadSubject" value="${threadSubject}" />
 
@@ -363,30 +363,30 @@
 			</then>
 		</if>
 
-		<execute action="PGMessageboardsMyposts#assertTextEquals" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="PGMessageboardsMyposts#click" locator1="THREAD_TABLE_ACTIONS" />
-		<execute action="PGMessageboardsMyposts#assertClick" locator1="THREAD_MENULIST_EDIT" value1="Edit" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#click" locator1="PGMessageboardsMyposts#THREAD_TABLE_ACTIONS" />
+		<execute function="#assertClick" locator1="PGMessageboardsMyposts#THREAD_MENULIST_EDIT" value1="Edit" />
 
-		<execute action="PGMessageboardsPostthread#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGMessageboards#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertClick" locator1="PGMessageboardsPostthread#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="flagPG">
-		<execute action="PGMessageboardsThread#assertClick" locator1="MESSAGE_FLAG_1" value1="Flag" />
+		<execute function="#assertClick" locator1="PGMessageboardsThread#MESSAGE_FLAG_1" value1="Flag" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="REPORT_INAPPROPRIATE_CONTENT_HEADER" value1="Report Inappropriate Content" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="REPORT_INAPPROPRIATE_CONTENT_WARNING" value1="You are about to report a violation of our Terms of Use. All reports are strictly confidential." />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="REPORT_INAPPROPRIATE_CONTENT_WARNING_TERMS_OF_USE_LINK" value1="Terms of Use" />
-		<execute action="PGMessageboardsThread#select" locator1="REPORT_INAPPROPRIATE_CONTENT_REASON_SELECT" value1="${flagReason}" />
-		<execute action="PGMessageboardsThread#assertClick" locator1="REPORT_INAPPROPRIATE_CONTENT_SAVE_BUTTON" value1="Save" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="REPORT_INAPPROPRIATE_CONTENT_SUCCESS_MESSAGE" value1="Although we cannot disclose our final decision, we do review every report and appreciate your effort to make sure Liferay is a safe environment for everyone." />
-		<execute action="PGMessageboardsThread#click" locator1="REPORT_INAPPROPRIATE_CONTENT_CLOSE_BUTTON" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#REPORT_INAPPROPRIATE_CONTENT_HEADER" value1="Report Inappropriate Content" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#REPORT_INAPPROPRIATE_CONTENT_WARNING" value1="You are about to report a violation of our Terms of Use. All reports are strictly confidential." />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#REPORT_INAPPROPRIATE_CONTENT_WARNING_TERMS_OF_USE_LINK" value1="Terms of Use" />
+		<execute function="#select" locator1="PGMessageboardsThread#REPORT_INAPPROPRIATE_CONTENT_REASON_SELECT" value1="${flagReason}" />
+		<execute function="#assertClick" locator1="PGMessageboardsThread#REPORT_INAPPROPRIATE_CONTENT_SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#REPORT_INAPPROPRIATE_CONTENT_SUCCESS_MESSAGE" value1="Although we cannot disclose our final decision, we do review every report and appreciate your effort to make sure Liferay is a safe environment for everyone." />
+		<execute function="#click" locator1="PGMessageboardsThread#REPORT_INAPPROPRIATE_CONTENT_CLOSE_BUTTON" />
 	</command>
 
 	<command name="gotoCP">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="CPMessageboards#assertClick" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertClick" locator1="CPMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 	</command>
 
 	<command name="gotoPG">
@@ -403,11 +403,11 @@
 				</execute>
 			</then>
 			<else>
-				<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-				<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_STARTED_BY" value1="${startedByUserName}" />
-				<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_POSTS" value1="${postCount}" />
-				<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_LAST_POST" value1="${lastPostUserName}" />
-				<execute action="PGMessageboards#click" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_STARTED_BY" value1="${startedByUserName}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_POSTS" value1="${postCount}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_LAST_POST" value1="${lastPostUserName}" />
+				<execute function="#click" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 			</else>
 		</if>
 	</command>
@@ -415,23 +415,23 @@
 	<command name="lockPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="PGMessageboards#click" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#click" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertClick" locator1="THREAD_ACTIONS_LOCK_THREAD" value1="Lock Thread" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertClick" locator1="PGMessageboardsThread#THREAD_ACTIONS_LOCK_THREAD" value1="Lock Thread" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="markAsAnswerCP">
-		<execute action="CPMessageboardsThread#assertClick" locator1="MESSAGE_MARK_AS_AN_ANSWER_1" value1="Mark as an Answer" />
+		<execute function="#assertClick" locator1="CPMessageboardsThread#MESSAGE_MARK_AS_AN_ANSWER_1" value1="Mark as an Answer" />
 
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="MESSAGE_ANSWER_1" value1="Answer" />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 	</command>
 
 	<command name="markAsAnswerPG">
-		<execute action="PGMessageboardsThread#assertClick" locator1="MESSAGE_MARK_AS_AN_ANSWER_1" value1="Mark as an Answer" />
+		<execute function="#assertClick" locator1="PGMessageboardsThread#MESSAGE_MARK_AS_AN_ANSWER_1" value1="Mark as an Answer" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_ANSWER_1" value1="Answer" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 	</command>
 
 	<command name="movePG">
@@ -442,40 +442,40 @@
 			<then>
 				<var name="key_categoryDescription" value="${categoryDescription}" />
 
-				<execute action="PGMessageboards#assertClick" locator1="CATEGORY_TABLE_CATEGORY_DESCRIPTION" value1="${categoryDescription}" />
+				<execute function="#assertClick" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORY_DESCRIPTION" value1="${categoryDescription}" />
 			</then>
 			<else>
 				<var name="key_categoryName" value="${categoryName1}" />
 
-				<execute action="PGMessageboards#assertClick" locator1="CATEGORY_TABLE_CATEGORY" value1="${categoryName1}" />
+				<execute function="#assertClick" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORY" value1="${categoryName1}" />
 			</else>
 		</if>
 
-		<execute action="PGMessageboardsCategory#click" locator1="THREAD_TABLE_ACTIONS_GENERIC" />
-		<execute action="PGMessageboardsCategory#assertClick" locator1="THREAD_MENULIST_MOVE" value1="Move" />
+		<execute function="#click" locator1="PGMessageboardsCategory#THREAD_TABLE_ACTIONS_GENERIC" />
+		<execute function="#assertClick" locator1="PGMessageboardsCategory#THREAD_MENULIST_MOVE" value1="Move" />
 
-		<execute action="PGMessageboardsMovethread#assertClick" locator1="SELECT_BUTTON" value1="Select" />
+		<execute function="#assertClick" locator1="PGMessageboardsMovethread#SELECT_BUTTON" value1="Select" />
 
-		<execute action="PGMessageboardsMovethreadSelectcategory#selectFrame" locator1="SELECT_CATEGORY_IFRAME" />
+		<execute function="#selectFrame" locator1="PGMessageboardsMovethreadSelectcategory#SELECT_CATEGORY_IFRAME" />
 
 		<var name="key_categoryName" value="${categoryName2}" />
 
-		<execute action="PGMessageboardsMovethreadSelectcategory#assertClick" locator1="CATEGORY_TABLE_CHOOSE_BUTTON_2" value1="Choose" />
+		<execute function="#assertClick" locator1="PGMessageboardsMovethreadSelectcategory#CATEGORY_TABLE_CHOOSE_BUTTON_2" value1="Choose" />
 
 		<if>
 			<equals arg1="${explanationPost}" arg2="true" />
 			<then>
 				<execute action="PGMessageboardsMovethread#selectFrame" value1="relative=top" />
-				<execute action="PGMessageboardsMovethread#assertElementPresent" locator1="CATEGORY_FIELD" />
-				<execute action="PGMessageboardsMovethread#check" locator1="ADD_EXPLANATION_POST_CHECKBOX" />
-				<execute action="PGMessageboardsMovethread#type" locator1="ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${explanationSubject}" />
-				<execute action="PGMessageboardsMovethread#type" locator1="ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
+				<execute function="#assertElementPresent" locator1="PGMessageboardsMovethread#CATEGORY_FIELD" />
+				<execute function="#check" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_CHECKBOX" />
+				<execute function="#type" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${explanationSubject}" />
+				<execute function="#type" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
 			</then>
 		</if>
 
 		<execute action="PGMessageboardsMovethread#selectFrame" value1="relative=top" />
-		<execute action="PGMessageboardsMovethread#assertElementPresent" locator1="CATEGORY_FIELD" />
-		<execute action="PGMessageboardsMovethread#assertClick" locator1="MOVE_THREAD_BUTTON" value1="Move Thread" />
+		<execute function="#assertElementPresent" locator1="PGMessageboardsMovethread#CATEGORY_FIELD" />
+		<execute function="#assertClick" locator1="PGMessageboardsMovethread#MOVE_THREAD_BUTTON" value1="Move Thread" />
 	</command>
 
 	<command name="moveToHomePG">
@@ -486,81 +486,81 @@
 			<then>
 				<var name="key_categoryDescription" value="${categoryDescription}" />
 
-				<execute action="PGMessageboards#assertClick" locator1="CATEGORY_TABLE_CATEGORY_DESCRIPTION" value1="${categoryDescription}" />
+				<execute function="#assertClick" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORY_DESCRIPTION" value1="${categoryDescription}" />
 			</then>
 			<else>
 				<var name="key_categoryName" value="${categoryName}" />
 
-				<execute action="PGMessageboards#assertClick" locator1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+				<execute function="#assertClick" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
 			</else>
 		</if>
 
-		<execute action="PGMessageboardsCategory#assertClick" locator1="THREAD_TABLE_ACTIONS_GENERIC" value1="Actions" />
-		<execute action="PGMessageboardsCategory#assertClick" locator1="THREAD_MENULIST_MOVE" value1="Move" />
+		<execute function="#assertClick" locator1="PGMessageboardsCategory#THREAD_TABLE_ACTIONS_GENERIC" value1="Actions" />
+		<execute function="#assertClick" locator1="PGMessageboardsCategory#THREAD_MENULIST_MOVE" value1="Move" />
 
-		<execute action="PGMessageboardsMovethread#assertClick" locator1="SELECT_BUTTON" value1="Select" />
+		<execute function="#assertClick" locator1="PGMessageboardsMovethread#SELECT_BUTTON" value1="Select" />
 
-		<execute action="PGMessageboardsMovethreadSelectcategory#selectFrame" locator1="SELECT_CATEGORY_IFRAME" />
+		<execute function="#selectFrame" locator1="PGMessageboardsMovethreadSelectcategory#SELECT_CATEGORY_IFRAME" />
 
 		<if>
-			<condition action="PGMessageboardsMovethreadSelectcategory#isElementPresent" locator1="CATEGORIES_LINK" />
+			<condition function="#isElementPresent" locator1="PGMessageboardsMovethreadSelectcategory#CATEGORIES_LINK" />
 			<then>
-				<execute action="PGMessageboardsMovethreadSelectcategory#assertClick" locator1="CATEGORIES_LINK" value1="Categories" />
+				<execute function="#assertClick" locator1="PGMessageboardsMovethreadSelectcategory#CATEGORIES_LINK" value1="Categories" />
 			</then>
 		</if>
 
-		<execute action="PGMessageboardsMovethreadSelectcategory#assertClick" locator1="CHOOSE_THIS_CATEGORY_BUTTON" value1="Choose This Category" />
+		<execute function="#assertClick" locator1="PGMessageboardsMovethreadSelectcategory#CHOOSE_THIS_CATEGORY_BUTTON" value1="Choose This Category" />
 
 		<if>
 			<equals arg1="${explanationPost}" arg2="true" />
 			<then>
 				<execute action="PGMessageboardsMovethread#selectFrame" value1="relative=top" />
-				<execute action="PGMessageboardsMovethread#assertElementPresent" locator1="CATEGORY_FIELD" />
-				<execute action="PGMessageboardsMovethread#check" locator1="ADD_EXPLANATION_POST_CHECKBOX" />
-				<execute action="PGMessageboardsMovethread#type" locator1="ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${explanationSubject}" />
-				<execute action="PGMessageboardsMovethread#type" locator1="ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
+				<execute function="#assertElementPresent" locator1="PGMessageboardsMovethread#CATEGORY_FIELD" />
+				<execute function="#check" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_CHECKBOX" />
+				<execute function="#type" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${explanationSubject}" />
+				<execute function="#type" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
 			</then>
 		</if>
 
 		<execute action="PGMessageboardsMovethread#selectFrame" value1="relative=top" />
-		<execute action="PGMessageboardsMovethread#assertElementPresent" locator1="CATEGORY_FIELD" />
-		<execute action="PGMessageboardsMovethread#assertClick" locator1="MOVE_THREAD_BUTTON" value1="Move Thread" />
+		<execute function="#assertElementPresent" locator1="PGMessageboardsMovethread#CATEGORY_FIELD" />
+		<execute function="#assertClick" locator1="PGMessageboardsMovethread#MOVE_THREAD_BUTTON" value1="Move Thread" />
 	</command>
 
 	<command name="moveToRecycleBinCP">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="CPMessageboards#assertTextEquals" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="CPMessageboards#click" locator1="THREAD_TABLE_ACTIONS" />
-		<execute action="CPMessageboards#assertElementPresent" locator1="THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
-		<execute action="CPMessageboards#assertClick" locator1="THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute action="CPMessageboards#assertTextEquals" locator1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${threadSubject} was moved to the Recycle Bin. Undo" />
-		<execute action="CPMessageboards#assertTextEquals" locator1="INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
+		<execute function="#assertTextEquals" locator1="CPMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#click" locator1="CPMessageboards#THREAD_TABLE_ACTIONS" />
+		<execute function="#assertElementPresent" locator1="CPMessageboards#THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
+		<execute function="#assertClick" locator1="CPMessageboards#THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="#assertTextEquals" locator1="CPMessageboards#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${threadSubject} was moved to the Recycle Bin. Undo" />
+		<execute function="#assertTextEquals" locator1="CPMessageboards#INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
 	</command>
 
 	<command name="quickReplyPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboards#assertClick" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertClick" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertClick" locator1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
+		<execute function="#assertClick" locator1="PGMessageboardsThread#MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
 
-		<execute action="PGMessageboardsThread#type" locator1="QUICK_REPLY_BODY_FIELD" value1="${threadReplyBody}" />
-		<execute action="PGMessageboardsThread#assertClick" locator1="QUICK_REPLY_PUBLISH_BUTTON" value1="Publish" />
+		<execute function="#type" locator1="PGMessageboardsThread#QUICK_REPLY_BODY_FIELD" value1="${threadReplyBody}" />
+		<execute function="#assertClick" locator1="PGMessageboardsThread#QUICK_REPLY_PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="ratePG">
 		<if>
 			<equals arg1="${ratingType}" arg2="Positive" />
 			<then>
-				<execute action="PGMessageboardsThread#click" locator1="MESSAGE_RATING_1_UPVOTE" />
+				<execute function="#click" locator1="PGMessageboardsThread#MESSAGE_RATING_1_UPVOTE" />
 			</then>
 			<elseif>
 				<equals arg1="${ratingType}" arg2="Negative" />
 				<then>
-					<execute action="PGMessageboardsThread#click" locator1="MESSAGE_RATING_1_DOWNVOTE" />
+					<execute function="#click" locator1="PGMessageboardsThread#MESSAGE_RATING_1_DOWNVOTE" />
 				</then>
 			</elseif>
 		</if>
@@ -570,14 +570,14 @@
 		<var name="key_roleName" value="${key_roleName?lowercase()}" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboards#click" locator1="THREAD_TABLE_ACTIONS" />
-		<execute action="PGMessageboards#assertClick" locator1="THREAD_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute function="#click" locator1="PGMessageboards#THREAD_TABLE_ACTIONS" />
+		<execute function="#assertClick" locator1="PGMessageboards#THREAD_MENULIST_PERMISSIONS" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
-		<execute action="Permissions#assertTextEquals" locator1="HEADER_TITLE" value1="${threadSubject}" />
-		<execute action="Permissions#uncheck" locator1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
-		<execute action="Permissions#assertClick" locator1="SAVE_BUTTON" value1="Save" />
-		<execute action="Permissions#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#selectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
+		<execute function="#assertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${threadSubject}" />
+		<execute function="#uncheck" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+		<execute function="#assertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Permissions#selectFrame" value1="relative=top" />
 	</command>
 
@@ -588,17 +588,17 @@
 			<equals arg1="${markAsQuestion}" arg2="true" />
 			<then>
 				<var name="key_threadSubject" value="${threadSubject}" />
-				<execute action="CPMessageboards#assertTextEquals" locator1="THREAD_TABLE_FLAG" value1="Waiting for an Answer" />
+				<execute function="#assertTextEquals" locator1="CPMessageboards#THREAD_TABLE_FLAG" value1="Waiting for an Answer" />
 			</then>
 		</if>
 
-		<execute action="CPMessageboards#assertClick" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="CPMessageboardsThread#assertClick" locator1="MESSAGE_REPLY_1" value1="Reply" />
+		<execute function="#assertClick" locator1="CPMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertClick" locator1="CPMessageboardsThread#MESSAGE_REPLY_1" value1="Reply" />
 
-		<execute action="CPMessageboardsPostthread#type" locator1="BODY_FIELD" value1="${threadReplyBody}" />
-		<execute action="CPMessageboardsPostthread#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute function="#type" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadReplyBody}" />
+		<execute function="#assertClick" locator1="CPMessageboardsPostthread#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<if>
 			<equals arg1="${markAsAnswer}" arg2="true" />
@@ -614,13 +614,13 @@
 			<then>
 				<var name="key_threadSubject" value="${threadSubject}" />
 
-				<execute action="PGMessageboardsCategory#assertClick" locator1="QUESTION_CATEGORY_THREAD_TABLE_QUESTION" value1="${threadSubject}" />
+				<execute function="#assertClick" locator1="PGMessageboardsCategory#QUESTION_CATEGORY_THREAD_TABLE_QUESTION" value1="${threadSubject}" />
 			</then>
 			<else>
 				<var name="key_threadSubject" value="${threadSubject}" />
 
-				<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-				<execute action="PGMessageboards#click" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+				<execute function="#click" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 			</else>
 		</if>
 
@@ -629,19 +629,19 @@
 			<then>
 				<var name="key_threadBody" value="${threadBody}" />
 
-				<execute action="PGMessageboardsThread#assertClick" locator1="MESSAGE_REPLY_SPECIFIC" value1="Reply" />
+				<execute function="#assertClick" locator1="PGMessageboardsThread#MESSAGE_REPLY_SPECIFIC" value1="Reply" />
 			</then>
 			<else>
-				<execute action="PGMessageboardsThread#assertClick" locator1="MESSAGE_REPLY_1" value1="Reply" />
+				<execute function="#assertClick" locator1="PGMessageboardsThread#MESSAGE_REPLY_1" value1="Reply" />
 			</else>
 		</if>
 
-		<execute action="PGMessageboardsPostthread#type" locator1="BODY_FIELD" value1="${threadReplyBody}" />
+		<execute function="#type" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadReplyBody}" />
 
 		<if>
 			<equals arg1="${anonymous}" arg2="true" />
 			<then>
-				<execute action="PGMessageboardsPostthread#check" locator1="ANONYMOUS_CHECKBOX" />
+				<execute function="#check" locator1="PGMessageboardsPostthread#ANONYMOUS_CHECKBOX" />
 			</then>
 		</if>
 
@@ -649,19 +649,19 @@
 			<isset var="mbThreadAttachment" />
 			<then>
 				<if>
-					<condition action="PGMessageboardsPostthread#isElementPresent" locator1="ATTACHMENTS_DROPDOWN_COLLAPSED" />
+					<condition function="#isElementPresent" locator1="PGMessageboardsPostthread#ATTACHMENTS_DROPDOWN_COLLAPSED" />
 					<then>
-						<execute action="PGMessageboardsPostthread#assertClick" locator1="ATTACHMENTS_DROPDOWN" value1="Attachments" />
+						<execute function="#assertClick" locator1="PGMessageboardsPostthread#ATTACHMENTS_DROPDOWN" value1="Attachments" />
 					</then>
 				</if>
 
-				<execute action="PGMessageboardsPostthread#uploadCommonFile" locator1="ATTACHMENTS_FILE_FIELD_1" value1="${mbThreadAttachment}" />
+				<execute function="#uploadCommonFile" locator1="PGMessageboardsPostthread#ATTACHMENTS_FILE_FIELD_1" value1="${mbThreadAttachment}" />
 			</then>
 		</if>
 
-		<execute action="PGMessageboardsPostthread#click" locator1="PUBLISH_BUTTON" />
+		<execute function="#click" locator1="PGMessageboardsPostthread#PUBLISH_BUTTON" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<if>
 			<equals arg1="${markAsAnswer}" arg2="true" />
@@ -674,58 +674,58 @@
 	<command name="replyWithQuotePG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="PGMessageboards#click" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#click" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertClick" locator1="MESSAGE_REPLY_WITH_QUOTE_1" value1="Reply with Quote" />
+		<execute function="#assertClick" locator1="PGMessageboardsThread#MESSAGE_REPLY_WITH_QUOTE_1" value1="Reply with Quote" />
 
-		<execute action="PGMessageboardsPostthread#click" locator1="SOURCE_BUTTON" />
-		<execute action="PGMessageboardsPostthread#type" locator1="BODY_FIELD_SOURCE_ON_SEND_KEYS" value1="${threadReplyBody}" />
-		<execute action="PGMessageboardsPostthread#click" locator1="PUBLISH_BUTTON" />
+		<execute function="#click" locator1="PGMessageboardsPostthread#SOURCE_BUTTON" />
+		<execute function="#type" locator1="PGMessageboardsPostthread#BODY_FIELD_SOURCE_ON_SEND_KEYS" value1="${threadReplyBody}" />
+		<execute function="#click" locator1="PGMessageboardsPostthread#PUBLISH_BUTTON" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="restoreMBAttachmentCP">
-		<execute action="CPMessageboardsThread#click" locator1="MESSAGE_BODY_ATTACHMENT_1" />
+		<execute function="#click" locator1="CPMessageboardsThread#MESSAGE_BODY_ATTACHMENT_1" />
 
 		<var name="key_mbAttachmentFile" value="${mbAttachmentFile}" />
 
-		<execute action="CPMessageboardsRemovedAttachments#assertTextEquals" locator1="ATTACHMENT_TABLE_NAME" value1="${mbAttachmentFile}" />
-		<execute action="CPMessageboardsRemovedAttachments#click" locator1="ATTACHMENT_TABLE_ACTIONS" />
-		<execute action="CPMessageboardsRemovedAttachments#assertClick" locator1="ATTACHMENT_MENULIST_RESTORE" value1="Restore" />
-		<execute action="CPMessageboardsRemovedAttachments#assertTextEquals" locator1="INFO_MESSAGE" value1="This message does not have file attachments in the Recycle Bin." />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsRemovedAttachments#ATTACHMENT_TABLE_NAME" value1="${mbAttachmentFile}" />
+		<execute function="#click" locator1="CPMessageboardsRemovedAttachments#ATTACHMENT_TABLE_ACTIONS" />
+		<execute function="#assertClick" locator1="CPMessageboardsRemovedAttachments#ATTACHMENT_MENULIST_RESTORE" value1="Restore" />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsRemovedAttachments#INFO_MESSAGE" value1="This message does not have file attachments in the Recycle Bin." />
 	</command>
 
 	<command name="searchPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboards#type" locator1="NAVIGATION_SEARCH_FIELD" value1="${threadKeyword}" />
-		<execute action="PGMessageboards#assertClick" locator1="NAVIGATION_SEARCH_BUTTON" value1="Search" />
+		<execute function="#type" locator1="PGMessageboards#NAVIGATION_SEARCH_FIELD" value1="${threadKeyword}" />
+		<execute function="#assertClick" locator1="PGMessageboards#NAVIGATION_SEARCH_BUTTON" value1="Search" />
 
-		<execute action="PGMessageboardsSearch#assertTextEquals" locator1="SEARCH_RESULTS_ENTRY_TITLE" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsSearch#SEARCH_RESULTS_ENTRY_TITLE" value1="${threadSubject}" />
 	</command>
 
 	<command name="splitThreadPG">
 		<var name="key_threadBody" value="${threadReplyBody}" />
 
-		<execute action="PGMessageboardsThread#assertClick" locator1="MESSAGE_SPLIT_THREAD" value1="Split Thread" />
+		<execute function="#assertClick" locator1="PGMessageboardsThread#MESSAGE_SPLIT_THREAD" value1="Split Thread" />
 
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboardsSplitthread#assertTextEquals" locator1="INFO_MESSAGE" value1="Click OK to create a new thread with the following messages." />
-		<execute action="PGMessageboardsSplitthread#assertTextEquals" locator1="THREAD_TABLE_SUBJECT" value1="RE: ${threadSubject}" />
-		<execute action="PGMessageboardsSplitthread#type" locator1="SUBJECT_FIELD" value1="${threadSplitSubject}" />
-		<execute action="PGMessageboardsSplitthread#assertTextEquals" locator1="ADD_EXPLANATION_POST_LABEL" value1="Add explanation post to the source thread." />
-		<execute action="PGMessageboardsSplitthread#check" locator1="ADD_EXPLANATION_POST_CHECKBOX" />
-		<execute action="PGMessageboardsSplitthread#assertTextEquals" locator1="ADD_EXPLANATION_POST_INFO_MESSAGE" value1="The following post will be added in place of the moved message." />
-		<execute action="PGMessageboardsSplitthread#type" locator1="ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${threadSplitReplySubject}" />
-		<execute action="PGMessageboardsSplitthread#type" locator1="ADD_EXPLANATION_POST_BODY_FIELD" value1="${threadSplitReplyBody}" />
-		<execute action="PGMessageboardsSplitthread#assertClick" locator1="OK_BUTTON" value1="OK" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsSplitthread#INFO_MESSAGE" value1="Click OK to create a new thread with the following messages." />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsSplitthread#THREAD_TABLE_SUBJECT" value1="RE: ${threadSubject}" />
+		<execute function="#type" locator1="PGMessageboardsSplitthread#SUBJECT_FIELD" value1="${threadSplitSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsSplitthread#ADD_EXPLANATION_POST_LABEL" value1="Add explanation post to the source thread." />
+		<execute function="#check" locator1="PGMessageboardsSplitthread#ADD_EXPLANATION_POST_CHECKBOX" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsSplitthread#ADD_EXPLANATION_POST_INFO_MESSAGE" value1="The following post will be added in place of the moved message." />
+		<execute function="#type" locator1="PGMessageboardsSplitthread#ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${threadSplitReplySubject}" />
+		<execute function="#type" locator1="PGMessageboardsSplitthread#ADD_EXPLANATION_POST_BODY_FIELD" value1="${threadSplitReplyBody}" />
+		<execute function="#assertClick" locator1="PGMessageboardsSplitthread#OK_BUTTON" value1="OK" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="TITLE_HEADER" value1="${threadSplitSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_1" value1="${threadReplyBody}" />
-		<execute action="PGMessageboardsThread#assertElementNotPresent" locator1="MESSAGE_BODY_2" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSplitSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadReplyBody}" />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboardsThread#MESSAGE_BODY_2" />
 	</command>
 
 	<command name="tearDownCP">
@@ -734,11 +734,11 @@
 		</execute>
 
 		<if>
-			<condition action="CPMessageboards#isElementPresent" locator1="THREAD_TABLE_ALL_CHECKBOX" />
+			<condition function="#isElementPresent" locator1="CPMessageboards#THREAD_TABLE_ALL_CHECKBOX" />
 			<then>
-				<execute action="CPMessageboards#check" locator1="THREAD_TABLE_ALL_CHECKBOX" />
-				<execute action="CPMessageboards#assertClick" locator1="THREADS_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
-				<execute action="CPMessageboards#assertTextEquals" locator1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
+				<execute function="#check" locator1="CPMessageboards#THREAD_TABLE_ALL_CHECKBOX" />
+				<execute function="#assertClick" locator1="CPMessageboards#THREADS_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
+				<execute function="#assertTextEquals" locator1="CPMessageboards#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</if>
 
@@ -755,20 +755,20 @@
 		</execute>
 
 		<while>
-			<condition action="PGMessageboards#isElementPresent" locator1="THREAD_TABLE_ACTIONS_GENERIC" />
+			<condition function="#isElementPresent" locator1="PGMessageboards#THREAD_TABLE_ACTIONS_GENERIC" />
 			<then>
-				<execute action="PGMessageboards#click" locator1="THREAD_TABLE_ACTIONS_GENERIC" />
-				<execute action="PGMessageboardsMyposts#assertClick" locator1="THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+				<execute function="#click" locator1="PGMessageboards#THREAD_TABLE_ACTIONS_GENERIC" />
+				<execute function="#assertClick" locator1="PGMessageboardsMyposts#THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 			</then>
 		</while>
 
-		<execute action="PGMessageboards#assertClick" locator1="NAVIGATION_MY_POSTS" value1="My Posts" />
+		<execute function="#assertClick" locator1="PGMessageboards#NAVIGATION_MY_POSTS" value1="My Posts" />
 
 		<while>
-			<condition action="PGMessageboardsMyposts#isElementPresent" locator1="THREAD_TABLE_ACTIONS_GENERIC" />
+			<condition function="#isElementPresent" locator1="PGMessageboardsMyposts#THREAD_TABLE_ACTIONS_GENERIC" />
 			<then>
-				<execute action="PGMessageboardsMyposts#click" locator1="THREAD_TABLE_ACTIONS_GENERIC" />
-				<execute action="PGMessageboardsMyposts#assertClick" locator1="THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+				<execute function="#click" locator1="PGMessageboardsMyposts#THREAD_TABLE_ACTIONS_GENERIC" />
+				<execute function="#assertClick" locator1="PGMessageboardsMyposts#THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 			</then>
 		</while>
 
@@ -780,42 +780,42 @@
 	</command>
 
 	<command name="viewAnonymousPostingCheckboxCP">
-		<execute action="CPMessageboards#assertClick" locator1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="#assertClick" locator1="CPMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
-		<execute action="CPMessageboardsPostthread#assertElementPresent" locator1="ANONYMOUS_CHECKBOX" />
+		<execute function="#assertElementPresent" locator1="CPMessageboardsPostthread#ANONYMOUS_CHECKBOX" />
 	</command>
 
 	<command name="viewAnswerCP">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="CPMessageboards#assertTextEquals" locator1="THREAD_TABLE_FLAG" value1="Resolved" />
-		<execute action="CPMessageboards#assertClick" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="MESSAGE_ANSWER_1" value1="Answer" />
-		<execute action="CPMessageboardsThread#assertClick" locator1="THREAD_CONTROLS_BACK" value1="Back" />
+		<execute function="#assertTextEquals" locator1="CPMessageboards#THREAD_TABLE_FLAG" value1="Resolved" />
+		<execute function="#assertClick" locator1="CPMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#MESSAGE_ANSWER_1" value1="Answer" />
+		<execute function="#assertClick" locator1="CPMessageboardsThread#THREAD_CONTROLS_BACK" value1="Back" />
 	</command>
 
 	<command name="viewCP">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="CPMessageboards#assertElementPresent" locator1="THREAD_TABLE_CHECKBOX" />
-		<execute action="CPMessageboards#assertTextEquals" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="CPMessageboards#assertElementPresent" locator1="THREAD_TABLE_FLAG" />
-		<execute action="CPMessageboards#assertTextEquals" locator1="THREAD_TABLE_STARTED_BY" value1="${userName}" />
-		<execute action="CPMessageboards#assertTextEquals" locator1="THREAD_TABLE_POSTS" value1="${postsNumber}" />
-		<execute action="CPMessageboards#assertElementPresent" locator1="THREAD_TABLE_VIEWS" />
-		<execute action="CPMessageboards#assertTextEquals" locator1="THREAD_TABLE_LAST_POST" value1="${userName}" />
-		<execute action="CPMessageboards#assertElementPresent" locator1="THREAD_TABLE_ACTIONS" />
-		<execute action="CPMessageboards#assertClick" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertElementPresent" locator1="CPMessageboards#THREAD_TABLE_CHECKBOX" />
+		<execute function="#assertTextEquals" locator1="CPMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertElementPresent" locator1="CPMessageboards#THREAD_TABLE_FLAG" />
+		<execute function="#assertTextEquals" locator1="CPMessageboards#THREAD_TABLE_STARTED_BY" value1="${userName}" />
+		<execute function="#assertTextEquals" locator1="CPMessageboards#THREAD_TABLE_POSTS" value1="${postsNumber}" />
+		<execute function="#assertElementPresent" locator1="CPMessageboards#THREAD_TABLE_VIEWS" />
+		<execute function="#assertTextEquals" locator1="CPMessageboards#THREAD_TABLE_LAST_POST" value1="${userName}" />
+		<execute function="#assertElementPresent" locator1="CPMessageboards#THREAD_TABLE_ACTIONS" />
+		<execute function="#assertClick" locator1="CPMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="TITLE_HEADER" value1="${threadSubject}" />
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_1" value1="${userName}" />
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_1" value1="${threadBody}" />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#TITLE_HEADER" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
 
 		<if>
 			<isset var="mbAttachmentFile" />
 			<then>
-				<execute action="CPMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_ATTACHMENT_1" value1="${mbAttachmentFile}" />
+				<execute function="#assertTextEquals" locator1="CPMessageboardsThread#MESSAGE_BODY_ATTACHMENT_1" value1="${mbAttachmentFile}" />
 			</then>
 		</if>
 	</command>
@@ -823,29 +823,29 @@
 	<command name="viewDefaultCP">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="CPMessageboards#assertTextEquals" locator1="INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
+		<execute function="#assertTextEquals" locator1="CPMessageboards#INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
 		<execute action="CPMessageboards#assertTextNotPresent" value1="${threadSubject}" />
-		<execute action="CPMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_CHECKBOX" />
-		<execute action="CPMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_THREAD" />
-		<execute action="CPMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_FLAG" />
-		<execute action="CPMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_STARTED_BY" />
-		<execute action="CPMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_POSTS" />
-		<execute action="CPMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_VIEWS" />
-		<execute action="CPMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_LAST_POST" />
-		<execute action="CPMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_ACTIONS" />
+		<execute function="#assertElementNotPresent" locator1="CPMessageboards#THREAD_TABLE_CHECKBOX" />
+		<execute function="#assertElementNotPresent" locator1="CPMessageboards#THREAD_TABLE_THREAD" />
+		<execute function="#assertElementNotPresent" locator1="CPMessageboards#THREAD_TABLE_FLAG" />
+		<execute function="#assertElementNotPresent" locator1="CPMessageboards#THREAD_TABLE_STARTED_BY" />
+		<execute function="#assertElementNotPresent" locator1="CPMessageboards#THREAD_TABLE_POSTS" />
+		<execute function="#assertElementNotPresent" locator1="CPMessageboards#THREAD_TABLE_VIEWS" />
+		<execute function="#assertElementNotPresent" locator1="CPMessageboards#THREAD_TABLE_LAST_POST" />
+		<execute function="#assertElementNotPresent" locator1="CPMessageboards#THREAD_TABLE_ACTIONS" />
 	</command>
 
 	<command name="viewLockedPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboards#assertElementPresent" locator1="THREAD_TABLE_THREAD_LOCKED_ICON" />
-		<execute action="PGMessageboards#assertClick" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertElementPresent" locator1="PGMessageboards#THREAD_TABLE_THREAD_LOCKED_ICON" />
+		<execute function="#assertClick" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="THREAD_ACTIONS_UNLOCK_THREAD" value1="Unlock Thread" />
-		<execute action="PGMessageboardsThread#assertElementNotPresent" locator1="MESSAGE_REPLY_1" value1="Reply" />
-		<execute action="PGMessageboardsThread#assertElementNotPresent" locator1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
-		<execute action="PGMessageboardsThread#assertElementNotPresent" locator1="MESSAGE_REPLY_WITH_QUOTE_1" value1="Reply with Quote" />
-		<execute action="PGMessageboardsThread#assertElementNotPresent" locator1="MESSAGE_EDIT_1" value1="Edit" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#THREAD_ACTIONS_UNLOCK_THREAD" value1="Unlock Thread" />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboardsThread#MESSAGE_REPLY_1" value1="Reply" />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboardsThread#MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboardsThread#MESSAGE_REPLY_WITH_QUOTE_1" value1="Reply with Quote" />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboardsThread#MESSAGE_EDIT_1" value1="Edit" />
 	</command>
 
 	<command name="viewMarkAsAnswerPG">
@@ -854,91 +854,91 @@
 		<if>
 			<equals arg1="${displayStyle}" arg2="Question" />
 			<then>
-				<execute action="PGMessageboardsCategory#assertTextEquals" locator1="QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_ANSWERS" value1="${questionAnswers}" />
-				<execute action="PGMessageboardsCategory#assertClick" locator1="QUESTION_CATEGORY_THREAD_TABLE_QUESTION" value1="${threadSubject}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsCategory#QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_ANSWERS" value1="${questionAnswers}" />
+				<execute function="#assertClick" locator1="PGMessageboardsCategory#QUESTION_CATEGORY_THREAD_TABLE_QUESTION" value1="${threadSubject}" />
 			</then>
 			<else>
-				<execute action="PGMessageboards#assertClick" locator1="THREAD_TABLE_FLAG" value1="Resolved" />
-				<execute action="PGMessageboards#assertClick" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+				<execute function="#assertClick" locator1="PGMessageboards#THREAD_TABLE_FLAG" value1="Resolved" />
+				<execute function="#assertClick" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 			</else>
 		</if>
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_ANSWER_1" value1="Answer" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 	</command>
 
 	<command name="viewMarkAsQuestionCheckedCP">
-		<execute action="CPMessageboards#assertClick" locator1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="#assertClick" locator1="CPMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
-		<execute action="CPMessageboardsPostthread#assertChecked" locator1="MARK_AS_A_QUESTION_CHECKBOX" />
-		<execute action="CPMessageboardsPostthread#assertClick" locator1="CANCEL_BUTTON" value1="Cancel" />
+		<execute function="#assertChecked" locator1="CPMessageboardsPostthread#MARK_AS_A_QUESTION_CHECKBOX" />
+		<execute function="#assertClick" locator1="CPMessageboardsPostthread#CANCEL_BUTTON" value1="Cancel" />
 	</command>
 
 	<command name="viewMarkAsQuestionNotCheckedCP">
-		<execute action="CPMessageboards#assertClick" locator1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="#assertClick" locator1="CPMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
-		<execute action="CPMessageboardsPostthread#assertNotChecked" locator1="MARK_AS_A_QUESTION_CHECKBOX" />
-		<execute action="CPMessageboardsPostthread#assertClick" locator1="CANCEL_BUTTON" value1="Cancel" />
+		<execute function="#assertNotChecked" locator1="CPMessageboardsPostthread#MARK_AS_A_QUESTION_CHECKBOX" />
+		<execute function="#assertClick" locator1="CPMessageboardsPostthread#CANCEL_BUTTON" value1="Cancel" />
 	</command>
 
 	<command name="viewNoAnonymousPostingCheckboxCP">
-		<execute action="CPMessageboards#assertClick" locator1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="#assertClick" locator1="CPMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
-		<execute action="CPMessageboardsPostthread#assertElementNotPresent" locator1="ANONYMOUS_CHECKBOX" />
+		<execute function="#assertElementNotPresent" locator1="CPMessageboardsPostthread#ANONYMOUS_CHECKBOX" />
 	</command>
 
 	<command name="viewNoPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator1="INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
 		<execute action="CPMessageboards#assertTextNotPresent" value1="${threadSubject}" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_THREAD"  />
-		<execute action="PGMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_STARTED_BY" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_POSTS" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_LAST_POST" />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboards#THREAD_TABLE_THREAD"  />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboards#THREAD_TABLE_STARTED_BY" />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboards#THREAD_TABLE_POSTS" />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboards#THREAD_TABLE_LAST_POST" />
 	</command>
 
 	<command name="viewNoXSSPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
 		<execute action="PGMessageboardsThread#assertAlertNotPresent" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="TITLE_HEADER" value1="${threadSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_1" value1="${userName}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_1" value1="" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="" />
 	</command>
 
 	<command name="viewPG">
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="TITLE_HEADER" value1="${threadSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_1" value1="${userName}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_1" value1="${threadBody}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
 
 		<if>
 			<isset var="fontSize" />
 			<then>
 				<var name="key_fontSize" value="${fontSize}" />
 
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_STYLE_1" value1="${threadBody}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_STYLE_1" value1="${threadBody}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="threadSubject2" />
 			<then>
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="TITLE_HEADER" value1="${threadSubject}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_2" value1="${userName}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSubject}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_2" value1="${userName}" />
 
 				<var name="key_threadSubject" value="${threadSubject2}" />
 
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_2" value1="${threadSubject2}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_2" value1="${threadBody2}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_2" value1="${threadSubject2}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_2" value1="${threadBody2}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="workflowTask" />
 			<then>
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_WORKFLOW_STATUS_1" value1="Pending (${workflowTask})" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_WORKFLOW_STATUS_1" value1="Pending (${workflowTask})" />
 			</then>
 		</if>
 	</command>
@@ -946,25 +946,25 @@
 	<command name="viewPGViaAP">
 		<var name="key_assetTitle" value="${threadSubject}" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_TITLE" value1="${threadSubject}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_DESCRIPTION" value1="${threadBody}" />
-		<execute action="PGAssetpublisher#assertClick" locator1="ASSET_ABSTRACT_TITLE" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${threadBody}" />
+		<execute function="#assertClick" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${threadSubject}" />
 
-		<execute action="PGAssetpublisherAsset#assertTextEquals" locator1="ASSET_TITLE" value1="${threadSubject}" />
-		<execute action="PGAssetpublisherAsset#assertTextEquals" locator1="ASSET_MESSAGE_BOARDS_THREAD_SUBJECT" value1="${threadSubject}" />
-		<execute action="PGAssetpublisherAsset#assertTextEquals" locator1="ASSET_MESSAGE_BOARDS_THREAD_BODY" value1="${threadBody}" />
+		<execute function="#assertTextEquals" locator1="PGAssetpublisherAsset#ASSET_TITLE" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGAssetpublisherAsset#ASSET_MESSAGE_BOARDS_THREAD_SUBJECT" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGAssetpublisherAsset#ASSET_MESSAGE_BOARDS_THREAD_BODY" value1="${threadBody}" />
 	</command>
 
 	<command name="viewRatingPG">
 		<if>
 			<equals arg1="${ratingType}" arg2="Positive" />
 			<then>
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_RATING_1" value1="+1 (1 Vote)" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_RATING_1" value1="+1 (1 Vote)" />
 			</then>
 			<elseif>
 				<equals arg1="${ratingType}" arg2="Negative" />
 				<then>
-					<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_RATING_1" value1="-1 (1 Vote)" />
+					<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_RATING_1" value1="-1 (1 Vote)" />
 				</then>
 			</elseif>
 		</if>
@@ -973,79 +973,79 @@
 	<command name="viewReplyCP">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="CPMessageboards#assertElementPresent" locator1="THREAD_TABLE_CHECKBOX" />
-		<execute action="CPMessageboards#assertTextEquals" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="CPMessageboards#assertElementPresent" locator1="THREAD_TABLE_FLAG" />
-		<execute action="CPMessageboards#assertTextEquals" locator1="THREAD_TABLE_STARTED_BY" value1="${userName}" />
-		<execute action="CPMessageboards#assertTextEquals" locator1="THREAD_TABLE_POSTS" value1="${postsNumber}" />
-		<execute action="CPMessageboards#assertElementPresent" locator1="THREAD_TABLE_VIEWS" />
-		<execute action="CPMessageboards#assertTextEquals" locator1="THREAD_TABLE_LAST_POST" value1="${userName}" />
-		<execute action="CPMessageboards#assertElementPresent" locator1="THREAD_TABLE_ACTIONS" />
-		<execute action="CPMessageboards#assertClick" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertElementPresent" locator1="CPMessageboards#THREAD_TABLE_CHECKBOX" />
+		<execute function="#assertTextEquals" locator1="CPMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertElementPresent" locator1="CPMessageboards#THREAD_TABLE_FLAG" />
+		<execute function="#assertTextEquals" locator1="CPMessageboards#THREAD_TABLE_STARTED_BY" value1="${userName}" />
+		<execute function="#assertTextEquals" locator1="CPMessageboards#THREAD_TABLE_POSTS" value1="${postsNumber}" />
+		<execute function="#assertElementPresent" locator1="CPMessageboards#THREAD_TABLE_VIEWS" />
+		<execute function="#assertTextEquals" locator1="CPMessageboards#THREAD_TABLE_LAST_POST" value1="${userName}" />
+		<execute function="#assertElementPresent" locator1="CPMessageboards#THREAD_TABLE_ACTIONS" />
+		<execute function="#assertClick" locator1="CPMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="TITLE_HEADER" value1="${threadSubject}" />
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_1" value1="${userName}" />
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_1" value1="${threadBody}" />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#TITLE_HEADER" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
 
 		<if>
 			<isset var="mbAttachmentFile" />
 			<then>
-				<execute action="CPMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_ATTACHMENT_1" value1="${mbAttachmentFile}" />
+				<execute function="#assertTextEquals" locator1="CPMessageboardsThread#MESSAGE_BODY_ATTACHMENT_1" value1="${mbAttachmentFile}" />
 			</then>
 		</if>
 
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_2" value1="${userName2}" />
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_2" value1="RE: ${threadSubject}" />
-		<execute action="CPMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_2" value1="${threadBody2}" />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#MESSAGE_USERNAME_2" value1="${userName2}" />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#MESSAGE_SUBJECT_2" value1="RE: ${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="CPMessageboardsThread#MESSAGE_BODY_2" value1="${threadBody2}" />
 	</command>
 
 	<command name="viewReplyPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_STARTED_BY" value1="${userName}" />
-		<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_POSTS" value1="${postCount}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_STARTED_BY" value1="${userName}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_POSTS" value1="${postCount}" />
 
 		<if>
 			<equals arg1="${guestReply}" arg2="true" />
 			<then>
-				<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_LAST_POST" value1="Anonymous" />
-				<execute action="PGMessageboards#assertClick" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_LAST_POST" value1="Anonymous" />
+				<execute function="#assertClick" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 			</then>
 			<else>
-				<execute action="PGMessageboards#assertClick" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+				<execute function="#assertClick" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 			</else>
 		</if>
 
 		<if>
 			<equals arg1="${loggedOut}" arg2="true" />
 			<then>
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="THREAD_TABLE_SUBJECT_2" value1="RE: ${threadSubject}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_1" value1="${threadBody}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_1" value1="${userName}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_2" value1="RE: ${threadSubject}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_2" value1="${threadReplyBody}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_2_GUEST" value1="Anonymous" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#THREAD_TABLE_SUBJECT_2" value1="RE: ${threadSubject}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_2" value1="RE: ${threadSubject}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_2" value1="${threadReplyBody}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_2_GUEST" value1="Anonymous" />
 			</then>
 			<else>
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="THREAD_TABLE_SUBJECT_2" value1="RE: ${threadSubject}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_1" value1="${threadBody}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_1" value1="${userName}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_RATING_1_UPVOTE" value1="0" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_2" value1="RE: ${threadSubject}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_2" value1="${threadReplyBody}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_2" value1="${userName}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_RATING_2_UPVOTE" value1="0" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#THREAD_TABLE_SUBJECT_2" value1="RE: ${threadSubject}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_RATING_1_UPVOTE" value1="0" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_2" value1="RE: ${threadSubject}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_2" value1="${threadReplyBody}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_2" value1="${userName}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_RATING_2_UPVOTE" value1="0" />
 			</else>
 		</if>
 
 		<if>
 			<equals arg1="${guestReply}" arg2="false" />
 			<then>
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_2" value1="${userName}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_2" value1="${userName}" />
 			</then>
 		</if>
 
@@ -1054,7 +1054,7 @@
 			<then>
 				<var name="key_mbThreadAttachment" value="${mbThreadAttachment}" />
 
-				<execute action="PGMessageboardsThread#assertElementPresent" locator1="MESSAGE_ATTACHMENT_IMAGE" />
+				<execute function="#assertElementPresent" locator1="PGMessageboardsThread#MESSAGE_ATTACHMENT_IMAGE" />
 			</then>
 		</if>
 	</command>
@@ -1062,15 +1062,15 @@
 	<command name="viewSplitThreadPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_POSTS" value1="2" />
-		<execute action="PGMessageboards#assertClick" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_POSTS" value1="2" />
+		<execute function="#assertClick" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="TITLE_HEADER" value1="${threadSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_1" value1="${threadBody}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_2" value1="${threadSplitReplySubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_2" value1="${threadSplitReplyBody}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_2" value1="${threadSplitReplySubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_2" value1="${threadSplitReplyBody}" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1078,44 +1078,44 @@
 
 		<var name="key_threadSubject" value="${threadSplitSubject}" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_THREAD" value1="${threadSplitSubject}" />
-		<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_POSTS" value1="1" />
-		<execute action="PGMessageboards#assertClick" locator1="THREAD_TABLE_THREAD" value1="${threadSplitSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSplitSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_POSTS" value1="1" />
+		<execute function="#assertClick" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSplitSubject}" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="TITLE_HEADER" value1="${threadSplitSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_1" value1="${threadSplitSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_1" value1="${threadReplyBody}" />
-		<execute action="PGMessageboardsThread#assertElementNotPresent" locator1="MESSAGE_SUBJECT_2" />
-		<execute action="PGMessageboardsThread#assertElementNotPresent" locator1="MESSAGE_BODY_2" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSplitSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSplitSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadReplyBody}" />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_2" />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboardsThread#MESSAGE_BODY_2" />
 	</command>
 
 	<command name="viewStatisticsPostsCountDefaultPG">
-		<execute action="PGMessageboards#assertClick" locator1="NAVIGATION_STATISTICS" value1="Statistics" />
+		<execute function="#assertClick" locator1="PGMessageboards#NAVIGATION_STATISTICS" value1="Statistics" />
 
 		<if>
-			<condition action="PGMessageboardsStatistics#isElementPresent" locator1="GENERAL_DROPDOWN_COLLAPSED" />
+			<condition function="#isElementPresent" locator1="PGMessageboardsStatistics#GENERAL_DROPDOWN_COLLAPSED" />
 			<then>
-				<execute action="PGMessageboardsStatistics#assertClick" locator1="GENERAL_DROPDOWN" value1="General" />
+				<execute function="#assertClick" locator1="PGMessageboardsStatistics#GENERAL_DROPDOWN" value1="General" />
 			</then>
 		</if>
 
-		<execute action="PGMessageboardsStatistics#assertTextEquals" locator1="GENERAL_NUMBER_OF_CATEGORIES" value1="0" />
-		<execute action="PGMessageboardsStatistics#assertTextEquals" locator1="GENERAL_NUMBER_OF_POSTS" value1="0" />
-		<execute action="PGMessageboardsStatistics#assertTextEquals" locator1="GENERAL_NUMBER_OF_PARTICIPANTS" value1="0" />
-		<execute action="PGMessageboardsStatistics#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no top posters." />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsStatistics#GENERAL_NUMBER_OF_CATEGORIES" value1="0" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsStatistics#GENERAL_NUMBER_OF_POSTS" value1="0" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsStatistics#GENERAL_NUMBER_OF_PARTICIPANTS" value1="0" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsStatistics#INFO_MESSAGE" value1="There are no top posters." />
 	</command>
 
 	<command name="viewStatisticsPostsCountPG">
-		<execute action="PGMessageboards#assertClick" locator1="NAVIGATION_STATISTICS" value1="Statistics" />
+		<execute function="#assertClick" locator1="PGMessageboards#NAVIGATION_STATISTICS" value1="Statistics" />
 
 		<if>
-			<condition action="PGMessageboardsStatistics#isElementPresent" locator1="GENERAL_DROPDOWN_COLLAPSED" />
+			<condition function="#isElementPresent" locator1="PGMessageboardsStatistics#GENERAL_DROPDOWN_COLLAPSED" />
 			<then>
-				<execute action="PGMessageboardsStatistics#assertClick" locator1="GENERAL_DROPDOWN" value1="General" />
+				<execute function="#assertClick" locator1="PGMessageboardsStatistics#GENERAL_DROPDOWN" value1="General" />
 			</then>
 		</if>
 
-		<execute action="PGMessageboardsStatistics#assertTextEquals" locator1="GENERAL_NUMBER_OF_POSTS" value1="${threadPostNumber}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsStatistics#GENERAL_NUMBER_OF_POSTS" value1="${threadPostNumber}" />
 
 		<if>
 			<isset var="userPostNumber" />
@@ -1131,33 +1131,33 @@
 	</command>
 
 	<command name="viewStatisticsTopPoster">
-		<execute action="PGMessageboards#assertClick" locator1="NAVIGATION_STATISTICS" value1="Statistics" />
+		<execute function="#assertClick" locator1="PGMessageboards#NAVIGATION_STATISTICS" value1="Statistics" />
 
 		<if>
-			<condition action="PGMessageboardsStatistics#isElementPresent" locator1="TOP_POSTERS_DROPDOWN_COLLAPSED" />
+			<condition function="#isElementPresent" locator1="PGMessageboardsStatistics#TOP_POSTERS_DROPDOWN_COLLAPSED" />
 			<then>
-				<execute action="PGMessageboardsStatistics#assertClick" locator1="TOP_POSTERS_DROPDOWN" value1="Top Posters" />
+				<execute function="#assertClick" locator1="PGMessageboardsStatistics#TOP_POSTERS_DROPDOWN" value1="Top Posters" />
 			</then>
 		</if>
 
 		<var name="key_userName" value="${userName}" />
 
-		<execute action="PGMessageboardsStatistics#assertTextEquals" locator1="TOP_POSTERS_AUTHOR_NAME" value1="${userName}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsStatistics#TOP_POSTERS_AUTHOR_NAME" value1="${userName}" />
 
 		<if>
 			<isset var="userMessageboardsRank" />
 			<then>
-				<execute action="PGMessageboardsStatistics#assertTextEquals" locator1="TOP_POSTERS_AUTHOR_RANK" value1="Rank: ${userMessageboardsRank}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsStatistics#TOP_POSTERS_AUTHOR_RANK" value1="Rank: ${userMessageboardsRank}" />
 			</then>
 			<else>
-				<execute action="PGMessageboardsStatistics#assertTextEquals" locator1="TOP_POSTERS_AUTHOR_RANK" value1="Rank: Youngling" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsStatistics#TOP_POSTERS_AUTHOR_RANK" value1="Rank: Youngling" />
 			</else>
 		</if>
 
-		<execute action="PGMessageboardsStatistics#assertTextEquals" locator1="TOP_POSTERS_AUTHOR_POSTS" value1="Posts: ${userPostNumber}" />
-		<execute action="PGMessageboardsStatistics#assertElementPresent" locator1="TOP_POSTERS_AUTHOR_JOIN_DATE" />
-		<execute action="PGMessageboardsStatistics#assertElementPresent" locator1="TOP_POSTERS_AUTHOR_LAST_POST_DATE" />
-		<execute action="PGMessageboardsStatistics#assertElementPresent" locator1="TOP_POSTERS_AUTHOR_PROFILE_PICTURE" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsStatistics#TOP_POSTERS_AUTHOR_POSTS" value1="Posts: ${userPostNumber}" />
+		<execute function="#assertElementPresent" locator1="PGMessageboardsStatistics#TOP_POSTERS_AUTHOR_JOIN_DATE" />
+		<execute function="#assertElementPresent" locator1="PGMessageboardsStatistics#TOP_POSTERS_AUTHOR_LAST_POST_DATE" />
+		<execute function="#assertElementPresent" locator1="PGMessageboardsStatistics#TOP_POSTERS_AUTHOR_PROFILE_PICTURE" />
 	</command>
 
 	<command name="viewTagPG">
@@ -1167,22 +1167,22 @@
 		<if>
 			<equals arg1="${messageTagNumber}" arg2="1" />
 			<then>
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_TAG_1" value1="${tagName}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_TAG_1" value1="${tagName}" />
 			</then>
 			<elseif>
 				<equals arg1="${messageTagNumber}" arg2="2" />
 				<then>
-					<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_TAG_2" value1="${tagName}" />
+					<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_TAG_2" value1="${tagName}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${messageTagNumber}" arg2="3" />
 				<then>
-					<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_TAG_3" value1="${tagName}" />
+					<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_TAG_3" value1="${tagName}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_TAG_1" value1="${tagName}" />
+				<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_TAG_1" value1="${tagName}" />
 			</else>
 		</if>
 	</command>
@@ -1190,34 +1190,34 @@
 	<command name="viewWaitingForAnswerPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_FLAG" value1="Waiting for an Answer" />
+		<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_FLAG" value1="Waiting for an Answer" />
 	</command>
 
 	<command name="viewWithWorkflowPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_THREAD" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_STARTED_BY" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_POSTS" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator1="THREAD_TABLE_LAST_POST" />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboards#THREAD_TABLE_THREAD" />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboards#THREAD_TABLE_STARTED_BY" />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboards#THREAD_TABLE_POSTS" />
+		<execute function="#assertElementNotPresent" locator1="PGMessageboards#THREAD_TABLE_LAST_POST" />
 
-		<execute action="PGMessageboards#assertClick" locator1="NAVIGATION_MY_POSTS" value1="My Posts" />
+		<execute function="#assertClick" locator1="PGMessageboards#NAVIGATION_MY_POSTS" value1="My Posts" />
 
-		<execute action="PGMessageboardsMyposts#assertTextEquals" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="PGMessageboardsMyposts#assertTextEquals" locator1="THREAD_TABLE_STATUS" value1="Pending" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_STATUS" value1="Pending" />
 
-		<execute action="PGMessageboardsMyposts#assertClick" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="#assertClick" locator1="PGMessageboardsMyposts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="TITLE_HEADER" value1="${threadSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_1" value1="${userName}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_WORKFLOW_STATUS_1" value1="Pending (${workflowTask})" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_1" value1="${threadBody}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_WORKFLOW_STATUS_1" value1="Pending (${workflowTask})" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
 	</command>
 
 	<command name="viewWithWorkflowPGViaAP">
 		<var name="key_assetTitle" value="${threadSubject}" />
 
-		<execute action="PGAssetpublisher#assertElementNotPresent" locator1="ASSET_ABSTRACT_TITLE" value1="${threadSubject}" />
+		<execute function="#assertElementNotPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${threadSubject}" />
 	</command>
 </definition>

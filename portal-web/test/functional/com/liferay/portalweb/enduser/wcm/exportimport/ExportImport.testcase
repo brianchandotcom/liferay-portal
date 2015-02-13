@@ -124,10 +124,10 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute action="CPSitepagesExport#click" locator1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute action="CPSitepagesExport#downloadTempFile" />
 
-		<execute action="CPSitepagesExport#click" locator1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute action="CPSitepagesExport#downloadTempFile" />
 
 		<execute macro="Page#gotoCP">
@@ -179,7 +179,7 @@
 			<var name="exportTemplateName" value="Export Template Name Edit" />
 		</execute>
 
-		<execute action="CPSitepagesExport#assertTextEquals" locator1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="#assertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText(&quot;//div[@id='_156_exportProcesses']//table//tr/td[5]/span/a/span&quot;)" name="valueName" />
 
@@ -189,7 +189,7 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute action="CPSitepagesExport#click" locator1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute action="CPSitepagesExport#downloadTempFile" />
 
 		<execute macro="Page#gotoPagesCP">
@@ -225,9 +225,9 @@
 
 		<execute macro="LAR#configureExportSiteCP" />
 
-		<execute action="CPSitepagesExport#assertClick" locator1="EXPORT_BUTTON" value1="Export" />
+		<execute function="#assertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
 
-		<execute action="CPSitepagesExport#assertTextEquals" locator1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="#assertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
 
@@ -237,7 +237,7 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute action="CPSitepagesExport#click" locator1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute action="CPSitepagesExport#downloadTempFile" />
 
 		<execute macro="Page#gotoCP">
@@ -273,9 +273,9 @@
 
 		<execute macro="LAR#configureExportSiteCP" />
 
-		<execute action="CPSitepagesExport#assertClick" locator1="EXPORT_BUTTON" value1="Export" />
+		<execute function="#assertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
 
-		<execute action="CPSitepagesExport#assertTextEquals" locator1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="#assertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
 
@@ -285,7 +285,7 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute action="CPSitepagesExport#click" locator1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute action="CPSitepagesExport#downloadTempFile" />
 
 		<execute macro="LAR#importSiteCP">
@@ -341,15 +341,15 @@
 
 		<var name="key_entryTitle" value="Blogs Entry Title" />
 
-		<execute action="PGBlogs#assertElementNotPresent" locator1="ENTRY_EDIT" value1="Edit" />
-		<execute action="PGBlogs#assertElementNotPresent" locator1="ENTRY_PERMISSIONS" value1="Permissions" />
-		<execute action="PGBlogs#assertElementNotPresent" locator1="ENTRY_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
+		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_PERMISSIONS" value1="Permissions" />
+		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
 		<execute macro="LAR#configureExportSiteCP" />
 
-		<execute action="CPSitepagesExport#assertClick" locator1="EXPORT_BUTTON" value1="Export" />
+		<execute function="#assertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
 
-		<execute action="CPSitepagesExport#assertTextEquals" locator1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="#assertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
 
@@ -359,7 +359,7 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute action="CPSitepagesExport#click" locator1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute action="CPSitepagesExport#downloadTempFile" />
 
 		<execute macro="Page#gotoCP">
@@ -383,9 +383,9 @@
 
 		<var name="key_entryTitle" value="Blogs Entry Title" />
 
-		<execute action="PGBlogs#assertElementNotPresent" locator1="ENTRY_EDIT" value1="Edit" />
-		<execute action="PGBlogs#assertElementNotPresent" locator1="ENTRY_PERMISSIONS" value1="Permissions" />
-		<execute action="PGBlogs#assertElementNotPresent" locator1="ENTRY_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
+		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_PERMISSIONS" value1="Permissions" />
+		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 	</command>
 
 	<command name="ExportImportSampleLARPortlet" priority="4">
@@ -513,11 +513,11 @@
 
 		<execute macro="LAR#configureExportSiteCP" />
 
-		<execute action="CPSitepagesExport#assertClick" locator1="EXPORT_BUTTON" value1="Export" />
+		<execute function="#assertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
 
 		<var name="key_larFileName" value="${larFileName}" />
 
-		<execute action="CPSitepagesExport#assertTextEquals" locator1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="#assertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
 
@@ -527,7 +527,7 @@
 
 		<echo message="lar file name ${larFileName}" />
 
-		<execute action="CPSitepagesExport#click" locator1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute action="CPSitepagesExport#downloadTempFile" />
 		<execute action="CPSitepagesExport#selectFrame" value1="relative=top" />
 
@@ -586,9 +586,9 @@
 			<var name="uncheckSubContent" value="Referenced Content" />
 		</execute>
 
-		<execute action="CPSitepagesExport#assertClick" locator1="EXPORT_BUTTON" value1="Export" />
+		<execute function="#assertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
 
-		<execute action="CPSitepagesExport#assertTextEquals" locator1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="#assertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
 
@@ -598,7 +598,7 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute action="CPSitepagesExport#click" locator1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute action="CPSitepagesExport#downloadTempFile" />
 
 		<execute macro="Page#gotoCP">
@@ -653,7 +653,7 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute action="CPSitepagesExport#click" locator1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute action="CPSitepagesExport#downloadTempFile" />
 
 		<execute macro="Page#gotoCP">
@@ -701,9 +701,9 @@
 
 		<var name="key_consumerPortletName" value="WSRP Unit Converter" />
 
-		<execute action="CPWSRPManageportlets#assertTextEquals" locator1="PORTLET_TABLE_NAME" value1="WSRP Unit Converter" />
-		<execute action="CPWSRPManageportlets#assertTextEquals" locator1="PORTLET_TABLE_REMOTE_PORTLET" value1="Unit Converter" />
-		<execute action="CPWSRPManageportlets#assertElementPresent" locator1="PORTLET_TABLE_DELETE" value1="Delete" />
+		<execute function="#assertTextEquals" locator1="CPWSRPManageportlets#PORTLET_TABLE_NAME" value1="WSRP Unit Converter" />
+		<execute function="#assertTextEquals" locator1="CPWSRPManageportlets#PORTLET_TABLE_REMOTE_PORTLET" value1="Unit Converter" />
+		<execute function="#assertElementPresent" locator1="CPWSRPManageportlets#PORTLET_TABLE_DELETE" value1="Delete" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="WSRP Page" />
@@ -731,11 +731,11 @@
 
 		<execute macro="LAR#configureExportSiteCP" />
 
-		<execute action="CPSitepagesExport#assertClick" locator1="EXPORT_BUTTON" value1="Export" />
+		<execute function="#assertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
 
 		<var name="key_larFileName" value="${larFileName}" />
 
-		<execute action="CPSitepagesExport#assertTextEquals" locator1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="#assertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
 
@@ -745,7 +745,7 @@
 
 		<echo message="lar file name ${larFileName}" />
 
-		<execute action="CPSitepagesExport#click" locator1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute action="CPSitepagesExport#downloadTempFile" />
 		<execute action="CPSitepagesExport#selectFrame" value1="relative=top" />
 

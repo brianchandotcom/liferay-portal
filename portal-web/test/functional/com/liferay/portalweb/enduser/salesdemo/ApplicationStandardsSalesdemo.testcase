@@ -35,7 +35,7 @@
 
 		<take-screenshot />
 
-		<execute action="PGIFrame#sikuliAssertElementPresent" locator1="SCREENSHOTS_LIFERAY_PRODUCTS_LOGO_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="PGIFrame#SCREENSHOTS_LIFERAY_PRODUCTS_LOGO_PNG" />
 	</command>
 
 	<command known-issues="sales-demo" name="WebProxyDemo" priority="5">
@@ -64,6 +64,6 @@
 
 		<take-screenshot />
 
-		<execute action="PGWebProxy#sikuliAssertElementPresent" locator1="SCREENSHOTS_GOOGLE_IMAGES_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="PGWebProxy#SCREENSHOTS_GOOGLE_IMAGES_PNG" />
 	</command>
 </definition>

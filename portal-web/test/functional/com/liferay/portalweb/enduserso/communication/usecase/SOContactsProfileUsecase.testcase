@@ -172,7 +172,7 @@
 
 		<var name="key_userName" value="${userName1}" />
 
-		<execute action="SOProfile#assertTextEquals" locator1="MY_CONTACTS_CONTACT_NAME" value1="${userName1}" />
+		<execute function="#assertTextEquals" locator1="SOProfile#MY_CONTACTS_CONTACT_NAME" value1="${userName1}" />
 		<execute action="SOProfile#assertTextNotPresent" value1="${userName2}" />
 		<execute action="SOProfile#assertTextNotPresent" value1="${userName3}" />
 		<execute action="SOProfile#assertTextNotPresent" value1="${userName4}" />
@@ -181,9 +181,9 @@
 
 		<var name="key_userName" value="${adminName}" />
 
-		<execute action="SOProfile#assertClick" locator1="MY_CONTACTS_VIEW_ALL_LINK" value1="View all ${adminName}'s connections." />
+		<execute function="#assertClick" locator1="SOProfile#MY_CONTACTS_VIEW_ALL_LINK" value1="View all ${adminName}'s connections." />
 
-		<execute action="SOContactsProfile#assertElementPresent" locator1="CONTACTS_LIST_NAME" />
+		<execute function="#assertElementPresent" locator1="SOContactsProfile#CONTACTS_LIST_NAME" />
 		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName1}" />
 		<execute action="SOContactsProfile#assertTextNotPresent" value1="${userListName2}" />
 		<execute action="SOContactsProfile#assertTextNotPresent" value1="${userListName3}" />
@@ -500,51 +500,51 @@
 
 		<var name="key_userName" value="${userName12}" />
 
-		<execute action="SOProfile#assertTextEquals" locator1="MY_CONTACTS_CONTACT_NAME" value1="${userName12}" />
+		<execute function="#assertTextEquals" locator1="SOProfile#MY_CONTACTS_CONTACT_NAME" value1="${userName12}" />
 
 		<var name="key_userName" value="${userName11}" />
 
-		<execute action="SOProfile#assertTextEquals" locator1="MY_CONTACTS_CONTACT_NAME" value1="${userName11}" />
+		<execute function="#assertTextEquals" locator1="SOProfile#MY_CONTACTS_CONTACT_NAME" value1="${userName11}" />
 
 		<var name="key_userName" value="${userName10}" />
 
-		<execute action="SOProfile#assertTextEquals" locator1="MY_CONTACTS_CONTACT_NAME" value1="${userName10}" />
+		<execute function="#assertTextEquals" locator1="SOProfile#MY_CONTACTS_CONTACT_NAME" value1="${userName10}" />
 
 		<var name="key_userName" value="${userName9}" />
 
-		<execute action="SOProfile#assertTextEquals" locator1="MY_CONTACTS_CONTACT_NAME" value1="${userName9}" />
+		<execute function="#assertTextEquals" locator1="SOProfile#MY_CONTACTS_CONTACT_NAME" value1="${userName9}" />
 
 		<var name="key_userName" value="${userName8}" />
 
-		<execute action="SOProfile#assertTextEquals" locator1="MY_CONTACTS_CONTACT_NAME" value1="${userName8}" />
+		<execute function="#assertTextEquals" locator1="SOProfile#MY_CONTACTS_CONTACT_NAME" value1="${userName8}" />
 
 		<var name="key_userName" value="${userName7}" />
 
-		<execute action="SOProfile#assertTextEquals" locator1="MY_CONTACTS_CONTACT_NAME" value1="${userName7}" />
+		<execute function="#assertTextEquals" locator1="SOProfile#MY_CONTACTS_CONTACT_NAME" value1="${userName7}" />
 
 		<var name="key_userName" value="${userName6}" />
 
-		<execute action="SOProfile#assertTextEquals" locator1="MY_CONTACTS_CONTACT_NAME" value1="${userName6}" />
+		<execute function="#assertTextEquals" locator1="SOProfile#MY_CONTACTS_CONTACT_NAME" value1="${userName6}" />
 
 		<var name="key_userName" value="${userName5}" />
 
-		<execute action="SOProfile#assertTextEquals" locator1="MY_CONTACTS_CONTACT_NAME" value1="${userName5}" />
+		<execute function="#assertTextEquals" locator1="SOProfile#MY_CONTACTS_CONTACT_NAME" value1="${userName5}" />
 
 		<var name="key_userName" value="${userName4}" />
 
-		<execute action="SOProfile#assertTextEquals" locator1="MY_CONTACTS_CONTACT_NAME" value1="${userName4}" />
+		<execute function="#assertTextEquals" locator1="SOProfile#MY_CONTACTS_CONTACT_NAME" value1="${userName4}" />
 
 		<var name="key_userName" value="${userName3}" />
 
-		<execute action="SOProfile#assertTextEquals" locator1="MY_CONTACTS_CONTACT_NAME" value1="${userName3}" />
+		<execute function="#assertTextEquals" locator1="SOProfile#MY_CONTACTS_CONTACT_NAME" value1="${userName3}" />
 		<execute action="SOProfile#assertTextNotPresent" value1="${userName2}" />
 		<execute action="SOProfile#assertTextNotPresent" value1="${userName1}" />
 
 		<var name="key_userName" value="${adminName}" />
 
-		<execute action="SOProfile#assertClick" locator1="MY_CONTACTS_VIEW_ALL_LINK" value1="View all ${adminName}'s connections." />
+		<execute function="#assertClick" locator1="SOProfile#MY_CONTACTS_VIEW_ALL_LINK" value1="View all ${adminName}'s connections." />
 
-		<execute action="SOContactsProfile#assertElementPresent" locator1="CONTACTS_LIST_NAME" />
+		<execute function="#assertElementPresent" locator1="SOContactsProfile#CONTACTS_LIST_NAME" />
 		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName1}" />
 		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName2}" />
 		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName3}" />

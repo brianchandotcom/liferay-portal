@@ -1572,16 +1572,16 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOSite#assertTextEquals" locator1="SITE_NAME" value1="${siteName}" />
-		<execute action="SOSite#assertElementNotPresent" locator1="JOIN_SITE_BUTTON" />
-		<execute action="SOSite#assertElementNotPresent" locator1="REQUEST_MEMBERSHIP_BUTTON" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_HOME" value1="Home" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_CALENDAR" value1="Calendar" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_DOCUMENTS" value1="Documents" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_FORUMS" value1="Forums" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_BLOGS" value1="Blogs" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_WIKI" value1="Wiki" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_MEMBERS" value1="Members" />
+		<execute function="#assertTextEquals" locator1="SOSite#SITE_NAME" value1="${siteName}" />
+		<execute function="#assertElementNotPresent" locator1="SOSite#JOIN_SITE_BUTTON" />
+		<execute function="#assertElementNotPresent" locator1="SOSite#REQUEST_MEMBERSHIP_BUTTON" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_HOME" value1="Home" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_CALENDAR" value1="Calendar" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_DOCUMENTS" value1="Documents" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_FORUMS" value1="Forums" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_BLOGS" value1="Blogs" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_WIKI" value1="Wiki" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_MEMBERS" value1="Members" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1651,16 +1651,16 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOSite#assertTextEquals" locator1="SITE_NAME" value1="${siteName}" />
-		<execute action="SOSite#assertElementNotPresent" locator1="JOIN_SITE_BUTTON" />
-		<execute action="SOSite#assertElementNotPresent" locator1="REQUEST_MEMBERSHIP_BUTTON" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_HOME" value1="Home" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_CALENDAR" value1="Calendar" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_DOCUMENTS" value1="Documents" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_FORUMS" value1="Forums" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_BLOGS" value1="Blogs" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_WIKI" value1="Wiki" />
-		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_MEMBERS" value1="Members" />
+		<execute function="#assertTextEquals" locator1="SOSite#SITE_NAME" value1="${siteName}" />
+		<execute function="#assertElementNotPresent" locator1="SOSite#JOIN_SITE_BUTTON" />
+		<execute function="#assertElementNotPresent" locator1="SOSite#REQUEST_MEMBERSHIP_BUTTON" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_HOME" value1="Home" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_CALENDAR" value1="Calendar" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_DOCUMENTS" value1="Documents" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_FORUMS" value1="Forums" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_BLOGS" value1="Blogs" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_WIKI" value1="Wiki" />
+		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_MEMBERS" value1="Members" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -2220,13 +2220,13 @@
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LINK_ALL" value1="View all 2 users." />
-		<execute action="SOMembersPortlet#assertClick" locator1="MEMBERS_LINK_CONNECTIONS" value1="You have 1 connections in this site." />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
-		<execute action="SOMembersPortlet#click" locator1="MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="USER_DETAILS_NAME" value1="${userName}" />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LINK_ALL" value1="View all 2 users." />
+		<execute function="#assertClick" locator1="SOMembersPortlet#MEMBERS_LINK_CONNECTIONS" value1="You have 1 connections in this site." />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute function="#click" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#USER_DETAILS_NAME" value1="${userName}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
 	</command>
 
 	<command name="InviteFollowingSite" priority="4">
@@ -2297,13 +2297,13 @@
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LINK_ALL" value1="View all 2 users." />
-		<execute action="SOMembersPortlet#assertClick" locator1="MEMBERS_LINK_FOLLOWING" value1="You are following 1 people in this site." />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
-		<execute action="SOMembersPortlet#click" locator1="MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="USER_DETAILS_NAME" value1="${userName}" />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LINK_ALL" value1="View all 2 users." />
+		<execute function="#assertClick" locator1="SOMembersPortlet#MEMBERS_LINK_FOLLOWING" value1="You are following 1 people in this site." />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute function="#click" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#USER_DETAILS_NAME" value1="${userName}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
 	</command>
 
 	<command name="InviteMemberNewSiteRoleSite" priority="4">
@@ -2739,19 +2739,19 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOMembersPortlet#select" locator1="ROLE_FILTER_DROPDOWN" value1="Administrators" />
+		<execute function="#select" locator1="SOMembersPortlet#ROLE_FILTER_DROPDOWN" value1="Administrators" />
 
 		<var name="key_userEmailAddress" value="${adminEmailAddress}" />
 
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_NAME" value1="${adminListName}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${adminListName}" />
 
 		<var name="key_userEmailAddress" value="${userEmailAddress1}" />
 
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_NAME" value1="${userListName1}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userListName1}" />
 
 		<var name="key_userEmailAddress" value="${userEmailAddress2}" />
 
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_NAME" value1="${userListName2}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userListName2}" />
 
 		<execute action="SOMembersPortlet#assertTextNotPresent" value1="${userListName3}" />
 		<execute action="SOMembersPortlet#assertTextNotPresent" value1="${userListName4}" />
@@ -3224,33 +3224,33 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOMembersPortlet#assertClick" locator1="INVITE_BUTTON" value1="Invite members to this site." />
+		<execute function="#assertClick" locator1="SOMembersPortlet#INVITE_BUTTON" value1="Invite members to this site." />
 
 		<var name="key_userName" value="${userName}" />
 
-		<execute action="SOMembersPortletInvite#assertTextEquals" locator1="FIND_MEMBERS_USER" value1="${userName}" />
-		<execute action="SOMembersPortletInvite#click" locator1="FIND_MEMBERS_USER" />
-		<execute action="SOMembersPortletInvite#assertTextEquals" locator1="MEMBERS_INVITE_LIST" value1="${userName}${userEmailAddress}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortletInvite#FIND_MEMBERS_USER" value1="${userName}" />
+		<execute function="#click" locator1="SOMembersPortletInvite#FIND_MEMBERS_USER" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortletInvite#MEMBERS_INVITE_LIST" value1="${userName}${userEmailAddress}" />
 
 		<var name="key_userName" value="${userName2}" />
 
-		<execute action="SOMembersPortletInvite#assertTextEquals" locator1="FIND_MEMBERS_USER" value1="${userName2}" />
-		<execute action="SOMembersPortletInvite#click" locator1="FIND_MEMBERS_USER" />
-		<execute action="SOMembersPortletInvite#assertTextEquals" locator1="MEMBERS_INVITE_LIST" value1="${userName2}${userEmailAddress2}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortletInvite#FIND_MEMBERS_USER" value1="${userName2}" />
+		<execute function="#click" locator1="SOMembersPortletInvite#FIND_MEMBERS_USER" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortletInvite#MEMBERS_INVITE_LIST" value1="${userName2}${userEmailAddress2}" />
 
 		<var name="key_userName" value="${userName3}" />
 
-		<execute action="SOMembersPortletInvite#assertTextEquals" locator1="FIND_MEMBERS_USER" value1="${userName3}" />
-		<execute action="SOMembersPortletInvite#click" locator1="FIND_MEMBERS_USER" />
-		<execute action="SOMembersPortletInvite#assertTextEquals" locator1="MEMBERS_INVITE_LIST" value1="${userName3}${userEmailAddress3}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortletInvite#FIND_MEMBERS_USER" value1="${userName3}" />
+		<execute function="#click" locator1="SOMembersPortletInvite#FIND_MEMBERS_USER" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortletInvite#MEMBERS_INVITE_LIST" value1="${userName3}${userEmailAddress3}" />
 
 		<var name="key_userName" value="${userName4}" />
 
-		<execute action="SOMembersPortletInvite#assertTextEquals" locator1="FIND_MEMBERS_USER" value1="${userName4}" />
-		<execute action="SOMembersPortletInvite#click" locator1="FIND_MEMBERS_USER" />
-		<execute action="SOMembersPortletInvite#assertTextEquals" locator1="MEMBERS_INVITE_LIST" value1="${userName4}${userEmailAddress4}" />
-		<execute action="SOMembersPortletInvite#assertClick" locator1="SEND_INVITATIONS_BUTTON" value1="Send Invitations"  />
-		<execute action="SOMembersPortletInvite#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request processed successfully."  />
+		<execute function="#assertTextEquals" locator1="SOMembersPortletInvite#FIND_MEMBERS_USER" value1="${userName4}" />
+		<execute function="#click" locator1="SOMembersPortletInvite#FIND_MEMBERS_USER" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortletInvite#MEMBERS_INVITE_LIST" value1="${userName4}${userEmailAddress4}" />
+		<execute function="#assertClick" locator1="SOMembersPortletInvite#SEND_INVITATIONS_BUTTON" value1="Send Invitations"  />
+		<execute function="#assertTextEquals" locator1="SOMembersPortletInvite#SUCCESS_MESSAGE" value1="Your request processed successfully."  />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -3298,19 +3298,19 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LINK_ALL" value1="View all 3 users." />
-		<execute action="SOMembersPortlet#assertClick" locator1="MEMBERS_LINK_CONNECTIONS" value1="You have 1 connections in this site." />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LINK_ALL" value1="View all 3 users." />
+		<execute function="#assertClick" locator1="SOMembersPortlet#MEMBERS_LINK_CONNECTIONS" value1="You have 1 connections in this site." />
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
-		<execute action="SOMembersPortlet#assertClick" locator1="MEMBERS_LINK_FOLLOWING" value1="You are following 1 people in this site." />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute function="#assertClick" locator1="SOMembersPortlet#MEMBERS_LINK_FOLLOWING" value1="You are following 1 people in this site." />
 
 		<var name="key_userEmailAddress" value="${userEmailAddress2}" />
 
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_NAME" value1="${userLastName2}, ${userFirstName2}" />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress2}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName2}, ${userFirstName2}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMAIL" value1="${userEmailAddress2}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
@@ -3345,30 +3345,30 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LINK_ALL" value1="View all 5 users." />
-		<execute action="SOMembersPortlet#assertClick" locator1="MEMBERS_LINK_CONNECTIONS" value1="You have 2 connections in this site." />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LINK_ALL" value1="View all 5 users." />
+		<execute function="#assertClick" locator1="SOMembersPortlet#MEMBERS_LINK_CONNECTIONS" value1="You have 2 connections in this site." />
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
 
 		<var name="key_userEmailAddress" value="${userEmailAddress3}" />
 
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_NAME" value1="${userLastName3}, ${userFirstName3}" />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress3}" />
-		<execute action="SOMembersPortlet#assertClick" locator1="MEMBERS_LINK_FOLLOWING" value1="You are following 2 people in this site." />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName3}, ${userFirstName3}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMAIL" value1="${userEmailAddress3}" />
+		<execute function="#assertClick" locator1="SOMembersPortlet#MEMBERS_LINK_FOLLOWING" value1="You are following 2 people in this site." />
 
 		<var name="key_userEmailAddress" value="${userEmailAddress2}" />
 
-		<execute action="SOMembersPortlet#assertClick" locator1="MEMBERS_LINK_FOLLOWING" value1="You are following 2 people in this site." />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_NAME" value1="${userLastName2}, ${userFirstName2}" />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress2}" />
+		<execute function="#assertClick" locator1="SOMembersPortlet#MEMBERS_LINK_FOLLOWING" value1="You are following 2 people in this site." />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName2}, ${userFirstName2}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMAIL" value1="${userEmailAddress2}" />
 
 		<var name="key_userEmailAddress" value="${userEmailAddress4}" />
 
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_NAME" value1="${userLastName4}, ${userFirstName4}" />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress4}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName4}, ${userFirstName4}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMAIL" value1="${userEmailAddress4}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -3398,19 +3398,19 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LINK_ALL" value1="View all 3 users." />
-		<execute action="SOMembersPortlet#assertClick" locator1="MEMBERS_LINK_CONNECTIONS" value1="You have 1 connections in this site." />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LINK_ALL" value1="View all 3 users." />
+		<execute function="#assertClick" locator1="SOMembersPortlet#MEMBERS_LINK_CONNECTIONS" value1="You have 1 connections in this site." />
 
 		<var name="key_userEmailAddress" value="${userEmailAddress3}" />
 
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_NAME" value1="${userLastName3}, ${userFirstName3}" />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress3}" />
-		<execute action="SOMembersPortlet#assertClick" locator1="MEMBERS_LINK_FOLLOWING" value1="You are following 1 people in this site." />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName3}, ${userFirstName3}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMAIL" value1="${userEmailAddress3}" />
+		<execute function="#assertClick" locator1="SOMembersPortlet#MEMBERS_LINK_FOLLOWING" value1="You are following 1 people in this site." />
 
 		<var name="key_userEmailAddress" value="${userEmailAddress4}" />
 
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_NAME" value1="${userLastName4}, ${userFirstName4}" />
-		<execute action="SOMembersPortlet#assertTextEquals" locator1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress4}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName4}, ${userFirstName4}" />
+		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMAIL" value1="${userEmailAddress4}" />
 	</command>
 
 	<command name="ViewRolesDropdownLocalizationGerman" priority="5">
@@ -3491,19 +3491,19 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOMembersPortlet#assertSelectedLabel" locator1="ROLE_FILTER_DROPDOWN" value1="Alles" />
-		<execute action="SOMembersPortlet#select" locator1="ROLE_FILTER_DROPDOWN" value1="Administratoren" />
-		<execute action="SOMembersPortlet#assertSelectedLabel" locator1="ROLE_FILTER_DROPDOWN" value1="Administratoren" />
-		<execute action="SOMembersPortlet#select" locator1="ROLE_FILTER_DROPDOWN" value1="Verbindungen" />
-		<execute action="SOMembersPortlet#assertSelectedLabel" locator1="ROLE_FILTER_DROPDOWN" value1="Verbindungen" />
-		<execute action="SOMembersPortlet#select" locator1="ROLE_FILTER_DROPDOWN" value1="Folge ich" />
-		<execute action="SOMembersPortlet#assertSelectedLabel" locator1="ROLE_FILTER_DROPDOWN" value1="Folge ich" />
-		<execute action="SOMembersPortlet#assertClick" locator1="INVITE_BUTTON" value1="Mitglieder in diese Site einladen." />
+		<execute function="#assertSelectedLabel" locator1="SOMembersPortlet#ROLE_FILTER_DROPDOWN" value1="Alles" />
+		<execute function="#select" locator1="SOMembersPortlet#ROLE_FILTER_DROPDOWN" value1="Administratoren" />
+		<execute function="#assertSelectedLabel" locator1="SOMembersPortlet#ROLE_FILTER_DROPDOWN" value1="Administratoren" />
+		<execute function="#select" locator1="SOMembersPortlet#ROLE_FILTER_DROPDOWN" value1="Verbindungen" />
+		<execute function="#assertSelectedLabel" locator1="SOMembersPortlet#ROLE_FILTER_DROPDOWN" value1="Verbindungen" />
+		<execute function="#select" locator1="SOMembersPortlet#ROLE_FILTER_DROPDOWN" value1="Folge ich" />
+		<execute function="#assertSelectedLabel" locator1="SOMembersPortlet#ROLE_FILTER_DROPDOWN" value1="Folge ich" />
+		<execute function="#assertClick" locator1="SOMembersPortlet#INVITE_BUTTON" value1="Mitglieder in diese Site einladen." />
 
-		<execute action="SOMembersPortletInvite#select" locator1="INVITE_TO_ROLE_SELECT" value1="${roleNameLocalized1}" />
-		<execute action="SOMembersPortletInvite#assertSelectedLabel" locator1="INVITE_TO_ROLE_SELECT" value1="${roleNameLocalized1}" />
-		<execute action="SOMembersPortletInvite#select" locator1="INVITE_TO_ROLE_SELECT" value1="${roleNameLocalized2}" />
-		<execute action="SOMembersPortletInvite#assertSelectedLabel" locator1="INVITE_TO_ROLE_SELECT" value1="${roleNameLocalized2}" />
+		<execute function="#select" locator1="SOMembersPortletInvite#INVITE_TO_ROLE_SELECT" value1="${roleNameLocalized1}" />
+		<execute function="#assertSelectedLabel" locator1="SOMembersPortletInvite#INVITE_TO_ROLE_SELECT" value1="${roleNameLocalized1}" />
+		<execute function="#select" locator1="SOMembersPortletInvite#INVITE_TO_ROLE_SELECT" value1="${roleNameLocalized2}" />
+		<execute function="#assertSelectedLabel" locator1="SOMembersPortletInvite#INVITE_TO_ROLE_SELECT" value1="${roleNameLocalized2}" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Mitglieder" />
@@ -3520,19 +3520,19 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOMembersPortlet#assertSelectedLabel" locator1="ROLE_FILTER_DROPDOWN" value1="All" />
-		<execute action="SOMembersPortlet#select" locator1="ROLE_FILTER_DROPDOWN" value1="Administrators" />
-		<execute action="SOMembersPortlet#assertSelectedLabel" locator1="ROLE_FILTER_DROPDOWN" value1="Administrators" />
-		<execute action="SOMembersPortlet#select" locator1="ROLE_FILTER_DROPDOWN" value1="Connections" />
-		<execute action="SOMembersPortlet#assertSelectedLabel" locator1="ROLE_FILTER_DROPDOWN" value1="Connections" />
-		<execute action="SOMembersPortlet#select" locator1="ROLE_FILTER_DROPDOWN" value1="Following" />
-		<execute action="SOMembersPortlet#assertSelectedLabel" locator1="ROLE_FILTER_DROPDOWN" value1="Following" />
-		<execute action="SOMembersPortlet#assertClick" locator1="INVITE_BUTTON" value1="Invite members to this site." />
+		<execute function="#assertSelectedLabel" locator1="SOMembersPortlet#ROLE_FILTER_DROPDOWN" value1="All" />
+		<execute function="#select" locator1="SOMembersPortlet#ROLE_FILTER_DROPDOWN" value1="Administrators" />
+		<execute function="#assertSelectedLabel" locator1="SOMembersPortlet#ROLE_FILTER_DROPDOWN" value1="Administrators" />
+		<execute function="#select" locator1="SOMembersPortlet#ROLE_FILTER_DROPDOWN" value1="Connections" />
+		<execute function="#assertSelectedLabel" locator1="SOMembersPortlet#ROLE_FILTER_DROPDOWN" value1="Connections" />
+		<execute function="#select" locator1="SOMembersPortlet#ROLE_FILTER_DROPDOWN" value1="Following" />
+		<execute function="#assertSelectedLabel" locator1="SOMembersPortlet#ROLE_FILTER_DROPDOWN" value1="Following" />
+		<execute function="#assertClick" locator1="SOMembersPortlet#INVITE_BUTTON" value1="Invite members to this site." />
 
-		<execute action="SOMembersPortletInvite#select" locator1="INVITE_TO_ROLE_SELECT" value1="Site Administrator" />
-		<execute action="SOMembersPortletInvite#assertSelectedLabel" locator1="INVITE_TO_ROLE_SELECT" value1="Site Administrator" />
-		<execute action="SOMembersPortletInvite#select" locator1="INVITE_TO_ROLE_SELECT" value1="Site Owner" />
-		<execute action="SOMembersPortletInvite#assertSelectedLabel" locator1="INVITE_TO_ROLE_SELECT" value1="Site Owner" />
+		<execute function="#select" locator1="SOMembersPortletInvite#INVITE_TO_ROLE_SELECT" value1="Site Administrator" />
+		<execute function="#assertSelectedLabel" locator1="SOMembersPortletInvite#INVITE_TO_ROLE_SELECT" value1="Site Administrator" />
+		<execute function="#select" locator1="SOMembersPortletInvite#INVITE_TO_ROLE_SELECT" value1="Site Owner" />
+		<execute function="#assertSelectedLabel" locator1="SOMembersPortletInvite#INVITE_TO_ROLE_SELECT" value1="Site Owner" />
 	</command>
 
 	<command name="ViewSiteMembershipViaProfile" priority="4">

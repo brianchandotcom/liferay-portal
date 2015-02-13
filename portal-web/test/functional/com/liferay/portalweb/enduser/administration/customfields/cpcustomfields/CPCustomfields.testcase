@@ -204,12 +204,12 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsUser#assertClick" locator1="MENU_MISCELLANEOUS_CUSTOM_FIELDS" value1="Custom Fields" />
+		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#MENU_MISCELLANEOUS_CUSTOM_FIELDS" value1="Custom Fields" />
 
 		<var name="key_customFieldName" value="${customFieldName}" />
 
-		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator1="CUSTOM_FIELDS_LABEL" value1="${customFieldName}" />
-		<execute action="CPUsersandorganizationsUser#assertSelectedLabel" locator1="CUSTOM_FIELDS_SELECT" value1="False" />
+		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_LABEL" value1="${customFieldName}" />
+		<execute function="#assertSelectedLabel" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_SELECT" value1="False" />
 	</command>
 
 	<command name="EditRevertCustomFieldWikiPage" priority="5">

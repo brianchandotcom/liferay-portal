@@ -65,13 +65,13 @@
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
-		<execute action="CPKnowledgebaseadmin#assertClick" locator1="ADD_BUTTON" value1="Add" />
-		<execute action="CPKnowledgebaseadmin#assertClick" locator1="ADD_ARTICLE_BUTTON" value1="Add Article" />
+		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ADD_BUTTON" value1="Add" />
+		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ADD_ARTICLE_BUTTON" value1="Add Article" />
 
-		<execute action="CPKnowledgebaseadminAddarticle#type" locator1="TITLE_FIELD" value1="KB Admin Article" />
-		<execute action="CPKnowledgebaseadminAddarticle#type" locator1="CONTENT_FIELD" value1="This is an article created from the KB Admin." />
-		<execute action="CPKnowledgebaseadminAddarticle#select" locator1="SECTIONS_SELECT" value1="Portlets" />
-		<execute action="CPKnowledgebaseadminAddarticle#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute function="#type" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD" value1="KB Admin Article" />
+		<execute function="#type" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" value1="This is an article created from the KB Admin." />
+		<execute function="#select" locator1="CPKnowledgebaseadminAddarticle#SECTIONS_SELECT" value1="Portlets" />
+		<execute function="#assertClick" locator1="CPKnowledgebaseadminAddarticle#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
@@ -467,7 +467,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute function="#assertTextEquals" locator1="CPDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />

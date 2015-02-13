@@ -1,12 +1,12 @@
 <definition>
 	<command name="checkReplyToMessageForGuestPG">
-		<execute action="PGMessageboards#assertClick" locator1="PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute function="#assertClick" locator1="PGMessageboards#PERMISSIONS_BUTTON" value1="Permissions" />
 
-		<execute action="PGMessageboardsPermissionsConfiguration#selectFrame" locator1="PERMISSIONS_IFRAME" />
-		<execute action="PGMessageboardsPermissionsConfiguration#check" locator1="GUEST_REPLY_TO_MESSAGE_CHECKBOX" />
-		<execute action="PGMessageboardsPermissionsConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGMessageboardsPermissionsConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="#selectFrame" locator1="PGMessageboardsPermissionsConfiguration#PERMISSIONS_IFRAME" />
+		<execute function="#check" locator1="PGMessageboardsPermissionsConfiguration#GUEST_REPLY_TO_MESSAGE_CHECKBOX" />
+		<execute function="#assertClick" locator1="PGMessageboardsPermissionsConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="#assertTextEquals" locator1="PGMessageboardsPermissionsConfiguration#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGMessageboardsPermissionsConfiguration#selectFrame" value1="relative=top" />
-		<execute action="PGMessageboardsPermissionsConfiguration#assertClick" locator1="CLOSE_BUTTON" value1="×" />
+		<execute function="#assertClick" locator1="PGMessageboardsPermissionsConfiguration#CLOSE_BUTTON" value1="×" />
 	</command>
 </definition>

@@ -4,9 +4,9 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="XSLContentConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
-		<execute action="XSLContentConfiguration#assertTextEquals" locator1="SETUP_XML_URL_FIELD" value1="@portal_url@/o/27/example.xml" />
-		<execute action="XSLContentConfiguration#assertTextEquals" locator1="SETUP_XSL_URL_FIELD" value1="@portal_url@/o/27/example.xsl" />
+		<execute function="#selectFrame" locator1="XSLContentConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="#assertTextEquals" locator1="XSLContentConfiguration#SETUP_XML_URL_FIELD" value1="@portal_url@/o/27/example.xml" />
+		<execute function="#assertTextEquals" locator1="XSLContentConfiguration#SETUP_XSL_URL_FIELD" value1="@portal_url@/o/27/example.xsl" />
 
 		<execute action="XSLContentConfiguration#selectFrameTop" value1="relative=top" />
 	</command>

@@ -527,9 +527,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertTextEquals" locator1="PORTAL_LOCALIZATION_INFO_MESSAGE" value1="× Esta página se muestra en inglés (Estados Unidos). Establecer inglés (Estados Unidos) como su idioma preferido." />
+		<execute function="#assertTextEquals" locator1="Home#PORTAL_LOCALIZATION_INFO_MESSAGE" value1="× Esta página se muestra en inglés (Estados Unidos). Establecer inglés (Estados Unidos) como su idioma preferido." />
 
-		<execute action="Home#assertTextEquals" locator1="PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" value1="Establecer inglés (Estados Unidos) como su idioma preferido." />
+		<execute function="#assertTextEquals" locator1="Home#PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" value1="Establecer inglés (Estados Unidos) como su idioma preferido." />
 
 		<execute macro="User#logoutPG" />
 

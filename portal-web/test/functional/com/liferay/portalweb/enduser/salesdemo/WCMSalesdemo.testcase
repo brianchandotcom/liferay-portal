@@ -128,7 +128,7 @@
 			<var name="portletName" value="Hello World" />
 		</execute>
 
-		<execute action="BasePortlet#sikuliAssertElementPresent" locator1="PORTLET_ORDER_SINGLE_COLUMN" />
+		<execute function="#sikuliAssertElementPresent" locator1="BasePortlet#PORTLET_ORDER_SINGLE_COLUMN" />
 
 		<execute macro="Page#openURL" />
 	</command>

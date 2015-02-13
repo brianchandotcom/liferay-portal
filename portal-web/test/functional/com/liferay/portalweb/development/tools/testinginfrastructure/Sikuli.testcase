@@ -2,45 +2,45 @@
 	<property name="testray.main.component.name" value="Tools" />
 
 	<command name="Smoke" priority="5">
-		<execute action="PGLogin#sikuliAssertElementPresent" locator1="SIGN_IN_BUTTON_PNG" />
-		<execute action="PGLogin#sikuliAssertElementNotPresent" locator1="AVERAGE_RATING_STAR_ICON_PNG" />
-		<execute action="PGLogin#sikuliType" locator1="EMAIL_ADDRESS_FIELD_PNG" value1="test@liferay.com" />
-		<execute action="PGLogin#sikuliType" locator1="PASSWORD_FIELD_PNG" value1="test" />
-		<execute action="PGLogin#check" locator1="REMEMBER_ME_CHECKBOX" />
-		<execute action="PGLogin#sikuliClick" locator1="SIGN_IN_BUTTON_PNG" />
+		<execute function="#sikuliAssertElementPresent" locator1="PGLogin#SIGN_IN_BUTTON_PNG" />
+		<execute function="#sikuliAssertElementNotPresent" locator1="PGLogin#AVERAGE_RATING_STAR_ICON_PNG" />
+		<execute function="#sikuliType" locator1="PGLogin#EMAIL_ADDRESS_FIELD_PNG" value1="test@liferay.com" />
+		<execute function="#sikuliType" locator1="PGLogin#PASSWORD_FIELD_PNG" value1="test" />
+		<execute function="#check" locator1="PGLogin#REMEMBER_ME_CHECKBOX" />
+		<execute function="#sikuliClick" locator1="PGLogin#SIGN_IN_BUTTON_PNG" />
 
-		<execute action="Dockbar#assertElementPresent" locator1="USER_AVATAR_IMAGE" />
+		<execute function="#assertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 
 		<if>
-			<condition action="PGLoginTermsofservice#isElementPresent" locator1="I_AGREE_BUTTON" value1="I Agree" />
+			<condition function="#isElementPresent" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
 			<then>
-				<execute action="PGLoginTermsofservice#assertClick" locator1="I_AGREE_BUTTON" value1="I Agree" />
+				<execute function="#assertClick" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
 			</then>
 		</if>
 
 		<if>
-			<condition action="PGLoginNewpassword#isElementPresent" locator1="PASSWORD_FIELD" />
+			<condition function="#isElementPresent" locator1="PGLoginNewpassword#PASSWORD_FIELD" />
 			<then>
-				<execute action="PGLoginNewpassword#type" locator1="PASSWORD_FIELD" value1="test" />
-				<execute action="PGLoginNewpassword#type" locator1="ENTER_AGAIN_FIELD" value1="test" />
-				<execute action="PGLoginNewpassword#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+				<execute function="#type" locator1="PGLoginNewpassword#PASSWORD_FIELD" value1="test" />
+				<execute function="#type" locator1="PGLoginNewpassword#ENTER_AGAIN_FIELD" value1="test" />
+				<execute function="#assertClick" locator1="PGLoginNewpassword#SAVE_BUTTON" value1="Save" />
 			</then>
 		</if>
 
 		<if>
-			<condition action="PGLoginPasswordreminder#isElementPresent" locator1="ANSWER_FIELD" />
+			<condition function="#isElementPresent" locator1="PGLoginPasswordreminder#ANSWER_FIELD" />
 			<then>
-				<execute action="PGLoginPasswordreminder#type" locator1="ANSWER_FIELD" value1="test" />
-				<execute action="PGLoginPasswordreminder#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+				<execute function="#type" locator1="PGLoginPasswordreminder#ANSWER_FIELD" value1="test" />
+				<execute function="#assertClick" locator1="PGLoginPasswordreminder#SAVE_BUTTON" value1="Save" />
 			</then>
 		</if>
 
-		<execute action="BasePortlet#assertTextEquals" locator1="PORTLET_CONTENT" value1="You are signed in as Test Test." />
+		<execute function="#assertTextEquals" locator1="BasePortlet#PORTLET_CONTENT" value1="You are signed in as Test Test." />
 
-		<execute action="Home#sikuliMouseMove" locator1="SIGN_IN_PORTLET" />
+		<execute function="#sikuliMouseMove" locator1="Home#SIGN_IN_PORTLET" />
 		<execute action="Home#sikuliLeftMouseDown" />
-		<execute action="Home#sikuliMouseMove" locator1="HELLO_WORLD_PORTLET" />
+		<execute function="#sikuliMouseMove" locator1="Home#HELLO_WORLD_PORTLET" />
 		<execute action="Home#sikuliLeftMouseUp" />
-		<execute action="Home#assertElementPresent" locator1="PAGE_COLUMN_2_SIGN_IN_PORTLET" />
+		<execute function="#assertElementPresent" locator1="Home#PAGE_COLUMN_2_SIGN_IN_PORTLET" />
 	</command>
 </definition>

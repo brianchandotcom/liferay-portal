@@ -241,7 +241,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 	</command>
 
 	<command name="ViewMBCategoryThreadMessageActivities" priority="5">
@@ -332,7 +332,7 @@
 
 		<var name="key_row" value="01" />
 
-		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_ACTION_LINK" value1="${categoryName2}" />
+		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_ACTION_LINK" value1="${categoryName2}" />
 
 		<execute macro="SOForumsCategoryThread#viewDetailsPG">
 			<var name="categoryName" value="${categoryName2}" />
@@ -358,7 +358,7 @@
 
 		<var name="key_row" value="02" />
 
-		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_ACTION_LINK" value1="${categoryName1}" />
+		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_ACTION_LINK" value1="${categoryName1}" />
 
 		<execute macro="SOForumsCategoryThread#viewDetailsPG">
 			<var name="categoryName" value="${categoryName1}" />

@@ -55,7 +55,7 @@ import org.junit.Test;
 /**
  * @author Adolfo Pérez
  */
-public class DLPDFProcessorTest {
+public class PDFProcessorTest {
 
 	@ClassRule
 	@Rule
@@ -67,6 +67,7 @@ public class DLPDFProcessorTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
 	}
@@ -162,7 +163,7 @@ public class DLPDFProcessorTest {
 
 	@Test
 	public void testShouldCopyPreviousPreviewOnCheckIn() throws Exception {
-		AtomicInteger count = registerDLPDFProcessorMessageListener(
+		AtomicInteger count = registerPDFProcessorMessageListener(
 			EventType.COPY_PREVIOUS);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
@@ -181,7 +182,7 @@ public class DLPDFProcessorTest {
 
 	@Test
 	public void testShouldCopyPreviousPreviewOnCheckOut() throws Exception {
-		AtomicInteger count = registerDLPDFProcessorMessageListener(
+		AtomicInteger count = registerPDFProcessorMessageListener(
 			EventType.COPY_PREVIOUS);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
@@ -199,7 +200,7 @@ public class DLPDFProcessorTest {
 
 	@Test
 	public void testShouldCopyPreviousPreviewOnRevert() throws Exception {
-		AtomicInteger count = registerDLPDFProcessorMessageListener(
+		AtomicInteger count = registerPDFProcessorMessageListener(
 			EventType.COPY_PREVIOUS);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
@@ -229,7 +230,7 @@ public class DLPDFProcessorTest {
 	public void testShouldCopyPreviousPreviewOnUpdateAndCheckInWithNoContent()
 		throws Exception {
 
-		AtomicInteger count = registerDLPDFProcessorMessageListener(
+		AtomicInteger count = registerPDFProcessorMessageListener(
 			EventType.COPY_PREVIOUS);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
@@ -252,7 +253,7 @@ public class DLPDFProcessorTest {
 	public void testShouldCopyPreviousPreviewOnUpdateWithNoContent()
 		throws Exception {
 
-		AtomicInteger count = registerDLPDFProcessorMessageListener(
+		AtomicInteger count = registerPDFProcessorMessageListener(
 			EventType.COPY_PREVIOUS);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
@@ -273,7 +274,7 @@ public class DLPDFProcessorTest {
 
 	@Test
 	public void testShouldCreateNewPreviewOnAdd() throws Exception {
-		AtomicInteger count = registerDLPDFProcessorMessageListener(
+		AtomicInteger count = registerPDFProcessorMessageListener(
 			EventType.GENERATE_NEW);
 
 		DLAppServiceUtil.addFileEntry(
@@ -288,7 +289,7 @@ public class DLPDFProcessorTest {
 
 	@Test
 	public void testShouldCreateNewPreviewOnCancelCheckOut() throws Exception {
-		AtomicInteger count = registerDLPDFProcessorMessageListener(
+		AtomicInteger count = registerPDFProcessorMessageListener(
 			EventType.GENERATE_NEW);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
@@ -310,7 +311,7 @@ public class DLPDFProcessorTest {
 	public void testShouldCreateNewPreviewOnUpdateAndCheckInWithContent()
 		throws Exception {
 
-		AtomicInteger newCount = registerDLPDFProcessorMessageListener(
+		AtomicInteger newCount = registerPDFProcessorMessageListener(
 			EventType.GENERATE_NEW);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
@@ -337,7 +338,7 @@ public class DLPDFProcessorTest {
 	public void testShouldCreateNewPreviewOnUpdateWithContent()
 		throws Exception {
 
-		AtomicInteger count = registerDLPDFProcessorMessageListener(
+		AtomicInteger count = registerPDFProcessorMessageListener(
 			EventType.GENERATE_NEW);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
@@ -356,7 +357,7 @@ public class DLPDFProcessorTest {
 		Assert.assertEquals(2, count.get());
 	}
 
-	protected static AtomicInteger registerDLPDFProcessorMessageListener(
+	protected static AtomicInteger registerPDFProcessorMessageListener(
 		final EventType eventType) {
 
 		final AtomicInteger counter = new AtomicInteger();

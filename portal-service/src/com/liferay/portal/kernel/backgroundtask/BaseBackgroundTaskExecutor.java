@@ -41,6 +41,15 @@ public abstract class BaseBackgroundTaskExecutor
 	}
 
 	@Override
+	public int getIsolationLevel() {
+		if (_isolationLevel == 0) {
+			_isolationLevel = BackgroundTaskConstants.ISOLATION_LEVEL_CLASS;
+		}
+
+		return _isolationLevel;
+	}
+
+	@Override
 	public String handleException(BackgroundTask backgroundTask, Exception e) {
 		return "Unable to execute background task: " + e.getMessage();
 	}
@@ -82,6 +91,10 @@ public abstract class BaseBackgroundTaskExecutor
 			backgroundTaskStatusMessageTranslator;
 	}
 
+	protected void setIsolationLevel(int isolationLevel) {
+		_isolationLevel = isolationLevel;
+	}
+
 	protected void setSerial(boolean serial) {
 		_serial = serial;
 	}
@@ -91,6 +104,7 @@ public abstract class BaseBackgroundTaskExecutor
 
 	private BackgroundTaskStatusMessageTranslator
 		_backgroundTaskStatusMessageTranslator;
+	private int _isolationLevel;
 	private boolean _serial;
 
 }

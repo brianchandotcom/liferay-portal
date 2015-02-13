@@ -35,7 +35,7 @@ public interface VelocityEngineConfiguration {
 	public int resourceModificationCheckInterval();
 
 	@Meta.AD(
-		deflt = "com.liferay.portal.velocity.VelocityServletResourceParser|com.liferay.portal.template.ThemeResourceParser|com.liferay.portal.template.DDMTemplateResourceParser|com.liferay.portal.template.ClassLoaderResourceParser",
+		deflt = "com.liferay.portal.template.velocity.VelocityBundleResourceParser|com.liferay.portal.template.velocity.VelocityServletResourceParser|com.liferay.portal.template.ThemeResourceParser|com.liferay.portal.template.DDMTemplateResourceParser|com.liferay.portal.template.ClassLoaderResourceParser",
 		required = false
 	)
 	public String[] resourceParsers();

@@ -105,7 +105,7 @@
 			<liferay-ui:error exception="<%= CookieNotSupportedException.class %>" message="authentication-failed-please-enable-browser-cookies" />
 			<liferay-ui:error exception="<%= NoSuchUserException.class %>" message="authentication-failed" />
 			<liferay-ui:error exception="<%= PasswordExpiredException.class %>" message="your-password-has-expired" />
-			<liferay-ui:error exception="<%= UserEmailAddressException.class %>" message="authentication-failed" />
+			<liferay-ui:error exception="<%= UserEmailAddressException.MustNotBeNull.class %>" message="please-enter-an-email-address" />
 			<liferay-ui:error exception="<%= UserLockoutException.LDAPLockout.class %>" message="this-account-is-locked" />
 
 			<liferay-ui:error exception="<%= UserLockoutException.PasswordPolicyLockout.class %>">

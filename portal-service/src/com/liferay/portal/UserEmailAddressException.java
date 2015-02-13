@@ -49,6 +49,10 @@ public class UserEmailAddressException extends PortalException {
 		super(msg, cause);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
+	@Deprecated
 	public UserEmailAddressException(Throwable cause) {
 		super(cause);
 	}
@@ -60,7 +64,7 @@ public class UserEmailAddressException extends PortalException {
 
 			super(
 				String.format(
-					"Email address 1 %s and email address %2 for user %s " +
+					"Email address 1 %s and email address 2 %s for user %s " +
 						"must be equal",
 					emailAddress1, emailAddress2, user.getUserId()));
 

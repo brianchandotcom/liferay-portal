@@ -165,6 +165,9 @@ public class PoshiRunnerExecutor {
 			else if (childElementName.equals("var")) {
 				runVarElement(childElement);
 			}
+			else if (childElementName.equals("while")) {
+				runWhileElement(childElement);
+			}
 		}
 	}
 
@@ -526,6 +529,28 @@ public class PoshiRunnerExecutor {
 		varValue = PoshiRunnerVariablesUtil.replaceCommandVars(varValue);
 
 		PoshiRunnerVariablesUtil.putIntoCommandMap(varName, varValue);
+	}
+
+	public static void runWhileElement(Element element) throws Exception {
+		int maxIterations = 15;
+
+		if (element.attributeValue("max-iterations") != null) {
+			maxIterations = Integer.parseInt(
+				element.attributeValue("max-iterations"));
+		}
+
+		List<Element> whileChildElements = element.elements();
+
+		Element conditionElement = whileChildElements.get(0);
+		Element thenElement = element.element("then");
+
+		for (int i = 0; i < maxIterations; i++) {
+			if (!evaluateConditionalElement(conditionElement)) {
+				break;
+			}
+
+			parseElement(thenElement);
+		}
 	}
 
 	private static final LiferaySelenium _liferaySelenium =

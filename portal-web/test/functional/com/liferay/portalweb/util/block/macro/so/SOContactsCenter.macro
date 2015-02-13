@@ -467,7 +467,7 @@
 		<while>
 			<condition function="IsElementPresent" locator1="SOContactscenter#CONTACTS_LIST_NAME" />
 			<then>
-				<var locator="CONTACTS_LIST_NAME" name="contactName" path="SOContactscenter" />
+				<var locator="SOContactscenter#CONTACTS_LIST_NAME" name="contactName" />
 
 				<execute function="Click" locator1="SOContactscenter#CONTACTS_LIST_NAME" />
 				<execute function="Click" locator1="SOContactscenter#CONTACTS_LIST_NAME" />

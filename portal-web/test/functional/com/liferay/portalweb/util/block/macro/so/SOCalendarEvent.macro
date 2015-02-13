@@ -13,10 +13,10 @@
 		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE" />
 		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE_TIME" />
 
-		<var locator="END_DATE" name="endDate" path="PGCalendarAddevent" />
-		<var locator="END_DATE_TIME" name="endDateTime" path="PGCalendarAddevent" />
-		<var locator="START_DATE" name="startDate" path="PGCalendarAddevent" />
-		<var locator="START_DATE_TIME" name="startDateTime" path="PGCalendarAddevent" />
+		<var locator="PGCalendarAddevent#END_DATE" name="endDate" />
+		<var locator="PGCalendarAddevent#END_DATE_TIME" name="endDateTime" />
+		<var locator="PGCalendarAddevent#START_DATE" name="startDate" />
+		<var locator="PGCalendarAddevent#START_DATE_TIME" name="startDateTime" />
 
 		<execute function="Check" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
 

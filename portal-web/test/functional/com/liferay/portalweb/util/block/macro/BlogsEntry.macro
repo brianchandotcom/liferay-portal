@@ -413,7 +413,7 @@
 
 		<execute function="Type" locator1="PGBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 
-		<var locator="DISPLAY_DATE_DATE_HOUR" name="displayDateHour" path="PGBlogsAdd" />
+		<var locator="PGBlogsAdd#DISPLAY_DATE_DATE_HOUR" name="displayDateHour" />
 		<var name="displayDateHourLength" value="${displayDateHour?length()}" />
 
 		<if>
@@ -423,7 +423,7 @@
 			</then>
 		</if>
 
-		<var locator="DISPLAY_DATE_DATE_MINUTE" name="displayDateMinute" path="PGBlogsAdd" />
+		<var locator="PGBlogsAdd#DISPLAY_DATE_DATE_MINUTE" name="displayDateMinute" />
 		<var name="displayDateMinuteFuture" value="${displayDateMinute?increment()}" />
 		<var name="displayDateMinuteFuture" value="${displayDateMinuteFuture?increment()}" />
 		<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />
@@ -435,7 +435,7 @@
 			</then>
 		</if>
 
-		<var locator="DISPLAY_DATE_DATE_MERIDIAN" name="displayDateMeridian" path="PGBlogsAdd" />
+		<var locator="PGBlogsAdd#DISPLAY_DATE_DATE_MERIDIAN" name="displayDateMeridian" />
 		<var name="displayDateMeridian" value="${displayDateMeridian?replace('0', 'AM')}" />
 		<var name="displayDateMeridian" value="${displayDateMeridian?replace('1', 'PM')}" />
 
@@ -1476,7 +1476,7 @@
 				<equals arg1="${entryViewCount}" arg2="0" />
 			</not>
 			<then>
-				<var locator="ENTRY_STATS_VIEW_COUNT" name="entryViewCount" path="CPBlogsEntry" />
+				<var locator="CPBlogsEntry#ENTRY_STATS_VIEW_COUNT" name="entryViewCount" />
 				<var name="entryViewCount" value="${entryViewCount?getFirstNumber()}" />
 			</then>
 		</if>
@@ -1517,7 +1517,7 @@
 
 		<execute function="AssertClick" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
 
-		<var locator="ENTRY_STATS_VIEW_COUNT" name="entryViewCount" path="PGBlogsEntry" />
+		<var locator="PGBlogsEntry#ENTRY_STATS_VIEW_COUNT" name="entryViewCount" />
 		<var name="entryViewCount" value="${entryViewCount?getFirstNumber()}" />
 
 		<if>

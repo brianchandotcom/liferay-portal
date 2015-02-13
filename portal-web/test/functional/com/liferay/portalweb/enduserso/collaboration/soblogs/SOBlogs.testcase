@@ -2278,7 +2278,7 @@
 
 		<var name="key_gmailAssetType" value="Blogs" />
 
-		<var locator="GMAIL_HTML_MODE_MESSAGE_BODY_LINK_1" name="blogEntryURL" path="Gmail" />
+		<var locator="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK_1" name="blogEntryURL" />
 
 		<execute macro="Gmail#tearDown">
 			<var name="userEmailAddress" property-value="email.address.2" />

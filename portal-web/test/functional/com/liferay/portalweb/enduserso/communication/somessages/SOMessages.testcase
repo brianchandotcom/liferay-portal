@@ -4184,7 +4184,7 @@
 
 		<var name="key_messageBody" value="${messageBody}" />
 
-		<var locator="MESSAGE_TIMESTAMP" name="englishTimeStamp1" path="SOMessages" />
+		<var locator="SOMessages#MESSAGE_TIMESTAMP" name="englishTimeStamp1" />
 
 		<execute macro="SOMessages#viewMessage">
 			<var name="connectionName" value="${adminName}" />
@@ -4193,7 +4193,7 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<var locator="PRIVATE_MESSAGE_TIMESTAMP" name="englishTimeStamp2" path="SOMessagesMessage" />
+		<var locator="SOMessagesMessage#PRIVATE_MESSAGE_TIMESTAMP" name="englishTimeStamp2" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />

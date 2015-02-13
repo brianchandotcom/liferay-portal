@@ -560,7 +560,7 @@
 			<var name="gmailMessageTitle" value="Your New Account" />
 		</execute>
 
-		<var locator="EMAIL_PASSWORD" name="emailPassword" path="Gmail" />
+		<var locator="Gmail#EMAIL_PASSWORD" name="emailPassword" />
 
 		<execute macro="Gmail#gotoHtmlMode" />
 
@@ -569,7 +569,7 @@
 			<var name="gmailMessageTitle" value="Email Address Verification" />
 		</execute>
 
-		<var locator="EMAIL_VERIFICATION_CODE" name="emailVerification" path="Gmail" />
+		<var locator="Gmail#EMAIL_VERIFICATION_CODE" name="emailVerification" />
 
 		<execute macro="Page#openURL">
 			<var name="siteURL" value="true" />
@@ -615,7 +615,7 @@
 			<var name="gmailMessageTitle" value="Email Address Verification" />
 		</execute>
 
-		<var locator="EMAIL_ADDRESS_VERIFICATION_URL" name="emailAddressVerificationURL" path="Gmail" />
+		<var locator="Gmail#EMAIL_ADDRESS_VERIFICATION_URL" name="emailAddressVerificationURL" />
 
 		<execute function="Click" locator1="Gmail#EMAIL_ADDRESS_VERIFICATION_URL" />
 

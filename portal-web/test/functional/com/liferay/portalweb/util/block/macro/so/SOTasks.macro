@@ -84,7 +84,7 @@
 					</then>
 				</if>
 
-				<var locator="DUE_DATE_HOUR" name="displayDateHour" path="SOTasksAdd" />
+				<var locator="SOTasksAdd#DUE_DATE_HOUR" name="displayDateHour" />
 				<var name="displayDateHourLength" value="${displayDateHour?length()}" />
 
 				<if>
@@ -94,7 +94,7 @@
 					</then>
 				</if>
 
-				<var locator="DUE_DATE_MINUTE" name="displayDateMinute" path="SOTasksAdd" />
+				<var locator="SOTasksAdd#DUE_DATE_MINUTE" name="displayDateMinute" />
 				<var name="displayDateMinuteFuture" value="${displayDateMinute?increment()}" />
 				<var name="displayDateMinuteFuture" value="${displayDateMinuteFuture?increment()}" />
 				<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />
@@ -106,7 +106,7 @@
 					</then>
 				</if>
 
-				<var locator="DUE_DATE_MERIDIAN" name="displayDateMeridian" path="SOTasksAdd" />
+				<var locator="SOTasksAdd#DUE_DATE_MERIDIAN" name="displayDateMeridian" />
 				<var name="displayDateMeridian" value="${displayDateMeridian?replace('0', 'AM')}" />
 				<var name="displayDateMeridian" value="${displayDateMeridian?replace('1', 'PM')}" />
 
@@ -503,7 +503,7 @@
 	</command>
 
 	<command name="reopenTask">
-		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
+		<var locator="Dockbar#USER_NAME" name="currentUser" />
 		<var name="key_taskDescription" value="${taskDescription}" />
 
 		<execute function="AssertClick" locator1="SOTasks#ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
@@ -522,7 +522,7 @@
 	</command>
 
 	<command name="resolveTask">
-		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
+		<var locator="Dockbar#USER_NAME" name="currentUser" />
 		<var name="key_taskDescription" value="${taskDescription}" />
 
 		<execute function="AssertClick" locator1="SOTasks#ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
@@ -600,7 +600,7 @@
 	<command name="viewTask">
 		<var name="key_taskDescription" value="${taskDescription}" />
 
-		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
+		<var locator="Dockbar#USER_NAME" name="currentUser" />
 
 		<execute function="AssertClick" locator1="SOTasks#ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
 

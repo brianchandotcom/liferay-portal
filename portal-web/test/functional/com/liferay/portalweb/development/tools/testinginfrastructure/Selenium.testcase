@@ -105,7 +105,7 @@
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${int}" />
-			<var locator="DISPLAY_DATE_DAY" name="expected" path="CPBlogsAdd" />
+			<var locator="CPBlogsAdd#DISPLAY_DATE_DAY" name="expected" />
 		</execute>
 	</command>
 
@@ -116,7 +116,7 @@
 
 		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
 
-		<var locator="DISPLAY_DATE" name="int" path="CPBlogsAdd" />
+		<var locator="CPBlogsAdd#DISPLAY_DATE" name="int" />
 
 		<var method="selenium#getCurrentMonth()" name="month" />
 		<var group="1" input="${int}" name="regex" pattern="([1-9]*[0-9])/([0-9]*)/([0-9]*)" />
@@ -138,7 +138,7 @@
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${int}" />
-			<var locator="DISPLAY_DATE_YEAR" name="expected" path="CPBlogsAdd" />
+			<var locator="CPBlogsAdd#DISPLAY_DATE_YEAR" name="expected" />
 		</execute>
 	</command>
 

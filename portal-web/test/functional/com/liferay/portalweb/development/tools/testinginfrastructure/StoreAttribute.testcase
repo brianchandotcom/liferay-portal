@@ -34,7 +34,7 @@
 	</command>
 
 	<command name="storeAttributeWithoutVariablesInLocator" priority="5">
-		<var attribute="class" locator="TEST_PATH" name="attributeValue" path="TestUtils" />
+		<var attribute="class" locator="TestUtils#TEST_PATH" name="attributeValue" />
 
 		<echo message="Test storeAttribute #3: using locator/path with xpath containing no variables" />
 
@@ -58,7 +58,7 @@
 	<command name="storeAttributeWithVariablesInAttributeName" priority="5">
 		<var name="key_testVar" value="site-title" />
 
-		<var attribute="class" locator="TEST_VAR_PATH" name="attributeValue" path="TestUtils" />
+		<var attribute="class" locator="TestUtils#TEST_VAR_PATH" name="attributeValue" />
 
 		<echo message="Test storeAttribute #5: using locator/path with xpath containing variables" />
 

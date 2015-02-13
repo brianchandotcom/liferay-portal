@@ -446,7 +446,7 @@
 			</else>
 		</if>
 
-		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
+		<var locator="Dockbar#USER_NAME" name="currentUser" />
 		<var name="key_commentContent" value="${commentContent}" />
 		<var name="key_row" value="${row}" />
 		<var name="key_userFirstName" value="${userFirstName}" />
@@ -789,7 +789,7 @@
 			</else>
 		</if>
 
-		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
+		<var locator="Dockbar#USER_NAME" name="currentUser" />
 
 		<var name="key_userName" value="${microblogsEntryAuthorName}" />
 
@@ -850,7 +850,7 @@
 			</else>
 		</if>
 
-		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
+		<var locator="Dockbar#USER_NAME" name="currentUser" />
 
 		<if>
 			<isset var="profileScreenName" />
@@ -922,7 +922,7 @@
 			</else>
 		</if>
 
-		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
+		<var locator="Dockbar#USER_NAME" name="currentUser" />
 
 		<var name="key_commentContent" value="${microblogsEntryCommentContent}" />
 
@@ -1018,7 +1018,7 @@
 			</else>
 		</if>
 
-		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
+		<var locator="Dockbar#USER_NAME" name="currentUser" />
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 		<var name="key_userName" value="${microblogsEntryAuthorName}" />
 
@@ -1053,7 +1053,7 @@
 			</else>
 		</if>
 
-		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
+		<var locator="Dockbar#USER_NAME" name="currentUser" />
 		<var name="key_userName" value="${microblogsEntryAuthorName}" />
 
 		<if>
@@ -1084,7 +1084,7 @@
 			</else>
 		</if>
 
-		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
+		<var locator="Dockbar#USER_NAME" name="currentUser" />
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 		<var name="key_microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		<var name="key_userName" value="${microblogsEntryAuthorName}" />
@@ -1127,7 +1127,7 @@
 			</else>
 		</if>
 
-		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
+		<var locator="Dockbar#USER_NAME" name="currentUser" />
 
 		<var name="key_userName" value="${microblogsEntryAuthorName}" />
 
@@ -1181,7 +1181,7 @@
 
 		<var name="key_userName" value="${microblogsEntryRepostAuthorName}" />
 
-		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
+		<var locator="Dockbar#USER_NAME" name="currentUser" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -1261,7 +1261,7 @@
 			</else>
 		</if>
 
-		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
+		<var locator="Dockbar#USER_NAME" name="currentUser" />
 
 		<if>
 			<isset var="profileScreenName" />

@@ -3521,7 +3521,7 @@
 
 		<execute function="Click" locator1="PGStaging#HISTORY_BUTTON" />
 
-		<var locator="HISTORY_VERSION" name="historyVersion" path="PGStaging" />
+		<var locator="PGStaging#HISTORY_VERSION" name="historyVersion" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
@@ -4010,7 +4010,7 @@
 
 		<execute function="Click" locator1="PGStaging#HISTORY_BUTTON" />
 
-		<var locator="HISTORY_VERSION" name="historyVersion" path="PGStaging" />
+		<var locator="PGStaging#HISTORY_VERSION" name="historyVersion" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />

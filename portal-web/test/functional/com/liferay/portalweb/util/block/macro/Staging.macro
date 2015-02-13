@@ -770,7 +770,7 @@
 
 		<execute function="Click" locator1="PGStaging#HISTORY_BUTTON" />
 
-		<var locator="HISTORY_VERSION" name="historyVersion" path="PGStaging" />
+		<var locator="PGStaging#HISTORY_VERSION" name="historyVersion" />
 	</command>
 
 	<command name="submitForPublicationPageRevision">

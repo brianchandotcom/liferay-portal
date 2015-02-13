@@ -145,10 +145,10 @@
 				<execute function="AssertNotChecked" locator1="PGCalendarAddevent#ALL_DAY_CHECKBOX" />
 				<execute function="AssertNotChecked" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
 
-				<var locator="END_DATE" name="endDate" path="PGCalendarAddevent" />
-				<var locator="END_DATE_TIME" name="endDateTime" path="PGCalendarAddevent" />
-				<var locator="START_DATE" name="startDate" path="PGCalendarAddevent" />
-				<var locator="START_DATE_TIME" name="startDateTime" path="PGCalendarAddevent" />
+				<var locator="PGCalendarAddevent#END_DATE" name="endDate" />
+				<var locator="PGCalendarAddevent#END_DATE_TIME" name="endDateTime" />
+				<var locator="PGCalendarAddevent#START_DATE" name="startDate" />
+				<var locator="PGCalendarAddevent#START_DATE_TIME" name="startDateTime" />
 
 				<execute macro="CalendarEvent#selectCalendarPG" />
 
@@ -179,8 +179,8 @@
 					<execute function="AssertElementNotPresent#assertNotVisible" locator1="PGCalendarAddevent#START_DATE_TIME" />
 					<execute function="AssertElementNotPresent#assertNotVisible" locator1="PGCalendarAddevent#END_DATE_TIME" />
 
-					<var locator="END_DATE" name="endDate" path="PGCalendarAddevent" />
-					<var locator="START_DATE" name="startDate" path="PGCalendarAddevent" />
+					<var locator="PGCalendarAddevent#END_DATE" name="endDate" />
+					<var locator="PGCalendarAddevent#START_DATE" name="startDate" />
 
 					<execute macro="CalendarEvent#selectCalendarPG" />
 
@@ -214,10 +214,10 @@
 			<elseif>
 				<equals arg1="${eventType}" arg2="Repeating" />
 				<then>
-					<var locator="END_DATE" name="endDate" path="PGCalendarAddevent" />
-					<var locator="END_DATE_TIME" name="endDateTime" path="PGCalendarAddevent" />
-					<var locator="START_DATE" name="startDate" path="PGCalendarAddevent" />
-					<var locator="START_DATE_TIME" name="startDateTime" path="PGCalendarAddevent" />
+					<var locator="PGCalendarAddevent#END_DATE" name="endDate" />
+					<var locator="PGCalendarAddevent#END_DATE_TIME" name="endDateTime" />
+					<var locator="PGCalendarAddevent#START_DATE" name="startDate" />
+					<var locator="PGCalendarAddevent#START_DATE_TIME" name="startDateTime" />
 
 					<execute function="Check" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
 					<execute function="Select" locator1="PGCalendarAddevent#REPEAT_REPEATS_DROPDOWN" value1="${frequency}" />
@@ -364,7 +364,7 @@
 				<execute function="Type" locator1="PGCalendarAddevent#START_DATE_TIME" value1="${setStartDateTime}" />
 				<execute function="Type" locator1="PGCalendarAddevent#END_DATE_TIME" value1="${setEndDateTime}" />
 
-				<var locator="START_DATE" name="startDate" path="PGCalendarAddevent" />
+				<var locator="PGCalendarAddevent#START_DATE" name="startDate" />
 				<var name="endDate" value="${startDate}" />
 
 				<execute function="Type" locator1="PGCalendarAddevent#END_DATE" value1="${endDate}" />
@@ -394,7 +394,7 @@
 					<execute function="Type" locator1="PGCalendarAddevent#START_DATE_TIME" value1="${setStartDateTime}" />
 					<execute function="Type" locator1="PGCalendarAddevent#END_DATE_TIME" value1="${setEndDateTime}" />
 
-					<var locator="START_DATE" name="startDate" path="PGCalendarAddevent" />
+					<var locator="PGCalendarAddevent#START_DATE" name="startDate" />
 					<var name="endDate" value="${startDate}" />
 
 					<execute function="Type" locator1="PGCalendarAddevent#END_DATE" value1="${endDate}" />
@@ -810,8 +810,8 @@
 				<execute function="AssertElementNotPresent#assertNotVisible" locator1="PGCalendarAddevent#START_DATE_TIME" />
 				<execute function="AssertElementNotPresent#assertNotVisible" locator1="PGCalendarAddevent#END_DATE_TIME" />
 
-				<var locator="END_DATE" name="endDate" path="PGCalendarEditevent" />
-				<var locator="START_DATE" name="startDate" path="PGCalendarEditevent" />
+				<var locator="PGCalendarEditevent#END_DATE" name="endDate" />
+				<var locator="PGCalendarEditevent#START_DATE" name="startDate" />
 
 				<execute function="AssertTextEquals" locator1="PGCalendarEditevent#TITLE_FIELD" value1="${eventTitle}" />
 				<execute function="Type" locator1="PGCalendarEditevent#TITLE_FIELD" value1="${eventTitleEdit}" />
@@ -835,8 +835,8 @@
 					<execute function="AssertElementPresent" locator1="PGCalendarEditevent#END_DATE" />
 					<execute function="AssertElementPresent" locator1="PGCalendarEditevent#END_DATE_TIME" />
 
-					<var locator="END_DATE" name="endDate" path="PGCalendarEditevent" />
-					<var locator="START_DATE" name="startDate" path="PGCalendarEditevent" />
+					<var locator="PGCalendarEditevent#END_DATE" name="endDate" />
+					<var locator="PGCalendarEditevent#START_DATE" name="startDate" />
 
 					<execute function="Type" locator1="PGCalendarEditevent#START_DATE_TIME" value1="${startDateTime}" />
 					<execute function="Click" locator1="PGCalendarEditevent#START_DATE_TIME" />
@@ -862,8 +862,8 @@
 					<execute function="AssertElementPresent" locator1="PGCalendarEditevent#END_DATE" />
 					<execute function="AssertElementPresent" locator1="PGCalendarEditevent#END_DATE_TIME" />
 
-					<var locator="END_DATE" name="endDate" path="PGCalendarEditevent" />
-					<var locator="START_DATE" name="startDate" path="PGCalendarEditevent" />
+					<var locator="PGCalendarEditevent#END_DATE" name="endDate" />
+					<var locator="PGCalendarEditevent#START_DATE" name="startDate" />
 
 					<execute function="Type" locator1="PGCalendarEditevent#START_DATE_TIME" value1="${startDateTime}" />
 					<execute function="Click" locator1="PGCalendarEditevent#START_DATE_TIME" />
@@ -955,8 +955,8 @@
 		<execute function="AssertElementPresent" locator1="PGCalendarEditevent#END_DATE" />
 		<execute function="AssertElementPresent" locator1="PGCalendarEditevent#END_DATE_TIME" />
 
-		<var locator="END_DATE" name="endDate" path="PGCalendarEditevent" />
-		<var locator="START_DATE" name="startDate" path="PGCalendarEditevent" />
+		<var locator="PGCalendarEditevent#END_DATE" name="endDate" />
+		<var locator="PGCalendarEditevent#START_DATE" name="startDate" />
 
 		<execute function="Type" locator1="PGCalendarEditevent#START_DATE_TIME" value1="${startDateTime}" />
 		<execute function="Click" locator1="PGCalendarEditevent#START_DATE_TIME" />

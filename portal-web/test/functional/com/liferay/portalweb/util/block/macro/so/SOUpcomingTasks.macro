@@ -2,7 +2,7 @@
 	<command name="viewUpcomingTask">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<var locator="USER_NAME" name="currentUser" path="Dockbar" />
+		<var locator="Dockbar#USER_NAME" name="currentUser" />
 		<var name="key_taskDescription" value="${taskDescription}" />
 
 		<if>

@@ -101,7 +101,7 @@
 
 		<execute function="SelectFrame" locator1="PGWebcontentdisplayEditwebcontent#WEB_CONTENT_IFRAME" />
 
-		<var locator="ARTICLE_ID" name="articleID" path="PGWebcontentdisplayEditwebcontent" />
+		<var locator="PGWebcontentdisplayEditwebcontent#ARTICLE_ID" name="articleID" />
 
 		<execute macro="User#logoutPG" />
 

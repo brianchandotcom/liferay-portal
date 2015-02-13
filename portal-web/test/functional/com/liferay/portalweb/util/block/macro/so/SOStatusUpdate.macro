@@ -128,7 +128,7 @@
 	</command>
 
 	<command name="viewCharacterCountdownCmd">
-		<var attribute="value" locator="STATUS_UPDATE_CONTENT_INPUT_FIELD" name="textFieldContent" path="SOStatusUpdate" />
+		<var attribute="value" locator="SOStatusUpdate#STATUS_UPDATE_CONTENT_INPUT_FIELD" name="textFieldContent" />
 		<var name="textFieldContentLength" value="${textFieldContent?length()}" />
 
 		<var method="MathUtil#difference(&quot;150&quot;, &quot;${textFieldContentLength}&quot;)" name="characterCountdown" />

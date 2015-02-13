@@ -75,7 +75,7 @@
 
 		<execute function="AssertTextEquals" locator1="JsonwebservicesAddress#API_METHOD" value1="/address/add-address" />
 
-		<var locator="P_AUTH_FIELD" name="pAuth" path="JsonwebservicesAddress" />
+		<var locator="JsonwebservicesAddress#P_AUTH_FIELD" name="pAuth" />
 
 		<execute function="Open" locator1="${url}${pAuth}" />
 	</command>

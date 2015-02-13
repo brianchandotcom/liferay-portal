@@ -541,7 +541,7 @@
 	</command>
 
 	<command name="viewCharacterCountdownCmd">
-		<var attribute="value" locator="MICROBLOGS_CONTENT_INPUT_FIELD" name="textFieldContent" path="SOMicroblogs" />
+		<var attribute="value" locator="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" name="textFieldContent" />
 		<var name="textFieldContentLength" value="${textFieldContent?length()}" />
 
 		<var method="MathUtil#difference(&quot;150&quot;, &quot;${textFieldContentLength}&quot;)" name="characterCountdown" />

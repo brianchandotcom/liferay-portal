@@ -366,17 +366,17 @@
 	</command>
 
 	<command name="scheduleFutureExpirationTimeCmd">
-		<var locator="DISPLAY_DATE_DATE_DAY" name="expirationDateDay" path="SOAnnouncementsAdd" />
+		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_DAY" name="expirationDateDay" />
 
-		<var locator="DISPLAY_DATE_DATE_MONTH" name="expirationDateMonth" path="SOAnnouncementsAdd" />
+		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_MONTH" name="expirationDateMonth" />
 		<var name="expirationDateMonth" value="${expirationDateMonth?increment()}" />
 
-		<var locator="DISPLAY_DATE_DATE_YEAR" name="expirationDateYear" path="SOAnnouncementsAdd" />
+		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_YEAR" name="expirationDateYear" />
 		<var name="expirationDate" value="${expirationDateMonth}/${expirationDateDay}/${expirationDateYear}" />
 
 		<execute function="Type" locator1="SOAnnouncementsAdd#EXPIRATION_DATE_DATE_INPUT" value1="${expirationDate}" />
 
-		<var locator="DISPLAY_DATE_DATE_HOUR" name="expirationDateHour" path="SOAnnouncementsAdd" />
+		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_HOUR" name="expirationDateHour" />
 		<var name="expirationDateHourLength" value="${expirationDateHour?length()}" />
 
 		<if>
@@ -389,7 +389,7 @@
 			</else>
 		</if>
 
-		<var locator="DISPLAY_DATE_DATE_MINUTE" name="expirationDateMinute" path="SOAnnouncementsAdd" />
+		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_MINUTE" name="expirationDateMinute" />
 		<var name="expirationDateMinuteFuture" value="${expirationDateMinute?increment()}" />
 		<var name="expirationDateMinuteFuture" value="${expirationDateMinuteFuture?increment()}" />
 		<var name="expirationDateMinuteFutureLength" value="${expirationDateMinuteFuture?length()}" />
@@ -404,7 +404,7 @@
 			</else>
 		</if>
 
-		<var locator="DISPLAY_DATE_DATE_MERIDIAN" name="expirationDateMeridian" path="SOAnnouncementsAdd" />
+		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_MERIDIAN" name="expirationDateMeridian" />
 		<var name="expirationDateMeridian" value="${expirationDateMeridian?replace('0', 'AM')}" />
 		<var name="expirationDateMeridian" value="${expirationDateMeridian?replace('1', 'PM')}" />
 		<var name="expirationTime" value="${expirationDateHour}:${expirationDateMinuteFuture} ${expirationDateMeridian}" />
@@ -415,7 +415,7 @@
 	<command name="scheduleFutureTimeCmd">
 		<execute function="Uncheck" locator1="SOAnnouncementsAdd#DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX" />
 
-		<var locator="DISPLAY_DATE_DATE_HOUR" name="displayDateHour" path="SOAnnouncementsAdd" />
+		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_HOUR" name="displayDateHour" />
 		<var name="displayDateHourLength" value="${displayDateHour?length()}" />
 
 		<if>
@@ -425,7 +425,7 @@
 			</then>
 		</if>
 
-		<var locator="DISPLAY_DATE_DATE_MINUTE" name="displayDateMinute" path="SOAnnouncementsAdd" />
+		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_MINUTE" name="displayDateMinute" />
 		<var name="displayDateMinuteFuture" value="${displayDateMinute?increment()}" />
 		<var name="displayDateMinuteFuture" value="${displayDateMinuteFuture?increment()}" />
 		<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />
@@ -437,7 +437,7 @@
 			</then>
 		</if>
 
-		<var locator="DISPLAY_DATE_DATE_MERIDIAN" name="displayDateMeridian" path="SOAnnouncementsAdd" />
+		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_MERIDIAN" name="displayDateMeridian" />
 		<var name="displayDateMeridian" value="${displayDateMeridian?replace('0', 'AM')}" />
 		<var name="displayDateMeridian" value="${displayDateMeridian?replace('1', 'PM')}" />
 

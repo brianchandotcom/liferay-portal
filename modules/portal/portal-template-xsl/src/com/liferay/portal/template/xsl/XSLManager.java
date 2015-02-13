@@ -25,13 +25,13 @@ import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.xsl.configuration.XSLEngineConfiguration;
 import com.liferay.portal.xsl.XSLTemplateResource;
 
+import java.util.Map;
+
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
-
-import java.util.Map;
 
 /**
  * @author Tina Tian
@@ -69,6 +69,13 @@ public class XSLManager extends BaseTemplateManager {
 		templateContextHelper = new TemplateContextHelper();
 	}
 
+	@Activate
+	@Modified
+	protected void activate(ComponentContext componentContext) {
+		_XSLEngineConfiguration = Configurable.createConfigurable(
+			XSLEngineConfiguration.class, componentContext.getProperties());
+	}
+
 	@Override
 	protected Template doGetTemplate(
 		TemplateResource templateResource,
@@ -82,16 +89,7 @@ public class XSLManager extends BaseTemplateManager {
 			xslTemplateResource, errorTemplateResource, templateContextHelper,
 			_XSLEngineConfiguration);
 	}
-	
-	@Activate
-	@Modified
-	protected void activate(ComponentContext componentContext) {
-		_XSLEngineConfiguration = Configurable.createConfigurable(
-			XSLEngineConfiguration.class,
-			componentContext.getProperties());
 
-	}
-	
 	private volatile XSLEngineConfiguration _XSLEngineConfiguration;
 
 }

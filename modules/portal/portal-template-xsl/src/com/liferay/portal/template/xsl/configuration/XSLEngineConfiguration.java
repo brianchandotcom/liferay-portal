@@ -24,5 +24,5 @@ public interface XSLEngineConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean secureProcesingEnabled();
-	
+
 }

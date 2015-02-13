@@ -28,9 +28,11 @@ import com.liferay.portal.xsl.XSLTemplateResource;
 import com.liferay.portal.xsl.XSLURIResolver;
 
 import java.io.Writer;
+
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
@@ -38,6 +40,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+
 import javax.xml.XMLConstants;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -54,7 +57,7 @@ public class XSLTemplate implements Template {
 	public XSLTemplate(
 		XSLTemplateResource xslTemplateResource,
 		TemplateResource errorTemplateResource,
-		TemplateContextHelper templateContextHelper, 
+		TemplateContextHelper templateContextHelper,
 		XSLEngineConfiguration xSLEngineConfiguration) {
 
 		if (xslTemplateResource == null) {

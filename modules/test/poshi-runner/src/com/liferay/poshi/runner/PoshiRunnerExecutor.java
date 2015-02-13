@@ -532,26 +532,24 @@ public class PoshiRunnerExecutor {
 	}
 
 	public static void runWhileElement(Element element) throws Exception {
-		int maxIteration = 15;
+		int maxIterations = 15;
 
-		String definedMax = element.attributeValue("max-iteration");
-
-		if (definedMax != null) {
-			maxIteration = Integer.parseInt(definedMax);
+		if (element.attributeValue("max-iterations") != null) {
+			maxIterations = Integer.parseInt(
+				element.attributeValue("max-iterations"));
 		}
 
-		int i = 0;
+		List<Element> whileChildElements = element.elements();
 
-		List<Element> whileElements = element.elements();
+		Element conditionElement = whileChildElements.get(0);
+		Element thenElement = element.element("then");
 
-		while (evaluateConditionalElement(whileElements.get(0)) &&
-			   (i < maxIteration)) {
-
-			Element thenElement = element.element("then");
+		for (int i = 0; i < maxIterations; i++) {
+			if (!evaluateConditionalElement(conditionElement)) {
+				break;
+			}
 
 			parseElement(thenElement);
-
-			i++;
 		}
 	}
 

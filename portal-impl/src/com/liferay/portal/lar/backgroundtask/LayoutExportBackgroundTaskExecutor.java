@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
+import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 
 import java.io.File;
@@ -55,8 +56,15 @@ public class LayoutExportBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws PortalException {
 
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
+		long exportImportConfigurationId = MapUtil.getLong(
+			taskContextMap, "exportImportConfigurationId");
+
 		ExportImportConfiguration exportImportConfiguration =
-			getExportImportConfiguration(backgroundTask);
+			ExportImportConfigurationLocalServiceUtil.
+				getExportImportConfiguration(exportImportConfigurationId);
 
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();

@@ -36,6 +36,7 @@ import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.HttpPrincipal;
+import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.http.LayoutServiceHttp;
 import com.liferay.portal.service.http.StagingServiceHttp;
@@ -65,8 +66,15 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws PortalException {
 
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
+		long exportImportConfigurationId = MapUtil.getLong(
+			taskContextMap, "exportImportConfigurationId");
+
 		ExportImportConfiguration exportImportConfiguration =
-			getExportImportConfiguration(backgroundTask);
+			ExportImportConfigurationLocalServiceUtil.
+				getExportImportConfiguration(exportImportConfigurationId);
 
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
@@ -85,10 +93,6 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			exportImportConfiguration,
 			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
-
-		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
-
 		HttpPrincipal httpPrincipal = (HttpPrincipal)taskContextMap.get(
 			"httpPrincipal");
 

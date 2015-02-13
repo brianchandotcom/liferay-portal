@@ -98,7 +98,8 @@ public class VelocityTemplateTest {
 
 		_templateResourceLoader = new MockTemplateResourceLoader();
 
-		_templateResourceLoader.activate(Collections.<String, Object>emptyMap());
+		_templateResourceLoader.activate(
+			Collections.<String, Object>emptyMap());
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -409,7 +410,6 @@ public class VelocityTemplateTest {
 
 	private static ServiceRegistration<TemplateResourceLoader>
 		_serviceRegistration;
-
 	private static MockTemplateResourceLoader _templateResourceLoader;
 
 	private TemplateContextHelper _templateContextHelper;

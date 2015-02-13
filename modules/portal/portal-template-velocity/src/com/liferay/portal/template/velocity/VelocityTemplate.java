@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.velocity;
+package com.liferay.portal.template.velocity;
 
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.AbstractTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.Writer;
 
@@ -45,12 +44,13 @@ public class VelocityTemplate extends AbstractTemplate {
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
 		VelocityEngine velocityEngine,
-		TemplateContextHelper templateContextHelper, boolean privileged) {
+		TemplateContextHelper templateContextHelper,
+		int resourceModificationCheckInterval, boolean privileged) {
 
 		super(
 			templateResource, errorTemplateResource, context,
 			templateContextHelper, TemplateConstants.LANG_TYPE_VM,
-			PropsValues.VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL);
+			resourceModificationCheckInterval);
 
 		_velocityContext = new VelocityContext(super.context);
 		_velocityEngine = velocityEngine;

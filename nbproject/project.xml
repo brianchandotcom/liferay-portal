@@ -331,6 +331,8 @@
 				<classpath mode="compile">lib/development/spring-instrument-tomcat.jar</classpath>
 				<classpath mode="compile">lib/development/spring-test.jar</classpath>
 				<classpath mode="compile">lib/development/tomcat-coyote.jar</classpath>
+				<classpath mode="compile">lib/development/velocity-tools.jar</classpath>
+				<classpath mode="compile">lib/development/velocity.jar</classpath>
 				<classpath mode="compile">lib/development/xmltask.jar</classpath>
 				<classpath mode="compile">lib/global/portlet.jar</classpath>
 				<classpath mode="compile">lib/portal/abdera.jar</classpath>
@@ -542,8 +544,6 @@
 				<classpath mode="compile">lib/portal/unoil.jar</classpath>
 				<classpath mode="compile">lib/portal/urlrewritefilter.jar</classpath>
 				<classpath mode="compile">lib/portal/vaadin.jar</classpath>
-				<classpath mode="compile">lib/portal/velocity-tools.jar</classpath>
-				<classpath mode="compile">lib/portal/velocity.jar</classpath>
 				<classpath mode="compile">lib/portal/vorbis-java-core.jar</classpath>
 				<classpath mode="compile">lib/portal/vorbis-java-tika.jar</classpath>
 				<classpath mode="compile">lib/portal/wsdl4j.jar</classpath>

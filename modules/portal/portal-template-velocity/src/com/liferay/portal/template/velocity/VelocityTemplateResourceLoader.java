@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.template.freemarker;
+package com.liferay.portal.template.velocity;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.template.DefaultTemplateResourceLoader;
-import com.liferay.portal.template.freemarker.configuration.FreemarkerEngineConfiguration;
+import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
 
 import java.util.Map;
 
@@ -34,13 +34,16 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Spasic
+ * @author Peter Fellwock
  */
 @Component(
-	configurationPid = "com.liferay.portal.template.freemarker",
+	configurationPid = "com.liferay.portal.template.velocity",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = TemplateResourceLoader.class
+	service = {
+		TemplateResourceLoader.class, VelocityTemplateResourceLoader.class
+	}
 )
-public class FreemarkerTemplateResourceLoader implements TemplateResourceLoader{
+public class VelocityTemplateResourceLoader implements TemplateResourceLoader {
 
 	@Override
 	public void clearCache() {
@@ -75,26 +78,32 @@ public class FreemarkerTemplateResourceLoader implements TemplateResourceLoader{
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_freemarkerEngineConfiguration = Configurable.createConfigurable(
-			FreemarkerEngineConfiguration.class, properties);
+		_velocityEngineConfiguration = Configurable.createConfigurable(
+			VelocityEngineConfiguration.class, properties);
 
 		_defaultTemplateResourceLoader = new DefaultTemplateResourceLoader(
-			TemplateConstants.LANG_TYPE_FTL,
-			_freemarkerEngineConfiguration.templateParsers(),
-			_freemarkerEngineConfiguration.resourceModificationCheck());
+			TemplateConstants.LANG_TYPE_VM,
+			_velocityEngineConfiguration.resourceParsers(),
+			_velocityEngineConfiguration.resourceModificationCheckInterval());
 	}
 
 	@Reference(unbind = "-")
 	protected void setMultiVMPoolUtil(MultiVMPoolUtil multiVMPoolUtil) {
+
+		// This reference ensures that MultipVMPoolUtil is ready for use.
+
 	}
 
 	@Reference(unbind = "-")
 	protected void setSingleVMPoolUtil(SingleVMPoolUtil singleVMPoolUtil) {
+
+		// This reference ensures that SingleVMPoolUtil is ready for use.
+
 	}
 
 	private static volatile DefaultTemplateResourceLoader
 		_defaultTemplateResourceLoader;
-	private static volatile FreemarkerEngineConfiguration
-		_freemarkerEngineConfiguration;
+	private static volatile VelocityEngineConfiguration
+		_velocityEngineConfiguration;
 
 }

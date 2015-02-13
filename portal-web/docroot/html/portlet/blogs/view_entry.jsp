@@ -86,10 +86,10 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 		<aui:container cssClass="entry-navigation">
 			<aui:row>
 				<c:if test="<%= previousEntry != null %>">
-					<aui:col cssClass="previous-entry" md="6" sm="6">
+					<aui:col cssClass='<%= "previous-entry " + ((nextEntry != null) ? "has-next-entry" : StringPool.BLANK) %>' md="6" sm="6">
 						<h2><liferay-ui:message key="previous-entry" /></h2>
 
-						<div class="previous-entry-content <%= (nextEntry != null) ? "bordered" : StringPool.BLANK %>">
+						<div class="previous-entry-content">
 							<portlet:renderURL var="previousEntryURL">
 								<portlet:param name="struts_action" value="/blogs/view_entry" />
 								<portlet:param name="redirect" value="<%= redirect %>" />
@@ -135,7 +135,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 				</c:if>
 
 				<c:if test="<%= nextEntry != null %>">
-					<aui:col cssClass="next-entry" md="6" sm="6">
+					<aui:col cssClass='<%= "next-entry " + ((previousEntry != null) ? "has-previous-entry" : StringPool.BLANK) %>' md="6" sm="6">
 						<div class="<%= (previousEntry != null) ? "next-entry-container" : StringPool.BLANK %>">
 							<h2><liferay-ui:message key="next-entry" /></h2>
 

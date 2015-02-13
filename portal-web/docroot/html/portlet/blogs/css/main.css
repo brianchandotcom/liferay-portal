@@ -277,10 +277,12 @@
 			margin-top: 28px;
 		}
 
-		.previous-entry .previous-entry-content {
-			padding-right: 60px;
+		.previous-entry {
+			.previous-entry-content {
+				padding-right: 60px;
+			}
 
-			&.bordered {
+			&.has-next-entry .previous-entry-content {
 				border-right: 1px solid #EDEEF0;
 
 				@include respond-to(phone) {

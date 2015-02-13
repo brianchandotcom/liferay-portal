@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.trash;
+package com.liferay.wiki.util.test;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -25,14 +25,13 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.util.WikiTestUtil;
 
 /**
  * @author Roberto Díaz
  */
 public class WikiPageTrashHandlerTestUtil {
 
-	protected static BaseModel<?> addBaseModelWithWorkflow(
+	public static BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -47,24 +46,21 @@ public class WikiPageTrashHandlerTestUtil {
 			approved);
 	}
 
-	protected static BaseModel<?> getBaseModel(long primaryKey)
-		throws Exception {
-
+	public static BaseModel<?> getBaseModel(long primaryKey) throws Exception {
 		return WikiPageLocalServiceUtil.getPageByPageId(primaryKey);
 	}
 
-	protected static Class<?> getBaseModelClass() {
+	public static Class<?> getBaseModelClass() {
 		return WikiPage.class;
 	}
 
-	protected static String getBaseModelName(ClassedModel classedModel) {
+	public static String getBaseModelName(ClassedModel classedModel) {
 		WikiPage page = (WikiPage)classedModel;
 
 		return page.getTitle();
 	}
 
-	protected static int getNotInTrashBaseModelsCount(
-			BaseModel<?> parentBaseModel)
+	public static int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
 		return WikiPageLocalServiceUtil.getPagesCount(
@@ -72,7 +68,7 @@ public class WikiPageTrashHandlerTestUtil {
 			WorkflowConstants.STATUS_ANY);
 	}
 
-	protected static BaseModel<?> getParentBaseModel(
+	public static BaseModel<?> getParentBaseModel(
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
@@ -86,17 +82,17 @@ public class WikiPageTrashHandlerTestUtil {
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	protected static String getSearchKeywords() {
+	public static String getSearchKeywords() {
 		return _PAGE_TITLE;
 	}
 
-	protected static long getTrashEntryClassPK(ClassedModel classedModel) {
+	public static long getTrashEntryClassPK(ClassedModel classedModel) {
 		WikiPage page = (WikiPage)classedModel;
 
 		return page.getResourcePrimKey();
 	}
 
-	protected static String getUniqueTitle(BaseModel<?> baseModel) {
+	public static String getUniqueTitle(BaseModel<?> baseModel) {
 		WikiPage page = (WikiPage)baseModel;
 
 		String title = page.getTitle();
@@ -104,23 +100,21 @@ public class WikiPageTrashHandlerTestUtil {
 		return TrashUtil.getOriginalTitle(title);
 	}
 
-	protected static void moveBaseModelToTrash(long primaryKey)
-		throws Exception {
-
+	public static void moveBaseModelToTrash(long primaryKey) throws Exception {
 		WikiPage page = WikiPageLocalServiceUtil.getPageByPageId(primaryKey);
 
 		WikiPageLocalServiceUtil.movePageToTrash(
 			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle());
 	}
 
-	protected static void moveParentBaseModelToTrash(long primaryKey)
+	public static void moveParentBaseModelToTrash(long primaryKey)
 		throws Exception {
 
 		WikiNodeLocalServiceUtil.moveNodeToTrash(
 			TestPropsValues.getUserId(), primaryKey);
 	}
 
-	protected static BaseModel<?> updateBaseModel(
+	public static BaseModel<?> updateBaseModel(
 			long primaryKey, ServiceContext serviceContext)
 		throws Exception {
 

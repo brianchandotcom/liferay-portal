@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.creole.util;
+package com.liferay.wiki.engine.creole.util.test;
 
 import com.liferay.wiki.parser.creole.ast.WikiPageNode;
 import com.liferay.wiki.parser.creole.parser.Creole10Lexer;

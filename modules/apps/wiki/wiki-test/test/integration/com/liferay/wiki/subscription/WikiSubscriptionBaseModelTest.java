@@ -27,7 +27,7 @@ import com.liferay.portlet.subscriptions.test.BaseSubscriptionBaseModelTestCase;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.util.WikiTestUtil;
+import com.liferay.wiki.util.test.WikiTestUtil;
 
 import org.junit.ClassRule;
 import org.junit.Ignore;

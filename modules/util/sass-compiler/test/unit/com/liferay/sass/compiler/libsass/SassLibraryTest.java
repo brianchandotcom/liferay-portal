@@ -14,8 +14,8 @@
 
 package com.liferay.sass.compiler.libsass;
 
-import com.liferay.sass.compiler.SassTestUtil;
 import com.liferay.sass.compiler.libsass.SassLibrary.Sass_File_Context;
+import com.liferay.sass.compiler.util.test.SassTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;

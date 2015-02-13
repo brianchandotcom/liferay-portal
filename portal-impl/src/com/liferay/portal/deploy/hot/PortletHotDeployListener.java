@@ -261,36 +261,29 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		while (itr.hasNext()) {
 			Portlet portlet = itr.next();
 
+			if (!portletAppInitialized) {
+				initPortletApp(
+					servletContextName, servletContext, classLoader, portlet);
+
+				portletAppInitialized = true;
+			}
+
 			PortletBag portletBag = portletBagFactory.create(portlet);
 
-			if (portletBag == null) {
-				itr.remove();
+			javax.portlet.Portlet portletInstance =
+				portletBag.getPortletInstance();
+
+			if (ClassUtil.isSubclass(
+					portletInstance.getClass(), PHPPortlet.class.getName())) {
+
+				phpPortlet = true;
 			}
-			else {
-				if (!portletAppInitialized) {
-					initPortletApp(
-						servletContextName, servletContext, classLoader,
-						portlet);
 
-					portletAppInitialized = true;
-				}
+			if (ClassUtil.isSubclass(
+					portletInstance.getClass(),
+					StrutsPortlet.class.getName())) {
 
-				javax.portlet.Portlet portletInstance =
-					portletBag.getPortletInstance();
-
-				if (ClassUtil.isSubclass(
-						portletInstance.getClass(),
-						PHPPortlet.class.getName())) {
-
-					phpPortlet = true;
-				}
-
-				if (ClassUtil.isSubclass(
-						portletInstance.getClass(),
-						StrutsPortlet.class.getName())) {
-
-					strutsBridges = true;
-				}
+				strutsBridges = true;
 			}
 		}
 

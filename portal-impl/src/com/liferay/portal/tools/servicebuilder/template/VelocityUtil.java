@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.velocity;
+package com.liferay.portal.tools.servicebuilder.template;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.Map;
 
@@ -41,11 +39,11 @@ public class VelocityUtil {
 
 		velocityEngine.setProperty(
 			RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,
-			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER));
+			"org.apache.velocity.runtime.log.SimpleLog4JLogSystem");
 
 		velocityEngine.setProperty(
 			RuntimeConstants.RUNTIME_LOG_LOGSYSTEM + ".log4j.category",
-			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER_CATEGORY));
+			"org.apache.velocity");
 
 		velocityEngine.init();
 

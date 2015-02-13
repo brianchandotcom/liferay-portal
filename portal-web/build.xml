@@ -24,6 +24,7 @@
 		<pathelement location="${project.dir}/util-taglib/util-taglib.jar" />
 		<pathelement location="${project.dir}/lib/development/activation.jar" />
 		<pathelement location="${project.dir}/lib/development/mail.jar" />
+		<pathelement location="${project.dir}/lib/development/velocity.jar" />
 		<pathelement location="${project.dir}/lib/global/portal-settings-shared.jar" />
 		<pathelement location="${project.dir}/lib/global/portlet.jar" />
 		<pathelement location="${project.dir}/lib/portal/ant.jar" />
@@ -46,7 +47,6 @@
 		<pathelement location="${project.dir}/lib/portal/openid4java.jar" />
 		<pathelement location="${project.dir}/lib/portal/rome.jar" />
 		<pathelement location="${project.dir}/lib/portal/struts.jar" />
-		<pathelement location="${project.dir}/lib/portal/velocity.jar" />
 	</path>
 
 	<extension-point name="build-portal-web-dependencies" depends="build-alloy,build-alloy-editor,build-bourbon,build-ckeditor,build-css,build-dtd,build-tinymce,build-vaadin" />

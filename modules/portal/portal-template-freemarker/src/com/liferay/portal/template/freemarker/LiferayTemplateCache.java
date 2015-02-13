@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
+import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
 import com.liferay.portal.template.freemarker.configuration.FreemarkerEngineConfiguration;
@@ -43,11 +43,14 @@ public class LiferayTemplateCache extends TemplateCache {
 
 	public LiferayTemplateCache(
 		Configuration configuration,
-		FreemarkerEngineConfiguration freemarkerEngineConfiguration) {
+		FreemarkerEngineConfiguration freemarkerEngineConfiguration,
+		TemplateResourceLoader templateResourceLoader) {
 
 		_configuration = configuration;
 
 		_freemarkerEngineConfiguration = freemarkerEngineConfiguration;
+
+		_templateResourceLoader = templateResourceLoader;
 
 		String cacheName = TemplateResource.class.getName();
 
@@ -116,9 +119,8 @@ public class LiferayTemplateCache extends TemplateCache {
 		}
 		else {
 			try {
-				templateResource =
-					TemplateResourceLoaderUtil.getTemplateResource(
-						TemplateConstants.LANG_TYPE_FTL, templateId);
+				templateResource = _templateResourceLoader.getTemplateResource(
+					templateId);
 			}
 			catch (Exception e) {
 				templateResource = null;
@@ -152,6 +154,7 @@ public class LiferayTemplateCache extends TemplateCache {
 	private final Configuration _configuration;
 	private final FreemarkerEngineConfiguration _freemarkerEngineConfiguration;
 	private final PortalCache<TemplateResource, Object> _portalCache;
+	private final TemplateResourceLoader _templateResourceLoader;
 
 	private class TemplatePrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Template> {

@@ -112,7 +112,7 @@
 		<for list="Home,Documents and Media,News" param="pageName">
 			<var name="key_pageName" value="Asset Publisher Page" />
 
-			<execute action="Home#assertElementPresent" locator-key1="PAGE" value1="Asset Publisher Page" />
+			<execute action="Home#assertElementPresent" locator1="PAGE" value1="Asset Publisher Page" />
 		</for>
 
 		<execute macro="Page#openURL">
@@ -121,12 +121,12 @@
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
-		<execute action="Home#assertElementPresent" locator-key1="PAGE" value1="Home" />
+		<execute action="Home#assertElementPresent" locator1="PAGE" value1="Home" />
 
 		<for list="Documents and Media,News" param="pageName">
 			<var name="key_pageName" value="Asset Publisher Page" />
 
-			<execute action="Home#assertElementNotPresent" locator-key1="PAGE" value1="Asset Publisher Page" />
+			<execute action="Home#assertElementNotPresent" locator1="PAGE" value1="Asset Publisher Page" />
 		</for>
 
 		<execute macro="Page#addPG">
@@ -176,9 +176,9 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
-		<execute action="PGAssetpublisher#assertClick" locator-key1="DISPLAY_ICON_EDIT" value1="Edit" />
+		<execute action="PGAssetpublisher#assertClick" locator1="DISPLAY_ICON_EDIT" value1="Edit" />
 
-		<execute action="PGSignin#assertTextNotEquals" locator-key1="PORTLET_TITLE" value1="Sign In" />
+		<execute action="PGSignin#assertTextNotEquals" locator1="PORTLET_TITLE" value1="Sign In" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Page" />
@@ -244,17 +244,17 @@
 
 		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
 
-		<execute action="PGAssetpublisherConfiguration#click" locator-key1="ASSET_SELECTION_MANUAL" />
+		<execute action="PGAssetpublisherConfiguration#click" locator1="ASSET_SELECTION_MANUAL" />
 
-		<execute action="PGAssetpublisherConfigurationManual#assertClick" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT" value1="Select" />
+		<execute action="PGAssetpublisherConfigurationManual#assertClick" locator1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT" value1="Select" />
 
 		<var name="key_assetEntryType" value="Global Document Type Name" />
 
-		<execute action="PGAssetpublisherConfigurationManual#assertTextEquals" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="Global Document Type Name" />
+		<execute action="PGAssetpublisherConfigurationManual#assertTextEquals" locator1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="Global Document Type Name" />
 
 		<var name="key_assetEntryType" value="Local Document Type Name" />
 
-		<execute action="PGAssetpublisherConfigurationManual#assertTextEquals" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="Local Document Type Name" />
+		<execute action="PGAssetpublisherConfigurationManual#assertTextEquals" locator1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="Local Document Type Name" />
 	</command>
 
 	<command name="AssetPublisherCategoriesLocalization" priority="3">
@@ -1404,7 +1404,7 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ADD_NEW_DROPDOWN" value1="Add New" />
 
 		<execute macro="AssetPublisherPortlet#viewDynamicAssetSelectionConfigurationPG">
 			<var name="portletName" value="Asset Publisher" />
@@ -1599,9 +1599,9 @@
 			<var name="assetTitle" value="Blogs Entry2 Title" />
 		</execute>
 
-		<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_TITLE_IMAGE_2" />
-		<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_TITLE_2" />
-		<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_EDIT_2" />
+		<execute action="PGRelatedassets#assertElementNotPresent" locator1="ASSET_TITLE_IMAGE_2" />
+		<execute action="PGRelatedassets#assertElementNotPresent" locator1="ASSET_TITLE_2" />
+		<execute action="PGRelatedassets#assertElementNotPresent" locator1="ASSET_EDIT_2" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
@@ -1622,9 +1622,9 @@
 			<var name="assetTitle" value="Blogs Entry1 Title" />
 		</execute>
 
-		<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_TITLE_IMAGE_2" />
-		<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_TITLE_2" />
-		<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_EDIT_2" />
+		<execute action="PGRelatedassets#assertElementNotPresent" locator1="ASSET_TITLE_IMAGE_2" />
+		<execute action="PGRelatedassets#assertElementNotPresent" locator1="ASSET_TITLE_2" />
+		<execute action="PGRelatedassets#assertElementNotPresent" locator1="ASSET_EDIT_2" />
 	</command>
 
 	<command name="ViewDeletedWCDArticleAsAdminAndGuestCP" priority="5">
@@ -1977,6 +1977,6 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="Asset Publisher Page 2" />
+		<execute action="Home#assertTextEquals" locator1="BREADCRUMB_1" value1="Asset Publisher Page 2" />
 	</command>
 </definition>

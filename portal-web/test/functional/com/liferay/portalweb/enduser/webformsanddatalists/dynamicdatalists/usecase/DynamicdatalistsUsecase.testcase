@@ -35,10 +35,10 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute action="CPDynamicdatalists#assertClick" locator1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
 
 		<execute macro="DynamicDataMapping#addField">
@@ -47,10 +47,10 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator1="DATA_DEFINITIONS_IFRAME" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertTextEquals" locator-key1="NAME_FIELD_ALERT" value1="This field is required." />
+		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertTextEquals" locator1="NAME_FIELD_ALERT" value1="This field is required." />
 	</command>
 
 	<command name="AddListWithoutDataDefinitionAndAssertErrorMessage" priority="4">
@@ -61,12 +61,12 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDynamicdatalists#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
 
-		<execute action="CPDynamicdatalistsAddlist#type" locator-key1="NAME_FIELD" value1="${ddlListName}" />
-		<execute action="CPDynamicdatalistsAddlist#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPDynamicdatalistsAddlist#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-		<execute action="CPDynamicdatalistsAddlist#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid definition." />
+		<execute action="CPDynamicdatalistsAddlist#type" locator1="NAME_FIELD" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalistsAddlist#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPDynamicdatalistsAddlist#assertTextEquals" locator1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute action="CPDynamicdatalistsAddlist#assertTextEquals" locator1="ERROR_MESSAGE_2" value1="Please enter a valid definition." />
 	</command>
 
 	<command name="AddRecord" priority="5">
@@ -427,28 +427,28 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute action="PGDynamicdatalistsConfiguration#check" locator-key1="TEMPLATES_SPREADSHEET_VIEW_CHECKBOX" />
-		<execute action="PGDynamicdatalistsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGDynamicdatalistsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGDynamicdatalistsConfiguration#check" locator1="TEMPLATES_SPREADSHEET_VIEW_CHECKBOX" />
+		<execute action="PGDynamicdatalistsConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGDynamicdatalistsConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGDynamicdatalists#assertTextNotPresent" locator-key1="SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_BUTTON" value1="Add" />
-		<execute action="PGDynamicdatalists#assertElementNotPresent" locator-key1="SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_SELECT_MENULIST" />
+		<execute action="PGDynamicdatalists#assertTextNotPresent" locator1="SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_BUTTON" value1="Add" />
+		<execute action="PGDynamicdatalists#assertElementNotPresent" locator1="SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_SELECT_MENULIST" />
 
-		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_ICON" value1="Options" />
-		<execute action="BasePortlet#assertTextEquals" locator-key1="OPTIONS_MENULIST_LOOK_AND_FEEL" value1="Look and Feel" />
-		<execute action="BasePortlet#assertTextEquals" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
-		<execute action="BasePortlet#assertTextEquals" locator-key1="OPTIONS_MENULIST_EXPORT_IMPORT" value1="Export / Import" />
-		<execute action="BasePortlet#assertTextEquals" locator-key1="MAXIMIZE" value1="Maximize" />
-		<execute action="BasePortlet#assertTextEquals" locator-key1="MINIMIZE" value1="Minimize" />
-		<execute action="BasePortlet#assertTextEquals" locator-key1="OPTION_MENULIST_REMOVE" value1="Remove" />
+		<execute action="BasePortlet#assertClick" locator1="OPTIONS_ICON" value1="Options" />
+		<execute action="BasePortlet#assertTextEquals" locator1="OPTIONS_MENULIST_LOOK_AND_FEEL" value1="Look and Feel" />
+		<execute action="BasePortlet#assertTextEquals" locator1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute action="BasePortlet#assertTextEquals" locator1="OPTIONS_MENULIST_EXPORT_IMPORT" value1="Export / Import" />
+		<execute action="BasePortlet#assertTextEquals" locator1="MAXIMIZE" value1="Maximize" />
+		<execute action="BasePortlet#assertTextEquals" locator1="MINIMIZE" value1="Minimize" />
+		<execute action="BasePortlet#assertTextEquals" locator1="OPTION_MENULIST_REMOVE" value1="Remove" />
 
-		<execute action="PGDynamicdatalists#click" locator-key1="TOOLBAR_SELECT_LIST" value1="Select List" />
+		<execute action="PGDynamicdatalists#click" locator1="TOOLBAR_SELECT_LIST" value1="Select List" />
 
-		<execute action="PGDynamicdatalistsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGDynamicdatalistsConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
 	</command>
 
 	<command name="AssertDecimalFieldInvalidDataErrorMessage" priority="4">
@@ -514,10 +514,10 @@
 
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="DECIMAL_FIELD" value1="${ddlInvalidRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="DECIMAL_FIELD" value1="${ddlInvalidRecordFieldData}" />
 
-		<execute action="PGDynamicdatalistsAddrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGDynamicdatalistsAddrecord#assertTextEquals" locator-key1="RECORD_FIELD_ALERT" value1="Please enter a valid number." />
+		<execute action="PGDynamicdatalistsAddrecord#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDynamicdatalistsAddrecord#assertTextEquals" locator1="RECORD_FIELD_ALERT" value1="Please enter a valid number." />
 	</command>
 
 	<command name="AssertFieldAfterNavigatingToManageTemplates" priority="4">
@@ -541,20 +541,20 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
-		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
-		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator1="TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalistsDatadefinitions#click" locator1="DATA_DEFINITION_TABLE_ACTIONS_1" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator1="DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#click" locator-key1="BACK_TAB" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#click" locator1="BACK_TAB" />
 
 		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
-		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_NAME" value1="${ddlDataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#click" locator1="DATA_DEFINITION_TABLE_NAME" value1="${ddlDataDefinitionName}" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="HEADER_TITLE" value1="${ddlDataDefinitionName}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="NAME_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator1="HEADER_TITLE" value1="${ddlDataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator1="NAME_FIELD" value1="${ddlDataDefinitionName}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
 
@@ -670,8 +670,8 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
-		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_VIEW" value1="View" />
+		<execute action="PGDynamicdatalists#click" locator1="RECORD_TABLE_ACTIONS_1" />
+		<execute action="PGDynamicdatalists#assertClick" locator1="RECORD_MENULIST_VIEW" value1="View" />
 		<execute function="#pause" locator1="1000" />
 
 		<var method="selenium#getLocation()" name="adminViewURL" />
@@ -692,31 +692,31 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel1}" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData1}" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_TWO_NAME" value1="${fieldFieldLabel2}" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_TWO_RECORD_1" value1="${ddlRecordFieldData2}" />
-		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_TABLE_GUEST_VIEW_LINK" value1="View" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel1}" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData1}" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="RECORD_TABLE_COLUMN_TWO_NAME" value1="${fieldFieldLabel2}" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="RECORD_TABLE_COLUMN_TWO_RECORD_1" value1="${ddlRecordFieldData2}" />
+		<execute action="PGDynamicdatalists#assertClick" locator1="RECORD_TABLE_GUEST_VIEW_LINK" value1="View" />
 
-		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel1} ${ddlRecordFieldData1}" />
-		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_2" value1="${fieldFieldLabel2} ${ddlRecordFieldData2}" />
-		<execute action="PGDynamicdatalistsDisplayrecord#assertElementNotPresent" locator-key1="EDIT_BUTTON" />
+		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator1="FIELD_1" value1="${fieldFieldLabel1} ${ddlRecordFieldData1}" />
+		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator1="FIELD_2" value1="${fieldFieldLabel2} ${ddlRecordFieldData2}" />
+		<execute action="PGDynamicdatalistsDisplayrecord#assertElementNotPresent" locator1="EDIT_BUTTON" />
 
 		<execute function="#open" locator1="${adminViewURL}" />
 
-		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel1} ${ddlRecordFieldData1}" />
-		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_2" value1="${fieldFieldLabel2} ${ddlRecordFieldData2}" />
-		<execute action="PGDynamicdatalistsDisplayrecord#assertElementNotPresent" locator-key1="EDIT_BUTTON" />
+		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator1="FIELD_1" value1="${fieldFieldLabel1} ${ddlRecordFieldData1}" />
+		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator1="FIELD_2" value1="${fieldFieldLabel2} ${ddlRecordFieldData2}" />
+		<execute action="PGDynamicdatalistsDisplayrecord#assertElementNotPresent" locator1="EDIT_BUTTON" />
 
 		<execute function="#open" locator1="${adminEditURL}" />
 
-		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="ADD_TRANSLATION_BUTTON" value1="Add Translation" />
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator1="ADD_TRANSLATION_BUTTON" value1="Add Translation" />
 
 		<var name="key_localizedLanguage" value="${localizedLanguage}" />
 
-		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="ADD_TRANSLATION_MENULIST_LANGUAGE" value1="Catalan (Spain)" />
-		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator1="ADD_TRANSLATION_MENULIST_LANGUAGE" value1="Catalan (Spain)" />
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -724,30 +724,30 @@
 
 		<execute function="#open" locator1="${adminEditURL}" />
 
-		<execute action="PGDynamicdatalistsEditrecord#assertElementNotPresent" locator-key1="AVAILABLE_TRANSLATIONS_LINK" value1="${localizedLanguage}" />
-		<execute action="PGDynamicdatalistsEditrecord#type" locator-key1="FIELD_1" value1="${fieldFieldLabel1Edit}" />
-		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute action="PGDynamicdatalistsEditrecord#assertElementNotPresent" locator1="AVAILABLE_TRANSLATIONS_LINK" value1="${localizedLanguage}" />
+		<execute action="PGDynamicdatalistsEditrecord#type" locator1="FIELD_1" value1="${fieldFieldLabel1Edit}" />
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 
 		<execute function="#open" locator1="${adminEditURL}" />
 
-		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel1}" />
-		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="FIELD_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON" value1="Choose from Document Library" />
+		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator1="FIELD_1" value1="${fieldFieldLabel1}" />
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator1="FIELD_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON" value1="Choose from Document Library" />
 
-		<execute action="PGDynamicdatalistsEditrecordSelectdocument#selectFrame" locator-key1="SELECT_DOCUMENT_IFRAME" />
+		<execute action="PGDynamicdatalistsEditrecordSelectdocument#selectFrame" locator1="SELECT_DOCUMENT_IFRAME" />
 
-		<execute action="PGLogin#assertTextEquals" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
-
-		<execute function="#open" locator1="${adminEditURL}" />
-
-		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="FIELD_CLEAR_BUTTON" value1="Clear" />
-		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute action="PGLogin#assertTextEquals" locator1="SIGN_IN_BUTTON" value1="Sign In" />
 
 		<execute function="#open" locator1="${adminEditURL}" />
 
-		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
-		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator1="FIELD_CLEAR_BUTTON" value1="Clear" />
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+
+		<execute function="#open" locator1="${adminEditURL}" />
+
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="AssertIntegerFieldInvalidDataErrorMessage" priority="4">
@@ -813,10 +813,10 @@
 
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="INTEGER_FIELD" value1="${ddlInvalidRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="INTEGER_FIELD" value1="${ddlInvalidRecordFieldData}" />
 
-		<execute action="PGDynamicdatalistsAddrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGDynamicdatalistsAddrecord#assertTextEquals" locator-key1="RECORD_FIELD_ALERT" value1="Please enter only digits." />
+		<execute action="PGDynamicdatalistsAddrecord#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDynamicdatalistsAddrecord#assertTextEquals" locator1="RECORD_FIELD_ALERT" value1="Please enter only digits." />
 	</command>
 
 	<command name="AssertNumberFieldInvalidDataErrorMessage" priority="4">
@@ -882,9 +882,9 @@
 
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="NUMBER_FIELD" value1="${ddlInvalidRecordFieldData}" />
-		<execute action="PGDynamicdatalistsAddrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGDynamicdatalistsAddrecord#assertTextEquals" locator-key1="RECORD_FIELD_ALERT" value1="Please enter a valid number." />
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="NUMBER_FIELD" value1="${ddlInvalidRecordFieldData}" />
+		<execute action="PGDynamicdatalistsAddrecord#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDynamicdatalistsAddrecord#assertTextEquals" locator1="RECORD_FIELD_ALERT" value1="Please enter a valid number." />
 	</command>
 
 	<command name="AssertUserCannotDeleteEntryAfterPermissionRemoved" priority="4">
@@ -965,10 +965,10 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_ACTIONS_1" />
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="LIST_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute action="CPDynamicdatalists#click" locator1="LIST_TABLE_ACTIONS_1" />
+		<execute action="CPDynamicdatalists#assertClick" locator1="LIST_MENULIST_PERMISSIONS" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 
 		<execute macro="Role#definePermissionPG">
 			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
@@ -998,10 +998,10 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_ACTIONS_1" />
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="LIST_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute action="CPDynamicdatalists#click" locator1="LIST_TABLE_ACTIONS_1" />
+		<execute action="CPDynamicdatalists#assertClick" locator1="LIST_MENULIST_PERMISSIONS" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 
 		<execute macro="Role#removePermissionPG">
 			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
@@ -1171,16 +1171,16 @@
 			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 		</execute>
 
-		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#selectFrame" locator1="MY_ACCOUNT_IFRAME" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
-		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="New To Do for List: DDL List" />
+		<execute action="CPMyworkflowtasks#assertClick" locator1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="New To Do for List: DDL List" />
 
-		<execute action="MyaccountMyworkflowtasks#assertClick" locator-key1="EDIT_LINK" value1="Edit" />
+		<execute action="MyaccountMyworkflowtasks#assertClick" locator1="EDIT_LINK" value1="Edit" />
 		<execute action="MyaccountMyworkflowtasks#selectFrame" value1="relative=top" />
-		<execute action="MyaccountMyworkflowtasks#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-		<execute action="MyaccountMyworkflowtasks#assertTextEquals" locator-key1="VIEW_HISTORY_BUTTON" value1="View History" />
+		<execute action="MyaccountMyworkflowtasks#selectFrame" locator1="MY_ACCOUNT_IFRAME" />
+		<execute action="MyaccountMyworkflowtasks#assertTextEquals" locator1="VIEW_HISTORY_BUTTON" value1="View History" />
 		<execute action="MyaccountMyworkflowtasks#selectFrame" value1="relative=top" />
 
 		<execute macro="User#logoutPG" />
@@ -1933,9 +1933,9 @@
 
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#click" locator-key1="BACK_TAB" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#click" locator1="BACK_TAB" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TOOLBAR_ADD_FORM_TEMPLATE" value1="Add Form Template" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator1="TOOLBAR_ADD_FORM_TEMPLATE" value1="Add Form Template" />
 
 		<execute macro="DynamicDataMapping#viewCannotAddField">
 			<var name="field" value="Text Box" />

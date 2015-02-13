@@ -55,15 +55,15 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
+		<execute action="Dockbar#click" locator1="ADD" value1="Add" />
 
-		<execute action="DockbarAddpanelpage#assertClick" locator-key1="NAVIGATION_PAGE" value1="Page" />
-		<execute action="DockbarAddpanelpage#type" locator-key1="NAME_FIELD" value1="りんご" />
-		<execute action="DockbarAddpanelpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute action="DockbarAddpanelpage#assertClick" locator1="NAVIGATION_PAGE" value1="Page" />
+		<execute action="DockbarAddpanelpage#type" locator1="NAME_FIELD" value1="りんご" />
+		<execute action="DockbarAddpanelpage#assertClick" locator1="ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<var name="key_pageName" value="りんご" />
 
-		<execute action="Home#assertClick" locator-key1="PAGE" value1="りんご" />
+		<execute action="Home#assertClick" locator1="PAGE" value1="りんご" />
 
 		<execute macro="TestUtils#pass" />
 	</command>
@@ -75,15 +75,15 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
+		<execute action="Dockbar#click" locator1="ADD" value1="Add" />
 
-		<execute action="DockbarAddpanelpage#assertClick" locator-key1="NAVIGATION_PAGE" value1="Page" />
-		<execute action="DockbarAddpanelpage#type" locator-key1="NAME_FIELD" value1="${test}" />
-		<execute action="DockbarAddpanelpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute action="DockbarAddpanelpage#assertClick" locator1="NAVIGATION_PAGE" value1="Page" />
+		<execute action="DockbarAddpanelpage#type" locator1="NAME_FIELD" value1="${test}" />
+		<execute action="DockbarAddpanelpage#assertClick" locator1="ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<var name="key_pageName" value="${test}" />
 
-		<execute action="Home#assertClick" locator-key1="PAGE" value1="${test}" />
+		<execute action="Home#assertClick" locator1="PAGE" value1="${test}" />
 
 		<execute macro="TestUtils#pass" />
 	</command>

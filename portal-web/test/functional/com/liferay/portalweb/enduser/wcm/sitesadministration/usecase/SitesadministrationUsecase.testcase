@@ -207,7 +207,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertTextEquals" locator-key1="STATUS_MESSAGE" value1="This site is inactive. Please contact the administrator." />
+		<execute action="Home#assertTextEquals" locator1="STATUS_MESSAGE" value1="This site is inactive. Please contact the administrator." />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -238,8 +238,8 @@
 			<var name="siteScopeName" value="${site1Name}" />
 		</execute>
 
-		<execute action="CPSitesettings#select" locator-key1="APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
-		<execute action="CPSitesettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitesettings#select" locator1="APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
+		<execute action="CPSitesettings#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -263,7 +263,7 @@
 
 		<var name="key_portletName" value="Navigation" />
 
-		<execute action="PGNavigation#assertTextEquals" locator-key1="PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+		<execute action="PGNavigation#assertTextEquals" locator1="PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -295,15 +295,15 @@
 
 		<var name="key_portletName" value="Navigation" />
 
-		<execute action="PGNavigation#assertTextNotPresent" locator-key1="PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+		<execute action="PGNavigation#assertTextNotPresent" locator1="PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteScopeName" value="${site2Name}" />
 		</execute>
 
-		<execute action="CPSitesettings#select" locator-key1="APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
-		<execute action="CPSitesettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitesettings#select" locator1="APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
+		<execute action="CPSitesettings#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${site2PageName}" />
@@ -313,15 +313,15 @@
 
 		<var name="key_portletName" value="Navigation" />
 
-		<execute action="PGNavigation#assertTextEquals" locator-key1="PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+		<execute action="PGNavigation#assertTextEquals" locator1="PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteScopeName" value="${site2Name}" />
 		</execute>
 
-		<execute action="CPSitesettings#select" locator-key1="APPLICATION_ADAPTER_SELECT" value1="None" />
-		<execute action="CPSitesettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitesettings#select" locator1="APPLICATION_ADAPTER_SELECT" value1="None" />
+		<execute action="CPSitesettings#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${site2PageName}" />
@@ -331,7 +331,7 @@
 
 		<var name="key_portletName" value="Navigation" />
 
-		<execute action="PGNavigation#assertTextNotPresent" locator-key1="PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+		<execute action="PGNavigation#assertTextNotPresent" locator1="PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 	</command>
 
 	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="4">
@@ -453,7 +453,7 @@
 		</execute>
 
 		<execute action="Home#assertLocation" value1="http://www.able.com:8080/private-page" />
-		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="Private Page" />
+		<execute action="Home#assertTextEquals" locator1="BREADCRUMB_1" value1="Private Page" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -560,7 +560,7 @@
 			<var name="gmailMessageTitle" value="Your New Account" />
 		</execute>
 
-		<var locator-key="EMAIL_PASSWORD" name="emailPassword" path="Gmail" />
+		<var locator="EMAIL_PASSWORD" name="emailPassword" path="Gmail" />
 
 		<execute macro="Gmail#gotoHtmlMode" />
 
@@ -569,7 +569,7 @@
 			<var name="gmailMessageTitle" value="Email Address Verification" />
 		</execute>
 
-		<var locator-key="EMAIL_VERIFICATION_CODE" name="emailVerification" path="Gmail" />
+		<var locator="EMAIL_VERIFICATION_CODE" name="emailVerification" path="Gmail" />
 
 		<execute macro="Page#openURL">
 			<var name="siteURL" value="true" />
@@ -615,9 +615,9 @@
 			<var name="gmailMessageTitle" value="Email Address Verification" />
 		</execute>
 
-		<var locator-key="EMAIL_ADDRESS_VERIFICATION_URL" name="emailAddressVerificationURL" path="Gmail" />
+		<var locator="EMAIL_ADDRESS_VERIFICATION_URL" name="emailAddressVerificationURL" path="Gmail" />
 
-		<execute action="Gmail#click" locator-key1="EMAIL_ADDRESS_VERIFICATION_URL" />
+		<execute action="Gmail#click" locator1="EMAIL_ADDRESS_VERIFICATION_URL" />
 
 		<execute function="#selectWindow" locator1="title=Verify Email Address - Site Name - Liferay" />
 		<execute action="Home#assertLocation" value1="${emailAddressVerificationURL}" />
@@ -809,7 +809,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_INFO" value1="This site is inactive. Please contact the administrator." />
+		<execute action="Home#assertTextEquals" locator1="ERROR_MESSAGE_ALERT_INFO" value1="This site is inactive. Please contact the administrator." />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -908,7 +908,7 @@
 			<var name="virtualHostsURL" value="http://www.able.com:8080/" />
 		</execute>
 
-		<execute action="Home#confirm" locator-key1="PAGE_CONFIRM" value1="Welcome to Russia." />
+		<execute action="Home#confirm" locator1="PAGE_CONFIRM" value1="Welcome to Russia." />
 
 		<execute macro="Page#viewCustomThemePG">
 			<var name="customTheme" value="Dark" />
@@ -990,9 +990,9 @@
 			<var name="siteName" value="World Cup - Russia 2018" />
 		</execute>
 
-		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
+		<execute action="CPSitepagesExport#assertClick" locator1="EXPORT_BUTTON" value1="Export" />
 
-		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute action="CPSitepagesExport#assertTextEquals" locator1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
 
@@ -1002,7 +1002,7 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute action="CPSitepagesExport#click" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute action="CPSitepagesExport#click" locator1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute action="CPSitepagesExport#downloadTempFile" />
 
 		<execute macro="Page#gotoCP">
@@ -1343,7 +1343,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="Home#assertElementNotPresent" locator-key1="PAGE_2" />
+		<execute action="Home#assertElementNotPresent" locator1="PAGE_2" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />

@@ -2715,8 +2715,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#click" locator-key1="NAVIGATION_ALL" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#click" locator1="NAVIGATION_ALL" />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl}" />
@@ -2733,7 +2733,7 @@
 		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContent}" />
 
-		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+		<execute action="SOUserBar#assertClick" locator1="NOTIFICATION_MENU_COUNT" value1="0" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${announcementEntryContent}" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${announcementEntryTitle}" />
 
@@ -3111,8 +3111,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#click" locator-key1="NAVIGATION_ALL" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#click" locator1="NAVIGATION_ALL" />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl}" />
@@ -3129,7 +3129,7 @@
 		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContent}" />
 
-		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+		<execute action="SOUserBar#assertClick" locator1="NOTIFICATION_MENU_COUNT" value1="0" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${announcementEntryContent}" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${announcementEntryTitle}" />
 

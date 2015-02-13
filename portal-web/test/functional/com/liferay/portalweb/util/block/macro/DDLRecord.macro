@@ -2,96 +2,96 @@
 	<command name="addCP">
 		<var name="key_ddlListName" value="${ddlListName}" />
 
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="LIST_TABLE_NAME" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalists#assertClick" locator1="LIST_TABLE_NAME" value1="${ddlListName}" />
 
-		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="HEADER_TITLE" value1="${ddlListName}" />
-		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinitionName}" />
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator1="HEADER_TITLE" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalistsList#assertClick" locator1="ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinitionName}" />
 	</command>
 
 	<command name="addRepeatableField">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#click" locator-key1="FIELD_ADD" />
+		<execute action="CPDynamicdatalistsListAddrecord#click" locator1="FIELD_ADD" />
 	</command>
 
 	<command name="addTranslation">
-		<execute action="CPDynamicdatalistsListEditrecord#assertClick" locator-key1="ADD_TRANSLATION" value1="Add Translation" />
+		<execute action="CPDynamicdatalistsListEditrecord#assertClick" locator1="ADD_TRANSLATION" value1="Add Translation" />
 
 		<var name="key_localizedLanguage" value="${localizedLanguage}" />
 
-		<execute action="CPDynamicdatalistsListEditrecord#assertClick" locator-key1="ADD_TRANSLATION_MENULIST_LANGUAGE" value1="${localizedLanguage}" />
+		<execute action="CPDynamicdatalistsListEditrecord#assertClick" locator1="ADD_TRANSLATION_MENULIST_LANGUAGE" value1="${localizedLanguage}" />
 	</command>
 
 	<command name="addViaDDLDisplayPG">
-		<execute action="PGDynamicdatalists#click" locator-key1="ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinitionName}" />
+		<execute action="PGDynamicdatalists#click" locator1="ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinitionName}" />
 	</command>
 
 	<command name="deleteCP">
-		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlListName}" />
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalists#type" locator1="TOOLBAR_SEARCH_FIELD" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalists#assertClick" locator1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalists#assertTextEquals" locator1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalists#click" locator1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
-		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
-		<execute action="CPDynamicdatalistsList#assertClickNoError" locator-key1="RECORD_MENULIST_DELETE" value1="Delete" />
-		<execute action="CPDynamicdatalistsList#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No" />
+		<execute action="CPDynamicdatalistsList#click" locator1="RECORD_TABLE_ACTIONS_1" />
+		<execute action="CPDynamicdatalistsList#assertClickNoError" locator1="RECORD_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPDynamicdatalistsList#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator1="INFO_MESSAGE" value1="No" />
 	</command>
 
 	<command name="deleteRepeatableField">
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_fieldNumber" value="${fieldNumber}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#click" locator-key1="FIELD_DELETE" />
+		<execute action="CPDynamicdatalistsListAddrecord#click" locator1="FIELD_DELETE" />
 	</command>
 
 	<command name="deleteViaDDLDisplayPG">
-		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
-		<execute action="PGDynamicdatalists#assertClickNoError" locator-key1="RECORD_MENULIST_DELETE" value1="Delete" />
-		<execute action="PGDynamicdatalists#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No ${ddlDataDefinitionName} records were found" />
+		<execute action="PGDynamicdatalists#click" locator1="RECORD_TABLE_ACTIONS_1" />
+		<execute action="PGDynamicdatalists#assertClickNoError" locator1="RECORD_MENULIST_DELETE" value1="Delete" />
+		<execute action="PGDynamicdatalists#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="INFO_MESSAGE" value1="No ${ddlDataDefinitionName} records were found" />
 	</command>
 
 	<command name="editCP">
-		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlListName}" />
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalists#type" locator1="TOOLBAR_SEARCH_FIELD" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalists#assertClick" locator1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalists#assertTextEquals" locator1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalists#click" locator1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
-		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
-		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="RECORD_MENULIST_EDIT" value1="Edit" />
+		<execute action="CPDynamicdatalistsList#click" locator1="RECORD_TABLE_ACTIONS_1" />
+		<execute action="CPDynamicdatalistsList#assertClick" locator1="RECORD_MENULIST_EDIT" value1="Edit" />
 	</command>
 
 	<command name="editPG">
-		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
-		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_EDIT" value1="Edit" />
+		<execute action="PGDynamicdatalists#click" locator1="RECORD_TABLE_ACTIONS_1" />
+		<execute action="PGDynamicdatalists#assertClick" locator1="RECORD_MENULIST_EDIT" value1="Edit" />
 	</command>
 
 	<command name="editTranslation">
 		<var name="key_localizedLanguage" value="${localizedLanguage}" />
 
-		<execute action="CPDynamicdatalistsListEditrecord#assertClick" locator-key1="AVAILABLE_TRANSLATION" value1="${localizedLanguage}" />
+		<execute action="CPDynamicdatalistsListEditrecord#assertClick" locator1="AVAILABLE_TRANSLATION" value1="${localizedLanguage}" />
 	</command>
 
 	<command name="editViaRecordViewCP">
-		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlListName}" />
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalists#type" locator1="TOOLBAR_SEARCH_FIELD" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalists#assertClick" locator1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalists#assertTextEquals" locator1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalists#click" locator1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
-		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
-		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="RECORD_MENULIST_VIEW" value1="View" />
+		<execute action="CPDynamicdatalistsList#click" locator1="RECORD_TABLE_ACTIONS_1" />
+		<execute action="CPDynamicdatalistsList#assertClick" locator1="RECORD_MENULIST_VIEW" value1="View" />
 
-		<execute action="CPDynamicdatalistsListRecord#assertClick" locator-key1="EDIT_BUTTON" value1="Edit" />
+		<execute action="CPDynamicdatalistsListRecord#assertClick" locator1="EDIT_BUTTON" value1="Edit" />
 	</command>
 
 	<command name="editViaRecordViewPG">
-		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
-		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_VIEW" value1="View" />
+		<execute action="PGDynamicdatalists#click" locator1="RECORD_TABLE_ACTIONS_1" />
+		<execute action="PGDynamicdatalists#assertClick" locator1="RECORD_MENULIST_VIEW" value1="View" />
 
-		<execute action="PGDynamicdatalistsDisplayrecord#assertClick" locator-key1="EDIT_BUTTON" value1="Edit" />
+		<execute action="PGDynamicdatalistsDisplayrecord#assertClick" locator1="EDIT_BUTTON" value1="Edit" />
 	</command>
 
 	<command name="populateFieldBoolean">
@@ -109,10 +109,10 @@
 				<if>
 					<equals arg1="${fieldShowLabel}" arg2="No" />
 					<then>
-						<execute action="CPDynamicdatalistsListAddrecord#uncheck" locator-key1="BOOLEAN_LABEL_HIDDEN_CHECKBOX" />
+						<execute action="CPDynamicdatalistsListAddrecord#uncheck" locator1="BOOLEAN_LABEL_HIDDEN_CHECKBOX" />
 					</then>
 					<else>
-						<execute action="CPDynamicdatalistsListAddrecord#uncheck" locator-key1="BOOLEAN_CHECKBOX" />
+						<execute action="CPDynamicdatalistsListAddrecord#uncheck" locator1="BOOLEAN_CHECKBOX" />
 					</else>
 				</if>
 			</then>
@@ -122,10 +122,10 @@
 					<if>
 						<equals arg1="${fieldShowLabel}" arg2="No" />
 						<then>
-							<execute action="CPDynamicdatalistsListAddrecord#check" locator-key1="BOOLEAN_LABEL_HIDDEN_CHECKBOX" />
+							<execute action="CPDynamicdatalistsListAddrecord#check" locator1="BOOLEAN_LABEL_HIDDEN_CHECKBOX" />
 						</then>
 						<else>
-							<execute action="CPDynamicdatalistsListAddrecord#check" locator-key1="BOOLEAN_CHECKBOX" />
+							<execute action="CPDynamicdatalistsListAddrecord#check" locator1="BOOLEAN_CHECKBOX" />
 						</else>
 					</if>
 				</then>
@@ -139,117 +139,117 @@
 	<command name="populateFieldDate">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="DATE_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="DATE_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldDecimal">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="DECIMAL_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="DECIMAL_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="DOCUMENTS_AND_MEDIA_CHOOSE_FROM_DOCUMENT_LIBRARY" value1="Choose from Document Library" />
+		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator1="DOCUMENTS_AND_MEDIA_CHOOSE_FROM_DOCUMENT_LIBRARY" value1="Choose from Document Library" />
 
-		<execute action="CPDynamicdatalistsListAddrecordSelect#selectFrame" locator-key1="SELECT_DOCUMENT_IFRAME" />
-		<execute action="CPDynamicdatalistsListAddrecordSelect#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-		<execute action="CPDynamicdatalistsListAddrecordSelect#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+		<execute action="CPDynamicdatalistsListAddrecordSelect#selectFrame" locator1="SELECT_DOCUMENT_IFRAME" />
+		<execute action="CPDynamicdatalistsListAddrecordSelect#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDynamicdatalistsListAddrecordSelect#assertClick" locator1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 
-		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${document}" />
-		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#type" locator-key1="TITLE_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#uploadCommonFile" locator1="FILE_FIELD" value1="${document}" />
+		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#type" locator1="TITLE_FIELD" value1="${ddlRecordFieldData}" />
 		<execute function="#pause" locator1="1000" />
-		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 
 		<var name="key_documentTitle" value="${ddlRecordFieldData}" />
 
-		<execute action="CPDynamicdatalistsListAddrecordSelect#assertTextEquals" locator-key1="DOCUMENTS_TABLE_DOCUMENT" value1="${ddlRecordFieldData}" />
-		<execute action="CPDynamicdatalistsListAddrecordSelect#click" locator-key1="DOCUMENTS_TABLE_CHOOSE" />
+		<execute action="CPDynamicdatalistsListAddrecordSelect#assertTextEquals" locator1="DOCUMENTS_TABLE_DOCUMENT" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecordSelect#click" locator1="DOCUMENTS_TABLE_CHOOSE" />
 
 		<execute action="CPDynamicdatalistsListAddrecord#selectFrame" value1="relative=top" />
-		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="DOCUMENTS_AND_MEDIA_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator1="DOCUMENTS_AND_MEDIA_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldDocumentsAndMediaUpload">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="DOCUMENTS_AND_MEDIA_UPLOAD" value1="Upload" />
+		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator1="DOCUMENTS_AND_MEDIA_UPLOAD" value1="Upload" />
 
-		<execute action="OS#sikuliClick" locator-key1="FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
-		<execute action="OS#sikuliUploadCommonFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${document}" />
+		<execute action="OS#sikuliClick" locator1="FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
+		<execute action="OS#sikuliUploadCommonFile" locator1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${document}" />
 		<execute function="#pause" locator1="5000" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="DOCUMENTS_AND_MEDIA_FIELD" value1="${document}" />
+		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator1="DOCUMENTS_AND_MEDIA_FIELD" value1="${document}" />
 	</command>
 
 	<command name="populateFieldGeolocation">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="FIELD_LABEL" value1="${fieldName}" />
-		<execute action="CPDynamicdatalistsListAddrecord#sikuliClick" locator-key1="GEOLOCATION_SHARE_LOCATION_BUTTON_PNG" />
-		<execute action="CPDynamicdatalistsListAddrecord#sikuliClick" locator-key1="GEOLOCATION_SHARE_LOCATION_BUTTON_PNG" />
+		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator1="FIELD_LABEL" value1="${fieldName}" />
+		<execute action="CPDynamicdatalistsListAddrecord#sikuliClick" locator1="GEOLOCATION_SHARE_LOCATION_BUTTON_PNG" />
+		<execute action="CPDynamicdatalistsListAddrecord#sikuliClick" locator1="GEOLOCATION_SHARE_LOCATION_BUTTON_PNG" />
 		<execute function="#pause" locator1="2000" />
-		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator-key1="GEOLOCATION_MAP_DIAMOND_BAR_PNG" />
-		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator-key1="GEOLOCATION_MAP_DIRECTIONAL_ARROWS_PNG" />
-		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator-key1="GEOLOCATION_MAP_LOCATION_PIN_PNG" />
-		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator-key1="GEOLOCATION_MAP_MAP_SATELLITE_TOGGLE_PNG" />
-		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator-key1="GEOLOCATION_MAP_RECENTER_BUTTON_PNG" />
+		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator1="GEOLOCATION_MAP_DIAMOND_BAR_PNG" />
+		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator1="GEOLOCATION_MAP_DIRECTIONAL_ARROWS_PNG" />
+		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator1="GEOLOCATION_MAP_LOCATION_PIN_PNG" />
+		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator1="GEOLOCATION_MAP_MAP_SATELLITE_TOGGLE_PNG" />
+		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator1="GEOLOCATION_MAP_RECENTER_BUTTON_PNG" />
 	</command>
 
 	<command name="populateFieldHTML">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="HTML_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="HTML_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldInteger">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="INTEGER_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="INTEGER_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldLinkToPage">
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#select" locator-key1="LINK_TO_PAGE_SELECT" value1="regexp:–\s+${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecord#select" locator1="LINK_TO_PAGE_SELECT" value1="regexp:–\s+${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldNumber">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="NUMBER_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="NUMBER_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldRadio">
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="RADIO_OPTION_LABEL" value1="${ddlRecordFieldData}" />
-		<execute action="CPDynamicdatalistsListAddrecord#click" locator-key1="RADIO_OPTION_RADIO" />
+		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator1="RADIO_OPTION_LABEL" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecord#click" locator1="RADIO_OPTION_RADIO" />
 	</command>
 
 	<command name="populateFieldSelect">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#select" locator-key1="SELECT_SELECT" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecord#select" locator1="SELECT_SELECT" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldSelectViaSpreadsheetView">
 		<var name="key_ddlRecordRow" value="${ddlRecordRow}" />
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="PGDynamicdatalistsSpreadsheetview#doubleClick" locator-key1="RECORD_TABLE_FIELD_ENTRY" />
-		<execute action="PGDynamicdatalistsSpreadsheetview#select" locator-key1="CELL_EDITOR_SELECT" value1="${ddlRecordFieldData}" />
-		<execute action="PGDynamicdatalistsSpreadsheetview#click" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGDynamicdatalistsSpreadsheetview#assertTextEquals" locator-key1="RECORD_TABLE_FIELD_ENTRY" value1="${ddlRecordFieldData}" />
+		<execute action="PGDynamicdatalistsSpreadsheetview#doubleClick" locator1="RECORD_TABLE_FIELD_ENTRY" />
+		<execute action="PGDynamicdatalistsSpreadsheetview#select" locator1="CELL_EDITOR_SELECT" value1="${ddlRecordFieldData}" />
+		<execute action="PGDynamicdatalistsSpreadsheetview#click" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGDynamicdatalistsSpreadsheetview#assertTextEquals" locator1="RECORD_TABLE_FIELD_ENTRY" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldText">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="TEXT_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="TEXT_FIELD" value1="${ddlRecordFieldData}" />
 
 		<var name="i" value="1" />
 
@@ -271,7 +271,7 @@
 	<command name="populateFieldTextBox">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="TEXT_BOX_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="TEXT_BOX_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldTextViaSpreadsheetView">
@@ -286,16 +286,16 @@
 		<var name="key_ddlRecordRow" value="${ddlRecordRow}" />
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="PGDynamicdatalistsSpreadsheetview#doubleClick" locator-key1="RECORD_TABLE_FIELD_ENTRY" />
-		<execute action="PGDynamicdatalistsSpreadsheetview#type" locator-key1="CELL_EDITOR_FIELD" value1="${ddlRecordFieldData}" />
-		<execute action="PGDynamicdatalistsSpreadsheetview#click" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGDynamicdatalistsSpreadsheetview#assertTextEquals" locator-key1="RECORD_TABLE_FIELD_ENTRY" value1="${ddlRecordFieldData}" />
+		<execute action="PGDynamicdatalistsSpreadsheetview#doubleClick" locator1="RECORD_TABLE_FIELD_ENTRY" />
+		<execute action="PGDynamicdatalistsSpreadsheetview#type" locator1="CELL_EDITOR_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="PGDynamicdatalistsSpreadsheetview#click" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGDynamicdatalistsSpreadsheetview#assertTextEquals" locator1="RECORD_TABLE_FIELD_ENTRY" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateTranslationFieldText">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListEditrecordtranslation#type" locator-key1="TEXT_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListEditrecordtranslation#type" locator1="TEXT_FIELD" value1="${ddlRecordFieldData}" />
 
 		<var name="i" value="1" />
 
@@ -318,50 +318,50 @@
 		<if>
 			<isset var="workflowDefinition" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
 			</then>
 			<else>
-				<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 			</else>
 		</if>
 
-		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="publishViaDDLDisplayPG">
 		<if>
 			<isset var="workflowDefinition" />
 			<then>
-				<execute action="PGDynamicdatalistsAddrecord#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+				<execute action="PGDynamicdatalistsAddrecord#assertClick" locator1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
 			</then>
 			<else>
-				<execute action="PGDynamicdatalistsAddrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+				<execute action="PGDynamicdatalistsAddrecord#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 			</else>
 		</if>
 
-		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="saveAsDraftCP">
-		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
 
-		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="viewCP">
-		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlListName}" />
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalists#type" locator1="TOOLBAR_SEARCH_FIELD" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalists#assertClick" locator1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalists#assertTextEquals" locator1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalists#click" locator1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
-		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="HEADER_TITLE" value1="${ddlListName}" />
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator1="HEADER_TITLE" value1="${ddlListName}" />
 	</command>
 
 	<command name="viewFieldCP">
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator1="RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
 
 		<if>
 			<isset var="ddlRecordNestedFieldData" />
@@ -369,23 +369,23 @@
 				<var name="key_ddlRecordFieldData" value="${ddlRecordNestedFieldData}" />
 				<var name="key_fieldFieldLabel" value="${nestedFieldFieldLabel}" />
 
-				<execute action="CPDynamicdatalistsList#assertElementNotPresent" locator-key1="RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
+				<execute action="CPDynamicdatalistsList#assertElementNotPresent" locator1="RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
 			</then>
 		</if>
 
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS" />
-		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_MENULIST_VIEW" />
+		<execute action="CPDynamicdatalistsList#click" locator1="RECORD_TABLE_ACTIONS" />
+		<execute action="CPDynamicdatalistsList#click" locator1="RECORD_MENULIST_VIEW" />
 
 		<if>
 			<equals arg1="${fieldBlank}" arg2="true" />
 			<then>
-				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD" value1="${fieldFieldLabel}${ddlRecordFieldData}" />
+				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator1="FIELD" value1="${fieldFieldLabel}${ddlRecordFieldData}" />
 			</then>
 			<else>
-				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator1="FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 			</else>
 		</if>
 
@@ -395,7 +395,7 @@
 				<var name="key_ddlRecordFieldData" value="${ddlRecordNestedFieldData}" />
 				<var name="key_fieldFieldLabel" value="${nestedFieldFieldLabel}" />
 
-				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_NESTED" value1="${nestedFieldFieldLabel} ${ddlRecordNestedFieldData}" />
+				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator1="FIELD_NESTED" value1="${nestedFieldFieldLabel} ${ddlRecordNestedFieldData}" />
 			</then>
 		</if>
 	</command>
@@ -406,14 +406,14 @@
 			<then>
 				<var name="key_fieldText" value="${fieldText}" />
 
-				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="PARAGRAPH_FIELD" value1="${fieldText}" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator1="PARAGRAPH_FIELD" value1="${fieldText}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Separator" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertElementPresent" locator-key1="SEPARATOR_FIELD" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertElementPresent" locator1="SEPARATOR_FIELD" />
 			</then>
 		</if>
 	</command>
@@ -424,10 +424,10 @@
 		<if>
 			<equals arg1="${fieldShowLabel}" arg2="No" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertNotVisible" locator-key1="FIELD_LABEL_HIDDEN" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertNotVisible" locator1="FIELD_LABEL_HIDDEN" />
 			</then>
 			<else>
-				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="FIELD_LABEL" value1="${fieldFieldLabel}" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator1="FIELD_LABEL" value1="${fieldFieldLabel}" />
 			</else>
 		</if>
 	</command>
@@ -440,10 +440,10 @@
 				<equals arg1="${fieldShowLabel}" arg2="No" />
 			</not>
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="FIELD_LABEL" value1="${fieldFieldLabel}" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator1="FIELD_LABEL" value1="${fieldFieldLabel}" />
 			</then>
 			<else>
-				<execute action="CPDynamicdatalistsListAddrecord#assertElementNotPresent" locator-key1="FIELD_LABEL" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertElementNotPresent" locator1="FIELD_LABEL" />
 			</else>
 		</if>
 
@@ -453,12 +453,12 @@
 				<if>
 					<equals arg1="${fieldPredefinedValue}" arg2="Yes" />
 					<then>
-						<execute action="CPDynamicdatalistsListAddrecord#assertChecked" locator-key1="BOOLEAN_CHECKBOX" />
+						<execute action="CPDynamicdatalistsListAddrecord#assertChecked" locator1="BOOLEAN_CHECKBOX" />
 					</then>
 					<elseif>
 						<equals arg1="${fieldPredefinedValue}" arg2="No" />
 						<then>
-							<execute action="CPDynamicdatalistsListAddrecord#assertNotChecked" locator-key1="BOOLEAN_CHECKBOX" />
+							<execute action="CPDynamicdatalistsListAddrecord#assertNotChecked" locator1="BOOLEAN_CHECKBOX" />
 						</then>
 					</elseif>
 				</if>
@@ -468,49 +468,49 @@
 		<if>
 			<equals arg1="${field}" arg2="Date" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="DATE_FIELD" value1="${fieldPredefinedValue}" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator1="DATE_FIELD" value1="${fieldPredefinedValue}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Decimal" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="DECIMAL_FIELD" value1="${fieldPredefinedValue}" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator1="DECIMAL_FIELD" value1="${fieldPredefinedValue}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Documents and Media" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="DECIMAL_FIELD" value1="${fieldPredefinedValue}" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator1="DECIMAL_FIELD" value1="${fieldPredefinedValue}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="HTML" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="HTML_FIELD" value1="${fieldPredefinedValue}" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator1="HTML_FIELD" value1="${fieldPredefinedValue}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Integer" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="INTEGER_FIELD" value1="${fieldPredefinedValue}" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator1="INTEGER_FIELD" value1="${fieldPredefinedValue}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Link to Page" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertSelectedLabel" locator-key1="LINK_TO_PAGE_SELECT" value1="${fieldPredefinedValue}" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertSelectedLabel" locator1="LINK_TO_PAGE_SELECT" value1="${fieldPredefinedValue}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Number" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="NUMBER_FIELD" value1="${fieldPredefinedValue}" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator1="NUMBER_FIELD" value1="${fieldPredefinedValue}" />
 			</then>
 		</if>
 
@@ -519,39 +519,39 @@
 			<then>
 				<var name="key_ddlRecordFieldData" value="${fieldPredefinedValue}" />
 
-				<execute action="CPDynamicdatalistsListAddrecord#assertChecked" locator-key1="RADIO_OPTION_RADIO" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertChecked" locator1="RADIO_OPTION_RADIO" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Select" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="SELECT_SELECT" value1="${fieldPredefinedValue}" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator1="SELECT_SELECT" value1="${fieldPredefinedValue}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Text" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="TEXT_FIELD" value1="${fieldPredefinedValue}" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator1="TEXT_FIELD" value1="${fieldPredefinedValue}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Text Box" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="TEXT_BOX_FIELD" value1="${fieldPredefinedValue}" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator1="TEXT_BOX_FIELD" value1="${fieldPredefinedValue}" />
 			</then>
 		</if>
 	</command>
 
 	<command name="viewFirstFieldCP">
-		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator1="RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
 
 		<if>
 			<isset var="workflowStatus" />
 			<then>
-				<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_TWO_RECORD_1_WORKFLOW_STATUS" value1="Pending" />
+				<execute action="CPDynamicdatalistsList#assertTextEquals" locator1="RECORD_TABLE_COLUMN_TWO_RECORD_1_WORKFLOW_STATUS" value1="Pending" />
 			</then>
 		</if>
 
@@ -572,25 +572,25 @@
 		<if>
 			<equals arg1="${field}" arg2="HTML" />
 			<then>
-				<execute action="CPDynamicdatalistsList#assertClick" locator-key1="RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
+				<execute action="CPDynamicdatalistsList#assertClick" locator1="RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
 
 				<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 
-				<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_PREVIEW" value1="${ddlRecordFieldData}" />
-				<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_PREVIEW_CLOSE" />
+				<execute action="CPDynamicdatalistsList#assertTextEquals" locator1="RECORD_TABLE_PREVIEW" value1="${ddlRecordFieldData}" />
+				<execute action="CPDynamicdatalistsList#click" locator1="RECORD_TABLE_PREVIEW_CLOSE" />
 			</then>
 			<else>
-				<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
+				<execute action="CPDynamicdatalistsList#assertTextEquals" locator1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
 			</else>
 		</if>
 
-		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
-		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_MENULIST_VIEW" />
+		<execute action="CPDynamicdatalistsList#click" locator1="RECORD_TABLE_ACTIONS_1" />
+		<execute action="CPDynamicdatalistsList#click" locator1="RECORD_MENULIST_VIEW" />
 
 		<if>
 			<isset var="workflowStatus" />
 			<then>
-				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="Pending (${workflowStatus})" />
+				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator1="WORKFLOW_STATUS" value1="Pending (${workflowStatus})" />
 			</then>
 		</if>
 
@@ -615,36 +615,36 @@
 		<if>
 			<equals arg1="${fieldShowLabel}" arg2="No" />
 			<then>
-				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_1" value1="${ddlRecordFieldData}" />
+				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator1="FIELD_1" value1="${ddlRecordFieldData}" />
 			</then>
 			<else>
-				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator1="FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 			</else>
 		</if>
 	</command>
 
 	<command name="viewViaDDLDisplayPG">
-		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="HEADER_TITLE" value1="${ddlListName}" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="HEADER_TITLE" value1="${ddlListName}" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
 
 		<if>
 			<isset var="ddlRecordFieldDataTableDisplay" />
 			<then>
-				<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldDataTableDisplay}" />
+				<execute action="PGDynamicdatalists#assertTextEquals" locator1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldDataTableDisplay}" />
 			</then>
 			<else>
-				<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
+				<execute action="PGDynamicdatalists#assertTextEquals" locator1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
 			</else>
 		</if>
 
 		<if>
 			<equals arg1="${userRole}" arg2="Guest" />
 			<then>
-				<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_TABLE_GUEST_VIEW_LINK" value1="View" />
+				<execute action="PGDynamicdatalists#assertClick" locator1="RECORD_TABLE_GUEST_VIEW_LINK" value1="View" />
 			</then>
 			<else>
-				<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
-				<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_VIEW" value1="View" />
+				<execute action="PGDynamicdatalists#click" locator1="RECORD_TABLE_ACTIONS_1" />
+				<execute action="PGDynamicdatalists#assertClick" locator1="RECORD_MENULIST_VIEW" value1="View" />
 			</else>
 		</if>
 
@@ -666,6 +666,6 @@
 			</then>
 		</if>
 
-		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator1="FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 	</command>
 </definition>

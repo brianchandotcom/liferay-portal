@@ -978,10 +978,10 @@
 			<var name="portletName" value="Server Administration" />
 		</execute>
 
-		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_FILE_UPLOADS" value1="File Uploads" />
-		<execute action="CPServeradministration#type" locator-key1="FILE_UPLOADS_DOCS_AND_MEDIA_MAX_FILE_SIZE_FIELD" value1="30000000" />
-		<execute action="CPServeradministration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPServeradministration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPServeradministration#assertClick" locator1="NAVIGATION_FILE_UPLOADS" value1="File Uploads" />
+		<execute action="CPServeradministration#type" locator1="FILE_UPLOADS_DOCS_AND_MEDIA_MAX_FILE_SIZE_FIELD" value1="30000000" />
+		<execute action="CPServeradministration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPServeradministration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
@@ -1811,7 +1811,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertTextNotPresent" locator-key1="PAGE_2" value1="Wiki" />
+		<execute action="Home#assertTextNotPresent" locator1="PAGE_2" value1="Wiki" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1837,7 +1837,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertTextNotPresent" locator-key1="PAGE_2_GUEST_VIEW" value1="New Page Name" />
+		<execute action="Home#assertTextNotPresent" locator1="PAGE_2_GUEST_VIEW" value1="New Page Name" />
 		<execute function="#pause" locator1="120000" />
 
 		<execute macro="Page#gotoPG">
@@ -1846,7 +1846,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertTextEquals" locator-key1="PAGE_2_GUEST_VIEW" value1="New Page Name" />
+		<execute action="Home#assertTextEquals" locator1="PAGE_2_GUEST_VIEW" value1="New Page Name" />
 	</command>
 
 	<command name="StagingKaleoPageRevision" priority="5">
@@ -2022,7 +2022,7 @@
 
 		<var name="key_portletTitleName" value="Web Content Display" />
 
-		<execute action="BasePortlet#assertTextNotPresent" locator-key1="SPECIFIC_TITLE" value1="Web Content Display" />
+		<execute action="BasePortlet#assertTextNotPresent" locator1="SPECIFIC_TITLE" value1="Web Content Display" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -2037,7 +2037,7 @@
 
 		<var name="key_portletTitleName" value="Web Content Display" />
 
-		<execute action="BasePortlet#assertTextNotPresent" locator-key1="SPECIFIC_TITLE" value1="Web Content Display" />
+		<execute action="BasePortlet#assertTextNotPresent" locator1="SPECIFIC_TITLE" value1="Web Content Display" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
@@ -2046,7 +2046,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_MESSAGE_WORKFLOW_UNAPPROVED_MESSAGE" value1="Web Content Title is not approved." />
+		<execute action="PGWebcontentdisplay#assertTextEquals" locator1="WEB_CONTENT_MESSAGE_WORKFLOW_UNAPPROVED_MESSAGE" value1="Web Content Title is not approved." />
 	</command>
 
 	<command name="StagingLocalLiveLock" priority="5">
@@ -2379,7 +2379,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="BasePortlet#assertTextNotEquals" locator-key1="TITLE" value1="Web Content Display" />
+		<execute action="BasePortlet#assertTextNotEquals" locator1="TITLE" value1="Web Content Display" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="contentcreator@liferay.com" />
@@ -2692,7 +2692,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="Web Content Content 1" />
+		<execute action="PGWebcontentdisplay#assertTextEquals" locator1="WEB_CONTENT_CONTENT" value1="Web Content Content 1" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page 2" />
@@ -2701,7 +2701,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_MESSAGE_WORKFLOW_UNAPPROVED_MESSAGE" value1="Web Content Title 2 is not approved." />
+		<execute action="PGWebcontentdisplay#assertTextEquals" locator1="WEB_CONTENT_MESSAGE_WORKFLOW_UNAPPROVED_MESSAGE" value1="Web Content Title 2 is not approved." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
@@ -2727,7 +2727,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="Web Content Content 1" />
+		<execute action="PGWebcontentdisplay#assertTextEquals" locator1="WEB_CONTENT_CONTENT" value1="Web Content Content 1" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page 2" />
@@ -2735,7 +2735,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGWebcontentdisplay#assertTextNotPresent" locator-key1="WEB_CONTENT_CONTENT" value1="Web Content Title 2" />
+		<execute action="PGWebcontentdisplay#assertTextNotPresent" locator1="WEB_CONTENT_CONTENT" value1="Web Content Title 2" />
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
@@ -2770,7 +2770,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="Web Content Content 2" />
+		<execute action="PGWebcontentdisplay#assertTextEquals" locator1="WEB_CONTENT_CONTENT" value1="Web Content Content 2" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -2788,7 +2788,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_ALERT_MESSAGE" value1="The selected web content no longer exists." />
+		<execute action="PGWebcontentdisplay#assertTextEquals" locator1="WEB_CONTENT_ALERT_MESSAGE" value1="The selected web content no longer exists." />
 
 		<execute macro="Staging#publishToLiveNow" />
 
@@ -2798,7 +2798,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_ALERT_MESSAGE" value1="The selected web content no longer exists." />
+		<execute action="PGWebcontentdisplay#assertTextEquals" locator1="WEB_CONTENT_ALERT_MESSAGE" value1="The selected web content no longer exists." />
 	</command>
 
 	<command name="StagingOrganizations" priority="5">
@@ -3184,7 +3184,7 @@
 
 		<var name="siteID" value="siteID" />
 
-		<execute action="CPSitesEdit#copy" locator-key1="SITE_ID" value1="siteID" />
+		<execute action="CPSitesEdit#copy" locator1="SITE_ID" value1="siteID" />
 
 		<execute macro="User#loginPG">
 			<var name="nodePort" value="8080" />
@@ -3402,7 +3402,7 @@
 
 		<var name="key_contentName" value="Web Content" />
 
-		<execute action="StagingPublishtolivenow#assertElementNotPresent" locator-key1="CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+		<execute action="StagingPublishtolivenow#assertElementNotPresent" locator1="CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
@@ -3421,7 +3421,7 @@
 
 		<var name="key_webContentTitle" value="Web Content Title" />
 
-		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="Web Content Title" />
+		<execute action="CPWebcontent#assertTextEquals" locator1="ENTRY_DESCRIPTIVE_TITLE" value1="Web Content Title" />
 
 		<execute macro="WebContentStructures#viewCP">
 			<var name="structureDescription" value="Structure Description" />
@@ -3513,15 +3513,15 @@
 		</execute>
 
 		<if>
-			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			<condition action="PGStaging#isElementNotPresent" locator1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
 			<then>
-				<execute action="PGStaging#assertClick" locator-key1="STAGING_DROP_DOWN_BUTTON" value1="Staging" />
+				<execute action="PGStaging#assertClick" locator1="STAGING_DROP_DOWN_BUTTON" value1="Staging" />
 			</then>
 		</if>
 
-		<execute action="PGStaging#click" locator-key1="HISTORY_BUTTON" />
+		<execute action="PGStaging#click" locator1="HISTORY_BUTTON" />
 
-		<var locator-key="HISTORY_VERSION" name="historyVersion" path="PGStaging" />
+		<var locator="HISTORY_VERSION" name="historyVersion" path="PGStaging" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
@@ -4002,15 +4002,15 @@
 		</execute>
 
 		<if>
-			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			<condition action="PGStaging#isElementNotPresent" locator1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
 			<then>
-				<execute action="PGStaging#assertClick" locator-key1="STAGING_DROP_DOWN_BUTTON" value1="Staging" />
+				<execute action="PGStaging#assertClick" locator1="STAGING_DROP_DOWN_BUTTON" value1="Staging" />
 			</then>
 		</if>
 
-		<execute action="PGStaging#click" locator-key1="HISTORY_BUTTON" />
+		<execute action="PGStaging#click" locator1="HISTORY_BUTTON" />
 
-		<var locator-key="HISTORY_VERSION" name="historyVersion" path="PGStaging" />
+		<var locator="HISTORY_VERSION" name="historyVersion" path="PGStaging" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />

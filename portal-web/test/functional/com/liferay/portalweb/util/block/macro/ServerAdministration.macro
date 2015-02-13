@@ -1,28 +1,28 @@
 <definition>
 	<command name="addCategoryLogLevels">
-		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_LOG_LEVELS" value1="Log Levels" />
+		<execute action="CPServeradministration#assertClick" locator1="NAVIGATION_LOG_LEVELS" value1="Log Levels" />
 
-		<execute action="CPServeradministrationLogLevels#assertClick" locator-key1="NAVIGATION_ADD_CATEGORY" value1="Add Category" />
+		<execute action="CPServeradministrationLogLevels#assertClick" locator1="NAVIGATION_ADD_CATEGORY" value1="Add Category" />
 
-		<execute action="CPServeradministrationLogLevelsAddCategory#type" locator-key1="CATEGORY_NAME_FIELD" value1="${catagoryName}" />
-		<execute action="CPServeradministrationLogLevelsAddCategory#select" locator-key1="CATEGORY_PRIORITY_SELECT" value1="${categoryPriority}" />
-		<execute action="CPServeradministrationLogLevelsAddCategory#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPServeradministrationLogLevelsAddCategory#type" locator1="CATEGORY_NAME_FIELD" value1="${catagoryName}" />
+		<execute action="CPServeradministrationLogLevelsAddCategory#select" locator1="CATEGORY_PRIORITY_SELECT" value1="${categoryPriority}" />
+		<execute action="CPServeradministrationLogLevelsAddCategory#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPServeradministrationLogLevelsAddCategory#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPServeradministrationLogLevelsAddCategory#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="configureExternalServices">
-		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_EXTERNAL_SERVICES" value1="External Services" />
+		<execute action="CPServeradministration#assertClick" locator1="NAVIGATION_EXTERNAL_SERVICES" value1="External Services" />
 
 		<if>
 			<equals arg1="${enableOpenOfficeIntegration}" arg2="true" />
 			<then>
-				<execute action="CPServeradministrationExternalservices#check" locator-key1="OPEN_OFFICE_INTEGRATION_ENABLED_CHECKBOX" />
+				<execute action="CPServeradministrationExternalservices#check" locator1="OPEN_OFFICE_INTEGRATION_ENABLED_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${enableOpenOfficeIntegration}" arg2="false" />
 				<then>
-					<execute action="CPServeradministrationExternalservices#uncheck" locator-key1="OPEN_OFFICE_INTEGRATION_ENABLED_CHECKBOX" />
+					<execute action="CPServeradministrationExternalservices#uncheck" locator1="OPEN_OFFICE_INTEGRATION_ENABLED_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
@@ -30,25 +30,25 @@
 		<if>
 			<and>
 				<isset var="installXuggler" />
-				<condition action="CPServeradministrationExternalservices#isElementNotPresent" locator-key1="XUGGLER_ENABLED_CHECKBOX" />
+				<condition action="CPServeradministrationExternalservices#isElementNotPresent" locator1="XUGGLER_ENABLED_CHECKBOX" />
 			</and>
 			<then>
-				<execute action="CPServeradministrationExternalservices#select" locator-key1="XUGGLER_JAR_FILE_SELECT" value1="${xugglerJarFile}" />
-				<execute action="CPServeradministrationExternalservices#assertClick" locator-key1="XUGGLER_INSTALL_BUTTON" value1="Install" />
-				<execute action="CPServeradministrationExternalservices#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Xuggler has been installed. You need to reboot your server to apply changes." />
+				<execute action="CPServeradministrationExternalservices#select" locator1="XUGGLER_JAR_FILE_SELECT" value1="${xugglerJarFile}" />
+				<execute action="CPServeradministrationExternalservices#assertClick" locator1="XUGGLER_INSTALL_BUTTON" value1="Install" />
+				<execute action="CPServeradministrationExternalservices#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Xuggler has been installed. You need to reboot your server to apply changes." />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${enableXuggler}" arg2="true" />
 			<then>
-				<execute action="CPServeradministrationExternalservices#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Xuggler appears to be installed correctly. Enable to allow audio and video preview generation." />
-				<execute action="CPServeradministrationExternalservices#check" locator-key1="XUGGLER_ENABLED_CHECKBOX"  />
+				<execute action="CPServeradministrationExternalservices#assertTextEquals" locator1="INFO_MESSAGE" value1="Xuggler appears to be installed correctly. Enable to allow audio and video preview generation." />
+				<execute action="CPServeradministrationExternalservices#check" locator1="XUGGLER_ENABLED_CHECKBOX"  />
 			</then>
 		</if>
 
-		<execute action="CPServeradministrationExternalservices#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPServeradministrationExternalservices#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPServeradministrationExternalservices#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPServeradministrationExternalservices#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="configureFileUploadOverallMaximumFileSize">
@@ -56,59 +56,59 @@
 			<var name="portletName" value="Server Administration" />
 		</execute>
 
-		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_FILE_UPLOADS" value1="File Uploads" />
-		<execute action="CPServeradministrationFileuploads#type" locator-key1="FILE_UPLOADS_GENERAL_OVERALL_MAX_FILE_SIZE_FIELD" value1="${maxFileSize}" />
-		<execute action="CPServeradministrationFileuploads#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPServeradministrationFileuploads#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPServeradministration#assertClick" locator1="NAVIGATION_FILE_UPLOADS" value1="File Uploads" />
+		<execute action="CPServeradministrationFileuploads#type" locator1="FILE_UPLOADS_GENERAL_OVERALL_MAX_FILE_SIZE_FIELD" value1="${maxFileSize}" />
+		<execute action="CPServeradministrationFileuploads#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPServeradministrationFileuploads#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="configureMailServerSettings">
-		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_MAIL" value1="Mail" />
+		<execute action="CPServeradministration#assertClick" locator1="NAVIGATION_MAIL" value1="Mail" />
 
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_POP_SERVER" value1="pop.gmail.com" />
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_PORT" value1="995" />
-		<execute action="CPServeradministrationMail#check" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_SECURE_NETWORK_CONNECTION_CHECKBOX" />
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_USER_NAME" value1="${userName}" />
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_PASSWORD" value1="${userPassword}" />
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_SMTP_SERVER" value1="smtp.gmail.com" />
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_PORT" value1="465" />
-		<execute action="CPServeradministrationMail#check" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_SECURE_CONNECTION_CHECKBOX" />
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_USER_NAME" value1="${userName}" />
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_PASSWORD" value1="${userPassword}" />
-		<execute action="CPServeradministrationMail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_INCOMING_POP_SERVER" value1="pop.gmail.com" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_INCOMING_PORT" value1="995" />
+		<execute action="CPServeradministrationMail#check" locator1="CONFIGURE_MAIL_SERVER_INCOMING_SECURE_NETWORK_CONNECTION_CHECKBOX" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_INCOMING_USER_NAME" value1="${userName}" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_INCOMING_PASSWORD" value1="${userPassword}" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_OUTGOING_SMTP_SERVER" value1="smtp.gmail.com" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_OUTGOING_PORT" value1="465" />
+		<execute action="CPServeradministrationMail#check" locator1="CONFIGURE_MAIL_SERVER_OUTGOING_SECURE_CONNECTION_CHECKBOX" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_OUTGOING_USER_NAME" value1="${userName}" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_OUTGOING_PASSWORD" value1="${userPassword}" />
+		<execute action="CPServeradministrationMail#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPServeradministrationMail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPServeradministrationMail#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="executeServerResourcesActions">
 		<var name="key_actionsDescription" value="${actionsDescription}" />
 
-		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_RESOURCES" value1="Resources" />
-		<execute action="CPServeradministration#assertTextEquals" locator-key1="RESOURCES_ACTIONS_TABLE_DESCRIPTION" value1="${actionsDescription}" />
-		<execute action="CPServeradministration#assertClick" locator-key1="RESOURCES_ACTIONS_TABLE_EXECUTE" value1="Execute" />
-		<execute action="CPServeradministration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPServeradministration#assertClick" locator1="NAVIGATION_RESOURCES" value1="Resources" />
+		<execute action="CPServeradministration#assertTextEquals" locator1="RESOURCES_ACTIONS_TABLE_DESCRIPTION" value1="${actionsDescription}" />
+		<execute action="CPServeradministration#assertClick" locator1="RESOURCES_ACTIONS_TABLE_EXECUTE" value1="Execute" />
+		<execute action="CPServeradministration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="searchPortalPropertiesCP">
-		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_PROPERTIES" value1="Properties" />
-		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_PORTAL_PROPERTIES" value1="Portal Properties" />
+		<execute action="CPServeradministration#assertClick" locator1="NAVIGATION_PROPERTIES" value1="Properties" />
+		<execute action="CPServeradministration#assertClick" locator1="NAVIGATION_PORTAL_PROPERTIES" value1="Portal Properties" />
 
-		<execute action="CPServeradministration#type" locator-key1="PROPERTIES_PORTAL_PROPERTIES_SEARCH_FIELD" value1="${propertyName}" />
-		<execute action="CPServeradministration#assertClick" locator-key1="PROPERTIES_PORTAL_PROPERTIES_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPServeradministration#type" locator1="PROPERTIES_PORTAL_PROPERTIES_SEARCH_FIELD" value1="${propertyName}" />
+		<execute action="CPServeradministration#assertClick" locator1="PROPERTIES_PORTAL_PROPERTIES_SEARCH_BUTTON" value1="Search" />
 
 		<var name="key_propertyName" value="${propertyName}" />
 
-		<execute action="CPServeradministration#assertTextEquals" locator-key1="PROPERTIES_PORTAL_PROPERTIES_TABLE_PROPERTY" value1="${propertyName}" />
+		<execute action="CPServeradministration#assertTextEquals" locator1="PROPERTIES_PORTAL_PROPERTIES_TABLE_PROPERTY" value1="${propertyName}" />
 
 		<if>
 			<isset var="propertyOveridden" />
 			<then>
-				<execute action="CPServeradministration#mouseOver" locator-key1="SOURCE" />
-				<execute action="CPServeradministration#assertTextEquals" locator-key1="PROPERTIES_PORTAL_PROPERTIES_TABLE_SOURCE" value1="The value of this property was overridden using the Control Panel and is stored in the database." />
+				<execute action="CPServeradministration#mouseOver" locator1="SOURCE" />
+				<execute action="CPServeradministration#assertTextEquals" locator1="PROPERTIES_PORTAL_PROPERTIES_TABLE_SOURCE" value1="The value of this property was overridden using the Control Panel and is stored in the database." />
 			</then>
 			<else>
-				<execute action="CPServeradministration#mouseOver" locator-key1="SOURCE" />
-				<execute action="CPServeradministration#assertTextEquals" locator-key1="PROPERTIES_PORTAL_PROPERTIES_TABLE_SOURCE" value1="The value of this property is read from a portal.properties file or one of its extension files." />
+				<execute action="CPServeradministration#mouseOver" locator1="SOURCE" />
+				<execute action="CPServeradministration#assertTextEquals" locator1="PROPERTIES_PORTAL_PROPERTIES_TABLE_SOURCE" value1="The value of this property is read from a portal.properties file or one of its extension files." />
 			</else>
 		</if>
 	</command>
@@ -118,9 +118,9 @@
 			<var name="portletName" value="Server Administration" />
 		</execute>
 
-		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_FILE_UPLOADS" value1="File Uploads" />
-		<execute action="CPServeradministrationFileuploads#type" locator-key1="DOCUMENTS_AND_MEDIA_MAX_FILE_SIZE" value1="" />
-		<execute action="CPServeradministrationFileuploads#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPServeradministration#assertClick" locator1="NAVIGATION_FILE_UPLOADS" value1="File Uploads" />
+		<execute action="CPServeradministrationFileuploads#type" locator1="DOCUMENTS_AND_MEDIA_MAX_FILE_SIZE" value1="" />
+		<execute action="CPServeradministrationFileuploads#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="tearDownMailServerSettings">
@@ -128,20 +128,20 @@
 			<var name="portletName" value="Server Administration" />
 		</execute>
 
-		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_MAIL" value1="Mail" />
+		<execute action="CPServeradministration#assertClick" locator1="NAVIGATION_MAIL" value1="Mail" />
 
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_POP_SERVER" value1="localhost" />
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_PORT" value1="110" />
-		<execute action="CPServeradministrationMail#uncheck" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_SECURE_NETWORK_CONNECTION_CHECKBOX" />
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_USER_NAME" value1="weblogic" />
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_PASSWORD" value1="password" />
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_SMTP_SERVER" value1="localhost" />
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_PORT" value1="25" />
-		<execute action="CPServeradministrationMail#uncheck" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_SECURE_CONNECTION_CHECKBOX" />
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_USER_NAME" value1="" />
-		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_PASSWORD" value1="" />
-		<execute action="CPServeradministrationMail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_INCOMING_POP_SERVER" value1="localhost" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_INCOMING_PORT" value1="110" />
+		<execute action="CPServeradministrationMail#uncheck" locator1="CONFIGURE_MAIL_SERVER_INCOMING_SECURE_NETWORK_CONNECTION_CHECKBOX" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_INCOMING_USER_NAME" value1="weblogic" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_INCOMING_PASSWORD" value1="password" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_OUTGOING_SMTP_SERVER" value1="localhost" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_OUTGOING_PORT" value1="25" />
+		<execute action="CPServeradministrationMail#uncheck" locator1="CONFIGURE_MAIL_SERVER_OUTGOING_SECURE_CONNECTION_CHECKBOX" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_OUTGOING_USER_NAME" value1="" />
+		<execute action="CPServeradministrationMail#type" locator1="CONFIGURE_MAIL_SERVER_OUTGOING_PASSWORD" value1="" />
+		<execute action="CPServeradministrationMail#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPServeradministrationMail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPServeradministrationMail#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 </definition>

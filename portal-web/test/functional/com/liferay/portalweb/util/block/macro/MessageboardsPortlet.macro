@@ -1,22 +1,22 @@
 <definition>
 	<command name="configureAnonymousPostingCP">
-		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator1="MESSAGE_BOARDS_IFRAME" />
 
 		<if>
 			<equals arg1="${anonymousPostingEnabled}" arg2="true" />
 			<then>
-				<execute action="CPMessageboardsConfiguration#check" locator-key1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+				<execute action="CPMessageboardsConfiguration#check" locator1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${anonymousPostingEnabled}" arg2="false" />
 				<then>
-					<execute action="CPMessageboardsConfiguration#uncheck" locator-key1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+					<execute action="CPMessageboardsConfiguration#uncheck" locator1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPMessageboardsConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureGeneralCP">
@@ -24,21 +24,21 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
-		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute action="BasePortlet#click" locator1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator1="MESSAGE_BOARDS_IFRAME" />
 
 		<if>
 			<equals arg1="${threadAsQuestionByDefaultEnabled}" arg2="true" />
 			<then>
-				<execute action="CPMessageboardsConfiguration#check" locator-key1="GENERAL_THREAD_AS_QUESTION_BY_DEFAULT_CHECKBOX" />
+				<execute action="CPMessageboardsConfiguration#check" locator1="GENERAL_THREAD_AS_QUESTION_BY_DEFAULT_CHECKBOX" />
 			</then>
 		</if>
 
-		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPMessageboardsConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureGeneralPG">
@@ -46,19 +46,19 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="PGMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="PGMessageboardsConfiguration#selectFrame" locator1="MESSAGE_BOARDS_IFRAME" />
 
 		<if>
 			<equals arg1="${messageFormatBBCodeEnabled}" arg2="true" />
 			<then>
 				<var name="key_messageFormat" value="${messageFormat}" />
 
-				<execute action="PGMessageboardsConfiguration#select" locator-key1="MESSAGE_FORMAT_DROPDOWN_OPTION" value1="${key_messageFormat}" />
+				<execute action="PGMessageboardsConfiguration#select" locator1="MESSAGE_FORMAT_DROPDOWN_OPTION" value1="${key_messageFormat}" />
 			</then>
 		</if>
 
-		<execute action="PGMessageboardsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGMessageboardsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGMessageboardsConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGMessageboardsConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureMessageAddedEmailCP">
@@ -66,24 +66,24 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
-		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute action="BasePortlet#click" locator1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
-		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL" value1="Message Added Email" />
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#assertClick" locator1="SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL" value1="Message Added Email" />
 
 		<if>
 			<equals arg1="${messageAddedEmailEnabled}" arg2="false" />
 			<then>
-				<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#uncheck" locator-key1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
+				<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#uncheck" locator1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
 			</then>
 			<else>
-				<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertChecked" locator-key1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
+				<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertChecked" locator1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
 			</else>
 		</if>
 
-		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureMessageEmailFromCP">
@@ -91,28 +91,28 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
-		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute action="BasePortlet#click" locator1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
-		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_EMAIL_FROM" value1="Email From" />
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#assertClick" locator1="SETUP_NAVIGATION_EMAIL_FROM" value1="Email From" />
 
 		<if>
 			<isset var="emailFromName" />
 			<then>
-				<execute action="CPMessageboardsConfigurationSetupEmailFrom#type" locator-key1="EMAIL_FROM_NAME" value1="${emailFromName}" />
+				<execute action="CPMessageboardsConfigurationSetupEmailFrom#type" locator1="EMAIL_FROM_NAME" value1="${emailFromName}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="emailFromAddress" />
 			<then>
-				<execute action="CPMessageboardsConfigurationSetupEmailFrom#type" locator-key1="EMAIL_FROM_ADDRESS" value1="${emailFromAddress}" />
+				<execute action="CPMessageboardsConfigurationSetupEmailFrom#type" locator1="EMAIL_FROM_ADDRESS" value1="${emailFromAddress}" />
 			</then>
 		</if>
 
-		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureMessageUpdatedEmailCP">
@@ -120,24 +120,24 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
-		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute action="BasePortlet#click" locator1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
-		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#assertClick" locator1="SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
 
 		<if>
 			<equals arg1="${messageUpdatedEmailEnabled}" arg2="false" />
 			<then>
-				<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#uncheck" locator-key1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
+				<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#uncheck" locator1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
 			</then>
 			<else>
-				<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertChecked" locator-key1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
+				<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertChecked" locator1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
 			</else>
 		</if>
 
-		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureMessageUpdatedEmailPG">
@@ -145,21 +145,21 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="PGMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
-		<execute action="PGMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
+		<execute action="PGMessageboardsConfiguration#selectFrame" locator1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="PGMessageboardsConfiguration#assertClick" locator1="SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
 
 		<if>
 			<equals arg1="${messageUpdatedEmailEnabled}" arg2="false" />
 			<then>
-				<execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#uncheck" locator-key1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
+				<execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#uncheck" locator1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
 			</then>
 			<else>
-				<execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertChecked" locator-key1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
+				<execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertChecked" locator1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
 			</else>
 		</if>
 
-		<execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureScopePG">
@@ -167,28 +167,28 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="PGMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
-		<execute action="PGMessageboardsConfiguration#assertClick" locator-key1="NAVIGATION_SCOPE" value1="Scope" />
+		<execute action="PGMessageboardsConfiguration#selectFrame" locator1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="PGMessageboardsConfiguration#assertClick" locator1="NAVIGATION_SCOPE" value1="Scope" />
 
 		<var name="key_scopeName" value="${scopeName}" />
 
-		<execute action="PGMessageboardsConfigurationScope#click" locator-key1="SCOPE_DROPDOWN" />
-		<execute action="PGMessageboardsConfigurationScope#assertClick" locator-key1="SCOPE_MENULIST" value1="${scopeName}" />
-		<execute action="PGMessageboardsConfigurationScope#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGMessageboardsConfigurationScope#click" locator1="SCOPE_DROPDOWN" />
+		<execute action="PGMessageboardsConfigurationScope#assertClick" locator1="SCOPE_MENULIST" value1="${scopeName}" />
+		<execute action="PGMessageboardsConfigurationScope#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="gotoRecentPostsPG">
-		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_RECENT_POSTS" value1="Recent Posts" />
+		<execute action="PGMessageboards#assertClick" locator1="NAVIGATION_RECENT_POSTS" value1="Recent Posts" />
 	</command>
 
 	<command name="searchPG">
-		<execute action="PGMessageboards#type" locator-key1="NAVIGATION_SEARCH_FIELD" value1="${searchTerm}" />
-		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_SEARCH_BUTTON" value1="Search" />
+		<execute action="PGMessageboards#type" locator1="NAVIGATION_SEARCH_FIELD" value1="${searchTerm}" />
+		<execute action="PGMessageboards#assertClick" locator1="NAVIGATION_SEARCH_BUTTON" value1="Search" />
 	</command>
 
 	<command name="subscribePG">
-		<execute action="PGMessageboards#assertClick" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGMessageboards#assertClick" locator1="SUBSCRIBE_LINK" value1="Subscribe" />
+		<execute action="PGMessageboards#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownConfigurationEmailCP">
@@ -196,20 +196,20 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
-		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute action="BasePortlet#click" locator1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
-		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL" value1="Message Added Email" />
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#assertClick" locator1="SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL" value1="Message Added Email" />
 
-		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#check" locator-key1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
-		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
+		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#check" locator1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
+		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator1="SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
 
-		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#check" locator-key1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
-		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#check" locator1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
+		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="tearDownConfigurationGeneralCP">
@@ -217,72 +217,72 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
-		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute action="BasePortlet#click" locator1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
-		<execute action="CPMessageboardsConfiguration#check" locator-key1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
-		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#check" locator1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+		<execute action="CPMessageboardsConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="unbanUserPG">
-		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_BANNED_USERS" value1="Banned Users" />
+		<execute action="PGMessageboards#assertClick" locator1="NAVIGATION_BANNED_USERS" value1="Banned Users" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute action="PGMessageboardsBannedusers#assertClick" locator-key1="BANNED_USERS_TABLE_UNBAN_THIS_USER" value1="Unban This User" />
-		<execute action="PGMessageboardsBannedusers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGMessageboardsBannedusers#assertElementNotPresent" locator-key1="BANNED_USERS_TABLE_BANNED_USER" />
+		<execute action="PGMessageboardsBannedusers#assertClick" locator1="BANNED_USERS_TABLE_UNBAN_THIS_USER" value1="Unban This User" />
+		<execute action="PGMessageboardsBannedusers#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGMessageboardsBannedusers#assertElementNotPresent" locator1="BANNED_USERS_TABLE_BANNED_USER" />
 		<execute action="PGMessageboardsBannedusers#assertTextNotPresent" value1="${userScreenName}" />
 	</command>
 
 	<command name="viewAnonymousPostingConfigurationCP">
-		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator1="MESSAGE_BOARDS_IFRAME" />
 
 		<if>
 			<equals arg1="${anonymousPostingEnabled}" arg2="true" />
 			<then>
-				<execute action="CPMessageboardsConfiguration#assertChecked" locator-key1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+				<execute action="CPMessageboardsConfiguration#assertChecked" locator1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${anonymousPostingEnabled}" arg2="false" />
 				<then>
-					<execute action="CPMessageboardsConfiguration#assertNotChecked" locator-key1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+					<execute action="CPMessageboardsConfiguration#assertNotChecked" locator1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
 	</command>
 
 	<command name="viewBannedUserPG">
-		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_BANNED_USERS" value1="Banned Users" />
+		<execute action="PGMessageboards#assertClick" locator1="NAVIGATION_BANNED_USERS" value1="Banned Users" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute action="PGMessageboardsBannedusers#assertTextEquals" locator-key1="BANNED_USERS_TABLE_BANNED_USER" value1="${userScreenName}" />
-		<execute action="PGMessageboardsBannedusers#assertTextEquals" locator-key1="BANNED_USERS_TABLE_BANNED_BY" value1="Test Test" />
-		<execute action="PGMessageboardsBannedusers#assertVisible" locator-key1="BANNED_USERS_TABLE_BAN_DATE"  />
-		<execute action="PGMessageboardsBannedusers#assertVisible" locator-key1="BANNED_USERS_TABLE_UNBAN_DATE"  />
-		<execute action="PGMessageboardsBannedusers#assertTextEquals" locator-key1="BANNED_USERS_TABLE_UNBAN_THIS_USER" value1="Unban This User" />
-		<execute action="PGMessageboardsBannedusers#assertClick" locator-key1="BANNED_USERS_TABLE_BANNED_USER" value1="${userScreenName}" />
+		<execute action="PGMessageboardsBannedusers#assertTextEquals" locator1="BANNED_USERS_TABLE_BANNED_USER" value1="${userScreenName}" />
+		<execute action="PGMessageboardsBannedusers#assertTextEquals" locator1="BANNED_USERS_TABLE_BANNED_BY" value1="Test Test" />
+		<execute action="PGMessageboardsBannedusers#assertVisible" locator1="BANNED_USERS_TABLE_BAN_DATE"  />
+		<execute action="PGMessageboardsBannedusers#assertVisible" locator1="BANNED_USERS_TABLE_UNBAN_DATE"  />
+		<execute action="PGMessageboardsBannedusers#assertTextEquals" locator1="BANNED_USERS_TABLE_UNBAN_THIS_USER" value1="Unban This User" />
+		<execute action="PGMessageboardsBannedusers#assertClick" locator1="BANNED_USERS_TABLE_BANNED_USER" value1="${userScreenName}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${userScreenName}" />
+		<execute action="Home#assertTextEquals" locator1="SITE_NAME" value1="${userScreenName}" />
 	</command>
 
 	<command name="viewBanPG">
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You have been banned by the moderator." />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="ADD_CATEGORY_BUTTON" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="POST_NEW_THREAD_BUTTON" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="RSS_LINK" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="SUBSCRIBE_LINK" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_MESSAGE_BOARDS_HOME" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_RECENT_POSTS" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_MY_POSTS" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_MY_SUBSCRIPTIONS" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_STATISTICS" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_BANNED_USERS" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_SEARCH_FIELD" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_SEARCH_BUTTON" />
+		<execute action="PGMessageboards#assertTextEquals" locator1="ERROR_MESSAGE" value1="You have been banned by the moderator." />
+		<execute action="PGMessageboards#assertElementNotPresent" locator1="ADD_CATEGORY_BUTTON" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator1="POST_NEW_THREAD_BUTTON" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator1="RSS_LINK" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator1="SUBSCRIBE_LINK" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator1="NAVIGATION_MESSAGE_BOARDS_HOME" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator1="NAVIGATION_RECENT_POSTS" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator1="NAVIGATION_MY_POSTS" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator1="NAVIGATION_MY_SUBSCRIPTIONS" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator1="NAVIGATION_STATISTICS" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator1="NAVIGATION_BANNED_USERS" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator1="NAVIGATION_SEARCH_FIELD" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator1="NAVIGATION_SEARCH_BUTTON" />
 	</command>
 
 	<command name="viewDefaultEmailFromCP">
@@ -290,26 +290,26 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
-		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute action="BasePortlet#click" locator1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
-		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_EMAIL_FROM" value1="Email From" />
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#assertClick" locator1="SETUP_NAVIGATION_EMAIL_FROM" value1="Email From" />
 
-		<execute action="CPMessageboardsConfigurationSetupEmailFrom#assertTextEquals" locator-key1="EMAIL_FROM_NAME" value1="[$MESSAGE_USER_NAME$]" />
-		<execute action="CPMessageboardsConfigurationSetupEmailFrom#assertTextEquals" locator-key1="EMAIL_FROM_ADDRESS" value1="test@liferay.com" />
+		<execute action="CPMessageboardsConfigurationSetupEmailFrom#assertTextEquals" locator1="EMAIL_FROM_NAME" value1="[$MESSAGE_USER_NAME$]" />
+		<execute action="CPMessageboardsConfigurationSetupEmailFrom#assertTextEquals" locator1="EMAIL_FROM_ADDRESS" value1="test@liferay.com" />
 	</command>
 
 	<command name="viewNoPermissionCP">
-		<execute action="CPMessageboards#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Message Boards" />
-		<execute action="CPMessageboards#assertElementPresent" locator-key1="NAVBAR_CONTAINER" />
-		<execute action="CPMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
+		<execute action="CPMessageboards#assertTextEquals" locator1="PORTLET_TITLE" value1="Message Boards" />
+		<execute action="CPMessageboards#assertElementPresent" locator1="NAVBAR_CONTAINER" />
+		<execute action="CPMessageboards#assertTextEquals" locator1="INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
 	</command>
 
 	<command name="viewNoSearchResultSubjectPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboardsSearch#assertElementNotPresent" locator-key1="SEARCH_RESULTS_ENTRY_TITLE" />
+		<execute action="PGMessageboardsSearch#assertElementNotPresent" locator1="SEARCH_RESULTS_ENTRY_TITLE" />
 	</command>
 
 	<command name="viewRecentPostsConfigurationCP">
@@ -317,24 +317,24 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
-		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator-key1="GENERAL_SHOW_RECENT_POSTS_FROM_LAST_DROPDOWN" value1="${recentPostsRange}" />
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator1="GENERAL_SHOW_RECENT_POSTS_FROM_LAST_DROPDOWN" value1="${recentPostsRange}" />
 	</command>
 
 	<command name="viewSearchResultPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboardsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_TITLE" value1="${threadSubject}" />
-		<execute action="PGMessageboardsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${threadBody}" />
+		<execute action="PGMessageboardsSearch#assertTextEquals" locator1="SEARCH_RESULTS_ENTRY_TITLE" value1="${threadSubject}" />
+		<execute action="PGMessageboardsSearch#assertTextEquals" locator1="SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${threadBody}" />
 
 		<if>
 			<isset var="mbThreadAttachment" />
 			<then>
 				<var name="key_userName" value="${userName}" />
 
-				<execute action="PGMessageboardsSearch#assertVisible" locator-key1="SEARCH_RESULTS_ATTACHMENT_IMAGE" />
-				<execute action="PGMessageboardsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ATTACHMENT_HEADER" value1="Attachment added by ${userName}." />
-				<execute action="PGMessageboardsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ATTACHMENT_BODY" value1="${searchTerm}" />
+				<execute action="PGMessageboardsSearch#assertVisible" locator1="SEARCH_RESULTS_ATTACHMENT_IMAGE" />
+				<execute action="PGMessageboardsSearch#assertTextEquals" locator1="SEARCH_RESULTS_ATTACHMENT_HEADER" value1="Attachment added by ${userName}." />
+				<execute action="PGMessageboardsSearch#assertTextEquals" locator1="SEARCH_RESULTS_ATTACHMENT_BODY" value1="${searchTerm}" />
 			</then>
 		</if>
 	</command>

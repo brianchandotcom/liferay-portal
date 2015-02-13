@@ -30,13 +30,13 @@
 			<var name="pageName" value="Test Page1" />
 		</execute>
 
-		<execute action="BasePortlet#assertTextEquals" locator-key1="TITLE" value1="Blogs" />
+		<execute action="BasePortlet#assertTextEquals" locator1="TITLE" value1="Blogs" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute action="CPBlogs#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Blogs" />
+		<execute action="CPBlogs#assertTextEquals" locator1="PORTLET_TITLE" value1="Blogs" />
 	</command>
 
 	<command name="ViewAnnouncementEntry" priority="5">
@@ -51,7 +51,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGAnnouncements#assertClick" locator-key1="NAVIGATION_MANAGE_ENTRIES" value1="Manage Entries" />
+		<execute action="PGAnnouncements#assertClick" locator1="NAVIGATION_MANAGE_ENTRIES" value1="Manage Entries" />
 
 		<execute macro="AnnouncementsEntry#viewViaManageEntriesPG">
 			<var name="announcementType" value="${announcementType}" />
@@ -116,12 +116,12 @@
 			<var name="userScreenName" value="usercf" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="MENU_MISCELLANEOUS_CUSTOM_FIELDS" value1="Custom Fields" />
+		<execute action="CPUsersandorganizationsUser#assertClick" locator1="MENU_MISCELLANEOUS_CUSTOM_FIELDS" value1="Custom Fields" />
 
 		<var name="key_customFieldName" value="${customFieldName}" />
 
-		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="CUSTOM_FIELDS_LABEL" value1="${customFieldName}" />
-		<execute action="CPUsersandorganizationsUser#assertSelectedLabel" locator-key1="CUSTOM_FIELDS_SELECT" value1="False" />
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator1="CUSTOM_FIELDS_LABEL" value1="${customFieldName}" />
+		<execute action="CPUsersandorganizationsUser#assertSelectedLabel" locator1="CUSTOM_FIELDS_SELECT" value1="False" />
 	</command>
 
 	<command name="ViewDDLRecord" priority="5">

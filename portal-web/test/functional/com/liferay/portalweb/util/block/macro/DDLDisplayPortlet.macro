@@ -1,21 +1,21 @@
 <definition>
 	<command name="configureListViewPG">
-		<execute action="PGDynamicdatalists#click" locator-key1="OPTIONS_ICON" />
-		<execute action="PGDynamicdatalists#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute action="PGDynamicdatalists#click" locator1="OPTIONS_ICON" />
+		<execute action="PGDynamicdatalists#assertClick" locator1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute action="PGDynamicdatalistsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGDynamicdatalistsConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
 
 		<if>
 			<equals arg1="${configureChecked}" arg2="false" />
 			<then>
-				<execute action="PGDynamicdatalistsConfiguration#uncheck" locator-key1="${configureCheckBoxName}" />
+				<execute action="PGDynamicdatalistsConfiguration#uncheck" locator1="${configureCheckBoxName}" />
 			</then>
 			<else>
-				<execute action="PGDynamicdatalistsConfiguration#check" locator-key1="${configureCheckBoxName}" />
+				<execute action="PGDynamicdatalistsConfiguration#check" locator1="${configureCheckBoxName}" />
 			</else>
 		</if>
 
-		<execute action="PGDynamicdatalistsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGDynamicdatalistsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGDynamicdatalistsConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGDynamicdatalistsConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 </definition>

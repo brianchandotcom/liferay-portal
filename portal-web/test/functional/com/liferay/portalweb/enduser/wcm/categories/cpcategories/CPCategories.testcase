@@ -896,8 +896,8 @@
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
-		<execute action="CPCategories#assertTextNotPresent" locator-key1="CATEGORY_DETAILS_PROPERTY_KEY" value1="Category Property 2 Key" />
-		<execute action="CPCategories#assertTextNotPresent" locator-key1="CATEGORY_DETAILS_PROPERTY_VALUE" value1="Category Property 2 Value" />
+		<execute action="CPCategories#assertTextNotPresent" locator1="CATEGORY_DETAILS_PROPERTY_KEY" value1="Category Property 2 Key" />
+		<execute action="CPCategories#assertTextNotPresent" locator1="CATEGORY_DETAILS_PROPERTY_VALUE" value1="Category Property 2 Value" />
 	</command>
 
 	<command name="DeleteSubcategoryViaActions" priority="3">
@@ -1214,9 +1214,9 @@
 			<var name="portletName" value="Categories" />
 		</execute>
 
-		<execute action="CPCategories#assertClick" locator-key1="ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
-		<execute action="CPVocabulariesAdd#type" locator-key1="NAME_FIELD" value1="${vocabularyName}" />
-		<execute action="CPVocabulariesAdd#click" locator-key1="CANCEL_BUTTON" />
+		<execute action="CPCategories#assertClick" locator1="ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
+		<execute action="CPVocabulariesAdd#type" locator1="NAME_FIELD" value1="${vocabularyName}" />
+		<execute action="CPVocabulariesAdd#click" locator1="CANCEL_BUTTON" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />

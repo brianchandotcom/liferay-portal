@@ -123,19 +123,19 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
+		<execute action="CPUsersandorganizations#assertClick" locator1="SEARCH_ALL_USERS" value1="All Users" />
 
-		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userFirstName}" />
-		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsersandorganizationsViewusers#type" locator1="BASIC_SEARCH_FIELD" value1="${userFirstName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator1="BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ACTIONS" />
-		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_MENULIST_MANAGE_PAGES" value1="Manage Pages" />
+		<execute action="CPUsersandorganizationsViewusers#click" locator1="USER_TABLE_ACTIONS" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator1="USER_MENULIST_MANAGE_PAGES" value1="Manage Pages" />
 
-		<execute action="CPUsersandorganizationsManagepages#assertClick" locator-key1="NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
-		<execute action="CPUsersandorganizationsManagepages#click" locator-key1="PAGE_TREE_ROOT_ARROW" />
-		<execute action="CPUsersandorganizationsManagepages#assertElementNotPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
+		<execute action="CPUsersandorganizationsManagepages#assertClick" locator1="NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
+		<execute action="CPUsersandorganizationsManagepages#click" locator1="PAGE_TREE_ROOT_ARROW" />
+		<execute action="CPUsersandorganizationsManagepages#assertElementNotPresent" locator1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
@@ -155,8 +155,8 @@
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute action="Home#click" locator-key1="PAGE_NAVIGATION_BAR" />
-		<execute action="Home#assertTextEquals" locator-key1="PAGE_1" value1="${sitePageName}" />
+		<execute action="Home#click" locator1="PAGE_NAVIGATION_BAR" />
+		<execute action="Home#assertTextEquals" locator1="PAGE_1" value1="${sitePageName}" />
 
 		<execute macro="User#logoutUserPG" />
 
@@ -357,17 +357,17 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
+		<execute action="CPSites#assertClick" locator1="SITE_TABLE_NAME" value1="${siteName}" />
 
-		<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_USERS" value1="Users" />
-		<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_USERS_SITE_MEMBERSHIPS" value1="Site Memberships" />
+		<execute action="Home#assertClick" locator1="SITE_ADMINISTRATION_USERS" value1="Users" />
+		<execute action="Home#assertClick" locator1="SITE_ADMINISTRATION_USERS_SITE_MEMBERSHIPS" value1="Site Memberships" />
 
 		<var name="key_userScreenName" value="usersn3" />
 
-		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_NAME" value1="userfn3 userln3" />
-		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="usersn3" />
-		<execute action="CPSitememberships#click" locator-key1="USER_TABLE_ACTIONS" />
-		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_MENULIST_ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
+		<execute action="CPSitememberships#assertTextEquals" locator1="USER_TABLE_NAME" value1="userfn3 userln3" />
+		<execute action="CPSitememberships#assertTextEquals" locator1="USER_TABLE_SCREEN_NAME" value1="usersn3" />
+		<execute action="CPSitememberships#click" locator1="USER_TABLE_ACTIONS" />
+		<execute action="CPSitememberships#assertTextEquals" locator1="USER_MENULIST_ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
 
 		<execute macro="User#logoutUserPG" />
 
@@ -396,7 +396,7 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_NAME_UNVIEWABLE" value1="${siteName}" />
+		<execute action="CPSites#assertClick" locator1="SITE_TABLE_NAME_UNVIEWABLE" value1="${siteName}" />
 
 		<execute macro="User#logoutUserPG" />
 
@@ -446,7 +446,7 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
+		<execute action="CPSites#assertClick" locator1="SITE_TABLE_NAME" value1="${siteName}" />
 
 		<execute macro="User#logoutUserPG" />
 
@@ -514,15 +514,15 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_1" value1="Welcome" />
-		<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_2" value1="Home" />
-		<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_3" value1="Wiki" />
+		<execute action="Home#assertElementPresent" locator1="PAGE_TEMPLATE_1" value1="Welcome" />
+		<execute action="Home#assertElementPresent" locator1="PAGE_TEMPLATE_2" value1="Home" />
+		<execute action="Home#assertElementPresent" locator1="PAGE_TEMPLATE_3" value1="Wiki" />
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_1" value1="Welcome" />
-		<execute action="Home#assertElementNotPresent" locator-key1="PAGE_TEMPLATE_2" value1="Home" />
-		<execute action="Home#assertElementNotPresent" locator-key1="PAGE_TEMPLATE_3" value1="Wiki" />
+		<execute action="Home#assertElementPresent" locator1="PAGE_TEMPLATE_1" value1="Welcome" />
+		<execute action="Home#assertElementNotPresent" locator1="PAGE_TEMPLATE_2" value1="Home" />
+		<execute action="Home#assertElementNotPresent" locator1="PAGE_TEMPLATE_3" value1="Wiki" />
 
 		<execute macro="User#logoutPG" />
 
@@ -533,15 +533,15 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_1" value1="Welcome" />
-		<execute action="Home#assertElementNotPresent" locator-key1="PAGE_TEMPLATE_2" value1="Home" />
-		<execute action="Home#assertElementNotPresent" locator-key1="PAGE_TEMPLATE_3" value1="Wiki" />
+		<execute action="Home#assertElementPresent" locator1="PAGE_TEMPLATE_1" value1="Welcome" />
+		<execute action="Home#assertElementNotPresent" locator1="PAGE_TEMPLATE_2" value1="Home" />
+		<execute action="Home#assertElementNotPresent" locator1="PAGE_TEMPLATE_3" value1="Wiki" />
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_1" value1="Welcome" />
-		<execute action="Home#assertElementNotPresent" locator-key1="PAGE_TEMPLATE_2" value1="Home" />
-		<execute action="Home#assertElementNotPresent" locator-key1="PAGE_TEMPLATE_3" value1="Wiki" />
+		<execute action="Home#assertElementPresent" locator1="PAGE_TEMPLATE_1" value1="Welcome" />
+		<execute action="Home#assertElementNotPresent" locator1="PAGE_TEMPLATE_2" value1="Home" />
+		<execute action="Home#assertElementNotPresent" locator1="PAGE_TEMPLATE_3" value1="Wiki" />
 
 		<execute macro="User#logoutPG" />
 
@@ -568,15 +568,15 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_1" value1="Welcome" />
-		<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_2" value1="Home" />
-		<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_3" value1="Wiki" />
+		<execute action="Home#assertElementPresent" locator1="PAGE_TEMPLATE_1" value1="Welcome" />
+		<execute action="Home#assertElementPresent" locator1="PAGE_TEMPLATE_2" value1="Home" />
+		<execute action="Home#assertElementPresent" locator1="PAGE_TEMPLATE_3" value1="Wiki" />
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_1" value1="Welcome" />
-		<execute action="Home#assertElementNotPresent" locator-key1="PAGE_TEMPLATE_2" value1="Home" />
-		<execute action="Home#assertElementNotPresent" locator-key1="PAGE_TEMPLATE_3" value1="Wiki" />
+		<execute action="Home#assertElementPresent" locator1="PAGE_TEMPLATE_1" value1="Welcome" />
+		<execute action="Home#assertElementNotPresent" locator1="PAGE_TEMPLATE_2" value1="Home" />
+		<execute action="Home#assertElementNotPresent" locator1="PAGE_TEMPLATE_3" value1="Wiki" />
 
 		<execute macro="User#logoutPG" />
 
@@ -742,8 +742,8 @@
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
-		<execute action="CPUsergroups#assertElementNotPresent" locator-key1="USER_GROUP_TABLE_ACTIONS" />
+		<execute action="CPUsergroups#assertTextEquals" locator1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute action="CPUsergroups#assertElementNotPresent" locator1="USER_GROUP_TABLE_ACTIONS" />
 
 		<execute macro="User#logoutUserPG" />
 
@@ -777,7 +777,7 @@
 
 		<var name="key_roleName" value="Roles Siterole Name" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
-		<execute action="Permissions#assertTextEquals" locator-key1="CONTENT_PERMISSIONS_ROLE_NAME" value1="Roles Siterole Name" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#assertTextEquals" locator1="CONTENT_PERMISSIONS_ROLE_NAME" value1="Roles Siterole Name" />
 	</command>
 </definition>

@@ -53,7 +53,7 @@
 
 		<execute macro="Page#gotoCP" />
 
-		<execute action="CPRoles#assertElementNotPresent" locator-key1="ADD" />
+		<execute action="CPRoles#assertElementNotPresent" locator1="ADD" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
@@ -96,7 +96,7 @@
 
 		<execute macro="Page#gotoCP" />
 
-		<execute action="CPRoles#assertElementNotPresent" locator-key1="ADD" />
+		<execute action="CPRoles#assertElementNotPresent" locator1="ADD" />
 	</command>
 
 	<command name="AddRegularRoleRegRole" priority="5">
@@ -133,7 +133,7 @@
 
 		<execute macro="Page#gotoCP" />
 
-		<execute action="CPRoles#assertElementNotPresent" locator-key1="ADD" />
+		<execute action="CPRoles#assertElementNotPresent" locator1="ADD" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
@@ -175,7 +175,7 @@
 
 		<execute macro="Page#gotoCP" />
 
-		<execute action="CPRoles#assertElementNotPresent" locator-key1="ADD" />
+		<execute action="CPRoles#assertElementNotPresent" locator1="ADD" />
 	</command>
 
 	<command name="AddSiteRoleRegRole" priority="5">
@@ -213,7 +213,7 @@
 
 		<execute macro="Page#gotoCP" />
 
-		<execute action="CPRoles#assertElementNotPresent" locator-key1="ADD" />
+		<execute action="CPRoles#assertElementNotPresent" locator1="ADD" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
@@ -256,6 +256,6 @@
 
 		<execute macro="Page#gotoCP" />
 
-		<execute action="CPRoles#assertElementNotPresent" locator-key1="ADD" />
+		<execute action="CPRoles#assertElementNotPresent" locator1="ADD" />
 	</command>
 </definition>

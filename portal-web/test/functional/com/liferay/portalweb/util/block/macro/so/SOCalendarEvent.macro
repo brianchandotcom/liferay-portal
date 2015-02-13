@@ -4,37 +4,37 @@
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<execute action="PGCalendar#assertClick" locator-key1="ADD_EVENT_BUTTON" value1="Add Event" />
+		<execute action="PGCalendar#assertClick" locator1="ADD_EVENT_BUTTON" value1="Add Event" />
 
-		<execute action="PGCalendarAddevent#selectFrame" locator-key1="ADD_EVENT_IFRAME" />
-		<execute action="PGCalendarAddevent#type" locator-key1="TITLE_FIELD" value1="${eventTitle}" />
-		<execute action="PGCalendarAddevent#assertElementPresent" locator-key1="START_DATE" />
-		<execute action="PGCalendarAddevent#assertElementPresent" locator-key1="START_DATE_TIME" />
-		<execute action="PGCalendarAddevent#assertElementPresent" locator-key1="END_DATE" />
-		<execute action="PGCalendarAddevent#assertElementPresent" locator-key1="END_DATE_TIME" />
+		<execute action="PGCalendarAddevent#selectFrame" locator1="ADD_EVENT_IFRAME" />
+		<execute action="PGCalendarAddevent#type" locator1="TITLE_FIELD" value1="${eventTitle}" />
+		<execute action="PGCalendarAddevent#assertElementPresent" locator1="START_DATE" />
+		<execute action="PGCalendarAddevent#assertElementPresent" locator1="START_DATE_TIME" />
+		<execute action="PGCalendarAddevent#assertElementPresent" locator1="END_DATE" />
+		<execute action="PGCalendarAddevent#assertElementPresent" locator1="END_DATE_TIME" />
 
-		<var locator-key="END_DATE" name="endDate" path="PGCalendarAddevent" />
-		<var locator-key="END_DATE_TIME" name="endDateTime" path="PGCalendarAddevent" />
-		<var locator-key="START_DATE" name="startDate" path="PGCalendarAddevent" />
-		<var locator-key="START_DATE_TIME" name="startDateTime" path="PGCalendarAddevent" />
+		<var locator="END_DATE" name="endDate" path="PGCalendarAddevent" />
+		<var locator="END_DATE_TIME" name="endDateTime" path="PGCalendarAddevent" />
+		<var locator="START_DATE" name="startDate" path="PGCalendarAddevent" />
+		<var locator="START_DATE_TIME" name="startDateTime" path="PGCalendarAddevent" />
 
-		<execute action="PGCalendarAddevent#check" locator-key1="REPEAT_CHECKBOX" />
+		<execute action="PGCalendarAddevent#check" locator1="REPEAT_CHECKBOX" />
 
-		<execute action="PGCalendarAddevent#assertSelectedLabel" locator-key1="REPEAT_REPEATS_DROPDOWN" value1="Daily" />
-		<execute action="PGCalendarAddevent#assertSelectedLabel" locator-key1="REPEAT_REPEAT_EVERY_DROPDOWN" value1="1" />
-		<execute action="PGCalendarAddevent#click" locator-key1="REPEAT_ENDS_AFTER_RADIO" />
-		<execute action="PGCalendarAddevent#type" locator-key1="REPEAT_ENDS_AFTER_FIELD" value1="${numberOfRepeats}" />
-		<execute action="PGCalendarAddevent#click" locator-key1="REPEAT_SUMMARY_2" />
-		<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="REPEAT_SUMMARY_2" value1="Daily, ${numberOfRepeats} Times" />
-		<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="REPEAT_DONE_BUTTON" value1="Done" />
+		<execute action="PGCalendarAddevent#assertSelectedLabel" locator1="REPEAT_REPEATS_DROPDOWN" value1="Daily" />
+		<execute action="PGCalendarAddevent#assertSelectedLabel" locator1="REPEAT_REPEAT_EVERY_DROPDOWN" value1="1" />
+		<execute action="PGCalendarAddevent#click" locator1="REPEAT_ENDS_AFTER_RADIO" />
+		<execute action="PGCalendarAddevent#type" locator1="REPEAT_ENDS_AFTER_FIELD" value1="${numberOfRepeats}" />
+		<execute action="PGCalendarAddevent#click" locator1="REPEAT_SUMMARY_2" />
+		<execute action="PGCalendarAddevent#assertTextEquals" locator1="REPEAT_SUMMARY_2" value1="Daily, ${numberOfRepeats} Times" />
+		<execute action="PGCalendarAddevent#assertTextEquals" locator1="REPEAT_DONE_BUTTON" value1="Done" />
 
-		<execute action="PGCalendarAddevent#check" locator-key1="REPEAT_CHECKBOX" />
-		<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="REPEAT_SUMMARY_1" value1="Daily, ${numberOfRepeats} Times" />
+		<execute action="PGCalendarAddevent#check" locator1="REPEAT_CHECKBOX" />
+		<execute action="PGCalendarAddevent#assertTextEquals" locator1="REPEAT_SUMMARY_1" value1="Daily, ${numberOfRepeats} Times" />
 
 		<execute macro="CalendarEvent#selectCalendarPG" />
 
-		<execute action="PGCalendarAddevent#click" locator-key1="SAVE_BUTTON" />
-		<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGCalendarAddevent#click" locator1="SAVE_BUTTON" />
+		<execute action="PGCalendarAddevent#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGCalendarAddevent#selectFrame" value1="relative=top" />
 	</command>
 
@@ -52,19 +52,19 @@
 			<then>
 				<var name="dayNumber" value="${dayNumber?increment()}" />
 
-				<execute action="PGCalendar#click" locator-key1="VIEW_NEXT_BUTTON" />
+				<execute action="PGCalendar#click" locator1="VIEW_NEXT_BUTTON" />
 			</then>
 		</while>
 
-		<execute action="PGCalendarAgendaView#click" locator-key1="SCHEDULER_EVENT_GENERIC" />
+		<execute action="PGCalendarAgendaView#click" locator1="SCHEDULER_EVENT_GENERIC" />
 
-		<execute action="PGCalendar#click" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
+		<execute action="PGCalendar#click" locator1="SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
 
-		<execute action="PGCalendarRecurringEventDialogBox#click" locator-key1="ONLY_THIS_INSTANCE_BUTTON" />
+		<execute action="PGCalendarRecurringEventDialogBox#click" locator1="ONLY_THIS_INSTANCE_BUTTON" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 
-		<execute action="PGCalendarAgendaView#assertElementNotPresent" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
+		<execute action="PGCalendarAgendaView#assertElementNotPresent" locator1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
 	</command>
 
 	<command name="editFutureEventPG">
@@ -81,20 +81,20 @@
 			<then>
 				<var name="dayNumber" value="${dayNumber?increment()}" />
 
-				<execute action="PGCalendar#click" locator-key1="VIEW_NEXT_BUTTON" />
+				<execute action="PGCalendar#click" locator1="VIEW_NEXT_BUTTON" />
 			</then>
 		</while>
 
-		<execute action="PGCalendarAgendaView#click" locator-key1="SCHEDULER_EVENT_GENERIC" />
+		<execute action="PGCalendarAgendaView#click" locator1="SCHEDULER_EVENT_GENERIC" />
 
-		<execute action="PGCalendar#type" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
-		<execute action="PGCalendar#click" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_SAVE_BUTTON" />
+		<execute action="PGCalendar#type" locator1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
+		<execute action="PGCalendar#click" locator1="SCHEDULER_EVENT_DIALOG_BOX_SAVE_BUTTON" />
 
-		<execute action="PGCalendarRecurringEventDialogBox#click" locator-key1="ONLY_THIS_INSTANCE_BUTTON" />
+		<execute action="PGCalendarRecurringEventDialogBox#click" locator1="ONLY_THIS_INSTANCE_BUTTON" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 
-		<execute action="PGCalendarAgendaView#assertTextEquals" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
+		<execute action="PGCalendarAgendaView#assertTextEquals" locator1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
 	</command>
 
 	<command name="tearDownPG">

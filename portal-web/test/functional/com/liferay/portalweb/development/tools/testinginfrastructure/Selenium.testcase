@@ -34,13 +34,13 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute action="CPBlogs#assertClick" locator1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
 		<var name="key_entryComment" value="${entryComment}" />
 
-		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
-		<execute action="CPBlogsEntry#mouseOver" locator-key1="COMMENT" />
-		<execute action="CPBlogsEntry#assertClick" locator-key1="COMMENT_DELETE_1" value1="Delete" />
+		<execute action="CPBlogsEntry#assertTextEquals" locator1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#mouseOver" locator1="COMMENT" />
+		<execute action="CPBlogsEntry#assertClick" locator1="COMMENT_DELETE_1" value1="Delete" />
 
 		<var method="selenium#getAlert()" name="string" />
 
@@ -79,10 +79,10 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+		<execute action="CPBlogs#assertClick" locator1="ADD_ENTRY" value1="Add" />
 
-		<execute action="CPBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
-		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="CPBlogsAdd#type" locator1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="CPBlogsAdd#type" locator1="CONTENT_FIELD" value1="${entryContent}" />
 
 		<execute function="#selectFrame" locator1="//iframe[contains(@title,'Rich Text Editor')]" />
 
@@ -99,13 +99,13 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+		<execute action="CPBlogs#assertClick" locator1="ADD_ENTRY" value1="Add" />
 
 		<var method="selenium#getCurrentDay()" name="int" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${int}" />
-			<var locator-key="DISPLAY_DATE_DAY" name="expected" path="CPBlogsAdd" />
+			<var locator="DISPLAY_DATE_DAY" name="expected" path="CPBlogsAdd" />
 		</execute>
 	</command>
 
@@ -114,9 +114,9 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+		<execute action="CPBlogs#assertClick" locator1="ADD_ENTRY" value1="Add" />
 
-		<var locator-key="DISPLAY_DATE" name="int" path="CPBlogsAdd" />
+		<var locator="DISPLAY_DATE" name="int" path="CPBlogsAdd" />
 
 		<var method="selenium#getCurrentMonth()" name="month" />
 		<var group="1" input="${int}" name="regex" pattern="([1-9]*[0-9])/([0-9]*)/([0-9]*)" />
@@ -132,13 +132,13 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+		<execute action="CPBlogs#assertClick" locator1="ADD_ENTRY" value1="Add" />
 
 		<var method="selenium#getCurrentYear()" name="int" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${int}" />
-			<var locator-key="DISPLAY_DATE_YEAR" name="expected" path="CPBlogsAdd" />
+			<var locator="DISPLAY_DATE_YEAR" name="expected" path="CPBlogsAdd" />
 		</execute>
 	</command>
 
@@ -147,7 +147,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+		<execute action="CPBlogs#assertClick" locator1="ADD_ENTRY" value1="Add" />
 
 		<var method="selenium#getFirstNumber(//input[@id='__161__displayDateYear'])" name="string" />
 
@@ -162,7 +162,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+		<execute action="CPBlogs#assertClick" locator1="ADD_ENTRY" value1="Add" />
 
 		<var method="selenium#getFirstNumberIncrement(//input[@id='__161__displayDateYear'])" name="string" />
 		<execute macro="TestUtils#assertEquals">
@@ -226,8 +226,8 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute action="CPBlogs#assertClick" locator1="ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPBlogs#assertClick" locator1="ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<var method="selenium#getValue(//input[@id='_161_title'])" name="string" />
 
@@ -266,13 +266,13 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute action="CPBlogs#assertClick" locator1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
 		<var name="key_entryComment" value="${entryComment}" />
 
-		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
-		<execute action="CPBlogsEntry#mouseOver" locator-key1="COMMENT" />
-		<execute action="CPBlogsEntry#assertClick" locator-key1="COMMENT_DELETE_1" value1="Delete" />
+		<execute action="CPBlogsEntry#assertTextEquals" locator1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#mouseOver" locator1="COMMENT" />
+		<execute action="CPBlogsEntry#assertClick" locator1="COMMENT_DELETE_1" value1="Delete" />
 
 		<var method="selenium#isAlertPresent()" name="alert" />
 
@@ -291,10 +291,10 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+		<execute action="CPBlogs#assertClick" locator1="ADD_ENTRY" value1="Add" />
 
-		<execute action="CPBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
-		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="CPBlogsAdd#type" locator1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="CPBlogsAdd#type" locator1="CONTENT_FIELD" value1="${entryContent}" />
 
 		<var method="selenium#isChecked(//input[@id='_161_allowPingbacksCheckbox'])" name="check" />
 
@@ -340,10 +340,10 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+		<execute action="CPBlogs#assertClick" locator1="ADD_ENTRY" value1="Add" />
 
-		<execute action="CPBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
-		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="CPBlogsAdd#type" locator1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="CPBlogsAdd#type" locator1="CONTENT_FIELD" value1="${entryContent}" />
 
 		<var method="selenium#isNotChecked(//input[@id='_161_allowPingbacksCheckbox'])" name="check" />
 
@@ -372,8 +372,8 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute action="CPBlogs#assertClick" locator1="ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPBlogs#assertClick" locator1="ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<var method="selenium#isNotPartialText(//fieldset[@class='fieldset '], Content)" name="string" />
 
@@ -411,8 +411,8 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute action="CPBlogs#assertClick" locator1="ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPBlogs#assertClick" locator1="ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<var method="selenium#isNotValue(//input[@id='_161_title'], Blogs Entry Title)" name="string" />
 
@@ -450,8 +450,8 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute action="CPBlogs#assertClick" locator1="ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPBlogs#assertClick" locator1="ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<var method="selenium#isPartialText(//fieldset[@class='fieldset '], Content)" name="string" />
 
@@ -480,7 +480,7 @@
 	</command>
 
 	<command name="IsTextPresent" priority="5">
-		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator1="ADMIN" value1="Admin" />
 
 		<var method="selenium#isTextPresent('Site Administrator')" name="string" />
 
@@ -509,8 +509,8 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute action="CPBlogs#assertClick" locator1="ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPBlogs#assertClick" locator1="ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<var method="selenium#isValue(//div[@id='_161_title'], Blogs Entry Title)" name="string" />
 

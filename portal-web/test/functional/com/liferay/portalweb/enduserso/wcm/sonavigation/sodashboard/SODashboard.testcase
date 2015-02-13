@@ -24,16 +24,16 @@
 	<command name="GoBackToSODashboardFromControlPanel" priority="5">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
-		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute action="Dockbar#assertClick" locator1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
 		<execute function="#click" locator1="//a[@title='Back']" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_DASHBOARD" value1="Dashboard" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MESSAGES" value1="Messages" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+		<execute action="SODashboard#assertTextEquals" locator1="NAVIGATION_DASHBOARD" value1="Dashboard" />
+		<execute action="SODashboard#assertTextEquals" locator1="NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
+		<execute action="SODashboard#assertTextEquals" locator1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
+		<execute action="SODashboard#assertTextEquals" locator1="NAVIGATION_MESSAGES" value1="Messages" />
+		<execute action="SODashboard#assertTextEquals" locator1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
+		<execute action="SODashboard#assertTextEquals" locator1="NAVIGATION_TASKS" value1="Tasks" />
 	</command>
 
 	<command known-issues="LIFERAYQA-11550" name="ViewDashboardLocalized" priority="4">
@@ -202,7 +202,7 @@
 	<command name="ViewLinkContactscenter" priority="5">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
+		<execute action="SODashboard#click" locator1="NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
 
 		<execute macro="SODashboard#viewLinkContactscenter" />
 	</command>
@@ -210,8 +210,8 @@
 	<command name="ViewLinkHome" priority="5">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_DASHBOARD" value1="Dashboard" />
+		<execute action="SODashboard#click" locator1="NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
+		<execute action="SODashboard#click" locator1="NAVIGATION_DASHBOARD" value1="Dashboard" />
 
 		<execute macro="SODashboard#viewLinkHome" />
 	</command>
@@ -219,7 +219,7 @@
 	<command name="ViewLinkMicroblogs" priority="5">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
+		<execute action="SODashboard#click" locator1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
 		<execute macro="SODashboard#viewLinkMicroblogs" />
 	</command>
@@ -227,7 +227,7 @@
 	<command name="ViewLinkMydocuments" priority="5">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
+		<execute action="SODashboard#click" locator1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
 
 		<execute macro="SODashboard#viewLinkMydocuments" />
 	</command>
@@ -235,7 +235,7 @@
 	<command name="ViewLinkPrivateMessaging" priority="5">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" value1="Messages" />
+		<execute action="SODashboard#click" locator1="NAVIGATION_MESSAGES" value1="Messages" />
 
 		<execute macro="SODashboard#viewLinkPrivateMessaging" />
 	</command>
@@ -243,7 +243,7 @@
 	<command name="ViewLinkTasks" priority="5">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+		<execute action="SODashboard#click" locator1="NAVIGATION_TASKS" value1="Tasks" />
 
 		<execute macro="SODashboard#viewLinkTasks" />
 	</command>

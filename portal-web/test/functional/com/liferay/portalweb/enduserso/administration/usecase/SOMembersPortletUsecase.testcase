@@ -40,13 +40,13 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="SOMembersPortlet#assertClick" locator-key1="INVITE_BUTTON" value1="Invite members to this site." />
+		<execute action="SOMembersPortlet#assertClick" locator1="INVITE_BUTTON" value1="Invite members to this site." />
 
 		<execute action="SOMembersPortletInvite#assertTextNotPresent" value1="Test LAX 1" />
 		<execute action="SOMembersPortletInvite#assertTextNotPresent" value1="test.lax.1@liferay.com" />
 		<execute action="SOMembersPortletInvite#assertTextNotPresent" value1="Test SFO 9" />
 		<execute action="SOMembersPortletInvite#assertTextNotPresent" value1="test.sfo.9@liferay.com" />
-		<execute action="SOMembersPortletInvite#assertClick" locator-key1="MEMBERS_INVITE_VIEW_MORE_LINK" value1="View More" />
+		<execute action="SOMembersPortletInvite#assertClick" locator1="MEMBERS_INVITE_VIEW_MORE_LINK" value1="View More" />
 		<execute action="SOMembersPortletInvite#assertTextPresent" value1="Test LAX 1" />
 		<execute action="SOMembersPortletInvite#assertTextPresent" value1="test.lax.1@liferay.com" />
 		<execute action="SOMembersPortletInvite#assertTextPresent" value1="Test SFO 9" />

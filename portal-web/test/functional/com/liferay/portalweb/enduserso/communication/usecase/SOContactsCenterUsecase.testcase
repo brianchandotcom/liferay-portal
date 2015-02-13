@@ -37,7 +37,7 @@
 
 		<execute action="SOContactscenter#assertTextNotPresent" value1="SFO 9, Test" />
 		<execute action="SOContactscenter#assertTextNotPresent" value1="test.sfo.9@liferay.com" />
-		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_VIEW_MORE" value1="View More" />
+		<execute action="SOContactscenter#assertClick" locator1="CONTACTS_LIST_VIEW_MORE" value1="View More" />
 		<execute action="SOContactscenter#assertTextPresent" value1="SFO 9, Test" />
 		<execute action="SOContactscenter#assertTextPresent" value1="test.sfo.9@liferay.com" />
 	</command>

@@ -607,7 +607,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Dockbar#assertTextNotPresent" locator-key1="PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template." />
+		<execute action="Dockbar#assertTextNotPresent" locator1="PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template." />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />

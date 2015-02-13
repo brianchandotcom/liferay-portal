@@ -1,36 +1,36 @@
 <definition>
 	<command name="addReportDefinition">
-		<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
+		<execute action="CPReportsadmin#assertClick" locator1="DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
 
-		<execute action="CPReportsadminAddreportdefinition#type" locator-key1="DEFINITION_NAME_FIELD" value1="${reportsDefinitionName}" />
-		<execute action="CPReportsadminAddreportdefinition#type" locator-key1="DEFINITION_DESCRIPTION_FIELD" value1="${reportsDefinitionDescription}" />
-		<execute action="CPReportsadminAddreportdefinition#select" locator-key1="DATA_SOURCE_NAME_SELECT" value1="${dataSource}" />
-		<execute action="CPReportsadminAddreportdefinition#uploadCommonFile" locator-key1="TEMPLATE_FILE_UPLOAD" value1="${templateFile}" />
-		<execute action="CPReportsadminAddreportdefinition#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPReportsadminAddreportdefinition#type" locator1="DEFINITION_NAME_FIELD" value1="${reportsDefinitionName}" />
+		<execute action="CPReportsadminAddreportdefinition#type" locator1="DEFINITION_DESCRIPTION_FIELD" value1="${reportsDefinitionDescription}" />
+		<execute action="CPReportsadminAddreportdefinition#select" locator1="DATA_SOURCE_NAME_SELECT" value1="${dataSource}" />
+		<execute action="CPReportsadminAddreportdefinition#uploadCommonFile" locator1="TEMPLATE_FILE_UPLOAD" value1="${templateFile}" />
+		<execute action="CPReportsadminAddreportdefinition#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPReportsadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPReportsadmin#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addReportEntry">
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT" value1="Add Report" />
+		<execute action="CPReportsadmin#assertClick" locator1="DEFINITIONS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPReportsadmin#assertClick" locator1="DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT" value1="Add Report" />
 
-		<execute action="CPReportsadminAddreportentry#select" locator-key1="REPORT_FORMAT_SELECT" value1="${reportFormat}" />
-		<execute action="CPReportsadminAddreportentry#type" locator-key1="EMAIL_NOTIFICATIONS_FIELD" value1="${emailNotificationsAddress}" />
-		<execute action="CPReportsadminAddreportentry#type" locator-key1="EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
-		<execute action="CPReportsadminAddreportentry#assertClick" locator-key1="GENERATE_BUTTON" value1="Generate" />
+		<execute action="CPReportsadminAddreportentry#select" locator1="REPORT_FORMAT_SELECT" value1="${reportFormat}" />
+		<execute action="CPReportsadminAddreportentry#type" locator1="EMAIL_NOTIFICATIONS_FIELD" value1="${emailNotificationsAddress}" />
+		<execute action="CPReportsadminAddreportentry#type" locator1="EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
+		<execute action="CPReportsadminAddreportentry#assertClick" locator1="GENERATE_BUTTON" value1="Generate" />
 
-		<execute action="CPReportsadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPReportsadmin#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#pause" locator1="5000" />
 	</command>
 
 	<command name="addScheduleEntry">
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_DEFINITION_MENULIST_ADD_SCHEDULE" value1="Add Schedule" />
+		<execute action="CPReportsadmin#assertClick" locator1="DEFINITIONS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPReportsadmin#assertClick" locator1="DEFINITIONS_DEFINITION_MENULIST_ADD_SCHEDULE" value1="Add Schedule" />
 
 		<var method="selenium#getValue(//span[@class='lfr-input-time ']/input)" name="time" />
 
@@ -67,92 +67,92 @@
 			</else>
 		</if>
 
-		<execute action="CPReportsadminAddscheduleentry#type" locator-key1="START_DATE_TIME_FIELD" value1="${hours}:${minutesIncremented2} ${ampm}" />
+		<execute action="CPReportsadminAddscheduleentry#type" locator1="START_DATE_TIME_FIELD" value1="${hours}:${minutesIncremented2} ${ampm}" />
 
-		<execute action="CPReportsadminAddscheduleentry#select" locator-key1="REPORT_FORMAT_SELECT" value1="${reportFormat}" />
-		<execute action="CPReportsadminAddscheduleentry#type" locator-key1="EMAIL_NOTIFICATIONS_FIELD" value1="${emailNotificationsAddress}" />
-		<execute action="CPReportsadminAddscheduleentry#type" locator-key1="EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
-		<execute action="CPReportsadminAddscheduleentry#assertClick" locator-key1="SCHEDULE_BUTTON" value1="Schedule" />
+		<execute action="CPReportsadminAddscheduleentry#select" locator1="REPORT_FORMAT_SELECT" value1="${reportFormat}" />
+		<execute action="CPReportsadminAddscheduleentry#type" locator1="EMAIL_NOTIFICATIONS_FIELD" value1="${emailNotificationsAddress}" />
+		<execute action="CPReportsadminAddscheduleentry#type" locator1="EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
+		<execute action="CPReportsadminAddscheduleentry#assertClick" locator1="SCHEDULE_BUTTON" value1="Schedule" />
 
-		<execute action="CPReportsadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPReportsadmin#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#pause" locator1="5000" />
 	</command>
 
 	<command name="addSource">
-		<execute action="CPReportsadmin#assertClick" locator-key1="SOURCES_ADD_SOURCE_BUTTON" value1="Add Source" />
+		<execute action="CPReportsadmin#assertClick" locator1="SOURCES_ADD_SOURCE_BUTTON" value1="Add Source" />
 
-		<execute action="CPReportsadminAddsource#type" locator-key1="DATA_SOURCE_NAME_FIELD" value1="${reportsDataSourceName}" />
-		<execute action="CPReportsadminAddsource#type" locator-key1="JDBC_DRIVER_CLASS_NAME_FIELD" value1="${reportsDataSourceClass}" />
-		<execute action="CPReportsadminAddsource#type" locator-key1="JDBC_URL_FIELD" value1="${reportsDataSourceURL}" />
-		<execute action="CPReportsadminAddsource#type" locator-key1="JDBC_USER_NAME_FIELD" value1="${reportsDataSourceUser}" />
+		<execute action="CPReportsadminAddsource#type" locator1="DATA_SOURCE_NAME_FIELD" value1="${reportsDataSourceName}" />
+		<execute action="CPReportsadminAddsource#type" locator1="JDBC_DRIVER_CLASS_NAME_FIELD" value1="${reportsDataSourceClass}" />
+		<execute action="CPReportsadminAddsource#type" locator1="JDBC_URL_FIELD" value1="${reportsDataSourceURL}" />
+		<execute action="CPReportsadminAddsource#type" locator1="JDBC_USER_NAME_FIELD" value1="${reportsDataSourceUser}" />
 
 		<if>
 			<isset var="reportsDataSourcePassword" />
 			<then>
-				<execute action="CPReportsadminAddsource#type" locator-key1="JDBC_PASSWORD_FIELD" value1="${reportsDataSourcePassword}" />
+				<execute action="CPReportsadminAddsource#type" locator1="JDBC_PASSWORD_FIELD" value1="${reportsDataSourcePassword}" />
 			</then>
 		</if>
 
-		<execute action="CPReportsadminAddsource#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPReportsadminAddsource#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPReportsadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPReportsadmin#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="configureDeliveryEmail">
-		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
-		<execute action="CPReportsadminConfiguration#type" locator-key1="DELIVERY_EMAIL_SUBJECT_FIELD" value1="${deliverySubject}" />
-		<execute action="CPReportsadminConfiguration#type" locator-key1="DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
-		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPReportsadminConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPReportsadminConfiguration#assertClick" locator1="NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
+		<execute action="CPReportsadminConfiguration#type" locator1="DELIVERY_EMAIL_SUBJECT_FIELD" value1="${deliverySubject}" />
+		<execute action="CPReportsadminConfiguration#type" locator1="DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
+		<execute action="CPReportsadminConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPReportsadminConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureEmailFrom">
-		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="NAVIGATION_EMAIL_FROM" value1="Email From" />
-		<execute action="CPReportsadminConfiguration#type" locator-key1="EMAIL_FROM_NAME_FIELD" value1="${emailFromName}" />
-		<execute action="CPReportsadminConfiguration#type" locator-key1="EMAIL_FROM_ADDRESS_FIELD" value1="${emailFromAddress}" />
-		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPReportsadminConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPReportsadminConfiguration#assertClick" locator1="NAVIGATION_EMAIL_FROM" value1="Email From" />
+		<execute action="CPReportsadminConfiguration#type" locator1="EMAIL_FROM_NAME_FIELD" value1="${emailFromName}" />
+		<execute action="CPReportsadminConfiguration#type" locator1="EMAIL_FROM_ADDRESS_FIELD" value1="${emailFromAddress}" />
+		<execute action="CPReportsadminConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPReportsadminConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureNotificationsEmail">
-		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
-		<execute action="CPReportsadminConfiguration#type" locator-key1="NOTIFICATIONS_EMAIL_SUBJECT_FIELD" value1="${notificationSubject}" />
-		<execute action="CPReportsadminConfiguration#type" locator-key1="NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
-		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPReportsadminConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPReportsadminConfiguration#assertClick" locator1="NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
+		<execute action="CPReportsadminConfiguration#type" locator1="NOTIFICATIONS_EMAIL_SUBJECT_FIELD" value1="${notificationSubject}" />
+		<execute action="CPReportsadminConfiguration#type" locator1="NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
+		<execute action="CPReportsadminConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPReportsadminConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="deleteReportEntryFile">
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
-		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
-		<execute action="CPReportsadminViewreportentry#assertClick" locator-key1="ENTRY_FILE_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPReportsadminViewreportentry#assertClickNoError" locator-key1="ENTRY_FILE_MENULIST_DELETE" value1="Delete" />
-		<execute action="CPReportsadminViewreportentry#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPReportsadminViewreportentry#assertElementNotPresent" locator-key1="ENTRY_FILE_TABLE_FILE" />
+		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator1="ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
+		<execute action="CPReportsadminViewreportentry#assertClick" locator1="ENTRY_FILE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPReportsadminViewreportentry#assertClickNoError" locator1="ENTRY_FILE_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPReportsadminViewreportentry#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPReportsadminViewreportentry#assertElementNotPresent" locator1="ENTRY_FILE_TABLE_FILE" />
 	</command>
 
 	<command name="deliverReportEntryFile">
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
-		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
-		<execute action="CPReportsadminViewreportentry#assertClick" locator-key1="ENTRY_FILE_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPReportsadminViewreportentry#assertClick" locator-key1="ENTRY_FILE_MENULIST_DELIVER_REPORT" value1="Deliver Report" />
+		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator1="ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
+		<execute action="CPReportsadminViewreportentry#assertClick" locator1="ENTRY_FILE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPReportsadminViewreportentry#assertClick" locator1="ENTRY_FILE_MENULIST_DELIVER_REPORT" value1="Deliver Report" />
 
-		<execute action="CPReportsadminViewreportentryDeliverreport#assertTextEquals" locator-key1="REPORT_NAME" value1="Report Name ${reportsFileName}" />
-		<execute action="CPReportsadminViewreportentryDeliverreport#type" locator-key1="EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
-		<execute action="CPReportsadminViewreportentryDeliverreport#assertClick" locator-key1="DELIVER_BUTTON" value1="Deliver" />
+		<execute action="CPReportsadminViewreportentryDeliverreport#assertTextEquals" locator1="REPORT_NAME" value1="Report Name ${reportsFileName}" />
+		<execute action="CPReportsadminViewreportentryDeliverreport#type" locator1="EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
+		<execute action="CPReportsadminViewreportentryDeliverreport#assertClick" locator1="DELIVER_BUTTON" value1="Deliver" />
 
-		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="downloadReportEntryFile">
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
-		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
-		<execute action="CPReportsadminViewreportentry#assertClick" locator-key1="ENTRY_FILE_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPReportsadminViewreportentry#assertClick" locator-key1="ENTRY_FILE_MENULIST_DOWNLOAD" value1="Download" />
+		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator1="ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
+		<execute action="CPReportsadminViewreportentry#assertClick" locator1="ENTRY_FILE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPReportsadminViewreportentry#assertClick" locator1="ENTRY_FILE_MENULIST_DOWNLOAD" value1="Download" />
 		<execute function="#pause" locator1="2000" />
 
 		<take-screenshot />
@@ -163,10 +163,10 @@
 				<if>
 					<equals arg1="${reportsFileName}" arg2="reports_admin_template_source_sample_list_type.pdf" />
 					<then>
-						<execute action="CPReportsadmin#sikuliAssertElementPresent" locator-key1="REPORT_PDF_LIST_TYPE_PNG" />
+						<execute action="CPReportsadmin#sikuliAssertElementPresent" locator1="REPORT_PDF_LIST_TYPE_PNG" />
 					</then>
 					<else>
-						<execute action="CPReportsadmin#sikuliAssertElementPresent" locator-key1="REPORT_PDF_CLASS_NAME_PNG" />
+						<execute action="CPReportsadmin#sikuliAssertElementPresent" locator1="REPORT_PDF_CLASS_NAME_PNG" />
 					</else>
 				</if>
 			</then>
@@ -174,37 +174,37 @@
 	</command>
 
 	<command name="gotoConfiguration">
-		<execute action="CPReportsadmin#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
-		<execute action="CPReportsadmin#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute action="CPReportsadmin#assertClick" locator1="OPTIONS_WRENCH_ICON" value1="Options" />
+		<execute action="CPReportsadmin#assertClick" locator1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute action="CPReportsadminConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="CPReportsadminConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
 	</command>
 
 	<command name="gotoDefinitions">
-		<execute action="CPReportsadmin#assertClick" locator-key1="NAVIGATION_DEFINITIONS" value1="Definitions" />
+		<execute action="CPReportsadmin#assertClick" locator1="NAVIGATION_DEFINITIONS" value1="Definitions" />
 	</command>
 
 	<command name="gotoReports">
-		<execute action="CPReportsadmin#assertClick" locator-key1="NAVIGATION_REPORTS" value1="Reports" />
+		<execute action="CPReportsadmin#assertClick" locator1="NAVIGATION_REPORTS" value1="Reports" />
 	</command>
 
 	<command name="gotoSources">
-		<execute action="CPReportsadmin#assertClick" locator-key1="NAVIGATION_SOURCES" value1="Sources" />
+		<execute action="CPReportsadmin#assertClick" locator1="NAVIGATION_SOURCES" value1="Sources" />
 	</command>
 
 	<command name="tearDownConfiguration">
 		<execute macro="ReportsAdmin#gotoConfiguration" />
 
-		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="NAVIGATION_EMAIL_FROM" value1="Email From" />
-		<execute action="CPReportsadminConfiguration#type" locator-key1="EMAIL_FROM_NAME_FIELD" value1="Joe Bloggs" />
-		<execute action="CPReportsadminConfiguration#type" locator-key1="EMAIL_FROM_ADDRESS_FIELD" value1="test@liferay.com" />
-		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPReportsadminConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
+		<execute action="CPReportsadminConfiguration#assertClick" locator1="NAVIGATION_EMAIL_FROM" value1="Email From" />
+		<execute action="CPReportsadminConfiguration#type" locator1="EMAIL_FROM_NAME_FIELD" value1="Joe Bloggs" />
+		<execute action="CPReportsadminConfiguration#type" locator1="EMAIL_FROM_ADDRESS_FIELD" value1="test@liferay.com" />
+		<execute action="CPReportsadminConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPReportsadminConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPReportsadminConfiguration#assertClick" locator1="NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
 
 		<var name="deliverySubject"><![CDATA[New Report: [$REPORT_NAME$]]]></var>
 
-		<execute action="CPReportsadminConfiguration#type" locator-key1="DELIVERY_EMAIL_SUBJECT_FIELD" value1="${deliverySubject}" />
+		<execute action="CPReportsadminConfiguration#type" locator1="DELIVERY_EMAIL_SUBJECT_FIELD" value1="${deliverySubject}" />
 
 		<var name="deliveryBody"><![CDATA[
 Dear [$TO_NAME$],<br /><br />
@@ -215,14 +215,14 @@ Sincerely,<br />
 [$FROM_NAME$]<br />
 [$FROM_ADDRESS$]		<br />]]>		</var>
 
-		<execute action="CPReportsadminConfiguration#type" locator-key1="DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
-		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPReportsadminConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
+		<execute action="CPReportsadminConfiguration#type" locator1="DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
+		<execute action="CPReportsadminConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPReportsadminConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPReportsadminConfiguration#assertClick" locator1="NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
 
 		<var name="notificationSubject"><![CDATA[New Report: [$REPORT_NAME$]]]></var>
 
-		<execute action="CPReportsadminConfiguration#type" locator-key1="NOTIFICATIONS_EMAIL_SUBJECT_FIELD" value1="${notificationSubject}" />
+		<execute action="CPReportsadminConfiguration#type" locator1="NOTIFICATIONS_EMAIL_SUBJECT_FIELD" value1="${notificationSubject}" />
 
 		<var name="notificationBody"><![CDATA[
 Dear [$TO_NAME$],<br /><br />
@@ -233,9 +233,9 @@ Sincerely,<br />
 [$FROM_NAME$]<br />
 [$FROM_ADDRESS$]		<br />]]>		</var>
 
-		<execute action="CPReportsadminConfiguration#type" locator-key1="NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
-		<execute action="CPReportsadminConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPReportsadminConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPReportsadminConfiguration#type" locator1="NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
+		<execute action="CPReportsadminConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPReportsadminConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="tearDownDefinitions">
@@ -246,16 +246,16 @@ Sincerely,<br />
 		<execute macro="ReportsAdmin#gotoDefinitions" />
 
 		<while>
-			<condition action="CPReportsadmin#isElementPresent" locator-key1="DEFINITIONS_DEFINITION_TABLE_ACTIONS_1" />
+			<condition action="CPReportsadmin#isElementPresent" locator1="DEFINITIONS_DEFINITION_TABLE_ACTIONS_1" />
 			<then>
-				<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
-				<execute action="CPReportsadmin#assertClickNoError" locator-key1="DEFINITIONS_DEFINITION_MENULIST_DELETE" value1="Delete" />
-				<execute action="CPReportsadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="CPReportsadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="CPReportsadmin#assertClick" locator1="DEFINITIONS_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+				<execute action="CPReportsadmin#assertClickNoError" locator1="DEFINITIONS_DEFINITION_MENULIST_DELETE" value1="Delete" />
+				<execute action="CPReportsadmin#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="CPReportsadmin#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
 
-		<execute action="CPReportsadmin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no definitions." />
+		<execute action="CPReportsadmin#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no definitions." />
 	</command>
 
 	<command name="tearDownReports">
@@ -264,16 +264,16 @@ Sincerely,<br />
 		</execute>
 
 		<while>
-			<condition action="CPReportsadmin#isElementPresent" locator-key1="REPORTS_ENTRY_TABLE_ACTIONS_1" />
+			<condition action="CPReportsadmin#isElementPresent" locator1="REPORTS_ENTRY_TABLE_ACTIONS_1" />
 			<then>
-				<execute action="CPReportsadmin#assertClick" locator-key1="REPORTS_ENTRY_TABLE_ACTIONS_1" value1="Actions" />
-				<execute action="CPReportsadmin#assertClickNoError" locator-key1="REPORTS_ENTRY_MENULIST_DELETE" value1="Delete" />
-				<execute action="CPReportsadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="CPReportsadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="CPReportsadmin#assertClick" locator1="REPORTS_ENTRY_TABLE_ACTIONS_1" value1="Actions" />
+				<execute action="CPReportsadmin#assertClickNoError" locator1="REPORTS_ENTRY_MENULIST_DELETE" value1="Delete" />
+				<execute action="CPReportsadmin#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="CPReportsadmin#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
 
-		<execute action="CPReportsadmin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no entries." />
+		<execute action="CPReportsadmin#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no entries." />
 	</command>
 
 	<command name="tearDownSources">
@@ -284,66 +284,66 @@ Sincerely,<br />
 		<execute macro="ReportsAdmin#gotoSources" />
 
 		<while>
-			<condition action="CPReportsadmin#isElementPresent" locator-key1="SOURCES_SOURCE_TABLE_ACTIONS_1" />
+			<condition action="CPReportsadmin#isElementPresent" locator1="SOURCES_SOURCE_TABLE_ACTIONS_1" />
 			<then>
-				<execute action="CPReportsadmin#assertClick" locator-key1="SOURCES_SOURCE_TABLE_ACTIONS_1" value1="Actions" />
-				<execute action="CPReportsadmin#assertClickNoError" locator-key1="SOURCES_SOURCE_MENULIST_DELETE" value1="Delete" />
-				<execute action="CPReportsadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="CPReportsadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="CPReportsadmin#assertClick" locator1="SOURCES_SOURCE_TABLE_ACTIONS_1" value1="Actions" />
+				<execute action="CPReportsadmin#assertClickNoError" locator1="SOURCES_SOURCE_MENULIST_DELETE" value1="Delete" />
+				<execute action="CPReportsadmin#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="CPReportsadmin#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
 
-		<execute action="CPReportsadmin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no sources." />
+		<execute action="CPReportsadmin#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no sources." />
 	</command>
 
 	<command name="viewNoReportEntryFile">
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
-		<execute action="CPReportsadminViewreportentry#assertElementNotPresent" locator-key1="ENTRY_FILE_TABLE_FILE" />
+		<execute action="CPReportsadminViewreportentry#assertElementNotPresent" locator1="ENTRY_FILE_TABLE_FILE" />
 	</command>
 
 	<command name="viewReportEntry">
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute action="CPReportsadmin#assertClick" locator-key1="REPORTS_ENTRY_TABLE_DEFINITION_NAME" value1="${reportsDefinitionName}" />
+		<execute action="CPReportsadmin#assertClick" locator1="REPORTS_ENTRY_TABLE_DEFINITION_NAME" value1="${reportsDefinitionName}" />
 	</command>
 
 	<command name="viewReportEntryFields">
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="DEFINITION_NAME_FIELD" value1="Definition Name ${reportsDefinitionName}" />
+		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator1="DEFINITION_NAME_FIELD" value1="Definition Name ${reportsDefinitionName}" />
 
 		<var name="key_reportsDefinitionDescription" value="${reportsDefinitionDescription}" />
 
-		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="DESCRIPTION_FIELD" value1="Description ${reportsDefinitionDescription}" />
+		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator1="DESCRIPTION_FIELD" value1="Description ${reportsDefinitionDescription}" />
 
 		<var name="key_dataSource" value="${dataSource}" />
 
-		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="DATA_SOURCE_NAME_FIELD" value1="Data Source Name ${dataSource}" />
+		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator1="DATA_SOURCE_NAME_FIELD" value1="Data Source Name ${dataSource}" />
 
 		<if>
 			<isset var="reportParameters" />
 			<then>
-				<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="REPORT_PARAMETERS_FIELD" value1="Report Parameters [${reportParameterse}]" />
+				<execute action="CPReportsadminViewreportentry#assertTextEquals" locator1="REPORT_PARAMETERS_FIELD" value1="Report Parameters [${reportParameterse}]" />
 			</then>
 			<else>
-				<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="REPORT_PARAMETERS_DEFAULT_FIELD" value1="Report Parameters" />
+				<execute action="CPReportsadminViewreportentry#assertTextEquals" locator1="REPORT_PARAMETERS_DEFAULT_FIELD" value1="Report Parameters" />
 			</else>
 		</if>
 
 		<var name="key_userName" value="${userName}" />
 
-		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="REQUESTED_BY_FIELD" value1="Requested By ${userName}" />
+		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator1="REQUESTED_BY_FIELD" value1="Requested By ${userName}" />
 
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
 		<if>
 			<equals arg1="${scheduled}" arg2="true" />
 			<then>
-				<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="ENTRY_FILE_TABLE_SCHEDULED_FILE" value1="${reportsFileName}" />
+				<execute action="CPReportsadminViewreportentry#assertTextEquals" locator1="ENTRY_FILE_TABLE_SCHEDULED_FILE" value1="${reportsFileName}" />
 			</then>
 			<else>
-				<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
+				<execute action="CPReportsadminViewreportentry#assertTextEquals" locator1="ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
 			</else>
 		</if>
 	</command>

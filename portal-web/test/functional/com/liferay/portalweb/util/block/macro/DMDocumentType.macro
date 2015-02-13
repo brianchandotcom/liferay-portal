@@ -1,14 +1,14 @@
 <definition>
 	<command name="addCP">
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="MANAGE_MENULIST_DOCUMENT_TYPES" value1="Document Types" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="MANAGE_MENULIST_DOCUMENT_TYPES" value1="Document Types" />
 
 		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 
-		<execute action="CPDocumentsandmediaManageDocumenttypes#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDocumentsandmediaManageDocumenttypes#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
 
-		<execute action="CPDocumentsandmediaManageDocumenttypesAdd#type" locator-key1="NAME_FIELD" value1="${dmDocumentTypeName}" />
-		<execute action="CPDocumentsandmediaManageDocumenttypesAdd#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dmDocumentTypeDescription}" />
+		<execute action="CPDocumentsandmediaManageDocumenttypesAdd#type" locator1="NAME_FIELD" value1="${dmDocumentTypeName}" />
+		<execute action="CPDocumentsandmediaManageDocumenttypesAdd#type" locator1="DETAILS_DESCRIPTION_FIELD" value1="${dmDocumentTypeDescription}" />
 
 		<for list="${dmDocumentTypeFieldNames}" param="dmDocumentTypeFieldName">
 			<execute macro="DMDocumentType#addField">
@@ -18,35 +18,35 @@
 			</execute>
 		</for>
 
-		<execute action="CPDocumentsandmediaManageDocumenttypes#selectFrame" locator-key1="DOCUMENT_TYPES_IFRAME" />
+		<execute action="CPDocumentsandmediaManageDocumenttypes#selectFrame" locator1="DOCUMENT_TYPES_IFRAME" />
 
-		<execute action="CPDocumentsandmediaManageDocumenttypesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPDocumentsandmediaManageDocumenttypes#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDocumentsandmediaManageDocumenttypesAdd#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPDocumentsandmediaManageDocumenttypes#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addField">
 		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator1="FIELDS_LINK" value1="Fields" />
 
 		<var name="key_field" value="${field}" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#dragAndDrop" locator-key1="FIELDS_FIELD" locator-key2="FORM_BUILDER" value1="${field}" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#dragAndDrop" locator1="FIELDS_FIELD" locator2="FORM_BUILDER" value1="${field}" />
 
 		<var name="key_fieldFieldLabel" value="${field}" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#click" locator-key1="FORM_FIELD" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#click" locator1="FORM_FIELD" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#doubleClick" locator-key1="SETTINGS_FIELD_LABEL" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldFieldLabel}" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertTextEquals" locator-key1="SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#doubleClick" locator-key1="SETTINGS_NAME" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldName}" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertTextEquals" locator-key1="SETTINGS_NAME" value1="${fieldName}" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#click" locator-key1="NAME_FIELD" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#doubleClick" locator1="SETTINGS_FIELD_LABEL" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldFieldLabel}" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertTextEquals" locator1="SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#doubleClick" locator1="SETTINGS_NAME" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldName}" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertTextEquals" locator1="SETTINGS_NAME" value1="${fieldName}" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator1="FIELDS_LINK" value1="Fields" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#click" locator1="NAME_FIELD" />
 
 		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#selectFrame" value1="relative=top" />
 	</command>
@@ -54,10 +54,10 @@
 	<command name="addPG">
 		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypes#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="PGDocumentsandmediaManageDocumenttypes#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator-key1="NAME_FIELD" value1="${dmDocumentTypeName}" />
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dmDocumentTypeDescription}" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator1="NAME_FIELD" value1="${dmDocumentTypeName}" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator1="DETAILS_DESCRIPTION_FIELD" value1="${dmDocumentTypeDescription}" />
 
 		<for list="${dmDocumentTypeFieldNames}" param="dmDocumentTypeFieldName">
 			<execute macro="DMDocumentType#addField">
@@ -67,7 +67,7 @@
 			</execute>
 		</for>
 
-		<execute action="PGDocumentsandmediaManageDocumenttypes#selectFrame" locator-key1="DOCUMENT_TYPES_IFRAME" />
+		<execute action="PGDocumentsandmediaManageDocumenttypes#selectFrame" locator1="DOCUMENT_TYPES_IFRAME" />
 
 		<if>
 			<isset var="metadataSetName" />
@@ -80,8 +80,8 @@
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deletePG">
@@ -89,13 +89,13 @@
 
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypes#click" locator-key1="DOCUMENT_TYPES_TABLE_ACTIONS" />
-		<execute action="PGDocumentsandmediaManageDocumenttypes#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute action="PGDocumentsandmediaManageDocumenttypes#click" locator1="DOCUMENT_TYPES_TABLE_ACTIONS" />
+		<execute action="PGDocumentsandmediaManageDocumenttypes#assertClickNoError" locator1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 
-		<execute action="PGDocumentsandmedia#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmedia#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextNotPresent" locator-key1="DOCUMENT_TYPES_TABLE_NAME" value1="${dmDocumentTypeName}" />
+		<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextNotPresent" locator1="DOCUMENT_TYPES_TABLE_NAME" value1="${dmDocumentTypeName}" />
 	</command>
 
 	<command name="editPG">
@@ -103,20 +103,20 @@
 
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypes#click" locator-key1="DOCUMENT_TYPES_TABLE_ACTIONS" />
-		<execute action="PGDocumentsandmediaManageDocumenttypes#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
+		<execute action="PGDocumentsandmediaManageDocumenttypes#click" locator1="DOCUMENT_TYPES_TABLE_ACTIONS" />
+		<execute action="PGDocumentsandmediaManageDocumenttypes#assertClick" locator1="ACTIONS_MENULIST_EDIT" value1="Edit" />
 
 		<if>
 			<isset var="dmDocumentTypeNameEdit" />
 			<then>
-				<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator-key1="NAME_FIELD" value1="${dmDocumentTypeNameEdit}"  />
+				<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator1="NAME_FIELD" value1="${dmDocumentTypeNameEdit}"  />
 			</then>
 		</if>
 
 		<if>
 			<isset var="dmDocumentTypeDescriptionEdit" />
 			<then>
-				<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dmDocumentTypeDescriptionEdit}"  />
+				<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator1="DETAILS_DESCRIPTION_FIELD" value1="${dmDocumentTypeDescriptionEdit}"  />
 			</then>
 		</if>
 
@@ -140,47 +140,47 @@
 			<then>
 				<var name="key_metadataSetName" value="${metadataSetName}" />
 
-				<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator-key1="REMOVE_METADATA_SET_BUTTON" value1="Remove" />
+				<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator1="REMOVE_METADATA_SET_BUTTON" value1="Remove" />
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<if>
 			<isset var="dmDocumentTypeNameEdit" />
 			<then>
-				<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator-key1="DOCUMENT_TYPES_TABLE_NAME" value1="${dmDocumentTypeNameEdit}" />
+				<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator1="DOCUMENT_TYPES_TABLE_NAME" value1="${dmDocumentTypeNameEdit}" />
 			</then>
 			<else>
 				<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-				<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator-key1="DOCUMENT_TYPES_TABLE_NAME" value1="${dmDocumentTypeName}" />
+				<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator1="DOCUMENT_TYPES_TABLE_NAME" value1="${dmDocumentTypeName}" />
 			</else>
 		</if>
 	</command>
 
 	<command name="gotoCP">
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="MANAGE_MENULIST_DOCUMENT_TYPES" value1="Document Types" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="MANAGE_MENULIST_DOCUMENT_TYPES" value1="Document Types" />
 	</command>
 
 	<command name="gotoPG">
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="MANAGE_MENULIST_DOCUMENT_TYPES" value1="Document Types" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="MANAGE_MENULIST_DOCUMENT_TYPES" value1="Document Types" />
 	</command>
 
 	<command name="selectDocumentTypeFrame">
 		<if>
-			<condition action="PGDocumentsandmediaManageDocumenttypes#isElementPresent" locator-key1="DOCUMENT_TYPES_IFRAME" />
+			<condition action="PGDocumentsandmediaManageDocumenttypes#isElementPresent" locator1="DOCUMENT_TYPES_IFRAME" />
 			<then>
-				<execute action="PGDocumentsandmediaManageDocumenttypes#selectFrame" locator-key1="DOCUMENT_TYPES_IFRAME" />
+				<execute action="PGDocumentsandmediaManageDocumenttypes#selectFrame" locator1="DOCUMENT_TYPES_IFRAME" />
 			</then>
 		</if>
 	</command>
 
 	<command name="selectPGMetadataSet">
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator-key1="SELECT_METADATA_SET_BUTTON" value1="Select Metadata Set" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator1="SELECT_METADATA_SET_BUTTON" value1="Select Metadata Set" />
 
 		<execute action="PGDocumentsandmediaManageMetadatasets#selectFrameTop" value1="relative=top" />
 
@@ -188,7 +188,7 @@
 
 		<var name="key_metadataSetName" value="${metadataSetName}" />
 
-		<execute action="PGDocumentsandmediaManageMetadatasets#assertClick" locator-key1="METADATA_SETS_TABLE_CHOOSE" value1="Choose" />
+		<execute action="PGDocumentsandmediaManageMetadatasets#assertClick" locator1="METADATA_SETS_TABLE_CHOOSE" value1="Choose" />
 
 		<execute action="PGDocumentsandmediaManageMetadatasets#selectFrameTop" value1="relative=top" />
 	</command>
@@ -202,16 +202,16 @@
 
 		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypes#type" locator-key1="BASIC_SEARCH_FIELD" value1="DM Document Type" />
-		<execute action="PGDocumentsandmediaManageDocumenttypes#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="PGDocumentsandmediaManageDocumenttypes#type" locator1="BASIC_SEARCH_FIELD" value1="DM Document Type" />
+		<execute action="PGDocumentsandmediaManageDocumenttypes#assertClick" locator1="BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<while>
-			<condition action="PGDocumentsandmediaManageDocumenttypes#isElementPresent" locator-key1="DOCUMENT_TYPES_TABLE_ACTIONS_1" />
+			<condition action="PGDocumentsandmediaManageDocumenttypes#isElementPresent" locator1="DOCUMENT_TYPES_TABLE_ACTIONS_1" />
 			<then>
-				<execute action="PGDocumentsandmediaManageDocumenttypes#click" locator-key1="DOCUMENT_TYPES_TABLE_ACTIONS_1" />
-				<execute action="PGDocumentsandmediaManageDocumenttypes#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
-				<execute action="PGDocumentsandmediaManageDocumenttypes#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="PGDocumentsandmediaManageDocumenttypes#click" locator1="DOCUMENT_TYPES_TABLE_ACTIONS_1" />
+				<execute action="PGDocumentsandmediaManageDocumenttypes#assertClickNoError" locator1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+				<execute action="PGDocumentsandmediaManageDocumenttypes#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
 	</command>
@@ -219,7 +219,7 @@
 	<command name="viewPGAddMenulist">
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ADD_MENULIST_DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
 	</command>
 </definition>

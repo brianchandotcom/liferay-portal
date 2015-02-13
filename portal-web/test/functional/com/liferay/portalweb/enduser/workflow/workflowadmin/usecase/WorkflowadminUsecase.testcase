@@ -128,16 +128,16 @@
 			<var name="portletName" value="My Submissions" />
 		</execute>
 
-		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#selectFrame" locator1="MY_ACCOUNT_IFRAME" />
 
 		<var name="key_workflowAssetTitle" value="${wikiPageTitle}" />
 
-		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_DEFINITION" value1="Single Approver" />
-		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_ASSET_TITLE" value1="${wikiPageTitle}" />
-		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
-		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_STATUS" value1="Review" />
-		<execute action="CPMysubmissions#assertElementPresent" locator-key1="PENDING_TABLE_LAST_ACTIVITY_DATE" />
-		<execute action="CPMysubmissions#assertElementPresent" locator-key1="PENDING_TABLE_END_DATE" />
+		<execute action="CPMysubmissions#assertTextEquals" locator1="PENDING_TABLE_DEFINITION" value1="Single Approver" />
+		<execute action="CPMysubmissions#assertTextEquals" locator1="PENDING_TABLE_ASSET_TITLE" value1="${wikiPageTitle}" />
+		<execute action="CPMysubmissions#assertTextEquals" locator1="PENDING_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMysubmissions#assertTextEquals" locator1="PENDING_TABLE_STATUS" value1="Review" />
+		<execute action="CPMysubmissions#assertElementPresent" locator1="PENDING_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMysubmissions#assertElementPresent" locator1="PENDING_TABLE_END_DATE" />
 
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
 
@@ -422,7 +422,7 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#selectFrame" locator1="MY_ACCOUNT_IFRAME" />
 
 		<execute function="#assertElementNotPresent" locator1="//div[@id='workflowMyRolesTasksPanelContent']//tr[3]/td" />
 

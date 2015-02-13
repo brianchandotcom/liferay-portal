@@ -2,23 +2,23 @@
 	<command name="deleteCP">
 		<var name="key_assetName" value="${assetName}" />
 
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_TABLE_TYPE" value1="${assetType}" />
-		<execute action="CPRecyclebin#click" locator-key1="RECYCLE_BIN_TABLE_ACTIONS" />
-		<execute action="CPRecyclebin#assertClickNoError" locator-key1="RECYCLE_BIN_MENULIST_DELETE" value1="Delete" />
-		<execute action="CPRecyclebin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="RECYCLE_BIN_TABLE_TYPE" value1="${assetType}" />
+		<execute action="CPRecyclebin#click" locator1="RECYCLE_BIN_TABLE_ACTIONS" />
+		<execute action="CPRecyclebin#assertClickNoError" locator1="RECYCLE_BIN_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPRecyclebin#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
 		<execute action="CPRecyclebin#assertTextNotPresent" value1="${assetName}" />
 	</command>
 
 	<command name="emptyCP">
 		<if>
-			<condition action="CPRecyclebin#isElementPresent" locator-key1="EMPTY_RECYCLE_BIN" />
+			<condition action="CPRecyclebin#isElementPresent" locator1="EMPTY_RECYCLE_BIN" />
 			<then>
-				<execute action="CPRecyclebin#assertClickNoError" locator-key1="EMPTY_RECYCLE_BIN" value1="Empty the Recycle Bin" />
-				<execute action="CPRecyclebin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to empty the Recycle Bin?" />
-				<execute action="CPRecyclebin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
+				<execute action="CPRecyclebin#assertClickNoError" locator1="EMPTY_RECYCLE_BIN" value1="Empty the Recycle Bin" />
+				<execute action="CPRecyclebin#confirm" locator1="CONFIRMATION" value1="Are you sure you want to empty the Recycle Bin?" />
+				<execute action="CPRecyclebin#assertTextEquals" locator1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
 			</then>
 		</if>
 	</command>
@@ -26,38 +26,38 @@
 	<command name="restoreContentFromFolderCP">
 		<var name="key_assetName" value="${assetName}" />
 
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_TABLE_TYPE" value1="${assetType}" />
-		<execute action="CPRecyclebin#assertClick" locator-key1="RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="RECYCLE_BIN_TABLE_TYPE" value1="${assetType}" />
+		<execute action="CPRecyclebin#assertClick" locator1="RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
 
 		<var name="key_assetName" value="${documentName}" />
 
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_FOLDER_DOCUMENT_NAME" value1="${documentName}" />
-		<execute action="CPRecyclebin#click" locator-key1="RECYCLE_BIN_FOLDER_ACTIONS" />
-		<execute action="CPRecyclebin#assertClick" locator-key1="RECYCLE_BIN_MENULIST_RESTORE" value1="Restore" />
-		<execute action="CPRecyclebin#selectFrame" locator-key1="RECYCLE_BIN_FOLDER_WARNING_IFRAME" />
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_FOLDER_WARNING_INFO" value1="The original Folder does not exist anymore. Choose a different Folder to restore ${documentName}." />
-		<execute action="CPRecyclebin#assertClick" locator-key1="RECYCLE_BIN_FOLDER_WARNING_CHOOSE_THIS_FOLDER_BUTTON" value1="Choose This Folder" />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="RECYCLE_BIN_FOLDER_DOCUMENT_NAME" value1="${documentName}" />
+		<execute action="CPRecyclebin#click" locator1="RECYCLE_BIN_FOLDER_ACTIONS" />
+		<execute action="CPRecyclebin#assertClick" locator1="RECYCLE_BIN_MENULIST_RESTORE" value1="Restore" />
+		<execute action="CPRecyclebin#selectFrame" locator1="RECYCLE_BIN_FOLDER_WARNING_IFRAME" />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="RECYCLE_BIN_FOLDER_WARNING_INFO" value1="The original Folder does not exist anymore. Choose a different Folder to restore ${documentName}." />
+		<execute action="CPRecyclebin#assertClick" locator1="RECYCLE_BIN_FOLDER_WARNING_CHOOSE_THIS_FOLDER_BUTTON" value1="Choose This Folder" />
 		<execute action="CPRecyclebin#selectFrameTop" value1="relative=top" />
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The ${assetType2} ${documentName} was restored to ${assetRestoreLocation}." />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="The ${assetType2} ${documentName} was restored to ${assetRestoreLocation}." />
 	</command>
 
 	<command name="restoreCP">
 		<var name="key_assetName" value="${assetName}" />
 
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
-		<execute action="CPRecyclebin#click" locator-key1="RECYCLE_BIN_TABLE_ACTIONS" />
-		<execute action="CPRecyclebin#assertClick" locator-key1="RECYCLE_BIN_MENULIST_RESTORE" value1="Restore" />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
+		<execute action="CPRecyclebin#click" locator1="RECYCLE_BIN_TABLE_ACTIONS" />
+		<execute action="CPRecyclebin#assertClick" locator1="RECYCLE_BIN_MENULIST_RESTORE" value1="Restore" />
 
 		<if>
 			<isset var="assetType" />
 			<then>
 				<var name="key_assetType" value="${assetType}" />
 
-				<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_CONTENT" value1="${assetType}" />
+				<execute action="CPRecyclebin#assertTextEquals" locator1="SUCCESS_MESSAGE_CONTENT" value1="${assetType}" />
 			</then>
 			<else>
-				<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The item was restored." />
+				<execute action="CPRecyclebin#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="The item was restored." />
 			</else>
 		</if>
 
@@ -66,49 +66,49 @@
 			<then>
 				<var name="key_assetRestoreLocation" value="${assetRestoreLocation}" />
 
-				<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RESTORE_LOCATION" value1="${assetRestoreLocation}" />
+				<execute action="CPRecyclebin#assertTextEquals" locator1="SUCCESS_MESSAGE_RESTORE_LOCATION" value1="${assetRestoreLocation}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${multipleAssets}" arg2="true" />
 			<then>
-				<execute action="CPRecyclebin#assertTextNotPresent" locator-key1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
+				<execute action="CPRecyclebin#assertTextNotPresent" locator1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
 			</then>
 			<else>
-				<execute action="CPRecyclebin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
+				<execute action="CPRecyclebin#assertTextEquals" locator1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
 			</else>
 		</if>
 
-		<execute action="CPRecyclebin#assertElementNotPresent" locator-key1="RECYCLE_BIN_TABLE_NAME" />
+		<execute action="CPRecyclebin#assertElementNotPresent" locator1="RECYCLE_BIN_TABLE_NAME" />
 	</command>
 
 	<command name="restoreWarningCP">
 		<var name="key_assetName" value="${assetName}" />
 
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_TABLE_TYPE" value1="${assetType}" />
-		<execute action="CPRecyclebin#click" locator-key1="RECYCLE_BIN_TABLE_ACTIONS" />
-		<execute action="CPRecyclebin#assertClick" locator-key1="RECYCLE_BIN_MENULIST_RESTORE" value1="Restore" />
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_WARNING_MESSAGE" value1="An entry with name ${assetName} already exists." />
-		<execute action="CPRecyclebin#click" locator-key1="RECYCLE_BIN_WARNING_KEEP_AND_RENAME_RADIO" />
-		<execute action="CPRecyclebin#type" locator-key1="RECYCLE_BIN_WARNING_KEEP_AND_RENAME_FIELD" value1="${newAssetName}" />
-		<execute action="CPRecyclebin#assertClick" locator-key1="RECYCLE_BIN_WARNING_SAVE_BUTTON" value1="Save" />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="RECYCLE_BIN_TABLE_TYPE" value1="${assetType}" />
+		<execute action="CPRecyclebin#click" locator1="RECYCLE_BIN_TABLE_ACTIONS" />
+		<execute action="CPRecyclebin#assertClick" locator1="RECYCLE_BIN_MENULIST_RESTORE" value1="Restore" />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="RECYCLE_BIN_WARNING_MESSAGE" value1="An entry with name ${assetName} already exists." />
+		<execute action="CPRecyclebin#click" locator1="RECYCLE_BIN_WARNING_KEEP_AND_RENAME_RADIO" />
+		<execute action="CPRecyclebin#type" locator1="RECYCLE_BIN_WARNING_KEEP_AND_RENAME_FIELD" value1="${newAssetName}" />
+		<execute action="CPRecyclebin#assertClick" locator1="RECYCLE_BIN_WARNING_SAVE_BUTTON" value1="Save" />
 
 		<var name="key_assetType" value="${newAssetName}" />
 
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_CONTENT" value1="${newAssetName}" />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="SUCCESS_MESSAGE_CONTENT" value1="${newAssetName}" />
 
 		<var name="key_assetRestoreLocation" value="${assetRestoreLocation}" />
 
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RESTORE_LOCATION" value1="${assetRestoreLocation}" />
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
-		<execute action="CPRecyclebin#assertElementNotPresent" locator-key1="RECYCLE_BIN_TABLE_NAME" />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="SUCCESS_MESSAGE_RESTORE_LOCATION" value1="${assetRestoreLocation}" />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
+		<execute action="CPRecyclebin#assertElementNotPresent" locator1="RECYCLE_BIN_TABLE_NAME" />
 	</command>
 
 	<command name="searchCP">
-		<execute action="CPRecyclebin#type" locator-key1="SEARCH_FIELD" value1="${assetName}" />
-		<execute action="CPRecyclebin#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPRecyclebin#type" locator1="SEARCH_FIELD" value1="${assetName}" />
+		<execute action="CPRecyclebin#assertClick" locator1="SEARCH_BUTTON" value1="Search" />
 	</command>
 
 	<command name="viewCP">
@@ -117,35 +117,35 @@
 		<if>
 			<isset var="customMaxAgeMsg" />
 			<then>
-				<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="${customMaxAgeMsg}" />
+				<execute action="CPRecyclebin#assertTextEquals" locator1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="${customMaxAgeMsg}" />
 			</then>
 			<else>
-				<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="Entries that have been in the Recycle Bin for more than 1 month will be automatically deleted. Empty the Recycle Bin" />
+				<execute action="CPRecyclebin#assertTextEquals" locator1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="Entries that have been in the Recycle Bin for more than 1 month will be automatically deleted. Empty the Recycle Bin" />
 			</else>
 		</if>
 
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_TABLE_TYPE" value1="${assetType}" />
-		<execute action="CPRecyclebin#assertElementPresent" locator-key1="RECYCLE_BIN_TABLE_REMOVED_DATE" />
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_TABLE_REMOVED_BY" value1="${deleteUser}" />
-		<execute action="CPRecyclebin#assertElementPresent" locator-key1="RECYCLE_BIN_TABLE_ACTIONS" />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="RECYCLE_BIN_TABLE_TYPE" value1="${assetType}" />
+		<execute action="CPRecyclebin#assertElementPresent" locator1="RECYCLE_BIN_TABLE_REMOVED_DATE" />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="RECYCLE_BIN_TABLE_REMOVED_BY" value1="${deleteUser}" />
+		<execute action="CPRecyclebin#assertElementPresent" locator1="RECYCLE_BIN_TABLE_ACTIONS" />
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
+		<execute action="CPRecyclebin#assertTextEquals" locator1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
 		<execute action="CPRecyclebin#assertTextNotPresent" value1="${assetName}" />
 	</command>
 
 	<command name="viewDeleteWithDisabledRBViaBlogsCP">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="CPBlogs#click" locator-key1="ENTRY_TABLE_CHECKBOX" value1="${entryTitle}" />
-		<execute action="CPBlogs#assertElementPresent" locator-key1="DELETE_BUTTON" />
-		<execute action="CPBlogs#click" locator-key1="ENTRY_TABLE_ACTIONS" />
-		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_MENULIST_DELETE" value1="Delete" />
-		<execute action="CPBlogs#assertClickNoError" locator-key1="ENTRY_MENULIST_DELETE" value1="Delete" />
-		<execute action="CPBlogs#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute action="CPBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPBlogs#click" locator1="ENTRY_TABLE_CHECKBOX" value1="${entryTitle}" />
+		<execute action="CPBlogs#assertElementPresent" locator1="DELETE_BUTTON" />
+		<execute action="CPBlogs#click" locator1="ENTRY_TABLE_ACTIONS" />
+		<execute action="CPBlogs#assertTextEquals" locator1="ENTRY_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPBlogs#assertClickNoError" locator1="ENTRY_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPBlogs#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPBlogs#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="viewDisabledCP">
@@ -153,11 +153,11 @@
 			<var name="portletName" value="Site Settings" />
 		</execute>
 
-		<execute action="CPSitesettings#assertElementNotPresent" locator-key1="MENU_BASIC_INFORMATION_RECYCLE_BIN" />
+		<execute action="CPSitesettings#assertElementNotPresent" locator1="MENU_BASIC_INFORMATION_RECYCLE_BIN" />
 	</command>
 
 	<command name="viewRecyclebinViaSiteSettingsCP">
-		<execute action="CPSitesettings#assertClick" locator-key1="MENU_BASIC_INFORMATION_RECYCLE_BIN" value1="Recycle Bin" />
-		<execute action="CPSitesettingsRecyclebin#assertTextEquals" locator-key1="TRASH_ENTRIES_MAX_AGE_FIELD" value1="${maxAgeField}" />
+		<execute action="CPSitesettings#assertClick" locator1="MENU_BASIC_INFORMATION_RECYCLE_BIN" value1="Recycle Bin" />
+		<execute action="CPSitesettingsRecyclebin#assertTextEquals" locator1="TRASH_ENTRIES_MAX_AGE_FIELD" value1="${maxAgeField}" />
 	</command>
 </definition>

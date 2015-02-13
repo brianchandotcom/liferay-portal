@@ -198,11 +198,11 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="SOTasks#click" locator-key1="ADD_TASK_BUTTON" />
+		<execute action="SOTasks#click" locator1="ADD_TASK_BUTTON" />
 
-		<execute action="SOTasksAdd#selectFrame" locator-key1="ADD_TASK_IFRAME" />
-		<execute action="SOTasksAdd#type" locator-key1="TASK_DESCRIPTION_FIELD" value1="${taskDescription}" />
-		<execute action="SOTasksAdd#assertTextNotEquals" locator-key1="TASK_ASSIGNEE_SELECT_MENU" value1="${userName}" />
+		<execute action="SOTasksAdd#selectFrame" locator1="ADD_TASK_IFRAME" />
+		<execute action="SOTasksAdd#type" locator1="TASK_DESCRIPTION_FIELD" value1="${taskDescription}" />
+		<execute action="SOTasksAdd#assertTextNotEquals" locator1="TASK_ASSIGNEE_SELECT_MENU" value1="${userName}" />
 		<execute action="SOTasksAdd#selectFrame" value1="relative=top" />
 	</command>
 
@@ -350,24 +350,24 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="SOTasks#click" locator-key1="ADD_TASK_BUTTON" />
+		<execute action="SOTasks#click" locator1="ADD_TASK_BUTTON" />
 
-		<execute action="SOTasksAdd#selectFrame" locator-key1="ADD_TASK_IFRAME" />
-		<execute action="SOTasksAdd#type" locator-key1="TASK_DESCRIPTION_FIELD" value1="${taskDescription}" />
-		<execute action="SOTasksAdd#select" locator-key1="TASK_ASSIGNEE_SELECT_MENU" value1="${adminName}" />
-		<execute action="SOTasksAdd#type" locator-key1="TASK_TAG_FIELD" value1="&lt;tag1&gt;" />
-		<execute action="SOTasksAdd#click" locator-key1="TASK_ADD_TAG_BUTTON" />
+		<execute action="SOTasksAdd#selectFrame" locator1="ADD_TASK_IFRAME" />
+		<execute action="SOTasksAdd#type" locator1="TASK_DESCRIPTION_FIELD" value1="${taskDescription}" />
+		<execute action="SOTasksAdd#select" locator1="TASK_ASSIGNEE_SELECT_MENU" value1="${adminName}" />
+		<execute action="SOTasksAdd#type" locator1="TASK_TAG_FIELD" value1="&lt;tag1&gt;" />
+		<execute action="SOTasksAdd#click" locator1="TASK_ADD_TAG_BUTTON" />
 
 		<var name="key_tagNumber" value="1" />
 
-		<execute action="SOTasksAdd#assertTextEquals" locator-key1="TASK_TAG" value1="tag1" />
+		<execute action="SOTasksAdd#assertTextEquals" locator1="TASK_TAG" value1="tag1" />
 		<execute action="SOTasksAdd#assertTextNotPresent" value1="&lt;tag1&gt;" />
-		<execute action="SOTasksAdd#click" locator-key1="SAVE_BUTTON" />
+		<execute action="SOTasksAdd#click" locator1="SAVE_BUTTON" />
 
-		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_DESCRIPTION" value1="${taskDescription}" />
-		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_ASSIGNEE" value1="Assigned to ${adminName}" />
-		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_REPORTER" value1="Created by ${adminName}" />
-		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_TAG" value1="tag1" />
+		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_DESCRIPTION" value1="${taskDescription}" />
+		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_ASSIGNEE" value1="Assigned to ${adminName}" />
+		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_REPORTER" value1="Created by ${adminName}" />
+		<execute action="SOTasksTask#assertTextEquals" locator1="TASK_TAG" value1="tag1" />
 		<execute action="SOTasksTask#assertTextNotPresent" value1="&lt;tag1&gt;" />
 		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 	</command>
@@ -1126,14 +1126,14 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="SOTasks#assertClick" locator-key1="FILTER_BUTTON" value1="Filter" />
+		<execute action="SOTasks#assertClick" locator1="FILTER_BUTTON" value1="Filter" />
 		<execute action="SOTasks#pause" value1="1000" />
-		<execute action="SOTasks#assertTextEquals" locator-key1="FILTER_PLACE_HEADER" value1="Filter by Place" />
-		<execute action="SOTasks#select" locator-key1="FILTER_PLACE_SELECT_MENU" value1="Liferay" />
+		<execute action="SOTasks#assertTextEquals" locator1="FILTER_PLACE_HEADER" value1="Filter by Place" />
+		<execute action="SOTasks#select" locator1="FILTER_PLACE_SELECT_MENU" value1="Liferay" />
 
 		<var name="key_taskDescription" value="${taskDescription}02" />
 
-		<execute action="SOTasks#assertTextEquals" locator-key1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}02" />
+		<execute action="SOTasks#assertTextEquals" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}02" />
 		<execute action="SOTasks#assertTextNotPresent" value1="${taskDescription}01" />
 	</command>
 
@@ -1179,27 +1179,27 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="SOTasks#assertClick" locator-key1="FILTER_BUTTON" value1="Filter" />
+		<execute action="SOTasks#assertClick" locator1="FILTER_BUTTON" value1="Filter" />
 		<execute action="SOTasks#pause" value1="1000" />
-		<execute action="SOTasks#assertTextEquals" locator-key1="FILTER_TAG_HEADER" value1="Filter by Tags" />
+		<execute action="SOTasks#assertTextEquals" locator1="FILTER_TAG_HEADER" value1="Filter by Tags" />
 
 		<var name="key_taskDescription" value="${taskDescription}01" />
 
-		<execute action="SOTasks#assertTextEquals" locator-key1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}01" />
+		<execute action="SOTasks#assertTextEquals" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}01" />
 
 		<var name="key_tagNumber" value="2" />
 		<var name="key_taskDescription" value="${taskDescription}02" />
 
-		<execute action="SOTasks#assertTextEquals" locator-key1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}02" />
-		<execute action="SOTasks#assertClick" locator-key1="FILTER_TAG_CHECKBOX" value1="tag2" />
+		<execute action="SOTasks#assertTextEquals" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}02" />
+		<execute action="SOTasks#assertClick" locator1="FILTER_TAG_CHECKBOX" value1="tag2" />
 		<execute action="SOTasks#assertTextNotPresent" value1="${taskDescription}01" />
-		<execute action="SOTasks#assertClick" locator-key1="FILTER_TAG_CHECKBOX" value1="tag2" />
+		<execute action="SOTasks#assertClick" locator1="FILTER_TAG_CHECKBOX" value1="tag2" />
 
 		<var name="key_tagNumber" value="1" />
 		<var name="key_taskDescription" value="${taskDescription}01" />
 
-		<execute action="SOTasks#assertClick" locator-key1="FILTER_TAG_CHECKBOX" value1="tag1" />
-		<execute action="SOTasks#assertTextEquals" locator-key1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}01" />
+		<execute action="SOTasks#assertClick" locator1="FILTER_TAG_CHECKBOX" value1="tag1" />
+		<execute action="SOTasks#assertTextEquals" locator1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}01" />
 		<execute action="SOTasks#assertTextNotPresent" value1="${taskDescription}02" />
 	</command>
 

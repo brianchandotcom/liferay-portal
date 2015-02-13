@@ -5,10 +5,10 @@
 			<then>
 				<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-				<execute action="CPSpamModerationWikis#check" locator-key1="WIKI_PAGE_TABLE_CHECKBOX" />
-				<execute action="CPSpamModerationWikis#assertClickNoError" locator-key1="WIKIS_NOT_SPAM_BUTTON" value1="Not Spam" />
-				<execute action="CPSpamModerationWikis#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to mark the selected pages not spam?" />
-				<execute action="CPSpamModerationWikis#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully. " />
+				<execute action="CPSpamModerationWikis#check" locator1="WIKI_PAGE_TABLE_CHECKBOX" />
+				<execute action="CPSpamModerationWikis#assertClickNoError" locator1="WIKIS_NOT_SPAM_BUTTON" value1="Not Spam" />
+				<execute action="CPSpamModerationWikis#confirm" locator1="CONFIRMATION" value1="Are you sure you want to mark the selected pages not spam?" />
+				<execute action="CPSpamModerationWikis#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully. " />
 			</then>
 		</if>
 	</command>
@@ -19,31 +19,31 @@
 			<then>
 				<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-				<execute action="CPSpamModerationWikis#check" locator-key1="WIKI_PAGE_TABLE_CHECKBOX" />
-				<execute action="CPSpamModerationWikis#assertClickNoError" locator-key1="WIKIS_SPAM_BUTTON" value1="Spam" />
-				<execute action="CPSpamModerationWikis#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to mark the selected pages as spam?" />
-				<execute action="CPSpamModerationWikis#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully. " />
+				<execute action="CPSpamModerationWikis#check" locator1="WIKI_PAGE_TABLE_CHECKBOX" />
+				<execute action="CPSpamModerationWikis#assertClickNoError" locator1="WIKIS_SPAM_BUTTON" value1="Spam" />
+				<execute action="CPSpamModerationWikis#confirm" locator1="CONFIRMATION" value1="Are you sure you want to mark the selected pages as spam?" />
+				<execute action="CPSpamModerationWikis#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully. " />
 			</then>
 		</if>
 	</command>
 
 	<command name="navigateToDiscussions">
-		<execute action="CPSpamModerationWikis#assertClick" locator-key1="NAVIGATION_DISCUSSIONS" value1="Wikis" />
+		<execute action="CPSpamModerationWikis#assertClick" locator1="NAVIGATION_DISCUSSIONS" value1="Wikis" />
 	</command>
 
 	<command name="navigateToMessageBoards">
-		<execute action="CPSpamModerationWikis#assertClick" locator-key1="NAVIGATION_MESSAGE_BOARDS" value1="Wikis" />
+		<execute action="CPSpamModerationWikis#assertClick" locator1="NAVIGATION_MESSAGE_BOARDS" value1="Wikis" />
 	</command>
 
 	<command name="navigateToWikis">
-		<execute action="CPSpamModerationWikis#assertClick" locator-key1="NAVIGATION_WIKIS" value1="Wikis" />
+		<execute action="CPSpamModerationWikis#assertClick" locator1="NAVIGATION_WIKIS" value1="Wikis" />
 	</command>
 
 	<command name="viewDefault">
 		<if>
 			<equals arg1="${assetType}" arg2="wikiPage" />
 			<then>
-				<execute action="CPSpamModerationWikis#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no pages. " />
+				<execute action="CPSpamModerationWikis#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no pages. " />
 			</then>
 		</if>
 	</command>
@@ -54,11 +54,11 @@
 			<then>
 				<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-				<execute action="CPSpamModerationWikis#assertElementPresent" locator-key1="WIKI_PAGE_TABLE_CHECKBOX" />
-				<execute action="CPSpamModerationWikis#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_TITLE" value1="${wikiPageTitle}" />
-				<execute action="CPSpamModerationWikis#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_VERSION" value1="${wikiPageRevision}" />
-				<execute action="CPSpamModerationWikis#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_POSTED_BY" value1="${wikiPageUsername}" />
-				<execute action="CPSpamModerationWikis#assertElementPresent" locator-key1="WIKI_PAGE_TABLE_ACTIONS" />
+				<execute action="CPSpamModerationWikis#assertElementPresent" locator1="WIKI_PAGE_TABLE_CHECKBOX" />
+				<execute action="CPSpamModerationWikis#assertTextEquals" locator1="WIKI_PAGE_TABLE_TITLE" value1="${wikiPageTitle}" />
+				<execute action="CPSpamModerationWikis#assertTextEquals" locator1="WIKI_PAGE_TABLE_VERSION" value1="${wikiPageRevision}" />
+				<execute action="CPSpamModerationWikis#assertTextEquals" locator1="WIKI_PAGE_TABLE_POSTED_BY" value1="${wikiPageUsername}" />
+				<execute action="CPSpamModerationWikis#assertElementPresent" locator1="WIKI_PAGE_TABLE_ACTIONS" />
 			</then>
 		</if>
 	</command>

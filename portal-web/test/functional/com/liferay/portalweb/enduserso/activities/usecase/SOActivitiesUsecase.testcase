@@ -1353,7 +1353,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute action="SOActivities#assertClick" locator1="NAVIGATION_CONNECTIONS" value1="Connections" />
 
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Wrote a new forum post." />
@@ -1384,7 +1384,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
+		<execute action="SOActivities#assertClick" locator1="NAVIGATION_FOLLOWING" value1="Following" />
 
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Wrote a new forum post." />
@@ -1440,8 +1440,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertClick" locator1="NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
@@ -1457,8 +1457,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertClick" locator1="NAVIGATION_FOLLOWING" value1="Following" />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
@@ -1598,7 +1598,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute action="SOActivities#assertClick" locator1="NAVIGATION_CONNECTIONS" value1="Connections" />
 
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Wrote a new forum post." />
@@ -1629,7 +1629,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
+		<execute action="SOActivities#assertClick" locator1="NAVIGATION_FOLLOWING" value1="Following" />
 
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Wrote a new forum post." />
@@ -1685,8 +1685,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertClick" locator1="NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
@@ -1702,8 +1702,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertClick" locator1="NAVIGATION_FOLLOWING" value1="Following" />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
@@ -1790,7 +1790,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName}" />
@@ -1814,7 +1814,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName}" />
@@ -1835,7 +1835,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName}" />
@@ -2145,12 +2145,12 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${adminScreenName}" />
-		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${adminListName}" />
-		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${adminListName}" />
-		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${adminName}" />
+		<execute action="SOContactscenter#type" locator1="CONTACTS_LIST_SEARCH" value1="${adminScreenName}" />
+		<execute action="SOContactscenter#assertClick" locator1="CONTACTS_LIST_NAME" value1="${adminListName}" />
+		<execute action="SOContactscenter#assertClick" locator1="CONTACTS_LIST_NAME" value1="${adminListName}" />
+		<execute action="SOContactscenter#assertClick" locator1="USER_DETAILS_NAME" value1="${adminName}" />
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl}" />
@@ -2260,12 +2260,12 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${adminScreenName}" />
-		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${adminListName}" />
-		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${adminListName}" />
-		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${adminName}" />
+		<execute action="SOContactscenter#type" locator1="CONTACTS_LIST_SEARCH" value1="${adminScreenName}" />
+		<execute action="SOContactscenter#assertClick" locator1="CONTACTS_LIST_NAME" value1="${adminListName}" />
+		<execute action="SOContactscenter#assertClick" locator1="CONTACTS_LIST_NAME" value1="${adminListName}" />
+		<execute action="SOContactscenter#assertClick" locator1="USER_DETAILS_NAME" value1="${adminName}" />
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl}" />
@@ -2388,9 +2388,9 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator-key1="PROFILE_URL" />
+		<execute action="SOProfile#open" locator1="PROFILE_URL" />
 
-		<execute action="SOProfile#click" locator-key1="NAVIGATION_MICROBLOGS" />
+		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -2500,7 +2500,7 @@
 			<var name="row" value="06" />
 		</execute>
 
-		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_ME" value1="Me" />
+		<execute action="SOActivities#assertClick" locator1="NAVIGATION_ME" value1="Me" />
 
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Commented on a blog entry." />
@@ -2716,7 +2716,7 @@
 			<var name="row" value="06" />
 		</execute>
 
-		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_ME" value1="Me" />
+		<execute action="SOActivities#assertClick" locator1="NAVIGATION_ME" value1="Me" />
 
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
@@ -3038,7 +3038,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#click" locator-key1="NAVIGATION_CONNECTIONS" />
+		<execute action="SOActivities#click" locator1="NAVIGATION_CONNECTIONS" />
 
 		<execute macro="SOActivities#viewSiteContent">
 			<var name="blogsAction" value="Wrote a new blog entry." />
@@ -3055,7 +3055,7 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<execute action="SOActivities#click" locator-key1="NAVIGATION_FOLLOWING" />
+		<execute action="SOActivities#click" locator1="NAVIGATION_FOLLOWING" />
 
 		<execute macro="SOActivities#viewSiteContent">
 			<var name="blogsAction" value="Wrote a new blog entry." />
@@ -3181,7 +3181,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 
 		<execute macro="SOActivities#addSiteContent">
 			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}02" />

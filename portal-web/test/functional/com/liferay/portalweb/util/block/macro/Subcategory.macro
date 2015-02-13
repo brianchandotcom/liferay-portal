@@ -3,104 +3,104 @@
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-		<execute action="CPCategories#click" locator-key1="CATEGORY_ENTRY_MENULIST_ARROW" />
-		<execute action="CPCategories#assertClick" locator-key1="CATEGORY_ENTRY_MENULIST_ADD_SUBCATEGORY" value1="Add Subcategory" />
+		<execute action="CPCategories#assertClick" locator1="VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+		<execute action="CPCategories#click" locator1="CATEGORY_ENTRY_MENULIST_ARROW" />
+		<execute action="CPCategories#assertClick" locator1="CATEGORY_ENTRY_MENULIST_ADD_SUBCATEGORY" value1="Add Subcategory" />
 
-		<execute action="CPCategoriesAddSubcategory#type" locator-key1="NAME_FIELD" value1="${subcategoryName}" />
-		<execute action="CPCategoriesAddSubcategory#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPCategoriesAddSubcategory#type" locator1="NAME_FIELD" value1="${subcategoryName}" />
+		<execute action="CPCategoriesAddSubcategory#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPCategories#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addDuplicateCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator1="VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute action="CPCategories#click" locator-key1="CATEGORY_ENTRY_MENULIST_ARROW" />
-		<execute action="CPCategories#assertClick" locator-key1="CATEGORY_ENTRY_MENULIST_ADD_SUBCATEGORY" value1="Add Subcategory" />
+		<execute action="CPCategories#click" locator1="CATEGORY_ENTRY_MENULIST_ARROW" />
+		<execute action="CPCategories#assertClick" locator1="CATEGORY_ENTRY_MENULIST_ADD_SUBCATEGORY" value1="Add Subcategory" />
 
-		<execute action="CPCategoriesAddSubcategory#type" locator-key1="NAME_FIELD" value1="${subcategoryName}" />
-		<execute action="CPCategoriesAddSubcategory#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPCategoriesAddSubcategory#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Your request failed to complete." />
-		<execute action="CPCategoriesAddSubcategory#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a unique name." />
+		<execute action="CPCategoriesAddSubcategory#type" locator1="NAME_FIELD" value1="${subcategoryName}" />
+		<execute action="CPCategoriesAddSubcategory#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPCategoriesAddSubcategory#assertTextEquals" locator1="ERROR_MESSAGE" value1="Your request failed to complete." />
+		<execute action="CPCategoriesAddSubcategory#assertTextEquals" locator1="ERROR_MESSAGE_2" value1="Please enter a unique name." />
 	</command>
 
 	<command name="deleteViaActionsCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator1="VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute action="CPCategories#assertClick" locator-key1="CATEGORY_ENTRY_LINK" value1="${categoryName}" />
+		<execute action="CPCategories#assertClick" locator1="CATEGORY_ENTRY_LINK" value1="${categoryName}" />
 
 		<var name="key_subcategoryName" value="${subcategoryName}" />
 
-		<execute action="CPCategories#click" locator-key1="SUBCATEGORY_CHECKBOX" value1="${subcategoryName}" />
-		<execute action="CPCategories#click" locator-key1="ACTIONS_BUTTON" />
-		<execute action="CPCategories#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
-		<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPCategories#click" locator1="SUBCATEGORY_CHECKBOX" value1="${subcategoryName}" />
+		<execute action="CPCategories#click" locator1="ACTIONS_BUTTON" />
+		<execute action="CPCategories#assertClickNoError" locator1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPCategories#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPCategories#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPCategories#assertTextNotPresent" value1="${subcategoryName}" />
 	</command>
 
 	<command name="deleteViaArrowCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator1="VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute action="CPCategories#assertClick" locator-key1="CATEGORY_ENTRY_LINK" value1="${categoryName}" />
+		<execute action="CPCategories#assertClick" locator1="CATEGORY_ENTRY_LINK" value1="${categoryName}" />
 
 		<var name="key_subcategoryName" value="${subcategoryName}" />
 
-		<execute action="CPCategories#click" locator-key1="SUBCATEGORY_ENTRY_MENULIST_ARROW" />
-		<execute action="CPCategories#assertClickNoError" locator-key1="SUBCATEGORY_ENTRY_MENULIST_DELETE" value1="Delete" />
-		<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPCategories#click" locator1="SUBCATEGORY_ENTRY_MENULIST_ARROW" />
+		<execute action="CPCategories#assertClickNoError" locator1="SUBCATEGORY_ENTRY_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPCategories#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPCategories#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPCategories#assertTextNotPresent" value1="${subcategoryName}" />
 	</command>
 
 	<command name="editCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator1="VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute action="CPCategories#assertClick" locator-key1="CATEGORY_ENTRY_LINK" value1="${categoryName}" />
+		<execute action="CPCategories#assertClick" locator1="CATEGORY_ENTRY_LINK" value1="${categoryName}" />
 
 		<var name="key_subcategoryName" value="${subcategoryName}" />
 
-		<execute action="CPCategories#click" locator-key1="SUBCATEGORY_ENTRY_MENULIST_ARROW" />
-		<execute action="CPCategories#assertClick" locator-key1="SUBCATEGORY_ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute action="CPCategories#click" locator1="SUBCATEGORY_ENTRY_MENULIST_ARROW" />
+		<execute action="CPCategories#assertClick" locator1="SUBCATEGORY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
-		<execute action="CPCategoriesEditSubcategory#type" locator-key1="NAME_FIELD" value1="${subcategoryNameEdit}" />
-		<execute action="CPCategoriesEditSubcategory#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPCategoriesEditSubcategory#type" locator1="NAME_FIELD" value1="${subcategoryNameEdit}" />
+		<execute action="CPCategoriesEditSubcategory#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPCategories#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<var name="key_subcategoryName" value="${subcategoryNameEdit}" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUBCATEGORY_ENTRY" value1="${subcategoryNameEdit}" />
+		<execute action="CPCategories#assertTextEquals" locator1="SUBCATEGORY_ENTRY" value1="${subcategoryNameEdit}" />
 	</command>
 
 	<command name="viewCP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-		<execute action="CPCategories#assertClick" locator-key1="CATEGORY_ENTRY_LINK" value1="${categoryName}" />
+		<execute action="CPCategories#assertClick" locator1="VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator1="CATEGORY_ENTRY_LINK" value1="${categoryName}" />
 
 		<var name="key_subcategoryName" value="${subcategoryName}" />
 
-		<execute action="CPCategories#click" locator-key1="SUBCATEGORY_ENTRY_MENULIST_ARROW" />
-		<execute action="CPCategories#assertClick" locator-key1="SUBCATEGORY_ENTRY_MENULIST_EDIT" value1="Edit" />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUBCATEGORY_ENTRY_HEADER" value1="${subcategoryName}" />
-		<execute action="CPCategoriesEditSubcategory#type" locator-key1="NAME_FIELD" value1="${subcategoryName}" />
+		<execute action="CPCategories#click" locator1="SUBCATEGORY_ENTRY_MENULIST_ARROW" />
+		<execute action="CPCategories#assertClick" locator1="SUBCATEGORY_ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute action="CPCategories#assertTextEquals" locator1="SUBCATEGORY_ENTRY_HEADER" value1="${subcategoryName}" />
+		<execute action="CPCategoriesEditSubcategory#type" locator1="NAME_FIELD" value1="${subcategoryName}" />
 	</command>
 </definition>

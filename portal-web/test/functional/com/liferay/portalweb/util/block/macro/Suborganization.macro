@@ -1,23 +1,23 @@
 <definition>
 	<command name="addCP">
-		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsersandorganizations#type" locator1="SEARCH_FIELD" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator1="SEARCH_BUTTON" value1="Search" />
 
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_TABLE_ACTIONS" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_ADD_REGULAR_ORGANIZATION" value1="Add Regular Organization" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#click" locator1="ORGANIZATION_TABLE_ACTIONS" />
+		<execute action="CPUsersandorganizations#assertClick" locator1="ORGANIZATION_MENULIST_ADD_REGULAR_ORGANIZATION" value1="Add Regular Organization" />
 
-		<execute action="CPUsersandorganizationsAddorganization#type" locator-key1="DETAILS_NAME_FIELD" value1="${suborgName}" />
-		<execute action="CPUsersandorganizationsAddorganization#select" locator-key1="DETAILS_TYPE_SELECT" value1="${suborgType}" />
-		<execute action="CPUsersandorganizationsAddorganization#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPUsersandorganizationsAddorganization#type" locator1="DETAILS_NAME_FIELD" value1="${suborgName}" />
+		<execute action="CPUsersandorganizationsAddorganization#select" locator1="DETAILS_TYPE_SELECT" value1="${suborgType}" />
+		<execute action="CPUsersandorganizationsAddorganization#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 
 		<var name="key_orgType" value="${orgType}" />
 
-		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_NAME_FIELD" value1="${suborgName}" />
-		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_TYPE" value1="${orgType}" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator1="DETAILS_NAME_FIELD" value1="${suborgName}" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator1="DETAILS_TYPE" value1="${orgType}" />
 	</command>
 
 	<command name="tearDownCP">
@@ -33,7 +33,7 @@
 			<var name="searchToken" value="${suborgSearchName}" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="PARENT_ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="PARENT_ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator1="PARENT_ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator1="PARENT_ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
 	</command>
 </definition>

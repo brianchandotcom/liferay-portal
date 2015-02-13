@@ -178,16 +178,16 @@
 
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
-		<execute action="CPPagetemplates#assertClick" locator-key1="PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute action="CPPagetemplates#assertClick" locator1="PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
 
-		<execute action="CPPagetemplatesEdit#assertClick" locator-key1="OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
+		<execute action="CPPagetemplatesEdit#assertClick" locator1="OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
 
 		<execute function="#selectWindow" locator1="title=${pageTemplateName} - Liferay" />
 
 		<var name="key_pageName" value="${pageTemplateName}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${pageTemplateName}" />
-		<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="${pageTemplateName}" />
+		<execute action="Home#assertTextEquals" locator1="SITE_NAME" value1="${pageTemplateName}" />
+		<execute action="Home#assertTextEquals" locator1="PAGE" value1="${pageTemplateName}" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
@@ -200,15 +200,15 @@
 
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
-		<execute action="CPPagetemplates#assertClick" locator-key1="PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName} Edit" />
+		<execute action="CPPagetemplates#assertClick" locator1="PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName} Edit" />
 
-		<execute action="CPPagetemplatesEdit#assertClick" locator-key1="OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
+		<execute action="CPPagetemplatesEdit#assertClick" locator1="OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
 
 		<execute function="#selectWindow" locator1="title=${pageTemplateName} Edit - Liferay" />
 
 		<var name="key_pageName" value="${pageTemplateName}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${pageTemplateName} Edit" />
-		<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="${pageTemplateName} Edit" />
+		<execute action="Home#assertTextEquals" locator1="SITE_NAME" value1="${pageTemplateName} Edit" />
+		<execute action="Home#assertTextEquals" locator1="PAGE" value1="${pageTemplateName} Edit" />
 	</command>
 </definition>

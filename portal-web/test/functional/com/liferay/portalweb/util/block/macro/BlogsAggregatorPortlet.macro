@@ -5,11 +5,11 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="BasePortletConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
 
-		<execute action="PGBlogsAggregatorConfiguration#select" locator-key1="SELECTION_METHOD_SELECT" value1="${selectionMethod}" />
-		<execute action="PGBlogsAggregatorConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGBlogsAggregatorConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGBlogsAggregatorConfiguration#select" locator1="SELECTION_METHOD_SELECT" value1="${selectionMethod}" />
+		<execute action="PGBlogsAggregatorConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGBlogsAggregatorConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 
 		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
 	</command>
@@ -21,7 +21,7 @@
 				<for list="${viewEntryTitle}" param="entryTitle">
 					<var name="key_entryTitle" value="${entryTitle}" />
 
-					<execute action="PGBlogsAggregator#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+					<execute action="PGBlogsAggregator#assertTextEquals" locator1="ENTRY_TITLE" value1="${entryTitle}" />
 				</for>
 			</then>
 		</if>
@@ -32,7 +32,7 @@
 				<for list="${viewNoEntryTitle}" param="entryTitle">
 					<var name="key_entryTitle" value="${entryTitle}" />
 
-					<execute action="PGBlogsAggregator#assertElementNotPresent" locator-key1="ENTRY_TITLE" />
+					<execute action="PGBlogsAggregator#assertElementNotPresent" locator1="ENTRY_TITLE" />
 				</for>
 			</then>
 		</if>
@@ -43,12 +43,12 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="BasePortletConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
 
-		<execute action="PGBlogsAggregatorConfiguration#assertClick" locator-key1="ORGANIZATION_SELECT_BUTTON" value1="Select" />
+		<execute action="PGBlogsAggregatorConfiguration#assertClick" locator1="ORGANIZATION_SELECT_BUTTON" value1="Select" />
 
 		<execute action="PGBlogsAggregatorConfigurationSelectOrganization#selectFrame" value1="relative=top" />
-		<execute action="PGBlogsAggregatorConfigurationSelectOrganization#selectFrame" locator-key1="SELECT_ORGANIZATION_IFRAME" />
+		<execute action="PGBlogsAggregatorConfigurationSelectOrganization#selectFrame" locator1="SELECT_ORGANIZATION_IFRAME" />
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -57,14 +57,14 @@
 			<then>
 				<var name="key_orgName" value="${subOrgName}" />
 
-				<execute action="PGBlogsAggregatorConfigurationSelectOrganization#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${subOrgName}" />
-				<execute action="PGBlogsAggregatorConfigurationSelectOrganization#assertTextEquals" locator-key1="ORGANIZATION_TABLE_PARENT_ORGANIZATION" value1="${parentOrgName}" />
+				<execute action="PGBlogsAggregatorConfigurationSelectOrganization#assertTextEquals" locator1="ORGANIZATION_TABLE_NAME" value1="${subOrgName}" />
+				<execute action="PGBlogsAggregatorConfigurationSelectOrganization#assertTextEquals" locator1="ORGANIZATION_TABLE_PARENT_ORGANIZATION" value1="${parentOrgName}" />
 			</then>
 			<elseif>
 				<equals arg1="${parentOrgExist}" arg2="false" />
 				<then>
-					<execute action="PGBlogsAggregatorConfigurationSelectOrganization#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-					<execute action="PGBlogsAggregatorConfigurationSelectOrganization#assertTextEquals" locator-key1="ORGANIZATION_TABLE_PARENT_ORGANIZATION" value1="" />
+					<execute action="PGBlogsAggregatorConfigurationSelectOrganization#assertTextEquals" locator1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+					<execute action="PGBlogsAggregatorConfigurationSelectOrganization#assertTextEquals" locator1="ORGANIZATION_TABLE_PARENT_ORGANIZATION" value1="" />
 				</then>
 			</elseif>
 		</if>
@@ -77,15 +77,15 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="PGBlogsAggregatorConfiguration#assertTextPresent" locator-key1="CONFIGURATION_TITLE" value1="Blogs Aggregator" />
+		<execute action="PGBlogsAggregatorConfiguration#assertTextPresent" locator1="CONFIGURATION_TITLE" value1="Blogs Aggregator" />
 
-		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="BasePortletConfiguration#assertClick" locator-key1="NAVIGATION_SETUP" value1="Setup" />
+		<execute action="BasePortletConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
+		<execute action="BasePortletConfiguration#assertClick" locator1="NAVIGATION_SETUP" value1="Setup" />
 
-		<execute action="PGBlogsAggregatorConfiguration#assertClick" locator-key1="ORGANIZATION_SELECT_BUTTON" value1="Select" />
+		<execute action="PGBlogsAggregatorConfiguration#assertClick" locator1="ORGANIZATION_SELECT_BUTTON" value1="Select" />
 		<execute action="PGBlogsAggregatorConfiguration#selectFrame" value1="relative=top" />
 
-		<execute action="PGBlogsAggregatorConfigurationSelectOrganization#selectFrame" locator-key1="SELECT_ORGANIZATION_IFRAME" />
-		<execute action="PGBlogsAggregatorConfigurationSelectOrganization#assertElementPresent" locator-key1="NO_ORGANIZATIONS_MESSAGE" />
+		<execute action="PGBlogsAggregatorConfigurationSelectOrganization#selectFrame" locator1="SELECT_ORGANIZATION_IFRAME" />
+		<execute action="PGBlogsAggregatorConfigurationSelectOrganization#assertElementPresent" locator1="NO_ORGANIZATIONS_MESSAGE" />
 	</command>
 </definition>

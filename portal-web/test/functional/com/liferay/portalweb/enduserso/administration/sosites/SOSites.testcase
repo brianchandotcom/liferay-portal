@@ -63,13 +63,13 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME" value1="${siteName}" />
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName}" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#type" locator1="GO_TO_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME" value1="${siteName}" />
+		<execute action="SOUserBar#assertElementNotPresent" locator1="GO_TO_SITE_NAME_LINK" value1="${siteName}" />
 	</command>
 
 	<command name="AddSOSiteOpenDefaultPagesSOUserHome" priority="3">
@@ -803,18 +803,18 @@
 		<var name="siteName" value="Open Site Name" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO_ADD_SITE_BUTTON" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#click" locator1="GO_TO_ADD_SITE_BUTTON" />
 
 		<execute action="SOUserBarAddSite#selectFrameTop" />
-		<execute action="SOUserBarAddSite#type" locator-key1="DESCRIPTION_FIELD" value1="${siteDescription}" />
-		<execute action="SOUserBarAddSite#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="This field is required." />
+		<execute action="SOUserBarAddSite#type" locator1="DESCRIPTION_FIELD" value1="${siteDescription}" />
+		<execute action="SOUserBarAddSite#assertTextEquals" locator1="ALERT_MESSAGE" value1="This field is required." />
 
-		<execute action="SOUserBar#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_SITE_NAME_REQUIRED_PNG" />
+		<execute action="SOUserBar#sikuliAssertElementPresent" locator1="SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_SITE_NAME_REQUIRED_PNG" />
 
-		<execute action="SOUserBarAddSite#type" locator-key1="NAME_FIELD" value1="${siteName}" />
-		<execute action="SOUserBarAddSite#click" locator-key1="SAVE_BUTTON" />
-		<execute action="SOUserBarAddSite#assertElementNotPresent" locator-key1="SAVE_BUTTON" />
+		<execute action="SOUserBarAddSite#type" locator1="NAME_FIELD" value1="${siteName}" />
+		<execute action="SOUserBarAddSite#click" locator1="SAVE_BUTTON" />
+		<execute action="SOUserBarAddSite#assertElementNotPresent" locator1="SAVE_BUTTON" />
 	</command>
 
 	<command name="ViewSOSitesDirectory" priority="5">
@@ -864,117 +864,117 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#click" locator1="GO_TO_SITES_DIRECTORY_BUTTON" />
 
-		<execute action="SOUserBarSitesDirectory#select" locator-key1="SITE_CATEGORY_SELECT" value1="All Sites" />
+		<execute action="SOUserBarSitesDirectory#select" locator1="SITE_CATEGORY_SELECT" value1="All Sites" />
 
 		<var name="key_siteName" value="${siteName1}" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName1}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription1}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="${siteName1}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="${siteDescription1}" />
 
 		<var name="key_siteName" value="${siteName2}" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName2}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription2}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="${siteName2}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="${siteDescription2}" />
 
 		<var name="key_siteName" value="${siteName3}" />
 
-		<execute action="SOUserBarSitesDirectory#assertElementNotPresent" locator-key1="SITE_NAME_LINK" value1="${siteName3}" />
-		<execute action="SOUserBarSitesDirectory#assertElementNotPresent" locator-key1="SITE_DESCRIPTION" value1="${siteDescription3}" />
+		<execute action="SOUserBarSitesDirectory#assertElementNotPresent" locator1="SITE_NAME_LINK" value1="${siteName3}" />
+		<execute action="SOUserBarSitesDirectory#assertElementNotPresent" locator1="SITE_DESCRIPTION" value1="${siteDescription3}" />
 
 		<var name="key_siteName" value="${siteName4}" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName4}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription4}" />
-		<execute action="SOUserBarSitesDirectory#select" locator-key1="SITE_CATEGORY_SELECT" value1="My Sites" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="${siteName4}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="${siteDescription4}" />
+		<execute action="SOUserBarSitesDirectory#select" locator1="SITE_CATEGORY_SELECT" value1="My Sites" />
 
 		<var name="key_siteName" value="${siteName1}" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName1}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription1}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="${siteName1}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="${siteDescription1}" />
 
 		<var name="key_siteName" value="${siteName2}" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName2}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription2}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="${siteName2}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="${siteDescription2}" />
 
 		<var name="key_siteName" value="${siteName3}" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName3}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription3}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="${siteName3}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="${siteDescription3}" />
 
 		<var name="key_siteName" value="${siteName4}" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName4}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription4}" />
-		<execute action="SOUserBarSitesDirectory#select" locator-key1="SITE_CATEGORY_SELECT" value1="My Favorites" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="${siteName4}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="${siteDescription4}" />
+		<execute action="SOUserBarSitesDirectory#select" locator1="SITE_CATEGORY_SELECT" value1="My Favorites" />
 
 		<var name="key_siteName" value="${siteName1}" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName1}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription1}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="${siteName1}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="${siteDescription1}" />
 		<execute action="SOUserBarSitesDirectory#assertTextNotPresent" value1="${siteName2}" />
 		<execute action="SOUserBarSitesDirectory#assertTextNotPresent" value1="${siteDescription2}" />
 		<execute action="SOUserBarSitesDirectory#assertTextNotPresent" value1="${siteName3}" />
 		<execute action="SOUserBarSitesDirectory#assertTextNotPresent" value1="${siteDescription3}" />
 		<execute action="SOUserBarSitesDirectory#assertTextNotPresent" value1="${siteName4}" />
 		<execute action="SOUserBarSitesDirectory#assertTextNotPresent" value1="${siteDescription4}" />
-		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName1}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName1}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription1}" />
-		<execute action="SOUserBarSitesDirectory#click" locator-key1="SITE_NAME_LINK" value1="${siteName1}" />
+		<execute action="SOUserBarSitesDirectory#type" locator1="SITE_SEARCH_FIELD" value1="${siteName1}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="${siteName1}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="${siteDescription1}" />
+		<execute action="SOUserBarSitesDirectory#click" locator1="SITE_NAME_LINK" value1="${siteName1}" />
 
-		<execute action="SOSite#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName1}" />
+		<execute action="SOSite#assertTextEquals" locator1="SITE_NAME" value1="${siteName1}" />
 
 		<var name="key_siteName" value="${siteName2}" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#click" locator1="GO_TO_SITES_DIRECTORY_BUTTON" />
 
-		<execute action="SOUserBarSitesDirectory#select" locator-key1="SITE_CATEGORY_SELECT" value1="My Sites" />
-		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName2}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName2}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription2}" />
-		<execute action="SOUserBarSitesDirectory#click" locator-key1="SITE_NAME_LINK" value1="${siteName2}" />
+		<execute action="SOUserBarSitesDirectory#select" locator1="SITE_CATEGORY_SELECT" value1="My Sites" />
+		<execute action="SOUserBarSitesDirectory#type" locator1="SITE_SEARCH_FIELD" value1="${siteName2}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="${siteName2}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="${siteDescription2}" />
+		<execute action="SOUserBarSitesDirectory#click" locator1="SITE_NAME_LINK" value1="${siteName2}" />
 
-		<execute action="SOSite#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName2}" />
+		<execute action="SOSite#assertTextEquals" locator1="SITE_NAME" value1="${siteName2}" />
 
 		<var name="key_siteName" value="${siteName3}" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#click" locator1="GO_TO_SITES_DIRECTORY_BUTTON" />
 
-		<execute action="SOUserBarSitesDirectory#select" locator-key1="SITE_CATEGORY_SELECT" value1="My Sites" />
-		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName3}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName3}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription3}" />
-		<execute action="SOUserBarSitesDirectory#click" locator-key1="SITE_NAME_LINK" value1="${siteName3}" />
+		<execute action="SOUserBarSitesDirectory#select" locator1="SITE_CATEGORY_SELECT" value1="My Sites" />
+		<execute action="SOUserBarSitesDirectory#type" locator1="SITE_SEARCH_FIELD" value1="${siteName3}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="${siteName3}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="${siteDescription3}" />
+		<execute action="SOUserBarSitesDirectory#click" locator1="SITE_NAME_LINK" value1="${siteName3}" />
 
-		<execute action="SOSite#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName3}" />
+		<execute action="SOSite#assertTextEquals" locator1="SITE_NAME" value1="${siteName3}" />
 
 		<var name="key_siteName" value="${siteName4}" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#click" locator1="GO_TO_SITES_DIRECTORY_BUTTON" />
 
-		<execute action="SOUserBarSitesDirectory#select" locator-key1="SITE_CATEGORY_SELECT" value1="My Sites" />
-		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName4}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName4}" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription4}" />
-		<execute action="SOUserBarSitesDirectory#click" locator-key1="SITE_NAME_LINK" value1="${siteName4}" />
+		<execute action="SOUserBarSitesDirectory#select" locator1="SITE_CATEGORY_SELECT" value1="My Sites" />
+		<execute action="SOUserBarSitesDirectory#type" locator1="SITE_SEARCH_FIELD" value1="${siteName4}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="${siteName4}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="${siteDescription4}" />
+		<execute action="SOUserBarSitesDirectory#click" locator1="SITE_NAME_LINK" value1="${siteName4}" />
 
-		<execute action="SOSite#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName4}" />
+		<execute action="SOSite#assertTextEquals" locator1="SITE_NAME" value1="${siteName4}" />
 	</command>
 
 	<command name="ViewSOSitesDirectoryPagination" priority="4">
@@ -1047,132 +1047,132 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_USERBAR_GO_TO_MENU_VIEW_ALL_LINK_PNG" />
-		<execute action="SOUserBar#assertClick" locator-key1="GO_TO_VIEW_ALL" value1="View All (12)" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#sikuliAssertElementPresent" locator1="SCREENSHOTS_USERBAR_GO_TO_MENU_VIEW_ALL_LINK_PNG" />
+		<execute action="SOUserBar#assertClick" locator1="GO_TO_VIEW_ALL" value1="View All (12)" />
 
 		<var name="key_siteName" value="Liferay" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Liferay" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Liferay" />
 
 		<var name="key_siteName" value="Open Site1 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site1 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site1 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site1 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site1 Description" />
 
 		<var name="key_siteName" value="Open Site10 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site10 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site10 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site10 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site10 Description" />
 
 		<var name="key_siteName" value="Open Site11 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site11 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site11 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site11 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site11 Description" />
 
 		<var name="key_siteName" value="Open Site2 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site2 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site2 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site2 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site2 Description" />
 
 		<var name="key_siteName" value="Open Site3 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site3 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site3 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site3 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site3 Description" />
 
 		<var name="key_siteName" value="Open Site4 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site4 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site4 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site4 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site4 Description" />
 
 		<var name="key_siteName" value="Open Site5 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site5 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site5 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site5 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site5 Description" />
 
 		<var name="key_siteName" value="Open Site6 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site6 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site6 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site6 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site6 Description" />
 
 		<var name="key_siteName" value="Open Site7 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site7 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site7 Description" />
-		<execute action="SOUserBarSitesDirectory#click" locator-key1="NEXT_BUTTON" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site7 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site7 Description" />
+		<execute action="SOUserBarSitesDirectory#click" locator1="NEXT_BUTTON" />
 
 		<var name="key_siteName" value="Open Site8 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site8 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site8 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site8 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site8 Description" />
 
 		<var name="key_siteName" value="Open Site9 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site9 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site9 Description" />
-		<execute action="SOUserBarSitesDirectory#click" locator-key1="PREVIOUS_BUTTON" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site9 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site9 Description" />
+		<execute action="SOUserBarSitesDirectory#click" locator1="PREVIOUS_BUTTON" />
 
 		<var name="key_siteName" value="Liferay" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Liferay" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Liferay" />
 
 		<var name="key_siteName" value="Open Site1 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site1 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site1 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site1 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site1 Description" />
 
 		<var name="key_siteName" value="Open Site10 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site10 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site10 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site10 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site10 Description" />
 
 		<var name="key_siteName" value="Open Site11 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site11 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site11 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site11 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site11 Description" />
 
 		<var name="key_siteName" value="Open Site2 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site2 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site2 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site2 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site2 Description" />
 
 		<var name="key_siteName" value="Open Site3 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site3 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site3 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site3 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site3 Description" />
 
 		<var name="key_siteName" value="Open Site4 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site4 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site4 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site4 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site4 Description" />
 
 		<var name="key_siteName" value="Open Site5 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site5 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site5 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site5 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site5 Description" />
 
 		<var name="key_siteName" value="Open Site6 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site6 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site6 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site6 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site6 Description" />
 
 		<var name="key_siteName" value="Open Site7 Name" />
 
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="Open Site7 Name" />
-		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="Open Site7 Description" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_NAME_LINK" value1="Open Site7 Name" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator1="SITE_DESCRIPTION" value1="Open Site7 Description" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_USERBAR_GO_TO_MENU_VIEW_ALL_LINK_PNG" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_VIEW_ALL" value1="View All (12)" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#sikuliAssertElementPresent" locator1="SCREENSHOTS_USERBAR_GO_TO_MENU_VIEW_ALL_LINK_PNG" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_VIEW_ALL" value1="View All (12)" />
 	</command>
 
 	<command name="ViewSOSitesNonMembershipProfile" priority="4">
@@ -1237,7 +1237,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_SITES_EMPTY" value1="${userName} does not belong to any sites." />
+		<execute action="SOProfile#assertTextEquals" locator1="PROFILE_INFO_SITES_EMPTY" value1="${userName} does not belong to any sites." />
 		<execute action="SOProfile#assertTextNotPresent" value1="${siteName1}" />
 		<execute action="SOProfile#assertTextNotPresent" value1="${siteName2}" />
 		<execute action="SOProfile#assertTextNotPresent" value1="${siteName3}" />
@@ -1291,88 +1291,88 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 
 		<var name="key_siteName" value="${siteName1}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName1}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME_LINK" value1="${siteName1}" />
 
 		<var name="key_siteName" value="${siteName2}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName2}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME_LINK" value1="${siteName2}" />
 
 		<var name="key_siteName" value="${siteName3}" />
 
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName3}" />
+		<execute action="SOUserBar#assertElementNotPresent" locator1="GO_TO_SITE_NAME_LINK" value1="${siteName3}" />
 
 		<var name="key_siteName" value="${siteName4}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName4}" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME_LINK" value1="${siteName4}" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
 
 		<var name="key_siteName" value="${siteName1}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName1}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME_LINK" value1="${siteName1}" />
 
 		<var name="key_siteName" value="${siteName2}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName2}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME_LINK" value1="${siteName2}" />
 
 		<var name="key_siteName" value="${siteName3}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName3}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME_LINK" value1="${siteName3}" />
 
 		<var name="key_siteName" value="${siteName4}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName4}" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Favorites" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME_LINK" value1="${siteName4}" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="My Favorites" />
 
 		<var name="key_siteName" value="${siteName1}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName1}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME_LINK" value1="${siteName1}" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${siteName2}" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${siteName3}" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${siteName4}" />
-		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName1}" />
-		<execute action="SOUserBar#assertClick" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName1}" />
+		<execute action="SOUserBar#type" locator1="GO_TO_SEARCH_FIELD" value1="${siteName1}" />
+		<execute action="SOUserBar#assertClick" locator1="GO_TO_SITE_NAME_LINK" value1="${siteName1}" />
 
-		<execute action="SOSite#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName1}" />
+		<execute action="SOSite#assertTextEquals" locator1="SITE_NAME" value1="${siteName1}" />
 
 		<var name="key_siteName" value="${siteName2}" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
-		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName2}" />
-		<execute action="SOUserBar#assertClick" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName2}" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
+		<execute action="SOUserBar#type" locator1="GO_TO_SEARCH_FIELD" value1="${siteName2}" />
+		<execute action="SOUserBar#assertClick" locator1="GO_TO_SITE_NAME_LINK" value1="${siteName2}" />
 
-		<execute action="SOSite#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName2}" />
+		<execute action="SOSite#assertTextEquals" locator1="SITE_NAME" value1="${siteName2}" />
 
 		<var name="key_siteName" value="${siteName3}" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
-		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName3}" />
-		<execute action="SOUserBar#assertClick" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName3}" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
+		<execute action="SOUserBar#type" locator1="GO_TO_SEARCH_FIELD" value1="${siteName3}" />
+		<execute action="SOUserBar#assertClick" locator1="GO_TO_SITE_NAME_LINK" value1="${siteName3}" />
 
-		<execute action="SOSite#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName3}" />
+		<execute action="SOSite#assertTextEquals" locator1="SITE_NAME" value1="${siteName3}" />
 
 		<var name="key_siteName" value="${siteName4}" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
-		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName4}" />
-		<execute action="SOUserBar#assertClick" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName4}" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
+		<execute action="SOUserBar#type" locator1="GO_TO_SEARCH_FIELD" value1="${siteName4}" />
+		<execute action="SOUserBar#assertClick" locator1="GO_TO_SITE_NAME_LINK" value1="${siteName4}" />
 
-		<execute action="SOSite#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName4}" />
+		<execute action="SOSite#assertTextEquals" locator1="SITE_NAME" value1="${siteName4}" />
 	</command>
 </definition>

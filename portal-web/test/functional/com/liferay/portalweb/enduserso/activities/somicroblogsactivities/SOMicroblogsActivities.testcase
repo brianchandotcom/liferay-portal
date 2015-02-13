@@ -464,7 +464,7 @@
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 
 		<execute action="SOMicroblogs#assertTextNotPresent" value1="1 Comment" />
-		<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="Comment" />
+		<execute action="SOMicroblogs#assertClick" locator1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="Comment" />
 		<execute action="SOMicroblogs#assertTextNotPresent" value1="${microblogsEntryCommentContent}" />
 	</command>
 
@@ -606,7 +606,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_ME" value1="Me" />
+		<execute action="SOActivities#assertClick" locator1="NAVIGATION_ME" value1="Me" />
 
 		<execute macro="SOActivities#viewMicroblogsRepostActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
@@ -643,7 +643,7 @@
 			<var name="profileScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute action="SOProfile#click" locator-key1="NAVIGATION_MICROBLOGS" />
+		<execute action="SOProfile#click" locator1="NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -652,7 +652,7 @@
 
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 
-		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
+		<execute action="SOMicroblogs#assertTextEquals" locator1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
 	</command>
 
 	<command name="ViewMicroblogsActivities" priority="5">
@@ -745,7 +745,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOActivities#click" locator-key1="NAVIGATION_CONNECTIONS" />
+		<execute action="SOActivities#click" locator1="NAVIGATION_CONNECTIONS" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -785,10 +785,10 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#click" locator-key1="NAVIGATION_ALL" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#click" locator-key1="NAVIGATION_CONNECTIONS" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#click" locator1="NAVIGATION_ALL" />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#click" locator1="NAVIGATION_CONNECTIONS" />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -823,7 +823,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOActivities#click" locator-key1="NAVIGATION_FOLLOWING" />
+		<execute action="SOActivities#click" locator1="NAVIGATION_FOLLOWING" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -846,10 +846,10 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#click" locator-key1="NAVIGATION_ALL" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#click" locator-key1="NAVIGATION_FOLLOWING" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#click" locator1="NAVIGATION_ALL" />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#click" locator1="NAVIGATION_FOLLOWING" />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 	</command>
 
 	<command name="ViewMicroblogsActivitiesAsConnectionAndFollower" priority="3">
@@ -941,7 +941,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOActivities#click" locator-key1="NAVIGATION_CONNECTIONS" />
+		<execute action="SOActivities#click" locator1="NAVIGATION_CONNECTIONS" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -956,7 +956,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOActivities#click" locator-key1="NAVIGATION_FOLLOWING" />
+		<execute action="SOActivities#click" locator1="NAVIGATION_FOLLOWING" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -1030,7 +1030,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Microblogs" />
@@ -1133,7 +1133,7 @@
 
 		<var name="profileScreenName" value="${adminScreenName}" />
 
-		<execute action="SOProfile#open" locator-key1="PROFILE_URL" />
+		<execute action="SOProfile#open" locator1="PROFILE_URL" />
 
 		<execute macro="SOActivities#viewMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />

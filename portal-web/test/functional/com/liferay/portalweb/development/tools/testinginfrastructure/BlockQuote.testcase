@@ -28,18 +28,18 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGMessageboards#click" locator-key1="POST_NEW_THREAD_BUTTON" />
+		<execute action="PGMessageboards#click" locator1="POST_NEW_THREAD_BUTTON" />
 
-		<execute action="PGMessageboardsPostthread#click" locator-key1="BLOCK_QUOTE_BUTTON" />
-		<execute action="PGMessageboardsPostthread#type" locator-key1="SUBJECT_FIELD" value1="${threadSubject}" />
-		<execute action="PGMessageboardsPostthread#click" locator-key1="BLOCK_QUOTE_FIELD" value1="70,400" />
+		<execute action="PGMessageboardsPostthread#click" locator1="BLOCK_QUOTE_BUTTON" />
+		<execute action="PGMessageboardsPostthread#type" locator1="SUBJECT_FIELD" value1="${threadSubject}" />
+		<execute action="PGMessageboardsPostthread#click" locator1="BLOCK_QUOTE_FIELD" value1="70,400" />
 		<execute function="#typeScreen" locator1="${threadBody}" />
 
 		<take-screenshot />
 
-		<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGMessageboardsPostthread#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGMessageboards#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute function="#pause" locator1="5000" />
 	</command>

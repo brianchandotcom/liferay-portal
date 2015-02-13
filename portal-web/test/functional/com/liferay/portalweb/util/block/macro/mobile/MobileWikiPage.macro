@@ -1,19 +1,19 @@
 <definition>
 	<command name="addPG">
-		<execute action="MobilePGWiki#click" locator-key1="REORDER_ICON" />
+		<execute action="MobilePGWiki#click" locator1="REORDER_ICON" />
 
-		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute action="PGWiki#assertClick" locator1="NAVIGATION_ALL_PAGES" value1="All Pages" />
 
 		<execute function="#pause" locator1="2000" />
 
-		<execute action="PGWikiAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute action="PGWikiAllpages#assertClick" locator1="ADD_PAGE_BUTTON" value1="Add Page" />
 
-		<execute action="PGWikiAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiPageTitle}" />
+		<execute action="PGWikiAddpage#type" locator1="TITLE_FIELD" value1="${wikiPageTitle}" />
 
-		<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
+		<execute action="CKEditor#type" locator1="BODY_FIELD" value1="${wikiPageContent}" />
 
-		<execute action="PGWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGWikiAddpage#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGWikiAllpages#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 </definition>

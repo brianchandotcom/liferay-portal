@@ -194,7 +194,7 @@
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="USER_BAR" />
+		<execute action="SOUserBar#assertElementNotPresent" locator1="USER_BAR" />
 
 		<execute macro="SOConfigurations#assignUserRoleCP">
 			<var name="userScreenName" value="${adminScreenName}" />
@@ -317,9 +317,9 @@
 		</execute>
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="GO_TO_ADD_SITE_BUTTON" />
-		<execute action="SOUserBar#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_NOT_PRESENT_PNG" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#assertElementNotPresent" locator1="GO_TO_ADD_SITE_BUTTON" />
+		<execute action="SOUserBar#sikuliAssertElementPresent" locator1="SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_NOT_PRESENT_PNG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -340,8 +340,8 @@
 		</execute>
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_PRESENT_PNG" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#sikuliAssertElementPresent" locator1="SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_PRESENT_PNG" />
 	</command>
 
 	<command name="EnableAndDisableSOSiteTypes" priority="5">
@@ -451,9 +451,9 @@
 		</execute>
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="GO_TO_ADD_SITE_BUTTON" />
-		<execute action="SOUserBar#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_NOT_PRESENT_PNG" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#assertElementNotPresent" locator1="GO_TO_ADD_SITE_BUTTON" />
+		<execute action="SOUserBar#sikuliAssertElementPresent" locator1="SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_NOT_PRESENT_PNG" />
 
 		<execute macro="SOConfigurations#enableSOSiteTypeCP">
 			<var name="siteTypeList" value="${siteType1},${siteType2},${siteType3},${siteType4}" />

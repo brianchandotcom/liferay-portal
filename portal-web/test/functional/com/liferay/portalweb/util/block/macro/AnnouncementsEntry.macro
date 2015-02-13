@@ -1,38 +1,38 @@
 <definition>
 	<command name="addPG">
-		<execute action="PGAnnouncements#click" locator-key1="NAVIGATION_MANAGE_ENTRIES" />
+		<execute action="PGAnnouncements#click" locator1="NAVIGATION_MANAGE_ENTRIES" />
 
-		<execute action="PGAnnouncementsManageentries#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute action="PGAnnouncementsManageentries#assertClick" locator-key1="ADD_ENTRY_BUTTON" value1="Add Entry" />
+		<execute action="PGAnnouncementsManageentries#select" locator1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute action="PGAnnouncementsManageentries#assertClick" locator1="ADD_ENTRY_BUTTON" value1="Add Entry" />
 
-		<execute action="PGAnnouncementsAddentry#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
-		<execute action="PGAnnouncementsAddentry#type" locator-key1="URL_FIELD" value1="${entryURL}" />
-		<execute action="PGAnnouncementsAddentry#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="PGAnnouncementsAddentry#type" locator1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="PGAnnouncementsAddentry#type" locator1="URL_FIELD" value1="${entryURL}" />
+		<execute action="PGAnnouncementsAddentry#type" locator1="CONTENT_FIELD" value1="${entryContent}" />
 
 		<if>
 			<isset var="priority" />
 			<then>
-				<execute action="PGAnnouncementsAddentry#select" locator-key1="PRIORITY_SELECT" value1="${priority}" />
+				<execute action="PGAnnouncementsAddentry#select" locator1="PRIORITY_SELECT" value1="${priority}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="expirationDate" />
 			<then>
-				<execute action="PGAnnouncementsAddentry#type" locator-key1="EXPIRATION_DATE_DATE_INPUT" value1="${expirationDate}" />
+				<execute action="PGAnnouncementsAddentry#type" locator1="EXPIRATION_DATE_DATE_INPUT" value1="${expirationDate}" />
 			</then>
 		</if>
 
-		<execute action="PGAnnouncementsAddentry#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGAnnouncementsAddentry#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="deletePG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
-		<execute action="PGAnnouncements#assertClickNoError" locator-key1="ENTRY_DELETE" value1="Delete" />
-		<execute action="PGAnnouncements#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="PGAnnouncements#assertTextEquals" locator1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGAnnouncements#assertTextEquals" locator1="ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
+		<execute action="PGAnnouncements#assertClickNoError" locator1="ENTRY_DELETE" value1="Delete" />
+		<execute action="PGAnnouncements#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute action="PGAnnouncements#assertTextNotPresent" value1="{entryTitle}" />
 		<execute action="PGAnnouncements#assertTextNotPresent" value1="{entryContent}" />
@@ -41,32 +41,32 @@
 	<command name="editPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
-		<execute action="PGAnnouncements#click" locator-key1="ENTRY_EDIT" />
+		<execute action="PGAnnouncements#assertTextEquals" locator1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGAnnouncements#assertTextEquals" locator1="ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
+		<execute action="PGAnnouncements#click" locator1="ENTRY_EDIT" />
 
-		<execute action="PGAnnouncementsAddentry#type" locator-key1="TITLE_FIELD" value1="${entryTitleEdit}" />
-		<execute action="PGAnnouncementsAddentry#type" locator-key1="URL_FIELD" value1="${entryURLEdit}" />
-		<execute action="PGAnnouncementsAddentry#type" locator-key1="CONTENT_FIELD" value1="${entryContentEdit}" />
-		<execute action="PGAnnouncementsAddentry#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGAnnouncementsAddentry#type" locator1="TITLE_FIELD" value1="${entryTitleEdit}" />
+		<execute action="PGAnnouncementsAddentry#type" locator1="URL_FIELD" value1="${entryURLEdit}" />
+		<execute action="PGAnnouncementsAddentry#type" locator1="CONTENT_FIELD" value1="${entryContentEdit}" />
+		<execute action="PGAnnouncementsAddentry#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="hidePG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGAnnouncements#assertClick" locator-key1="ENTRY_HIDE" value1="Hide" />
+		<execute action="PGAnnouncements#assertClick" locator1="ENTRY_HIDE" value1="Hide" />
 	</command>
 
 	<command name="markAsReadPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGAnnouncements#assertClick" locator-key1="ENTRY_MARK_AS_READ" value1="Mark as Read" />
+		<execute action="PGAnnouncements#assertClick" locator1="ENTRY_MARK_AS_READ" value1="Mark as Read" />
 	</command>
 
 	<command name="showPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGAnnouncements#assertClick" locator-key1="ENTRY_SHOW" value1="Show" />
+		<execute action="PGAnnouncements#assertClick" locator1="ENTRY_SHOW" value1="Show" />
 	</command>
 
 	<command name="tearDownPG">
@@ -74,16 +74,16 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGAnnouncements#click" locator-key1="NAVIGATION_MANAGE_ENTRIES" />
+		<execute action="PGAnnouncements#click" locator1="NAVIGATION_MANAGE_ENTRIES" />
 
-		<execute action="PGAnnouncementsManageentries#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="General" />
+		<execute action="PGAnnouncementsManageentries#select" locator1="DISTRIBUTION_SCOPE_SELECT" value1="General" />
 
 		<while>
-			<condition action="PGAnnouncementsManageentries#isElementPresent" locator-key1="ENTRY_TABLE_ACTIONS_GENERIC" />
+			<condition action="PGAnnouncementsManageentries#isElementPresent" locator1="ENTRY_TABLE_ACTIONS_GENERIC" />
 			<then>
-				<execute action="PGAnnouncementsManageentries#click" locator-key1="ENTRY_TABLE_ACTIONS_GENERIC" />
-				<execute action="PGAnnouncementsManageentries#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
-				<execute action="PGAnnouncementsManageentries#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="PGAnnouncementsManageentries#click" locator1="ENTRY_TABLE_ACTIONS_GENERIC" />
+				<execute action="PGAnnouncementsManageentries#assertClickNoError" locator1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+				<execute action="PGAnnouncementsManageentries#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</while>
 	</command>
@@ -96,61 +96,61 @@
 	<command name="viewEditPG">
 		<var name="key_entryTitle" value="${entryTitleEdit}" />
 
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitleEdit}" />
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_SCOPE" value1="${distributionScope}" />
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${distributionScope} ${entryContentEdit}" />
-		<execute action="PGAnnouncements#click" locator-key1="NAVIGATION_MANAGE_ENTRIES" />
+		<execute action="PGAnnouncements#assertTextEquals" locator1="ENTRY_TITLE" value1="${entryTitleEdit}" />
+		<execute action="PGAnnouncements#assertTextEquals" locator1="ENTRY_SCOPE" value1="${distributionScope}" />
+		<execute action="PGAnnouncements#assertTextEquals" locator1="ENTRY_CONTENT" value1="${distributionScope} ${entryContentEdit}" />
+		<execute action="PGAnnouncements#click" locator1="NAVIGATION_MANAGE_ENTRIES" />
 
-		<execute action="PGAnnouncementsManageentries#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitleEdit}" />
-		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TYPE" value1="${distributionScope}" />
+		<execute action="PGAnnouncementsManageentries#select" locator1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator1="ENTRY_TABLE_TITLE" value1="${entryTitleEdit}" />
+		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator1="ENTRY_TABLE_TYPE" value1="${distributionScope}" />
 	</command>
 
 	<command name="viewHiddenPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_SHOW" value1="Show" />
-		<execute action="PGAnnouncements#assertElementNotPresent" locator-key1="ENTRY_CONTENT" />
-		<execute action="PGAnnouncements#assertElementNotPresent" locator-key1="ENTRY_SCOPE" />
+		<execute action="PGAnnouncements#assertTextEquals" locator1="ENTRY_SHOW" value1="Show" />
+		<execute action="PGAnnouncements#assertElementNotPresent" locator1="ENTRY_CONTENT" />
+		<execute action="PGAnnouncements#assertElementNotPresent" locator1="ENTRY_SCOPE" />
 	</command>
 
 	<command name="viewNoPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGAnnouncements#assertTextNotPresent" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGAnnouncements#assertTextNotPresent" locator1="ENTRY_TITLE" value1="${entryTitle}" />
 	</command>
 
 	<command name="viewPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_SCOPE" value1="${distributionScope}" />
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
-		<execute action="PGAnnouncements#click" locator-key1="NAVIGATION_MANAGE_ENTRIES" />
+		<execute action="PGAnnouncements#assertTextEquals" locator1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGAnnouncements#assertTextEquals" locator1="ENTRY_SCOPE" value1="${distributionScope}" />
+		<execute action="PGAnnouncements#assertTextEquals" locator1="ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
+		<execute action="PGAnnouncements#click" locator1="NAVIGATION_MANAGE_ENTRIES" />
 
-		<execute action="PGAnnouncementsManageentries#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TYPE" value1="${announcementType}" />
+		<execute action="PGAnnouncementsManageentries#select" locator1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator1="ENTRY_TABLE_TYPE" value1="${announcementType}" />
 	</command>
 
 	<command name="viewViaEntriesPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_SCOPE" value1="${distributionScope}" />
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
+		<execute action="PGAnnouncements#assertTextEquals" locator1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGAnnouncements#assertTextEquals" locator1="ENTRY_SCOPE" value1="${distributionScope}" />
+		<execute action="PGAnnouncements#assertTextEquals" locator1="ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
 	</command>
 
 	<command name="viewViaManageEntriesPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGAnnouncementsManageentries#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TYPE" value1="${announcementType}" />
-		<execute action="PGAnnouncementsManageentries#assertElementPresent" locator-key1="ENTRY_TABLE_MODIFIED_DATE" />
-		<execute action="PGAnnouncementsManageentries#assertElementPresent" locator-key1="ENTRY_TABLE_DISPLAY_DATE" />
-		<execute action="PGAnnouncementsManageentries#assertElementPresent" locator-key1="ENTRY_TABLE_EXPIRATION_DATE" />
-		<execute action="PGAnnouncementsManageentries#assertElementPresent" locator-key1="ENTRY_TABLE_MODIFIED_DATE" />
-		<execute action="PGAnnouncementsManageentries#assertElementPresent" locator-key1="ENTRY_TABLE_ACTIONS" />
+		<execute action="PGAnnouncementsManageentries#select" locator1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator1="ENTRY_TABLE_TYPE" value1="${announcementType}" />
+		<execute action="PGAnnouncementsManageentries#assertElementPresent" locator1="ENTRY_TABLE_MODIFIED_DATE" />
+		<execute action="PGAnnouncementsManageentries#assertElementPresent" locator1="ENTRY_TABLE_DISPLAY_DATE" />
+		<execute action="PGAnnouncementsManageentries#assertElementPresent" locator1="ENTRY_TABLE_EXPIRATION_DATE" />
+		<execute action="PGAnnouncementsManageentries#assertElementPresent" locator1="ENTRY_TABLE_MODIFIED_DATE" />
+		<execute action="PGAnnouncementsManageentries#assertElementPresent" locator1="ENTRY_TABLE_ACTIONS" />
 	</command>
 </definition>

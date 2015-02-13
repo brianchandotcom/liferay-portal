@@ -2,7 +2,7 @@
 	<command name="viewCustomADTMultiColumnPG">
 		<for list="${listPageName}" param="pageName">
 			<var name="key_pageName" value="${pageName}" />
-			<execute action="PGSiteMapPortlet#assertTextEquals" locator-key1="ADT_MULTI_COLUMN_PAGE_DISPLAY" value1="${pageName}" />
+			<execute action="PGSiteMapPortlet#assertTextEquals" locator1="ADT_MULTI_COLUMN_PAGE_DISPLAY" value1="${pageName}" />
 		</for>
 
 		<if>
@@ -11,7 +11,7 @@
 				<for list="${listChildPageName}" param="childPageName">
 					<var name="key_childPageName" value="${childPageName}" />
 
-					<execute action="PGSiteMapPortlet#assertTextEquals" locator-key1="ADT_MULTI_COLUMN_CHILD_PAGE_DISPLAY" value1="${childPageName}" />
+					<execute action="PGSiteMapPortlet#assertTextEquals" locator1="ADT_MULTI_COLUMN_CHILD_PAGE_DISPLAY" value1="${childPageName}" />
 				</for>
 			</then>
 		</if>
@@ -20,7 +20,7 @@
 	<command name="viewDefaultPG">
 		<for list="${listPageName}" param="pageName">
 			<var name="key_pageName" value="${pageName}" />
-			<execute action="PGSiteMapPortlet#assertTextEquals" locator-key1="SITE_MAP_PAGE_DISPLAY" value1="${pageName}" />
+			<execute action="PGSiteMapPortlet#assertTextEquals" locator1="SITE_MAP_PAGE_DISPLAY" value1="${pageName}" />
 		</for>
 
 		<if>
@@ -29,7 +29,7 @@
 				<for list="${listChildPageName}" param="childPageName">
 					<var name="key_childPageName" value="${childPageName}" />
 
-					<execute action="PGSiteMapPortlet#assertTextEquals" locator-key1="SITE_MAP_CHILD_PAGE_DISPLAY" value1="${childPageName}" />
+					<execute action="PGSiteMapPortlet#assertTextEquals" locator1="SITE_MAP_CHILD_PAGE_DISPLAY" value1="${childPageName}" />
 				</for>
 			</then>
 		</if>

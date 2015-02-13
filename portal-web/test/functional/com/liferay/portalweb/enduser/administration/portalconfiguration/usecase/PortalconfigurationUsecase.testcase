@@ -116,7 +116,7 @@
 			<var name="virtualHostsURL" value="${otherInstanceAccessAttempt}" />
 		</execute>
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute action="Home#assertTextEquals" locator1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="ViewDeactivatedPortalInstance" priority="4">
@@ -231,7 +231,7 @@
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
-		<execute action="Home#assertTextEquals" locator-key1="STATUS_MESSAGE" value1="This instance is inactive. Please contact the administrator." />
+		<execute action="Home#assertTextEquals" locator1="STATUS_MESSAGE" value1="This instance is inactive. Please contact the administrator." />
 	</command>
 
 	<command name="ViewVirtualHostPrivateSitePage" priority="5">
@@ -292,7 +292,7 @@
 
 		<var name="key_pageName" value="Private Page" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="Private Page" />
+		<execute action="Home#assertTextEquals" locator1="PAGE" value1="Private Page" />
 		<execute action="Home#assertHTMLSourceTextPresent" value1="http://www.charlie.com:8080" />
 
 		<execute macro="User#logoutPG" />

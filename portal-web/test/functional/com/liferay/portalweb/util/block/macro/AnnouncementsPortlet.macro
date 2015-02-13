@@ -5,19 +5,19 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="PGAnnouncementsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="PGAnnouncementsConfiguration#select" locator-key1="SETUP_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="5" />
-		<execute action="PGAnnouncementsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGAnnouncementsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGAnnouncementsConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
+		<execute action="PGAnnouncementsConfiguration#select" locator1="SETUP_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="5" />
+		<execute action="PGAnnouncementsConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGAnnouncementsConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute action="PGAnnouncementsConfiguration#selectFrameTop" />
 	</command>
 
 	<command name="configurePaginationManageEntriesPG">
-		<execute action="PGAnnouncementsManageentries#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute action="PGAnnouncementsManageentries#click" locator-key1="ITEMS_PER_PAGE_BUTTON" />
+		<execute action="PGAnnouncementsManageentries#select" locator1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute action="PGAnnouncementsManageentries#click" locator1="ITEMS_PER_PAGE_BUTTON" />
 
 		<var name="key_itemsPerPage" value="${itemsPerPage}" />
 
-		<execute action="PGAnnouncementsManageentries#assertClick" locator-key1="MENULIST_ITEMS_PER_PAGE" value1="${itemsPerPage}" />
+		<execute action="PGAnnouncementsManageentries#assertClick" locator1="MENULIST_ITEMS_PER_PAGE" value1="${itemsPerPage}" />
 	</command>
 </definition>

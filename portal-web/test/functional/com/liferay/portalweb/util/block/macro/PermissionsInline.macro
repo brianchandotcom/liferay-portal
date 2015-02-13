@@ -9,19 +9,19 @@
 			<if>
 				<equals arg1="${addOrRemoveViewPermission}" arg2="Add" />
 				<then>
-					<execute action="Permissions#check" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+					<execute action="Permissions#check" locator1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 				</then>
 				<elseif>
 					<equals arg1="${addOrRemoveViewPermission}" arg2="Remove" />
 					<then>
-						<execute action="Permissions#uncheck" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+						<execute action="Permissions#uncheck" locator1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 					</then>
 				</elseif>
 			</if>
 		</for>
 
-		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Permissions#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="Permissions#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="assertDefaultPG">
@@ -37,10 +37,10 @@
 					<equals arg1="${roleName}" arg2="Site Member" />
 				</or>
 				<then>
-					<execute action="Permissions#assertNotChecked" locator-key1="CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX" />
+					<execute action="Permissions#assertNotChecked" locator1="CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX" />
 				</then>
 				<else>
-					<execute action="Permissions#assertChecked" locator-key1="CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX" />
+					<execute action="Permissions#assertChecked" locator1="CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX" />
 				</else>
 			</if>
 
@@ -52,14 +52,14 @@
 					<equals arg1="${roleName}" arg2="User" />
 				</or>
 				<then>
-					<execute action="Permissions#assertNotChecked" locator-key1="CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
-					<execute action="Permissions#assertNotChecked" locator-key1="CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
-					<execute action="Permissions#assertNotChecked" locator-key1="CONFIGURATION_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
+					<execute action="Permissions#assertNotChecked" locator1="CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
+					<execute action="Permissions#assertNotChecked" locator1="CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
+					<execute action="Permissions#assertNotChecked" locator1="CONFIGURATION_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
 				</then>
 				<else>
-					<execute action="Permissions#assertChecked" locator-key1="CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
-					<execute action="Permissions#assertChecked" locator-key1="CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
-					<execute action="Permissions#assertChecked" locator-key1="CONFIGURATION_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
+					<execute action="Permissions#assertChecked" locator1="CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
+					<execute action="Permissions#assertChecked" locator1="CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
+					<execute action="Permissions#assertChecked" locator1="CONFIGURATION_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
 				</else>
 			</if>
 
@@ -69,10 +69,10 @@
 					<equals arg1="${roleName}" arg2="User" />
 				</or>
 				<then>
-					<execute action="Permissions#assertNotChecked" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+					<execute action="Permissions#assertNotChecked" locator1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 				</then>
 				<else>
-					<execute action="Permissions#assertChecked" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+					<execute action="Permissions#assertChecked" locator1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 				</else>
 			</if>
 		</for>
@@ -83,11 +83,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGBlogs#click" locator-key1="OPTIONS" />
-		<execute action="PGBlogs#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute action="PGBlogs#click" locator1="OPTIONS" />
+		<execute action="PGBlogs#assertClick" locator1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute action="PGBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="PGBlogsConfiguration#assertClick" locator-key1="NAVIGATION_PERMISSIONS" value1="Permissions" />
+		<execute action="PGBlogsConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
+		<execute action="PGBlogsConfiguration#assertClick" locator1="NAVIGATION_PERMISSIONS" value1="Permissions" />
 	</command>
 
 	<command name="gotoBlogsEntryCP">
@@ -100,10 +100,10 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="CPBlogs#click" locator-key1="ENTRY_TABLE_ACTIONS" />
-		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute action="CPBlogs#click" locator1="ENTRY_TABLE_ACTIONS" />
+		<execute action="CPBlogs#assertClick" locator1="ENTRY_MENULIST_PERMISSIONS" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoBlogsEntryPG">
@@ -115,9 +115,9 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_PERMISSIONS" value1="Permissions" />
+		<execute action="PGBlogs#assertClick" locator1="ENTRY_PERMISSIONS" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoBlogsPG">
@@ -127,9 +127,9 @@
 			<var name="siteURL" value="${siteURLTemp}" />
 		</execute>
 
-		<execute action="PGBlogs#assertClick" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute action="PGBlogs#assertClick" locator1="PERMISSIONS_BUTTON" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoConfigurationPG">
@@ -137,18 +137,18 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="BasePortletConfiguration#assertClick" locator-key1="NAVIGATION_PERMISSIONS" value1="Permissions" />
+		<execute action="BasePortletConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
+		<execute action="BasePortletConfiguration#assertClick" locator1="NAVIGATION_PERMISSIONS" value1="Permissions" />
 	</command>
 
 	<command name="gotoDMDocumentPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator1="TOOLBAR_PERMISSIONS_BUTTON" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoDMFolderPG">
@@ -160,10 +160,10 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_FOLDER_ACTIONS" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="FOLDER_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute action="PGDocumentsandmedia#click" locator1="ENTRY_ICON_FOLDER_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="FOLDER_MENULIST_PERMISSIONS" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoDocumentsAndMediaPG">
@@ -173,10 +173,10 @@
 			<var name="siteURL" value="${siteURLTemp}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="FILTER_HOME_ACTIONS" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="HOME_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute action="PGDocumentsandmedia#click" locator1="FILTER_HOME_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="HOME_MENULIST_PERMISSIONS" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoMessageBoardsCategoryPG">
@@ -185,18 +185,18 @@
 			<then>
 				<var name="key_categoryDescription" value="${categoryDescription}" />
 
-				<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY_DESCRIPTION" value1="${categoryDescription}" />
+				<execute action="PGMessageboards#assertClick" locator1="CATEGORY_TABLE_CATEGORY_DESCRIPTION" value1="${categoryDescription}" />
 			</then>
 			<else>
 				<var name="key_categoryName" value="${categoryName}" />
 
-				<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+				<execute action="PGMessageboards#assertClick" locator1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
 			</else>
 		</if>
 
-		<execute action="PGMessageboardsCategory#assertClick" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute action="PGMessageboardsCategory#assertClick" locator1="PERMISSIONS_BUTTON" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoMessageBoardsPG">
@@ -206,9 +206,9 @@
 			<var name="siteURL" value="${siteURLTemp}" />
 		</execute>
 
-		<execute action="PGMessageboards#assertClick" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute action="PGMessageboards#assertClick" locator1="PERMISSIONS_BUTTON" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoMessageBoardsThreadReplyPG">
@@ -220,11 +220,11 @@
 
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboards#assertClick" locator1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_REPLY_PERMISSIONS_1" value1="Permissions" />
+		<execute action="PGMessageboardsThread#assertClick" locator1="MESSAGE_REPLY_PERMISSIONS_1" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoPagePG">
@@ -235,31 +235,31 @@
 		</execute>
 
 		<if>
-			<condition action="SOUserBar#isElementPresent" locator-key1="USER_BAR" />
+			<condition action="SOUserBar#isElementPresent" locator1="USER_BAR" />
 			<then>
 				<if>
-					<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+					<condition action="SOUserBar#isElementNotPresent" locator1="VISIBLE_PAGE_CONTROLS" />
 					<then>
-						<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+						<execute action="SOUserBar#click" locator1="TOGGLE_DOCKBAR" />
 					</then>
 				</if>
 			</then>
 		</if>
 
-		<execute action="Dockbar#click" locator-key1="EDIT" />
+		<execute action="Dockbar#click" locator1="EDIT" />
 
-		<execute action="DockbarEditpanel#click" locator-key1="TOOLBAR_PERMISSIONS" />
+		<execute action="DockbarEditpanel#click" locator1="TOOLBAR_PERMISSIONS" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoPollPermissionsCP">
 		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
 
-		<execute action="CPPolls#click" locator-key1="POLLS_TABLE_ACTION" />
-		<execute action="CPPolls#assertClick" locator-key1="POLLS_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute action="CPPolls#click" locator1="POLLS_TABLE_ACTION" />
+		<execute action="CPPolls#assertClick" locator1="POLLS_MENULIST_PERMISSIONS" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoSitepageCP">
@@ -269,10 +269,10 @@
 
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
-		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_PERMISSIONS" value1="Permissions" />
+		<execute action="CPSitepages#click" locator1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
+		<execute action="CPSitepages#assertClick" locator1="TOOLBAR_PERMISSIONS" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoSiteTeamsCP">
@@ -283,10 +283,10 @@
 
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute action="CPSiteteams#click" locator-key1="TEAM_TABLE_ACTIONS" />
-		<execute action="CPSiteteams#assertClick" locator-key1="TEAM_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute action="CPSiteteams#click" locator1="TEAM_TABLE_ACTIONS" />
+		<execute action="CPSiteteams#assertClick" locator1="TEAM_MENULIST_PERMISSIONS" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoSiteTemplateCP">
@@ -297,10 +297,10 @@
 
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
-		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_PERMISSIONS" value1="Permissions" />
+		<execute action="CPSitepages#click" locator1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
+		<execute action="CPSitepages#assertClick" locator1="TOOLBAR_PERMISSIONS" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoUserGroupSitePermissionsCP">
@@ -310,32 +310,32 @@
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_TABLE_ACTIONS" />
-		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_SITE_PERMISSIONS" value1="Site Permissions" />
+		<execute action="CPUsergroups#click" locator1="USER_GROUP_TABLE_ACTIONS" />
+		<execute action="CPUsergroups#assertClick" locator1="USER_GROUP_MENULIST_SITE_PERMISSIONS" value1="Site Permissions" />
 	</command>
 
 	<command name="gotoWCArticle">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute action="CPWebcontent#mouseOver" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
-		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
-		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute action="CPWebcontent#mouseOver" locator1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
+		<execute action="CPWebcontent#assertClick" locator1="ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
+		<execute action="CPWebcontent#assertClick" locator1="ENTRY_MENULIST_PERMISSIONS" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
-		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${webContentTitle}" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#assertTextEquals" locator1="HEADER_TITLE" value1="${webContentTitle}" />
 	</command>
 
 	<command name="viewPermissionsChecked">
 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
 		<var name="key_roleName" value="${key_roleName?lowercase()}" />
 
-		<execute action="Permissions#assertChecked" locator-key1="${permissionDefinitionKey}" />
+		<execute action="Permissions#assertChecked" locator1="${permissionDefinitionKey}" />
 	</command>
 
 	<command name="viewPermissionsRemoved">
 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
 		<var name="key_roleName" value="${key_roleName?lowercase()}" />
 
-		<execute action="Permissions#assertNotChecked" locator-key1="${permissionDefinitionKey}" />
+		<execute action="Permissions#assertNotChecked" locator1="${permissionDefinitionKey}" />
 	</command>
 </definition>

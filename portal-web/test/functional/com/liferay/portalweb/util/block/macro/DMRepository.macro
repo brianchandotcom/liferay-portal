@@ -1,21 +1,21 @@
 <definition>
 	<command name="addCP">
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_REPOSITORY" value1="Repository" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="ADD_MENULIST_REPOSITORY" value1="Repository" />
 
-		<execute action="CPDocumentsandmediaAddrepository#type" locator-key1="NAME_FIELD" value1="${dmRepositoryName}" />
-		<execute action="CPDocumentsandmediaAddrepository#select" locator-key1="REPOSITORY_TYPE_SELECT" value1="${dmRepositoryType}" />
-		<execute action="CPDocumentsandmediaAddrepository#type" locator-key1="SITE_URL_FIELD" value1="${dmRepositorySiteURL}" />
-		<execute action="CPDocumentsandmediaAddrepository#type" locator-key1="LIBRARY_NAME_FIELD" value1="${dmRepositoryLibraryName}" />
-		<execute action="CPDocumentsandmediaAddrepository#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPDocumentsandmediaAddrepository#type" locator1="NAME_FIELD" value1="${dmRepositoryName}" />
+		<execute action="CPDocumentsandmediaAddrepository#select" locator1="REPOSITORY_TYPE_SELECT" value1="${dmRepositoryType}" />
+		<execute action="CPDocumentsandmediaAddrepository#type" locator1="SITE_URL_FIELD" value1="${dmRepositorySiteURL}" />
+		<execute action="CPDocumentsandmediaAddrepository#type" locator1="LIBRARY_NAME_FIELD" value1="${dmRepositoryLibraryName}" />
+		<execute action="CPDocumentsandmediaAddrepository#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="gotoCP">
 		<var name="key_dmRepositoryName" value="${dmRepositoryName}" />
 
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="FILTER_REPOSITORY" value1="${dmRepositoryName}" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="FILTER_REPOSITORY" value1="${dmRepositoryName}" />
 	</command>
 
 	<command name="tearDownCP">
@@ -24,26 +24,26 @@
 		</execute>
 
 		<while>
-			<condition action="CPDocumentsandmedia#isElementPresent" locator-key1="FILTER_REPOSITORY_GENERIC" />
+			<condition action="CPDocumentsandmedia#isElementPresent" locator1="FILTER_REPOSITORY_GENERIC" />
 			<then>
-				<execute action="CPDocumentsandmedia#click" locator-key1="FILTER_REPOSITORY_GENERIC" />
+				<execute action="CPDocumentsandmedia#click" locator1="FILTER_REPOSITORY_GENERIC" />
 
 				<if>
-					<condition action="CPDocumentsandmedia#isElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_GENERIC" />
+					<condition action="CPDocumentsandmedia#isElementPresent" locator1="DOCUMENT_CONTAINER_DOCUMENT_GENERIC" />
 					<then>
-						<execute action="CPDocumentsandmedia#check" locator-key1="TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
+						<execute action="CPDocumentsandmedia#check" locator1="TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
 						<execute function="#pause" locator1="1000" />
-						<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
-						<execute action="CPDocumentsandmedia#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
-						<execute action="CPDocumentsandmedia#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
-						<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+						<execute action="CPDocumentsandmedia#assertClick" locator1="TOOLBAR_ACTIONS" value1="Actions" />
+						<execute action="CPDocumentsandmedia#assertClickNoError" locator1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+						<execute action="CPDocumentsandmedia#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
+						<execute action="CPDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 					</then>
 				</if>
 
-				<execute action="CPDocumentsandmedia#click" locator-key1="FILTER_REPOSITORY_ACTIONS_GENERIC" />
-				<execute action="CPDocumentsandmedia#assertClickNoError" locator-key1="FILTER_MENULIST_DELETE" value1="Delete" />
-				<execute action="CPDocumentsandmedia#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="CPDocumentsandmedia#click" locator1="FILTER_REPOSITORY_ACTIONS_GENERIC" />
+				<execute action="CPDocumentsandmedia#assertClickNoError" locator1="FILTER_MENULIST_DELETE" value1="Delete" />
+				<execute action="CPDocumentsandmedia#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="CPDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
 	</command>
@@ -51,6 +51,6 @@
 	<command name="viewCP">
 		<var name="key_dmFolderName" value="${dmRepositoryName}" />
 
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="BREADCRUMB_LAST" value1="${dmRepositoryName}" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="BREADCRUMB_LAST" value1="${dmRepositoryName}" />
 	</command>
 </definition>

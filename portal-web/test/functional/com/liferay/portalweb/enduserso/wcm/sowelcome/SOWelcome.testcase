@@ -46,6 +46,6 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOWelcome#assertTextEquals" locator-key1="WELCOME_PORTLET_CONTENT" value1="${welcomeContent}" />
+		<execute action="SOWelcome#assertTextEquals" locator1="WELCOME_PORTLET_CONTENT" value1="${welcomeContent}" />
 	</command>
 </definition>

@@ -38,18 +38,18 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
-		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute action="Dockbar#assertClick" locator1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
 		<execute function="#click" locator1="//a[@title='Back']" />
 
-		<execute action="SOSite#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
-		<execute action="SOSite#assertTextEquals" locator-key1="NAVIGATION_HOME" value1="Home" />
-		<execute action="SOSite#assertTextEquals" locator-key1="NAVIGATION_CALENDAR" value1="Calendar" />
-		<execute action="SOSite#assertTextEquals" locator-key1="NAVIGATION_DOCUMENTS" value1="Documents" />
-		<execute action="SOSite#assertTextEquals" locator-key1="NAVIGATION_FORUMS" value1="Forums" />
-		<execute action="SOSite#assertTextEquals" locator-key1="NAVIGATION_BLOGS" value1="Blogs" />
-		<execute action="SOSite#assertTextEquals" locator-key1="NAVIGATION_WIKI" value1="Wiki" />
-		<execute action="SOSite#assertTextEquals" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
+		<execute action="SOSite#assertTextEquals" locator1="SITE_NAME" value1="${siteName}" />
+		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_HOME" value1="Home" />
+		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_CALENDAR" value1="Calendar" />
+		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_DOCUMENTS" value1="Documents" />
+		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_FORUMS" value1="Forums" />
+		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_BLOGS" value1="Blogs" />
+		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_WIKI" value1="Wiki" />
+		<execute action="SOSite#assertTextEquals" locator1="NAVIGATION_MEMBERS" value1="Members" />
 	</command>
 
 	<command known-issues="LIFERAYQA-11550" name="ViewSOSiteLocalized" priority="4">

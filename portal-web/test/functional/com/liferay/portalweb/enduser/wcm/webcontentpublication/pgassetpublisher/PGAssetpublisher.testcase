@@ -370,8 +370,8 @@
 
 		<var name="key_structureName" value="Advertisement WC Structure Name" />
 
-		<execute action="CPWebcontentStructures#click" locator-key1="STRUCTURE_TABLE_ACTIONS" />
-		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute action="CPWebcontentStructures#click" locator1="STRUCTURE_TABLE_ACTIONS" />
+		<execute action="CPWebcontentStructures#assertClick" locator1="STRUCTURE_MENULIST_PERMISSIONS" value1="Permissions" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 			<var name="addOrRemoveViewPermission" value="Remove" />
@@ -396,8 +396,8 @@
 
 		<var name="key_structureName" value="Press Release Structure Name" />
 
-		<execute action="CPWebcontentStructures#click" locator-key1="STRUCTURE_TABLE_ACTIONS" />
-		<execute action="CPWebcontentStructures#click" locator-key1="STRUCTURE_MENULIST_PERMISSIONS" />
+		<execute action="CPWebcontentStructures#click" locator1="STRUCTURE_TABLE_ACTIONS" />
+		<execute action="CPWebcontentStructures#click" locator1="STRUCTURE_MENULIST_PERMISSIONS" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 			<var name="addOrRemoveViewPermission" value="Remove" />
@@ -429,8 +429,8 @@
 
 		<var name="key_templateName" value="Advertisement Template Name" />
 
-		<execute action="CPWebcontentTemplates#click" locator-key1="TEMPLATE_TABLE_ACTIONS" />
-		<execute action="CPWebcontentTemplates#click" locator-key1="TEMPLATE_MENULIST_PERMISSIONS" />
+		<execute action="CPWebcontentTemplates#click" locator1="TEMPLATE_TABLE_ACTIONS" />
+		<execute action="CPWebcontentTemplates#click" locator1="TEMPLATE_MENULIST_PERMISSIONS" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 			<var name="addOrRemoveViewPermission" value="Remove" />
@@ -462,8 +462,8 @@
 
 		<var name="key_templateName" value="Press Release Template Name" />
 
-		<execute action="CPWebcontentTemplates#click" locator-key1="TEMPLATE_TABLE_ACTIONS" />
-		<execute action="CPWebcontentTemplates#click" locator-key1="TEMPLATE_MENULIST_PERMISSIONS" />
+		<execute action="CPWebcontentTemplates#click" locator1="TEMPLATE_TABLE_ACTIONS" />
+		<execute action="CPWebcontentTemplates#click" locator1="TEMPLATE_MENULIST_PERMISSIONS" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 			<var name="addOrRemoveViewPermission" value="Remove" />
@@ -578,15 +578,15 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
+		<execute action="PGAssetpublisher#assertClick" locator1="ADD_NEW_DROPDOWN" value1="Add New" />
 
 		<var name="key_structureName" value="Advertisement WC Structure Name" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ADD_NEW_MENULIST_CUSTOM_STRUCTURE" value1="Advertisement WC Structure Name" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ADD_NEW_MENULIST_CUSTOM_STRUCTURE" value1="Advertisement WC Structure Name" />
 
 		<var name="key_structureName" value="Press Release Structure Name" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ADD_NEW_MENULIST_CUSTOM_STRUCTURE" value1="Press Release Structure Name" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ADD_NEW_MENULIST_CUSTOM_STRUCTURE" value1="Press Release Structure Name" />
 
 		<execute macro="User#logoutPG" />
 
@@ -613,14 +613,14 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPWebcontent#assertClick" locator-key1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
+		<execute action="CPWebcontent#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
+		<execute action="CPWebcontent#assertClick" locator1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
 
-		<execute action="CPWebcontentStructures#selectFrame" locator-key1="STRUCTURES_IFRAME" />
+		<execute action="CPWebcontentStructures#selectFrame" locator1="STRUCTURES_IFRAME" />
 
 		<var name="key_structureName" value="Press Release Structure Name" />
 
-		<execute action="CPWebcontentStructures#assertElementNotPresent" locator-key1="STRUCTURE_TABLE_NAME" />
+		<execute action="CPWebcontentStructures#assertElementNotPresent" locator1="STRUCTURE_TABLE_NAME" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="nonAdminUser" value="true" />
@@ -639,14 +639,14 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPWebcontent#assertClick" locator-key1="MANAGE_MENULIST_TEMPLATES" value1="Templates" />
+		<execute action="CPWebcontent#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
+		<execute action="CPWebcontent#assertClick" locator1="MANAGE_MENULIST_TEMPLATES" value1="Templates" />
 
-		<execute action="CPWebcontentTemplates#selectFrame" locator-key1="TEMPLATES_IFRAME" />
+		<execute action="CPWebcontentTemplates#selectFrame" locator1="TEMPLATES_IFRAME" />
 
 		<var name="key_templateName" value="Press Release Template Name" />
 
-		<execute action="CPWebcontentTemplates#assertElementNotPresent" locator-key1="TEMPLATE_TABLE_NAME" />
+		<execute action="CPWebcontentTemplates#assertElementNotPresent" locator1="TEMPLATE_TABLE_NAME" />
 
 		<execute macro="Page#openURL">
 			<var name="pageAccess" value="Public" />
@@ -655,15 +655,15 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
+		<execute action="PGAssetpublisher#assertClick" locator1="ADD_NEW_DROPDOWN" value1="Add New" />
 
 		<var name="key_structureName" value="Advertisement WC Structure Name" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ADD_NEW_MENULIST_CUSTOM_STRUCTURE" value1="Advertisement WC Structure Name" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ADD_NEW_MENULIST_CUSTOM_STRUCTURE" value1="Advertisement WC Structure Name" />
 
 		<var name="key_structureName" value="Press Release Structure Name" />
 
-		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ADD_NEW_MENULIST_CUSTOM_STRUCTURE" />
+		<execute action="PGAssetpublisher#assertElementNotPresent" locator1="ADD_NEW_MENULIST_CUSTOM_STRUCTURE" />
 
 		<execute macro="User#logoutPG" />
 
@@ -690,14 +690,14 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPWebcontent#assertClick" locator-key1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
+		<execute action="CPWebcontent#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
+		<execute action="CPWebcontent#assertClick" locator1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
 
-		<execute action="CPWebcontentStructures#selectFrame" locator-key1="STRUCTURES_IFRAME" />
+		<execute action="CPWebcontentStructures#selectFrame" locator1="STRUCTURES_IFRAME" />
 
 		<var name="key_structureName" value="Advertisement WC Structure Name" />
 
-		<execute action="CPWebcontentStructures#assertElementNotPresent" locator-key1="STRUCTURE_TABLE_NAME" />
+		<execute action="CPWebcontentStructures#assertElementNotPresent" locator1="STRUCTURE_TABLE_NAME" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="nonAdminUser" value="true" />
@@ -716,14 +716,14 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPWebcontent#assertClick" locator-key1="MANAGE_MENULIST_TEMPLATES" value1="Templates" />
+		<execute action="CPWebcontent#assertClick" locator1="TOOLBAR_MANAGE" value1="Manage" />
+		<execute action="CPWebcontent#assertClick" locator1="MANAGE_MENULIST_TEMPLATES" value1="Templates" />
 
-		<execute action="CPWebcontentTemplates#selectFrame" locator-key1="TEMPLATES_IFRAME" />
+		<execute action="CPWebcontentTemplates#selectFrame" locator1="TEMPLATES_IFRAME" />
 
 		<var name="key_templateName" value="Advertisement Template Name" />
 
-		<execute action="CPWebcontentTemplates#assertElementNotPresent" locator-key1="TEMPLATE_TABLE_NAME" />
+		<execute action="CPWebcontentTemplates#assertElementNotPresent" locator1="TEMPLATE_TABLE_NAME" />
 
 		<execute macro="Page#openURL">
 			<var name="pageAccess" value="Public" />
@@ -732,15 +732,15 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
+		<execute action="PGAssetpublisher#assertClick" locator1="ADD_NEW_DROPDOWN" value1="Add New" />
 
 		<var name="key_structureName" value="Advertisement WC Structure Name" />
 
-		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ADD_NEW_MENULIST_CUSTOM_STRUCTURE" />
+		<execute action="PGAssetpublisher#assertElementNotPresent" locator1="ADD_NEW_MENULIST_CUSTOM_STRUCTURE" />
 
 		<var name="key_structureName" value="Press Release Structure Name" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ADD_NEW_MENULIST_CUSTOM_STRUCTURE" value1="Press Release Structure Name" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ADD_NEW_MENULIST_CUSTOM_STRUCTURE" value1="Press Release Structure Name" />
 	</command>
 
 	<command name="ConfigureAPPortletDisplayPage" priority="5">

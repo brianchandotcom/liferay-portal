@@ -1,57 +1,57 @@
 <definition>
 	<command name="configureScopePG">
 		<if>
-			<condition action="PGWikidisplay#isElementPresent" locator-key1="PORTLET_CONFIGURATION_MESSAGE" />
+			<condition action="PGWikidisplay#isElementPresent" locator1="PORTLET_CONFIGURATION_MESSAGE" />
 			<then>
-				<execute action="PGWikidisplay#assertClick" locator-key1="PORTLET_CONFIGURATION_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
+				<execute action="PGWikidisplay#assertClick" locator1="PORTLET_CONFIGURATION_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
 			</then>
 			<elseif>
-				<condition action="PGWikidisplay#isElementNotPresent" locator-key1="PORTLET_CONFIGURATION_MESSAGE" />
+				<condition action="PGWikidisplay#isElementNotPresent" locator1="PORTLET_CONFIGURATION_MESSAGE" />
 				<then>
-					<execute action="PGWikidisplay#click" locator-key1="OPTIONS_ICON"  />
-					<execute action="PGWikidisplay#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+					<execute action="PGWikidisplay#click" locator1="OPTIONS_ICON"  />
+					<execute action="PGWikidisplay#assertClick" locator1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute action="PGWikidisplayConfiguration#selectFrame" locator-key1="WIKI_DISPLAY_CONFIGURATION_IFRAME" />
-		<execute action="PGWikidisplayConfiguration#assertClick" locator-key1="NAVIGATION_TAB_SCOPE" value1="Scope" />
-		<execute action="PGWikidisplayConfigurationScope#click" locator-key1="SCOPE_SELECT" />
+		<execute action="PGWikidisplayConfiguration#selectFrame" locator1="WIKI_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute action="PGWikidisplayConfiguration#assertClick" locator1="NAVIGATION_TAB_SCOPE" value1="Scope" />
+		<execute action="PGWikidisplayConfigurationScope#click" locator1="SCOPE_SELECT" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="PGWikidisplayConfigurationScope#assertClick" locator-key1="SCOPE_MENULIST_SITE" value1="${siteName}" />
-		<execute action="PGWikidisplayConfigurationScope#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGWikidisplayConfigurationScope#assertSelectedLabel" locator-key1="SCOPE_SELECT" value1="${siteName}" />
+		<execute action="PGWikidisplayConfigurationScope#assertClick" locator1="SCOPE_MENULIST_SITE" value1="${siteName}" />
+		<execute action="PGWikidisplayConfigurationScope#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGWikidisplayConfigurationScope#assertSelectedLabel" locator1="SCOPE_SELECT" value1="${siteName}" />
 		<execute action="PGWikidisplayConfiguration#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureSetupPG">
 		<if>
-			<condition action="PGWikidisplay#isElementPresent" locator-key1="PORTLET_CONFIGURATION_MESSAGE" />
+			<condition action="PGWikidisplay#isElementPresent" locator1="PORTLET_CONFIGURATION_MESSAGE" />
 			<then>
-				<execute action="PGWikidisplay#assertClick" locator-key1="PORTLET_CONFIGURATION_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
+				<execute action="PGWikidisplay#assertClick" locator1="PORTLET_CONFIGURATION_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
 			</then>
 			<elseif>
-				<condition action="PGWikidisplay#isElementNotPresent" locator-key1="PORTLET_CONFIGURATION_MESSAGE" />
+				<condition action="PGWikidisplay#isElementNotPresent" locator1="PORTLET_CONFIGURATION_MESSAGE" />
 				<then>
-					<execute action="PGWikidisplay#click" locator-key1="OPTIONS_ICON"  />
-					<execute action="PGWikidisplay#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+					<execute action="PGWikidisplay#click" locator1="OPTIONS_ICON"  />
+					<execute action="PGWikidisplay#assertClick" locator1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute action="PGWikidisplayConfiguration#selectFrame" locator-key1="WIKI_DISPLAY_CONFIGURATION_IFRAME" />
-		<execute action="PGWikidisplayConfiguration#select" locator-key1="WIKI_NODE_SELECT" value1="${wikiNodeName}" />
-		<execute action="PGWikidisplayConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGWikidisplayConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGWikidisplayConfiguration#assertSelectedLabel" locator-key1="WIKI_NODE_SELECT" value1="${wikiNodeName}" />
+		<execute action="PGWikidisplayConfiguration#selectFrame" locator1="WIKI_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute action="PGWikidisplayConfiguration#select" locator1="WIKI_NODE_SELECT" value1="${wikiNodeName}" />
+		<execute action="PGWikidisplayConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGWikidisplayConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGWikidisplayConfiguration#assertSelectedLabel" locator1="WIKI_NODE_SELECT" value1="${wikiNodeName}" />
 
-		<execute action="PGWikidisplayConfiguration#select" locator-key1="WIKI_PAGE_SELECT" value1="${wikiPageName}" />
-		<execute action="PGWikidisplayConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGWikidisplayConfiguration#assertSelectedLabel" locator-key1="WIKI_PAGE_SELECT" value1="${wikiPageName}" />
+		<execute action="PGWikidisplayConfiguration#select" locator1="WIKI_PAGE_SELECT" value1="${wikiPageName}" />
+		<execute action="PGWikidisplayConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGWikidisplayConfiguration#assertSelectedLabel" locator1="WIKI_PAGE_SELECT" value1="${wikiPageName}" />
 
-		<execute action="PGWikidisplayConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGWikidisplayConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute action="PGWikidisplayConfiguration#selectFrame" value1="relative=top" />
 	</command>
 </definition>

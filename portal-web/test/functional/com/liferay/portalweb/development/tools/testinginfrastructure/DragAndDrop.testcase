@@ -42,13 +42,13 @@
 			<var name="eventType" value="${eventType}" />
 		</execute>
 
-		<execute action="DragAndDrop#dragAndDrop" locator-key1="CALENDAR_EVENT" value1="80,0" />
-		<execute action="DragAndDrop#dragAndDrop" locator-key1="CALENDAR_EVENT" value1="-80,0" />
-		<execute action="DragAndDrop#dragAndDrop" locator-key1="CALENDAR_EVENT" value1="160,0" />
-		<execute action="DragAndDrop#dragAndDrop" locator-key1="CALENDAR_EVENT" value1="-160,0" />
-		<execute action="DragAndDrop#dragAndDrop" locator-key1="CALENDAR_EVENT" value1="0,60" />
-		<execute action="DragAndDrop#dragAndDrop" locator-key1="CALENDAR_EVENT" value1="0,-50" />
-		<execute action="DragAndDrop#dragAndDrop" locator-key1="CALENDAR_EVENT" value1="0,30" />
-		<execute action="DragAndDrop#dragAndDrop" locator-key1="CALENDAR_EVENT" value1="0,-20" />
+		<execute action="DragAndDrop#dragAndDrop" locator1="CALENDAR_EVENT" value1="80,0" />
+		<execute action="DragAndDrop#dragAndDrop" locator1="CALENDAR_EVENT" value1="-80,0" />
+		<execute action="DragAndDrop#dragAndDrop" locator1="CALENDAR_EVENT" value1="160,0" />
+		<execute action="DragAndDrop#dragAndDrop" locator1="CALENDAR_EVENT" value1="-160,0" />
+		<execute action="DragAndDrop#dragAndDrop" locator1="CALENDAR_EVENT" value1="0,60" />
+		<execute action="DragAndDrop#dragAndDrop" locator1="CALENDAR_EVENT" value1="0,-50" />
+		<execute action="DragAndDrop#dragAndDrop" locator1="CALENDAR_EVENT" value1="0,30" />
+		<execute action="DragAndDrop#dragAndDrop" locator1="CALENDAR_EVENT" value1="0,-20" />
 	</command>
 </definition>

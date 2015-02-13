@@ -2,43 +2,43 @@
 	<command name="addCommentPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
-		<execute action="PGDocumentsandmediaDocument#type" locator-key1="COMMENTS_COMMENT_FIELD" value1="${commentBody}" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
+		<execute action="PGDocumentsandmediaDocument#type" locator1="COMMENTS_COMMENT_FIELD" value1="${commentBody}" />
 
 		<if>
-			<condition action="PGDocumentsandmediaDocument#isElementPresent" locator-key1="COMMENTS_SUBMIT_BUTTON" value1="Submit" />
+			<condition action="PGDocumentsandmediaDocument#isElementPresent" locator1="COMMENTS_SUBMIT_BUTTON" value1="Submit" />
 			<then>
-				<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_SUBMIT_BUTTON" value1="Submit" />
+				<execute action="PGDocumentsandmediaDocument#assertClick" locator1="COMMENTS_SUBMIT_BUTTON" value1="Submit" />
 			</then>
 			<else>
-				<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+				<execute action="PGDocumentsandmediaDocument#assertClick" locator1="COMMENTS_REPLY_BUTTON" value1="Reply" />
 			</else>
 		</if>
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>
 
 	<command name="addCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 
 		<if>
 			<equals arg1="${uploadTempFile}" arg2="true" />
 			<then>
-				<execute action="CPDocumentsandmediaAdddocument#uploadTempFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
+				<execute action="CPDocumentsandmediaAdddocument#uploadTempFile" locator1="FILE_FIELD" value1="${dmDocumentFile}" />
 			</then>
 			<elseif>
 				<equals arg1="${nullFile}" arg2="true" />
 				<then>
-					<execute action="CPDocumentsandmediaAdddocument#assertElementPresent" locator-key1="FILE_FIELD" />
+					<execute action="CPDocumentsandmediaAdddocument#assertElementPresent" locator1="FILE_FIELD" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="CPDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
+				<execute action="CPDocumentsandmediaAdddocument#uploadCommonFile" locator1="FILE_FIELD" value1="${dmDocumentFile}" />
 			</else>
 		</if>
 
@@ -49,71 +49,71 @@
 
 				<var name="key_vocabularyName" value="${vocabularyName}" />
 
-				<execute action="CPDocumentsandmediaAdddocument#click" locator-key1="CATEGORIZATION_VOCABULARY_SELECT" value1="${vocabularyName}" />
+				<execute action="CPDocumentsandmediaAdddocument#click" locator1="CATEGORIZATION_VOCABULARY_SELECT" value1="${vocabularyName}" />
 
 				<for list="${categoryNameList}" param="categoryName">
 					<var name="key_categoryName" value="${categoryName}" />
-					<execute action="CPDocumentsandmediaAdddocument#assertElementPresent" locator-key1="CATEGORIZATION_CATEGORIES_CATEGORY_CHECKBOX" value1="${categoryName}" />
-					<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="CATEGORIZATION_CATEGORIES_SEARCH_FIELD" value1="${categoryName}" />
-					<execute action="CPDocumentsandmediaAdddocument#check" locator-key1="CATEGORIZATION_CATEGORIES_CATEGORY_SEARCH_RESULT_CHECKBOX" />
-					<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="CATEGORIZATION_CATEGORIES_SEARCH_FIELD" value1="" />
+					<execute action="CPDocumentsandmediaAdddocument#assertElementPresent" locator1="CATEGORIZATION_CATEGORIES_CATEGORY_CHECKBOX" value1="${categoryName}" />
+					<execute action="CPDocumentsandmediaAdddocument#type" locator1="CATEGORIZATION_CATEGORIES_SEARCH_FIELD" value1="${categoryName}" />
+					<execute action="CPDocumentsandmediaAdddocument#check" locator1="CATEGORIZATION_CATEGORIES_CATEGORY_SEARCH_RESULT_CHECKBOX" />
+					<execute action="CPDocumentsandmediaAdddocument#type" locator1="CATEGORIZATION_CATEGORIES_SEARCH_FIELD" value1="" />
 				</for>
 
-				<execute action="CPDocumentsandmediaAdddocument#click" locator-key1="CATEGORIZATION_CATEGORIES_CLOSE_BUTTON" />
+				<execute action="CPDocumentsandmediaAdddocument#click" locator1="CATEGORIZATION_CATEGORIES_CLOSE_BUTTON" />
 			</then>
 		</if>
 
-		<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmediaAdddocument#type" locator1="TITLE_FIELD" value1="${dmDocumentTitle}" />
 
 		<if>
 			<isset var="dmDocumentDescription" />
 			<then>
-				<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+				<execute action="CPDocumentsandmediaAdddocument#type" locator1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
 			</then>
 		</if>
 
-		<execute action="CPDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="CPDocumentsandmediaAdddocument#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
 	<command name="addDMMarketingBannerCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_MARKETING_BANNER" value1="Marketing Banner" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="ADD_MENULIST_MARKETING_BANNER" value1="Marketing Banner" />
 
-		<execute action="CPDocumentsandmediaAddMarketingbanner#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
-		<execute action="CPDocumentsandmediaAddMarketingbanner#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
-		<execute action="CPDocumentsandmediaAddMarketingbanner#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
-		<execute action="CPDocumentsandmediaAddMarketingbanner#select" locator-key1="MARKETING_SELECT" value1="${marketingSelect}" />
-		<execute action="CPDocumentsandmediaAddMarketingbanner#select" locator-key1="CAMPAIGN_THEME_SELECT" value1="${campaignTheme}" />
-		<execute action="CPDocumentsandmediaAddMarketingbanner#select" locator-key1="BUSINESS_GOAL_SELECT" value1="${businessGoal}" />
-		<execute action="CPDocumentsandmediaAddMarketingbanner#click" locator-key1="NEEDS_LEGAL_REVIEW_${legalReview}_RADIO" />
-		<execute action="CPDocumentsandmediaAddMarketingbanner#type" locator-key1="BANNER_NAME_FIELD" value1="${bannerName}" />
-		<execute action="CPDocumentsandmediaAddMarketingbanner#type" locator-key1="BANNER_DESCRIPTION_FIELD" value1="${bannerDescription}" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#uploadCommonFile" locator1="FILE_FIELD" value1="${dmDocumentFile}" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#type" locator1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#type" locator1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#select" locator1="MARKETING_SELECT" value1="${marketingSelect}" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#select" locator1="CAMPAIGN_THEME_SELECT" value1="${campaignTheme}" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#select" locator1="BUSINESS_GOAL_SELECT" value1="${businessGoal}" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#click" locator1="NEEDS_LEGAL_REVIEW_${legalReview}_RADIO" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#type" locator1="BANNER_NAME_FIELD" value1="${bannerName}" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#type" locator1="BANNER_DESCRIPTION_FIELD" value1="${bannerDescription}" />
 
-		<execute action="CPDocumentsandmediaAddMarketingbanner#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
 	<command name="addDocumentTypeCmdCP">
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="ADD_MENULIST_DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
 
-		<execute action="CPDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
-		<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
-		<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+		<execute action="CPDocumentsandmediaAdddocument#uploadCommonFile" locator1="FILE_FIELD" value1="${dmDocumentFile}" />
+		<execute action="CPDocumentsandmediaAdddocument#type" locator1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmediaAdddocument#type" locator1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
 
 		<if>
 			<isset var="selectOption" />
 			<then>
-				<execute action="CPDocumentsandmediaAdddocumenttype#select" locator-key1="SELECT_OPTIONS_SELECT" value1="${selectOption}" />
+				<execute action="CPDocumentsandmediaAdddocumenttype#select" locator1="SELECT_OPTIONS_SELECT" value1="${selectOption}" />
 			</then>
 		</if>
 
@@ -122,7 +122,7 @@
 			<then>
 				<var name="key_fieldName" value="Text" />
 
-				<execute action="CPDocumentsandmediaAdddocumenttype#type" locator-key1="TEXT_FIELD" value1="${textField}" />
+				<execute action="CPDocumentsandmediaAdddocumenttype#type" locator1="TEXT_FIELD" value1="${textField}" />
 			</then>
 		</if>
 
@@ -131,7 +131,7 @@
 			<then>
 				<var name="key_fieldName" value="Number" />
 
-				<execute action="CPDocumentsandmediaAdddocumenttype#type" locator-key1="NUMBER_FIELD" value1="${numberField}" />
+				<execute action="CPDocumentsandmediaAdddocumenttype#type" locator1="NUMBER_FIELD" value1="${numberField}" />
 			</then>
 		</if>
 
@@ -140,7 +140,7 @@
 			<then>
 				<var name="key_fieldName" value="Boolean" />
 
-				<execute action="CPDocumentsandmediaAdddocumenttype#check" locator-key1="BOOLEAN_CHECKBOX" value1="${booleanField}" />
+				<execute action="CPDocumentsandmediaAdddocumenttype#check" locator1="BOOLEAN_CHECKBOX" value1="${booleanField}" />
 			</then>
 		</if>
 	</command>
@@ -150,24 +150,24 @@
 			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
 		</execute>
 
-		<execute action="CPDocumentsandmediaAdddocumenttype#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="CPDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDocumentsandmediaAdddocumenttype#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="CPDocumentsandmediaAdddocumenttype#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addDocumentTypePG">
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ADD_MENULIST_DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
 
-		<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
-		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
-		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+		<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator1="FILE_FIELD" value1="${dmDocumentFile}" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
 
 		<if>
 			<isset var="selectOption" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#select" locator-key1="SELECT_OPTIONS_SELECT" value1="${selectOption}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#select" locator1="SELECT_OPTIONS_SELECT" value1="${selectOption}" />
 			</then>
 		</if>
 
@@ -176,7 +176,7 @@
 			<then>
 				<var name="key_fieldName" value="Text" />
 
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="TEXT_FIELD" value1="${textField}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator1="TEXT_FIELD" value1="${textField}" />
 			</then>
 		</if>
 
@@ -185,7 +185,7 @@
 			<then>
 				<var name="key_fieldName" value="Number" />
 
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="NUMBER_FIELD" value1="${numberField}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator1="NUMBER_FIELD" value1="${numberField}" />
 			</then>
 		</if>
 
@@ -194,12 +194,12 @@
 			<then>
 				<var name="key_fieldName" value="Boolean" />
 
-				<execute action="PGDocumentsandmediaAdddocumenttype#check" locator-key1="BOOLEAN_CHECKBOX" value1="${booleanField}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#check" locator1="BOOLEAN_CHECKBOX" value1="${booleanField}" />
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmediaAdddocumenttype#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmediaAdddocumenttype#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addDocumentTypeWithWorkflowCP">
@@ -207,13 +207,13 @@
 			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
 		</execute>
 
-		<execute action="CPDocumentsandmediaAdddocumenttype#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
-		<execute action="CPDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDocumentsandmediaAdddocumenttype#assertClick" locator1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute action="CPDocumentsandmediaAdddocumenttype#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addMultiplePG">
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_MULTIPLE_DOCUMENTS" value1="Multiple Documents" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ADD_MENULIST_MULTIPLE_DOCUMENTS" value1="Multiple Documents" />
 
 		<if>
 			<isset var="dmDocumentFileList" />
@@ -221,53 +221,53 @@
 				<for list="${dmDocumentFileList}" param="dmDocumentFile">
 					<var name="key_dmDocumentFile" value="${dmDocumentFile}" />
 
-					<execute action="PGDocumentsandmediaAddmultipledocuments#assertClick" locator-key1="SELECT_FILES_BUTTON" value1="Select Files" />
+					<execute action="PGDocumentsandmediaAddmultipledocuments#assertClick" locator1="SELECT_FILES_BUTTON" value1="Select Files" />
 
 					<if>
 						<equals arg1="${uploadTempFile}" arg2="true" />
 						<then>
-							<execute action="OS#sikuliUploadTempFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
+							<execute action="OS#sikuliUploadTempFile" locator1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
 						</then>
 						<else>
-							<execute action="OS#sikuliUploadCommonFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
+							<execute action="OS#sikuliUploadCommonFile" locator1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
 						</else>
 					</if>
 
-					<execute action="PGDocumentsandmediaAddmultipledocuments#assertChecked" locator-key1="ALL_FILES_READY_TO_BE_SAVED_CHECKBOX" />
-					<execute action="PGDocumentsandmediaAddmultipledocuments#assertElementPresent" locator-key1="ALL_FILES_READY_TO_BE_SAVED_TITLE" value1="${dmDocumentFile}" />
+					<execute action="PGDocumentsandmediaAddmultipledocuments#assertChecked" locator1="ALL_FILES_READY_TO_BE_SAVED_CHECKBOX" />
+					<execute action="PGDocumentsandmediaAddmultipledocuments#assertElementPresent" locator1="ALL_FILES_READY_TO_BE_SAVED_TITLE" value1="${dmDocumentFile}" />
 				</for>
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmediaAddmultipledocuments#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator-key1="ALL_FILES_READY_TO_BE_SAVED_SUCCESS_MESSAGE" value1="Successfully saved." />
+		<execute action="PGDocumentsandmediaAddmultipledocuments#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator1="ALL_FILES_READY_TO_BE_SAVED_SUCCESS_MESSAGE" value1="Successfully saved." />
 	</command>
 
 	<command name="addPG">
 		<if>
 			<equals arg1="${stagingActivated}" arg2="true" />
 			<then>
-				<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="STAGING_MESSAGE" value1="The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging." />
+				<execute action="PGDocumentsandmedia#assertElementNotPresent" locator1="STAGING_MESSAGE" value1="The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging." />
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
 
 		<if>
 			<isset var="dmDocumentTypeName" />
 			<then>
 				<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-				<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
+				<execute action="PGDocumentsandmedia#assertClick" locator1="ADD_MENULIST_DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
 			</then>
 			<else>
-				<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+				<execute action="PGDocumentsandmedia#assertClick" locator1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 			</else>
 		</if>
 
-		<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
-		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
-		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+		<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator1="FILE_FIELD" value1="${dmDocumentFile}" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
 
 		<if>
 			<isset var="categoryName" />
@@ -275,12 +275,12 @@
 				<var name="key_categoryName" value="${categoryName}" />
 
 				<execute macro="PGDocumentsandmediaEditdocument#showCategorization" />
-				<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="CATEGORIZATION_TOPIC_SELECT_BUTTON" value1="Select" />
+				<execute action="PGDocumentsandmediaEditdocument#assertClick" locator1="CATEGORIZATION_TOPIC_SELECT_BUTTON" value1="Select" />
 
-				<execute action="PGDocumentsandmediaCategoriesDialogBox#assertClick" locator-key1="CATEGORY_TOPIC" value1="${categoryName}" />
-				<execute action="PGDocumentsandmediaCategoriesDialogBox#assertClick" locator-key1="CLOSE_BUTTON" value1="×" />
+				<execute action="PGDocumentsandmediaCategoriesDialogBox#assertClick" locator1="CATEGORY_TOPIC" value1="${categoryName}" />
+				<execute action="PGDocumentsandmediaCategoriesDialogBox#assertClick" locator1="CLOSE_BUTTON" value1="×" />
 
-				<execute action="PGDocumentsandmediaEditdocument#assertTextEquals" locator-key1="CATEGORIZATION_VOCABULARY_TAG" value1="${categoryName}" />
+				<execute action="PGDocumentsandmediaEditdocument#assertTextEquals" locator1="CATEGORIZATION_VOCABULARY_TAG" value1="${categoryName}" />
 			</then>
 		</if>
 
@@ -300,42 +300,42 @@
 				<for list="${tagNameList}" param="tagName">
 					<execute macro="DMDocument#showCategorization" />
 
-					<execute action="PGDocumentsandmediaEditdocument#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
-					<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
+					<execute action="PGDocumentsandmediaEditdocument#type" locator1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+					<execute action="PGDocumentsandmediaEditdocument#assertClick" locator1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
 				</for>
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 
 		<if>
 			<equals arg1="${dmDocument}" arg2="Duplicate" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocument#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Your request failed to complete." />
-				<execute action="PGDocumentsandmediaAdddocument#assertTextEquals" locator-key1="UNIQUE_DOCUMENT_ERROR_MESSAGE" value1="Please enter a unique document name." />
+				<execute action="PGDocumentsandmediaAdddocument#assertTextEquals" locator1="ERROR_MESSAGE" value1="Your request failed to complete." />
+				<execute action="PGDocumentsandmediaAdddocument#assertTextEquals" locator1="UNIQUE_DOCUMENT_ERROR_MESSAGE" value1="Please enter a unique document name." />
 			</then>
 			<elseif>
 				<equals arg1="${dmDocument}" arg2="Invalid" />
 				<then>
-					<execute action="PGDocumentsandmediaAdddocument#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-					<execute action="PGDocumentsandmediaAdddocument#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a file with a valid file name." />
+					<execute action="PGDocumentsandmediaAdddocument#assertTextEquals" locator1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+					<execute action="PGDocumentsandmediaAdddocument#assertTextEquals" locator1="ERROR_MESSAGE_2" value1="Please enter a file with a valid file name." />
 				</then>
 			</elseif>
 			<else>
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="PGDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
 
 	<command name="addPGViaAP">
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
-		<execute action="PGAssetpublisher#selectFrame" locator-key1="CONTENT_IFRAME" />
+		<execute action="PGAssetpublisher#assertClick" locator1="ADD_NEW_DROPDOWN" value1="Add New" />
+		<execute action="PGAssetpublisher#assertClick" locator1="ADD_NEW_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+		<execute action="PGAssetpublisher#selectFrame" locator1="CONTENT_IFRAME" />
 
-		<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
-		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
-		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
-		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator1="FILE_FIELD" value1="${dmDocumentFile}" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="#selectFrame" locator1="relative=top" />
 	</command>
@@ -344,12 +344,12 @@
 		<if>
 			<equals arg1="${stagingActivated}" arg2="true" />
 			<then>
-				<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="STAGING_MESSAGE" value1="The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging." />
+				<execute action="PGDocumentsandmedia#assertElementNotPresent" locator1="STAGING_MESSAGE" value1="The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging." />
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_MULTIPLE_DOCUMENTS" value1="Multiple Documents" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ADD_MENULIST_MULTIPLE_DOCUMENTS" value1="Multiple Documents" />
 
 		<if>
 			<isset var="dmDocumentFileList" />
@@ -357,199 +357,199 @@
 				<for list="${dmDocumentFileList}" param="dmDocumentFile">
 					<var name="key_dmDocumentFile" value="${dmDocumentFile}" />
 
-					<execute action="PGDocumentsandmediaAddmultipledocuments#assertClick" locator-key1="SELECT_FILES_BUTTON" value1="Select Files" />
+					<execute action="PGDocumentsandmediaAddmultipledocuments#assertClick" locator1="SELECT_FILES_BUTTON" value1="Select Files" />
 
 					<if>
 						<equals arg1="${uploadTempFile}" arg2="true" />
 						<then>
-							<execute action="OS#sikuliUploadTempFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
+							<execute action="OS#sikuliUploadTempFile" locator1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
 						</then>
 						<else>
-							<execute action="OS#sikuliUploadCommonFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
+							<execute action="OS#sikuliUploadCommonFile" locator1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
 						</else>
 					</if>
 
-					<execute action="PGDocumentsandmediaAddmultipledocuments#assertChecked" locator-key1="ALL_FILES_READY_TO_BE_SAVED_CHECKBOX" />
-					<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator-key1="ALL_FILES_READY_TO_BE_SAVED_TITLE" value1="${dmDocumentFile}" />
+					<execute action="PGDocumentsandmediaAddmultipledocuments#assertChecked" locator1="ALL_FILES_READY_TO_BE_SAVED_CHECKBOX" />
+					<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator1="ALL_FILES_READY_TO_BE_SAVED_TITLE" value1="${dmDocumentFile}" />
 				</for>
 			</then>
 			<else>
 				<var name="key_dmDocumentFile" value="${dmDocumentFile}" />
 
-				<execute action="PGDocumentsandmediaAddmultipledocuments#assertClick" locator-key1="SELECT_FILES_BUTTON" value1="Select Files" />
+				<execute action="PGDocumentsandmediaAddmultipledocuments#assertClick" locator1="SELECT_FILES_BUTTON" value1="Select Files" />
 
 				<if>
 					<equals arg1="${uploadTempFile}" arg2="true" />
 					<then>
-						<execute action="OS#sikuliUploadTempFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
+						<execute action="OS#sikuliUploadTempFile" locator1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
 					</then>
 					<else>
-						<execute action="OS#sikuliUploadCommonFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
+						<execute action="OS#sikuliUploadCommonFile" locator1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
 					</else>
 				</if>
 
-				<execute action="PGDocumentsandmediaAddmultipledocuments#assertChecked" locator-key1="ALL_FILES_READY_TO_BE_SAVED_CHECKBOX" />
-				<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator-key1="ALL_FILES_READY_TO_BE_SAVED_TITLE" value1="${dmDocumentFile}" />
+				<execute action="PGDocumentsandmediaAddmultipledocuments#assertChecked" locator1="ALL_FILES_READY_TO_BE_SAVED_CHECKBOX" />
+				<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator1="ALL_FILES_READY_TO_BE_SAVED_TITLE" value1="${dmDocumentFile}" />
 			</else>
 		</if>
 
-		<execute action="PGDocumentsandmediaAddmultipledocuments#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator-key1="ALL_FILES_READY_TO_BE_SAVED_SUCCESS_MESSAGE" value1="Successfully saved." />
+		<execute action="PGDocumentsandmediaAddmultipledocuments#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator1="ALL_FILES_READY_TO_BE_SAVED_SUCCESS_MESSAGE" value1="Successfully saved." />
 	</command>
 
 	<command name="addPGViaMG">
-		<execute action="PGMediagalleryFolder#assertClick" locator-key1="FOLDER_MENU_ADD_MEDIA" value1="Add Media" />
+		<execute action="PGMediagalleryFolder#assertClick" locator1="FOLDER_MENU_ADD_MEDIA" value1="Add Media" />
 
-		<execute action="PGMediagallerySelectmediatype#selectFrame" locator-key1="SELECT_MEDIA_TYPE_IFRAME" />
-		<execute action="PGMediagallerySelectmediatype#assertClick" locator-key1="MEDIA_TABLE_BASIC_DOCUMENT" value1="Basic Document" />
+		<execute action="PGMediagallerySelectmediatype#selectFrame" locator1="SELECT_MEDIA_TYPE_IFRAME" />
+		<execute action="PGMediagallerySelectmediatype#assertClick" locator1="MEDIA_TABLE_BASIC_DOCUMENT" value1="Basic Document" />
 		<execute action="PGMediagallerySelectmediatype#selectFrameTop" value1="relative=top" />
 
-		<execute action="PGMediagalleryAddmedia#uploadCommonFile" locator-key1="FILE_FIELD" value1="${mgDocumentFile}" />
-		<execute action="PGMediagalleryAddmedia#type" locator-key1="TITLE_FIELD" value1="${mgDocumentTitle}" />
-		<execute action="PGMediagalleryAddmedia#type" locator-key1="DESCRIPTION_FIELD" value1="${mgDocumentDescription}" />
-		<execute action="PGMediagalleryAddmedia#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGMediagalleryAddmedia#uploadCommonFile" locator1="FILE_FIELD" value1="${mgDocumentFile}" />
+		<execute action="PGMediagalleryAddmedia#type" locator1="TITLE_FIELD" value1="${mgDocumentTitle}" />
+		<execute action="PGMediagalleryAddmedia#type" locator1="DESCRIPTION_FIELD" value1="${mgDocumentDescription}" />
+		<execute action="PGMediagalleryAddmedia#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGMediagallery#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGMediagallery#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addRelatedAssetPG">
 		<if>
-			<condition action="PGDocumentsandmediaAdddocument#isElementNotPresent" locator-key1="RELATED_ASSETS_SELECT" />
+			<condition action="PGDocumentsandmediaAdddocument#isElementNotPresent" locator1="RELATED_ASSETS_SELECT" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocument#click" locator-key1="RELATED_ASSETS_DROPDOWN_COLLAPSED" />
-				<execute action="PGDocumentsandmediaAdddocument#assertElementPresent" locator-key1="RELATED_ASSETS_DROPDOWN" />
+				<execute action="PGDocumentsandmediaAdddocument#click" locator1="RELATED_ASSETS_DROPDOWN_COLLAPSED" />
+				<execute action="PGDocumentsandmediaAdddocument#assertElementPresent" locator1="RELATED_ASSETS_DROPDOWN" />
 			</then>
 		</if>
 
 		<var name="key_assetType" value="${assetType}" />
 
-		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="RELATED_ASSETS_SELECT" value1="Select" />
-		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="RELATED_ASSETS_MENULIST_SELECTION" value1="${assetType}" />
+		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator1="RELATED_ASSETS_SELECT" value1="Select" />
+		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator1="RELATED_ASSETS_MENULIST_SELECTION" value1="${assetType}" />
 
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute action="PGRelatedassetsSelect#selectFrame" locator-key1="IFRAME" />
-		<execute action="PGRelatedassetsSelect#assertClick" locator-key1="ASSET_TABLE_CHOOSE" value1="Choose" />
+		<execute action="PGRelatedassetsSelect#selectFrame" locator1="IFRAME" />
+		<execute action="PGRelatedassetsSelect#assertClick" locator1="ASSET_TABLE_CHOOSE" value1="Choose" />
 		<execute action="PGRelatedassetsSelect#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addShortcutPG">
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_SHORTCUT" value1="Shortcut" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ADD_MENULIST_SHORTCUT" value1="Shortcut" />
 
-		<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator-key1="SITE_SELECT_BUTTON" value1="Select" />
+		<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator1="SITE_SELECT_BUTTON" value1="Select" />
 
-		<execute action="PGDocumentsandmediaAddshortcut#selectFrame" locator-key1="SELECT_SITE_IFRAME" />
+		<execute action="PGDocumentsandmediaAddshortcut#selectFrame" locator1="SELECT_SITE_IFRAME" />
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="PGDocumentsandmediaAddshortcut#type" locator-key1="SELECT_SITE_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="PGDocumentsandmediaAddshortcut#click" locator-key1="SELECT_SITE_SEARCH_BUTTON" />
-		<execute action="PGDocumentsandmediaAddshortcut#assertTextEquals" locator-key1="SELECT_SITE_TABLE_NAME" value1="${siteName}" />
-		<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator-key1="SELECT_SITE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+		<execute action="PGDocumentsandmediaAddshortcut#type" locator1="SELECT_SITE_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="PGDocumentsandmediaAddshortcut#click" locator1="SELECT_SITE_SEARCH_BUTTON" />
+		<execute action="PGDocumentsandmediaAddshortcut#assertTextEquals" locator1="SELECT_SITE_TABLE_NAME" value1="${siteName}" />
+		<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator1="SELECT_SITE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 		<execute action="PGDocumentsandmediaAddshortcut#selectFrameTop" value1="relative=top" />
-		<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator-key1="DOCUMENT_SELECT_BUTTON" value1="Select" />
-		<execute action="PGDocumentsandmediaAddshortcut#selectFrame" locator-key1="SELECT_FILE_IFRAME" />
+		<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator1="DOCUMENT_SELECT_BUTTON" value1="Select" />
+		<execute action="PGDocumentsandmediaAddshortcut#selectFrame" locator1="SELECT_FILE_IFRAME" />
 
 		<if>
 			<isset var="dmFolderName" />
 			<then>
 				<var name="key_dmFolderName" value="${dmFolderName}" />
 
-				<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator-key1="SELECT_FOLDER_TABLE_FOLDER" value1="${dmFolderName}" />
+				<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator1="SELECT_FOLDER_TABLE_FOLDER" value1="${dmFolderName}" />
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmediaAddshortcut#assertTextEquals" locator-key1="SELECT_FILE_DOCUMENT" value1="${dmDocumentTitle} ${dmDocumentDescription}" />
-		<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator-key1="SELECT_FILE_CHOOSE_BUTTON" value1="Choose" />
+		<execute action="PGDocumentsandmediaAddshortcut#assertTextEquals" locator1="SELECT_FILE_DOCUMENT" value1="${dmDocumentTitle} ${dmDocumentDescription}" />
+		<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator1="SELECT_FILE_CHOOSE_BUTTON" value1="Choose" />
 		<execute action="PGDocumentsandmediaAddshortcut#selectFrameTop" value1="relative=top" />
-		<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addWithWorkflowCP">
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 
-		<execute action="CPDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
-		<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
-		<execute action="CPDocumentsandmediaAdddocument#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute action="CPDocumentsandmediaAdddocument#uploadCommonFile" locator1="FILE_FIELD" value1="${dmDocumentFile}" />
+		<execute action="CPDocumentsandmediaAdddocument#type" locator1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmediaAdddocument#assertClick" locator1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
 
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
 	<command name="cancelCheckoutPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="CHECKOUT_SUCCESS_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="CHECKOUT_SUCCESS_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_CANCEL_CHECKOUT_BUTTON" value1="Cancel Checkout" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator1="TOOLBAR_CANCEL_CHECKOUT_BUTTON" value1="Cancel Checkout" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="cannotViewCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#assertElementNotPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertElementNotPresent" locator1="DOCUMENT_CONTAINER_DOCUMENT" />
 	</command>
 
 	<command name="cannotViewDocumentMetadataCP">
 		<var name="key_metadataData" value="${metadataData}" />
 		<var name="key_metadataLabel" value="${metadataLabel}" />
 
-		<execute action="CPDocumentsandmediaDocument#assertElementNotPresent" locator-key1="DOCUMENT_EXTRACTED_METADATA_FIELD" />
+		<execute action="CPDocumentsandmediaDocument#assertElementNotPresent" locator1="DOCUMENT_EXTRACTED_METADATA_FIELD" />
 	</command>
 
 	<command name="checkDocumentCheckboxCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#check" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX" />
+		<execute action="CPDocumentsandmedia#check" locator1="DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX" />
 	</command>
 
 	<command name="checkinCP">
 		<if>
 			<equals arg1="${sharepointRepository}" arg2="true" />
 			<then>
-				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
+				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
 			</then>
 			<else>
-				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 			</else>
 		</if>
 
-		<execute action="CPDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_CHECKIN_BUTTON" value1="Checkin" />
+		<execute action="CPDocumentsandmediaDocument#assertClick" locator1="TOOLBAR_CHECKIN_BUTTON" value1="Checkin" />
 
-		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="checkinPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="CHECKOUT_SUCCESS_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_CHECKIN_BUTTON" value1="Checkin" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="CHECKOUT_SUCCESS_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator1="TOOLBAR_CHECKIN_BUTTON" value1="Checkin" />
 
 		<if>
-			<condition action="PGDocumentsandmediaCheckin#isElementPresent" locator-key1="MAJOR_REVISION" />
+			<condition action="PGDocumentsandmediaCheckin#isElementPresent" locator1="MAJOR_REVISION" />
 			<then>
 				<if>
 					<equals arg1="${revision}" arg2="Major" />
 					<then>
-						<execute action="PGDocumentsandmediaCheckin#click" locator-key1="MAJOR_REVISION" />
+						<execute action="PGDocumentsandmediaCheckin#click" locator1="MAJOR_REVISION" />
 					</then>
 					<elseif>
 						<equals arg1="${revision}" arg2="Minor" />
 						<then>
-							<execute action="PGDocumentsandmediaCheckin#click" locator-key1="MINOR_REVISION" />
+							<execute action="PGDocumentsandmediaCheckin#click" locator1="MINOR_REVISION" />
 						</then>
 					</elseif>
 				</if>
@@ -557,35 +557,35 @@
 				<if>
 					<isset var="changeLog" />
 					<then>
-						<execute action="PGDocumentsandmediaCheckin#type" locator-key1="CHANGE_LOG" value1="${changeLog}" />
+						<execute action="PGDocumentsandmediaCheckin#type" locator1="CHANGE_LOG" value1="${changeLog}" />
 					</then>
 				</if>
 
-				<execute action="PGDocumentsandmediaCheckin#assertClick" locator-key1="SAVE_AND_CHECKIN_BUTTON" value1="Save and Checkin" />
+				<execute action="PGDocumentsandmediaCheckin#assertClick" locator1="SAVE_AND_CHECKIN_BUTTON" value1="Save and Checkin" />
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="checkinViaDocumentActionsPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_CHECKIN" value1="Checkin" />
+		<execute action="PGDocumentsandmedia#click" locator1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="DOCUMENT_MENULIST_CHECKIN" value1="Checkin" />
 
 		<if>
-			<condition action="PGDocumentsandmediaCheckin#isElementPresent" locator-key1="MAJOR_REVISION" />
+			<condition action="PGDocumentsandmediaCheckin#isElementPresent" locator1="MAJOR_REVISION" />
 			<then>
 				<if>
 					<equals arg1="${revision}" arg2="Major" />
 					<then>
-						<execute action="PGDocumentsandmediaCheckin#click" locator-key1="MAJOR_REVISION" />
+						<execute action="PGDocumentsandmediaCheckin#click" locator1="MAJOR_REVISION" />
 					</then>
 					<elseif>
 						<equals arg1="${revision}" arg2="Minor" />
 						<then>
-							<execute action="PGDocumentsandmediaCheckin#click" locator-key1="MINOR_REVISION" />
+							<execute action="PGDocumentsandmediaCheckin#click" locator1="MINOR_REVISION" />
 						</then>
 					</elseif>
 				</if>
@@ -593,28 +593,28 @@
 				<if>
 					<isset var="changeLog" />
 					<then>
-						<execute action="PGDocumentsandmediaCheckin#type" locator-key1="CHANGE_LOG" value1="${changeLog}" />
+						<execute action="PGDocumentsandmediaCheckin#type" locator1="CHANGE_LOG" value1="${changeLog}" />
 					</then>
 				</if>
 
-				<execute action="PGDocumentsandmediaCheckin#assertClick" locator-key1="SAVE_AND_CHECKIN_BUTTON" value1="Save and Checkin" />
+				<execute action="PGDocumentsandmediaCheckin#assertClick" locator1="SAVE_AND_CHECKIN_BUTTON" value1="Save and Checkin" />
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="checkoutCP">
-		<execute action="CPDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_CHECKOUT_BUTTON" value1="Checkout" />
-		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDocumentsandmediaDocument#assertClick" locator1="TOOLBAR_CHECKOUT_BUTTON" value1="Checkout" />
+		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<if>
 			<equals arg1="${sharepointRepository}" arg2="true" />
 			<then>
-				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
+				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
 			</then>
 			<else>
-				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 			</else>
 		</if>
 	</command>
@@ -622,47 +622,47 @@
 	<command name="checkoutPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_CHECKOUT_BUTTON" value1="Checkout" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="CHECKOUT_SUCCESS_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator1="TOOLBAR_CHECKOUT_BUTTON" value1="Checkout" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="CHECKOUT_SUCCESS_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 	</command>
 
 	<command name="checkoutViaDocumentActionsPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmedia#click" locator1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deleteCommentPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaDocument#makeVisible" locator-key1="COMMENTS_DELETE" value1="Delete" />
-		<execute action="PGDocumentsandmediaDocument#assertClickNoError" locator-key1="COMMENTS_DELETE_LINK" value1="Delete" />
-		<execute action="PGDocumentsandmediaDocument#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected comment?" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="PGDocumentsandmediaDocument#makeVisible" locator1="COMMENTS_DELETE" value1="Delete" />
+		<execute action="PGDocumentsandmediaDocument#assertClickNoError" locator1="COMMENTS_DELETE_LINK" value1="Delete" />
+		<execute action="PGDocumentsandmediaDocument#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete the selected comment?" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>
 
 	<command name="deleteCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
+		<execute action="CPDocumentsandmedia#click" locator1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
 
 		<if>
 			<isset var="recycleBinDisabled" />
 			<then>
-				<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_DELETE" value1="Delete" />
-				<execute action="CPDocumentsandmedia#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="CPDocumentsandmedia#assertClick" locator1="DOCUMENT_MENULIST_DELETE" value1="Delete" />
+				<execute action="CPDocumentsandmedia#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="CPDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 			<else>
-				<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
+				<execute action="CPDocumentsandmedia#assertClick" locator1="DOCUMENT_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+				<execute action="PGDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
 			</else>
 		</if>
 	</command>
@@ -670,56 +670,56 @@
 	<command name="deletePG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<execute macro="DMDocument#viewDocumentTitleCmdPG">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_MOVE_TO_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator1="TOOLBAR_MOVE_TO_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="deletePGViaMG">
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
-		<execute action="PGMediagalleryFolder#assertClick" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
-		<execute action="PGMediagalleryMedia#click" locator-key1="ENTRY_RECYCLE_BIN_ICON" />
-		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
-		<execute action="PGMediagalleryFolder#assertElementNotPresent" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
+		<execute action="PGMediagalleryFolder#assertClick" locator1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
+		<execute action="PGMediagalleryMedia#click" locator1="ENTRY_RECYCLE_BIN_ICON" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator1="RECYCLE_BIN_SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
+		<execute action="PGMediagalleryFolder#assertElementNotPresent" locator1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
 	</command>
 
 	<command name="deleteViaActionsPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#check" locator-key1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
+		<execute action="PGDocumentsandmedia#check" locator1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
+		<execute action="PGDocumentsandmedia#click" locator1="TOOLBAR_ACTIONS" value1="Actions" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="downloadCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#mouseOver" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
-		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
+		<execute action="CPDocumentsandmedia#mouseOver" locator1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
+		<execute action="CPDocumentsandmedia#click" locator1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
 
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_DOWNLOAD" value1="Download (${dmDocumentSize})" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="DOCUMENT_MENULIST_DOWNLOAD" value1="Download (${dmDocumentSize})" />
 	</command>
 
 	<command name="downloadPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_DOWNLOAD_BUTTON" value1="Download" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator1="TOOLBAR_DOWNLOAD_BUTTON" value1="Download" />
 	</command>
 
 	<command name="editCmdCP">
@@ -731,10 +731,10 @@
 				<if>
 					<equals arg1="${sharepointRepository}" arg2="true" />
 					<then>
-						<execute action="CPDocumentsandmediaEditdocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
+						<execute action="CPDocumentsandmediaEditdocument#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
 					</then>
 					<else>
-						<execute action="CPDocumentsandmediaEditdocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+						<execute action="CPDocumentsandmediaEditdocument#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 					</else>
 				</if>
 			</then>
@@ -745,7 +745,7 @@
 				<contains string="${dmDocumentFileEdit}" substring="{dmDocumentFileEdit}" />
 			</not>
 			<then>
-				<execute action="CPDocumentsandmediaEditdocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFileEdit}" />
+				<execute action="CPDocumentsandmediaEditdocument#uploadCommonFile" locator1="FILE_FIELD" value1="${dmDocumentFileEdit}" />
 			</then>
 		</if>
 
@@ -754,7 +754,7 @@
 				<contains string="${dmDocumentTitleEdit}" substring="{dmDocumentTitleEdit}" />
 			</not>
 			<then>
-				<execute action="CPDocumentsandmediaEditdocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitleEdit}" />
+				<execute action="CPDocumentsandmediaEditdocument#type" locator1="TITLE_FIELD" value1="${dmDocumentTitleEdit}" />
 			</then>
 		</if>
 
@@ -763,7 +763,7 @@
 				<contains string="${dmDocumentDescriptionEdit}" substring="{dmDocumentDescriptionEdit}" />
 			</not>
 			<then>
-				<execute action="CPDocumentsandmediaEditdocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescriptionEdit}" />
+				<execute action="CPDocumentsandmediaEditdocument#type" locator1="DESCRIPTION_FIELD" value1="${dmDocumentDescriptionEdit}" />
 			</then>
 		</if>
 	</command>
@@ -771,15 +771,15 @@
 	<command name="editCmdPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<if>
 			<equals arg1="${checkedOut}" arg2="true" />
 			<then>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You cannot modify this document because it was locked by ${userName}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="ERROR_MESSAGE" value1="You cannot modify this document because it was locked by ${userName}" />
 			</then>
 			<else>
-				<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
+				<execute action="PGDocumentsandmediaDocument#assertClick" locator1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
 			</else>
 		</if>
 
@@ -788,7 +788,7 @@
 				<contains string="${dmDocumentFileEdit}" substring="{dmDocumentFileEdit}" />
 			</not>
 			<then>
-				<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFileEdit}" />
+				<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator1="FILE_FIELD" value1="${dmDocumentFileEdit}" />
 			</then>
 		</if>
 
@@ -797,7 +797,7 @@
 				<contains string="${dmDocumentTitleEdit}" substring="{dmDocumentTitleEdit}" />
 			</not>
 			<then>
-				<execute action="PGDocumentsandmediaEditdocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitleEdit}"  />
+				<execute action="PGDocumentsandmediaEditdocument#type" locator1="TITLE_FIELD" value1="${dmDocumentTitleEdit}"  />
 			</then>
 		</if>
 
@@ -806,7 +806,7 @@
 				<contains string="${dmDocumentDescriptionEdit}" substring="{dmDocumentDescriptionEdit}" />
 			</not>
 			<then>
-				<execute action="PGDocumentsandmediaEditdocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescriptionEdit}" />
+				<execute action="PGDocumentsandmediaEditdocument#type" locator1="DESCRIPTION_FIELD" value1="${dmDocumentDescriptionEdit}" />
 			</then>
 		</if>
 
@@ -817,7 +817,7 @@
 			<then>
 				<execute macro="DMDocument#showCategorization" />
 
-				<execute action="PGDocumentsandmediaEditdocument#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${dmDocumentTagName}" />
+				<execute action="PGDocumentsandmediaEditdocument#type" locator1="CATEGORIZATION_TAGS_FIELD" value1="${dmDocumentTagName}" />
 			</then>
 		</if>
 
@@ -829,10 +829,10 @@
 				<if>
 					<equals arg1="${revision}" arg2="Major" />
 					<then>
-						<execute action="PGDocumentsandmediaEditdocument#click" locator-key1="MAJOR_REVISION_BUTTON" />
+						<execute action="PGDocumentsandmediaEditdocument#click" locator1="MAJOR_REVISION_BUTTON" />
 					</then>
 					<else>
-						<execute action="PGDocumentsandmediaEditdocument#click" locator-key1="MINOR_REVISION_BUTTON" />
+						<execute action="PGDocumentsandmediaEditdocument#click" locator1="MINOR_REVISION_BUTTON" />
 					</else>
 				</if>
 			</then>
@@ -841,7 +841,7 @@
 		<if>
 			<isset var="changeLog" />
 			<then>
-				<execute action="PGDocumentsandmediaCheckin#type" locator-key1="CHANGE_LOG" value1="${changeLog}" />
+				<execute action="PGDocumentsandmediaCheckin#type" locator1="CHANGE_LOG" value1="${changeLog}" />
 			</then>
 		</if>
 	</command>
@@ -849,21 +849,21 @@
 	<command name="editCommentPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaDocument#makeVisible" locator-key1="COMMENTS_EDIT" value1="Edit" />
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_EDIT_LINK" value1="Edit" />
-		<execute action="PGDocumentsandmediaDocument#type" locator-key1="COMMENTS_COMMENT_EDIT_FIELD" value1="${commentBodyEdit}" />
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="PGDocumentsandmediaDocument#makeVisible" locator1="COMMENTS_EDIT" value1="Edit" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator1="COMMENTS_EDIT_LINK" value1="Edit" />
+		<execute action="PGDocumentsandmediaDocument#type" locator1="COMMENTS_COMMENT_EDIT_FIELD" value1="${commentBodyEdit}" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator1="COMMENTS_PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>
 
 	<command name="editCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#mouseOver" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
-		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_EDIT" value1="Edit" />
+		<execute action="CPDocumentsandmedia#mouseOver" locator1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#click" locator1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="DOCUMENT_MENULIST_EDIT" value1="Edit" />
 
 		<execute macro="DMDocument#editCmdCP">
 			<var name="checkedOut" value="${checkedOut}" />
@@ -875,14 +875,14 @@
 		<if>
 			<equals arg1="${checkedOut}" arg2="true" />
 			<then>
-				<execute action="CPDocumentsandmediaEditdocument#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+				<execute action="CPDocumentsandmediaEditdocument#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 			</then>
 			<else>
-				<execute action="CPDocumentsandmediaEditdocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+				<execute action="CPDocumentsandmediaEditdocument#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 			</else>
 		</if>
 
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editPG">
@@ -895,28 +895,28 @@
 			<var name="revision" value="${revision}" />
 		</execute>
 
-		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editPGViaAP">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute action="PGAssetpublisher#click" locator-key1="ASSET_ABSTRACT_EDIT" />
+		<execute action="PGAssetpublisher#click" locator1="ASSET_ABSTRACT_EDIT" />
 
-		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
+		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator1="WEB_CONTENT_IFRAME" />
 
 		<if>
 			<not>
 				<contains string="${dmDocumentTitleEdit}" substring="{dmDocumentTitleEdit}" />
 			</not>
 			<then>
-				<execute action="PGDocumentsandmediaEditdocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitleEdit}"  />
+				<execute action="PGDocumentsandmediaEditdocument#type" locator1="TITLE_FIELD" value1="${dmDocumentTitleEdit}"  />
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="#selectFrame" locator1="relative=top" />
 	</command>
@@ -924,17 +924,17 @@
 	<command name="editPGViaMG">
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
-		<execute action="PGMediagalleryFolder#assertClick" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
+		<execute action="PGMediagalleryFolder#assertClick" locator1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
 
-		<execute action="PGMediagalleryMedia#assertTextEquals" locator-key1="MEDIA_CAPTION" value1="${mgDocumentTitle} - ${mgDocumentDescription}" />
-		<execute action="PGMediagalleryMedia#click" locator-key1="ENTRY_EDIT_ICON" />
+		<execute action="PGMediagalleryMedia#assertTextEquals" locator1="MEDIA_CAPTION" value1="${mgDocumentTitle} - ${mgDocumentDescription}" />
+		<execute action="PGMediagalleryMedia#click" locator1="ENTRY_EDIT_ICON" />
 
-		<execute action="PGMediagalleryEditmedia#type" locator-key1="TITLE_FIELD" value1="${mgDocumentTitleEdit}" />
-		<execute action="PGMediagalleryEditmedia#type" locator-key1="DESCRIPTION_FIELD" value1="${mgDocumentDescriptionEdit}" />
-		<execute action="PGMediagalleryEditmedia#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGMediagalleryEditmedia#type" locator1="TITLE_FIELD" value1="${mgDocumentTitleEdit}" />
+		<execute action="PGMediagalleryEditmedia#type" locator1="DESCRIPTION_FIELD" value1="${mgDocumentDescriptionEdit}" />
+		<execute action="PGMediagalleryEditmedia#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitleEdit}" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator1="ENTRY_TITLE" value1="${mgDocumentTitleEdit}" />
 	</command>
 
 	<command name="editPublishPG">
@@ -947,8 +947,8 @@
 			<var name="revision" value="${revision}" />
 		</execute>
 
-		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editSaveAndCheckinPG">
@@ -964,13 +964,13 @@
 		<if>
 			<isset var="changeLog" />
 			<then>
-				<execute action="PGDocumentsandmediaCheckin#type" locator-key1="CHANGE_LOG" value1="${changeLog}" />
+				<execute action="PGDocumentsandmediaCheckin#type" locator1="CHANGE_LOG" value1="${changeLog}" />
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="SAVE_AND_CHECKIN_BUTTON" value1="Save and Checkin" />
+		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator1="SAVE_AND_CHECKIN_BUTTON" value1="Save and Checkin" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editSaveAsDraftPG">
@@ -986,58 +986,58 @@
 		<if>
 			<isset var="changeLog" />
 			<then>
-				<execute action="PGDocumentsandmediaCheckin#type" locator-key1="CHANGE_LOG" value1="${changeLog}" />
+				<execute action="PGDocumentsandmediaCheckin#type" locator1="CHANGE_LOG" value1="${changeLog}" />
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_WORKFLOW" value1="Status: Draft" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_DETAILS_WORKFLOW" value1="Status: Draft" />
 	</command>
 
 	<command name="gotoCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
 	<command name="gotoHomeCP">
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="BREADCRUMB_HOME" value1="Home" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="BREADCRUMB_HOME" value1="Home" />
 	</command>
 
 	<command name="gotoPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
 	<command name="gotoRelatedAssetPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<var name="key_assetTitle" value="${key_assetTitle}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_RELATED_ASSETS_HEADER" value1="Related Assets:" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_RELATED_ASSETS_TITLE" value1="${assetTitle}" />
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="DOCUMENT_INFO_RELATED_ASSETS_TITLE" value1="${assetTitle}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_RELATED_ASSETS_HEADER" value1="Related Assets:" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_RELATED_ASSETS_TITLE" value1="${assetTitle}" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator1="DOCUMENT_INFO_RELATED_ASSETS_TITLE" value1="${assetTitle}" />
 	</command>
 
 	<command name="linkImage">
-		<execute action="CKEditor#click" locator-key1="CONTENT_IMAGE_LINK" />
-		<execute action="CKEditor#assertClick" locator-key1="CONTENT_IMAGE_LINK_BROWSE_SERVER_BUTTON" value1="Browse Server" />
-		<execute action="CKEditor#selectFrame" locator-key1="LINK_IMAGE_BROWSE_SERVER_IFRAME" />
+		<execute action="CKEditor#click" locator1="CONTENT_IMAGE_LINK" />
+		<execute action="CKEditor#assertClick" locator1="CONTENT_IMAGE_LINK_BROWSE_SERVER_BUTTON" value1="Browse Server" />
+		<execute action="CKEditor#selectFrame" locator1="LINK_IMAGE_BROWSE_SERVER_IFRAME" />
 
 		<if>
 			<isset var="siteName" />
 			<then>
-				<execute action="CKEditor#click" locator-key1="LINK_IMAGE_BROWSE_SERVER_SITE_BUTTON" />
+				<execute action="CKEditor#click" locator1="LINK_IMAGE_BROWSE_SERVER_SITE_BUTTON" />
 
 				<var name="key_siteName" value="${siteName}" />
 
-				<execute action="CKEditor#click" locator-key1="LINK_IMAGE_BROWSE_SERVER_SITE_MENULIST_BUTTON" />
+				<execute action="CKEditor#click" locator1="LINK_IMAGE_BROWSE_SERVER_SITE_MENULIST_BUTTON" />
 			</then>
 		</if>
 
@@ -1047,69 +1047,69 @@
 				<for list="${dmFolderNames}" param="folderName">
 					<var name="key_folderName" value="${folderName}" />
 
-					<execute action="CKEditor#click" locator-key1="LINK_IMAGE_BROWSE_SERVER_FOLDER_NAME" />
+					<execute action="CKEditor#click" locator1="LINK_IMAGE_BROWSE_SERVER_FOLDER_NAME" />
 				</for>
 			</then>
 		</if>
 
 		<var name="key_documentName" value="${documentName}" />
 
-		<execute action="CKEditor#assertClick" locator-key1="LINK_IMAGE_BROWSE_SERVER_DOCUMENT_CHOOSE_BUTTON" value1="Choose" />
+		<execute action="CKEditor#assertClick" locator1="LINK_IMAGE_BROWSE_SERVER_DOCUMENT_CHOOSE_BUTTON" value1="Choose" />
 		<execute action="CKEditor#selectFrame" value1="relative=top" />
-		<execute action="CKEditor#assertClick" locator-key1="CONTENT_IMAGE_LINK_OK_BUTTON" value1="OK" />
+		<execute action="CKEditor#assertClick" locator1="CONTENT_IMAGE_LINK_OK_BUTTON" value1="OK" />
 	</command>
 
 	<command name="moveToFolderCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_MENULIST_MOVE" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_MOVE" value1="Move" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator1="DOCUMENT_MENULIST_MOVE" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="DOCUMENT_MENULIST_MOVE" value1="Move" />
 
-		<execute action="CPDocumentsandmediaMovedocument#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
-		<execute action="CPDocumentsandmediaMovedocument#selectFrame" locator-key1="FOLDER_WINDOW_ID" />
+		<execute action="CPDocumentsandmediaMovedocument#assertClick" locator1="SELECT_BUTTON" value1="Select" />
+		<execute action="CPDocumentsandmediaMovedocument#selectFrame" locator1="FOLDER_WINDOW_ID" />
 
 		<if>
 			<equals arg1="${dmFolderName}" arg2="Home" />
 			<then>
-				<execute action="CPDocumentsandmediaMovedocument#assertClick" locator-key1="FOLDER_WINDOW_CHOOSE_THIS_FOLDER_BUTTON" value1="Choose This Folder" />
+				<execute action="CPDocumentsandmediaMovedocument#assertClick" locator1="FOLDER_WINDOW_CHOOSE_THIS_FOLDER_BUTTON" value1="Choose This Folder" />
 			</then>
 			<else>
-				<execute action="CPDocumentsandmediaMovedocument#assertClick" locator-key1="FOLDER_WINDOW_FOLDER_CHOOSE_BUTTON" value1="Choose" />
+				<execute action="CPDocumentsandmediaMovedocument#assertClick" locator1="FOLDER_WINDOW_FOLDER_CHOOSE_BUTTON" value1="Choose" />
 			</else>
 		</if>
 
 		<execute function="#selectFrame" locator1="relative=top" />
-		<execute action="CPDocumentsandmediaMovedocument#assertTextEquals" locator-key1="NEW_FOLDER" value1="${dmFolderName}" />
-		<execute action="CPDocumentsandmediaMovedocument#assertClick" locator-key1="MOVE_BUTTON" value1="Move" />
+		<execute action="CPDocumentsandmediaMovedocument#assertTextEquals" locator1="NEW_FOLDER" value1="${dmFolderName}" />
+		<execute action="CPDocumentsandmediaMovedocument#assertClick" locator1="MOVE_BUTTON" value1="Move" />
 
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="moveToFolderPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_MOVE" value1="Move" />
+		<execute action="PGDocumentsandmedia#click" locator1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="DOCUMENT_MENULIST_MOVE" value1="Move" />
 
-		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
-		<execute action="PGDocumentsandmediaMovefiles#selectFrame" locator-key1="SELECT_POP_UP_IFRAME" />
+		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator1="SELECT_BUTTON" value1="Select" />
+		<execute action="PGDocumentsandmediaMovefiles#selectFrame" locator1="SELECT_POP_UP_IFRAME" />
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute action="PGDocumentsandmediaMovefiles#assertTextEquals" locator-key1="SELECT_FOLDER_TABLE_FOLDER" value1="${dmFolderName}" />
-		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="SELECT_FOLDER_TABLE_CHOOSE" value1="Choose" />
+		<execute action="PGDocumentsandmediaMovefiles#assertTextEquals" locator1="SELECT_FOLDER_TABLE_FOLDER" value1="${dmFolderName}" />
+		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator1="SELECT_FOLDER_TABLE_CHOOSE" value1="Choose" />
 		<execute action="PGDocumentsandmediaMovefiles#selectFrameTop" />
-		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="MOVE_BUTTON" value1="Move" />
+		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator1="MOVE_BUTTON" value1="Move" />
 
 		<if>
 			<isset var="dmDuplicateDocument" />
 			<then>
-				<execute action="PGDocumentsandmediaMovefiles#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="Your request failed to complete." />
-				<execute action="PGDocumentsandmediaMovefiles#assertTextEquals" locator-key1="ALERT_MESSAGE_2" value1="The folder you selected already has an entry with this name. Please select a different folder." />
+				<execute action="PGDocumentsandmediaMovefiles#assertTextEquals" locator1="ALERT_MESSAGE" value1="Your request failed to complete." />
+				<execute action="PGDocumentsandmediaMovefiles#assertTextEquals" locator1="ALERT_MESSAGE_2" value1="The folder you selected already has an entry with this name. Please select a different folder." />
 			</then>
 			<else>
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="PGDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
@@ -1117,51 +1117,51 @@
 	<command name="moveToHomePG">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute action="PGDocumentsandmediaFolder#check" locator-key1="ENTRY_ICON_FOLDER_CHECKBOX" />
-		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
-		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="ACTIONS_MENULIST_MOVE" value1="Move" />
+		<execute action="PGDocumentsandmediaFolder#check" locator1="ENTRY_ICON_FOLDER_CHECKBOX" />
+		<execute action="PGDocumentsandmediaFolder#assertClick" locator1="TOOLBAR_ACTIONS" value1="Actions" />
+		<execute action="PGDocumentsandmediaFolder#assertClick" locator1="ACTIONS_MENULIST_MOVE" value1="Move" />
 
-		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
-		<execute action="PGDocumentsandmediaMovefiles#selectFrame" locator-key1="SELECT_POP_UP_IFRAME" />
+		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator1="SELECT_BUTTON" value1="Select" />
+		<execute action="PGDocumentsandmediaMovefiles#selectFrame" locator1="SELECT_POP_UP_IFRAME" />
 
 		<if>
-			<condition action="PGDocumentsandmediaMovefiles#isElementPresent" locator-key1="SELECT_POP_UP_HOME" />
+			<condition action="PGDocumentsandmediaMovefiles#isElementPresent" locator1="SELECT_POP_UP_HOME" />
 			<then>
-				<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="SELECT_POP_UP_HOME" value1="Home" />
+				<execute action="PGDocumentsandmediaMovefiles#assertClick" locator1="SELECT_POP_UP_HOME" value1="Home" />
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="SELECT_POP_UP_CHOOSE_THIS_FOLDER" value1="Choose This Folder" />
+		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator1="SELECT_POP_UP_CHOOSE_THIS_FOLDER" value1="Choose This Folder" />
 		<execute action="PGDocumentsandmediaMovefiles#selectFrameTop" />
-		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="MOVE_BUTTON" value1="Move" />
+		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator1="MOVE_BUTTON" value1="Move" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="moveToRecycleBinCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#mouseOver" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX" />
-		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX" />
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="TOOLBAR_ACTIONS" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${dmDocumentTitle} was moved to the Recycle Bin. Undo" />
+		<execute action="CPDocumentsandmedia#mouseOver" locator1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator1="DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX" />
+		<execute action="CPDocumentsandmedia#click" locator1="DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator1="TOOLBAR_ACTIONS" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="TOOLBAR_ACTIONS" value1="Actions" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${dmDocumentTitle} was moved to the Recycle Bin. Undo" />
 
 		<if>
-			<condition action="CPDocumentsandmedia#isElementNotPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_GENERIC" />
+			<condition action="CPDocumentsandmedia#isElementNotPresent" locator1="DOCUMENT_CONTAINER_DOCUMENT_GENERIC" />
 			<then>
-				<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+				<execute action="CPDocumentsandmedia#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
 			</then>
 		</if>
 	</command>
 
 	<command name="navigateBackViaDocumentViewPG">
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="UP_BUTTON" value1="Up" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator1="UP_BUTTON" value1="Up" />
 	</command>
 
 	<command name="populateField">
@@ -1172,10 +1172,10 @@
 				<equals arg1="${fieldShowLabel}" arg2="No" />
 			</not>
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="FIELD_LABEL" value1="${fieldFieldLabel}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator1="FIELD_LABEL" value1="${fieldFieldLabel}" />
 			</then>
 			<else>
-				<execute action="PGDocumentsandmediaAdddocumenttype#assertElementNotPresent" locator-key1="FIELD_LABEL" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#assertElementNotPresent" locator1="FIELD_LABEL" />
 			</else>
 		</if>
 
@@ -1185,12 +1185,12 @@
 				<if>
 					<equals arg1="${dmDocumentTypeFieldData}" arg2="false" />
 					<then>
-						<execute action="PGDocumentsandmediaAdddocumenttype#uncheck" locator-key1="BOOLEAN_CHECKBOX" />
+						<execute action="PGDocumentsandmediaAdddocumenttype#uncheck" locator1="BOOLEAN_CHECKBOX" />
 					</then>
 					<elseif>
 						<equals arg1="${dmDocumentTypeFieldData}" arg2="true" />
 						<then>
-							<execute action="PGDocumentsandmediaAdddocumenttype#check" locator-key1="BOOLEAN_CHECKBOX" />
+							<execute action="PGDocumentsandmediaAdddocumenttype#check" locator1="BOOLEAN_CHECKBOX" />
 						</then>
 					</elseif>
 					<else>
@@ -1203,51 +1203,51 @@
 		<if>
 			<equals arg1="${field}" arg2="Date" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="DATE_FIELD" value1="${dmDocumentTypeFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator1="DATE_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Decimal" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="DECIMAL_FIELD" value1="${dmDocumentTypeFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator1="DECIMAL_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Documents and Media" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#assertClick" locator-key1="DOCUMENTS_AND_MEDIA_SELECT" value1="Select" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#assertClick" locator1="DOCUMENTS_AND_MEDIA_SELECT" value1="Select" />
 
-				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#selectFrame" locator-key1="SELECT_DOCUMENT_IFRAME" />
-				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#selectFrame" locator1="SELECT_DOCUMENT_IFRAME" />
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#assertClick" locator1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 
-				<execute action="PGDocumentsandmediaAdddocumenttypeSelectAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${document}" />
-				<execute action="PGDocumentsandmediaAdddocumenttypeSelectAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTypeFieldData}" />
-				<execute action="PGDocumentsandmediaAdddocumenttypeSelectAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelectAdddocument#uploadCommonFile" locator1="FILE_FIELD" value1="${document}" />
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelectAdddocument#type" locator1="TITLE_FIELD" value1="${dmDocumentTypeFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelectAdddocument#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 
 				<var name="key_documentTitle" value="${dmDocumentTypeFieldData}" />
 
-				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#assertTextEquals" locator-key1="DOCUMENTS_TABLE_DOCUMENT" value1="${dmDocumentTypeFieldData}" />
-				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#click" locator-key1="DOCUMENTS_TABLE_CHOOSE" />
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#assertTextEquals" locator1="DOCUMENTS_TABLE_DOCUMENT" value1="${dmDocumentTypeFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#click" locator1="DOCUMENTS_TABLE_CHOOSE" />
 
 				<execute action="PGDocumentsandmediaAdddocumenttype#selectFrame" value1="relative=top" />
-				<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="DOCUMENTS_AND_MEDIA_FIELD" value1="${dmDocumentTypeFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator1="DOCUMENTS_AND_MEDIA_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="HTML" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="HTML_FIELD" value1="${dmDocumentTypeFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator1="HTML_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Integer" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="INTEGER_FIELD" value1="${dmDocumentTypeFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator1="INTEGER_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
@@ -1256,15 +1256,15 @@
 			<then>
 				<var name="key_ddlRecordFieldData" value="${dmDocumentTypeFieldData}" />
 
-				<execute action="PGDocumentsandmediaAdddocumenttype#click" locator-key1="LINK_TO_PAGE_SELECT" />
-				<execute action="PGDocumentsandmediaAdddocumenttype#doubleClick" locator-key1="LINK_TO_PAGE_SELECT_OPTION" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#click" locator1="LINK_TO_PAGE_SELECT" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#doubleClick" locator1="LINK_TO_PAGE_SELECT_OPTION" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Number" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="NUMBER_FIELD" value1="${dmDocumentTypeFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator1="NUMBER_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
@@ -1273,82 +1273,82 @@
 			<then>
 				<var name="key_ddlRecordFieldData" value="${dmDocumentTypeFieldData}" />
 
-				<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="RADIO_OPTION_LABEL" value1="${dmDocumentTypeFieldData}" />
-				<execute action="PGDocumentsandmediaAdddocumenttype#click" locator-key1="RADIO_OPTION_RADIO" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator1="RADIO_OPTION_LABEL" value1="${dmDocumentTypeFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#click" locator1="RADIO_OPTION_RADIO" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Select" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#select" locator-key1="SELECT_SELECT" value1="${dmDocumentTypeFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#select" locator1="SELECT_SELECT" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Text" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="TEXT_FIELD" value1="${dmDocumentTypeFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator1="TEXT_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Text Box" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="TEXT_BOX_FIELD" value1="${dmDocumentTypeFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator1="TEXT_BOX_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 	</command>
 
 	<command name="publishCP">
-		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="publishDraftPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL" />
+		<execute action="PGDocumentsandmedia#click" locator1="ENTRY_ICON_DOCUMENT_THUMBNAIL" />
 
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
 
-		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="ratePG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL" />
+		<execute action="PGDocumentsandmedia#click" locator1="ENTRY_ICON_DOCUMENT_THUMBNAIL" />
 
 		<if>
 			<equals arg1="${soDocument}" arg2="true" />
 			<then>
-				<execute action="PGDocumentsandmediaDocument#sikuliClick" locator-key1="SOCIAL_OFFICE_AVERAGE_RATING_STAR_ICON_PNG" />
+				<execute action="PGDocumentsandmediaDocument#sikuliClick" locator1="SOCIAL_OFFICE_AVERAGE_RATING_STAR_ICON_PNG" />
 			</then>
 			<else>
-				<execute action="PGDocumentsandmediaDocument#sikuliClick" locator-key1="AVERAGE_RATING_STAR_ICON_PNG" />
+				<execute action="PGDocumentsandmediaDocument#sikuliClick" locator1="AVERAGE_RATING_STAR_ICON_PNG" />
 			</else>
 		</if>
 
-		<execute action="PGDocumentsandmediaDocument#sikuliClick" locator-key1="DOCUMENT_DETAILS_WORKFLOW_PNG" />
+		<execute action="PGDocumentsandmediaDocument#sikuliClick" locator1="DOCUMENT_DETAILS_WORKFLOW_PNG" />
 	</command>
 
 	<command name="removeDocumentViewPermissionsPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 		<var name="key_roleName" value="${key_roleName?lowercase()}" />
 
-		<execute action="PGDocumentsandmedia#check" locator-key1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute action="PGDocumentsandmedia#check" locator1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
+		<execute action="PGDocumentsandmedia#click" locator1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="DOCUMENT_MENULIST_PERMISSIONS" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
-		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${dmDocumentTitle}" />
-		<execute action="Permissions#uncheck" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
-		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#assertTextEquals" locator1="HEADER_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="Permissions#uncheck" locator1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+		<execute action="Permissions#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="Permissions#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Permissions#selectFrame" value1="relative=top" />
 	</command>
 
@@ -1356,36 +1356,36 @@
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 		<var name="key_dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="VERSION_HISTORY_TABLE_VERSION" value1="${dmDocumentVersionNumber}" />
-		<execute action="PGDocumentsandmediaDocument#click" locator-key1="VERSION_HISTORY_TABLE_DROPDOWN" />
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="VERSION_HISTORY_MENULIST_REVERT" value1="Revert" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="VERSION_HISTORY_TABLE_VERSION" value1="${dmDocumentVersionNumber}" />
+		<execute action="PGDocumentsandmediaDocument#click" locator1="VERSION_HISTORY_TABLE_DROPDOWN" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator1="VERSION_HISTORY_MENULIST_REVERT" value1="Revert" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="saveAsDraftPG">
-		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+		<execute action="PGDocumentsandmediaFolder#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
+		<execute action="PGDocumentsandmediaFolder#assertClick" locator1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 
-		<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
-		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
-		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
-		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+		<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator1="FILE_FIELD" value1="${dmDocumentFile}" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
 
-		<execute action="PGDocumentsandmediaFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmediaFolder#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="searchCP">
-		<execute action="CPDocumentsandmedia#type" locator-key1="SEARCH_FIELD" value1="${dmDocumentKeyword}" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDocumentsandmedia#type" locator1="SEARCH_FIELD" value1="${dmDocumentKeyword}" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="SEARCH_BUTTON" value1="Search" />
 	</command>
 
 	<command name="searchPG">
-		<execute action="PGDocumentsandmedia#type" locator-key1="BASIC_SEARCH_FIELD" value1="${dmDocumentKeyword}" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="PGDocumentsandmedia#type" locator1="BASIC_SEARCH_FIELD" value1="${dmDocumentKeyword}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="BASIC_SEARCH_BUTTON" value1="Search" />
 
-		<execute action="PGDocumentsandmediaSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaSearch#assertTextEquals" locator1="SEARCH_RESULTS_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
 	<command name="searchPGviaMG">
@@ -1394,20 +1394,20 @@
 			<then>
 				<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
-				<execute action="PGMediagallery#type" locator-key1="SEARCH_FIELD" value1="${mgDocumentTitle}" />
-				<execute action="PGMediagallery#click" locator-key1="SEARCH_BUTTON" value1="Search" />
+				<execute action="PGMediagallery#type" locator1="SEARCH_FIELD" value1="${mgDocumentTitle}" />
+				<execute action="PGMediagallery#click" locator1="SEARCH_BUTTON" value1="Search" />
 
-				<execute action="PGMediagallery#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
+				<execute action="PGMediagallery#assertTextEquals" locator1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
 			</then>
 			<elseif>
 				<equals arg1="${mediaGallerySearch}" arg2="Null" />
 				<then>
 					<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
-					<execute action="PGMediagallery#type" locator-key1="SEARCH_FIELD" value1="asdf" />
-					<execute action="PGMediagallery#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+					<execute action="PGMediagallery#type" locator1="SEARCH_FIELD" value1="asdf" />
+					<execute action="PGMediagallery#assertClick" locator1="SEARCH_BUTTON" value1="Search" />
 
-					<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no media files in this folder." />
+					<execute action="PGMediagalleryFolder#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no media files in this folder." />
 				</then>
 			</elseif>
 			<elseif>
@@ -1416,10 +1416,10 @@
 					<var name="quotes"><![CDATA["${mgDocumentTitle}"]]></var>
 					<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
-					<execute action="PGMediagallery#type" locator-key1="SEARCH_FIELD" value1="${quotes}" />
-					<execute action="PGMediagallery#click" locator-key1="SEARCH_BUTTON" value1="Search" />
+					<execute action="PGMediagallery#type" locator1="SEARCH_FIELD" value1="${quotes}" />
+					<execute action="PGMediagallery#click" locator1="SEARCH_BUTTON" value1="Search" />
 
-					<execute action="PGMediagallery#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
+					<execute action="PGMediagallery#assertTextEquals" locator1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
 				</then>
 			</elseif>
 		</if>
@@ -1427,9 +1427,9 @@
 
 	<command name="showCategorization">
 		<if>
-			<condition action="PGDocumentsandmediaEditdocument#isElementNotPresent" locator-key1="CATEGORIZATION_TAGS_FIELD" />
+			<condition action="PGDocumentsandmediaEditdocument#isElementNotPresent" locator1="CATEGORIZATION_TAGS_FIELD" />
 			<then>
-				<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="CATEGORIZATION_PANEL_COLLAPSED" value1="Categorization" />
+				<execute action="PGDocumentsandmediaEditdocument#assertClick" locator1="CATEGORIZATION_PANEL_COLLAPSED" value1="Categorization" />
 			</then>
 		</if>
 	</command>
@@ -1440,12 +1440,12 @@
 		</execute>
 
 		<if>
-			<condition action="CPDocumentsandmedia#isElementNotPresent" locator-key1="INFO_MESSAGE" />
+			<condition action="CPDocumentsandmedia#isElementNotPresent" locator1="INFO_MESSAGE" />
 			<then>
-				<execute action="CPDocumentsandmedia#check" locator-key1="TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
-				<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
-				<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
-				<execute action="CPDocumentsandmedia#assertClick" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+				<execute action="CPDocumentsandmedia#check" locator1="TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
+				<execute action="CPDocumentsandmedia#assertClick" locator1="TOOLBAR_ACTIONS" value1="Actions" />
+				<execute action="CPDocumentsandmedia#assertElementPresent" locator1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
+				<execute action="CPDocumentsandmedia#assertClick" locator1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 			</then>
 		</if>
 
@@ -1462,13 +1462,13 @@
 		</execute>
 
 		<if>
-			<condition action="PGDocumentsandmedia#isElementPresent" locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL_GENERIC" />
+			<condition action="PGDocumentsandmedia#isElementPresent" locator1="ENTRY_ICON_DOCUMENT_THUMBNAIL_GENERIC" />
 			<then>
-				<execute action="PGDocumentsandmedia#check" locator-key1="TOOLBAR_SELECT_ALL_CHECKBOX" />
-				<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
-				<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
-				<execute action="PGDocumentsandmedia#assertClick" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
+				<execute action="PGDocumentsandmedia#check" locator1="TOOLBAR_SELECT_ALL_CHECKBOX" />
+				<execute action="PGDocumentsandmedia#assertClick" locator1="TOOLBAR_ACTIONS" value1="Actions" />
+				<execute action="PGDocumentsandmedia#assertElementPresent" locator1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
+				<execute action="PGDocumentsandmedia#assertClick" locator1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+				<execute action="PGDocumentsandmedia#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</if>
 
@@ -1482,7 +1482,7 @@
 	<command name="uncheckDocumentCheckboxCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#uncheck" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX" />
+		<execute action="CPDocumentsandmedia#uncheck" locator1="DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX" />
 	</command>
 
 	<command name="viewAllPG">
@@ -1492,12 +1492,12 @@
 		</execute>
 
 		<if>
-			<condition action="SODocuments#isElementPresent" locator-key1="DOCUMENT_BREADCRUMBS" />
+			<condition action="SODocuments#isElementPresent" locator1="DOCUMENT_BREADCRUMBS" />
 			<then>
-				<execute action="SODocuments#assertElementPresent" locator-key1="DOCUMENT_BREADCRUMBS" />
+				<execute action="SODocuments#assertElementPresent" locator1="DOCUMENT_BREADCRUMBS" />
 			</then>
 			<else>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="BACK_BUTTON" value1="Back" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="BACK_BUTTON" value1="Back" />
 			</else>
 		</if>
 
@@ -1512,7 +1512,7 @@
 			<then>
 				<var name="key_commentBody" value="${commentBody}" />
 
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${commentBody}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="COMMENTS_BODY" value1="${commentBody}" />
 			</then>
 			<else>
 				<execute macro="DMDocument#viewDocumentNoCommentsCmdPG" />
@@ -1527,8 +1527,8 @@
 	</command>
 
 	<command name="viewCheckedinCP">
-		<execute action="CPDocumentsandmediaDocument#assertVisible" locator-key1="DOCUMENT_DETAILS_VERSION" />
-		<execute action="CPDocumentsandmediaDocument#assertElementNotPresent" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="CPDocumentsandmediaDocument#assertVisible" locator1="DOCUMENT_DETAILS_VERSION" />
+		<execute action="CPDocumentsandmediaDocument#assertElementNotPresent" locator1="SUCCESS_MESSAGE" />
 
 		<if>
 			<equals arg1="${sharepointRepository}" arg2="true" />
@@ -1542,15 +1542,15 @@
 	</command>
 
 	<command name="viewCheckedoutCP">
-		<execute action="CPDocumentsandmediaDocument#assertVisible" locator-key1="DOCUMENT_DETAILS_VERSION_LOCKED" />
+		<execute action="CPDocumentsandmediaDocument#assertVisible" locator1="DOCUMENT_DETAILS_VERSION_LOCKED" />
 
 		<if>
 			<equals arg1="${sharepointRepository}" arg2="true" />
 			<then>
-				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
+				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
 			</then>
 			<else>
-				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 			</else>
 		</if>
 	</command>
@@ -1558,17 +1558,17 @@
 	<command name="viewCheckedoutPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRY_ICON_DOCUMENT_LOCKED_ICON" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_ICON_DOCUMENT_STATUS" value1="Draft" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertElementPresent" locator1="ENTRY_ICON_DOCUMENT_LOCKED_ICON" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ENTRY_ICON_DOCUMENT_STATUS" value1="Draft" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="ALERT_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="ALERT_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 	</command>
 
 	<command name="viewCP">
-		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
 
 		<if>
 			<and>
@@ -1578,7 +1578,7 @@
 				</not>
 			</and>
 			<then>
-				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="VERSION_HISTORY_TABLE_SIZE" value1="${dmDocumentSize}" />
+				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator1="VERSION_HISTORY_TABLE_SIZE" value1="${dmDocumentSize}" />
 			</then>
 		</if>
 	</command>
@@ -1589,59 +1589,59 @@
 		<if>
 			<equals arg1="${dmDocumentStatus}" arg2="Approved" />
 			<then>
-				<execute action="CPDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
-				<execute action="CPDocumentsandmedia#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_LIST" value1="List" />
-				<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_WORKFLOW_STATUS" value1="Approved" />
+				<execute action="CPDocumentsandmedia#click" locator1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+				<execute action="CPDocumentsandmedia#assertClick" locator1="DISPLAY_STYLE_MENULIST_LIST" value1="List" />
+				<execute action="CPDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_CONTAINER_DOCUMENT_WORKFLOW_STATUS" value1="Approved" />
 			</then>
 			<else>
-				<execute action="CPDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
-				<execute action="CPDocumentsandmedia#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-				<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_THUMBNAIL" />
-				<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_WORKFLOW_STATUS" value1="${dmDocumentStatus}" />
-				<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+				<execute action="CPDocumentsandmedia#click" locator1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+				<execute action="CPDocumentsandmedia#assertClick" locator1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+				<execute action="CPDocumentsandmedia#assertElementPresent" locator1="DOCUMENT_CONTAINER_DOCUMENT_THUMBNAIL" />
+				<execute action="CPDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_CONTAINER_DOCUMENT_WORKFLOW_STATUS" value1="${dmDocumentStatus}" />
+				<execute action="CPDocumentsandmedia#assertClick" locator1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-				<execute action="CPDocumentsandmediaAdddocument#assertTextEquals" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+				<execute action="CPDocumentsandmediaAdddocument#assertTextEquals" locator1="TITLE_FIELD" value1="${dmDocumentTitle}" />
 			</else>
 		</if>
 
-		<execute action="CPDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_ICON" value1="Icon" />
+		<execute action="CPDocumentsandmedia#click" locator1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="DISPLAY_STYLE_MENULIST_ICON" value1="Icon" />
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute action="CPDocumentsandmedia#assertElementNotPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_GENERIC" />
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute action="CPDocumentsandmedia#assertElementNotPresent" locator1="DOCUMENT_CONTAINER_DOCUMENT_GENERIC" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
 	</command>
 
 	<command name="viewDefaultPG">
-		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL_GENERIC" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator1="ENTRY_ICON_DOCUMENT_THUMBNAIL_GENERIC" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
 	</command>
 
 	<command name="viewDMMarketingBannerPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
+		<execute action="PGAssetpublisher#assertClick" locator1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
 
 		<var name="key_marketingSelect" value="${marketingSelect}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="MARKETING_SELECT" value1="${marketingSelect}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="MARKETING_SELECT" value1="${marketingSelect}" />
 
 		<var name="key_campaignTheme" value="${campaignTheme}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="MARKETING_CAMPAIGN_THEME" value1="${campaignTheme}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="MARKETING_CAMPAIGN_THEME" value1="${campaignTheme}" />
 
 		<var name="key_legalReview" value="${legalReview}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="MARKETING_NEEDS_LEGAL_REVIEW" value1="${legalReview}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="MARKETING_NEEDS_LEGAL_REVIEW" value1="${legalReview}" />
 
 		<var name="key_bannerName" value="${bannerName}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="MARKETING_BANNER_NAME" value1="${bannerName}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="MARKETING_BANNER_NAME" value1="${bannerName}" />
 
 		<var name="key_bannerDescription" value="${bannerDescription}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="MARKETING_BANNER_DESCRIPTION" value1="${bannerDescription}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="MARKETING_BANNER_DESCRIPTION" value1="${bannerDescription}" />
 	</command>
 
 	<command name="viewDocumentAuthorCmdPG">
@@ -1650,10 +1650,10 @@
 				<contains string="${dmDocumentAuthor}" substring="{dmDocumentAuthor}" />
 			</not>
 			<then>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_UPLOADED_BY" value1="${dmDocumentAuthor}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_UPLOADED_BY" value1="${dmDocumentAuthor}" />
 			</then>
 			<else>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_UPLOADED_BY" value1="Test Test" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_UPLOADED_BY" value1="Test Test" />
 			</else>
 		</if>
 	</command>
@@ -1664,12 +1664,12 @@
 		<if>
 			<equals arg1="${dmDocumentShortcut}" arg2="true" />
 			<then>
-				<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_SHORTCUT_ACTIONS" />
+				<execute action="PGDocumentsandmedia#click" locator1="ENTRY_ICON_DOCUMENT_SHORTCUT_ACTIONS" />
 			</then>
 			<elseif>
 				<equals arg1="${dmDocumentShortcut}" arg2="false" />
 				<then>
-					<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+					<execute action="PGDocumentsandmedia#click" locator1="ENTRY_ICON_DOCUMENT_ACTIONS" />
 				</then>
 			</elseif>
 		</if>
@@ -1677,56 +1677,56 @@
 		<if>
 			<equals arg1="${viewCheckoutOption}" arg2="true" />
 			<then>
-				<execute action="PGDocumentsandmedia#assertVisible" locator-key1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
+				<execute action="PGDocumentsandmedia#assertVisible" locator1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
 			</then>
 			<elseif>
 				<equals arg1="${viewCheckoutOption}" arg2="false" />
 				<then>
-					<execute action="PGDocumentsandmedia#assertNotVisible" locator-key1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
+					<execute action="PGDocumentsandmedia#assertNotVisible" locator1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
 				</then>
 			</elseif>
 		</if>
 	</command>
 
 	<command name="viewDocumentDetailsCmdPG">
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_DATE" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_WORKFLOW_STATUS" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_DOWNLOAD_DOCUMENT" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_GET_URL_OR_WEBDAV_URL" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_AUTOMATICALLY_EXTRACTED_METADATA" value1="Automatically Extracted Metadata" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_INFO_DATE" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_INFO_WORKFLOW_STATUS" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_INFO_DOWNLOAD_DOCUMENT" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_INFO_GET_URL_OR_WEBDAV_URL" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_AUTOMATICALLY_EXTRACTED_METADATA" value1="Automatically Extracted Metadata" />
 	</command>
 
 	<command name="viewDocumentMetadataCP">
 		<var name="key_metadataData" value="${metadataData}" />
 		<var name="key_metadataLabel" value="${metadataLabel}" />
 
-		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_EXTRACTED_METADATA_FIELD" value1="${metadataData}" />
+		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_EXTRACTED_METADATA_FIELD" value1="${metadataData}" />
 	</command>
 
 	<command name="viewDocumentNoCommentsCmdPG">
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="COMMENTS_SUBSCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="COMMENTS_SUBSCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
 	</command>
 
 	<command name="viewDocumentTitleCmdPG">
 		<if>
-			<condition action="PGDocumentsandmediaDocument#isElementPresent" locator-key1="DOCUMENT_INFO_TITLE" />
+			<condition action="PGDocumentsandmediaDocument#isElementPresent" locator1="DOCUMENT_INFO_TITLE" />
 			<then>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
 			</then>
 			<else>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_HEADER_TITLE" value1="${dmDocumentTitle}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_HEADER_TITLE" value1="${dmDocumentTitle}" />
 			</else>
 		</if>
 	</command>
 
 	<command name="viewDocumentToolbarCmdPG">
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="TOOLBAR_DOWNLOAD_BUTTON" value1="Download" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="TOOLBAR_MOVE_BUTTON" value1="Move" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="TOOLBAR_CHECKOUT_BUTTON" value1="Checkout" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="TOOLBAR_PERMISSIONS_BUTTON" value1="Permissions" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="TOOLBAR_MOVE_TO_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="TOOLBAR_DOWNLOAD_BUTTON" value1="Download" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="TOOLBAR_MOVE_BUTTON" value1="Move" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="TOOLBAR_CHECKOUT_BUTTON" value1="Checkout" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="TOOLBAR_PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="TOOLBAR_MOVE_TO_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
 	</command>
 
 	<command name="viewDocumentTypePG">
@@ -1735,7 +1735,7 @@
 			<then>
 				<var name="key_booleanValue" value="${booleanValue}" />
 
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="METADATA_PANEL_BOOLEAN" value1="${booleanValue}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="METADATA_PANEL_BOOLEAN" value1="${booleanValue}" />
 			</then>
 		</if>
 
@@ -1744,7 +1744,7 @@
 			<then>
 				<var name="key_selectOption" value="${selectOption}" />
 
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="METADATA_PANEL_SELECT" value1="Select ${selectOption}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="METADATA_PANEL_SELECT" value1="Select ${selectOption}" />
 			</then>
 		</if>
 
@@ -1753,7 +1753,7 @@
 			<then>
 				<var name="key_radioOption" value="${radioOption}" />
 
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="METADATA_PANEL_RADIO" value1="${radioOption}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="METADATA_PANEL_RADIO" value1="${radioOption}" />
 			</then>
 		</if>
 
@@ -1762,7 +1762,7 @@
 			<then>
 				<var name="key_textContent" value="${textContent}" />
 
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="METADATA_PANEL_TEXT" value1="${textContent}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="METADATA_PANEL_TEXT" value1="${textContent}" />
 			</then>
 		</if>
 
@@ -1771,7 +1771,7 @@
 			<then>
 				<var name="key_numberValue" value="${numberValue}" />
 
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="METADATA_PANEL_NUMBER" value1="${numberValue}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="METADATA_PANEL_NUMBER" value1="${numberValue}" />
 			</then>
 		</if>
 	</command>
@@ -1782,10 +1782,10 @@
 				<contains string="${dmDocumentVersionNumber}" substring="{dmDocumentVersionNumber}" />
 			</not>
 			<then>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_VERSION" value1="Version ${dmDocumentVersionNumber}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_VERSION" value1="Version ${dmDocumentVersionNumber}" />
 			</then>
 			<else>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_VERSION" value1="Version 1.0" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_VERSION" value1="Version 1.0" />
 			</else>
 		</if>
 	</command>
@@ -1793,8 +1793,8 @@
 	<command name="viewDocumentVersionNumberPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<execute macro="DMDocument#viewDocumentVersionNumberCmdPG" />
 	</command>
@@ -1803,26 +1803,26 @@
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 		<var name="key_roleName" value="${key_roleName?lowercase()}" />
 
-		<execute action="PGDocumentsandmedia#check" locator-key1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute action="PGDocumentsandmedia#check" locator1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
+		<execute action="PGDocumentsandmedia#click" locator1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="DOCUMENT_MENULIST_PERMISSIONS" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
-		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#assertTextEquals" locator1="HEADER_TITLE" value1="${dmDocumentTitle}" />
 
 		<if>
 			<equals arg1="${viewPermissionValue}" arg2="checked" />
 			<then>
-				<execute action="Permissions#assertChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+				<execute action="Permissions#assertChecked" locator1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 			</then>
 			<elseif>
 				<equals arg1="${viewPermissionValue}" arg2="unchecked" />
 				<then>
-					<execute action="Permissions#assertNotChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+					<execute action="Permissions#assertNotChecked" locator1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="Permissions#assertChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+				<execute action="Permissions#assertChecked" locator1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 			</else>
 		</if>
 
@@ -1832,23 +1832,23 @@
 	<command name="viewEditCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitleEdit}" />
 
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitleEdit}" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitleEdit}" />
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitleEdit}" />
 
-		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitleEdit}" />
+		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitleEdit}" />
 	</command>
 
 	<command name="viewEditedDraftPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 		<var name="key_dmDocumentVersionNumber" value="${dmDocumentVersionNumberEdit}" />
 
-		<execute action="PGDocumentsandmedia#assertTextPresent" locator-key1="BREADCRUMB_HOME" value1="Home" />
-		<execute action="PGDocumentsandmedia#type" locator-key1="BASIC_SEARCH_FIELD" value1="${dmDocumentTitle}" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="PGDocumentsandmedia#assertTextPresent" locator1="BREADCRUMB_HOME" value1="Home" />
+		<execute action="PGDocumentsandmedia#type" locator1="BASIC_SEARCH_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="BASIC_SEARCH_BUTTON" value1="Search" />
 
-		<execute action="PGDocumentsandmediaSearch#assertClick" locator-key1="SEARCH_RESULTS_TITLE" value1="${dmDocumentTitle} Draft" />
+		<execute action="PGDocumentsandmediaSearch#assertClick" locator1="SEARCH_RESULTS_TITLE" value1="${dmDocumentTitle} Draft" />
 
 		<execute macro="DMDocument#viewDocumentToolbarCmdPG" />
 
@@ -1856,55 +1856,55 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitleEdit}" />
 		</execute>
 
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_THUMBNAIL" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_UPLOADED_BY" value1="${dmDocumentUploader}" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_RATING" value1="Ratings" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_INFO_THUMBNAIL" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_UPLOADED_BY" value1="${dmDocumentUploader}" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_INFO_RATING" value1="Ratings" />
 
 		<if>
-			<condition action="SODocuments#isElementPresent" locator-key1="VERSION_HISTORY_TITLE" />
+			<condition action="SODocuments#isElementPresent" locator1="VERSION_HISTORY_TITLE" />
 			<then>
-				<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_TITLE" value1="Version History" />
-				<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_NUMBER" value1="Version ${dmDocumentVersionNumberEdit}" />
-				<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_UPLOADER_NAME" value1="By: ${dmDocumentUploader}" />
-				<execute action="SODocuments#assertElementPresent" locator-key1="VERSION_HISTORY_DATE" />
-				<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_SIZE" value1="Size: ${dmDocumentSizeSO}" />
+				<execute action="SODocuments#assertTextEquals" locator1="VERSION_HISTORY_TITLE" value1="Version History" />
+				<execute action="SODocuments#assertTextEquals" locator1="VERSION_HISTORY_NUMBER" value1="Version ${dmDocumentVersionNumberEdit}" />
+				<execute action="SODocuments#assertTextEquals" locator1="VERSION_HISTORY_UPLOADER_NAME" value1="By: ${dmDocumentUploader}" />
+				<execute action="SODocuments#assertElementPresent" locator1="VERSION_HISTORY_DATE" />
+				<execute action="SODocuments#assertTextEquals" locator1="VERSION_HISTORY_SIZE" value1="Size: ${dmDocumentSizeSO}" />
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="COMMENTS_SUBSCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_VERSION" value1="Version ${dmDocumentVersionNumberEdit}" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_UPLOADER" value1="Last Updated by ${dmDocumentUploader}" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_DETAILS_DATE" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_WORKFLOW" value1="Status: Draft" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_DOWNLOAD" value1="Download (${dmDocumentSize2})" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_URL" value1="Get URL or WebDAV URL." />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="COMMENTS_SUBSCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_DETAILS_VERSION" value1="Version ${dmDocumentVersionNumberEdit}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_DETAILS_UPLOADER" value1="Last Updated by ${dmDocumentUploader}" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_DETAILS_DATE" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_DETAILS_WORKFLOW" value1="Status: Draft" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_DETAILS_DOWNLOAD" value1="Download (${dmDocumentSize2})" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_DETAILS_URL" value1="Get URL or WebDAV URL." />
 	</command>
 
 	<command name="viewFolderViewPermissionsPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 		<var name="key_roleName" value="${key_roleName?lowercase()}" />
 
-		<execute action="PGDocumentsandmedia#check" locator-key1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute action="PGDocumentsandmedia#check" locator1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
+		<execute action="PGDocumentsandmedia#click" locator1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="DOCUMENT_MENULIST_PERMISSIONS" value1="Permissions" />
 
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
-		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="Permissions#selectFrame" locator1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#assertTextEquals" locator1="HEADER_TITLE" value1="${dmDocumentTitle}" />
 
 		<if>
 			<equals arg1="${viewPermissionValue}" arg2="checked" />
 			<then>
-				<execute action="Permissions#assertChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+				<execute action="Permissions#assertChecked" locator1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 			</then>
 			<elseif>
 				<equals arg1="${viewPermissionValue}" arg2="unchecked" />
 				<then>
-					<execute action="Permissions#assertNotChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+					<execute action="Permissions#assertNotChecked" locator1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="Permissions#assertChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+				<execute action="Permissions#assertChecked" locator1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 			</else>
 		</if>
 
@@ -1914,34 +1914,34 @@
 	<command name="viewIconLockedCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#assertVisible" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_ICON_LOCKED" />
+		<execute action="CPDocumentsandmedia#assertVisible" locator1="DOCUMENT_CONTAINER_DOCUMENT_ICON_LOCKED" />
 	</command>
 
 	<command name="viewIconNotLockedCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#assertVisible" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_ICON_NOT_LOCKED" />
+		<execute action="CPDocumentsandmedia#assertVisible" locator1="DOCUMENT_CONTAINER_DOCUMENT_ICON_NOT_LOCKED" />
 	</command>
 
 	<command name="viewLockPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="ENTRY_ICON_FOLDER_TITLE" value1="${dmDocumentTitle}" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+		<execute action="PGDocumentsandmediaFolder#assertClick" locator1="ENTRY_ICON_FOLDER_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="ALERT_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="ALERT_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 	</command>
 
 	<command name="viewMovedToFolderCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_FOLDER" />
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_FOLDER_TITLE" value1="${dmFolderName}" />
-		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_FOLDER" value1="${dmFolderName}" />
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="BREADCRUMB_LAST" value1="${dmFolderName}" />
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="FOLDER_VIEW_DOCUMENT" />
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="FOLDER_VIEW_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator1="DOCUMENT_CONTAINER_FOLDER" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_CONTAINER_FOLDER_TITLE" value1="${dmFolderName}" />
+		<execute action="CPDocumentsandmedia#click" locator1="DOCUMENT_CONTAINER_FOLDER" value1="${dmFolderName}" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="BREADCRUMB_LAST" value1="${dmFolderName}" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator1="FOLDER_VIEW_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator1="FOLDER_VIEW_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
 	<command name="viewOlderVersionPG">
@@ -1949,29 +1949,29 @@
 		<var name="key_dmDocumentDescription" value="${dmDocumentDescription}" />
 		<var name="key_dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
 
-		<execute action="PGDocumentsandmediaDocument#click" locator-key1="VERSION_HISTORY_TABLE_DROPDOWN" value1="${dmDocumentVersionNumber}" />
-		<execute action="PGDocumentsandmediaDocument#click" locator-key1="VERSION_HISTORY_MENULIST_VIEW" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_VERSION" value1="Version ${dmDocumentVersionNumber}" />
+		<execute action="PGDocumentsandmediaDocument#click" locator1="VERSION_HISTORY_TABLE_DROPDOWN" value1="${dmDocumentVersionNumber}" />
+		<execute action="PGDocumentsandmediaDocument#click" locator1="VERSION_HISTORY_MENULIST_VIEW" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_VERSION" value1="Version ${dmDocumentVersionNumber}" />
 	</command>
 
 	<command name="viewPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<execute macro="DMDocument#viewDocumentTitleCmdPG">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_THUMBNAIL" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_RATING" value1="Rating" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_INFO_THUMBNAIL" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_INFO_RATING" value1="Rating" />
 
 		<if>
 			<isset var="dmDocumentDescription" />
 			<then>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
 			</then>
 		</if>
 
@@ -1979,7 +1979,7 @@
 			<isset var="tagNameList" />
 			<then>
 				<for list="${tagNameList}" param="tagName">
-					<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TAGS" value1="${tagName}" />
+					<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_TAGS" value1="${tagName}" />
 				</for>
 			</then>
 		</if>
@@ -1987,7 +1987,7 @@
 		<if>
 			<isset var="categoryName" />
 			<then>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_CATEGORIES" value1="Topic: ${categoryName}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_CATEGORIES" value1="Topic: ${categoryName}" />
 			</then>
 		</if>
 	</command>
@@ -1995,40 +1995,40 @@
 	<command name="viewPGDetails">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertTextPresent" locator-key1="BREADCRUMB_HOME" value1="Home" />
-		<execute action="PGDocumentsandmedia#type" locator-key1="BASIC_SEARCH_FIELD" value1="${dmDocumentTitle}" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="PGDocumentsandmedia#assertTextPresent" locator1="BREADCRUMB_HOME" value1="Home" />
+		<execute action="PGDocumentsandmedia#type" locator1="BASIC_SEARCH_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="BASIC_SEARCH_BUTTON" value1="Search" />
 
-		<execute action="PGDocumentsandmediaSearch#assertClick" locator-key1="SEARCH_RESULTS_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaSearch#assertClick" locator1="SEARCH_RESULTS_TITLE" value1="${dmDocumentTitle}" />
 
 		<execute macro="DMDocument#viewDocumentToolbarCmdPG" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_THUMBNAIL" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_UPLOADED_BY" value1="${dmDocumentUploader}" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_RATING" value1="Ratings" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_INFO_THUMBNAIL" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_UPLOADED_BY" value1="${dmDocumentUploader}" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_INFO_RATING" value1="Ratings" />
 
 		<if>
-			<condition action="SODocuments#isElementPresent" locator-key1="VERSION_HISTORY_TITLE" />
+			<condition action="SODocuments#isElementPresent" locator1="VERSION_HISTORY_TITLE" />
 			<then>
-				<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_TITLE" value1="Version History" />
-				<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_NUMBER" value1="Version ${dmDocumentVersionNumber}" />
-				<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_UPLOADER_NAME" value1="By: ${dmDocumentUploader}" />
-				<execute action="SODocuments#assertElementPresent" locator-key1="VERSION_HISTORY_DATE" />
-				<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_SIZE" value1="Size: ${dmDocumentSizeSO}" />
-				<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_CHANGE_LOG" value1="${changeLog}" />
+				<execute action="SODocuments#assertTextEquals" locator1="VERSION_HISTORY_TITLE" value1="Version History" />
+				<execute action="SODocuments#assertTextEquals" locator1="VERSION_HISTORY_NUMBER" value1="Version ${dmDocumentVersionNumber}" />
+				<execute action="SODocuments#assertTextEquals" locator1="VERSION_HISTORY_UPLOADER_NAME" value1="By: ${dmDocumentUploader}" />
+				<execute action="SODocuments#assertElementPresent" locator1="VERSION_HISTORY_DATE" />
+				<execute action="SODocuments#assertTextEquals" locator1="VERSION_HISTORY_SIZE" value1="Size: ${dmDocumentSizeSO}" />
+				<execute action="SODocuments#assertTextEquals" locator1="VERSION_HISTORY_CHANGE_LOG" value1="${changeLog}" />
 			</then>
 		</if>
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="COMMENTS_SUBSCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_VERSION" value1="Version ${dmDocumentVersionNumber}" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_UPLOADER" value1="Last Updated by ${dmDocumentUploader}" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_DETAILS_DATE" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_WORKFLOW" value1="${workflow}" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_DOWNLOAD" value1="Download (${dmDocumentSize})" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_URL" value1="Get URL or WebDAV URL." />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="COMMENTS_SUBSCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_DETAILS_VERSION" value1="Version ${dmDocumentVersionNumber}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_DETAILS_UPLOADER" value1="Last Updated by ${dmDocumentUploader}" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_DETAILS_DATE" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_DETAILS_WORKFLOW" value1="${workflow}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_DETAILS_DOWNLOAD" value1="Download (${dmDocumentSize})" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_DETAILS_URL" value1="Get URL or WebDAV URL." />
 	</command>
 
 	<command name="viewPGMetadata">
@@ -2038,9 +2038,9 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_THUMBNAIL" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_RATING" value1="Rating" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_INFO_THUMBNAIL" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_INFO_RATING" value1="Rating" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
 	</command>
 
 	<command name="viewPGNonAuthor">
@@ -2050,16 +2050,16 @@
 		</execute>
 
 		<if>
-			<condition action="SODocuments#isElementPresent" locator-key1="DOCUMENT_BREADCRUMBS" />
+			<condition action="SODocuments#isElementPresent" locator1="DOCUMENT_BREADCRUMBS" />
 			<then>
-				<execute action="SODocuments#assertElementPresent" locator-key1="DOCUMENT_BREADCRUMBS" />
+				<execute action="SODocuments#assertElementPresent" locator1="DOCUMENT_BREADCRUMBS" />
 			</then>
 			<else>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="BACK_BUTTON" value1="Back" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="BACK_BUTTON" value1="Back" />
 			</else>
 		</if>
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="TOOLBAR_DOWNLOAD_BUTTON" value1="Download" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="TOOLBAR_DOWNLOAD_BUTTON" value1="Download" />
 
 		<execute macro="DMDocument#viewDocumentAuthorCmdPG">
 			<var name="dmDocumentAuthor" value="${dmDocumentAuthor}" />
@@ -2070,10 +2070,10 @@
 		<if>
 			<isset var="dmDocumentVersionNumber" />
 			<then>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_VERSION" value1="Version ${dmDocumentVersionNumber}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_VERSION" value1="Version ${dmDocumentVersionNumber}" />
 			</then>
 			<else>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_VERSION" value1="Version 1.0" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_VERSION" value1="Version 1.0" />
 			</else>
 		</if>
 
@@ -2081,30 +2081,30 @@
 	</command>
 
 	<command name="viewPGRating">
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="AVERAGE_RATING" value1="Average (1 Vote)" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="AVERAGE_RATING" value1="Average (1 Vote)" />
 
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_1" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_2" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_3" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_4" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_4" />
-		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="AVERAGE_RATING_STAR_5" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_EMPTY_1" />
-		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="AVERAGE_RATING_STAR_EMPTY_2" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="AVERAGE_RATING_STAR_1" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="AVERAGE_RATING_STAR_2" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="AVERAGE_RATING_STAR_3" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="AVERAGE_RATING_STAR_4" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="AVERAGE_RATING_STAR_4" />
+		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator1="AVERAGE_RATING_STAR_5" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="AVERAGE_RATING_STAR_EMPTY_1" />
+		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator1="AVERAGE_RATING_STAR_EMPTY_2" />
 	</command>
 
 	<command name="viewPGViaAP">
 		<var name="key_assetTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${dmDocumentTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${dmDocumentDescription}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_DESCRIPTION" value1="${dmDocumentDescription}" />
 
 		<if>
-			<condition action="PGAssetpublisher#isElementPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" />
+			<condition action="PGAssetpublisher#isElementPresent" locator1="ASSET_ABSTRACT_READ_MORE" />
 			<then>
-				<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_READ_MORE" value1="Read More" />
-				<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${dmDocumentTitle}" />
-				<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_CONTENT" value1="${dmDocumentDescription}" />
+				<execute action="PGAssetpublisher#assertClick" locator1="ASSET_ABSTRACT_READ_MORE" value1="Read More" />
+				<execute action="PGAssetpublisherAsset#assertTextEquals" locator1="ASSET_TITLE" value1="${dmDocumentTitle}" />
+				<execute action="PGAssetpublisherAsset#assertTextEquals" locator1="ASSET_CONTENT" value1="${dmDocumentDescription}" />
 			</then>
 		</if>
 	</command>
@@ -2112,8 +2112,8 @@
 	<command name="viewPGViaMG">
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
-		<execute action="PGMediagalleryFolder#assertElementPresent" locator-key1="ENTRY_THUMBNAIL" />
-		<execute action="PGMediagalleryFolder#assertElementPresent" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
+		<execute action="PGMediagalleryFolder#assertElementPresent" locator1="ENTRY_THUMBNAIL" />
+		<execute action="PGMediagalleryFolder#assertElementPresent" locator1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
 	</command>
 
 	<command name="viewPGViaSearch">
@@ -2123,9 +2123,9 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_THUMBNAIL" />
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_RATING" value1="Rating" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_INFO_THUMBNAIL" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator1="DOCUMENT_INFO_RATING" value1="Rating" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
 	</command>
 
 	<command name="viewPGviaStagingLocalLive">
@@ -2134,19 +2134,19 @@
 		<if>
 			<equals arg1="${documentAdded}" arg2="true" />
 			<then>
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-				<execute action="PGDocumentsandmedia#assertClick" locator-key1="LIVE_BUTTON" value1="Live" />
+				<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+				<execute action="PGDocumentsandmedia#assertClick" locator1="LIVE_BUTTON" value1="Live" />
 
-				<execute action="PGDocumentsandmedia#assertTextNotPresent" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+				<execute action="PGDocumentsandmedia#assertTextNotPresent" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+				<execute action="PGDocumentsandmedia#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
 			</then>
 			<elseif>
 				<equals arg1="${documentAdded}" arg2="false" />
 				<then>
-					<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+					<execute action="PGDocumentsandmedia#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
 
-					<execute action="PGDocumentsandmedia#assertClick" locator-key1="LIVE_BUTTON" value1="Live" />
-					<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+					<execute action="PGDocumentsandmedia#assertClick" locator1="LIVE_BUTTON" value1="Live" />
+					<execute action="PGDocumentsandmedia#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
 				</then>
 			</elseif>
 		</if>
@@ -2158,44 +2158,44 @@
 		<if>
 			<isset var="dmRepositoryName" />
 			<then>
-				<execute action="CPDocumentsandmediaSearch#assertClick" locator-key1="NAVIGATION_REPOSITORY" value1="${dmRepositoryName}" />
+				<execute action="CPDocumentsandmediaSearch#assertClick" locator1="NAVIGATION_REPOSITORY" value1="${dmRepositoryName}" />
 			</then>
 		</if>
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmediaSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_TITLE" value1="${dmDocumentTitle}" />
-		<execute action="CPDocumentsandmediaSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_PARENT_FOLDER" value1="${dmParentFolder}" />
+		<execute action="CPDocumentsandmediaSearch#assertTextEquals" locator1="SEARCH_RESULTS_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmediaSearch#assertTextEquals" locator1="SEARCH_RESULTS_PARENT_FOLDER" value1="${dmParentFolder}" />
 	</command>
 
 	<command name="viewStagingDetailsPG">
-		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_ADD" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_FOLDER" value1="Folder" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_SHORTCUT" value1="Shortcut" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_REPOSITORY" value1="Repository" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_MULTIPLE_DOCUMENTS" value1="Multiple Documents" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_CONTRACT" value1="Contract" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_MARKETING_BANNER" value1="Marketing Banner" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_ONLINE_TRAINING" value1="Online Training" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_SALES_PRESENTATION" value1="Sales Presentation" />
+		<execute action="PGDocumentsandmedia#click" locator1="TOOLBAR_ADD" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ADD_MENULIST_FOLDER" value1="Folder" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ADD_MENULIST_SHORTCUT" value1="Shortcut" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ADD_MENULIST_REPOSITORY" value1="Repository" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ADD_MENULIST_MULTIPLE_DOCUMENTS" value1="Multiple Documents" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ADD_MENULIST_CONTRACT" value1="Contract" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ADD_MENULIST_MARKETING_BANNER" value1="Marketing Banner" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ADD_MENULIST_ONLINE_TRAINING" value1="Online Training" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ADD_MENULIST_SALES_PRESENTATION" value1="Sales Presentation" />
 
 		<var name="key_dmDocumentTitle" value="Document_1.jpeg" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_DOWNLOAD" value1="Download" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_EDIT" value1="Edit" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_MOVE" value1="Move" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_PERMISSIONS" value1="Permissions" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_DELETE" value1="Move to the Recycle Bin" />
+		<execute action="PGDocumentsandmedia#click" locator1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_MENULIST_DOWNLOAD" value1="Download" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_MENULIST_EDIT" value1="Edit" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_MENULIST_MOVE" value1="Move" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_MENULIST_DELETE" value1="Move to the Recycle Bin" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ACTIONS_MENULIST_CANCEL_CHECKOUT" value1="Cancel Checkout" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ACTIONS_MENULIST_CHECKIN" value1="Checkin" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ACTIONS_MENULIST_CHECKOUT" value1="Checkout" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ACTIONS_MENULIST_MOVE" value1="Move" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute action="PGDocumentsandmedia#click" locator1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="TOOLBAR_ACTIONS" value1="Actions" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ACTIONS_MENULIST_CANCEL_CHECKOUT" value1="Cancel Checkout" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ACTIONS_MENULIST_CHECKIN" value1="Checkin" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ACTIONS_MENULIST_CHECKOUT" value1="Checkout" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ACTIONS_MENULIST_MOVE" value1="Move" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
@@ -2203,22 +2203,22 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="TOOLBAR_ADD" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_DOWNLOAD" value1="Download" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_DELETE" value1="Move to the Recycle Bin" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator1="TOOLBAR_ADD" />
+		<execute action="PGDocumentsandmedia#click" locator1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_MENULIST_DOWNLOAD" value1="Download" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="DOCUMENT_MENULIST_DELETE" value1="Move to the Recycle Bin" />
+		<execute action="PGDocumentsandmedia#click" locator1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="TOOLBAR_ACTIONS" value1="Actions" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 	</command>
 
 	<command name="viewWithWorkflowCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertClick" locator1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
-		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_WORKFLOW_STATUS" value1="${workflowStatus}" />
+		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator1="DOCUMENT_INFO_WORKFLOW_STATUS" value1="${workflowStatus}" />
 	</command>
 </definition>

@@ -1,26 +1,26 @@
 <definition>
 	<command name="addNewPG">
-		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
+		<execute action="Dockbar#click" locator1="ADD" value1="Add" />
 
-		<execute action="DockbarAddpanelcontent#assertClick" locator-key1="NAVIGATION_CONTENT" value1="Content" />
+		<execute action="DockbarAddpanelcontent#assertClick" locator1="NAVIGATION_CONTENT" value1="Content" />
 
 		<var name="key_assetType" value="${assetType}" />
 
-		<execute action="DockbarAddpanelcontent#assertClick" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
-		<execute action="DockbarAddpanelcontent#assertClick" locator-key1="ADD_NEW_MENULIST" value1="${assetType}" />
+		<execute action="DockbarAddpanelcontent#assertClick" locator1="ADD_NEW_DROPDOWN" value1="Add New" />
+		<execute action="DockbarAddpanelcontent#assertClick" locator1="ADD_NEW_MENULIST" value1="${assetType}" />
 	</command>
 
 	<command name="addPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
+		<execute action="Dockbar#click" locator1="ADD" value1="Add" />
 
-		<execute action="DockbarAddpanelcontent#assertClick" locator-key1="NAVIGATION_CONTENT" value1="Content" />
-		<execute action="DockbarAddpanelcontent#type" locator-key1="SEARCH_FIELD" value1="${assetTitle}" />
+		<execute action="DockbarAddpanelcontent#assertClick" locator1="NAVIGATION_CONTENT" value1="Content" />
+		<execute action="DockbarAddpanelcontent#type" locator1="SEARCH_FIELD" value1="${assetTitle}" />
 
-		<execute action="DockbarAddpanelcontent#assertTextEquals" locator-key1="CONTENT_TITLE" value1="${assetTitle}" />
-		<execute action="DockbarAddpanelcontent#mouseOver" locator-key1="CONTENT_TITLE" />
-		<execute action="DockbarAddpanelcontent#assertTextEquals" locator-key1="POPOVER_CONTENT_TITLE" value1="${assetTitle}" />
-		<execute action="DockbarAddpanelcontent#assertClick" locator-key1="POPOVER_ADD_BUTTON" value1="Add" />
+		<execute action="DockbarAddpanelcontent#assertTextEquals" locator1="CONTENT_TITLE" value1="${assetTitle}" />
+		<execute action="DockbarAddpanelcontent#mouseOver" locator1="CONTENT_TITLE" />
+		<execute action="DockbarAddpanelcontent#assertTextEquals" locator1="POPOVER_CONTENT_TITLE" value1="${assetTitle}" />
+		<execute action="DockbarAddpanelcontent#assertClick" locator1="POPOVER_ADD_BUTTON" value1="Add" />
 	</command>
 </definition>

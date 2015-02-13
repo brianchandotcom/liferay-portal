@@ -1100,22 +1100,22 @@
 
 		<var name="key_threadSubject" value="MB Thread Message Subject" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="MB Thread Message Subject" />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="Test Test" />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="2" />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="userfn userln" />
-		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="MB Thread Message Subject" />
+		<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_THREAD" value1="MB Thread Message Subject" />
+		<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_STARTED_BY" value1="Test Test" />
+		<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_POSTS" value1="2" />
+		<execute action="PGMessageboards#assertTextEquals" locator1="THREAD_TABLE_LAST_POST" value1="userfn userln" />
+		<execute action="PGMessageboards#click" locator1="THREAD_TABLE_THREAD" value1="MB Thread Message Subject" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_TABLE_SUBJECT_1" value1="MB Thread Message Subject" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_TABLE_SUBJECT_2" value1="RE: MB Thread Message Subject" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="MB Thread Message Subject" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="MB Thread Message Body" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="Test Test" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_1" value1="0 (0 Votes)" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_2" value1="RE: MB Thread Message Subject" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_2" value1="MB Thread Message Subject Reply" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_2" value1="userfn userln" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_2" value1="0 (0 Votes)" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator1="THREAD_TABLE_SUBJECT_1" value1="MB Thread Message Subject" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator1="THREAD_TABLE_SUBJECT_2" value1="RE: MB Thread Message Subject" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_1" value1="MB Thread Message Subject" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_1" value1="MB Thread Message Body" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_1" value1="Test Test" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_RATING_1" value1="0 (0 Votes)" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_SUBJECT_2" value1="RE: MB Thread Message Subject" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_BODY_2" value1="MB Thread Message Subject Reply" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_USERNAME_2" value1="userfn userln" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator1="MESSAGE_RATING_2" value1="0 (0 Votes)" />
 
 		<execute macro="Gmail#tearDown">
 			<var name="userEmailAddress" property-value="email.address.2" />

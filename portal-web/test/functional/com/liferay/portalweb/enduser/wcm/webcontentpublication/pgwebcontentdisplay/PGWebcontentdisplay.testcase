@@ -668,13 +668,13 @@
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
-		<execute action="PGWebcontentdisplay#click" locator-key1="LANGUAGE_MENU_CHINESE" />
+		<execute action="PGWebcontentdisplay#click" locator1="LANGUAGE_MENU_CHINESE" />
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="世界您好 Content" />
 		</execute>
 
-		<execute action="PGWebcontentdisplay#click" locator-key1="LANGUAGE_MENU_ENGLISH" />
+		<execute action="PGWebcontentdisplay#click" locator1="LANGUAGE_MENU_ENGLISH" />
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="WC WebContent Content" />

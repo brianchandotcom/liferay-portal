@@ -497,7 +497,7 @@
 		<var name="key_documentTitleRow" value="1" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle3}" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle3}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription3}" />
@@ -518,7 +518,7 @@
 		<var name="key_documentTitleRow" value="2" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle2}" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle2}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription2}" />
@@ -539,7 +539,7 @@
 		<var name="key_documentTitleRow" value="3" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle1}" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle1}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
@@ -845,7 +845,7 @@
 		<var name="key_documentTitleRow" value="1" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle3}" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle3}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription3}" />
@@ -866,7 +866,7 @@
 		<var name="key_documentTitleRow" value="2" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle2}" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle2}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription2}" />
@@ -887,7 +887,7 @@
 		<var name="key_documentTitleRow" value="3" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle1}" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle1}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
@@ -956,7 +956,7 @@
 
 		<var name="key_row" value="01" />
 
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_TITLE" value1="${dmDocumentTitle}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
@@ -971,11 +971,11 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_ACTION_LINK" value1="${dmFolderName}" />
+		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_ACTION_LINK" value1="${dmFolderName}" />
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
@@ -1088,7 +1088,7 @@
 		<var name="key_documentTitleRow" value="1" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle3}" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle3}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription3}" />
@@ -1107,7 +1107,7 @@
 		<var name="key_documentTitleRow" value="2" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle2}" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle2}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription2}" />
@@ -1126,7 +1126,7 @@
 		<var name="key_documentTitleRow" value="3" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle1}" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle1}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
@@ -1162,7 +1162,7 @@
 		<var name="key_documentTitleRow" value="1" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle3}" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle3}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription3}" />
@@ -1181,7 +1181,7 @@
 		<var name="key_documentTitleRow" value="2" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle1}" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle1}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
@@ -1230,9 +1230,9 @@
 		<var name="key_documentTitleRow" value="1" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#assertElementNotPresent" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" />
-		<execute action="SOActivities#assertElementNotPresent" locator-key1="ACTIVITIES_DOCUMENT_DESCRIPTION_MULTIPLE" />
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_TITLE" value1="${dmDocumentTitle3}" />
+		<execute action="SOActivities#assertElementNotPresent" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" />
+		<execute action="SOActivities#assertElementNotPresent" locator1="ACTIVITIES_DOCUMENT_DESCRIPTION_MULTIPLE" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_TITLE" value1="${dmDocumentTitle3}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription3}" />
@@ -1521,7 +1521,7 @@
 
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_VIEW_MORE" value1="View More" />
+		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_VIEW_MORE" value1="View More" />
 
 		<execute macro="SOActivities#viewMultipleDocumentsActivityEntry">
 			<var name="dmDocumentDescriptionList" value="${dmDocumentDescription6},${dmDocumentDescription5},${dmDocumentDescription4},${dmDocumentDescription3},${dmDocumentDescription2},${dmDocumentDescription1}" />
@@ -1530,7 +1530,7 @@
 			<var name="userName" value="Test" />
 		</execute>
 
-		<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_VIEW_LESS" value1="View Less" />
+		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_VIEW_LESS" value1="View Less" />
 
 		<execute macro="SOActivities#viewMultipleDocumentsActivityEntry">
 			<var name="dmDocumentDescriptionList" value="${dmDocumentDescription6},${dmDocumentDescription5},${dmDocumentDescription4}" />
@@ -1541,7 +1541,7 @@
 
 		<var name="key_documentTitleRow" value="1" />
 
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle6}" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle6}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription6}" />
@@ -1560,7 +1560,7 @@
 		<var name="key_documentTitleRow" value="2" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle5}" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle5}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription5}" />
@@ -1579,7 +1579,7 @@
 		<var name="key_documentTitleRow" value="3" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle4}" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle4}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription4}" />
@@ -1598,8 +1598,8 @@
 		<var name="key_documentTitleRow" value="4" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_VIEW_MORE" value1="View More" />
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle3}" />
+		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_VIEW_MORE" value1="View More" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle3}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription3}" />
@@ -1618,8 +1618,8 @@
 		<var name="key_documentTitleRow" value="5" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_VIEW_MORE" value1="View More" />
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle2}" />
+		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_VIEW_MORE" value1="View More" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle2}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription2}" />
@@ -1638,8 +1638,8 @@
 		<var name="key_documentTitleRow" value="6" />
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_VIEW_MORE" value1="View More" />
-		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle1}" />
+		<execute action="SOActivities#assertClick" locator1="ACTIVITIES_VIEW_MORE" value1="View More" />
+		<execute action="SOActivities#click" locator1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle1}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
@@ -1685,7 +1685,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOActivities#assertElementNotPresent" locator-key1="ACTIVITIES_VIEW_MORE" />
+		<execute action="SOActivities#assertElementNotPresent" locator1="ACTIVITIES_VIEW_MORE" />
 
 		<execute macro="SOActivities#viewMultipleDocumentsActivityEntry">
 			<var name="dmDocumentDescriptionList" value="${dmDocumentDescription3},${dmDocumentDescription2},${dmDocumentDescription1}" />

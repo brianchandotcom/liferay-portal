@@ -62,7 +62,7 @@
 
 		<var name="key_pageName" value="${sitePage3Name}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="${sitePage3Name}" />
+		<execute action="Home#assertTextEquals" locator1="PAGE" value1="${sitePage3Name}" />
 	</command>
 
 	<command name="CannotDeleteLastPrivatePage" priority="3">
@@ -165,9 +165,9 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute action="CPSitepages#assertElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_TO_PAGE" />
-		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_ARROW_2" />
-		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_3" value1="Child Page Name" />
+		<execute action="CPSitepages#assertElementPresent" locator1="PAGE_TREE_PAGE_LINK_TO_PAGE" />
+		<execute action="CPSitepages#click" locator1="PAGE_TREE_PAGE_ARROW_2" />
+		<execute action="CPSitepages#assertTextEquals" locator1="PAGE_TREE_PAGE_LINK_3" value1="Child Page Name" />
 	</command>
 
 	<command name="DefaultLanguageWithEmptyFriendlyURLThrowsErrorExceptions" priority="4">
@@ -273,7 +273,7 @@
 
 		<execute function="#open" locator1="http://localhost:8080/web/usersn/page-name?p_p_id=130&amp;p_p_state=maximized" />
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
+		<execute action="Home#assertTextEquals" locator1="ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -384,9 +384,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertTextNotPresent" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute action="Home#assertTextNotPresent" locator1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 
-		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="Site Page" />
+		<execute action="Home#assertTextEquals" locator1="BREADCRUMB_2" value1="Site Page" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -421,9 +421,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute action="Home#assertTextEquals" locator1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 
-		<execute action="Home#assertTextNotPresent" locator-key1="BREADCRUMB_2" value1="Site Page" />
+		<execute action="Home#assertTextNotPresent" locator1="BREADCRUMB_2" value1="Site Page" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -619,16 +619,16 @@
 		</execute>
 
 		<execute macro="User#viewLoginPG" />
-		<execute action="Home#assertElementNotPresent" locator-key1="ERROR_MESSAGE" />
-		<execute action="Home#assertElementNotPresent" locator-key1="ERROR_MESSAGE_ALERT_ERROR" />
+		<execute action="Home#assertElementNotPresent" locator1="ERROR_MESSAGE" />
+		<execute action="Home#assertElementNotPresent" locator1="ERROR_MESSAGE_ALERT_ERROR" />
 
 		<execute function="#open" locator1="${blogEntryURL}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute action="Home#assertTextEquals" locator1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 
 		<execute function="#open" locator1="${messageBoardsThreadURL}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute action="Home#assertTextEquals" locator1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="ViewSecureContentAndPageAsSiteMember" priority="4">
@@ -850,8 +850,8 @@
 			<var name="pageNameList" value="Private Page" />
 		</execute>
 
-		<execute action="Home#assertElementNotPresent" locator-key1="ERROR_MESSAGE" />
-		<execute action="Home#assertElementNotPresent" locator-key1="ERROR_MESSAGE_ALERT_ERROR" />
+		<execute action="Home#assertElementNotPresent" locator1="ERROR_MESSAGE" />
+		<execute action="Home#assertElementNotPresent" locator1="ERROR_MESSAGE_ALERT_ERROR" />
 
 		<execute function="#open" locator1="${blogEntryURL}" />
 
@@ -1088,11 +1088,11 @@
 			<var name="pageAccess" value="Private" />
 		</execute>
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute action="Home#assertTextEquals" locator1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 
 		<execute function="#open" locator1="${blogEntryURL}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute action="Home#assertTextEquals" locator1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -1100,7 +1100,7 @@
 
 		<execute function="#open" locator1="${messageBoardsThreadURL}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute action="Home#assertTextEquals" locator1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="WebContentAdministrationSitesPagesPanel" priority="3">
@@ -1119,7 +1119,7 @@
 
 		<var name="key_portletName" value="Blogs" />
 
-		<execute action="PGPanel#assertClick" locator-key1="MENU_ITEM" value1="Blogs" />
+		<execute action="PGPanel#assertClick" locator1="MENU_ITEM" value1="Blogs" />
 
 		<execute macro="BlogsEntry#addPG">
 			<var name="entryContent" value="This is Blog Post 1 Content" />
@@ -1138,7 +1138,7 @@
 
 		<var name="key_portletName" value="Message Boards" />
 
-		<execute action="PGPanel#assertClick" locator-key1="MENU_ITEM" value1="Message Boards" />
+		<execute action="PGPanel#assertClick" locator1="MENU_ITEM" value1="Message Boards" />
 
 		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="This is Message Boards Thread 1" />
@@ -1149,7 +1149,7 @@
 			<var name="pageName" value="Panel Test Page" />
 		</execute>
 
-		<execute action="PGPanel#assertClick" locator-key1="MENU_ITEM" value1="Message Boards" />
+		<execute action="PGPanel#assertClick" locator1="MENU_ITEM" value1="Message Boards" />
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
@@ -1198,12 +1198,12 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="Blank Page" />
-		<execute action="CPSitepages#assertClickNoError" locator-key1="TOOLBAR_DELETE" value1="Delete" />
-		<execute action="CPSitepages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
-		<execute action="CPSitepages#assertTextEquals" locator-key1="INFO_MESSAGE_1" value1="Your request failed to complete." />
-		<execute action="CPSitepages#assertTextEquals" locator-key1="INFO_MESSAGE_2" value1="The first page cannot be of type Link to URL." />
-		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="Blank Page" />
+		<execute action="CPSitepages#assertClick" locator1="PAGE_TREE_PAGE_LINK_1" value1="Blank Page" />
+		<execute action="CPSitepages#assertClickNoError" locator1="TOOLBAR_DELETE" value1="Delete" />
+		<execute action="CPSitepages#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
+		<execute action="CPSitepages#assertTextEquals" locator1="INFO_MESSAGE_1" value1="Your request failed to complete." />
+		<execute action="CPSitepages#assertTextEquals" locator1="INFO_MESSAGE_2" value1="The first page cannot be of type Link to URL." />
+		<execute action="CPSitepages#assertTextEquals" locator1="PAGE_TREE_PAGE_LINK_1" value1="Blank Page" />
 
 		<execute macro="SitePage#addCP">
 			<var name="pageTypeDescription" value="Liferay" />
@@ -1246,8 +1246,8 @@
 
 		<execute action="Home#assertLocation" value1="http://localhost:8080/web/page-type-test-site-name/embedded-page" />
 
-		<execute action="PGEmbedded#selectFrame" locator-key1="EMBEDDED_IFRAME" />
-		<execute action="PGEmbedded#assertTextEquals" locator-key1="EMBEDDED_LIFERAY_COPYRIGHT_TEXT" value1="© 2015 LIFERAY INC. ALL RIGHTS RESERVED" />
+		<execute action="PGEmbedded#selectFrame" locator1="EMBEDDED_IFRAME" />
+		<execute action="PGEmbedded#assertTextEquals" locator1="EMBEDDED_LIFERAY_COPYRIGHT_TEXT" value1="© 2015 LIFERAY INC. ALL RIGHTS RESERVED" />
 		<execute action="PGEmbedded#selectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">

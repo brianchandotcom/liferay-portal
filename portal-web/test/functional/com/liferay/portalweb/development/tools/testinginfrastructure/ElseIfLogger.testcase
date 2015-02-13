@@ -102,14 +102,14 @@
 
 	<command name="TestCaseElseIfConditions" priority="5">
 		<if>
-			<condition action="ElseIfLogger#isElementPresent" locator-key1="FAKE_ELEMENT" />
+			<condition action="ElseIfLogger#isElementPresent" locator1="FAKE_ELEMENT" />
 			<then>
 				<execute macro="TestUtils#fail">
 					<var name="message" value="1st clause is not true: FAIL" />
 				</execute>
 			</then>
 			<elseif>
-				<condition action="ElseIfLogger#isElementPresent" locator-key1="REAL_ELEMENT" />
+				<condition action="ElseIfLogger#isElementPresent" locator1="REAL_ELEMENT" />
 				<then>
 					<execute macro="TestUtils#pass">
 						<var name="message" value="2nd clause is true: PASS" />

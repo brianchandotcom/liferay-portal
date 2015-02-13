@@ -161,8 +161,8 @@
 
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -181,8 +181,8 @@
 
 		<var name="key_assetTitle" value="${webContentTitleEdit}" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitleEdit}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContentEdit}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_TITLE" value1="${webContentTitleEdit}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContentEdit}" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -200,11 +200,11 @@
 
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
-		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
-		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitleEdit}" />
-		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
-		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContentEdit}" />
-		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" value1="Read More" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator1="ASSET_ABSTRACT_TITLE" value1="${webContentTitleEdit}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContentEdit}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator1="ASSET_ABSTRACT_READ_MORE" value1="Read More" />
 	</command>
 
 	<command name="AddWebContentWithGlobalScopeViaCPToSiteAP" priority="4">
@@ -291,8 +291,8 @@
 
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -313,8 +313,8 @@
 
 		<var name="key_assetTitle" value="${webContentTitleEdit}" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitleEdit}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContentEdit}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_TITLE" value1="${webContentTitleEdit}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContentEdit}" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -334,11 +334,11 @@
 
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
-		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
-		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitleEdit}" />
-		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
-		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContentEdit}" />
-		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" value1="Read More" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator1="ASSET_ABSTRACT_TITLE" value1="${webContentTitleEdit}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContentEdit}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator1="ASSET_ABSTRACT_READ_MORE" value1="Read More" />
 	</command>
 
 	<command name="AddWebContentWithStructureAndGlobalScopeViaCPToLiferayAP" priority="4">
@@ -403,7 +403,7 @@
 
 		<var name="key_fieldName" value="${structureFieldNames}" />
 
-		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="TEXT_FIELD" value1="${webContentText}" />
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator1="TEXT_FIELD" value1="${webContentText}" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -433,8 +433,8 @@
 
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentText}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentText}" />
 	</command>
 
 	<command name="AddWebContentWithStructureAndGlobalScopeViaCPToSiteAP" priority="4">
@@ -500,7 +500,7 @@
 
 		<var name="key_fieldName" value="${structureFieldNames}" />
 
-		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="TEXT_FIELD" value1="${webContentText}" />
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator1="TEXT_FIELD" value1="${webContentText}" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -554,8 +554,8 @@
 
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentText}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator1="ASSET_ABSTRACT_DESCRIPTION" value1="${webContentText}" />
 	</command>
 
 	<command name="ViewDefaultGlobalScopeLandingPage" priority="4">
@@ -651,10 +651,10 @@
 
 		<var name="key_portletName" value="${portlet3Name}" />
 
-		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet3Name}" />
+		<execute action="BasePortlet#assertTextEquals" locator1="SPECIFIC_PORTLET_TITLE" value1="${portlet3Name}" />
 
-		<execute action="Dockbar#assertTextEquals" locator-key1="PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template." />
-		<execute action="Dockbar#assertClick" locator-key1="RESET_CHANGES_BUTTON" value1="Reset Changes" />
+		<execute action="Dockbar#assertTextEquals" locator1="PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template." />
+		<execute action="Dockbar#assertClick" locator1="RESET_CHANGES_BUTTON" value1="Reset Changes" />
 
 		<execute macro="Page#openURL">
 			<var name="pageName" value="${sitePageName}" />
@@ -662,7 +662,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="BasePortlet#assertTextNotPresent" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet3Name}" />
+		<execute action="BasePortlet#assertTextNotPresent" locator1="SPECIFIC_PORTLET_TITLE" value1="${portlet3Name}" />
 
 		<execute macro="PermissionsInline#gotoConfigurationPG" >
 			<var name="portletName" value="${portlet1Name}" />
@@ -734,7 +734,7 @@
 
 		<var name="key_portletName" value="${portlet2Name}" />
 
-		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet2Name}" />
+		<execute action="BasePortlet#assertTextEquals" locator1="SPECIFIC_PORTLET_TITLE" value1="${portlet2Name}" />
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="postCount" value="1" />
@@ -750,25 +750,25 @@
 
 		<var name="key_portletName" value="${portlet1Name}" />
 
-		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet1Name}" />
+		<execute action="BasePortlet#assertTextEquals" locator1="SPECIFIC_PORTLET_TITLE" value1="${portlet1Name}" />
 
-		<execute action="BasePortlet#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Please sign in to vote." />
+		<execute action="BasePortlet#assertTextEquals" locator1="INFO_MESSAGE" value1="Please sign in to vote." />
 
-		<execute action="PGSearch#assertElementPresent" locator-key1="SEARCH_FIELD" />
+		<execute action="PGSearch#assertElementPresent" locator1="SEARCH_FIELD" />
 
 		<var name="key_portletName" value="${portlet4Name}" />
 
-		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet4Name}" />
+		<execute action="BasePortlet#assertTextEquals" locator1="SPECIFIC_PORTLET_TITLE" value1="${portlet4Name}" />
 
 		<var name="key_portletName" value="${portlet5Name}" />
 
-		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet5Name}" />
+		<execute action="BasePortlet#assertTextEquals" locator1="SPECIFIC_PORTLET_TITLE" value1="${portlet5Name}" />
 
-		<execute action="Dockbar#assertClick" locator-key1="USER_SIGN_IN" value1="Sign In" />
+		<execute action="Dockbar#assertClick" locator1="USER_SIGN_IN" value1="Sign In" />
 
-		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
-		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
+		<execute action="PGLogin#type" locator1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="PGLogin#type" locator1="PASSWORD_FIELD" value1="${password}" />
+		<execute action="PGLogin#click" locator1="SIGN_IN_BUTTON" value1="Sign In" />
 
 		<execute macro="PermissionsInline#gotoConfigurationPG" >
 			<var name="portletName" value="${portlet1Name}" />
@@ -798,7 +798,7 @@
 
 		<execute function="#open" locator1="${siteGuestViewURL}" />
 
-		<execute action="PGPollsdisplay#assertTextEquals" locator-key1="ERROR_MESSAGE_1_COLUMN_1" value1="You do not have the roles required to access this portlet." />
-		<execute action="PGPollsdisplay#assertTextEquals" locator-key1="ERROR_MESSAGE_1_COLUMN_2" value1="You do not have the roles required to access this portlet." />
+		<execute action="PGPollsdisplay#assertTextEquals" locator1="ERROR_MESSAGE_1_COLUMN_1" value1="You do not have the roles required to access this portlet." />
+		<execute action="PGPollsdisplay#assertTextEquals" locator1="ERROR_MESSAGE_1_COLUMN_2" value1="You do not have the roles required to access this portlet." />
 	</command>
 </definition>

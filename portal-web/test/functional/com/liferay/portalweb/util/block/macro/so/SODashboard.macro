@@ -2,54 +2,54 @@
 	<command name="tearDownCP">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
-		<execute action="Dockbar#assertClick" locator-key1="ADMIN_SITE_ADMINISTRATION_PAGES" value1="Pages" />
+		<execute action="Dockbar#assertClick" locator1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator1="ADMIN_SITE_ADMINISTRATION_PAGES" value1="Pages" />
 
-		<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
+		<execute action="CPSitepages#assertClick" locator1="NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
 
 		<if>
-			<condition action="CPSitepages#isElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_8" />
+			<condition action="CPSitepages#isElementPresent" locator1="PAGE_TREE_PAGE_LINK_8" />
 			<then>
-				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_8" />
-				<execute action="CPSitepages#assertClickNoError" locator-key1="TOOLBAR_DELETE" value1="Delete" />
-				<execute action="CPSitepages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
+				<execute action="CPSitepages#click" locator1="PAGE_TREE_PAGE_LINK_8" />
+				<execute action="CPSitepages#assertClickNoError" locator1="TOOLBAR_DELETE" value1="Delete" />
+				<execute action="CPSitepages#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
 			</then>
 		</if>
 
-		<execute action="CPSitepages#assertElementNotPresent" locator-key1="PAGE_TREE_PAGE_LINK_8" />
+		<execute action="CPSitepages#assertElementNotPresent" locator1="PAGE_TREE_PAGE_LINK_8" />
 	</command>
 
 	<command name="tearDownPG">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<if>
-			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+			<condition action="SOUserBar#isElementNotPresent" locator1="VISIBLE_PAGE_CONTROLS" />
 			<then>
-				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+				<execute action="SOUserBar#click" locator1="TOGGLE_DOCKBAR" />
 			</then>
 		</if>
 
 		<if>
-			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+			<condition action="SOUserBar#isElementPresent" locator1="EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
-				<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
+				<execute action="Dockbar#mouseOver" locator1="EDIT_CONTROLS" />
+				<execute action="Dockbar#click" locator1="EDIT_CONTROLS" />
 			</then>
 		</if>
 
-		<execute action="SODashboard#mouseOver" locator-key1="NAVIGATION_DASHBOARD" />
+		<execute action="SODashboard#mouseOver" locator1="NAVIGATION_DASHBOARD" />
 		<execute function="#pause" locator1="1000" />
 
 		<while>
-			<condition action="SODashboard#isElementPresent" locator-key1="NAVIGATION_USER_ADDED_PAGE" />
+			<condition action="SODashboard#isElementPresent" locator1="NAVIGATION_USER_ADDED_PAGE" />
 			<then>
-				<execute action="SODashboard#mouseOver" locator-key1="NAVIGATION_USER_ADDED_PAGE" />
-				<execute action="SODashboard#clickNoError" locator-key1="NAVIGATION_PAGE_DELETE" />
-				<execute action="SODashboard#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this page?" />
+				<execute action="SODashboard#mouseOver" locator1="NAVIGATION_USER_ADDED_PAGE" />
+				<execute action="SODashboard#clickNoError" locator1="NAVIGATION_PAGE_DELETE" />
+				<execute action="SODashboard#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this page?" />
 			</then>
 		</while>
 
-		<execute action="SODashboard#assertElementNotPresent" locator-key1="NAVIGATION_USER_ADDED_PAGE" />
+		<execute action="SODashboard#assertElementNotPresent" locator1="NAVIGATION_USER_ADDED_PAGE" />
 	</command>
 
 	<command name="tearDownSiteTemplateCP">
@@ -59,261 +59,261 @@
 
 		<var name="key_siteTemplateName" value="Social Office User Home" />
 
-		<execute action="CPSitetemplates#click" locator-key1="SITE_TEMPLATE_TABLE_ACTIONS" value1="Social Office User Home" />
-		<execute action="CPSitetemplates#click" locator-key1="SITE_TEMPLATE_MENULIST_MANAGE" />
+		<execute action="CPSitetemplates#click" locator1="SITE_TEMPLATE_TABLE_ACTIONS" value1="Social Office User Home" />
+		<execute action="CPSitetemplates#click" locator1="SITE_TEMPLATE_MENULIST_MANAGE" />
 
 		<if>
-			<condition action="CPSitepages#isElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_7" />
+			<condition action="CPSitepages#isElementPresent" locator1="PAGE_TREE_PAGE_LINK_7" />
 			<then>
-				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_7" />
-				<execute action="CPSitepages#clickNoError" locator-key1="TOOLBAR_DELETE" />
-				<execute action="CPSitepages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
+				<execute action="CPSitepages#click" locator1="PAGE_TREE_PAGE_LINK_7" />
+				<execute action="CPSitepages#clickNoError" locator1="TOOLBAR_DELETE" />
+				<execute action="CPSitepages#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
 			</then>
 		</if>
 
-		<execute action="CPSitepages#assertElementNotPresent" locator-key1="PAGE_TREE_PAGE_LINK_8" />
+		<execute action="CPSitepages#assertElementNotPresent" locator1="PAGE_TREE_PAGE_LINK_8" />
 	</command>
 
 	<command name="viewLinkContactscenter">
-		<execute action="SOContactscenter#assertElementPresent" locator-key1="CONTACTS_LIST_NAME" />
-		<execute action="SOContactscenter#assertElementPresent" locator-key1="CONTACTS_LIST_ALL_CHECKBOX" />
-		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LINK_TITLE" value1="Contacts Center" />
-		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LINK_CONNECTIONS" value1="You have 0 connections." />
-		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LINK_FOLLOWING" value1="You are following 0 people." />
-		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LINK_CONTACTS" value1="View my 0 contacts." />
+		<execute action="SOContactscenter#assertElementPresent" locator1="CONTACTS_LIST_NAME" />
+		<execute action="SOContactscenter#assertElementPresent" locator1="CONTACTS_LIST_ALL_CHECKBOX" />
+		<execute action="SOContactscenter#assertTextEquals" locator1="CONTACTS_LINK_TITLE" value1="Contacts Center" />
+		<execute action="SOContactscenter#assertTextEquals" locator1="CONTACTS_LINK_CONNECTIONS" value1="You have 0 connections." />
+		<execute action="SOContactscenter#assertTextEquals" locator1="CONTACTS_LINK_FOLLOWING" value1="You are following 0 people." />
+		<execute action="SOContactscenter#assertTextEquals" locator1="CONTACTS_LINK_CONTACTS" value1="View my 0 contacts." />
 
 		<var name="siteName" value="Liferay" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#assertElementPresent" locator1="GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME" value1="${siteName}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME" value1="${siteName}" />
 	</command>
 
 	<command name="viewLinkHome">
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
-		<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_CONTENT_FIELD" value1="Update your status..." />
-		<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
+		<execute action="SOStatusUpdate#assertTextEquals" locator1="STATUS_UPDATE_CONTENT_FIELD" value1="Update your status..." />
+		<execute action="SOStatusUpdate#assertTextEquals" locator1="STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
 
-		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_PORTLET_TITLE" value1="Announcements" />
-		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
-		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
-		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
+		<execute action="SOAnnouncements#assertTextEquals" locator1="ANNOUNCEMENTS_PORTLET_TITLE" value1="Announcements" />
+		<execute action="SOAnnouncements#assertTextEquals" locator1="ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
+		<execute action="SOAnnouncements#assertTextEquals" locator1="ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+		<execute action="SOAnnouncements#assertTextEquals" locator1="ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_PORTLET_TITLE" value1="Activities" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NAVIGATION_ALL" value1="All" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NAVIGATION_MY_SITE" value1="My Sites" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NAVIGATION_ME" value1="Me" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextEquals" locator1="ACTIVITIES_PORTLET_TITLE" value1="Activities" />
+		<execute action="SOActivities#assertTextEquals" locator1="NAVIGATION_ALL" value1="All" />
+		<execute action="SOActivities#assertTextEquals" locator1="NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute action="SOActivities#assertTextEquals" locator1="NAVIGATION_FOLLOWING" value1="Following" />
+		<execute action="SOActivities#assertTextEquals" locator1="NAVIGATION_MY_SITE" value1="My Sites" />
+		<execute action="SOActivities#assertTextEquals" locator1="NAVIGATION_ME" value1="Me" />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 
-		<execute action="SOUpcomingTasks#assertTextEquals" locator-key1="TASK_PORTLET_TITLE" value1="Upcoming Tasks" />
-		<execute action="SOUpcomingTasks#assertTextEquals" locator-key1="VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
+		<execute action="SOUpcomingTasks#assertTextEquals" locator1="TASK_PORTLET_TITLE" value1="Upcoming Tasks" />
+		<execute action="SOUpcomingTasks#assertTextEquals" locator1="VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
 
-		<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_PORTLET_TITLE" value1="Events" />
-		<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
+		<execute action="SOEvents#assertTextEquals" locator1="EVENTS_DISPLAY_PORTLET_TITLE" value1="Events" />
+		<execute action="SOEvents#assertTextEquals" locator1="EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
 
 		<var name="siteName" value="Liferay" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#assertElementPresent" locator1="GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME" value1="${siteName}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME" value1="${siteName}" />
 	</command>
 
 	<command name="viewLinkMicroblogs">
-		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_CONTENT_FIELD" value1="Update your status..." />
-		<execute action="SOMicroblogs#assertTextEquals" locator-key1="INFO_MESSAGE" value1="You do not have any microblog entries." />
+		<execute action="SOMicroblogs#assertTextEquals" locator1="MICROBLOGS_CONTENT_FIELD" value1="Update your status..." />
+		<execute action="SOMicroblogs#assertTextEquals" locator1="INFO_MESSAGE" value1="You do not have any microblog entries." />
 
 		<var name="siteName" value="Liferay" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#assertElementPresent" locator1="GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME" value1="${siteName}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME" value1="${siteName}" />
 	</command>
 
 	<command name="viewLinkMydocuments">
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="FILTER_HOME" value1="Home" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="FILTER_RECENT" value1="Recent" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="FILTER_MINE" value1="Mine" />
-		<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="TOOLBAR_SELECT_ALL_CHECKBOX" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="TOOLBAR_ADD" value1="Add" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="TOOLBAR_SORT_BY" value1="Sort By" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="TOOLBAR_DISPLAY_STYLE" />
-		<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="BASIC_SEARCH_FIELD" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="FILTER_HOME" value1="Home" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="FILTER_RECENT" value1="Recent" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="FILTER_MINE" value1="Mine" />
+		<execute action="PGDocumentsandmedia#assertElementPresent" locator1="TOOLBAR_SELECT_ALL_CHECKBOX" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="TOOLBAR_ADD" value1="Add" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="TOOLBAR_SORT_BY" value1="Sort By" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="TOOLBAR_MANAGE" value1="Manage" />
+		<execute action="PGDocumentsandmedia#assertElementPresent" locator1="TOOLBAR_DISPLAY_STYLE" />
+		<execute action="PGDocumentsandmedia#assertElementPresent" locator1="BASIC_SEARCH_FIELD" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<var name="siteName" value="Liferay" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#assertElementPresent" locator1="GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME" value1="${siteName}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME" value1="${siteName}" />
 	</command>
 
 	<command name="viewLinkPrivateMessaging">
-		<execute action="SOMessages#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No messages found." />
-		<execute action="SOMessages#assertElementNotPresent" locator-key1="MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
-		<execute action="SOMessages#assertElementNotPresent" locator-key1="MARK_AS_READ_BUTTON" value1="Mark as Read" />
-		<execute action="SOMessages#assertElementNotPresent" locator-key1="DELETE_BUTTON" value1="Delete" />
-		<execute action="SOMessages#assertTextEquals" locator-key1="NEW_MESSAGE_BUTTON" value1="New Message" />
+		<execute action="SOMessages#assertTextEquals" locator1="INFO_MESSAGE" value1="No messages found." />
+		<execute action="SOMessages#assertElementNotPresent" locator1="MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
+		<execute action="SOMessages#assertElementNotPresent" locator1="MARK_AS_READ_BUTTON" value1="Mark as Read" />
+		<execute action="SOMessages#assertElementNotPresent" locator1="DELETE_BUTTON" value1="Delete" />
+		<execute action="SOMessages#assertTextEquals" locator1="NEW_MESSAGE_BUTTON" value1="New Message" />
 
 		<var name="siteName" value="Liferay" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#assertElementPresent" locator1="GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME" value1="${siteName}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME" value1="${siteName}" />
 	</command>
 
 	<command name="viewLinkTasks">
-		<execute action="SOTasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
-		<execute action="SOTasks#assertTextEquals" locator-key1="I_HAVE_CREATED_LINK" value1="I Have Created" />
-		<execute action="SOTasks#assertTextEquals" locator-key1="ADD_TASK_BUTTON" value1="Add Task" />
-		<execute action="SOTasks#assertTextEquals" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
-		<execute action="SOTasks#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No tasks were found." />
+		<execute action="SOTasks#assertTextEquals" locator1="ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
+		<execute action="SOTasks#assertTextEquals" locator1="I_HAVE_CREATED_LINK" value1="I Have Created" />
+		<execute action="SOTasks#assertTextEquals" locator1="ADD_TASK_BUTTON" value1="Add Task" />
+		<execute action="SOTasks#assertTextEquals" locator1="PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute action="SOTasks#assertTextEquals" locator1="INFO_MESSAGE" value1="No tasks were found." />
 
 		<var name="siteName" value="Liferay" />
 
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#assertElementPresent" locator1="GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME" value1="${siteName}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME" value1="${siteName}" />
 	</command>
 
 	<command name="viewLocalizedPG">
 		<var name="key_pageName" value="${contactsCenterPageLocalized}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="PAGE_NAME" value1="${contactsCenterPageLocalized}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="PAGE_NAME" value1="${contactsCenterPageLocalized}" />
 
 		<var name="key_pageName" value="${microblogsPageLocalized}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="PAGE_NAME" value1="${microblogsPageLocalized}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="PAGE_NAME" value1="${microblogsPageLocalized}" />
 
 		<var name="key_pageName" value="${messagesPageLocalized}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="PAGE_NAME" value1="${messagesPageLocalized}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="PAGE_NAME" value1="${messagesPageLocalized}" />
 
 		<var name="key_pageName" value="${myDocumentsPageLocalized}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="PAGE_NAME" value1="${myDocumentsPageLocalized}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="PAGE_NAME" value1="${myDocumentsPageLocalized}" />
 
 		<var name="key_pageName" value="${tasksPageLocalized}" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="PAGE_NAME" value1="${tasksPageLocalized}" />
+		<execute action="SOUserBar#assertTextEquals" locator1="PAGE_NAME" value1="${tasksPageLocalized}" />
 
 		<var name="key_pageName" value="${dashboardPageLocalized}" />
 
-		<execute action="SOUserBar#assertClick" locator-key1="PAGE_NAME" value1="${dashboardPageLocalized}" />
+		<execute action="SOUserBar#assertClick" locator1="PAGE_NAME" value1="${dashboardPageLocalized}" />
 
 		<execute macro="SOUserBar#showEditControls" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_PAGE" value1="${dashboardPageLocalized}" />
+		<execute action="SODashboard#assertTextEquals" locator1="NAVIGATION_PAGE" value1="${dashboardPageLocalized}" />
 
 		<var method="StringUtil#upperCase(&quot;${microblogsStatusUpdatePortletLocalized}&quot;)" name="microblogsStatusUpdatePortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${microblogsStatusUpdatePortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${microblogsStatusUpdatePortletLocalizedUpperCase}" />
+		<execute action="Home#assertTextEquals" locator1="PORTLET_BORDERLESS" value1="${microblogsStatusUpdatePortletLocalizedUpperCase}" />
 
 		<var name="key_portletName" value="${announcementsPortletLocalized}" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${announcementsPortletLocalized}" />
+		<execute action="SODashboard#assertTextEquals" locator1="PORTLET_TITLE" value1="${announcementsPortletLocalized}" />
 
 		<var name="key_portletName" value="${activitiesPortletLocalized}" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${activitiesPortletLocalized}" />
+		<execute action="SODashboard#assertTextEquals" locator1="PORTLET_TITLE" value1="${activitiesPortletLocalized}" />
 
 		<var name="key_portletName" value="${upcomingTasksPortletLocalized}" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${upcomingTasksPortletLocalized}" />
+		<execute action="SODashboard#assertTextEquals" locator1="PORTLET_TITLE" value1="${upcomingTasksPortletLocalized}" />
 
 		<var name="key_portletName" value="${eventsPortletLocalized}" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${eventsPortletLocalized}" />
+		<execute action="SODashboard#assertTextEquals" locator1="PORTLET_TITLE" value1="${eventsPortletLocalized}" />
 
 		<var name="key_pageName" value="${contactsCenterPageLocalized}" />
 
-		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${contactsCenterPageLocalized}" />
+		<execute action="SODashboard#assertClick" locator1="NAVIGATION_PAGE" value1="${contactsCenterPageLocalized}" />
 
 		<var method="StringUtil#upperCase(&quot;${contactsCenterPortletLocalized}&quot;)" name="contactsCenterPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${contactsCenterPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${contactsCenterPortletLocalizedUpperCase}" />
+		<execute action="Home#assertTextEquals" locator1="PORTLET_BORDERLESS" value1="${contactsCenterPortletLocalizedUpperCase}" />
 
 		<var name="key_pageName" value="${microblogsPageLocalized}" />
 
-		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${microblogsPageLocalized}" />
+		<execute action="SODashboard#assertClick" locator1="NAVIGATION_PAGE" value1="${microblogsPageLocalized}" />
 
 		<var method="StringUtil#upperCase(&quot;${microblogsPortletLocalized}&quot;)" name="microblogsPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${microblogsPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${microblogsPortletLocalizedUpperCase}" />
+		<execute action="Home#assertTextEquals" locator1="PORTLET_BORDERLESS" value1="${microblogsPortletLocalizedUpperCase}" />
 
 		<var name="key_pageName" value="${messagesPageLocalized}" />
 
-		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${messagesPageLocalized}" />
+		<execute action="SODashboard#assertClick" locator1="NAVIGATION_PAGE" value1="${messagesPageLocalized}" />
 
 		<var method="StringUtil#upperCase(&quot;${privateMessagingPortletLocalized}&quot;)" name="privateMessagingPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${privateMessagingPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${privateMessagingPortletLocalizedUpperCase}" />
+		<execute action="Home#assertTextEquals" locator1="PORTLET_BORDERLESS" value1="${privateMessagingPortletLocalizedUpperCase}" />
 
 		<var name="key_pageName" value="${myDocumentsPageLocalized}" />
 
-		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${myDocumentsPageLocalized}" />
+		<execute action="SODashboard#assertClick" locator1="NAVIGATION_PAGE" value1="${myDocumentsPageLocalized}" />
 
 		<var method="StringUtil#upperCase(&quot;${documentsAndMediaPortletLocalized}&quot;)" name="documentsAndMediaPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${documentsAndMediaPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${documentsAndMediaPortletLocalizedUpperCase}" />
+		<execute action="Home#assertTextEquals" locator1="PORTLET_BORDERLESS" value1="${documentsAndMediaPortletLocalizedUpperCase}" />
 
 		<var name="key_pageName" value="${tasksPageLocalized}" />
 
-		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${tasksPageLocalized}" />
+		<execute action="SODashboard#assertClick" locator1="NAVIGATION_PAGE" value1="${tasksPageLocalized}" />
 
 		<var method="StringUtil#upperCase(&quot;${tasksPortletLocalized}&quot;)" name="tasksPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${tasksPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${tasksPortletLocalizedUpperCase}" />
+		<execute action="Home#assertTextEquals" locator1="PORTLET_BORDERLESS" value1="${tasksPortletLocalizedUpperCase}" />
 	</command>
 </definition>

@@ -919,7 +919,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextEquals" locator1="NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent}" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle}" />
 		<execute function="#pause" locator1="150000" />
@@ -938,6 +938,6 @@
 
 		<var name="key_row" value="1" />
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_TIME_STAMP" value1="1 minute ago." />
+		<execute action="SOActivities#assertTextEquals" locator1="ACTIVITIES_TIME_STAMP" value1="1 minute ago." />
 	</command>
 </definition>

@@ -21,7 +21,7 @@
 			<var name="portletName" value="Test Blob" />
 		</execute>
 
-		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute action="PGTestPortlet#assertElementNotPresent" locator1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewCacheConfiguration" priority="5">
@@ -33,7 +33,7 @@
 			<var name="portletName" value="Test Cache Configuration" />
 		</execute>
 
-		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute action="PGTestPortlet#assertElementNotPresent" locator1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewCLP" priority="5">
@@ -45,7 +45,7 @@
 			<var name="portletName" value="Test CLP" />
 		</execute>
 
-		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute action="PGTestPortlet#assertElementNotPresent" locator1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewDependencyAbleFox" priority="5">
@@ -115,9 +115,9 @@
 			<var name="portletName" value="Event Producer" />
 		</execute>
 
-		<execute action="PGTestEventProducer#click" locator-key1="EVENT_PRODUCER_PORTLET_LINK" />
+		<execute action="PGTestEventProducer#click" locator1="EVENT_PRODUCER_PORTLET_LINK" />
 
-		<execute action="PGTestEventConsumer#assertTextEquals" locator-key1="EVENT_CONSUMER_PORTLET_BODY" value1="PASSED" />
+		<execute action="PGTestEventConsumer#assertTextEquals" locator1="EVENT_CONSUMER_PORTLET_BODY" value1="PASSED" />
 	</command>
 
 	<command known-issues="Ignore" name="ViewHook" priority="5">
@@ -129,7 +129,7 @@
 			<var name="portletName" value="Test Hook" />
 		</execute>
 
-		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute action="PGTestPortlet#assertElementNotPresent" locator1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewHTTPClient" priority="5">
@@ -141,7 +141,7 @@
 			<var name="portletName" value="Test HTTP Client" />
 		</execute>
 
-		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute action="PGTestPortlet#assertElementNotPresent" locator1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewJSR" priority="5">
@@ -153,22 +153,22 @@
 			<var name="portletName" value="Test JSR 286 PLT.26.6" />
 		</execute>
 
-		<execute action="PGTestJSR#click" locator-key1="TEST_ACTION_URL" />
-		<execute action="PGTestJSR#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute action="PGTestJSR#click" locator1="TEST_ACTION_URL" />
+		<execute action="PGTestJSR#assertElementNotPresent" locator1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test JSR 286 PLT.26.6 Page" />
 		</execute>
 
-		<execute action="PGTestJSR#click" locator-key1="TEST_RENDER_URL" />
-		<execute action="PGTestJSR#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute action="PGTestJSR#click" locator1="TEST_RENDER_URL" />
+		<execute action="PGTestJSR#assertElementNotPresent" locator1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test JSR 286 PLT.26.6 Page" />
 		</execute>
 
-		<execute action="PGTestJSR#click" locator-key1="TEST_RESOURCE_URL" />
-		<execute action="PGTestJSR#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute action="PGTestJSR#click" locator1="TEST_RESOURCE_URL" />
+		<execute action="PGTestJSR#assertElementNotPresent" locator1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command known-issues="LPS-45103" name="ViewKaleo" priority="5">
@@ -180,7 +180,7 @@
 			<var name="portletName" value="Test Kaleo" />
 		</execute>
 
-		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute action="PGTestPortlet#assertElementNotPresent" locator1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewLocalized" priority="5">
@@ -192,7 +192,7 @@
 			<var name="portletName" value="Test Localized Portlet" />
 		</execute>
 
-		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute action="PGTestPortlet#assertElementNotPresent" locator1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command known-issues="Ignore" name="ViewLog" priority="5">
@@ -204,7 +204,7 @@
 			<var name="portletName" value="Test Log" />
 		</execute>
 
-		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute action="PGTestPortlet#assertElementNotPresent" locator1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewPublisherSubscriber" priority="5">
@@ -224,13 +224,13 @@
 			<var name="portletName" value="Subscriber Portlet" />
 		</execute>
 
-		<execute action="PGTestSubscriberPortlet#click" locator-key1="SUBSCRIBER_PORTLET_SUBSCRIBE_BUTTON" />
-		<execute action="PGTestPublisherPortlet#click" locator-key1="PUBLISHER_PORTLET_PUBLISH_BUTTON" />
+		<execute action="PGTestSubscriberPortlet#click" locator1="SUBSCRIBER_PORTLET_SUBSCRIBE_BUTTON" />
+		<execute action="PGTestPublisherPortlet#click" locator1="PUBLISHER_PORTLET_PUBLISH_BUTTON" />
 
-	<!--<var name="randomNumber" path="PGTestPublisherPortlet" locator-key="PUBLISHER_PORTLET_MESSAGE" />
+	<!--<var name="randomNumber" path="PGTestPublisherPortlet" locator="PUBLISHER_PORTLET_MESSAGE" />
 
-		<execute action="PGTestPublisherPortlet#assertTextEquals" locator-key1="PUBLISHER_PORTLET_MESSAGE" value1="${randomNumber}" />
-		<execute action="PGTestSubscriberPortlet#assertTextEquals" locator-key1="SUBSCRIBER_PORTLET_MESSAGE" value1="${randomNumber}"/>-->
+		<execute action="PGTestPublisherPortlet#assertTextEquals" locator1="PUBLISHER_PORTLET_MESSAGE" value1="${randomNumber}" />
+		<execute action="PGTestSubscriberPortlet#assertTextEquals" locator1="SUBSCRIBER_PORTLET_MESSAGE" value1="${randomNumber}"/>-->
 	</command>
 
 	<command known-issues="LPS-45835" name="ViewResourcesImporter" priority="5">
@@ -242,7 +242,7 @@
 			<var name="portletName" value="Test Resources Importer" />
 		</execute>
 
-		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute action="PGTestPortlet#assertElementNotPresent" locator1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewTransaction" priority="5">
@@ -254,7 +254,7 @@
 			<var name="portletName" value="Test Transaction" />
 		</execute>
 
-		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute action="PGTestPortlet#assertElementNotPresent" locator1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command known-issues="Ignore" name="ViewUserAttributes" priority="5">
@@ -266,6 +266,6 @@
 			<var name="portletName" value="Test User Attributes" />
 		</execute>
 
-		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute action="PGTestPortlet#assertElementNotPresent" locator1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 </definition>

@@ -1963,7 +1963,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGUsersegmentcontentdisplay#sikuliClick" locator-key1="PREVIEW_DOCUMENT_1_PNG" />
+		<execute action="PGUsersegmentcontentdisplay#sikuliClick" locator1="PREVIEW_DOCUMENT_1_PNG" />
 	</command>
 
 	<command name="UserSegmentAddWithDoesNotBelongViaUserSegmentContentDisplayPortlet" priority="5">

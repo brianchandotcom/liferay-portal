@@ -5,124 +5,124 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="BasePortletConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
 
-		<execute action="PGRelatedassetsConfiguration#select" locator-key1="FILTER_SELECT" value1="Categories" />
-		<execute action="PGRelatedassetsConfiguration#assertClick" locator-key1="FILTER_SELECT_CATEGORIES_SELECT_BUTTON" value1="Select" />
+		<execute action="PGRelatedassetsConfiguration#select" locator1="FILTER_SELECT" value1="Categories" />
+		<execute action="PGRelatedassetsConfiguration#assertClick" locator1="FILTER_SELECT_CATEGORIES_SELECT_BUTTON" value1="Select" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute action="PGRelatedassetsConfiguration#click" locator-key1="CATEGORIES_WINDOW_CATEGORY_CHECKBOX" />
-		<execute action="PGRelatedassetsConfiguration#click" locator-key1="CATEGORIES_WINDOW_CLOSE_BUTTON" />
-		<execute action="PGRelatedassetsConfiguration#assertTextEquals" locator-key1="CATEGORY" value1="${categoryName}" />
-		<execute action="PGRelatedassetsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGRelatedassetsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGRelatedassetsConfiguration#click" locator1="CATEGORIES_WINDOW_CATEGORY_CHECKBOX" />
+		<execute action="PGRelatedassetsConfiguration#click" locator1="CATEGORIES_WINDOW_CLOSE_BUTTON" />
+		<execute action="PGRelatedassetsConfiguration#assertTextEquals" locator1="CATEGORY" value1="${categoryName}" />
+		<execute action="PGRelatedassetsConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGRelatedassetsConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 
 		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="gotoBookmarksSelectionPG">
-		<execute action="PGBookmarks#assertClick" locator-key1="FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
+		<execute action="PGBookmarks#assertClick" locator1="FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
 
 		<if>
-			<condition action="PGBookmarksAddBookmark#isElementPresent" locator-key1="RELATED_ASSETS_PANEL_COLLAPSED" />
+			<condition action="PGBookmarksAddBookmark#isElementPresent" locator1="RELATED_ASSETS_PANEL_COLLAPSED" />
 			<then>
-				<execute action="PGBookmarksAddBookmark#click" locator-key1="RELATED_ASSETS_PANEL_COLLAPSED" />
-				<execute action="PGBookmarksAddBookmark#assertElementPresent" locator-key1="RELATED_ASSETS_PANEL_EXPANDED" />
+				<execute action="PGBookmarksAddBookmark#click" locator1="RELATED_ASSETS_PANEL_COLLAPSED" />
+				<execute action="PGBookmarksAddBookmark#assertElementPresent" locator1="RELATED_ASSETS_PANEL_EXPANDED" />
 			</then>
 		</if>
 
 		<var name="key_assetType" value="${assetType}" />
 
-		<execute action="PGBookmarksAddBookmark#assertClick" locator-key1="RELATED_ASSETS_SELECT" value1="Select" />
-		<execute action="PGBookmarksAddBookmark#assertClick" locator-key1="RELATED_ASSETS_MENULIST_SELECTION" value1="${assetType}" />
+		<execute action="PGBookmarksAddBookmark#assertClick" locator1="RELATED_ASSETS_SELECT" value1="Select" />
+		<execute action="PGBookmarksAddBookmark#assertClick" locator1="RELATED_ASSETS_MENULIST_SELECTION" value1="${assetType}" />
 	</command>
 
 	<command name="gotoWebContentSelectionCP">
-		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-		<execute action="CPWebcontent#assertClick" locator-key1="ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute action="CPWebcontent#assertClick" locator1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPWebcontent#assertClick" locator1="ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
 
 		<var name="key_assetType" value="${assetType}" />
 
-		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="MENU_RELATED_ASSETS" value1="Related Assets" />
-		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="RELATED_ASSETS_SELECT" value1="Select" />
-		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="RELATED_ASSETS_MENULIST_SELECTION" value1="${assetType}" />
+		<execute action="CPWebcontentAddwebcontent#assertClick" locator1="MENU_RELATED_ASSETS" value1="Related Assets" />
+		<execute action="CPWebcontentAddwebcontent#assertClick" locator1="RELATED_ASSETS_SELECT" value1="Select" />
+		<execute action="CPWebcontentAddwebcontent#assertClick" locator1="RELATED_ASSETS_MENULIST_SELECTION" value1="${assetType}" />
 	</command>
 
 	<command name="searchAdvancedRelatedAssetsCP">
 		<if>
-			<condition action="CPRelatedassetsSelect#isElementNotPresent" locator-key1="ADVANCED_SEARCH_OPERATOR_SELECTION" />
+			<condition action="CPRelatedassetsSelect#isElementNotPresent" locator1="ADVANCED_SEARCH_OPERATOR_SELECTION" />
 			<then>
-				<execute action="CPRelatedassetsSelect#click" locator-key1="SEARCH_ADVANCED_MENULIST" />
+				<execute action="CPRelatedassetsSelect#click" locator1="SEARCH_ADVANCED_MENULIST" />
 			</then>
 		</if>
 
 		<if>
-			<condition action="CPRelatedassetsSelect#isTextNotEqual" locator-key1="ADVANCED_SEARCH_OPERATOR_SELECTION" value1="All" />
+			<condition action="CPRelatedassetsSelect#isTextNotEqual" locator1="ADVANCED_SEARCH_OPERATOR_SELECTION" value1="All" />
 			<then>
-				<execute action="CPRelatedassetsSelect#select" locator-key1="ADVANCED_SEARCH_OPERATOR_SELECTION" value1="All" />
+				<execute action="CPRelatedassetsSelect#select" locator1="ADVANCED_SEARCH_OPERATOR_SELECTION" value1="All" />
 			</then>
 		</if>
 
 		<for list="ADVANCED_SEARCH_TITLE_FIELD,ADVANCED_SEARCH_DESCRIPTION_FIELD,ADVANCED_SEARCH_USER_NAME_FIELD" param="advancedSearchKey">
 			<if>
-				<condition action="CPRelatedassetsSelect#isTextNotEqual" locator-key1="${advancedSearchKey}" value1="" />
+				<condition action="CPRelatedassetsSelect#isTextNotEqual" locator1="${advancedSearchKey}" value1="" />
 				<then>
-					<execute action="CPRelatedassetsSelect#type" locator-key1="${advancedSearchKey}" value1="" />
+					<execute action="CPRelatedassetsSelect#type" locator1="${advancedSearchKey}" value1="" />
 				</then>
 			</if>
 		</for>
 
 		<if>
-			<condition action="CPRelatedassetsSelect#isTextNotEqual" locator-key1="ADVANCED_SEARCH_MY_SITES_SELECTION" value1="Liferay" />
+			<condition action="CPRelatedassetsSelect#isTextNotEqual" locator1="ADVANCED_SEARCH_MY_SITES_SELECTION" value1="Liferay" />
 			<then>
-				<execute action="CPRelatedassetsSelect#select" locator-key1="ADVANCED_SEARCH_MY_SITES_SELECTION" value1="Liferay" />
+				<execute action="CPRelatedassetsSelect#select" locator1="ADVANCED_SEARCH_MY_SITES_SELECTION" value1="Liferay" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="searchOperator" />
 			<then>
-				<execute action="CPRelatedassetsSelect#select" locator-key1="ADVANCED_SEARCH_OPERATOR_SELECTION" value1="${searchOperator}" />
+				<execute action="CPRelatedassetsSelect#select" locator1="ADVANCED_SEARCH_OPERATOR_SELECTION" value1="${searchOperator}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="searchTitle" />
 			<then>
-				<execute action="CPRelatedassetsSelect#type" locator-key1="ADVANCED_SEARCH_TITLE_FIELD" value1="${searchTitle}" />
+				<execute action="CPRelatedassetsSelect#type" locator1="ADVANCED_SEARCH_TITLE_FIELD" value1="${searchTitle}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="searchDescription" />
 			<then>
-				<execute action="CPRelatedassetsSelect#type" locator-key1="ADVANCED_SEARCH_DESCRIPTION_FIELD" value1="${searchDescription}" />
+				<execute action="CPRelatedassetsSelect#type" locator1="ADVANCED_SEARCH_DESCRIPTION_FIELD" value1="${searchDescription}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="searchUserName" />
 			<then>
-				<execute action="CPRelatedassetsSelect#type" locator-key1="ADVANCED_SEARCH_USER_NAME_FIELD" value1="${searchUserName}" />
+				<execute action="CPRelatedassetsSelect#type" locator1="ADVANCED_SEARCH_USER_NAME_FIELD" value1="${searchUserName}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="searchSite" />
 			<then>
-				<execute action="CPRelatedassetsSelect#select" locator-key1="ADVANCED_SEARCH_MY_SITES_SELECTION" value1="${searchSite}" />
+				<execute action="CPRelatedassetsSelect#select" locator1="ADVANCED_SEARCH_MY_SITES_SELECTION" value1="${searchSite}" />
 			</then>
 		</if>
 
-		<execute action="CPRelatedassetsSelect#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPRelatedassetsSelect#assertClick" locator1="SEARCH_BUTTON" value1="Search" />
 	</command>
 
 	<command name="viewAdvancedSearchNoResultCP">
 		<for list="${forList}" param="assetTitle">
 			<var name="key_assetTitle" value="${assetTitle}" />
 
-			<execute action="CPRelatedassetsSelect#assertTextNotPresent" locator-key1="ASSET_TABLE_TITLE" value1="${assetTitle}" />
+			<execute action="CPRelatedassetsSelect#assertTextNotPresent" locator1="ASSET_TABLE_TITLE" value1="${assetTitle}" />
 		</for>
 	</command>
 
@@ -130,43 +130,43 @@
 		<for list="${forList}" param="assetTitle">
 			<var name="key_assetTitle" value="${assetTitle}" />
 
-			<execute action="CPRelatedassetsSelect#assertTextEquals" locator-key1="ASSET_TABLE_TITLE" value1="${assetTitle}" />
+			<execute action="CPRelatedassetsSelect#assertTextEquals" locator1="ASSET_TABLE_TITLE" value1="${assetTitle}" />
 		</for>
 	</command>
 
 	<command name="viewDefaultPG">
-		<execute action="PGRelatedassets#assertTextEquals" locator-key1="TITLE" value1="Related Assets" />
-		<execute action="PGRelatedassets#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no related assets available. This application will show all assets related to the main asset of the current page." />
+		<execute action="PGRelatedassets#assertTextEquals" locator1="TITLE" value1="Related Assets" />
+		<execute action="PGRelatedassets#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no related assets available. This application will show all assets related to the main asset of the current page." />
 	</command>
 
 	<command name="viewNoPG">
 		<for list="${assetTitleList}" param="assetTitle">
 			<var name="key_assetTitle" value="${assetTitle}" />
 
-			<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_TITLE" />
+			<execute action="PGRelatedassets#assertElementNotPresent" locator1="ASSET_TITLE" />
 		</for>
 	</command>
 
 	<command name="viewNoSearchResultsCP">
-		<execute action="CPRelatedassetsSelect#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no results." />
+		<execute action="CPRelatedassetsSelect#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no results." />
 	</command>
 
 	<command name="viewPG">
-		<execute action="PGRelatedassets#assertElementPresent" locator-key1="ASSET_TITLE_IMAGE_1" />
-		<execute action="PGRelatedassets#assertTextEquals" locator-key1="ASSET_TITLE_1" value1="${assetTitle}" />
-		<execute action="PGRelatedassets#assertElementPresent" locator-key1="ASSET_EDIT_1" />
+		<execute action="PGRelatedassets#assertElementPresent" locator1="ASSET_TITLE_IMAGE_1" />
+		<execute action="PGRelatedassets#assertTextEquals" locator1="ASSET_TITLE_1" value1="${assetTitle}" />
+		<execute action="PGRelatedassets#assertElementPresent" locator1="ASSET_EDIT_1" />
 	</command>
 
 	<command name="viewViaSelectCP">
-		<execute action="CPRelatedassetsSelect#selectFrame" locator-key1="IFRAME" />
-		<execute action="CPRelatedassetsSelect#assertElementPresent" locator-key1="SEARCH_ADVANCED_MENULIST" />
-		<execute action="CPRelatedassetsSelect#assertElementPresent" locator-key1="SEARCH_FIELD" />
-		<execute action="CPRelatedassetsSelect#assertTextEquals" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPRelatedassetsSelect#selectFrame" locator1="IFRAME" />
+		<execute action="CPRelatedassetsSelect#assertElementPresent" locator1="SEARCH_ADVANCED_MENULIST" />
+		<execute action="CPRelatedassetsSelect#assertElementPresent" locator1="SEARCH_FIELD" />
+		<execute action="CPRelatedassetsSelect#assertTextEquals" locator1="SEARCH_BUTTON" value1="Search" />
 
 		<for list="${forList}" param="assetTitle">
 			<var name="key_assetTitle" value="${assetTitle}" />
 
-			<execute action="CPRelatedassetsSelect#assertTextEquals" locator-key1="ASSET_TABLE_TITLE" value1="${assetTitle}" />
+			<execute action="CPRelatedassetsSelect#assertTextEquals" locator1="ASSET_TABLE_TITLE" value1="${assetTitle}" />
 		</for>
 	</command>
 </definition>

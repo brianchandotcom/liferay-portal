@@ -1,13 +1,13 @@
 <definition>
 	<command name="addSampleBooking">
-		<execute action="Samplelarportlet#assertClick" locator-key1="ADD_SAMPLE_BOOKING_BUTTON" value1="Add Sample Booking" />
-		<execute action="Samplelarportlet#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Samplelarportlet#assertElementPresent" locator-key1="SAMPLE_BOOKING_TABLE_BOOKING_ID" />
-		<execute action="Samplelarportlet#assertElementPresent" locator-key1="SAMPLE_BOOKING_TABLE_BOOKING_NUMBER" />
+		<execute action="Samplelarportlet#assertClick" locator1="ADD_SAMPLE_BOOKING_BUTTON" value1="Add Sample Booking" />
+		<execute action="Samplelarportlet#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Samplelarportlet#assertElementPresent" locator1="SAMPLE_BOOKING_TABLE_BOOKING_ID" />
+		<execute action="Samplelarportlet#assertElementPresent" locator1="SAMPLE_BOOKING_TABLE_BOOKING_NUMBER" />
 	</command>
 
 	<command name="viewSampleBookingNumber">
-		<execute action="Samplelarportlet#assertElementPresent" locator-key1="SAMPLE_BOOKING_TABLE_BOOKING_ID" />
-		<execute action="Samplelarportlet#assertTextEquals" locator-key1="SAMPLE_BOOKING_TABLE_BOOKING_NUMBER" value1="${bookingNumber}" />
+		<execute action="Samplelarportlet#assertElementPresent" locator1="SAMPLE_BOOKING_TABLE_BOOKING_ID" />
+		<execute action="Samplelarportlet#assertTextEquals" locator1="SAMPLE_BOOKING_TABLE_BOOKING_NUMBER" value1="${bookingNumber}" />
 	</command>
 </definition>

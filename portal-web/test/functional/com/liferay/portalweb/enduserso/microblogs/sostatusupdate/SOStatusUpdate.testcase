@@ -119,7 +119,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute action="SOActivities#assertClick" locator1="NAVIGATION_CONNECTIONS" value1="Connections" />
 
 		<execute macro="SOActivities#viewMicroblogsNotViewableByEveryoneActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${statusUpdateEntryAuthorFirstName}" />
@@ -231,7 +231,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
+		<execute action="SOActivities#assertClick" locator1="NAVIGATION_FOLLOWING" value1="Following" />
 
 		<execute macro="SOActivities#viewMicroblogsNotViewableByEveryoneActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${statusUpdateEntryAuthorFirstName}" />
@@ -309,7 +309,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
+		<execute action="SODashboard#click" locator1="NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${microblogsEntryAuthorName}" />
@@ -331,9 +331,9 @@
 
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
-		<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
+		<execute action="SOStatusUpdate#assertTextEquals" locator1="STATUS_UPDATE_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
 		<execute action="SOStatusUpdate#assertTextNotPresent" value1="Microblogs Post Comment" />
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
+		<execute action="SODashboard#click" locator1="NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor">
 			<var name="microblogsEntryAuthorName" value="${userName}" />
@@ -341,7 +341,7 @@
 
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 
-		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
+		<execute action="SOMicroblogs#assertTextEquals" locator1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentLink" />
 

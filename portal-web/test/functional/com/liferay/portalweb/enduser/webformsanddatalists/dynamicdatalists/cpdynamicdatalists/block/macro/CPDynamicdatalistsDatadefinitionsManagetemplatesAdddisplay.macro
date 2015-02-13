@@ -1,12 +1,12 @@
 <definition>
 	<command name="showDetails">
 		<if>
-			<condition action="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#isElementNotPresent" locator-key1="DETAILS_DESCRIPTION_FIELD" />
+			<condition action="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#isElementNotPresent" locator1="DETAILS_DESCRIPTION_FIELD" />
 			<then>
-				<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#assertClick" locator-key1="DETAILS" value1="Details" />
+				<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#assertClick" locator1="DETAILS" value1="Details" />
 			</then>
 		</if>
 
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#assertElementPresent" locator-key1="DETAILS_LANGUAGE_SELECT" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#assertElementPresent" locator1="DETAILS_LANGUAGE_SELECT" />
 	</command>
 </definition>

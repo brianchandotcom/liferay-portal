@@ -4,23 +4,23 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute action="Mobiledockbar#click" locator-key1="PENCIL_ICON" />
-		<execute action="Mobiledockbar#assertClick" locator-key1="ADD" value1="Add" />
+		<execute action="Mobiledockbar#click" locator1="PENCIL_ICON" />
+		<execute action="Mobiledockbar#assertClick" locator1="ADD" value1="Add" />
 
-		<execute action="MobiledockbarAddpanelcontent#assertClick" locator-key1="NAVIGATION_PAGE" value1="Page" />
+		<execute action="MobiledockbarAddpanelcontent#assertClick" locator1="NAVIGATION_PAGE" value1="Page" />
 
-		<execute action="MobiledockbarAddpanelpage#type" locator-key1="NAME_FIELD" value1="${pageName}" />
+		<execute action="MobiledockbarAddpanelpage#type" locator1="NAME_FIELD" value1="${pageName}" />
 		<execute function="#pause" locator1="2000" />
-		<execute action="MobiledockbarAddpanelpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute action="MobiledockbarAddpanelpage#assertClick" locator1="ADD_PAGE_BUTTON" value1="Add Page" />
 		<execute function="#pause" locator1="2000" />
-		<execute action="MobiledockbarAddpanelpage#click" locator-key1="CLOSE_BUTTON" />
+		<execute action="MobiledockbarAddpanelpage#click" locator1="CLOSE_BUTTON" />
 	</command>
 
 	<command name="gotoCmdCP">
 		<execute macro="Page#openURL" />
 
-		<execute action="Mobiledockbar#click" locator-key1="COG_ICON" />
-		<execute action="Mobiledockbar#assertClick" locator-key1="${portletCategoryKey}" value1="${portletCategoryName}" />
+		<execute action="Mobiledockbar#click" locator1="COG_ICON" />
+		<execute action="Mobiledockbar#assertClick" locator1="${portletCategoryKey}" value1="${portletCategoryName}" />
 
 		<if>
 			<not>
@@ -29,7 +29,7 @@
 			<then>
 				<var name="key_portletName" value="${portletName}" />
 
-				<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+				<execute action="Home#assertClick" locator1="SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
 			</then>
 		</if>
 	</command>
@@ -59,15 +59,15 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute action="Mobiledockbar#click" locator-key1="COG_ICON" />
-		<execute action="Mobiledockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute action="Mobiledockbar#click" locator1="COG_ICON" />
+		<execute action="Mobiledockbar#assertClick" locator1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<if>
 			<isset var="portletName" />
 			<then>
 				<var name="key_portletName" value="${portletName}" />
 
-				<execute action="Home#click" locator-key1="CONTROL_PANEL_NAVIGATION" />
+				<execute action="Home#click" locator1="CONTROL_PANEL_NAVIGATION" />
 			</then>
 		</if>
 	</command>
@@ -92,11 +92,11 @@
 			</then>
 		</if>
 
-		<execute action="Mobiledockbar#click" locator-key1="REORDER_ICON" />
+		<execute action="Mobiledockbar#click" locator1="REORDER_ICON" />
 
 		<var name="key_pageName" value="${pageName}" />
 
-		<execute action="Mobiledockbar#assertClick" locator-key1="REORDER_MENULIST_PAGE_NAME" value1="${pageName}" />
+		<execute action="Mobiledockbar#assertClick" locator1="REORDER_MENULIST_PAGE_NAME" value1="${pageName}" />
 	</command>
 
 	<command name="tearDownCP">
@@ -105,13 +105,13 @@
 		</execute>
 
 		<while>
-			<condition action="MobileCPSitepages#isElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_2" />
+			<condition action="MobileCPSitepages#isElementPresent" locator1="PAGE_TREE_PAGE_LINK_2" />
 			<then>
-				<execute action="MobileCPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_2" />
-				<execute action="MobileCPSitepages#click" locator-key1="REORDER_ICON" />
-				<execute action="MobileCPSitepages#assertClickNoError" locator-key1="TOOLBAR_DELETE" value1="Delete" />
-				<execute action="MobileCPSitepages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
-				<execute action="MobileCPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="MobileCPSitepages#click" locator1="PAGE_TREE_PAGE_LINK_2" />
+				<execute action="MobileCPSitepages#click" locator1="REORDER_ICON" />
+				<execute action="MobileCPSitepages#assertClickNoError" locator1="TOOLBAR_DELETE" value1="Delete" />
+				<execute action="MobileCPSitepages#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
+				<execute action="MobileCPSitepages#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
 	</command>
@@ -128,6 +128,6 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute action="BasePortlet#mouseMove" locator-key1="SPECIFIC_PORTLET_OPTIONS_ICON" value1="${portletName}" />
+		<execute action="BasePortlet#mouseMove" locator1="SPECIFIC_PORTLET_OPTIONS_ICON" value1="${portletName}" />
 	</command>
 </definition>

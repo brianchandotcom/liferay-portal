@@ -1,6 +1,6 @@
 <definition>
 	<command name="removeReferencePG">
-		<execute action="Dockbar#click" locator-key1="EDIT" value1="Edit" />
+		<execute action="Dockbar#click" locator1="EDIT" value1="Edit" />
 
 		<execute macro="Dockbar#showEditField">
 			<var name="fieldKey" value="${fieldKey}" />
@@ -8,18 +8,18 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute action="DockbarEditpanel#check" locator-key1="EMBEDDED_PORTLETS_CHECKBOX_1" />
-		<execute action="DockbarEditpanel#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="DockbarEditpanel#check" locator1="EMBEDDED_PORTLETS_CHECKBOX_1" />
+		<execute action="DockbarEditpanel#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="viewDisabledPG">
-		<execute action="Dockbar#click" locator-key1="EDIT" value1="Edit" />
+		<execute action="Dockbar#click" locator1="EDIT" value1="Edit" />
 
-		<execute action="DockbarEditpanel#assertTextNotPresent" locator-key1="EMBEDDED_PORTLETS_PANEL_TOGGLE" value1="Embedded Portlets" />
+		<execute action="DockbarEditpanel#assertTextNotPresent" locator1="EMBEDDED_PORTLETS_PANEL_TOGGLE" value1="Embedded Portlets" />
 	</command>
 
 	<command name="viewPG">
-		<execute action="Dockbar#click" locator-key1="EDIT" value1="Edit" />
+		<execute action="Dockbar#click" locator1="EDIT" value1="Edit" />
 
 		<execute macro="Dockbar#showEditField">
 			<var name="fieldKey" value="${fieldKey}" />
@@ -30,12 +30,12 @@
 		<if>
 			<isset var="viewNumber" />
 			<then>
-				<execute action="DockbarEditpanel#assertTextEquals" locator-key1="EMBEDDED_PORTLETS_PORTLET_ID_${viewNumber}" value1="${embeddedPortletId}" />
-				<execute action="DockbarEditpanel#assertTextEquals" locator-key1="EMBEDDED_PORTLETS_TITLE_${viewNumber}" value1="${embeddedPortletTitle}" />
+				<execute action="DockbarEditpanel#assertTextEquals" locator1="EMBEDDED_PORTLETS_PORTLET_ID_${viewNumber}" value1="${embeddedPortletId}" />
+				<execute action="DockbarEditpanel#assertTextEquals" locator1="EMBEDDED_PORTLETS_TITLE_${viewNumber}" value1="${embeddedPortletTitle}" />
 			</then>
 			<else>
-				<execute action="DockbarEditpanel#assertTextEquals" locator-key1="EMBEDDED_PORTLETS_PORTLET_ID_1" value1="${embeddedPortletId}" />
-				<execute action="DockbarEditpanel#assertTextEquals" locator-key1="EMBEDDED_PORTLETS_TITLE_1" value1="${embeddedPortletTitle}" />
+				<execute action="DockbarEditpanel#assertTextEquals" locator1="EMBEDDED_PORTLETS_PORTLET_ID_1" value1="${embeddedPortletId}" />
+				<execute action="DockbarEditpanel#assertTextEquals" locator1="EMBEDDED_PORTLETS_TITLE_1" value1="${embeddedPortletTitle}" />
 			</else>
 		</if>
 	</command>

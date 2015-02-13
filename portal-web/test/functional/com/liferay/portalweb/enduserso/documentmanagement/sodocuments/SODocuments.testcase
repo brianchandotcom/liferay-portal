@@ -216,8 +216,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="FILTER_BROWSE_BY_TYPE" value1="Browse by Type" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="FILTER_BROWSE_BY_TYPE_CONTRACT" value1="Contract" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="FILTER_BROWSE_BY_TYPE" value1="Browse by Type" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="FILTER_BROWSE_BY_TYPE_CONTRACT" value1="Contract" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
@@ -230,8 +230,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="FILTER_BROWSE_BY_TYPE" value1="Browse by Type" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="FILTER_BROWSE_BY_TYPE_MARKETING_BANNER" value1="Marketing Banner" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="FILTER_BROWSE_BY_TYPE" value1="Browse by Type" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="FILTER_BROWSE_BY_TYPE_MARKETING_BANNER" value1="Marketing Banner" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription2}" />
@@ -244,8 +244,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="FILTER_BROWSE_BY_TYPE" value1="Browse by Type" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="FILTER_BROWSE_BY_TYPE_ONLINE_TRAINING" value1="Online Training" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="FILTER_BROWSE_BY_TYPE" value1="Browse by Type" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="FILTER_BROWSE_BY_TYPE_ONLINE_TRAINING" value1="Online Training" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription3}" />
@@ -258,8 +258,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="FILTER_BROWSE_BY_TYPE" value1="Browse by Type" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="FILTER_BROWSE_BY_TYPE_SALES_PRESENTATION" value1="Sales Presentation" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="FILTER_BROWSE_BY_TYPE" value1="Browse by Type" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="FILTER_BROWSE_BY_TYPE_SALES_PRESENTATION" value1="Sales Presentation" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription4}" />
@@ -467,12 +467,12 @@
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<var name="key_commentBody" value="${commentBody}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="COMMENTS_AUTHOR" value1="${userName}" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${commentBody}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="COMMENTS_AUTHOR" value1="${userName}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="COMMENTS_BODY" value1="${commentBody}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1515,7 +1515,7 @@
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL" />
+		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator1="ENTRY_ICON_DOCUMENT_THUMBNAIL" />
 	</command>
 
 	<command name="CancelCheckoutDMFolderDocument" priority="5">
@@ -2226,7 +2226,7 @@
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<execute action="PGDocumentsandmediaDocument#assertTextNotPresent" value1="${commentBody}" />
 
@@ -2246,7 +2246,7 @@
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<execute action="PGDocumentsandmediaDocument#assertTextNotPresent" value1="${commentBody}" />
 
@@ -2652,12 +2652,12 @@
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<var name="key_commentBody" value="${commentBody}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="COMMENTS_AUTHOR" value1="${userName}" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${commentBodyEdit}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="COMMENTS_AUTHOR" value1="${userName}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator1="COMMENTS_BODY" value1="${commentBodyEdit}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -3305,7 +3305,7 @@
 			<var name="dmFolderName" value="${dmFolder2Name}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="EMPTY_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="EMPTY_MESSAGE" value1="There are no documents or media files in this folder." />
 		<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="${dmDocument1File}" />
 		<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="${dmDocument2File}" />
 
@@ -3459,7 +3459,7 @@
 
 		<var name="key_dmDocumentTitle" value="DM Document Title" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="DM Document Title" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="DM Document Title" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="DM Document Description" />
@@ -3832,7 +3832,7 @@
 
 		<var name="key_dmDocumentTitle" value="DM Document Title Edit1" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="DM Document Title Edit1" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="DM Document Title Edit1" />
 
 		<execute macro="SODocuments#viewPGDocumentSpecificVersionLog">
 			<var name="changeLog" value="Reverted to 1.1" />
@@ -4767,10 +4767,10 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_STYLE" />
+		<execute action="PGDocumentsandmedia#click" locator1="TOOLBAR_DISPLAY_STYLE" />
 		<execute function="#pause" locator1="1000" />
 
-		<execute action="SODocuments#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_DOCUMENTS_DISPLAY_STYLES_PNG" />
+		<execute action="SODocuments#sikuliAssertElementPresent" locator1="SCREENSHOTS_DOCUMENTS_DISPLAY_STYLES_PNG" />
 	</command>
 
 	<command name="ViewDisplayStyleListAndSelectAll" priority="3">
@@ -4819,23 +4819,23 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle3}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_STYLE" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="DISPLAY_STYLE_MENULIST_LIST" />
-		<execute action="PGDocumentsandmedia#check" locator-key1="TOOLBAR_SELECT_ALL_CHECKBOX" />
+		<execute action="PGDocumentsandmedia#click" locator1="TOOLBAR_DISPLAY_STYLE" />
+		<execute action="PGDocumentsandmedia#click" locator1="DISPLAY_STYLE_MENULIST_LIST" />
+		<execute action="PGDocumentsandmedia#check" locator1="TOOLBAR_SELECT_ALL_CHECKBOX" />
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle1}" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle1}" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ENTRY_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle1}" />
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle2}" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle2}" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ENTRY_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle2}" />
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle3}" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle3}" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ENTRY_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle3}" />
 
-		<execute action="SODocuments#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_DOCUMENTS_DISPLAY_STYLE_LIST_ALL_DOCUMENTS_SELECTED_PNG" />
+		<execute action="SODocuments#sikuliAssertElementPresent" locator1="SCREENSHOTS_DOCUMENTS_DISPLAY_STYLE_LIST_ALL_DOCUMENTS_SELECTED_PNG" />
 	</command>
 
 	<command known-issues="LPS-45435" name="ViewDMFolderAsGuest" priority="4">
@@ -5131,7 +5131,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
 	</command>
 
 	<command name="ViewDraftEditDMFolderDocumentSOUser" priority="5">
@@ -5276,7 +5276,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="FILTER_MINE" value1="Mine" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="FILTER_MINE" value1="Mine" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
@@ -5324,7 +5324,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="FILTER_RECENT" value1="Recent" />
+		<execute action="PGDocumentsandmedia#assertClick" locator1="FILTER_RECENT" value1="Recent" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
@@ -5371,8 +5371,8 @@
 
 		<var name="key_dmDocumentTitle" value="Document_1.jpg" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="Document_1.jpg" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator1="ENTRY_ICON_DOCUMENT_TITLE" value1="Document_1.jpg" />
 
-		<execute action="SODocuments#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_DOCUMENTS_MULTIPLE_THUMBNAILS_PNG" />
+		<execute action="SODocuments#sikuliAssertElementPresent" locator1="SCREENSHOTS_DOCUMENTS_MULTIPLE_THUMBNAILS_PNG" />
 	</command>
 </definition>

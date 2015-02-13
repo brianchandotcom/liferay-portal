@@ -40,7 +40,7 @@
 		<if>
 			<and>
 				<equals arg1="${fullDatabase}" arg2="true" />
-				<condition action="Setupwizard#isElementPresent" locator-key1="PORTAL_PORTAL_NAME_FIELD" />
+				<condition action="Setupwizard#isElementPresent" locator1="PORTAL_PORTAL_NAME_FIELD" />
 			</and>
 			<then>
 				<execute macro="SetupWizard#configureDefaultPG">
@@ -50,7 +50,7 @@
 			<elseif>
 				<and>
 					<equals arg1="${fullDatabase}" arg2="true" />
-					<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
+					<condition action="Dockbar#isElementPresent" locator1="USER_NAME" />
 				</and>
 				<then>
 					<execute macro="User#logoutAndLoginPG">
@@ -60,7 +60,7 @@
 				</then>
 			</elseif>
 			<elseif>
-				<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
+				<condition action="Dockbar#isElementPresent" locator1="USER_NAME" />
 				<then>
 					<execute macro="User#logoutAndLoginPG">
 						<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -77,7 +77,7 @@
 		</if>
 
 		<if>
-			<condition action="SOUserBar#isElementNotPresent" locator-key1="USER_BAR" />
+			<condition action="SOUserBar#isElementNotPresent" locator1="USER_BAR" />
 			<then>
 				<execute macro="Page#gotoCP">
 					<var name="portletName" value="Roles" />
@@ -123,104 +123,104 @@
 	<command name="viewNonSORole">
 		<execute macro="Page#openURL" />
 
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="USER_BAR" />
+		<execute action="SOUserBar#assertElementNotPresent" locator1="USER_BAR" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="Dashboard" />
 
-		<execute action="Dockbar#assertClick" locator-key1="USER_NAME" value1="${userName}" />
-		<execute action="Dockbar#assertClick" locator-key1="USER_MY_DASHBOARD" value1="My Dashboard" />
+		<execute action="Dockbar#assertClick" locator1="USER_NAME" value1="${userName}" />
+		<execute action="Dockbar#assertClick" locator1="USER_MY_DASHBOARD" value1="My Dashboard" />
 
-		<execute action="SODashboard#assertElementNotPresent" locator-key1="NAVIGATION_DASHBOARD" />
-		<execute action="SODashboard#assertElementNotPresent" locator-key1="NAVIGATION_CONTACTS_CENTER" />
-		<execute action="SODashboard#assertElementNotPresent" locator-key1="NAVIGATION_MICROBLOGS" />
-		<execute action="SODashboard#assertElementNotPresent" locator-key1="NAVIGATION_MESSAGES" />
-		<execute action="SODashboard#assertElementNotPresent" locator-key1="NAVIGATION_MY_DOCUMENTS" />
-		<execute action="SODashboard#assertElementNotPresent" locator-key1="NAVIGATION_TASKS" />
+		<execute action="SODashboard#assertElementNotPresent" locator1="NAVIGATION_DASHBOARD" />
+		<execute action="SODashboard#assertElementNotPresent" locator1="NAVIGATION_CONTACTS_CENTER" />
+		<execute action="SODashboard#assertElementNotPresent" locator1="NAVIGATION_MICROBLOGS" />
+		<execute action="SODashboard#assertElementNotPresent" locator1="NAVIGATION_MESSAGES" />
+		<execute action="SODashboard#assertElementNotPresent" locator1="NAVIGATION_MY_DOCUMENTS" />
+		<execute action="SODashboard#assertElementNotPresent" locator1="NAVIGATION_TASKS" />
 
-		<execute action="Dockbar#assertClick" locator-key1="USER_NAME" value1="${userName}" />
-		<execute action="Dockbar#assertClick" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute action="Dockbar#assertClick" locator1="USER_NAME" value1="${userName}" />
+		<execute action="Dockbar#assertClick" locator1="USER_MY_PROFILE" value1="My Profile" />
 
-		<execute action="SOProfile#assertElementNotPresent" locator-key1="USER_NAME" />
-		<execute action="SOProfile#assertElementNotPresent" locator-key1="USER_EMAIL" />
-		<execute action="SOProfile#assertElementNotPresent" locator-key1="ADD_INTRODUCTION" />
-		<execute action="SOProfile#assertElementNotPresent" locator-key1="ADD_TAGS" />
-		<execute action="SOProfile#assertElementNotPresent" locator-key1="ADD_PHONES" />
-		<execute action="SOProfile#assertElementNotPresent" locator-key1="ADD_EMAIL_ADDRESS" />
-		<execute action="SOProfile#assertElementNotPresent" locator-key1="ADD_INSTANT_MESSENGER" />
-		<execute action="SOProfile#assertElementNotPresent" locator-key1="ADD_ADDRESSES" />
-		<execute action="SOProfile#assertElementNotPresent" locator-key1="ADD_WEBSITES" />
-		<execute action="SOProfile#assertElementNotPresent" locator-key1="ADD_SOCIAL_NETWORK" />
-		<execute action="SOProfile#assertElementNotPresent" locator-key1="ADD_SMS" />
-		<execute action="SOProfile#assertElementNotPresent" locator-key1="ADD_PROJECTS" />
-		<execute action="SOProfile#assertElementNotPresent" locator-key1="NAVIGATION_PROFILE" />
-		<execute action="SOProfile#assertElementNotPresent" locator-key1="NAVIGATION_CONTACTS" />
-		<execute action="SOProfile#assertElementNotPresent" locator-key1="NAVIGATION_MICROBLOGS" />
+		<execute action="SOProfile#assertElementNotPresent" locator1="USER_NAME" />
+		<execute action="SOProfile#assertElementNotPresent" locator1="USER_EMAIL" />
+		<execute action="SOProfile#assertElementNotPresent" locator1="ADD_INTRODUCTION" />
+		<execute action="SOProfile#assertElementNotPresent" locator1="ADD_TAGS" />
+		<execute action="SOProfile#assertElementNotPresent" locator1="ADD_PHONES" />
+		<execute action="SOProfile#assertElementNotPresent" locator1="ADD_EMAIL_ADDRESS" />
+		<execute action="SOProfile#assertElementNotPresent" locator1="ADD_INSTANT_MESSENGER" />
+		<execute action="SOProfile#assertElementNotPresent" locator1="ADD_ADDRESSES" />
+		<execute action="SOProfile#assertElementNotPresent" locator1="ADD_WEBSITES" />
+		<execute action="SOProfile#assertElementNotPresent" locator1="ADD_SOCIAL_NETWORK" />
+		<execute action="SOProfile#assertElementNotPresent" locator1="ADD_SMS" />
+		<execute action="SOProfile#assertElementNotPresent" locator1="ADD_PROJECTS" />
+		<execute action="SOProfile#assertElementNotPresent" locator1="NAVIGATION_PROFILE" />
+		<execute action="SOProfile#assertElementNotPresent" locator1="NAVIGATION_CONTACTS" />
+		<execute action="SOProfile#assertElementNotPresent" locator1="NAVIGATION_MICROBLOGS" />
 	</command>
 
 	<command name="viewSORole">
 		<execute macro="Page#openURL" />
 
-		<execute action="SOUserBar#assertElementPresent" locator-key1="USER_BAR" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="DASHBOARD" value1="Dashboard" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="CONTACT_CENTER" value1="Contacts Center" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="MICROBLOGS" value1="Microblogs" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="MESSAGES" value1="Messages" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="MY_DOCUMENTS" value1="My Documents" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="TASKS" value1="Tasks" />
-		<execute action="SOUserBar#click" locator-key1="USER_BAR" />
+		<execute action="SOUserBar#assertElementPresent" locator1="USER_BAR" />
+		<execute action="SOUserBar#assertTextEquals" locator1="DASHBOARD" value1="Dashboard" />
+		<execute action="SOUserBar#assertTextEquals" locator1="CONTACT_CENTER" value1="Contacts Center" />
+		<execute action="SOUserBar#assertTextEquals" locator1="MICROBLOGS" value1="Microblogs" />
+		<execute action="SOUserBar#assertTextEquals" locator1="MESSAGES" value1="Messages" />
+		<execute action="SOUserBar#assertTextEquals" locator1="MY_DOCUMENTS" value1="My Documents" />
+		<execute action="SOUserBar#assertTextEquals" locator1="TASKS" value1="Tasks" />
+		<execute action="SOUserBar#click" locator1="USER_BAR" />
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SITE_LIST" />
-		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
-		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="Liferay" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#assertElementPresent" locator1="GO_TO_SEARCH_FIELD" />
+		<execute action="SOUserBar#assertElementPresent" locator1="GO_TO_SITE_LIST" />
+		<execute action="SOUserBar#select" locator1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
+		<execute action="SOUserBar#type" locator1="GO_TO_SEARCH_FIELD" value1="Liferay" />
 
 		<var name="key_siteName" value="Liferay" />
 
 		<execute function="#pause" locator1="1000" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="Liferay" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_ADD_SITE_BUTTON" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
+		<execute action="SOUserBar#assertTextEquals" locator1="GO_TO_SITE_NAME_LINK" value1="Liferay" />
+		<execute action="SOUserBar#assertElementPresent" locator1="GO_TO_ADD_SITE_BUTTON" />
+		<execute action="SOUserBar#assertElementPresent" locator1="GO_TO_SITES_DIRECTORY_BUTTON" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_DASHBOARD" value1="Dashboard" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MESSAGES" value1="Messages" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+		<execute action="SODashboard#assertTextEquals" locator1="NAVIGATION_DASHBOARD" value1="Dashboard" />
+		<execute action="SODashboard#assertTextEquals" locator1="NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
+		<execute action="SODashboard#assertTextEquals" locator1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
+		<execute action="SODashboard#assertTextEquals" locator1="NAVIGATION_MESSAGES" value1="Messages" />
+		<execute action="SODashboard#assertTextEquals" locator1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
+		<execute action="SODashboard#assertTextEquals" locator1="NAVIGATION_TASKS" value1="Tasks" />
 
-		<execute action="SOUserBar#assertElementPresent" locator-key1="USER_BAR" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="DASHBOARD" value1="Dashboard" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="CONTACT_CENTER" value1="Contacts Center" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="MICROBLOGS" value1="Microblogs" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="MESSAGES" value1="Messages" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="MY_DOCUMENTS" value1="My Documents" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="TASKS" value1="Tasks" />
-		<execute action="SOUserBar#click" locator-key1="USER_BAR" />
+		<execute action="SOUserBar#assertElementPresent" locator1="USER_BAR" />
+		<execute action="SOUserBar#assertTextEquals" locator1="DASHBOARD" value1="Dashboard" />
+		<execute action="SOUserBar#assertTextEquals" locator1="CONTACT_CENTER" value1="Contacts Center" />
+		<execute action="SOUserBar#assertTextEquals" locator1="MICROBLOGS" value1="Microblogs" />
+		<execute action="SOUserBar#assertTextEquals" locator1="MESSAGES" value1="Messages" />
+		<execute action="SOUserBar#assertTextEquals" locator1="MY_DOCUMENTS" value1="My Documents" />
+		<execute action="SOUserBar#assertTextEquals" locator1="TASKS" value1="Tasks" />
+		<execute action="SOUserBar#click" locator1="USER_BAR" />
 		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SITE_CATEGORY_SELECT" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SITE_LIST" />
+		<execute action="SOUserBar#click" locator1="GO_TO" />
+		<execute action="SOUserBar#assertElementPresent" locator1="GO_TO_SEARCH_FIELD" />
+		<execute action="SOUserBar#assertElementPresent" locator1="GO_TO_SITE_CATEGORY_SELECT" />
+		<execute action="SOUserBar#assertElementPresent" locator1="GO_TO_SITE_LIST" />
 
-		<execute action="Dockbar#assertClick" locator-key1="USER_NAME" value1="${userName}" />
-		<execute action="Dockbar#assertClick" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute action="Dockbar#assertClick" locator1="USER_NAME" value1="${userName}" />
+		<execute action="Dockbar#assertClick" locator1="USER_MY_PROFILE" value1="My Profile" />
 
-		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${userName}" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${userEmailAddress}" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_INTRODUCTION" value1="Introduction" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_TAGS" value1="Tags" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_PHONES" value1="Phones" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_EMAIL_ADDRESS" value1="Email Address" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_INSTANT_MESSENGER" value1="Instant Messenger" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_ADDRESSES" value1="Addresses" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_WEBSITES" value1="Websites" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_SOCIAL_NETWORK" value1="Social Network" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_SMS" value1="SMS" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="ADD_PROJECTS" value1="Add" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="NAVIGATION_PROFILE" value1="Profile" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="NAVIGATION_CONTACTS" value1="Contacts" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
+		<execute action="SOProfile#assertTextEquals" locator1="USER_NAME" value1="${userName}" />
+		<execute action="SOProfile#assertTextEquals" locator1="USER_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOProfile#assertTextEquals" locator1="ADD_INTRODUCTION" value1="Introduction" />
+		<execute action="SOProfile#assertTextEquals" locator1="ADD_TAGS" value1="Tags" />
+		<execute action="SOProfile#assertTextEquals" locator1="ADD_PHONES" value1="Phones" />
+		<execute action="SOProfile#assertTextEquals" locator1="ADD_EMAIL_ADDRESS" value1="Email Address" />
+		<execute action="SOProfile#assertTextEquals" locator1="ADD_INSTANT_MESSENGER" value1="Instant Messenger" />
+		<execute action="SOProfile#assertTextEquals" locator1="ADD_ADDRESSES" value1="Addresses" />
+		<execute action="SOProfile#assertTextEquals" locator1="ADD_WEBSITES" value1="Websites" />
+		<execute action="SOProfile#assertTextEquals" locator1="ADD_SOCIAL_NETWORK" value1="Social Network" />
+		<execute action="SOProfile#assertTextEquals" locator1="ADD_SMS" value1="SMS" />
+		<execute action="SOProfile#assertTextEquals" locator1="ADD_PROJECTS" value1="Add" />
+		<execute action="SOProfile#assertTextEquals" locator1="NAVIGATION_PROFILE" value1="Profile" />
+		<execute action="SOProfile#assertTextEquals" locator1="NAVIGATION_CONTACTS" value1="Contacts" />
+		<execute action="SOProfile#assertTextEquals" locator1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
 	</command>
 </definition>

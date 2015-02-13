@@ -137,16 +137,16 @@
 
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
-		<execute action="PGKaleoforms#assertClick" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_NAME" value1="${kfProcessName}" />
+		<execute action="PGKaleoforms#assertClick" locator1="ASSIGNED_TO_MY_ROLES_TABLE_NAME" value1="${kfProcessName}" />
 
-		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator-key1="ASSIGNED_TO_LABEL" value1="Assigned to" />
-		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator-key1="ASSIGNED_TO" value1="Assigned to Nobody - Assign to Me" />
-		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator-key1="ASSIGNED_TO_ASSIGN_TO_ME_LINK" value1="Assign to Me" />
-		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator-key1="STATE_LABEL" value1="State" />
-		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator-key1="STATE_STATUS" value1="State ${kfProcessStatus}" />
-		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator-key1="DUE_DATE_LABEL" value1="Due Date" />
-		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator-key1="DUE_DATE_DATE" value1="Due Date Never - (Change)" />
-		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="${kfProcessStatus}" />
+		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator1="ASSIGNED_TO_LABEL" value1="Assigned to" />
+		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator1="ASSIGNED_TO" value1="Assigned to Nobody - Assign to Me" />
+		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator1="ASSIGNED_TO_ASSIGN_TO_ME_LINK" value1="Assign to Me" />
+		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator1="STATE_LABEL" value1="State" />
+		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator1="STATE_STATUS" value1="State ${kfProcessStatus}" />
+		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator1="DUE_DATE_LABEL" value1="Due Date" />
+		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator1="DUE_DATE_DATE" value1="Due Date Never - (Change)" />
+		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator1="WORKFLOW_STATUS" value1="${kfProcessStatus}" />
 	</command>
 
 	<command name="AssertEditFormNotUsedAsCreateForm" priority="5">
@@ -269,7 +269,7 @@
 			<var name="kfProcessFieldData" value="4" />
 		</execute>
 
-		<execute action="PGKaleoformsSubmitnew#assertElementNotPresent" locator-key1="NEW_PROCESS_FIELDS_SEPARATOR" />
+		<execute action="PGKaleoformsSubmitnew#assertElementNotPresent" locator1="NEW_PROCESS_FIELDS_SEPARATOR" />
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
 
@@ -525,8 +525,8 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
-		<execute action="Dockbar#assertClick" locator-key1="ADMIN_SITE_ADMINISTRATION_CONTENT" value1="Content" />
+		<execute action="Dockbar#assertClick" locator1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator1="ADMIN_SITE_ADMINISTRATION_CONTENT" value1="Content" />
 
 		<execute macro="KaleoFormsAdmin#addProcess" />
 
@@ -4204,8 +4204,8 @@
 
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
-		<execute action="PGKaleoforms#click" locator-key1="ASSIGNED_TO_ME_TABLE_ACTIONS_1" />
-		<execute action="PGKaleoforms#assertElementNotPresent" locator-key1="ASSIGNED_TO_ME_MENULIST_REJECT" />
+		<execute action="PGKaleoforms#click" locator1="ASSIGNED_TO_ME_TABLE_ACTIONS_1" />
+		<execute action="PGKaleoforms#assertElementNotPresent" locator1="ASSIGNED_TO_ME_MENULIST_REJECT" />
 
 		<execute macro="KaleoFormsPortlet#approveProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -4762,7 +4762,7 @@
 
 		<var name="key_fieldName" value="Fieldset" />
 
-		<execute action="PGKaleoformsSubmitnew#assertElementNotPresent" locator-key1="NEW_PROCESS_FIELDS_FIELDSET" />
+		<execute action="PGKaleoformsSubmitnew#assertElementNotPresent" locator1="NEW_PROCESS_FIELDS_FIELDSET" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Kaleo Forms Page" />
@@ -6270,7 +6270,7 @@
 
 		<var name="key_fieldName" value="quantity" />
 
-		<execute action="PGKaleoformsSubmitnew#assertElementNotPresent" locator-key1="NEW_PROCESS_FIELDS_TEXT_FIELD" />
+		<execute action="PGKaleoformsSubmitnew#assertElementNotPresent" locator1="NEW_PROCESS_FIELDS_TEXT_FIELD" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -8488,8 +8488,8 @@
 
 		<var name="key_kfFormName" value="Created Task Form" />
 
-		<execute action="CPKaleoformsadminNewprocessSelectform#assertTextEquals" locator-key1="FORM_TABLE_NAME" value1="Created Task Form" />
-		<execute action="CPKaleoformsadminNewprocessSelectform#assertElementNotPresent" locator-key1="FORM_TABLE_NAME_2" />
+		<execute action="CPKaleoformsadminNewprocessSelectform#assertTextEquals" locator1="FORM_TABLE_NAME" value1="Created Task Form" />
+		<execute action="CPKaleoformsadminNewprocessSelectform#assertElementNotPresent" locator1="FORM_TABLE_NAME_2" />
 	</command>
 
 	<command name="ViewProcessWithComments" priority="4">

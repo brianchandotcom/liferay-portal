@@ -54,7 +54,7 @@
 
 		<execute macro="Page#gotoCP" />
 
-		<execute action="CPUsergroups#assertElementNotPresent" locator-key1="ADD" />
+		<execute action="CPUsergroups#assertElementNotPresent" locator1="ADD" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
@@ -96,6 +96,6 @@
 
 		<execute macro="Page#gotoCP" />
 
-		<execute action="CPUsergroups#assertElementNotPresent" locator-key1="ADD" />
+		<execute action="CPUsergroups#assertElementNotPresent" locator1="ADD" />
 	</command>
 </definition>

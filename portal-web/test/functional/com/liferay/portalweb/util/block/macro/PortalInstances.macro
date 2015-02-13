@@ -1,63 +1,63 @@
 <definition>
 	<command name="addCP">
-		<execute action="CPPortalinstances#assertClick" locator-key1="ADD_BUTTON" value1="Add" />
+		<execute action="CPPortalinstances#assertClick" locator1="ADD_BUTTON" value1="Add" />
 
-		<execute action="CPPortalinstancesAdd#type" locator-key1="WEB_ID_FIELD" value1="${webId}" />
-		<execute action="CPPortalinstancesAdd#type" locator-key1="VIRTUAL_HOST_FIELD" value1="${virtualHost}" />
-		<execute action="CPPortalinstancesAdd#type" locator-key1="MAIL_DOMAIN_FIELD" value1="${mailDomain}" />
+		<execute action="CPPortalinstancesAdd#type" locator1="WEB_ID_FIELD" value1="${webId}" />
+		<execute action="CPPortalinstancesAdd#type" locator1="VIRTUAL_HOST_FIELD" value1="${virtualHost}" />
+		<execute action="CPPortalinstancesAdd#type" locator1="MAIL_DOMAIN_FIELD" value1="${mailDomain}" />
 
 		<if>
 			<equals arg1="${maxUsers}" arg2="true" />
 			<then>
-				<execute action="CPPortalinstancesAdd#type" locator-key1="MAX_USERS_FIELD" value1="${maxUserNumber}" />
+				<execute action="CPPortalinstancesAdd#type" locator1="MAX_USERS_FIELD" value1="${maxUserNumber}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${portalInstanceActive}" arg2="false" />
 			<then>
-				<execute action="CPPortalinstancesAdd#uncheck" locator-key1="ACTIVE_CHECKBOX" />
+				<execute action="CPPortalinstancesAdd#uncheck" locator1="ACTIVE_CHECKBOX" />
 			</then>
 		</if>
 
-		<execute action="CPPortalinstancesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPPortalinstances#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPPortalinstancesAdd#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalinstances#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deactivatePortalInstance">
 		<var name="key_virtualHost" value="${virtualHost}" />
 
-		<execute action="CPPortalinstances#click" locator-key1="INSTANCE_TABLE_ACTIONS" />
-		<execute action="CPPortalinstances#assertClick" locator-key1="INSTANCE_MENULIST_EDIT" value1="Edit" />
+		<execute action="CPPortalinstances#click" locator1="INSTANCE_TABLE_ACTIONS" />
+		<execute action="CPPortalinstances#assertClick" locator1="INSTANCE_MENULIST_EDIT" value1="Edit" />
 
-		<execute action="CPPortalinstancesAdd#uncheck" locator-key1="ACTIVE_CHECKBOX" />
-		<execute action="CPPortalinstancesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalinstancesAdd#uncheck" locator1="ACTIVE_CHECKBOX" />
+		<execute action="CPPortalinstancesAdd#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPPortalinstances#assertTextEquals" locator-key1="INSTANCE_TABLE_ACTIVE" value1="No" />
+		<execute action="CPPortalinstances#assertTextEquals" locator1="INSTANCE_TABLE_ACTIVE" value1="No" />
 	</command>
 
 	<command name="deleteCP">
 		<var name="key_virtualHost" value="${virtualHost}" />
 
-		<execute action="CPPortalinstances#assertTextEquals" locator-key1="INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
-		<execute action="CPPortalinstances#click" locator-key1="INSTANCE_TABLE_ACTIONS" />
-		<execute action="CPPortalinstances#assertClickNoError" locator-key1="INSTANCE_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPPortalinstances#assertTextEquals" locator1="INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
+		<execute action="CPPortalinstances#click" locator1="INSTANCE_TABLE_ACTIONS" />
+		<execute action="CPPortalinstances#assertClickNoError" locator1="INSTANCE_MENULIST_DELETE" value1="Delete" />
 
-		<execute action="CPPortalinstances#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute action="CPPortalinstances#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPPortalinstances#assertTextNotPresent" locator-key1="INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
+		<execute action="CPPortalinstances#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPPortalinstances#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPPortalinstances#assertTextNotPresent" locator1="INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
 	</command>
 
 	<command name="editCP">
 		<var name="key_virtualHost" value="${virtualHost}" />
 
-		<execute action="CPPortalinstances#assertTextEquals" locator-key1="INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
-		<execute action="CPPortalinstances#assertClick" locator-key1="INSTANCE_TABLE_EDIT" value1="Edit" />
+		<execute action="CPPortalinstances#assertTextEquals" locator1="INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
+		<execute action="CPPortalinstances#assertClick" locator1="INSTANCE_TABLE_EDIT" value1="Edit" />
 
-		<execute action="CPPortalinstancesEdit#type" locator-key1="MAIL_DOMAIN_FIELD" value1="${mailDomain}" />
-		<execute action="CPPortalinstancesEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalinstancesEdit#type" locator1="MAIL_DOMAIN_FIELD" value1="${mailDomain}" />
+		<execute action="CPPortalinstancesEdit#assertClick" locator1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPPortalinstances#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPPortalinstances#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownCP">
@@ -66,12 +66,12 @@
 		</execute>
 
 		<while>
-			<condition action="CPPortalinstances#isElementPresent" locator-key1="INSTANCE_TABLE_ACTIONS_GENERIC" />
+			<condition action="CPPortalinstances#isElementPresent" locator1="INSTANCE_TABLE_ACTIONS_GENERIC" />
 			<then>
-				<execute action="CPPortalinstances#click" locator-key1="INSTANCE_TABLE_ACTIONS_GENERIC" />
-				<execute action="CPPortalinstances#assertClickNoError" locator-key1="INSTANCE_MENULIST_DELETE" value1="Delete" />
-				<execute action="CPPortalinstances#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="CPPortalinstances#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="CPPortalinstances#click" locator1="INSTANCE_TABLE_ACTIONS_GENERIC" />
+				<execute action="CPPortalinstances#assertClickNoError" locator1="INSTANCE_MENULIST_DELETE" value1="Delete" />
+				<execute action="CPPortalinstances#confirm" locator1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="CPPortalinstances#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
 	</command>
@@ -79,8 +79,8 @@
 	<command name="viewCP">
 		<var name="key_virtualHost" value="${virtualHost}" />
 
-		<execute action="CPPortalinstances#assertTextEquals" locator-key1="INSTANCE_TABLE_WEB_ID" value1="${virtualHost}" />
-		<execute action="CPPortalinstances#assertTextEquals" locator-key1="INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
-		<execute action="CPPortalinstances#assertTextEquals" locator-key1="INSTANCE_TABLE_MAIL_DOMAIN" value1="${virtualHost}" />
+		<execute action="CPPortalinstances#assertTextEquals" locator1="INSTANCE_TABLE_WEB_ID" value1="${virtualHost}" />
+		<execute action="CPPortalinstances#assertTextEquals" locator1="INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
+		<execute action="CPPortalinstances#assertTextEquals" locator1="INSTANCE_TABLE_MAIL_DOMAIN" value1="${virtualHost}" />
 	</command>
 </definition>

@@ -2,7 +2,7 @@
 	<command name="addField">
 		<var name="key_wfPreviousFieldName" value="${wfPreviousFieldName}" />
 
-		<execute action="PGWebformConfiguration#click" locator-key1="SETUP_FORM_FIELDS_ADD_ROW_BUTTON" />
+		<execute action="PGWebformConfiguration#click" locator1="SETUP_FORM_FIELDS_ADD_ROW_BUTTON" />
 
 		<execute macro="WebFormPortlet#editField">
 			<var name="wfFieldName" value="New Item" />
@@ -15,19 +15,19 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="PGWebformConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGWebformConfiguration#selectFrame" locator1="CONFIGURATION_IFRAME" />
 
 		<if>
 			<isset var="wfInformationTitle" />
 			<then>
-				<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_INFORMATION_TITLE_FIELD" value1="${wfInformationTitle}" />
+				<execute action="PGWebformConfiguration#type" locator1="SETUP_FORM_INFORMATION_TITLE_FIELD" value1="${wfInformationTitle}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="wfInformationDescription" />
 			<then>
-				<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_INFORMATION_DESCRIPTION_FIELD" value1="${wfInformationDescription}" />
+				<execute action="PGWebformConfiguration#type" locator1="SETUP_FORM_INFORMATION_DESCRIPTION_FIELD" value1="${wfInformationDescription}" />
 			</then>
 		</if>
 	</command>
@@ -37,7 +37,7 @@
 
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute action="PGWebformConfiguration#doubleClick" locator-key1="SETUP_FORM_FIELDS_DELETE_ROW_BUTTON" />
+		<execute action="PGWebformConfiguration#doubleClick" locator1="SETUP_FORM_FIELDS_DELETE_ROW_BUTTON" />
 
 		<execute macro="WebFormPortlet#viewEditableFieldNotVisibleCmd" />
 	</command>
@@ -45,15 +45,15 @@
 	<command name="editField">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_FIELDS_NAME_FIELD" value1="${wfNewFieldName}" />
-		<execute action="PGWebformConfiguration#click" locator-key1="SETUP_FORM_FIELDS" />
+		<execute action="PGWebformConfiguration#type" locator1="SETUP_FORM_FIELDS_NAME_FIELD" value1="${wfNewFieldName}" />
+		<execute action="PGWebformConfiguration#click" locator1="SETUP_FORM_FIELDS" />
 
 		<if>
 			<isset var="wfFieldType" />
 			<then>
 				<var name="key_wfNewFieldName" value="${wfNewFieldName}" />
 
-				<execute action="PGWebformConfiguration#select" locator-key1="SETUP_FORM_FIELDS_TYPE_SELECT" value1="${wfFieldType}" />
+				<execute action="PGWebformConfiguration#select" locator1="SETUP_FORM_FIELDS_TYPE_SELECT" value1="${wfFieldType}" />
 			</then>
 		</if>
 
@@ -68,7 +68,7 @@
 			<then>
 				<var name="key_wfNewFieldName" value="${wfNewFieldName}" />
 
-				<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_FIELDS_OPTIONS_FIELD" value1="${optionsList}" />
+				<execute action="PGWebformConfiguration#type" locator1="SETUP_FORM_FIELDS_OPTIONS_FIELD" value1="${optionsList}" />
 			</then>
 		</if>
 
@@ -77,46 +77,46 @@
 			<then>
 				<var name="key_wfNewFieldName" value="${wfNewFieldName}" />
 
-				<execute action="PGWebformConfiguration#check" locator-key1="SETUP_FORM_FIELDS_OPTIONAL_CHECKBOX" />
+				<execute action="PGWebformConfiguration#check" locator1="SETUP_FORM_FIELDS_OPTIONAL_CHECKBOX" />
 			</then>
 		</if>
 	</command>
 
 	<command name="saveConfiguration">
-		<execute action="PGWebformConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGWebformConfiguration#assertClick" locator1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGWebformConfiguration#assertTextEquals" locator1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute action="PGWebformConfiguration#selectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="viewDeletedFieldNotPresent">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute action="PGWebformConfiguration#assertElementNotPresent" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_TITLE" />
+		<execute action="PGWebformConfiguration#assertElementNotPresent" locator1="SETUP_FORM_POPULATED_FIELDS_FIELD_TITLE" />
 	</command>
 
 	<command name="viewEditableField">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute action="PGWebformConfiguration#assertElementPresent" locator-key1="SETUP_FORM_FIELDS_NAME_FIELD" />
+		<execute action="PGWebformConfiguration#assertElementPresent" locator1="SETUP_FORM_FIELDS_NAME_FIELD" />
 	</command>
 
 	<command name="viewEditableFieldNotPresent">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute action="PGWebformConfiguration#assertElementNotPresent" locator-key1="SETUP_FORM_FIELDS_NAME_EDITABLE_FIELD" />
+		<execute action="PGWebformConfiguration#assertElementNotPresent" locator1="SETUP_FORM_FIELDS_NAME_EDITABLE_FIELD" />
 	</command>
 
 	<command name="viewEditableFieldNotVisibleCmd">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute action="PGWebformConfiguration#assertElementNotPresent" locator-key1="SETUP_FORM_FIELDS_NAME_FIELD" />
+		<execute action="PGWebformConfiguration#assertElementNotPresent" locator1="SETUP_FORM_FIELDS_NAME_FIELD" />
 	</command>
 
 	<command name="viewSubmittedField">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_TITLE" value1="${wfFieldName}" />
-		<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_NAME" value1="${wfFieldName}" />
+		<execute action="PGWebformConfiguration#assertTextEquals" locator1="SETUP_FORM_POPULATED_FIELDS_FIELD_TITLE" value1="${wfFieldName}" />
+		<execute action="PGWebformConfiguration#assertTextEquals" locator1="SETUP_FORM_POPULATED_FIELDS_FIELD_NAME" value1="${wfFieldName}" />
 
 		<if>
 			<equals arg1="${wfFieldType}" arg2="Text Box" />
@@ -124,22 +124,22 @@
 				<var name="key_wfFieldType" value="textarea" />
 				<var name="wfFieldType" value="textarea" />
 
-				<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_TYPE" value1="${wfFieldType}" />
+				<execute action="PGWebformConfiguration#assertTextEquals" locator1="SETUP_FORM_POPULATED_FIELDS_FIELD_TYPE" value1="${wfFieldType}" />
 			</then>
 			<else>
 				<var name="key_wfFieldType" value="${wfFieldType}" />
 
-				<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_TYPE" value1="${wfFieldType}" />
+				<execute action="PGWebformConfiguration#assertTextEquals" locator1="SETUP_FORM_POPULATED_FIELDS_FIELD_TYPE" value1="${wfFieldType}" />
 			</else>
 		</if>
 
 		<if>
 			<equals arg1="${optional}" arg2="true" />
 			<then>
-				<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_OPTIONAL" value1="Yes" />
+				<execute action="PGWebformConfiguration#assertTextEquals" locator1="SETUP_FORM_POPULATED_FIELDS_FIELD_OPTIONAL" value1="Yes" />
 			</then>
 			<else>
-				<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_OPTIONAL" value1="No" />
+				<execute action="PGWebformConfiguration#assertTextEquals" locator1="SETUP_FORM_POPULATED_FIELDS_FIELD_OPTIONAL" value1="No" />
 			</else>
 		</if>
 
@@ -148,7 +148,7 @@
 			<then>
 				<var name="key_optionsList" value="${optionsList}" />
 
-				<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_OPTIONS" value1="${optionsList}" />
+				<execute action="PGWebformConfiguration#assertTextEquals" locator1="SETUP_FORM_POPULATED_FIELDS_FIELD_OPTIONS" value1="${optionsList}" />
 			</then>
 		</if>
 	</command>

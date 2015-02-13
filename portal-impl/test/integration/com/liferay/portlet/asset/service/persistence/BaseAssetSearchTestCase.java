@@ -57,6 +57,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -962,7 +963,9 @@ public abstract class BaseAssetSearchTestCase {
 			"content", "life", "liferay", "open", "osgi", "social"
 		};
 
-		testOrderByTitle(assetEntryQuery, "asc", titles, orderedTitles);
+		testOrderByTitle(
+			assetEntryQuery, "asc", titles, orderedTitles,
+			new Locale[] {LocaleUtil.getDefault(), LocaleUtil.FRANCE});
 	}
 
 	@Test
@@ -979,7 +982,9 @@ public abstract class BaseAssetSearchTestCase {
 			"social", "osgi", "open", "liferay", "life", "content"
 		};
 
-		testOrderByTitle(assetEntryQuery, "desc", titles, orderedTitles);
+		testOrderByTitle(
+			assetEntryQuery, "desc", titles, orderedTitles,
+			new Locale[] {LocaleUtil.getDefault(), LocaleUtil.FRANCE});
 	}
 
 	@Test
@@ -1323,7 +1328,7 @@ public abstract class BaseAssetSearchTestCase {
 
 	protected void testOrderByTitle(
 			AssetEntryQuery assetEntryQuery, String orderByType,
-			String[] titles, String[] orderedTitles)
+			String[] titles, String[] orderedTitles, Locale[] locales)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -1343,14 +1348,20 @@ public abstract class BaseAssetSearchTestCase {
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
-		AssetEntry[] assetEntries = search(assetEntryQuery, searchContext);
+		AssetEntry[] assetEntries;
 
-		for (int i = 0; i < assetEntries.length; i++) {
-			AssetEntry assetEntry = assetEntries[i];
+		for (Locale locale : locales) {
+			searchContext.setLocale(locale);
 
-			String field = assetEntry.getTitle(LocaleUtil.getDefault());
+			assetEntries = search(assetEntryQuery, searchContext);
 
-			Assert.assertEquals(orderedTitles[i], field);
+			for (int i = 0; i < assetEntries.length; i++) {
+				AssetEntry assetEntry = assetEntries[i];
+
+				String field = assetEntry.getTitle(locale);
+
+				Assert.assertEquals(orderedTitles[i], field);
+			}
 		}
 	}
 

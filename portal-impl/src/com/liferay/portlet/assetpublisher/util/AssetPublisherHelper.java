@@ -50,7 +50,8 @@ public class AssetPublisherHelper {
 		PortletURL viewFullContentURL =
 			liferayPortletResponse.createRenderURL();
 
-		viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
+		viewFullContentURL.setParameter(
+			"mvcPath", "/html/portlet/asset_publisher/view_content.jsp");
 		viewFullContentURL.setParameter(
 			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
 

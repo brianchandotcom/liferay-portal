@@ -18,7 +18,7 @@ import com.liferay.sync.engine.BaseTestCase;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.persistence.SyncFilePersistence;
 import com.liferay.sync.engine.util.FileUtil;
-import com.liferay.sync.engine.util.SyncFileTestUtil;
+import com.liferay.sync.engine.util.test.SyncFileTestUtil;
 
 import java.nio.file.Paths;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.util;
+package com.liferay.bookmarks.util.test;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;

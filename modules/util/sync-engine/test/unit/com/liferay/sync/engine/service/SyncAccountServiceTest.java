@@ -18,8 +18,8 @@ import com.liferay.sync.engine.BaseTestCase;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.util.FileUtil;
-import com.liferay.sync.engine.util.SyncFileTestUtil;
-import com.liferay.sync.engine.util.SyncSiteTestUtil;
+import com.liferay.sync.engine.util.test.SyncFileTestUtil;
+import com.liferay.sync.engine.util.test.SyncSiteTestUtil;
 
 import org.junit.Assert;
 import org.junit.Test;

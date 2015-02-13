@@ -27,6 +27,7 @@ import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.util.test.WikiPageTrashHandlerTestUtil;
 
 import org.junit.ClassRule;
 import org.junit.Ignore;

@@ -23,7 +23,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.wiki.util.WikiTestUtil;
+import com.liferay.wiki.util.test.WikiTestUtil;
 
 import java.util.List;
 import java.util.Map;

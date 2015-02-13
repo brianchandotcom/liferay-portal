@@ -14,6 +14,8 @@
 
 package com.liferay.sass.compiler;
 
+import com.liferay.sass.compiler.util.test.SassTestUtil;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;

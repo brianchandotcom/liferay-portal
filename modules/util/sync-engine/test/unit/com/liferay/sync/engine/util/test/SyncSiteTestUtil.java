@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.engine.util;
+package com.liferay.sync.engine.util.test;
 
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;

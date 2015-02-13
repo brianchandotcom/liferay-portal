@@ -25,7 +25,10 @@ public interface VelocityEngineConfiguration {
 	@Meta.AD(deflt = "false", required = false)
 	public boolean directiveIfToStringNullCheck();
 
-	@Meta.AD(deflt = "org.apache.velocity.runtime.log.SimpleLog4JLogSystem", required = false)
+	@Meta.AD(
+		deflt = "org.apache.velocity.runtime.log.SimpleLog4JLogSystem",
+		required = false
+	)
 	public String logger();
 
 	@Meta.AD(deflt = "org.apache.velocity", required = false)

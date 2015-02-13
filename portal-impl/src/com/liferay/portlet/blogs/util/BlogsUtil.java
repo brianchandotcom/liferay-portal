@@ -229,6 +229,7 @@ public class BlogsUtil {
 			BlogsEntry.class.getName(), searchContainer);
 
 		assetEntryQuery.setExcludeZeroViewCount(false);
+		assetEntryQuery.setOrderByCol1("publishDate");
 		assetEntryQuery.setVisible(Boolean.TRUE);
 
 		int total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);

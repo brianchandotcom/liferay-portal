@@ -38,6 +38,9 @@ public class PortletImportBackgroundTaskExecutor
 	public PortletImportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
 			new PortletExportImportBackgroundTaskStatusMessageTranslator());
+
+		// Isolation level guarantees this will be serial in a group
+
 		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_GROUP);
 		setSerial(true);
 	}

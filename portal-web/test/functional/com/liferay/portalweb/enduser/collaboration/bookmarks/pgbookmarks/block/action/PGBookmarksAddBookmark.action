@@ -1,7 +1,0 @@
-<definition>
-	<command name="isElementPresent">
-		<case locator-key1="RELATED_ASSETS_PANEL_COLLAPSED">
-			<execute function="IsElementPresent#pauseIsElementPresent" />
-		</case>
-	</command>
-</definition>

@@ -1,7 +1,0 @@
-<definition>
-	<command name="isElementPresent">
-		<case locator-key1="PORTLET_CONFIGURATION_MESSAGE">
-			<execute function="IsElementPresent#isVisible" />
-		</case>
-	</command>
-</definition>

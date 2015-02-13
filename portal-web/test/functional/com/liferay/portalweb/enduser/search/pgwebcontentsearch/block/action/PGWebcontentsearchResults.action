@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertTextEquals">
-		<case locator-key1="RESULTS_TABLE_CONTENT">
-			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-	</command>
-</definition>

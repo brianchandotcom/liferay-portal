@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertTextEquals">
-		<case locator-key1="ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE">
-			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-	</command>
-</definition>

@@ -1,7 +1,0 @@
-<definition>
-	<command name="type">
-		<case comparator="startsWith" locator1="//div[contains(@id,'cke__167_">
-			<execute function="Type#typeFrameWaitForCKEditor" />
-		</case>
-	</command>
-</definition>

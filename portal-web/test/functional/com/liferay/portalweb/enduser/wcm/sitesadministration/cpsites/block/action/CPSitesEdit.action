@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertElementNotPresent">
-		<case locator-key1="STAGING_ENABLED_ON_PUBLIC_PAGES_CHECKBOX">
-			<execute function="AssertElementNotPresent#assertNotVisible" />
-		</case>
-	</command>
-</definition>

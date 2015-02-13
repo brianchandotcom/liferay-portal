@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertClick">
-		<case locator-key1="MENU_USER_INFORMATION_PASSWORD">
-			<execute function="AssertClick#assertPartialTextClickAt" />
-		</case>
-	</command>
-</definition>

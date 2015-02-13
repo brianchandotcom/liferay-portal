@@ -136,50 +136,48 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 
 				<c:if test="<%= nextEntry != null %>">
 					<aui:col cssClass='<%= "next-entry " + ((previousEntry != null) ? "has-previous-entry" : StringPool.BLANK) %>' md="6" sm="6">
-						<div class="<%= (previousEntry != null) ? "next-entry-container" : StringPool.BLANK %>">
-							<h2><liferay-ui:message key="next-entry" /></h2>
+						<h2><liferay-ui:message key="next-entry" /></h2>
 
-							<div class="next-entry-content">
-								<portlet:renderURL var="nextEntryURL">
-									<portlet:param name="struts_action" value="/blogs/view_entry" />
-									<portlet:param name="redirect" value="<%= redirect %>" />
-									<portlet:param name="entryId" value="<%= String.valueOf(nextEntry.getEntryId()) %>" />
-								</portlet:renderURL>
+						<div class="next-entry-content">
+							<portlet:renderURL var="nextEntryURL">
+								<portlet:param name="struts_action" value="/blogs/view_entry" />
+								<portlet:param name="redirect" value="<%= redirect %>" />
+								<portlet:param name="entryId" value="<%= String.valueOf(nextEntry.getEntryId()) %>" />
+							</portlet:renderURL>
 
-								<%
-								String smallImageURL = nextEntry.getSmallImageURL(themeDisplay);
-								%>
+							<%
+							String smallImageURL = nextEntry.getSmallImageURL(themeDisplay);
+							%>
 
-								<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
-									<div class="small-image visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></div>
-								</c:if>
+							<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
+								<div class="small-image visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></div>
+							</c:if>
 
-								<div class="entry-content">
-									<h3><a href="<%= nextEntryURL %>" title="<%= nextEntry.getTitle() %>"><%= nextEntry.getTitle() %></a></h3>
+							<div class="entry-content">
+								<h3><a href="<%= nextEntryURL %>" title="<%= nextEntry.getTitle() %>"><%= nextEntry.getTitle() %></a></h3>
 
-									<p class="entry-content-body visible-lg-block">
-										<c:choose>
-											<c:when test="<%= Validator.isNotNull(nextEntry.getSubtitle()) %>">
-												<%= StringUtil.shorten(nextEntry.getSubtitle(), 100) %>
-											</c:when>
-											<c:otherwise>
-												<%= StringUtil.shorten(HtmlUtil.stripHtml(nextEntry.getContent()), 100) %>
-											</c:otherwise>
-										</c:choose>
-									</p>
+								<p class="entry-content-body visible-lg-block">
+									<c:choose>
+										<c:when test="<%= Validator.isNotNull(nextEntry.getSubtitle()) %>">
+											<%= StringUtil.shorten(nextEntry.getSubtitle(), 100) %>
+										</c:when>
+										<c:otherwise>
+											<%= StringUtil.shorten(HtmlUtil.stripHtml(nextEntry.getContent()), 100) %>
+										</c:otherwise>
+									</c:choose>
+								</p>
 
-									<liferay-ui:user-display
-										userId="<%= nextEntry.getUserId() %>"
-										userName="<%= nextEntry.getUserName() %>"
-									>
+								<liferay-ui:user-display
+									userId="<%= nextEntry.getUserId() %>"
+									userName="<%= nextEntry.getUserName() %>"
+								>
 
-										<%
-										Date createDate = nextEntry.getCreateDate();
-										%>
+									<%
+									Date createDate = nextEntry.getCreateDate();
+									%>
 
-										<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-									</liferay-ui:user-display>
-								</div>
+									<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+								</liferay-ui:user-display>
 							</div>
 						</div>
 					</aui:col>

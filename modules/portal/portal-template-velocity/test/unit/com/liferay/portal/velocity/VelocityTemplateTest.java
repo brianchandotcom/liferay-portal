@@ -174,7 +174,8 @@ public class VelocityTemplateTest {
 			SecureUberspector.class.getName());
 		extendedProperties.setProperty(
 			VelocityEngine.VM_LIBRARY,
-			_velocityEngineConfiguration.velocimacroLibrary());
+			StringUtil.merge(
+				_velocityEngineConfiguration.velocimacroLibrary()));
 		extendedProperties.setProperty(
 			VelocityEngine.VM_LIBRARY_AUTORELOAD,
 			String.valueOf(!cacheEnabled));

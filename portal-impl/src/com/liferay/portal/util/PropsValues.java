@@ -216,8 +216,6 @@ public class PropsValues {
 
 	public static final String BREADCRUMB_DISPLAY_STYLE_DEFAULT = PropsUtil.get(PropsKeys.BREADCRUMB_DISPLAY_STYLE_DEFAULT);
 
-	public static final String[] BREADCRUMB_DISPLAY_STYLE_OPTIONS = PropsUtil.getArray(PropsKeys.BREADCRUMB_DISPLAY_STYLE_OPTIONS);
-
 	public static final boolean BREADCRUMB_SHOW_GUEST_GROUP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BREADCRUMB_SHOW_GUEST_GROUP));
 
 	public static final boolean BREADCRUMB_SHOW_PARENT_GROUPS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BREADCRUMB_SHOW_PARENT_GROUPS));

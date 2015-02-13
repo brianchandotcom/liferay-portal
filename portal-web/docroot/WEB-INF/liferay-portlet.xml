@@ -429,11 +429,10 @@
 	<portlet>
 		<portlet-name>82</portlet-name>
 		<icon>/html/icons/language.png</icon>
-		<struts-path>language</struts-path>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<template-handler>com.liferay.portlet.language.template.LanguagePortletDisplayTemplateHandler</template-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<layout-cacheable>true</layout-cacheable>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>

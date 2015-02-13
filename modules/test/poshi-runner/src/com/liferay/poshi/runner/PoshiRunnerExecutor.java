@@ -524,7 +524,12 @@ public class PoshiRunnerExecutor {
 		String varValue = element.attributeValue("value");
 
 		if (varValue == null) {
-			varValue = element.elementText("var");
+			if (element.attributeValue("method") != null) {
+				varValue = PoshiRunnerGetterUtil.getVarMethodValue(element);
+			}
+			else {
+				varValue = element.elementText("var");
+			}
 		}
 
 		varValue = PoshiRunnerVariablesUtil.replaceCommandVars(varValue);

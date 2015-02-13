@@ -14,7 +14,10 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.selenium.LiferaySelenium;
+import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.FileUtil;
+import com.liferay.poshi.runner.util.MathUtil;
 import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
 
@@ -25,6 +28,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 
+import java.lang.reflect.Method;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -103,7 +109,7 @@ public class PoshiRunnerGetterUtil {
 		String line = null;
 
 		while ((line = bufferedReader.readLine()) != null) {
-			Matcher matcher = _pattern.matcher(line);
+			Matcher matcher = _tagPattern.matcher(line);
 
 			if (matcher.find()) {
 				for (String reservedTag : _reservedTags) {
@@ -134,7 +140,98 @@ public class PoshiRunnerGetterUtil {
 		return document.getRootElement();
 	}
 
-	private static final Pattern _pattern = Pattern.compile("<[a-z\\-]+");
+	public static String getVarMethodValue(Element element) throws Exception {
+		String classCommandName = PoshiRunnerVariablesUtil.replaceCommandVars(
+			element.attributeValue("method"));
+
+		String commandName = getCommandNameFromClassCommandName(
+			classCommandName);
+
+		Matcher matcher = _parameterPattern.matcher(commandName);
+
+		String[] parameters = null;
+
+		while (matcher.find()) {
+			String parameterString = matcher.group(1);
+
+			parameterString = parameterString.replaceAll("\"", "");
+
+			parameters = parameterString.split(",");
+		}
+
+		commandName = commandName.replaceAll("(\\(.*\\))+", "");
+
+		LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
+
+		Class clazz = liferaySelenium.getClass();
+
+		Object object = liferaySelenium;
+
+		String className = getClassNameFromClassCommandName(classCommandName);
+
+		if (!className.equals("selenium")) {
+			clazz = Class.forName("com.liferay.poshi.runner.util." + className);
+
+			object = null;
+		}
+
+		if (className.equals("MathUtil")) {
+			Integer[] integer = new Integer[parameters.length];
+
+			for (int i = 0; i < parameters.length; i++) {
+				integer[i] = Integer.parseInt(parameters[i].trim());
+			}
+
+			Method[] mathMethods = MathUtil.class.getDeclaredMethods();
+
+			for (Method mathMethod : mathMethods) {
+				if (mathMethod.getName().equals(commandName)) {
+					Class[] parameterTypes = mathMethod.getParameterTypes();
+
+					Method method = MathUtil.class.getMethod(
+						commandName, parameterTypes);
+
+					if (parameterTypes.length > 1 ) {
+						Object obj = method.invoke(object, integer);
+
+						return obj.toString();
+					}
+					else {
+						Object obj = method.invoke(
+							object, new Object[]{integer});
+
+						return obj.toString();
+					}
+				}
+			}
+		}
+		else {
+			List<Class> parameterClasses = new ArrayList<>();
+
+			if (parameters != null) {
+				for (int i = 0; i < parameters.length; i++) {
+					parameters[i] = parameters[i].trim();
+
+					parameterClasses.add(String.class);
+				}
+			}
+
+			Method method = clazz.getMethod(
+				commandName,
+				parameterClasses.toArray(new Class[parameterClasses.size()]));
+
+			method.setAccessible(true);
+
+			Object obj = method.invoke(object, parameters);
+
+			return obj.toString();
+		}
+
+		return null;
+	}
+
+	private static final Pattern _parameterPattern = Pattern.compile(
+		"\\(([^)]+)\\)");
 	private static final List<String> _reservedTags = Arrays.asList(
 		new String[] {
 			"and", "case", "command", "condition", "contains", "default",
@@ -143,5 +240,6 @@ public class PoshiRunnerGetterUtil {
 			"property", "set-up", "take-screenshot", "td", "tear-down", "then",
 			"tr", "while", "var"
 		});
+	private static final Pattern _tagPattern = Pattern.compile("<[a-z\\-]+");
 
 }

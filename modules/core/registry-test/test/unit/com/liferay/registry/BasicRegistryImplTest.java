@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.registry;
 
 import java.util.Collections;
@@ -28,35 +29,6 @@ public class BasicRegistryImplTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
-	}
-
-	@Test
-	public void testServiceTrackerCustomizerCalledOncePerEvent() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		AtomicInteger addingState = new AtomicInteger(0);
-		AtomicInteger midifiedState = new AtomicInteger(0);
-		AtomicInteger removedState = new AtomicInteger(0);
-
-		ServiceTracker<Foo, Foo> serviceTracker = registry.trackServices(
-			Foo.class,
-			new FooServiceTracker(addingState, midifiedState, removedState));
-
-		serviceTracker.open();
-
-		ServiceRegistration<Foo> serviceRegistration =
-			registry.registerService(Foo.class, new Foo() {});
-
-		Assert.assertEquals(1, addingState.get());
-
-		serviceRegistration.setProperties(
-			Collections.<String, Object>emptyMap());
-
-		Assert.assertEquals(1, midifiedState.get());
-
-		serviceRegistration.unregister();
-
-		Assert.assertEquals(1, removedState.get());
 	}
 
 	@Test
@@ -87,6 +59,35 @@ public class BasicRegistryImplTest {
 		serviceRegistrationB.unregister();
 
 		Assert.assertEquals(0, serviceTracker.size());
+	}
+
+	@Test
+	public void testServiceTrackerCustomizerCalledOncePerEvent() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		AtomicInteger addingState = new AtomicInteger(0);
+		AtomicInteger midifiedState = new AtomicInteger(0);
+		AtomicInteger removedState = new AtomicInteger(0);
+
+		ServiceTracker<Foo, Foo> serviceTracker = registry.trackServices(
+			Foo.class,
+			new FooServiceTracker(addingState, midifiedState, removedState));
+
+		serviceTracker.open();
+
+		ServiceRegistration<Foo> serviceRegistration = registry.registerService(
+			Foo.class, new Foo() {});
+
+		Assert.assertEquals(1, addingState.get());
+
+		serviceRegistration.setProperties(
+			Collections.<String, Object>emptyMap());
+
+		Assert.assertEquals(1, midifiedState.get());
+
+		serviceRegistration.unregister();
+
+		Assert.assertEquals(1, removedState.get());
 	}
 
 	public class Foo {

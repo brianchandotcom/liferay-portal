@@ -38,6 +38,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.wiki.configuration.WikiConfiguration;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.DuplicatePageException;
 import com.liferay.wiki.exception.NoSuchNodeException;
@@ -52,7 +53,6 @@ import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
-import com.liferay.wiki.settings.WikiConfiguration;
 import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
 
 import javax.portlet.ActionRequest;

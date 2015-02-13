@@ -17,9 +17,8 @@ package com.liferay.portal.template.velocity;
 import com.liferay.portal.kernel.io.ReaderInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
+import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.IOException;
@@ -73,6 +72,9 @@ public class LiferayResourceLoader extends ResourceLoader {
 
 		setModificationCheckInterval(resourceModificationCheckInterval);
 
+		_templateResourceLoader =
+			(TemplateResourceLoader)extendedProperties.get(
+				VelocityTemplateResourceLoader.class.getName());
 	}
 
 	@Override
@@ -117,8 +119,7 @@ public class LiferayResourceLoader extends ResourceLoader {
 
 		try {
 			TemplateResource templateResource =
-				TemplateResourceLoaderUtil.getTemplateResource(
-					TemplateConstants.LANG_TYPE_VM, source);
+				_templateResourceLoader.getTemplateResource(source);
 
 			return new ReaderInputStream(templateResource.getReader());
 		}
@@ -129,5 +130,7 @@ public class LiferayResourceLoader extends ResourceLoader {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayResourceLoader.class);
+
+	private TemplateResourceLoader _templateResourceLoader;
 
 }

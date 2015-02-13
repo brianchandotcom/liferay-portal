@@ -24,11 +24,13 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
-import com.liferay.portlet.dynamicdatamapping.StorageException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil;
+import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
 
 import java.io.Serializable;
 
@@ -136,15 +138,17 @@ public class GoogleDocsMetadataHelper {
 
 	public void update() {
 		try {
+			DDMFormValues ddmFormValues = toDDMFormValues(_fields);
+
 			_storageEngine.update(
-				_dlFileEntryMetadata.getDDMStorageId(), _fields,
+				_dlFileEntryMetadata.getDDMStorageId(), ddmFormValues,
 				new ServiceContext());
 		}
-		catch (StorageException se) {
+		catch (PortalException pe) {
 			throw new SystemException(
 				"Unable to update DDM fields for file version " +
 					_dlFileVersion.getFileVersionId(),
-				se);
+				pe);
 		}
 	}
 
@@ -189,8 +193,10 @@ public class GoogleDocsMetadataHelper {
 			serviceContext.setScopeGroupId(_dlFileVersion.getGroupId());
 			serviceContext.setUserId(_dlFileVersion.getUserId());
 
+			DDMFormValues ddmFormValues = toDDMFormValues(fields);
+
 			long ddmStorageId = _storageEngine.create(
-				_dlFileVersion.getCompanyId(), ddmStructureId, fields,
+				_dlFileVersion.getCompanyId(), ddmStructureId, ddmFormValues,
 				serviceContext);
 
 			_dlFileEntryMetadata.setDDMStorageId(ddmStorageId);
@@ -241,8 +247,11 @@ public class GoogleDocsMetadataHelper {
 		}
 
 		try {
-			_fields = _storageEngine.getFields(
+			DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
 				_dlFileEntryMetadata.getDDMStorageId());
+
+			_fields = DDMFormValuesToFieldsConverterUtil.convert(
+				_ddmStructure, ddmFormValues);
 
 			for (Field field : _fields) {
 				_fieldsMap.put(field.getName(), field);
@@ -254,6 +263,13 @@ public class GoogleDocsMetadataHelper {
 					_dlFileVersion.getFileVersionId(),
 				pe);
 		}
+	}
+
+	protected DDMFormValues toDDMFormValues(Fields fields)
+		throws PortalException {
+
+		return FieldsToDDMFormValuesConverterUtil.convert(
+			_ddmStructure, fields);
 	}
 
 	private Field _getField(String fieldName) {

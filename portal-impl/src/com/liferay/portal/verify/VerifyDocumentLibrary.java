@@ -61,6 +61,7 @@ import com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageAdapter;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageAdapterRegistryUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 
 import java.io.InputStream;
 
@@ -473,7 +474,8 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 			dlFileEntryMetadata);
 
 		StorageAdapter storageAdapter =
-			StorageAdapterRegistryUtil.getStorageAdapter("xml");
+			StorageAdapterRegistryUtil.getStorageAdapter(
+				StorageType.JSON.toString());
 
 		storageAdapter.deleteByClass(dlFileEntryMetadata.getDDMStorageId());
 

@@ -65,10 +65,13 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
+import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -304,7 +307,8 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			DLFileEntryMetadata.class);
 	}
 
-	protected void updateDDLFileUploadReferences(long ddlRecordSetId)
+	protected void updateDDLFileUploadReferences(
+			long structureId, long ddlRecordSetId)
 		throws Exception {
 
 		List<DDLRecord> ddlRecords = DDLRecordLocalServiceUtil.getRecords(
@@ -312,9 +316,9 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 
 		for (DDLRecord ddlRecord : ddlRecords) {
 			updateFileUploadReferences(
-				ddlRecord.getCompanyId(), ddlRecord.getDDMStorageId(),
-				getUserId(ddlRecord), ddlRecord.getGroupId(), ddlRecord,
-				ddlRecord.getStatus());
+				ddlRecord.getCompanyId(), getUserId(ddlRecord),
+				ddlRecord.getGroupId(), structureId,
+				ddlRecord.getDDMStorageId(), ddlRecord, ddlRecord.getStatus());
 		}
 	}
 
@@ -339,7 +343,8 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		DDMTemplateLocalServiceUtil.updateDDMTemplate(template);
 	}
 
-	protected void updateDLFileUploadReferences(long dlFileEntryMetadataId)
+	protected void updateDLFileUploadReferences(
+			long structureId, long dlFileEntryMetadataId)
 		throws Exception {
 
 		DLFileEntryMetadata dlFileEntryMetadata =
@@ -352,27 +357,10 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		updateFileUploadReferences(
-			fileEntry.getCompanyId(), dlFileEntryMetadata.getDDMStorageId(),
-			getUserId(fileEntry), fileEntry.getGroupId(), dlFileEntryMetadata,
+			fileEntry.getCompanyId(), getUserId(fileEntry),
+			fileEntry.getGroupId(), structureId,
+			dlFileEntryMetadata.getDDMStorageId(), dlFileEntryMetadata,
 			fileVersion.getStatus());
-	}
-
-	protected void updateFieldValues(
-			long storageId, Map<String, String> fieldValues)
-		throws Exception {
-
-		Fields fields = new Fields();
-
-		for (Map.Entry<String, String> entry : fieldValues.entrySet()) {
-			Field field = new Field(
-				storageId, entry.getKey(), entry.getValue());
-
-			fields.put(field);
-		}
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		StorageEngineUtil.update(storageId, fields, true, serviceContext);
 	}
 
 	protected void updateFileEntryStatus(
@@ -443,13 +431,16 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 	protected void updateFileUploadReferences(DDMStructureLink ddmStructureLink)
 		throws Exception {
 
+		long structureId = ddmStructureLink.getStructureId();
 		long classNameId = ddmStructureLink.getClassNameId();
 
 		if (classNameId == _ddlRecordSetClassNameId) {
-			updateDDLFileUploadReferences(ddmStructureLink.getClassPK());
+			updateDDLFileUploadReferences(
+				structureId, ddmStructureLink.getClassPK());
 		}
 		else if (classNameId == _dlFileEntryMetadataClassNameId) {
-			updateDLFileUploadReferences(ddmStructureLink.getClassPK());
+			updateDLFileUploadReferences(
+				structureId, ddmStructureLink.getClassPK());
 		}
 	}
 
@@ -463,13 +454,18 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 	}
 
 	protected void updateFileUploadReferences(
-			long companyId, long storageId, long userId, long groupId,
-			BaseModel<?> baseModel, int status)
+			long companyId, long userId, long groupId, long structureId,
+			long storageId, BaseModel<?> baseModel, int status)
 		throws Exception {
 
-		Map<String, String> fieldValues = new HashMap<>();
+		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+			structureId);
 
-		Fields fields = StorageEngineUtil.getFields(storageId);
+		DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(
+			storageId);
+
+		Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+			structure, ddmFormValues);
 
 		for (Field field : fields) {
 			String dataType = field.getDataType();
@@ -499,11 +495,15 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 				jsonObject.getString("name"), filePath, status);
 
 			if (fileEntry != null) {
-				fieldValues.put(field.getName(), getJSON(fileEntry));
+				field.setValue(getJSON(fileEntry));
 			}
 		}
 
-		updateFieldValues(storageId, fieldValues);
+		ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(
+			structure, fields);
+
+		StorageEngineUtil.update(
+			storageId, ddmFormValues, new ServiceContext());
 	}
 
 	protected String updateFileUploadReferences(String xsd) throws Exception {

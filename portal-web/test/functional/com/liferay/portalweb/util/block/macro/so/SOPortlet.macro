@@ -37,7 +37,7 @@
 			<elseif>
 				<equals arg1="${portletOption}" arg2="Configuration" />
 				<then>
-					<execute function="#assertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+					<execute function="AssertClick#assertTextClickAndWait" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 				</then>
 			</elseif>
 			<elseif>

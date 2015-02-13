@@ -14,7 +14,7 @@
 
 		<var name="key_tagName" value="${tagName}" />
 
-		<execute function="#type" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" value1="tag" />
+		<execute function="Type#clickAtSendKeys" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" value1="tag" />
 		<execute function="#assertTextEquals" locator1="PGBlogsAdd#CATEGORIZATION_TAG_AUTOCOMPLETE" value1="${tagName3}" />
 		<execute function="#assertClick" locator1="PGBlogsAdd#CATEGORIZATION_TAG_AUTOCOMPLETE" value1="${tagName3}" />
 		<execute function="#assertClick" locator1="PGBlogsAdd#PUBLISH_BUTTON" value1="Publish" />
@@ -72,7 +72,7 @@
 	<command name="addFrontPageTagPG">
 		<execute function="#assertClick" locator1="PGWiki#ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute function="#type" locator1="CKEditor#BODY_FIELD" value1="${wikiPageContent}" />
+		<execute function="Type#typeFrameWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${wikiPageContent}" />
 		<execute function="#assertClick" locator1="PGWikiAddpage#CATEGORIZATION_DROPDOWN" value1="Categorization" />
 		<execute function="#type" locator1="PGWikiAddpage#TAGS_FIELD" value1="${wikiTagName}" />
 		<execute function="#assertClick" locator1="PGWikiAddpage#PUBLISH_BUTTON" value1="Publish" />
@@ -102,7 +102,7 @@
 		</if>
 
 		<for list="${tagNameList}" param="tagName">
-			<execute function="#type" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+			<execute function="Type#clickAtSendKeys" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
 			<execute function="#click" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_ADD_BUTTON" />
 		</for>
 
@@ -186,7 +186,7 @@
 			</then>
 		</if>
 
-		<execute function="#type" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+		<execute function="Type#clickAtSendKeys" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
 		<execute function="#assertClick" locator1="PGBlogsAdd#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="#assertTextEquals" locator1="PGBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -246,7 +246,7 @@
 	<command name="removeSelectTagViaBlogsPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertClick" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
+		<execute function="AssertClick#assertTextClickAndWait" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
 
 		<if>
 			<condition function="#isElementNotPresent" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" />
@@ -282,7 +282,7 @@
 	<command name="removeTagViaBlogsPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertClick" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
+		<execute function="AssertClick#assertTextClickAndWait" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
 
 		<var name="key_tagName" value="${tagName1}" />
 

@@ -50,21 +50,21 @@
 	<command name="SearchCollapsedPortlet" priority="5">
 		<var name="portletName" value="Bookmarks" />
 
-		<execute function="#click" locator1="Dockbar#ADD" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
 
 		<execute function="#assertClick" locator1="DockbarAddpanelapplications#NAVIGATION_APPLICATIONS" value1="Applications" />
 
 		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'drag-content-item')]" />
 
-		<execute function="#assertNotVisible" locator1="${portletLocator}" />
+		<execute function="AssertVisible#pauseAssertVisible" locator1="${portletLocator}" />
 
-		<execute function="#type" locator1="DockbarAddpanelapplications#SEARCH_FIELD" value1="${portletName}" />
+		<execute function="Type#sendKeysApplicationSearch" locator1="DockbarAddpanelapplications#SEARCH_FIELD" value1="${portletName}" />
 
-		<execute function="#assertVisible" locator1="${portletLocator}" />
+		<execute function="AssertVisible#pauseAssertVisible" locator1="${portletLocator}" />
 	</command>
 
 	<command name="ViewAddPageField" priority="5">
-		<execute function="#click" locator1="Dockbar#ADD" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
 
 		<execute function="#assertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
 
@@ -76,12 +76,12 @@
 	</command>
 
 	<command name="ViewAddPageFieldEditable" priority="5">
-		<execute function="#click" locator1="Dockbar#ADD" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
 
 		<execute function="#assertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
 
-		<execute function="#click" locator1="Dockbar#ADD" />
-		<execute function="#click" locator1="Dockbar#ADD" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
 
 		<execute function="#assertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
 		<execute function="#type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="Dockbar Test Page" />
@@ -104,7 +104,7 @@
 			<var name="pageName" value="Dockbar Test Page" />
 		</execute>
 
-		<execute function="#click" locator1="Dockbar#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
 
 		<execute macro="Dockbar#viewLocalizationOptionsEdit">
 			<var name="localizationOptions" value="en_US,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,iw_IL,hu_HU,ja_JP,pt_BR,es_ES" />
@@ -124,9 +124,9 @@
 			<var name="pageName" value="Dockbar Test Page" />
 		</execute>
 
-		<execute function="#click" locator1="Dockbar#EDIT" />
-		<execute function="#click" locator1="Dockbar#EDIT" />
-		<execute function="#click" locator1="Dockbar#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
 
 		<execute function="#type" locator1="DockbarEditpanel#DETAILS_NAME_FIELD" value1="Edited" />
 		<execute function="#type" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1="/edited" />
@@ -141,7 +141,7 @@
 			<var name="localizedFriendlyURL" value="/edited-french" />
 		</execute>
 
-		<execute function="#assertClick" locator1="DockbarEditpanel#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarEditpanel#SAVE_BUTTON" value1="Save" />
 
 		<var name="key_pageName" value="Edited" />
 

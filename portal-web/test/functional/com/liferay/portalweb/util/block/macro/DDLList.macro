@@ -2,12 +2,12 @@
 	<command name="addCP">
 		<execute function="#assertClick" locator1="CPDynamicdatalists#TOOLBAR_ADD" value1="Add" />
 
-		<execute function="#type" locator1="CPDynamicdatalistsAddlist#NAME_FIELD" value1="${ddlListName}" />
+		<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsAddlist#NAME_FIELD" value1="${ddlListName}" />
 
 		<if>
 			<isset var="ddlListDescription" />
 			<then>
-				<execute function="#type" locator1="CPDynamicdatalistsAddlist#DESCRIPTION_FIELD" value1="${ddlListDescription}" />
+				<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsAddlist#DESCRIPTION_FIELD" value1="${ddlListDescription}" />
 			</then>
 		</if>
 
@@ -83,12 +83,12 @@
 		<execute function="#assertClick" locator1="CPDynamicdatalists#LIST_TABLE_ACTIONS_1" />
 		<execute function="#assertClick" locator1="CPDynamicdatalists#LIST_MENULIST_EDIT" value1="Edit" />
 
-		<execute function="#type" locator1="CPDynamicdatalistsEditlist#NAME_FIELD" value1="${ddlListNameEdit}" />
+		<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsEditlist#NAME_FIELD" value1="${ddlListNameEdit}" />
 
 		<if>
 			<isset var="ddlListDescription" />
 			<then>
-				<execute function="#type" locator1="CPDynamicdatalistsEditlist#DESCRIPTION_FIELD" value1="${ddlListDescriptionEdit}" />
+				<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsEditlist#DESCRIPTION_FIELD" value1="${ddlListDescriptionEdit}" />
 			</then>
 		</if>
 

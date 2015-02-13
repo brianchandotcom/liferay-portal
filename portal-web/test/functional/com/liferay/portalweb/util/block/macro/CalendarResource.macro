@@ -22,7 +22,7 @@
 		<execute function="#assertClick" locator1="PGCalendarResource#RESOURCE_TABLE_ACTIONS" />
 		<execute function="#assertClickNoError" locator1="PGCalendarResource#RESOURCE_MENULIST_DELETE" value1="Delete" />
 
-		<execute function="#confirm" locator1="PGCalendarResource#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm#waitForConfirmation" locator1="PGCalendarResource#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="#assertTextEquals" locator1="PGCalendarResource#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#assertElementNotPresent" locator1="PGCalendarResource#RESOURCE_TABLE_NAME" value1="${calendarResourceName}" />
 		<execute function="#assertTextNotPresent" value1="${calendarResourceName}" />
@@ -56,7 +56,7 @@
 				<execute function="#assertClick" locator1="PGCalendarResource#RESOURCE_TABLE_ACTIONS_GENERIC" />
 				<execute function="#assertClickNoError" locator1="PGCalendarResource#RESOURCE_MENULIST_DELETE" value1="Delete" />
 
-				<execute function="#confirm" locator1="PGCalendarResource#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Confirm#waitForConfirmation" locator1="PGCalendarResource#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="#assertTextEquals" locator1="PGCalendarResource#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>

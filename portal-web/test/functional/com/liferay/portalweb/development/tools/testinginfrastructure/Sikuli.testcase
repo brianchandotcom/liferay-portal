@@ -12,14 +12,14 @@
 		<execute function="#assertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 
 		<if>
-			<condition function="#isElementPresent" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
 			<then>
 				<execute function="#assertClick" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
 			</then>
 		</if>
 
 		<if>
-			<condition function="#isElementPresent" locator1="PGLoginNewpassword#PASSWORD_FIELD" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGLoginNewpassword#PASSWORD_FIELD" />
 			<then>
 				<execute function="#type" locator1="PGLoginNewpassword#PASSWORD_FIELD" value1="test" />
 				<execute function="#type" locator1="PGLoginNewpassword#ENTER_AGAIN_FIELD" value1="test" />
@@ -28,14 +28,14 @@
 		</if>
 
 		<if>
-			<condition function="#isElementPresent" locator1="PGLoginPasswordreminder#ANSWER_FIELD" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGLoginPasswordreminder#ANSWER_FIELD" />
 			<then>
 				<execute function="#type" locator1="PGLoginPasswordreminder#ANSWER_FIELD" value1="test" />
 				<execute function="#assertClick" locator1="PGLoginPasswordreminder#SAVE_BUTTON" value1="Save" />
 			</then>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="BasePortlet#PORTLET_CONTENT" value1="You are signed in as Test Test." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="You are signed in as Test Test." />
 
 		<execute function="#sikuliMouseMove" locator1="Home#SIGN_IN_PORTLET" />
 		<execute function="#sikuliLeftMouseDown" />

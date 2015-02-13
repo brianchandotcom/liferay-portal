@@ -94,7 +94,7 @@
 
 				<execute function="#assertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 				<execute function="#assertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_NAME_FIELD" value1="${orgName}" />
-				<execute function="#assertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_TYPE" value1="${orgType}" />
+				<execute function="AssertTextEquals#assertValue" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_TYPE" value1="${orgType}" />
 			</else>
 		</if>
 	</command>
@@ -155,7 +155,7 @@
 
 		<execute function="#assertClick" locator1="CPUsersandorganizations#ORGANIZATION_MENULIST_EDIT" value1="Edit" />
 
-		<execute function="#assertClick" locator1="CPUsersandorganizationsOrganizationEdit#ORGANIZATION_INFORMATION_ORGANIZATION_SITE" value1="Organization Site" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPUsersandorganizationsOrganizationEdit#ORGANIZATION_INFORMATION_ORGANIZATION_SITE" value1="Organization Site" />
 		<execute function="#select" locator1="CPUsersandorganizationsOrganizationEdit#ORGANIZATION_SITE_PRIVATE_PAGES_SELECT" value1="${organizationSite}" />
 
 		<if>
@@ -215,7 +215,7 @@
 
 		<execute function="#assertClick" locator1="CPUsersandorganizations#ORGANIZATION_MENULIST_EDIT" value1="Edit" />
 
-		<execute function="#assertClick" locator1="CPUsersandorganizationsOrganizationEdit#ORGANIZATION_INFORMATION_ORGANIZATION_SITE" value1="Organization Site" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPUsersandorganizationsOrganizationEdit#ORGANIZATION_INFORMATION_ORGANIZATION_SITE" value1="Organization Site" />
 		<execute function="#check" locator1="CPUsersandorganizationsOrganizationEdit#ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
 
 		<if>
@@ -483,7 +483,7 @@
 				<execute function="#assertClick" locator1="CPUsersandorganizationsAssignmembers#CURRENT" value1="Current" />
 
 				<if>
-					<condition function="#isElementPresent" locator1="CPUsersandorganizationsAssignmembers#USER_TABLE_ALL_CHECKBOX" />
+					<condition function="IsElementPresent#isVisible" locator1="CPUsersandorganizationsAssignmembers#USER_TABLE_ALL_CHECKBOX" />
 					<then>
 						<execute function="#uncheck" locator1="CPUsersandorganizationsAssignmembers#USER_TABLE_ALL_CHECKBOX" />
 						<execute function="#assertClick" locator1="CPUsersandorganizationsAssignmembers#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
@@ -491,7 +491,7 @@
 					</then>
 				</if>
 
-				<execute function="#assertClick" locator1="CPUsersandorganizationsAssignmembers#BACK" value1="Back" />
+				<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="CPUsersandorganizationsAssignmembers#BACK" value1="Back" />
 
 				<execute function="#assertClickNoError" locator1="CPUsersandorganizationsOrganization#MENU_DELETE" value1="Delete" />
 				<execute function="#confirm" locator1="CPUsersandorganizationsOrganization#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -557,7 +557,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#TITLE" value1="Edit ${orgName}" />
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_NAME_FIELD" value1="${orgName}" />
-		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_TYPE" value1="${orgType}" />
+		<execute function="AssertTextEquals#assertValue" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_TYPE" value1="${orgType}" />
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#ORGANIZATION_NAME" value1="${orgName}" />
 	</command>
 
@@ -576,7 +576,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#TITLE" value1="Edit ${orgNameEdit}" />
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_NAME_FIELD" value1="${orgNameEdit}" />
-		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_TYPE" value1="${orgType}" />
+		<execute function="AssertTextEquals#assertValue" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_TYPE" value1="${orgType}" />
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#ORGANIZATION_NAME" value1="${orgNameEdit}" />
 	</command>
 

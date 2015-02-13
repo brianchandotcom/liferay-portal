@@ -933,8 +933,8 @@
 		<var name="key_recipientName" value="${recipientName}" />
 
 		<execute function="#selectFrame" locator1="SOMessagesAdd#NEW_MESSAGE_IFRAME" />
-		<execute function="#type" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName}" />
-		<execute function="#assertClick" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${recipientName}" />
+		<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName}" />
+		<execute function="AssertClick#pauseAssertPartialTextClickAt" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${recipientName}" />
 		<execute function="#assertTextEquals" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName} &lt;${recipientScreenName}&gt;, " />
 		<execute function="#type" locator1="SOMessagesAdd#SUBJECT_FIELD" value1="${messageSubject}" />
 		<execute function="#type" locator1="SOMessagesAdd#BODY_FIELD" value1="${messageBody}" />
@@ -1473,7 +1473,7 @@
 		<execute function="#assertClick" locator1="SOMessages#NEW_MESSAGE_BUTTON" value1="New Message" />
 
 		<execute function="#selectFrame" locator1="SOMessagesAdd#NEW_MESSAGE_IFRAME" />
-		<execute function="#type" locator1="SOMessagesAdd#TO_FIELD" value1="Social01 Office01 User01 &lt;socialoffice01&gt;" />
+		<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="Social01 Office01 User01 &lt;socialoffice01&gt;" />
 		<execute function="#type" locator1="SOMessagesAdd#SUBJECT_FIELD" value1="${messageSubject}" />
 		<execute function="#type" locator1="SOMessagesAdd#BODY_FIELD" value1="${messageBody}" />
 		<execute function="#click" locator1="SOMessagesAdd#SEND_BUTTON" />
@@ -2892,15 +2892,15 @@
 
 		<execute function="#selectFrame" locator1="SOMessagesAdd#NEW_MESSAGE_IFRAME" />
 
-		<execute function="#type" locator1="SOMessagesAdd#TO_FIELD" value1="Social" />
+		<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="Social" />
 
 		<var name="key_recipientName" value="Social01" />
 
-		<execute function="#assertTextEquals" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName1} &lt;${userScreenName1}&gt;" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName1} &lt;${userScreenName1}&gt;" />
 
 		<var name="key_recipientName" value="Social02" />
 
-		<execute function="#assertTextEquals" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName2} &lt;${userScreenName2}&gt;" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName2} &lt;${userScreenName2}&gt;" />
 		<execute function="#assertTextNotPresent" value1="${userName3}" />
 		<execute function="#assertTextNotPresent" value1="${userScreenName3}" />
 		<execute function="#assertTextNotPresent" value1="${userName4}" />
@@ -2979,11 +2979,11 @@
 		<execute function="#assertClick" locator1="SOMessages#NEW_MESSAGE_BUTTON" value1="New Message" />
 
 		<execute function="#selectFrame" locator1="SOMessagesAdd#NEW_MESSAGE_IFRAME" />
-		<execute function="#type" locator1="SOMessagesAdd#TO_FIELD" value1="${userFirstName1}" />
+		<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="${userFirstName1}" />
 
 		<var name="key_recipientName" value="${userFirstName1}" />
 
-		<execute function="#assertTextEquals" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName1} &lt;${userScreenName1}&gt;" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName1} &lt;${userScreenName1}&gt;" />
 		<execute function="#assertTextNotPresent" value1="${userName2}" />
 		<execute function="#assertTextNotPresent" value1="${userScreenName2}" />
 		<execute function="#assertTextNotPresent" value1="${userName3}" />
@@ -2999,11 +2999,11 @@
 		<execute function="#assertClick" locator1="SOMessages#NEW_MESSAGE_BUTTON" value1="New Message" />
 
 		<execute function="#selectFrame" locator1="SOMessagesAdd#NEW_MESSAGE_IFRAME" />
-		<execute function="#type" locator1="SOMessagesAdd#TO_FIELD" value1="${userFirstName2}" />
+		<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="${userFirstName2}" />
 
 		<var name="key_recipientName" value="${userFirstName2}" />
 
-		<execute function="#assertTextEquals" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName2} &lt;${userScreenName2}&gt;" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName2} &lt;${userScreenName2}&gt;" />
 		<execute function="#assertTextNotPresent" value1="${userName1}" />
 		<execute function="#assertTextNotPresent" value1="${userScreenName1}" />
 		<execute function="#assertTextNotPresent" value1="${userName3}" />
@@ -3019,11 +3019,11 @@
 		<execute function="#assertClick" locator1="SOMessages#NEW_MESSAGE_BUTTON" value1="New Message" />
 
 		<execute function="#selectFrame" locator1="SOMessagesAdd#NEW_MESSAGE_IFRAME" />
-		<execute function="#type" locator1="SOMessagesAdd#TO_FIELD" value1="${userFirstName3}" />
+		<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="${userFirstName3}" />
 
 		<var name="key_recipientName" value="${userFirstName3}" />
 
-		<execute function="#assertTextEquals" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName3} &lt;${userScreenName3}&gt;" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName3} &lt;${userScreenName3}&gt;" />
 		<execute function="#assertTextNotPresent" value1="${userName1}" />
 		<execute function="#assertTextNotPresent" value1="${userScreenName1}" />
 		<execute function="#assertTextNotPresent" value1="${userName2}" />
@@ -3039,11 +3039,11 @@
 		<execute function="#assertClick" locator1="SOMessages#NEW_MESSAGE_BUTTON" value1="New Message" />
 
 		<execute function="#selectFrame" locator1="SOMessagesAdd#NEW_MESSAGE_IFRAME" />
-		<execute function="#type" locator1="SOMessagesAdd#TO_FIELD" value1="${userFirstName4}" />
+		<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="${userFirstName4}" />
 
 		<var name="key_recipientName" value="${userFirstName4}" />
 
-		<execute function="#assertTextEquals" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName4} &lt;${userScreenName4}&gt;" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName4} &lt;${userScreenName4}&gt;" />
 		<execute function="#assertTextNotPresent" value1="${userName1}" />
 		<execute function="#assertTextNotPresent" value1="${userScreenName1}" />
 		<execute function="#assertTextNotPresent" value1="${userName2}" />
@@ -3059,7 +3059,7 @@
 		<execute function="#assertClick" locator1="SOMessages#NEW_MESSAGE_BUTTON" value1="New Message" />
 
 		<execute function="#selectFrame" locator1="SOMessagesAdd#NEW_MESSAGE_IFRAME" />
-		<execute function="#type" locator1="SOMessagesAdd#TO_FIELD" value1="Social05" />
+		<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="Social05" />
 		<execute function="#assertElementNotPresent" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" />
 		<execute function="#assertTextNotPresent" value1="${userName1}" />
 		<execute function="#assertTextNotPresent" value1="${userScreenName1}" />
@@ -3714,7 +3714,7 @@
 		<execute function="#assertTextPresent" value1="${messageReplyBody26}" />
 		<execute function="#assertTextPresent" value1="${messageReplyBody27}" />
 		<execute function="#assertTextPresent" value1="${messageReplyBody28}" />
-		<execute function="#assertClick" locator1="SOMessagesMessage#FIRST_LINK" value1="First" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="SOMessagesMessage#FIRST_LINK" value1="First" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_BUTTON" value1="Page 1 of 2" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#SEARCH_RESULTS" value1="Showing 1 - 20 of 29 results." />
 		<execute function="#assertTextPresent" value1="${messageBody}" />
@@ -3746,7 +3746,7 @@
 		<execute function="#assertTextNotPresent" value1="${messageReplyBody26}" />
 		<execute function="#assertTextNotPresent" value1="${messageReplyBody27}" />
 		<execute function="#assertTextNotPresent" value1="${messageReplyBody28}" />
-		<execute function="#assertClick" locator1="SOMessagesMessage#LAST_LINK" value1="Last" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="SOMessagesMessage#LAST_LINK" value1="Last" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_BUTTON" value1="Page 2 of 2" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#SEARCH_RESULTS" value1="Showing 21 - 29 of 29 results." />
 		<execute function="#assertTextNotPresent" value1="${messageBody}" />
@@ -4064,8 +4064,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute function="#type" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="Type#typePause" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="#assertTextEquals" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${userName}" />
 		<execute function="#assertTextEquals" locator1="SOContactscenter#USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
 		<execute function="#assertClick" locator1="SOContactscenter#MESSAGE_BUTTON" value1="Message" />
@@ -4129,10 +4129,10 @@
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
-		<execute function="#type" locator1="SOMembersPortlet#MEMBERS_LIST_SEARCH" value1="${userEmailAddress}" />
+		<execute function="Type#typePause" locator1="SOMembersPortlet#MEMBERS_LIST_SEARCH" value1="${userEmailAddress}" />
 		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
 		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
-		<execute function="#click" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
+		<execute function="Click#pauseTextClickAt" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
 		<execute function="#assertClick" locator1="SOMembersPortlet#MESSAGE_BUTTON" value1="Message" />
 
 		<execute function="#selectFrame" locator1="SOMessagesAdd#NEW_MESSAGE_IFRAME" />

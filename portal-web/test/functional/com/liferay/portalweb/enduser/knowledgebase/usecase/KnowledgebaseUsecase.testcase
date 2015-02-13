@@ -69,7 +69,7 @@
 		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ADD_ARTICLE_BUTTON" value1="Add Article" />
 
 		<execute function="#type" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD" value1="KB Admin Article" />
-		<execute function="#type" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" value1="This is an article created from the KB Admin." />
+		<execute function="Type#typeFrameWaitForCKEditor" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" value1="This is an article created from the KB Admin." />
 		<execute function="#select" locator1="CPKnowledgebaseadminAddarticle#SECTIONS_SELECT" value1="Portlets" />
 		<execute function="#assertClick" locator1="CPKnowledgebaseadminAddarticle#PUBLISH_BUTTON" value1="Publish" />
 

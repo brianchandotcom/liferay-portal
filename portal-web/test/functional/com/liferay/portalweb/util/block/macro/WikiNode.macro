@@ -33,7 +33,7 @@
 		<execute function="#assertTextEquals" locator1="CPWiki#WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
 		<execute function="#click" locator1="CPWiki#WIKI_NODE_TABLE_ACTIONS" />
 		<execute function="#assertClick" locator1="CPWiki#WIKI_NODE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="#assertTextEquals" locator1="CPWiki#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${wikiNodeName} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPWiki#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${wikiNodeName} was moved to the Recycle Bin. Undo" />
 		<execute function="#assertElementNotPresent" locator1="CPWiki#WIKI_NODE_TABLE_WIKI" />
 
 		<execute macro="RecycleBin#emptyCP" />
@@ -70,8 +70,8 @@
 			<then>
 				<execute function="#click" locator1="CPWiki#WIKI_NODE_TABLE_ACTIONS_GENERIC_2" />
 				<execute function="#assertClick" locator1="CPWiki#WIKI_NODE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-				<execute function="#assertTextEquals" locator1="CPWiki#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType}" />
-				<execute function="#assertTextEquals" locator1="CPWiki#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPWiki#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPWiki#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</while>
 

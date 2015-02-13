@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute function="#assertClick" locator1="CPDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="CPDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
 		<execute function="#assertClick" locator1="CPDocumentsandmedia#ADD_MENULIST_REPOSITORY" value1="Repository" />
 
 		<execute function="#type" locator1="CPDocumentsandmediaAddrepository#NAME_FIELD" value1="${dmRepositoryName}" />
@@ -33,7 +33,7 @@
 					<then>
 						<execute function="#check" locator1="CPDocumentsandmedia#TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
 						<execute function="#pause" locator1="1000" />
-						<execute function="#assertClick" locator1="CPDocumentsandmedia#TOOLBAR_ACTIONS" value1="Actions" />
+						<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="CPDocumentsandmedia#TOOLBAR_ACTIONS" value1="Actions" />
 						<execute function="#assertClickNoError" locator1="CPDocumentsandmedia#ACTIONS_MENULIST_DELETE" value1="Delete" />
 						<execute function="#confirm" locator1="CPDocumentsandmedia#CONFIRMATION" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
 						<execute function="#assertTextEquals" locator1="CPDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />

@@ -18,7 +18,7 @@
 	<command name="viewAppCP">
 		<var name="key_appName" value="${appName}" />
 
-		<execute function="#assertTextEquals" locator1="CPAppmanager#APP_NAME" value1="${appName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPAppmanager#APP_NAME" value1="${appName}" />
 	</command>
 
 	<command name="viewUninstallAppCP">

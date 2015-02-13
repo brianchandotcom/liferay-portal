@@ -25,7 +25,7 @@
 		</execute>
 
 		<execute function="#click" locator1="BasePortlet#OPTIONS_ICON" />
-		<execute function="#assertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick#assertTextClickAndWait" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="#selectFrame" locator1="CPMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
 
@@ -67,7 +67,7 @@
 		</execute>
 
 		<execute function="#click" locator1="BasePortlet#OPTIONS_ICON" />
-		<execute function="#assertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick#assertTextClickAndWait" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="#selectFrame" locator1="CPMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
 		<execute function="#assertClick" locator1="CPMessageboardsConfiguration#SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL" value1="Message Added Email" />
@@ -92,7 +92,7 @@
 		</execute>
 
 		<execute function="#click" locator1="BasePortlet#OPTIONS_ICON" />
-		<execute function="#assertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick#assertTextClickAndWait" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="#selectFrame" locator1="CPMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
 		<execute function="#assertClick" locator1="CPMessageboardsConfiguration#SETUP_NAVIGATION_EMAIL_FROM" value1="Email From" />
@@ -121,7 +121,7 @@
 		</execute>
 
 		<execute function="#click" locator1="BasePortlet#OPTIONS_ICON" />
-		<execute function="#assertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick#assertTextClickAndWait" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="#selectFrame" locator1="CPMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
 		<execute function="#assertClick" locator1="CPMessageboardsConfiguration#SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
@@ -173,7 +173,7 @@
 		<var name="key_scopeName" value="${scopeName}" />
 
 		<execute function="#click" locator1="PGMessageboardsConfigurationScope#SCOPE_DROPDOWN" />
-		<execute function="#assertClick" locator1="PGMessageboardsConfigurationScope#SCOPE_MENULIST" value1="${scopeName}" />
+		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="PGMessageboardsConfigurationScope#SCOPE_MENULIST" value1="${scopeName}" />
 		<execute function="#assertTextEquals" locator1="PGMessageboardsConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
@@ -188,7 +188,7 @@
 
 	<command name="subscribePG">
 		<execute function="#assertClick" locator1="PGMessageboards#SUBSCRIBE_LINK" value1="Subscribe" />
-		<execute function="#assertTextEquals" locator1="PGMessageboards#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertText" locator1="PGMessageboards#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownConfigurationEmailCP">
@@ -197,7 +197,7 @@
 		</execute>
 
 		<execute function="#click" locator1="BasePortlet#OPTIONS_ICON" />
-		<execute function="#assertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick#assertTextClickAndWait" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="#selectFrame" locator1="CPMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
 		<execute function="#assertClick" locator1="CPMessageboardsConfiguration#SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL" value1="Message Added Email" />
@@ -218,7 +218,7 @@
 		</execute>
 
 		<execute function="#click" locator1="BasePortlet#OPTIONS_ICON" />
-		<execute function="#assertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick#assertTextClickAndWait" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="#selectFrame" locator1="CPMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
 		<execute function="#check" locator1="CPMessageboardsConfiguration#GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
@@ -291,7 +291,7 @@
 		</execute>
 
 		<execute function="#click" locator1="BasePortlet#OPTIONS_ICON" />
-		<execute function="#assertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick#assertTextClickAndWait" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="#selectFrame" locator1="CPMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
 		<execute function="#assertClick" locator1="CPMessageboardsConfiguration#SETUP_NAVIGATION_EMAIL_FROM" value1="Email From" />
@@ -303,7 +303,7 @@
 	<command name="viewNoPermissionCP">
 		<execute function="#assertTextEquals" locator1="CPMessageboards#PORTLET_TITLE" value1="Message Boards" />
 		<execute function="#assertElementPresent" locator1="CPMessageboards#NAVBAR_CONTAINER" />
-		<execute function="#assertTextEquals" locator1="CPMessageboards#INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
+		<execute function="AssertTextEquals#assertText" locator1="CPMessageboards#INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
 	</command>
 
 	<command name="viewNoSearchResultSubjectPG">
@@ -334,7 +334,7 @@
 
 				<execute function="#assertVisible" locator1="PGMessageboardsSearch#SEARCH_RESULTS_ATTACHMENT_IMAGE" />
 				<execute function="#assertTextEquals" locator1="PGMessageboardsSearch#SEARCH_RESULTS_ATTACHMENT_HEADER" value1="Attachment added by ${userName}." />
-				<execute function="#assertTextEquals" locator1="PGMessageboardsSearch#SEARCH_RESULTS_ATTACHMENT_BODY" value1="${searchTerm}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboardsSearch#SEARCH_RESULTS_ATTACHMENT_BODY" value1="${searchTerm}" />
 			</then>
 		</if>
 	</command>

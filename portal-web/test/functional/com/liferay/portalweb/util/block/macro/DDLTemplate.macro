@@ -19,14 +19,14 @@
 		<if>
 			<isset var="ddlDisplayTemplateTextFieldScript" />
 			<then>
-				<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScript}" />
+				<execute function="AssertClick#assertTextClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScript}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="ddlDisplayTemplateScript" />
 			<then>
-				<execute function="#type" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#SCRIPT_CONTENT_FIELD" value1="${ddlDisplayTemplateScript}" />
+				<execute function="Type#typeAceEditor" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#SCRIPT_CONTENT_FIELD" value1="${ddlDisplayTemplateScript}" />
 			</then>
 		</if>
 
@@ -54,7 +54,7 @@
 		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 
 		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TOOLBAR_ADD_FORM_TEMPLATE" value1="Add Form Template" />
-		<execute function="#type" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#NAME_FIELD" value1="${ddlFormTemplateName}" />
+		<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#NAME_FIELD" value1="${ddlFormTemplateName}" />
 
 		<execute function="#selectFrame" value1="relative=top" />
 	</command>
@@ -62,7 +62,7 @@
 	<command name="addFormTemplateViaDDLDisplayPG">
 		<execute function="#click" locator1="PGDynamicdatalists#TOOLBAR_ADD_FORM_TEMPLATE" />
 
-		<execute function="#type" locator1="PGDynamicdatalistsAddformtemplate#NAME_FIELD" value1="${ddlFormTemplateName}" />
+		<execute function="Type#clickAtSendKeys" locator1="PGDynamicdatalistsAddformtemplate#NAME_FIELD" value1="${ddlFormTemplateName}" />
 	</command>
 
 	<command name="copyCP">
@@ -177,7 +177,7 @@
 		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
 
 		<if>
-			<condition function="#isElementNotPresent" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#DETAILS_MODE_SELECT" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#DETAILS_MODE_SELECT" />
 			<then>
 				<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#DETAILS" value1="Details" />
 			</then>
@@ -193,7 +193,7 @@
 	<command name="editFormTemplatePG">
 		<execute function="#click" locator1="PGDynamicdatalists#TOOLBAR_EDIT_FORM_TEMPLATE" />
 
-		<execute function="#type" locator1="PGDynamicdatalistsAddformtemplate#NAME_FIELD" value1="${ddlFormTemplateNameEdit}" />
+		<execute function="Type#clickAtSendKeys" locator1="PGDynamicdatalistsAddformtemplate#NAME_FIELD" value1="${ddlFormTemplateNameEdit}" />
 	</command>
 
 	<command name="gotoManageTemplatesCmd">
@@ -313,7 +313,7 @@
 
 		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_NAME" value1="${ddlTemplateName}" />
 
-		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#HEADER_TITLE" value1="${ddlTemplateName} (${ddlDataDefinitionName})" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#HEADER_TITLE" value1="${ddlTemplateName} (${ddlDataDefinitionName})" />
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#NAME_FIELD" value1="${ddlTemplateName}" />
 
 		<execute function="#selectFrame" value1="relative=top" />

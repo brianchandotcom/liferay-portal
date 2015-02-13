@@ -28,10 +28,10 @@
 
 				<execute function="#click" locator1="SOAnnouncementsAdd#TEXT_FORMAT_BUTTON" />
 				<execute function="#selectFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" />
-				<execute function="#type" locator1="SOAnnouncementsAdd#CONTENT_FIELD_FORMATTED_TEXT" value1="${entryContent}" />
+				<execute function="Type#sendKeys" locator1="SOAnnouncementsAdd#CONTENT_FIELD_FORMATTED_TEXT" value1="${entryContent}" />
 			</then>
 			<else>
-				<execute function="#type" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
+				<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
 			</else>
 		</if>
 
@@ -85,7 +85,7 @@
 		<execute function="#assertClick" locator1="SOAnnouncementsManage#ADD_ENTRY_BUTTON" value1="Add Entry"  />
 
 		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
 		<execute function="#selectFrameTop" />
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
@@ -161,7 +161,7 @@
 
 					<execute function="#select" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_AVAILABLE_SITES_SELECT" value1="${displayingSite}" />
 					<execute function="#click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_SITES_FROM_AVAILABLE_TO_DISPLAYING_BUTTON" />
-					<execute function="#assertTextEquals" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT" value1="${displayingSite}" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT" value1="${displayingSite}" />
 				</for>
 			</then>
 			<elseif>
@@ -172,7 +172,7 @@
 
 						<execute function="#select" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT" value1="${nonDisplayingSite}" />
 						<execute function="#click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_SITES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
-						<execute function="#assertTextEquals" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_AVAILABLE_SITES_SELECT" value1="${nonDisplayingSite}" />
+						<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_AVAILABLE_SITES_SELECT" value1="${nonDisplayingSite}" />
 					</for>
 				</then>
 			</elseif>
@@ -188,7 +188,7 @@
 
 					<execute function="#select" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_AVAILABLE_ROLES_SELECT" value1="${displayingRole}" />
 					<execute function="#click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_ROLES_FROM_AVAILABLE_TO_DISPLAYING_BUTTON" />
-					<execute function="#assertTextEquals" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT" value1="${displayingRole}" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT" value1="${displayingRole}" />
 				</for>
 			</then>
 			<elseif>
@@ -199,7 +199,7 @@
 
 						<execute function="#select" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT" value1="${nonDisplayingRole}" />
 						<execute function="#click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_ROLES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
-						<execute function="#assertTextEquals" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_AVAILABLE_ROLES_SELECT" value1="${nonDisplayingRole}" />
+						<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_AVAILABLE_ROLES_SELECT" value1="${nonDisplayingRole}" />
 					</for>
 				</then>
 			</elseif>
@@ -214,9 +214,9 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="#clickNoError" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_DELETE_LINK" />
-		<execute function="#confirm" locator1="SOAnnouncements#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
+		<execute function="Confirm#waitForConfirmation" locator1="SOAnnouncements#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
 		<execute function="#assertTextNotPresent" value1="{entryTitle}" />
 		<execute function="#assertTextNotPresent" value1="{entryContent}" />
 	</command>
@@ -225,7 +225,7 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
 
 		<execute function="#selectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
@@ -241,12 +241,12 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="#click" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EDIT_LINK" />
 
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitleEdit}" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
+		<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
 		<execute function="#selectFrameTop" />
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
@@ -260,7 +260,7 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
 
 		<execute function="#selectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
@@ -268,7 +268,7 @@
 		<execute function="#assertClick" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
 
 		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitleEdit}" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
+		<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
 		<execute function="#selectFrameTop" />
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
@@ -289,16 +289,16 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Read" />
 		<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
 		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
 		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
 		<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
 		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Unread" />
@@ -313,16 +313,16 @@
 		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
 		<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
 		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Unread" />
 		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
 		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
 		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Read" />
@@ -332,12 +332,12 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="#click" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EDIT_LINK" />
 
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitleEdit}" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
+		<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
 		<execute function="#selectFrameTop" />
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
@@ -354,7 +354,7 @@
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#select" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
 		<execute function="#selectFrameTop" />
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
@@ -519,7 +519,7 @@
 			<condition function="#isElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_GENERIC_DELETE_LINK" />
 			<then>
 				<execute function="#assertClickNoError" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_GENERIC_DELETE_LINK" value1="Delete" />
-				<execute function="#confirm" locator1="SOAnnouncements#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
+				<execute function="Confirm#waitForConfirmation" locator1="SOAnnouncements#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
 			</then>
 		</while>
 
@@ -564,7 +564,7 @@
 						<execute function="#select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 						<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 						<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_AUTHOR" value1="${entryAuthor}" />
-						<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" value1="Ago" />
+						<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" value1="Ago" />
 
 						<if>
 							<isset var="type" />
@@ -595,7 +595,7 @@
 		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
 		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="1" />
 		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
-		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${entryAuthor} sent a new announcement." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${entryAuthor} sent a new announcement." />
 		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
 		<execute function="#assertClick" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${entryAuthor} sent a new announcement." />
 		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
@@ -604,7 +604,7 @@
 	<command name="viewPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
 
 		<if>
 			<isset var="entryURL" />
@@ -621,7 +621,7 @@
 			</else>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
 
 		<if>
 			<equals arg1="${priority}" arg2="Important" />

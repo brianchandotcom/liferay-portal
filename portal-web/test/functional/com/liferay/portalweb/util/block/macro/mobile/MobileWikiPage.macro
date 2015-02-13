@@ -10,7 +10,7 @@
 
 		<execute function="#type" locator1="PGWikiAddpage#TITLE_FIELD" value1="${wikiPageTitle}" />
 
-		<execute function="#type" locator1="CKEditor#BODY_FIELD" value1="${wikiPageContent}" />
+		<execute function="Type#typeFrameWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${wikiPageContent}" />
 
 		<execute function="#assertClick" locator1="PGWikiAddpage#PUBLISH_BUTTON" value1="Publish" />
 

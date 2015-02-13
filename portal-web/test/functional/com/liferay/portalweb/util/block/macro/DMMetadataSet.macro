@@ -75,12 +75,12 @@
 	</command>
 
 	<command name="gotoCP">
-		<execute function="#assertClick" locator1="CPDocumentsandmedia#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="CPDocumentsandmedia#TOOLBAR_MANAGE" value1="Manage" />
 		<execute function="#assertClick" locator1="CPDocumentsandmedia#MANAGE_MENULIST_METADATA_SETS" value1="Metadata Sets" />
 	</command>
 
 	<command name="gotoPG">
-		<execute function="#assertClick" locator1="PGDocumentsandmedia#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmedia#TOOLBAR_MANAGE" value1="Manage" />
 		<execute function="#assertClick" locator1="PGDocumentsandmedia#MANAGE_MENULIST_METADATA_SETS" value1="Metadata Sets" />
 	</command>
 

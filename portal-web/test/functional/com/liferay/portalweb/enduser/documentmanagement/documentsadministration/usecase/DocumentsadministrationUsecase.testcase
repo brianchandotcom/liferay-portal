@@ -298,7 +298,7 @@
 
 		<execute function="#assertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="Document1" />
 
-		<execute function="#assertClick" locator1="PGDocumentsandmediaDocument#TOOLBAR_EDIT_BUTTON" value1="Edit" />
+		<execute function="AssertClick#assertTextClick" locator1="PGDocumentsandmediaDocument#TOOLBAR_EDIT_BUTTON" value1="Edit" />
 
 		<while>
 			<condition function="#isElementPresent" locator1="PGDocumentsandmediaEditdocument#CATEGORIZATION_TAGS_REMOVE_ICON_GENERIC" />
@@ -553,11 +553,11 @@
 
 		<var name="key_videoGenerationThumbnailResolution" value="1280" />
 
-		<execute function="#assertElementPresent" locator1="PGDocumentsandmediaVideoGenerationThumbnail#VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
+		<execute function="AssertElementPresent#assertElementPresent" locator1="PGDocumentsandmediaVideoGenerationThumbnail#VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
 
 		<var name="key_videoGenerationThumbnailResolution" value="720" />
 
-		<execute function="#assertElementPresent" locator1="PGDocumentsandmediaVideoGenerationThumbnail#VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
+		<execute function="AssertElementPresent#assertElementPresent" locator1="PGDocumentsandmediaVideoGenerationThumbnail#VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
 	</command>
 
 	<command name="ImportDocumentWithDBStore" priority="5">
@@ -671,9 +671,9 @@
 			<execute function="#check" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_CHECKBOX" />
 		</for>
 
-		<execute function="#assertClick" locator1="PGDocumentsandmedia#TOOLBAR_ACTIONS" value1="Actions" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmedia#TOOLBAR_ACTIONS" value1="Actions" />
 		<execute function="#assertClick" locator1="PGDocumentsandmedia#ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
 
 		<execute macro="DMDocument#viewDefaultCP" />
 	</command>
@@ -725,7 +725,7 @@
 
 		<execute function="#assertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute function="#assertClick" locator1="PGDocumentsandmediaDocument#TOOLBAR_EDIT_BUTTON" value1="Edit" />
+		<execute function="AssertClick#assertTextClick" locator1="PGDocumentsandmediaDocument#TOOLBAR_EDIT_BUTTON" value1="Edit" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
@@ -780,7 +780,7 @@
 
 		<execute function="#type" locator1="PGDocumentsandmediaAdddocument#TITLE_FIELD" value1="DM Document 2 Title" />
 		<execute function="#assertClick" locator1="PGDocumentsandmediaAdddocument#PUBLISH_BUTTON" value1="Publish" />
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute function="#pause" locator1="1000" />
 		<execute function="#assertTextNotPresent" value1="Documents and Media is temporarily unavailable." />

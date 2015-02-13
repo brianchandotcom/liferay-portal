@@ -263,7 +263,7 @@
 
 		<var name="key_portletName" value="Navigation" />
 
-		<execute function="#assertTextEquals" locator1="PGNavigation#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGNavigation#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -313,7 +313,7 @@
 
 		<var name="key_portletName" value="Navigation" />
 
-		<execute function="#assertTextEquals" locator1="PGNavigation#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGNavigation#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
@@ -908,7 +908,7 @@
 			<var name="virtualHostsURL" value="http://www.able.com:8080/" />
 		</execute>
 
-		<execute function="#confirm" locator1="Home#PAGE_CONFIRM" value1="Welcome to Russia." />
+		<execute function="Confirm#waitForConfirmation" locator1="Home#PAGE_CONFIRM" value1="Welcome to Russia." />
 
 		<execute macro="Page#viewCustomThemePG">
 			<var name="customTheme" value="Dark" />

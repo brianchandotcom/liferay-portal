@@ -1115,7 +1115,7 @@
 			</then>
 		</if>
 
-		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_PASSWORD" value1="Password" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_PASSWORD" value1="Password" />
 		<execute function="#type" locator1="CPUsersandorganizationsUser#PASSWORD_NEW_PASSWORD_FIELD" value1="${newPassword}" />
 		<execute function="#type" locator1="CPUsersandorganizationsUser#PASSWORD_ENTER_AGAIN_FIELD" value1="${newPassword}" />
 		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#SAVE_BUTTON" value1="Save" />
@@ -1157,7 +1157,7 @@
 			</then>
 		</if>
 
-		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_PASSWORD" value1="Password" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_PASSWORD" value1="Password" />
 		<execute function="#type" locator1="CPUsersandorganizationsUser#PASSWORD_NEW_PASSWORD_FIELD" value1="${newPassword}" />
 		<execute function="#type" locator1="CPUsersandorganizationsUser#PASSWORD_ENTER_AGAIN_FIELD" value1="${newPassword}" />
 		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#SAVE_BUTTON" value1="Save" />
@@ -1321,10 +1321,10 @@
 
 	<command name="expandRootCP">
 		<execute function="#click" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_ROOT_ARROW" />
-		<execute function="#assertElementPresent" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_LINK_1" />
+		<execute function="AssertElementPresent#assertElementPresent" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_LINK_1" />
 
 		<if>
-			<condition function="#isElementNotPresent" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_LINK_1" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_LINK_1" />
 			<then>
 				<execute function="#click" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_ROOT_ARROW" />
 			</then>
@@ -1567,7 +1567,7 @@
 		<execute function="#assertClick" locator1="PGLogin#SIGN_IN_BUTTON" value1="Sign In" />
 
 		<if>
-			<condition function="#isElementPresent" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
 			<then>
 				<execute function="#assertClick" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
 			</then>
@@ -1578,7 +1578,7 @@
 		<execute function="#assertClick" locator1="PGLoginEmailVerificationCode#VERIFY_BUTTON" value1="Verify" />
 
 		<if>
-			<condition function="#isElementPresent" locator1="PGLoginNewpassword#PASSWORD_FIELD" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGLoginNewpassword#PASSWORD_FIELD" />
 			<then>
 				<if>
 					<not>
@@ -1594,7 +1594,7 @@
 		</if>
 
 		<if>
-			<condition function="#isElementPresent" locator1="PGLoginPasswordreminder#ANSWER_FIELD" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGLoginPasswordreminder#ANSWER_FIELD" />
 			<then>
 				<execute function="#type" locator1="PGLoginPasswordreminder#ANSWER_FIELD" value1="test" />
 				<execute function="#assertClick" locator1="PGLoginPasswordreminder#SAVE_BUTTON" value1="Save" />

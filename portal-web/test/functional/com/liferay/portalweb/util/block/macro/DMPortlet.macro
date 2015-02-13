@@ -117,7 +117,7 @@
 		</if>
 
 		<execute function="#assertChecked" locator1="PGDocumentsandmediaConfiguration#DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaConfiguration#DISPLAY_SETTINGS_MAXIMUM_ENTRIES_TO_DISPLAY_SELECT" value1="20" />
+		<execute function="AssertTextEquals#assertValue" locator1="PGDocumentsandmediaConfiguration#DISPLAY_SETTINGS_MAXIMUM_ENTRIES_TO_DISPLAY_SELECT" value1="20" />
 		<execute function="#assertChecked" locator1="PGDocumentsandmediaConfiguration#DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
 		<execute function="#selectFrame" value1="relative=top" />
 	</command>

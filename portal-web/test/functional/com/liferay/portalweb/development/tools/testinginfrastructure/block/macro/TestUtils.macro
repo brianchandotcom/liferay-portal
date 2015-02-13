@@ -47,7 +47,7 @@
 	<command name="typeIntoField">
 		<execute macro="Page#openURL" />
 
-		<execute function="#click" locator1="Dockbar#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
 
 		<execute function="#assertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
 		<execute function="#type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${text}" />

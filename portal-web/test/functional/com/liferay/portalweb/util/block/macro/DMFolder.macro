@@ -2,7 +2,7 @@
 	<command name="addCP">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="#assertClick" locator1="CPDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="CPDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
 		<execute function="#assertClick" locator1="CPDocumentsandmedia#ADD_MENULIST_FOLDER" value1="Folder" />
 
 		<execute function="#type" locator1="CPDocumentsandmediaAddfolder#NAME_FIELD" value1="${dmFolderName}" />
@@ -22,7 +22,7 @@
 	</command>
 
 	<command name="addPG">
-		<execute function="#assertClick" locator1="PGDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
 		<execute function="#assertClick" locator1="PGDocumentsandmedia#ADD_MENULIST_FOLDER" value1="Folder" />
 
 		<execute function="#type" locator1="PGDocumentsandmediaAddfolder#NAME_FIELD" value1="${dmFolderName}" />
@@ -51,7 +51,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
@@ -71,7 +71,7 @@
 	</command>
 
 	<command name="addSubfolderPG">
-		<execute function="#assertClick" locator1="PGDocumentsandmediaFolder#TOOLBAR_ADD" value1="Add" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmediaFolder#TOOLBAR_ADD" value1="Add" />
 		<execute function="#assertClick" locator1="PGDocumentsandmediaFolder#ADD_MENULIST_SUBFOLDER" value1="Subfolder" />
 
 		<execute function="#type" locator1="PGDocumentsandmediaAddfolder#NAME_FIELD" value1="${dmSubFolderName}" />
@@ -99,7 +99,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
@@ -178,7 +178,7 @@
 			</then>
 			<else>
 				<execute function="#assertClick" locator1="CPDocumentsandmedia#FOLDER_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-				<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
 			</else>
 		</if>
 	</command>
@@ -188,9 +188,9 @@
 
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_TITLE" value1="${dmFolderName}" />
 		<execute function="#check" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_CHECKBOX" />
-		<execute function="#assertClick" locator1="PGDocumentsandmedia#TOOLBAR_ACTIONS" value1="Actions" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmedia#TOOLBAR_ACTIONS" value1="Actions" />
 		<execute function="#assertClick" locator1="PGDocumentsandmedia#ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
 		<execute function="#assertElementNotPresent" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_THUMBNAIL" />
 	</command>
 
@@ -226,7 +226,7 @@
 		<execute function="#type" locator1="PGDocumentsandmediaEditfolder#DESCRIPTION_FIELD" value1="${dmFolderDescriptionEdit}" />
 		<execute function="#assertClick" locator1="PGDocumentsandmediaEditfolder#SAVE_BUTTON" value1="Save" />
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_TITLE" value1="${dmFolderNameEdit}" />
 	</command>
 
@@ -308,7 +308,7 @@
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute function="#check" locator1="PGDocumentsandmediaFolder#ENTRY_ICON_FOLDER_CHECKBOX" />
-		<execute function="#assertClick" locator1="PGDocumentsandmediaFolder#TOOLBAR_ACTIONS" value1="Actions" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmediaFolder#TOOLBAR_ACTIONS" value1="Actions" />
 		<execute function="#assertClick" locator1="PGDocumentsandmediaFolder#ACTIONS_MENULIST_MOVE" value1="Move" />
 
 		<execute function="#assertClick" locator1="PGDocumentsandmediaMovefiles#SELECT_BUTTON" value1="Select" />
@@ -328,7 +328,7 @@
 				<execute function="#assertTextEquals" locator1="PGDocumentsandmediaMovefiles#ALERT_MESSAGE_2" value1="The folder you selected already has an entry with this name. Please select a different folder." />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
@@ -342,9 +342,9 @@
 		<execute function="#mouseOver" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_FOLDER" />
 		<execute function="#click" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_FOLDER_CHECKBOX" />
 		<execute function="#assertElementPresent" locator1="CPDocumentsandmedia#TOOLBAR_ACTIONS" />
-		<execute function="#assertClick" locator1="CPDocumentsandmedia#TOOLBAR_ACTIONS" value1="Actions" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="CPDocumentsandmedia#TOOLBAR_ACTIONS" value1="Actions" />
 		<execute function="#assertClick" locator1="CPDocumentsandmedia#ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="#assertTextEquals" locator1="CPDocumentsandmedia#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${dmFolderName} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPDocumentsandmedia#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${dmFolderName} was moved to the Recycle Bin. Undo" />
 		<execute function="#assertTextEquals" locator1="CPDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
 	</command>
 
@@ -378,7 +378,7 @@
 			<condition function="#isElementNotPresent" locator1="CPDocumentsandmedia#INFO_MESSAGE" />
 			<then>
 				<execute function="#check" locator1="CPDocumentsandmedia#TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
-				<execute function="#assertClick" locator1="CPDocumentsandmedia#TOOLBAR_ACTIONS" value1="Actions" />
+				<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="CPDocumentsandmedia#TOOLBAR_ACTIONS" value1="Actions" />
 				<execute function="#assertElementPresent" locator1="CPDocumentsandmedia#ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
 				<execute function="#assertClick" locator1="CPDocumentsandmedia#ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 			</then>
@@ -401,7 +401,7 @@
 			<then>
 				<execute function="#click" locator1="PGMediagallery#ENTRIES_FOLDER" />
 				<execute function="#assertClick" locator1="PGMediagalleryFolder#FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-				<execute function="#assertTextEquals" locator1="PGMediagallery#RECYCLE_BIN_SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGMediagallery#RECYCLE_BIN_SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</while>
 
@@ -471,7 +471,7 @@
 
 		<execute function="#click" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_THUMBNAIL" />
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaFolder#BREADCRUMB_FOLDER" value1="${dmFolderName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmediaFolder#BREADCRUMB_FOLDER" value1="${dmFolderName}" />
 	</command>
 
 	<command name="viewPGViaMG">

@@ -10,7 +10,7 @@
 	<command name="navigateToContent">
 		<var name="key_contentBody" value="${contentBody}" />
 
-		<execute function="#assertClick" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT" value1="${contentBody}" />
+		<execute function="Click#partialTextClickAtAndWait" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT" value1="${contentBody}" />
 	</command>
 
 	<command name="navigateToViewAllNotifications">
@@ -20,7 +20,7 @@
 				<execute function="#assertClick" locator1="PGNotificationsdockbar#NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS" value1="Notifications (${notificationCount})" />
 			</then>
 			<else>
-				<execute function="#click" locator1="PGNotificationsdockbar#NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS" />
+				<execute function="Click#clickAtAndWait" locator1="PGNotificationsdockbar#NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS" />
 			</else>
 		</if>
 	</command>

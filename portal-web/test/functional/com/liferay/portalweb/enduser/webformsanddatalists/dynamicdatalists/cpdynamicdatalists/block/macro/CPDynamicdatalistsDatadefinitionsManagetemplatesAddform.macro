@@ -1,7 +1,7 @@
 <definition>
 	<command name="showDetails">
 		<if>
-			<condition function="#isElementNotPresent" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#DETAILS_DESCRIPTION_FIELD" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#DETAILS_DESCRIPTION_FIELD" />
 			<then>
 				<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#DETAILS" value1="Details" />
 			</then>

@@ -340,7 +340,7 @@ Sincerely,<br />
 		<if>
 			<equals arg1="${scheduled}" arg2="true" />
 			<then>
-				<execute function="#assertTextEquals" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_SCHEDULED_FILE" value1="${reportsFileName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_SCHEDULED_FILE" value1="${reportsFileName}" />
 			</then>
 			<else>
 				<execute function="#assertTextEquals" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />

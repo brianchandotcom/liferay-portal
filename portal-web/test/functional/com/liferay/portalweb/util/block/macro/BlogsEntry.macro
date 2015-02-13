@@ -1,7 +1,7 @@
 <definition>
 	<command name="addAbstractDescriptionPG">
 		<if>
-			<condition function="#isElementPresent" locator1="PGBlogsAdd#ABSTRACT_DROPDOWN_COLLAPSED" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGBlogsAdd#ABSTRACT_DROPDOWN_COLLAPSED" />
 			<then>
 				<execute function="#assertClick" locator1="PGBlogsAdd#ABSTRACT_DROPDOWN" value1="Abstract" />>
 			</then>
@@ -66,7 +66,7 @@
 		<execute function="#assertElementPresent" locator1="CPBlogsEdit#CONTENT_FIELD" />
 
 		<if>
-			<condition function="#isElementNotPresent" locator1="CPBlogsEdit#CATEGORIZATION_TAGS_ADD_BUTTON" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPBlogsEdit#CATEGORIZATION_TAGS_ADD_BUTTON" />
 			<then>
 				<execute function="#assertClick" locator1="CPBlogsEdit#CATEGORIZATION_TOGGLE" value1="Categorization" />
 				<execute function="#assertElementPresent" locator1="CPBlogsEdit#CATEGORIZATION_TAGS_ADD_BUTTON" />
@@ -83,7 +83,7 @@
 		<execute function="#assertTextEquals" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#assertClick" locator1="CPBlogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
-		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_VOCABULARY" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogsEntry#ENTRY_VOCABULARY" value1="${vocabularyName}" />
 		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_CATEGORY" value1="${categoryName}" />
 	</command>
 
@@ -150,7 +150,7 @@
 				<execute function="#assertClick" locator1="CPBlogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
 				<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_HEADER" value1="${entryTitle}" />
-				<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 			</else>
 		</if>
 	</command>
@@ -161,7 +161,7 @@
 		<execute function="#type" locator1="CPBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="#type" locator1="CPBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
 		<execute function="#pause" locator1="30000" />
-		<execute function="#assertTextEquals" locator1="CPBlogsAdd#SAVE_STATUS" value1="Draft saved at" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogsAdd#SAVE_STATUS" value1="Draft saved at" />
 
 		<execute function="#assertTextEquals" locator1="CPBlogsEdit#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="#selectFrame" locator1="CPBlogsEdit#CONTENT_FIELD" />
@@ -175,7 +175,7 @@
 		<execute function="#type" locator1="PGBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="#type" locator1="PGBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
 		<execute function="#pause" locator1="30000" />
-		<execute function="#assertTextEquals" locator1="PGBlogsAdd#SAVE_STATUS" value1="Draft saved at" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGBlogsAdd#SAVE_STATUS" value1="Draft saved at" />
 
 		<execute function="#assertTextEquals" locator1="PGBlogsEdit#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="#selectFrame" locator1="PGBlogsEdit#CONTENT_FIELD" />
@@ -384,7 +384,7 @@
 		<var name="key_assetTitle" value="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
 	</command>
 
 	<command name="addRelatedAssetPG">
@@ -441,7 +441,7 @@
 
 		<var name="displayDate" value="${displayDateHour}:${displayDateMinuteFuture} ${displayDateMeridian}" />
 
-		<execute function="#type" locator1="PGBlogsAdd#DISPLAY_DATE_TIME_INPUT" value1="${displayDate}" />
+		<execute function="Type#clickAtSendKeys" locator1="PGBlogsAdd#DISPLAY_DATE_TIME_INPUT" value1="${displayDate}" />
 		<execute function="#type" locator1="PGBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
 		<execute function="#assertClick" locator1="PGBlogsAdd#PUBLISH_BUTTON" value1="Publish" />
 
@@ -459,7 +459,7 @@
 		<execute function="#assertClick" locator1="CPBlogsEdit#SETTINGS_TAB" value1="Settings" />
 
 		<if>
-			<condition function="#isElementNotPresent" locator1="CPBlogsEdit#CATEGORIZATION_TAGS_ADD_BUTTON" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPBlogsEdit#CATEGORIZATION_TAGS_ADD_BUTTON" />
 			<then>
 				<execute function="#assertClick" locator1="CPBlogsEdit#CATEGORIZATION_TOGGLE" value1="Categorization" />
 				<execute function="#assertElementPresent" locator1="CPBlogsEdit#CATEGORIZATION_TAGS_ADD_BUTTON" />
@@ -497,14 +497,14 @@
 			<isset var="tagNameList" />
 			<then>
 				<for list="${tagNameList}" param="tagName">
-					<execute function="#type" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+					<execute function="Type#clickAtSendKeys" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
 					<execute function="#assertClick" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
 				</for>
 			</then>
 			<else>
 				<var name="key_tagName" value="${tagName}" />
 
-				<execute function="#type" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+				<execute function="Type#clickAtSendKeys" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
 				<execute function="#assertClick" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
 				<execute function="#assertElementPresent" locator1="PGBlogsAdd#CATEGORIZATION_TAG" value1="${tagName}" />
 			</else>
@@ -573,7 +573,7 @@
 		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_HEADER" value1="${entryTitle}" />
 		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_WORKFLOW_STATUS" value1="Pending Approval" />
 		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_LINK" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="addWithWorkflowPG">
@@ -620,14 +620,14 @@
 		<execute function="#assertClick" locator1="CPBlogs#ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<execute function="#type" locator1="CPBlogsEdit#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="#type" locator1="CPBlogsEdit#CONTENT_FIELD" value1="${entryContentEdit}" />
+		<execute function="Type#typeFrameWaitForCKEditor" locator1="CPBlogsEdit#CONTENT_FIELD" value1="${entryContentEdit}" />
 		<execute function="#assertClick" locator1="CPBlogsEdit#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="#assertTextEquals" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#assertClick" locator1="CPBlogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_HEADER" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContentEdit}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContentEdit}" />
 	</command>
 
 	<command name="editContentInlinePG">
@@ -638,7 +638,7 @@
 		<if>
 			<equals arg1="${useSendKeys}" arg2="true" />
 			<then>
-				<execute function="#type" locator1="PGBlogs#ENTRY_CONTENT_CKE_EDIT_INLINE_SENDKEYS" value1="${entryContentEdit}" />
+				<execute function="Type#sendKeys" locator1="PGBlogs#ENTRY_CONTENT_CKE_EDIT_INLINE_SENDKEYS" value1="${entryContentEdit}" />
 			</then>
 			<else>
 				<execute function="#type" locator1="PGBlogs#ENTRY_CONTENT_CKE_EDIT_INLINE" value1="${entryContentEdit}" />
@@ -654,7 +654,7 @@
 
 		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="#assertClick" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
+		<execute function="AssertClick#assertTextClickAndWait" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
 
 		<execute function="#type" locator1="PGBlogsEdit#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="#type" locator1="PGBlogsEdit#CONTENT_FIELD" value1="${entryContentEdit}" />
@@ -686,7 +686,7 @@
 
 		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="#assertClick" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
+		<execute function="AssertClick#assertTextClickAndWait" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
 
 		<execute function="#type" locator1="PGBlogsEdit#TITLE_FIELD" value1="${entryTitleEdit}" />
 		<execute function="#type" locator1="PGBlogsEdit#CONTENT_FIELD" value1="${entryContentEdit}" />
@@ -720,7 +720,7 @@
 		<execute function="#assertClick" locator1="CPBlogs#ENTRY_TABLE_TITLE" value1="${entryTitleEdit}" />
 
 		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_HEADER" value1="${entryTitleEdit}" />
-		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="entryAddPermissionsCmd">
@@ -737,7 +737,7 @@
 				<if>
 					<condition function="#isNotVisible" locator1="PGBlogsAdd#PERMISSIONS_HIDE_OPTIONS_LINK" />
 					<then>
-						<execute function="#assertClick" locator1="PGBlogsAdd#PERMISSIONS_MORE_OPTIONS_LINK" value1="More Options" />
+						<execute function="AssertClick#assertPartialTextClickAt" locator1="PGBlogsAdd#PERMISSIONS_MORE_OPTIONS_LINK" value1="More Options" />
 					</then>
 				</if>
 
@@ -799,7 +799,7 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertClick" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
+		<execute function="AssertClick#assertTextClickAndWait" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
 	</command>
 
 	<command name="gotoPG">
@@ -858,7 +858,7 @@
 		<execute function="#assertTextEquals" locator1="CPBlogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 		<execute function="#click" locator1="CPBlogs#ENTRY_TABLE_ACTIONS" />
 		<execute function="#assertClick" locator1="CPBlogs#ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="#assertTextEquals" locator1="CPBlogs#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogs#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="moveToRecycleBinDraftCP">
@@ -868,7 +868,7 @@
 		<execute function="#assertTextEquals" locator1="CPBlogs#ENTRY_TABLE_STATUS" value1="Draft" />
 		<execute function="#click" locator1="CPBlogs#ENTRY_TABLE_ACTIONS" />
 		<execute function="#assertClick" locator1="CPBlogs#ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="#assertTextEquals" locator1="CPBlogs#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogs#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="moveToRecycleBinNoPermissionPG">
@@ -884,7 +884,7 @@
 		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="#assertClick" locator1="PGBlogs#ENTRY_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="#assertTextEquals" locator1="PGBlogs#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGBlogs#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
 		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
 		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT" />
 	</command>
@@ -920,7 +920,7 @@
 		<execute function="#assertClick" locator1="CPBlogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_HEADER" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="publishDraftPG">
@@ -938,7 +938,7 @@
 
 		<execute function="#assertClick" locator1="CPBlogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
-		<execute function="#click" locator1="CPBlogsEntry#YOUR_RATING_STAR_EMPTY_4" />
+		<execute function="Click#clickWaitForInlineCKEditor" locator1="CPBlogsEntry#YOUR_RATING_STAR_EMPTY_4" />
 	</command>
 
 	<command name="rate4StarsPG">
@@ -946,7 +946,7 @@
 
 		<execute function="#assertClick" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
 
-		<execute function="#click" locator1="PGBlogsEntry#YOUR_RATING_STAR_EMPTY_4" />
+		<execute function="Click#clickWaitForInlineCKEditorNoMouseOver" locator1="PGBlogsEntry#YOUR_RATING_STAR_EMPTY_4" />
 	</command>
 
 	<command name="removeViewPermissionsPG">
@@ -1036,11 +1036,11 @@
 		</execute>
 
 		<if>
-			<condition function="#isElementPresent" locator1="CPBlogs#ENTRY_TABLE_ALL_CHECKBOX" />
+			<condition function="IsElementPresent#isVisible" locator1="CPBlogs#ENTRY_TABLE_ALL_CHECKBOX" />
 			<then>
 				<execute function="#click" locator1="CPBlogs#ENTRY_TABLE_ALL_CHECKBOX" />
 				<execute function="#assertClick" locator1="CPBlogs#RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
-				<execute function="#assertTextEquals" locator1="CPBlogs#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogs#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</if>
 
@@ -1055,7 +1055,7 @@
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${entryAbstractDescription}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${entryAbstractDescription}" />
 
 		<if>
 			<isset var="smallImage" />
@@ -1067,7 +1067,7 @@
 		<execute function="#assertClick" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisherAsset#ASSET_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisherAsset#ASSET_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherAsset#ASSET_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewAsRelatedAssetPG">
@@ -1122,7 +1122,7 @@
 			</then>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="#assertElementNotPresent" locator1="CPBlogsEntry#ENTRY_WORKFLOW_STATUS" />
 	</command>
 
@@ -1176,7 +1176,7 @@
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#YOUR_RATING" value1="Your Rating" />
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#PREVIOUS" value1="Previous" />
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#NEXT" value1="Next" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#COMMENTS" value1="Comments" />
+		<execute function="AssertTextEquals#assertTextWaitForInlineCKEditor" locator1="PGBlogsEntry#COMMENTS" value1="Comments" />
 	</command>
 
 	<command name="viewDraftCP">
@@ -1191,7 +1191,7 @@
 		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_HEADER" value1="${entryTitle}" />
 		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_DRAFT_STATUS" value1="Draft" />
 		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_LINK" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewDraftPG">
@@ -1216,7 +1216,7 @@
 	</command>
 
 	<command name="viewEntryAsGuestViaBlogsAggregatorPG">
-		<execute function="#assertClick" locator1="PGBlogsAggregator#ENTRY_READ_MORE" value1="Read More" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGBlogsAggregator#ENTRY_READ_MORE" value1="Read More" />
 
 		<execute function="#assertTextEquals" locator1="PGBlogs#PORTLET_TITLE" value1="Blogs" />
 		<execute function="#assertElementPresent" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
@@ -1228,12 +1228,12 @@
 
 		<execute function="#assertClick" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
 		<execute function="#assertTextEquals" locator1="PGAssetpublisherAsset#ASSET_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisherAsset#ASSET_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherAsset#ASSET_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewEntryViaBlogsAggregatorPG">
 		<execute function="#assertTextEquals" locator1="PGBlogsAggregator#ENTRY_ABSTRACT_DESCRIPTION" value1="${entryAbstractDescription}" />
-		<execute function="#assertClick" locator1="PGBlogsAggregator#ENTRY_READ_MORE" value1="Read More" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGBlogsAggregator#ENTRY_READ_MORE" value1="Read More" />
 
 		<execute function="#assertTextEquals" locator1="PGBlogs#PORTLET_TITLE" value1="Blogs" />
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
@@ -1336,11 +1336,11 @@
 		<var name="key_assetTitle" value="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
 		<execute function="#assertClick" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisherAsset#ASSET_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisherAsset#ASSET_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherAsset#ASSET_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewRate4StarsCP">
@@ -1507,13 +1507,13 @@
 	</command>
 
 	<command name="viewViewCountPG">
-		<execute function="#click" locator1="link=${pageName}" />
+		<execute function="Click#clickAtNavigation" locator1="link=${pageName}" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="#assertClick" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
 
-		<execute function="#click" locator1="link=${pageName}" />
+		<execute function="Click#clickAtNavigation" locator1="link=${pageName}" />
 
 		<execute function="#assertClick" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
 
@@ -1530,7 +1530,7 @@
 			</else>
 		</if>
 
-		<execute function="#click" locator1="link=${pageName}" />
+		<execute function="Click#clickAtNavigation" locator1="link=${pageName}" />
 
 		<execute function="#assertClick" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
 
@@ -1572,8 +1572,8 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_CONTENT_ABSTRACT" value1="${entryAbstractDescription}" />
-		<execute function="#assertClick" locator1="PGBlogs#ENTRY_CONTENT_READ_MORE" value1="Read More" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGBlogs#ENTRY_CONTENT_ABSTRACT" value1="${entryAbstractDescription}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGBlogs#ENTRY_CONTENT_READ_MORE" value1="Read More" />
 
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
@@ -1583,9 +1583,9 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_CONTENT_READ_MORE" value1="Read More" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGBlogs#ENTRY_CONTENT_READ_MORE" value1="Read More" />
 		<execute function="#assertTextNotPresent" locator1="PGBlogs#ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="#assertClick" locator1="PGBlogs#ENTRY_CONTENT_READ_MORE" value1="Read More" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGBlogs#ENTRY_CONTENT_READ_MORE" value1="Read More" />
 
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
@@ -1603,7 +1603,7 @@
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_COMMENTS" value1="1 Comment" />
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#COMMENT_1" value1="[...] ${entryContent2} [...] Read More" />
-		<execute function="#assertClick" locator1="PGBlogsEntry#COMMENT_READ_MORE_1" value1="Read More" />
+		<execute function="AssertClick#assertTextClickAndWait" locator1="PGBlogsEntry#COMMENT_READ_MORE_1" value1="Read More" />
 
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle2}" />
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent2}" />
@@ -1618,7 +1618,7 @@
 		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_HEADER" value1="${entryTitle}" />
 		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_WORKFLOW_STATUS" value1="Pending Approval" />
 		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_LINK" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewWithWorkflowPG">

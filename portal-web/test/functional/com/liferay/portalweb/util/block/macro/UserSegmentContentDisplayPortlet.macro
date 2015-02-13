@@ -169,7 +169,7 @@
 
 		<var name="key_contentType" value="${contentType}" />
 
-		<execute function="#assertTextEquals" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_SELECTED_DISPLAY_CONTENT_TYPE" value1="Type: ${contentType}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_SELECTED_DISPLAY_CONTENT_TYPE" value1="Type: ${contentType}" />
 
 		<if>
 			<isset var="otherwiseContentType" />
@@ -179,7 +179,7 @@
 
 				<var name="key_contentType" value="${otherwiseContentType}" />
 
-				<execute function="#assertTextEquals" locator1="PGUsersegmentcontentdisplay#OTHERWISE_PANEL_SELECTED_CONTENT_TYPE" value1="Type: ${otherwiseContentType}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGUsersegmentcontentdisplay#OTHERWISE_PANEL_SELECTED_CONTENT_TYPE" value1="Type: ${otherwiseContentType}" />
 
 				<var name="key_contentTitle" value="${otherwiseContentTitle}" />
 

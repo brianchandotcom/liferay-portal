@@ -197,7 +197,7 @@
 
 		<execute function="#click" locator1="SOTasks#TASK_PROGRESS_BAR_VISIBLE" />
 		<execute function="#makeVisible" locator1="SOTasks#TASK_PROGRESS_BAR" />
-		<execute function="#click" locator1="SOTasks#TASK_PROGRESS_BAR_PERCENT_CLICK" />
+		<execute function="Click#makeVisibleClickAt" locator1="SOTasks#TASK_PROGRESS_BAR_PERCENT_CLICK" />
 		<execute function="#pause" locator1="1000" />
 
 		<var name="key_taskDescription" value="${taskDescription}" />
@@ -254,7 +254,7 @@
 				</if>
 			</then>
 			<else>
-				<execute function="#assertElementPresent" locator1="SOTasks#TASK_PROGRESS_BAR_PERCENT_COMPLETION" />
+				<execute function="AssertElementPresent#assertElementPresent" locator1="SOTasks#TASK_PROGRESS_BAR_PERCENT_COMPLETION" />
 
 				<var name="key_taskDescription" value="${taskDescription}" />
 
@@ -493,7 +493,7 @@
 		<if>
 			<equals arg1="${dueDateEdit}" arg2="true" />
 			<then>
-				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_DUE_DATE" value1="4/17/17" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOTasksTask#TASK_DUE_DATE" value1="4/17/17" />
 			</then>
 		</if>
 
@@ -592,7 +592,7 @@
 		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
 		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="1" />
 		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
-		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${taskAssignee} resolved the task." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${taskAssignee} resolved the task." />
 		<execute function="#assertClick" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${taskDescription}" />
 		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
 	</command>
@@ -620,7 +620,7 @@
 							</then>
 						</if>
 
-						<execute function="#assertElementPresent" locator1="SOTasks#TASK_PROGRESS_BAR_PERCENT_COMPLETION" />
+						<execute function="AssertElementPresent#assertElementPresent" locator1="SOTasks#TASK_PROGRESS_BAR_PERCENT_COMPLETION" />
 					</then>
 				</if>
 
@@ -686,7 +686,7 @@
 							</then>
 						</if>
 
-						<execute function="#assertElementPresent" locator1="SOTasks#TASK_PROGRESS_BAR_PERCENT_COMPLETION" />
+						<execute function="AssertElementPresent#assertElementPresent" locator1="SOTasks#TASK_PROGRESS_BAR_PERCENT_COMPLETION" />
 					</then>
 				</if>
 
@@ -774,12 +774,12 @@
 		<if>
 			<equals arg1="${dueDate}" arg2="true" />
 			<then>
-				<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_DUE_DATE" value1="3/16/16" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOTasksTask#TASK_DUE_DATE" value1="3/16/16" />
 			</then>
 			<elseif>
 				<equals arg1="${dueDateEdit}" arg2="true" />
 				<then>
-					<execute function="#assertTextEquals" locator1="SOTasksTask#TASK_DUE_DATE" value1="4/17/17" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="SOTasksTask#TASK_DUE_DATE" value1="4/17/17" />
 				</then>
 			</elseif>
 			<elseif>
@@ -844,7 +844,7 @@
 		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
 		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="1" />
 		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
-		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${taskReporter} assigned you a task." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${taskReporter} assigned you a task." />
 		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${taskDescription}" />
 		<execute function="#click" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${taskReporter} assigned you a task." />
 

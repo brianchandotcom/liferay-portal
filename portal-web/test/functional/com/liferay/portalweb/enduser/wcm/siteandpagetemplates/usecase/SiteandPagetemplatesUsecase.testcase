@@ -576,10 +576,10 @@
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
-		<execute function="#mouseOver" locator1="Home#PAGE_1" />
+		<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE_1" />
 		<execute function="#clickNoError" locator1="Home#PAGE_DELETE" />
-		<execute function="#confirm" locator1="Home#PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
-		<execute function="#assertElementNotPresent" locator1="Home#PAGE_DELETE" />
+		<execute function="Confirm#waitForConfirmation" locator1="Home#PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
+		<execute function="AssertElementNotPresent#assertElementNotPresentClickDockbar" locator1="Home#PAGE_DELETE" />
 
 		<execute macro="Portlet#deletePG">
 			<var name="portletName" value="Recent Bloggers" />

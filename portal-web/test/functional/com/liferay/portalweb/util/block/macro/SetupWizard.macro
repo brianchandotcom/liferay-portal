@@ -6,7 +6,7 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="#assertTextEquals" locator1="Setupwizard#PORTAL_PORTAL_NAME_FIELD" value1="Liferay" />
+		<execute function="AssertTextEquals#assertValue" locator1="Setupwizard#PORTAL_PORTAL_NAME_FIELD" value1="Liferay" />
 
 		<if>
 			<equals arg1="${setupWizardAddSampleData}" arg2="false" />
@@ -16,27 +16,27 @@
 		</if>
 
 		<execute function="#assertSelectedLabel" locator1="Setupwizard#PORTAL_DEFAULT_LANGUAGE_SELECT" value1="English (United States)" />
-		<execute function="#assertTextEquals" locator1="Setupwizard#ADMINISTRATOR_USER_FIRST_NAME_FIELD" value1="${administratorFirstName}" />
-		<execute function="#assertTextEquals" locator1="Setupwizard#ADMINISTRATOR_USER_LAST_NAME_FIELD" value1="${administratorLastName}" />
-		<execute function="#assertTextEquals" locator1="Setupwizard#ADMINISTRATOR_USER_EMAIL_FIELD" value1="${administratorEmail}" />
-		<execute function="#assertTextEquals" locator1="Setupwizard#DATABASE_CONFIGURED_JDBC_DRIVER_CLASS_NAME_LABEL" value1="Configured Database" />
+		<execute function="AssertTextEquals#assertValue" locator1="Setupwizard#ADMINISTRATOR_USER_FIRST_NAME_FIELD" value1="${administratorFirstName}" />
+		<execute function="AssertTextEquals#assertValue" locator1="Setupwizard#ADMINISTRATOR_USER_LAST_NAME_FIELD" value1="${administratorLastName}" />
+		<execute function="AssertTextEquals#assertValue" locator1="Setupwizard#ADMINISTRATOR_USER_EMAIL_FIELD" value1="${administratorEmail}" />
+		<execute function="AssertTextEquals#assertText" locator1="Setupwizard#DATABASE_CONFIGURED_JDBC_DRIVER_CLASS_NAME_LABEL" value1="Configured Database" />
 
 		<execute function="#assertClick" locator1="Setupwizard#DATABASE_CHANGE_LINK" value1="(Change)" />
 
-		<execute function="#assertTextEquals" locator1="Setupwizard#DATABASE_CHANGE_DATABASE_TYPE_LABEL" value1="Database Type" />
-		<execute function="#assertTextEquals" locator1="Setupwizard#DATABASE_CHANGE_JDBC_URL_LABEL" value1="JDBC URL (Required)" />
-		<execute function="#assertTextEquals" locator1="Setupwizard#DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_LABEL" value1="JDBC Driver Class Name (Required)" />
-		<execute function="#assertTextEquals" locator1="Setupwizard#DATABASE_CHANGE_USER_NAME_LABEL" value1="User Name" />
-		<execute function="#assertTextEquals" locator1="Setupwizard#DATABASE_CHANGE_PASSWORD_LABEL" value1="Password" />
+		<execute function="AssertTextEquals#assertText" locator1="Setupwizard#DATABASE_CHANGE_DATABASE_TYPE_LABEL" value1="Database Type" />
+		<execute function="AssertTextEquals#assertText" locator1="Setupwizard#DATABASE_CHANGE_JDBC_URL_LABEL" value1="JDBC URL (Required)" />
+		<execute function="AssertTextEquals#assertText" locator1="Setupwizard#DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_LABEL" value1="JDBC Driver Class Name (Required)" />
+		<execute function="AssertTextEquals#assertText" locator1="Setupwizard#DATABASE_CHANGE_USER_NAME_LABEL" value1="User Name" />
+		<execute function="AssertTextEquals#assertText" locator1="Setupwizard#DATABASE_CHANGE_PASSWORD_LABEL" value1="Password" />
 		<execute function="#assertClick" locator1="Setupwizard#FINISH_CONFIGURATION_BUTTON" value1="Finish Configuration" />
 
 		<execute function="#assertTextEquals" locator1="SetupwizardFinishconfiguration#SUCCESS_MESSAGE" value1="Your configuration was saved successfully." />
-		<execute function="#assertTextEquals" locator1="SetupwizardFinishconfiguration#CONFIGURATION_SAVE_MESSAGE" value1="The configuration was saved in" />
-		<execute function="#assertTextEquals" locator1="SetupwizardFinishconfiguration#CONFIGURATION_SAVE_LOCATION" value1="portal-setup-wizard.properties" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SetupwizardFinishconfiguration#CONFIGURATION_SAVE_MESSAGE" value1="The configuration was saved in" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SetupwizardFinishconfiguration#CONFIGURATION_SAVE_LOCATION" value1="portal-setup-wizard.properties" />
 		<execute function="#assertClick" locator1="SetupwizardFinishconfiguration#GO_TO_MY_PORTAL_BUTTON" value1="Go to My Portal" />
 
 		<if>
-			<condition function="#isElementPresent" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
 			<then>
 				<execute function="#assertClick" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
 			</then>

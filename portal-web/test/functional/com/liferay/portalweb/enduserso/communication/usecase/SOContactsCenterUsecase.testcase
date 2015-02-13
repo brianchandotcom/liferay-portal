@@ -37,7 +37,7 @@
 
 		<execute function="#assertTextNotPresent" value1="SFO 9, Test" />
 		<execute function="#assertTextNotPresent" value1="test.sfo.9@liferay.com" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_VIEW_MORE" value1="View More" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_VIEW_MORE" value1="View More" />
 		<execute function="#assertTextPresent" value1="SFO 9, Test" />
 		<execute function="#assertTextPresent" value1="test.sfo.9@liferay.com" />
 	</command>

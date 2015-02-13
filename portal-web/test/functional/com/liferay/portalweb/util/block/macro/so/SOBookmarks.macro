@@ -32,7 +32,7 @@
 
 		<execute function="#assertClick" locator1="SOBookmarks#BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
 		<execute function="#assertClick" locator1="SOBookmarks#BOOKMARKS_ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="#assertTextEquals" locator1="SOBookmarks#BOOKMARKS_NO_ENTRIES_MESSAGE" value1="There are no entries." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOBookmarks#BOOKMARKS_NO_ENTRIES_MESSAGE" value1="There are no entries." />
 		<execute function="#assertElementNotPresent" locator1="SOBookmarks#BOOKMARKS_ENTRY_LINK" />
 	</command>
 
@@ -93,20 +93,20 @@
 			<then>
 				<execute function="#selectWindow" locator1="SOBookmarks#BOOKMARKS_POP_UP_GOOGLE" />
 				<execute function="#assertElementPresent" locator1="SOBookmarks#BOOKMARKS_POP_UP_IMAGE_GOOGLE" />
-				<execute function="#close" locator1="SOBookmarks#BOOKMARKS_POP_UP_GOOGLE" />
+				<execute function="Close#closeWindow" locator1="SOBookmarks#BOOKMARKS_POP_UP_GOOGLE" />
 			</then>
 			<elseif>
 				<equals arg1="${bookmarksEntryUrl}" arg2="http://www.bing.com" />
 				<then>
 					<execute function="#selectWindow" locator1="SOBookmarks#BOOKMARKS_POP_UP_BING" />
 					<execute function="#assertElementPresent" locator1="SOBookmarks#BOOKMARKS_POP_UP_IMAGE_BING" />
-					<execute function="#close" locator1="SOBookmarks#BOOKMARKS_POP_UP_BING" />
+					<execute function="Close#closeWindow" locator1="SOBookmarks#BOOKMARKS_POP_UP_BING" />
 				</then>
 			</elseif>
 			<else>
 				<execute function="#selectWindow" locator1="SOBookmarks#BOOKMARKS_POP_UP_WIRED" />
 				<execute function="#assertElementPresent" locator1="SOBookmarks#BOOKMARKS_POP_UP_IMAGE_WIRED" />
-				<execute function="#close" locator1="SOBookmarks#BOOKMARKS_POP_UP_WIRED" />
+				<execute function="Close#closeWindow" locator1="SOBookmarks#BOOKMARKS_POP_UP_WIRED" />
 			</else>
 		</if>
 	</command>

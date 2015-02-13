@@ -5,7 +5,7 @@
 		<execute function="#assertClick" locator1="CPKnowledgebaseadminTemplates#ADD_TEMPLATE_BUTTON" value1="Add Template" />
 
 		<execute function="#type" locator1="CPKnowledgebaseadminAddtemplate#TITLE_FIELD" value1="${kbTemplateTitle}" />
-		<execute function="#type" locator1="CPKnowledgebaseadminAddtemplate#CONTENT_FIELD" value1="${kbTemplateContent}" />
+		<execute function="Type#typeFrameWaitForCKEditor" locator1="CPKnowledgebaseadminAddtemplate#CONTENT_FIELD" value1="${kbTemplateContent}" />
 		<execute function="#assertClick" locator1="CPKnowledgebaseadminAddtemplate#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminTemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -44,7 +44,7 @@
 		</execute>
 
 		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminTemplate#TEMPLATE_TITLE" value1="${kbTemplateTitle}" />
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminTemplate#TEMPLATE_CONTENT" value1="${kbTemplateContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPKnowledgebaseadminTemplate#TEMPLATE_CONTENT" value1="${kbTemplateContent}" />
 	</command>
 
 	<command name="viewCPViaAddTemplate">

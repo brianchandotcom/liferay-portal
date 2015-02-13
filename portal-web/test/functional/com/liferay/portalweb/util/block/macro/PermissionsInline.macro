@@ -146,7 +146,7 @@
 
 		<execute function="#assertElementPresent" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_DOCUMENT" />
 		<execute function="#assertClick" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-		<execute function="#assertClick" locator1="PGDocumentsandmediaDocument#TOOLBAR_PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute function="AssertClick#assertTextClick" locator1="PGDocumentsandmediaDocument#TOOLBAR_PERMISSIONS_BUTTON" value1="Permissions" />
 
 		<execute function="#selectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
 	</command>
@@ -246,7 +246,7 @@
 			</then>
 		</if>
 
-		<execute function="#click" locator1="Dockbar#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
 
 		<execute function="#click" locator1="DockbarEditpanel#TOOLBAR_PERMISSIONS" />
 

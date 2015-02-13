@@ -90,7 +90,7 @@
 		<execute function="#select" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="" />
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#CONTENT_FIELD_FORMATTED_TEXT" value1="${entryContent}" />
+		<execute function="Type#sendKeys" locator1="SOAnnouncementsAdd#CONTENT_FIELD_FORMATTED_TEXT" value1="${entryContent}" />
 		<execute function="#selectFrameTop" />
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#sikuliAssertElementPresent" locator1="SOAnnouncementsAdd#SCREENSHOTS_ANNOUNCEMENTS_ADD_DISTRUBTION_SCOPE_REQUIRED_PNG" />
@@ -493,7 +493,7 @@
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
 
-		<execute function="#click" locator1="SOUserBar#DASHBOARD" />
+		<execute function="Click#textClickAtAndWait" locator1="SOUserBar#DASHBOARD" />
 
 		<execute macro="SOAnnouncementsEntry#addPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -506,7 +506,7 @@
 
 		<execute function="#pause" locator1="120000" />
 
-		<execute function="#click" locator1="SOUserBar#DASHBOARD" />
+		<execute function="Click#textClickAtAndWait" locator1="SOUserBar#DASHBOARD" />
 
 		<execute macro="SOAnnouncementsEntry#viewPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -935,7 +935,7 @@
 			<var name="userScreenName" value="${userScreenName2}" />
 		</execute>
 
-		<execute function="#click" locator1="SOUserBar#DASHBOARD" />
+		<execute function="Click#textClickAtAndWait" locator1="SOUserBar#DASHBOARD" />
 
 		<execute macro="SOAnnouncementsEntry#addPG">
 			<var name="distributionScope" value="${roleName}" />
@@ -950,7 +950,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute function="#click" locator1="SOUserBar#DASHBOARD" />
+		<execute function="Click#textClickAtAndWait" locator1="SOUserBar#DASHBOARD" />
 
 		<execute macro="SOAnnouncementsEntry#viewPG">
 			<var name="distributionScope" value="${roleName}" />
@@ -966,7 +966,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute function="#click" locator1="SOUserBar#DASHBOARD" />
+		<execute function="Click#textClickAtAndWait" locator1="SOUserBar#DASHBOARD" />
 
 		<execute macro="SOAnnouncementsEntry#viewEmptyPG">
 			<var name="distributionScope" value="${roleName}" />
@@ -2743,10 +2743,10 @@
 		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
 
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName1}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName2}" />
-		<execute function="#assertTextNotEquals" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName3}" />
-		<execute function="#assertTextNotEquals" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName4}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName1}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName2}" />
+		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName3}" />
+		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName4}" />
 		<execute function="#selectFrameTop" />
 
 		<execute macro="User#logoutAndLoginPG">
@@ -2762,10 +2762,10 @@
 		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
 
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName3}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName4}" />
-		<execute function="#assertTextNotEquals" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName1}" />
-		<execute function="#assertTextNotEquals" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName2}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName3}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName4}" />
+		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName1}" />
+		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName2}" />
 		<execute function="#selectFrameTop" />
 	</command>
 
@@ -3199,7 +3199,7 @@
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle1}" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 21 - 21 of 21 results." />
-		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" />
 		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
 
 		<var name="key_entryTitle" value="${entryTitle6}" />
@@ -3284,7 +3284,7 @@
 		<var name="key_entryTitle" value="${entryTitle17}" />
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle17}" />
-		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesPerPageDisplay">
 			<var name="entriesPerPage" value="10" />
@@ -3693,7 +3693,7 @@
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle1}" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 21 - 21 of 21 results." />
-		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" />
 		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
 
 		<var name="key_entryTitle" value="${entryTitle6}" />
@@ -3778,7 +3778,7 @@
 		<var name="key_entryTitle" value="${entryTitle17}" />
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle17}" />
-		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesPerPageDisplay">
 			<var name="entriesPerPage" value="10" />

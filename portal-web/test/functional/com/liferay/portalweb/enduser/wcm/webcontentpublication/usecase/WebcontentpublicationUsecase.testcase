@@ -176,7 +176,7 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
-		<execute function="#assertClick" locator1="PGAssetpublisher#DISPLAY_ICON_EDIT" value1="Edit" />
+		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="PGAssetpublisher#DISPLAY_ICON_EDIT" value1="Edit" />
 
 		<execute function="#assertTextNotEquals" locator1="PGSignin#PORTLET_TITLE" value1="Sign In" />
 

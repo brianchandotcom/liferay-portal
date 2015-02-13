@@ -3,7 +3,7 @@
 		<execute function="#assertClick" locator1="PGAssetpublisher#ADD_NEW_DROPDOWN" value1="Add New" />
 		<execute function="#assertClick" locator1="PGAssetpublisher#ADD_NEW_MENULIST_BOOKMARKS_ENTRY" value1="Bookmarks Entry" />
 		<execute function="#selectFrame" locator1="PGAssetpublisherAddnewbookmarksentry#BOOKMARKS_IFRAME" />
-		<execute function="#assertClick" locator1="PGAssetpublisherAddnewbookmarksentry#BOOKMARKS_FOLDER_SELECT_BUTTON" value1="Select" />
+		<execute function="AssertClick#pauseAssertTextClickAtAndWait" locator1="PGAssetpublisherAddnewbookmarksentry#BOOKMARKS_FOLDER_SELECT_BUTTON" value1="Select" />
 		<execute function="#selectFrameTop" />
 
 		<execute function="#selectFrame" locator1="PGAssetpublisherAddnewbookmarksentrySelectfolder#SELECT_FOLDER_IFRAME" />
@@ -18,7 +18,7 @@
 		<execute function="#type" locator1="PGAssetpublisherAddnewbookmarksentry#BOOKMARKS_NAME_FIELD" value1="${bookmarkName}" />
 		<execute function="#type" locator1="PGAssetpublisherAddnewbookmarksentry#BOOKMARKS_URL_FIELD" value1="${bookmarkURL}" />
 		<execute function="#type" locator1="PGAssetpublisherAddnewbookmarksentry#BOOKMARKS_DESCRIPTION_FIELD" value1="${bookmarkDescription}" />
-		<execute function="#assertClick" locator1="PGAssetpublisherAddnewbookmarksentry#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="PGAssetpublisherAddnewbookmarksentry#SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="addCP">
@@ -60,9 +60,9 @@
 		<execute function="#type" locator1="CPBookmarksAddbookmark#URL_FIELD" value1="${bookmarkURLInvalid}" />
 		<execute function="#type" locator1="CPBookmarksAddbookmark#DESCRIPTION_FIELD" value1="${bookmarkDescription}" />
 		<execute function="#assertClick" locator1="CPBookmarksAddbookmark#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="CPBookmarksAddbookmark#URL_FIELD_REQUIRED" value1="URL" />
-		<execute function="#assertTextEquals" locator1="CPBookmarksAddbookmark#URL_FIELD_REQUIRED" value1="Required" />
-		<execute function="#assertTextEquals" locator1="CPBookmarksAddbookmark#URL_FIELD_REQUIRED" value1="Please enter a valid URL." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBookmarksAddbookmark#URL_FIELD_REQUIRED" value1="URL" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBookmarksAddbookmark#URL_FIELD_REQUIRED" value1="Required" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBookmarksAddbookmark#URL_FIELD_REQUIRED" value1="Please enter a valid URL." />
 	</command>
 
 	<command name="addInvalidURLPG">
@@ -95,9 +95,9 @@
 		</if>
 
 		<execute function="#assertClick" locator1="CPBookmarksAddbookmark#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="CPBookmarksAddbookmark#URL_FIELD_REQUIRED" value1="URL" />
-		<execute function="#assertTextEquals" locator1="CPBookmarksAddbookmark#URL_FIELD_REQUIRED" value1="Required" />
-		<execute function="#assertTextEquals" locator1="CPBookmarksAddbookmark#URL_FIELD_REQUIRED" value1="This field is required." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBookmarksAddbookmark#URL_FIELD_REQUIRED" value1="URL" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBookmarksAddbookmark#URL_FIELD_REQUIRED" value1="Required" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBookmarksAddbookmark#URL_FIELD_REQUIRED" value1="This field is required." />
 	</command>
 
 	<command name="addPG">
@@ -180,7 +180,7 @@
 		<execute function="#assertTextEquals" locator1="PGBookmarks#BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
 		<execute function="#click" locator1="PGBookmarksFolder#BOOKMARKS_TABLE_ACTIONS_BUTTON" />
 		<execute function="#assertClick" locator1="PGBookmarksFolder#BOOKMARK_ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="#assertTextEquals" locator1="PGBookmarksFolder#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGBookmarksFolder#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Recycle Bin" />
@@ -249,8 +249,8 @@
 			<then>
 				<var name="key_folderName" value="${folderName}" />
 
-				<execute function="#assertTextEquals" locator1="PGBookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-				<execute function="#assertClick" locator1="PGBookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGBookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
+				<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="PGBookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
 			</then>
 		</if>
 
@@ -331,7 +331,7 @@
 		<execute function="#assertTextEquals" locator1="CPBookmarks#BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
 		<execute function="#click" locator1="CPBookmarks#BOOKMARKS_TABLE_ACTIONS_BUTTON" />
 		<execute function="#assertClick" locator1="CPBookmarks#BOOKMARK_ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="#assertTextEquals" locator1="CPBookmarks#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBookmarks#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 		<execute function="#assertTextNotPresent" locator1="CPBookmarks#BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
 	</command>
 
@@ -413,7 +413,7 @@
 			<then>
 				<execute function="#click" locator1="CPBookmarks#BOOKMARKS_TABLE_ACTIONS_BUTTON_GENERIC" />
 				<execute function="#assertClick" locator1="CPBookmarks#BOOKMARK_ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-				<execute function="#assertTextEquals" locator1="CPBookmarks#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPBookmarks#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</while>
 
@@ -431,7 +431,7 @@
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_BOOKMARK_DETAIL_NAME" value1="${bookmarkName}" />
 		<execute function="#click" locator1="PGAssetpublisher#ASSET_ABSTRACT_BOOKMARK_DETAIL_LINK" />
 		<execute function="#selectWindow" locator1="title=Liferay - Enterprise open source portal and collaboration software | Liferay" />
-		<execute function="#assertElementPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_BOOKMARK_LIFERAY_LOGO" />
+		<execute function="AssertElementPresent#assertElementPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_BOOKMARK_LIFERAY_LOGO" />
 		<execute function="#close" locator1="title=Liferay - Enterprise open source portal and collaboration software | Liferay" />
 	</command>
 

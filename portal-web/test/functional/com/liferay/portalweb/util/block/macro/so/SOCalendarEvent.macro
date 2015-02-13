@@ -8,10 +8,10 @@
 
 		<execute function="#selectFrame" locator1="PGCalendarAddevent#ADD_EVENT_IFRAME" />
 		<execute function="#type" locator1="PGCalendarAddevent#TITLE_FIELD" value1="${eventTitle}" />
-		<execute function="#assertElementPresent" locator1="PGCalendarAddevent#START_DATE" />
-		<execute function="#assertElementPresent" locator1="PGCalendarAddevent#START_DATE_TIME" />
-		<execute function="#assertElementPresent" locator1="PGCalendarAddevent#END_DATE" />
-		<execute function="#assertElementPresent" locator1="PGCalendarAddevent#END_DATE_TIME" />
+		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#START_DATE" />
+		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#START_DATE_TIME" />
+		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE" />
+		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE_TIME" />
 
 		<var locator="END_DATE" name="endDate" path="PGCalendarAddevent" />
 		<var locator="END_DATE_TIME" name="endDateTime" path="PGCalendarAddevent" />
@@ -94,7 +94,7 @@
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 
-		<execute function="#assertTextEquals" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
 	</command>
 
 	<command name="tearDownPG">

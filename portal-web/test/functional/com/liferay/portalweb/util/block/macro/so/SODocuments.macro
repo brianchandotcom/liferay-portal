@@ -8,7 +8,7 @@
 
 		<execute function="#assertClick" locator1="SODocuments#VERSION_HISTORY_DELETE_VERSION" value1="Delete Version" />
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaDocument#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmediaDocument#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="revertPGDocumentVersion">
@@ -20,7 +20,7 @@
 
 		<execute function="#assertClick" locator1="SODocuments#VERSION_HISTORY_REVERT" value1="Revert" />
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaDocument#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmediaDocument#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_HEADER_TITLE" value1="${dmDocumentRevertTitle}" />
 		<execute function="#assertElementPresent" locator1="PGDocumentsandmediaDocument#DOCUMENT_INFO_THUMBNAIL" />
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentRevertDescription}" />
@@ -53,14 +53,14 @@
 		<if>
 			<or>
 				<condition function="#isElementPresent" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_THUMBNAIL_GENERIC" />
-				<condition function="#isElementPresent" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_THUMBNAIL_GENERIC" />
+				<condition function="IsElementPresent#isVisible" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_THUMBNAIL_GENERIC" />
 			</or>
 			<then>
 				<execute function="#check" locator1="PGDocumentsandmedia#TOOLBAR_SELECT_ALL_CHECKBOX" />
-				<execute function="#assertClick" locator1="PGDocumentsandmedia#TOOLBAR_ACTIONS" value1="Actions" />
+				<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmedia#TOOLBAR_ACTIONS" value1="Actions" />
 				<execute function="#assertElementPresent" locator1="PGDocumentsandmedia#ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
 				<execute function="#assertClick" locator1="PGDocumentsandmedia#ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-				<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</if>
 
@@ -469,7 +469,7 @@
 				<execute function="#assertTextEquals" locator1="SODocuments#VERSION_HISTORY_COMMENT_BODY" value1="${commentBody}" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="SODocuments#VERSION_HISTORY_COMMENT_NO_COMMENTS" value1="No comments yet." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SODocuments#VERSION_HISTORY_COMMENT_NO_COMMENTS" value1="No comments yet." />
 				<execute function="#assertTextEquals" locator1="SODocuments#VERSION_HISTORY_COMMENT_BE_THE_FIRST_LINK" value1="Be the first." />
 			</else>
 		</if>

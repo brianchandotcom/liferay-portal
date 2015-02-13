@@ -162,7 +162,7 @@
 		<var name="key_larFileName" value="${larFileName}" />
 
 		<execute function="#assertTextEquals" locator1="BasePortletExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-		<execute function="#assertClick" locator1="BasePortletExport#CURRENT_AND_PREVIOUS_DOWNLOAD" value1="${larFileName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="BasePortletExport#CURRENT_AND_PREVIOUS_DOWNLOAD" value1="${larFileName}" />
 		<execute function="#downloadTempFile" locator1="${larFileName}" />
 		<execute function="#selectFrame" value1="relative=top" />
 	</command>
@@ -186,7 +186,7 @@
 		<echo message="${exportTemplateName}" />
 
 		<execute function="#assertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-		<execute function="#assertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" value1="${exportTemplateName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" value1="${exportTemplateName}" />
 	</command>
 
 	<command name="exportPortlet">
@@ -311,7 +311,7 @@
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 
 		<execute function="#click" locator1="CPSitepagesExport#EXPORT_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_BUTTON" />
-		<execute function="#assertTextEquals" locator1="CPSitepagesExport#EXPORT_MESSAGE" value1="The Export Import Template ${exportTemplateName} was moved to the Recycle Bin." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#EXPORT_MESSAGE" value1="The Export Import Template ${exportTemplateName} was moved to the Recycle Bin." />
 	</command>
 
 	<command name="saveExportTemplateCP">
@@ -368,7 +368,7 @@
 				<execute function="#assertTextEquals" locator1="CPSitepagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
 				<execute function="#assertTextEquals" locator1="CPSitepagesImport#VALIDATION_ERROR_MESSAGE" value1="There are missing references that could not be found in the current site. Please import the following elements first:" />
 				<execute function="#assertTextEquals" locator1="CPSitepagesImport#VALIDATION_ERROR_MESSAGE" value1="There are missing references that could not be found in the current site. Please import  the following elements first:" />
-				<execute function="#assertTextEquals" locator1="CPSitepagesImport#VALIDATION_ERROR_LIST_ITEM" value1="${importValidationMissingItem}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesImport#VALIDATION_ERROR_LIST_ITEM" value1="${importValidationMissingItem}" />
 			</then>
 			<else>
 				<execute function="#assertTextEquals" locator1="CPSitepagesImport#FILE_TITLE" value1="${larFileName}" />

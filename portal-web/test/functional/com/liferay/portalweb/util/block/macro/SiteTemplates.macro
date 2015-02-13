@@ -18,7 +18,7 @@
 		<execute function="#pause" locator1="3000" />
 		<execute function="#assertClick" locator1="CPSitepages#TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
 
-		<execute function="#type" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
+		<execute function="Type#clickAtSendKeys" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
 		<execute function="#assertClick" locator1="CPSitepagesAddpage#ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<execute function="#assertTextEquals" locator1="CPSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -86,7 +86,7 @@
 			</then>
 		</if>
 
-		<execute function="#type" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
+		<execute function="Type#clickAtSendKeys" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
 		<execute function="#assertClick" locator1="CPSitepagesAddpage#ADD_PAGE_BUTTON" value1="Add Page" />
 	</command>
 
@@ -206,7 +206,7 @@
 
 	<command name="resetPageChanges">
 		<execute function="#refresh" />
-		<execute function="#assertTextEquals" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template." />
 		<execute function="#assertTextEquals" locator1="Dockbar#RESET_CHANGES_BUTTON" value1="Reset Changes" />
 
 		<var name="key_portletTitleName" value="${portletName}" />
@@ -262,7 +262,7 @@
 		<execute function="#click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
 		<execute function="#assertClick" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_MANAGE" value1="Manage" />
 
-		<execute function="#assertClick" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
+		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
 		<execute function="#assertTextEquals" locator1="Home#SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
 
 		<for list="${portletNames}" param="portletName">

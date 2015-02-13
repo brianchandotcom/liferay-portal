@@ -94,12 +94,12 @@
 		<if>
 			<isset var="startDateTime" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
 			</then>
 			<elseif>
 				<equals arg1="${allDayEvent}" arg2="true" />
 				<then>
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="12:00 AM" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="12:00 AM" />
 				</then>
 			</elseif>
 			<else>
@@ -110,12 +110,12 @@
 		<if>
 			<isset var="endDateTime" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
 			</then>
 			<elseif>
 				<equals arg1="${allDayEvent}" arg2="true" />
 				<then>
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="11:59 PM" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="11:59 PM" />
 				</then>
 			</elseif>
 			<else>
@@ -221,12 +221,12 @@
 		<if>
 			<isset var="startDateTime" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
 			</then>
 			<elseif>
 				<equals arg1="${allDayEvent}" arg2="true" />
 				<then>
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="12:00 AM" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="12:00 AM" />
 				</then>
 			</elseif>
 			<else>
@@ -237,12 +237,12 @@
 		<if>
 			<isset var="endDateTime" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
 			</then>
 			<elseif>
 				<equals arg1="${allDayEvent}" arg2="true" />
 				<then>
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="11:59 PM" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="11:59 PM" />
 				</then>
 			</elseif>
 			<else>
@@ -332,7 +332,7 @@
 		<if>
 			<isset var="startDateTime" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
 			</then>
 			<else>
 				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" />
@@ -342,7 +342,7 @@
 		<if>
 			<isset var="endDateTime" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
 			</then>
 			<else>
 				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" />
@@ -413,7 +413,7 @@
 		<if>
 			<isset var="startDateTime" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
 			</then>
 			<else>
 				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" />
@@ -423,7 +423,7 @@
 		<if>
 			<isset var="endDateTime" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
 			</then>
 			<else>
 				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" />

@@ -183,7 +183,7 @@
 		<execute function="#check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_COMMENTS_CHECKBOX" />
 		<execute function="#check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_COMMENT_RATINGS_CHECKBOX" />
 		<execute function="#check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX" />
-		<execute function="#assertClick" locator1="PGADTConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick#assertTextClickAndWait" locator1="PGADTConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGADTConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute function="#selectFrameTop" value1="relative=top" />
 	</command>
@@ -197,7 +197,7 @@
 				<execute function="#assertClick" locator1="BasePortlet#SPECIFIC_PORTLET_OPTIONS_ICON" value1="Options" />
 			</then>
 			<else>
-				<execute function="#assertClick" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
+				<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
 			</else>
 		</if>
 
@@ -209,7 +209,7 @@
 			<elseif>
 				<equals arg1="${portletOption}" arg2="Configuration" />
 				<then>
-					<execute function="#assertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+					<execute function="AssertClick#assertTextClickAndWait" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 				</then>
 			</elseif>
 			<elseif>
@@ -273,14 +273,14 @@
 			</elseif>
 		</if>
 
-		<execute function="#click" locator1="Dockbar#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
 
 		<execute function="#assertClick" locator1="DockbarAddpanelapplications#NAVIGATION_APPLICATIONS" value1="Applications" />
-		<execute function="#type" locator1="DockbarAddpanelapplications#SEARCH_FIELD" value1="${portletName}" />
+		<execute function="Type#sendKeysApplicationSearch" locator1="DockbarAddpanelapplications#SEARCH_FIELD" value1="${portletName}" />
 
 		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
 
-		<execute function="#assertElementNotPresent" locator1="${portletLocator}" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="${portletLocator}" />
 	</command>
 
 	<command name="viewDuplicatePG">
@@ -312,7 +312,7 @@
 			<then>
 				<var name="key_portletName" value="${portletName}" />
 
-				<execute function="#assertTextEquals" locator1="BasePortlet#PORTLET_BODY" value1="${portletBody}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_BODY" value1="${portletBody}" />
 			</then>
 		</if>
 	</command>

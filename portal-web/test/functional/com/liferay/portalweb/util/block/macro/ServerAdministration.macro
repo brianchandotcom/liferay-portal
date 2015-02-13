@@ -84,7 +84,7 @@
 		<var name="key_actionsDescription" value="${actionsDescription}" />
 
 		<execute function="#assertClick" locator1="CPServeradministration#NAVIGATION_RESOURCES" value1="Resources" />
-		<execute function="#assertTextEquals" locator1="CPServeradministration#RESOURCES_ACTIONS_TABLE_DESCRIPTION" value1="${actionsDescription}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPServeradministration#RESOURCES_ACTIONS_TABLE_DESCRIPTION" value1="${actionsDescription}" />
 		<execute function="#assertClick" locator1="CPServeradministration#RESOURCES_ACTIONS_TABLE_EXECUTE" value1="Execute" />
 		<execute function="#assertTextEquals" locator1="CPServeradministration#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>

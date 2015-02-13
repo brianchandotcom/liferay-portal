@@ -28,7 +28,7 @@
 		</if>
 
 		<execute function="#pause" locator1="3000" />
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaDocument#SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmediaDocument#SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>
 
 	<command name="viewPG">

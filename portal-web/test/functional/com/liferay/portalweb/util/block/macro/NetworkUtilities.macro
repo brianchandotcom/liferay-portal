@@ -5,6 +5,6 @@
 		<execute function="#type" locator1="Networkutilities#DNS_LOOKUP_FIELD" value1="${dnsDomain}" />
 		<execute function="#assertClick" locator1="Networkutilities#SEARCH_BUTTON" value1="Search" />
 
-		<execute function="#assertTextEquals" locator1="Networkutilities#NETWORK_DOMAIN" value1="${networkDomain}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Networkutilities#NETWORK_DOMAIN" value1="${networkDomain}" />
 	</command>
 </definition>

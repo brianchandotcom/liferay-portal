@@ -79,7 +79,7 @@
 		</if>
 
 		<execute function="#assertClick" locator1="CPUsergroupsSitepages#TOOLBAR_ADD_PAGE" value1="Add Page" />
-		<execute function="#type" locator1="CPUsergroupsSitepages#ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
+		<execute function="Type#clickAtSendKeys" locator1="CPUsergroupsSitepages#ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
 		<execute function="#assertClick" locator1="CPUsergroupsSitepages#ADD_PAGE_BUTTON" value1="Add Page" />
 		<execute function="#assertTextEquals" locator1="CPUsergroupsSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
@@ -204,10 +204,10 @@
 
 	<command name="expandRootCP">
 		<execute function="#click" locator1="CPUsergroupsSitepages#PAGE_TREE_ROOT_ARROW" />
-		<execute function="#assertElementPresent" locator1="CPUsergroupsSitepages#PAGE_TREE_PAGE_LINK_1" />
+		<execute function="AssertElementPresent#assertElementPresent" locator1="CPUsergroupsSitepages#PAGE_TREE_PAGE_LINK_1" />
 
 		<if>
-			<condition function="#isElementNotPresent" locator1="CPUsergroupsSitepages#PAGE_TREE_PAGE_LINK_1" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPUsergroupsSitepages#PAGE_TREE_PAGE_LINK_1" />
 			<then>
 				<execute function="#click" locator1="CPUsergroupsSitepages#PAGE_TREE_ROOT_ARROW" />
 			</then>
@@ -345,7 +345,7 @@
 
 		<execute function="#click" locator1="CPUsergroups#USER_GROUP_TABLE_ACTIONS" />
 		<execute function="#assertClick" locator1="CPUsergroups#USER_GROUP_MENULIST_EDIT" value1="Edit" />
-		<execute function="#assertClick" locator1="CPUsergroupsEditusergroup#PUBLIC_PAGES_OPEN_PAGES" value1="Open Pages" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPUsergroupsEditusergroup#PUBLIC_PAGES_OPEN_PAGES" value1="Open Pages" />
 		<execute function="#selectWindow" locator1="home - ${userGroupName} - Liferay" />
 
 		<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />

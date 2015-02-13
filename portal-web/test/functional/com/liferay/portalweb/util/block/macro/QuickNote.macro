@@ -1,7 +1,7 @@
 <definition>
 	<command name="addPG">
 		<execute function="#assertTextEquals" locator1="Quicknote#NOTE_CONTENT" value1="Click to edit me..." />
-		<execute function="#click" locator1="Quicknote#NOTE_CONTENT" />
+		<execute function="Click#click" locator1="Quicknote#NOTE_CONTENT" />
 		<execute function="#type" locator1="Quicknote#NOTE_CONTENT_TEXTAREA" value1="${noteContent}" />
 		<execute function="#click" locator1="Quicknote#OK_BUTTON" />
 

@@ -605,7 +605,7 @@
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute function="#assertTextEquals" locator1="CPKaleoformsadminViewprocessrecordsRecorddetails#CURRENT_RECORD_FIELD" value1="${kfProcessFieldData}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPKaleoformsadminViewprocessrecordsRecorddetails#CURRENT_RECORD_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="viewProcessRecordTable">

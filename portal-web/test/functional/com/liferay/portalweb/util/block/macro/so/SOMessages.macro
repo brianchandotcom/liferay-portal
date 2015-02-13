@@ -12,15 +12,15 @@
 				<for list="${recipientNameList}" param="recipientName">
 					<var name="key_recipientName" value="${recipientName}" />
 
-					<execute function="#type" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName}" />
-					<execute function="#assertClick" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${recipientName}" />
+					<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName}" />
+					<execute function="AssertClick#pauseAssertPartialTextClickAt" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${recipientName}" />
 				</for>
 			</then>
 			<else>
 				<var name="key_recipientName" value="${recipientName}" />
 
-				<execute function="#type" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName}" />
-				<execute function="#assertClick" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${recipientName}" />
+				<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName}" />
+				<execute function="AssertClick#pauseAssertPartialTextClickAt" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${recipientName}" />
 				<execute function="#assertTextEquals" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName} &lt;${recipientScreenName}&gt;, " />
 			</else>
 		</if>
@@ -112,7 +112,7 @@
 				<for list="${recipientNameList}" param="recipientName">
 					<var name="key_recipientName" value="${recipientName}" />
 
-					<execute function="#type" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName}" />
+					<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName}" />
 					<execute function="#assertElementNotPresent" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" />
 				</for>
 			</then>
@@ -121,14 +121,14 @@
 				<then>
 					<var name="key_recipientName" value="${recipientName}" />
 
-					<execute function="#type" locator1="SOMessagesAdd#TO_FIELD" value1="${userInformation}" />
+					<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="${userInformation}" />
 					<execute function="#assertElementNotPresent" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" />
 				</then>
 			</elseif>
 			<else>
 				<var name="key_recipientName" value="${recipientName}" />
 
-				<execute function="#type" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName}" />
+				<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName}" />
 				<execute function="#assertElementNotPresent" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" />
 			</else>
 		</if>
@@ -154,13 +154,13 @@
 		<execute macro="SOMessages#viewMessageConnectionDetailsView" />
 
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_SENDER" value1="${senderName}" />
-		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_BODY" value1="${messageBody}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_BODY" value1="${messageBody}" />
 
 		<if>
 			<isset var="messageAttachmentFile" />
 			<then>
 				<execute function="#assertElementPresent" locator1="SOMessagesMessage#PRIVATE_MESSAGE_ATTACHMENT" />
-				<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_ATTACHMENT_LINK" value1="${messageAttachmentFile}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_ATTACHMENT_LINK" value1="${messageAttachmentFile}" />
 			</then>
 		</if>
 	</command>
@@ -174,7 +174,7 @@
 				<for list="${connectionNameList}" param="connectionName">
 					<var name="connectionNumber" value="${connectionNumber?increment()}" />
 
-					<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_USERS" value1="${connectionName}" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_USERS" value1="${connectionName}" />
 				</for>
 
 				<var name="connectionNumberLast" value="${connectionNumber}" />
@@ -187,22 +187,22 @@
 					<if>
 						<equals arg1="${connectionNumber}" arg2="1" />
 						<then>
-							<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_USERS" value1="Between ${connectionName} ," />
+							<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_USERS" value1="Between ${connectionName} ," />
 						</then>
 						<elseif>
 							<equals arg1="${connectionNumber}" arg2="${connectionNumberLast}" />
 							<then>
-								<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_USERS" value1=", ${connectionName} and You" />
+								<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_USERS" value1=", ${connectionName} and You" />
 							</then>
 						</elseif>
 						<else>
-							<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_USERS" value1=", ${connectionName} ," />
+							<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_USERS" value1=", ${connectionName} ," />
 						</else>
 					</if>
 				</for>
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_USERS" value1="Between ${connectionName} and You" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_USERS" value1="Between ${connectionName} and You" />
 			</else>
 		</if>
 	</command>
@@ -216,7 +216,7 @@
 				<for list="${connectionNameList}" param="connectionName">
 					<var name="connectionNumber" value="${connectionNumber?increment()}" />
 
-					<execute function="#assertTextEquals" locator1="SOMessages#MESSAGE" value1="${connectionName}" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="SOMessages#MESSAGE" value1="${connectionName}" />
 				</for>
 
 				<var name="connectionNumberLast" value="${connectionNumber}" />
@@ -231,7 +231,7 @@
 							<equals arg1="${connectionNumber}" arg2="${connectionNumberLast}" />
 						</not>
 						<then>
-							<execute function="#assertTextEquals" locator1="SOMessages#MESSAGE" value1="${connectionName} ," />
+							<execute function="AssertTextEquals#assertPartialText" locator1="SOMessages#MESSAGE" value1="${connectionName} ," />
 						</then>
 					</if>
 				</for>
@@ -273,7 +273,7 @@
 		</if>
 
 		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
-		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${senderName} sent you a message." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${senderName} sent you a message." />
 		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${messageBody}" />
 		<execute function="#assertClick" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${senderName} sent you a message." />
 
@@ -311,13 +311,13 @@
 		<execute macro="SOMessages#viewMessageConnectionDetailsView" />
 
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_SENDER" value1="${senderName}" />
-		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_BODY" value1="${messageBody}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_BODY" value1="${messageBody}" />
 
 		<if>
 			<isset var="messageAttachmentFile" />
 			<then>
 				<execute function="#assertElementPresent" locator1="SOMessagesMessage#PRIVATE_MESSAGE_ATTACHMENT" />
-				<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_ATTACHMENT_LINK" value1="${messageAttachmentFile}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_ATTACHMENT_LINK" value1="${messageAttachmentFile}" />
 			</then>
 		</if>
 
@@ -332,13 +332,13 @@
 		</if>
 
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_SENDER" value1="${replySenderName}" />
-		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_BODY" value1="${messageReplyBody}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_BODY" value1="${messageReplyBody}" />
 
 		<if>
 			<isset var="messageReplyAttachmentFile" />
 			<then>
 				<execute function="#assertElementPresent" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_ATTACHMENT" />
-				<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_ATTACHMENT_LINK" value1="${messageReplyAttachmentFile}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_ATTACHMENT_LINK" value1="${messageReplyAttachmentFile}" />
 			</then>
 		</if>
 	</command>

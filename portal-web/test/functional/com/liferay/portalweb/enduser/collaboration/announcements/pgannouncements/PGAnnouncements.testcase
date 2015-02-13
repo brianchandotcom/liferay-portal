@@ -74,12 +74,12 @@
 
 		<execute function="#click" locator1="PGAnnouncements#NAVIGATION_MANAGE_ENTRIES" />
 
-		<execute function="#select" locator1="PGAnnouncementsManageentries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute function="Select#selectAndWait" locator1="PGAnnouncementsManageentries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 		<execute function="#click" locator1="PGAnnouncementsManageentries#ADD_ENTRY_BUTTON" />
 
 		<execute function="#type" locator1="PGAnnouncementsAddentry#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="#type" locator1="PGAnnouncementsAddentry#URL_FIELD" value1="${entryURL}" />
-		<execute function="#type" locator1="PGAnnouncementsAddentry#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGAnnouncementsAddentry#CONTENT_FIELD" value1="${entryContent}" />
 
 		<execute function="#uncheck" locator1="PGAnnouncementsAddentry#DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX" />
 
@@ -160,7 +160,7 @@
 		<execute function="#assertTextNotPresent" value1="${entryTitle}" />
 		<execute function="#click" locator1="PGAnnouncements#NAVIGATION_MANAGE_ENTRIES" />
 
-		<execute function="#select" locator1="PGAnnouncementsManageentries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute function="Select#selectAndWait" locator1="PGAnnouncementsManageentries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 

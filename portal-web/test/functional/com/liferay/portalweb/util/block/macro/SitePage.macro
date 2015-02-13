@@ -31,7 +31,7 @@
 		<execute function="#pause" locator1="5000" />
 		<execute function="#assertClick" locator1="CPSitepages#TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
 
-		<execute function="#type" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
+		<execute function="Type#clickAtSendKeys" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
 		<execute function="#assertClick" locator1="CPSitepagesAddpage#ADD_PAGE_BUTTON" value1="Add Page" />
 		<execute function="#assertTextEquals" locator1="CPSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -74,7 +74,7 @@
 		<execute function="#pause" locator1="5000" />
 		<execute function="#assertClick" locator1="CPSitepages#TOOLBAR_ADD_PAGE" value1="Add Page" />
 
-		<execute function="#type" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
+		<execute function="Type#clickAtSendKeys" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
 
 		<var name="key_pageType" value="${pageTemplateName}" />
 
@@ -150,7 +150,7 @@
 		<var name="key_componentOrPortletName" value="${componentName}" />
 
 		<execute function="#click" locator1="CPSitepagesAddpage#PAGE_TYPE_PANEL_CHECKBOX" />
-		<execute function="#assertChecked" locator1="CPSitepagesAddpage#PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
+		<execute function="AssertChecked#waitForElementPresentAssertChecked" locator1="CPSitepagesAddpage#PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
 	</command>
 
 	<command name="changeColorSchemesCP">
@@ -272,7 +272,7 @@
 				<execute function="#click" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_2" />
 				<execute function="#assertClickNoError" locator1="CPSitepages#TOOLBAR_DELETE" value1="Delete" />
 
-				<execute function="#confirm" locator1="Home#PAGE_CONFIRM" value1="Are you sure you want to delete the selected page?" />
+				<execute function="Confirm#waitForConfirmation" locator1="Home#PAGE_CONFIRM" value1="Are you sure you want to delete the selected page?" />
 
 				<execute function="#assertTextEquals" locator1="CPSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
@@ -283,12 +283,12 @@
 		<execute macro="Page#openURL" />
 
 		<while>
-			<condition function="#isElementPresent" locator1="Home#PAGE_2" />
+			<condition function="IsElementPresent#isElementPresentClickNavigation" locator1="Home#PAGE_2" />
 			<then>
-				<execute function="#mouseOver" locator1="Home#PAGE_2" />
+				<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE_2" />
 				<execute function="#clickNoError" locator1="Home#PAGE_DELETE" />
-				<execute function="#confirm" locator1="Home#PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
-				<execute function="#assertElementNotPresent" locator1="Home#PAGE_DELETE" />
+				<execute function="Confirm#waitForConfirmation" locator1="Home#PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
+				<execute function="AssertElementNotPresent#assertElementNotPresentClickDockbar" locator1="Home#PAGE_DELETE" />
 			</then>
 		</while>
 	</command>
@@ -312,7 +312,7 @@
 	<command name="editPG">
 		<execute function="#click" locator1="DockbarEditpanel#EDIT" value1="Edit" />
 		<execute function="#type" locator1="DockbarEditpanel#DETAILS_NAME_FIELD" value1="${sitePageNameEdit}" />
-		<execute function="#assertClick" locator1="DockbarEditpanel#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarEditpanel#SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="editTemplatePagesCP">
@@ -326,13 +326,13 @@
 		<execute function="#click" locator1="DockbarEditpanel#EDIT" value1="Edit" />
 		<execute function="#assertClick" locator1="DockbarEditpanel#DETAILS_TYPE_PAGE_OPTIONS" value1="Embedded" />
 		<execute function="#type" locator1="DockbarEditpanel#DETAILS_TYPE_PAGE_URL" value1="http://www.liferay.com" />
-		<execute function="#assertClick" locator1="DockbarEditpanel#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarEditpanel#SAVE_BUTTON" value1="Save" />
 
 		<execute function="#assertTextPresent" locator1="Home#EMBEDDED_SITE_LIFERAY_BANNER_LOGO" value1="Liferay" />
 	</command>
 
 	<command name="expandRootCP">
-		<execute function="#assertElementPresent" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_1" />
+		<execute function="AssertElementPresent#assertElementPresent" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_1" />
 
 		<if>
 			<condition function="#isNotVisible" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_1" />
@@ -346,7 +346,7 @@
 		<var name="key_sitePageName" value="${sitePageName}" />
 
 		<execute function="#click" locator1="CPSitepages#PAGE_TREE_PAGE_ARROW_1" />
-		<execute function="#assertElementPresent" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_2" />
+		<execute function="AssertElementPresent#assertElementPresent" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_2" />
 
 		<if>
 			<condition function="#isNotVisible" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_2" />
@@ -372,7 +372,7 @@
 	</command>
 
 	<command name="pageLockCheckPG">
-		<execute function="#assertTextEquals" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page is linked to a site template which does not allow modifications to it." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page is linked to a site template which does not allow modifications to it." />
 	</command>
 
 	<command name="pageNotLockCheckPG">
@@ -388,7 +388,7 @@
 	</command>
 
 	<command name="pageTemplateLockCheckPG">
-		<execute function="#assertTextEquals" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
 	</command>
 
 	<command name="pageTemplateNotLockedCheckPG">
@@ -471,7 +471,7 @@
 		<if>
 			<equals arg1="${childPageCount}" arg2="1" />
 			<then>
-				<execute function="#mouseOver" locator1="Home#PAGE_1" value1="${sitePageName}" />
+				<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE_1" value1="${sitePageName}" />
 				<execute function="#assertClick" locator1="Home#PAGE_1_CHILD_PAGE_1" value1="${siteChildPageName}" />
 				<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />
 				<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />
@@ -485,7 +485,7 @@
 						<equals arg1="${i}" arg2="${childPageCount}" />
 					</not>
 					<then>
-						<execute function="#mouseOver" locator1="Home#PAGE_1" value1="${sitePageName}" />
+						<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE_1" value1="${sitePageName}" />
 						<execute function="#assertClick" locator1="Home#PAGE_1_CHILD_PAGE_${childPageCounter}" value1="Site Child Page ${childPageCounter}" />
 						<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />
 						<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />
@@ -555,7 +555,7 @@
 		<var name="key_sitePageName" value="${pageName}" />
 
 		<execute function="#assertClick" locator1="CPSitepages#PAGE_TREE_PAGE_LINK" value1="${pageName}" />
-		<execute function="#assertTextEquals" locator1="CPSitepages#INCOMPLETE_STAGING_PAGE_VARIATION_INFO_MESSAGE" value1="The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepages#INCOMPLETE_STAGING_PAGE_VARIATION_INFO_MESSAGE" value1="The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations." />
 		<execute function="#assertTextEquals" locator1="CPSitepages#INCOMPLETE_STAGING_PAGE_VARIATION_ENABLE_BUTTON" value1="Enable in ${sitePagesVariationName}" />
 		<execute function="#assertTextEquals" locator1="CPSitepages#INCOMPLETE_STAGING_PAGE_VARIATION_DELETE_BUTTON" value1="Delete in All Pages Variations" />
 	</command>
@@ -602,7 +602,7 @@
 	</command>
 
 	<command name="viewOnlyAddOptionViaSiteAdminCP">
-		<execute function="#click" locator1="Dockbar#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
 
 		<execute function="#assertElementNotPresent" locator1="DockbarAddpanelpage#NAVIGATION_CONTENT" />
 		<execute function="#assertElementNotPresent" locator1="DockbarAddpanelpage#NAVIGATION_APPLICATIONS" />
@@ -644,8 +644,8 @@
 	</command>
 
 	<command name="viewPageTemplatePG">
-		<execute function="#assertTextEquals" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
-		<execute function="#click" locator1="Dockbar#EDIT" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
 		<execute function="#assertTextEquals" locator1="DockbarEditpanel#DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_LABEL" value1="Automatically apply changes done to the page template ${pageTemplateName}." />
 		<execute function="#assertChecked" locator1="DockbarEditpanel#DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_CHECKBOX" />
 	</command>
@@ -676,12 +676,12 @@
 
 		<var name="key_componentOrPortletName" value="${componentName}" />
 
-		<execute function="#assertChecked" locator1="CPSitepages#DETAILS_PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
+		<execute function="AssertChecked#waitForElementPresentAssertChecked" locator1="CPSitepages#DETAILS_PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
 
 		<for list="${portletNameList}" param="portletName" >
 			<var name="key_componentOrPortletName" value="${portletName}" />
 
-			<execute function="#assertChecked" locator1="CPSitepages#DETAILS_PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
+			<execute function="AssertChecked#waitForElementPresentAssertChecked" locator1="CPSitepages#DETAILS_PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
 		</for>
 	</command>
 

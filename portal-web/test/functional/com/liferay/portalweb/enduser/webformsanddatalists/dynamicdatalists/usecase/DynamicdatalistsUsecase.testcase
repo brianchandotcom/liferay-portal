@@ -63,7 +63,7 @@
 
 		<execute function="#assertClick" locator1="CPDynamicdatalists#TOOLBAR_ADD" value1="Add" />
 
-		<execute function="#type" locator1="CPDynamicdatalistsAddlist#NAME_FIELD" value1="${ddlListName}" />
+		<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsAddlist#NAME_FIELD" value1="${ddlListName}" />
 		<execute function="#assertClick" locator1="CPDynamicdatalistsAddlist#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsAddlist#ERROR_MESSAGE_1" value1="Your request failed to complete." />
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsAddlist#ERROR_MESSAGE_2" value1="Please enter a valid definition." />
@@ -438,7 +438,7 @@
 		<execute function="#assertTextNotPresent" locator1="PGDynamicdatalists#SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_BUTTON" value1="Add" />
 		<execute function="#assertElementNotPresent" locator1="PGDynamicdatalists#SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_SELECT_MENULIST" />
 
-		<execute function="#assertClick" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
 		<execute function="#assertTextEquals" locator1="BasePortlet#OPTIONS_MENULIST_LOOK_AND_FEEL" value1="Look and Feel" />
 		<execute function="#assertTextEquals" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 		<execute function="#assertTextEquals" locator1="BasePortlet#OPTIONS_MENULIST_EXPORT_IMPORT" value1="Export / Import" />

@@ -13,7 +13,7 @@
 		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadmin#SUGGESTION_CONTENT" value1="${kbSuggestionBody}" />
 		<execute function="#assertClickNoError" locator1="CPKnowledgebaseadmin#SUGGESTION_DELETE_BUTTON" value1="Delete" />
 		<execute function="#confirm" locator1="CPKnowledgebaseadmin#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Suggestion deleted successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Suggestion deleted successfully." />
 	</command>
 
 	<command name="gotoArticleCP">
@@ -31,7 +31,7 @@
 	<command name="goToSuggestionStatusNew">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#assertClick" locator1="PGKnowledgebasedisplay#SUGGESTION_NAVIGATION_NEW" value1="New (${suggestionCount})" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGKnowledgebasedisplay#SUGGESTION_NAVIGATION_NEW" value1="New (${suggestionCount})" />
 	</command>
 
 	<command name="goToSuggestionStatusResolved">

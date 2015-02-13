@@ -713,7 +713,7 @@
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_TABLE_NAME" value1="${userName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitememberships#USER_TABLE_NAME" value1="${userName}" />
 		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_TABLE_SITE_ROLES_AND_TEAMS" value1="${siteRoleName}" />
 		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_TABLE_ACTIONS" value1="Actions" />

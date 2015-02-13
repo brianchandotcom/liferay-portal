@@ -317,7 +317,7 @@
 		</execute>
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#assertElementNotPresent" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
 		<execute function="#sikuliAssertElementPresent" locator1="SOUserBar#SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_NOT_PRESENT_PNG" />
 
@@ -340,7 +340,7 @@
 		</execute>
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#sikuliAssertElementPresent" locator1="SOUserBar#SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_PRESENT_PNG" />
 	</command>
 
@@ -451,7 +451,7 @@
 		</execute>
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#assertElementNotPresent" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
 		<execute function="#sikuliAssertElementPresent" locator1="SOUserBar#SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_NOT_PRESENT_PNG" />
 

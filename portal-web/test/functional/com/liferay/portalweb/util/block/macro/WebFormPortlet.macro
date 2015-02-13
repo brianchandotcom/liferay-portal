@@ -83,7 +83,7 @@
 	</command>
 
 	<command name="saveConfiguration">
-		<execute function="#assertClick" locator1="PGWebformConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="PGWebformConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGWebformConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute function="#selectFrameTop" value1="relative=top" />
 	</command>
@@ -109,7 +109,7 @@
 	<command name="viewEditableFieldNotVisibleCmd">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute function="#assertElementNotPresent" locator1="PGWebformConfiguration#SETUP_FORM_FIELDS_NAME_FIELD" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="PGWebformConfiguration#SETUP_FORM_FIELDS_NAME_FIELD" />
 	</command>
 
 	<command name="viewSubmittedField">

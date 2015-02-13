@@ -424,7 +424,7 @@
 
 		<execute function="#selectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
 
-		<execute function="#assertElementNotPresent" locator1="//div[@id='workflowMyRolesTasksPanelContent']//tr[3]/td" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="//div[@id='workflowMyRolesTasksPanelContent']//tr[3]/td" />
 
 		<execute function="#selectFrame" value1="relative=top" />
 	</command>

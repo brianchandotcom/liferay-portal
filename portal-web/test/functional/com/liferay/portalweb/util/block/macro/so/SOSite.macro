@@ -43,31 +43,31 @@
 
 		<var name="key_portletName" value="${announcementsPortletLocalized}" />
 
-		<execute function="#assertTextEquals" locator1="SOSite#PORTLET_TITLE" value1="${announcementsPortletLocalized}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOSite#PORTLET_TITLE" value1="${announcementsPortletLocalized}" />
 
 		<var name="key_portletName" value="${activitiesPortletLocalized}" />
 
-		<execute function="#assertTextEquals" locator1="SOSite#PORTLET_TITLE" value1="${activitiesPortletLocalized}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOSite#PORTLET_TITLE" value1="${activitiesPortletLocalized}" />
 
 		<var name="key_portletName" value="${welcomePortletLocalized}" />
 
-		<execute function="#assertTextEquals" locator1="SOSite#PORTLET_TITLE" value1="${welcomePortletLocalized}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOSite#PORTLET_TITLE" value1="${welcomePortletLocalized}" />
 
 		<var name="key_portletName" value="${bookmarksPortletLocalized}" />
 
-		<execute function="#assertTextEquals" locator1="SOSite#PORTLET_TITLE" value1="${bookmarksPortletLocalized}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOSite#PORTLET_TITLE" value1="${bookmarksPortletLocalized}" />
 
 		<var name="key_portletName" value="${rssPortletLocalized}" />
 
-		<execute function="#assertTextEquals" locator1="SOSite#PORTLET_TITLE" value1="${rssPortletLocalized}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOSite#PORTLET_TITLE" value1="${rssPortletLocalized}" />
 
 		<var name="key_portletName" value="${recentDownloadsPortletLocalized}" />
 
-		<execute function="#assertTextEquals" locator1="SOSite#PORTLET_TITLE" value1="${recentDownloadsPortletLocalized}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOSite#PORTLET_TITLE" value1="${recentDownloadsPortletLocalized}" />
 
 		<var name="key_portletName" value="${eventsPortletLocalized}" />
 
-		<execute function="#assertTextEquals" locator1="SOSite#PORTLET_TITLE" value1="${eventsPortletLocalized}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOSite#PORTLET_TITLE" value1="${eventsPortletLocalized}" />
 
 		<var name="key_pageName" value="${calendarPageLocalized}" />
 
@@ -112,7 +112,7 @@
 
 		<var name="key_portletName" value="${recentBlogsPortletLocalized}" />
 
-		<execute function="#assertTextEquals" locator1="SOSite#PORTLET_TITLE" value1="${recentBlogsPortletLocalized}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOSite#PORTLET_TITLE" value1="${recentBlogsPortletLocalized}" />
 
 		<var name="key_pageName" value="${wikiPageLocalized}" />
 
@@ -178,8 +178,8 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
-		<execute function="#click" locator1="SOUserBar#GO_TO_SITES_DIRECTORY_BUTTON" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO_SITES_DIRECTORY_BUTTON" />
 
 		<if>
 			<equals arg1="${siteType}" arg2="Private" />
@@ -253,20 +253,20 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#type" locator1="SOUserBar#GO_TO_SEARCH_FIELD" value1="${siteName}" />
 		<execute function="#assertTextEquals" locator1="SOUserBar#GO_TO_SITE_EMPTY" value1="There are no results." />
 		<execute function="#assertTextNotPresent" value1="${siteName}" />
 		<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#type" locator1="SOUserBar#GO_TO_SEARCH_FIELD" value1="${siteName}" />
 		<execute function="#assertTextEquals" locator1="SOUserBar#GO_TO_SITE_EMPTY" value1="There are no results." />
 		<execute function="#assertTextNotPresent" value1="${siteName}" />
-		<execute function="#click" locator1="SOUserBar#GO_TO_SITES_DIRECTORY_BUTTON" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO_SITES_DIRECTORY_BUTTON" />
 
 		<execute function="#select" locator1="SOUserBarSitesDirectory#SITE_CATEGORY_SELECT" value1="My Sites" />
 		<execute function="#type" locator1="SOUserBarSitesDirectory#SITE_SEARCH_FIELD" value1="${siteName}" />
@@ -284,10 +284,10 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="My Favorites" />
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#type" locator1="SOUserBar#GO_TO_SEARCH_FIELD" value1="${siteName}" />
 		<execute function="#pause" locator1="1000" />
 		<execute function="#assertTextEquals" locator1="SOUserBar#GO_TO_SITE_NAME_LINK" value1="${siteName}" />
@@ -307,8 +307,8 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
-		<execute function="#click" locator1="SOUserBar#GO_TO_SITES_DIRECTORY_BUTTON" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO_SITES_DIRECTORY_BUTTON" />
 
 		<var name="key_siteName" value="${siteName}" />
 
@@ -336,10 +336,10 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#type" locator1="SOUserBar#GO_TO_SEARCH_FIELD" value1="${siteName}" />
 		<execute function="#pause" locator1="1000" />
 		<execute function="#assertTextEquals" locator1="SOUserBar#GO_TO_SITE_NAME_LINK" value1="${siteName}" />
@@ -391,7 +391,7 @@
 				<execute function="#assertElementNotPresent" locator1="SOActivities#ACTIVITIES_OPTIONS" />
 				<execute function="#assertElementNotPresent" locator1="SOWelcome#WELCOME_OPTIONS" />
 				<execute function="#assertElementNotPresent" locator1="SOBookmarks#BOOKMARKS_OPTIONS" />
-				<execute function="#assertElementNotPresent" locator1="SORss#RSS_OPTIONS" />
+				<execute function="AssertElementNotPresent#assertNotVisible" locator1="SORss#RSS_OPTIONS" />
 				<execute function="#assertElementNotPresent" locator1="SORecentDownloads#RECENT_DOWNLOADS_OPTIONS" />
 				<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_OPTIONS" />
 			</else>
@@ -400,8 +400,8 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
-		<execute function="#click" locator1="SOUserBar#GO_TO_SITES_DIRECTORY_BUTTON" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO_SITES_DIRECTORY_BUTTON" />
 
 		<var name="key_siteName" value="${siteName}" />
 
@@ -456,10 +456,10 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#type" locator1="SOUserBar#GO_TO_SEARCH_FIELD" value1="${siteName}" />
 
 		<if>
@@ -483,15 +483,15 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#type" locator1="SOUserBar#GO_TO_SEARCH_FIELD" value1="${siteName}" />
 		<execute function="#assertTextEquals" locator1="SOUserBar#GO_TO_SITE_EMPTY" value1="There are no results." />
 		<execute function="#assertElementNotPresent" locator1="SOUserBar#GO_TO_SITE_NAME_LINK" />
 		<execute function="#assertTextNotPresent" value1="${siteName}" />
-		<execute function="#click" locator1="SOUserBar#GO_TO_SITES_DIRECTORY_BUTTON" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO_SITES_DIRECTORY_BUTTON" />
 
 		<var name="key_siteName" value="${siteName}" />
 
@@ -576,7 +576,7 @@
 					</else>
 				</if>
 
-				<execute function="#type" locator1="SOMembersPortlet#MEMBERS_LIST_SEARCH" value1="${userEmailAddress}" />
+				<execute function="Type#typePause" locator1="SOMembersPortlet#MEMBERS_LIST_SEARCH" value1="${userEmailAddress}" />
 				<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMPTY" value1="There are no results." />
 				<execute function="#assertTextNotPresent" value1="${userListName}" />
 			</then>

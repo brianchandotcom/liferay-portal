@@ -17,7 +17,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_NAME_FIELD" value1="${suborgName}" />
-		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_TYPE" value1="${orgType}" />
+		<execute function="AssertTextEquals#assertValue" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_TYPE" value1="${orgType}" />
 	</command>
 
 	<command name="tearDownCP">

@@ -8,7 +8,7 @@
 		<execute function="#assertClick" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<if>
-			<condition function="#isElementNotPresent" locator1="CPVocabulariesEdit#ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPVocabulariesEdit#ASSOCIATED_ASSET_TYPES_SELECT" />
 			<then>
 				<execute function="#assertClick" locator1="CPVocabulariesEdit#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
 			</then>
@@ -94,7 +94,7 @@
 		<execute function="#type" locator1="CPVocabulariesAdd#NAME_FIELD" value1="${vocabularyName}" />
 
 		<if>
-			<condition function="#isElementNotPresent" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_SELECT" />
 			<then>
 				<execute function="#assertClick" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
 			</then>
@@ -118,7 +118,7 @@
 		<execute function="#assertClick" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<if>
-			<condition function="#isElementNotPresent" locator1="CPVocabulariesEdit#ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPVocabulariesEdit#ASSOCIATED_ASSET_TYPES_SELECT" />
 			<then>
 				<execute function="#assertClick" locator1="CPVocabulariesEdit#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
 			</then>
@@ -243,7 +243,7 @@
 		<execute function="#assertClick" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<if>
-			<condition function="#isElementNotPresent" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_SELECT" />
 			<then>
 				<execute function="#assertClick" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
 			</then>

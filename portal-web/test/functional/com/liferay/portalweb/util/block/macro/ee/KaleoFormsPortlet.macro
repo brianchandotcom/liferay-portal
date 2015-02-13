@@ -141,7 +141,7 @@
 	<command name="populateFieldHTML">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="#type" locator1="PGKaleoformsSubmitnew#NEW_PROCESS_FIELDS_HTML_FIELD_EDITOR" value1="${kfProcessFieldData}" />
+		<execute function="Type#typeFrame" locator1="PGKaleoformsSubmitnew#NEW_PROCESS_FIELDS_HTML_FIELD_EDITOR" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="populateFieldLinkToPage">
@@ -322,7 +322,7 @@
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute function="#assertTextEquals" locator1="PGKaleoformsSubmitnew#NEW_PROCESS_FIELDS_SELECT_FIELD" value1="${kfProcessFieldData}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGKaleoformsSubmitnew#NEW_PROCESS_FIELDS_SELECT_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="viewCompleteFormFieldText">
@@ -385,7 +385,7 @@
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute function="#assertTextEquals" locator1="PGKaleoformsMycompletedrequestsProcess#CURRENT_ENTRY_FIELD" value1="${kfProcessFieldData}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGKaleoformsMycompletedrequestsProcess#CURRENT_ENTRY_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="viewMyCompletedRequestsFieldNotPresent">

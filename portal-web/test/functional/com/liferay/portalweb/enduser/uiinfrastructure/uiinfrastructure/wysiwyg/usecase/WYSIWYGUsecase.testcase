@@ -45,7 +45,7 @@
 			<var name="documentName" value="Document_1.jpg" />
 		</execute>
 
-		<execute function="#assertClick" locator1="PGWikiEditpage#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" locator1="PGWikiEditpage#PUBLISH_BUTTON" value1="Publish" />
 
 		<var name="key_htmlTags" value="p/img[contains(@src,'Document_1.jpg')]" />
 
@@ -67,11 +67,11 @@
 
 		<execute function="#assertClick" locator1="PGWiki#ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute function="#click" locator1="CKEditor#CONTENT_IMAGE_LINK" />
+		<execute function="Click#pauseClickAt" locator1="CKEditor#CONTENT_IMAGE_LINK" />
 		<execute function="#type" locator1="CKEditor#CONTENT_IMAGE_LINK_URL_FIELD" value1="https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg" />
 		<execute function="#assertClick" locator1="CKEditor#CONTENT_IMAGE_LINK_OK_BUTTON" value1="OK" />
 
-		<execute function="#assertClick" locator1="PGWikiEditpage#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" locator1="PGWikiEditpage#PUBLISH_BUTTON" value1="Publish" />
 
 		<var name="key_htmlTags" value="p/img[contains(@src,'Document_1.jpg')]" />
 
@@ -116,7 +116,7 @@
 		<execute function="#assertTextEquals" locator1="CKEditor#TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
 		<execute function="#assertTextEquals" locator1="CKEditor#TOOLBAR_SIZE_BUTTON_PORTLET" value1="Size" />
 		<execute function="#assertElementPresent" locator1="" value1="//script[contains(@src,'/html/js/editor/ckeditor/plugins/bbcode/bbcode_parser.js')]" />
-		<execute function="#assertClick" locator1="CKEditor#TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="CKEditor#TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
 		<execute function="#selectFrame" locator1="CKEditor#TOOLBAR_FORMAT_IFRAME" />
 
 		<for list="${ckEditorFormatOptionsValid},${ckEditorFormatOptionsInvalid}" param="optionList" >
@@ -139,7 +139,7 @@
 
 		<execute function="#assertTextEquals" locator1="CKEditor#TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
 		<execute function="#assertTextEquals" locator1="CKEditor#TOOLBAR_SIZE_BUTTON_PORTLET" value1="Size" />
-		<execute function="#assertClick" locator1="CKEditor#TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="CKEditor#TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
 		<execute function="#selectFrame" locator1="CKEditor#TOOLBAR_FORMAT_IFRAME" />
 
 		<for list="${ckEditorFormatOptionsValid},${ckEditorFormatOptionsInvalid}" param="optionList" >

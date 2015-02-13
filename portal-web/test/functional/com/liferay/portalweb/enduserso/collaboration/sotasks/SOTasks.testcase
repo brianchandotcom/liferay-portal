@@ -202,7 +202,7 @@
 
 		<execute function="#selectFrame" locator1="SOTasksAdd#ADD_TASK_IFRAME" />
 		<execute function="#type" locator1="SOTasksAdd#TASK_DESCRIPTION_FIELD" value1="${taskDescription}" />
-		<execute function="#assertTextNotEquals" locator1="SOTasksAdd#TASK_ASSIGNEE_SELECT_MENU" value1="${userName}" />
+		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="SOTasksAdd#TASK_ASSIGNEE_SELECT_MENU" value1="${userName}" />
 		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 

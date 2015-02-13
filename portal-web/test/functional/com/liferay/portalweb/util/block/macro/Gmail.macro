@@ -8,8 +8,8 @@
 	<command name="gotoMail">
 		<var name="key_gmailAssetType" value="${gmailAssetType}" />
 
-		<execute function="#assertTextEquals" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME" value1="${emailFromUserName}" />
-		<execute function="#assertClick" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE" value1="${gmailMessageTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME" value1="${emailFromUserName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE" value1="${gmailMessageTitle}" />
 		<execute function="#pause" locator1="3000" />
 	</command>
 
@@ -114,7 +114,7 @@
 
 		<var name="key_pageNameURL" value="${pageNameURL}" />
 
-		<execute function="#assertClick" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK" value1="${pageNameURL}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK" value1="${pageNameURL}" />
 
 		<if>
 			<isset var="contentTitle" />
@@ -161,9 +161,9 @@
 		<var name="key_gmailAssetType" value="${gmailAssetType}" />
 
 		<execute function="#assertTextEquals" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_TITLE" value1="${gmailMessageTitle}" />
-		<execute function="#assertTextEquals" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_GREETING" value1="${gmailMessageBody}" />
-		<execute function="#assertTextEquals" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY" value1="${gmailMessageBody}" />
-		<execute function="#assertTextEquals" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_CLOSING" value1="${gmailMessageBody}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_GREETING" value1="${gmailMessageBody}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY" value1="${gmailMessageBody}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_CLOSING" value1="${gmailMessageBody}" />
 
 		<if>
 			<isset var="gmailMesssageAttachment" />
@@ -182,12 +182,12 @@
 	</command>
 
 	<command name="viewSocialOfficeMessageMail">
-		<execute function="#assertClick" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE_SOCIAL_OFFICE_MESSAGE" value1="${senderName} sent you a message on Liferay" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE_SOCIAL_OFFICE_MESSAGE" value1="${senderName} sent you a message on Liferay" />
 		<execute function="#pause" locator1="3000" />
 
-		<execute function="#assertTextEquals" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_SUMMARY" value1="${senderName} sent you a message." />
-		<execute function="#assertTextEquals" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_SUBJECT" value1="${messageSubject}" />
-		<execute function="#assertTextEquals" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_BODY" value1="${messageBody}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_SUMMARY" value1="${senderName} sent you a message." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_SUBJECT" value1="${messageSubject}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_BODY" value1="${messageBody}" />
 		<execute function="#click" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_LINK" />
 
 		<execute function="#selectWindow" locator1="SOMessages#MESSAGES_POP_UP_WINDOW" />
@@ -207,16 +207,16 @@
 		<execute macro="SOMessages#viewMessageConnectionDetailsView" />
 
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_SENDER" value1="${senderName}" />
-		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_BODY" value1="${messageBody}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_BODY" value1="${messageBody}" />
 
 		<if>
 			<isset var="messageAttachmentFile" />
 			<then>
 				<execute function="#assertElementPresent" locator1="SOMessagesMessage#PRIVATE_MESSAGE_ATTACHMENT" />
-				<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_ATTACHMENT_LINK" value1="${messageAttachmentFile}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_ATTACHMENT_LINK" value1="${messageAttachmentFile}" />
 			</then>
 		</if>
 
-		<execute function="#close" locator1="SOMessages#MESSAGES_POP_UP_WINDOW" />
+		<execute function="Close#closeWindow" locator1="SOMessages#MESSAGES_POP_UP_WINDOW" />
 	</command>
 </definition>

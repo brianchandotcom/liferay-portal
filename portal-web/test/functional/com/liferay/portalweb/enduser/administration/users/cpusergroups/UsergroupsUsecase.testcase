@@ -357,14 +357,14 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="#assertClick" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
 
-		<execute function="#assertClick" locator1="Home#SITE_ADMINISTRATION_USERS" value1="Users" />
-		<execute function="#assertClick" locator1="Home#SITE_ADMINISTRATION_USERS_SITE_MEMBERSHIPS" value1="Site Memberships" />
+		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_USERS" value1="Users" />
+		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_USERS_SITE_MEMBERSHIPS" value1="Site Memberships" />
 
 		<var name="key_userScreenName" value="usersn3" />
 
-		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_TABLE_NAME" value1="userfn3 userln3" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitememberships#USER_TABLE_NAME" value1="userfn3 userln3" />
 		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_TABLE_SCREEN_NAME" value1="usersn3" />
 		<execute function="#click" locator1="CPSitememberships#USER_TABLE_ACTIONS" />
 		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_MENULIST_ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
@@ -396,7 +396,7 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="#assertClick" locator1="CPSites#SITE_TABLE_NAME_UNVIEWABLE" value1="${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPSites#SITE_TABLE_NAME_UNVIEWABLE" value1="${siteName}" />
 
 		<execute macro="User#logoutUserPG" />
 
@@ -446,7 +446,7 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="#assertClick" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
 
 		<execute macro="User#logoutUserPG" />
 

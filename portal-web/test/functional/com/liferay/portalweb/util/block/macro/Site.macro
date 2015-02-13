@@ -147,10 +147,10 @@
 		<if>
 			<isset var="userMiddleName" />
 			<then>
-				<execute function="#assertTextEquals" locator1="CPSitemembershipsAddmembers#USER_TABLE_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPSitemembershipsAddmembers#USER_TABLE_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="CPSitemembershipsAddmembers#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPSitemembershipsAddmembers#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
 			</else>
 		</if>
 
@@ -408,7 +408,7 @@
 
 					<execute function="#select" locator1="CPSitesettingsDisplaysettings#AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${currentSiteLanguage}" />
 					<execute function="#click" locator1="CPSitesettingsDisplaysettings#MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
-					<execute function="#assertTextEquals" locator1="CPSitesettingsDisplaysettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentSiteLanguage}" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="CPSitesettingsDisplaysettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentSiteLanguage}" />
 				</for>
 			</then>
 		</if>
@@ -515,7 +515,7 @@
 	<command name="exportSite">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="#assertClick" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
 
 		<execute function="#assertClick" locator1="CPSitepages#TOOLBAR_EXPORT" value1="Export" />
 
@@ -534,7 +534,7 @@
 	<command name="importSite">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="#assertClick" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
 
 		<execute function="#assertClick" locator1="CPSitepages#TOOLBAR_IMPORT" value1="Import" />
 
@@ -654,10 +654,10 @@
 		<if>
 			<isset var="userMiddleName" />
 			<then>
-				<execute function="#assertTextEquals" locator1="CPSitememberships#USER_TABLE_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPSitememberships#USER_TABLE_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="CPSitememberships#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPSitememberships#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
 			</else>
 		</if>
 
@@ -869,7 +869,7 @@
 		<execute function="#assertTextEquals" locator1="CPSites#SITE_TABLE_PENDING_REQUESTS" value1="" />
 		<execute function="#assertTextEquals" locator1="CPSites#SITE_TABLE_TAGS" value1="" />
 		<execute function="#assertVisible" locator1="CPSites#SITE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPSites#SITE_TABLE_CHILD_SITE" value1="This site has 1 child site." />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="CPSites#SITE_TABLE_CHILD_SITE" value1="This site has 1 child site." />
 
 		<var name="key_childSiteName" value="${childSiteName}" />
 		<var name="key_siteName" value="${siteName}" />
@@ -923,13 +923,13 @@
 		<for list="${currentSiteLanguages}" param="currentSiteLanguage">
 			<var name="currentSiteLanguage" value="${currentSiteLanguage}" />
 
-			<execute function="#assertTextEquals" locator1="CPSitesettingsDisplaysettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentSiteLanguage}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="CPSitesettingsDisplaysettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentSiteLanguage}" />
 		</for>
 
 		<for list="${availableSiteLanguages}" param="availableSiteLanguage">
 			<var name="availableSiteLanguage" value="${availableSiteLanguage}" />
 
-			<execute function="#assertTextEquals" locator1="CPSitesettingsDisplaysettings#AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${availableSiteLanguage}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="CPSitesettingsDisplaysettings#AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${availableSiteLanguage}" />
 		</for>
 
 		<if>
@@ -952,7 +952,7 @@
 
 		<execute function="#assertElementPresent" locator1="Home#SCOPE_SELECTOR_SITE_NAME" value1="${siteName}" />
 		<execute function="#assertTextNotPresent" value1="You do not have the roles required to access this portlet" />
-		<execute function="#assertTextEquals" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
 	</command>
 
 	<command name="viewLimitMembershipParentSiteCP">
@@ -967,7 +967,7 @@
 	<command name="viewMemberCP">
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitememberships#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
 		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="#assertVisible" locator1="CPSitememberships#USER_TABLE_ACTIONS" />
 	</command>
@@ -989,11 +989,11 @@
 
 		<execute function="#assertClick" locator1="CPSitememberships#NAVIGATION_ORGANIZATIONS" value1="Organizations" />
 
-		<execute function="#assertTextEquals" locator1="CPSitememberships#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitememberships#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 		<if>
 			<equals arg1="${toolTip}" arg2="true" />
 			<then>
-				<execute function="#assertTextEquals" locator1="CPSitememberships#ORGANIZATION_TABLE_TOOLTIP" value1="This site belongs to ${orgName} which is an organization" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPSitememberships#ORGANIZATION_TABLE_TOOLTIP" value1="This site belongs to ${orgName} which is an organization" />
 			</then>
 		</if>
 	</command>
@@ -1042,10 +1042,10 @@
 		<if>
 			<equals arg1="${clonedFromTemplate}" arg2="true" />
 			<then>
-				<execute function="#assertTextEquals" locator1="CPSitesettingsSitetemplate#SITE_CLONED_FROM_TEMPLATE_MESSAGE" value1="This site was cloned from site template ${siteTemplateName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPSitesettingsSitetemplate#SITE_CLONED_FROM_TEMPLATE_MESSAGE" value1="This site was cloned from site template ${siteTemplateName}" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="CPSitesettingsSitetemplate#SITE_NOT_CLONED_FROM_TEMPLATE_MESSAGE" value1="This site is not related to a site template." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPSitesettingsSitetemplate#SITE_NOT_CLONED_FROM_TEMPLATE_MESSAGE" value1="This site is not related to a site template." />
 			</else>
 		</if>
 	</command>
@@ -1075,7 +1075,7 @@
 
 		<execute function="#assertClick" locator1="CPSitesettings#MENU_BASIC_INFORMATION_SITE_TEMPLATE" value1="Site Template" />
 
-		<execute function="#assertTextEquals" locator1="CPSitesettingsSitetemplate#SITE_CLONED_FROM_TEMPLATE_MESSAGE" value1="Site Template" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitesettingsSitetemplate#SITE_CLONED_FROM_TEMPLATE_MESSAGE" value1="Site Template" />
 	</command>
 
 	<command name="viewSitePG">

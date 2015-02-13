@@ -168,7 +168,7 @@
 		<execute function="#assertTextEquals" locator1="SOUserBar#TASKS" value1="Tasks" />
 		<execute function="#click" locator1="SOUserBar#USER_BAR" />
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#assertElementPresent" locator1="SOUserBar#GO_TO_SEARCH_FIELD" />
 		<execute function="#assertElementPresent" locator1="SOUserBar#GO_TO_SITE_LIST" />
 		<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
@@ -199,7 +199,7 @@
 		<execute function="#assertTextEquals" locator1="SOUserBar#TASKS" value1="Tasks" />
 		<execute function="#click" locator1="SOUserBar#USER_BAR" />
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#assertElementPresent" locator1="SOUserBar#GO_TO_SEARCH_FIELD" />
 		<execute function="#assertElementPresent" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" />
 		<execute function="#assertElementPresent" locator1="SOUserBar#GO_TO_SITE_LIST" />

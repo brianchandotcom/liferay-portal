@@ -162,7 +162,7 @@
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -182,7 +182,7 @@
 		<var name="key_assetTitle" value="${webContentTitleEdit}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${webContentTitleEdit}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContentEdit}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContentEdit}" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -292,7 +292,7 @@
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -314,7 +314,7 @@
 		<var name="key_assetTitle" value="${webContentTitleEdit}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${webContentTitleEdit}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContentEdit}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContentEdit}" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -434,7 +434,7 @@
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentText}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentText}" />
 	</command>
 
 	<command name="AddWebContentWithStructureAndGlobalScopeViaCPToSiteAP" priority="4">
@@ -555,7 +555,7 @@
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentText}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentText}" />
 	</command>
 
 	<command name="ViewDefaultGlobalScopeLandingPage" priority="4">
@@ -653,7 +653,7 @@
 
 		<execute function="#assertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="${portlet3Name}" />
 
-		<execute function="#assertTextEquals" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template." />
 		<execute function="#assertClick" locator1="Dockbar#RESET_CHANGES_BUTTON" value1="Reset Changes" />
 
 		<execute macro="Page#openURL">

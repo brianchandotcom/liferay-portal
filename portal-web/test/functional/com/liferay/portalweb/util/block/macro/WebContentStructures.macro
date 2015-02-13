@@ -8,7 +8,7 @@
 		<execute function="#selectFrame" />
 
 		<execute function="#selectFrame" locator1="CPWebcontentStructuresAddstructure#STRUCTURES_IFRAME" />
-		<execute function="#type" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${structureName}" />
+		<execute function="Type#clickAtSendKeys" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${structureName}" />
 
 		<if>
 			<isset var="localization1NameKey" />
@@ -16,7 +16,7 @@
 				<var name="key_localizationName" value="${localization1NameKey}" />
 
 				<execute function="#click" locator1="CPWebcontentStructuresAddstructure#LOCALIZATION_NAME" />
-				<execute function="#type" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${localization1Name}" />
+				<execute function="Type#clickAtSendKeys" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${localization1Name}" />
 
 				<if>
 					<isset var="localization2NameKey" />
@@ -24,7 +24,7 @@
 						<var name="key_localizationName" value="${localization2NameKey}" />
 
 						<execute function="#click" locator1="CPWebcontentStructuresAddstructure#LOCALIZATION_NAME" />
-						<execute function="#type" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${localization2Name}" />
+						<execute function="Type#clickAtSendKeys" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${localization2Name}" />
 					</then>
 				</if>
 			</then>

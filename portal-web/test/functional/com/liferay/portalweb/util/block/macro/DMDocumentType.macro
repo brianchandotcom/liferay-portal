@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute function="#assertClick" locator1="CPDocumentsandmedia#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="CPDocumentsandmedia#TOOLBAR_MANAGE" value1="Manage" />
 		<execute function="#assertClick" locator1="CPDocumentsandmedia#MANAGE_MENULIST_DOCUMENT_TYPES" value1="Document Types" />
 
 		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
@@ -56,7 +56,7 @@
 
 		<execute function="#assertClick" locator1="PGDocumentsandmediaManageDocumenttypes#TOOLBAR_ADD" value1="Add" />
 
-		<execute function="#type" locator1="PGDocumentsandmediaManageDocumenttypesAdd#NAME_FIELD" value1="${dmDocumentTypeName}" />
+		<execute function="Type#clickAtSendKeys" locator1="PGDocumentsandmediaManageDocumenttypesAdd#NAME_FIELD" value1="${dmDocumentTypeName}" />
 		<execute function="#type" locator1="PGDocumentsandmediaManageDocumenttypesAdd#DETAILS_DESCRIPTION_FIELD" value1="${dmDocumentTypeDescription}" />
 
 		<for list="${dmDocumentTypeFieldNames}" param="dmDocumentTypeFieldName">
@@ -109,7 +109,7 @@
 		<if>
 			<isset var="dmDocumentTypeNameEdit" />
 			<then>
-				<execute function="#type" locator1="PGDocumentsandmediaManageDocumenttypesAdd#NAME_FIELD" value1="${dmDocumentTypeNameEdit}"  />
+				<execute function="Type#clickAtSendKeys" locator1="PGDocumentsandmediaManageDocumenttypesAdd#NAME_FIELD" value1="${dmDocumentTypeNameEdit}"  />
 			</then>
 		</if>
 
@@ -161,12 +161,12 @@
 	</command>
 
 	<command name="gotoCP">
-		<execute function="#assertClick" locator1="CPDocumentsandmedia#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="CPDocumentsandmedia#TOOLBAR_MANAGE" value1="Manage" />
 		<execute function="#assertClick" locator1="CPDocumentsandmedia#MANAGE_MENULIST_DOCUMENT_TYPES" value1="Document Types" />
 	</command>
 
 	<command name="gotoPG">
-		<execute function="#assertClick" locator1="PGDocumentsandmedia#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmedia#TOOLBAR_MANAGE" value1="Manage" />
 		<execute function="#assertClick" locator1="PGDocumentsandmedia#MANAGE_MENULIST_DOCUMENT_TYPES" value1="Document Types" />
 	</command>
 
@@ -210,7 +210,7 @@
 			<then>
 				<execute function="#click" locator1="PGDocumentsandmediaManageDocumenttypes#DOCUMENT_TYPES_TABLE_ACTIONS_1" />
 				<execute function="#assertClickNoError" locator1="PGDocumentsandmediaManageDocumenttypes#ACTIONS_MENULIST_DELETE" value1="Delete" />
-				<execute function="#confirm" locator1="PGDocumentsandmediaManageDocumenttypes#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Confirm#waitForConfirmation" locator1="PGDocumentsandmediaManageDocumenttypes#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="#assertTextEquals" locator1="PGDocumentsandmediaManageDocumenttypes#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
@@ -219,7 +219,7 @@
 	<command name="viewPGAddMenulist">
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-		<execute function="#assertClick" locator1="PGDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#ADD_MENULIST_DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
 	</command>
 </definition>

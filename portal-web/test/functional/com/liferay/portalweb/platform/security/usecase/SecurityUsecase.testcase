@@ -126,7 +126,7 @@
 
 		<execute function="#assertTextEquals" locator1="Jsonwebservices#SECURITY_TEST_PAGE_BODY" value1="{&quot;message&quot;:&quot;com.liferay.portal.security.auth.PrincipalException&quot;,&quot;exception&quot;:&quot;com.liferay.portal.security.auth.PrincipalException&quot;}" />
 
-		<execute function="#assertTextNotPresent" locator1="Jsonwebservices#SECURITY_TEST_PAGE_BODY" value1="companyId" />
+		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="Jsonwebservices#SECURITY_TEST_PAGE_BODY" value1="companyId" />
 	</command>
 
 	<command name="ValidateForwardURLPG" priority="4">
@@ -139,7 +139,7 @@
 
 		<execute function="#assertElementPresent" locator1="Home#PAGE" value1="Welcome" />
 
-		<execute function="#assertTextEquals" locator1="PGHelloworld#PORTLET_TITLE" value1="Hello World" />
+		<execute function="AssertTextEquals#assertText" locator1="PGHelloworld#PORTLET_TITLE" value1="Hello World" />
 		<execute function="#assertElementPresent" locator1="PGHelloworld#PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
 
 		<execute macro="Page#addPG">
@@ -181,25 +181,25 @@
 		<execute function="#open" locator1="${maliciousURL1}" />
 
 		<execute function="#assertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
-		<execute function="#assertTextEquals" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
 		<execute function="#assertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
 
 		<execute function="#open" locator1="${maliciousURL2}" />
 
 		<execute function="#assertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
-		<execute function="#assertTextEquals" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
 		<execute function="#assertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
 
 		<execute function="#open" locator1="${maliciousURL3}" />
 
 		<execute function="#assertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
-		<execute function="#assertTextEquals" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
 		<execute function="#assertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
 
 		<execute function="#open" locator1="${maliciousURL4}" />
 
 		<execute function="#assertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
-		<execute function="#assertTextEquals" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
 		<execute function="#assertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
 	</command>
 
@@ -216,7 +216,7 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="#assertTextEquals" locator1="BasePortlet#PORTLET_CONTENT" value1="You are signed in as Test ${userLastNameEdit}." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="You are signed in as Test ${userLastNameEdit}." />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Bookmarks" />
@@ -261,7 +261,7 @@
 
 		<execute function="#assertClick" locator1="Dockbar#MY_SITES" value1="My Sites" />
 		<execute function="#assertClick" locator1="Dockbar#MY_SITES_SITE_NAME" value1="${siteName}" />
-		<execute function="#assertClick" locator1="Dockbar#ADMIN" value1="Admin" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
 		<execute function="#assertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<execute function="#assertAlertNotPresent" />

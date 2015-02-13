@@ -12,7 +12,7 @@
 		<execute function="#click" locator1="SOProfileAddAdditionalEmailAddress#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_EMAIL_ADDRESS_TITLE" value1="Additional Email Addresses:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_EMAIL_ADDRESS_TITLE" value1="Additional Email Addresses:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_EMAIL_ADDRESS_CONTENT" value1="Email Address ${userAdditionalEmailAddress}" />
 	</command>
 
@@ -61,7 +61,7 @@
 		<execute function="#click" locator1="SOProfileAddAddress#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_ADDRESS_TITLE" value1="Addresses:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_ADDRESS_TITLE" value1="Addresses:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_ADDRESS_CONTENT" value1="${userAddressType} ${userAddressStreet1}, ${userAddressCity}, ${userAddressPostalCode}, ${userAddressRegion}, ${userAddressCountry} (Mailing)" />
 	</command>
 
@@ -136,7 +136,7 @@
 		<execute function="#click" locator1="SOProfileAddInstantMessenger#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_JABBER_CONTENT" value1="Jabber ${userInstantMessengerJabber}" />
@@ -156,7 +156,7 @@
 		<execute function="#click" locator1="SOProfileAddIntroduction#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INTRODUCTION_TITLE" value1="Introduction:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_INTRODUCTION_TITLE" value1="Introduction:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INTRODUCTION_CONTENT" value1="${userIntroduction}"  />
 	</command>
 
@@ -181,7 +181,7 @@
 		<execute function="#click" locator1="SOProfileAddPhoneNumber#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PHONE_NUMBERS_TITLE" value1="Phones:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_PHONE_NUMBERS_TITLE" value1="Phones:" />
 
 		<if>
 			<isset var="userPhoneNumberExtension" />
@@ -198,7 +198,7 @@
 		<execute function="#click" locator1="Dockbar#USER_NAME" />
 		<execute function="#click" locator1="Dockbar#USER_MY_PROFILE" value1="My Profile" />
 
-		<execute function="#click" locator1="SOProfile#EDIT_PROFILE_PICTURE_BUTTON" />
+		<execute function="Click#makeVisibleClickAt" locator1="SOProfile#EDIT_PROFILE_PICTURE_BUTTON" />
 		<execute function="#selectFrame" locator1="SOProfile#ADD_CONTENT_IFRAME" />
 
 		<execute function="#uploadCommonFile" locator1="SOProfileAddProfilePicture#UPLOAD_IMAGE_FIELD" value1="${imageFileName}" />
@@ -240,7 +240,7 @@
 		<execute function="#click" locator1="SOProfileAddExpertise#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PROJECTS_TITLE" value1="${userProjectTitle}:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_PROJECTS_TITLE" value1="${userProjectTitle}:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PROJECTS_DATES" value1="01 Jan 2012 - Current"  />
 
 		<if>
@@ -262,7 +262,7 @@
 		<execute function="#click" locator1="SOProfileAddSMS#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SMS_TITLE" value1="SMS:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_SMS_TITLE" value1="SMS:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SMS_CONTENT" value1="${userSMS}"  />
 	</command>
 
@@ -290,7 +290,7 @@
 		<execute function="#click" locator1="SOProfileAddSocialNetwork#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_TITLE" value1="Social Network:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_TITLE" value1="Social Network:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_FACEBOOK_CONTENT" value1="Facebook ${userSocialNetworkFacebook}" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_TWITTER_CONTENT" value1="Twitter ${userSocialNetworkTwitter}" />
 	</command>
@@ -310,7 +310,7 @@
 
 		<var name="key_userTag" value="${userTag}" />
 
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_TAGS_TITLE" value1="Tags" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_TAGS_TITLE" value1="Tags" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_TAGS_CONTENT" value1="${userTag}" />
 	</command>
 
@@ -327,7 +327,7 @@
 		<execute function="#click" locator1="SOProfileAddWebsite#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_WEBSITES_TITLE" value1="Websites:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_WEBSITES_TITLE" value1="Websites:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_WEBSITES_CONTENT" value1="${userWebsiteType} ${userWebsiteURL}" />
 	</command>
 
@@ -336,9 +336,9 @@
 
 		<execute function="#click" locator1="SODashboard#NAVIGATION_CONTACTS_CENTER" />
 
-		<execute function="#type" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="Type#typePause" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${userName}" />
 
 		<execute function="#assertTextEquals" locator1="SOProfile#USER_NAME" value1="${userName}" />
@@ -365,9 +365,9 @@
 
 		<execute function="#click" locator1="SODashboard#NAVIGATION_CONTACTS_CENTER" />
 
-		<execute function="#type" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="Type#typePause" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${userName}" />
 
 		<execute function="#assertTextEquals" locator1="SOProfile#USER_NAME" value1="${userName}" />
@@ -388,7 +388,7 @@
 		<execute function="#click" locator1="SOProfileAddAdditionalEmailAddress#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_EMAIL_ADDRESS_TITLE" value1="Additional Email Addresses:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_EMAIL_ADDRESS_TITLE" value1="Additional Email Addresses:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_EMAIL_ADDRESS_CONTENT" value1="Email Address ${userAdditionalEmailAddress}" />
 	</command>
 
@@ -451,7 +451,7 @@
 		<execute function="#click" locator1="SOProfileAddAddress#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_ADDRESS_TITLE" value1="Addresses:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_ADDRESS_TITLE" value1="Addresses:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_ADDRESS_CONTENT" value1="${userAddressType} ${userAddressStreet1}, ${userAddressCity}, ${userAddressPostalCode}, ${userAddressRegion}, ${userAddressCountry} (Mailing)" />
 	</command>
 
@@ -524,7 +524,7 @@
 		<execute function="#click" locator1="SOProfileAddInstantMessenger#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_JABBER_CONTENT" value1="Jabber ${userInstantMessengerJabber}" />
@@ -563,7 +563,7 @@
 		<execute function="#click" locator1="SOProfileAddIntroduction#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INTRODUCTION_TITLE" value1="Introduction:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_INTRODUCTION_TITLE" value1="Introduction:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INTRODUCTION_CONTENT" value1="${userIntroduction}"  />
 	</command>
 
@@ -602,7 +602,7 @@
 		<execute function="#click" locator1="SOProfileAddPhoneNumber#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PHONE_NUMBERS_TITLE" value1="Phones:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_PHONE_NUMBERS_TITLE" value1="Phones:" />
 
 		<if>
 			<isset var="userPhoneNumberExtension" />
@@ -652,7 +652,7 @@
 		<execute function="#click" locator1="SOProfileAddExpertise#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PROJECTS_TITLE" value1="${userProjectTitle}:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_PROJECTS_TITLE" value1="${userProjectTitle}:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PROJECTS_DATES" value1="01 Feb 2012 - Current"  />
 
 		<if>
@@ -689,7 +689,7 @@
 		<execute function="#click" locator1="SOProfileAddSMS#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SMS_TITLE" value1="SMS:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_SMS_TITLE" value1="SMS:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SMS_CONTENT" value1="${userSMS}"  />
 	</command>
 
@@ -731,7 +731,7 @@
 		<execute function="#click" locator1="SOProfileAddSocialNetwork#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_TITLE" value1="Social Network:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_TITLE" value1="Social Network:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_FACEBOOK_CONTENT" value1="Facebook ${userSocialNetworkFacebook}" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_TWITTER_CONTENT" value1="Twitter ${userSocialNetworkTwitter}" />
 	</command>
@@ -766,7 +766,7 @@
 
 		<var name="key_userTag" value="${userTag}" />
 
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_TAGS_TITLE" value1="Tags" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_TAGS_TITLE" value1="Tags" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_TAGS_CONTENT" value1="${userTag}" />
 	</command>
 
@@ -780,7 +780,7 @@
 		<while>
 			<condition function="#isElementPresent" locator1="SOProfileAddTag#DELETE_TAG_BUTTON" />
 			<then>
-				<execute function="#click" locator1="SOProfileAddTag#DELETE_TAG_BUTTON" />
+				<execute function="Click#click" locator1="SOProfileAddTag#DELETE_TAG_BUTTON" />
 				<execute function="#pause" value1="1000" />
 			</then>
 		</while>
@@ -804,7 +804,7 @@
 		<execute function="#click" locator1="SOProfileAddWebsite#SAVE_BUTTON" />
 
 		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_WEBSITES_TITLE" value1="Websites:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_WEBSITES_TITLE" value1="Websites:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_WEBSITES_CONTENT" value1="${userWebsiteType} ${userWebsiteURL}" />
 	</command>
 
@@ -827,9 +827,9 @@
 
 		<execute function="#click" locator1="SODashboard#NAVIGATION_CONTACTS_CENTER" />
 
-		<execute function="#type" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="Type#typePause" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${userName}" />
 
 		<execute function="#assertTextEquals" locator1="SOProfile#USER_NAME" value1="${userName}" />
@@ -844,9 +844,9 @@
 
 		<execute function="#click" locator1="SODashboard#NAVIGATION_CONTACTS_CENTER" />
 
-		<execute function="#type" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="Type#typePause" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${userName}" />
 
 		<execute function="#assertTextEquals" locator1="SOProfile#USER_NAME" value1="${userName}" />
@@ -901,9 +901,9 @@
 
 		<execute function="#click" locator1="SODashboard#NAVIGATION_CONTACTS_CENTER" />
 
-		<execute function="#type" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="Type#typePause" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${userName}" />
 
 		<execute function="#assertTextEquals" locator1="SOProfile#USER_NAME" value1="${userName}" />
@@ -918,9 +918,9 @@
 
 		<execute function="#click" locator1="SODashboard#NAVIGATION_CONTACTS_CENTER" />
 
-		<execute function="#type" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="Type#typePause" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${userName}" />
 
 		<execute function="#assertTextEquals" locator1="SOProfile#USER_NAME" value1="${userName}" />
@@ -931,19 +931,19 @@
 	</command>
 
 	<command name="viewAdditionalEmailAddress">
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_EMAIL_ADDRESS_TITLE" value1="Additional Email Addresses:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_EMAIL_ADDRESS_TITLE" value1="Additional Email Addresses:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_EMAIL_ADDRESS_CONTENT" value1="Email Address ${userAdditionalEmailAddress}" />
 	</command>
 
 	<command name="viewAddress">
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_ADDRESS_TITLE" value1="Addresses:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_ADDRESS_TITLE" value1="Addresses:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_ADDRESS_CONTENT" value1="${userAddressType} ${userAddressStreet1}, ${userAddressCity}, ${userAddressPostalCode}, ${userAddressRegion}, ${userAddressCountry} (Mailing)" />
 	</command>
 
 	<command name="viewBlockedUser">
-		<execute function="#type" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute function="Type#typePause" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
 		<execute function="#assertTextEquals" locator1="SOContactscenter#CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${userName}" />
 
 		<execute function="#assertTextEquals" locator1="SOProfile#USER_NAME" value1="${userName}" />
@@ -955,9 +955,9 @@
 	</command>
 
 	<command name="viewBlockingUser">
-		<execute function="#type" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute function="Type#typePause" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
 		<execute function="#assertTextEquals" locator1="SOContactscenter#CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${userName}" />
 
 		<execute function="#assertTextEquals" locator1="SOProfile#USER_NAME" value1="${userName}" />
@@ -971,7 +971,7 @@
 		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LINK_CONNECTIONS" value1="You have ${filterTypeCount} connections." />
 		<execute function="#assertSelectedLabel" locator1="SOContactscenter#CONTACTS_LIST_FILTER" value1="Connections" />
 		<execute function="#assertTextEquals" locator1="SOContactscenter#CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${userName}" />
 
 		<execute function="#assertTextEquals" locator1="SOProfile#USER_NAME" value1="${userName}" />
@@ -1025,7 +1025,7 @@
 		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LINK_FOLLOWING" value1="You are following ${filterTypeCount} people." />
 		<execute function="#assertSelectedLabel" locator1="SOContactscenter#CONTACTS_LIST_FILTER" value1="Following" />
 		<execute function="#assertTextEquals" locator1="SOContactscenter#CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${userName}" />
 
 		<execute function="#assertTextEquals" locator1="SOProfile#USER_NAME" value1="${userName}" />
@@ -1037,7 +1037,7 @@
 	</command>
 
 	<command name="viewInstantMessenger">
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_JABBER_CONTENT" value1="Jabber ${userInstantMessengerJabber}" />
@@ -1047,7 +1047,7 @@
 	</command>
 
 	<command name="viewIntroduction">
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INTRODUCTION_TITLE" value1="Introduction:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_INTRODUCTION_TITLE" value1="Introduction:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INTRODUCTION_CONTENT" value1="${userIntroduction}"  />
 	</command>
 
@@ -1107,8 +1107,8 @@
 		<execute function="#assertSelectedLabel" locator1="SOContactscenter#CONTACTS_LIST_FILTER" value1="Connections" />
 		<execute function="#assertTextNotPresent" locator1="SOContactscenter#CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
 		<execute function="#select" locator1="SOContactscenter#CONTACTS_LIST_FILTER" value1="All" />
-		<execute function="#type" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="Type#typePause" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${userName}" />
 
 		<execute function="#assertTextEquals" locator1="SOProfile#USER_NAME" value1="${userName}" />
@@ -1125,8 +1125,8 @@
 		<execute function="#assertSelectedLabel" locator1="SOContactscenter#CONTACTS_LIST_FILTER" value1="Connections" />
 		<execute function="#assertTextNotPresent" locator1="SOContactscenter#CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
 		<execute function="#select" locator1="SOContactscenter#CONTACTS_LIST_FILTER" value1="All" />
-		<execute function="#type" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="Type#typePause" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${userName}" />
 
 		<execute function="#assertTextEquals" locator1="SOProfile#USER_NAME" value1="${userName}" />
@@ -1159,7 +1159,7 @@
 	</command>
 
 	<command name="viewPhoneNumbers">
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PHONE_NUMBERS_TITLE" value1="Phones:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_PHONE_NUMBERS_TITLE" value1="Phones:" />
 
 		<if>
 			<isset var="userPhoneNumberExtension" />
@@ -1180,7 +1180,7 @@
 	</command>
 
 	<command name="viewProjects">
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PROJECTS_TITLE" value1="${userProjectTitle}:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_PROJECTS_TITLE" value1="${userProjectTitle}:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PROJECTS_DATES" value1="01 Jan 2012 - Current"  />
 
 		<if>
@@ -1192,7 +1192,7 @@
 	</command>
 
 	<command name="viewProjectsEdit">
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PROJECTS_TITLE" value1="${userProjectTitle}:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_PROJECTS_TITLE" value1="${userProjectTitle}:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PROJECTS_DATES" value1="01 Feb 2012 - Current"  />
 
 		<if>
@@ -1208,9 +1208,9 @@
 
 		<execute function="#click" locator1="SODashboard#NAVIGATION_CONTACTS_CENTER" />
 
-		<execute function="#type" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="Type#typePause" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${userName}" />
 
 		<var name="key_siteName" value="${siteName}" />
@@ -1253,12 +1253,12 @@
 	</command>
 
 	<command name="viewSMS">
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SMS_TITLE" value1="SMS:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_SMS_TITLE" value1="SMS:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SMS_CONTENT" value1="${userSMS}"  />
 	</command>
 
 	<command name="viewSocialNetwork">
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_TITLE" value1="Social Network:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_TITLE" value1="Social Network:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_FACEBOOK_CONTENT" value1="Facebook ${userSocialNetworkFacebook}" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_TWITTER_CONTENT" value1="Twitter ${userSocialNetworkTwitter}" />
 	</command>
@@ -1266,7 +1266,7 @@
 	<command name="viewTag">
 		<var name="key_userTag" value="${userTag}" />
 
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_TAGS_TITLE" value1="Tags" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_TAGS_TITLE" value1="Tags" />
 		<execute function="#assertClick" locator1="SOProfile#PROFILE_INFO_TAGS_CONTENT" value1="${userTag}" />
 
 		<if>
@@ -1275,21 +1275,21 @@
 				<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
 				<execute function="#assertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
-				<execute function="#assertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TYPE" value1="${searchAssetType}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TYPE" value1="${searchAssetType}" />
 			</then>
 			<else>
 				<var name="key_searchAssetTitle" value="${userName}" />
 
 				<execute function="#assertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${userName}" />
-				<execute function="#assertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TYPE" value1="User" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TYPE" value1="User" />
 			</else>
 		</if>
 	</command>
 
 	<command name="viewUser">
-		<execute function="#type" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute function="Type#typePause" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
 		<execute function="#assertTextEquals" locator1="SOContactscenter#CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
-		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${userName}" />
 
 		<execute function="#assertTextEquals" locator1="SOProfile#USER_NAME" value1="${userName}" />
@@ -1300,7 +1300,7 @@
 	</command>
 
 	<command name="viewWebsite">
-		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_WEBSITES_TITLE" value1="Websites:" />
+		<execute function="AssertTextEquals#assertText" locator1="SOProfile#PROFILE_INFO_WEBSITES_TITLE" value1="Websites:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_WEBSITES_CONTENT" value1="${userWebsiteType} ${userWebsiteURL}" />
 	</command>
 </definition>

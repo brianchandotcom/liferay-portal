@@ -76,7 +76,7 @@
 
 		<var name="key_pageTitle" value="${pageTemplateName} - Liferay" />
 
-		<execute function="#close" locator1="SOPage#PAGE_TITLE" />
+		<execute function="Close#closeWindow" locator1="SOPage#PAGE_TITLE" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
@@ -98,21 +98,21 @@
 
 		<execute function="#assertVisible" locator1="SOUserBar#USER_BAR" />
 
-		<execute function="#click" locator1="Dockbar#ADD" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
 
 		<execute function="#assertElementPresent" locator1="DockbarAddpanelcontent#NAVIGATION_CONTENT" />
 
-		<execute function="#click" locator1="Dockbar#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
 
 		<execute function="#assertElementPresent" locator1="DockbarEditpanel#DETAILS_PANEL_TOGGLE" />
 
-		<execute function="#click" locator1="Dockbar#PREVIEW" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#PREVIEW" />
 
 		<execute function="#assertElementPresent" locator1="DockbarPreviewpanel#PREVIEW_AUTOSIZE" />
 
 		<var name="key_pageTitle" value="${pageTemplateName} Edit - Liferay" />
 
-		<execute function="#close" locator1="SOPage#PAGE_TITLE" />
+		<execute function="Close#closeWindow" locator1="SOPage#PAGE_TITLE" />
 	</command>
 
 	<command name="DashboardDemo" priority="5">

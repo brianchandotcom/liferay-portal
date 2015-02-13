@@ -2,7 +2,7 @@
 	<command name="tearDownCP">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertClick" locator1="Dockbar#ADMIN" value1="Admin" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
 		<execute function="#assertClick" locator1="Dockbar#ADMIN_SITE_ADMINISTRATION_PAGES" value1="Pages" />
 
 		<execute function="#assertClick" locator1="CPSitepages#NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
@@ -45,7 +45,7 @@
 			<then>
 				<execute function="#mouseOver" locator1="SODashboard#NAVIGATION_USER_ADDED_PAGE" />
 				<execute function="#clickNoError" locator1="SODashboard#NAVIGATION_PAGE_DELETE" />
-				<execute function="#confirm" locator1="SODashboard#CONFIRMATION" value1="Are you sure you want to delete this page?" />
+				<execute function="Confirm#waitForConfirmation" locator1="SODashboard#CONFIRMATION" value1="Are you sure you want to delete this page?" />
 			</then>
 		</while>
 
@@ -85,10 +85,10 @@
 		<var name="siteName" value="Liferay" />
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#assertElementPresent" locator1="SOUserBar#GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
@@ -102,7 +102,7 @@
 		<execute function="#assertTextEquals" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_FIELD" value1="Update your status..." />
 		<execute function="#assertTextEquals" locator1="SOStatusUpdate#STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_PORTLET_TITLE" value1="Announcements" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_PORTLET_TITLE" value1="Announcements" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
@@ -115,7 +115,7 @@
 		<execute function="#assertTextEquals" locator1="SOActivities#NAVIGATION_ME" value1="Me" />
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 
-		<execute function="#assertTextEquals" locator1="SOUpcomingTasks#TASK_PORTLET_TITLE" value1="Upcoming Tasks" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOUpcomingTasks#TASK_PORTLET_TITLE" value1="Upcoming Tasks" />
 		<execute function="#assertTextEquals" locator1="SOUpcomingTasks#VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
 
 		<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_PORTLET_TITLE" value1="Events" />
@@ -124,10 +124,10 @@
 		<var name="siteName" value="Liferay" />
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#assertElementPresent" locator1="SOUserBar#GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
@@ -142,10 +142,10 @@
 		<var name="siteName" value="Liferay" />
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#assertElementPresent" locator1="SOUserBar#GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
@@ -168,10 +168,10 @@
 		<var name="siteName" value="Liferay" />
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#assertElementPresent" locator1="SOUserBar#GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
@@ -181,18 +181,18 @@
 
 	<command name="viewLinkPrivateMessaging">
 		<execute function="#assertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
-		<execute function="#assertElementNotPresent" locator1="SOMessages#MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
-		<execute function="#assertElementNotPresent" locator1="SOMessages#MARK_AS_READ_BUTTON" value1="Mark as Read" />
-		<execute function="#assertElementNotPresent" locator1="SOMessages#DELETE_BUTTON" value1="Delete" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SOMessages#MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SOMessages#MARK_AS_READ_BUTTON" value1="Mark as Read" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SOMessages#DELETE_BUTTON" value1="Delete" />
 		<execute function="#assertTextEquals" locator1="SOMessages#NEW_MESSAGE_BUTTON" value1="New Message" />
 
 		<var name="siteName" value="Liferay" />
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#assertElementPresent" locator1="SOUserBar#GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
@@ -210,10 +210,10 @@
 		<var name="siteName" value="Liferay" />
 
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute function="#selectFrameTop" />
-		<execute function="#click" locator1="SOUserBar#GO_TO" />
+		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
 		<execute function="#assertElementPresent" locator1="SOUserBar#GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
@@ -257,19 +257,19 @@
 
 		<var name="key_portletName" value="${announcementsPortletLocalized}" />
 
-		<execute function="#assertTextEquals" locator1="SODashboard#PORTLET_TITLE" value1="${announcementsPortletLocalized}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SODashboard#PORTLET_TITLE" value1="${announcementsPortletLocalized}" />
 
 		<var name="key_portletName" value="${activitiesPortletLocalized}" />
 
-		<execute function="#assertTextEquals" locator1="SODashboard#PORTLET_TITLE" value1="${activitiesPortletLocalized}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SODashboard#PORTLET_TITLE" value1="${activitiesPortletLocalized}" />
 
 		<var name="key_portletName" value="${upcomingTasksPortletLocalized}" />
 
-		<execute function="#assertTextEquals" locator1="SODashboard#PORTLET_TITLE" value1="${upcomingTasksPortletLocalized}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SODashboard#PORTLET_TITLE" value1="${upcomingTasksPortletLocalized}" />
 
 		<var name="key_portletName" value="${eventsPortletLocalized}" />
 
-		<execute function="#assertTextEquals" locator1="SODashboard#PORTLET_TITLE" value1="${eventsPortletLocalized}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SODashboard#PORTLET_TITLE" value1="${eventsPortletLocalized}" />
 
 		<var name="key_pageName" value="${contactsCenterPageLocalized}" />
 

@@ -341,7 +341,7 @@
 		<for list="${viewTrackingActionsList}" param="trackingAction">
 			<var name="key_trackingAction" value="${trackingAction}" />
 
-			<execute function="#assertTextEquals" locator1="CPContenttargetingEditcampaign#TRACKING_ACTIONS_APPLIED" value1="${trackingAction}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="CPContenttargetingEditcampaign#TRACKING_ACTIONS_APPLIED" value1="${trackingAction}" />
 
 			<if>
 				<equals arg1="${trackingAction}" arg2="Page" />
@@ -391,6 +391,6 @@
 
 		<execute function="#assertTextEquals" locator1="CPContenttargetingCampaignReports#TRACKING_REPORT_TABLE_ALIAS" value1="${trackingAlias}" />
 		<execute function="#assertTextEquals" locator1="CPContenttargetingCampaignReports#TRACKING_REPORT_TABLE_EVENT" value1="${trackingEvent}" />
-		<execute function="#assertTextEquals" locator1="CPContenttargetingCampaignReports#TRACKING_REPORT_TABLE_COUNT" value1="${trackingCount}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPContenttargetingCampaignReports#TRACKING_REPORT_TABLE_COUNT" value1="${trackingCount}" />
 	</command>
 </definition>

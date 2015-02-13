@@ -13,7 +13,7 @@
 	</command>
 
 	<command name="configurePaginationManageEntriesPG">
-		<execute function="#select" locator1="PGAnnouncementsManageentries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute function="Select#selectAndWait" locator1="PGAnnouncementsManageentries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 		<execute function="#click" locator1="PGAnnouncementsManageentries#ITEMS_PER_PAGE_BUTTON" />
 
 		<var name="key_itemsPerPage" value="${itemsPerPage}" />

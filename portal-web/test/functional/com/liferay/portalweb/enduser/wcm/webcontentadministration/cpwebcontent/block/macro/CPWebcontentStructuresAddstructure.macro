@@ -1,7 +1,7 @@
 <definition>
 	<command name="showDetails">
 		<if>
-			<condition function="#isElementNotPresent" locator1="CPWebcontentStructuresAddstructure#DESCRIPTION_FIELD" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPWebcontentStructuresAddstructure#DESCRIPTION_FIELD" />
 			<then>
 				<execute function="#click" locator1="CPWebcontentStructuresAddstructure#DETAILS" />
 			</then>

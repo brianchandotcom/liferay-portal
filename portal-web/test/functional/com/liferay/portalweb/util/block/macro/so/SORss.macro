@@ -172,7 +172,7 @@
 	<command name="viewRssFeed">
 		<var name="key_feedTitle" value="${feedTitle}" />
 
-		<execute function="#assertTextEquals" locator1="SORss#RSS_FEED_TITLE" value1="${feedTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SORss#RSS_FEED_TITLE" value1="${feedTitle}" />
 		<execute function="#assertElementPresent" locator1="SORss#RSS_FEED_PUBLISHED_DATE" />
 		<execute function="#assertElementPresent" locator1="SORss#RSS_FEED_DESCRIPTION" />
 		<execute function="#assertElementPresent" locator1="SORss#RSS_FEED_IMAGE" />

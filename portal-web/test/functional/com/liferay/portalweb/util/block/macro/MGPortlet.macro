@@ -1,7 +1,7 @@
 <definition>
 	<command name="configureShowAllPG">
 		<execute function="#assertElementPresent" locator1="PGMediagallery#OPTIONS" />
-		<execute function="#assertClick" locator1="PGMediagallery#OPTIONS" value1="Options" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="PGMediagallery#OPTIONS" value1="Options" />
 		<execute function="#assertClick" locator1="PGMediagallery#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="#selectFrame" locator1="PGMediagalleryConfiguration#MG_CONFIGURATION_IFRAME" />

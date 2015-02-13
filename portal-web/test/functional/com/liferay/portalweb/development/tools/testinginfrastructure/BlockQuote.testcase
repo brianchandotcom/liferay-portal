@@ -32,14 +32,14 @@
 
 		<execute function="#click" locator1="PGMessageboardsPostthread#BLOCK_QUOTE_BUTTON" />
 		<execute function="#type" locator1="PGMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
-		<execute function="#click" locator1="PGMessageboardsPostthread#BLOCK_QUOTE_FIELD" value1="70,400" />
+		<execute function="Click#clickAt" locator1="PGMessageboardsPostthread#BLOCK_QUOTE_FIELD" value1="70,400" />
 		<execute function="#typeScreen" locator1="${threadBody}" />
 
 		<take-screenshot />
 
 		<execute function="#assertClick" locator1="PGMessageboardsPostthread#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute function="#assertTextEquals" locator1="PGMessageboards#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertText" locator1="PGMessageboards#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute function="#pause" locator1="5000" />
 	</command>

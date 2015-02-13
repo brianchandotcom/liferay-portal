@@ -70,23 +70,23 @@
 				</and>
 			</not>
 			<then>
-				<execute function="#assertTextEquals" locator1="SOBlogs#RECENT_BLOGS_ENTRY_AUTHOR" value1="By Test Test" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOBlogs#RECENT_BLOGS_ENTRY_AUTHOR" value1="By Test Test" />
 			</then>
 			<else>
 				<if>
 					<isset var="entryAuthorMiddleName" />
 					<then>
-						<execute function="#assertTextEquals" locator1="SOBlogs#RECENT_BLOGS_ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorMiddleName} ${entryAuthorLastName}" />
+						<execute function="AssertTextEquals#assertPartialText" locator1="SOBlogs#RECENT_BLOGS_ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorMiddleName} ${entryAuthorLastName}" />
 					</then>
 					<else>
-						<execute function="#assertTextEquals" locator1="SOBlogs#RECENT_BLOGS_ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorLastName}" />
+						<execute function="AssertTextEquals#assertPartialText" locator1="SOBlogs#RECENT_BLOGS_ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorLastName}" />
 					</else>
 				</if>
 			</else>
 		</if>
 
 		<execute function="#assertElementPresent" locator1="SOBlogs#RECENT_BLOGS_ENTRY_DATE" />
-		<execute function="#assertClick" locator1="SOBlogs#RECENT_BLOGS_ENTRY_READ_MORE_LINK" value1="Read More" />
+		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="SOBlogs#RECENT_BLOGS_ENTRY_READ_MORE_LINK" value1="Read More" />
 
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
@@ -136,6 +136,6 @@
 			</else>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#COMMENTS" value1="Comments" />
+		<execute function="AssertTextEquals#assertTextWaitForInlineCKEditor" locator1="PGBlogsEntry#COMMENTS" value1="Comments" />
 	</command>
 </definition>

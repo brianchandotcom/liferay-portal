@@ -143,8 +143,8 @@
 
 		<var name="key_scopeSelection" value="${scopeSelection}" />
 
-		<execute function="#click" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" />
-		<execute function="#assertClick" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST_SELECTION" value1="${scopeSelection}" />
+		<execute function="Click#pauseClickAt" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST_SELECTION" value1="${scopeSelection}" />
 
 		<execute function="#assertTextEquals" locator1="PGBlogsConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute function="#assertTextEquals" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
@@ -161,7 +161,7 @@
 		</execute>
 
 		<execute function="#click" locator1="BasePortlet#OPTIONS_ICON" />
-		<execute function="#assertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick#assertTextClickAndWait" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="#selectFrame" locator1="CPBlogsConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="#select" locator1="CPBlogsConfiguration#DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="Full Content" />
@@ -227,16 +227,16 @@
 	<command name="viewDefaultConfigurationDisplaySettingsPG">
 		<execute function="#selectFrame" locator1="PGBlogsConfiguration#CONFIGURATION_IFRAME" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="20" />
-		<execute function="#assertTextEquals" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="full-content" />
+		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="20" />
+		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="full-content" />
 		<execute function="#assertChecked" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_FLAGS_CHECKBOX" />
 		<execute function="#assertChecked" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_RELATED_ASSET_CHECKBOX" />
 		<execute function="#assertChecked" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_RATINGS_CHECKBOX" />
 		<execute function="#assertChecked" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_COMMENTS_CHECKBOX" />
 		<execute function="#assertChecked" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_COMMENT_RATINGS_CHECKBOX" />
 		<execute function="#assertChecked" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX" />
-		<execute function="#assertTextEquals" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_DISPLAY_STYLE_SELECT" value1="menu" />
-		<execute function="#assertTextEquals" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_DISPLAY_POSITION_SELECT" value1="bottom" />
+		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_DISPLAY_STYLE_SELECT" value1="menu" />
+		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_DISPLAY_POSITION_SELECT" value1="bottom" />
 		<execute function="#assertChecked" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_TWITTER_CHECKBOX" />
 		<execute function="#assertChecked" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_FACEBOOK_CHECKBOX" />
 		<execute function="#assertChecked" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_GOOGLE_PLUS_CHECKBOX" />
@@ -254,9 +254,9 @@
 		</if>
 
 		<execute function="#assertChecked" locator1="PGBlogsConfigurationSetupRSS#ENABLE_RSS_SUBSCRIPTION_CHECKBOX" />
-		<execute function="#assertTextEquals" locator1="PGBlogsConfigurationSetupRSS#MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="20" />
-		<execute function="#assertTextEquals" locator1="PGBlogsConfigurationSetupRSS#RSS_DISPLAY_STYLE_SELECT" value1="full-content" />
-		<execute function="#assertTextEquals" locator1="PGBlogsConfigurationSetupRSS#FORMAT_SELECT" value1="atom_1.0" />
+		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsConfigurationSetupRSS#MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="20" />
+		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsConfigurationSetupRSS#RSS_DISPLAY_STYLE_SELECT" value1="full-content" />
+		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsConfigurationSetupRSS#FORMAT_SELECT" value1="atom_1.0" />
 		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 

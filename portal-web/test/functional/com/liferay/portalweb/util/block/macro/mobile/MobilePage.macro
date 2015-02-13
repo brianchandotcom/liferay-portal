@@ -4,8 +4,8 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="#click" locator1="Mobiledockbar#PENCIL_ICON" />
-		<execute function="#assertClick" locator1="Mobiledockbar#ADD" value1="Add" />
+		<execute function="Click#waitForNavigationInteractionTouchScriptTap" locator1="Mobiledockbar#PENCIL_ICON" />
+		<execute function="AssertClick#waitForNodeScriptAssertTextEqualsClick" locator1="Mobiledockbar#ADD" value1="Add" />
 
 		<execute function="#assertClick" locator1="MobiledockbarAddpanelcontent#NAVIGATION_PAGE" value1="Page" />
 
@@ -29,7 +29,7 @@
 			<then>
 				<var name="key_portletName" value="${portletName}" />
 
-				<execute function="#assertClick" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+				<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
 			</then>
 		</if>
 	</command>
@@ -92,7 +92,7 @@
 			</then>
 		</if>
 
-		<execute function="#click" locator1="Mobiledockbar#REORDER_ICON" />
+		<execute function="Click#waitForNavigationInteractionTouchScriptTap" locator1="Mobiledockbar#REORDER_ICON" />
 
 		<var name="key_pageName" value="${pageName}" />
 
@@ -108,7 +108,7 @@
 			<condition function="#isElementPresent" locator1="MobileCPSitepages#PAGE_TREE_PAGE_LINK_2" />
 			<then>
 				<execute function="#click" locator1="MobileCPSitepages#PAGE_TREE_PAGE_LINK_2" />
-				<execute function="#click" locator1="MobileCPSitepages#REORDER_ICON" />
+				<execute function="Click#pauseClickAt" locator1="MobileCPSitepages#REORDER_ICON" />
 				<execute function="#assertClickNoError" locator1="MobileCPSitepages#TOOLBAR_DELETE" value1="Delete" />
 				<execute function="#confirm" locator1="MobileCPSitepages#CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
 				<execute function="#assertTextEquals" locator1="MobileCPSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />

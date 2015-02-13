@@ -102,7 +102,7 @@
 
 		<execute function="#assertClick" locator1="Kaleodesigner#SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
 		<execute function="#pause" locator1="1000" />
-		<execute function="#type" locator1="Kaleodesigner#SOURCE_KALEO_XML_CONTENT" value1="${sourceXML}" />
+		<execute function="Type#typeAceEditorNoMouseOver" locator1="Kaleodesigner#SOURCE_KALEO_XML_CONTENT" value1="${sourceXML}" />
 		<execute function="#pause" locator1="1000" />
 		<execute function="#assertClick" locator1="Kaleodesigner#VIEW_TAB" value1="View" />
 		<execute function="#pause" locator1="1000" />
@@ -183,7 +183,7 @@
 		</var>
 		<execute function="#assertClick" locator1="Kaleodesigner#SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
 		<execute function="#pause" locator1="1000" />
-		<execute function="#type" locator1="Kaleodesigner#SOURCE_KALEO_XML_CONTENT" value1="${sourceXML}" />
+		<execute function="Type#typeAceEditorNoMouseOver" locator1="Kaleodesigner#SOURCE_KALEO_XML_CONTENT" value1="${sourceXML}" />
 		<execute function="#pause" locator1="1000" />
 		<execute function="#assertClick" locator1="Kaleodesigner#VIEW_TAB" value1="View" />
 		<execute function="#pause" locator1="1000" />
@@ -193,7 +193,7 @@
 		<var name="key_connectorLabel" value="${connectorLabel}" />
 
 		<execute function="#click" locator1="Kaleodesigner#VIEW_FORM_CONNECTOR" />
-		<execute function="#keyPress" locator1="Kaleodesigner#VIEW_FORM_CONNECTOR" value1="\DELETE" />
+		<execute function="KeyPress#keyPressNoError" locator1="Kaleodesigner#VIEW_FORM_CONNECTOR" value1="\DELETE" />
 		<execute function="#confirm" locator1="Kaleodesigner#CONFIRMATION" value1="Are you sure you want to delete the selected connector(s)?" />
 		<execute function="#pause" locator1="1000" />
 
@@ -384,7 +384,7 @@
 
 	<command name="editNodeScript">
 		<execute function="#doubleClick" locator1="Kaleodesigner#SETTINGS_SCRIPT" />
-		<execute function="#type" locator1="Kaleodesigner#SETTINGS_SCRIPT_CONTENT" value1="${nodeScript}" />
+		<execute function="Type#typeAceEditorNoMouseOver" locator1="Kaleodesigner#SETTINGS_SCRIPT_CONTENT" value1="${nodeScript}" />
 		<execute function="#assertClick" locator1="Kaleodesigner#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 	</command>
 
@@ -432,7 +432,7 @@
 	<command name="eraseDefinitionViaSourceXML">
 		<execute function="#assertClick" locator1="Kaleodesigner#SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
 		<execute function="#pause" locator1="1000" />
-		<execute function="#type" locator1="Kaleodesigner#SOURCE_KALEO_XML_CONTENT" value1="" />
+		<execute function="Type#typeAceEditorNoMouseOver" locator1="Kaleodesigner#SOURCE_KALEO_XML_CONTENT" value1="" />
 		<execute function="#pause" locator1="1000" />
 		<execute function="#assertClick" locator1="Kaleodesigner#VIEW_TAB" value1="View" />
 		<execute function="#pause" locator1="1000" />
@@ -683,7 +683,7 @@
 
 		<var name="key_line" value="${line}" />
 
-		<execute function="#assertTextEquals" locator1="Kaleodesigner#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE_CONTENT" value1="${kdSourceXML}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Kaleodesigner#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE_CONTENT" value1="${kdSourceXML}" />
 		<execute function="#pause" locator1="1000" />
 		<execute function="#assertClick" locator1="Kaleodesigner#VIEW_TAB" value1="View" />
 		<execute function="#pause" locator1="1000" />

@@ -27,9 +27,9 @@
 			</then>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_3" value1="${categoryName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_3" value1="${categoryName}" />
 
 		<if>
 			<equals arg1="${displayStyle}" arg2="Question" />
@@ -89,10 +89,10 @@
 				<if>
 					<equals arg1="${anonymous}" arg2="true" />
 					<then>
-						<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_LAST_POST" value1="" />
+						<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboards#THREAD_TABLE_LAST_POST" value1="" />
 					</then>
 					<else>
-						<execute function="#assertTextEquals" locator1="PGMessageboards#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
+						<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboards#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
 					</else>
 				</if>
 
@@ -127,17 +127,17 @@
 		<if>
 			<equals arg1="${subCategoryEnabled}" arg2="true" />
 			<then>
-				<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
-				<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
-				<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_3" value1="${categoryName}" />
-				<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_4" value1="${subCategoryName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_3" value1="${categoryName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_4" value1="${subCategoryName}" />
 				<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_5" value1="${threadSubject}" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
-				<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
-				<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_3" value1="${categoryName}" />
-				<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_4" value1="${threadSubject}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_3" value1="${categoryName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_4" value1="${threadSubject}" />
 			</else>
 		</if>
 
@@ -227,9 +227,9 @@
 			</then>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_3" value1="My Posts" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_3" value1="My Posts" />
 
 		<if>
 			<equals arg1="${threadPriority}" arg2="Sticky" />
@@ -263,7 +263,7 @@
 				<execute function="#assertTextNotEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboardsMyposts#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
 			</else>
 		</if>
 
@@ -278,10 +278,10 @@
 			</then>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_3" value1="${categoryName}" />
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_4" value1="${threadSubject}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_3" value1="${categoryName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_4" value1="${threadSubject}" />
 
 		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSubject}" />
 		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#THREAD_CONTROLS_BACK" value1="${categoryName}" />
@@ -339,8 +339,8 @@
 			</then>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
@@ -411,9 +411,9 @@
 			</then>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_3" value1="Recent Posts" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_3" value1="Recent Posts" />
 
 		<if>
 			<equals arg1="${threadPriority}" arg2="Sticky" />
@@ -447,7 +447,7 @@
 				<execute function="#assertTextNotEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboardsMyposts#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
 			</else>
 		</if>
 
@@ -477,10 +477,10 @@
 			</then>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_3" value1="${categoryName}" />
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_4" value1="${threadSubject}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_3" value1="${categoryName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_4" value1="${threadSubject}" />
 
 		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSubject}" />
 		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#THREAD_CONTROLS_BACK" value1="${categoryName}" />
@@ -575,7 +575,7 @@
 						<execute function="#assertTextPresent" locator1="PGMessageboardsThread#MESSAGE_BODY_2_BLOCK_QUOTE" value1="${threadBodyQuote}" />
 					</then>
 					<else>
-						<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_2" value1="${threadReplyBody}" />
+						<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboardsThread#MESSAGE_BODY_2" value1="${threadReplyBody}" />
 					</else>
 				</if>
 
@@ -618,8 +618,8 @@
 			</then>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
-		<execute function="#assertTextEquals" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_1" value1="${siteName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_2" value1="${pageName}" />
 
 		<var name="key_subCategoryName" value="${subCategoryName}" />
 

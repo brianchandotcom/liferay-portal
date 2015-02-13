@@ -348,7 +348,7 @@
 		<for list="${viewUserSegmentRuleList}" param="usersegmentRuleName">
 			<var name="key_userSegmentRuleName" value="${usersegmentRuleName}" />
 
-			<execute function="#assertTextEquals" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_RULE_APPLIED" value1="${usersegmentRuleName}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_RULE_APPLIED" value1="${usersegmentRuleName}" />
 
 			<if>
 				<equals arg1="${usersegmentRuleName}" arg2="Content Visited" />

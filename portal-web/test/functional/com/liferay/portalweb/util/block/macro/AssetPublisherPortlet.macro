@@ -29,7 +29,7 @@
 
 				<var name="key_siteName" value="${globalSite}" />
 
-				<execute function="#assertTextEquals" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_NAME" value1="Global" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_NAME" value1="Global" />
 			</then>
 		</if>
 
@@ -48,7 +48,7 @@
 
 				<execute function="#selectFrame" />
 				<execute function="#selectFrame" locator1="PGAssetpublisherConfiguration#ASSET_PUBLISHER_IFRAME" />
-				<execute function="#assertTextEquals" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_NAME" value1="${otherSiteName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_NAME" value1="${otherSiteName}" />
 			</then>
 		</if>
 
@@ -67,7 +67,7 @@
 
 				<execute function="#selectFrame" />
 				<execute function="#selectFrame" locator1="PGAssetpublisherConfiguration#ASSET_PUBLISHER_IFRAME" />
-				<execute function="#assertTextEquals" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
 			</then>
 			<else>
 				<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT" value1="Select" />
@@ -104,7 +104,7 @@
 
 				<var name="key_siteName" value="Liferay" />
 
-				<execute function="#assertTextEquals" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_NAME" value1="Liferay" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_NAME" value1="Liferay" />
 			</else>
 		</if>
 
@@ -282,7 +282,7 @@
 		<if>
 			<isset var="fieldValue" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE" value1="${fieldFilter}: ${fieldValue}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE" value1="${fieldFilter}: ${fieldValue}" />
 			</then>
 		</if>
 
@@ -417,12 +417,12 @@
 		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#selectFrame" locator1="PGAssetpublisherConfiguration#ASSET_PUBLISHER_IFRAME" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
 		<execute function="#assertTextEquals" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_TYPE" value1="${siteScopeType}" />
 		<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SAVE_BUTTON" value1="Save" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisherConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
 		<execute function="#assertTextEquals" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_TYPE" value1="${siteScopeType}" />
 		<execute function="#assertElementPresent" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_DELETE" />
 	</command>
@@ -524,7 +524,7 @@
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
 		<execute function="#assertClick" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DETAIL_TITLE" value1="${assetTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DETAIL_CONTENT" value1="${assetContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DETAIL_CONTENT" value1="${assetContent}" />
 	</command>
 
 	<command name="viewAssetNotPresentPG">
@@ -538,7 +538,7 @@
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${assetContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${assetContent}" />
 
 		<if>
 			<equals arg1="${addMetadata}" arg2="true" />
@@ -546,8 +546,8 @@
 				<var name="key_categoryName" value="${categoryName}" />
 				<var name="key_vocabularyName" value="${vocabularyName}" />
 
-				<execute function="#assertTextEquals" locator1="PGAssetpublisher#METADATA_VOCABULARY" value1="${vocabularyName}" />
-				<execute function="#assertTextEquals" locator1="PGAssetpublisher#METADATA_CATEGORY" value1="${categoryName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#METADATA_VOCABULARY" value1="${vocabularyName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#METADATA_CATEGORY" value1="${categoryName}" />
 			</then>
 		</if>
 	</command>
@@ -690,14 +690,14 @@
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${assetContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${assetContent}" />
 	</command>
 
 	<command name="viewCustomADTRichSummaryPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${assetDescription}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${assetDescription}" />
 		<execute function="#assertElementPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_READ_MORE" />
 		<execute function="#assertElementPresent" locator1="PGAssetpublisher#DISPLAY_ICON_PRINT" />
 		<execute function="#assertElementPresent" locator1="PGAssetpublisher#DISPLAY_ICON_FLAG" />
@@ -735,7 +735,7 @@
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
 		<execute function="#assertElementPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_EDIT" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${assetDescription}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${assetDescription}" />
 		<execute function="#assertElementPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_READ_MORE" />
 	</command>
 
@@ -756,7 +756,7 @@
 		<var name="key_assetTitle" value="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
 		<execute function="#assertElementPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_EDIT" />
 	</command>
 
@@ -769,7 +769,7 @@
 		<if>
 			<equals arg1="${noneIndexable}" arg2="true" />
 			<then>
-				<execute function="#assertElementNotPresent" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_CHECKBOX" />
+				<execute function="AssertElementNotPresent#assertNotVisible" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_CHECKBOX" />
 				<execute function="#assertElementNotPresent" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_SELECT_BUTTON" value1="Select" />
 			</then>
 			<else>
@@ -782,7 +782,7 @@
 				<for list="${assetSubtypeFields}" param="assetSubtypeField">
 					<var name="key_fieldName" value="${assetSubtypeField}" />
 
-					<execute function="#assertTextEquals" locator1="PGAssetpublisherConfigurationFilterbyfield#FIELD_FILTER_FIELD_NAME" value1="${assetSubtypeField}" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherConfigurationFilterbyfield#FIELD_FILTER_FIELD_NAME" value1="${assetSubtypeField}" />
 				</for>
 			</else>
 		</if>
@@ -827,7 +827,7 @@
 		<var name="key_assetTitle" value="${entryTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
 		<execute function="#assertElementNotPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_EDIT" />
 	</command>
 
@@ -859,11 +859,11 @@
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${assetContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${assetContent}" />
 		<execute function="#assertClick" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisherAsset#ASSET_TITLE" value1="${assetTitle}" />
-		<execute function="#assertTextEquals" locator1="PGAssetpublisherAsset#ASSET_CONTENT" value1="${assetContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherAsset#ASSET_CONTENT" value1="${assetContent}" />
 
 		<if>
 			<isset var="relatedAssetTitle" />

@@ -57,7 +57,7 @@
 				<execute function="#assertElementPresent" locator1="CPSpamModerationWikis#WIKI_PAGE_TABLE_CHECKBOX" />
 				<execute function="#assertTextEquals" locator1="CPSpamModerationWikis#WIKI_PAGE_TABLE_TITLE" value1="${wikiPageTitle}" />
 				<execute function="#assertTextEquals" locator1="CPSpamModerationWikis#WIKI_PAGE_TABLE_VERSION" value1="${wikiPageRevision}" />
-				<execute function="#assertTextEquals" locator1="CPSpamModerationWikis#WIKI_PAGE_TABLE_POSTED_BY" value1="${wikiPageUsername}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPSpamModerationWikis#WIKI_PAGE_TABLE_POSTED_BY" value1="${wikiPageUsername}" />
 				<execute function="#assertElementPresent" locator1="CPSpamModerationWikis#WIKI_PAGE_TABLE_ACTIONS" />
 			</then>
 		</if>

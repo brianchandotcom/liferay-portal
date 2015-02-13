@@ -1,7 +1,7 @@
 <definition>
 	<command name="configureScopePG">
 		<if>
-			<condition function="#isElementPresent" locator1="PGWikidisplay#PORTLET_CONFIGURATION_MESSAGE" />
+			<condition function="IsElementPresent#isVisible" locator1="PGWikidisplay#PORTLET_CONFIGURATION_MESSAGE" />
 			<then>
 				<execute function="#assertClick" locator1="PGWikidisplay#PORTLET_CONFIGURATION_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
 			</then>
@@ -28,7 +28,7 @@
 
 	<command name="configureSetupPG">
 		<if>
-			<condition function="#isElementPresent" locator1="PGWikidisplay#PORTLET_CONFIGURATION_MESSAGE" />
+			<condition function="IsElementPresent#isVisible" locator1="PGWikidisplay#PORTLET_CONFIGURATION_MESSAGE" />
 			<then>
 				<execute function="#assertClick" locator1="PGWikidisplay#PORTLET_CONFIGURATION_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
 			</then>

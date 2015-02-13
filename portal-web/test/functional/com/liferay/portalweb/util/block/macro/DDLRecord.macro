@@ -36,7 +36,7 @@
 		<execute function="#assertClickNoError" locator1="CPDynamicdatalistsList#RECORD_MENULIST_DELETE" value1="Delete" />
 		<execute function="#confirm" locator1="CPDynamicdatalistsList#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsList#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsList#INFO_MESSAGE" value1="No" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPDynamicdatalistsList#INFO_MESSAGE" value1="No" />
 	</command>
 
 	<command name="deleteRepeatableField">
@@ -139,7 +139,7 @@
 	<command name="populateFieldDate">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="#type" locator1="CPDynamicdatalistsListAddrecord#DATE_FIELD" value1="${ddlRecordFieldData}" />
+		<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsListAddrecord#DATE_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldDecimal">
@@ -200,7 +200,7 @@
 	<command name="populateFieldHTML">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="#type" locator1="CPDynamicdatalistsListAddrecord#HTML_FIELD" value1="${ddlRecordFieldData}" />
+		<execute function="Type#typeFrameWaitForCKEditor" locator1="CPDynamicdatalistsListAddrecord#HTML_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldInteger">
@@ -382,10 +382,10 @@
 		<if>
 			<equals arg1="${fieldBlank}" arg2="true" />
 			<then>
-				<execute function="#assertTextEquals" locator1="CPDynamicdatalistsListRecord#FIELD" value1="${fieldFieldLabel}${ddlRecordFieldData}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPDynamicdatalistsListRecord#FIELD" value1="${fieldFieldLabel}${ddlRecordFieldData}" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="CPDynamicdatalistsListRecord#FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPDynamicdatalistsListRecord#FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 			</else>
 		</if>
 

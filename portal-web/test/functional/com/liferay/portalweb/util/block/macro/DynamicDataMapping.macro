@@ -2,7 +2,7 @@
 	<command name="addField">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<var name="key_field" value="${field}" />
 
@@ -11,12 +11,12 @@
 		<execute macro="DynamicDataMapping#editFieldLabelCmd" />
 
 		<execute function="#assertTextEquals" locator1="Dynamicdatamapping#SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<execute macro="DynamicDataMapping#editFieldNameCmd" />
 
 		<execute function="#assertTextEquals" locator1="Dynamicdatamapping#SETTINGS_NAME" value1="${fieldName}" />
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
@@ -24,7 +24,7 @@
 	<command name="addFieldFormTemplateSpecific">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<var name="key_field" value="${field}" />
 
@@ -55,7 +55,7 @@
 			</elseif>
 		</if>
 
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
@@ -63,7 +63,7 @@
 	<command name="addFieldNested">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<var name="key_field" value="${field}" />
 
@@ -82,12 +82,12 @@
 		<execute macro="DynamicDataMapping#editFieldLabelCmd" />
 
 		<execute function="#assertTextEquals" locator1="Dynamicdatamapping#SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<execute macro="DynamicDataMapping#editFieldNameCmd" />
 
 		<execute function="#assertTextEquals" locator1="Dynamicdatamapping#SETTINGS_NAME" value1="${fieldName}" />
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
@@ -131,7 +131,7 @@
 			</then>
 		</if>
 
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
@@ -146,7 +146,7 @@
 		<execute function="#doubleClick" locator1="Dynamicdatamapping#SETTINGS_INDEXABLE" />
 		<execute function="#click" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_NOT_INDEXABLE_RADIO" />
 		<execute function="#assertClick" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
@@ -171,7 +171,7 @@
 		<execute function="#doubleClick" locator1="Dynamicdatamapping#SETTINGS_LOCALIZABLE" />
 		<execute function="#click" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_NO_RADIO" />
 		<execute function="#assertClick" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
@@ -242,7 +242,7 @@
 			<var name="fieldOptionsvalues" value="${fieldOptionsvalues}" />
 		</execute>
 
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
@@ -318,7 +318,7 @@
 			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
 		</execute>
 
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
@@ -333,7 +333,7 @@
 		<execute function="#doubleClick" locator1="Dynamicdatamapping#SETTINGS_REPEATABLE" />
 		<execute function="#click" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_YES_RADIO" />
 		<execute function="#assertClick" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
@@ -370,7 +370,7 @@
 
 		<execute function="#assertClick" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="Dynamicdatamapping#SETTINGS_SHOW_LABEL" value1="${fieldShowLabel}" />
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
@@ -414,7 +414,7 @@
 		<execute function="#type" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${fieldTip}" />
 		<execute function="#assertClick" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="Dynamicdatamapping#SETTINGS_TIP" value1="${fieldTip}" />
-		<execute function="#assertClick" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
@@ -569,7 +569,7 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<for list="${fieldOptionsNames}" param="fieldOptionsName">
-			<execute function="#assertTextEquals" locator1="Dynamicdatamapping#SETTINGS_OPTIONS" value1="${fieldOptionsName}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="Dynamicdatamapping#SETTINGS_OPTIONS" value1="${fieldOptionsName}" />
 		</for>
 
 		<if>

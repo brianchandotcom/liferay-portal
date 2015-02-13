@@ -17,7 +17,7 @@
 		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGWebcontentdisplayEditwebcontent#WEB_CONTENT_EDIT_IFRAME" />
 		<execute function="#assertTextEquals" locator1="PGWebcontentdisplayEditwebcontent#TEMPLATE_NAME" value1="${templateName}" />
-		<execute function="#assertClick" locator1="PGWebcontentdisplayEditwebcontent#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="PGWebcontentdisplayEditwebcontent#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="#selectFrame" value1="relative=top" />
 	</command>
@@ -32,8 +32,8 @@
 
 		<var name="key_scopeSelection" value="${scopeSelection}" />
 
-		<execute function="#click" locator1="PGWebcontentdisplayConfigurationScope#SCOPE_MENULIST" />
-		<execute function="#assertClick" locator1="PGWebcontentdisplayConfigurationScope#SCOPE_MENULIST_SELECTION" value1="${scopeSelection}" />
+		<execute function="Click#pauseClickAt" locator1="PGWebcontentdisplayConfigurationScope#SCOPE_MENULIST" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGWebcontentdisplayConfigurationScope#SCOPE_MENULIST_SELECTION" value1="${scopeSelection}" />
 
 		<execute function="#assertTextEquals" locator1="PGWebcontentdisplayConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute function="#assertTextEquals" locator1="PGWebcontentdisplayConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
@@ -74,7 +74,7 @@
 
 					<execute function="#select" locator1="PGWebcontentdisplayConfiguration#AVAILABLE_FILE_TYPES_SELECT" value1="${fileType}" />
 					<execute function="#click" locator1="PGWebcontentdisplayConfiguration#MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
-					<execute function="#assertTextEquals" locator1="PGWebcontentdisplayConfiguration#CURRENT_FILE_TYPES_SELECT" value1="${fileType}" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplayConfiguration#CURRENT_FILE_TYPES_SELECT" value1="${fileType}" />
 				</for>
 			</then>
 		</if>
@@ -107,7 +107,7 @@
 		<if>
 			<isset var="templateScript" />
 			<then>
-				<execute function="#type" locator1="PGWebcontentdisplayEdittemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
+				<execute function="Type#typeAceEditor" locator1="PGWebcontentdisplayEdittemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
 			</then>
 		</if>
 
@@ -125,7 +125,7 @@
 				<execute function="#selectFrame" value1="relative=top" />
 				<execute function="#selectFrame" locator1="PGWebcontentdisplayEditwebcontent#WEB_CONTENT_EDIT_IFRAME" />
 				<execute function="#assertTextEquals" locator1="PGWebcontentdisplayEditwebcontent#TEMPLATE_NAME" value1="${templateName}" />
-				<execute function="#assertClick" locator1="PGWebcontentdisplayEditwebcontent#PUBLISH_BUTTON" value1="Publish" />
+				<execute function="AssertClick#pauseAssertTextClickAt" locator1="PGWebcontentdisplayEditwebcontent#PUBLISH_BUTTON" value1="Publish" />
 
 				<execute function="#selectFrame" value1="relative=top" />
 			</else>
@@ -233,14 +233,14 @@
 	</command>
 
 	<command name="viewAllSettingsEnabledPG">
-		<execute function="#assertTextEquals" locator1="PGWebcontentdisplay#PRINT_WEB_CONTENT" value1="Print" />
-		<execute function="#assertTextEquals" locator1="PGWebcontentdisplay#NO_COMMENTS_MESSAGE" value1="No comments yet" />
-		<execute function="#assertTextEquals" locator1="PGWebcontentdisplay#SUBCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplay#PRINT_WEB_CONTENT" value1="Print" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplay#NO_COMMENTS_MESSAGE" value1="No comments yet" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplay#SUBCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
 
 		<var name="key_assetTitle" value="${relatedAssetTitle}" />
 
-		<execute function="#assertTextEquals" locator1="PGWebcontentdisplay#RELATED_ASSETS" value1="${relatedAssetTitle}" />
-		<execute function="#assertClick" locator1="PGWebcontentdisplay#BE_THE_FIRST" value1="Be the first" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplay#RELATED_ASSETS" value1="${relatedAssetTitle}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGWebcontentdisplay#BE_THE_FIRST" value1="Be the first" />
 		<execute function="#assertTextEquals" locator1="PGWebcontentdisplay#COMMENT_LABEL" value1="Comment" />
 		<execute function="#type" locator1="PGWebcontentdisplay#COMMENT_FIELD" value1="Hello World!" />
 		<execute function="#assertClick" locator1="PGWebcontentdisplay#COMMENT_REPLY_BUTTON" value1="Reply" />
@@ -282,7 +282,7 @@
 		<for list="${fileTypes}" param="fileType">
 			<var name="key_fileType" value="${fileType}" />
 
-			<execute function="#assertTextEquals" locator1="PGWebcontentdisplay#DOCUMENT_CONVERSION_TYPE" value1="${fileType}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplay#DOCUMENT_CONVERSION_TYPE" value1="${fileType}" />
 			<execute function="#assertElementPresent" locator1="PGWebcontentdisplay#DOCUMENT_CONVERSION_TYPE_ICON" />
 		</for>
 	</command>

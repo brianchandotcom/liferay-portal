@@ -40,7 +40,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_LINK" value1="${entryTitle}" />
 		<execute function="#mouseOver" locator1="CPBlogsEntry#COMMENT" />
-		<execute function="#assertClick" locator1="CPBlogsEntry#COMMENT_DELETE_1" value1="Delete" />
+		<execute function="AssertClick#assertTextClickWaitForInlineCKEditor" locator1="CPBlogsEntry#COMMENT_DELETE_1" value1="Delete" />
 
 		<var method="selenium#getAlert()" name="string" />
 
@@ -272,7 +272,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_LINK" value1="${entryTitle}" />
 		<execute function="#mouseOver" locator1="CPBlogsEntry#COMMENT" />
-		<execute function="#assertClick" locator1="CPBlogsEntry#COMMENT_DELETE_1" value1="Delete" />
+		<execute function="AssertClick#assertTextClickWaitForInlineCKEditor" locator1="CPBlogsEntry#COMMENT_DELETE_1" value1="Delete" />
 
 		<var method="selenium#isAlertPresent()" name="alert" />
 
@@ -480,7 +480,7 @@
 	</command>
 
 	<command name="IsTextPresent" priority="5">
-		<execute function="#assertClick" locator1="Dockbar#ADMIN" value1="Admin" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
 
 		<var method="selenium#isTextPresent('Site Administrator')" name="string" />
 

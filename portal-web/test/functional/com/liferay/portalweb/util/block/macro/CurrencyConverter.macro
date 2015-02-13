@@ -6,8 +6,8 @@
 		<execute function="#select" locator1="Currencyconverter#CURRENCY_CONVERTER_TO_SELECT" value1="${currencyTo}" />
 		<execute function="#assertClick" locator1="Currencyconverter#CONVERT_BUTTON" value1="Convert" />
 
-		<execute function="#assertTextEquals" locator1="Currencyconverter#CURRENCY_DATA_TABLE_FROM" value1="${currencyDataFrom}" />
-		<execute function="#assertTextEquals" locator1="Currencyconverter#CURRENCY_DATA_TABLE_TO" value1="${currencyDataTo}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Currencyconverter#CURRENCY_DATA_TABLE_FROM" value1="${currencyDataFrom}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Currencyconverter#CURRENCY_DATA_TABLE_TO" value1="${currencyDataTo}" />
 		<execute function="#assertElementPresent" locator1="Currencyconverter#CURRENCY_DATA_GRAPH" />
 	</command>
 </definition>

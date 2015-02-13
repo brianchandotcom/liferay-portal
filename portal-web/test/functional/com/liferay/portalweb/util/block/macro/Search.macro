@@ -2,7 +2,7 @@
 	<command name="gotoModifiedRangeFacetPG">
 		<var name="key_searchModifiedRange" value="${searchModifiedRange}" />
 
-		<execute function="#assertClick" locator1="PGSearchResults#MODIFIED_RANGE_FACET_TIME_RANGE" value1="${searchModifiedRange}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGSearchResults#MODIFIED_RANGE_FACET_TIME_RANGE" value1="${searchModifiedRange}" />
 	</command>
 
 	<command name="gotoUserSearchResultPG">
@@ -94,7 +94,7 @@
 		<execute function="#assertElementPresent" locator1="PGSearchResults#ASSET_TYPE_FACET_SEARCH_ASSETS_BOX" />
 		<execute function="#assertTextEquals" locator1="PGSearchResults#ASSET_TYPE_FACET_EVERYTHING" value1="Everything" />
 		<execute function="#assertTextEquals" locator1="PGSearchResults#ASSET_TYPE_FACET_FREQUENCY" value1="${facetFrequency}" />
-		<execute function="#assertClick" locator1="PGSearchResults#ASSET_TYPE_FACET_ASSET" value1="${searchAssetType}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGSearchResults#ASSET_TYPE_FACET_ASSET" value1="${searchAssetType}" />
 
 		<execute macro="Search#viewSearchPG">
 			<var name="searchAssetSummary" value="${searchAssetSummary}" />
@@ -140,7 +140,7 @@
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
 		<execute function="#assertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
-		<execute function="#assertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TYPE" value1="${searchAssetType}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TYPE" value1="${searchAssetType}" />
 
 		<if>
 			<isset var="searchAssetSummary" />
@@ -157,7 +157,7 @@
 		<execute function="#assertElementPresent" locator1="PGSearchResults#USER_FACET_SEARCH_USERS_BOX" />
 		<execute function="#assertTextEquals" locator1="PGSearchResults#USER_FACET_ANY_USER" value1="Any User" />
 		<execute function="#assertTextEquals" locator1="PGSearchResults#USER_FACET_FREQUENCY" value1="${facetFrequency}" />
-		<execute function="#assertClick" locator1="PGSearchResults#USER_FACET_USER_NAME" value1="${userLoginFullName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGSearchResults#USER_FACET_USER_NAME" value1="${userLoginFullName}" />
 
 		<execute macro="Search#viewSearchPG">
 			<var name="searchAssetSummary" value="${searchAssetSummary}" />

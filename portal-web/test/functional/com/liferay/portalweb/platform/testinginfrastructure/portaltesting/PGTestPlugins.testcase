@@ -229,8 +229,8 @@
 
 	<!--<var name="randomNumber" path="PGTestPublisherPortlet" locator="PUBLISHER_PORTLET_MESSAGE" />
 
-		<execute function="#assertTextEquals" locator1="PGTestPublisherPortlet#PUBLISHER_PORTLET_MESSAGE" value1="${randomNumber}" />
-		<execute function="#assertTextEquals" locator1="PGTestSubscriberPortlet#SUBSCRIBER_PORTLET_MESSAGE" value1="${randomNumber}"/>-->
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGTestPublisherPortlet#PUBLISHER_PORTLET_MESSAGE" value1="${randomNumber}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGTestSubscriberPortlet#SUBSCRIBER_PORTLET_MESSAGE" value1="${randomNumber}"/>-->
 	</command>
 
 	<command known-issues="LPS-45835" name="ViewResourcesImporter" priority="5">

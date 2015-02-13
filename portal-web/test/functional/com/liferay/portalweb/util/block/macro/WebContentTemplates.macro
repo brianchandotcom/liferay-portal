@@ -8,7 +8,7 @@
 		<execute function="#selectFrame" />
 
 		<execute function="#selectFrame" locator1="CPWebcontentTemplatesAddtemplate#TEMPLATES_IFRAME" />
-		<execute function="#type" locator1="CPWebcontentTemplatesAddtemplate#NAME_FIELD" value1="${templateName}" />
+		<execute function="Type#clickAtSendKeys" locator1="CPWebcontentTemplatesAddtemplate#NAME_FIELD" value1="${templateName}" />
 
 		<if>
 			<isset var="localization1NameKey" />
@@ -16,7 +16,7 @@
 				<var name="key_localizationName" value="${localization1NameKey}" />
 
 				<execute function="#click" locator1="CPWebcontentStructuresAddstructure#LOCALIZATION_NAME" />
-				<execute function="#type" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${localization1Name}" />
+				<execute function="Type#clickAtSendKeys" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${localization1Name}" />
 
 				<if>
 					<isset var="localization2NameKey" />
@@ -24,7 +24,7 @@
 						<var name="key_localizationName" value="${localization2NameKey}" />
 
 						<execute function="#click" locator1="CPWebcontentStructuresAddstructure#LOCALIZATION_NAME" />
-						<execute function="#type" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${localization2Name}" />
+						<execute function="Type#clickAtSendKeys" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${localization2Name}" />
 					</then>
 				</if>
 			</then>
@@ -55,7 +55,7 @@
 
 				<execute function="#selectFrame" />
 				<execute function="#selectFrame" locator1="CPWebcontentTemplatesAddtemplate#TEMPLATES_IFRAME" />
-				<execute function="#assertTextEquals" locator1="CPWebcontentTemplatesAddtemplate#STRUCTURE" value1="${structureName}" />
+				<execute function="AssertTextEquals#assertValue" locator1="CPWebcontentTemplatesAddtemplate#STRUCTURE" value1="${structureName}" />
 
 				<if>
 					<equals arg1="${templateLanguage}" arg2="ftl" />
@@ -96,7 +96,7 @@
 		<if>
 			<isset var="templateScript" />
 			<then>
-				<execute function="#type" locator1="CPWebcontentTemplatesAddtemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
+				<execute function="Type#typeAceEditor" locator1="CPWebcontentTemplatesAddtemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
 			</then>
 		</if>
 
@@ -286,7 +286,7 @@
 		<if>
 			<isset var="structureName" />
 			<then>
-				<execute function="#assertTextEquals" locator1="CPWebcontentTemplatesEdittemplate#STRUCTURE" value1="${structureName}" />
+				<execute function="AssertTextEquals#assertValue" locator1="CPWebcontentTemplatesEdittemplate#STRUCTURE" value1="${structureName}" />
 			</then>
 		</if>
 

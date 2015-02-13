@@ -18,7 +18,7 @@
 		</execute>
 
 		<execute function="#click" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_INPUT_FIELD" />
-		<execute function="#type" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_INPUT_FIELD" value1="${statusUpdateEntryContent}" />
+		<execute function="Type#sendKeys" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_INPUT_FIELD" value1="${statusUpdateEntryContent}" />
 
 		<execute macro="SOMicroblogs#viewCharacterCountdownCmd" />
 
@@ -45,7 +45,7 @@
 		</execute>
 
 		<execute function="#click" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_INPUT_FIELD" />
-		<execute function="#type" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_INPUT_FIELD" value1="${statusUpdateEntryContent}" />
+		<execute function="Type#sendKeys" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_INPUT_FIELD" value1="${statusUpdateEntryContent}" />
 
 		<execute macro="SOMicroblogs#viewCharacterCountdownCmd" />
 

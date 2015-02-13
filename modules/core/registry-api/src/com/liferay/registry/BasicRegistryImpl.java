@@ -414,16 +414,8 @@ public class BasicRegistryImpl implements Registry {
 			ServiceTracker<S, T> serviceTracker =
 				(ServiceTracker<S, T>)entry.getKey();
 
-			T service = serviceTracker.getService(basicServiceReference);
-
-			if (service == null) {
-				continue;
-			}
-
-			serviceTracker.remove(basicServiceReference);
-
 			try {
-				serviceTracker.removedService(basicServiceReference, service);
+				serviceTracker.remove(basicServiceReference);
 			}
 			catch (Throwable t) {
 				t.printStackTrace();

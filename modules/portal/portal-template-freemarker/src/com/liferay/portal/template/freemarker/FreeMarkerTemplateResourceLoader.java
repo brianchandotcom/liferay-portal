@@ -39,10 +39,10 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.portal.template.freemarker",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = {
-		FreemarkerTemplateResourceLoader.class, TemplateResourceLoader.class
+		FreeMarkerTemplateResourceLoader.class, TemplateResourceLoader.class
 	}
 )
-public class FreemarkerTemplateResourceLoader implements TemplateResourceLoader{
+public class FreeMarkerTemplateResourceLoader implements TemplateResourceLoader{
 
 	@Override
 	public void clearCache() {

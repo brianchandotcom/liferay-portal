@@ -270,7 +270,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	}
 
 	@Override
-	@Reference(service = FreemarkerTemplateResourceLoader.class, unbind = "-")
+	@Reference(service = FreeMarkerTemplateResourceLoader.class, unbind = "-")
 	public void setTemplateResourceLoader(
 		TemplateResourceLoader templateResourceLoader) {
 

@@ -54,10 +54,10 @@ import org.osgi.service.component.annotations.Modified;
  * @author Peter Fellwock
  */
 @Component(
-		configurationPid = "com.liferay.portal.template.velocity",
-		configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-		service = {TemplateContextHelper.class, VelocityTemplateContextHelper.class}
-	)
+	configurationPid = "com.liferay.portal.template.velocity",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = {TemplateContextHelper.class, VelocityTemplateContextHelper.class}
+)
 public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 	@Override

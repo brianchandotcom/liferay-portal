@@ -87,15 +87,17 @@ List<ExportImportConfiguration> recentExportImportConfigurations = ExportImportC
 					%>
 
 				</c:when>
-				<c:when test="<%= layoutSetBranches.size() == 1 %>">
+				<c:otherwise>
+					<c:if test="<%= layoutSetBranches.size() == 1 %>">
 
-					<%
-					layoutSetBranch = layoutSetBranches.get(0);
+						<%
+						layoutSetBranch = layoutSetBranches.get(0);
 
-					publishRenderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranch.getLayoutSetBranchId()));
-					%>
+						publishRenderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranch.getLayoutSetBranchId()));
+						%>
 
-				</c:when>
+					</c:if>
+				</c:otherwise>
 			</c:choose>
 
 			<%
@@ -127,24 +129,27 @@ List<ExportImportConfiguration> recentExportImportConfigurations = ExportImportC
 						url="<%= publishRenderURL.toString() %>"
 					/>
 
-					<c:if test="<%= recentExportImportConfigurations.size() > 0 %>">
-						<li class="divider"></li>
-					</c:if>
-
 					<%
-					for (ExportImportConfiguration recentExportImportConfiguration : recentExportImportConfigurations) {
+					if (recentExportImportConfigurations.size() > 0) {
+						%>
+
+							<li class="divider"></li>
+
+						<%
+					}
+
+					for (ExportImportConfiguration exportImportConfiguration : recentExportImportConfigurations) {
 					%>
 
 						<portlet:renderURL var="confirmationURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="struts_action" value="/staging_bar/confirmation" />
 							<portlet:param name="redirect" value="<%= publishRedirectURL.toString() %>" />
-							<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(recentExportImportConfiguration.getExportImportConfigurationId()) %>" />
-							<portlet:param name="quickPublish" value="<%= String.valueOf(true) %>" />
+							<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 						</portlet:renderURL>
 
 						<liferay-ui:icon
 							iconCssClass="icon icon-archive"
-							message="<%= recentExportImportConfiguration.getName() %>"
+							message="<%= exportImportConfiguration.getName() %>"
 							url="<%= confirmationURL.toString() %>"
 							useDialog="<%= true %>"
 						/>

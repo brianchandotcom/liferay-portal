@@ -651,10 +651,10 @@ public class AssetPublisherDisplayContext {
 		return _enableRSS;
 	}
 
-	public boolean isEnableSetAsDefualtAssetPublisher() {
+	public boolean isEnableSetAsDefaultAssetPublisher() {
 		String portletName = getPortletName();
 
-		if (portletName.equals(AssetPublisherPortletKeys.ASSET_PUBLISHER)) {
+		if (portletName.equals(PortletKeys.ASSET_PUBLISHER)) {
 			return true;
 		}
 

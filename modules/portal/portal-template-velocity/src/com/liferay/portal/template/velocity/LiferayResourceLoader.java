@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,16 +67,12 @@ public class LiferayResourceLoader extends ResourceLoader {
 	}
 
 	@Override
-	public void init(ExtendedProperties props) {
-		String resourceModificationCheckInterval = (String)props.get(
-			"resourceModificationCheckInterval");
+	public void init(ExtendedProperties extendedProperties) {
+		int resourceModificationCheckInterval = GetterUtil.getInteger(
+			extendedProperties.get("resourceModificationCheckInterval"), 60);
 
-		if (resourceModificationCheckInterval == null) {
-			resourceModificationCheckInterval = "60";
-		}
+		setModificationCheckInterval(resourceModificationCheckInterval);
 
-		setModificationCheckInterval(
-			Integer.parseInt(resourceModificationCheckInterval));
 	}
 
 	@Override

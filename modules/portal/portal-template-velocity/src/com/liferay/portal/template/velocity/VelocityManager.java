@@ -192,7 +192,8 @@ public class VelocityManager extends BaseTemplateManager {
 
 		extendedProperties.setProperty(
 			VelocityEngine.VM_LIBRARY,
-			_velocityEngineConfiguration.velocimacroLibrary());
+			StringUtil.merge(
+				_velocityEngineConfiguration.velocimacroLibrary()));
 
 		extendedProperties.setProperty(
 			VelocityEngine.VM_LIBRARY_AUTORELOAD,

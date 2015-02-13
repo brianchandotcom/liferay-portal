@@ -84,12 +84,12 @@
 			<then>
 				<var name="key_campaignTrackingAction" value="Youtube" />
 
-				<execute action="CPContenttargetingAddcampaign#dragAndDrop" locator1="CAMPAIGN_TRACKING_ACTIONS" locator2="TRACKING_ACTIONS_FORM_BUILDER" value1="Youtube Videos" />
+				<execute function="#dragAndDrop" locator1="CPContenttargetingAddcampaign#CAMPAIGN_TRACKING_ACTIONS" locator2="CPContenttargetingAddcampaign#TRACKING_ACTIONS_FORM_BUILDER" value1="Youtube Videos" />
 			</then>
 			<else>
 				<var name="key_campaignTrackingAction" value="${campaignTrackingAction}" />
 
-				<execute action="CPContenttargetingAddcampaign#dragAndDrop" locator1="CAMPAIGN_TRACKING_ACTIONS" locator2="TRACKING_ACTIONS_FORM_BUILDER" value1="${campaignTrackingAction}" />
+				<execute function="#dragAndDrop" locator1="CPContenttargetingAddcampaign#CAMPAIGN_TRACKING_ACTIONS" locator2="CPContenttargetingAddcampaign#TRACKING_ACTIONS_FORM_BUILDER" value1="${campaignTrackingAction}" />
 			</else>
 		</if>
 	</command>

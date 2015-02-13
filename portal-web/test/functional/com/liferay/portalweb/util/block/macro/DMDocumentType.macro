@@ -31,7 +31,7 @@
 
 		<var name="key_field" value="${field}" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#dragAndDrop" locator1="FIELDS_FIELD" locator2="FORM_BUILDER" value1="${field}" />
+		<execute function="#dragAndDrop" locator1="PGDocumentsandmediaManageDocumenttypesAdd#FIELDS_FIELD" locator2="PGDocumentsandmediaManageDocumenttypesAdd#FORM_BUILDER" value1="${field}" />
 
 		<var name="key_fieldFieldLabel" value="${field}" />
 

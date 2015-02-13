@@ -47,7 +47,7 @@
 
 		<var name="key_userSegmentRule" value="${userSegmentRule}" />
 
-		<execute action="CPContenttargetingAddusersegment#dragAndDrop" locator1="USER_SEGMENT_RULES_RULE" locator2="USER_SEGMENT_RULES_FORM_BUILDER" value1="${userSegmentRule}" />
+		<execute function="#dragAndDrop" locator1="CPContenttargetingAddusersegment#USER_SEGMENT_RULES_RULE" locator2="CPContenttargetingAddusersegment#USER_SEGMENT_RULES_FORM_BUILDER" value1="${userSegmentRule}" />
 	</command>
 
 	<command name="addSessionAttributesTimeRuleCP">

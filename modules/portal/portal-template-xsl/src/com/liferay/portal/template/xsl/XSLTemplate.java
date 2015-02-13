@@ -23,14 +23,14 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.template.TemplateContextHelper;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.template.xsl.configuration.XSLEngineConfiguration;
+import com.liferay.portal.xsl.XSLTemplateResource;
+import com.liferay.portal.xsl.XSLURIResolver;
 
 import java.io.Writer;
-
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
@@ -38,7 +38,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-
 import javax.xml.XMLConstants;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -48,13 +47,15 @@ import javax.xml.transform.stream.StreamSource;
 
 /**
  * @author Tina Tian
+ * @author Peter Fellwock
  */
 public class XSLTemplate implements Template {
 
 	public XSLTemplate(
 		XSLTemplateResource xslTemplateResource,
 		TemplateResource errorTemplateResource,
-		TemplateContextHelper templateContextHelper) {
+		TemplateContextHelper templateContextHelper, 
+		XSLEngineConfiguration xSLEngineConfiguration) {
 
 		if (xslTemplateResource == null) {
 			throw new IllegalArgumentException("XSL template resource is null");
@@ -74,7 +75,7 @@ public class XSLTemplate implements Template {
 		try {
 			_transformerFactory.setFeature(
 				XMLConstants.FEATURE_SECURE_PROCESSING,
-				PropsValues.XSL_TEMPLATE_SECURE_PROCESSING_ENABLED);
+				xSLEngineConfiguration.secureProcesingEnabled());
 		}
 		catch (TransformerConfigurationException tce) {
 		}

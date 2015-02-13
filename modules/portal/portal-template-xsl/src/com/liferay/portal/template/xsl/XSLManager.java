@@ -14,15 +14,22 @@
 
 package com.liferay.portal.template.xsl;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.template.xsl.configuration.XSLEngineConfiguration;
+import com.liferay.portal.xsl.XSLTemplateResource;
 
+import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 
 import java.util.Map;
 
@@ -72,7 +79,19 @@ public class XSLManager extends BaseTemplateManager {
 			(XSLTemplateResource)templateResource;
 
 		return new XSLTemplate(
-			xslTemplateResource, errorTemplateResource, templateContextHelper);
+			xslTemplateResource, errorTemplateResource, templateContextHelper,
+			_XSLEngineConfiguration);
 	}
+	
+	@Activate
+	@Modified
+	protected void activate(ComponentContext componentContext) {
+		_XSLEngineConfiguration = Configurable.createConfigurable(
+			XSLEngineConfiguration.class,
+			componentContext.getProperties());
+
+	}
+	
+	private volatile XSLEngineConfiguration _XSLEngineConfiguration;
 
 }

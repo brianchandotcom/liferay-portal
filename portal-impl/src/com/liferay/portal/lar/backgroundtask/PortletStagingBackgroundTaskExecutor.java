@@ -62,9 +62,9 @@ public class PortletStagingBackgroundTaskExecutor
 			ExportImportThreadLocal.setPortletStagingInProcess(true);
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-					ExportImportLifecycleConstants.
-						EVENT_PUBLICATION_PORTLET_LOCAL_STARTED,
-					serializableTaskContextMap);
+				ExportImportLifecycleConstants.
+					EVENT_PUBLICATION_PORTLET_LOCAL_STARTED,
+				serializableTaskContextMap);
 
 			missingReferences = TransactionHandlerUtil.invoke(
 				transactionAttribute,
@@ -72,9 +72,9 @@ public class PortletStagingBackgroundTaskExecutor
 					backgroundTask.getBackgroundTaskId()));
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-					ExportImportLifecycleConstants.
-						EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED,
-					serializableTaskContextMap);
+				ExportImportLifecycleConstants.
+					EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED,
+				serializableTaskContextMap);
 		}
 		catch (Throwable t) {
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(

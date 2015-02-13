@@ -15,7 +15,7 @@
 package com.liferay.wiki.service.settings;
 
 import com.liferay.portal.kernel.settings.SettingsProvider;
-import com.liferay.wiki.settings.WikiConfiguration;
+import com.liferay.wiki.configuration.WikiConfiguration;
 import com.liferay.wiki.settings.WikiSettings;
 
 import org.osgi.service.component.annotations.Activate;

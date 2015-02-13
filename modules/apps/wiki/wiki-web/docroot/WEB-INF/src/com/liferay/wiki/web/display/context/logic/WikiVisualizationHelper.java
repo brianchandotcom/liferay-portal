@@ -17,10 +17,10 @@ package com.liferay.wiki.web.display.context.logic;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.wiki.configuration.WikiConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.settings.WikiConfiguration;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 
 import java.util.Collection;

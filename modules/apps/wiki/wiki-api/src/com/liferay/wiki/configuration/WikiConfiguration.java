@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.settings;
+package com.liferay.wiki.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -60,7 +60,7 @@ public interface WikiConfiguration {
 
 	@Meta.AD(
 		deflt =
-			"${resource:com/liferay/wiki/settings/dependencies" +
+			"${resource:com/liferay/wiki/configuration/dependencies" +
 				"/email_page_added_body.tmpl}",
 		required = false
 	)
@@ -73,7 +73,7 @@ public interface WikiConfiguration {
 
 	@Meta.AD(
 		deflt =
-			"${resource:com/liferay/wiki/settings/dependencies" +
+			"${resource:com/liferay/wiki/configuration/dependencies" +
 				"/email_page_added_subject.tmpl}",
 		required = false
 	)
@@ -81,7 +81,7 @@ public interface WikiConfiguration {
 
 	@Meta.AD(
 		deflt =
-			"${resource:com/liferay/wiki/settings/dependencies" +
+			"${resource:com/liferay/wiki/configuration/dependencies" +
 				"/email_page_updated_body.tmpl}",
 		required = false
 	)
@@ -94,7 +94,7 @@ public interface WikiConfiguration {
 
 	@Meta.AD(
 		deflt =
-			"${resource:com/liferay/wiki/settings/dependencies" +
+			"${resource:com/liferay/wiki/configuration/dependencies" +
 				"/email_page_updated_subject.tmpl}",
 		required = false
 	)

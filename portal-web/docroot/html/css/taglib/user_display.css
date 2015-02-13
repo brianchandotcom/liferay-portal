@@ -6,7 +6,17 @@
 	&.display-style-1 {
 		.user-profile-image {
 			float: left;
-			margin-right: 1.5em;
+			margin-right: 24px;
+		}
+
+		.user-name {
+			display: inline-block;
+			margin-top: 10px;
+		}
+
+		.user-details {
+			margin-left: 84px;
+			margin-top: 0;
 		}
 	}
 
@@ -30,11 +40,11 @@
 
 	.avatar {
 		background: no-repeat center;
-		background-size: 65px;
+		background-size: 60px;
 		display: block;
-		height: 65px;
+		height: 60px;
 		margin: 0 auto;
-		width: 65px;
+		width: 60px;
 
 		&.author:after {
 			border-radius: 50%;

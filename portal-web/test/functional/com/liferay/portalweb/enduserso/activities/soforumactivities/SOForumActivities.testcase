@@ -146,7 +146,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${userName}" />
+		<execute function="AssertTextNotPresent" value1="${userName}" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
@@ -168,7 +168,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${userName}" />
+		<execute function="AssertTextNotPresent" value1="${userName}" />
 
 		<execute macro="Page#gotoMyProfile" />
 
@@ -191,7 +191,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${userName}" />
+		<execute function="AssertTextNotPresent" value1="${userName}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -241,7 +241,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="AssertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 	</command>
 
 	<command name="ViewMBCategoryThreadMessageActivities" priority="5">
@@ -332,7 +332,7 @@
 
 		<var name="key_row" value="01" />
 
-		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_ACTION_LINK" value1="${categoryName2}" />
+		<execute function="AssertClick" locator1="SOActivities#ACTIVITIES_ACTION_LINK" value1="${categoryName2}" />
 
 		<execute macro="SOForumsCategoryThread#viewDetailsPG">
 			<var name="categoryName" value="${categoryName2}" />
@@ -358,7 +358,7 @@
 
 		<var name="key_row" value="02" />
 
-		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_ACTION_LINK" value1="${categoryName1}" />
+		<execute function="AssertClick" locator1="SOActivities#ACTIVITIES_ACTION_LINK" value1="${categoryName1}" />
 
 		<execute macro="SOForumsCategoryThread#viewDetailsPG">
 			<var name="categoryName" value="${categoryName1}" />
@@ -615,9 +615,9 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${categoryName2}" />
-		<execute function="#assertTextNotPresent" value1="${threadSubject2}" />
-		<execute function="#assertTextNotPresent" value1="${threadBody2}" />
+		<execute function="AssertTextNotPresent" value1="${categoryName2}" />
+		<execute function="AssertTextNotPresent" value1="${threadSubject2}" />
+		<execute function="AssertTextNotPresent" value1="${threadBody2}" />
 	</command>
 
 	<command known-issues="LPS-45435" name="ViewRemoveMBThreadViewPermissionActivities" priority="4">
@@ -720,7 +720,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${threadSubject2}" />
-		<execute function="#assertTextNotPresent" value1="${threadBody2}" />
+		<execute function="AssertTextNotPresent" value1="${threadSubject2}" />
+		<execute function="AssertTextNotPresent" value1="${threadBody2}" />
 	</command>
 </definition>

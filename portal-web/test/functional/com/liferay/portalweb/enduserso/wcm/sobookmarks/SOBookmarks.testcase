@@ -188,12 +188,12 @@
 
 		<var name="key_bookmarksEntryName" value="${bookmarksEntryName}" />
 
-		<execute function="#assertClick" locator1="SOBookmarks#BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
-		<execute function="#assertClick" locator1="SOBookmarks#BOOKMARKS_ACTIONS_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="SOBookmarks#BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="SOBookmarks#BOOKMARKS_ACTIONS_MENULIST_EDIT" value1="Edit" />
 
 		<var name="key_tagName" value="${tagName}" />
 
-		<execute function="#assertTextEquals" locator1="SOBookmarksAdd#TAG" value1="${tagName}" />
+		<execute function="AssertTextEquals" locator1="SOBookmarksAdd#TAG" value1="${tagName}" />
 	</command>
 
 	<command name="DeleteBookmarksEntryTest" priority="5">
@@ -421,8 +421,8 @@
 
 		<var name="key_bookmarksEntryName" value="${bookmarksEntryName2}" />
 
-		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
-		<execute function="#assertElementNotPresent" locator1="SOBookmarks#BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
+		<execute function="AssertTextNotPresent" value1="${bookmarksEntryDescription2}" />
+		<execute function="AssertElementNotPresent" locator1="SOBookmarks#BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
 	</command>
 
 	<command name="ViewBookmarksEntryAsGuest" priority="4">
@@ -506,7 +506,7 @@
 
 		<var name="key_bookmarksEntryName" value="${bookmarksEntryName2}" />
 
-		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
-		<execute function="#assertElementNotPresent" locator1="SOBookmarks#BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
+		<execute function="AssertTextNotPresent" value1="${bookmarksEntryDescription2}" />
+		<execute function="AssertElementNotPresent" locator1="SOBookmarks#BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
 	</command>
 </definition>

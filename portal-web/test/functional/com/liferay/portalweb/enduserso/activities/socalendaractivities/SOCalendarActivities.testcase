@@ -501,7 +501,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="1 Comment" />
+		<execute function="AssertTextNotPresent" value1="1 Comment" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Calendar" />
@@ -515,7 +515,7 @@
 			<var name="user" value="${adminName}" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${commentContent}" />
+		<execute function="AssertTextNotPresent" value1="${commentContent}" />
 	</command>
 
 	<command name="EditCalendarEventComment" priority="5">
@@ -767,7 +767,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute function="#assertTextNotPresent" value1="${eventTitle}" />
+		<execute function="AssertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 	</command>
 </definition>

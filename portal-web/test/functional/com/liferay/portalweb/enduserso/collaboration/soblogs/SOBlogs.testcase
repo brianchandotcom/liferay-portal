@@ -137,37 +137,37 @@
 
 		<var name="key_entryTitle" value="${entryTitle1}" />
 
-		<execute function="#assertClick" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle1}" />
+		<execute function="AssertClick" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle1}" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle1}" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent1}" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle1}" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent1}" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#PREVIOUS" value1="Previous" />
-		<execute function="#assertElementNotPresent" locator1="PGBlogsEntry#PREVIOUS_LINK" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#NEXT_LINK" value1="Next" />
-		<execute function="#assertElementNotPresent" locator1="PGBlogsEntry#NEXT" />
-		<execute function="#assertClick" locator1="PGBlogsEntry#NEXT_LINK" value1="Next" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#PREVIOUS" value1="Previous" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogsEntry#PREVIOUS_LINK" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#NEXT_LINK" value1="Next" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogsEntry#NEXT" />
+		<execute function="AssertClick" locator1="PGBlogsEntry#NEXT_LINK" value1="Next" />
 
 		<var name="key_entryTitle" value="${entryTitle2}" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle2}" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent2}" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle2}" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent2}" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#PREVIOUS_LINK" value1="Previous" />
-		<execute function="#assertElementNotPresent" locator1="PGBlogsEntry#PREVIOUS" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#NEXT_LINK" value1="Next" />
-		<execute function="#assertElementNotPresent" locator1="PGBlogsEntry#NEXT" />
-		<execute function="#assertClick" locator1="PGBlogsEntry#NEXT_LINK" value1="Next" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#PREVIOUS_LINK" value1="Previous" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogsEntry#PREVIOUS" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#NEXT_LINK" value1="Next" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogsEntry#NEXT" />
+		<execute function="AssertClick" locator1="PGBlogsEntry#NEXT_LINK" value1="Next" />
 
 		<var name="key_entryTitle" value="${entryTitle3}" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle3}" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent3}" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle3}" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent3}" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#PREVIOUS_LINK" value1="Previous" />
-		<execute function="#assertElementNotPresent" locator1="PGBlogsEntry#PREVIOUS" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#NEXT" value1="Next" />
-		<execute function="#assertElementNotPresent" locator1="PGBlogsEntry#NEXT_LINK" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#PREVIOUS_LINK" value1="Previous" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogsEntry#PREVIOUS" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#NEXT" value1="Next" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogsEntry#NEXT_LINK" />
 	</command>
 
 	<command name="AddSOBlogsEntry" priority="5">
@@ -186,8 +186,8 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_COMMENT_1" value1="0 Comments" />
-		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_COMMENT_1" value1="0 Comments" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
 
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="${entryContent}" />
@@ -204,8 +204,8 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_COMMENTS" value1="0 Comments" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#AVERAGE" value1="Average (0 Votes)" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_COMMENTS" value1="0 Comments" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#AVERAGE" value1="Average (0 Votes)" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -217,7 +217,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_VIEW_COUNT" value1="2 Views," />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_VIEW_COUNT" value1="2 Views," />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -229,18 +229,18 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_VIEW_COUNT" value1="3 Views," />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_VIEW_COUNT" value1="3 Views," />
 
-		<execute function="#open" locator1="http://localhost:8080/web/open-site-name/blogs/-/blogs/rss" />
+		<execute function="Open" locator1="http://localhost:8080/web/open-site-name/blogs/-/blogs/rss" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogsRSS#FEED_TITLE" value1="Open Site Name" />
-		<execute function="#assertTextEquals" locator1="PGBlogsRSS#FEED_SUBTITLE" value1="Open Site Name" />
-		<execute function="#assertTextEquals" locator1="PGBlogsRSS#ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="PGBlogsRSS#ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="#click" locator1="PGBlogsRSS#ENTRY_TITLE" />
+		<execute function="AssertTextEquals" locator1="PGBlogsRSS#FEED_TITLE" value1="Open Site Name" />
+		<execute function="AssertTextEquals" locator1="PGBlogsRSS#FEED_SUBTITLE" value1="Open Site Name" />
+		<execute function="AssertTextEquals" locator1="PGBlogsRSS#ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="PGBlogsRSS#ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="Click" locator1="PGBlogsRSS#ENTRY_TITLE" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="AddSOBlogsEntryCategories" priority="4">
@@ -296,8 +296,8 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_COMMENT_1" value1="0 Comments" />
-		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_COMMENT_1" value1="0 Comments" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
 
 		<execute macro="BlogsEntryComment#addPG">
 			<var name="entryComment" value="${entryComment}" />
@@ -607,8 +607,8 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_COMMENT_1" value1="0 Comments" />
-		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_COMMENT_1" value1="0 Comments" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
 
 		<execute macro="BlogsEntry#viewDetailsPG">
 			<var name="entryAuthorFirstName" value="${userFirstName}" />
@@ -618,8 +618,8 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_COMMENTS" value1="0 Comments" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#AVERAGE" value1="Average (0 Votes)" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_COMMENTS" value1="0 Comments" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#AVERAGE" value1="Average (0 Votes)" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -648,8 +648,8 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_COMMENT_1" value1="0 Comments" />
-		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_COMMENT_1" value1="0 Comments" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
 
 		<execute macro="BlogsEntry#viewDetailsPG">
 			<var name="entryAuthorFirstName" value="${userFirstName}" />
@@ -659,8 +659,8 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_COMMENTS" value1="0 Comments" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#AVERAGE" value1="Average (0 Votes)" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_COMMENTS" value1="0 Comments" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#AVERAGE" value1="Average (0 Votes)" />
 	</command>
 
 	<command name="AddSOBlogsEntryTag" priority="4">
@@ -1133,7 +1133,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute function="#sikuliAssertElementPresent" locator1="SOBlogs#SCREENSHOTS_BLOG_ENTRY_CONTENT_INLINE_EDIT_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="SOBlogs#SCREENSHOTS_BLOG_ENTRY_CONTENT_INLINE_EDIT_PNG" />
 	</command>
 
 	<command name="EditSOBlogsEntrySOUser" priority="5">
@@ -1313,8 +1313,8 @@
 			<var name="entryTitle" value="${entryTitleEdit}" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_COMMENTS" value1="0 Comments" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_COMMENTS" value1="0 Comments" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
 	</command>
 
 	<command name="ImportLarSOBlogsEntry" priority="4">
@@ -1572,8 +1572,8 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertElementPresent" locator1="SOBlogs#RECENT_BLOGS_ENTRY_NO_ENTRIES" />
-		<execute function="#assertElementNotPresent" locator1="SOBlogs#RECENT_BLOGS_ENTRY_TITLE" />
+		<execute function="AssertElementPresent" locator1="SOBlogs#RECENT_BLOGS_ENTRY_NO_ENTRIES" />
+		<execute function="AssertElementNotPresent" locator1="SOBlogs#RECENT_BLOGS_ENTRY_TITLE" />
 	</command>
 
 	<command name="MoveToRecycleBinSOBlogsEntrySOUser" priority="5">
@@ -1740,12 +1740,12 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertElementPresent" locator1="PGBlogs#ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
-		<execute function="#assertElementPresent" locator1="PGBlogs#PERMISSIONS_BUTTON" value1="Permissions" />
-		<execute function="#assertTextEquals" locator1="PGBlogs#RSS_LINK" value1="RSS" />
-		<execute function="#assertTextEquals" locator1="PGBlogs#SUBSCRIBE_LINK" value1="Subscribe" />
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE_1" />
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT_1" />
+		<execute function="AssertElementPresent" locator1="PGBlogs#ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
+		<execute function="AssertElementPresent" locator1="PGBlogs#PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#RSS_LINK" value1="RSS" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#SUBSCRIBE_LINK" value1="Subscribe" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE_1" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT_1" />
 	</command>
 
 	<command name="PreviewSOBlogsEntry" priority="5">
@@ -2257,7 +2257,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute function="#pause" locator1="30000" />
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -2285,12 +2285,12 @@
 			<var name="userPassword" property-value="email.address.2" />
 		</execute>
 
-		<execute function="#open" locator1="${blogEntryURL}" />
+		<execute function="Open" locator1="${blogEntryURL}" />
 
-		<execute function="#pause" locator1="1000" />
+		<execute function="Pause" locator1="1000" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="UserFlagsEntryAndAdminViewsNotificationInGmail" priority="4">
@@ -2373,7 +2373,7 @@
 			<var name="flagReason" value="${flagReason}" />
 		</execute>
 
-		<execute function="#pause" locator1="30000" />
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -2397,7 +2397,7 @@
 			<var name="userPassword" value="email.password.2" />
 		</execute>
 
-		<execute function="#open" locator1="http://localhost:8080" />
+		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
 	<command name="ViewSOBlogsEntriesMaxItemsToDisplay5" priority="4">
@@ -2575,38 +2575,38 @@
 
 		<var name="key_entryTitle" value="${entryTitle1}" />
 
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogs#PAGINATION_ITEMS_PER_PAGE" value1="— 5 Items per Page" />
-		<execute function="#assertTextEquals" locator1="PGBlogs#PAGINATION_PAGE_SELECTOR" value1="Page 1 of 2" />
-		<execute function="#assertClick" locator1="PGBlogs#PAGINATION_NEXT_BUTTON" value1="Next" />
-		<execute function="#assertTextEquals" locator1="PGBlogs#PAGINATION_PAGE_SELECTOR" value1="Page 2 of 2" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#PAGINATION_ITEMS_PER_PAGE" value1="— 5 Items per Page" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#PAGINATION_PAGE_SELECTOR" value1="Page 1 of 2" />
+		<execute function="AssertClick" locator1="PGBlogs#PAGINATION_NEXT_BUTTON" value1="Next" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#PAGINATION_PAGE_SELECTOR" value1="Page 2 of 2" />
 
 		<var name="key_entryTitle" value="${entryTitle2}" />
 
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT" />
 
 		<var name="key_entryTitle" value="${entryTitle3}" />
 
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT" />
 
 		<var name="key_entryTitle" value="${entryTitle4}" />
 
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT" />
 
 		<var name="key_entryTitle" value="${entryTitle5}" />
 
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT" />
 
 		<var name="key_entryTitle" value="${entryTitle6}" />
 
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT" />
 
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="${entryContent1}" />
@@ -2673,8 +2673,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent2}" />
 
 		<execute macro="SOBlogs#viewBlogsEntryRecentBlogs">
 			<var name="entryContent" value="${entryContent1}" />
@@ -2686,8 +2686,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent1}" />
 
 		<execute macro="SOBlogs#viewBlogsEntryRecentBlogs">
 			<var name="entryAuthorFirstName" value="${userFirstName}" />
@@ -2707,8 +2707,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent2}" />
 
 		<execute macro="SOBlogs#viewBlogsEntryRecentBlogs">
 			<var name="entryContent" value="${entryContent1}" />
@@ -2752,8 +2752,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent1}" />
 
 		<execute macro="SOBlogs#viewBlogsEntryRecentBlogs">
 			<var name="entryAuthorFirstName" value="${userFirstName}" />

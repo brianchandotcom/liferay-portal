@@ -1,56 +1,56 @@
 <definition>
 	<command name="configureEventsPortletDisplayDays">
 		<if>
-			<condition function="#isElementNotPresent" locator1="SOUserBar#VISIBLE_PAGE_CONTROLS" />
+			<condition function="IsElementNotPresent" locator1="SOUserBar#VISIBLE_PAGE_CONTROLS" />
 			<then>
-				<execute function="#click" locator1="SOUserBar#TOGGLE_DOCKBAR" />
+				<execute function="Click" locator1="SOUserBar#TOGGLE_DOCKBAR" />
 			</then>
 		</if>
 
 		<if>
-			<condition function="#isElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
+			<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute function="#mouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-				<execute function="#click" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
 			</then>
 		</if>
 
-		<execute function="#click" locator1="SOEvents#EVENTS_DISPLAY_OPTIONS" />
+		<execute function="Click" locator1="SOEvents#EVENTS_DISPLAY_OPTIONS" />
 
-		<execute function="#click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
 
-		<execute function="#selectFrame" locator1="SOEventsConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="#select" locator1="SOEventsConfiguration#DISPLAY_SETTINGS_MAX_DAYS_DISPLAYED_SELECT" value1="${maxDisplayDays}" />
-		<execute function="#assertClick" locator1="SOEventsConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="SOEventsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrame" locator1="SOEventsConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="Select" locator1="SOEventsConfiguration#DISPLAY_SETTINGS_MAX_DAYS_DISPLAYED_SELECT" value1="${maxDisplayDays}" />
+		<execute function="AssertClick" locator1="SOEventsConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="SOEventsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="configureEventsPortletDisplayEvents">
 		<if>
-			<condition function="#isElementNotPresent" locator1="SOUserBar#VISIBLE_PAGE_CONTROLS" />
+			<condition function="IsElementNotPresent" locator1="SOUserBar#VISIBLE_PAGE_CONTROLS" />
 			<then>
-				<execute function="#click" locator1="SOUserBar#TOGGLE_DOCKBAR" />
+				<execute function="Click" locator1="SOUserBar#TOGGLE_DOCKBAR" />
 			</then>
 		</if>
 
 		<if>
-			<condition function="#isElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
+			<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute function="#mouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-				<execute function="#click" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
 			</then>
 		</if>
 
-		<execute function="#click" locator1="SOEvents#EVENTS_DISPLAY_OPTIONS" />
+		<execute function="Click" locator1="SOEvents#EVENTS_DISPLAY_OPTIONS" />
 
-		<execute function="#click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
 
-		<execute function="#selectFrame" locator1="SOEventsConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="#select" locator1="SOEventsConfiguration#DISPLAY_SETTINGS_MAX_EVENTS_TO_DISPLAY_SELECT" value1="${maxDisplayEvents}" />
-		<execute function="#assertClick" locator1="SOEventsConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="SOEventsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrame" locator1="SOEventsConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="Select" locator1="SOEventsConfiguration#DISPLAY_SETTINGS_MAX_EVENTS_TO_DISPLAY_SELECT" value1="${maxDisplayEvents}" />
+		<execute function="AssertClick" locator1="SOEventsConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="SOEventsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="viewTodaysEventDashboardEvent">
@@ -61,35 +61,35 @@
 			<then>
 				<var name="key_eventTitle" value="${eventTitleShort}" />
 
-				<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
+				<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
 			</then>
 			<else>
 				<var name="key_eventTitle" value="${eventTitle}" />
 
-				<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+				<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="startDateTime" />
 			<then>
-				<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" value1="${startDateTime}" />
+				<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" value1="${startDateTime}" />
 			</then>
 			<elseif>
 				<equals arg1="${allDayEvent}" arg2="true" />
 				<then>
-					<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+					<execute function="AssertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="#assertElementPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+				<execute function="AssertElementPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
 			</else>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_CREATOR" value1="${userName}" />
-		<execute function="#click" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" />
+		<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_CREATOR" value1="${userName}" />
+		<execute function="Click" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" />
 
-		<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
+		<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
 
 		<if>
 			<isset var="startDateTime" />
@@ -103,7 +103,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" />
 			</else>
 		</if>
 
@@ -119,7 +119,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" />
 			</else>
 		</if>
 
@@ -128,15 +128,15 @@
 				<equals arg1="${invitedToEvent}" arg2="true"  />
 			</not>
 			<then>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#RESOURCES_FIELD" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#RESOURCES_FIELD" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${schedulerEventDialogBox}" arg2="true" />
 			<then>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#MAYBE_BUTTON" />
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#DECLINE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#MAYBE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#DECLINE_BUTTON" />
 			</then>
 		</if>
 
@@ -147,8 +147,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
 				</for>
 			</then>
 			<elseif>
@@ -157,8 +157,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
 				</then>
 			</elseif>
 		</if>
@@ -169,18 +169,18 @@
 
 		<if>
 			<and>
-				<condition function="#isElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
-				<condition function="#isElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
+				<condition function="IsElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
+				<condition function="IsElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
 			</and>
 			<then>
-				<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
+				<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
 			</then>
 		</if>
 
-		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
-		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_CREATOR" value1="${userName}" />
-		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
-		<execute function="#assertTextNotPresent" value1="${eventTitle}" />
+		<execute function="AssertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+		<execute function="AssertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_CREATOR" value1="${userName}" />
+		<execute function="AssertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 	</command>
 
 	<command name="viewTodaysEventSiteEvent">
@@ -189,34 +189,34 @@
 			<then>
 				<var name="key_eventTitle" value="${eventTitleShort}" />
 
-				<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
+				<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
 			</then>
 			<else>
 				<var name="key_eventTitle" value="${eventTitle}" />
 
-				<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+				<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="startDateTime" />
 			<then>
-				<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" value1="${startDateTime}" />
+				<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" value1="${startDateTime}" />
 			</then>
 			<elseif>
 				<equals arg1="${allDayEvent}" arg2="true" />
 				<then>
-					<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+					<execute function="AssertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="#assertElementPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+				<execute function="AssertElementPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
 			</else>
 		</if>
 
-		<execute function="#click" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" />
+		<execute function="Click" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" />
 
-		<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
+		<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
 
 		<if>
 			<isset var="startDateTime" />
@@ -230,7 +230,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" />
 			</else>
 		</if>
 
@@ -246,7 +246,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" />
 			</else>
 		</if>
 
@@ -255,15 +255,15 @@
 				<equals arg1="${invitedToEvent}" arg2="true"  />
 			</not>
 			<then>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#RESOURCES_FIELD" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#RESOURCES_FIELD" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${schedulerEventDialogBox}" arg2="true" />
 			<then>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#MAYBE_BUTTON" />
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#DECLINE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#MAYBE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#DECLINE_BUTTON" />
 			</then>
 		</if>
 
@@ -274,8 +274,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
 				</for>
 			</then>
 			<elseif>
@@ -284,8 +284,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
 				</then>
 			</elseif>
 		</if>
@@ -299,35 +299,35 @@
 			<then>
 				<var name="key_eventTitle" value="${eventTitleShort}" />
 
-				<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
+				<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
 			</then>
 			<else>
 				<var name="key_eventTitle" value="${eventTitle}" />
 
-				<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+				<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="startDateTime" />
 			<then>
-				<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" value1="${startDateTime}" />
+				<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" value1="${startDateTime}" />
 			</then>
 			<elseif>
 				<equals arg1="${allDayEvent}" arg2="true" />
 				<then>
-					<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
+					<execute function="AssertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="#assertElementPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
+				<execute function="AssertElementPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
 			</else>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_CREATOR" value1="${userName}" />
-		<execute function="#click" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" />
+		<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_CREATOR" value1="${userName}" />
+		<execute function="Click" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" />
 
-		<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
+		<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
 
 		<if>
 			<isset var="startDateTime" />
@@ -335,7 +335,7 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
 			</then>
 			<else>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" />
 			</else>
 		</if>
 
@@ -345,7 +345,7 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
 			</then>
 			<else>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" />
 			</else>
 		</if>
 
@@ -354,15 +354,15 @@
 				<equals arg1="${invitedToEvent}" arg2="true"  />
 			</not>
 			<then>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#RESOURCES_FIELD" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#RESOURCES_FIELD" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${schedulerEventDialogBox}" arg2="true" />
 			<then>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#MAYBE_BUTTON" />
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#DECLINE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#MAYBE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#DECLINE_BUTTON" />
 			</then>
 		</if>
 
@@ -373,8 +373,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
 				</for>
 			</then>
 			<elseif>
@@ -383,8 +383,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
 				</then>
 			</elseif>
 		</if>
@@ -396,19 +396,19 @@
 			<then>
 				<var name="key_eventTitle" value="${eventTitleShort}" />
 
-				<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
+				<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
 			</then>
 			<else>
 				<var name="key_eventTitle" value="${eventTitle}" />
 
-				<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+				<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
 			</else>
 		</if>
 
-		<execute function="#assertElementPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
-		<execute function="#click" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" />
+		<execute function="AssertElementPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
+		<execute function="Click" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" />
 
-		<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
+		<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
 
 		<if>
 			<isset var="startDateTime" />
@@ -416,7 +416,7 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
 			</then>
 			<else>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" />
 			</else>
 		</if>
 
@@ -426,7 +426,7 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
 			</then>
 			<else>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" />
 			</else>
 		</if>
 
@@ -435,15 +435,15 @@
 				<equals arg1="${invitedToEvent}" arg2="true"  />
 			</not>
 			<then>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#RESOURCES_FIELD" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#RESOURCES_FIELD" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${schedulerEventDialogBox}" arg2="true" />
 			<then>
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#MAYBE_BUTTON" />
-				<execute function="#assertElementPresent" locator1="PGCalendarVieweventdetails#DECLINE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#MAYBE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#DECLINE_BUTTON" />
 			</then>
 		</if>
 
@@ -454,8 +454,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
 				</for>
 			</then>
 			<elseif>
@@ -464,8 +464,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="#assertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
 				</then>
 			</elseif>
 		</if>

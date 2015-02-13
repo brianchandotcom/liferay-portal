@@ -2,45 +2,45 @@
 	<property name="testray.main.component.name" value="Tools" />
 
 	<command name="Smoke" priority="5">
-		<execute function="#sikuliAssertElementPresent" locator1="PGLogin#SIGN_IN_BUTTON_PNG" />
-		<execute function="#sikuliAssertElementNotPresent" locator1="PGLogin#AVERAGE_RATING_STAR_ICON_PNG" />
-		<execute function="#sikuliType" locator1="PGLogin#EMAIL_ADDRESS_FIELD_PNG" value1="test@liferay.com" />
-		<execute function="#sikuliType" locator1="PGLogin#PASSWORD_FIELD_PNG" value1="test" />
-		<execute function="#check" locator1="PGLogin#REMEMBER_ME_CHECKBOX" />
-		<execute function="#sikuliClick" locator1="PGLogin#SIGN_IN_BUTTON_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="PGLogin#SIGN_IN_BUTTON_PNG" />
+		<execute function="SikuliAssertElementNotPresent" locator1="PGLogin#AVERAGE_RATING_STAR_ICON_PNG" />
+		<execute function="SikuliType" locator1="PGLogin#EMAIL_ADDRESS_FIELD_PNG" value1="test@liferay.com" />
+		<execute function="SikuliType" locator1="PGLogin#PASSWORD_FIELD_PNG" value1="test" />
+		<execute function="Check" locator1="PGLogin#REMEMBER_ME_CHECKBOX" />
+		<execute function="SikuliClick" locator1="PGLogin#SIGN_IN_BUTTON_PNG" />
 
-		<execute function="#assertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
+		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 
 		<if>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
 			<then>
-				<execute function="#assertClick" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
+				<execute function="AssertClick" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
 			</then>
 		</if>
 
 		<if>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGLoginNewpassword#PASSWORD_FIELD" />
 			<then>
-				<execute function="#type" locator1="PGLoginNewpassword#PASSWORD_FIELD" value1="test" />
-				<execute function="#type" locator1="PGLoginNewpassword#ENTER_AGAIN_FIELD" value1="test" />
-				<execute function="#assertClick" locator1="PGLoginNewpassword#SAVE_BUTTON" value1="Save" />
+				<execute function="Type" locator1="PGLoginNewpassword#PASSWORD_FIELD" value1="test" />
+				<execute function="Type" locator1="PGLoginNewpassword#ENTER_AGAIN_FIELD" value1="test" />
+				<execute function="AssertClick" locator1="PGLoginNewpassword#SAVE_BUTTON" value1="Save" />
 			</then>
 		</if>
 
 		<if>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGLoginPasswordreminder#ANSWER_FIELD" />
 			<then>
-				<execute function="#type" locator1="PGLoginPasswordreminder#ANSWER_FIELD" value1="test" />
-				<execute function="#assertClick" locator1="PGLoginPasswordreminder#SAVE_BUTTON" value1="Save" />
+				<execute function="Type" locator1="PGLoginPasswordreminder#ANSWER_FIELD" value1="test" />
+				<execute function="AssertClick" locator1="PGLoginPasswordreminder#SAVE_BUTTON" value1="Save" />
 			</then>
 		</if>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="You are signed in as Test Test." />
 
-		<execute function="#sikuliMouseMove" locator1="Home#SIGN_IN_PORTLET" />
-		<execute function="#sikuliLeftMouseDown" />
-		<execute function="#sikuliMouseMove" locator1="Home#HELLO_WORLD_PORTLET" />
-		<execute function="#sikuliLeftMouseUp" />
-		<execute function="#assertElementPresent" locator1="Home#PAGE_COLUMN_2_SIGN_IN_PORTLET" />
+		<execute function="SikuliMouseMove" locator1="Home#SIGN_IN_PORTLET" />
+		<execute function="SikuliLeftMouseDown" />
+		<execute function="SikuliMouseMove" locator1="Home#HELLO_WORLD_PORTLET" />
+		<execute function="SikuliLeftMouseUp" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE_COLUMN_2_SIGN_IN_PORTLET" />
 	</command>
 </definition>

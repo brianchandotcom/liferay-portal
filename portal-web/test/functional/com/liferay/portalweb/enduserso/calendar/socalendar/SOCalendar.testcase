@@ -337,7 +337,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS" value1="There are no more events today." />
+		<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS" value1="There are no more events today." />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName2}" />
@@ -820,9 +820,9 @@
 		<var name="key_eventTitle" value="${eventTitle}" />
 
 		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="PGCalendar#SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
-		<execute function="#assertClick" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON" value1="View Details" />
+		<execute function="AssertClick" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON" value1="View Details" />
 
-		<execute function="#assertTextNotPresent" value1="${eventComment}" />
+		<execute function="AssertTextNotPresent" value1="${eventComment}" />
 	</command>
 
 	<command name="DeleteCalendarResource" priority="5">
@@ -958,7 +958,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS" value1="There are no more events today." />
+		<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS" value1="There are no more events today." />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName2}" />
@@ -1712,10 +1712,10 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
-		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
-		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
-		<execute function="#assertTextNotPresent" value1="${eventTitle}" />
+		<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
+		<execute function="AssertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
+		<execute function="AssertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
+		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1726,26 +1726,26 @@
 			<var name="viewType" value="Day" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${eventTitle}" />
+		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${eventTitle}" />
+		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Month" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${eventTitle}" />
+		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Agenda" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGCalendarAgendaView#EMPTY_MESSAGE" value1="No events." />
-		<execute function="#assertTextNotPresent" value1="${eventTitle}" />
+		<execute function="AssertTextEquals" locator1="PGCalendarAgendaView#EMPTY_MESSAGE" value1="No events." />
+		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 	</command>
 
 	<command name="ViewCalendarEventInviteGmail" priority="4">
@@ -1790,7 +1790,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#pause" locator1="30000" />
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -1814,6 +1814,6 @@
 			<var name="userPassword" value="email.password.2" />
 		</execute>
 
-		<execute function="#open" locator1="http://localhost:8080" />
+		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 </definition>

@@ -34,12 +34,12 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertClick" locator1="CPBlogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute function="AssertClick" locator1="CPBlogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
 		<var name="key_entryComment" value="${entryComment}" />
 
-		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_LINK" value1="${entryTitle}" />
-		<execute function="#mouseOver" locator1="CPBlogsEntry#COMMENT" />
+		<execute function="AssertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_LINK" value1="${entryTitle}" />
+		<execute function="MouseOver" locator1="CPBlogsEntry#COMMENT" />
 		<execute function="AssertClick#assertTextClickWaitForInlineCKEditor" locator1="CPBlogsEntry#COMMENT_DELETE_1" value1="Delete" />
 
 		<var method="selenium#getAlert()" name="string" />
@@ -79,12 +79,12 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="#assertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
 
-		<execute function="#type" locator1="CPBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="#type" locator1="CPBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="Type" locator1="CPBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type" locator1="CPBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
 
-		<execute function="#selectFrame" locator1="//iframe[contains(@title,'Rich Text Editor')]" />
+		<execute function="SelectFrame" locator1="//iframe[contains(@title,'Rich Text Editor')]" />
 
 		<var method="selenium#getBodyText()" name="string" />
 
@@ -99,7 +99,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="#assertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
 
 		<var method="selenium#getCurrentDay()" name="int" />
 
@@ -114,7 +114,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="#assertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
 
 		<var locator="DISPLAY_DATE" name="int" path="CPBlogsAdd" />
 
@@ -132,7 +132,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="#assertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
 
 		<var method="selenium#getCurrentYear()" name="int" />
 
@@ -147,7 +147,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="#assertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
 
 		<var method="selenium#getFirstNumber(//input[@id='__161__displayDateYear'])" name="string" />
 
@@ -162,7 +162,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="#assertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
 
 		<var method="selenium#getFirstNumberIncrement(//input[@id='__161__displayDateYear'])" name="string" />
 		<execute macro="TestUtils#assertEquals">
@@ -226,8 +226,8 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertClick" locator1="CPBlogs#ENTRY_TABLE_ACTIONS" value1="Actions" />
-		<execute function="#assertClick" locator1="CPBlogs#ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="CPBlogs#ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="CPBlogs#ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<var method="selenium#getValue(//input[@id='_161_title'])" name="string" />
 
@@ -266,12 +266,12 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertClick" locator1="CPBlogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute function="AssertClick" locator1="CPBlogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
 		<var name="key_entryComment" value="${entryComment}" />
 
-		<execute function="#assertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_LINK" value1="${entryTitle}" />
-		<execute function="#mouseOver" locator1="CPBlogsEntry#COMMENT" />
+		<execute function="AssertTextEquals" locator1="CPBlogsEntry#ENTRY_TITLE_LINK" value1="${entryTitle}" />
+		<execute function="MouseOver" locator1="CPBlogsEntry#COMMENT" />
 		<execute function="AssertClick#assertTextClickWaitForInlineCKEditor" locator1="CPBlogsEntry#COMMENT_DELETE_1" value1="Delete" />
 
 		<var method="selenium#isAlertPresent()" name="alert" />
@@ -291,10 +291,10 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="#assertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
 
-		<execute function="#type" locator1="CPBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="#type" locator1="CPBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="Type" locator1="CPBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type" locator1="CPBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
 
 		<var method="selenium#isChecked(//input[@id='_161_allowPingbacksCheckbox'])" name="check" />
 
@@ -340,10 +340,10 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="#assertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
 
-		<execute function="#type" locator1="CPBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="#type" locator1="CPBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="Type" locator1="CPBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type" locator1="CPBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
 
 		<var method="selenium#isNotChecked(//input[@id='_161_allowPingbacksCheckbox'])" name="check" />
 
@@ -372,8 +372,8 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertClick" locator1="CPBlogs#ENTRY_TABLE_ACTIONS" value1="Actions" />
-		<execute function="#assertClick" locator1="CPBlogs#ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="CPBlogs#ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="CPBlogs#ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<var method="selenium#isNotPartialText(//fieldset[@class='fieldset '], Content)" name="string" />
 
@@ -411,8 +411,8 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertClick" locator1="CPBlogs#ENTRY_TABLE_ACTIONS" value1="Actions" />
-		<execute function="#assertClick" locator1="CPBlogs#ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="CPBlogs#ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="CPBlogs#ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<var method="selenium#isNotValue(//input[@id='_161_title'], Blogs Entry Title)" name="string" />
 
@@ -450,8 +450,8 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertClick" locator1="CPBlogs#ENTRY_TABLE_ACTIONS" value1="Actions" />
-		<execute function="#assertClick" locator1="CPBlogs#ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="CPBlogs#ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="CPBlogs#ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<var method="selenium#isPartialText(//fieldset[@class='fieldset '], Content)" name="string" />
 
@@ -509,8 +509,8 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertClick" locator1="CPBlogs#ENTRY_TABLE_ACTIONS" value1="Actions" />
-		<execute function="#assertClick" locator1="CPBlogs#ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="CPBlogs#ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="CPBlogs#ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<var method="selenium#isValue(//div[@id='_161_title'], Blogs Entry Title)" name="string" />
 

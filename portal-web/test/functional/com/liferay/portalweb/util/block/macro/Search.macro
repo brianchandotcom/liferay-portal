@@ -8,13 +8,13 @@
 	<command name="gotoUserSearchResultPG">
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
-		<execute function="#assertClick" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+		<execute function="AssertClick" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 	</command>
 
 	<command name="removeFacetValuePG">
 		<var name="key_searchFacetValue" value="${searchFacetValue}" />
 
-		<execute function="#click" locator1="PGSearchResults#FACET_VALUE_REMOVE" />
+		<execute function="Click" locator1="PGSearchResults#FACET_VALUE_REMOVE" />
 	</command>
 
 	<command name="removeUserFacetDisplayPG">
@@ -22,50 +22,50 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="#selectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
 
-		<execute function="#uncheck" locator1="PGSearchConfiguration#DISPLAY_SETTING_BASIC_DISPLAY_USER_FACET_CHECKBOX" />
-		<execute function="#assertClick" locator1="PGSearchConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="Uncheck" locator1="PGSearchConfiguration#DISPLAY_SETTING_BASIC_DISPLAY_USER_FACET_CHECKBOX" />
+		<execute function="AssertClick" locator1="PGSearchConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="searchNoPG">
-		<execute function="#type" locator1="PGSearch#SEARCH_FIELD" value1="${searchTerm}" />
+		<execute function="Type" locator1="PGSearch#SEARCH_FIELD" value1="${searchTerm}" />
 
 		<var name="key_searchIDName" value="Search" />
 
 		<if>
 			<equals arg1="${searchSocialOffice}" arg2="true" />
 			<then>
-				<execute function="#keyPress" locator1="PGSearch#SEARCH_FIELD" value1="\RETURN" />
+				<execute function="KeyPress" locator1="PGSearch#SEARCH_FIELD" value1="\RETURN" />
 			</then>
 			<else>
-				<execute function="#click" locator1="PGSearch#SEARCH_BUTTON" />
+				<execute function="Click" locator1="PGSearch#SEARCH_BUTTON" />
 			</else>
 		</if>
 
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
-		<execute function="#assertElementNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" />
-		<execute function="#assertElementNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TYPE" />
+		<execute function="AssertElementNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TYPE" />
 
 		<if>
 			<isset var="searchAssetSummary" />
 			<then>
-				<execute function="#assertElementNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
+				<execute function="AssertElementNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${searchNoResults}" arg2="true" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGSearchResults#INFO_MESSAGE" value1="No results were found that matched the keywords: ${searchTerm}." />
+				<execute function="AssertTextEquals" locator1="PGSearchResults#INFO_MESSAGE" value1="No results were found that matched the keywords: ${searchTerm}." />
 			</then>
 		</if>
 	</command>
 
 	<command name="searchPG">
-		<execute function="#type" locator1="PGSearch#SEARCH_FIELD" value1="${searchTerm}" />
+		<execute function="Type" locator1="PGSearch#SEARCH_FIELD" value1="${searchTerm}" />
 
 		<if>
 			<isset var="localizationIDName" />
@@ -80,10 +80,10 @@
 		<if>
 			<equals arg1="${searchSocialOffice}" arg2="true" />
 			<then>
-				<execute function="#keyPress" locator1="PGSearch#SEARCH_FIELD" value1="\RETURN" />
+				<execute function="KeyPress" locator1="PGSearch#SEARCH_FIELD" value1="\RETURN" />
 			</then>
 			<else>
-				<execute function="#click" locator1="PGSearch#SEARCH_BUTTON" />
+				<execute function="Click" locator1="PGSearch#SEARCH_BUTTON" />
 			</else>
 		</if>
 	</command>
@@ -91,9 +91,9 @@
 	<command name="viewAssetTypeFacetPG">
 		<var name="key_searchAssetType" value="${searchAssetType}" />
 
-		<execute function="#assertElementPresent" locator1="PGSearchResults#ASSET_TYPE_FACET_SEARCH_ASSETS_BOX" />
-		<execute function="#assertTextEquals" locator1="PGSearchResults#ASSET_TYPE_FACET_EVERYTHING" value1="Everything" />
-		<execute function="#assertTextEquals" locator1="PGSearchResults#ASSET_TYPE_FACET_FREQUENCY" value1="${facetFrequency}" />
+		<execute function="AssertElementPresent" locator1="PGSearchResults#ASSET_TYPE_FACET_SEARCH_ASSETS_BOX" />
+		<execute function="AssertTextEquals" locator1="PGSearchResults#ASSET_TYPE_FACET_EVERYTHING" value1="Everything" />
+		<execute function="AssertTextEquals" locator1="PGSearchResults#ASSET_TYPE_FACET_FREQUENCY" value1="${facetFrequency}" />
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGSearchResults#ASSET_TYPE_FACET_ASSET" value1="${searchAssetType}" />
 
 		<execute macro="Search#viewSearchPG">
@@ -106,32 +106,32 @@
 	<command name="viewSearchAssetTitle">
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
-		<execute function="#assertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 	</command>
 
 	<command name="viewSearchNoAssetTitle">
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
-		<execute function="#assertTextNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+		<execute function="AssertTextNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 	</command>
 
 	<command name="viewSearchNoPG">
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
-		<execute function="#assertElementNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" />
-		<execute function="#assertElementNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TYPE" />
+		<execute function="AssertElementNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TYPE" />
 
 		<if>
 			<isset var="searchAssetSummary" />
 			<then>
-				<execute function="#assertElementNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
+				<execute function="AssertElementNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${searchNoResults}" arg2="true" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGSearchResults#INFO_MESSAGE" value1="No results were found that matched the keywords: ${searchTerm}." />
+				<execute function="AssertTextEquals" locator1="PGSearchResults#INFO_MESSAGE" value1="No results were found that matched the keywords: ${searchTerm}." />
 			</then>
 		</if>
 	</command>
@@ -139,13 +139,13 @@
 	<command name="viewSearchPG">
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
-		<execute function="#assertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TYPE" value1="${searchAssetType}" />
 
 		<if>
 			<isset var="searchAssetSummary" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
+				<execute function="AssertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
 			</then>
 		</if>
 	</command>
@@ -154,9 +154,9 @@
 		<var name="key_facetFrequency" value="${facetFrequency}" />
 		<var name="key_userLoginFullName" value="${userLoginFullName}" />
 
-		<execute function="#assertElementPresent" locator1="PGSearchResults#USER_FACET_SEARCH_USERS_BOX" />
-		<execute function="#assertTextEquals" locator1="PGSearchResults#USER_FACET_ANY_USER" value1="Any User" />
-		<execute function="#assertTextEquals" locator1="PGSearchResults#USER_FACET_FREQUENCY" value1="${facetFrequency}" />
+		<execute function="AssertElementPresent" locator1="PGSearchResults#USER_FACET_SEARCH_USERS_BOX" />
+		<execute function="AssertTextEquals" locator1="PGSearchResults#USER_FACET_ANY_USER" value1="Any User" />
+		<execute function="AssertTextEquals" locator1="PGSearchResults#USER_FACET_FREQUENCY" value1="${facetFrequency}" />
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGSearchResults#USER_FACET_USER_NAME" value1="${userLoginFullName}" />
 
 		<execute macro="Search#viewSearchPG">
@@ -167,9 +167,9 @@
 	</command>
 
 	<command name="viewUserSearchResultPG">
-		<execute function="#assertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
-		<execute function="#assertTextEquals" locator1="Home#PAGE_1" value1="${pageName}" />
-		<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_1" value1="${breadcrumb1}" />
-		<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_2" value1="${breadcrumb2}" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_1" value1="${pageName}" />
+		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${breadcrumb1}" />
+		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${breadcrumb2}" />
 	</command>
 </definition>

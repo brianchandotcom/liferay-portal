@@ -1,12 +1,12 @@
 <definition>
 	<command name="addPG">
-		<execute function="#assertClick" locator1="PGOpensocialgadget#OPTIONS_ICON" value1="Options" />
-		<execute function="#assertClick" locator1="PGOpensocialgadget#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="PGOpensocialgadget#OPTIONS_ICON" value1="Options" />
+		<execute function="AssertClick" locator1="PGOpensocialgadget#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute function="#selectFrame" locator1="PGOpensocialgadgetConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="#type" locator1="PGOpensocialgadgetConfiguration#URL_FIELD" value1="${opensocialGadgetURL}" />
-		<execute function="#assertClick" locator1="PGOpensocialgadgetConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="PGOpensocialgadgetConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="SelectFrame" locator1="PGOpensocialgadgetConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="Type" locator1="PGOpensocialgadgetConfiguration#URL_FIELD" value1="${opensocialGadgetURL}" />
+		<execute function="AssertClick" locator1="PGOpensocialgadgetConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="PGOpensocialgadgetConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 </definition>

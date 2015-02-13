@@ -92,8 +92,8 @@
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
-		<execute function="#pause" locator1="5000" />
-		<execute function="#assertLocation" value1="${spURL}" />
+		<execute function="Pause" locator1="5000" />
+		<execute function="AssertLocation" value1="${spURL}" />
 	</command>
 
 	<command name="executeSPInitiatedSSO">
@@ -106,7 +106,7 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute function="#pause" locator1="5000" />
-		<execute function="#assertLocation" value1="${spURL}" />
+		<execute function="Pause" locator1="5000" />
+		<execute function="AssertLocation" value1="${spURL}" />
 	</command>
 </definition>

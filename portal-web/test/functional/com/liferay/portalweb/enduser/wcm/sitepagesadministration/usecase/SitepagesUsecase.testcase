@@ -62,7 +62,7 @@
 
 		<var name="key_pageName" value="${sitePage3Name}" />
 
-		<execute function="#assertTextEquals" locator1="Home#PAGE" value1="${sitePage3Name}" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="${sitePage3Name}" />
 	</command>
 
 	<command name="CannotDeleteLastPrivatePage" priority="3">
@@ -165,9 +165,9 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute function="#assertElementPresent" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_TO_PAGE" />
-		<execute function="#click" locator1="CPSitepages#PAGE_TREE_PAGE_ARROW_2" />
-		<execute function="#assertTextEquals" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_3" value1="Child Page Name" />
+		<execute function="AssertElementPresent" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_TO_PAGE" />
+		<execute function="Click" locator1="CPSitepages#PAGE_TREE_PAGE_ARROW_2" />
+		<execute function="AssertTextEquals" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_3" value1="Child Page Name" />
 	</command>
 
 	<command name="DefaultLanguageWithEmptyFriendlyURLThrowsErrorExceptions" priority="4">
@@ -194,7 +194,7 @@
 			<var name="pageName" value="Page Name" />
 		</execute>
 
-		<execute function="#assertConsoleTextNotPresent" value1="java.lang.StringIndexOutOfBoundsException: String index out of range: -1" />
+		<execute function="AssertConsoleTextNotPresent" value1="java.lang.StringIndexOutOfBoundsException: String index out of range: -1" />
 
 		<execute macro="Page#viewPageFriendURLPG">
 			<var name="localizedFriendlyURL" value="/german" />
@@ -271,9 +271,9 @@
 			<var name="pageName" value="Page Name" />
 		</execute>
 
-		<execute function="#open" locator1="http://localhost:8080/web/usersn/page-name?p_p_id=130&amp;p_p_state=maximized" />
+		<execute function="Open" locator1="http://localhost:8080/web/usersn/page-name?p_p_id=130&amp;p_p_state=maximized" />
 
-		<execute function="#assertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -384,9 +384,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute function="AssertTextNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 
-		<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_2" value1="Site Page" />
+		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="Site Page" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -421,9 +421,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 
-		<execute function="#assertTextNotPresent" locator1="Home#BREADCRUMB_2" value1="Site Page" />
+		<execute function="AssertTextNotPresent" locator1="Home#BREADCRUMB_2" value1="Site Page" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -544,7 +544,7 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute function="#pause" locator1="30000" />
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -571,9 +571,9 @@
 
 		<var method="selenium#getLocation()" name="blogEntryURL" />
 
-		<execute function="#close" />
+		<execute function="Close" />
 
-		<execute function="#selectWindow" locator1="null" />
+		<execute function="SelectWindow" locator1="null" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -599,9 +599,9 @@
 
 		<var method="selenium#getLocation()" name="messageBoardsThreadURL" />
 
-		<execute function="#close" />
+		<execute function="Close" />
 
-		<execute function="#selectWindow" locator1="null" />
+		<execute function="SelectWindow" locator1="null" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -619,16 +619,16 @@
 		</execute>
 
 		<execute macro="User#viewLoginPG" />
-		<execute function="#assertElementNotPresent" locator1="Home#ERROR_MESSAGE" />
-		<execute function="#assertElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
+		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE" />
+		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
 
-		<execute function="#open" locator1="${blogEntryURL}" />
+		<execute function="Open" locator1="${blogEntryURL}" />
 
-		<execute function="#assertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
 
-		<execute function="#open" locator1="${messageBoardsThreadURL}" />
+		<execute function="Open" locator1="${messageBoardsThreadURL}" />
 
-		<execute function="#assertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="ViewSecureContentAndPageAsSiteMember" priority="4">
@@ -769,7 +769,7 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute function="#pause" locator1="30000" />
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -796,9 +796,9 @@
 
 		<var method="selenium#getLocation()" name="blogEntryURL" />
 
-		<execute function="#close" />
+		<execute function="Close" />
 
-		<execute function="#selectWindow" locator1="null" />
+		<execute function="SelectWindow" locator1="null" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -824,9 +824,9 @@
 
 		<var method="selenium#getLocation()" name="messageBoardsThreadURL" />
 
-		<execute function="#close" />
+		<execute function="Close" />
 
-		<execute function="#selectWindow" locator1="null" />
+		<execute function="SelectWindow" locator1="null" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -850,10 +850,10 @@
 			<var name="pageNameList" value="Private Page" />
 		</execute>
 
-		<execute function="#assertElementNotPresent" locator1="Home#ERROR_MESSAGE" />
-		<execute function="#assertElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
+		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE" />
+		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
 
-		<execute function="#open" locator1="${blogEntryURL}" />
+		<execute function="Open" locator1="${blogEntryURL}" />
 
 		<execute macro="BlogsEntry#viewDetailsPG">
 			<var name="blogEntryURL" value="${blogEntryURL}" />
@@ -865,7 +865,7 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute function="#open" locator1="${messageBoardsThreadURL}" />
+		<execute function="Open" locator1="${messageBoardsThreadURL}" />
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
@@ -1011,7 +1011,7 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute function="#pause" locator1="30000" />
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -1038,9 +1038,9 @@
 
 		<var method="selenium#getLocation()" name="blogEntryURL" />
 
-		<execute function="#close" />
+		<execute function="Close" />
 
-		<execute function="#selectWindow" locator1="null" />
+		<execute function="SelectWindow" locator1="null" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -1066,9 +1066,9 @@
 
 		<var method="selenium#getLocation()" name="messageBoardsThreadURL" />
 
-		<execute function="#close" />
+		<execute function="Close" />
 
-		<execute function="#selectWindow" locator1="null" />
+		<execute function="SelectWindow" locator1="null" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -1088,19 +1088,19 @@
 			<var name="pageAccess" value="Private" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 
-		<execute function="#open" locator1="${blogEntryURL}" />
+		<execute function="Open" locator1="${blogEntryURL}" />
 
-		<execute function="#assertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute function="#open" locator1="${messageBoardsThreadURL}" />
+		<execute function="Open" locator1="${messageBoardsThreadURL}" />
 
-		<execute function="#assertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="WebContentAdministrationSitesPagesPanel" priority="3">
@@ -1119,7 +1119,7 @@
 
 		<var name="key_portletName" value="Blogs" />
 
-		<execute function="#assertClick" locator1="PGPanel#MENU_ITEM" value1="Blogs" />
+		<execute function="AssertClick" locator1="PGPanel#MENU_ITEM" value1="Blogs" />
 
 		<execute macro="BlogsEntry#addPG">
 			<var name="entryContent" value="This is Blog Post 1 Content" />
@@ -1138,7 +1138,7 @@
 
 		<var name="key_portletName" value="Message Boards" />
 
-		<execute function="#assertClick" locator1="PGPanel#MENU_ITEM" value1="Message Boards" />
+		<execute function="AssertClick" locator1="PGPanel#MENU_ITEM" value1="Message Boards" />
 
 		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="This is Message Boards Thread 1" />
@@ -1149,7 +1149,7 @@
 			<var name="pageName" value="Panel Test Page" />
 		</execute>
 
-		<execute function="#assertClick" locator1="PGPanel#MENU_ITEM" value1="Message Boards" />
+		<execute function="AssertClick" locator1="PGPanel#MENU_ITEM" value1="Message Boards" />
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
@@ -1198,12 +1198,12 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute function="#assertClick" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_1" value1="Blank Page" />
-		<execute function="#assertClickNoError" locator1="CPSitepages#TOOLBAR_DELETE" value1="Delete" />
-		<execute function="#confirm" locator1="CPSitepages#CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
-		<execute function="#assertTextEquals" locator1="CPSitepages#INFO_MESSAGE_1" value1="Your request failed to complete." />
-		<execute function="#assertTextEquals" locator1="CPSitepages#INFO_MESSAGE_2" value1="The first page cannot be of type Link to URL." />
-		<execute function="#assertTextEquals" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_1" value1="Blank Page" />
+		<execute function="AssertClick" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_1" value1="Blank Page" />
+		<execute function="AssertClickNoError" locator1="CPSitepages#TOOLBAR_DELETE" value1="Delete" />
+		<execute function="Confirm" locator1="CPSitepages#CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
+		<execute function="AssertTextEquals" locator1="CPSitepages#INFO_MESSAGE_1" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals" locator1="CPSitepages#INFO_MESSAGE_2" value1="The first page cannot be of type Link to URL." />
+		<execute function="AssertTextEquals" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_1" value1="Blank Page" />
 
 		<execute macro="SitePage#addCP">
 			<var name="pageTypeDescription" value="Liferay" />
@@ -1236,7 +1236,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertLocation" value1="https://www.google.com/" />
+		<execute function="AssertLocation" value1="https://www.google.com/" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Embedded Page" />
@@ -1244,11 +1244,11 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertLocation" value1="http://localhost:8080/web/page-type-test-site-name/embedded-page" />
+		<execute function="AssertLocation" value1="http://localhost:8080/web/page-type-test-site-name/embedded-page" />
 
-		<execute function="#selectFrame" locator1="PGEmbedded#EMBEDDED_IFRAME" />
-		<execute function="#assertTextEquals" locator1="PGEmbedded#EMBEDDED_LIFERAY_COPYRIGHT_TEXT" value1="© 2015 LIFERAY INC. ALL RIGHTS RESERVED" />
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="SelectFrame" locator1="PGEmbedded#EMBEDDED_IFRAME" />
+		<execute function="AssertTextEquals" locator1="PGEmbedded#EMBEDDED_LIFERAY_COPYRIGHT_TEXT" value1="© 2015 LIFERAY INC. ALL RIGHTS RESERVED" />
+		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Panel Page" />

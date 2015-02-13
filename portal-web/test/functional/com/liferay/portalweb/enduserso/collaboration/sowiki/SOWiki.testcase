@@ -2002,10 +2002,10 @@
 			<var name="wikiPageTitle" value="${wikiChildPageTitle1}" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${wikiChildPageTitle2}" />
-		<execute function="#assertClick" locator1="PGWiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute function="AssertTextNotPresent" value1="${wikiChildPageTitle2}" />
+		<execute function="AssertClick" locator1="PGWiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
 
-		<execute function="#assertTextNotPresent" value1="${wikiChildPageTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${wikiChildPageTitle2}" />
 	</command>
 
 	<command name="LinkSOWikiOrphanPageToPageHTML" priority="4">
@@ -3094,7 +3094,7 @@
 			<var name="wikiPageContent" value="${wikiFrontPageContent}" />
 		</execute>
 
-		<execute function="#pause" locator1="30000" />
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -3118,7 +3118,7 @@
 			<var name="userPassword" property-value="email.address.2" />
 		</execute>
 
-		<execute function="#open" locator1="http://localhost:8080" />
+		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
 	<command name="ViewSOWikiEditControlsAsGuest" priority="5">
@@ -3191,11 +3191,11 @@
 
 		<var name="key_attachmentFileName" value="${attachmentFileName}" />
 
-		<execute function="#assertElementNotPresent" locator1="PGWiki#EDIT_BUTTON" value1="Edit" />
-		<execute function="#assertClick" locator1="PGWiki#ATTACHMENTS_BUTTON" value1="1 Attachment" />
+		<execute function="AssertElementNotPresent" locator1="PGWiki#EDIT_BUTTON" value1="Edit" />
+		<execute function="AssertClick" locator1="PGWiki#ATTACHMENTS_BUTTON" value1="1 Attachment" />
 
-		<execute function="#assertElementNotPresent" locator1="PGWikiWikipageAttachments#ADD_ATTACHMENTS_BUTTON" />
-		<execute function="#assertElementNotPresent" locator1="PGWikiWikipageAttachments#ATTACHMENT_TABLE_REMOVE" value1="Remove" />
+		<execute function="AssertElementNotPresent" locator1="PGWikiWikipageAttachments#ADD_ATTACHMENTS_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="PGWikiWikipageAttachments#ATTACHMENT_TABLE_REMOVE" value1="Remove" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -3204,13 +3204,13 @@
 
 		<var name="key_wikiPageTitle" value="${wikiChildPageTitle}" />
 
-		<execute function="#assertClick" locator1="PGWiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute function="AssertClick" locator1="PGWiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
 
-		<execute function="#assertElementNotPresent" locator1="PGWikiAllpages#WIKI_PAGE_TABLE_ACTIONS" />
-		<execute function="#assertElementNotPresent" locator1="PGWikiAllpages#WIKI_PAGE_MENULIST_EDIT" />
-		<execute function="#assertClick" locator1="PGWikiAllpages#WIKI_PAGE_TABLE_PAGE" value1="${wikiChildPageTitle}" />
+		<execute function="AssertElementNotPresent" locator1="PGWikiAllpages#WIKI_PAGE_TABLE_ACTIONS" />
+		<execute function="AssertElementNotPresent" locator1="PGWikiAllpages#WIKI_PAGE_MENULIST_EDIT" />
+		<execute function="AssertClick" locator1="PGWikiAllpages#WIKI_PAGE_TABLE_PAGE" value1="${wikiChildPageTitle}" />
 
-		<execute function="#assertElementNotPresent" locator1="PGWiki#EDIT_BUTTON" value1="Edit" />
+		<execute function="AssertElementNotPresent" locator1="PGWiki#EDIT_BUTTON" value1="Edit" />
 	</command>
 
 	<command known-issues="LPS-45435" name="ViewSOWikiFrontPageChildPageAsGuest" priority="4">
@@ -3316,10 +3316,10 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${wikiChildPageTitle2}" />
-		<execute function="#assertClick" locator1="PGWiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute function="AssertTextNotPresent" value1="${wikiChildPageTitle2}" />
+		<execute function="AssertClick" locator1="PGWiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
 
-		<execute function="#assertTextNotPresent" value1="${wikiChildPageTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${wikiChildPageTitle2}" />
 	</command>
 
 	<command name="ViewSOWikiPageViewCount" priority="3">

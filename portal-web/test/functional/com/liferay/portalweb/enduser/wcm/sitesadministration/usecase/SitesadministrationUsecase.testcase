@@ -207,7 +207,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="Home#STATUS_MESSAGE" value1="This site is inactive. Please contact the administrator." />
+		<execute function="AssertTextEquals" locator1="Home#STATUS_MESSAGE" value1="This site is inactive. Please contact the administrator." />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -238,8 +238,8 @@
 			<var name="siteScopeName" value="${site1Name}" />
 		</execute>
 
-		<execute function="#select" locator1="CPSitesettings#APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
-		<execute function="#assertClick" locator1="CPSitesettings#SAVE_BUTTON" value1="Save" />
+		<execute function="Select" locator1="CPSitesettings#APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
+		<execute function="AssertClick" locator1="CPSitesettings#SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -295,15 +295,15 @@
 
 		<var name="key_portletName" value="Navigation" />
 
-		<execute function="#assertTextNotPresent" locator1="PGNavigation#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+		<execute function="AssertTextNotPresent" locator1="PGNavigation#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteScopeName" value="${site2Name}" />
 		</execute>
 
-		<execute function="#select" locator1="CPSitesettings#APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
-		<execute function="#assertClick" locator1="CPSitesettings#SAVE_BUTTON" value1="Save" />
+		<execute function="Select" locator1="CPSitesettings#APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
+		<execute function="AssertClick" locator1="CPSitesettings#SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${site2PageName}" />
@@ -320,8 +320,8 @@
 			<var name="siteScopeName" value="${site2Name}" />
 		</execute>
 
-		<execute function="#select" locator1="CPSitesettings#APPLICATION_ADAPTER_SELECT" value1="None" />
-		<execute function="#assertClick" locator1="CPSitesettings#SAVE_BUTTON" value1="Save" />
+		<execute function="Select" locator1="CPSitesettings#APPLICATION_ADAPTER_SELECT" value1="None" />
+		<execute function="AssertClick" locator1="CPSitesettings#SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${site2PageName}" />
@@ -331,7 +331,7 @@
 
 		<var name="key_portletName" value="Navigation" />
 
-		<execute function="#assertTextNotPresent" locator1="PGNavigation#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+		<execute function="AssertTextNotPresent" locator1="PGNavigation#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 	</command>
 
 	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="4">
@@ -452,8 +452,8 @@
 			<var name="virtualHostsURL" value="http://www.able.com:8080/private-page" />
 		</execute>
 
-		<execute function="#assertLocation" value1="http://www.able.com:8080/private-page" />
-		<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_1" value1="Private Page" />
+		<execute function="AssertLocation" value1="http://www.able.com:8080/private-page" />
+		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="Private Page" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -617,10 +617,10 @@
 
 		<var locator="EMAIL_ADDRESS_VERIFICATION_URL" name="emailAddressVerificationURL" path="Gmail" />
 
-		<execute function="#click" locator1="Gmail#EMAIL_ADDRESS_VERIFICATION_URL" />
+		<execute function="Click" locator1="Gmail#EMAIL_ADDRESS_VERIFICATION_URL" />
 
-		<execute function="#selectWindow" locator1="title=Verify Email Address - Site Name - Liferay" />
-		<execute function="#assertLocation" value1="${emailAddressVerificationURL}" />
+		<execute function="SelectWindow" locator1="title=Verify Email Address - Site Name - Liferay" />
+		<execute function="AssertLocation" value1="${emailAddressVerificationURL}" />
 
 		<execute macro="Site#viewDefaultThemePG" />
 	</command>
@@ -673,7 +673,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute function="#assertConsoleTextNotPresent" value1="Error" />
+		<execute function="AssertConsoleTextNotPresent" value1="Error" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -682,7 +682,7 @@
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute function="#assertLocation" value1="http://localhost:8080/user/usersn/home" />
+		<execute function="AssertLocation" value1="http://localhost:8080/user/usersn/home" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -701,9 +701,9 @@
 			<var name="siteFriendlyURLEdit" value="/liferay" />
 		</execute>
 
-		<execute function="#open" locator1="http://localhost:8080/web/liferay/site-page-name" />
+		<execute function="Open" locator1="http://localhost:8080/web/liferay/site-page-name" />
 
-		<execute function="#assertLocation" value1="http://localhost:8080/web/liferay/site-page-name" />
+		<execute function="AssertLocation" value1="http://localhost:8080/web/liferay/site-page-name" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
@@ -809,7 +809,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_INFO" value1="This site is inactive. Please contact the administrator." />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_INFO" value1="This site is inactive. Please contact the administrator." />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -990,9 +990,9 @@
 			<var name="siteName" value="World Cup - Russia 2018" />
 		</execute>
 
-		<execute function="#assertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
 
-		<execute function="#assertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="AssertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
 
@@ -1002,8 +1002,8 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute function="#downloadTempFile" />
+		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="DownloadTempFile" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -1343,7 +1343,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="#assertElementNotPresent" locator1="Home#PAGE_2" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE_2" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />

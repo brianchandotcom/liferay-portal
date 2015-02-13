@@ -104,9 +104,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertClick" locator1="//div[@class='add-as-friend']/button[contains(.,'Add as Friend')]" value1="Add as Friend" />
+		<execute function="AssertClick" locator1="//div[@class='add-as-friend']/button[contains(.,'Add as Friend')]" value1="Add as Friend" />
 
-		<execute function="#assertTextEquals" locator1="//div[contains(@class,'alert') and contains(@class,'alert-info')]" value1="Friend Requested" />
+		<execute function="AssertTextEquals" locator1="//div[contains(@class,'alert') and contains(@class,'alert-info')]" value1="Friend Requested" />
 
 		<execute macro="User#logoutPG" />
 
@@ -121,7 +121,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertClick" locator1="//span[@class='taglib-text 'and contains(.,'Confirm')]" value1="Confirm" />
+		<execute function="AssertClick" locator1="//span[@class='taglib-text 'and contains(.,'Confirm')]" value1="Confirm" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

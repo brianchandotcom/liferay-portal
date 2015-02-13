@@ -2,42 +2,42 @@
 	<command name="addPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="#assertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="AssertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<if>
-			<condition function="#isElementPresent" locator1="PGDocumentsandmediaDocument#COMMENTS_BE_THE_FIRST" />
+			<condition function="IsElementPresent" locator1="PGDocumentsandmediaDocument#COMMENTS_BE_THE_FIRST" />
 			<then>
-				<execute function="#assertClick" locator1="PGDocumentsandmediaDocument#COMMENTS_BE_THE_FIRST" value1="Be the first." />
+				<execute function="AssertClick" locator1="PGDocumentsandmediaDocument#COMMENTS_BE_THE_FIRST" value1="Be the first." />
 			</then>
 			<else>
-				<execute function="#assertClick" locator1="PGDocumentsandmediaDocument#COMMENTS_ADD_COMMENT" value1="Add Comment" />
+				<execute function="AssertClick" locator1="PGDocumentsandmediaDocument#COMMENTS_ADD_COMMENT" value1="Add Comment" />
 			</else>
 		</if>
 
-		<execute function="#type" locator1="PGDocumentsandmediaDocument#COMMENTS_COMMENT_FIELD" value1="${commentBody}" />
-		<execute function="#pause" locator1="3000" />
+		<execute function="Type" locator1="PGDocumentsandmediaDocument#COMMENTS_COMMENT_FIELD" value1="${commentBody}" />
+		<execute function="Pause" locator1="3000" />
 
 		<if>
-			<condition function="#isElementPresent" locator1="PGDocumentsandmediaDocument#COMMENTS_SUBMIT_BUTTON" value1="Submit" />
+			<condition function="IsElementPresent" locator1="PGDocumentsandmediaDocument#COMMENTS_SUBMIT_BUTTON" value1="Submit" />
 			<then>
-				<execute function="#assertClick" locator1="PGDocumentsandmediaDocument#COMMENTS_SUBMIT_BUTTON" value1="Submit" />
+				<execute function="AssertClick" locator1="PGDocumentsandmediaDocument#COMMENTS_SUBMIT_BUTTON" value1="Submit" />
 			</then>
 			<else>
-				<execute function="#assertClick" locator1="PGDocumentsandmediaDocument#COMMENTS_REPLY_BUTTON" value1="Reply" />
+				<execute function="AssertClick" locator1="PGDocumentsandmediaDocument#COMMENTS_REPLY_BUTTON" value1="Reply" />
 			</else>
 		</if>
 
-		<execute function="#pause" locator1="3000" />
+		<execute function="Pause" locator1="3000" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmediaDocument#SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>
 
 	<command name="viewPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="#assertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="AssertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<var name="key_commentBody" value="${commentBody}" />
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaDocument#COMMENTS_BODY" value1="${commentBody}" />
+		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#COMMENTS_BODY" value1="${commentBody}" />
 	</command>
 </definition>

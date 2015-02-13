@@ -243,16 +243,16 @@
 			<var name="virtualHostsURL" value="http://127.0.0.1:8080/web/site-name" />
 		</execute>
 
-		<execute function="#assertLocation" value1="http://127.0.0.1:8080/web/site-name/site-page-name" />
+		<execute function="AssertLocation" value1="http://127.0.0.1:8080/web/site-name/site-page-name" />
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListVisible" value="Liferay,Site Name,Site Page Name" />
 		</execute>
 
 		<var name="key_URL" value="http://localhost:8080" />
-		<execute function="#assertElementNotPresent" locator1="PGBreadcrumb#BREADCRUMB_PAGE_LINK" />
+		<execute function="AssertElementNotPresent" locator1="PGBreadcrumb#BREADCRUMB_PAGE_LINK" />
 
 		<var name="key_URL" value="/web/guest" />
-		<execute function="#assertTextEquals" locator1="PGBreadcrumb#BREADCRUMB_PAGE_LINK" value1="Liferay" />
+		<execute function="AssertTextEquals" locator1="PGBreadcrumb#BREADCRUMB_PAGE_LINK" value1="Liferay" />
 	</command>
 </definition>

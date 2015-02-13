@@ -1,36 +1,36 @@
 <definition>
 	<command name="showEditField">
 		<if>
-			<condition function="#isElementNotPresent" locator1="//div[@id='_145_${fieldLabel}Content']" value1="${fieldName}" />
+			<condition function="IsElementNotPresent" locator1="//div[@id='_145_${fieldLabel}Content']" value1="${fieldName}" />
 			<then>
-				<execute function="#assertClick" locator1="DockbarEditpanel#${fieldKey}" value1="${fieldName}" />
+				<execute function="AssertClick" locator1="DockbarEditpanel#${fieldKey}" value1="${fieldName}" />
 			</then>
 		</if>
 
-		<execute function="#assertElementPresent" locator1="//div[@id='_145_${fieldLabel}Content']" />
+		<execute function="AssertElementPresent" locator1="//div[@id='_145_${fieldLabel}Content']" />
 	</command>
 
 	<command name="viewAddTabsWithNoAddPagePermission">
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
 
-		<execute function="#assertTextEquals" locator1="DockbarAddpanelcontent#NAVIGATION_CONTENT" value1="Content" />
-		<execute function="#assertTextEquals" locator1="DockbarAddpanelcontent#NAVIGATION_APPLICATIONS" value1="Applications" />
-		<execute function="#assertElementNotPresent" locator1="DockbarAddpanelcontent#NAVIGATION_PAGE" value1="Page" />
+		<execute function="AssertTextEquals" locator1="DockbarAddpanelcontent#NAVIGATION_CONTENT" value1="Content" />
+		<execute function="AssertTextEquals" locator1="DockbarAddpanelcontent#NAVIGATION_APPLICATIONS" value1="Applications" />
+		<execute function="AssertElementNotPresent" locator1="DockbarAddpanelcontent#NAVIGATION_PAGE" value1="Page" />
 	</command>
 
 	<command name="viewLocalizationOptionsAdd">
-		<execute function="#assertElementPresent" locator1="DockbarAddpanelpage#NAME_FIELD" />
+		<execute function="AssertElementPresent" locator1="DockbarAddpanelpage#NAME_FIELD" />
 
 		<for list="${localizationOptions}" param="localizationOption">
 			<var name="key_localizationName" value="${localizationOption}" />
 
-			<execute function="#assertElementPresent" locator1="DockbarAddpanelpage#LOCALIZED_FLAG_ICON" />
+			<execute function="AssertElementPresent" locator1="DockbarAddpanelpage#LOCALIZED_FLAG_ICON" />
 		</for>
 	</command>
 
 	<command name="viewLocalizationOptionsEdit">
-		<execute function="#assertElementPresent" locator1="DockbarEditpanel#DETAILS_NAME_FIELD" />
-		<execute function="#assertElementPresent" locator1="DockbarEditpanel#DETAILS_FRIENDLY_URL_TITLE" />
+		<execute function="AssertElementPresent" locator1="DockbarEditpanel#DETAILS_NAME_FIELD" />
+		<execute function="AssertElementPresent" locator1="DockbarEditpanel#DETAILS_FRIENDLY_URL_TITLE" />
 
 		<for list="${localizationOptions}" param="localizationOption">
 			<var name="key_localizationName" value="${localizationOption}" />
@@ -38,10 +38,10 @@
 			<if>
 				<isset var="friendlyURL" />
 				<then>
-					<execute function="#assertElementPresent" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL_LOCALIZED" />
+					<execute function="AssertElementPresent" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL_LOCALIZED" />
 				</then>
 				<else>
-					<execute function="#assertElementPresent" locator1="DockbarEditpanel#DETAILS_LOCALIZED_FLAG_ICON" />
+					<execute function="AssertElementPresent" locator1="DockbarEditpanel#DETAILS_LOCALIZED_FLAG_ICON" />
 				</else>
 			</if>
 		</for>
@@ -51,12 +51,12 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="Click#textClickAtClickDockbar" locator1="Dockbar#MY_SITES" value1="My Sites" />
-		<execute function="#assertTextEquals" locator1="Dockbar#MY_SITES_SITE_NAME_2" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="Dockbar#MY_SITES_SITE_NAME_2" value1="${siteName}" />
 	</command>
 
 	<command name="viewSitesViaMySitesDropDown">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="#assertTextEquals" locator1="Dockbar#MY_SITES_PUBLIC_SITE" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="Dockbar#MY_SITES_PUBLIC_SITE" value1="${siteName}" />
 	</command>
 </definition>

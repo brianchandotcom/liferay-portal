@@ -10,7 +10,7 @@
 			<var name="portletName" value="User Groups" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="View All" />
+		<execute function="AssertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 
@@ -18,7 +18,7 @@
 			<var name="portletName" value="Roles" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="View All" />
+		<execute function="AssertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 
@@ -26,7 +26,7 @@
 			<var name="portletName" value="Password Policies" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="View All" />
+		<execute function="AssertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 
@@ -34,7 +34,7 @@
 			<var name="portletName" value="Site Templates" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="View All" />
+		<execute function="AssertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 
@@ -42,7 +42,7 @@
 			<var name="portletName" value="Site Templates" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="View All" />
+		<execute function="AssertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 
@@ -50,7 +50,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="View All" />
+		<execute function="AssertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 
@@ -58,7 +58,7 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="View All" />
+		<execute function="AssertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 
@@ -67,11 +67,11 @@
 		</execute>
 
 		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="CPDocumentsandmedia#TOOLBAR_MANAGE" value1="Manage" />
-		<execute function="#assertClick" locator1="CPDocumentsandmedia#MANAGE_MENULIST_DOCUMENT_TYPES" value1="Document Types" />
+		<execute function="AssertClick" locator1="CPDocumentsandmedia#MANAGE_MENULIST_DOCUMENT_TYPES" value1="Document Types" />
 
 		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 
-		<execute function="#assertTextNotPresent" value1="View All" />
+		<execute function="AssertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 	</command>

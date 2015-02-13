@@ -33,7 +33,7 @@
 			<then>
 				<var name="i" value="${i?increment()}" />
 
-				<execute function="#refresh" />
+				<execute function="Refresh" />
 
 				<execute macro="Portlet#addPGCmd">
 					<var name="portletName" value="${portletName}" />
@@ -43,7 +43,7 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="#assertElementPresent" locator1="Home#${portletTypeKey}" />
+		<execute function="AssertElementPresent" locator1="Home#${portletTypeKey}" />
 	</command>
 
 	<command name="addPG">
@@ -139,27 +139,27 @@
 	</command>
 
 	<command name="configureCustomTitleViaLookandfeelPG">
-		<execute function="#check" locator1="BasePortlet#PORTLET_CONFIGURATION_USE_CUSTOM_TITLE_CHECKBOX" />
-		<execute function="#type" locator1="BasePortlet#PORTLET_CONFIGURATION_CUSTOM_TITLE_FIELD" value1="${portletName} Custom" />
-		<execute function="#assertClick" locator1="BasePortlet#PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="BasePortlet#PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute function="Check" locator1="BasePortlet#PORTLET_CONFIGURATION_USE_CUSTOM_TITLE_CHECKBOX" />
+		<execute function="Type" locator1="BasePortlet#PORTLET_CONFIGURATION_CUSTOM_TITLE_FIELD" value1="${portletName} Custom" />
+		<execute function="AssertClick" locator1="BasePortlet#PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>
 
 	<command name="deletePG">
 		<var name="portletLocator" value="//h1[@class='portlet-title']/span[contains(.,'${portletName}')]/../../menu//a[@title='Options']" />
 
-		<execute function="#assertClick" locator1="${portletLocator}" value1="Options" />
-		<execute function="#assertClickNoError" locator1="BasePortlet#REMOVE" value1="Remove" />
-		<execute function="#confirm" locator1="BasePortlet#PORTLET_CONFIRM" value1="Are you sure you want to remove this component?" />
+		<execute function="AssertClick" locator1="${portletLocator}" value1="Options" />
+		<execute function="AssertClickNoError" locator1="BasePortlet#REMOVE" value1="Remove" />
+		<execute function="Confirm" locator1="BasePortlet#PORTLET_CONFIRM" value1="Are you sure you want to remove this component?" />
 	</command>
 
 	<command name="dragAndDropPortletToColumnPG">
 		<var name="key_portletTitleName" value="${portletName}" />
 
-		<execute function="#assertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE" value1="${portletName}" />
-		<execute function="#dragAndDrop" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE" locator2="Home#PAGE_COLUMN_${columnNumberTo}" value1="${portletName}" />
-		<execute function="#assertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE" value1="${portletName}" />
-		<execute function="#assertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE" value1="${portletName}" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE" value1="${portletName}" />
+		<execute function="DragAndDrop" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE" locator2="Home#PAGE_COLUMN_${columnNumberTo}" value1="${portletName}" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE" value1="${portletName}" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE" value1="${portletName}" />
 	</command>
 
 	<command name="flagAllDisplaySettingsCheckboxes">
@@ -167,25 +167,25 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="#selectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
 
 		<if>
-			<condition function="#isElementPresent" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS" />
+			<condition function="IsElementPresent" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS" />
 			<then>
-				<execute function="#assertClick" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS" value1="Display Settings" />
+				<execute function="AssertClick" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS" value1="Display Settings" />
 			</then>
 		</if>
 
-		<execute function="#check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_PRINT_CHECKBOX" />
-		<execute function="#check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_FLAGS_CHECKBOX" />
-		<execute function="#check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX" />
-		<execute function="#check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_RATINGS_CHECKBOX" />
-		<execute function="#check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_COMMENTS_CHECKBOX" />
-		<execute function="#check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_COMMENT_RATINGS_CHECKBOX" />
-		<execute function="#check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX" />
+		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_PRINT_CHECKBOX" />
+		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_FLAGS_CHECKBOX" />
+		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX" />
+		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_RATINGS_CHECKBOX" />
+		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_COMMENTS_CHECKBOX" />
+		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_COMMENT_RATINGS_CHECKBOX" />
+		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX" />
 		<execute function="AssertClick#assertTextClickAndWait" locator1="PGADTConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="PGADTConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="#selectFrameTop" value1="relative=top" />
+		<execute function="AssertTextEquals" locator1="PGADTConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="gotoPortletOptions">
@@ -194,7 +194,7 @@
 			<then>
 				<var name="key_portletName" value="${portletName}" />
 
-				<execute function="#assertClick" locator1="BasePortlet#SPECIFIC_PORTLET_OPTIONS_ICON" value1="Options" />
+				<execute function="AssertClick" locator1="BasePortlet#SPECIFIC_PORTLET_OPTIONS_ICON" value1="Options" />
 			</then>
 			<else>
 				<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
@@ -204,7 +204,7 @@
 		<if>
 			<equals arg1="${portletOption}" arg2="Look and Feel" />
 			<then>
-				<execute function="#assertClick" locator1="BasePortlet#OPTIONS_MENULIST_LOOK_AND_FEEL" value1="Look and Feel" />
+				<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_LOOK_AND_FEEL" value1="Look and Feel" />
 			</then>
 			<elseif>
 				<equals arg1="${portletOption}" arg2="Configuration" />
@@ -215,13 +215,13 @@
 			<elseif>
 				<equals arg1="${portletOption}" arg2="Preferences" />
 				<then>
-					<execute function="#assertClick" locator1="BasePortlet#OPTIONS_MENULIST_PREFERENCES" value1="Preferences" />
+					<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_PREFERENCES" value1="Preferences" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${portletOption}" arg2="Export / Import" />
 				<then>
-					<execute function="#assertClick" locator1="BasePortlet#OPTIONS_MENULIST_EXPORT_IMPORT" value1="Export / Import" />
+					<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_EXPORT_IMPORT" value1="Export / Import" />
 				</then>
 			</elseif>
 			<else>
@@ -233,13 +233,13 @@
 	<command name="shutdownServer">
 		<description message="This will shutdown the server at ${base_branch}-bundles\tomcat." />
 
-		<execute function="#antCommand" locator1="build-test.xml" value1="stop-app-server" />
+		<execute function="AntCommand" locator1="build-test.xml" value1="stop-app-server" />
 	</command>
 
 	<command name="startServer">
 		<description message="This will start the server at ${base_branch}-bundles\tomcat." />
 
-		<execute function="#antCommand" locator1="build-test.xml" value1="start-app-server" />
+		<execute function="AntCommand" locator1="build-test.xml" value1="start-app-server" />
 	</command>
 
 	<command name="tearDownPG">
@@ -248,7 +248,7 @@
 		<var name="key_portletName" value="${portletName}" />
 
 		<while>
-			<condition function="#isElementPresent" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="${portletName}" />
+			<condition function="IsElementPresent" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="${portletName}" />
 			<then>
 				<execute macro="Portlet#deletePG">
 					<var name="portletName" value="${portletName}" />
@@ -275,7 +275,7 @@
 
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
 
-		<execute function="#assertClick" locator1="DockbarAddpanelapplications#NAVIGATION_APPLICATIONS" value1="Applications" />
+		<execute function="AssertClick" locator1="DockbarAddpanelapplications#NAVIGATION_APPLICATIONS" value1="Applications" />
 		<execute function="Type#sendKeysApplicationSearch" locator1="DockbarAddpanelapplications#SEARCH_FIELD" value1="${portletName}" />
 
 		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
@@ -293,7 +293,7 @@
 			<then>
 				<var name="i" value="${i?increment()}" />
 
-				<execute function="#assertElementPresent" locator1="xpath=(//section[header/h1[contains(.,'${portletName}')]])[${i}]" />
+				<execute function="AssertElementPresent" locator1="xpath=(//section[header/h1[contains(.,'${portletName}')]])[${i}]" />
 			</then>
 		</while>
 	</command>
@@ -301,11 +301,11 @@
 	<command name="viewNoSpecificPG">
 		<var name="key_portletTitleName" value="${portletName}" />
 
-		<execute function="#assertElementNotPresent" locator1="BasePortlet#SPECIFIC_TITLE" value1="${portletName}" />
+		<execute function="AssertElementNotPresent" locator1="BasePortlet#SPECIFIC_TITLE" value1="${portletName}" />
 	</command>
 
 	<command name="viewPG">
-		<execute function="#assertTextEquals" locator1="BasePortlet#TITLE" value1="${portletName}" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="${portletName}" />
 
 		<if>
 			<isset var="portletBody" />
@@ -320,6 +320,6 @@
 	<command name="viewSpecificPG">
 		<var name="key_portletTitleName" value="${portletName}" />
 
-		<execute function="#assertTextEquals" locator1="BasePortlet#SPECIFIC_TITLE" value1="${portletName}" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_TITLE" value1="${portletName}" />
 	</command>
 </definition>

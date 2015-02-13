@@ -2,31 +2,31 @@
 	<command name="configureDisplaySettingsLanguage">
 		<var name="key_myAccount" value="${myAccount}" />
 
-		<execute function="#click" locator1="Dockbar#USER_NAME" />
-		<execute function="#assertClick" locator1="Dockbar#USER_MY_ACCOUNT_LOCALIZED" value1="${myAccount}" />
+		<execute function="Click" locator1="Dockbar#USER_NAME" />
+		<execute function="AssertClick" locator1="Dockbar#USER_MY_ACCOUNT_LOCALIZED" value1="${myAccount}" />
 
-		<execute function="#selectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-		<execute function="#assertClick" locator1="Myaccount#MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="${displaySettings}" />
-		<execute function="#select" locator1="Myaccount#LANGUAGE_SELECT" value1="${languageName}" />
+		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
+		<execute function="AssertClick" locator1="Myaccount#MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="${displaySettings}" />
+		<execute function="Select" locator1="Myaccount#LANGUAGE_SELECT" value1="${languageName}" />
 
 		<var name="key_saveButton" value="${saveButton}" />
 
-		<execute function="#assertClick" locator1="Myaccount#SAVE_BUTTON_LOCALIZED" value1="${saveButton}" />
-		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="${successMessage}" />
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="AssertClick" locator1="Myaccount#SAVE_BUTTON_LOCALIZED" value1="${saveButton}" />
+		<execute function="AssertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="${successMessage}" />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="view">
-		<execute function="#selectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
+		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
 
-		<execute function="#assertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_DETAILS" value1="Details" />
-		<execute function="#assertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_PASSWORD" value1="Password" />
-		<execute function="#assertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_ORGANIZATIONS" value1="Organizations" />
-		<execute function="#assertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_SITES" value1="Sites" />
-		<execute function="#assertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_USER_GROUPS" value1="User Groups" />
-		<execute function="#assertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_ROLES" value1="Roles" />
-		<execute function="#assertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_CATEGORIZATION" value1="Categorization" />
+		<execute function="AssertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_DETAILS" value1="Details" />
+		<execute function="AssertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_PASSWORD" value1="Password" />
+		<execute function="AssertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_ORGANIZATIONS" value1="Organizations" />
+		<execute function="AssertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_SITES" value1="Sites" />
+		<execute function="AssertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_USER_GROUPS" value1="User Groups" />
+		<execute function="AssertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_ROLES" value1="Roles" />
+		<execute function="AssertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_CATEGORIZATION" value1="Categorization" />
 
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 </definition>

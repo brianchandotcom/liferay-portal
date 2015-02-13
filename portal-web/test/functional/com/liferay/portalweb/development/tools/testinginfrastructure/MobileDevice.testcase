@@ -3,9 +3,9 @@
 	<property name="testray.main.component.name" value="Tools" />
 
 	<command name="BrowseGoogle" priority="5">
-		<execute function="#open" locator1="www.google.com" />
+		<execute function="Open" locator1="www.google.com" />
 
-		<execute function="#pause" locator1="5000" />
+		<execute function="Pause" locator1="5000" />
 	</command>
 
 	<command name="Smoke" priority="5">

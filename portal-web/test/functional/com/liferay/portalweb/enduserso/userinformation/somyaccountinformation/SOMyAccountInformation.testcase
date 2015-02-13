@@ -77,7 +77,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="#assertElementPresent" locator1="SOProfile#ADD_EMAIL_ADDRESS" />
+		<execute function="AssertElementPresent" locator1="SOProfile#ADD_EMAIL_ADDRESS" />
 	</command>
 
 	<command name="EditAddress" priority="5">
@@ -157,7 +157,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="#assertElementPresent" locator1="SOProfile#ADD_ADDRESSES" />
+		<execute function="AssertElementPresent" locator1="SOProfile#ADD_ADDRESSES" />
 	</command>
 
 	<command name="EditInstantMessenger" priority="5">
@@ -237,7 +237,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="#assertElementPresent" locator1="SOProfile#ADD_INSTANT_MESSENGER" />
+		<execute function="AssertElementPresent" locator1="SOProfile#ADD_INSTANT_MESSENGER" />
 	</command>
 
 	<command name="EditIntroduction" priority="5">
@@ -282,7 +282,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="#assertElementPresent" locator1="SOProfile#ADD_INTRODUCTION" />
+		<execute function="AssertElementPresent" locator1="SOProfile#ADD_INTRODUCTION" />
 	</command>
 
 	<command name="EditPhoneNumbers" priority="5">
@@ -341,7 +341,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="#assertElementPresent" locator1="SOProfile#ADD_PHONES" />
+		<execute function="AssertElementPresent" locator1="SOProfile#ADD_PHONES" />
 	</command>
 
 	<command known-issues="SOS-2463" name="EditProfilePicture" priority="5">
@@ -361,7 +361,7 @@
 
 		<execute macro="SOProfile#viewProfilePicture" />
 
-		<execute function="#sikuliAssertElementPresent" locator1="SOProfile#SCREENSHOTS_PROFILE_PICTURE_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="SOProfile#SCREENSHOTS_PROFILE_PICTURE_PNG" />
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="Account Settings" />
@@ -375,7 +375,7 @@
 
 		<execute macro="SOProfile#viewProfilePicture" />
 
-		<execute function="#sikuliAssertElementPresent" locator1="SOProfile#SCREENSHOTS_PROFILE_PICTURE_EDIT_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="SOProfile#SCREENSHOTS_PROFILE_PICTURE_EDIT_PNG" />
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="Account Settings" />
@@ -385,8 +385,8 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="#assertElementPresent" locator1="SOProfile#DEFAULT_PROFILE_PICTURE" />
-		<execute function="#sikuliAssertElementPresent" locator1="SOProfile#SCREENSHOTS_PROFILE_PICTURE_DEFAULT_PNG" />
+		<execute function="AssertElementPresent" locator1="SOProfile#DEFAULT_PROFILE_PICTURE" />
+		<execute function="SikuliAssertElementPresent" locator1="SOProfile#SCREENSHOTS_PROFILE_PICTURE_DEFAULT_PNG" />
 	</command>
 
 	<command name="EditProjects" priority="5">
@@ -448,7 +448,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="#assertElementPresent" locator1="SOProfile#ADD_PROJECTS" />
+		<execute function="AssertElementPresent" locator1="SOProfile#ADD_PROJECTS" />
 	</command>
 
 	<command name="EditSMS" priority="5">
@@ -493,7 +493,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="#assertElementPresent" locator1="SOProfile#ADD_SMS" />
+		<execute function="AssertElementPresent" locator1="SOProfile#ADD_SMS" />
 	</command>
 
 	<command name="EditSocialNetwork" priority="5">
@@ -545,7 +545,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="#assertElementPresent" locator1="SOProfile#ADD_SOCIAL_NETWORK" />
+		<execute function="AssertElementPresent" locator1="SOProfile#ADD_SOCIAL_NETWORK" />
 	</command>
 
 	<command name="EditTag" priority="5">
@@ -599,7 +599,7 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="#assertElementPresent" locator1="SOProfile#ADD_TAGS" />
+		<execute function="AssertElementPresent" locator1="SOProfile#ADD_TAGS" />
 	</command>
 
 	<command name="EditWebsite" priority="5">
@@ -651,6 +651,6 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="#assertElementPresent" locator1="SOProfile#ADD_WEBSITES" />
+		<execute function="AssertElementPresent" locator1="SOProfile#ADD_WEBSITES" />
 	</command>
 </definition>

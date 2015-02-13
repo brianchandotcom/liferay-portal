@@ -233,14 +233,14 @@
 			<var name="wfInformationTitle" value="Feed Back" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'webformportlet')])[1]" value1="Test 1" />
-		<execute function="#assertElementPresent" locator1="xpath=(//fieldset/div/div[contains(@class,'form-group')]/input[@type='text'])[1]" />
-		<execute function="#assertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'webformportlet')])[2]" value1="Test 2" />
-		<execute function="#assertElementPresent" locator1="xpath=(//fieldset/div/div[contains(@class,'form-group')]/input[@type='text'])[2]" />
-		<execute function="#assertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'webformportlet')])[3]" value1="Rate Us!" />
-		<execute function="#assertElementPresent" locator1="//div[contains(@class,'checkbox')]//input[@type='checkbox']" />
-		<execute function="#assertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'webformportlet')])[4]" value1="Additional Comments" />
-		<execute function="#assertElementPresent" locator1="//fieldset/div/div[contains(@class,'form-group')]/textarea" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'webformportlet')])[1]" value1="Test 1" />
+		<execute function="AssertElementPresent" locator1="xpath=(//fieldset/div/div[contains(@class,'form-group')]/input[@type='text'])[1]" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'webformportlet')])[2]" value1="Test 2" />
+		<execute function="AssertElementPresent" locator1="xpath=(//fieldset/div/div[contains(@class,'form-group')]/input[@type='text'])[2]" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'webformportlet')])[3]" value1="Rate Us!" />
+		<execute function="AssertElementPresent" locator1="//div[contains(@class,'checkbox')]//input[@type='checkbox']" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'webformportlet')])[4]" value1="Additional Comments" />
+		<execute function="AssertElementPresent" locator1="//fieldset/div/div[contains(@class,'form-group')]/textarea" />
 	</command>
 
 	<command name="EditWebFormAndViewOptionalCheckBoxField" priority="4">
@@ -790,7 +790,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="#selectFrame" locator1="PGWebformConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="PGWebformConfiguration#CONFIGURATION_IFRAME" />
 
 		<execute macro="WebFormPortlet#viewEditableField">
 			<var name="wfFieldName" value="Name" />
@@ -804,7 +804,7 @@
 			<var name="wfFieldName" value="Comments" />
 		</execute>
 
-		<execute function="#selectFrameTop" value1="relative=top" />
+		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -835,8 +835,8 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="#selectFrame" locator1="PGWebformConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="#assertTextEquals" locator1="PGWebformConfiguration#SETUP_FORM_FIELDS_INFO_MESSAGE" value1="There is existing form data. Please export and delete it before making changes to the fields." />
+		<execute function="SelectFrame" locator1="PGWebformConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="AssertTextEquals" locator1="PGWebformConfiguration#SETUP_FORM_FIELDS_INFO_MESSAGE" value1="There is existing form data. Please export and delete it before making changes to the fields." />
 
 		<execute macro="WebFormPortlet#viewEditableFieldNotPresent">
 			<var name="wfFieldName" value="Name" />
@@ -866,6 +866,6 @@
 			<var name="wfFieldType" value="Text Box" />
 		</execute>
 
-		<execute function="#selectFrameTop" value1="relative=top" />
+		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 </definition>

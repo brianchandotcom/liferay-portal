@@ -35,10 +35,10 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="SFO 9, Test" />
-		<execute function="#assertTextNotPresent" value1="test.sfo.9@liferay.com" />
+		<execute function="AssertTextNotPresent" value1="SFO 9, Test" />
+		<execute function="AssertTextNotPresent" value1="test.sfo.9@liferay.com" />
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_VIEW_MORE" value1="View More" />
-		<execute function="#assertTextPresent" value1="SFO 9, Test" />
-		<execute function="#assertTextPresent" value1="test.sfo.9@liferay.com" />
+		<execute function="AssertTextPresent" value1="SFO 9, Test" />
+		<execute function="AssertTextPresent" value1="test.sfo.9@liferay.com" />
 	</command>
 </definition>

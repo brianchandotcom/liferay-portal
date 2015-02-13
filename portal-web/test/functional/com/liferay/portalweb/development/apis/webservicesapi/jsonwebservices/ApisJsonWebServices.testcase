@@ -14,37 +14,37 @@
 	<command name="ViewIncludeAllAPINoMarketplace" priority="5">
 		<property name="custom.properties" value="jsonws.web.service.paths.includes=$${line.separator}jsonws.web.service.paths.excludes=/marketplace-portlet.*/*" />
 
-		<execute function="#open" locator1="Home#API_JSON_URL" />
+		<execute function="Open" locator1="Home#API_JSON_URL" />
 
-		<execute function="#assertTextEquals" locator1="Jsonwebservices#INFO_MESSAGE" value1="Please select a method on the left." />
-		<execute function="#assertTextEquals" locator1="Jsonwebservices#PANEL_HEADING_ADDRESS" value1="Address" />
-		<execute function="#assertTextEquals" locator1="Jsonwebservices#PANEL_HEADING_USER" value1="User" />
-		<execute function="#assertTextEquals" locator1="Jsonwebservices#PANEL_HEADING_WIKI_PAGE" value1="WikiPage" />
-		<execute function="#assertElementNotPresent" locator1="Jsonwebservices#CONTEXT_PATH_SELECT" />
+		<execute function="AssertTextEquals" locator1="Jsonwebservices#INFO_MESSAGE" value1="Please select a method on the left." />
+		<execute function="AssertTextEquals" locator1="Jsonwebservices#PANEL_HEADING_ADDRESS" value1="Address" />
+		<execute function="AssertTextEquals" locator1="Jsonwebservices#PANEL_HEADING_USER" value1="User" />
+		<execute function="AssertTextEquals" locator1="Jsonwebservices#PANEL_HEADING_WIKI_PAGE" value1="WikiPage" />
+		<execute function="AssertElementNotPresent" locator1="Jsonwebservices#CONTEXT_PATH_SELECT" />
 	</command>
 
 	<command name="ViewIncludeOnlyAddressAndUserAndExcludeHighRiskSecurityAPI" priority="5">
 		<property name="custom.properties" value="jsonws.web.service.paths.includes=/address/*,/user/*$${line.separator}jsonws.web.service.paths.excludes=/user/update-password,/user/set-role-users" />
 
-		<execute function="#open" locator1="Home#API_JSON_URL" />
+		<execute function="Open" locator1="Home#API_JSON_URL" />
 
-		<execute function="#assertTextEquals" locator1="Jsonwebservices#INFO_MESSAGE" value1="Please select a method on the left." />
-		<execute function="#assertTextEquals" locator1="Jsonwebservices#PANEL_HEADING_ADDRESS" value1="Address" />
-		<execute function="#assertTextEquals" locator1="Jsonwebservices#PANEL_HEADING_USER" value1="User" />
-		<execute function="#assertElementNotPresent" locator1="Jsonwebservices#PANEL_HEADING_WIKI_PAGE" value1="WikiPage" />
-		<execute function="#assertElementNotPresent" locator1="Jsonwebservices#USER_UPDATE_PASSWORD" value1="update-password" />
-		<execute function="#assertTextNotEquals" locator1="Jsonwebservices#USER_SET_ROLE_USERS" value1="set-role-users" />
+		<execute function="AssertTextEquals" locator1="Jsonwebservices#INFO_MESSAGE" value1="Please select a method on the left." />
+		<execute function="AssertTextEquals" locator1="Jsonwebservices#PANEL_HEADING_ADDRESS" value1="Address" />
+		<execute function="AssertTextEquals" locator1="Jsonwebservices#PANEL_HEADING_USER" value1="User" />
+		<execute function="AssertElementNotPresent" locator1="Jsonwebservices#PANEL_HEADING_WIKI_PAGE" value1="WikiPage" />
+		<execute function="AssertElementNotPresent" locator1="Jsonwebservices#USER_UPDATE_PASSWORD" value1="update-password" />
+		<execute function="AssertTextNotEquals" locator1="Jsonwebservices#USER_SET_ROLE_USERS" value1="set-role-users" />
 	</command>
 
 	<command name="ViewIncludeOnlyAddressAndUserAPI" priority="5">
 		<property name="custom.properties" value="jsonws.web.service.paths.includes=/address/*,/user/*$${line.separator}jsonws.web.service.paths.excludes=" />
 
-		<execute function="#open" locator1="Home#API_JSON_URL" />
+		<execute function="Open" locator1="Home#API_JSON_URL" />
 
-		<execute function="#assertTextEquals" locator1="Jsonwebservices#INFO_MESSAGE" value1="Please select a method on the left." />
-		<execute function="#assertTextEquals" locator1="Jsonwebservices#PANEL_HEADING_ADDRESS" value1="Address" />
-		<execute function="#assertTextEquals" locator1="Jsonwebservices#PANEL_HEADING_USER" value1="User" />
-		<execute function="#assertElementNotPresent" locator1="Jsonwebservices#PANEL_HEADING_WIKI_PAGE" value1="WikiPage" />
+		<execute function="AssertTextEquals" locator1="Jsonwebservices#INFO_MESSAGE" value1="Please select a method on the left." />
+		<execute function="AssertTextEquals" locator1="Jsonwebservices#PANEL_HEADING_ADDRESS" value1="Address" />
+		<execute function="AssertTextEquals" locator1="Jsonwebservices#PANEL_HEADING_USER" value1="User" />
+		<execute function="AssertElementNotPresent" locator1="Jsonwebservices#PANEL_HEADING_WIKI_PAGE" value1="WikiPage" />
 	</command>
 
 	<command name="ViewJsonws" priority="5">

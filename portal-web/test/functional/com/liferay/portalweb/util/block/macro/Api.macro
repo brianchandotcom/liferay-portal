@@ -3,80 +3,80 @@
 	<var name="userEmailAddress" value="test@liferay.com" />
 
 	<command name="apiAxisView">
-		<execute function="#open" locator1="Home#API_AXIS_URL" />
+		<execute function="Open" locator1="Home#API_AXIS_URL" />
 
-		<execute function="#assertTextPresent" value1="And now... Some Services" />
-		<execute function="#assertTextPresent" value1="Portal_LayoutBranchService" />
-		<execute function="#assertTextPresent" value1="Portal_AccountService" />
-		<execute function="#assertTextPresent" value1="Portal_CompanyService" />
+		<execute function="AssertTextPresent" value1="And now... Some Services" />
+		<execute function="AssertTextPresent" value1="Portal_LayoutBranchService" />
+		<execute function="AssertTextPresent" value1="Portal_AccountService" />
+		<execute function="AssertTextPresent" value1="Portal_CompanyService" />
 	</command>
 
 	<command name="apiJsonwsAddressView">
-		<execute function="#open" locator1="Home#API_JSON_URL" />
+		<execute function="Open" locator1="Home#API_JSON_URL" />
 
-		<execute function="#click" locator1="Jsonwebservices#ADDRESS_ADD_ADDRESS" />
+		<execute function="Click" locator1="Jsonwebservices#ADDRESS_ADD_ADDRESS" />
 
-		<execute function="#assertTextEquals" locator1="JsonwebservicesAddress#API_METHOD" value1="/address/add-address" />
-		<execute function="#assertElementPresent" locator1="JsonwebservicesAddress#INVOKE_BUTTON" />
+		<execute function="AssertTextEquals" locator1="JsonwebservicesAddress#API_METHOD" value1="/address/add-address" />
+		<execute function="AssertElementPresent" locator1="JsonwebservicesAddress#INVOKE_BUTTON" />
 	</command>
 
 	<command name="apiJsonwsUserView">
-		<execute function="#open" locator1="Home#API_JSON_URL" />
+		<execute function="Open" locator1="Home#API_JSON_URL" />
 
-		<execute function="#click" locator1="Jsonwebservices#USER_UPDATE_USER" />
+		<execute function="Click" locator1="Jsonwebservices#USER_UPDATE_USER" />
 
-		<execute function="#assertTextEquals" locator1="JsonwebservicesAddress#API_METHOD" value1="/user/update-user" />
-		<execute function="#assertElementPresent" locator1="JsonwebservicesAddress#INVOKE_BUTTON" />
+		<execute function="AssertTextEquals" locator1="JsonwebservicesAddress#API_METHOD" value1="/user/update-user" />
+		<execute function="AssertElementPresent" locator1="JsonwebservicesAddress#INVOKE_BUTTON" />
 	</command>
 
 	<command name="apiJsonwsView">
-		<execute function="#open" locator1="Home#API_JSON_URL" />
+		<execute function="Open" locator1="Home#API_JSON_URL" />
 
-		<execute function="#assertTextEquals" locator1="Jsonwebservices#INFO_MESSAGE" value1="Please select a method on the left." />
-		<execute function="#assertTextEquals" locator1="Jsonwebservices#SITE_NAME" value1="JSONWS API" />
-		<execute function="#assertElementPresent" locator1="Jsonwebservices#SEARCH" />
-		<execute function="#assertElementPresent" locator1="Jsonwebservices#ADDRESS" />
-		<execute function="#assertElementPresent" locator1="Jsonwebservices#WIKI_PAGE" />
+		<execute function="AssertTextEquals" locator1="Jsonwebservices#INFO_MESSAGE" value1="Please select a method on the left." />
+		<execute function="AssertTextEquals" locator1="Jsonwebservices#SITE_NAME" value1="JSONWS API" />
+		<execute function="AssertElementPresent" locator1="Jsonwebservices#SEARCH" />
+		<execute function="AssertElementPresent" locator1="Jsonwebservices#ADDRESS" />
+		<execute function="AssertElementPresent" locator1="Jsonwebservices#WIKI_PAGE" />
 	</command>
 
 	<command name="apiJsonwsWikiView">
-		<execute function="#open" locator1="Home#API_JSON_URL" />
+		<execute function="Open" locator1="Home#API_JSON_URL" />
 
-		<execute function="#click" locator1="Jsonwebservices#WIKI_PAGE_ADD_PAGE" />
+		<execute function="Click" locator1="Jsonwebservices#WIKI_PAGE_ADD_PAGE" />
 
-		<execute function="#assertTextEquals" locator1="JsonwebservicesWiki#API_METHOD" value1="/wikipage/add-page" />
-		<execute function="#assertElementPresent" locator1="JsonwebservicesWiki#INVOKE_BUTTON" />
+		<execute function="AssertTextEquals" locator1="JsonwebservicesWiki#API_METHOD" value1="/wikipage/add-page" />
+		<execute function="AssertElementPresent" locator1="JsonwebservicesWiki#INVOKE_BUTTON" />
 	</command>
 
 	<command name="editJsonwsUserView">
-		<execute function="#assertTextEquals" locator1="JsonwebservicesUser#API_METHOD" value1="/user/update-user" />
+		<execute function="AssertTextEquals" locator1="JsonwebservicesUser#API_METHOD" value1="/user/update-user" />
 
-		<execute function="#type" locator1="JsonwebservicesUser#API_EXECUTE_USER_ID_FIELD" value1="${userId}" />
-		<execute function="#type" locator1="JsonwebservicesUser#API_EXECUTE_PASSWORD_RESET_FALSE_RADIO" value1="False" />
-		<execute function="#type" locator1="JsonwebservicesUser#API_EXECUTE_SCREEN_NAME_FIELD" value1="${userScreenName}" />
-		<execute function="#type" locator1="JsonwebservicesUser#API_EXECUTE_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute function="#type" locator1="JsonwebservicesUser#API_EXECUTE_FACEBOOK_ID_FIELD" value1="${userFacebookId}" />
-		<execute function="#type" locator1="JsonwebservicesUser#API_EXECUTE_FIRST_NAME_FIELD" value1="${userFirstName}" />
-		<execute function="#type" locator1="JsonwebservicesUser#API_EXECUTE_LAST_NAME_FIELD" value1="${userLastName}" />
-		<execute function="#type" locator1="JsonwebservicesUser#API_EXECUTE_PREFIX_ID_FIELD" value1="${userPrefixId}" />
-		<execute function="#type" locator1="JsonwebservicesUser#API_EXECUTE_SUFFIX_ID_FIELD" value1="${userSuffixId}" />
-		<execute function="#type" locator1="JsonwebservicesUser#API_EXECUTE_MALE_TRUE_RADIO" value1="True" />
-		<execute function="#type" locator1="JsonwebservicesUser#API_EXECUTE_BIRTHDAY_MONTH_FIELD" value1="${userBirthdayMonth}" />
-		<execute function="#type" locator1="JsonwebservicesUser#API_EXECUTE_BIRTHDAY_DAY_FIELD" value1="${userBirthdayDay}" />
-		<execute function="#type" locator1="JsonwebservicesUser#API_EXECUTE_BIRTHDAY_YEAR_FIELD" value1="${userBirthdayYear}" />
+		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_USER_ID_FIELD" value1="${userId}" />
+		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_PASSWORD_RESET_FALSE_RADIO" value1="False" />
+		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_SCREEN_NAME_FIELD" value1="${userScreenName}" />
+		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_FACEBOOK_ID_FIELD" value1="${userFacebookId}" />
+		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_FIRST_NAME_FIELD" value1="${userFirstName}" />
+		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_LAST_NAME_FIELD" value1="${userLastName}" />
+		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_PREFIX_ID_FIELD" value1="${userPrefixId}" />
+		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_SUFFIX_ID_FIELD" value1="${userSuffixId}" />
+		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_MALE_TRUE_RADIO" value1="True" />
+		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_BIRTHDAY_MONTH_FIELD" value1="${userBirthdayMonth}" />
+		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_BIRTHDAY_DAY_FIELD" value1="${userBirthdayDay}" />
+		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_BIRTHDAY_YEAR_FIELD" value1="${userBirthdayYear}" />
 
-		<execute function="#assertClick" locator1="JsonwebservicesUser#INVOKE_BUTTON" value1="Invoke" />
+		<execute function="AssertClick" locator1="JsonwebservicesUser#INVOKE_BUTTON" value1="Invoke" />
 	</command>
 
 	<command name="gotoPAuthURL">
-		<execute function="#open" locator1="Home#API_JSON_URL" />
+		<execute function="Open" locator1="Home#API_JSON_URL" />
 
-		<execute function="#click" locator1="Jsonwebservices#ADDRESS_ADD_ADDRESS" />
+		<execute function="Click" locator1="Jsonwebservices#ADDRESS_ADD_ADDRESS" />
 
-		<execute function="#assertTextEquals" locator1="JsonwebservicesAddress#API_METHOD" value1="/address/add-address" />
+		<execute function="AssertTextEquals" locator1="JsonwebservicesAddress#API_METHOD" value1="/address/add-address" />
 
 		<var locator="P_AUTH_FIELD" name="pAuth" path="JsonwebservicesAddress" />
 
-		<execute function="#open" locator1="${url}${pAuth}" />
+		<execute function="Open" locator1="${url}${pAuth}" />
 	</command>
 </definition>

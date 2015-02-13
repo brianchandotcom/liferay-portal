@@ -2,75 +2,75 @@
 	<command name="addChildPageViaSiteTemplateCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="#click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
-		<execute function="#click" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_MANAGE" />
+		<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
+		<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_MANAGE" />
 
 		<if>
 			<isset var="childSitepageName" />
 			<then>
-				<execute function="#click" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_2" />
+				<execute function="Click" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_2" />
 			</then>
 			<else>
-				<execute function="#click" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_1" />
+				<execute function="Click" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_1" />
 			</else>
 		</if>
 
-		<execute function="#pause" locator1="3000" />
-		<execute function="#assertClick" locator1="CPSitepages#TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
+		<execute function="Pause" locator1="3000" />
+		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
 
 		<execute function="Type#clickAtSendKeys" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
-		<execute function="#assertClick" locator1="CPSitepagesAddpage#ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute function="AssertClick" locator1="CPSitepagesAddpage#ADD_PAGE_BUTTON" value1="Add Page" />
 
-		<execute function="#assertTextEquals" locator1="CPSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="CPSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addCP">
-		<execute function="#assertClick" locator1="CPSitetemplates#ADD" value1="Add" />
+		<execute function="AssertClick" locator1="CPSitetemplates#ADD" value1="Add" />
 
-		<execute function="#type" locator1="CPSitetemplatesAdd#NAME_FIELD" value1="${siteTemplateName}" />
+		<execute function="Type" locator1="CPSitetemplatesAdd#NAME_FIELD" value1="${siteTemplateName}" />
 
 		<if>
 			<equals arg1="${siteTemplateActive}" arg2="No" />
 			<then>
-				<execute function="#uncheck" locator1="CPSitetemplatesAdd#ACTIVE_CHECKBOX" />
+				<execute function="Uncheck" locator1="CPSitetemplatesAdd#ACTIVE_CHECKBOX" />
 			</then>
 			<else>
-				<execute function="#check" locator1="CPSitetemplatesAdd#ACTIVE_CHECKBOX" />
+				<execute function="Check" locator1="CPSitetemplatesAdd#ACTIVE_CHECKBOX" />
 			</else>
 		</if>
 
-		<execute function="#assertClick" locator1="CPSitetemplatesAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="CPSitetemplatesAdd#SAVE_BUTTON" value1="Save" />
 
-		<execute function="#assertTextEquals" locator1="CPSitetemplateSettings#PORTLET_TITLE" value1="Site Template Settings" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplateSettings#PORTLET_TITLE" value1="Site Template Settings" />
 
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="#assertTextEquals" locator1="CPSitetemplatesConfiguration#SITE_TEMPLATE_NAME" value1="${siteTemplateName}" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplatesConfiguration#SITE_TEMPLATE_NAME" value1="${siteTemplateName}" />
 	</command>
 
 	<command name="addSitePageViaSiteTemplateCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="#click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
-		<execute function="#click" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_MANAGE" />
+		<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
+		<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_MANAGE" />
 
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="#assertClick" locator1="CPSitepages#TOOLBAR_ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_ADD_PAGE" value1="Add Page" />
 
 		<if>
 			<isset var="pageType" />
 			<then>
 				<var name="key_pageType" value="${pageType}" />
 
-				<execute function="#assertTextEquals" locator1="CPSitepagesAddpage#PAGE_TYPE_LABEL" value1="${pageType}" />
-				<execute function="#click" locator1="CPSitepagesAddpage#PAGE_TYPE_RADIO" value1="${pageType}" />
+				<execute function="AssertTextEquals" locator1="CPSitepagesAddpage#PAGE_TYPE_LABEL" value1="${pageType}" />
+				<execute function="Click" locator1="CPSitepagesAddpage#PAGE_TYPE_RADIO" value1="${pageType}" />
 
 				<if>
 					<equals arg1="${pageTemplateAutoApplyChanges}" arg2="true" />
 					<then>
-						<execute function="#assertTextEquals" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
-						<execute function="#check" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" value1="${pageType}" />
+						<execute function="AssertTextEquals" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
+						<execute function="Check" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" value1="${pageType}" />
 					</then>
 				</if>
 
@@ -87,23 +87,23 @@
 		</if>
 
 		<execute function="Type#clickAtSendKeys" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
-		<execute function="#assertClick" locator1="CPSitepagesAddpage#ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute function="AssertClick" locator1="CPSitepagesAddpage#ADD_PAGE_BUTTON" value1="Add Page" />
 	</command>
 
 	<command name="allowChangesToPageTemplateCP">
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="#click" locator1="CPSitepages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName" />
+		<execute function="Click" locator1="CPSitepages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName" />
 
 		<if>
 			<equals arg1="${allow}" arg2="true" />
 			<then>
-				<execute function="#check" locator1="CPSitepages#DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX" />
-				<execute function="#click" locator1="CPSitepages#SAVE_BUTTON" />
+				<execute function="Check" locator1="CPSitepages#DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX" />
+				<execute function="Click" locator1="CPSitepages#SAVE_BUTTON" />
 			</then>
 			<else>
-				<execute function="#uncheck" locator1="CPSitepages#DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX" />
-				<execute function="#click" locator1="CPSitepages#SAVE_BUTTON" />
+				<execute function="Uncheck" locator1="CPSitepages#DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX" />
+				<execute function="Click" locator1="CPSitepages#SAVE_BUTTON" />
 			</else>
 		</if>
 	</command>
@@ -111,21 +111,21 @@
 	<command name="allowSiteAdminsToEditThisPageCP">
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="#click" locator1="CPSitepages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName" />
+		<execute function="Click" locator1="CPSitepages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName" />
 
-		<execute function="#check" locator1="CPSitepages#DETAILS_PAGE_TEMPLATE_UPDATEABLE_CHECKBOX" />
-		<execute function="#click" locator1="CPSitepages#SAVE_BUTTON" />
+		<execute function="Check" locator1="CPSitepages#DETAILS_PAGE_TEMPLATE_UPDATEABLE_CHECKBOX" />
+		<execute function="Click" locator1="CPSitepages#SAVE_BUTTON" />
 	</command>
 
 	<command name="deleteCP">
 
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="#click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
-		<execute function="#assertClickNoError" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_DELETE" value1="Delete" />
-		<execute function="#confirm" locator1="CPSitetemplates#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
+		<execute function="AssertClickNoError" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_DELETE" value1="Delete" />
+		<execute function="Confirm" locator1="CPSitetemplates#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-		<execute function="#assertTextEquals" locator1="CPSitetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="CPSitetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editAllowSiteAdminToModifyPageCP">
@@ -136,17 +136,17 @@
 		<if>
 			<equals arg1="${allowSiteAdminsToModifyPages}" arg2="true" />
 			<then>
-				<execute function="#check" locator1="CPSitetemplateSettings#ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX" />
+				<execute function="Check" locator1="CPSitetemplateSettings#ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${allowSiteAdminsToModifyPages}" arg2="false" />
 				<then>
-					<execute function="#uncheck" locator1="CPSitetemplateSettings#ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX" />
+					<execute function="Uncheck" locator1="CPSitetemplateSettings#ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute function="#assertClick" locator1="CPSitetemplateSettings#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="CPSitetemplateSettings#SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="editCP">
@@ -154,8 +154,8 @@
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 		</execute>
 
-		<execute function="#type" locator1="CPSitetemplateSettings#NAME_FIELD" value1="${siteTemplateName} Edit" />
-		<execute function="#assertClick" locator1="CPSitetemplateSettings#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="CPSitetemplateSettings#NAME_FIELD" value1="${siteTemplateName} Edit" />
+		<execute function="AssertClick" locator1="CPSitetemplateSettings#SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="editTemplateStatusCP">
@@ -169,51 +169,51 @@
 				<if>
 					<equals arg1="${siteTemplateActiveEdit}" arg2="No" />
 					<then>
-						<execute function="#uncheck" locator1="CPSitetemplateSettings#ACTIVE_CHECKBOX" />
+						<execute function="Uncheck" locator1="CPSitetemplateSettings#ACTIVE_CHECKBOX" />
 					</then>
 					<else>
-						<execute function="#check" locator1="CPSitetemplateSettings#ACTIVE_CHECKBOX" />
+						<execute function="Check" locator1="CPSitetemplateSettings#ACTIVE_CHECKBOX" />
 					</else>
 				</if>
 			</then>
 		</if>
 
-		<execute function="#assertClick" locator1="CPSitetemplateSettings#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="CPSitetemplateSettings#SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="gotoSettingsCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="#assertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
-		<execute function="#click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_MANAGE" value1="Manage" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+		<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_MANAGE" value1="Manage" />
 
-		<execute function="#assertTextEquals" locator1="CPSitetemplatesConfiguration#SITE_TEMPLATE_NAME" value1="${siteTemplateName}" />
-		<execute function="#assertClick" locator1="CPSitetemplatesConfiguration#CONFIGURATION" value1="Configuration" />
-		<execute function="#assertClick" locator1="CPSitetemplatesConfiguration#CONFIGURATION_SITE_TEMPLATE_SETTINGS" value1="Site Template Settings" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplatesConfiguration#SITE_TEMPLATE_NAME" value1="${siteTemplateName}" />
+		<execute function="AssertClick" locator1="CPSitetemplatesConfiguration#CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="CPSitetemplatesConfiguration#CONFIGURATION_SITE_TEMPLATE_SETTINGS" value1="Site Template Settings" />
 
-		<execute function="#assertTextEquals" locator1="CPSitetemplateSettings#PORTLET_TITLE" value1="Site Template Settings" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplateSettings#PORTLET_TITLE" value1="Site Template Settings" />
 	</command>
 
 	<command name="gotoViewPages">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="#assertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
-		<execute function="#click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_VIEW_PAGES" value1="View Pages" />
-		<execute function="#selectWindow" locator1="home - ${siteTemplateName} - Liferay" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+		<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_VIEW_PAGES" value1="View Pages" />
+		<execute function="SelectWindow" locator1="home - ${siteTemplateName} - Liferay" />
 	</command>
 
 	<command name="resetPageChanges">
-		<execute function="#refresh" />
+		<execute function="Refresh" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template." />
-		<execute function="#assertTextEquals" locator1="Dockbar#RESET_CHANGES_BUTTON" value1="Reset Changes" />
+		<execute function="AssertTextEquals" locator1="Dockbar#RESET_CHANGES_BUTTON" value1="Reset Changes" />
 
 		<var name="key_portletTitleName" value="${portletName}" />
 
-		<execute function="#assertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE" value1="${portletName}" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE" value1="${portletName}" />
 
-		<execute function="#assertClick" locator1="Dockbar#RESET_CHANGES_BUTTON" value1="Reset Changes" />
+		<execute function="AssertClick" locator1="Dockbar#RESET_CHANGES_BUTTON" value1="Reset Changes" />
 	</command>
 
 	<command name="tearDownCP">
@@ -224,33 +224,33 @@
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
 		<while>
-			<condition function="#isElementPresent" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
+			<condition function="IsElementPresent" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
 			<then>
-				<execute function="#click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
-				<execute function="#assertClickNoError" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_DELETE" value1="Delete" />
-				<execute function="#confirm" locator1="CPSitetemplates#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="#assertTextEquals" locator1="CPSitetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
+				<execute function="AssertClickNoError" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_DELETE" value1="Delete" />
+				<execute function="Confirm" locator1="CPSitetemplates#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="AssertTextEquals" locator1="CPSitetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute function="#assertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME_1" value1="Community Site" />
-		<execute function="#assertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME_2" value1="Intranet Site" />
-		<execute function="#assertElementNotPresent" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME_3" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME_1" value1="Community Site" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME_2" value1="Intranet Site" />
+		<execute function="AssertElementNotPresent" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME_3" />
 	</command>
 
 	<command name="viewDefaultDataLocalizedCP">
-		<execute function="#assertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME_1" value1="${communitySiteTranslation}" />
-		<execute function="#assertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME_2" value1="${intranetSiteTranslation}" />
-		<execute function="#assertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_DESCRITPION_1" value1="${communitySiteDescriptionTranslation}" />
-		<execute function="#assertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_DESCRIPTION_2" value1="${intranetSiteDescriptionTranslation}" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME_1" value1="${communitySiteTranslation}" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME_2" value1="${intranetSiteTranslation}" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_DESCRITPION_1" value1="${communitySiteDescriptionTranslation}" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_DESCRIPTION_2" value1="${intranetSiteDescriptionTranslation}" />
 	</command>
 
 	<command name="viewEditCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="#assertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName} Edit" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName} Edit" />
 	</command>
 
 	<command name="viewNoSiteOrWorkflowLinksCP">
@@ -258,38 +258,38 @@
 		<var name="key_portletName" value="${portletName}" />
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="#assertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
-		<execute function="#click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_MANAGE" value1="Manage" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+		<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_MANAGE" value1="Manage" />
 
 		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
-		<execute function="#assertTextEquals" locator1="Home#SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
 
 		<for list="${portletNames}" param="portletName">
 			<var name="key_portletName" value="${portletName}" />
 
-			<execute function="#assertTextNotPresent" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+			<execute function="AssertTextNotPresent" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
 		</for>
 
 		<var name="key_portletCategoryName" value="${portletCategoryName2}" />
 
-		<execute function="#assertElementNotPresent" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName2}" />
+		<execute function="AssertElementNotPresent" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName2}" />
 	</command>
 
 	<command name="viewResetPageChanges">
-		<execute function="#refresh" />
-		<execute function="#assertTextNotPresent" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template." />
-		<execute function="#assertTextNotPresent" locator1="Dockbar#RESET_CHANGES_BUTTON" value1="Reset Changes" />
+		<execute function="Refresh" />
+		<execute function="AssertTextNotPresent" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template." />
+		<execute function="AssertTextNotPresent" locator1="Dockbar#RESET_CHANGES_BUTTON" value1="Reset Changes" />
 
 		<var name="key_portletTitleName" value="${portletName}" />
 
-		<execute function="#assertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE" value1="${portletName}" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE" value1="${portletName}" />
 	</command>
 
 	<command name="viewTemplateStatusCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="#assertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
-		<execute function="#assertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIVE" value1="${siteTemplateActiveEdit}" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIVE" value1="${siteTemplateActiveEdit}" />
 	</command>
 </definition>

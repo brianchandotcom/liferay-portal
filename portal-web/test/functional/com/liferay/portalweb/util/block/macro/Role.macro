@@ -1,42 +1,42 @@
 <definition>
 	<command name="addCP">
-		<execute function="#assertClick" locator1="CPRoles#ADD" value1="Add" />
+		<execute function="AssertClick" locator1="CPRoles#ADD" value1="Add" />
 
 		<if>
 			<equals arg1="${roleType}" arg2="Organization" />
 			<then>
-				<execute function="#assertClick" locator1="CPRoles#ADD_MENULIST_ORGANIZATION_ROLE" value1="Organization Role" />
+				<execute function="AssertClick" locator1="CPRoles#ADD_MENULIST_ORGANIZATION_ROLE" value1="Organization Role" />
 			</then>
 			<elseif>
 				<equals arg1="${roleType}" arg2="Site" />
 				<then>
-					<execute function="#assertClick" locator1="CPRoles#ADD_MENULIST_SITE_ROLE" value1="Site Role" />
+					<execute function="AssertClick" locator1="CPRoles#ADD_MENULIST_SITE_ROLE" value1="Site Role" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="#assertClick" locator1="CPRoles#ADD_MENULIST_REGULAR_ROLE" value1="Regular Role" />
+				<execute function="AssertClick" locator1="CPRoles#ADD_MENULIST_REGULAR_ROLE" value1="Regular Role" />
 			</else>
 		</if>
 
-		<execute function="#type" locator1="CPRolesAddrole#NAME_FIELD" value1="${roleName}" />
+		<execute function="Type" locator1="CPRolesAddrole#NAME_FIELD" value1="${roleName}" />
 
 		<if>
 			<isset var="roleDescription" />
 			<then>
-				<execute function="#type" locator1="CPRolesAddrole#DESCRIPTION_FIELD" value1="${roleDescription}" />
+				<execute function="Type" locator1="CPRolesAddrole#DESCRIPTION_FIELD" value1="${roleDescription}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="roleTitle" />
 			<then>
-				<execute function="#type" locator1="CPRolesAddrole#TITLE_FIELD" value1="${roleTitle}" />
+				<execute function="Type" locator1="CPRolesAddrole#TITLE_FIELD" value1="${roleTitle}" />
 			</then>
 		</if>
 
-		<execute function="#assertClick" locator1="CPRolesAddrole#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="CPRolesAddrole#SAVE_BUTTON" value1="Save" />
 
-		<execute function="#assertTextEquals" locator1="CPRoles#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="CPRoles#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addStagingAdminRole">
@@ -61,83 +61,83 @@
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="Type#sendKeys" locator1="CPRoles#SEARCH_FIELD" value1="${roleName}" />
-		<execute function="#assertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
-		<execute function="#click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsers#MEMBERS_ORGANIZATIONS" value1="Organizations" />
+		<execute function="AssertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsers#MEMBERS_ORGANIZATIONS" value1="Organizations" />
 
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute function="#assertClick" locator1="CPRolesAssignmembersOrganizations#AVAILABLE" value1="Available" />
-		<execute function="#type" locator1="CPRolesAssignmembersOrganizations#SEARCH_FIELD" value1="${orgName}" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersOrganizations#SEARCH_BUTTON" value1="Search" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-		<execute function="#check" locator1="CPRolesAssignmembersOrganizations#ORGANIZATION_TABLE_CHECKBOX" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersOrganizations#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersOrganizations#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="#assertChecked" locator1="CPRolesAssignmembersOrganizations#ORGANIZATION_TABLE_CHECKBOX" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersOrganizations#AVAILABLE" value1="Available" />
+		<execute function="Type" locator1="CPRolesAssignmembersOrganizations#SEARCH_FIELD" value1="${orgName}" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersOrganizations#SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute function="Check" locator1="CPRolesAssignmembersOrganizations#ORGANIZATION_TABLE_CHECKBOX" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersOrganizations#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersOrganizations#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertChecked" locator1="CPRolesAssignmembersOrganizations#ORGANIZATION_TABLE_CHECKBOX" />
 	</command>
 
 	<command name="assignMembersSitesCP">
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="Type#sendKeys" locator1="CPRoles#SEARCH_FIELD" value1="${roleName}" />
-		<execute function="#assertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
-		<execute function="#click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsers#MEMBERS_SITES" value1="Sites" />
+		<execute function="AssertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsers#MEMBERS_SITES" value1="Sites" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="#assertClick" locator1="CPRolesAssignmembersSites#AVAILABLE" value1="Available" />
-		<execute function="#type" locator1="CPRolesAssignmembersSites#SEARCH_FIELD" value1="${siteName}" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersSites#SEARCH_BUTTON" value1="Search" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersSites#SITE_TABLE_NAME" value1="${siteName}" />
-		<execute function="#check" locator1="CPRolesAssignmembersSites#SITE_TABLE_CHECKBOX" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersSites#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersSites#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="#assertChecked" locator1="CPRolesAssignmembersSites#SITE_TABLE_CHECKBOX" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersSites#AVAILABLE" value1="Available" />
+		<execute function="Type" locator1="CPRolesAssignmembersSites#SEARCH_FIELD" value1="${siteName}" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersSites#SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersSites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="Check" locator1="CPRolesAssignmembersSites#SITE_TABLE_CHECKBOX" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersSites#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersSites#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertChecked" locator1="CPRolesAssignmembersSites#SITE_TABLE_CHECKBOX" />
 	</command>
 
 	<command name="assignMembersUserGroupsCP">
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="Type#sendKeys" locator1="CPRoles#SEARCH_FIELD" value1="${roleName}" />
-		<execute function="#assertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
-		<execute function="#click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsers#MEMBERS_USER_GROUPS" value1="User Groups" />
+		<execute function="AssertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsers#MEMBERS_USER_GROUPS" value1="User Groups" />
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsergroups#AVAILABLE" value1="Available" />
-		<execute function="#type" locator1="CPRolesAssignmembersUsergroups#SEARCH_FIELD" value1="${userGroupName}" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsergroups#SEARCH_BUTTON" value1="Search" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersUsergroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
-		<execute function="#check" locator1="CPRolesAssignmembersUsergroups#USER_GROUP_TABLE_CHECKBOX" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsergroups#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersUsergroups#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="#assertChecked" locator1="CPRolesAssignmembersUsergroups#USER_GROUP_TABLE_CHECKBOX" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsergroups#AVAILABLE" value1="Available" />
+		<execute function="Type" locator1="CPRolesAssignmembersUsergroups#SEARCH_FIELD" value1="${userGroupName}" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsergroups#SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersUsergroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute function="Check" locator1="CPRolesAssignmembersUsergroups#USER_GROUP_TABLE_CHECKBOX" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsergroups#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersUsergroups#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertChecked" locator1="CPRolesAssignmembersUsergroups#USER_GROUP_TABLE_CHECKBOX" />
 	</command>
 
 	<command name="assignRegRoleCP">
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="Type#sendKeys" locator1="CPRoles#SEARCH_FIELD" value1="${roleName}" />
-		<execute function="#assertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
-		<execute function="#click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="AssertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsers#STATUS_AVAILABLE" value1="Available" />
-		<execute function="#type" locator1="CPRolesAssignmembersUsers#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsers#BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="#check" locator1="CPRolesAssignmembersUsers#USER_TABLE_CHECKBOX" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsers#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersUsers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="#assertChecked" locator1="CPRolesAssignmembersUsers#USER_TABLE_CHECKBOX" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsers#STATUS_AVAILABLE" value1="Available" />
+		<execute function="Type" locator1="CPRolesAssignmembersUsers#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsers#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute function="Check" locator1="CPRolesAssignmembersUsers#USER_TABLE_CHECKBOX" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsers#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersUsers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertChecked" locator1="CPRolesAssignmembersUsers#USER_TABLE_CHECKBOX" />
 	</command>
 
 	<command name="definePermissionCmdCP">
@@ -164,10 +164,10 @@
 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
 		<var name="key_roleName" value="${key_roleName?lowercase()}" />
 
-		<execute function="#check" locator1="Permissions#${permissionDefinitionKey}" />
-		<execute function="#assertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="#assertChecked" locator1="Permissions#${permissionDefinitionKey}" />
+		<execute function="Check" locator1="Permissions#${permissionDefinitionKey}" />
+		<execute function="AssertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertChecked" locator1="Permissions#${permissionDefinitionKey}" />
 	</command>
 
 	<command name="definePermissionsCP">
@@ -181,10 +181,10 @@
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="Type#sendKeys" locator1="CPRoles#SEARCH_FIELD" value1="${roleName}" />
-		<execute function="#assertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
-		<execute function="#assertTextEquals" locator1="CPRoles#ROLE_TABLE_TITLE" value1="${roleName}" />
-		<execute function="#assertClick" locator1="CPRoles#ROLE_TABLE_ACTIONS" value1="Actions" />
-		<execute function="#assertClick" locator1="CPRoles#ROLE_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="CPRoles#ROLE_TABLE_TITLE" value1="${roleName}" />
+		<execute function="AssertClick" locator1="CPRoles#ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="CPRoles#ROLE_MENULIST_EDIT" value1="Edit" />
 
 		<if>
 			<equals arg1="${localizeRoleName}" arg2="true" />
@@ -192,7 +192,7 @@
 				<execute macro="Role#localizeRoleNameCmd" />
 			</then>
 			<else>
-				<execute function="#type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleName}" />
+				<execute function="Type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleName}" />
 			</else>
 		</if>
 
@@ -205,41 +205,41 @@
 						<execute macro="Role#localizeRoleDescriptionCmd" />
 					</then>
 					<else>
-						<execute function="#type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescription}" />
+						<execute function="Type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescription}" />
 					</else>
 				</if>
 			</then>
 		</if>
 
-		<execute function="#assertClick" locator1="CPRolesEdit#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="CPRolesEdit#SAVE_BUTTON" value1="Save" />
 
-		<execute function="#assertTextEquals" locator1="CPRoles#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="CPRoles#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editPermissionCmdCP">
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="Type#sendKeys" locator1="CPRoles#SEARCH_FIELD" value1="${roleName}" />
-		<execute function="#assertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
 
 		<if>
 			<isset var="roleUser" />
 			<then>
-				<execute function="#assertTextEquals" locator1="//tr[contains(.,'${roleName}') and contains(.,'${roleUser}')]/td[1]/a" value1="${roleUser}" />
-				<execute function="#click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
+				<execute function="AssertTextEquals" locator1="//tr[contains(.,'${roleName}') and contains(.,'${roleUser}')]/td[1]/a" value1="${roleUser}" />
+				<execute function="Click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="CPRoles#ROLE_TABLE_TITLE" value1="${roleName}" />
-				<execute function="#click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
+				<execute function="AssertTextEquals" locator1="CPRoles#ROLE_TABLE_TITLE" value1="${roleName}" />
+				<execute function="Click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
 			</else>
 		</if>
 
-		<execute function="#assertClick" locator1="CPRoles#ROLE_MENULIST_DEFINE_PERMISSIONS" value1="Define Permissions" />
+		<execute function="AssertClick" locator1="CPRoles#ROLE_MENULIST_DEFINE_PERMISSIONS" value1="Define Permissions" />
 
 		<if>
-			<condition function="#isElementPresent" locator1="CPRolesDefinepermissions#INFO_MESSAGE" />
+			<condition function="IsElementPresent" locator1="CPRolesDefinepermissions#INFO_MESSAGE" />
 			<then>
-				<execute function="#assertTextEquals" locator1="CPRolesDefinepermissions#INFO_MESSAGE" value1="This role does not have any permissions." />
+				<execute function="AssertTextEquals" locator1="CPRolesDefinepermissions#INFO_MESSAGE" value1="This role does not have any permissions." />
 			</then>
 		</if>
 
@@ -410,25 +410,25 @@
 
 			<if>
 				<not>
-					<condition function="#isElementPresent" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKey}" />
+					<condition function="IsElementPresent" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKey}" />
 				</not>
 				<then>
-					<execute function="#type" locator1="CPRolesDefinepermissions#SEARCH_FIELD" value1="${permissionNavigationValue}" />
-					<execute function="#assertClick" locator1="CPRolesDefinepermissions#${permissionNavigationKey}" value1="${permissionNavigationValue}" />
+					<execute function="Type" locator1="CPRolesDefinepermissions#SEARCH_FIELD" value1="${permissionNavigationValue}" />
+					<execute function="AssertClick" locator1="CPRolesDefinepermissions#${permissionNavigationKey}" value1="${permissionNavigationValue}" />
 
-					<execute function="#assertTextEquals" locator1="CPRolesDefinepermissionsAllpermissions#PERMISSION_HEADER" value1="${permissionNavigationValue}" />
+					<execute function="AssertTextEquals" locator1="CPRolesDefinepermissionsAllpermissions#PERMISSION_HEADER" value1="${permissionNavigationValue}" />
 				</then>
 			</if>
 
 			<if>
 				<equals arg1="${define}" arg2="true" />
 				<then>
-					<execute function="#check" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKey}" />
+					<execute function="Check" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKey}" />
 				</then>
 				<elseif>
 					<equals arg1="${remove}" arg2="true" />
 					<then>
-						<execute function="#uncheck" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKey}" />
+						<execute function="Uncheck" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKey}" />
 					</then>
 				</elseif>
 			</if>
@@ -438,175 +438,175 @@
 				<then>
 					<var name="permissionDefinitionKeyChange" value="${permissionDefinitionKey?replace('CHECKBOX', 'CHANGE_LINK')}" />
 
-					<execute function="#assertClick" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKeyChange}" value1="Change" />
+					<execute function="AssertClick" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKeyChange}" value1="Change" />
 
 					<var name="key_siteNameScope" value="${siteNameScope}" />
 
-					<execute function="#selectFrame" locator1="CPRolesDefinepermissionsSelectSite#SELECT_SITE_IFRAME" />
-					<execute function="#assertTextEquals" locator1="CPRolesDefinepermissionsSelectSite#SCOPE_SITES_TABLE_NAME" value1="${siteNameScope}" />
-					<execute function="#click" locator1="CPRolesDefinepermissionsSelectSite#SCOPE_SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+					<execute function="SelectFrame" locator1="CPRolesDefinepermissionsSelectSite#SELECT_SITE_IFRAME" />
+					<execute function="AssertTextEquals" locator1="CPRolesDefinepermissionsSelectSite#SCOPE_SITES_TABLE_NAME" value1="${siteNameScope}" />
+					<execute function="Click" locator1="CPRolesDefinepermissionsSelectSite#SCOPE_SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
 					<var name="key_siteNameScope" value="${siteNameScope}" />
 					<var name="permissionDefinitionKeySiteScope" value="${permissionDefinitionKey?replace('CHECKBOX', 'SITE_SCOPE')}" />
 
-					<execute function="#selectFrame" value1="relative=top" />
-					<execute function="#assertTextEquals" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKeySiteScope}" value1="${siteNameScope}" />
+					<execute function="SelectFrame" value1="relative=top" />
+					<execute function="AssertTextEquals" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKeySiteScope}" value1="${siteNameScope}" />
 				</then>
 			</if>
 		</for>
 
-		<execute function="#assertClick" locator1="CPRolesDefinepermissionsAllpermissions#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="CPRolesDefinepermissionsAllpermissions#SAVE_BUTTON" value1="Save" />
 
-		<execute function="#assertTextEquals" locator1="CPRolesDefinepermissions#SUCCESS_MESSAGE" value1="The role permissions were updated." />
+		<execute function="AssertTextEquals" locator1="CPRolesDefinepermissions#SUCCESS_MESSAGE" value1="The role permissions were updated." />
 	</command>
 
 	<command name="localizeRoleDescriptionCmd">
-		<execute function="#click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_ENGLISH" />
-		<execute function="#type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleName}" />
+		<execute function="Click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_ENGLISH" />
+		<execute function="Type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleName}" />
 
 		<if>
 			<equals arg1="${language}" arg2="Catalan (Spain)" />
 			<then>
-				<execute function="#click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_CATALAN" />
-				<execute function="#type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+				<execute function="Click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_CATALAN" />
+				<execute function="Type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
 			</then>
 			<elseif>
 				<equals arg1="${language}" arg2="Chinese (China)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_CHINESE" />
-					<execute function="#type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_CHINESE" />
+					<execute function="Type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Finnish (Finland)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_FINNISH" />
-					<execute function="#type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_FINNISH" />
+					<execute function="Type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="French (France)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_FRENCH" />
-					<execute function="#type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_FRENCH" />
+					<execute function="Type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="German (Germany)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_GERMAN" />
-					<execute function="#type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_GERMAN" />
+					<execute function="Type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Hebrew (Israel)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_HEBREW" />
-					<execute function="#type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_HEBREW" />
+					<execute function="Type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Hungarian (Hungary)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_HUNGARIAN" />
-					<execute function="#type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_HUNGARIAN" />
+					<execute function="Type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Japanese (Japan)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_JAPANESE" />
-					<execute function="#type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_JAPANESE" />
+					<execute function="Type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Portuguese (Brazil)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_PORTUGUESE" />
-					<execute function="#type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_PORTUGUESE" />
+					<execute function="Type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Spanish (Spain)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_SPANISH" />
-					<execute function="#type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#DESCRIPTION_FIELD_LOCALIZATION_FLAG_SPANISH" />
+					<execute function="Type" locator1="CPRolesEdit#DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 		</if>
 	</command>
 
 	<command name="localizeRoleNameCmd">
-		<execute function="#click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_ENGLISH" />
-		<execute function="#type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleName}" />
+		<execute function="Click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_ENGLISH" />
+		<execute function="Type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleName}" />
 
 		<if>
 			<equals arg1="${language}" arg2="Catalan (Spain)" />
 			<then>
-				<execute function="#click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_CATALAN" />
-				<execute function="#type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
+				<execute function="Click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_CATALAN" />
+				<execute function="Type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
 			</then>
 			<elseif>
 				<equals arg1="${language}" arg2="Chinese (China)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_CHINESE" />
-					<execute function="#type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_CHINESE" />
+					<execute function="Type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Finnish (Finland)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_FINNISH" />
-					<execute function="#type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_FINNISH" />
+					<execute function="Type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="French (France)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_FRENCH" />
-					<execute function="#type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_FRENCH" />
+					<execute function="Type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="German (Germany)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_GERMAN" />
-					<execute function="#type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_GERMAN" />
+					<execute function="Type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Hebrew (Israel)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_HEBREW" />
-					<execute function="#type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_HEBREW" />
+					<execute function="Type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Hungarian (Hungary)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_HUNGARIAN" />
-					<execute function="#type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_HUNGARIAN" />
+					<execute function="Type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Japanese (Japan)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_JAPANESE" />
-					<execute function="#type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_JAPANESE" />
+					<execute function="Type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Portuguese (Brazil)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_PORTUGUESE" />
-					<execute function="#type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_PORTUGUESE" />
+					<execute function="Type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Spanish (Spain)" />
 				<then>
-					<execute function="#click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_SPANISH" />
-					<execute function="#type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
+					<execute function="Click" locator1="CPRolesEdit#TITLE_FIELD_LOCALIZATION_FLAG_SPANISH" />
+					<execute function="Type" locator1="CPRolesEdit#TITLE_FIELD" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 		</if>
@@ -630,10 +630,10 @@
 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
 		<var name="key_roleName" value="${key_roleName?lowercase()}" />
 
-		<execute function="#uncheck" locator1="Permissions#${permissionDefinitionKey}" />
-		<execute function="#assertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="#assertNotChecked" locator1="Permissions#${permissionDefinitionKey}" />
+		<execute function="Uncheck" locator1="Permissions#${permissionDefinitionKey}" />
+		<execute function="AssertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertNotChecked" locator1="Permissions#${permissionDefinitionKey}" />
 	</command>
 
 	<command name="removePermissionsCP">
@@ -650,14 +650,14 @@
 		</execute>
 
 		<execute function="Type#sendKeys" locator1="CPRoles#SEARCH_FIELD" value1="Name" />
-		<execute function="#assertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
 
 		<while>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="CPRoles#ROLE_TABLE_ACTIONS_1" />
 			<then>
-				<execute function="#click" locator1="CPRoles#ROLE_TABLE_ACTIONS_1" />
-				<execute function="#assertClickNoError" locator1="CPRoles#ROLE_MENULIST_DELETE" value1="Delete" />
-				<execute function="#confirm" locator1="CPRoles#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Click" locator1="CPRoles#ROLE_TABLE_ACTIONS_1" />
+				<execute function="AssertClickNoError" locator1="CPRoles#ROLE_MENULIST_DELETE" value1="Delete" />
+				<execute function="Confirm" locator1="CPRoles#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</while>
 	</command>
@@ -666,100 +666,100 @@
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="Type#sendKeys" locator1="CPRoles#SEARCH_FIELD" value1="${roleName}" />
-		<execute function="#assertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
-		<execute function="#click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsers#MEMBERS_ORGANIZATIONS" value1="Organizations" />
+		<execute function="AssertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsers#MEMBERS_ORGANIZATIONS" value1="Organizations" />
 
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute function="#assertClick" locator1="CPRolesAssignmembersOrganizations#CURRENT" value1="Current" />
-		<execute function="#type" locator1="CPRolesAssignmembersOrganizations#SEARCH_FIELD" value1="${orgName}" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersOrganizations#SEARCH_BUTTON" value1="Search" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-		<execute function="#uncheck" locator1="CPRolesAssignmembersOrganizations#ORGANIZATION_TABLE_CHECKBOX" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersOrganizations#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersOrganizations#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersOrganizations#CURRENT" value1="Current" />
+		<execute function="Type" locator1="CPRolesAssignmembersOrganizations#SEARCH_FIELD" value1="${orgName}" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersOrganizations#SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute function="Uncheck" locator1="CPRolesAssignmembersOrganizations#ORGANIZATION_TABLE_CHECKBOX" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersOrganizations#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersOrganizations#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="unassignMembersSitesCP">
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="Type#sendKeys" locator1="CPRoles#SEARCH_FIELD" value1="${roleName}" />
-		<execute function="#assertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
-		<execute function="#click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsers#MEMBERS_SITES" value1="Sites" />
+		<execute function="AssertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsers#MEMBERS_SITES" value1="Sites" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="#assertClick" locator1="CPRolesAssignmembersSites#CURRENT" value1="Current" />
-		<execute function="#type" locator1="CPRolesAssignmembersSites#SEARCH_FIELD" value1="${siteName}" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersSites#SEARCH_BUTTON" value1="Search" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersSites#SITE_TABLE_NAME" value1="${siteName}" />
-		<execute function="#uncheck" locator1="CPRolesAssignmembersSites#SITE_TABLE_CHECKBOX" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersSites#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersSites#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="#assertNotChecked" locator1="CPRolesAssignmembersSites#SITE_TABLE_CHECKBOX" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersSites#CURRENT" value1="Current" />
+		<execute function="Type" locator1="CPRolesAssignmembersSites#SEARCH_FIELD" value1="${siteName}" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersSites#SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersSites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="Uncheck" locator1="CPRolesAssignmembersSites#SITE_TABLE_CHECKBOX" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersSites#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersSites#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertNotChecked" locator1="CPRolesAssignmembersSites#SITE_TABLE_CHECKBOX" />
 	</command>
 
 	<command name="unassignMembersUserGroupsCP">
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="Type#sendKeys" locator1="CPRoles#SEARCH_FIELD" value1="${roleName}" />
-		<execute function="#assertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
-		<execute function="#click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsers#MEMBERS_USER_GROUPS" value1="User Groups" />
+		<execute function="AssertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsers#MEMBERS_USER_GROUPS" value1="User Groups" />
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsergroups#CURRENT" value1="Current" />
-		<execute function="#type" locator1="CPRolesAssignmembersUsergroups#SEARCH_FIELD" value1="${userGroupName}" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsergroups#SEARCH_BUTTON" value1="Search" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersUsergroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
-		<execute function="#uncheck" locator1="CPRolesAssignmembersUsergroups#USER_GROUP_TABLE_CHECKBOX" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsergroups#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersUsergroups#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsergroups#CURRENT" value1="Current" />
+		<execute function="Type" locator1="CPRolesAssignmembersUsergroups#SEARCH_FIELD" value1="${userGroupName}" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsergroups#SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersUsergroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute function="Uncheck" locator1="CPRolesAssignmembersUsergroups#USER_GROUP_TABLE_CHECKBOX" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsergroups#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersUsergroups#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="unassignRegRoleCP">
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="Type#sendKeys" locator1="CPRoles#SEARCH_FIELD" value1="${roleName}" />
-		<execute function="#assertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
-		<execute function="#click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="AssertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPRoles#ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="#type" locator1="CPRolesAssignmembersUsers#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsers#BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="#uncheck" locator1="CPRolesAssignmembersUsers#USER_TABLE_CHECKBOX" />
-		<execute function="#assertClick" locator1="CPRolesAssignmembersUsers#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
-		<execute function="#assertTextEquals" locator1="CPRolesAssignmembersUsers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="Type" locator1="CPRolesAssignmembersUsers#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsers#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute function="Uncheck" locator1="CPRolesAssignmembersUsers#USER_TABLE_CHECKBOX" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsers#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+		<execute function="AssertTextEquals" locator1="CPRolesAssignmembersUsers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="viewCP">
 		<var name="key_roleName" value="${roleName}" />
 
-		<execute function="#assertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
-		<execute function="#assertTextEquals" locator1="CPRoles#ROLE_TABLE_TITLE" value1="${roleName}" />
-		<execute function="#assertTextEquals" locator1="CPRoles#ROLE_TABLE_TYPE" value1="${roleType}" />
-		<execute function="#click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPRoles#ROLE_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="CPRoles#ROLE_TABLE_TITLE" value1="${roleName}" />
+		<execute function="AssertTextEquals" locator1="CPRoles#ROLE_TABLE_TYPE" value1="${roleType}" />
+		<execute function="Click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPRoles#ROLE_MENULIST_EDIT" value1="Edit" />
 
-		<execute function="#assertTextEquals" locator1="CPRolesEdit#HEADER" value1="${roleName}" />
-		<execute function="#assertTextEquals" locator1="CPRolesEdit#NAME_FIELD" value1="${roleName}" />
+		<execute function="AssertTextEquals" locator1="CPRolesEdit#HEADER" value1="${roleName}" />
+		<execute function="AssertTextEquals" locator1="CPRolesEdit#NAME_FIELD" value1="${roleName}" />
 	</command>
 
 	<command name="viewNoXSSCP">
 		<var name="key_roleName" value="${roleName}" />
 
-		<execute function="#assertAlertNotPresent" />
-		<execute function="#assertTextEquals" locator1="CPRoles#ROLE_TABLE_TITLE" value1="${roleName}" />
-		<execute function="#assertTextEquals" locator1="CPRoles#ROLE_TABLE_DESCRIPTION" value1="${roleDescription}" />
+		<execute function="AssertAlertNotPresent" />
+		<execute function="AssertTextEquals" locator1="CPRoles#ROLE_TABLE_TITLE" value1="${roleName}" />
+		<execute function="AssertTextEquals" locator1="CPRoles#ROLE_TABLE_DESCRIPTION" value1="${roleDescription}" />
 	</command>
 
 	<command name="viewPermissionCP">
@@ -916,21 +916,21 @@
 		<if>
 			<equals arg1="${remove}" arg2="true" />
 			<then>
-				<execute function="#assertElementNotPresent" locator1="CPRolesDefinepermissions#PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />
-				<execute function="#assertElementNotPresent" locator1="CPRolesDefinepermissions#PERMISSION_TABLE_PERMISSIONS" value1="${permissionDefinitionValue}" />
-				<execute function="#assertElementNotPresent" locator1="CPRolesDefinepermissions#PERMISSION_TABLE_REMOVE" value1="Remove" />
+				<execute function="AssertElementNotPresent" locator1="CPRolesDefinepermissions#PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />
+				<execute function="AssertElementNotPresent" locator1="CPRolesDefinepermissions#PERMISSION_TABLE_PERMISSIONS" value1="${permissionDefinitionValue}" />
+				<execute function="AssertElementNotPresent" locator1="CPRolesDefinepermissions#PERMISSION_TABLE_REMOVE" value1="Remove" />
 			</then>
 			<else>
 				<while>
-					<condition function="#isElementNotPresent" locator1="CPRoles#PERMISSION_TABLE_PERMISSIONS" />
+					<condition function="IsElementNotPresent" locator1="CPRoles#PERMISSION_TABLE_PERMISSIONS" />
 					<then>
-						<execute function="#assertClick" locator1="CPRoles#PAGINATION_NEXT_BUTTON" value1="Next" />
+						<execute function="AssertClick" locator1="CPRoles#PAGINATION_NEXT_BUTTON" value1="Next" />
 					</then>
 				</while>
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="CPRolesDefinepermissions#PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="CPRolesDefinepermissions#PERMISSION_TABLE_PERMISSIONS" value1="${permissionDefinitionValue}" />
-				<execute function="#assertTextEquals" locator1="CPRolesDefinepermissions#PERMISSION_TABLE_REMOVE" value1="Remove" />
+				<execute function="AssertTextEquals" locator1="CPRolesDefinepermissions#PERMISSION_TABLE_REMOVE" value1="Remove" />
 			</else>
 		</if>
 	</command>
@@ -942,12 +942,12 @@
 		<if>
 			<equals arg1="${permissionFlagged}" arg2="true" />
 			<then>
-				<execute function="#assertChecked" locator1="Permissions#${permissionDefinitionKey}" />
+				<execute function="AssertChecked" locator1="Permissions#${permissionDefinitionKey}" />
 			</then>
 			<elseif>
 				<equals arg1="${permissionFlagged}" arg2="false" />
 				<then>
-					<execute function="#assertNotChecked" locator1="Permissions#${permissionDefinitionKey}" />
+					<execute function="AssertNotChecked" locator1="Permissions#${permissionDefinitionKey}" />
 				</then>
 			</elseif>
 		</if>

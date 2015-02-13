@@ -8,7 +8,7 @@
 		<if>
 			<equals arg1="${percentCompletion}" arg2="100" />
 			<then>
-				<execute function="#assertTextNotPresent" value1="${taskDescription}" />
+				<execute function="AssertTextNotPresent" value1="${taskDescription}" />
 			</then>
 			<elseif>
 				<equals arg1="${taskAssignee}" arg2="${currentUser}" />
@@ -16,16 +16,16 @@
 					<if>
 						<equals arg1="${taskPriority}" arg2="High" />
 						<then>
-							<execute function="#assertClick" locator1="SOUpcomingTasks#TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
+							<execute function="AssertClick" locator1="SOUpcomingTasks#TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
 						</then>
 						<elseif>
 							<equals arg1="${taskPriority}" arg2="Low" />
 							<then>
-								<execute function="#assertClick" locator1="SOUpcomingTasks#TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
+								<execute function="AssertClick" locator1="SOUpcomingTasks#TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
 							</then>
 						</elseif>
 						<else>
-							<execute function="#assertClick" locator1="SOUpcomingTasks#TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
+							<execute function="AssertClick" locator1="SOUpcomingTasks#TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 						</else>
 					</if>
 
@@ -33,13 +33,13 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="#assertTextNotPresent" value1="${taskDescription}" />
+				<execute function="AssertTextNotPresent" value1="${taskDescription}" />
 			</else>
 		</if>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertClick" locator1="SOUpcomingTasks#VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
+		<execute function="AssertClick" locator1="SOUpcomingTasks#VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
 
 		<execute macro="SOTasks#viewTask" />
 	</command>
@@ -49,20 +49,20 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertTextEquals" locator1="SOUpcomingTasks#VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
-		<execute function="#assertElementNotPresent" locator1="SOUpcomingTasks#TASK_DESCRIPTION_HIGH" />
-		<execute function="#assertElementNotPresent" locator1="SOUpcomingTasks#TASK_DESCRIPTION_LOW" />
-		<execute function="#assertElementNotPresent" locator1="SOUpcomingTasks#TASK_DESCRIPTION_NORMAL" />
-		<execute function="#assertTextNotPresent" value1="${taskDescription}" />
-		<execute function="#assertClick" locator1="SOUpcomingTasks#VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
+		<execute function="AssertTextEquals" locator1="SOUpcomingTasks#VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
+		<execute function="AssertElementNotPresent" locator1="SOUpcomingTasks#TASK_DESCRIPTION_HIGH" />
+		<execute function="AssertElementNotPresent" locator1="SOUpcomingTasks#TASK_DESCRIPTION_LOW" />
+		<execute function="AssertElementNotPresent" locator1="SOUpcomingTasks#TASK_DESCRIPTION_NORMAL" />
+		<execute function="AssertTextNotPresent" value1="${taskDescription}" />
+		<execute function="AssertClick" locator1="SOUpcomingTasks#VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
 
-		<execute function="#assertClick" locator1="SOTasks#ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
-		<execute function="#check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
-		<execute function="#assertTextEquals" locator1="SOTasks#INFO_MESSAGE" value1="No tasks were found." />
-		<execute function="#assertTextNotPresent" value1="${taskDescription}" />
-		<execute function="#assertClick" locator1="SOTasks#I_HAVE_CREATED_LINK" value1="I Have Created" />
-		<execute function="#check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
-		<execute function="#assertTextEquals" locator1="SOTasks#INFO_MESSAGE" value1="No tasks were found." />
-		<execute function="#assertTextNotPresent" value1="${taskDescription}" />
+		<execute function="AssertClick" locator1="SOTasks#ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
+		<execute function="Check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
+		<execute function="AssertTextEquals" locator1="SOTasks#INFO_MESSAGE" value1="No tasks were found." />
+		<execute function="AssertTextNotPresent" value1="${taskDescription}" />
+		<execute function="AssertClick" locator1="SOTasks#I_HAVE_CREATED_LINK" value1="I Have Created" />
+		<execute function="Check" locator1="SOTasks#SHOW_COMPLETED_TASKS_CHECKBOX" />
+		<execute function="AssertTextEquals" locator1="SOTasks#INFO_MESSAGE" value1="No tasks were found." />
+		<execute function="AssertTextNotPresent" value1="${taskDescription}" />
 	</command>
 </definition>

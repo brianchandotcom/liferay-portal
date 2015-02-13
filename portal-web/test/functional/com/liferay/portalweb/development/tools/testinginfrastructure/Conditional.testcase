@@ -9,7 +9,7 @@
 		<var name="test" value="test" />
 
 		<if>
-			<condition function="#isElementPresent" locator1="Dockbar#ADD" />
+			<condition function="IsElementPresent" locator1="Dockbar#ADD" />
 			<then>
 				<execute macro="TestUtils#pass" />
 			</then>
@@ -19,7 +19,7 @@
 		</if>
 
 		<if>
-			<condition function="#isElementNotPresent" locator1="Dockbar#ADD" />
+			<condition function="IsElementNotPresent" locator1="Dockbar#ADD" />
 			<then>
 				<execute macro="TestUtils#fail" />
 			</then>
@@ -29,7 +29,7 @@
 		</if>
 
 		<if>
-			<condition function="#isElementPresent" locator1="//a[@id='_145_addPanel']" />
+			<condition function="IsElementPresent" locator1="//a[@id='_145_addPanel']" />
 			<then>
 				<execute macro="TestUtils#pass" />
 			</then>
@@ -39,7 +39,7 @@
 		</if>
 
 		<if>
-			<condition function="#isElementNotPresent" locator1="//a[@id='_145_addPanel']" />
+			<condition function="IsElementNotPresent" locator1="//a[@id='_145_addPanel']" />
 			<then>
 				<execute macro="TestUtils#fail" />
 			</then>

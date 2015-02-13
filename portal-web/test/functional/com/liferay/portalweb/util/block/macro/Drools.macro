@@ -6,7 +6,7 @@
 		<if>
 			<isset var="screenshotFileName" />
 			<then>
-				<execute function="#sikuliAssertElementPresent" locator1="Drools#SCREENSHOTS_SAMPLEDROOLS_WEB_CONTENT_IMAGE_FIELD_PNG" />
+				<execute function="SikuliAssertElementPresent" locator1="Drools#SCREENSHOTS_SAMPLEDROOLS_WEB_CONTENT_IMAGE_FIELD_PNG" />
 			</then>
 		</if>
 	</command>

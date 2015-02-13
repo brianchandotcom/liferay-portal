@@ -49,9 +49,9 @@
 
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
 
-		<execute function="#assertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
-		<execute function="#type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${text}" />
+		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
+		<execute function="Type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${text}" />
 
-		<execute function="#assertTextEquals" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${text}" />
+		<execute function="AssertTextEquals" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${text}" />
 	</command>
 </definition>

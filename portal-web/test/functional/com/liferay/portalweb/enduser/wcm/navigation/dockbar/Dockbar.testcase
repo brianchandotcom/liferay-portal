@@ -52,7 +52,7 @@
 
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
 
-		<execute function="#assertClick" locator1="DockbarAddpanelapplications#NAVIGATION_APPLICATIONS" value1="Applications" />
+		<execute function="AssertClick" locator1="DockbarAddpanelapplications#NAVIGATION_APPLICATIONS" value1="Applications" />
 
 		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'drag-content-item')]" />
 
@@ -66,25 +66,25 @@
 	<command name="ViewAddPageField" priority="5">
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
 
-		<execute function="#assertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
+		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
 
 		<execute macro="Dockbar#viewLocalizationOptionsAdd">
 			<var name="localizationOptions" value="en_US,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,iw_IL,hu_HU,ja_JP,pt_BR,es_ES" />
 		</execute>
 
-		<execute function="#assertVisible" locator1="DockbarAddpanelpage#NAME_FIELD" />
+		<execute function="AssertVisible" locator1="DockbarAddpanelpage#NAME_FIELD" />
 	</command>
 
 	<command name="ViewAddPageFieldEditable" priority="5">
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
 
-		<execute function="#assertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
+		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
 
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
 
-		<execute function="#assertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
-		<execute function="#type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="Dockbar Test Page" />
+		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
+		<execute function="Type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="Dockbar Test Page" />
 
 		<execute macro="Page#addLocalizedNamePG">
 			<var name="localizationName" value="fr_FR" />
@@ -92,11 +92,11 @@
 			<var name="pageName" value="Dockbar Test Page French" />
 		</execute>
 
-		<execute function="#click" locator1="DockbarAddpanelpage#ADD_PAGE_BUTTON" />
+		<execute function="Click" locator1="DockbarAddpanelpage#ADD_PAGE_BUTTON" />
 
 		<var name="key_pageName" value="Dockbar Test Page" />
 
-		<execute function="#assertClick" locator1="Home#PAGE" value1="Dockbar Test Page" />
+		<execute function="AssertClick" locator1="Home#PAGE" value1="Dockbar Test Page" />
 	</command>
 
 	<command name="ViewEditPageFields" priority="5">
@@ -115,8 +115,8 @@
 			<var name="localizationOptions" value="en_US,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,iw_IL,hu_HU,ja_JP,pt_BR,es_ES" />
 		</execute>
 
-		<execute function="#assertVisible" locator1="DockbarEditpanel#DETAILS_NAME_FIELD" />
-		<execute function="#assertVisible" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" />
+		<execute function="AssertVisible" locator1="DockbarEditpanel#DETAILS_NAME_FIELD" />
+		<execute function="AssertVisible" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" />
 	</command>
 
 	<command name="ViewEditPageFieldsEditable" priority="5">
@@ -128,8 +128,8 @@
 		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
 		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
 
-		<execute function="#type" locator1="DockbarEditpanel#DETAILS_NAME_FIELD" value1="Edited" />
-		<execute function="#type" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1="/edited" />
+		<execute function="Type" locator1="DockbarEditpanel#DETAILS_NAME_FIELD" value1="Edited" />
+		<execute function="Type" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1="/edited" />
 
 		<execute macro="Page#addLocalizedNamePG">
 			<var name="localizationName" value="fr_FR" />
@@ -145,6 +145,6 @@
 
 		<var name="key_pageName" value="Edited" />
 
-		<execute function="#assertTextEquals" locator1="Home#PAGE" value1="Edited" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="Edited" />
 	</command>
 </definition>

@@ -30,42 +30,42 @@
 	</command>
 
 	<command name="downloadApp">
-		<execute function="#selectFrame" locator1="CPStore#MARKETPLACE_IFRAME" />
-		<execute function="#type" locator1="CPStore#SEARCH_FIELD" value1="${appName}" />
-		<execute function="#click" locator1="CPStore#SEARCH_BUTTON" />
+		<execute function="SelectFrame" locator1="CPStore#MARKETPLACE_IFRAME" />
+		<execute function="Type" locator1="CPStore#SEARCH_FIELD" value1="${appName}" />
+		<execute function="Click" locator1="CPStore#SEARCH_BUTTON" />
 
 		<var name="key_appName" value="${appName}" />
 
-		<execute function="#click" locator1="CPStore#APP_TITLE" />
-		<execute function="#click" locator1="CPStore#DETAILS_PURCHASE_BUTTON" />
-		<execute function="#click" locator1="CPStore#PURCHASE_SELECT_BUTTON" />
-		<execute function="#check" locator1="CPStore#PURCHASE_AGREE_CHECKBOX" />
-		<execute function="#click" locator1="CPStore#PURCHASE_BUTTON" />
-		<execute function="#assertTextEquals" locator1="CPStore#RECEIPT_TITLE" value1="Receipt" />
-		<execute function="#assertTextEquals" locator1="CPStore#RECEIPT_COMPLETED_THANK_YOU_MESSAGE" value1="Thank You!" />
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="Click" locator1="CPStore#APP_TITLE" />
+		<execute function="Click" locator1="CPStore#DETAILS_PURCHASE_BUTTON" />
+		<execute function="Click" locator1="CPStore#PURCHASE_SELECT_BUTTON" />
+		<execute function="Check" locator1="CPStore#PURCHASE_AGREE_CHECKBOX" />
+		<execute function="Click" locator1="CPStore#PURCHASE_BUTTON" />
+		<execute function="AssertTextEquals" locator1="CPStore#RECEIPT_TITLE" value1="Receipt" />
+		<execute function="AssertTextEquals" locator1="CPStore#RECEIPT_COMPLETED_THANK_YOU_MESSAGE" value1="Thank You!" />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="installApp">
-		<execute function="#selectFrame" locator1="CPStore#MARKETPLACE_IFRAME" />
-		<execute function="#type" locator1="CPStore#PURCHASED_SEARCH_TITLE_FIELD" value1="${appName}" />
-		<execute function="#click" locator1="CPStore#PURCHASED_SEARCH_BUTTON" />
-		<execute function="#click" locator1="CPStore#PURCHASED_INSTALL_BUTTON" />
-		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#pause" locator1="5000" />
+		<execute function="SelectFrame" locator1="CPStore#MARKETPLACE_IFRAME" />
+		<execute function="Type" locator1="CPStore#PURCHASED_SEARCH_TITLE_FIELD" value1="${appName}" />
+		<execute function="Click" locator1="CPStore#PURCHASED_SEARCH_BUTTON" />
+		<execute function="Click" locator1="CPStore#PURCHASED_INSTALL_BUTTON" />
+		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="Pause" locator1="5000" />
 	</command>
 
 	<command name="signIn">
-		<execute function="#selectFrame" locator1="CPStore#MARKETPLACE_IFRAME" />
+		<execute function="SelectFrame" locator1="CPStore#MARKETPLACE_IFRAME" />
 
-		<execute function="#type" locator1="CPStore#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute function="#type" locator1="CPStore#PASSWORD_FIELD" value1="${userEmailPassword}" />
-		<execute function="#click" locator1="CPStore#SIGN_IN_BUTTON" />
+		<execute function="Type" locator1="CPStore#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="CPStore#PASSWORD_FIELD" value1="${userEmailPassword}" />
+		<execute function="Click" locator1="CPStore#SIGN_IN_BUTTON" />
 
 		<if>
-			<condition function="#isElementPresent" locator1="CPStore#UPDATE_BUTTON" />
+			<condition function="IsElementPresent" locator1="CPStore#UPDATE_BUTTON" />
 			<then>
-				<execute function="#click" locator1="CPStore#UPDATE_BUTTON" />
+				<execute function="Click" locator1="CPStore#UPDATE_BUTTON" />
 			</then>
 		</if>
 	</command>

@@ -1,7 +1,7 @@
 <definition>
 	<command name="addCmd">
-		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
-		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_ADD" value1="Add" />
+		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
+		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_ADD" value1="Add" />
 		<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsDatadefinitionsAdd#NAME_FIELD" value1="${ddlDataDefinitionName}" />
 
 		<execute macro="CPDynamicdatalistsDatadefinitionsAdd#showDetails" />
@@ -13,11 +13,11 @@
 			</then>
 		</if>
 
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addCP">
-		<execute function="#assertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
 		<execute macro="DDLDataDefinition#addCmd">
 			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
@@ -33,93 +33,93 @@
 	</command>
 
 	<command name="copyCP">
-		<execute function="#assertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
 		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
-		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
-		<execute function="#click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_COPY" value1="Copy" />
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
+		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_COPY" value1="Copy" />
+		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitionsCopy#COPY_STRUCTURE_IFRAME" />
-		<execute function="#type" locator1="CPDynamicdatalistsDatadefinitionsCopy#NAME_FIELD" value1="${ddlDataDefinitionCopyName}" />
+		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitionsCopy#COPY_STRUCTURE_IFRAME" />
+		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitionsCopy#NAME_FIELD" value1="${ddlDataDefinitionCopyName}" />
 
 		<if>
 			<equals arg1="${copyFormTemplates}" arg2="true" />
 			<then>
-				<execute function="#check" locator1="CPDynamicdatalistsDatadefinitionsCopy#COPY_FORM_TEMPLATES_CHECKBOX" />
+				<execute function="Check" locator1="CPDynamicdatalistsDatadefinitionsCopy#COPY_FORM_TEMPLATES_CHECKBOX" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${copyDisplayTemplates}" arg2="true" />
 			<then>
-				<execute function="#check" locator1="CPDynamicdatalistsDatadefinitionsCopy#COPY_DISPLAY_TEMPLATES_CHECKBOX" />
+				<execute function="Check" locator1="CPDynamicdatalistsDatadefinitionsCopy#COPY_DISPLAY_TEMPLATES_CHECKBOX" />
 			</then>
 		</if>
 
-		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitionsCopy#COPY_BUTTON" value1="Copy" />
-		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsCopy#SUCCESS_MESSAGE" value1="Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog." />
-		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitionsCopy#CLOSE_BUTTON" value1="Close" />
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsCopy#COPY_BUTTON" value1="Copy" />
+		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsCopy#SUCCESS_MESSAGE" value1="Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog." />
+		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsCopy#CLOSE_BUTTON" value1="Close" />
+		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME_2" />
+		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME_2" />
 
 		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionCopyName}" />
 
-		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_NAME" value1="${ddlDataDefinitionCopyName}" />
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_NAME" value1="${ddlDataDefinitionCopyName}" />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="deleteCP">
-		<execute function="#assertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
-		<execute function="#type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="#click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
-		<execute function="#assertClickNoError" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_DELETE" value1="Delete" />
-		<execute function="#confirm" locator1="CPDynamicdatalistsDatadefinitions#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
+		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
+		<execute function="AssertClickNoError" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_DELETE" value1="Delete" />
+		<execute function="Confirm" locator1="CPDynamicdatalistsDatadefinitions#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute function="#assertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
-		<execute function="#type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="#assertTextNotPresent" value1="${ddlDataDefinitionName}" />
+		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
+		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextNotPresent" value1="${ddlDataDefinitionName}" />
 
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="deleteNoCP">
-		<execute function="#assertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
-		<execute function="#type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="#click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
-		<execute function="#assertClickNoError" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_DELETE" value1="Delete" />
-		<execute function="#confirm" locator1="CPDynamicdatalistsDatadefinitions#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#ERROR_MESSAGE_1" value1="Your request failed to complete." />
-		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#ERROR_MESSAGE_2" value1="Required structures could not be deleted." />
+		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
+		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
+		<execute function="AssertClickNoError" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_DELETE" value1="Delete" />
+		<execute function="Confirm" locator1="CPDynamicdatalistsDatadefinitions#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#ERROR_MESSAGE_2" value1="Required structures could not be deleted." />
 
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editCP">
-		<execute function="#assertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
-		<execute function="#type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="#click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
-		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
+		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
+		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
+		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
 
 		<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsDatadefinitionsEdit#NAME_FIELD" value1="${ddlDataDefinitionNameEdit}" />
 
@@ -127,26 +127,26 @@
 
 		<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsDatadefinitionsEdit#DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescriptionEdit}" />
 
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editPermissionsCP">
-		<execute function="#assertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
-		<execute function="#type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="#click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
-		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
+		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
+		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_PERMISSIONS" value1="Permissions" />
 	</command>
 
 	<command name="saveCmd">
-		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
+		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
 
-		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitionsAdd#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="saveCP">
@@ -158,13 +158,13 @@
 	</command>
 
 	<command name="selectCmd">
-		<execute function="#selectFrame" locator1="CPDynamicdatalistsAddlistDatadefinitions#DATA_DEFINITIONS_IFRAME" />
-		<execute function="#type" locator1="CPDynamicdatalistsAddlistDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="#assertClick" locator1="CPDynamicdatalistsAddlistDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsAddlistDatadefinitions#DATA_DEFINITION_TABLE_NAME_1" value1="${ddlDataDefinitionName}" />
+		<execute function="SelectFrame" locator1="CPDynamicdatalistsAddlistDatadefinitions#DATA_DEFINITIONS_IFRAME" />
+		<execute function="Type" locator1="CPDynamicdatalistsAddlistDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick" locator1="CPDynamicdatalistsAddlistDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsAddlistDatadefinitions#DATA_DEFINITION_TABLE_NAME_1" value1="${ddlDataDefinitionName}" />
 		<execute function="AssertClick#assertTextClick" locator1="CPDynamicdatalistsAddlistDatadefinitions#DATA_DEFINITION_TABLE_CHOOSE_BUTTON_1" value1="Choose" />
 
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrameTop" />
 
 		<execute function="AssertTextEquals#assertValue" locator1="CPDynamicdatalistsAddlist#DATA_DEFINITION_NAME" value1="${ddlDataDefinitionName}" />
 	</command>
@@ -270,9 +270,9 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute function="#assertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
+		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
 
 		<if>
 			<not>
@@ -283,24 +283,24 @@
 			</then>
 		</if>
 
-		<execute function="#type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
 
 		<if>
-			<condition function="#isElementPresent" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
+			<condition function="IsElementPresent" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
 			<then>
-				<execute function="#check" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ALL_CHECKBOX" />
-				<execute function="#clickNoError" locator1="CPDynamicdatalistsDatadefinitions#DELETE_BUTTON" />
-				<execute function="#confirm" locator1="CPDynamicdatalistsDatadefinitions#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Check" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ALL_CHECKBOX" />
+				<execute function="ClickNoError" locator1="CPDynamicdatalistsDatadefinitions#DELETE_BUTTON" />
+				<execute function="Confirm" locator1="CPDynamicdatalistsDatadefinitions#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 				<if>
 					<equals arg1="${kfProcessExists}" arg2="true" />
 					<then>
-						<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#ERROR_MESSAGE_1" value1="Your request failed to complete." />
-						<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#ERROR_MESSAGE_2" value1="Required structures could not be deleted." />
+						<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#ERROR_MESSAGE_1" value1="Your request failed to complete." />
+						<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#ERROR_MESSAGE_2" value1="Required structures could not be deleted." />
 					</then>
 					<else>
-						<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+						<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 					</else>
 				</if>
 			</then>
@@ -308,21 +308,21 @@
 	</command>
 
 	<command name="viewCP">
-		<execute function="#assertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
+		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
 
 		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
-		<execute function="#click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_NAME" value1="${ddlDataDefinitionName}" />
+		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_NAME" value1="${ddlDataDefinitionName}" />
 
-		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsEdit#HEADER_TITLE" value1="${ddlDataDefinitionName}" />
-		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsEdit#NAME_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsEdit#HEADER_TITLE" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsEdit#NAME_FIELD" value1="${ddlDataDefinitionName}" />
 
 		<if>
 			<isset var="ddlDataDefinitionDescription" />
 			<then>
-				<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsEdit#DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescription}" />
+				<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsEdit#DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescription}" />
 			</then>
 		</if>
 
@@ -331,10 +331,10 @@
 			<then>
 				<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-				<execute function="#assertElementPresent" locator1="CPDynamicdatalistsDatadefinitionsEdit#FORM_FIELD" value1="${fieldFieldLabel}" />
+				<execute function="AssertElementPresent" locator1="CPDynamicdatalistsDatadefinitionsEdit#FORM_FIELD" value1="${fieldFieldLabel}" />
 			</then>
 		</if>
 
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 </definition>

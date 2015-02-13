@@ -294,7 +294,7 @@
 
 		<execute macro="SOProfile#viewProfilePicture" />
 
-		<execute function="#sikuliAssertElementPresent" locator1="SOProfile#SCREENSHOTS_PROFILE_PICTURE_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="SOProfile#SCREENSHOTS_PROFILE_PICTURE_PNG" />
 
 		<execute macro="Page#gotoMyProfile" />
 
@@ -306,7 +306,7 @@
 
 		<execute macro="SOProfile#viewProfilePicture" />
 
-		<execute function="#sikuliAssertElementPresent" locator1="SOProfile#SCREENSHOTS_PROFILE_PICTURE_EDIT_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="SOProfile#SCREENSHOTS_PROFILE_PICTURE_EDIT_PNG" />
 	</command>
 
 	<command name="EditProjects" priority="5">

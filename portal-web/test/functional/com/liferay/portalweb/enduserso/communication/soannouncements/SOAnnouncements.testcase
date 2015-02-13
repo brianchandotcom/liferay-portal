@@ -84,22 +84,22 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
-		<execute function="#select" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="" />
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
+		<execute function="Select" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" />
 		<execute function="Type#sendKeys" locator1="SOAnnouncementsAdd#CONTENT_FIELD_FORMATTED_TEXT" value1="${entryContent}" />
-		<execute function="#selectFrameTop" />
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
-		<execute function="#sikuliAssertElementPresent" locator1="SOAnnouncementsAdd#SCREENSHOTS_ANNOUNCEMENTS_ADD_DISTRUBTION_SCOPE_REQUIRED_PNG" />
-		<execute function="#sikuliAssertElementPresent" locator1="SOAnnouncementsAdd#SCREENSHOTS_ANNOUNCEMENTS_ADD_TITLE_REQUIRED_PNG" />
-		<execute function="#select" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${siteName}" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
-		<execute function="#click" locator1="SOAnnouncementsAdd#SAVE_BUTTON" value1="Save" />
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrameTop" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
+		<execute function="SikuliAssertElementPresent" locator1="SOAnnouncementsAdd#SCREENSHOTS_ANNOUNCEMENTS_ADD_DISTRUBTION_SCOPE_REQUIRED_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="SOAnnouncementsAdd#SCREENSHOTS_ANNOUNCEMENTS_ADD_TITLE_REQUIRED_PNG" />
+		<execute function="Select" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${siteName}" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
+		<execute function="Click" locator1="SOAnnouncementsAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="SelectFrameTop" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
@@ -156,13 +156,13 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#sikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_CONTENT_LIPSUM_PREVIEW_UNREAD_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_CONTENT_LIPSUM_PREVIEW_UNREAD_PNG" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#click" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_VIEW_MORE_LINK" />
+		<execute function="Click" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_VIEW_MORE_LINK" />
 
-		<execute function="#sikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_CONTENT_LIPSUM_FULL_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_CONTENT_LIPSUM_FULL_PNG" />
 	</command>
 
 	<command name="AddSOAnnouncementsEntryBoldText" priority="5">
@@ -194,7 +194,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#sikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_BOLD_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_BOLD_PNG" />
 
 		<execute macro="SOAnnouncementsEntry#viewPG">
 			<var name="distributionScope" value="${siteName}" />
@@ -230,7 +230,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute function="#pause" locator1="70000" />
+		<execute function="Pause" locator1="70000" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -341,7 +341,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#sikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_ITALIC_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_ITALIC_PNG" />
 
 		<execute macro="SOAnnouncementsEntry#viewPG">
 			<var name="distributionScope" value="${siteName}" />
@@ -470,7 +470,7 @@
 			<var name="viewImmediately" value="false" />
 		</execute>
 
-		<execute function="#pause" locator1="120000" />
+		<execute function="Pause" locator1="120000" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
@@ -504,7 +504,7 @@
 			<var name="viewImmediately" value="false" />
 		</execute>
 
-		<execute function="#pause" locator1="120000" />
+		<execute function="Pause" locator1="120000" />
 
 		<execute function="Click#textClickAtAndWait" locator1="SOUserBar#DASHBOARD" />
 
@@ -643,23 +643,23 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
-		<execute function="#assertElementPresent" locator1="//optgroup[@label='Sites']" />
-		<execute function="#assertElementNotPresent" locator1="//optgroup[@label='Sites']/option[contains(.,'Organization Name')]" />
-		<execute function="#assertElementPresent" locator1="//optgroup[@label='Organizations']/option[contains(.,'Organization Name')]" />
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
+		<execute function="AssertElementPresent" locator1="//optgroup[@label='Sites']" />
+		<execute function="AssertElementNotPresent" locator1="//optgroup[@label='Sites']/option[contains(.,'Organization Name')]" />
+		<execute function="AssertElementPresent" locator1="//optgroup[@label='Organizations']/option[contains(.,'Organization Name')]" />
+		<execute function="SelectFrameTop" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
-		<execute function="#assertElementPresent" locator1="//optgroup[@label='Sites']" />
-		<execute function="#assertElementNotPresent" locator1="//optgroup[@label='Sites']/option[contains(.,'Organization Name')]" />
-		<execute function="#assertElementPresent" locator1="//optgroup[@label='Organizations']/option[contains(.,'Organization Name')]" />
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
+		<execute function="AssertElementPresent" locator1="//optgroup[@label='Sites']" />
+		<execute function="AssertElementNotPresent" locator1="//optgroup[@label='Sites']/option[contains(.,'Organization Name')]" />
+		<execute function="AssertElementPresent" locator1="//optgroup[@label='Organizations']/option[contains(.,'Organization Name')]" />
+		<execute function="SelectFrameTop" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
@@ -1066,7 +1066,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#sikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_STRIKE_THROUGH_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_STRIKE_THROUGH_PNG" />
 
 		<execute macro="SOAnnouncementsEntry#viewPG">
 			<var name="distributionScope" value="${siteName}" />
@@ -1138,7 +1138,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#sikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_UNDERLINE_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_UNDERLINE_PNG" />
 
 		<execute macro="SOAnnouncementsEntry#viewPG">
 			<var name="distributionScope" value="${siteName}" />
@@ -1875,16 +1875,16 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
-		<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
+		<execute function="AssertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
 
-		<execute function="#sikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_CONTENT_LIPSUM_PREVIEW_READ_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_CONTENT_LIPSUM_PREVIEW_READ_PNG" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#click" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_VIEW_MORE_LINK" />
+		<execute function="Click" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_VIEW_MORE_LINK" />
 
-		<execute function="#sikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_CONTENT_LIPSUM_FULL_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_CONTENT_LIPSUM_FULL_PNG" />
 	</command>
 
 	<command name="MarkAsReadSOAnnouncementsEntrySOUser" priority="5">
@@ -2354,7 +2354,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute function="#pause" locator1="60000" />
+		<execute function="Pause" locator1="60000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -2377,7 +2377,7 @@
 			<var name="userPassword" property-value="email.password.2" />
 		</execute>
 
-		<execute function="#open" locator1="http://localhost:8080" />
+		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
 	<command known-issues="LPS-42413" name="ViewAnnouncementEntryInGmail" priority="5">
@@ -2454,7 +2454,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute function="#pause" locator1="60000" />
+		<execute function="Pause" locator1="60000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -2477,7 +2477,7 @@
 			<var name="userPassword" property-value="email.address.2" />
 		</execute>
 
-		<execute function="#open" locator1="http://localhost:8080" />
+		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
 	<command name="ViewAnnouncementTeamScopes" priority="5">
@@ -2740,14 +2740,14 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName1}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName2}" />
 		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName3}" />
 		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName4}" />
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrameTop" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
@@ -2759,14 +2759,14 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName3}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName4}" />
 		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName1}" />
 		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName2}" />
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="ViewSOAnnouncementEntries" priority="4">
@@ -3109,181 +3109,181 @@
 
 		<var name="key_entryTitle" value="${entryTitle21}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle21}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle21}" />
 
 		<var name="key_entryTitle" value="${entryTitle20}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle20}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle20}" />
 
 		<var name="key_entryTitle" value="${entryTitle19}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle19}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle19}" />
 
 		<var name="key_entryTitle" value="${entryTitle18}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle18}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle18}" />
 
 		<var name="key_entryTitle" value="${entryTitle17}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle17}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 1 - 5 of 21 results." />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle17}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 1 - 5 of 21 results." />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
 
 		<var name="key_entryTitle" value="${entryTitle16}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle16}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle16}" />
 
 		<var name="key_entryTitle" value="${entryTitle15}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle15}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle15}" />
 
 		<var name="key_entryTitle" value="${entryTitle14}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle14}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle14}" />
 
 		<var name="key_entryTitle" value="${entryTitle13}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle13}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle13}" />
 
 		<var name="key_entryTitle" value="${entryTitle12}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle12}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 6 - 10 of 21 results." />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle12}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 6 - 10 of 21 results." />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
 
 		<var name="key_entryTitle" value="${entryTitle11}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle11}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle11}" />
 
 		<var name="key_entryTitle" value="${entryTitle10}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle10}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle10}" />
 
 		<var name="key_entryTitle" value="${entryTitle9}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle9}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle9}" />
 
 		<var name="key_entryTitle" value="${entryTitle8}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle8}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle8}" />
 
 		<var name="key_entryTitle" value="${entryTitle7}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle7}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 11 - 15 of 21 results." />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle7}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 11 - 15 of 21 results." />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
 
 		<var name="key_entryTitle" value="${entryTitle6}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle6}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle6}" />
 
 		<var name="key_entryTitle" value="${entryTitle5}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle5}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle5}" />
 
 		<var name="key_entryTitle" value="${entryTitle4}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle4}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle4}" />
 
 		<var name="key_entryTitle" value="${entryTitle3}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle3}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle3}" />
 
 		<var name="key_entryTitle" value="${entryTitle2}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle2}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 16 - 20 of 21 results." />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle2}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 16 - 20 of 21 results." />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
 
 		<var name="key_entryTitle" value="${entryTitle1}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle1}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 21 - 21 of 21 results." />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle1}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 21 - 21 of 21 results." />
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
 
 		<var name="key_entryTitle" value="${entryTitle6}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle6}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle6}" />
 
 		<var name="key_entryTitle" value="${entryTitle5}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle5}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle5}" />
 
 		<var name="key_entryTitle" value="${entryTitle4}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle4}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle4}" />
 
 		<var name="key_entryTitle" value="${entryTitle3}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle3}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle3}" />
 
 		<var name="key_entryTitle" value="${entryTitle2}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle2}" />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle2}" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
 
 		<var name="key_entryTitle" value="${entryTitle11}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle11}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle11}" />
 
 		<var name="key_entryTitle" value="${entryTitle10}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle10}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle10}" />
 
 		<var name="key_entryTitle" value="${entryTitle9}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle9}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle9}" />
 
 		<var name="key_entryTitle" value="${entryTitle8}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle8}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle8}" />
 
 		<var name="key_entryTitle" value="${entryTitle7}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle7}" />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle7}" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
 
 		<var name="key_entryTitle" value="${entryTitle16}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle16}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle16}" />
 
 		<var name="key_entryTitle" value="${entryTitle15}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle15}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle15}" />
 
 		<var name="key_entryTitle" value="${entryTitle14}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle14}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle14}" />
 
 		<var name="key_entryTitle" value="${entryTitle13}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle13}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle13}" />
 
 		<var name="key_entryTitle" value="${entryTitle12}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle12}" />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle12}" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
 
 		<var name="key_entryTitle" value="${entryTitle21}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle21}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle21}" />
 
 		<var name="key_entryTitle" value="${entryTitle20}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle20}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle20}" />
 
 		<var name="key_entryTitle" value="${entryTitle19}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle19}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle19}" />
 
 		<var name="key_entryTitle" value="${entryTitle18}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle18}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle18}" />
 
 		<var name="key_entryTitle" value="${entryTitle17}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle17}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle17}" />
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesPerPageDisplay">
@@ -3297,44 +3297,44 @@
 
 		<var name="key_entryTitle" value="${entryTitle21}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle21}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle21}" />
 
 		<var name="key_entryTitle" value="${entryTitle20}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle20}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle20}" />
 
 		<var name="key_entryTitle" value="${entryTitle19}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle19}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle19}" />
 
 		<var name="key_entryTitle" value="${entryTitle18}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle18}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle18}" />
 
 		<var name="key_entryTitle" value="${entryTitle17}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle17}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle17}" />
 
 		<var name="key_entryTitle" value="${entryTitle16}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle16}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle16}" />
 
 		<var name="key_entryTitle" value="${entryTitle15}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle15}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle15}" />
 
 		<var name="key_entryTitle" value="${entryTitle14}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle14}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle14}" />
 
 		<var name="key_entryTitle" value="${entryTitle13}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle13}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle13}" />
 
 		<var name="key_entryTitle" value="${entryTitle12}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle12}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 1 - 10 of 21 results." />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle12}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 1 - 10 of 21 results." />
 	</command>
 
 	<command name="ViewSOAnnouncementEntriesViaDashboard" priority="4">
@@ -3603,181 +3603,181 @@
 
 		<var name="key_entryTitle" value="${entryTitle21}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle21}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle21}" />
 
 		<var name="key_entryTitle" value="${entryTitle20}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle20}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle20}" />
 
 		<var name="key_entryTitle" value="${entryTitle19}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle19}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle19}" />
 
 		<var name="key_entryTitle" value="${entryTitle18}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle18}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle18}" />
 
 		<var name="key_entryTitle" value="${entryTitle17}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle17}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 1 - 5 of 21 results." />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle17}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 1 - 5 of 21 results." />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
 
 		<var name="key_entryTitle" value="${entryTitle16}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle16}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle16}" />
 
 		<var name="key_entryTitle" value="${entryTitle15}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle15}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle15}" />
 
 		<var name="key_entryTitle" value="${entryTitle14}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle14}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle14}" />
 
 		<var name="key_entryTitle" value="${entryTitle13}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle13}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle13}" />
 
 		<var name="key_entryTitle" value="${entryTitle12}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle12}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 6 - 10 of 21 results." />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle12}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 6 - 10 of 21 results." />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
 
 		<var name="key_entryTitle" value="${entryTitle11}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle11}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle11}" />
 
 		<var name="key_entryTitle" value="${entryTitle10}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle10}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle10}" />
 
 		<var name="key_entryTitle" value="${entryTitle9}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle9}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle9}" />
 
 		<var name="key_entryTitle" value="${entryTitle8}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle8}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle8}" />
 
 		<var name="key_entryTitle" value="${entryTitle7}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle7}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 11 - 15 of 21 results." />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle7}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 11 - 15 of 21 results." />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
 
 		<var name="key_entryTitle" value="${entryTitle6}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle6}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle6}" />
 
 		<var name="key_entryTitle" value="${entryTitle5}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle5}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle5}" />
 
 		<var name="key_entryTitle" value="${entryTitle4}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle4}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle4}" />
 
 		<var name="key_entryTitle" value="${entryTitle3}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle3}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle3}" />
 
 		<var name="key_entryTitle" value="${entryTitle2}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle2}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 16 - 20 of 21 results." />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle2}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 16 - 20 of 21 results." />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" value1="Next" />
 
 		<var name="key_entryTitle" value="${entryTitle1}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle1}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 21 - 21 of 21 results." />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle1}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 21 - 21 of 21 results." />
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_NEXT" />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
 
 		<var name="key_entryTitle" value="${entryTitle6}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle6}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle6}" />
 
 		<var name="key_entryTitle" value="${entryTitle5}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle5}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle5}" />
 
 		<var name="key_entryTitle" value="${entryTitle4}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle4}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle4}" />
 
 		<var name="key_entryTitle" value="${entryTitle3}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle3}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle3}" />
 
 		<var name="key_entryTitle" value="${entryTitle2}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle2}" />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle2}" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
 
 		<var name="key_entryTitle" value="${entryTitle11}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle11}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle11}" />
 
 		<var name="key_entryTitle" value="${entryTitle10}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle10}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle10}" />
 
 		<var name="key_entryTitle" value="${entryTitle9}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle9}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle9}" />
 
 		<var name="key_entryTitle" value="${entryTitle8}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle8}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle8}" />
 
 		<var name="key_entryTitle" value="${entryTitle7}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle7}" />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle7}" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
 
 		<var name="key_entryTitle" value="${entryTitle16}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle16}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle16}" />
 
 		<var name="key_entryTitle" value="${entryTitle15}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle15}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle15}" />
 
 		<var name="key_entryTitle" value="${entryTitle14}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle14}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle14}" />
 
 		<var name="key_entryTitle" value="${entryTitle13}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle13}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle13}" />
 
 		<var name="key_entryTitle" value="${entryTitle12}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle12}" />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle12}" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" value1="Previous" />
 
 		<var name="key_entryTitle" value="${entryTitle21}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle21}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle21}" />
 
 		<var name="key_entryTitle" value="${entryTitle20}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle20}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle20}" />
 
 		<var name="key_entryTitle" value="${entryTitle19}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle19}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle19}" />
 
 		<var name="key_entryTitle" value="${entryTitle18}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle18}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle18}" />
 
 		<var name="key_entryTitle" value="${entryTitle17}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle17}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle17}" />
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_PREVIOUS" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesPerPageDisplay">
@@ -3788,44 +3788,44 @@
 
 		<var name="key_entryTitle" value="${entryTitle21}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle21}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle21}" />
 
 		<var name="key_entryTitle" value="${entryTitle20}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle20}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle20}" />
 
 		<var name="key_entryTitle" value="${entryTitle19}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle19}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle19}" />
 
 		<var name="key_entryTitle" value="${entryTitle18}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle18}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle18}" />
 
 		<var name="key_entryTitle" value="${entryTitle17}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle17}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle17}" />
 
 		<var name="key_entryTitle" value="${entryTitle16}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle16}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle16}" />
 
 		<var name="key_entryTitle" value="${entryTitle15}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle15}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle15}" />
 
 		<var name="key_entryTitle" value="${entryTitle14}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle14}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle14}" />
 
 		<var name="key_entryTitle" value="${entryTitle13}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle13}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle13}" />
 
 		<var name="key_entryTitle" value="${entryTitle12}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle12}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 1 - 10 of 21 results." />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle12}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 1 - 10 of 21 results." />
 	</command>
 
 	<command name="ViewSOAnnouncementsEntryScopedToRolesViaDashboard" priority="5">
@@ -3873,13 +3873,13 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
-		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
+		<execute function="AssertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent1}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent2}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingRoles" value="${roleName1}" />
@@ -3897,10 +3897,10 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent2}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingRoles" value="${roleName2}" />
@@ -3928,8 +3928,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingRoles" value="${roleName3}" />
@@ -3993,8 +3993,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="nonDisplayingRoles" value="${roleName2}" />
@@ -4012,10 +4012,10 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent2}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="nonDisplayingRoles" value="${roleName1}" />
@@ -4023,13 +4023,13 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
-		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
+		<execute function="AssertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent1}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent2}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingRoles" value="${roleName1},${roleName2},${roleName3}" />
@@ -4073,13 +4073,13 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
-		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
+		<execute function="AssertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent1}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent2}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent3}" />
 	</command>
 
 	<command name="ViewSOAnnouncementsEntryScopedToSitesViaDashboard" priority="5">
@@ -4157,13 +4157,13 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
-		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
+		<execute function="AssertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent1}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent2}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingSites" value="${siteName1}" />
@@ -4181,10 +4181,10 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent2}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingSites" value="${siteName2}" />
@@ -4212,8 +4212,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingSites" value="${siteName3}" />
@@ -4277,8 +4277,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="nonDisplayingSites" value="${siteName2}" />
@@ -4296,10 +4296,10 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent2}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="nonDisplayingSites" value="${siteName1}" />
@@ -4307,13 +4307,13 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
-		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
+		<execute function="AssertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent1}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent2}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingSites" value="${siteName1},${siteName2},${siteName3}" />
@@ -4357,12 +4357,12 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
-		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
+		<execute function="AssertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent1}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent2}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent3}" />
 	</command>
 </definition>

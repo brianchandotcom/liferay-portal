@@ -137,16 +137,16 @@
 
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
-		<execute function="#assertClick" locator1="PGKaleoforms#ASSIGNED_TO_MY_ROLES_TABLE_NAME" value1="${kfProcessName}" />
+		<execute function="AssertClick" locator1="PGKaleoforms#ASSIGNED_TO_MY_ROLES_TABLE_NAME" value1="${kfProcessName}" />
 
-		<execute function="#assertTextEquals" locator1="PGKaleoformsInboxProcess#ASSIGNED_TO_LABEL" value1="Assigned to" />
-		<execute function="#assertTextEquals" locator1="PGKaleoformsInboxProcess#ASSIGNED_TO" value1="Assigned to Nobody - Assign to Me" />
-		<execute function="#assertTextEquals" locator1="PGKaleoformsInboxProcess#ASSIGNED_TO_ASSIGN_TO_ME_LINK" value1="Assign to Me" />
-		<execute function="#assertTextEquals" locator1="PGKaleoformsInboxProcess#STATE_LABEL" value1="State" />
-		<execute function="#assertTextEquals" locator1="PGKaleoformsInboxProcess#STATE_STATUS" value1="State ${kfProcessStatus}" />
-		<execute function="#assertTextEquals" locator1="PGKaleoformsInboxProcess#DUE_DATE_LABEL" value1="Due Date" />
-		<execute function="#assertTextEquals" locator1="PGKaleoformsInboxProcess#DUE_DATE_DATE" value1="Due Date Never - (Change)" />
-		<execute function="#assertTextEquals" locator1="PGKaleoformsInboxProcess#WORKFLOW_STATUS" value1="${kfProcessStatus}" />
+		<execute function="AssertTextEquals" locator1="PGKaleoformsInboxProcess#ASSIGNED_TO_LABEL" value1="Assigned to" />
+		<execute function="AssertTextEquals" locator1="PGKaleoformsInboxProcess#ASSIGNED_TO" value1="Assigned to Nobody - Assign to Me" />
+		<execute function="AssertTextEquals" locator1="PGKaleoformsInboxProcess#ASSIGNED_TO_ASSIGN_TO_ME_LINK" value1="Assign to Me" />
+		<execute function="AssertTextEquals" locator1="PGKaleoformsInboxProcess#STATE_LABEL" value1="State" />
+		<execute function="AssertTextEquals" locator1="PGKaleoformsInboxProcess#STATE_STATUS" value1="State ${kfProcessStatus}" />
+		<execute function="AssertTextEquals" locator1="PGKaleoformsInboxProcess#DUE_DATE_LABEL" value1="Due Date" />
+		<execute function="AssertTextEquals" locator1="PGKaleoformsInboxProcess#DUE_DATE_DATE" value1="Due Date Never - (Change)" />
+		<execute function="AssertTextEquals" locator1="PGKaleoformsInboxProcess#WORKFLOW_STATUS" value1="${kfProcessStatus}" />
 	</command>
 
 	<command name="AssertEditFormNotUsedAsCreateForm" priority="5">
@@ -269,7 +269,7 @@
 			<var name="kfProcessFieldData" value="4" />
 		</execute>
 
-		<execute function="#assertElementNotPresent" locator1="PGKaleoformsSubmitnew#NEW_PROCESS_FIELDS_SEPARATOR" />
+		<execute function="AssertElementNotPresent" locator1="PGKaleoformsSubmitnew#NEW_PROCESS_FIELDS_SEPARATOR" />
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
 
@@ -526,7 +526,7 @@
 		</execute>
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
-		<execute function="#assertClick" locator1="Dockbar#ADMIN_SITE_ADMINISTRATION_CONTENT" value1="Content" />
+		<execute function="AssertClick" locator1="Dockbar#ADMIN_SITE_ADMINISTRATION_CONTENT" value1="Content" />
 
 		<execute macro="KaleoFormsAdmin#addProcess" />
 
@@ -1803,9 +1803,9 @@
 			<var name="kfProcessFieldData" value="option 2" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][1]/label" value1="Text" />
-		<execute function="#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][2]/label" value1="Text Box" />
-		<execute function="#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][3]/div/label" value1="Select" />
+		<execute function="AssertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][1]/label" value1="Text" />
+		<execute function="AssertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][2]/label" value1="Text Box" />
+		<execute function="AssertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][3]/div/label" value1="Select" />
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
 
@@ -1837,8 +1837,8 @@
 			<var name="fieldName" value="Text Box" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][1]/label" value1="Text" />
-		<execute function="#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][2]/div/label" value1="Select" />
+		<execute function="AssertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][1]/label" value1="Text" />
+		<execute function="AssertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][2]/div/label" value1="Select" />
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
 
@@ -1871,9 +1871,9 @@
 			<var name="kfProcessFieldData" value="option 2" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][1]/label" value1="Text" />
-		<execute function="#assertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][2]/label" value1="Text Box" />
-		<execute function="#assertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][3]/label" value1="Select" />
+		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][1]/label" value1="Text" />
+		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][2]/label" value1="Text Box" />
+		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][3]/label" value1="Select" />
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
@@ -2161,7 +2161,7 @@
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
 
-		<execute function="#pause" locator1="30000" />
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" value="${user2EmailAddress}" />
@@ -2185,7 +2185,7 @@
 			<var name="userPassword" value="${user2EmailPassword}" />
 		</execute>
 
-		<execute function="#open" locator1="http://localhost:8080" />
+		<execute function="Open" locator1="http://localhost:8080" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${user2EmailAddress}" />
@@ -2201,7 +2201,7 @@
 			<var name="workflowTask" value="review" />
 		</execute>
 
-		<execute function="#pause" locator1="30000" />
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" value="${user2EmailAddress}" />
@@ -2225,7 +2225,7 @@
 			<var name="userPassword" value="${user2EmailPassword}" />
 		</execute>
 
-		<execute function="#open" locator1="http://localhost:8080" />
+		<execute function="Open" locator1="http://localhost:8080" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -2238,7 +2238,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 
-		<execute function="#pause" locator1="30000" />
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#logoutAndLogin">
 			<var name="userEmailAddress" value="${user3EmailAddress}" />
@@ -2261,7 +2261,7 @@
 			<var name="userPassword" value="${user3EmailPassword}" />
 		</execute>
 
-		<execute function="#open" locator1="http://localhost:8080" />
+		<execute function="Open" locator1="http://localhost:8080" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${user3EmailAddress}" />
@@ -2282,7 +2282,7 @@
 			<var name="workflowTask" value="update" />
 		</execute>
 
-		<execute function="#pause" locator1="30000" />
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#logoutAndLogin">
 			<var name="userEmailAddress" value="${user2EmailAddress}" />
@@ -2306,7 +2306,7 @@
 			<var name="userPassword" value="${user2EmailPassword}" />
 		</execute>
 
-		<execute function="#open" locator1="http://localhost:8080" />
+		<execute function="Open" locator1="http://localhost:8080" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${user2EmailAddress}" />
@@ -4204,8 +4204,8 @@
 
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
-		<execute function="#click" locator1="PGKaleoforms#ASSIGNED_TO_ME_TABLE_ACTIONS_1" />
-		<execute function="#assertElementNotPresent" locator1="PGKaleoforms#ASSIGNED_TO_ME_MENULIST_REJECT" />
+		<execute function="Click" locator1="PGKaleoforms#ASSIGNED_TO_ME_TABLE_ACTIONS_1" />
+		<execute function="AssertElementNotPresent" locator1="PGKaleoforms#ASSIGNED_TO_ME_MENULIST_REJECT" />
 
 		<execute macro="KaleoFormsPortlet#approveProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -4762,7 +4762,7 @@
 
 		<var name="key_fieldName" value="Fieldset" />
 
-		<execute function="#assertElementNotPresent" locator1="PGKaleoformsSubmitnew#NEW_PROCESS_FIELDS_FIELDSET" />
+		<execute function="AssertElementNotPresent" locator1="PGKaleoformsSubmitnew#NEW_PROCESS_FIELDS_FIELDSET" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Kaleo Forms Page" />
@@ -6270,7 +6270,7 @@
 
 		<var name="key_fieldName" value="quantity" />
 
-		<execute function="#assertElementNotPresent" locator1="PGKaleoformsSubmitnew#NEW_PROCESS_FIELDS_TEXT_FIELD" />
+		<execute function="AssertElementNotPresent" locator1="PGKaleoformsSubmitnew#NEW_PROCESS_FIELDS_TEXT_FIELD" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -8488,8 +8488,8 @@
 
 		<var name="key_kfFormName" value="Created Task Form" />
 
-		<execute function="#assertTextEquals" locator1="CPKaleoformsadminNewprocessSelectform#FORM_TABLE_NAME" value1="Created Task Form" />
-		<execute function="#assertElementNotPresent" locator1="CPKaleoformsadminNewprocessSelectform#FORM_TABLE_NAME_2" />
+		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocessSelectform#FORM_TABLE_NAME" value1="Created Task Form" />
+		<execute function="AssertElementNotPresent" locator1="CPKaleoformsadminNewprocessSelectform#FORM_TABLE_NAME_2" />
 	</command>
 
 	<command name="ViewProcessWithComments" priority="4">

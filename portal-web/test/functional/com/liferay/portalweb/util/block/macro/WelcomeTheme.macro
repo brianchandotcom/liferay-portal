@@ -1,45 +1,45 @@
 <definition>
 	<command name="viewPG">
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_TITLE" value1="Welcome To Liferay Portal" />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_START" value1="Start" />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_START_CONTENT" value1="Review our Quick Start Guide for an overview of Liferay's features." />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_QUICK_START_GUIDE" value1="Quick Start Guide" />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_LEARN" value1="Learn" />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_LEARN_CONTENT" value1="Read the official Liferay User Guide for detailed information about setting up and configuring Liferay." />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_LIFERAY_USER_GUIDE" value1="Liferay User Guide" />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_ENGAGE" value1="Engage" />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_ENGAGE_CONTENT" value1="Visit the Liferay Community to post questions, find answers, and contribute." />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_LIFERAY_COMMUNITY" value1="Liferay Community" />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_DEVELOP" value1="Develop" />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_DEVELOP_CONTENT" value1="Explore our Developer Resources to develop apps and more for Liferay Portal." />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_DEVELOPER_RESOURCES" value1="Developer Resources" />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_EVALUATE" value1="Evaluate" />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_EVALUATE_CONTENT" value1="Learn more about partners, support, training and other enterprise level options available for Liferay." />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_ENTERPRISE_LEVEL_OPTIONS" value1="enterprise level options" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_TITLE" value1="Welcome To Liferay Portal" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_START" value1="Start" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_START_CONTENT" value1="Review our Quick Start Guide for an overview of Liferay's features." />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_QUICK_START_GUIDE" value1="Quick Start Guide" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_LEARN" value1="Learn" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_LEARN_CONTENT" value1="Read the official Liferay User Guide for detailed information about setting up and configuring Liferay." />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_LIFERAY_USER_GUIDE" value1="Liferay User Guide" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_ENGAGE" value1="Engage" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_ENGAGE_CONTENT" value1="Visit the Liferay Community to post questions, find answers, and contribute." />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_LIFERAY_COMMUNITY" value1="Liferay Community" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_DEVELOP" value1="Develop" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_DEVELOP_CONTENT" value1="Explore our Developer Resources to develop apps and more for Liferay Portal." />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_DEVELOPER_RESOURCES" value1="Developer Resources" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_EVALUATE" value1="Evaluate" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_EVALUATE_CONTENT" value1="Learn more about partners, support, training and other enterprise level options available for Liferay." />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_CONTENT_ENTERPRISE_LEVEL_OPTIONS" value1="enterprise level options" />
 
-		<execute function="#open" locator1="http://www.liferay.com/welcome-start?v1.0" />
+		<execute function="Open" locator1="http://www.liferay.com/welcome-start?v1.0" />
 
-		<execute function="#assertElementPresent" locator1="PGWelcome#WELCOME_QUICK_START_GUIDE_HEADING_IMAGE" />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_QUICK_START_GUIDE_SUBHEADING" value1="Learn a little more about our platform." />
+		<execute function="AssertElementPresent" locator1="PGWelcome#WELCOME_QUICK_START_GUIDE_HEADING_IMAGE" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_QUICK_START_GUIDE_SUBHEADING" value1="Learn a little more about our platform." />
 
-		<execute function="#open" locator1="http://www.liferay.com/welcome-learn?v1.0" />
+		<execute function="Open" locator1="http://www.liferay.com/welcome-learn?v1.0" />
 
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_LIFERAY_USER_GUIDE_HEADER" value1="Documentation" />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_LIFERAY_USER_GUIDE_SUBHEADER" value1="Liferay provides a rich store of resources and knowledge to help our community better use and work with our technology." />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_LIFERAY_USER_GUIDE_HEADER" value1="Documentation" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_LIFERAY_USER_GUIDE_SUBHEADER" value1="Liferay provides a rich store of resources and knowledge to help our community better use and work with our technology." />
 
-		<execute function="#open" locator1="http://www.liferay.com/welcome-engage?v1.0" />
+		<execute function="Open" locator1="http://www.liferay.com/welcome-engage?v1.0" />
 
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_LIFERAY_COMMUNITY_HEADER" value1="Community" />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_LIFERAY_COMMUNITY_SUBHEADER" value1="Welcome to Liferay's Community! This space is where Liferay's open source community comes together to share knowledge, brainstorm new features, and build working relationships." />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_LIFERAY_COMMUNITY_HEADER" value1="Community" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_LIFERAY_COMMUNITY_SUBHEADER" value1="Welcome to Liferay's Community! This space is where Liferay's open source community comes together to share knowledge, brainstorm new features, and build working relationships." />
 
-		<execute function="#open" locator1="http://www.liferay.com/welcome-develop?v1.0" />
+		<execute function="Open" locator1="http://www.liferay.com/welcome-develop?v1.0" />
 
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_DEVELOPER_RESOURCES_HEADER" value1="Documentation" />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_DEVELOPER_RESOURCES_SUBHEADER" value1="Liferay provides a rich store of resources and knowledge to help our community better use and work with our technology." />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_DEVELOPER_RESOURCES_HEADER" value1="Documentation" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_DEVELOPER_RESOURCES_SUBHEADER" value1="Liferay provides a rich store of resources and knowledge to help our community better use and work with our technology." />
 
-		<execute function="#open" locator1="http://www.liferay.com/welcome-evaluate?v1.0" />
+		<execute function="Open" locator1="http://www.liferay.com/welcome-evaluate?v1.0" />
 
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_ENTERPRISE_LEVEL_OPTIONS_HEADER" value1="Global Services" />
-		<execute function="#assertTextEquals" locator1="PGWelcome#WELCOME_ENTERPRISE_LEVEL_OPTIONS_SUBHEADER" value1="Liferay is here to help" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_ENTERPRISE_LEVEL_OPTIONS_HEADER" value1="Global Services" />
+		<execute function="AssertTextEquals" locator1="PGWelcome#WELCOME_ENTERPRISE_LEVEL_OPTIONS_SUBHEADER" value1="Liferay is here to help" />
 	</command>
 </definition>

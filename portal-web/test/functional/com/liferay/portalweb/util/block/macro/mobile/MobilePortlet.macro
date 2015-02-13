@@ -12,7 +12,7 @@
 		<while>
 			<not>
 				<or>
-					<condition function="#isElementPresent" locator1="Home#${portletTypeKey}" />
+					<condition function="IsElementPresent" locator1="Home#${portletTypeKey}" />
 					<equals arg1="${i}" arg2="3" />
 				</or>
 			</not>
@@ -21,7 +21,7 @@
 
 				<echo message="The xpath ${portletTypeKey} could not be found. Refreshing the page. Attempt number ${i}..." />
 
-				<execute function="#refresh" />
+				<execute function="Refresh" />
 
 				<execute macro="MobilePortlet#addPGCmd">
 					<var name="portletName" value="${portletName}" />
@@ -29,12 +29,12 @@
 			</then>
 		</while>
 
-		<execute function="#assertTextEquals" locator1="MobiledockbarAddpanelapplications#PORTLET_ADDED_SUCCESS_MESSAGE" value1="${portletName} Added Skip to Content" />
-		<execute function="#pause" locator1="4000" />
-		<execute function="#assertNotVisible" locator1="MobiledockbarAddpanelapplications#PORTLET_ADDED_SUCCESS_MESSAGE" />
-		<execute function="#click" locator1="MobiledockbarAddpanelapplications#CLOSE_BUTTON" />
+		<execute function="AssertTextEquals" locator1="MobiledockbarAddpanelapplications#PORTLET_ADDED_SUCCESS_MESSAGE" value1="${portletName} Added Skip to Content" />
+		<execute function="Pause" locator1="4000" />
+		<execute function="AssertNotVisible" locator1="MobiledockbarAddpanelapplications#PORTLET_ADDED_SUCCESS_MESSAGE" />
+		<execute function="Click" locator1="MobiledockbarAddpanelapplications#CLOSE_BUTTON" />
 
-		<execute function="#assertElementPresent" locator1="Home#${portletTypeKey}" />
+		<execute function="AssertElementPresent" locator1="Home#${portletTypeKey}" />
 	</command>
 
 	<command name="addPGCmd">
@@ -43,9 +43,9 @@
 		<execute function="Click#waitForNavigationInteractionTouchScriptTap" locator1="Mobiledockbar#PENCIL_ICON" />
 		<execute function="AssertClick#waitForNodeScriptAssertTextEqualsClick" locator1="Mobiledockbar#ADD" value1="Add" />
 
-		<execute function="#assertClick" locator1="MobiledockbarAddpanelcontent#NAVIGATION_APPLICATIONS" value1="Applications" />
+		<execute function="AssertClick" locator1="MobiledockbarAddpanelcontent#NAVIGATION_APPLICATIONS" value1="Applications" />
 
-		<execute function="#type" locator1="MobiledockbarAddpanelapplications#SEARCH_FIELD" value1="${portletName}" />
+		<execute function="Type" locator1="MobiledockbarAddpanelapplications#SEARCH_FIELD" value1="${portletName}" />
 
 		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
 
@@ -73,7 +73,7 @@
 				<equals arg1="${portletName}" arg2="Media Gallery" />
 			</or>
 			<then>
-				<execute function="#pause" locator1="30000" />
+				<execute function="Pause" locator1="30000" />
 			</then>
 		</if>
 	</command>

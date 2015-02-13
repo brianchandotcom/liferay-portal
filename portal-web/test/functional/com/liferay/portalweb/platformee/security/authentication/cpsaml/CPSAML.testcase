@@ -135,11 +135,11 @@
 
 		<!-- Verify the following HTTP Post binding are displayed in the console after a successful SLO -->
 
-		<execute function="#pause" locator1="5000" />
+		<execute function="Pause" locator1="5000" />
 
-		<execute function="#assertConsoleTextPresent" value1="Received message using binding urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" />
-		<execute function="#assertConsoleTextPresent" value1="saml2p:LogoutRequest Destination=&quot;http://localhost:8080/c/portal/saml/slo&quot;" />
-		<execute function="#assertConsoleTextPresent" value1="saml2p:LogoutResponse Destination=&quot;http://www.able.com:9080/c/portal/saml/slo&quot;" />
+		<execute function="AssertConsoleTextPresent" value1="Received message using binding urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" />
+		<execute function="AssertConsoleTextPresent" value1="saml2p:LogoutRequest Destination=&quot;http://localhost:8080/c/portal/saml/slo&quot;" />
+		<execute function="AssertConsoleTextPresent" value1="saml2p:LogoutResponse Destination=&quot;http://www.able.com:9080/c/portal/saml/slo&quot;" />
 	</command>
 
 	<command known-issues="LPS-53332" name="ViewSPInitiatedSSO" priority="5">

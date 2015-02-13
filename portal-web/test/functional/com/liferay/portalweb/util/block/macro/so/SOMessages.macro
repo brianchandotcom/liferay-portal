@@ -2,9 +2,9 @@
 	<var name="password" value="test" />
 
 	<command name="sendMessage">
-		<execute function="#assertClick" locator1="SOMessages#NEW_MESSAGE_BUTTON" value1="New Message" />
+		<execute function="AssertClick" locator1="SOMessages#NEW_MESSAGE_BUTTON" value1="New Message" />
 
-		<execute function="#selectFrame" locator1="SOMessagesAdd#NEW_MESSAGE_IFRAME" />
+		<execute function="SelectFrame" locator1="SOMessagesAdd#NEW_MESSAGE_IFRAME" />
 
 		<if>
 			<isset var="recipientNameList" />
@@ -21,24 +21,24 @@
 
 				<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName}" />
 				<execute function="AssertClick#pauseAssertPartialTextClickAt" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${recipientName}" />
-				<execute function="#assertTextEquals" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName} &lt;${recipientScreenName}&gt;, " />
+				<execute function="AssertTextEquals" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName} &lt;${recipientScreenName}&gt;, " />
 			</else>
 		</if>
 
-		<execute function="#type" locator1="SOMessagesAdd#SUBJECT_FIELD" value1="${messageSubject}" />
-		<execute function="#type" locator1="SOMessagesAdd#BODY_FIELD" value1="${messageBody}" />
+		<execute function="Type" locator1="SOMessagesAdd#SUBJECT_FIELD" value1="${messageSubject}" />
+		<execute function="Type" locator1="SOMessagesAdd#BODY_FIELD" value1="${messageBody}" />
 
 		<if>
 			<isset var="messageAttachmentFile" />
 			<then>
-				<execute function="#uploadCommonFile" locator1="SOMessagesAdd#ATTACHMENTS_FIELD" value1="${messageAttachmentFile}" />
+				<execute function="UploadCommonFile" locator1="SOMessagesAdd#ATTACHMENTS_FIELD" value1="${messageAttachmentFile}" />
 			</then>
 		</if>
 
-		<execute function="#click" locator1="SOMessagesAdd#SEND_BUTTON" />
-		<execute function="#pause" locator1="1000" />
+		<execute function="Click" locator1="SOMessagesAdd#SEND_BUTTON" />
+		<execute function="Pause" locator1="1000" />
 
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="SelectFrame" value1="relative=top" />
 
 		<if>
 			<isset var="partialMessageBody" />
@@ -50,22 +50,22 @@
 			</else>
 		</if>
 
-		<execute function="#assertElementPresent" locator1="SOMessages#MESSAGE_SENDER" />
-		<execute function="#assertElementPresent" locator1="SOMessages#MESSAGE_SUBJECT" />
-		<execute function="#assertElementPresent" locator1="SOMessages#MESSAGE_BODY" />
+		<execute function="AssertElementPresent" locator1="SOMessages#MESSAGE_SENDER" />
+		<execute function="AssertElementPresent" locator1="SOMessages#MESSAGE_SUBJECT" />
+		<execute function="AssertElementPresent" locator1="SOMessages#MESSAGE_BODY" />
 	</command>
 
 	<command name="sendReplyMessage">
-		<execute function="#type" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_BODY_FIELD" value1="${messageReplyBody}" />
+		<execute function="Type" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_BODY_FIELD" value1="${messageReplyBody}" />
 
 		<if>
 			<isset var="messageReplyAttachmentFile" />
 			<then>
-				<execute function="#uploadCommonFile" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_ATTACHMENT_FIELD" value1="${messageReplyAttachmentFile}" />
+				<execute function="UploadCommonFile" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_ATTACHMENT_FIELD" value1="${messageReplyAttachmentFile}" />
 			</then>
 		</if>
 
-		<execute function="#click" locator1="SOMessagesMessage#PRIVATE_MESSAGE_SEND_BUTTON" />
+		<execute function="Click" locator1="SOMessagesMessage#PRIVATE_MESSAGE_SEND_BUTTON" />
 
 		<var name="key_messageReplyBody" value="${messageReplyBody}" />
 
@@ -74,13 +74,13 @@
 			<then>
 				<var name="key_pageNumber" value="${pageNumber}" />
 
-				<execute function="#click" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_BUTTON" />
-				<execute function="#click" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_MENU_ITEM" />
+				<execute function="Click" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_BUTTON" />
+				<execute function="Click" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_MENU_ITEM" />
 			</then>
 		</if>
 
-		<execute function="#assertElementPresent" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_SENDER" />
-		<execute function="#assertElementPresent" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_BODY" />
+		<execute function="AssertElementPresent" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_SENDER" />
+		<execute function="AssertElementPresent" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_BODY" />
 	</command>
 
 	<command name="tearDownPG">
@@ -88,23 +88,23 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#click" locator1="SODashboard#NAVIGATION_MESSAGES" />
+		<execute function="Click" locator1="SODashboard#NAVIGATION_MESSAGES" />
 
 		<if>
-			<condition function="#isElementNotPresent" locator1="SOMessages#INFO_MESSAGE" />
+			<condition function="IsElementNotPresent" locator1="SOMessages#INFO_MESSAGE" />
 			<then>
-				<execute function="#check" locator1="SOMessages#SELECT_ALL_CHECKBOX" />
-				<execute function="#clickNoError" locator1="SOMessages#DELETE_BUTTON" />
-				<execute function="#confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
-				<execute function="#assertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
+				<execute function="Check" locator1="SOMessages#SELECT_ALL_CHECKBOX" />
+				<execute function="ClickNoError" locator1="SOMessages#DELETE_BUTTON" />
+				<execute function="Confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
+				<execute function="AssertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
 			</then>
 		</if>
 	</command>
 
 	<command name="viewAutocompleteMenuNull">
-		<execute function="#assertClick" locator1="SOMessages#NEW_MESSAGE_BUTTON" value1="New Message" />
+		<execute function="AssertClick" locator1="SOMessages#NEW_MESSAGE_BUTTON" value1="New Message" />
 
-		<execute function="#selectFrame" locator1="SOMessagesAdd#NEW_MESSAGE_IFRAME" />
+		<execute function="SelectFrame" locator1="SOMessagesAdd#NEW_MESSAGE_IFRAME" />
 
 		<if>
 			<isset var="recipientNameList" />
@@ -113,7 +113,7 @@
 					<var name="key_recipientName" value="${recipientName}" />
 
 					<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName}" />
-					<execute function="#assertElementNotPresent" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" />
+					<execute function="AssertElementNotPresent" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" />
 				</for>
 			</then>
 			<elseif>
@@ -122,14 +122,14 @@
 					<var name="key_recipientName" value="${recipientName}" />
 
 					<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="${userInformation}" />
-					<execute function="#assertElementNotPresent" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" />
+					<execute function="AssertElementNotPresent" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" />
 				</then>
 			</elseif>
 			<else>
 				<var name="key_recipientName" value="${recipientName}" />
 
 				<execute function="Type#sendKeys" locator1="SOMessagesAdd#TO_FIELD" value1="${recipientName}" />
-				<execute function="#assertElementNotPresent" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" />
+				<execute function="AssertElementNotPresent" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" />
 			</else>
 		</if>
 	</command>
@@ -147,19 +147,19 @@
 			</else>
 		</if>
 
-		<execute function="#click" locator1="SOMessages#MESSAGE_SUBJECT" />
+		<execute function="Click" locator1="SOMessages#MESSAGE_SUBJECT" />
 
-		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_SUBJECT" value1="${messageSubject}" />
+		<execute function="AssertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_SUBJECT" value1="${messageSubject}" />
 
 		<execute macro="SOMessages#viewMessageConnectionDetailsView" />
 
-		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_SENDER" value1="${senderName}" />
+		<execute function="AssertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_SENDER" value1="${senderName}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_BODY" value1="${messageBody}" />
 
 		<if>
 			<isset var="messageAttachmentFile" />
 			<then>
-				<execute function="#assertElementPresent" locator1="SOMessagesMessage#PRIVATE_MESSAGE_ATTACHMENT" />
+				<execute function="AssertElementPresent" locator1="SOMessagesMessage#PRIVATE_MESSAGE_ATTACHMENT" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_ATTACHMENT_LINK" value1="${messageAttachmentFile}" />
 			</then>
 		</if>
@@ -237,7 +237,7 @@
 				</for>
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="SOMessages#MESSAGE_SENDER" value1="${connectionName}" />
+				<execute function="AssertTextEquals" locator1="SOMessages#MESSAGE_SENDER" value1="${connectionName}" />
 			</else>
 		</if>
 	</command>
@@ -255,35 +255,35 @@
 
 		<execute macro="SOMessages#viewMessageConnectionListView" />
 
-		<execute function="#assertTextEquals" locator1="SOMessages#MESSAGE_SUBJECT" value1="${messageSubject}" />
-		<execute function="#assertTextEquals" locator1="SOMessages#MESSAGE_BODY" value1="${messageBody}" />
+		<execute function="AssertTextEquals" locator1="SOMessages#MESSAGE_SUBJECT" value1="${messageSubject}" />
+		<execute function="AssertTextEquals" locator1="SOMessages#MESSAGE_BODY" value1="${messageBody}" />
 	</command>
 
 	<command name="viewMessageNotification">
-		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="AssertElementPresent" locator1="SOUserBar#NOTIFICATION" />
 
 		<if>
 			<isset var="numberOfNotifications" />
 			<then>
-				<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="${numberOfNotifications}" />
+				<execute function="AssertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="${numberOfNotifications}" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="1" />
+				<execute function="AssertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="1" />
 			</else>
 		</if>
 
-		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="Click" locator1="SOUserBar#NOTIFICATION" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${senderName} sent you a message." />
-		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${messageBody}" />
-		<execute function="#assertClick" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${senderName} sent you a message." />
+		<execute function="AssertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${messageBody}" />
+		<execute function="AssertClick" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${senderName} sent you a message." />
 
 		<if>
 			<isset var="numberOfNotifications" />
 			<then>
-				<execute function="#assertTextNotEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="${numberOfNotifications}" />
+				<execute function="AssertTextNotEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="${numberOfNotifications}" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
+				<execute function="AssertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
 			</else>
 		</if>
 	</command>
@@ -301,22 +301,22 @@
 			</else>
 		</if>
 
-		<execute function="#click" locator1="SOMessages#MESSAGE_SUBJECT" />
+		<execute function="Click" locator1="SOMessages#MESSAGE_SUBJECT" />
 
 		<var name="key_messageBody" value="${messageBody}" />
 		<var name="key_messageReplyBody" value="${messageReplyBody}" />
 
-		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_SUBJECT" value1="${messageSubject}" />
+		<execute function="AssertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_SUBJECT" value1="${messageSubject}" />
 
 		<execute macro="SOMessages#viewMessageConnectionDetailsView" />
 
-		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_SENDER" value1="${senderName}" />
+		<execute function="AssertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_SENDER" value1="${senderName}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_BODY" value1="${messageBody}" />
 
 		<if>
 			<isset var="messageAttachmentFile" />
 			<then>
-				<execute function="#assertElementPresent" locator1="SOMessagesMessage#PRIVATE_MESSAGE_ATTACHMENT" />
+				<execute function="AssertElementPresent" locator1="SOMessagesMessage#PRIVATE_MESSAGE_ATTACHMENT" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_ATTACHMENT_LINK" value1="${messageAttachmentFile}" />
 			</then>
 		</if>
@@ -326,18 +326,18 @@
 			<then>
 				<var name="key_pageNumber" value="${pageNumber}" />
 
-				<execute function="#click" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_BUTTON" />
-				<execute function="#click" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_MENU_ITEM" />
+				<execute function="Click" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_BUTTON" />
+				<execute function="Click" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_MENU_ITEM" />
 			</then>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_SENDER" value1="${replySenderName}" />
+		<execute function="AssertTextEquals" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_SENDER" value1="${replySenderName}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_BODY" value1="${messageReplyBody}" />
 
 		<if>
 			<isset var="messageReplyAttachmentFile" />
 			<then>
-				<execute function="#assertElementPresent" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_ATTACHMENT" />
+				<execute function="AssertElementPresent" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_ATTACHMENT" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="SOMessagesMessage#PRIVATE_MESSAGE_REPLY_ATTACHMENT_LINK" value1="${messageReplyAttachmentFile}" />
 			</then>
 		</if>
@@ -356,15 +356,15 @@
 
 		<execute macro="SOMessages#viewMessageConnectionListView" />
 
-		<execute function="#assertTextEquals" locator1="SOMessages#MESSAGE_SUBJECT" value1="${messageSubject}" />
+		<execute function="AssertTextEquals" locator1="SOMessages#MESSAGE_SUBJECT" value1="${messageSubject}" />
 
 		<if>
 			<isset var="messageReplyBodyListView" />
 			<then>
-				<execute function="#assertTextEquals" locator1="SOMessages#MESSAGE_BODY" value1="${messageReplyBodyListView}" />
+				<execute function="AssertTextEquals" locator1="SOMessages#MESSAGE_BODY" value1="${messageReplyBodyListView}" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="SOMessages#MESSAGE_BODY" value1="${messageReplyBody}" />
+				<execute function="AssertTextEquals" locator1="SOMessages#MESSAGE_BODY" value1="${messageReplyBody}" />
 			</else>
 		</if>
 	</command>

@@ -374,7 +374,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertElementNotPresent" locator1="Home#PAGE_2_GUEST_VIEW" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE_2_GUEST_VIEW" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
@@ -398,7 +398,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertElementPresent" locator1="Home#PAGE_2_GUEST_VIEW" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE_2_GUEST_VIEW" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
@@ -424,11 +424,11 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertClick" locator1="Home#PAGE_2_GUEST_VIEW" value1="${pageName}" />
+		<execute function="AssertClick" locator1="Home#PAGE_2_GUEST_VIEW" value1="${pageName}" />
 
 		<var name="key_entryTitle" value="Blogs Entry Title" />
 
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
@@ -458,11 +458,11 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertClick" locator1="Home#PAGE_2_GUEST_VIEW" value1="${pageName}" />
+		<execute function="AssertClick" locator1="Home#PAGE_2_GUEST_VIEW" value1="${pageName}" />
 
 		<var name="key_entryTitle" value="Blogs Entry Title" />
 
-		<execute function="#assertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
@@ -485,11 +485,11 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#click" locator1="Home#PAGE_2_GUEST_VIEW" />
+		<execute function="Click" locator1="Home#PAGE_2_GUEST_VIEW" />
 
 		<var name="key_entryTitle" value="Blogs Entry Title" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="Blogs Entry Title" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="Blogs Entry Title" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />

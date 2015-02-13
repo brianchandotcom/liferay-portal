@@ -20,7 +20,7 @@
 
 	<command name="IfStatements" priority="5">
 		<if>
-			<condition function="#isElementPresent" locator1="ActionLog#PAGE_TITLE" />
+			<condition function="IsElementPresent" locator1="ActionLog#PAGE_TITLE" />
 			<then>
 				<execute macro="TestUtils#pass">
 					<var name="message" value="Webpage title element was found: PASS" />
@@ -95,7 +95,7 @@
 
 	<command name="WhileLoops" priority="5">
 		<while>
-			<condition function="#isElementNotPresent" locator1="ActionLog#PAGE_TITLE" />
+			<condition function="IsElementNotPresent" locator1="ActionLog#PAGE_TITLE" />
 			<then>
 				<execute macro="TestUtils#fail">
 					<var name="message" value="Element is present and should not go into this while loop: FAIL" />

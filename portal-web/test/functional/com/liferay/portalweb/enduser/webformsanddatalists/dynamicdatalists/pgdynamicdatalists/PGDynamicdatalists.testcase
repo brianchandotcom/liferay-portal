@@ -191,7 +191,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute function="#assertElementNotPresent" locator1="PGDynamicdatalists#ADD_RECORD_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="PGDynamicdatalists#ADD_RECORD_BUTTON" />
 	</command>
 
 	<command name="ConfigureSpreadsheetListPG" priority="5">
@@ -245,7 +245,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute function="#assertElementPresent" locator1="PGDynamicdatalists#SPREADSHEET_CONTAINER" />
+		<execute function="AssertElementPresent" locator1="PGDynamicdatalists#SPREADSHEET_CONTAINER" />
 	</command>
 
 	<command name="DeleteList" priority="5">
@@ -628,7 +628,7 @@
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
-		<execute function="#assertTextEquals" locator1="PGDynamicdatalists#ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinition1Name}" />
+		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinition1Name}" />
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlList2Name}" />
@@ -644,8 +644,8 @@
 			<var name="ddlListName" value="${ddlList2Name}" />
 		</execute>
 
-		<execute function="#selectFrame" locator1="PGDynamicdatalistsConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="#assertChecked" locator1="PGDynamicdatalistsConfiguration#TEMPLATES_EDITABLE_CHECKBOX" />
+		<execute function="SelectFrame" locator1="PGDynamicdatalistsConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="AssertChecked" locator1="PGDynamicdatalistsConfiguration#TEMPLATES_EDITABLE_CHECKBOX" />
 	</command>
 
 	<command name="ViewBooleanFieldPredefinedValue" priority="4">
@@ -1212,8 +1212,8 @@
 
 		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute function="#assertClick" locator1="//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a" value1="${ddlRecordFieldData}" />
-		<execute function="#assertTextEquals" locator1="PGDynamicdatalistsDisplayrecord#FIELD_1" value1="Text ${ddlRecordFieldData}" />
+		<execute function="AssertClick" locator1="//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a" value1="${ddlRecordFieldData}" />
+		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsDisplayrecord#FIELD_1" value1="Text ${ddlRecordFieldData}" />
 	</command>
 
 	<command known-issues="LPS-51615" name="ViewListRecordWithUploadedFreeMarkerDisplayTemplate" priority="5">
@@ -1318,8 +1318,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[1]" value1="Name1" />
-		<execute function="#assertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[2]" value1="Name2" />
+		<execute function="AssertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[1]" value1="Name1" />
+		<execute function="AssertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[2]" value1="Name2" />
 	</command>
 
 	<command known-issues="LPS-51615" name="ViewListRecordWithUploadedVelocityDisplayTemplate" priority="5">
@@ -1424,8 +1424,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[1]" value1="Name1" />
-		<execute function="#assertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[2]" value1="Name2" />
+		<execute function="AssertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[1]" value1="Name1" />
+		<execute function="AssertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[2]" value1="Name2" />
 	</command>
 
 	<command known-issues="LPS-51615" name="ViewListRecordWithVelocityDisplayTemplate" priority="4">
@@ -1552,8 +1552,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="#assertTextPresent" locator1="//div[@class='portlet-body']/form" value1="Name1" />
-		<execute function="#assertTextPresent" locator1="//div[@class='portlet-body']/form" value1="Name2" />
+		<execute function="AssertTextPresent" locator1="//div[@class='portlet-body']/form" value1="Name1" />
+		<execute function="AssertTextPresent" locator1="//div[@class='portlet-body']/form" value1="Name2" />
 	</command>
 
 	<command name="ViewNumberFieldPredefinedValue" priority="4">

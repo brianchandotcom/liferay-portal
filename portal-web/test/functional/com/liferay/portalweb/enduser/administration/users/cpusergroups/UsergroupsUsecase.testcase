@@ -123,19 +123,19 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute function="#assertClick" locator1="CPUsersandorganizations#SEARCH_ALL_USERS" value1="All Users" />
+		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_ALL_USERS" value1="All Users" />
 
-		<execute function="#type" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_FIELD" value1="${userFirstName}" />
-		<execute function="#assertClick" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_FIELD" value1="${userFirstName}" />
+		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="#click" locator1="CPUsersandorganizationsViewusers#USER_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPUsersandorganizationsViewusers#USER_MENULIST_MANAGE_PAGES" value1="Manage Pages" />
+		<execute function="Click" locator1="CPUsersandorganizationsViewusers#USER_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#USER_MENULIST_MANAGE_PAGES" value1="Manage Pages" />
 
-		<execute function="#assertClick" locator1="CPUsersandorganizationsManagepages#NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
-		<execute function="#click" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_ROOT_ARROW" />
-		<execute function="#assertElementNotPresent" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
+		<execute function="AssertClick" locator1="CPUsersandorganizationsManagepages#NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
+		<execute function="Click" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_ROOT_ARROW" />
+		<execute function="AssertElementNotPresent" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
@@ -155,8 +155,8 @@
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute function="#click" locator1="Home#PAGE_NAVIGATION_BAR" />
-		<execute function="#assertTextEquals" locator1="Home#PAGE_1" value1="${sitePageName}" />
+		<execute function="Click" locator1="Home#PAGE_NAVIGATION_BAR" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_1" value1="${sitePageName}" />
 
 		<execute macro="User#logoutUserPG" />
 
@@ -365,9 +365,9 @@
 		<var name="key_userScreenName" value="usersn3" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitememberships#USER_TABLE_NAME" value1="userfn3 userln3" />
-		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_TABLE_SCREEN_NAME" value1="usersn3" />
-		<execute function="#click" locator1="CPSitememberships#USER_TABLE_ACTIONS" />
-		<execute function="#assertTextEquals" locator1="CPSitememberships#USER_MENULIST_ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
+		<execute function="AssertTextEquals" locator1="CPSitememberships#USER_TABLE_SCREEN_NAME" value1="usersn3" />
+		<execute function="Click" locator1="CPSitememberships#USER_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="CPSitememberships#USER_MENULIST_ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
 
 		<execute macro="User#logoutUserPG" />
 
@@ -514,15 +514,15 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="#assertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
-		<execute function="#assertElementPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
-		<execute function="#assertElementPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute function="#assertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
-		<execute function="#assertElementNotPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
-		<execute function="#assertElementNotPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
 
 		<execute macro="User#logoutPG" />
 
@@ -533,15 +533,15 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="#assertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
-		<execute function="#assertElementNotPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
-		<execute function="#assertElementNotPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute function="#assertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
-		<execute function="#assertElementNotPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
-		<execute function="#assertElementNotPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
 
 		<execute macro="User#logoutPG" />
 
@@ -568,15 +568,15 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="#assertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
-		<execute function="#assertElementPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
-		<execute function="#assertElementPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute function="#assertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
-		<execute function="#assertElementNotPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
-		<execute function="#assertElementNotPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
 
 		<execute macro="User#logoutPG" />
 
@@ -742,8 +742,8 @@
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="#assertTextEquals" locator1="CPUsergroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
-		<execute function="#assertElementNotPresent" locator1="CPUsergroups#USER_GROUP_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="CPUsergroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute function="AssertElementNotPresent" locator1="CPUsergroups#USER_GROUP_TABLE_ACTIONS" />
 
 		<execute macro="User#logoutUserPG" />
 
@@ -777,7 +777,7 @@
 
 		<var name="key_roleName" value="Roles Siterole Name" />
 
-		<execute function="#selectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
-		<execute function="#assertTextEquals" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME" value1="Roles Siterole Name" />
+		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
+		<execute function="AssertTextEquals" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME" value1="Roles Siterole Name" />
 	</command>
 </definition>

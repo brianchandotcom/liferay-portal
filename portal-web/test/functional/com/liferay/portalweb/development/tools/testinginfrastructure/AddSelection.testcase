@@ -9,16 +9,16 @@
 	<command name="AddSelection" priority="5">
 		<echo message="Test addSelection: select multiple items" />
 
-		<execute function="#selectFrame" locator1="//iframe[@id='iframeResult']" />
+		<execute function="SelectFrame" locator1="//iframe[@id='iframeResult']" />
 
-		<execute function="#assertElementPresent" locator1="//select" />
+		<execute function="AssertElementPresent" locator1="//select" />
 
-		<execute function="#addSelection" locator1="//select" value1="Volvo" />
-		<execute function="#addSelection" locator1="//select" value1="Saab" />
-		<execute function="#addSelection" locator1="//select" value1="Audi" />
+		<execute function="AddSelection" locator1="//select" value1="Volvo" />
+		<execute function="AddSelection" locator1="//select" value1="Saab" />
+		<execute function="AddSelection" locator1="//select" value1="Audi" />
 
-		<execute function="#assertSelectedLabel" locator1="//select" value1="Volvo" />
-		<execute function="#assertSelectedLabel" locator1="//select" value1="Saab" />
-		<execute function="#assertSelectedLabel" locator1="//select" value1="Audi" />
+		<execute function="AssertSelectedLabel" locator1="//select" value1="Volvo" />
+		<execute function="AssertSelectedLabel" locator1="//select" value1="Saab" />
+		<execute function="AssertSelectedLabel" locator1="//select" value1="Audi" />
 	</command>
 </definition>

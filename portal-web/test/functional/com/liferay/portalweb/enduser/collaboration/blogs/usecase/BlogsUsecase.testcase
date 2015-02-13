@@ -201,9 +201,9 @@
 			<var name="userFullName" value="Test Test" />
 		</execute>
 
-		<execute function="#assertClick" locator1="//div[@class='lfr-discussion-message']/a" value1="Read More" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="Blogs Entry2 Title" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="Blogs Entry2 Content" />
+		<execute function="AssertClick" locator1="//div[@class='lfr-discussion-message']/a" value1="Read More" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="Blogs Entry2 Title" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="Blogs Entry2 Content" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Instances" />
@@ -240,9 +240,9 @@
 			<var name="entryTitle" value="Blogs Entry3 Title" />
 		</execute>
 
-		<execute function="#assertClick" locator1="PGBlogs#ENTRY_COMMENT_1" value1="0 Comments" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="Blogs Entry3 Title" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="Blogs Entry3 Content" />
+		<execute function="AssertClick" locator1="PGBlogs#ENTRY_COMMENT_1" value1="0 Comments" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="Blogs Entry3 Title" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="Blogs Entry3 Content" />
 		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsEntry#COMMENTS_TRACKBACK_URL" value1="http://www.able.com:8080/blogs-page/-/blogs/trackback/blogs-entry3-title" />
 
 		<execute macro="Page#gotoPG">
@@ -261,8 +261,8 @@
 
 		<var name="key_entryTitle" value="Blogs Entry4 Title" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="Blogs Entry4 Title" />
-		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_CONTENT" value1="Blogs Entry4 Content" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="Blogs Entry4 Title" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_CONTENT" value1="Blogs Entry4 Content" />
 
 		<execute macro="BlogsEntry#gotoPG">
 			<var name="entryContent" value="Blogs Entry3 Content" />
@@ -277,9 +277,9 @@
 		</execute>
 
 		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsEntry#COMMENTS_TRACKBACK_URL" value1="http://www.able.com:8080/blogs-page/-/blogs/trackback/blogs-entry3-title" />
-		<execute function="#assertClick" locator1="//div[@class='lfr-discussion-message']/a" value1="Read More" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="Blogs Entry4 Title" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="Blogs Entry4 Content" />
+		<execute function="AssertClick" locator1="//div[@class='lfr-discussion-message']/a" value1="Read More" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="Blogs Entry4 Title" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="Blogs Entry4 Content" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -297,9 +297,9 @@
 			<var name="entryTitle" value="Blogs Entry5 Title" />
 		</execute>
 
-		<execute function="#assertClick" locator1="PGBlogs#ENTRY_COMMENT_1" value1="0 Comments" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="Blogs Entry5 Title" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="Blogs Entry5 Content" />
+		<execute function="AssertClick" locator1="PGBlogs#ENTRY_COMMENT_1" value1="0 Comments" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="Blogs Entry5 Title" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="Blogs Entry5 Content" />
 		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsEntry#COMMENTS_TRACKBACK_URL" value1="http://${ipAddress}:8080/web/guest/blogs-page/-/blogs/trackback/blogs-entry5-title" />
 
 		<execute macro="Page#gotoPG">
@@ -318,8 +318,8 @@
 
 		<var name="key_entryTitle" value="Blogs Entry6 Title" />
 
-		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="Blogs Entry6 Title" />
-		<execute function="#assertTextEquals" locator1="PGBlogs#ENTRY_CONTENT" value1="Blogs Entry6 Content" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="Blogs Entry6 Title" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_CONTENT" value1="Blogs Entry6 Content" />
 
 		<execute macro="BlogsEntry#gotoPG">
 			<var name="entryContent" value="Blogs Entry5 Content" />
@@ -334,9 +334,9 @@
 		</execute>
 
 		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsEntry#COMMENTS_TRACKBACK_URL" value1="http://${ipAddress}:8080/web/guest/blogs-page/-/blogs/trackback/blogs-entry5-title" />
-		<execute function="#assertClick" locator1="//div[@class='lfr-discussion-message']/a" value1="Read More" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="Blogs Entry6 Title" />
-		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="Blogs Entry6 Content" />
+		<execute function="AssertClick" locator1="//div[@class='lfr-discussion-message']/a" value1="Read More" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="Blogs Entry6 Title" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="Blogs Entry6 Content" />
 
 		<execute macro="User#logoutPG" />
 
@@ -900,7 +900,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute function="#pause" locator1="120000" />
+		<execute function="Pause" locator1="120000" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName2}" />

@@ -194,7 +194,7 @@
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
-		<execute function="#assertElementNotPresent" locator1="SOUserBar#USER_BAR" />
+		<execute function="AssertElementNotPresent" locator1="SOUserBar#USER_BAR" />
 
 		<execute macro="SOConfigurations#assignUserRoleCP">
 			<var name="userScreenName" value="${adminScreenName}" />
@@ -203,7 +203,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#open" locator1="http://localhost:8080" />
+		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
 	<command name="AssignSORoleUserGroup" priority="3">
@@ -316,10 +316,10 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrameTop" />
 		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
-		<execute function="#assertElementNotPresent" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
-		<execute function="#sikuliAssertElementPresent" locator1="SOUserBar#SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_NOT_PRESENT_PNG" />
+		<execute function="AssertElementNotPresent" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
+		<execute function="SikuliAssertElementPresent" locator1="SOUserBar#SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_NOT_PRESENT_PNG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -339,9 +339,9 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrameTop" />
 		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
-		<execute function="#sikuliAssertElementPresent" locator1="SOUserBar#SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_PRESENT_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="SOUserBar#SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_PRESENT_PNG" />
 	</command>
 
 	<command name="EnableAndDisableSOSiteTypes" priority="5">
@@ -450,10 +450,10 @@
 			<var name="siteTypeList" value="${siteType1},${siteType2},${siteType3},${siteType4}" />
 		</execute>
 
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrameTop" />
 		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
-		<execute function="#assertElementNotPresent" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
-		<execute function="#sikuliAssertElementPresent" locator1="SOUserBar#SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_NOT_PRESENT_PNG" />
+		<execute function="AssertElementNotPresent" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
+		<execute function="SikuliAssertElementPresent" locator1="SOUserBar#SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_NOT_PRESENT_PNG" />
 
 		<execute macro="SOConfigurations#enableSOSiteTypeCP">
 			<var name="siteTypeList" value="${siteType1},${siteType2},${siteType3},${siteType4}" />

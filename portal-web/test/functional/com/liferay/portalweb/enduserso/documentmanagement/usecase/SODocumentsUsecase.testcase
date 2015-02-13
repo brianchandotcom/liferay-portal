@@ -335,23 +335,23 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName1}" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentAuthor" value="${userName1}" />
@@ -366,15 +366,15 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
@@ -387,23 +387,23 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName2}" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentAuthor" value="${userName2}" />
@@ -418,15 +418,15 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
@@ -439,23 +439,23 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName3}" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentAuthor" value="${userName3}" />
@@ -471,15 +471,15 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress4}" />
@@ -492,23 +492,23 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName4}" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentAuthor" value="${userName4}" />
@@ -524,15 +524,15 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -545,15 +545,15 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents" />
@@ -561,15 +561,15 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents" />
@@ -577,15 +577,15 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageAccess" value="Private" />
@@ -594,15 +594,15 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageAccess" value="Private" />
@@ -611,14 +611,14 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 	</command>
 </definition>

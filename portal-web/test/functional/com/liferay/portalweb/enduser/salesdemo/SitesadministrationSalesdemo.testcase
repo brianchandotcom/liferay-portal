@@ -119,19 +119,19 @@
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute function="#assertClick" locator1="CPSitepages#SITE_PAGES_LINK" value1="Site Pages" />
+		<execute function="AssertClick" locator1="CPSitepages#SITE_PAGES_LINK" value1="Site Pages" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute function="#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="OpenSocial Gadget" />
 		</execute>
 
-		<execute function="#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Page#addPG">
 			<var name="defaultURL" value="false" />
@@ -144,7 +144,7 @@
 			<var name="portletName" value="Vimeo" />
 		</execute>
 
-		<execute function="#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Vimeo" />
@@ -155,7 +155,7 @@
 			<var name="vimeoURL" value="http://vimeo.com/45677716" />
 		</execute>
 
-		<execute function="#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Vimeo#view" />
 
@@ -186,7 +186,7 @@
 			<var name="opensocialGadgetURL" value="http://www.labpixies.com/campaigns/todo/todo.xml" />
 		</execute>
 
-		<execute function="#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="To-Do List" />

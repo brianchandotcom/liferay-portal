@@ -40,15 +40,15 @@
 	</tear-down>
 
 	<command name="AssertLoginURLRedirectsToDashboard" priority="4">
-		<execute function="#open" locator1="http://localhost:8080/login" />
-		<execute function="#assertLocation" value1="http://localhost:8080/user/test/so/dashboard" />
+		<execute function="Open" locator1="http://localhost:8080/login" />
+		<execute function="AssertLocation" value1="http://localhost:8080/user/test/so/dashboard" />
 
-		<execute function="#assertTextEquals" locator1="SODashboard#NAVIGATION_DASHBOARD" value1="Dashboard" />
-		<execute function="#assertTextEquals" locator1="SODashboard#NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
-		<execute function="#assertTextEquals" locator1="SODashboard#NAVIGATION_MICROBLOGS" value1="Microblogs" />
-		<execute function="#assertTextEquals" locator1="SODashboard#NAVIGATION_MESSAGES" value1="Messages" />
-		<execute function="#assertTextEquals" locator1="SODashboard#NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
-		<execute function="#assertTextEquals" locator1="SODashboard#NAVIGATION_TASKS" value1="Tasks" />
+		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_DASHBOARD" value1="Dashboard" />
+		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
+		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_MICROBLOGS" value1="Microblogs" />
+		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_MESSAGES" value1="Messages" />
+		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
+		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_TASKS" value1="Tasks" />
 	</command>
 
 	<command name="AssertPageTemplatePreviewWithSOUserBar" priority="4">
@@ -65,14 +65,14 @@
 
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
-		<execute function="#assertClick" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
-		<execute function="#click" locator1="CPPagetemplatesEdit#OPEN_PAGE_TEMPLATE" />
+		<execute function="AssertClick" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute function="Click" locator1="CPPagetemplatesEdit#OPEN_PAGE_TEMPLATE" />
 
 		<var name="key_pageTitle" value="${pageTemplateName} - Liferay" />
 
-		<execute function="#selectWindow" locator1="SOPage#PAGE_TITLE" />
+		<execute function="SelectWindow" locator1="SOPage#PAGE_TITLE" />
 
-		<execute function="#assertVisible" locator1="SOUserBar#USER_BAR" />
+		<execute function="AssertVisible" locator1="SOUserBar#USER_BAR" />
 
 		<var name="key_pageTitle" value="${pageTemplateName} - Liferay" />
 
@@ -89,26 +89,26 @@
 
 		<var name="key_pageTemplateName" value="${pageTemplateName} Edit" />
 
-		<execute function="#assertClick" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName} Edit" />
-		<execute function="#click" locator1="CPPagetemplatesEdit#OPEN_PAGE_TEMPLATE" />
+		<execute function="AssertClick" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName} Edit" />
+		<execute function="Click" locator1="CPPagetemplatesEdit#OPEN_PAGE_TEMPLATE" />
 
 		<var name="key_pageTitle" value="${pageTemplateName} Edit - Liferay" />
 
-		<execute function="#selectWindow" locator1="SOPage#PAGE_TITLE" />
+		<execute function="SelectWindow" locator1="SOPage#PAGE_TITLE" />
 
-		<execute function="#assertVisible" locator1="SOUserBar#USER_BAR" />
+		<execute function="AssertVisible" locator1="SOUserBar#USER_BAR" />
 
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
 
-		<execute function="#assertElementPresent" locator1="DockbarAddpanelcontent#NAVIGATION_CONTENT" />
+		<execute function="AssertElementPresent" locator1="DockbarAddpanelcontent#NAVIGATION_CONTENT" />
 
 		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
 
-		<execute function="#assertElementPresent" locator1="DockbarEditpanel#DETAILS_PANEL_TOGGLE" />
+		<execute function="AssertElementPresent" locator1="DockbarEditpanel#DETAILS_PANEL_TOGGLE" />
 
 		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#PREVIEW" />
 
-		<execute function="#assertElementPresent" locator1="DockbarPreviewpanel#PREVIEW_AUTOSIZE" />
+		<execute function="AssertElementPresent" locator1="DockbarPreviewpanel#PREVIEW_AUTOSIZE" />
 
 		<var name="key_pageTitle" value="${pageTemplateName} Edit - Liferay" />
 
@@ -258,7 +258,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute function="AssertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -273,8 +273,8 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
-		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="AssertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
+		<execute function="AssertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryViewableByEveryoneTag">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
@@ -364,12 +364,12 @@
 
 		<var name="key_messageBody" value="${messageReplyBody}" />
 
-		<execute function="#assertElementPresent" locator1="SOMessages#MESSAGE_UNREAD" />
-		<execute function="#check" locator1="SOMessages#MESSAGE_CHECKBOX" />
-		<execute function="#assertClickNoError" locator1="SOMessages#MARK_AS_READ_BUTTON" value1="Mark as Read" />
-		<execute function="#confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to mark the selected messages as read?" />
-		<execute function="#pause" locator1="1000" />
-		<execute function="#assertElementNotPresent" locator1="SOMessages#MESSAGE_UNREAD" />
+		<execute function="AssertElementPresent" locator1="SOMessages#MESSAGE_UNREAD" />
+		<execute function="Check" locator1="SOMessages#MESSAGE_CHECKBOX" />
+		<execute function="AssertClickNoError" locator1="SOMessages#MARK_AS_READ_BUTTON" value1="Mark as Read" />
+		<execute function="Confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to mark the selected messages as read?" />
+		<execute function="Pause" locator1="1000" />
+		<execute function="AssertElementNotPresent" locator1="SOMessages#MESSAGE_UNREAD" />
 
 		<execute macro="SOMessages#viewMessageNotification">
 			<var name="messageBody" value="${messageReplyBody}" />
@@ -381,10 +381,10 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute function="#check" locator1="SOMessages#MESSAGE_CHECKBOX" />
-		<execute function="#assertClickNoError" locator1="SOMessages#DELETE_BUTTON" value1="Delete" />
-		<execute function="#confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
-		<execute function="#assertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
+		<execute function="Check" locator1="SOMessages#MESSAGE_CHECKBOX" />
+		<execute function="AssertClickNoError" locator1="SOMessages#DELETE_BUTTON" value1="Delete" />
+		<execute function="Confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
+		<execute function="AssertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="My Documents" />
@@ -401,7 +401,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_HOME" value1="Home" />
+		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_HOME" value1="Home" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
@@ -424,7 +424,7 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
+		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
@@ -559,7 +559,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute function="AssertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -574,16 +574,16 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${dmFolderName}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderDescription}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentFile}" />
-		<execute function="#assertTextNotPresent" value1="${taskDescription1}" />
-		<execute function="#assertTextNotPresent" value1="${taskDescription2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderDescription}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentDescription}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentFile}" />
+		<execute function="AssertTextNotPresent" value1="${taskDescription1}" />
+		<execute function="AssertTextNotPresent" value1="${taskDescription2}" />
 
-		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
-		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="AssertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
+		<execute function="AssertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
@@ -592,9 +592,9 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
-		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
+		<execute function="AssertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute function="AssertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="AssertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -609,15 +609,15 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${dmFolderName}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderDescription}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentFile}" />
-		<execute function="#assertTextNotPresent" value1="${taskDescription1}" />
-		<execute function="#assertTextNotPresent" value1="${taskDescription2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderDescription}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentDescription}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentFile}" />
+		<execute function="AssertTextNotPresent" value1="${taskDescription1}" />
+		<execute function="AssertTextNotPresent" value1="${taskDescription2}" />
 
-		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
+		<execute function="AssertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -626,7 +626,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_ME" value1="Me" />
+		<execute function="AssertClick" locator1="SOActivities#NAVIGATION_ME" value1="Me" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
@@ -643,13 +643,13 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${dmFolderName}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderDescription}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentFile}" />
-		<execute function="#assertTextNotPresent" value1="${taskDescription1}" />
-		<execute function="#assertTextNotPresent" value1="${taskDescription2}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderDescription}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentDescription}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentFile}" />
+		<execute function="AssertTextNotPresent" value1="${taskDescription1}" />
+		<execute function="AssertTextNotPresent" value1="${taskDescription2}" />
 
 		<execute macro="SOContactsCenter#disconnectFromConnection">
 			<var name="userEmailAddress" value="${userEmailAddress1}" />
@@ -671,10 +671,10 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
-		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
-		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="AssertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute function="AssertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="AssertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
+		<execute function="AssertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
@@ -683,32 +683,32 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
-		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
-		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="AssertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute function="AssertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="AssertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
+		<execute function="AssertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 	</command>
 
 	<command name="SetHomeURL" priority="4">
-		<execute function="#open" locator1="http://localhost:8080/" />
-		<execute function="#assertLocation" value1="http://localhost:8080/" />
+		<execute function="Open" locator1="http://localhost:8080/" />
+		<execute function="AssertLocation" value1="http://localhost:8080/" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />
 		</execute>
 
-		<execute function="#type" locator1="CPPortalsettings#NAVIGATION_HOME_URL_FIELD" value1="/user" />
-		<execute function="#assertClick" locator1="CPPortalsettings#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="CPPortalsettings#NAVIGATION_HOME_URL_FIELD" value1="/user" />
+		<execute function="AssertClick" locator1="CPPortalsettings#SAVE_BUTTON" value1="Save" />
 
-		<execute function="#open" locator1="http://localhost:8080/" />
-		<execute function="#assertLocation" value1="http://localhost:8080/user/test/so/dashboard" />
+		<execute function="Open" locator1="http://localhost:8080/" />
+		<execute function="AssertLocation" value1="http://localhost:8080/user/test/so/dashboard" />
 
-		<execute function="#assertTextEquals" locator1="SODashboard#NAVIGATION_DASHBOARD" value1="Dashboard" />
-		<execute function="#assertTextEquals" locator1="SODashboard#NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
-		<execute function="#assertTextEquals" locator1="SODashboard#NAVIGATION_MICROBLOGS" value1="Microblogs" />
-		<execute function="#assertTextEquals" locator1="SODashboard#NAVIGATION_MESSAGES" value1="Messages" />
-		<execute function="#assertTextEquals" locator1="SODashboard#NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
-		<execute function="#assertTextEquals" locator1="SODashboard#NAVIGATION_TASKS" value1="Tasks" />
+		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_DASHBOARD" value1="Dashboard" />
+		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
+		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_MICROBLOGS" value1="Microblogs" />
+		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_MESSAGES" value1="Messages" />
+		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
+		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_TASKS" value1="Tasks" />
 	</command>
 
 	<command name="SiteDemo" priority="5">
@@ -855,7 +855,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_HOME" value1="Home" />
+		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_HOME" value1="Home" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
@@ -880,7 +880,7 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
+		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
@@ -1129,7 +1129,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${eventTitle1}" />
+		<execute function="AssertTextNotPresent" value1="${eventTitle1}" />
 
 		<execute macro="SOEvents#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${eventTitle2}" />
@@ -1141,7 +1141,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${eventTitle2}" />
+		<execute function="AssertTextNotPresent" value1="${eventTitle2}" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Calendar Test Page" />
@@ -1168,7 +1168,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute function="#assertTextNotPresent" value1="${eventTitle3}" />
+		<execute function="AssertTextNotPresent" value1="${eventTitle3}" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName1}" />
@@ -1278,31 +1278,31 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="#assertTextEquals" locator1="SOSite#SITE_NAME" value1="${siteName1}" />
-		<execute function="#assertTextEquals" locator1="SOSite#JOIN_SITE_BUTTON" value1="Join Site" />
-		<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_PORTLET_TITLE" />
-		<execute function="#assertElementPresent" locator1="SOActivities#ACTIVITIES_PORTLET_TITLE" />
-		<execute function="#assertElementPresent" locator1="SOWelcome#WELCOME_PORTLET_TITLE" />
-		<execute function="#assertElementPresent" locator1="SOBookmarks#BOOKMARKS_PORTLET_TITLE" />
-		<execute function="#assertElementPresent" locator1="SORss#RSS_PORTLET_TITLE" />
-		<execute function="#assertElementPresent" locator1="SORecentDownloads#RECENT_DOWNLOADS_PORTLET_TITLE" />
-		<execute function="#assertElementPresent" locator1="SOEvents#EVENTS_DISPLAY_PORTLET_TITLE" />
-		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_HOME" value1="Home" />
-		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_CALENDAR" value1="Calendar" />
-		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_DOCUMENTS" value1="Documents" />
-		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_FORUMS" value1="Forums" />
-		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_BLOGS" value1="Blogs" />
-		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_WIKI" value1="Wiki" />
-		<execute function="#assertTextEquals" locator1="SOSite#NAVIGATION_MEMBERS" value1="Members" />
+		<execute function="AssertTextEquals" locator1="SOSite#SITE_NAME" value1="${siteName1}" />
+		<execute function="AssertTextEquals" locator1="SOSite#JOIN_SITE_BUTTON" value1="Join Site" />
+		<execute function="AssertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_PORTLET_TITLE" />
+		<execute function="AssertElementPresent" locator1="SOActivities#ACTIVITIES_PORTLET_TITLE" />
+		<execute function="AssertElementPresent" locator1="SOWelcome#WELCOME_PORTLET_TITLE" />
+		<execute function="AssertElementPresent" locator1="SOBookmarks#BOOKMARKS_PORTLET_TITLE" />
+		<execute function="AssertElementPresent" locator1="SORss#RSS_PORTLET_TITLE" />
+		<execute function="AssertElementPresent" locator1="SORecentDownloads#RECENT_DOWNLOADS_PORTLET_TITLE" />
+		<execute function="AssertElementPresent" locator1="SOEvents#EVENTS_DISPLAY_PORTLET_TITLE" />
+		<execute function="AssertTextEquals" locator1="SOSite#NAVIGATION_HOME" value1="Home" />
+		<execute function="AssertTextEquals" locator1="SOSite#NAVIGATION_CALENDAR" value1="Calendar" />
+		<execute function="AssertTextEquals" locator1="SOSite#NAVIGATION_DOCUMENTS" value1="Documents" />
+		<execute function="AssertTextEquals" locator1="SOSite#NAVIGATION_FORUMS" value1="Forums" />
+		<execute function="AssertTextEquals" locator1="SOSite#NAVIGATION_BLOGS" value1="Blogs" />
+		<execute function="AssertTextEquals" locator1="SOSite#NAVIGATION_WIKI" value1="Wiki" />
+		<execute function="AssertTextEquals" locator1="SOSite#NAVIGATION_MEMBERS" value1="Members" />
 	</command>
 
 	<command name="ViewCaptchaCheckWithSORole" priority="5">
 		<execute macro="User#logoutPG" />
 
-		<execute function="#assertClick" locator1="PGLogin#CREATE_ACCOUNT_LINK" value1="Create Account" />
+		<execute function="AssertClick" locator1="PGLogin#CREATE_ACCOUNT_LINK" value1="Create Account" />
 
-		<execute function="#assertElementPresent" locator1="PGLoginCreateAccount#CAPTCHA_IMAGE" />
-		<execute function="#assertElementPresent" locator1="PGLoginCreateAccount#CAPTCHA_REFRESH" />
-		<execute function="#assertElementPresent" locator1="PGLoginCreateAccount#TEXT_VERIFICATION_FIELD" />
+		<execute function="AssertElementPresent" locator1="PGLoginCreateAccount#CAPTCHA_IMAGE" />
+		<execute function="AssertElementPresent" locator1="PGLoginCreateAccount#CAPTCHA_REFRESH" />
+		<execute function="AssertElementPresent" locator1="PGLoginCreateAccount#TEXT_VERIFICATION_FIELD" />
 	</command>
 </definition>

@@ -2715,27 +2715,27 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#click" locator1="SOActivities#NAVIGATION_ALL" />
-		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
-		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName}" />
-		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl}" />
-		<execute function="#assertTextNotPresent" value1="${categoryName}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentFile}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle}" />
-		<execute function="#assertTextNotPresent" value1="${eventDescription}" />
-		<execute function="#assertTextNotPresent" value1="${eventTitle}" />
-		<execute function="#assertTextNotPresent" value1="${threadBody}" />
-		<execute function="#assertTextNotPresent" value1="${threadSubject}" />
-		<execute function="#assertTextNotPresent" value1="${wikiPageContent}" />
+		<execute function="Click" locator1="SOActivities#NAVIGATION_ALL" />
+		<execute function="AssertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="AssertTextNotPresent" value1="${bookmarksEntryDescription}" />
+		<execute function="AssertTextNotPresent" value1="${bookmarksEntryName}" />
+		<execute function="AssertTextNotPresent" value1="${bookmarksEntryUrl}" />
+		<execute function="AssertTextNotPresent" value1="${categoryName}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentDescription}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentFile}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle}" />
+		<execute function="AssertTextNotPresent" value1="${eventDescription}" />
+		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
+		<execute function="AssertTextNotPresent" value1="${threadBody}" />
+		<execute function="AssertTextNotPresent" value1="${threadSubject}" />
+		<execute function="AssertTextNotPresent" value1="${wikiPageContent}" />
 
-		<execute function="#assertClick" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
-		<execute function="#assertTextNotPresent" value1="${announcementEntryContent}" />
-		<execute function="#assertTextNotPresent" value1="${announcementEntryTitle}" />
+		<execute function="AssertClick" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
+		<execute function="AssertTextNotPresent" value1="${announcementEntryContent}" />
+		<execute function="AssertTextNotPresent" value1="${announcementEntryTitle}" />
 
 		<execute macro="Search#searchNoPG">
 			<var name="searchAssetSummary" value="${entryTitle}" />
@@ -3111,27 +3111,27 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#click" locator1="SOActivities#NAVIGATION_ALL" />
-		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
-		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName}" />
-		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl}" />
-		<execute function="#assertTextNotPresent" value1="${categoryName}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentFile}" />
-		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle}" />
-		<execute function="#assertTextNotPresent" value1="${dmFolderName}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle}" />
-		<execute function="#assertTextNotPresent" value1="${eventDescription}" />
-		<execute function="#assertTextNotPresent" value1="${eventTitle}" />
-		<execute function="#assertTextNotPresent" value1="${threadBody}" />
-		<execute function="#assertTextNotPresent" value1="${threadSubject}" />
-		<execute function="#assertTextNotPresent" value1="${wikiPageContent}" />
+		<execute function="Click" locator1="SOActivities#NAVIGATION_ALL" />
+		<execute function="AssertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
+		<execute function="AssertTextNotPresent" value1="${bookmarksEntryDescription}" />
+		<execute function="AssertTextNotPresent" value1="${bookmarksEntryName}" />
+		<execute function="AssertTextNotPresent" value1="${bookmarksEntryUrl}" />
+		<execute function="AssertTextNotPresent" value1="${categoryName}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentDescription}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentFile}" />
+		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle}" />
+		<execute function="AssertTextNotPresent" value1="${dmFolderName}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle}" />
+		<execute function="AssertTextNotPresent" value1="${eventDescription}" />
+		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
+		<execute function="AssertTextNotPresent" value1="${threadBody}" />
+		<execute function="AssertTextNotPresent" value1="${threadSubject}" />
+		<execute function="AssertTextNotPresent" value1="${wikiPageContent}" />
 
-		<execute function="#assertClick" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
-		<execute function="#assertTextNotPresent" value1="${announcementEntryContent}" />
-		<execute function="#assertTextNotPresent" value1="${announcementEntryTitle}" />
+		<execute function="AssertClick" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
+		<execute function="AssertTextNotPresent" value1="${announcementEntryContent}" />
+		<execute function="AssertTextNotPresent" value1="${announcementEntryTitle}" />
 
 		<execute macro="Search#searchNoPG">
 			<var name="searchAssetSummary" value="${entryTitle}" />

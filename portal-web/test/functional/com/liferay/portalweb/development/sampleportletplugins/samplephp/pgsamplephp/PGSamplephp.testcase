@@ -35,6 +35,6 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute function="#assertConsoleTextNotPresent" value1="File &quot;/index.php&quot; not found" />
+		<execute function="AssertConsoleTextNotPresent" value1="File &quot;/index.php&quot; not found" />
 	</command>
 </definition>

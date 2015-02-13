@@ -54,7 +54,7 @@
 
 		<execute macro="Page#gotoCP" />
 
-		<execute function="#assertElementNotPresent" locator1="CPSites#ADD" />
+		<execute function="AssertElementNotPresent" locator1="CPSites#ADD" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
@@ -80,7 +80,7 @@
 
 		<execute macro="Page#gotoCP" />
 
-		<execute function="#assertElementNotPresent" locator1="CPSites#ADD" />
+		<execute function="AssertElementNotPresent" locator1="CPSites#ADD" />
 	</command>
 
 	<command name="SearchPermissions" priority="5">
@@ -214,27 +214,27 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="#type" locator1="CPSites#BASIC_SEARCH_FIELD" value1="Parent" />
-		<execute function="#assertClick" locator1="CPSites#BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute function="#assertTextEquals" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
-		<execute function="#assertTextNotPresent" value1="${childSiteName}" />
+		<execute function="Type" locator1="CPSites#BASIC_SEARCH_FIELD" value1="Parent" />
+		<execute function="AssertClick" locator1="CPSites#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertTextNotPresent" value1="${childSiteName}" />
 
 		<var name="key_siteName" value="${childSiteName}" />
 
-		<execute function="#type" locator1="CPSites#BASIC_SEARCH_FIELD" value1="Child" />
-		<execute function="#assertClick" locator1="CPSites#BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute function="#assertTextEquals" locator1="CPSites#SITE_TABLE_NAME" value1="${childSiteName}" />
-		<execute function="#assertTextNotPresent" value1="${siteName}" />
-		<execute function="#type" locator1="CPSites#BASIC_SEARCH_FIELD" value1="Site" />
-		<execute function="#assertClick" locator1="CPSites#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="CPSites#BASIC_SEARCH_FIELD" value1="Child" />
+		<execute function="AssertClick" locator1="CPSites#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="CPSites#SITE_TABLE_NAME" value1="${childSiteName}" />
+		<execute function="AssertTextNotPresent" value1="${siteName}" />
+		<execute function="Type" locator1="CPSites#BASIC_SEARCH_FIELD" value1="Site" />
+		<execute function="AssertClick" locator1="CPSites#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="#assertTextEquals" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
 
 		<var name="key_siteName" value="${childSiteName}" />
 
-		<execute function="#assertTextEquals" locator1="CPSites#SITE_TABLE_NAME" value1="${childSiteName}" />
+		<execute function="AssertTextEquals" locator1="CPSites#SITE_TABLE_NAME" value1="${childSiteName}" />
 
 		<execute macro="Site#viewSiteAdminPermissionsCP">
 			<var name="siteName" value="${siteName}" />
@@ -347,33 +347,33 @@
 		<execute macro="Page#openURL" />
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
-		<execute function="#assertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="#click" locator1="CPSites#SITE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPSites#SITE_MENULIST_ADD_CHILD_SITE" value1="Add Child Site" />
+		<execute function="Click" locator1="CPSites#SITE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPSites#SITE_MENULIST_ADD_CHILD_SITE" value1="Add Child Site" />
 
-		<execute function="#type" locator1="CPSitesAdd#DETAILS_NAME" value1="${childSiteName2}" />
-		<execute function="#click" locator1="CPSitesAdd#MENU_SAVE" value1="Save" />
+		<execute function="Type" locator1="CPSitesAdd#DETAILS_NAME" value1="${childSiteName2}" />
+		<execute function="Click" locator1="CPSitesAdd#MENU_SAVE" value1="Save" />
 
-		<execute function="#assertClick" locator1="CPSitesEdit#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="CPSitesEdit#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="CPSitesEdit#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="CPSitesEdit#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute macro="Page#openURL" />
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
-		<execute function="#assertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<var name="key_siteName" value="${childSiteName1}" />
 
-		<execute function="#click" locator1="CPSites#SITE_TABLE_ACTIONS" />
+		<execute function="Click" locator1="CPSites#SITE_TABLE_ACTIONS" />
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="CPSites#SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<var name="key_siteName" value="${childSiteName2}" />
 
-		<execute function="#click" locator1="CPSites#SITE_TABLE_ACTIONS" />
-		<execute function="#assertTextEquals" locator1="CPSites#SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+		<execute function="Click" locator1="CPSites#SITE_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="CPSites#SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition4Key}" />
@@ -386,17 +386,17 @@
 		<execute macro="Page#openURL" />
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
-		<execute function="#assertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<var name="key_siteName" value="${childSiteName1}" />
 
-		<execute function="#click" locator1="CPSites#SITE_TABLE_ACTIONS" />
-		<execute function="#assertTextEquals" locator1="CPSites#SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+		<execute function="Click" locator1="CPSites#SITE_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="CPSites#SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<var name="key_siteName" value="${childSiteName2}" />
 
-		<execute function="#click" locator1="CPSites#SITE_TABLE_ACTIONS" />
-		<execute function="#assertTextEquals" locator1="CPSites#SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+		<execute function="Click" locator1="CPSites#SITE_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="CPSites#SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition4Key}" />
@@ -409,17 +409,17 @@
 		<execute macro="Page#openURL" />
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
-		<execute function="#assertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<var name="key_siteName" value="${childSiteName1}" />
 
-		<execute function="#click" locator1="CPSites#SITE_TABLE_ACTIONS" />
+		<execute function="Click" locator1="CPSites#SITE_TABLE_ACTIONS" />
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="CPSites#SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<var name="key_siteName" value="${childSiteName2}" />
 
-		<execute function="#click" locator1="CPSites#SITE_TABLE_ACTIONS" />
-		<execute function="#assertTextEquals" locator1="CPSites#SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+		<execute function="Click" locator1="CPSites#SITE_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="CPSites#SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 	</command>
 
 	<command name="ViewSiteManagePagesRegRole" priority="5">
@@ -478,9 +478,9 @@
 		<execute macro="Page#openURL" />
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
-		<execute function="#assertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
-		<execute function="#assertTextEquals" locator1="CPSites#INFO_MESSAGE" value1="No sites were found." />
+		<execute function="AssertTextEquals" locator1="CPSites#INFO_MESSAGE" value1="No sites were found." />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey2}" />
@@ -501,17 +501,17 @@
 		<execute macro="Page#openURL" />
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
-		<execute function="#assertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<var name="key_siteName" value="Liferay" />
 
-		<execute function="#click" locator1="CPSites#SITE_TABLE_ACTIONS" />
-		<execute function="#assertTextEquals" locator1="CPSites#SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+		<execute function="Click" locator1="CPSites#SITE_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="CPSites#SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="#click" locator1="CPSites#SITE_TABLE_ACTIONS" />
-		<execute function="#assertTextEquals" locator1="CPSites#SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+		<execute function="Click" locator1="CPSites#SITE_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="CPSites#SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey2}" />
@@ -532,8 +532,8 @@
 		<execute macro="Page#openURL" />
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
-		<execute function="#assertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
-		<execute function="#assertTextEquals" locator1="CPSites#INFO_MESSAGE" value1="No sites were found." />
+		<execute function="AssertTextEquals" locator1="CPSites#INFO_MESSAGE" value1="No sites were found." />
 	</command>
 </definition>

@@ -12,7 +12,7 @@
 
 		<var name="key_roleName" value="guest" />
 
-		<execute function="#click" locator1="Permissions#INLINE_PERMISSIONS_VIEW" />
-		<execute function="#assertChecked" locator1="Permissions#INLINE_PERMISSIONS_VIEW" />
+		<execute function="Click" locator1="Permissions#INLINE_PERMISSIONS_VIEW" />
+		<execute function="AssertChecked" locator1="Permissions#INLINE_PERMISSIONS_VIEW" />
 	</command>
 </definition>

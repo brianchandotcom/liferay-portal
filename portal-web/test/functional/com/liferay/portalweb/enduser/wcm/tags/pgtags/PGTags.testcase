@@ -261,7 +261,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Tag#addViaBlogsPG">
 			<var name="entryContent" value="Entry Content" />

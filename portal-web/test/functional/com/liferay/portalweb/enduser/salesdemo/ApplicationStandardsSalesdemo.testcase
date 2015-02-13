@@ -31,11 +31,11 @@
 			<var name="pageName" value="IFrame Page" />
 		</execute>
 
-		<execute function="#pause" locator1="2000" />
+		<execute function="Pause" locator1="2000" />
 
 		<take-screenshot />
 
-		<execute function="#sikuliAssertElementPresent" locator1="PGIFrame#SCREENSHOTS_LIFERAY_PRODUCTS_LOGO_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="PGIFrame#SCREENSHOTS_LIFERAY_PRODUCTS_LOGO_PNG" />
 	</command>
 
 	<command known-issues="sales-demo" name="WebProxyDemo" priority="5">
@@ -60,10 +60,10 @@
 			<var name="pageName" value="Web Proxy Page" />
 		</execute>
 
-		<execute function="#assertElementPresent" locator1="//div[@title='Google Images']" />
+		<execute function="AssertElementPresent" locator1="//div[@title='Google Images']" />
 
 		<take-screenshot />
 
-		<execute function="#sikuliAssertElementPresent" locator1="PGWebProxy#SCREENSHOTS_GOOGLE_IMAGES_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="PGWebProxy#SCREENSHOTS_GOOGLE_IMAGES_PNG" />
 	</command>
 </definition>

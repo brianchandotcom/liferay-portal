@@ -43,8 +43,8 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="#assertElementNotPresent" locator1="SODashboard#PORTLET_TITLE" />
-		<execute function="#assertTextNotPresent" value1="${portletName}" />
+		<execute function="AssertElementNotPresent" locator1="SODashboard#PORTLET_TITLE" />
+		<execute function="AssertTextNotPresent" value1="${portletName}" />
 	</command>
 
 	<command name="ResetChangesViaDashboardSOUser" priority="4">
@@ -85,8 +85,8 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="#assertElementNotPresent" locator1="SODashboard#PORTLET_TITLE" />
-		<execute function="#assertTextNotPresent" value1="${portletName}" />
+		<execute function="AssertElementNotPresent" locator1="SODashboard#PORTLET_TITLE" />
+		<execute function="AssertTextNotPresent" value1="${portletName}" />
 	</command>
 
 	<command name="ResetChangesViaProfile" priority="4">
@@ -107,8 +107,8 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="#assertElementNotPresent" locator1="SODashboard#PORTLET_TITLE" />
-		<execute function="#assertTextNotPresent" value1="${portletName}" />
+		<execute function="AssertElementNotPresent" locator1="SODashboard#PORTLET_TITLE" />
+		<execute function="AssertTextNotPresent" value1="${portletName}" />
 	</command>
 
 	<command name="ResetChangesViaProfileSOUser" priority="4">
@@ -149,8 +149,8 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="#assertElementNotPresent" locator1="SODashboard#PORTLET_TITLE" />
-		<execute function="#assertTextNotPresent" value1="${portletName}" />
+		<execute function="AssertElementNotPresent" locator1="SODashboard#PORTLET_TITLE" />
+		<execute function="AssertTextNotPresent" value1="${portletName}" />
 	</command>
 
 	<command name="ResetChangesViaSite" priority="4">
@@ -190,8 +190,8 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="#assertElementNotPresent" locator1="SOSite#PORTLET_TITLE" />
-		<execute function="#assertTextNotPresent" value1="${portletName}" />
+		<execute function="AssertElementNotPresent" locator1="SOSite#PORTLET_TITLE" />
+		<execute function="AssertTextNotPresent" value1="${portletName}" />
 	</command>
 
 	<command name="ResetChangesViaSiteSOUser" priority="4">
@@ -251,7 +251,7 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="#assertElementNotPresent" locator1="SOSite#PORTLET_TITLE" />
-		<execute function="#assertTextNotPresent" value1="${portletName}" />
+		<execute function="AssertElementNotPresent" locator1="SOSite#PORTLET_TITLE" />
+		<execute function="AssertTextNotPresent" value1="${portletName}" />
 	</command>
 </definition>

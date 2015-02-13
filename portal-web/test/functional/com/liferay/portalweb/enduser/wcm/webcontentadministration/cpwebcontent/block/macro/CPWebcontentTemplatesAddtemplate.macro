@@ -3,7 +3,7 @@
 		<if>
 			<condition function="IsElementNotPresent#isNotVisible" locator1="CPWebcontentTemplatesAddtemplate#DESCRIPTION_FIELD" />
 			<then>
-				<execute function="#click" locator1="CPWebcontentTemplatesAddtemplate#DETAILS" />
+				<execute function="Click" locator1="CPWebcontentTemplatesAddtemplate#DETAILS" />
 			</then>
 		</if>
 	</command>

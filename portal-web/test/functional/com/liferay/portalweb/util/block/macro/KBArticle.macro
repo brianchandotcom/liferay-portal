@@ -2,39 +2,39 @@
 	<command name="addChildPGViaKBAdmin">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#click" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_ADD_CHILD_ARTICLE" value1="Add Child Article" />
+		<execute function="Click" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_ADD_CHILD_ARTICLE" value1="Add Child Article" />
 
-		<execute function="#type" locator1="CPKnowledgebaseadminAddchildarticle#TITLE_FIELD" value1="${kbChildArticleTitle}" />
-		<execute function="#type" locator1="CPKnowledgebaseadminAddchildarticle#CONTENT_FIELD" value1="${kbChildArticleContent}" />
-		<execute function="#assertClick" locator1="CPKnowledgebaseadminAddchildarticle#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="Type" locator1="CPKnowledgebaseadminAddchildarticle#TITLE_FIELD" value1="${kbChildArticleTitle}" />
+		<execute function="Type" locator1="CPKnowledgebaseadminAddchildarticle#CONTENT_FIELD" value1="${kbChildArticleContent}" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddchildarticle#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addChildPGViaKBDisplayPG">
-		<execute function="#click" locator1="PGKnowledgebasedisplay#ARTICLE_ACTIONS_BUTTON" />
-		<execute function="#assertClick" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_ADD_CHILD_ARTICLE" value1="Add Child Article" />
+		<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_ACTIONS_BUTTON" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_ADD_CHILD_ARTICLE" value1="Add Child Article" />
 
-		<execute function="#type" locator1="PGKnowledgebasedisplayAddchildarticle#TITLE_FIELD" value1="${kbArticleTitle}" />
-		<execute function="#type" locator1="PGKnowledgebasedisplayAddchildarticle#CONTENT_FIELD" value1="${kbArticleContent}" />
-		<execute function="#assertClick" locator1="PGKnowledgebasedisplayAddchildarticle#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="Type" locator1="PGKnowledgebasedisplayAddchildarticle#TITLE_FIELD" value1="${kbArticleTitle}" />
+		<execute function="Type" locator1="PGKnowledgebasedisplayAddchildarticle#CONTENT_FIELD" value1="${kbArticleContent}" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplayAddchildarticle#PUBLISH_BUTTON" value1="Publish" />
 	</command>
 
 	<command name="addCP">
 		<if>
 			<isset var="kbTemplateTitle" />
 			<then>
-				<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ADD_BUTTON" value1="Add" />
-				<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ADD_MENULIST_TEMPLATE" value1="${kbTemplateTitle}" />
+				<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ADD_BUTTON" value1="Add" />
+				<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ADD_MENULIST_TEMPLATE" value1="${kbTemplateTitle}" />
 			</then>
 			<else>
-				<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ADD_BUTTON" value1="Add" />
-				<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ADD_MENULIST_ADD_ARTICLE" value1="Add Article" />
+				<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ADD_BUTTON" value1="Add" />
+				<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ADD_MENULIST_ADD_ARTICLE" value1="Add Article" />
 			</else>
 		</if>
 
-		<execute function="#type" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD" value1="${kbArticleTitle}" />
+		<execute function="Type" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD" value1="${kbArticleTitle}" />
 
 		<if>
 			<isset var="kbArticleFriendlyURL" />
@@ -42,21 +42,21 @@
 				<var name="kbArticleTitleFormatted" value="/${kbArticleFriendlyURL?lowercase()}" />
 				<var name="kbArticleTitleFormatted" value="${kbArticleTitleFormatted?replace(' ', '-')}" />
 
-				<execute function="#type" locator1="CPKnowledgebaseadminAddarticle#FRIENDLY_URL_FIELD" value1="${kbArticleTitleFormatted}" />
+				<execute function="Type" locator1="CPKnowledgebaseadminAddarticle#FRIENDLY_URL_FIELD" value1="${kbArticleTitleFormatted}" />
 			</then>
 			<else>
 				<var name="kbArticleTitleFormatted" value="/${kbArticleTitle?lowercase()}" />
 				<var name="kbArticleTitleFormatted" value="${kbArticleTitleFormatted?replace(' ', '-')}" />
 
-				<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminAddarticle#FRIENDLY_URL_FIELD" value1="${kbArticleTitleFormatted}" />
+				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#FRIENDLY_URL_FIELD" value1="${kbArticleTitleFormatted}" />
 			</else>
 		</if>
 
 		<if>
 			<equals arg1="${kbArticleAddViaSource}" arg2="true" />
 			<then>
-				<execute function="#assertClick" locator1="CPKnowledgebaseadminAddarticle#SOURCE_BUTTON" value1="Source" />
-				<execute function="#type" locator1="CPKnowledgebaseadminAddarticle#CONTENT_BODY_SOURCE_ON" value1="${kbArticleContentSource}" />
+				<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#SOURCE_BUTTON" value1="Source" />
+				<execute function="Type" locator1="CPKnowledgebaseadminAddarticle#CONTENT_BODY_SOURCE_ON" value1="${kbArticleContentSource}" />
 			</then>
 			<else>
 				<execute function="Type#typeFrameWaitForCKEditor" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" value1="${kbArticleContent}" />
@@ -67,9 +67,9 @@
 			<isset var="kbArticleRelatedAssetType" />
 			<then>
 				<if>
-					<condition function="#isElementNotPresent" locator1="CPKnowledgebaseadminAddarticle#RELATED_ASSETS_HEADER_EXPANDED" />
+					<condition function="IsElementNotPresent" locator1="CPKnowledgebaseadminAddarticle#RELATED_ASSETS_HEADER_EXPANDED" />
 					<then>
-						<execute function="#click" locator1="CPKnowledgebaseadminAddarticle#RELATED_ASSETS_HEADER_COLLAPSED" />
+						<execute function="Click" locator1="CPKnowledgebaseadminAddarticle#RELATED_ASSETS_HEADER_COLLAPSED" />
 					</then>
 				</if>
 
@@ -83,37 +83,37 @@
 		<if>
 			<isset var="kbArticleSourceURL" />
 			<then>
-				<execute function="#type" locator1="CPKnowledgebaseadminAddarticle#SOURCE_URL_FIELD" value1="${kbArticleSourceURL}" />
+				<execute function="Type" locator1="CPKnowledgebaseadminAddarticle#SOURCE_URL_FIELD" value1="${kbArticleSourceURL}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="kbArticleSection" />
 			<then>
-				<execute function="#addSelection" locator1="CPKnowledgebaseadminAddarticle#SECTIONS_SELECT" value1="${kbArticleSection}" />
+				<execute function="AddSelection" locator1="CPKnowledgebaseadminAddarticle#SECTIONS_SELECT" value1="${kbArticleSection}" />
 			</then>
 		</if>
 
-		<execute function="#assertClick" locator1="CPKnowledgebaseadminAddarticle#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#PUBLISH_BUTTON" value1="Publish" />
 
 		<if>
 			<equals arg1="${kbArticleInvalidTitle}" arg2="true" />
 			<then>
-				<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_1" value1="Your request failed to complete." />
-				<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_2" value1="Please enter a valid title." />
+				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_1" value1="Your request failed to complete." />
+				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_2" value1="Please enter a valid title." />
 			</then>
 			<elseif>
 				<equals arg1="${kbArticleInvalidContent}" arg2="true" />
 				<then>
-					<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_1" value1="Your request failed to complete." />
-					<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_2" value1="Please enter valid content." />
+					<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_1" value1="Your request failed to complete." />
+					<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_2" value1="Please enter valid content." />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${kbArticleDuplicateFriendlyURL}" arg2="true" />
 				<then>
-					<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_1" value1="Your request failed to complete." />
-					<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_2" value1="Please enter a unique friendly URL." />
+					<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_1" value1="Your request failed to complete." />
+					<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_2" value1="Please enter a unique friendly URL." />
 				</then>
 			</elseif>
 			<else>
@@ -123,23 +123,23 @@
 	</command>
 
 	<command name="configureKBArticle">
-		<execute function="#assertClick" locator1="PGKnowledgebasearticle#CONFIGURE_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
+		<execute function="AssertClick" locator1="PGKnowledgebasearticle#CONFIGURE_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
 
-		<execute function="#selectFrame" locator1="PGKnowledgebasearticleConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="#assertClick" locator1="PGKnowledgebasearticleConfiguration#SELECT_BUTTON" value1="Select" />
+		<execute function="SelectFrame" locator1="PGKnowledgebasearticleConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="AssertClick" locator1="PGKnowledgebasearticleConfiguration#SELECT_BUTTON" value1="Select" />
 
-		<execute function="#selectWindow" locator1="title=Knowledge Base Article" />
+		<execute function="SelectWindow" locator1="title=Knowledge Base Article" />
 
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#assertClick" locator1="PGKnowledgebasearticleConfigurationArticle#ARTICLE_TABLE_CHOOSE_BUTTON" value1="Choose" />
-		<execute function="#pause" locator1="5000" />
+		<execute function="AssertClick" locator1="PGKnowledgebasearticleConfigurationArticle#ARTICLE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="Pause" locator1="5000" />
 
-		<execute function="#selectWindow" locator1="title=${pageName} - Liferay" />
-		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#selectFrame" locator1="PGKnowledgebasearticleConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="#assertClick" locator1="PGKnowledgebasearticleConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasearticleConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectWindow" locator1="title=${pageName} - Liferay" />
+		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="SelectFrame" locator1="PGKnowledgebasearticleConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="AssertClick" locator1="PGKnowledgebasearticleConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasearticleConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureKBDisplaySettingsPG">
@@ -147,18 +147,18 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="#selectFrame" locator1="PGKnowledgebasedisplayConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="#assertClick" locator1="PGKnowledgebasedisplayConfiguration#DISPLAY_SETTINGS" value1="Display Settings" />
+		<execute function="SelectFrame" locator1="PGKnowledgebasedisplayConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplayConfiguration#DISPLAY_SETTINGS" value1="Display Settings" />
 
 		<if>
 			<equals arg1="${subscribe}" arg2="true" />
 			<then>
-				<execute function="#check" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#ENABLE_SUBSCRIPTIONS_CHECKBOX" />
+				<execute function="Check" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#ENABLE_SUBSCRIPTIONS_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${subscribe}" arg2="false" />
 				<then>
-					<execute function="#uncheck" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#ENABLE_SUBSCRIPTIONS_CHECKBOX" />
+					<execute function="Uncheck" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#ENABLE_SUBSCRIPTIONS_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
@@ -166,12 +166,12 @@
 		<if>
 			<equals arg1="${history}" arg2="true" />
 			<then>
-				<execute function="#check" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#ENABLE_HISTORY_CHECKBOX" />
+				<execute function="Check" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#ENABLE_HISTORY_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${history}" arg2="false" />
 				<then>
-					<execute function="#uncheck" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#ENABLE_HISTORY_CHECKBOX" />
+					<execute function="Uncheck" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#ENABLE_HISTORY_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
@@ -179,19 +179,19 @@
 		<if>
 			<equals arg1="${print}" arg2="true" />
 			<then>
-				<execute function="#check" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#ENABLE_PRINT_CHECKBOX" />
+				<execute function="Check" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#ENABLE_PRINT_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${print}" arg2="false" />
 				<then>
-					<execute function="#uncheck" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#ENABLE_PRINT_CHECKBOX" />
+					<execute function="Uncheck" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#ENABLE_PRINT_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute function="#assertClick" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureKBSection">
@@ -200,92 +200,92 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="#selectFrame" locator1="PGKnowledgebasesectionConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="#assertChecked" locator1="PGKnowledgebasesectionConfiguration#SHOW_SECTIONS_TITLE_CHECKBOX" />
-		<execute function="#addSelection" locator1="PGKnowledgebasesectionConfiguration#SECTIONS_SELECT" value1="${kbArticleSection}" />
-		<execute function="#assertClick" locator1="PGKnowledgebasesectionConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertClick" locator1="PGKnowledgebasesectionConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrame" locator1="PGKnowledgebasesectionConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="AssertChecked" locator1="PGKnowledgebasesectionConfiguration#SHOW_SECTIONS_TITLE_CHECKBOX" />
+		<execute function="AddSelection" locator1="PGKnowledgebasesectionConfiguration#SECTIONS_SELECT" value1="${kbArticleSection}" />
+		<execute function="AssertClick" locator1="PGKnowledgebasesectionConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="PGKnowledgebasesectionConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="deleteCP">
-		<execute function="#click" locator1="CPKnowledgebaseadmin#ACTIONS_BUTTON" />
-		<execute function="#assertClickNoError" locator1="CPKnowledgebaseadmin#ACTIONS_MENULIST_DELETE" value1="Delete" />
-		<execute function="#confirm" locator1="CPKnowledgebaseadmin#CONFIRMATION" value1="Are you sure you want to delete the selected articles?" />
+		<execute function="Click" locator1="CPKnowledgebaseadmin#ACTIONS_BUTTON" />
+		<execute function="AssertClickNoError" locator1="CPKnowledgebaseadmin#ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute function="Confirm" locator1="CPKnowledgebaseadmin#CONFIRMATION" value1="Are you sure you want to delete the selected articles?" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="#assertTextNotPresent" locator1="CPKnowledgebaseadmin#ERROR_MESSAGE" value1="Your request failed to complete." />
-		<execute function="#assertTextNotPresent" locator1="CPKnowledgebaseadmin#FORM_ERROR_MESSAGE" value1="An unexpected error occurred while importing articles: File name is null." />
+		<execute function="AssertTextNotPresent" locator1="CPKnowledgebaseadmin#ERROR_MESSAGE" value1="Your request failed to complete." />
+		<execute function="AssertTextNotPresent" locator1="CPKnowledgebaseadmin#FORM_ERROR_MESSAGE" value1="An unexpected error occurred while importing articles: File name is null." />
 	</command>
 
 	<command name="deletePGViaKBArticle">
-		<execute function="#click" locator1="PGKnowledgebasearticle#ARTICLE_ACTIONS_BUTTON" />
-		<execute function="#assertClickNoError" locator1="PGKnowledgebasearticle#ACTIONS_MENULIST_DELETE" value1="Delete" />
-		<execute function="#confirm" locator1="PGKnowledgebasearticle#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasearticle#ERROR_MESSAGE" value1="The selected article no longer exists." />
+		<execute function="Click" locator1="PGKnowledgebasearticle#ARTICLE_ACTIONS_BUTTON" />
+		<execute function="AssertClickNoError" locator1="PGKnowledgebasearticle#ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute function="Confirm" locator1="PGKnowledgebasearticle#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasearticle#ERROR_MESSAGE" value1="The selected article no longer exists." />
 	</command>
 
 	<command name="deletePGViaKBDisplayPG">
-		<execute function="#click" locator1="PGKnowledgebasedisplay#ARTICLE_ACTIONS_BUTTON" />
-		<execute function="#assertClickNoError" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_DELETE" value1="Delete" />
-		<execute function="#confirm" locator1="PGKnowledgebasedisplay#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_ACTIONS_BUTTON" />
+		<execute function="AssertClickNoError" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute function="Confirm" locator1="PGKnowledgebasedisplay#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 	</command>
 
 	<command name="editCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_EDIT" value1="Edit" />
 
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminAddarticle#INFO_MESSAGE" value1="A new version will be created automatically if this content is modified." />
-		<execute function="#type" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#INFO_MESSAGE" value1="A new version will be created automatically if this content is modified." />
+		<execute function="Type" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
 		<execute function="Type#typeFrameWaitForCKEditor" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
-		<execute function="#assertClick" locator1="CPKnowledgebaseadminAddarticle#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editKBArticleViaKBDisplayPG">
-		<execute function="#click" locator1="PGKnowledgebasedisplay#ARTICLE_ACTIONS_BUTTON" />
-		<execute function="#assertClick" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_EDIT" value1="Edit" />
+		<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_ACTIONS_BUTTON" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_EDIT" value1="Edit" />
 
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayEditarticle#INFO_MESSAGE" value1="A new version will be created automatically if this content is modified." />
-		<execute function="#type" locator1="PGKnowledgebasedisplayEditarticle#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayEditarticle#INFO_MESSAGE" value1="A new version will be created automatically if this content is modified." />
+		<execute function="Type" locator1="PGKnowledgebasedisplayEditarticle#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
 		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGKnowledgebasedisplayEditarticle#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
-		<execute function="#addSelection" locator1="PGKnowledgebasedisplayEditarticle#SECTIONS_SELECT" value1="${kbArticleSectionEdit}" />
-		<execute function="#assertClick" locator1="PGKnowledgebasedisplayEditarticle#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="AddSelection" locator1="PGKnowledgebasedisplayEditarticle#SECTIONS_SELECT" value1="${kbArticleSectionEdit}" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplayEditarticle#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="goBackCP">
-		<execute function="#assertClick" locator1="CPKnowledgebaseadminArticle#BACK_TO_ICON" value1="Back" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadminArticle#BACK_TO_ICON" value1="Back" />
 	</command>
 
 	<command name="gotoCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="AssertTextEquals#assertValue" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_PRIORITY" value1="${kbPriority}" />
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_AUTHOR" value1="${kbAuthor}" />
-		<execute function="#click" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_VIEW" value1="View" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_AUTHOR" value1="${kbAuthor}" />
+		<execute function="Click" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_VIEW" value1="View" />
 	</command>
 
 	<command name="gotoPGViaKBSearchResult">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#assertClick" locator1="PGKnowledgebasesearchSearch#ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertClick" locator1="PGKnowledgebasesearchSearch#ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
 	</command>
 
 	<command name="gotoPGViaKBSection">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#assertClick" locator1="PGKnowledgebasesection#KB_ARTICLE_LINK" value1="${kbArticleTitle}" />
+		<execute function="AssertClick" locator1="PGKnowledgebasesection#KB_ARTICLE_LINK" value1="${kbArticleTitle}" />
 	</command>
 
 	<command name="gotoRelatedAssetCP">
 		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
-		<execute function="#assertClick" locator1="CPKnowledgebaseadminArticle#RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadminArticle#RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
 	</command>
 
 	<command name="gotoRelatedAssetViaKBDisplayPG">
@@ -295,14 +295,14 @@
 	</command>
 
 	<command name="gotoSuggestionsNavigationCP">
-		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#NAVIGATION_SUGGESTIONS" value1="Suggestions" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#NAVIGATION_SUGGESTIONS" value1="Suggestions" />
 	</command>
 
 	<command name="gotoSuggestionsNavigationPG">
 		<if>
-			<condition function="#isElementNotPresent" locator1="PGKnowledgebasedisplay#SUGGESTION_NAVIGATION_BAR" />
+			<condition function="IsElementNotPresent" locator1="PGKnowledgebasedisplay#SUGGESTION_NAVIGATION_BAR" />
 			<then>
-				<execute function="#click" locator1="PGKnowledgebasedisplay#ARTICLE_THERE_ARE_SUGGESTIONS_LINK" />
+				<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_THERE_ARE_SUGGESTIONS_LINK" />
 			</then>
 		</if>
 	</command>
@@ -313,10 +313,10 @@
 		<if>
 			<isset var="hasChildArticle" />
 			<then>
-				<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_TITLE_LINK" value1="${kbArticleTitle}" />
+				<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_TITLE_LINK" value1="${kbArticleTitle}" />
 			</then>
 			<else>
-				<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+				<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
 			</else>
 		</if>
 	</command>
@@ -325,9 +325,9 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<if>
-			<condition function="#isElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" />
+			<condition function="IsElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" />
 			<then>
-				<execute function="#assertClick" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle}" />
+				<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle}" />
 			</then>
 		</if>
 	</command>
@@ -339,11 +339,11 @@
 		<if>
 			<isset var="kbChildArticleTitle" />
 			<then>
-				<execute function="#assertClick" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle}" />
-				<execute function="#assertClick" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
+				<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle}" />
+				<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle}" />
+				<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle}" />
 			</else>
 		</if>
 	</command>
@@ -351,11 +351,11 @@
 	<command name="importCP">
 		<var name="key_kbZipFile" value="${kbZipFile}" />
 
-		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ADD_BUTTON" value1="Add" />
-		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ADD_MENULIST_IMPORT" value1="Import" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ADD_BUTTON" value1="Add" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ADD_MENULIST_IMPORT" value1="Import" />
 
-		<execute function="#uploadCommonFile" locator1="CPKnowledgebaseadminUploadZipFile#FILE_FIELD" value1="${kbZipFile}" />
-		<execute function="#assertClick" locator1="CPKnowledgebaseadminUploadZipFile#SAVE_BUTTON" value1="Save" />
+		<execute function="UploadCommonFile" locator1="CPKnowledgebaseadminUploadZipFile#FILE_FIELD" value1="${kbZipFile}" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadminUploadZipFile#SAVE_BUTTON" value1="Save" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -363,80 +363,80 @@
 	<command name="moveArticleCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" value1="Actions" />
-		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_MOVE" value1="Move" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_MOVE" value1="Move" />
 
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#CURRENT_PARENT_TITLE_FIELD" value1="${kbArticleCurrentParent}" />
-		<execute function="#click" locator1="CPKnowledgebaseadminMoveArticle#SELECT_BUTTON" value1="Select" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#CURRENT_PARENT_TITLE_FIELD" value1="${kbArticleCurrentParent}" />
+		<execute function="Click" locator1="CPKnowledgebaseadminMoveArticle#SELECT_BUTTON" value1="Select" />
 	</command>
 
 	<command name="moveArticleViaKBDisplayPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#click" locator1="PGKnowledgebasedisplay#ARTICLE_ACTIONS_BUTTON" />
-		<execute function="#assertClick" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_MOVE" value1="Move" />
+		<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_ACTIONS_BUTTON" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_MOVE" value1="Move" />
 
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#CURRENT_PARENT_TITLE_FIELD" value1="(None)" />
-		<execute function="#click" locator1="PGKnowledgebasedisplayMoveArticle#SELECT_BUTTON" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#CURRENT_PARENT_TITLE_FIELD" value1="(None)" />
+		<execute function="Click" locator1="PGKnowledgebasedisplayMoveArticle#SELECT_BUTTON" />
 	</command>
 
 	<command name="rateArticlePG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_TITLE" value1="${kbArticleTitle}" />
 
 		<if>
 			<equals arg1="${rateUp}" arg2="true" />
 			<then>
-				<execute function="#click" locator1="PGKnowledgebasedisplay#ARTICLE_VOTE_UP" />
+				<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_VOTE_UP" />
 			</then>
 			<elseif>
 				<equals arg1="${rateUp}" arg2="false" />
 				<then>
-					<execute function="#click" locator1="PGKnowledgebasedisplay#ARTICLE_VOTE_DOWN" />
+					<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_VOTE_DOWN" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_VOTES" value1="${articleVoteCount}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_VOTES" value1="${articleVoteCount}" />
 	</command>
 
 	<command name="removeParentArticleCP">
-		<execute function="#selectFrame" locator1="CPKnowledgebaseadminSelectParent#SELECT_PARENT_IFRAME" />
-		<execute function="#click" locator1="CPKnowledgebaseadminSelectParent#REMOVE_BUTTON" />
+		<execute function="SelectFrame" locator1="CPKnowledgebaseadminSelectParent#SELECT_PARENT_IFRAME" />
+		<execute function="Click" locator1="CPKnowledgebaseadminSelectParent#REMOVE_BUTTON" />
 
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#NEW_PARENT_TITLE_FIELD" value1="" />
-		<execute function="#click" locator1="CPKnowledgebaseadminMoveArticle#MOVE_BUTTON" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#NEW_PARENT_TITLE_FIELD" value1="" />
+		<execute function="Click" locator1="CPKnowledgebaseadminMoveArticle#MOVE_BUTTON" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="searchPGViaKBSearch">
-		<execute function="#type" locator1="PGKnowledgebasesearch#SEARCH_FIELD" value1="${searchTerm}" />
-		<execute function="#assertClick" locator1="PGKnowledgebasesearch#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="PGKnowledgebasesearch#SEARCH_FIELD" value1="${searchTerm}" />
+		<execute function="AssertClick" locator1="PGKnowledgebasesearch#SEARCH_BUTTON" value1="Search" />
 	</command>
 
 	<command name="selectAllCP">
-		<execute function="#check" locator1="CPKnowledgebaseadmin#SELECT_ALL_CHECKBOX" />
+		<execute function="Check" locator1="CPKnowledgebaseadmin#SELECT_ALL_CHECKBOX" />
 	</command>
 
 	<command name="selectArticleCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#check" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_CHECKBOX" />
+		<execute function="Check" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_CHECKBOX" />
 	</command>
 
 	<command name="selectParentArticleCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#selectFrame" locator1="CPKnowledgebaseadminSelectParent#SELECT_PARENT_IFRAME" />
-		<execute function="#click" locator1="CPKnowledgebaseadminSelectParent#CHOOSE_BUTTON" value1="Choose" />
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="SelectFrame" locator1="CPKnowledgebaseadminSelectParent#SELECT_PARENT_IFRAME" />
+		<execute function="Click" locator1="CPKnowledgebaseadminSelectParent#CHOOSE_BUTTON" value1="Choose" />
+		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />
-		<execute function="#click" locator1="CPKnowledgebaseadminMoveArticle#MOVE_BUTTON" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />
+		<execute function="Click" locator1="CPKnowledgebaseadminMoveArticle#MOVE_BUTTON" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -444,65 +444,65 @@
 	<command name="selectParentViaKBDisplayPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#selectFrame" locator1="PGKnowledgebasedisplaySelectParentArticle#SELECT_PARENT_IFRAME" />
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplaySelectParentArticle#ARTICLE_TITLE" value1="${kbArticleTitle}" />
-		<execute function="#click" locator1="PGKnowledgebasedisplaySelectParentArticle#CHOOSE_BUTTON" value1="Choose" />
-		<execute function="#selectFrame" locator1="PGKnowledgebasedisplaySelectParentArticle#FRAME_HEADER" />
-		<execute function="#click" locator1="PGKnowledgebasedisplaySelectParentArticle#CLOSE_BUTTON" />
+		<execute function="SelectFrame" locator1="PGKnowledgebasedisplaySelectParentArticle#SELECT_PARENT_IFRAME" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplaySelectParentArticle#ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute function="Click" locator1="PGKnowledgebasedisplaySelectParentArticle#CHOOSE_BUTTON" value1="Choose" />
+		<execute function="SelectFrame" locator1="PGKnowledgebasedisplaySelectParentArticle#FRAME_HEADER" />
+		<execute function="Click" locator1="PGKnowledgebasedisplaySelectParentArticle#CLOSE_BUTTON" />
 
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />
-		<execute function="#click" locator1="PGKnowledgebasedisplayMoveArticle#MOVE_BUTTON" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />
+		<execute function="Click" locator1="PGKnowledgebasedisplayMoveArticle#MOVE_BUTTON" />
 
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectPGViaKBArticle">
-		<execute function="#assertClick" locator1="PGKnowledgebasearticle#CONFIGURE_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
+		<execute function="AssertClick" locator1="PGKnowledgebasearticle#CONFIGURE_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
 
-		<execute function="#selectFrame" locator1="PGKnowledgebasearticleConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="#assertClick" locator1="PGKnowledgebasearticleConfiguration#SELECT_BUTTON" value1="Select" />
+		<execute function="SelectFrame" locator1="PGKnowledgebasearticleConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="AssertClick" locator1="PGKnowledgebasearticleConfiguration#SELECT_BUTTON" value1="Select" />
 
-		<execute function="#selectWindow" locator1="title=Knowledge Base Article" />
+		<execute function="SelectWindow" locator1="title=Knowledge Base Article" />
 
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#assertClick" locator1="PGKnowledgebasearticleConfigurationArticle#ARTICLE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="AssertClick" locator1="PGKnowledgebasearticleConfigurationArticle#ARTICLE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
-		<execute function="#selectWindow" locator1="title=${pageName} - Liferay" />
-		<execute function="#selectFrame" value1="relative=top" />
-		<execute function="#selectFrame" locator1="PGKnowledgebasearticleConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="#assertClick" locator1="PGKnowledgebasearticleConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="SelectWindow" locator1="title=${pageName} - Liferay" />
+		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="SelectFrame" locator1="PGKnowledgebasearticleConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="AssertClick" locator1="PGKnowledgebasearticleConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectRelatedAssetCP">
-		<execute function="#assertClick" locator1="CPKnowledgebaseadminAddarticle#RELATED_ASSETS_SELECT_BUTTON" value1="Select" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#RELATED_ASSETS_SELECT_BUTTON" value1="Select" />
 
 		<var name="key_kbArticleRelatedAssetType" value="${kbArticleRelatedAssetType}" />
 
-		<execute function="#assertClick" locator1="CPKnowledgebaseadminAddarticle#RELATED_ASSETS_SELECT_MENULIST" value1="${kbArticleRelatedAssetType}" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#RELATED_ASSETS_SELECT_MENULIST" value1="${kbArticleRelatedAssetType}" />
 
-		<execute function="#selectFrame" locator1="CPKnowledgebaseadminSelectRelatedAsset#SELECT_ASSET_IFRAME" />
+		<execute function="SelectFrame" locator1="CPKnowledgebaseadminSelectRelatedAsset#SELECT_ASSET_IFRAME" />
 
 		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminSelectRelatedAsset#ASSET_TABLE_TITLE" value1="${kbArticleRelatedAssetTitle}" />
-		<execute function="#assertClick" locator1="CPKnowledgebaseadminSelectRelatedAsset#ASSET_TABLE_ACTION" value1="Choose" />
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminSelectRelatedAsset#ASSET_TABLE_TITLE" value1="${kbArticleRelatedAssetTitle}" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadminSelectRelatedAsset#ASSET_TABLE_ACTION" value1="Choose" />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectScopePG">
 		<var name="key_currentKBPageScope" value="${currentKBPageScope}" />
 		<var name="key_newKBPageScope" value="${newKBPageScope}" />
 
-		<execute function="#selectFrame" locator1="PGKnowledgebasedisplayConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="PGKnowledgebasedisplayConfiguration#CONFIGURATION_IFRAME" />
 
-		<execute function="#assertClick" locator1="PGKnowledgebasedisplayConfigurationScope#SCOPE_TAB" value1="Scope" />
-		<execute function="#assertClick" locator1="PGKnowledgebasedisplayConfigurationScope#SCOPE_MENU_BUTTON" value1="${currentKBPageScope}" />
-		<execute function="#assertClick" locator1="PGKnowledgebasedisplayConfigurationScope#SCOPE_SELECTION" value1="${newKBPageScope}" />
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplayConfigurationScope#SCOPE_TAB" value1="Scope" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplayConfigurationScope#SCOPE_MENU_BUTTON" value1="${currentKBPageScope}" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplayConfigurationScope#SCOPE_SELECTION" value1="${newKBPageScope}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectSectionPGViaKBSection">
@@ -510,30 +510,30 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="#selectFrame" locator1="PGKnowledgebasesectionConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="#assertChecked" locator1="PGKnowledgebasesectionConfiguration#SHOW_SECTIONS_TITLE_CHECKBOX" />
-		<execute function="#addSelection" locator1="PGKnowledgebasesectionConfiguration#SECTIONS_SELECT" value1="${kbArticleSection}" />
-		<execute function="#assertSelectedLabel" locator1="PGKnowledgebasesectionConfiguration#ARTICLE_DISPLAY_STYLE_SELECT" value1="Title" />
-		<execute function="#assertSelectedLabel" locator1="PGKnowledgebasesectionConfiguration#ARTICLE_WINDOW_STATE_SELECT" value1="Maximized" />
-		<execute function="#assertClick" locator1="PGKnowledgebasesectionConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="SelectFrame" locator1="PGKnowledgebasesectionConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="AssertChecked" locator1="PGKnowledgebasesectionConfiguration#SHOW_SECTIONS_TITLE_CHECKBOX" />
+		<execute function="AddSelection" locator1="PGKnowledgebasesectionConfiguration#SECTIONS_SELECT" value1="${kbArticleSection}" />
+		<execute function="AssertSelectedLabel" locator1="PGKnowledgebasesectionConfiguration#ARTICLE_DISPLAY_STYLE_SELECT" value1="Title" />
+		<execute function="AssertSelectedLabel" locator1="PGKnowledgebasesectionConfiguration#ARTICLE_WINDOW_STATE_SELECT" value1="Maximized" />
+		<execute function="AssertClick" locator1="PGKnowledgebasesectionConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="setPriorityCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#type" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_PRIORITY" value1="${kbPriority}" />
-		<execute function="#check" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_CHECKBOX" />
-		<execute function="#click" locator1="CPKnowledgebaseadmin#ACTIONS_BUTTON" />
-		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ACTIONS_MENULIST_SAVE" value1="Save" />
+		<execute function="Type" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_PRIORITY" value1="${kbPriority}" />
+		<execute function="Check" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_CHECKBOX" />
+		<execute function="Click" locator1="CPKnowledgebaseadmin#ACTIONS_BUTTON" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ACTIONS_MENULIST_SAVE" value1="Save" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="setScopeCP">
 		<var name="key_kbPageScope" value="${kbPageScope}" />
 
-		<execute function="#click" locator1="CPKnowledgebaseadmin#SCOPE_SELECTOR_BUTTON" />
-		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#SCOPE_MENU" value1="${kbPageScope}" />
+		<execute function="Click" locator1="CPKnowledgebaseadmin#SCOPE_SELECTOR_BUTTON" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#SCOPE_MENU" value1="${kbPageScope}" />
 	</command>
 
 	<command name="tearDownCP">
@@ -542,98 +542,98 @@
 		</execute>
 
 		<if>
-			<condition function="#isElementPresent" locator1="CPKnowledgebaseadmin#SELECT_ALL_CHECKBOX" />
+			<condition function="IsElementPresent" locator1="CPKnowledgebaseadmin#SELECT_ALL_CHECKBOX" />
 			<then>
-				<execute function="#check" locator1="CPKnowledgebaseadmin#SELECT_ALL_CHECKBOX" />
-				<execute function="#click" locator1="CPKnowledgebaseadmin#ACTIONS_BUTTON" />
-				<execute function="#assertClickNoError" locator1="CPKnowledgebaseadmin#ACTIONS_MENULIST_DELETE" value1="Delete" />
-				<execute function="#confirm" locator1="CPKnowledgebaseadmin#CONFIRMATION" value1="Are you sure you want to delete the selected articles?" />
+				<execute function="Check" locator1="CPKnowledgebaseadmin#SELECT_ALL_CHECKBOX" />
+				<execute function="Click" locator1="CPKnowledgebaseadmin#ACTIONS_BUTTON" />
+				<execute function="AssertClickNoError" locator1="CPKnowledgebaseadmin#ACTIONS_MENULIST_DELETE" value1="Delete" />
+				<execute function="Confirm" locator1="CPKnowledgebaseadmin#CONFIRMATION" value1="Are you sure you want to delete the selected articles?" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-				<execute function="#assertTextEquals" locator1="CPKnowledgebaseadmin#INFO_MESSAGE" value1="No articles were found." />
+				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#INFO_MESSAGE" value1="No articles were found." />
 			</then>
 		</if>
 	</command>
 
 	<command name="viewArticleHistoryPG">
-		<execute function="#assertClick" locator1="PGKnowledgebasedisplay#ARTICLE_HISTORY" value1="History" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ARTICLE_HISTORY" value1="History" />
 
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#ARTICLE_TITLE" value1="${kbArticleTitle}" />
 
 		<if>
 			<isset var="kbArticleTitleRemovedDiff" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#ARTICLE_TITLE_EDIT_REMOVED_DIFF" value1="${kbArticleTitleRemovedDiff}" />
+				<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#ARTICLE_TITLE_EDIT_REMOVED_DIFF" value1="${kbArticleTitleRemovedDiff}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="kbArticleTitleAddedDiff" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#ARTICLE_TITLE_EDIT_ADDED_DIFF" value1="${kbArticleTitleAddedDiff}" />
+				<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#ARTICLE_TITLE_EDIT_ADDED_DIFF" value1="${kbArticleTitleAddedDiff}" />
 			</then>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#ARTICLE_CONTENT" value1="${kbArticleContent}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#ARTICLE_CONTENT" value1="${kbArticleContent}" />
 
 		<if>
 			<isset var="kbArticleContentRemovedDiff" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#ARTICLE_CONTENT_EDIT_REMOVED_DIFF" value1="${kbArticleContentRemovedDiff}" />
+				<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#ARTICLE_CONTENT_EDIT_REMOVED_DIFF" value1="${kbArticleContentRemovedDiff}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="kbArticleContentAddedDiff" />
 			<then>
-				<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#ARTICLE_CONTENT_EDIT_ADDED_DIFF" value1="${kbArticleContentAddedDiff}" />
+				<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#ARTICLE_CONTENT_EDIT_ADDED_DIFF" value1="${kbArticleContentAddedDiff}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${viewNoXMLInTitle}" arg2="true" />
 			<then>
-				<execute function="#assertTextNotPresent" locator1="PGKnowledgebasedisplayArticleHistory#ARTICLE_TITLE" value1="xml" />
+				<execute function="AssertTextNotPresent" locator1="PGKnowledgebasedisplayArticleHistory#ARTICLE_TITLE" value1="xml" />
 			</then>
 		</if>
 
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#VERSION_TABLE_TARGET" value1="${kbArticleHistoryTarget}" />
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#VERSION_TABLE_SOURCE" value1="${kbArticleHistorySource}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#VERSION_TABLE_TARGET" value1="${kbArticleHistoryTarget}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayArticleHistory#VERSION_TABLE_SOURCE" value1="${kbArticleHistorySource}" />
 	</command>
 
 	<command name="viewAttachmentCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#click" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_EDIT" value1="Edit" />
+		<execute function="Click" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_EDIT" value1="Edit" />
 
-		<execute function="#assertClick" locator1="CPKnowledgebaseadminAddarticle#ATTACHMENTS_HEADER_COLLAPSED" value1="Attachments" />
-		<execute function="#assertElementPresent" locator1="CPKnowledgebaseadminAddarticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#ATTACHMENTS_HEADER_COLLAPSED" value1="Attachments" />
+		<execute function="AssertElementPresent" locator1="CPKnowledgebaseadminAddarticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" />
 	</command>
 
 	<command name="viewChildArticleCP">
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadmin#INFO_MESSAGE" value1="Child Articles for ${kbArticleTitle}." />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#INFO_MESSAGE" value1="Child Articles for ${kbArticleTitle}." />
 
 		<var name="key_kbArticleTitle" value="${kbChildArticleTitle}" />
 
 		<execute function="AssertTextEquals#assertValue" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_PRIORITY" value1="${kbPriority}" />
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_TITLE" value1="${kbChildArticleTitle}" />
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_AUTHOR" value1="${kbAuthor}" />
-		<execute function="#click" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_VIEW" value1="View" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_TITLE" value1="${kbChildArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_AUTHOR" value1="${kbAuthor}" />
+		<execute function="Click" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_VIEW" value1="View" />
 
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminChildarticle#HEADER_TITLE" value1="${kbChildArticleTitle}" />
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminChildarticle#CONTENT" value1="${kbChildArticleContent}" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminChildarticle#HEADER_TITLE" value1="${kbChildArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminChildarticle#CONTENT" value1="${kbChildArticleContent}" />
 	</command>
 
 	<command name="viewCP">
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminArticle#CONTENT" value1="${kbArticleContent}" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#CONTENT" value1="${kbArticleContent}" />
 
 		<if>
 			<isset var="kbChildArticleTitle" />
 			<then>
-				<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminArticle#CHILD_ARTICLE_TITLE" value1="${kbChildArticleTitle}" />
-				<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminArticle#CHILD_ARTICLE_CONTENT" value1="${kbChildArticleContent}" />
+				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#CHILD_ARTICLE_TITLE" value1="${kbChildArticleTitle}" />
+				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#CHILD_ARTICLE_CONTENT" value1="${kbChildArticleContent}" />
 			</then>
 		</if>
 
@@ -642,31 +642,31 @@
 			<then>
 				<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
-				<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminArticle#RELATED_ASSETS_HEADER" value1="Related Assets:" />
-				<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminArticle#RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#RELATED_ASSETS_HEADER" value1="Related Assets:" />
+				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
 			</then>
 		</if>
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadmin#INFO_MESSAGE" value1="No articles were found." />
-		<execute function="#assertElementNotPresent" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_TITLE_GENERIC" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#INFO_MESSAGE" value1="No articles were found." />
+		<execute function="AssertElementNotPresent" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_TITLE_GENERIC" />
 	</command>
 
 	<command name="viewDefaultKBDisplaySettingsPG">
-		<execute function="#assertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_SUBSCRIBE" value1="Subscribe" />
-		<execute function="#assertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_HISTORY" value1="History" />
-		<execute function="#assertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_PRINT" value1="Print" />
+		<execute function="AssertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_SUBSCRIBE" value1="Subscribe" />
+		<execute function="AssertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_HISTORY" value1="History" />
+		<execute function="AssertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_PRINT" value1="Print" />
 	</command>
 
 	<command name="viewDefaultViaKBArticlePG">
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasearticle#CONFIGURE_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
-		<execute function="#assertElementNotPresent" locator1="PGKnowledgebasearticle#ARTICLE_TITLE" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasearticle#CONFIGURE_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
+		<execute function="AssertElementNotPresent" locator1="PGKnowledgebasearticle#ARTICLE_TITLE" />
 	</command>
 
 	<command name="viewDefaultViaKBDisplayPG">
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
-		<execute function="#assertElementNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_TITLE" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
+		<execute function="AssertElementNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_TITLE" />
 	</command>
 
 	<command name="viewHierarchyViaKBDisplayPG">
@@ -675,7 +675,7 @@
 			<then>
 				<var name="key_kbArticleTitle" value="${kbArticleTitle1}" />
 
-				<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle1}" />
+				<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle1}" />
 
 				<if>
 					<isset var="kbArticle1ChildArticleTitle1" />
@@ -683,7 +683,7 @@
 						<var name="key_kbArticleTitle" value="${kbArticleTitle1}" />
 						<var name="key_kbChildArticleTitle" value="${kbArticle1ChildArticleTitle1}" />
 
-						<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle1ChildArticleTitle1}" />
+						<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle1ChildArticleTitle1}" />
 					</then>
 				</if>
 
@@ -693,7 +693,7 @@
 						<var name="key_kbArticleTitle" value="${kbArticleTitle1}" />
 						<var name="key_kbChildArticleTitle" value="${kbArticle1ChildArticleTitle2}" />
 
-						<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle1ChildArticleTitle2}" />
+						<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle1ChildArticleTitle2}" />
 					</then>
 				</if>
 
@@ -703,7 +703,7 @@
 						<var name="key_kbArticleTitle" value="${kbArticleTitle1}" />
 						<var name="key_kbChildArticleTitle" value="${kbArticle1ChildArticleTitle3}" />
 
-						<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle1ChildArticleTitle3}" />
+						<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle1ChildArticleTitle3}" />
 					</then>
 				</if>
 			</then>
@@ -714,8 +714,8 @@
 			<then>
 				<var name="key_kbArticleTitle" value="${kbArticleTitle2}" />
 
-				<execute function="#click" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle2}" />
-				<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle2}" />
+				<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle2}" />
+				<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle2}" />
 
 				<if>
 					<isset var="kbArticle2ChildArticleTitle1" />
@@ -723,7 +723,7 @@
 						<var name="key_kbArticleTitle" value="${kbArticleTitle2}" />
 						<var name="key_kbChildArticleTitle" value="${kbArticle2ChildArticleTitle1}" />
 
-						<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle2ChildArticleTitle1}" />
+						<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle2ChildArticleTitle1}" />
 					</then>
 				</if>
 
@@ -733,7 +733,7 @@
 						<var name="key_kbArticleTitle" value="${kbArticleTitle2}" />
 						<var name="key_kbChildArticleTitle" value="${kbArticle2ChildArticleTitle2}" />
 
-						<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle2ChildArticleTitle2}" />
+						<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle2ChildArticleTitle2}" />
 					</then>
 				</if>
 
@@ -743,7 +743,7 @@
 						<var name="key_kbArticleTitle" value="${kbArticleTitle2}" />
 						<var name="key_kbChildArticleTitle" value="${kbArticle2ChildArticleTitle3}" />
 
-						<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle2ChildArticleTitle3}" />
+						<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle2ChildArticleTitle3}" />
 					</then>
 				</if>
 			</then>
@@ -754,8 +754,8 @@
 			<then>
 				<var name="key_kbArticleTitle" value="${kbArticleTitle3}" />
 
-				<execute function="#click" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle2}" />
-				<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle3}" />
+				<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle2}" />
+				<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle3}" />
 
 				<if>
 					<isset var="kbArticle3ChildArticleTitle1" />
@@ -763,7 +763,7 @@
 						<var name="key_kbArticleTitle" value="${kbArticleTitle3}" />
 						<var name="key_kbChildArticleTitle" value="${kbArticle3ChildArticleTitle1}" />
 
-						<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle3ChildArticleTitle1}" />
+						<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle3ChildArticleTitle1}" />
 					</then>
 				</if>
 
@@ -773,7 +773,7 @@
 						<var name="key_kbArticleTitle" value="${kbArticleTitle3}" />
 						<var name="key_kbChildArticleTitle" value="${kbArticle3ChildArticleTitle2}" />
 
-						<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle3ChildArticleTitle2}" />
+						<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle3ChildArticleTitle2}" />
 					</then>
 				</if>
 
@@ -783,7 +783,7 @@
 						<var name="key_kbArticleTitle" value="${kbArticleTitle3}" />
 						<var name="key_kbChildArticleTitle" value="${kbArticle3ChildArticleTitle3}" />
 
-						<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle3ChildArticleTitle3}" />
+						<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD" value1="${kbArticle3ChildArticleTitle3}" />
 					</then>
 				</if>
 			</then>
@@ -791,17 +791,17 @@
 	</command>
 
 	<command name="viewImageCaptionViaContentCmd">
-		<execute function="#assertElementPresent" locator1="CPKnowledgebaseadminArticle#ARTICLE_CONTENT_IMAGE" value1="${kbImageCaption}" />
+		<execute function="AssertElementPresent" locator1="CPKnowledgebaseadminArticle#ARTICLE_CONTENT_IMAGE" value1="${kbImageCaption}" />
 	</command>
 
 	<command name="viewImageViaContentCmd">
-		<execute function="#assertElementPresent" locator1="CPKnowledgebaseadminArticle#ARTICLE_CONTENT_IMAGE" />
+		<execute function="AssertElementPresent" locator1="CPKnowledgebaseadminArticle#ARTICLE_CONTENT_IMAGE" />
 	</command>
 
 	<command name="viewKBArticlePriorityCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals#assertValue" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_PRIORITY" value1="${kbPriority}" />
 	</command>
 
@@ -809,11 +809,11 @@
 		<if>
 			<equals arg1="${sourceURL}" arg2="true" />
 			<then>
-				<execute function="#assertClick" locator1="PGKnowledgebasedisplay#ARTICLE_GITHUB" value1="Edit on GitHub" />
+				<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ARTICLE_GITHUB" value1="Edit on GitHub" />
 
 				<var name="key_pageTitle" value="Google" />
 
-				<execute function="#selectWindow" locator1="Google#PAGE_TITLE" />
+				<execute function="SelectWindow" locator1="Google#PAGE_TITLE" />
 
 				<var method="selenium#getLocation()" name="url" />
 
@@ -822,19 +822,19 @@
 					<var name="expected" value="https://www.google.com/?gws_rd=ssl" />
 				</execute>
 
-				<execute function="#close" locator1="Google#PAGE_TITLE" />
+				<execute function="Close" locator1="Google#PAGE_TITLE" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${subscribe}" arg2="true" />
 			<then>
-				<execute function="#assertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_SUBSCRIBE" value1="Subscribe" />
+				<execute function="AssertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_SUBSCRIBE" value1="Subscribe" />
 			</then>
 			<elseif>
 				<equals arg1="${subscribe}" arg2="false" />
 				<then>
-					<execute function="#assertElementNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_SUBSCRIBE" value1="Subscribe" />
+					<execute function="AssertElementNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_SUBSCRIBE" value1="Subscribe" />
 				</then>
 			</elseif>
 		</if>
@@ -842,12 +842,12 @@
 		<if>
 			<equals arg1="${history}" arg2="true" />
 			<then>
-				<execute function="#assertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_HISTORY" value1="History" />
+				<execute function="AssertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_HISTORY" value1="History" />
 			</then>
 			<elseif>
 				<equals arg1="${history}" arg2="false" />
 				<then>
-					<execute function="#assertElementNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_HISTORY" value1="History" />
+					<execute function="AssertElementNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_HISTORY" value1="History" />
 				</then>
 			</elseif>
 		</if>
@@ -855,12 +855,12 @@
 		<if>
 			<equals arg1="${print}" arg2="true" />
 			<then>
-				<execute function="#assertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_PRINT" value1="Print" />
+				<execute function="AssertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_PRINT" value1="Print" />
 			</then>
 			<elseif>
 				<equals arg1="${print}" arg2="false" />
 				<then>
-					<execute function="#assertElementNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_PRINT" value1="Print" />
+					<execute function="AssertElementNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_PRINT" value1="Print" />
 				</then>
 			</elseif>
 		</if>
@@ -870,12 +870,12 @@
 		<if>
 			<equals arg1="${previous}" arg2="true" />
 			<then>
-				<execute function="#assertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_PREVIOUS" />
+				<execute function="AssertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_PREVIOUS" />
 			</then>
 			<elseif>
 				<equals arg1="${previous}" arg2="false" />
 				<then>
-					<execute function="#assertElementNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_PREVIOUS" />
+					<execute function="AssertElementNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_PREVIOUS" />
 				</then>
 			</elseif>
 		</if>
@@ -883,23 +883,23 @@
 		<if>
 			<equals arg1="${next}" arg2="true" />
 			<then>
-				<execute function="#assertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_NEXT" />
+				<execute function="AssertElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_NEXT" />
 			</then>
 			<elseif>
 				<equals arg1="${next}" arg2="false" />
 				<then>
-					<execute function="#assertElementNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_NEXT" />
+					<execute function="AssertElementNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_NEXT" />
 				</then>
 			</elseif>
 		</if>
 	</command>
 
 	<command name="viewNoViaKBDisplayPG">
-		<execute function="#assertTextNotPresent" value1="${kbArticleTitle}" />
+		<execute function="AssertTextNotPresent" value1="${kbArticleTitle}" />
 	</command>
 
 	<command name="viewNoViaKBSectionPG">
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasesection#SECTIONS_TITLE" value1="General" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasesection#SECTIONS_TITLE" value1="General" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGKnowledgebasesection#PORTLET_BODY" value1="No articles were found" />
 	</command>
 
@@ -907,45 +907,45 @@
 		<if>
 			<equals arg1="${RelatedAssetType}" arg2="Blogs Entry" />
 			<then>
-				<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminViewRelatedAsset#BLOGS_ENTRY_CONTENT" value1="${RelatedAssetContent}" />
+				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminViewRelatedAsset#BLOGS_ENTRY_CONTENT" value1="${RelatedAssetContent}" />
 			</then>
 		</if>
 
 		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminViewRelatedAsset#RELATED_ASSETS_HEADER" value1="Related Assets:" />
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminViewRelatedAsset#RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminViewRelatedAsset#RELATED_ASSETS_HEADER" value1="Related Assets:" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminViewRelatedAsset#RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
 	</command>
 
 	<command name="viewRelatedAssetViaKBDisplayPG">
 		<if>
 			<equals arg1="${RelatedAssetType}" arg2="Blogs Entry" />
 			<then>
-				<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminViewRelatedAsset#BLOGS_ENTRY_CONTENT" value1="${RelatedAssetContent}" />
+				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminViewRelatedAsset#BLOGS_ENTRY_CONTENT" value1="${RelatedAssetContent}" />
 			</then>
 		</if>
 
 		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayViewRelatedAsset#RELATED_ASSETS_HEADER" value1="Related Assets:" />
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayViewRelatedAsset#RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayViewRelatedAsset#RELATED_ASSETS_HEADER" value1="Related Assets:" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayViewRelatedAsset#RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
 	</command>
 
 	<command name="viewSearchResultsPG">
 		<for list="${kbArticleTitleList}" param="kbArticleTitle">
 			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-			<execute function="#assertTextEquals" locator1="PGKnowledgebasesearchSearch#ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+			<execute function="AssertTextEquals" locator1="PGKnowledgebasesearchSearch#ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
 		</for>
 	</command>
 
 	<command name="viewSectionPG">
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasesection#SECTIONS_TITLE" value1="${kbArticleSection}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasesection#SECTIONS_TITLE" value1="${kbArticleSection}" />
 
 		<for list="${kbArticleTitleList}" param="kbArticleTitle">
 			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-			<execute function="#assertTextEquals" locator1="PGKnowledgebasesection#KB_ARTICLE_LINK" value1="${kbArticleTitle}" />
+			<execute function="AssertTextEquals" locator1="PGKnowledgebasesection#KB_ARTICLE_LINK" value1="${kbArticleTitle}" />
 		</for>
 	</command>
 
@@ -953,56 +953,56 @@
 		<var name="key_kbArticleSourceURL" value="${kbArticleSourceURL}" />
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#click" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" />
-		<execute function="#assertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_EDIT" value1="Edit" />
+		<execute function="Click" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_EDIT" value1="Edit" />
 
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminAddarticle#SOURCE_URL_FIELD" value1="${kbArticleSourceURL}" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#SOURCE_URL_FIELD" value1="${kbArticleSourceURL}" />
 	</command>
 
 	<command name="viewSourceURLPG">
 		<var name="key_kbArticleSourceURL" value="${kbArticleSourceURL}" />
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="#click" locator1="PGKnowledgebasedisplay#ARTICLE_ACTIONS_BUTTON" />
-		<execute function="#assertClick" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_EDIT" value1="Edit" />
+		<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_ACTIONS_BUTTON" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_EDIT" value1="Edit" />
 
-		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminAddarticle#SOURCE_URL_FIELD" value1="${kbArticleSourceURL}" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#SOURCE_URL_FIELD" value1="${kbArticleSourceURL}" />
 	</command>
 
 	<command name="viewViaKBArticlePG">
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasearticle#ARTICLE_TITLE" value1="${kbArticleTitle}" />
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasearticle#ARTICLE_CONTENT" value1="${kbArticleContent}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasearticle#ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasearticle#ARTICLE_CONTENT" value1="${kbArticleContent}" />
 	</command>
 
 	<command name="viewViaKBDisplayPG">
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_TITLE" value1="${kbArticleTitle}" />
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_CONTENT" value1="${kbArticleContent}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_CONTENT" value1="${kbArticleContent}" />
 
 		<if>
 			<isset var="kbArticleRelatedAssetTitle" />
 			<then>
 				<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
-				<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#RELATED_ASSETS_HEADER" value1="Related Assets:" />
-				<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+				<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#RELATED_ASSETS_HEADER" value1="Related Assets:" />
+				<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
 			</then>
 		</if>
 	</command>
 
 	<command name="viewViaKBSearchPG">
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasesearchArticle#ARTICLE_TITLE" value1="${kbArticleTitle}" />
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasesearchArticle#ARTICLE_CONTENT" value1="${kbArticleContent}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasesearchArticle#ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasesearchArticle#ARTICLE_CONTENT" value1="${kbArticleContent}" />
 	</command>
 
 	<command name="viewViaKBSectionPG">
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasesectionArticle#ARTICLE_TITLE" value1="${kbArticleTitle}" />
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasesectionArticle#ARTICLE_CONTENT" value1="${kbArticleContent}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasesectionArticle#ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasesectionArticle#ARTICLE_CONTENT" value1="${kbArticleContent}" />
 	</command>
 
 	<command name="viewViaReadMoreLinkPG">
-		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_TITLE" value1="${kbArticleTitle}" />
-		<execute function="#assertTextNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_CHILD_CONTENT" value1="This last sentence of the child article should only be visible after clicking on Read More. " />
-		<execute function="#assertClick" locator1="PGKnowledgebasedisplay#ARTICLE_READ_MORE" value1="Read More" />
-		<execute function="#assertTextPresent" locator1="PGKnowledgebasedisplay#ARTICLE_CONTENT" value1="This last sentence of the child article should only be visible after clicking on Read More." />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_CHILD_CONTENT" value1="This last sentence of the child article should only be visible after clicking on Read More. " />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ARTICLE_READ_MORE" value1="Read More" />
+		<execute function="AssertTextPresent" locator1="PGKnowledgebasedisplay#ARTICLE_CONTENT" value1="This last sentence of the child article should only be visible after clicking on Read More." />
 	</command>
 </definition>

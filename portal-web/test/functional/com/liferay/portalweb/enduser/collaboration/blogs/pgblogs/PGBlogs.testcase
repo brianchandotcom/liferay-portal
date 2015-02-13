@@ -1241,7 +1241,7 @@
 			<var name="flagReason" value="Spam" />
 		</execute>
 
-		<execute function="#pause" locator1="30000" />
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -1336,7 +1336,7 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute function="#pause" locator1="30000" />
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -1360,7 +1360,7 @@
 			<var name="userPassword" property-value="email.password.2" />
 		</execute>
 
-		<execute function="#open" locator1="http://localhost:8080" />
+		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
 	<command name="ViewBlogsEntryCommentAsGuest" priority="4">
@@ -1411,7 +1411,7 @@
 			<var name="userFullName" value="${userFirstName}" />
 		</execute>
 
-		<execute function="#assertElementPresent" locator1="PGBlogsEntry#COMMENTS_ADD" value1="Add Comment" />
+		<execute function="AssertElementPresent" locator1="PGBlogsEntry#COMMENTS_ADD" value1="Add Comment" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="${password}" />
@@ -1446,7 +1446,7 @@
 			<var name="userFullName" value="${userFirstName}" />
 		</execute>
 
-		<execute function="#assertElementNotPresent" locator1="PGBlogsEntry#COMMENTS_ADD" value1="Add Comment" />
+		<execute function="AssertElementNotPresent" locator1="PGBlogsEntry#COMMENTS_ADD" value1="Add Comment" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="${password}" />

@@ -3,7 +3,7 @@
 		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
 
 		<execute function="Click#pauseClickAt" locator1="DockbarEditpanel#DETAILS_FRIENDLY_URL_LOCALIZED" />
-		<execute function="#type" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1="${localizedFriendlyURL}" />
+		<execute function="Type" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1="${localizedFriendlyURL}" />
 	</command>
 
 	<command name="addLocalizedNamePG">
@@ -12,14 +12,14 @@
 		<if>
 			<equals arg1="${newPage}" arg2="true" />
 			<then>
-				<execute function="#click" locator1="DockbarAddpanelpage#LOCALIZED_FLAG_ICON" />
-				<execute function="#type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${pageName}" />
+				<execute function="Click" locator1="DockbarAddpanelpage#LOCALIZED_FLAG_ICON" />
+				<execute function="Type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${pageName}" />
 			</then>
 			<elseif>
 				<equals arg1="${newPage}" arg2="false" />
 				<then>
-					<execute function="#click" locator1="DockbarEditpanel#DETAILS_LOCALIZED_FLAG_ICON" />
-					<execute function="#type" locator1="DockbarEditpanel#DETAILS_NAME_FIELD" value1="${pageName}" />
+					<execute function="Click" locator1="DockbarEditpanel#DETAILS_LOCALIZED_FLAG_ICON" />
+					<execute function="Type" locator1="DockbarEditpanel#DETAILS_NAME_FIELD" value1="${pageName}" />
 				</then>
 			</elseif>
 		</if>
@@ -28,12 +28,12 @@
 	<command name="addPageTypePanelPG">
 		<var name="key_componentName" value="${componentName}" />
 
-		<execute function="#click" locator1="DockbarAddpanelpage#TYPE_PANEL_COMPONENT_TREE_ARROW" />
+		<execute function="Click" locator1="DockbarAddpanelpage#TYPE_PANEL_COMPONENT_TREE_ARROW" />
 
 		<for list="${portletNameList}" param="portletName" >
 			<var name="key_componentOrPortletName" value="${portletName}" />
 
-			<execute function="#click" locator1="DockbarAddpanelpage#TYPE_PANEL_CHECKBOX" value1="${portletName}" />
+			<execute function="Click" locator1="DockbarAddpanelpage#TYPE_PANEL_CHECKBOX" value1="${portletName}" />
 			<execute function="AssertChecked#waitForElementPresentAssertChecked" locator1="DockbarAddpanelpage#TYPE_PANEL_CHECKBOX_INPUT" />
 		</for>
 	</command>
@@ -102,13 +102,13 @@
 
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
 
-		<execute function="#assertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
-		<execute function="#type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${pageName}" />
+		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
+		<execute function="Type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${pageName}" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarAddpanelpage#ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<var name="key_pageName" value="${pageName}" />
 
-		<execute function="#assertClick" locator1="Home#PAGE" value1="${pageName}" />
+		<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}" />
 
 		<execute macro="Staging#submitForPublicationPageRevision" />
 	</command>
@@ -116,7 +116,7 @@
 	<command name="assertLocalizedPG">
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGSignin#PORTLET_CONTENT_LOCALIZED" value1="${localizedContent}" />
 
-		<execute function="#assertTextEquals" locator1="Dockbar#ADMIN" value1="${localizedAdmin}" />
+		<execute function="AssertTextEquals" locator1="Dockbar#ADMIN" value1="${localizedAdmin}" />
 	</command>
 
 	<command name="assertnodePortPG">
@@ -126,33 +126,33 @@
 	</command>
 
 	<command name="changeLogoViaPageCP">
-		<execute function="#assertClick" locator1="CPSitepages#LOGO_NAVIGATION" value1="Logo" />
-		<execute function="#assertClick" locator1="CPSitepages#LOGO_CHANGE_BUTTON" value1="Change" />
-		<execute function="#selectFrame" locator1="CPSitepages#LOGO_UPLOAD_IMAGE_IFRAME" />
-		<execute function="#uploadCommonFile" locator1="CPSitepages#LOGO_UPLOAD_BROWSE_BUTTON" value1="${logoFile}" />
+		<execute function="AssertClick" locator1="CPSitepages#LOGO_NAVIGATION" value1="Logo" />
+		<execute function="AssertClick" locator1="CPSitepages#LOGO_CHANGE_BUTTON" value1="Change" />
+		<execute function="SelectFrame" locator1="CPSitepages#LOGO_UPLOAD_IMAGE_IFRAME" />
+		<execute function="UploadCommonFile" locator1="CPSitepages#LOGO_UPLOAD_BROWSE_BUTTON" value1="${logoFile}" />
 
-		<execute function="#pause" locator1="5000" />
+		<execute function="Pause" locator1="5000" />
 
-		<execute function="#assertClick" locator1="CPSitepages#LOGO_UPLOAD_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="CPSitepages#LOGO_UPLOAD_SAVE_BUTTON" value1="Save" />
 
-		<execute function="#pause" locator1="5000" />
+		<execute function="Pause" locator1="5000" />
 
-		<execute function="#selectFrameTop" />
-		<execute function="#assertClick" locator1="CPSitepages#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="CPSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="SelectFrameTop" />
+		<execute function="AssertClick" locator1="CPSitepages#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="CPSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deleteFriendlyURLPG">
 		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
 
 		<execute function="Click#pauseClickAt" locator1="DockbarEditpanel#DETAILS_FRIENDLY_URL_LOCALIZED" />
-		<execute function="#type" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1=" " />
+		<execute function="Type" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1=" " />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarEditpanel#SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="deleteLivePG">
 		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
-		<execute function="#clickNoError" locator1="Dockbar#EDIT_LIVE_DELETE" />
+		<execute function="ClickNoError" locator1="Dockbar#EDIT_LIVE_DELETE" />
 
 		<execute function="Confirm#waitForConfirmation" locator1="Home#PAGE_CONFIRM" value1="Are you sure you want to delete the selected page?" />
 	</command>
@@ -161,7 +161,7 @@
 		<var name="key_pageName" value="${pageName}" />
 
 		<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE" />
-		<execute function="#clickNoError" locator1="Home#PAGE_DELETE" />
+		<execute function="ClickNoError" locator1="Home#PAGE_DELETE" />
 		<execute function="Confirm#waitForConfirmation" locator1="Home#PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
 		<execute function="AssertElementNotPresent#assertElementNotPresentClickDockbar" locator1="Home#PAGE_DELETE" />
 	</command>
@@ -172,13 +172,13 @@
 		<if>
 			<condition function="IsElementNotPresent#isNotVisible" locator1="DockbarEditpanel#DETAILS_NAME_FIELD" />
 			<then>
-				<execute function="#assertClick" locator1="DockbarEditpanel#DETAILS_PANEL_TOGGLE" value1="Details" />
+				<execute function="AssertClick" locator1="DockbarEditpanel#DETAILS_PANEL_TOGGLE" value1="Details" />
 			</then>
 		</if>
 
 		<var name="key_columnName" value="${columnName}" />
 
-		<execute function="#click" locator1="DockbarEditpanel#DETAILS_LAYOUT_RADIO" />
+		<execute function="Click" locator1="DockbarEditpanel#DETAILS_LAYOUT_RADIO" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarEditpanel#SAVE_BUTTON" value1="Save" />
 	</command>
 
@@ -191,7 +191,7 @@
 
 		<var name="key_childPageName" value="${childPageName}" />
 
-		<execute function="#assertClick" locator1="Home#PAGE_CHILD_PAGE" value1="${childPageName}" />
+		<execute function="AssertClick" locator1="Home#PAGE_CHILD_PAGE" value1="${childPageName}" />
 	</command>
 
 	<command name="gotoCmdCP">
@@ -253,17 +253,17 @@
 
 		<var name="key_localizedPortletCategoryName" value="${localizedPortletCategoryName}" />
 
-		<execute function="#click" locator1="Dockbar#ADMIN_LOCALIZED" value1="${localizedAdmin}" />
-		<execute function="#click" locator1="Dockbar#${portletCategoryKey}" value1="${localizedPortletCategoryName}" />
+		<execute function="Click" locator1="Dockbar#ADMIN_LOCALIZED" value1="${localizedAdmin}" />
+		<execute function="Click" locator1="Dockbar#${portletCategoryKey}" value1="${localizedPortletCategoryName}" />
 
 		<if>
 			<isset var="siteScopeName" />
 			<then>
-				<execute function="#click" locator1="Home#SCOPE_SELECTOR" />
+				<execute function="Click" locator1="Home#SCOPE_SELECTOR" />
 
 				<var name="key_siteScopeName" value="${siteScopeName}" />
 
-				<execute function="#click" locator1="Home#SCOPE_SELECTOR_MENULIST_ITEM" />
+				<execute function="Click" locator1="Home#SCOPE_SELECTOR_MENULIST_ITEM" />
 			</then>
 		</if>
 
@@ -326,7 +326,7 @@
 		<execute macro="Page#openURL" />
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
-		<execute function="#assertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<if>
 			<isset var="portletName" />
@@ -345,8 +345,8 @@
 
 		<var name="key_localizedControlPanel" value="${localizedControlPanel}" />
 
-		<execute function="#click" locator1="Dockbar#ADMIN_LOCALIZED" value1="${localizedAdmin}" />
-		<execute function="#assertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL_LOCALIZED" value1="${localizedControlPanel}" />
+		<execute function="Click" locator1="Dockbar#ADMIN_LOCALIZED" value1="${localizedAdmin}" />
+		<execute function="AssertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL_LOCALIZED" value1="${localizedControlPanel}" />
 
 		<var name="key_portletName" value="${localizedPortletName}" />
 
@@ -362,13 +362,13 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="#click" locator1="Dockbar#USER_NAME" />
-		<execute function="#assertClick" locator1="Dockbar#USER_MY_ACCOUNT" value1="My Account" />
+		<execute function="Click" locator1="Dockbar#USER_NAME" />
+		<execute function="AssertClick" locator1="Dockbar#USER_MY_ACCOUNT" value1="My Account" />
 
-		<execute function="#selectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-		<execute function="#assertClick" locator1="//ul[@class='lfr-nav nav nav-pills']//a[contains(.,'${portletName}')]" value1="${portletName}" />
+		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
+		<execute function="AssertClick" locator1="//ul[@class='lfr-nav nav nav-pills']//a[contains(.,'${portletName}')]" value1="${portletName}" />
 
-		<execute function="#selectFrame" value1="relative=top" />
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="gotoMyDashboard">
@@ -376,8 +376,8 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="#click" locator1="Dockbar#USER_NAME" />
-		<execute function="#assertClick" locator1="Dockbar#USER_MY_DASHBOARD" value1="My Dashboard" />
+		<execute function="Click" locator1="Dockbar#USER_NAME" />
+		<execute function="AssertClick" locator1="Dockbar#USER_MY_DASHBOARD" value1="My Dashboard" />
 	</command>
 
 	<command name="gotoMyProfile">
@@ -385,8 +385,8 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="#click" locator1="Dockbar#USER_NAME" />
-		<execute function="#assertClick" locator1="Dockbar#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="Dockbar#USER_NAME" />
+		<execute function="AssertClick" locator1="Dockbar#USER_MY_PROFILE" value1="My Profile" />
 	</command>
 
 	<command name="gotoPagesCP">
@@ -427,14 +427,14 @@
 
 						<execute macro="SOUserBar#gotoDashboardPG" />
 
-						<execute function="#click" locator1="SODashboard#NAVIGATION_PAGE" />
+						<execute function="Click" locator1="SODashboard#NAVIGATION_PAGE" />
 					</then>
 					<else>
 						<var name="key_pageName" value="${pageName}" />
 
-						<execute function="#assertElementPresent" locator1="SOActivities#ACTIVITIES_PORTLET_LOADED" />
+						<execute function="AssertElementPresent" locator1="SOActivities#ACTIVITIES_PORTLET_LOADED" />
 
-						<execute function="#click" locator1="SOSite#NAVIGATION_PAGE" />
+						<execute function="Click" locator1="SOSite#NAVIGATION_PAGE" />
 					</else>
 				</if>
 			</then>
@@ -453,7 +453,7 @@
 
 		<var name="key_portletCategoryName" value="${portletCategoryName}" />
 
-		<execute function="#assertClick" locator1="Dockbar#ADMIN_SITE_ADMINISTRATION_CATEGORY" value1="${portletCategoryName}" />
+		<execute function="AssertClick" locator1="Dockbar#ADMIN_SITE_ADMINISTRATION_CATEGORY" value1="${portletCategoryName}" />
 
 		<var name="key_portletName" value="${portletName}" />
 
@@ -475,7 +475,7 @@
 
 		<var name="key_pageName" value="${pageName}" />
 
-		<execute function="#isElementPresent" locator1="Home#PAGE" value1="${pageName}" />
+		<execute function="IsElementPresent" locator1="Home#PAGE" value1="${pageName}" />
 	</command>
 
 	<command name="openURL">
@@ -541,7 +541,7 @@
 	<command name="selectPageTypeRadioPG">
 		<var name="key_pageType" value="${pageType}" />
 
-		<execute function="#click" locator1="DockbarAddpanelpage#TYPE_RADIO" value1="${pageType}" />
+		<execute function="Click" locator1="DockbarAddpanelpage#TYPE_RADIO" value1="${pageType}" />
 
 		<if>
 			<equals arg1="${pageType}" arg2="Panel" />
@@ -573,7 +573,7 @@
 		<if>
 			<isset var="viewChildPageDropdown" />
 			<then>
-				<execute function="#click" locator1="Home#${viewChildPageDropdown}" />
+				<execute function="Click" locator1="Home#${viewChildPageDropdown}" />
 
 				<if>
 					<isset var="javaScriptPage" />
@@ -582,65 +582,65 @@
 					</then>
 				</if>
 
-				<execute function="#mouseOver" locator1="Home#${viewChildPageDropdown}" />
+				<execute function="MouseOver" locator1="Home#${viewChildPageDropdown}" />
 
 				<var name="key_childPageName" value="${childPageName}" />
 
-				<execute function="#assertTextEquals" locator1="Home#PAGE_CHILD_PAGE" value1="${childPageName}" />
+				<execute function="AssertTextEquals" locator1="Home#PAGE_CHILD_PAGE" value1="${childPageName}" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_3" value1="${childPageName}" />
+				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_3" value1="${childPageName}" />
 			</else>
 		</if>
 	</command>
 
 	<command name="viewCustomLogoPG">
-		<execute function="#assertElementPresent" locator1="Home#CUSTOM_LOGO" />
-		<execute function="#assertElementNotPresent" locator1="Home#DEFAULT_LOGO" />
+		<execute function="AssertElementPresent" locator1="Home#CUSTOM_LOGO" />
+		<execute function="AssertElementNotPresent" locator1="Home#DEFAULT_LOGO" />
 	</command>
 
 	<command name="viewCustomThemePG">
 		<if>
 			<equals arg1="${customTheme}" arg2="Dark" />
 			<then>
-				<execute function="#assertElementPresent" locator1="Home#DARK_THEME" />
+				<execute function="AssertElementPresent" locator1="Home#DARK_THEME" />
 			</then>
 			<elseif>
 				<equals arg1="${customTheme}" arg2="Light" />
 				<then>
-					<execute function="#assertElementPresent" locator1="Home#LIGHT_THEME" />
+					<execute function="AssertElementPresent" locator1="Home#LIGHT_THEME" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="#assertElementPresent" locator1="Home#DEFAULT_THEME" />
+				<execute function="AssertElementPresent" locator1="Home#DEFAULT_THEME" />
 			</else>
 		</if>
 	</command>
 
 	<command name="viewDefaultLogoPG">
-		<execute function="#assertElementPresent" locator1="Home#DEFAULT_LOGO" />
-		<execute function="#assertElementNotPresent" locator1="Home#CUSTOM_LOGO" />
+		<execute function="AssertElementPresent" locator1="Home#DEFAULT_LOGO" />
+		<execute function="AssertElementNotPresent" locator1="Home#CUSTOM_LOGO" />
 	</command>
 
 	<command name="viewFriendlyURLLanguageOptionsPG">
-		<execute function="#click" locator1="DockbarEditpanel#EDIT" />
+		<execute function="Click" locator1="DockbarEditpanel#EDIT" />
 
 		<if>
-			<condition function="#isElementPresent" locator1="DockbarEditpanel#DETAILS_FRIENDLY_URL_TITLE" />
+			<condition function="IsElementPresent" locator1="DockbarEditpanel#DETAILS_FRIENDLY_URL_TITLE" />
 			<then>
-				<execute function="#click" locator1="DockbarEditpanel#DETAILS_PANEL_TOGGLE" />
+				<execute function="Click" locator1="DockbarEditpanel#DETAILS_PANEL_TOGGLE" />
 			</then>
 		</if>
 
 		<for list="${currentLanguageList}" param="languageKey">
-			<execute function="#assertElementPresent" locator1="DockbarEditpanel#${languageKey}" />
+			<execute function="AssertElementPresent" locator1="DockbarEditpanel#${languageKey}" />
 		</for>
 
 		<if>
 			<equals arg1="${assertUnavailableLanguages}" arg2="true" />
 			<then>
 				<for list="${unavailableLanguageList}" param="languageKey">
-					<execute function="#assertElementNotPresent" locator1="DockbarEditpanel#${languageKey}" />
+					<execute function="AssertElementNotPresent" locator1="DockbarEditpanel#${languageKey}" />
 				</for>
 			</then>
 		</if>
@@ -649,25 +649,25 @@
 	<command name="viewNoPG">
 		<var name="key_pageName" value="${pageName}" />
 
-		<execute function="#assertElementNotPresent" locator1="Home#PAGE" value1="${pageName}" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE" value1="${pageName}" />
 	</command>
 
 	<command name="viewPageFriendURLPG">
 		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
 
-		<execute function="#assertTextNotPresent" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1="${pageName}" />
-		<execute function="#assertTextEquals" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1="/2" />
+		<execute function="AssertTextNotPresent" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1="${pageName}" />
+		<execute function="AssertTextEquals" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1="/2" />
 	</command>
 
 	<command name="viewPageLayoutColumn">
-		<execute function="#assertElementPresent" locator1="Home#${pageColumnLayout}" />
+		<execute function="AssertElementPresent" locator1="Home#${pageColumnLayout}" />
 	</command>
 
 	<command name="viewPageLocalization">
 		<if>
-			<condition function="#isElementPresent" locator1="Home#PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" />
+			<condition function="IsElementPresent" locator1="Home#PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" />
 			<then>
-				<execute function="#click" locator1="Home#PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" />
+				<execute function="Click" locator1="Home#PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" />
 			</then>
 		</if>
 
@@ -676,36 +676,36 @@
 		<var name="key_defaultSiteLanguageKey" value="${defaultSiteLanguageKey}" />
 
 		<if>
-			<condition function="#isElementNotPresent" locator1="DockbarEditpanel#SEO_HTML_TITLE" />
+			<condition function="IsElementNotPresent" locator1="DockbarEditpanel#SEO_HTML_TITLE" />
 			<then>
-				<execute function="#assertClick" locator1="DockbarEditpanel#SEO_PANEL_TOGGLE" value1="SEO" />
+				<execute function="AssertClick" locator1="DockbarEditpanel#SEO_PANEL_TOGGLE" value1="SEO" />
 			</then>
 		</if>
 
-		<execute function="#assertElementPresent" locator1="DockbarEditpanel#SEO_HTML_TITLE" />
-		<execute function="#assertElementPresent" locator1="DockbarEditpanel#SEO_META_TAGS_DESCRIPTION" />
+		<execute function="AssertElementPresent" locator1="DockbarEditpanel#SEO_HTML_TITLE" />
+		<execute function="AssertElementPresent" locator1="DockbarEditpanel#SEO_META_TAGS_DESCRIPTION" />
 	</command>
 
 	<command name="viewPageOrderStagingLivePG">
-		<execute function="#assertTextEquals" locator1="Home#PAGE_1_STAGING_LIVE" value1="${pageName1}" />
-		<execute function="#assertTextEquals" locator1="Home#PAGE_2_STAGING_LIVE" value1="${pageName2}" />
-		<execute function="#assertTextEquals" locator1="Home#PAGE_3_STAGING_LIVE" value1="${pageName3}" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_1_STAGING_LIVE" value1="${pageName1}" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_2_STAGING_LIVE" value1="${pageName2}" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_3_STAGING_LIVE" value1="${pageName3}" />
 	</command>
 
 	<command name="viewPanelPortletListPG">
 		<var name="key_componentName" value="${componentName}" />
 
-		<execute function="#assertTextEquals" locator1="PGPanel#PANEL_TITLE" value1="${componentName}" />
+		<execute function="AssertTextEquals" locator1="PGPanel#PANEL_TITLE" value1="${componentName}" />
 
 		<var name="key_pageName" value="${pageName}" />
 
-		<execute function="#assertTextEquals" locator1="PGPanel#PANEL_PAGE_TITLE" value1="${pageName}" />
-		<execute function="#assertTextEquals" locator1="PGPanel#INFO_MESSAGE" value1="Please select a tool from the left menu." />
+		<execute function="AssertTextEquals" locator1="PGPanel#PANEL_PAGE_TITLE" value1="${pageName}" />
+		<execute function="AssertTextEquals" locator1="PGPanel#INFO_MESSAGE" value1="Please select a tool from the left menu." />
 
 		<for list="${portletNameList}" param="portletName">
 			<var name="key_portletName" value="${portletName}" />
 
-			<execute function="#assertTextEquals" locator1="PGPanel#MENU_ITEM" value1="${portletName}" />
+			<execute function="AssertTextEquals" locator1="PGPanel#MENU_ITEM" value1="${portletName}" />
 		</for>
 	</command>
 
@@ -713,10 +713,10 @@
 		<if>
 			<equals arg1="${liferaySite}" arg2="true" />
 			<then>
-				<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_1" value1="${pageName}" />
+				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${pageName}" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_2" value1="${pageName}" />
+				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${pageName}" />
 			</else>
 		</if>
 	</command>
@@ -725,59 +725,59 @@
 		<for list="${pageNameList}" param="pageName">
 			<var name="key_pageName" value="${pageName}" />
 
-			<execute function="#assertTextEquals" locator1="Home#PAGE" value1="${pageName}" />
+			<execute function="AssertTextEquals" locator1="Home#PAGE" value1="${pageName}" />
 		</for>
 	</command>
 
 	<command name="viewTooltipCP">
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="#mouseOver" locator1="Home#CONTROL_PANEL_NAVIGATION_TOOLTIP_ICON" />
-		<execute function="#assertTextEquals" locator1="Home#CONTROL_PANEL_NAVIGATION_TOOLTIP_MESSAGE" value1="${tooltipMessage}" />
+		<execute function="MouseOver" locator1="Home#CONTROL_PANEL_NAVIGATION_TOOLTIP_ICON" />
+		<execute function="AssertTextEquals" locator1="Home#CONTROL_PANEL_NAVIGATION_TOOLTIP_MESSAGE" value1="${tooltipMessage}" />
 
 		<take-screenshot />
 	</command>
 
 	<command name="viewTranslationsPG">
-		<execute function="#open" locator1="${sitePageURL}" />
-		<execute function="#assertLocation" value1="${sitePageURL}" />
+		<execute function="Open" locator1="${sitePageURL}" />
+		<execute function="AssertLocation" value1="${sitePageURL}" />
 
 		<if>
 			<isset var="childPageName" />
 			<then>
-				<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_3" value1="${childPageName}" />
+				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_3" value1="${childPageName}" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_2" value1="${pageName}" />
+				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${pageName}" />
 			</else>
 		</if>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Home#PORTAL_LOCALIZATION_MESSAGE_INFO" value1="${pageLocalizationMessage}" />
-		<execute function="#assertTextEquals" locator1="Home#PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" value1="Display the page in English (United States)." />
-		<execute function="#assertTextEquals" locator1="Home#PORTAL_LOCALIZATION_PREFERRED_MESSAGE" value1="${pageLocalizationPreferredLanguage}" />
+		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" value1="Display the page in English (United States)." />
+		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_PREFERRED_MESSAGE" value1="${pageLocalizationPreferredLanguage}" />
 
-		<execute function="#assertTextEquals" locator1="Dockbar#ADMIN" value1="${adminTranslation}" />
-		<execute function="#assertTextEquals" locator1="Dockbar#MY_SITES" value1="${mySitesTranslation}" />
+		<execute function="AssertTextEquals" locator1="Dockbar#ADMIN" value1="${adminTranslation}" />
+		<execute function="AssertTextEquals" locator1="Dockbar#MY_SITES" value1="${mySitesTranslation}" />
 	</command>
 
 	<command name="viewUserPageLayoutPG">
 		<execute macro="Page#openURL" />
 
-		<execute function="#click" locator1="Dockbar#USER_NAME" />
-		<execute function="#assertTextNotPresent" locator1="Dockbar#USER_MY_PROFILE" value1="My Profile" />
-		<execute function="#assertTextNotPresent" locator1="Dockbar#USER_MY_DASHBOARD" value1="My Dashboard" />
+		<execute function="Click" locator1="Dockbar#USER_NAME" />
+		<execute function="AssertTextNotPresent" locator1="Dockbar#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="AssertTextNotPresent" locator1="Dockbar#USER_MY_DASHBOARD" value1="My Dashboard" />
 	</command>
 
 	<command name="viewWithWorkflowPG">
-		<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_2" value1="${pageName}" />
-		<execute function="#pause" locator1="5000" />
+		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${pageName}" />
+		<execute function="Pause" locator1="5000" />
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="PGStaging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-		<execute function="#assertTextEquals" locator1="PGStaging#STAGING_MENU_STATUS" value1="${workflowStatus}" />
-		<execute function="#assertClick" locator1="PGStaging#LIVE_BUTTON" value1="Live" />
+		<execute function="AssertTextEquals" locator1="PGStaging#STAGING_MENU_STATUS" value1="${workflowStatus}" />
+		<execute function="AssertClick" locator1="PGStaging#LIVE_BUTTON" value1="Live" />
 
 		<var name="key_pageName" value="${pageName}" />
 
-		<execute function="#assertElementNotPresent" locator1="Home#PAGE" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE" />
 	</command>
 </definition>

@@ -1,33 +1,33 @@
 <definition>
 	<command name="addPG">
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
-		<execute function="#select" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
+		<execute function="Select" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 
 		<if>
 			<isset var="type" />
 			<then>
-				<execute function="#select" locator1="SOAnnouncementsAdd#TYPE_SELECT" value1="${type}" />
+				<execute function="Select" locator1="SOAnnouncementsAdd#TYPE_SELECT" value1="${type}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="priority" />
 			<then>
-				<execute function="#select" locator1="SOAnnouncementsAdd#PRIORITY_SELECT" value1="${priority}" />
+				<execute function="Select" locator1="SOAnnouncementsAdd#PRIORITY_SELECT" value1="${priority}" />
 			</then>
 		</if>
 
-		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitle}" />
 
 		<if>
 			<isset var="textFormat" />
 			<then>
 				<var name="key_textFormat" value="${textFormat}" />
 
-				<execute function="#click" locator1="SOAnnouncementsAdd#TEXT_FORMAT_BUTTON" />
-				<execute function="#selectFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" />
+				<execute function="Click" locator1="SOAnnouncementsAdd#TEXT_FORMAT_BUTTON" />
+				<execute function="SelectFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" />
 				<execute function="Type#sendKeys" locator1="SOAnnouncementsAdd#CONTENT_FIELD_FORMATTED_TEXT" value1="${entryContent}" />
 			</then>
 			<else>
@@ -35,13 +35,13 @@
 			</else>
 		</if>
 
-		<execute function="#selectFrameTop" />
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
+		<execute function="SelectFrameTop" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 
 		<if>
 			<isset var="entryURL" />
 			<then>
-				<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
+				<execute function="Type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
 			</then>
 		</if>
 
@@ -59,99 +59,99 @@
 			</then>
 		</if>
 
-		<execute function="#click" locator1="SOAnnouncementsAdd#SAVE_BUTTON" value1="Save" />
-		<execute function="#selectFrameTop" />
+		<execute function="Click" locator1="SOAnnouncementsAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="SelectFrameTop" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<if>
 			<equals arg1="${viewImmediately}" arg2="false" />
 			<then>
-				<execute function="#assertTextNotPresent" value1="${entryTitle}" />
+				<execute function="AssertTextNotPresent" value1="${entryTitle}" />
 			</then>
 			<else>
-				<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" />
+				<execute function="AssertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" />
 			</else>
 		</if>
 	</command>
 
 	<command name="addViaManageEntriesPG">
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
-		<execute function="#select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute function="#assertClick" locator1="SOAnnouncementsManage#ADD_ENTRY_BUTTON" value1="Add Entry"  />
+		<execute function="SelectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
+		<execute function="Select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute function="AssertClick" locator1="SOAnnouncementsManage#ADD_ENTRY_BUTTON" value1="Add Entry"  />
 
-		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
-		<execute function="#selectFrameTop" />
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
-		<execute function="#click" locator1="SOAnnouncementsAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="SelectFrameTop" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
+		<execute function="Click" locator1="SOAnnouncementsAdd#SAVE_BUTTON" value1="Save" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_AUTHOR" value1="${entryAuthor}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TYPE" value1="General" />
-		<execute function="#assertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_MODIFIED_DATE" />
-		<execute function="#assertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DISPLAY_DATE" />
-		<execute function="#assertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
-		<execute function="#selectFrameTop" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_AUTHOR" value1="${entryAuthor}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TYPE" value1="General" />
+		<execute function="AssertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_MODIFIED_DATE" />
+		<execute function="AssertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DISPLAY_DATE" />
+		<execute function="AssertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="configureAnnouncementEntriesPerPageDisplay">
 		<if>
-			<condition function="#isElementNotPresent" locator1="SOUserBar#VISIBLE_PAGE_CONTROLS" />
+			<condition function="IsElementNotPresent" locator1="SOUserBar#VISIBLE_PAGE_CONTROLS" />
 			<then>
-				<execute function="#click" locator1="SOUserBar#TOGGLE_DOCKBAR" />
+				<execute function="Click" locator1="SOUserBar#TOGGLE_DOCKBAR" />
 			</then>
 		</if>
 
 		<if>
-			<condition function="#isElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
+			<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute function="#mouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-				<execute function="#click" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
 			</then>
 		</if>
 
-		<execute function="#click" locator1="SOAnnouncements#ANNOUNCEMENTS_OPTIONS" />
+		<execute function="Click" locator1="SOAnnouncements#ANNOUNCEMENTS_OPTIONS" />
 
-		<execute function="#click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="#select" locator1="SOAnnouncementsConfiguration#DISPLAY_SETTINGS_ENTRIES_TO_DISPLAY_PER_PAGE_SELECT" value1="${entriesPerPage}" />
-		<execute function="#assertClick" locator1="SOAnnouncementsConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="Select" locator1="SOAnnouncementsConfiguration#DISPLAY_SETTINGS_ENTRIES_TO_DISPLAY_PER_PAGE_SELECT" value1="${entriesPerPage}" />
+		<execute function="AssertClick" locator1="SOAnnouncementsConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="configureAnnouncementEntriesScopeDisplay">
 		<if>
-			<condition function="#isElementNotPresent" locator1="SOUserBar#VISIBLE_PAGE_CONTROLS" />
+			<condition function="IsElementNotPresent" locator1="SOUserBar#VISIBLE_PAGE_CONTROLS" />
 			<then>
-				<execute function="#click" locator1="SOUserBar#TOGGLE_DOCKBAR" />
+				<execute function="Click" locator1="SOUserBar#TOGGLE_DOCKBAR" />
 			</then>
 		</if>
 
 		<if>
-			<condition function="#isElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
+			<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute function="#mouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-				<execute function="#click" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
 			</then>
 		</if>
 
-		<execute function="#click" locator1="SOAnnouncements#ANNOUNCEMENTS_OPTIONS" />
+		<execute function="Click" locator1="SOAnnouncements#ANNOUNCEMENTS_OPTIONS" />
 
-		<execute function="#click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="#check" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_CUSTOMIZE_ANNOUNCEMENTS_DISPLAYED_CHECKBOX" />
-		<execute function="#assertClick" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_SITES_TAB" value1="Sites" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="Check" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_CUSTOMIZE_ANNOUNCEMENTS_DISPLAYED_CHECKBOX" />
+		<execute function="AssertClick" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_SITES_TAB" value1="Sites" />
 
 		<if>
 			<isset var="displayingSites" />
@@ -159,8 +159,8 @@
 				<for list="${displayingSites}" param="displayingSite">
 					<var name="displayingSite" value="${displayingSite}" />
 
-					<execute function="#select" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_AVAILABLE_SITES_SELECT" value1="${displayingSite}" />
-					<execute function="#click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_SITES_FROM_AVAILABLE_TO_DISPLAYING_BUTTON" />
+					<execute function="Select" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_AVAILABLE_SITES_SELECT" value1="${displayingSite}" />
+					<execute function="Click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_SITES_FROM_AVAILABLE_TO_DISPLAYING_BUTTON" />
 					<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT" value1="${displayingSite}" />
 				</for>
 			</then>
@@ -170,15 +170,15 @@
 					<for list="${nonDisplayingSites}" param="nonDisplayingSite">
 						<var name="nonDisplayingSite" value="${nonDisplayingSite}" />
 
-						<execute function="#select" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT" value1="${nonDisplayingSite}" />
-						<execute function="#click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_SITES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
+						<execute function="Select" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT" value1="${nonDisplayingSite}" />
+						<execute function="Click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_SITES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
 						<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_AVAILABLE_SITES_SELECT" value1="${nonDisplayingSite}" />
 					</for>
 				</then>
 			</elseif>
 		</if>
 
-		<execute function="#assertClick" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_ROLES_TAB" value1="Roles" />
+		<execute function="AssertClick" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_ROLES_TAB" value1="Roles" />
 
 		<if>
 			<isset var="displayingRoles" />
@@ -186,8 +186,8 @@
 				<for list="${displayingRoles}" param="displayingRole">
 					<var name="displayingRole" value="${displayingRole}" />
 
-					<execute function="#select" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_AVAILABLE_ROLES_SELECT" value1="${displayingRole}" />
-					<execute function="#click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_ROLES_FROM_AVAILABLE_TO_DISPLAYING_BUTTON" />
+					<execute function="Select" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_AVAILABLE_ROLES_SELECT" value1="${displayingRole}" />
+					<execute function="Click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_ROLES_FROM_AVAILABLE_TO_DISPLAYING_BUTTON" />
 					<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT" value1="${displayingRole}" />
 				</for>
 			</then>
@@ -197,172 +197,172 @@
 					<for list="${nonDisplayingRoles}" param="nonDisplayingRole">
 						<var name="nonDisplayingRole" value="${nonDisplayingRole}" />
 
-						<execute function="#select" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT" value1="${nonDisplayingRole}" />
-						<execute function="#click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_ROLES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
+						<execute function="Select" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT" value1="${nonDisplayingRole}" />
+						<execute function="Click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_ROLES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
 						<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_AVAILABLE_ROLES_SELECT" value1="${nonDisplayingRole}" />
 					</for>
 				</then>
 			</elseif>
 		</if>
 
-		<execute function="#assertClick" locator1="SOAnnouncementsConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="#selectFrameTop" />
+		<execute function="AssertClick" locator1="SOAnnouncementsConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="deletePG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="#clickNoError" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_DELETE_LINK" />
+		<execute function="ClickNoError" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_DELETE_LINK" />
 		<execute function="Confirm#waitForConfirmation" locator1="SOAnnouncements#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
-		<execute function="#assertTextNotPresent" value1="{entryTitle}" />
-		<execute function="#assertTextNotPresent" value1="{entryContent}" />
+		<execute function="AssertTextNotPresent" value1="{entryTitle}" />
+		<execute function="AssertTextNotPresent" value1="{entryContent}" />
 	</command>
 
 	<command name="deleteViaManageEntriesPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
-		<execute function="#select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute function="#assertClickNoError" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
-		<execute function="#confirm" locator1="SOAnnouncementsManage#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
-		<execute function="#assertTextNotPresent" value1="{entryTitle}" />
-		<execute function="#assertTextNotPresent" value1="{entryContent}" />
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
+		<execute function="Select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute function="AssertClickNoError" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
+		<execute function="Confirm" locator1="SOAnnouncementsManage#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
+		<execute function="AssertTextNotPresent" value1="{entryTitle}" />
+		<execute function="AssertTextNotPresent" value1="{entryContent}" />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="editPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="#click" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EDIT_LINK" />
+		<execute function="Click" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EDIT_LINK" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitleEdit}" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitleEdit}" />
 		<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
-		<execute function="#selectFrameTop" />
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
-		<execute function="#click" locator1="SOAnnouncementsAdd#SAVE_BUTTON" value1="Save" />
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrameTop" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
+		<execute function="Click" locator1="SOAnnouncementsAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="SelectFrameTop" />
 
-		<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" />
+		<execute function="AssertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" />
 	</command>
 
 	<command name="editViaManageEntriesPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
-		<execute function="#select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute function="#assertClick" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
+		<execute function="SelectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
+		<execute function="Select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute function="AssertClick" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
 
-		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitleEdit}" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitleEdit}" />
 		<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
-		<execute function="#selectFrameTop" />
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
-		<execute function="#click" locator1="SOAnnouncementsAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="SelectFrameTop" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
+		<execute function="Click" locator1="SOAnnouncementsAdd#SAVE_BUTTON" value1="Save" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitleEdit}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_AUTHOR" value1="${entryAuthor}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TYPE" value1="General" />
-		<execute function="#assertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_MODIFIED_DATE" />
-		<execute function="#assertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DISPLAY_DATE" />
-		<execute function="#assertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
-		<execute function="#selectFrameTop" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitleEdit}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_AUTHOR" value1="${entryAuthor}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TYPE" value1="General" />
+		<execute function="AssertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_MODIFIED_DATE" />
+		<execute function="AssertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DISPLAY_DATE" />
+		<execute function="AssertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="markAsReadPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Read" />
-		<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
-		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
-		<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
-		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Read" />
+		<execute function="AssertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
+		<execute function="AssertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
+		<execute function="AssertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
+		<execute function="AssertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Unread" />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
-		<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
-		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Unread" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
+		<execute function="AssertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
+		<execute function="AssertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
 	</command>
 
 	<command name="markAsUnreadPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
-		<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
-		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
+		<execute function="AssertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
+		<execute function="AssertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Unread" />
-		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
-		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
-		<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Unread" />
+		<execute function="AssertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
+		<execute function="AssertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
+		<execute function="AssertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Read" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Read" />
 	</command>
 
 	<command name="previewEditPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="#click" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EDIT_LINK" />
+		<execute function="Click" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EDIT_LINK" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitleEdit}" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitleEdit}" />
 		<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
-		<execute function="#selectFrameTop" />
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
-		<execute function="#click" locator1="SOAnnouncementsAdd#PREVIEW_BUTTON" value1="Preview" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_TITLE" value1="${entryTitleEdit}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_CONTENT" value1="${entryContentEdit}" />
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrameTop" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
+		<execute function="Click" locator1="SOAnnouncementsAdd#PREVIEW_BUTTON" value1="Preview" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_TITLE" value1="${entryTitleEdit}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_CONTENT" value1="${entryContentEdit}" />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="previewPG">
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
-		<execute function="#select" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
+		<execute function="Select" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
-		<execute function="#selectFrameTop" />
-		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
-		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
-		<execute function="#click" locator1="SOAnnouncementsAdd#PREVIEW_BUTTON" value1="Preview" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrameTop" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
+		<execute function="Click" locator1="SOAnnouncementsAdd#PREVIEW_BUTTON" value1="Preview" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="scheduleFutureExpirationTimeCmd">
@@ -374,7 +374,7 @@
 		<var locator="DISPLAY_DATE_DATE_YEAR" name="expirationDateYear" path="SOAnnouncementsAdd" />
 		<var name="expirationDate" value="${expirationDateMonth}/${expirationDateDay}/${expirationDateYear}" />
 
-		<execute function="#type" locator1="SOAnnouncementsAdd#EXPIRATION_DATE_DATE_INPUT" value1="${expirationDate}" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#EXPIRATION_DATE_DATE_INPUT" value1="${expirationDate}" />
 
 		<var locator="DISPLAY_DATE_DATE_HOUR" name="expirationDateHour" path="SOAnnouncementsAdd" />
 		<var name="expirationDateHourLength" value="${expirationDateHour?length()}" />
@@ -409,11 +409,11 @@
 		<var name="expirationDateMeridian" value="${expirationDateMeridian?replace('1', 'PM')}" />
 		<var name="expirationTime" value="${expirationDateHour}:${expirationDateMinuteFuture} ${expirationDateMeridian}" />
 
-		<execute function="#type" locator1="SOAnnouncementsAdd#EXPIRATION_DATE_TIME_INPUT" value1="${expirationTime}" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#EXPIRATION_DATE_TIME_INPUT" value1="${expirationTime}" />
 	</command>
 
 	<command name="scheduleFutureTimeCmd">
-		<execute function="#uncheck" locator1="SOAnnouncementsAdd#DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX" />
+		<execute function="Uncheck" locator1="SOAnnouncementsAdd#DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX" />
 
 		<var locator="DISPLAY_DATE_DATE_HOUR" name="displayDateHour" path="SOAnnouncementsAdd" />
 		<var name="displayDateHourLength" value="${displayDateHour?length()}" />
@@ -443,7 +443,7 @@
 
 		<var name="displayDate" value="${displayDateHour}:${displayDateMinuteFuture} ${displayDateMeridian}" />
 
-		<execute function="#type" locator1="SOAnnouncementsAdd#DISPLAY_DATE_TIME_INPUT" value1="${displayDate}" />
+		<execute function="Type" locator1="SOAnnouncementsAdd#DISPLAY_DATE_TIME_INPUT" value1="${displayDate}" />
 	</command>
 
 	<command name="tearDownPG">
@@ -452,139 +452,139 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<if>
-			<condition function="#isElementNotPresent" locator1="SOUserBar#VISIBLE_PAGE_CONTROLS" />
+			<condition function="IsElementNotPresent" locator1="SOUserBar#VISIBLE_PAGE_CONTROLS" />
 			<then>
-				<execute function="#click" locator1="SOUserBar#TOGGLE_DOCKBAR" />
+				<execute function="Click" locator1="SOUserBar#TOGGLE_DOCKBAR" />
 			</then>
 		</if>
 
 		<if>
-			<condition function="#isElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
+			<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute function="#mouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-				<execute function="#click" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
 			</then>
 		</if>
 
-		<execute function="#click" locator1="SOAnnouncements#ANNOUNCEMENTS_OPTIONS" />
+		<execute function="Click" locator1="SOAnnouncements#ANNOUNCEMENTS_OPTIONS" />
 
-		<execute function="#click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="#check" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_CUSTOMIZE_ANNOUNCEMENTS_DISPLAYED_CHECKBOX" />
-		<execute function="#assertClick" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_SITES_TAB" value1="Sites" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="Check" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_CUSTOMIZE_ANNOUNCEMENTS_DISPLAYED_CHECKBOX" />
+		<execute function="AssertClick" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_SITES_TAB" value1="Sites" />
 
 		<while>
-			<condition function="#isElementPresent" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT_OPTION" />
+			<condition function="IsElementPresent" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT_OPTION" />
 			<then>
-				<execute function="#click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT_OPTION" />
-				<execute function="#click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_SITES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
-				<execute function="#pause" locator1="1000" />
+				<execute function="Click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT_OPTION" />
+				<execute function="Click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_SITES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
+				<execute function="Pause" locator1="1000" />
 			</then>
 		</while>
 
-		<execute function="#assertClick" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_ROLES_TAB" value1="Roles" />
+		<execute function="AssertClick" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_ROLES_TAB" value1="Roles" />
 
 		<while>
-			<condition function="#isElementPresent" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT_OPTION" />
+			<condition function="IsElementPresent" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT_OPTION" />
 			<then>
-				<execute function="#click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT_OPTION" />
-				<execute function="#click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_ROLES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
-				<execute function="#pause" locator1="1000" />
+				<execute function="Click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT_OPTION" />
+				<execute function="Click" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_MOVE_ROLES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
+				<execute function="Pause" locator1="1000" />
 			</then>
 		</while>
 
-		<execute function="#uncheck" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_CUSTOMIZE_ANNOUNCEMENTS_DISPLAYED_CHECKBOX" />
-		<execute function="#assertClick" locator1="SOAnnouncementsConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="#assertTextEquals" locator1="SOAnnouncementsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="#selectFrameTop" />
+		<execute function="Uncheck" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_CUSTOMIZE_ANNOUNCEMENTS_DISPLAYED_CHECKBOX" />
+		<execute function="AssertClick" locator1="SOAnnouncementsConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="SOAnnouncementsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrameTop" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#pause" value1="1000" />
-		<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_SECTION" />
+		<execute function="Pause" value1="1000" />
+		<execute function="AssertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_SECTION" />
 
 		<if>
 			<and>
-				<condition function="#isElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
-				<condition function="#isElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" />
+				<condition function="IsElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_COLLAPSED" />
+				<condition function="IsElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" />
 			</and>
 			<then>
-				<execute function="#click" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" />
-				<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
+				<execute function="Click" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" />
+				<execute function="AssertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_EXPANDED" />
 			</then>
 		</if>
 
 		<while>
-			<condition function="#isElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_GENERIC_DELETE_LINK" />
+			<condition function="IsElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_GENERIC_DELETE_LINK" />
 			<then>
-				<execute function="#assertClickNoError" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_GENERIC_DELETE_LINK" value1="Delete" />
+				<execute function="AssertClickNoError" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_GENERIC_DELETE_LINK" value1="Delete" />
 				<execute function="Confirm#waitForConfirmation" locator1="SOAnnouncements#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
 			</then>
 		</while>
 
-		<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+		<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
 
-		<execute function="#selectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
-		<execute function="#select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="General" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
+		<execute function="Select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="General" />
 
 		<while>
-			<condition function="#isElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" />
+			<condition function="IsElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" />
 			<then>
-				<execute function="#assertClickNoError" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
-				<execute function="#confirm" locator1="SOAnnouncementsManage#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
+				<execute function="AssertClickNoError" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
+				<execute function="Confirm" locator1="SOAnnouncementsManage#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
 			</then>
 		</while>
 
-		<execute function="#selectFrameTop" />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="viewEmptyPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="#assertTextNotPresent" value1="${entryAuthor} to ${distributionScope}" />
-		<execute function="#assertTextNotPresent" value1="${entryTitle}" />
-		<execute function="#assertTextNotPresent" value1="${entryContent}" />
+		<execute function="AssertTextNotPresent" value1="${entryAuthor} to ${distributionScope}" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle}" />
+		<execute function="AssertTextNotPresent" value1="${entryContent}" />
 
 		<if>
 			<equals arg1="${viewManageEntries}" arg2="false" />
 			<then>
-				<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+				<execute function="AssertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
 			</then>
 			<else>
-				<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+				<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
 
 				<var name="key_entryTitle" value="${entryTitle}" />
 
-				<execute function="#selectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
+				<execute function="SelectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
 
 				<if>
 					<equals arg1="${expiredEntry}" arg2="true" />
 					<then>
-						<execute function="#select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-						<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
-						<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_AUTHOR" value1="${entryAuthor}" />
+						<execute function="Select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+						<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+						<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_AUTHOR" value1="${entryAuthor}" />
 						<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" value1="Ago" />
 
 						<if>
 							<isset var="type" />
 							<then>
-								<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TYPE" value1="${type}" />
+								<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TYPE" value1="${type}" />
 							</then>
 							<else>
-								<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TYPE" value1="General" />
+								<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TYPE" value1="General" />
 							</else>
 						</if>
 					</then>
 					<else>
-						<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#INFO_MESSAGE" value1="No entries were found." />
-						<execute function="#select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-						<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#INFO_MESSAGE" value1="No entries were found." />
-						<execute function="#assertTextNotPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+						<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#INFO_MESSAGE" value1="No entries were found." />
+						<execute function="Select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+						<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#INFO_MESSAGE" value1="No entries were found." />
+						<execute function="AssertTextNotPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 					</else>
 				</if>
 
-				<execute function="#selectFrameTop" />
+				<execute function="SelectFrameTop" />
 			</else>
 		</if>
 	</command>
@@ -592,13 +592,13 @@
 	<command name="viewNotificationPG">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
-		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="1" />
-		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="AssertElementPresent" locator1="SOUserBar#NOTIFICATION" />
+		<execute function="AssertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="1" />
+		<execute function="Click" locator1="SOUserBar#NOTIFICATION" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${entryAuthor} sent a new announcement." />
-		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
-		<execute function="#assertClick" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${entryAuthor} sent a new announcement." />
-		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
+		<execute function="AssertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
+		<execute function="AssertClick" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${entryAuthor} sent a new announcement." />
+		<execute function="AssertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
 	</command>
 
 	<command name="viewPG">
@@ -609,15 +609,15 @@
 		<if>
 			<isset var="entryURL" />
 			<then>
-				<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE_LINK" value1="${entryTitle}" />
-				<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_IMAGE_GOOGLE" />
+				<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE_LINK" value1="${entryTitle}" />
+				<execute function="AssertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_IMAGE_GOOGLE" />
 
 				<execute macro="Page#openURL" />
 
 				<execute macro="SOUserBar#gotoDashboardPG" />
 			</then>
 			<else>
-				<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+				<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 			</else>
 		</if>
 
@@ -626,39 +626,39 @@
 		<if>
 			<equals arg1="${priority}" arg2="Important" />
 			<then>
-				<execute function="#sikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_IMPORTANT_PNG" />
+				<execute function="SikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_IMPORTANT_PNG" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${viewManageEntries}" arg2="false" />
 			<then>
-				<execute function="#assertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+				<execute function="AssertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
 			</then>
 			<else>
-				<execute function="#assertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+				<execute function="AssertClick" locator1="SOAnnouncements#ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
 
-				<execute function="#selectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
-				<execute function="#select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-				<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
-				<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_AUTHOR" value1="${entryAuthor}" />
+				<execute function="SelectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
+				<execute function="Select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+				<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+				<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_AUTHOR" value1="${entryAuthor}" />
 
 				<if>
 					<isset var="type" />
 					<then>
-						<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TYPE" value1="${type}" />
+						<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TYPE" value1="${type}" />
 					</then>
 					<else>
-						<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TYPE" value1="General" />
+						<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_TYPE" value1="General" />
 					</else>
 				</if>
 
-				<execute function="#assertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_MODIFIED_DATE" />
-				<execute function="#assertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DISPLAY_DATE" />
-				<execute function="#assertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" />
-				<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
-				<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
-				<execute function="#selectFrameTop" />
+				<execute function="AssertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_MODIFIED_DATE" />
+				<execute function="AssertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DISPLAY_DATE" />
+				<execute function="AssertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" />
+				<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
+				<execute function="AssertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
+				<execute function="SelectFrameTop" />
 			</else>
 		</if>
 	</command>

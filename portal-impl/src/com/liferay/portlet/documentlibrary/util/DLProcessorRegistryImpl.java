@@ -24,11 +24,9 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 
 import java.util.Map;
@@ -207,20 +205,8 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	private FileVersion _getLatestFileVersion(
 		FileEntry fileEntry, boolean trusted) {
 
-		FileVersion latestFileVersion = null;
-
 		try {
-			if (fileEntry.getModel() instanceof DLFileEntry) {
-				DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-				latestFileVersion = new LiferayFileVersion(
-					dlFileEntry.getLatestFileVersion(trusted));
-			}
-			else {
-				latestFileVersion = fileEntry.getLatestFileVersion(trusted);
-			}
-
-			return latestFileVersion;
+			return fileEntry.getLatestFileVersion(trusted);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

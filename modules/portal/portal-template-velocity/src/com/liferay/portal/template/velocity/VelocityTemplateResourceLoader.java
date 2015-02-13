@@ -37,9 +37,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-		configurationPid = "com.liferay.portal.template.velocity",
-		configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-		service = {TemplateResourceLoader.class, VelocityTemplateResourceLoader.class}
+	configurationPid = "com.liferay.portal.template.velocity",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = {
+		TemplateResourceLoader.class, VelocityTemplateResourceLoader.class
+	}
 )
 public class VelocityTemplateResourceLoader implements TemplateResourceLoader {
 

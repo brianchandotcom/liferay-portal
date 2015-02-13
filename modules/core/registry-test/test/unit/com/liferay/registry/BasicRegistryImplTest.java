@@ -31,7 +31,7 @@ public class BasicRegistryImplTest {
 	}
 
 	@Test
-	public void testCustomizerCalledOncePerEvent() {
+	public void testServiceTrackerCustomizerCalledOncePerEvent() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		AtomicInteger addingState = new AtomicInteger(0);

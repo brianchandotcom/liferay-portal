@@ -381,6 +381,12 @@
 							'plugin'
 						]
 					},
+					'liferay-fullscreen-source-editor': {
+						path: 'fullscreen_source_editor.js',
+						requires: [
+							'liferay-source-editor'
+						]
+					},
 					'liferay-history': {
 						path: 'history.js',
 						requires: [

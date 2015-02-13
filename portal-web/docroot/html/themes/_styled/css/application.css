@@ -853,6 +853,10 @@ input.switch {
 	padding-right: 30px;
 	position: relative;
 
+	.ace_editor {
+		height: 100%;
+	}
+
 	.lfr-source-editor-toolbar {
 		padding: 0;
 		position: absolute;
@@ -871,100 +875,84 @@ input.switch {
 	}
 }
 
-.lfr-header-fullscreen {
-	left: 0;
-	padding: 0 20px;
-	position: absolute;
-	top: 0;
-	width: 100%;
-
-	.header-left {
-		float: left;
-	}
-
-	.header-right {
-		float: right;
-
-		span {
-			cursor: pointer;
-			font-size: 12px;
-			margin: 0 5px;
-		}
-	}
+.lfr-fulscreen-source-editor-dialog .modal-footer {
+	text-align: left;
 }
 
-.lfr-source-editor-fullscreen {
-	display: block;
+.lfr-fullscreen-source-editor {
 	height: 100%;
 	overflow: hidden;
-	padding-top: 10px;
-	width: 100%;
 
-	.ace_editor {
-		height: 100%;
-	}
+	.lfr-fullscreen-source-editor-header {
+		height: 5%;
+		min-height: 5%;
 
-	.content-splitter {
-		border: 1px solid #CCC;
-	}
+		.layout-selector {
+			text-align: right;
 
-	.content-preview {
-		overflow-y: auto;
-		padding: 0 20px;
-	}
-
-	&.vertical {
-		.content-html, .content-splitter, .content-preview  {
-			float: left;
-			height: 100%;
-		}
-
-		.content-html {
-			width: 50%;
-		}
-
-		.content-splitter {
-			width: 1px;
-		}
-
-		.content-preview {
-			width: 49%;
+			span {
+				cursor: pointer;
+				font-size: 12px;
+				margin: 0 5px;
+			}
 		}
 	}
 
-	&.horizontal {
-		.content-html, .content-splitter, .content-preview  {
-			width: 100%;
+	.lfr-fullscreen-source-editor-content {
+		height: 95%;
+		position: relative;
+
+		.panel-splitter {
+			border: 1px solid #CCC;
+			position: absolute;
 		}
 
-		.content-html {
-			height: 50%;
-			margin-bottom: 5px;
+		.preview-panel {
+			display: inline-block;
+			overflow-y: auto;
+			padding-left: 20px;
 		}
 
-		.content-splitter {
-			height: 1px;
+		.source-panel {
+			display: inline-block;
 		}
 
-		.content-preview {
-			height: 49%;
+		&.vertical {
+			.source-panel, .preview-panel  {
+				height: 100%;
+				width: 50%;
+			}
+
+			.panel-splitter {
+				height: 100%;
+				left: 50%;
+				top: 0;
+			}
+		}
+
+		&.horizontal {
+			.source-panel, .preview-panel  {
+				height: 50%;
+				width: 100%;
+			}
+
+			.panel-splitter {
+				top: 50%;
+				width: 100%;
+			}
+		}
+
+		&.simple {
+			.panel-splitter, .preview-panel  {
+				display: none;
+			}
+
+			.source-panel {
+				height: 100%;
+				width: 100%;
+			}
 		}
 	}
-
-	&.simple {
-		.content-html {
-			height: 100%;
-			width: 100%;
-		}
-
-		.content-splitter, .content-preview  {
-			display: none;
-		}
-	}
-}
-
-.fullscreen-dialog .modal-footer {
-	text-align: left;
 }
 
 /* ---------- Alloy editor ---------- */

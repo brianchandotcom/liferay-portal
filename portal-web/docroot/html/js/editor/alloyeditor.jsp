@@ -347,8 +347,6 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 							}
 						).render();
 
-						sourceEditor.on('fullscreen-done', switchMode);
-
 						toggleEditorModeUI();
 
 						Liferay.component('<%= name %>Source', sourceEditor);
@@ -382,18 +380,68 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 			editorSwitch.on('click', switchMode);
 
+			var fullScreenDialog;
+			var fullScreenEditor;
+
 			editorFullscreen.on(
 				'click',
 				function(event) {
-					var editor = Liferay.component('<%= name %>Source');
-
-					var currentContent = window['<%= name %>'].getHTML();
-
-					if (currentContent !== editor.get(STR_VALUE)) {
-						editor.set(STR_VALUE, currentContent);
+					if (fullScreenDialog) {
+						fullScreenEditor.set('value', window['<%= name %>'].getHTML());
+						fullScreenDialog.show();
 					}
+					else {
+						Liferay.Util.openWindow(
+							{
+								dialog: {
+									constrain: true,
+									cssClass: 'lfr-fulscreen-source-editor-dialog',
+									modal: true,
+									'toolbars.footer': [
+										{
+											cssClass: 'btn-primary',
+											label: '<liferay-ui:message key="done" />',
+											on: {
+												click: function(event) {
+													fullScreenDialog.hide();
+													switchMode(
+														{
+															content: fullScreenEditor.get('value')
+														}
+													);
+												}
+											}
+										},
+										{
+											label: '<liferay-ui:message key="cancel" />',
+											on: {
+												click: function(event) {
+													fullScreenDialog.hide();
+												}
+											}
+										}
+									]
+								},
+								title: '<liferay-ui:message key="edit-content" />'
+							},
+							function(dialog) {
+								fullScreenDialog = dialog;
 
-					editor.openFullScreen();
+								A.use(
+									'liferay-fullscreen-source-editor',
+									function(A) {
+										fullScreenEditor = new A.LiferayFullScreenSourceEditor(
+											{
+												boundingBox: dialog.getStdModNode(A.WidgetStdMod.BODY).appendChild('<div></div>'),
+												previewCssClass: 'alloy-editor alloy-editor-placeholder',
+												value: window['<%= name %>'].getHTML()
+											}
+										).render();
+									}
+								);
+							}
+						);
+					}
 				}
 			);
 		</c:if>

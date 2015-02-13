@@ -57,7 +57,7 @@
 
 		<execute function="#assertClick" locator1="PGBlogsConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGBlogsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGBlogsConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureRSSPG">
@@ -106,7 +106,7 @@
 
 		<execute function="#assertClick" locator1="PGBlogsConfigurationSetupRSS#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGBlogsConfigurationSetupRSS#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGBlogsConfigurationSetupRSS#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureScopeCP">
@@ -240,7 +240,7 @@
 		<execute function="#assertChecked" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_TWITTER_CHECKBOX" />
 		<execute function="#assertChecked" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_FACEBOOK_CHECKBOX" />
 		<execute function="#assertChecked" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_GOOGLE_PLUS_CHECKBOX" />
-		<execute action="PGBlogsConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewDefaultConfigurationRSSPG">
@@ -257,7 +257,7 @@
 		<execute function="#assertTextEquals" locator1="PGBlogsConfigurationSetupRSS#MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="20" />
 		<execute function="#assertTextEquals" locator1="PGBlogsConfigurationSetupRSS#RSS_DISPLAY_STYLE_SELECT" value1="full-content" />
 		<execute function="#assertTextEquals" locator1="PGBlogsConfigurationSetupRSS#FORMAT_SELECT" value1="atom_1.0" />
-		<execute action="PGBlogsConfigurationSetupRSS#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewNoPermissionCP">

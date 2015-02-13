@@ -591,7 +591,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="1 Comment" />
+		<execute function="#assertTextNotPresent" value1="1 Comment" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs" />
@@ -609,7 +609,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute action="PGBlogsEntry#assertTextNotPresent" value1="${entryComment}" />
+		<execute function="#assertTextNotPresent" value1="${entryComment}" />
 	</command>
 
 	<command name="EditBlogsEntryComment" priority="5">
@@ -885,8 +885,8 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
 	</command>
 
 	<command known-issues="SOS-2269,SOS-2270" name="ViewScheduledBlogEntryActivities" priority="5">
@@ -920,8 +920,8 @@
 		</execute>
 
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle}" />
 		<execute function="#pause" locator1="150000" />
 
 		<execute macro="Page#openURL">

@@ -90,7 +90,7 @@
 						<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_STATUS" value1="Draft" />
 					</then>
 					<else>
-						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
+						<execute function="#assertTextNotPresent" value1="Draft" />
 					</else>
 				</if>
 			</then>
@@ -107,7 +107,7 @@
 							<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_STATUS" value1="Draft" />
 						</then>
 						<else>
-							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
+							<execute function="#assertTextNotPresent" value1="Draft" />
 						</else>
 					</if>
 				</then>
@@ -129,7 +129,7 @@
 						<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#ENTRY_LIST_DOCUMENT_WORKFLOW" value1="Draft" />
 					</then>
 					<else>
-						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
+						<execute function="#assertTextNotPresent" value1="Draft" />
 					</else>
 				</if>
 			</then>
@@ -144,7 +144,7 @@
 							<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#ENTRY_LIST_DOCUMENT_WORKFLOW" value1="Draft" />
 						</then>
 						<else>
-							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
+							<execute function="#assertTextNotPresent" value1="Draft" />
 						</else>
 					</if>
 
@@ -178,7 +178,7 @@
 						<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_STATUS" value1="Draft" />
 					</then>
 					<else>
-						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
+						<execute function="#assertTextNotPresent" value1="Draft" />
 					</else>
 				</if>
 			</then>
@@ -195,7 +195,7 @@
 							<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_STATUS" value1="Draft" />
 						</then>
 						<else>
-							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
+							<execute function="#assertTextNotPresent" value1="Draft" />
 						</else>
 					</if>
 				</then>
@@ -213,7 +213,7 @@
 							<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_STATUS" value1="Draft" />
 						</then>
 						<else>
-							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
+							<execute function="#assertTextNotPresent" value1="Draft" />
 						</else>
 					</if>
 				</then>
@@ -239,7 +239,7 @@
 						<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_STATUS" value1="Draft" />
 					</then>
 					<else>
-						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
+						<execute function="#assertTextNotPresent" value1="Draft" />
 					</else>
 				</if>
 			</then>

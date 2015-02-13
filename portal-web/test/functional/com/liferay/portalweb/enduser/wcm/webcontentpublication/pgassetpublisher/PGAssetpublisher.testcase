@@ -118,7 +118,7 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Look and Feel" />

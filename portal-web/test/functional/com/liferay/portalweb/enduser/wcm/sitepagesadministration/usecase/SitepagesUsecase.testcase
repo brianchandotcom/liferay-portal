@@ -194,7 +194,7 @@
 			<var name="pageName" value="Page Name" />
 		</execute>
 
-		<execute action="Home#assertConsoleTextNotPresent" value1="java.lang.StringIndexOutOfBoundsException: String index out of range: -1" />
+		<execute function="#assertConsoleTextNotPresent" value1="java.lang.StringIndexOutOfBoundsException: String index out of range: -1" />
 
 		<execute macro="Page#viewPageFriendURLPG">
 			<var name="localizedFriendlyURL" value="/german" />
@@ -571,7 +571,7 @@
 
 		<var method="selenium#getLocation()" name="blogEntryURL" />
 
-		<execute action="Gmail#close" />
+		<execute function="#close" />
 
 		<execute function="#selectWindow" locator1="null" />
 
@@ -599,7 +599,7 @@
 
 		<var method="selenium#getLocation()" name="messageBoardsThreadURL" />
 
-		<execute action="Gmail#close" />
+		<execute function="#close" />
 
 		<execute function="#selectWindow" locator1="null" />
 
@@ -796,7 +796,7 @@
 
 		<var method="selenium#getLocation()" name="blogEntryURL" />
 
-		<execute action="Gmail#close" />
+		<execute function="#close" />
 
 		<execute function="#selectWindow" locator1="null" />
 
@@ -824,7 +824,7 @@
 
 		<var method="selenium#getLocation()" name="messageBoardsThreadURL" />
 
-		<execute action="Gmail#close" />
+		<execute function="#close" />
 
 		<execute function="#selectWindow" locator1="null" />
 
@@ -1038,7 +1038,7 @@
 
 		<var method="selenium#getLocation()" name="blogEntryURL" />
 
-		<execute action="Gmail#close" />
+		<execute function="#close" />
 
 		<execute function="#selectWindow" locator1="null" />
 
@@ -1066,7 +1066,7 @@
 
 		<var method="selenium#getLocation()" name="messageBoardsThreadURL" />
 
-		<execute action="Gmail#close" />
+		<execute function="#close" />
 
 		<execute function="#selectWindow" locator1="null" />
 
@@ -1236,7 +1236,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertLocation" value1="https://www.google.com/" />
+		<execute function="#assertLocation" value1="https://www.google.com/" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Embedded Page" />
@@ -1244,11 +1244,11 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertLocation" value1="http://localhost:8080/web/page-type-test-site-name/embedded-page" />
+		<execute function="#assertLocation" value1="http://localhost:8080/web/page-type-test-site-name/embedded-page" />
 
 		<execute function="#selectFrame" locator1="PGEmbedded#EMBEDDED_IFRAME" />
 		<execute function="#assertTextEquals" locator1="PGEmbedded#EMBEDDED_LIFERAY_COPYRIGHT_TEXT" value1="© 2015 LIFERAY INC. ALL RIGHTS RESERVED" />
-		<execute action="PGEmbedded#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Panel Page" />

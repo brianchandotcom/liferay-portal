@@ -2291,13 +2291,13 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="changeLog" value="${changeLog}" />
@@ -2307,7 +2307,7 @@
 			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 	</command>
 
 	<command name="EditDocumentType" priority="4">
@@ -3924,10 +3924,10 @@
 			<var name="dmDocumentVersionNumber" value="3.0" />
 		</execute>
 
-		<execute action="SODocuments#assertTextNotPresent" value1="Version 2.0" />
-		<execute action="SODocuments#assertTextNotPresent" value1="DM Document Comment3 Edit" />
-		<execute action="SODocuments#assertTextNotPresent" value1="12.4k" />
-		<execute action="SODocuments#assertTextNotPresent" value1="Major Revision" />
+		<execute function="#assertTextNotPresent" value1="Version 2.0" />
+		<execute function="#assertTextNotPresent" value1="DM Document Comment3 Edit" />
+		<execute function="#assertTextNotPresent" value1="12.4k" />
+		<execute function="#assertTextNotPresent" value1="Major Revision" />
 
 		<execute macro="SODocuments#viewPGDocumentSpecificVersionLog">
 			<var name="changeLog" value="Minor Revision" />

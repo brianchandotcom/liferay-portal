@@ -477,7 +477,7 @@
 				<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />
 				<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_3" value1="${siteChildPageName}" />
 				<execute function="#assertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
-				<execute action="Home#assertLocation" value1="${sitePageURL}" />
+				<execute function="#assertLocation" value1="${sitePageURL}" />
 			</then>
 			<else>
 				<while>
@@ -491,7 +491,7 @@
 						<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />
 						<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_3" value1="Site Child Page ${childPageCounter}" />
 						<execute function="#assertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
-						<execute action="Home#assertLocation" value1="http://localhost:8080/web/site-name/site-child-page-${childPageCounter}" />
+						<execute function="#assertLocation" value1="http://localhost:8080/web/site-name/site-child-page-${childPageCounter}" />
 
 						<var name="childPageCounter" value="${childPageCounter?increment()}" />
 						<var name="i" value="${i?increment()}" />
@@ -608,7 +608,7 @@
 		<execute function="#assertElementNotPresent" locator1="DockbarAddpanelpage#NAVIGATION_APPLICATIONS" />
 		<execute function="#assertElementPresent" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" />
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 	</command>
 
 	<command name="viewPageLayoutPG">
@@ -693,6 +693,6 @@
 		<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />
 		<execute function="#assertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />
 		<execute function="#assertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
-		<execute action="Home#assertLocation" value1="${sitePageURL}" />
+		<execute function="#assertLocation" value1="${sitePageURL}" />
 	</command>
 </definition>

@@ -449,7 +449,7 @@
 					<var name="key_siteNameScope" value="${siteNameScope}" />
 					<var name="permissionDefinitionKeySiteScope" value="${permissionDefinitionKey?replace('CHECKBOX', 'SITE_SCOPE')}" />
 
-					<execute action="CPRolesDefinepermissionsAllpermissions#selectFrame" value1="relative=top" />
+					<execute function="#selectFrame" value1="relative=top" />
 					<execute function="#assertTextEquals" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKeySiteScope}" value1="${siteNameScope}" />
 				</then>
 			</if>
@@ -757,7 +757,7 @@
 	<command name="viewNoXSSCP">
 		<var name="key_roleName" value="${roleName}" />
 
-		<execute action="CPRoles#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 		<execute function="#assertTextEquals" locator1="CPRoles#ROLE_TABLE_TITLE" value1="${roleName}" />
 		<execute function="#assertTextEquals" locator1="CPRoles#ROLE_TABLE_DESCRIPTION" value1="${roleDescription}" />
 	</command>

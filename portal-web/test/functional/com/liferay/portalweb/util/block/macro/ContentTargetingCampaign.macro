@@ -43,7 +43,7 @@
 		<var name="key_contentTitle" value="${contentTitle}" />
 
 		<execute function="#click" locator1="CPContenttargetingAddcampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" />
-		<execute action="CPContenttargetingAddcampaign#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="CPContenttargetingAddcampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION" value1="view" />
 	</command>
 

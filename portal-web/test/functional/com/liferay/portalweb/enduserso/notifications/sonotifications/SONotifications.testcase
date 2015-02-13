@@ -1010,7 +1010,7 @@
 		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
 		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
 		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
-		<execute action="SOUserBar#assertTextNotPresent" value1="${entryAuthor} sent a new announcement." />
+		<execute function="#assertTextNotPresent" value1="${entryAuthor} sent a new announcement." />
 		<execute function="#assertElementNotPresent" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
 	</command>
 
@@ -2286,9 +2286,9 @@
 
 		<execute macro="Notifications#viewDefaultContent" />
 
-		<execute action="PGNotifications#assertTextNotPresent" value1="${messageBody}" />
-		<execute action="PGNotifications#assertTextNotPresent" value1="${messageSubject}" />
-		<execute action="PGNotifications#assertTextNotPresent" value1="${adminName}" />
+		<execute function="#assertTextNotPresent" value1="${messageBody}" />
+		<execute function="#assertTextNotPresent" value1="${messageSubject}" />
+		<execute function="#assertTextNotPresent" value1="${adminName}" />
 	</command>
 
 	<command name="ViewDisableConnectionRequestNotificationAttempt" priority="4">
@@ -4522,7 +4522,7 @@
 
 		<execute macro="Gmail#gotoHtmlMode" />
 
-		<execute action="Gmail#assertTextNotPresent" value1="${userName1} sent you a message on Liferay" />
+		<execute function="#assertTextNotPresent" value1="${userName1} sent you a message on Liferay" />
 
 		<execute macro="Gmail#tearDown">
 			<var name="userEmailAddress" property-value="email.address.3" />
@@ -4559,7 +4559,7 @@
 
 		<execute macro="Gmail#gotoHtmlMode" />
 
-		<execute action="Gmail#assertTextNotPresent" value1="${userName2} sent you a message on Liferay" />
+		<execute function="#assertTextNotPresent" value1="${userName2} sent you a message on Liferay" />
 
 		<execute macro="Gmail#tearDown">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -5781,7 +5781,7 @@
 		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
 		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
 		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
-		<execute action="SOUserBar#assertTextNotPresent" value1="${entryAuthor} sent a new announcement." />
+		<execute function="#assertTextNotPresent" value1="${entryAuthor} sent a new announcement." />
 		<execute function="#assertElementNotPresent" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
 
 		<execute macro="User#logoutAndLoginPG">
@@ -6027,7 +6027,7 @@
 		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
 		<execute function="#assertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
 		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
-		<execute action="SOUserBar#assertTextNotPresent" value1="${entryAuthor} sent a new announcement." />
+		<execute function="#assertTextNotPresent" value1="${entryAuthor} sent a new announcement." />
 		<execute function="#assertElementNotPresent" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
 	</command>
 

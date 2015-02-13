@@ -453,7 +453,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="1 Comment" />
+		<execute function="#assertTextNotPresent" value1="1 Comment" />
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -463,9 +463,9 @@
 
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 
-		<execute action="SOMicroblogs#assertTextNotPresent" value1="1 Comment" />
+		<execute function="#assertTextNotPresent" value1="1 Comment" />
 		<execute function="#assertClick" locator1="SOMicroblogs#MICROBLOGS_ENTRY_COMMENT_LINK" value1="Comment" />
-		<execute action="SOMicroblogs#assertTextNotPresent" value1="${microblogsEntryCommentContent}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntryCommentContent}" />
 	</command>
 
 	<command name="EditMicroblogsEntryComment" priority="5">

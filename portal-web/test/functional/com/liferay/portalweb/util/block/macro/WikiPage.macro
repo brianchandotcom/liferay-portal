@@ -158,7 +158,7 @@
 
 	<command name="addFrontPageDraftPG">
 		<execute function="#assertTextEquals" locator1="PGWiki#ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
-		<execute action="PGWiki#assertTextNotPresent" value1="${wikiPageContent}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContent}" />
 		<execute function="#assertClick" locator1="PGWiki#EDIT_BUTTON" value1="Edit" />
 
 		<execute function="#assertTextEquals" locator1="PGWikiAddpage#WORKFLOW_STATUS" value1="Draft" />
@@ -167,7 +167,7 @@
 		<var name="key_wikiPageContent" value="${wikiPageContent}" />
 
 		<execute function="#assertTextEquals" locator1="PGWikiAddpage#VIEW_BODY_FIELD" value1="${wikiPageContent}" />
-		<execute action="PGWikiAddpage#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#assertClick" locator1="PGWikiAddpage#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="#assertTextEquals" locator1="PGWiki#SUCCESS_MESSAGE"  value1="Your request completed successfully." />
@@ -487,7 +487,7 @@
 		<execute function="#assertTextEquals" locator1="CPWikiWikipageHistorySelectversion#SELECT_VERSION_VERSION_OLD" value1="${wikiPageVersionOld}" />
 		<execute function="#assertElementPresent" locator1="CPWikiWikipageHistorySelectversion#SELECT_VERSION_DATE_OLD" />
 		<execute function="#assertClick" locator1="CPWikiWikipageHistorySelectversion#SELECT_VERSION_CHOOSE_BUTTON_OLD" value1="Choose" />
-		<execute action="CPWikiWikipageHistorySelectversion#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#assertTextEquals" locator1="CPWikiWikipageHistory#COMPARE_VERSIONS_DIFF" value1="${wikiPageVersionDiff}" />
 	</command>
@@ -511,7 +511,7 @@
 		<execute function="#assertTextEquals" locator1="PGWikiWikipageHistorySelectversion#SELECT_VERSION_VERSION_OLD" value1="${wikiPageVersionOld}" />
 		<execute function="#assertElementPresent" locator1="PGWikiWikipageHistorySelectversion#SELECT_VERSION_DATE_OLD" />
 		<execute function="#assertClick" locator1="PGWikiWikipageHistorySelectversion#SELECT_VERSION_CHOOSE_BUTTON_OLD" value1="Choose" />
-		<execute action="PGWikiWikipageHistorySelectversion#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<if>
 			<equals arg1="${wikiPageCompareContentDetails}" arg2="true" />
@@ -989,7 +989,7 @@
 		<execute function="#uncheck" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 		<execute function="#assertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="renameWikiPagePG">
@@ -1071,7 +1071,7 @@
 		<var name="key_wikiPageContent" value="${wikiPageContent}" />
 
 		<execute function="#assertTextEquals" locator1="PGWikiAddpage#VIEW_BODY_FIELD" value1="${wikiPageContent}" />
-		<execute action="PGWikiAddpage#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="searchPG">
@@ -1259,7 +1259,7 @@
 	<command name="viewDefaultPGViaWD">
 		<execute function="#assertTextEquals" locator1="PGWikidisplay#INFO_MESSAGE" value1="This page is empty. Edit it to add some text." />
 		<execute function="#assertTextEquals" locator1="PGWikidisplay#WIKI_PAGE_TITLE" value1="FrontPage" />
-		<execute action="PGWikidisplay#assertTextNotPresent" value1="${wikiPageContent}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContent}" />
 		<execute function="#assertElementNotPresent" locator1="PGWikidisplay#WIKI_PAGE_BODY" />
 	</command>
 
@@ -1268,7 +1268,7 @@
 		<execute function="#assertTextEquals" locator1="CPWikiFrontpage#FRONTPAGE_TITLE_HEADER" value1="FrontPage" />
 		<execute function="#assertTextEquals" locator1="CPWikiFrontpage#FRONTPAGE_BODY" value1="${wikiFrontPageContent}" />
 		<execute function="#assertElementNotPresent" locator1="CPWikiFrontpage#INFO_MESSAGE" />
-		<execute action="CPWikiFrontpage#assertTextNotPresent" value1="This page is empty. Edit it to add some text." />
+		<execute function="#assertTextNotPresent" value1="This page is empty. Edit it to add some text." />
 	</command>
 
 	<command name="viewFrontPageDefaultADTPG">
@@ -1288,7 +1288,7 @@
 
 	<command name="viewFrontPageDefaultCP">
 		<execute function="#assertTextEquals" locator1="CPWikiFrontpage#INFO_MESSAGE" value1="This page is empty. Edit it to add some text." />
-		<execute action="CPWikiFrontpage#assertTextNotPresent" value1="${wikiFrontPageContent}" />
+		<execute function="#assertTextNotPresent" value1="${wikiFrontPageContent}" />
 	</command>
 
 	<command name="viewFrontPagePG">
@@ -1296,7 +1296,7 @@
 
 		<execute function="#assertTextEquals" locator1="PGWiki#WIKI_PAGE_TITLE" value1="FrontPage" />
 		<execute function="#assertTextEquals" locator1="PGWiki#WIKI_PAGE_BODY" value1="${wikiPageContent}" />
-		<execute action="PGWiki#assertTextNotPresent" value1="This page is empty. Edit it to add some text." />
+		<execute function="#assertTextNotPresent" value1="This page is empty. Edit it to add some text." />
 	</command>
 
 	<command name="viewLocalizedFrontPagePG">
@@ -1471,7 +1471,7 @@
 	<command name="viewPGViaWD">
 		<execute function="#assertTextEquals" locator1="PGWikidisplay#WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
 		<execute function="#assertTextEquals" locator1="PGWikidisplay#WIKI_PAGE_BODY" value1="${wikiPageContent}" />
-		<execute action="PGWikidisplay#assertTextNotPresent" value1="Please configure this portlet to make it visible to all users." />
+		<execute function="#assertTextNotPresent" value1="Please configure this portlet to make it visible to all users." />
 		<execute function="#assertElementNotPresent" locator1="PGWikidisplay#PORTLET_CONFIGURATION_MESSAGE" />
 	</command>
 
@@ -1501,7 +1501,7 @@
 	<command name="viewSaveAsDraftFrontPagePG">
 		<execute function="#assertTextEquals" locator1="PGWiki#ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
 		<execute function="#assertElementNotPresent" locator1="PGWiki#WIKI_PAGE_BODY" />
-		<execute action="PGWiki#assertTextNotPresent" value1="${wikiPageContent}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContent}" />
 		<execute function="#assertClick" locator1="PGWiki#EDIT_BUTTON" value1="Edit" />
 
 		<execute function="#assertTextEquals" locator1="PGWikiAddpage#WORKFLOW_STATUS" value1="Draft" />
@@ -1510,7 +1510,7 @@
 		<var name="key_wikiPageContent" value="${wikiPageContent}" />
 
 		<execute function="#assertTextEquals" locator1="PGWikiAddpage#VIEW_BODY_FIELD" value1="${wikiPageContent}" />
-		<execute action="PGWikiAddpage#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 

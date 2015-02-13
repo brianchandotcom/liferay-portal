@@ -385,7 +385,7 @@
 		<execute function="#selectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
 		<execute function="#assertClick" locator1="Myaccount#MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
 		<execute function="#assertSelectedLabel" locator1="Myaccount#LANGUAGE_SELECT" value1="English (United States)" />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="VotePollsQuestionWithGuestPermissions" priority="4">
@@ -460,7 +460,7 @@
 			<var name="roleName" value="Guest" />
 		</execute>
 
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute macro="User#logoutPG" />
 

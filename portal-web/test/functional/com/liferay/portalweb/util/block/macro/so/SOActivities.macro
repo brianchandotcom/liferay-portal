@@ -180,7 +180,7 @@
 
 		<execute function="#assertClickNoError" locator1="SOActivities#ACTIVITIES_COMMENT_DELETE" value1="Delete" />
 		<execute function="#confirm" locator1="SOActivities#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${commentContent}" />
+		<execute function="#assertTextNotPresent" value1="${commentContent}" />
 	</command>
 
 	<command name="deleteSiteContent">
@@ -275,7 +275,7 @@
 		</if>
 
 		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT_EDIT" value1="Edit" />
-		<execute action="SOActivities#pause" value1="1000" />
+		<execute function="#pause" value1="1000" />
 		<execute function="#click" locator1="SOActivities#ACTIVITIES_COMMENT_FIELD" />
 		<execute function="#type" locator1="SOActivities#ACTIVITIES_COMMENT_INPUT_FIELD" value1="${commentContentEdit}" />
 		<execute function="#keyPress" locator1="SOActivities#ACTIVITIES_COMMENT_FIELD" value1="\RETURN" />
@@ -432,7 +432,7 @@
 		<execute function="#assertTextEquals" locator1="SOActivitiesRepost#MICROBLOGS_ENTRY_AUTHOR_NAME" value1="${microblogsEntryAuthorName}" />
 		<execute function="#assertTextEquals" locator1="SOActivitiesRepost#MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
 		<execute function="#assertClick" locator1="SOActivitiesRepost#REPOST_BUTTON" value1="Repost" />
-		<execute action="SOActivitiesRepost#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewActivityEntryComment">

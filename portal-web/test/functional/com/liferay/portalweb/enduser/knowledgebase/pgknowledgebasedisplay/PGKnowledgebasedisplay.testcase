@@ -793,7 +793,7 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute action="PGKnowledgebasedisplay#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />

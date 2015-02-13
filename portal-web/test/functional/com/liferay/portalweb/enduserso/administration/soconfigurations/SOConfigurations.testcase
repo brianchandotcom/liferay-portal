@@ -316,7 +316,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#click" locator1="SOUserBar#GO_TO" />
 		<execute function="#assertElementNotPresent" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
 		<execute function="#sikuliAssertElementPresent" locator1="SOUserBar#SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_NOT_PRESENT_PNG" />
@@ -339,7 +339,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#click" locator1="SOUserBar#GO_TO" />
 		<execute function="#sikuliAssertElementPresent" locator1="SOUserBar#SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_PRESENT_PNG" />
 	</command>
@@ -450,7 +450,7 @@
 			<var name="siteTypeList" value="${siteType1},${siteType2},${siteType3},${siteType4}" />
 		</execute>
 
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#click" locator1="SOUserBar#GO_TO" />
 		<execute function="#assertElementNotPresent" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
 		<execute function="#sikuliAssertElementPresent" locator1="SOUserBar#SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_NOT_PRESENT_PNG" />

@@ -223,16 +223,16 @@
 			<condition function="#isElementPresent" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" />
 			<then>
 				<execute function="#assertTextEquals" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-				<execute action="PGCalendarCalendarSettings#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 			</then>
 			<else>
-				<execute action="PGCalendarCalendarSettings#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 
 				<execute function="#assertTextEquals" locator1="PGCalendar#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>
 		</if>
 
-		<execute action="PGCalendar#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editPG">
@@ -255,7 +255,7 @@
 				<execute function="#assertClick" locator1="PGCalendarCalendarSettings#SAVE_BUTTON" value1="Save" />
 				<execute function="#assertTextEquals" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-				<execute action="PGCalendar#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 			</then>
 			<elseif>
 				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
@@ -271,7 +271,7 @@
 					<execute function="#assertClick" locator1="PGCalendarCalendarSettings#SAVE_BUTTON" value1="Save" />
 					<execute function="#assertTextEquals" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-					<execute action="PGCalendar#selectFrame" value1="relative=top" />
+					<execute function="#selectFrame" value1="relative=top" />
 				</then>
 			</elseif>
 			<elseif>
@@ -289,7 +289,7 @@
 					<execute function="#assertClick" locator1="PGCalendarCalendarSettings#SAVE_BUTTON" value1="Save" />
 					<execute function="#assertTextEquals" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-					<execute action="PGCalendar#selectFrame" value1="relative=top" />
+					<execute function="#selectFrame" value1="relative=top" />
 				</then>
 			</elseif>
 		</if>
@@ -339,10 +339,10 @@
 			<condition function="#isElementPresent" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" />
 			<then>
 				<execute function="#assertTextEquals" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-				<execute action="PGCalendarCalendarSettings#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 			</then>
 			<else>
-				<execute action="PGCalendarCalendarSettings#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 
 				<execute function="#assertTextEquals" locator1="PGCalendar#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>
@@ -393,10 +393,10 @@
 			<condition function="#isElementPresent" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" />
 			<then>
 				<execute function="#assertTextEquals" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-				<execute action="PGCalendarCalendarSettings#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 			</then>
 			<else>
-				<execute action="PGCalendarCalendarSettings#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 
 				<execute function="#assertTextEquals" locator1="PGCalendar#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>
@@ -443,7 +443,7 @@
 		<execute function="#assertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${calendarName}" />
 		<execute function="#check" locator1="Permissions#EVENT_PERMISSIONS_VIEW_EVENT_DETAILS_CHECKBOX" value1="${roleName}" />
 		<execute function="#assertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="removeViewPermissionsPG">
@@ -486,7 +486,7 @@
 		<execute function="#assertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${calendarName}" />
 		<execute function="#uncheck" locator1="Permissions#EVENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 		<execute function="#assertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="tearDownColorPG">

@@ -16,7 +16,7 @@
 		<execute function="#selectFrame" locator1="CPKaleoformsadminNewprocessSelectformNewform#FORM_IFRAME" />
 		<execute function="#type" locator1="CPKaleoformsadminNewprocessSelectformNewform#NAME_FIELD" value1="${kfFormName}" />
 
-		<execute action="CPKaleoformsadminNewprocessSelectform#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addProcess">
@@ -222,7 +222,7 @@
 		<execute function="#assertClick" locator1="CPKaleoformsadminNewprocessSelectform#FORM_MENULIST_EDIT" value1="Edit" />
 		<execute function="#selectFrame" locator1="CPKaleoformsadminNewprocessSelectformNewform#FORM_IFRAME" />
 		<execute function="#type" locator1="CPKaleoformsadminNewprocessSelectformNewform#NAME_FIELD" value1="${kfFormNameEdit}" />
-		<execute action="CPKaleoformsadminNewprocessSelectform#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editProcess">
@@ -291,7 +291,7 @@
 
 		<execute function="#assertClick" locator1="CPKaleoformsadminViewprocessrecords#EXPORT_DIALOG_BOX_OK_BUTTON" value1="OK" />
 
-		<execute action="BasePortletExport#downloadTempFile" />
+		<execute function="#downloadTempFile" />
 	</command>
 
 	<command name="next">
@@ -342,7 +342,7 @@
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsListAddrecordSelect#DOCUMENTS_TABLE_DOCUMENT" value1="${kfProcessFieldData}" />
 		<execute function="#click" locator1="CPDynamicdatalistsListAddrecordSelect#DOCUMENTS_TABLE_CHOOSE" />
 
-		<execute action="CPKaleoformsadminViewprocessrecordsSubmitnew#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="CPKaleoformsadminViewprocessrecordsSubmitnew#NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
@@ -396,7 +396,7 @@
 		<execute function="#selectFrame" locator1="CPKaleoformsadminNewprocessSelectformNewform#FORM_IFRAME" />
 		<execute function="#assertClick" locator1="CPKaleoformsadminNewprocessSelectformNewform#SAVE_AND_CONTINUE_BUTTON" value1="Save and Continue" />
 		<execute function="#assertTextEquals" locator1="CPKaleoformsadminNewprocessSelectformNewform#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPKaleoformsadminNewprocessSelectformNewform#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="saveAsDraftWorkflow">
@@ -420,7 +420,7 @@
 	<command name="saveForm">
 		<execute function="#selectFrame" locator1="CPKaleoformsadminNewprocessSelectformNewform#FORM_IFRAME" />
 		<execute function="#assertClick" locator1="CPKaleoformsadminNewprocessSelectformNewform#SAVE_BUTTON" value1="Save" />
-		<execute action="CPKaleoformsadminNewprocessSelectformNewform#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="saveProcess">

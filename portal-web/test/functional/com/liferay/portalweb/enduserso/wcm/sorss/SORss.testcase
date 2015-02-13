@@ -147,7 +147,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOSite#assertTextNotPresent" value1="${feedTitle}" />
+		<execute function="#assertTextNotPresent" value1="${feedTitle}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -159,7 +159,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOSite#assertTextNotPresent" value1="${feedTitle}" />
+		<execute function="#assertTextNotPresent" value1="${feedTitle}" />
 	</command>
 
 	<command name="EditDefaultRssFeed" priority="4">

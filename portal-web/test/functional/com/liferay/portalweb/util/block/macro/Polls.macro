@@ -45,7 +45,7 @@
 		<execute function="#type" locator1="PGPollsdisplayPollsquestion#CHOICE_B_FIELD" value1="${pollsQuestionChoiceB}" />
 		<execute function="#assertClick" locator1="PGPollsdisplayPollsquestion#SAVE_BUTTON" value1="Save" />
 
-		<execute action="BasePortlet#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectPollPG">
@@ -58,7 +58,7 @@
 		<execute function="#assertClick" locator1="PGPollsdisplayConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute function="#assertSelectedLabel" locator1="PGPollsdisplayConfiguration#TITLE_DROPDOWN_SELECT" value1="${pollsQuestionTitle}" />
 
-		<execute action="BasePortlet#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="tearDownCP">

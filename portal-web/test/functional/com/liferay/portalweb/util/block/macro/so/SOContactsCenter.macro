@@ -443,9 +443,9 @@
 		</if>
 
 		<execute function="#click" locator1="SOMessagesAdd#SEND_BUTTON" />
-		<execute action="SOMessagesAdd#pause" value1="1000" />
+		<execute function="#pause" value1="1000" />
 
-		<execute action="SOMessages#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#click" locator1="SODashboard#NAVIGATION_MESSAGES" />
 
@@ -462,7 +462,7 @@
 		</execute>
 
 		<execute function="#select" locator1="SOContactscenter#CONTACTS_LIST_FILTER" value1="My Contacts" />
-		<execute action="SOContactscenter#pause" value1="1000" />
+		<execute function="#pause" value1="1000" />
 
 		<while>
 			<condition function="#isElementPresent" locator1="SOContactscenter#CONTACTS_LIST_NAME" />
@@ -472,9 +472,9 @@
 				<execute function="#click" locator1="SOContactscenter#CONTACTS_LIST_NAME" />
 				<execute function="#click" locator1="SOContactscenter#CONTACTS_LIST_NAME" />
 				<execute function="#assertClickNoError" locator1="SOContactscenter#DELETE_BUTTON" value1="Delete" />
-				<execute action="SOContactscenter#confirm" value1="Are you sure you want to delete ${contactName} from your contacts?" />
+				<execute function="#confirm" value1="Are you sure you want to delete ${contactName} from your contacts?" />
 				<execute function="#select" locator1="SOContactscenter#CONTACTS_LIST_FILTER" value1="My Contacts" />
-				<execute action="SOContactscenter#pause" value1="1000" />
+				<execute function="#pause" value1="1000" />
 			</then>
 		</while>
 	</command>

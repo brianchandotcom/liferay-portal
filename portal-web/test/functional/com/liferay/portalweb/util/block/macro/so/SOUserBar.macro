@@ -55,7 +55,7 @@
 				<var name="i" value="${i?increment()}" />
 				<var name="key_portletName" value="${portletName}" />
 
-				<execute action="Home#refresh" />
+				<execute function="#refresh" />
 
 				<execute function="#pause" locator1="1000" />
 
@@ -99,7 +99,7 @@
 					<then>
 						<var name="goToMenuClickAttemptNumber" value="${goToMenuClickAttemptNumber?increment()}" />
 
-						<execute action="SOUserBar#selectFrameTop" />
+						<execute function="#selectFrameTop" />
 						<execute function="#click" locator1="SOUserBar#GO_TO" />
 					</then>
 				</while>
@@ -121,7 +121,7 @@
 
 		<execute function="#click" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
 
-		<execute action="SOUserBarAddSite#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#type" locator1="SOUserBarAddSite#NAME_FIELD" value1="${siteName}" />
 		<execute function="#type" locator1="SOUserBarAddSite#DESCRIPTION_FIELD" value1="${siteDescription}" />
 		<execute function="#click" locator1="SOUserBarAddSite#NEXT_BUTTON" />
@@ -220,19 +220,19 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#click" locator1="SOUserBar#GO_TO" />
 		<execute function="#click" locator1="SOUserBar#GO_TO_SITES_DIRECTORY_BUTTON" />
 
 		<if>
 			<equals arg1="${siteType}" arg2="Private" />
 			<then>
-				<execute action="SOUserBar#selectFrameTop" />
+				<execute function="#selectFrameTop" />
 				<execute function="#click" locator1="SOUserBar#GO_TO" />
 				<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
 			</then>
 			<else>
-				<execute action="SOUserBar#selectFrameTop" />
+				<execute function="#selectFrameTop" />
 				<execute function="#click" locator1="SOUserBar#GO_TO" />
 				<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 			</else>
@@ -251,10 +251,10 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#click" locator1="SOUserBar#GO_TO" />
 		<execute function="#select" locator1="SOUserBar#GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#click" locator1="SOUserBar#GO_TO" />
 		<execute function="#type" locator1="SOUserBar#GO_TO_SEARCH_FIELD" value1="${siteName}" />
 		<execute function="#pause" locator1="1000" />
@@ -294,7 +294,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#click" locator1="SOUserBar#GO_TO" />
 		<execute function="#click" locator1="SOUserBar#GO_TO_SITES_DIRECTORY_BUTTON" />
 
@@ -311,7 +311,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#click" locator1="SOUserBar#GO_TO" />
 		<execute function="#click" locator1="SOUserBar#GO_TO_SITES_DIRECTORY_BUTTON" />
 
@@ -409,7 +409,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#click" locator1="SOUserBar#GO_TO" />
 		<execute function="#click" locator1="SOUserBar#GO_TO_SITES_DIRECTORY_BUTTON" />
 
@@ -444,7 +444,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#click" locator1="SOUserBar#GO_TO" />
 
 		<if>
@@ -457,7 +457,7 @@
 			</else>
 		</if>
 
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#click" locator1="SOUserBar#GO_TO" />
 		<execute function="#type" locator1="SOUserBar#GO_TO_SEARCH_FIELD" value1="${siteName}" />
 		<execute function="#pause" locator1="1000" />
@@ -507,11 +507,11 @@
 	<command name="viewDisabledSOSiteTypes">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#click" locator1="SOUserBar#GO_TO" />
 		<execute function="#click" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
 
-		<execute action="SOUserBarAddSite#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#click" locator1="SOUserBarAddSite#NEXT_BUTTON" />
 
 		<if>
@@ -570,11 +570,11 @@
 	<command name="viewEnabledSOSiteTypes">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#click" locator1="SOUserBar#GO_TO" />
 		<execute function="#click" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
 
-		<execute action="SOUserBarAddSite#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#click" locator1="SOUserBarAddSite#NEXT_BUTTON" />
 
 		<if>

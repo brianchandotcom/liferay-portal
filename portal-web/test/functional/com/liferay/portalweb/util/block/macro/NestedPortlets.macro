@@ -17,7 +17,7 @@
 
 		<execute function="#assertChecked" locator1="NestedportletsConfiguration#LAYOUT_2_COLUMNS" />
 
-		<execute action="NestedportletsConfiguration#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="viewPG">

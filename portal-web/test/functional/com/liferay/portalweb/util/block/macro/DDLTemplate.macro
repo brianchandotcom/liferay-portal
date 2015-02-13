@@ -41,7 +41,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addFormTemplateCP">
@@ -56,7 +56,7 @@
 		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TOOLBAR_ADD_FORM_TEMPLATE" value1="Add Form Template" />
 		<execute function="#type" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#NAME_FIELD" value1="${ddlFormTemplateName}" />
 
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addFormTemplateViaDDLDisplayPG">
@@ -88,7 +88,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_NAME" value1="${dataDefinitionTemplateCopyName}" />
 
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="deleteTemplateCP">
@@ -123,7 +123,7 @@
 		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TOOLBAR_SEARCH_BUTTON" value1="Search" />
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#INFO_MESSAGE" value1="There are no templates." />
 
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editDisplayTemplateCP">
@@ -151,7 +151,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editFormTemplateCP">
@@ -170,7 +170,7 @@
 
 		<execute function="#type" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#NAME_FIELD" value1="${ddlFormTemplateNameEdit}" />
 
-		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editFormTemplateModeCP">
@@ -187,7 +187,7 @@
 		<execute function="#select" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#DETAILS_MODE_SELECT" value1="${ddlFormTemplateMode}" />
 		<execute function="#pause" locator1="3000" />
 
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editFormTemplatePG">
@@ -214,7 +214,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="saveFormTemplateCP">
@@ -224,7 +224,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="saveFormTemplateViaDDLDisplayPG">
@@ -238,7 +238,7 @@
 		<execute function="#assertTextEquals" locator1="PGDynamicdatalistsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute function="#assertSelectedLabel" locator1="PGDynamicdatalistsConfiguration#TEMPLATES_DISPLAY_TEMPLATE_SELECT" value1="${ddlDisplayTemplateName}" />
 
-		<execute action="PGDynamicdatalists#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="tearDownTemplateCP">
@@ -286,7 +286,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#INFO_MESSAGE" value1="There are no templates." />
 
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewDisplayTemplateCP">
@@ -301,7 +301,7 @@
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#HEADER_TITLE" value1="${ddlTemplateName} (${ddlDataDefinitionName})" />
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#NAME_FIELD" value1="${ddlTemplateName}" />
 
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewFormTemplateCP">
@@ -316,7 +316,7 @@
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#HEADER_TITLE" value1="${ddlTemplateName} (${ddlDataDefinitionName})" />
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#NAME_FIELD" value1="${ddlTemplateName}" />
 
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewNoDuplicateTemplateCP">
@@ -339,6 +339,6 @@
 
 		<execute function="#assertElementNotPresent" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_NAME" />
 
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 </definition>

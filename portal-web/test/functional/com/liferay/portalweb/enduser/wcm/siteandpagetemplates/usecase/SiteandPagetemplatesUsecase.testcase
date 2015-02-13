@@ -144,7 +144,7 @@
 			<var name="portletName" value="Hello World" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="Page#addPG">
 			<var name="defaultURL" value="false" />
@@ -175,7 +175,7 @@
 			<var name="roleName" value="Guest" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
@@ -403,7 +403,7 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute action="CPSitepages#close" />
+		<execute function="#close" />
 
 		<execute function="#selectWindow" locator1="null" />
 
@@ -432,7 +432,7 @@
 
 		<execute macro="SitePage#pageTemplateNotLockedCheckPG" />
 
-		<execute action="CPSitepages#close" />
+		<execute function="#close" />
 
 		<execute function="#selectWindow" locator1="null" />
 
@@ -594,7 +594,7 @@
 			<var name="portletName" value="Dictionary" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="Page#addPG">
 			<var name="defaultURL" value="false" />
@@ -610,7 +610,7 @@
 			<var name="portletName" value="Hello World" />
 		</execute>
 
-		<execute action="CPSitepages#close" />
+		<execute function="#close" />
 
 		<execute function="#selectWindow" locator1="null" />
 

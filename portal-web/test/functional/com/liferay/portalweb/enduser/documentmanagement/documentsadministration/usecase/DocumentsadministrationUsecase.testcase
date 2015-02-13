@@ -783,14 +783,14 @@
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute function="#pause" locator1="1000" />
-		<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Documents and Media is temporarily unavailable." />
+		<execute function="#assertTextNotPresent" value1="Documents and Media is temporarily unavailable." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute function="#pause" locator1="1000" />
-		<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Documents and Media is temporarily unavailable." />
+		<execute function="#assertTextNotPresent" value1="Documents and Media is temporarily unavailable." />
 
 		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentDescription" value="DM Document 2 Description" />

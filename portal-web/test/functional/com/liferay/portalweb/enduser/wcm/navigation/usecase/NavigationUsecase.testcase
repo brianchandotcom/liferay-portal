@@ -72,7 +72,7 @@
 		<execute function="#assertSelectedLabel" locator1="PGNavigationConfiguration#CUSTOM_NESTED_CHILDREN_SELECT" value1="Yes" />
 		<execute function="#assertClick" locator1="PGNavigationConfiguration#PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGNavigationConfiguration#PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGNavigationConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -184,7 +184,7 @@
 		<execute function="#select" locator1="PGNavigationConfiguration#SETUP_DISPLAY_STYLE_SELECT" value1="Relative with Breadcrumb" />
 		<execute function="#assertClick" locator1="PGNavigationConfiguration#PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGNavigationConfiguration#PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGNavigationConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

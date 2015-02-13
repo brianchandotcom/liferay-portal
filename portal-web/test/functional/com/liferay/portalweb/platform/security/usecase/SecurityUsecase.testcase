@@ -233,7 +233,7 @@
 			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>
 
-		<execute action="PGBookmarksAddBookmarkRelatedAssets#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 	</command>
 
 	<command name="ViewControlPanelNoXSS" priority="4">
@@ -264,7 +264,7 @@
 		<execute function="#assertClick" locator1="Dockbar#ADMIN" value1="Admin" />
 		<execute function="#assertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 		<execute function="#assertTextEquals" locator1="Home#CONTROL_PANEL_MANAGE_BUTTON" value1="Manage ${siteName}" />
 	</command>
 
@@ -304,14 +304,14 @@
 		</execute>
 
 		<execute macro="Page#openURL" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 	</command>
 
 	<command name="ViewJSONWSNoXSS" priority="5">
 		<var name="url" value="http://localhost:8080/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E" />
 
 		<execute function="#open" locator1="${url}" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 	</command>
 
 	<command name="ViewLiferayPortletListNoXSS" priority="5">
@@ -322,13 +322,13 @@
 		</execute>
 
 		<execute function="#open" locator1="${url}" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
-		<execute action="Home#refresh" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="#refresh" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#openURL" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 	</command>
 
 	<command name="ViewLookAndFeelNoXSS" priority="4">
@@ -351,7 +351,7 @@
 			<var name="portletOption" value="Look and Feel" />
 		</execute>
 
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 	</command>
 
 	<command name="ViewNoDisplayPortletConfigurationPermission" priority="5">
@@ -403,7 +403,7 @@
 			<var name="assetType" value="Blogs Entry" />
 		</execute>
 
-		<execute action="CPRecyclebin#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 	</command>
 
 	<command known-issues="LPS-47697" name="ViewUpdateUserViaJSONWS" priority="5">
@@ -470,10 +470,10 @@
 		</var>
 
 		<execute function="#open" locator1="${maliciousURL1}" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute function="#open" locator1="${maliciousURL2}" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute function="#click" locator1="Dockbar#USER_NAME" />
 		<execute function="#assertClick" locator1="Dockbar#USER_MY_ACCOUNT" value1="My Account" />
@@ -481,13 +481,13 @@
 		<execute function="#selectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
 
 		<execute function="#open" locator1="${maliciousURL3}" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute function="#open" locator1="${maliciousURL4}" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute function="#open" locator1="${maliciousURL5}" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 	</command>
 
 	<command name="ViewWikiNoXSS" priority="4">
@@ -542,6 +542,6 @@
 
 		<execute function="#assertClick" locator1="CPWikiWikipage#WIKI_PAGE_ACTIONS_DETAILS" value1="Details" />
 
-		<execute action="CPWikiWikipage#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 	</command>
 </definition>

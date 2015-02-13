@@ -35,7 +35,7 @@
 			</else>
 		</if>
 
-		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 
 		<if>
@@ -60,14 +60,14 @@
 		</if>
 
 		<execute function="#click" locator1="SOAnnouncementsAdd#SAVE_BUTTON" value1="Save" />
-		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<if>
 			<equals arg1="${viewImmediately}" arg2="false" />
 			<then>
-				<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle}" />
+				<execute function="#assertTextNotPresent" value1="${entryTitle}" />
 			</then>
 			<else>
 				<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" />
@@ -86,7 +86,7 @@
 
 		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
 		<execute function="#click" locator1="SOAnnouncementsAdd#SAVE_BUTTON" value1="Save" />
@@ -99,7 +99,7 @@
 		<execute function="#assertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
 		<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
-		<execute action="SOAnnouncementsManage#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="configureAnnouncementEntriesPerPageDisplay">
@@ -126,7 +126,7 @@
 		<execute function="#select" locator1="SOAnnouncementsConfiguration#DISPLAY_SETTINGS_ENTRIES_TO_DISPLAY_PER_PAGE_SELECT" value1="${entriesPerPage}" />
 		<execute function="#assertClick" locator1="SOAnnouncementsConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncementsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="SOAnnouncementsConfiguration#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="configureAnnouncementEntriesScopeDisplay">
@@ -207,7 +207,7 @@
 
 		<execute function="#assertClick" locator1="SOAnnouncementsConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncementsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="SOAnnouncementsConfiguration#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="deletePG">
@@ -217,8 +217,8 @@
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="#clickNoError" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_DELETE_LINK" />
 		<execute function="#confirm" locator1="SOAnnouncements#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="{entryTitle}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="{entryContent}" />
+		<execute function="#assertTextNotPresent" value1="{entryTitle}" />
+		<execute function="#assertTextNotPresent" value1="{entryContent}" />
 	</command>
 
 	<command name="deleteViaManageEntriesPG">
@@ -232,9 +232,9 @@
 		<execute function="#select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 		<execute function="#assertClickNoError" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
 		<execute function="#confirm" locator1="SOAnnouncementsManage#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
-		<execute action="SOAnnouncementsManage#assertTextNotPresent" value1="{entryTitle}" />
-		<execute action="SOAnnouncementsManage#assertTextNotPresent" value1="{entryContent}" />
-		<execute action="SOAnnouncementsManage#selectFrameTop" />
+		<execute function="#assertTextNotPresent" value1="{entryTitle}" />
+		<execute function="#assertTextNotPresent" value1="{entryContent}" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="editPG">
@@ -247,11 +247,11 @@
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitleEdit}" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
-		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
 		<execute function="#click" locator1="SOAnnouncementsAdd#SAVE_BUTTON" value1="Save" />
-		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" />
 	</command>
@@ -269,7 +269,7 @@
 
 		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitleEdit}" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
-		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
 		<execute function="#click" locator1="SOAnnouncementsAdd#SAVE_BUTTON" value1="Save" />
@@ -282,7 +282,7 @@
 		<execute function="#assertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
 		<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
-		<execute action="SOAnnouncementsManage#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="markAsReadPG">
@@ -338,14 +338,14 @@
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitleEdit}" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
-		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
 		<execute function="#click" locator1="SOAnnouncementsAdd#PREVIEW_BUTTON" value1="Preview" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_TITLE" value1="${entryTitleEdit}" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_CONTENT" value1="${entryContentEdit}" />
-		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="previewPG">
@@ -355,14 +355,14 @@
 		<execute function="#select" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
 		<execute function="#click" locator1="SOAnnouncementsAdd#PREVIEW_BUTTON" value1="Preview" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#ANNOUNCEMENTS_PREVIEW_ENTRY_CONTENT" value1="${entryContent}" />
-		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="scheduleFutureExpirationTimeCmd">
@@ -497,11 +497,11 @@
 		<execute function="#uncheck" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_CUSTOMIZE_ANNOUNCEMENTS_DISPLAYED_CHECKBOX" />
 		<execute function="#assertClick" locator1="SOAnnouncementsConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="SOAnnouncementsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="SOAnnouncementsConfiguration#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOAnnouncements#pause" value1="1000" />
+		<execute function="#pause" value1="1000" />
 		<execute function="#assertElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_SECTION" />
 
 		<if>
@@ -536,15 +536,15 @@
 			</then>
 		</while>
 
-		<execute action="SOAnnouncementsManage#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="viewEmptyPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryAuthor} to ${distributionScope}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent}" />
+		<execute function="#assertTextNotPresent" value1="${entryAuthor} to ${distributionScope}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent}" />
 
 		<if>
 			<equals arg1="${viewManageEntries}" arg2="false" />
@@ -584,7 +584,7 @@
 					</else>
 				</if>
 
-				<execute action="SOAnnouncementsManage#selectFrameTop" />
+				<execute function="#selectFrameTop" />
 			</else>
 		</if>
 	</command>
@@ -658,7 +658,7 @@
 				<execute function="#assertElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" />
 				<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
 				<execute function="#assertTextEquals" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
-				<execute action="SOAnnouncementsManage#selectFrameTop" />
+				<execute function="#selectFrameTop" />
 			</else>
 		</if>
 	</command>

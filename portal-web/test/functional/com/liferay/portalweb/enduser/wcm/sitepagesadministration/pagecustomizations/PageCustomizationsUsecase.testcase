@@ -166,7 +166,7 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="Wiki" />
@@ -314,7 +314,7 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Language" />
@@ -335,7 +335,7 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="Web Content Display" />
@@ -353,7 +353,7 @@
 			<var name="portletName" value="Language" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="Language" />
@@ -453,7 +453,7 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Language" />

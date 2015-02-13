@@ -125,7 +125,7 @@
 		</execute>
 
 		<execute function="#click" locator1="Dockbar#ADD" value1="Add" />
-		<execute action="Dockbar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 	</command>
 
 	<command name="ViewWikiDraftPagesViaBreadcrumb" priority="4">

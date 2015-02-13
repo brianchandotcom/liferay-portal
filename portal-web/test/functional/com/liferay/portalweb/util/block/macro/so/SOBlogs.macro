@@ -23,7 +23,7 @@
 		<execute function="#select" locator1="SOBlogsRecentBlogsConfiguration#SETUP_SELECTION_METHOD_SELECT" value1="${selectionMethod}" />
 		<execute function="#assertClick" locator1="SOBlogsRecentBlogsConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="SOBlogsRecentBlogsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="SOBlogsRecentBlogsConfiguration#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="removeSocialBookmarksPG">
@@ -54,7 +54,7 @@
 		<execute function="#assertClick" locator1="PGBlogsConfiguration#SAVE_BUTTON" value1="Save" />
 
 		<execute function="#assertElementPresent" locator1="PGBlogsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGBlogsConfiguration#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="viewBlogsEntryRecentBlogs">

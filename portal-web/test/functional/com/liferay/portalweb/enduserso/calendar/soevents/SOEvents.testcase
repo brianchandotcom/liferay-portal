@@ -219,7 +219,7 @@
 		<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
-		<execute action="SOEvents#assertTextNotPresent" value1="${eventTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${eventTitle3}" />
 
 		<execute macro="SOEvents#configureEventsPortletDisplayDays">
 			<var name="maxDisplayDays" value="2" />
@@ -387,7 +387,7 @@
 		<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
-		<execute action="SOEvents#assertTextNotPresent" value1="${eventTitle6}" />
+		<execute function="#assertTextNotPresent" value1="${eventTitle6}" />
 
 		<execute macro="SOEvents#configureEventsPortletDisplayDays">
 			<var name="maxDisplayDays" value="5" />
@@ -396,7 +396,7 @@
 		<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
-		<execute action="SOEvents#assertTextNotPresent" value1="${eventTitle6}" />
+		<execute function="#assertTextNotPresent" value1="${eventTitle6}" />
 	</command>
 
 	<command name="ViewDashboardEvents" priority="4">
@@ -1217,7 +1217,7 @@
 
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitle3}" />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
-		<execute action="SOEvents#assertTextNotPresent" value1="${eventTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${eventTitle3}" />
 
 		<var name="key_eventTitle" value="${eventTitle4}" />
 
@@ -1253,7 +1253,7 @@
 
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitle3}" />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
-		<execute action="SOEvents#assertTextNotPresent" value1="${eventTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${eventTitle3}" />
 
 		<var name="key_eventTitle" value="${eventTitle4}" />
 
@@ -1679,7 +1679,7 @@
 		<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
-		<execute action="SOEvents#assertTextNotPresent" value1="${eventTitle6}" />
+		<execute function="#assertTextNotPresent" value1="${eventTitle6}" />
 
 		<execute macro="SOEvents#configureEventsPortletDisplayDays">
 			<var name="maxDisplayDays" value="5" />
@@ -1688,7 +1688,7 @@
 		<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
-		<execute action="SOEvents#assertTextNotPresent" value1="${eventTitle6}" />
+		<execute function="#assertTextNotPresent" value1="${eventTitle6}" />
 	</command>
 
 	<command name="ViewSiteEventNonViewableBySiteMember" priority="5">
@@ -1774,7 +1774,7 @@
 		<execute function="#assertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
-		<execute action="SOEvents#assertTextNotPresent" value1="${eventTitle}" />
+		<execute function="#assertTextNotPresent" value1="${eventTitle}" />
 	</command>
 
 	<command name="ViewSiteEvents" priority="5">

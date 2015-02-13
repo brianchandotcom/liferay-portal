@@ -13,7 +13,7 @@
 			</then>
 		</if>
 
-		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addCP">
@@ -40,7 +40,7 @@
 		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
 		<execute function="#click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS" />
 		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_COPY" value1="Copy" />
-		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitionsCopy#COPY_STRUCTURE_IFRAME" />
 		<execute function="#type" locator1="CPDynamicdatalistsDatadefinitionsCopy#NAME_FIELD" value1="${ddlDataDefinitionCopyName}" />
@@ -62,14 +62,14 @@
 		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitionsCopy#COPY_BUTTON" value1="Copy" />
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsCopy#SUCCESS_MESSAGE" value1="Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog." />
 		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitionsCopy#CLOSE_BUTTON" value1="Close" />
-		<execute action="CPDynamicdatalistsDatadefinitionsCopy#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME_2" />
 
 		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionCopyName}" />
 
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_NAME" value1="${ddlDataDefinitionCopyName}" />
-		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="deleteCP">
@@ -92,9 +92,9 @@
 		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
 		<execute function="#type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertTextNotPresent" value1="${ddlDataDefinitionName}" />
+		<execute function="#assertTextNotPresent" value1="${ddlDataDefinitionName}" />
 
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="deleteNoCP">
@@ -109,7 +109,7 @@
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#ERROR_MESSAGE_1" value1="Your request failed to complete." />
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#ERROR_MESSAGE_2" value1="Required structures could not be deleted." />
 
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editCP">
@@ -127,7 +127,7 @@
 
 		<execute function="#type" locator1="CPDynamicdatalistsDatadefinitionsEdit#DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescriptionEdit}" />
 
-		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editPermissionsCP">
@@ -146,7 +146,7 @@
 		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitionsAdd#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="saveCP">
@@ -164,7 +164,7 @@
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsAddlistDatadefinitions#DATA_DEFINITION_TABLE_NAME_1" value1="${ddlDataDefinitionName}" />
 		<execute function="#assertClick" locator1="CPDynamicdatalistsAddlistDatadefinitions#DATA_DEFINITION_TABLE_CHOOSE_BUTTON_1" value1="Choose" />
 
-		<execute action="CPDynamicdatalists#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsAddlist#DATA_DEFINITION_NAME" value1="${ddlDataDefinitionName}" />
 	</command>
@@ -335,6 +335,6 @@
 			</then>
 		</if>
 
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 </definition>

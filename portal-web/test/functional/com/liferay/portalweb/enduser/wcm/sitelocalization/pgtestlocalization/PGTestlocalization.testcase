@@ -34,7 +34,7 @@
 		<execute function="#assertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_12" value1="PASSED" />
 		<execute function="#assertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_13" value1="PASSED" />
 		<execute function="#assertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_14" value1="PASSED" />
-		<execute action="PGTestlocalization#assertTextNotPresent" value1="FAILED" />
+		<execute function="#assertTextNotPresent" value1="FAILED" />
 	</command>
 
 	<command name="CheckLocalizationEnglish" priority="5">
@@ -53,7 +53,7 @@
 		<execute function="#assertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_12" value1="PASSED" />
 		<execute function="#assertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_13" value1="PASSED" />
 		<execute function="#assertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_14" value1="PASSED" />
-		<execute action="PGTestlocalization#assertTextNotPresent" value1="FAILED" />
+		<execute function="#assertTextNotPresent" value1="FAILED" />
 	</command>
 
 	<command name="CheckLocalizationFrench" priority="5">
@@ -72,7 +72,7 @@
 		<execute function="#assertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_12" value1="PASSED" />
 		<execute function="#assertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_13" value1="PASSED" />
 		<execute function="#assertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_14" value1="PASSED" />
-		<execute action="PGTestlocalization#assertTextNotPresent" value1="FAILED" />
+		<execute function="#assertTextNotPresent" value1="FAILED" />
 	</command>
 
 	<command name="CheckLocalizationSpanish" priority="5">
@@ -91,7 +91,7 @@
 		<execute function="#assertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_12" value1="PASSED" />
 		<execute function="#assertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_13" value1="PASSED" />
 		<execute function="#assertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_14" value1="PASSED" />
-		<execute action="PGTestlocalization#assertTextNotPresent" value1="FAILED" />
+		<execute function="#assertTextNotPresent" value1="FAILED" />
 	</command>
 
 	<tear-down>

@@ -2753,8 +2753,8 @@
 
 		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_NAME" value1="${userListName2}" />
 
-		<execute action="SOMembersPortlet#assertTextNotPresent" value1="${userListName3}" />
-		<execute action="SOMembersPortlet#assertTextNotPresent" value1="${userListName4}" />
+		<execute function="#assertTextNotPresent" value1="${userListName3}" />
+		<execute function="#assertTextNotPresent" value1="${userListName4}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />

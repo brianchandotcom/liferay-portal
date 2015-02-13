@@ -35,7 +35,7 @@
 
 		<execute function="#click" locator1="PGCalendarAddevent#SAVE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="PGCalendarAddevent#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGCalendarAddevent#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="deleteFutureEventPG">

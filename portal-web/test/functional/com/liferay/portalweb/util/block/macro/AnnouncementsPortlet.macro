@@ -9,7 +9,7 @@
 		<execute function="#select" locator1="PGAnnouncementsConfiguration#SETUP_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="5" />
 		<execute function="#assertClick" locator1="PGAnnouncementsConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGAnnouncementsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGAnnouncementsConfiguration#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="configurePaginationManageEntriesPG">

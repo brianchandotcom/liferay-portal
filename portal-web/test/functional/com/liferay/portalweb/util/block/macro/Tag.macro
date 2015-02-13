@@ -214,7 +214,7 @@
 		<execute function="#confirm" locator1="CPTags#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="#assertTextEquals" locator1="CPTags#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#assertTextEquals" locator1="CPTags#INFO_MESSAGE" value1="There are no tags." />
-		<execute action="CPTags#assertTextNotPresent" value1="${tagName}" />
+		<execute function="#assertTextNotPresent" value1="${tagName}" />
 	</command>
 
 	<command name="editCancelCP">

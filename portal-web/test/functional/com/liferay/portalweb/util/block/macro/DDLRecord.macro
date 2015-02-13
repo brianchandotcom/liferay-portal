@@ -167,7 +167,7 @@
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsListAddrecordSelect#DOCUMENTS_TABLE_DOCUMENT" value1="${ddlRecordFieldData}" />
 		<execute function="#click" locator1="CPDynamicdatalistsListAddrecordSelect#DOCUMENTS_TABLE_CHOOSE" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsListAddrecord#DOCUMENTS_AND_MEDIA_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 

@@ -4,7 +4,7 @@
 
 		<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT" value1="Select" />
 		<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT_OTHER_SITE" value1="Other Site..." />
-		<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#selectFrame" locator1="PGAssetpublisherConfigurationSites#SITES_IFRAME" />
 
@@ -15,7 +15,7 @@
 
 		<execute function="#assertTextEquals" locator1="PGAssetpublisherConfigurationSites#SITES_TABLE_NAME" value1="${siteName}" />
 
-		<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureAddSiteScopes">
@@ -38,7 +38,7 @@
 			<then>
 				<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT" value1="Select" />
 				<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT_OTHER_SITE" value1="Other Site..." />
-				<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 
 				<execute function="#selectFrame" locator1="PGAssetpublisherConfigurationSites#SITES_IFRAME" />
 
@@ -46,7 +46,7 @@
 
 				<execute function="#assertClick" locator1="PGAssetpublisherConfigurationSites#SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
-				<execute action="PGAssetpublisherConfiguration#selectFrame" />
+				<execute function="#selectFrame" />
 				<execute function="#selectFrame" locator1="PGAssetpublisherConfiguration#ASSET_PUBLISHER_IFRAME" />
 				<execute function="#assertTextEquals" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_NAME" value1="${otherSiteName}" />
 			</then>
@@ -57,7 +57,7 @@
 			<then>
 				<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT" value1="Select" />
 				<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT_OTHER_SITE" value1="Other Site..." />
-				<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 
 				<execute function="#selectFrame" locator1="PGAssetpublisherConfigurationSites#SITES_IFRAME" />
 
@@ -65,14 +65,14 @@
 
 				<execute function="#assertClick" locator1="PGAssetpublisherConfigurationSites#SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
-				<execute action="PGAssetpublisherConfiguration#selectFrame" />
+				<execute function="#selectFrame" />
 				<execute function="#selectFrame" locator1="PGAssetpublisherConfiguration#ASSET_PUBLISHER_IFRAME" />
 				<execute function="#assertTextEquals" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
 			</then>
 			<else>
 				<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT" value1="Select" />
 				<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT_OTHER_SITE" value1="Other Site..." />
-				<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 
 				<execute function="#selectFrame" locator1="PGAssetpublisherConfigurationSites#SITES_IFRAME" />
 
@@ -244,7 +244,7 @@
 		<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGAssetpublisherConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 
-		<execute action="CKEditor#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureFilterByFieldPG">
@@ -254,7 +254,7 @@
 		<execute function="#select" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT" value1="${assetSubtype}" />
 		<execute function="#check" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_CHECKBOX" />
 		<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_SELECT_BUTTON" value1="Select" />
-		<execute action="PGAssetpublisherConfiguration#selectFrame" />
+		<execute function="#selectFrame" />
 
 		<execute function="#selectFrame" locator1="PGAssetpublisherConfigurationFilterbyfield#ASSET_PUBLISHER_FILTER_BY_FIELD_IFRAME" />
 
@@ -276,7 +276,7 @@
 
 		<execute function="#assertClick" locator1="PGAssetpublisherConfigurationFilterbyfield#FIELD_FILTER_APPLY_BUTTON" value1="Apply" />
 
-		<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGAssetpublisherConfiguration#ASSET_PUBLISHER_IFRAME" />
 
 		<if>
@@ -333,7 +333,7 @@
 
 				<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET" value1="${assetType}" />
 
-				<execute action="PGAssetpublisherConfiguration#selectFrameTop" value1="relative=top" />
+				<execute function="#selectFrameTop" value1="relative=top" />
 
 				<execute function="#selectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
 
@@ -341,7 +341,7 @@
 
 				<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_CONTENT_CHOOSE_BUTTON" value1="Choose" />
 
-				<execute action="PGAssetpublisherConfiguration#selectFrameTop" value1="relative=top" />
+				<execute function="#selectFrameTop" value1="relative=top" />
 
 				<execute function="#selectFrame" locator1="PGAssetpublisherConfiguration#ASSET_PUBLISHER_IFRAME" />
 			</then>
@@ -349,7 +349,7 @@
 
 		<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGAssetpublisherConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGAssetpublisherConfiguration#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="configurePaginationPG">
@@ -409,12 +409,12 @@
 		<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT" value1="Select" />
 		<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_MENULIST_OTHER_SITE" value1="Other Site..." />
 
-		<execute action="PGAssetpublisherConfigurationSites#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGAssetpublisherConfigurationSites#SITES_IFRAME" />
 		<execute function="#assertTextEquals" locator1="PGAssetpublisherConfigurationSites#SITES_TABLE_NAME" value1="${siteName}" />
 		<execute function="#assertTextEquals" locator1="PGAssetpublisherConfigurationSites#SITES_TABLE_TYPE" value1="${siteScopeType}" />
 		<execute function="#assertClick" locator1="PGAssetpublisherConfigurationSites#SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
-		<execute action="PGAssetpublisherConfigurationSites#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#selectFrame" locator1="PGAssetpublisherConfiguration#ASSET_PUBLISHER_IFRAME" />
 		<execute function="#assertTextEquals" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
@@ -557,7 +557,7 @@
 
 		<execute function="#assertTextNotEquals" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${assetType}" />
 
-		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewConfigureAPDisplayTemplateFullContentBookmarksPG">
@@ -627,7 +627,7 @@
 		<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT" value1="Select" />
 		<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_MENULIST_OTHER_SITE" value1="Other Site..." />
 
-		<execute action="PGAssetpublisherConfigurationSites#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGAssetpublisherConfigurationSites#SITES_IFRAME" />
 
 		<if>
@@ -659,14 +659,14 @@
 				<then>
 					<var name="key_siteName" value="${globalSiteName}" />
 
-					<execute action="PGAssetpublisherConfigurationSites#assertTextNotPresent" value1="${globalSiteName}" />
+					<execute function="#assertTextNotPresent" value1="${globalSiteName}" />
 					<execute function="#assertElementNotPresent" locator1="PGAssetpublisherConfigurationSites#SITES_TABLE_NAME" value1="${globalSiteName}" />
 					<execute function="#assertElementNotPresent" locator1="PGAssetpublisherConfigurationSites#SITES_TABLE_TYPE" value1="${globalSiteType}" />
 					<execute function="#assertElementNotPresent" locator1="PGAssetpublisherConfigurationSites#SITES_TABLE_CHOOSE_BUTTON" />
 
 					<var name="key_siteName" value="${liferaySiteName}" />
 
-					<execute action="PGAssetpublisherConfigurationSites#assertTextNotPresent" value1="${liferaySiteName}" />
+					<execute function="#assertTextNotPresent" value1="${liferaySiteName}" />
 					<execute function="#assertElementNotPresent" locator1="PGAssetpublisherConfigurationSites#SITES_TABLE_NAME" value1="${liferaySiteName}" />
 					<execute function="#assertElementNotPresent" locator1="PGAssetpublisherConfigurationSites#SITES_TABLE_TYPE" value1="${liferaySiteType}" />
 					<execute function="#assertElementNotPresent" locator1="PGAssetpublisherConfigurationSites#SITES_TABLE_CHOOSE_BUTTON" />
@@ -674,7 +674,7 @@
 			</elseif>
 		</if>
 
-		<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewContentSharingPG">
@@ -775,7 +775,7 @@
 			<else>
 				<execute function="#check" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_CHECKBOX" />
 				<execute function="#assertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_SELECT_BUTTON" value1="Select" />
-				<execute action="PGAssetpublisherConfiguration#selectFrame" />
+				<execute function="#selectFrame" />
 
 				<execute function="#selectFrame" locator1="PGAssetpublisherConfigurationFilterbyfield#ASSET_PUBLISHER_FILTER_BY_FIELD_IFRAME" />
 
@@ -879,7 +879,7 @@
 			<then>
 				<execute function="#assertTextEquals" locator1="PGAssetpublisherAsset#ASSET_RELATED_ASSET_HEADER" value1="Related Assets:" />
 				<execute function="#assertElementNotPresent" locator1="PGAssetpublisherAsset#ASSET_RELATED_ASSET_IMAGE" />
-				<execute action="PGAssetpublisherAsset#assertTextNotPresent" value1="${relatedAssetTitleHidden}" />
+				<execute function="#assertTextNotPresent" value1="${relatedAssetTitleHidden}" />
 			</then>
 		</if>
 	</command>

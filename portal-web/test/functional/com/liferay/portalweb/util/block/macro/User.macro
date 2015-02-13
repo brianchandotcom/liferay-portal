@@ -31,7 +31,7 @@
 		<execute function="#click" locator1="Myaccount#ADDITIONAL_EMAIL_ADDRESSES_PRIMARY_RADIO_BUTTON" />
 		<execute function="#click" locator1="Myaccount#SAVE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addAddressViaMyAccount">
@@ -71,7 +71,7 @@
 		<execute function="#check" locator1="Myaccount#ADDRESSES_MAILING_CHECKBOX" />
 		<execute function="#click" locator1="Myaccount#SAVE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addCommentViaMyAccount">
@@ -79,7 +79,7 @@
 		<execute function="#type" locator1="Myaccount#COMMENTS_FIELD" value1="${userIntroduction}" />
 		<execute function="#click" locator1="Myaccount#SAVE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addCP">
@@ -207,7 +207,7 @@
 
 		<execute function="#click" locator1="Myaccount#SAVE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addMultipleCP">
@@ -258,28 +258,28 @@
 		<execute function="#click" locator1="Myaccount#PHONE_NUMBERS_PRIMARY_RADIO_BUTTON" />
 		<execute function="#click" locator1="Myaccount#SAVE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addProfilePictureViaMyAccount">
 		<execute function="#click" locator1="Myaccount#DETAILS_PICTURE_CHANGE_BUTTON" />
 		<execute function="#pause" locator1="1000" />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#selectFrame" locator1="MyaccountUploadimage#UPLOAD_IMAGE_IFRAME" />
 		<execute function="#uploadCommonFile" locator1="MyaccountUploadimage#BROWSE_BUTTON" value1="${imageFileName}" />
 		<execute function="#pause" locator1="1000" />
-		<execute action="MyaccountUploadimage#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="MyaccountUploadimage#UPLOAD_IMAGE_IFRAME" />
 		<execute function="#click" locator1="MyaccountUploadimage#SAVE_BUTTON" />
 		<execute function="#pause" locator1="1000" />
-		<execute action="MyaccountUploadimage#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#selectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
 		<execute function="#click" locator1="Myaccount#SAVE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#pause" locator1="1000" />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addProjectViaMyAccount">
@@ -298,7 +298,7 @@
 
 		<execute function="#click" locator1="Myaccount#SAVE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addReservedEmailAddressCP">
@@ -348,7 +348,7 @@
 		<execute function="#type" locator1="Myaccount#SMS_SMS_FIELD" value1="${userSMS}" />
 		<execute function="#click" locator1="Myaccount#SAVE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addSocialNetworkViaMyAccount">
@@ -370,7 +370,7 @@
 
 		<execute function="#click" locator1="Myaccount#SAVE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addTagViaMyAccount">
@@ -379,7 +379,7 @@
 		<execute function="#click" locator1="Myaccount#CATEGORIZATION_ADD_BUTTON" />
 		<execute function="#click" locator1="Myaccount#SAVE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addWebsiteViaMyAccount">
@@ -389,7 +389,7 @@
 		<execute function="#click" locator1="Myaccount#WEBSITES_PRIMARY_RADIO_BUTTON" />
 		<execute function="#click" locator1="Myaccount#SAVE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="advancedSearchCP">
@@ -730,7 +730,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#ROLES_ORGANIZATION_SELECT_ROLE_IFRAME_TITLE" value1="${roleName}" />
 		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#ROLES_ORGANIZATION_SELECT_CHOOSE_BUTTON" value1="Choose" />
-		<execute action="CPUsersandorganizationsUser#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#ROLES_ORGANIZATION_ROLES_TABLE_TITLE" value1="${roleName}" />
 		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -755,7 +755,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#ROLES_REGULAR_ROLE_IFRAME_TITLE" value1="${roleName}" />
 		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#ROLES_REGULAR_SELECT_CHOOSE_BUTTON" value1="Choose" />
-		<execute action="CPUsersandorganizationsUser#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#ROLES_REGULAR_ROLES_TABLE_TITLE" value1="${roleName}" />
 		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -780,7 +780,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#ROLES_SITE_ROLES_IFRAME_TITLE" value1="${siteRoleName}" />
 		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#ROLES_SITE_ROLES_IFRAME_CHOOSE_BUTTON" value1="Choose" />
-		<execute action="CPUsersandorganizationsUser#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#ROLES_SITE_ROLES_TABLE_TITLE" value1="${siteRoleName}" />
 		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -877,7 +877,7 @@
 
 				<execute function="#assertTextEquals" locator1="Myaccount#ERROR_MESSAGE_1" value1="Your request failed to complete." />
 				<execute function="#assertTextEquals" locator1="Myaccount#ERROR_MESSAGE_2" value1="That password is invalid. Please enter in a different password." />
-				<execute action="Myaccount#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 
 				<execute macro="User#logoutPG" />
 
@@ -903,7 +903,7 @@
 				<execute function="#assertClick" locator1="Myaccount#SAVE_BUTTON" value1="Save" />
 
 				<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-				<execute action="Myaccount#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 
 				<execute macro="User#logoutPG" />
 
@@ -987,10 +987,10 @@
 
 	<command name="deleteProfilePictureViaMyAccount">
 		<execute function="#click" locator1="Myaccount#DETAILS_PICTURE_DELETE_BUTTON" />
-		<execute action="Myaccount#pause" value1="1000" />
+		<execute function="#pause" value1="1000" />
 		<execute function="#click" locator1="Myaccount#SAVE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="deleteTagViaMyAccount">
@@ -1014,7 +1014,7 @@
 
 		<execute function="#click" locator1="Myaccount#SAVE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editAnnouncementNotificationsViaMyAccount">
@@ -1026,7 +1026,7 @@
 		<execute function="#check" locator1="Myaccount#ANNOUNCEMENTS_NOTIFICATION_CHECKBOX" />
 		<execute function="#assertClick" locator1="Myaccount#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editDetailsViaMyAccount">
@@ -1063,7 +1063,7 @@
 
 		<execute function="#assertClick" locator1="Myaccount#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editDisplaySettingsCP">
@@ -1092,7 +1092,7 @@
 		<execute function="#assertClick" locator1="Myaccount#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#assertTextEquals" locator1="Myaccount#ALERT_SUCCESS_MESSAGE" value1="Your email verification code has been sent and the new email address will be applied to your account once it is verified." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editPasswordCP">
@@ -1183,7 +1183,7 @@
 		<execute function="#type" locator1="Myaccount#PASSWORD_ENTER_AGAIN_FIELD" value1="${newPassword}" />
 		<execute function="#assertClick" locator1="Myaccount#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<!-- The time zone option should change automatically because of Daylight Savings Time (DST). Since Los Angeles switches between Pacific Daylight Time (PDT), (UTC -07:00) and Pacific Standard Time (PST), (UTC -08:00), this macro will have to be updated accordingly. -->
@@ -1283,7 +1283,7 @@
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#ORGANIZATION_SELECT_TABLE_NAME" value1="${orgName}" />
 		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#ORGANIZATION_SELECT_CHOOSE_BUTTON" value1="Choose" />
 
-		<execute action="CPUsersandorganizationsUser#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#ORGANIZATIONS_TABLE_NAME" value1="${orgName}" />
 		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#SAVE_BUTTON" value1="Save" />
@@ -1312,7 +1312,7 @@
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#SITES_SELECT_TABLE_NAME" value1="${siteName}" />
 		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#SITES_SELECT_CHOOSE_BUTTON" value1="Choose" />
 
-		<execute action="CPUsersandorganizationsUser#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsUser#SITES_TABLE_NAME" value1="${siteName}" />
 		<execute function="#assertClick" locator1="CPUsersandorganizationsUser#SAVE_BUTTON" value1="Save" />
@@ -1340,7 +1340,7 @@
 		<execute function="#assertClick" locator1="PGFastloginGuest#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGFastloginGuest#SUCCESS_MESSAGE" value1="Your comment has already been posted. Would you like to create an account with the provided information?" />
 		<execute function="#assertClick" locator1="PGFastloginGuest#CANCEL_BUTTON" value1="Cancel" />
-		<execute action="PGFastlogin#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="firstLoginPG">

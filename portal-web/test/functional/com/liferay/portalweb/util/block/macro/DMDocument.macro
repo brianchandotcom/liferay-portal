@@ -402,7 +402,7 @@
 
 		<execute function="#selectFrame" locator1="PGMediagallerySelectmediatype#SELECT_MEDIA_TYPE_IFRAME" />
 		<execute function="#assertClick" locator1="PGMediagallerySelectmediatype#MEDIA_TABLE_BASIC_DOCUMENT" value1="Basic Document" />
-		<execute action="PGMediagallerySelectmediatype#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 
 		<execute function="#uploadCommonFile" locator1="PGMediagalleryAddmedia#FILE_FIELD" value1="${mgDocumentFile}" />
 		<execute function="#type" locator1="PGMediagalleryAddmedia#TITLE_FIELD" value1="${mgDocumentTitle}" />
@@ -430,7 +430,7 @@
 
 		<execute function="#selectFrame" locator1="PGRelatedassetsSelect#IFRAME" />
 		<execute function="#assertClick" locator1="PGRelatedassetsSelect#ASSET_TABLE_CHOOSE" value1="Choose" />
-		<execute action="PGRelatedassetsSelect#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addShortcutPG">
@@ -448,7 +448,7 @@
 		<execute function="#click" locator1="PGDocumentsandmediaAddshortcut#SELECT_SITE_SEARCH_BUTTON" />
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaAddshortcut#SELECT_SITE_TABLE_NAME" value1="${siteName}" />
 		<execute function="#assertClick" locator1="PGDocumentsandmediaAddshortcut#SELECT_SITE_TABLE_CHOOSE_BUTTON" value1="Choose" />
-		<execute action="PGDocumentsandmediaAddshortcut#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 		<execute function="#assertClick" locator1="PGDocumentsandmediaAddshortcut#DOCUMENT_SELECT_BUTTON" value1="Select" />
 		<execute function="#selectFrame" locator1="PGDocumentsandmediaAddshortcut#SELECT_FILE_IFRAME" />
 
@@ -463,7 +463,7 @@
 
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaAddshortcut#SELECT_FILE_DOCUMENT" value1="${dmDocumentTitle} ${dmDocumentDescription}" />
 		<execute function="#assertClick" locator1="PGDocumentsandmediaAddshortcut#SELECT_FILE_CHOOSE_BUTTON" value1="Choose" />
-		<execute action="PGDocumentsandmediaAddshortcut#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 		<execute function="#assertClick" locator1="PGDocumentsandmediaAddshortcut#SAVE_BUTTON" value1="Save" />
 
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -1055,7 +1055,7 @@
 		<var name="key_documentName" value="${documentName}" />
 
 		<execute function="#assertClick" locator1="CKEditor#LINK_IMAGE_BROWSE_SERVER_DOCUMENT_CHOOSE_BUTTON" value1="Choose" />
-		<execute action="CKEditor#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertClick" locator1="CKEditor#CONTENT_IMAGE_LINK_OK_BUTTON" value1="OK" />
 	</command>
 
@@ -1099,7 +1099,7 @@
 
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaMovefiles#SELECT_FOLDER_TABLE_FOLDER" value1="${dmFolderName}" />
 		<execute function="#assertClick" locator1="PGDocumentsandmediaMovefiles#SELECT_FOLDER_TABLE_CHOOSE" value1="Choose" />
-		<execute action="PGDocumentsandmediaMovefiles#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#assertClick" locator1="PGDocumentsandmediaMovefiles#MOVE_BUTTON" value1="Move" />
 
 		<if>
@@ -1132,7 +1132,7 @@
 		</if>
 
 		<execute function="#assertClick" locator1="PGDocumentsandmediaMovefiles#SELECT_POP_UP_CHOOSE_THIS_FOLDER" value1="Choose This Folder" />
-		<execute action="PGDocumentsandmediaMovefiles#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#assertClick" locator1="PGDocumentsandmediaMovefiles#MOVE_BUTTON" value1="Move" />
 
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -1232,7 +1232,7 @@
 				<execute function="#assertTextEquals" locator1="PGDocumentsandmediaAdddocumenttypeSelect#DOCUMENTS_TABLE_DOCUMENT" value1="${dmDocumentTypeFieldData}" />
 				<execute function="#click" locator1="PGDocumentsandmediaAdddocumenttypeSelect#DOCUMENTS_TABLE_CHOOSE" />
 
-				<execute action="PGDocumentsandmediaAdddocumenttype#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 				<execute function="#assertTextEquals" locator1="PGDocumentsandmediaAdddocumenttype#DOCUMENTS_AND_MEDIA_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
@@ -1349,7 +1349,7 @@
 		<execute function="#uncheck" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 		<execute function="#assertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="revertPG">
@@ -1533,10 +1533,10 @@
 		<if>
 			<equals arg1="${sharepointRepository}" arg2="true" />
 			<then>
-				<execute action="CPDocumentsandmediaDocument#assertTextNotPresent" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
+				<execute function="#assertTextNotPresent" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
 			</then>
 			<else>
-				<execute action="CPDocumentsandmediaDocument#assertTextNotPresent" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+				<execute function="#assertTextNotPresent" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 			</else>
 		</if>
 	</command>
@@ -1826,7 +1826,7 @@
 			</else>
 		</if>
 
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewEditCP">
@@ -1908,7 +1908,7 @@
 			</else>
 		</if>
 
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewIconLockedCP">

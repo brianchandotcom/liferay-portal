@@ -67,7 +67,7 @@
 		<execute function="#assertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${bookmarksEntryName}" />
 		<execute function="#uncheck" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 		<execute function="#assertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewBookmarksEntry">
@@ -139,6 +139,6 @@
 			</else>
 		</if>
 
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 </definition>

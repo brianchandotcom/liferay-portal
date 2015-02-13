@@ -125,13 +125,13 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="OpenSocial Gadget" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="Page#addPG">
 			<var name="defaultURL" value="false" />
@@ -144,7 +144,7 @@
 			<var name="portletName" value="Vimeo" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Vimeo" />
@@ -155,7 +155,7 @@
 			<var name="vimeoURL" value="http://vimeo.com/45677716" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="Vimeo#view" />
 
@@ -186,7 +186,7 @@
 			<var name="opensocialGadgetURL" value="http://www.labpixies.com/campaigns/todo/todo.xml" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="To-Do List" />

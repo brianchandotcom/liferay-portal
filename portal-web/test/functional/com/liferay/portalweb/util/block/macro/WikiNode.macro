@@ -90,7 +90,7 @@
 	<command name="viewNoCP">
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
-		<execute action="CPWiki#assertTextNotPresent" value1="${wikiNodeName}" />
+		<execute function="#assertTextNotPresent" value1="${wikiNodeName}" />
 		<execute function="#assertElementNotPresent" locator1="CPWiki#WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
 	</command>
 </definition>

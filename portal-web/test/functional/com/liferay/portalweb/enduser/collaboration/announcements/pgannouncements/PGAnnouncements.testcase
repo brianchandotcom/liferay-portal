@@ -118,7 +118,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGAnnouncements#assertTextNotPresent" value1="${entryTitle}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle}" />
 		<execute function="#pause" locator1="120000" />
 
 		<execute macro="Page#gotoPG">
@@ -157,7 +157,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGAnnouncements#assertTextNotPresent" value1="${entryTitle}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle}" />
 		<execute function="#click" locator1="PGAnnouncements#NAVIGATION_MANAGE_ENTRIES" />
 
 		<execute function="#select" locator1="PGAnnouncementsManageentries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />

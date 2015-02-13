@@ -173,23 +173,23 @@
 		<var name="key_userName" value="${userName1}" />
 
 		<execute function="#assertTextEquals" locator1="SOProfile#MY_CONTACTS_CONTACT_NAME" value1="${userName1}" />
-		<execute action="SOProfile#assertTextNotPresent" value1="${userName2}" />
-		<execute action="SOProfile#assertTextNotPresent" value1="${userName3}" />
-		<execute action="SOProfile#assertTextNotPresent" value1="${userName4}" />
-		<execute action="SOProfile#assertTextNotPresent" value1="${userName5}" />
-		<execute action="SOProfile#assertTextNotPresent" value1="${userName6}" />
+		<execute function="#assertTextNotPresent" value1="${userName2}" />
+		<execute function="#assertTextNotPresent" value1="${userName3}" />
+		<execute function="#assertTextNotPresent" value1="${userName4}" />
+		<execute function="#assertTextNotPresent" value1="${userName5}" />
+		<execute function="#assertTextNotPresent" value1="${userName6}" />
 
 		<var name="key_userName" value="${adminName}" />
 
 		<execute function="#assertClick" locator1="SOProfile#MY_CONTACTS_VIEW_ALL_LINK" value1="View all ${adminName}'s connections." />
 
 		<execute function="#assertElementPresent" locator1="SOContactsProfile#CONTACTS_LIST_NAME" />
-		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName1}" />
-		<execute action="SOContactsProfile#assertTextNotPresent" value1="${userListName2}" />
-		<execute action="SOContactsProfile#assertTextNotPresent" value1="${userListName3}" />
-		<execute action="SOContactsProfile#assertTextNotPresent" value1="${userListName4}" />
-		<execute action="SOContactsProfile#assertTextNotPresent" value1="${userListName5}" />
-		<execute action="SOContactsProfile#assertTextNotPresent" value1="${userListName6}" />
+		<execute function="#assertTextPresent" value1="${userListName1}" />
+		<execute function="#assertTextNotPresent" value1="${userListName2}" />
+		<execute function="#assertTextNotPresent" value1="${userListName3}" />
+		<execute function="#assertTextNotPresent" value1="${userListName4}" />
+		<execute function="#assertTextNotPresent" value1="${userListName5}" />
+		<execute function="#assertTextNotPresent" value1="${userListName6}" />
 
 		<execute macro="Page#gotoMyProfile" />
 
@@ -537,26 +537,26 @@
 		<var name="key_userName" value="${userName3}" />
 
 		<execute function="#assertTextEquals" locator1="SOProfile#MY_CONTACTS_CONTACT_NAME" value1="${userName3}" />
-		<execute action="SOProfile#assertTextNotPresent" value1="${userName2}" />
-		<execute action="SOProfile#assertTextNotPresent" value1="${userName1}" />
+		<execute function="#assertTextNotPresent" value1="${userName2}" />
+		<execute function="#assertTextNotPresent" value1="${userName1}" />
 
 		<var name="key_userName" value="${adminName}" />
 
 		<execute function="#assertClick" locator1="SOProfile#MY_CONTACTS_VIEW_ALL_LINK" value1="View all ${adminName}'s connections." />
 
 		<execute function="#assertElementPresent" locator1="SOContactsProfile#CONTACTS_LIST_NAME" />
-		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName1}" />
-		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName2}" />
-		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName3}" />
-		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName4}" />
-		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName5}" />
-		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName6}" />
-		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName7}" />
-		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName8}" />
-		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName9}" />
-		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName10}" />
-		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName11}" />
-		<execute action="SOContactsProfile#assertTextPresent" value1="${userListName12}" />
+		<execute function="#assertTextPresent" value1="${userListName1}" />
+		<execute function="#assertTextPresent" value1="${userListName2}" />
+		<execute function="#assertTextPresent" value1="${userListName3}" />
+		<execute function="#assertTextPresent" value1="${userListName4}" />
+		<execute function="#assertTextPresent" value1="${userListName5}" />
+		<execute function="#assertTextPresent" value1="${userListName6}" />
+		<execute function="#assertTextPresent" value1="${userListName7}" />
+		<execute function="#assertTextPresent" value1="${userListName8}" />
+		<execute function="#assertTextPresent" value1="${userListName9}" />
+		<execute function="#assertTextPresent" value1="${userListName10}" />
+		<execute function="#assertTextPresent" value1="${userListName11}" />
+		<execute function="#assertTextPresent" value1="${userListName12}" />
 
 		<execute macro="Page#gotoMyProfile" />
 

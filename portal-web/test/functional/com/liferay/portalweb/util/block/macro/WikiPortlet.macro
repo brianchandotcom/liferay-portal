@@ -15,7 +15,7 @@
 
 		<execute function="#assertClick" locator1="PGWikidisplayConfiguration#SAVE_BUTTON" value1="Save" />
 
-		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="subscribeToNodeCP">
@@ -56,7 +56,7 @@
 			</else>
 		</if>
 
-		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewNoPermissionCP">

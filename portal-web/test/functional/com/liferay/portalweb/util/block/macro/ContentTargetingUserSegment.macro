@@ -15,7 +15,7 @@
 
 		<execute function="#assertClick" locator1="CPContenttargetingAddusersegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_ARTICLE_CHOOSE_BUTTON" value1="Choose" />
 
-		<execute action="CPContenttargetingAddusersegment#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addBehaviorPageVisitedRuleCP">

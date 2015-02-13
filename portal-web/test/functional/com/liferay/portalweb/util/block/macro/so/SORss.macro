@@ -57,7 +57,7 @@
 		<execute function="#select" locator1="SORssConfiguration#DISPLAY_SETTINGS_EXPANDED_ENTRIES_PER_FEED_SELECT" value1="${expandedEntriesPerFeed}" />
 		<execute function="#click" locator1="SORssConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="SORssConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="SORssConfiguration#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="deleteRssFeed">
@@ -106,7 +106,7 @@
 
 		<execute function="#click" locator1="SORssConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="SORssConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="SORssConfiguration#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="editRssFeed">
@@ -166,7 +166,7 @@
 		<execute function="#select" locator1="SORssConfiguration#DISPLAY_SETTINGS_EXPANDED_ENTRIES_PER_FEED_SELECT" value1="${expandedEntriesPerFeed}" />
 		<execute function="#click" locator1="SORssConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="SORssConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="SORssConfiguration#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="viewRssFeed">
@@ -245,6 +245,6 @@
 		<execute function="#assertChecked" locator1="SORssConfiguration#DISPLAY_SETTINGS_SHOW_FEED_ITEM_AUTHOR_CHECKBOX" />
 		<execute function="#assertSelectedLabel" locator1="SORssConfiguration#DISPLAY_SETTINGS_ENTRIES_PER_FEED_SELECT" value1="${entriesPerFeed}" />
 		<execute function="#assertSelectedLabel" locator1="SORssConfiguration#DISPLAY_SETTINGS_EXPANDED_ENTRIES_PER_FEED_SELECT" value1="${expandedEntriesPerFeed}" />
-		<execute action="SORssConfiguration#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 </definition>

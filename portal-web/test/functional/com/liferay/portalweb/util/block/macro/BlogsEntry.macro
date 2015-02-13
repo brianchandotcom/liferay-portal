@@ -166,7 +166,7 @@
 		<execute function="#assertTextEquals" locator1="CPBlogsEdit#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="#selectFrame" locator1="CPBlogsEdit#CONTENT_FIELD" />
 		<execute function="#assertTextPresent" locator1="CPBlogsEdit#CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="CPBlogsEdit#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addDraftAutoPG">
@@ -180,7 +180,7 @@
 		<execute function="#assertTextEquals" locator1="PGBlogsEdit#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="#selectFrame" locator1="PGBlogsEdit#CONTENT_FIELD" />
 		<execute function="#assertTextPresent" locator1="PGBlogsEdit#CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="PGBlogsEdit#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addDraftCP">
@@ -210,7 +210,7 @@
 		<execute function="#assertTextEquals" locator1="PGBlogsEdit#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="#selectFrame" locator1="PGBlogsEdit#CONTENT_FIELD" />
 		<execute function="#assertTextPresent" locator1="PGBlogsEdit#CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="PGBlogsEdit#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addNoPermissionPG">
@@ -379,7 +379,7 @@
 		<execute function="#type" locator1="PGAssetpublisherAddnewblogsentry#CONTENT_FIELD" value1="${entryContent}" />
 		<execute function="#assertClick" locator1="PGAssetpublisherAddnewblogsentry#PUBLISH_BUTTON" value1="Publish" />
 		<execute function="#pause" locator1="5000" />
-		<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<var name="key_assetTitle" value="${entryTitle}" />
 
@@ -405,7 +405,7 @@
 
 		<execute function="#selectFrame" locator1="PGRelatedassetsSelect#IFRAME" />
 		<execute function="#assertClick" locator1="PGRelatedassetsSelect#ASSET_TABLE_CHOOSE" value1="Choose" />
-		<execute action="PGRelatedassetsSelect#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addScheduledPG">
@@ -605,7 +605,7 @@
 		<execute function="#assertClick" locator1="PGAssetpublisherAddnewblogsentry#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
 		<execute function="#pause" locator1="5000" />
 
-		<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<var name="key_assetTitle" value="${entryTitle}" />
 
@@ -960,7 +960,7 @@
 		<execute function="#assertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${entryTitle}" />
 		<execute function="#uncheck" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 		<execute function="#assertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="searchCP">
@@ -1128,7 +1128,7 @@
 
 	<command name="viewDefaultCP">
 		<execute function="#assertTextEquals" locator1="CPBlogs#INFO_MESSAGE" value1="No entries were found." />
-		<execute action="CPBlogs#assertTextNotPresent" value1="${entryTitle}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle}" />
 	</command>
 
 	<command name="viewDetailsPG">
@@ -1264,7 +1264,7 @@
 
 		<execute function="#assertClick" locator1="PGRecentbloggers#RECENT_BLOGGER_USER_NAME" value1="${entryAuthor}" />
 
-		<execute action="Home#assertLocation" value1="${friendlyURL}" />
+		<execute function="#assertLocation" value1="${friendlyURL}" />
 
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="#assertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
@@ -1300,7 +1300,7 @@
 	</command>
 
 	<command name="viewNoPG">
-		<execute action="PGBlogs#assertTextNotPresent" value1="${entryTitle}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle}" />
 	</command>
 
 	<command name="viewPermissionsNoPermissionPG">
@@ -1316,7 +1316,7 @@
 
 		<execute function="#selectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
 		<execute function="#assertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${entryTitle}" />
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewPG">
@@ -1565,7 +1565,7 @@
 			</else>
 		</if>
 
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewWithAbstractDisplayTemplatePG">

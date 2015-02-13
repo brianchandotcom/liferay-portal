@@ -205,7 +205,7 @@
 	</command>
 
 	<command name="resetPageChanges">
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 		<execute function="#assertTextEquals" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template." />
 		<execute function="#assertTextEquals" locator1="Dockbar#RESET_CHANGES_BUTTON" value1="Reset Changes" />
 
@@ -277,7 +277,7 @@
 	</command>
 
 	<command name="viewResetPageChanges">
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 		<execute function="#assertTextNotPresent" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template." />
 		<execute function="#assertTextNotPresent" locator1="Dockbar#RESET_CHANGES_BUTTON" value1="Reset Changes" />
 

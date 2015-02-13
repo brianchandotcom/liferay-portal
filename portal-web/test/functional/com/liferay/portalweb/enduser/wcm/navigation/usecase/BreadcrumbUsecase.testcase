@@ -243,7 +243,7 @@
 			<var name="virtualHostsURL" value="http://127.0.0.1:8080/web/site-name" />
 		</execute>
 
-		<execute action="Home#assertLocation" value1="http://127.0.0.1:8080/web/site-name/site-page-name" />
+		<execute function="#assertLocation" value1="http://127.0.0.1:8080/web/site-name/site-page-name" />
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListVisible" value="Liferay,Site Name,Site Page Name" />

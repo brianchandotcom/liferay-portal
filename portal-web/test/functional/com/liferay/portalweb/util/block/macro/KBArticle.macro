@@ -136,7 +136,7 @@
 		<execute function="#pause" locator1="5000" />
 
 		<execute function="#selectWindow" locator1="title=${pageName} - Liferay" />
-		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGKnowledgebasearticleConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="#assertClick" locator1="PGKnowledgebasearticleConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGKnowledgebasearticleConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
@@ -191,7 +191,7 @@
 
 		<execute function="#assertClick" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGKnowledgebasedisplayConfigurationDisplaysettings#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureKBSection">
@@ -433,7 +433,7 @@
 
 		<execute function="#selectFrame" locator1="CPKnowledgebaseadminSelectParent#SELECT_PARENT_IFRAME" />
 		<execute function="#click" locator1="CPKnowledgebaseadminSelectParent#CHOOSE_BUTTON" value1="Choose" />
-		<execute action="CPKnowledgebaseadminSelectParent#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />
 		<execute function="#click" locator1="CPKnowledgebaseadminMoveArticle#MOVE_BUTTON" />
@@ -454,7 +454,7 @@
 		<execute function="#click" locator1="PGKnowledgebasedisplayMoveArticle#MOVE_BUTTON" />
 
 		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGKnowledgebasedisplay#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectPGViaKBArticle">
@@ -470,10 +470,10 @@
 		<execute function="#assertClick" locator1="PGKnowledgebasearticleConfigurationArticle#ARTICLE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
 		<execute function="#selectWindow" locator1="title=${pageName} - Liferay" />
-		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGKnowledgebasearticleConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="#assertClick" locator1="PGKnowledgebasearticleConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectRelatedAssetCP">
@@ -489,7 +489,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPKnowledgebaseadminSelectRelatedAsset#ASSET_TABLE_TITLE" value1="${kbArticleRelatedAssetTitle}" />
 		<execute function="#assertClick" locator1="CPKnowledgebaseadminSelectRelatedAsset#ASSET_TABLE_ACTION" value1="Choose" />
-		<execute action="CPKnowledgebaseadminSelectRelatedAsset#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectScopePG">
@@ -502,7 +502,7 @@
 		<execute function="#assertClick" locator1="PGKnowledgebasedisplayConfigurationScope#SCOPE_MENU_BUTTON" value1="${currentKBPageScope}" />
 		<execute function="#assertClick" locator1="PGKnowledgebasedisplayConfigurationScope#SCOPE_SELECTION" value1="${newKBPageScope}" />
 		<execute function="#assertTextEquals" locator1="PGKnowledgebasedisplayConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGKnowledgebasedisplayConfigurationScope#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectSectionPGViaKBSection">
@@ -516,7 +516,7 @@
 		<execute function="#assertSelectedLabel" locator1="PGKnowledgebasesectionConfiguration#ARTICLE_DISPLAY_STYLE_SELECT" value1="Title" />
 		<execute function="#assertSelectedLabel" locator1="PGKnowledgebasesectionConfiguration#ARTICLE_WINDOW_STATE_SELECT" value1="Maximized" />
 		<execute function="#assertClick" locator1="PGKnowledgebasesectionConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="setPriorityCP">
@@ -895,7 +895,7 @@
 	</command>
 
 	<command name="viewNoViaKBDisplayPG">
-		<execute action="PGKnowledgebasedisplay#assertTextNotPresent" value1="${kbArticleTitle}" />
+		<execute function="#assertTextNotPresent" value1="${kbArticleTitle}" />
 	</command>
 
 	<command name="viewNoViaKBSectionPG">

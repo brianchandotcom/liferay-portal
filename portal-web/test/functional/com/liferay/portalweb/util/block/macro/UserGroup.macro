@@ -373,6 +373,6 @@
 		<execute function="#assertClick" locator1="CPUsergroups#BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute function="#assertTextEquals" locator1="CPUsergroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 		<execute function="#assertClick" locator1="CPUsergroups#USER_GROUP_TABLE_NAME_LINK" value1="${userGroupName}" />
-		<execute action="CPUsergroups#assertTextNotPresent" value1="${userFirstName}" />
+		<execute function="#assertTextNotPresent" value1="${userFirstName}" />
 	</command>
 </definition>

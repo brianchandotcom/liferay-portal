@@ -39,7 +39,7 @@
 
 		<execute function="#selectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
 		<execute function="#assertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_ADD" value1="Add" />
-		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="${field}" />
@@ -556,7 +556,7 @@
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsEdit#HEADER_TITLE" value1="${ddlDataDefinitionName}" />
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsEdit#NAME_FIELD" value1="${ddlDataDefinitionName}" />
 
-		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute macro="DynamicDataMapping#viewField">
 			<var name="fieldFieldLabel" value="Text" />
@@ -1178,10 +1178,10 @@
 		<execute function="#assertClick" locator1="CPMyworkflowtasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="New To Do for List: DDL List" />
 
 		<execute function="#assertClick" locator1="MyaccountMyworkflowtasks#EDIT_LINK" value1="Edit" />
-		<execute action="MyaccountMyworkflowtasks#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="MyaccountMyworkflowtasks#MY_ACCOUNT_IFRAME" />
 		<execute function="#assertTextEquals" locator1="MyaccountMyworkflowtasks#VIEW_HISTORY_BUTTON" value1="View History" />
-		<execute action="MyaccountMyworkflowtasks#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute macro="User#logoutPG" />
 

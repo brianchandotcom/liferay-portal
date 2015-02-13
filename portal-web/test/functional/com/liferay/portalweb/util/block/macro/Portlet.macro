@@ -33,7 +33,7 @@
 			<then>
 				<var name="i" value="${i?increment()}" />
 
-				<execute action="Home#refresh" />
+				<execute function="#refresh" />
 
 				<execute macro="Portlet#addPGCmd">
 					<var name="portletName" value="${portletName}" />
@@ -185,7 +185,7 @@
 		<execute function="#check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX" />
 		<execute function="#assertClick" locator1="PGADTConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGADTConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGADTConfiguration#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="gotoPortletOptions">

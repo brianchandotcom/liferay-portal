@@ -43,7 +43,7 @@
 		<execute function="#click" locator1="CPStore#PURCHASE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="CPStore#RECEIPT_TITLE" value1="Receipt" />
 		<execute function="#assertTextEquals" locator1="CPStore#RECEIPT_COMPLETED_THANK_YOU_MESSAGE" value1="Thank You!" />
-		<execute action="CPStore#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="installApp">
@@ -51,7 +51,7 @@
 		<execute function="#type" locator1="CPStore#PURCHASED_SEARCH_TITLE_FIELD" value1="${appName}" />
 		<execute function="#click" locator1="CPStore#PURCHASED_SEARCH_BUTTON" />
 		<execute function="#click" locator1="CPStore#PURCHASED_INSTALL_BUTTON" />
-		<execute action="CPStore#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#pause" locator1="5000" />
 	</command>
 

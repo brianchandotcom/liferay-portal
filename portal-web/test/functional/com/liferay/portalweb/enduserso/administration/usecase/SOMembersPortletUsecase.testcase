@@ -42,14 +42,14 @@
 
 		<execute function="#assertClick" locator1="SOMembersPortlet#INVITE_BUTTON" value1="Invite members to this site." />
 
-		<execute action="SOMembersPortletInvite#assertTextNotPresent" value1="Test LAX 1" />
-		<execute action="SOMembersPortletInvite#assertTextNotPresent" value1="test.lax.1@liferay.com" />
-		<execute action="SOMembersPortletInvite#assertTextNotPresent" value1="Test SFO 9" />
-		<execute action="SOMembersPortletInvite#assertTextNotPresent" value1="test.sfo.9@liferay.com" />
+		<execute function="#assertTextNotPresent" value1="Test LAX 1" />
+		<execute function="#assertTextNotPresent" value1="test.lax.1@liferay.com" />
+		<execute function="#assertTextNotPresent" value1="Test SFO 9" />
+		<execute function="#assertTextNotPresent" value1="test.sfo.9@liferay.com" />
 		<execute function="#assertClick" locator1="SOMembersPortletInvite#MEMBERS_INVITE_VIEW_MORE_LINK" value1="View More" />
-		<execute action="SOMembersPortletInvite#assertTextPresent" value1="Test LAX 1" />
-		<execute action="SOMembersPortletInvite#assertTextPresent" value1="test.lax.1@liferay.com" />
-		<execute action="SOMembersPortletInvite#assertTextPresent" value1="Test SFO 9" />
-		<execute action="SOMembersPortletInvite#assertTextPresent" value1="test.sfo.9@liferay.com" />
+		<execute function="#assertTextPresent" value1="Test LAX 1" />
+		<execute function="#assertTextPresent" value1="test.lax.1@liferay.com" />
+		<execute function="#assertTextPresent" value1="Test SFO 9" />
+		<execute function="#assertTextPresent" value1="test.sfo.9@liferay.com" />
 	</command>
 </definition>

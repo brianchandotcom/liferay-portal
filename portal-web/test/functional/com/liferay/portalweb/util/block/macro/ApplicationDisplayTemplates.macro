@@ -53,7 +53,7 @@
 
 		<var name="key_adtType" value="${adtType}" />
 
-		<execute action="PGApplicationdisplaytemplates#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGApplicationdisplaytemplates#ADT_IFRAME" />
 		<execute function="#assertClick" locator1="PGApplicationdisplaytemplates#ADD" value1="Add" />
 
@@ -67,7 +67,7 @@
 
 		<execute function="#assertTextEquals" locator1="PGApplicationdisplaytemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#assertTextEquals" locator1="PGApplicationdisplaytemplates#ADT_TABLE_NAME_1" value1="${adtType} Test ADT" />
-		<execute action="PGApplicationdisplaytemplates#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="tearDownADTviaPortletPG">
@@ -108,7 +108,7 @@
 
 		<execute function="#click" locator1="PGADTConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" />
 
-		<execute action="PGApplicationdisplaytemplates#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGApplicationdisplaytemplates#ADT_IFRAME" />
 
 		<if>

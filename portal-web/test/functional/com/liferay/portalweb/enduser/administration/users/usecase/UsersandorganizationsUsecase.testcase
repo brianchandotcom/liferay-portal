@@ -458,7 +458,7 @@
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<execute action="CPSites#assertTextNotPresent" value1="Organization Name 1" />
+		<execute function="#assertTextNotPresent" value1="Organization Name 1" />
 
 		<var name="key_siteName" value="${siteName}" />
 

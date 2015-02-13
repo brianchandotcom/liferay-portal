@@ -804,7 +804,7 @@
 			<var name="wfFieldName" value="Comments" />
 		</execute>
 
-		<execute action="PGWebformConfiguration#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -866,6 +866,6 @@
 			<var name="wfFieldType" value="Text Box" />
 		</execute>
 
-		<execute action="PGWebformConfiguration#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 	</command>
 </definition>

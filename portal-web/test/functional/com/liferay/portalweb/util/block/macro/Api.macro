@@ -5,10 +5,10 @@
 	<command name="apiAxisView">
 		<execute function="#open" locator1="Home#API_AXIS_URL" />
 
-		<execute action="Axisservices#assertTextPresent" value1="And now... Some Services" />
-		<execute action="Axisservices#assertTextPresent" value1="Portal_LayoutBranchService" />
-		<execute action="Axisservices#assertTextPresent" value1="Portal_AccountService" />
-		<execute action="Axisservices#assertTextPresent" value1="Portal_CompanyService" />
+		<execute function="#assertTextPresent" value1="And now... Some Services" />
+		<execute function="#assertTextPresent" value1="Portal_LayoutBranchService" />
+		<execute function="#assertTextPresent" value1="Portal_AccountService" />
+		<execute function="#assertTextPresent" value1="Portal_CompanyService" />
 	</command>
 
 	<command name="apiJsonwsAddressView">

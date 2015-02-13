@@ -38,9 +38,9 @@
 		<execute function="#assertTextEquals" locator1="BasePortlet#PORTLET_CONTENT" value1="You are signed in as Test Test." />
 
 		<execute function="#sikuliMouseMove" locator1="Home#SIGN_IN_PORTLET" />
-		<execute action="Home#sikuliLeftMouseDown" />
+		<execute function="#sikuliLeftMouseDown" />
 		<execute function="#sikuliMouseMove" locator1="Home#HELLO_WORLD_PORTLET" />
-		<execute action="Home#sikuliLeftMouseUp" />
+		<execute function="#sikuliLeftMouseUp" />
 		<execute function="#assertElementPresent" locator1="Home#PAGE_COLUMN_2_SIGN_IN_PORTLET" />
 	</command>
 </definition>

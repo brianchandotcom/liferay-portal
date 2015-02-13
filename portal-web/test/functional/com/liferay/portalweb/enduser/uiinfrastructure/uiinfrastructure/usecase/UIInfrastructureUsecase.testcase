@@ -10,7 +10,7 @@
 			<var name="portletName" value="User Groups" />
 		</execute>
 
-		<execute action="CPUsergroups#assertTextNotPresent" value1="View All" />
+		<execute function="#assertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 
@@ -18,7 +18,7 @@
 			<var name="portletName" value="Roles" />
 		</execute>
 
-		<execute action="CPRoles#assertTextNotPresent" value1="View All" />
+		<execute function="#assertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 
@@ -26,7 +26,7 @@
 			<var name="portletName" value="Password Policies" />
 		</execute>
 
-		<execute action="CPPasswordpolicies#assertTextNotPresent" value1="View All" />
+		<execute function="#assertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 
@@ -34,7 +34,7 @@
 			<var name="portletName" value="Site Templates" />
 		</execute>
 
-		<execute action="CPSitetemplates#assertTextNotPresent" value1="View All" />
+		<execute function="#assertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 
@@ -42,7 +42,7 @@
 			<var name="portletName" value="Site Templates" />
 		</execute>
 
-		<execute action="CPPagetemplates#assertTextNotPresent" value1="View All" />
+		<execute function="#assertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 
@@ -50,7 +50,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute action="CPBlogs#assertTextNotPresent" value1="View All" />
+		<execute function="#assertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 
@@ -58,7 +58,7 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute action="CPDynamicdatalists#assertTextNotPresent" value1="View All" />
+		<execute function="#assertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 
@@ -71,7 +71,7 @@
 
 		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 
-		<execute action="CPDocumentsandmedia#assertTextNotPresent" value1="View All" />
+		<execute function="#assertTextNotPresent" value1="View All" />
 
 		<take-screenshot />
 	</command>

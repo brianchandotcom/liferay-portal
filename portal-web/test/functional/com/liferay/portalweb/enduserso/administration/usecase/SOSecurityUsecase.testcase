@@ -137,7 +137,7 @@
 			<var name="userScreenName" value="${userScreenName1}" />
 		</execute>
 
-		<execute action="SOContactscenter#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOContactsCenter#addFollower">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -161,7 +161,7 @@
 			<var name="userScreenName" value="${adminScreenName}" />
 		</execute>
 
-		<execute action="SOContactscenter#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -185,7 +185,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute action="SOMicroblogs#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -194,7 +194,7 @@
 			<var name="statusUpdateEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute action="SOMicroblogs#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
@@ -207,18 +207,18 @@
 
 		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
-		<execute action="SOMicroblogsProfile#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
 		</execute>
 
-		<execute action="SOMicroblogsProfile#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<var name="key_row" value="01" />
 		<var name="key_userFirstName" value="${userFirstName1}" />
@@ -230,9 +230,9 @@
 		<var name="key_userName" value="${adminName}" />
 
 		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<var name="key_row" value="01" />
 		<var name="key_userName" value="${adminName}" />
@@ -244,31 +244,31 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotification">
 			<var name="microblogsEntryCommentAuthorName" value="${userName1}" />
 			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
 		</execute>
 
-		<execute action="SOMicroblogs#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<var name="key_row" value="01" />
 		<var name="key_userFirstName" value="${userFirstName1}" />
 		<var name="key_userName" value="${userName1}" />
 
 		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<var name="key_row" value="02" />
 		<var name="key_userName" value="${adminName}" />
 
 		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Messages" />
@@ -282,14 +282,14 @@
 			<var name="recipientScreenName" value="${userScreenName3}" />
 		</execute>
 
-		<execute action="SOMessagesMessage#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
 			<var name="userLoginFullName" value="${userName3}" />
 		</execute>
 
-		<execute action="SOUserBar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOMessages#viewMessageNotification">
 			<var name="messageBody" value="${messageBody}" />
@@ -301,7 +301,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOMessages#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOMessages#viewMessage">
 			<var name="connectionName" value="${adminName}" />
@@ -310,20 +310,20 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOMessagesMessage#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOMessages#sendReplyMessage">
 			<var name="messageReplyBody" value="${messageReplyBody}" />
 		</execute>
 
-		<execute action="SOMessagesMessage#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Messages" />
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOMessages#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOMessages#viewReplyMessage">
 			<var name="connectionName" value="${adminName}" />
@@ -334,21 +334,21 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOMessagesMessage#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Messages" />
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOMessages#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<var name="senderName" value="${userName3}" />
 
@@ -371,7 +371,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOMessages#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute function="#check" locator1="SOMessages#MESSAGE_CHECKBOX" />
 		<execute function="#assertClickNoError" locator1="SOMessages#DELETE_BUTTON" value1="Delete" />
@@ -388,14 +388,14 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="My Documents" />
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_HOME" value1="Home" />
 
@@ -403,7 +403,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
@@ -411,40 +411,40 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="My Documents" />
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="DMDocumentComment#addPG">
 			<var name="commentBody" value="${commentBody}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
-		<execute action="PGDocumentsandmediaDocument#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="My Documents" />
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
@@ -458,14 +458,14 @@
 			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
 
-		<execute action="PGDocumentsandmediaDocument#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Tasks" />
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOTasks#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOTasks#addTask">
 			<var name="taskAssignee" value="${adminName}" />
@@ -473,28 +473,28 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute action="SOTasksTask#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Tasks" />
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOTasks#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOTasks#addComment">
 			<var name="taskComment" value="${taskComment1}" />
 			<var name="taskDescription" value="${taskDescription1}" />
 		</execute>
 
-		<execute action="SOTasksTask#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Tasks" />
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOTasks#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOTasks#completeTask">
 			<var name="percentCompletion" value="60" />
@@ -503,14 +503,14 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute action="SOTasksTask#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Tasks" />
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOTasks#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOTasks#viewTask">
 			<var name="percentCompletion" value="60" />
@@ -520,14 +520,14 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute action="SOTasksTask#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Tasks" />
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOTasks#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOTasks#completeTask">
 			<var name="percentCompletion" value="100" />
@@ -536,14 +536,14 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute action="SOTasksTask#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Tasks" />
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOTasks#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOTasks#viewTask">
 			<var name="percentCompletion" value="100" />
@@ -553,7 +553,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute action="SOTasksTask#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOTasks#addTask">
 			<var name="taskAssignee" value="${userName1}" />
@@ -561,24 +561,24 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute action="SOTasksTask#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
 		<execute function="#click" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" />
-		<execute action="SOUserBar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Tasks" />
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOTasks#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOTasks#resolveTask">
 			<var name="taskAssignee" value="${userName1}" />
@@ -586,14 +586,14 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute action="SOTasksTask#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Tasks" />
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOTasks#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOTasks#viewTask">
 			<var name="percentCompletion" value="100" />
@@ -602,24 +602,24 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute action="SOTasksTask#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 		<execute function="#click" locator1="SOUserBar#NOTIFICATION" />
 		<execute function="#click" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" />
-		<execute action="SOUserBar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Tasks" />
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOTasks#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOTasks#viewTask">
 			<var name="percentCompletion" value="100" />
@@ -628,7 +628,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute action="SOTasksTask#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
@@ -637,37 +637,37 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<var name="key_row" value="01" />
 		<var name="key_userFirstName" value="${userFirstName1}" />
 		<var name="key_userName" value="${userName1}" />
 
 		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<var name="key_row" value="02" />
 		<var name="key_userName" value="${adminName}" />
 
 		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<var name="key_row" value="01" />
 		<var name="key_userName" value="${adminName}" />
 
 		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
-		<execute action="SOActivities#assertAlertNotPresent" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${taskDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${taskDescription2}" />
+		<execute function="#assertAlertNotPresent" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile}" />
+		<execute function="#assertTextNotPresent" value1="${taskDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${taskDescription2}" />
 
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 
 		<execute macro="User#logoutAndLoginPG">
@@ -677,31 +677,31 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<var name="key_row" value="01" />
 		<var name="key_userName" value="${adminName}" />
 
 		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<var name="key_row" value="01" />
 		<var name="key_userName" value="${adminName}" />
 
 		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
-		<execute action="SOActivities#assertAlertNotPresent" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${taskDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${taskDescription2}" />
+		<execute function="#assertAlertNotPresent" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile}" />
+		<execute function="#assertTextNotPresent" value1="${taskDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${taskDescription2}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -710,10 +710,10 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_ME" value1="Me" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -722,20 +722,20 @@
 		<var name="key_userName" value="${userName1}" />
 
 		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<var name="key_row" value="02" />
 		<var name="key_userName" value="${adminName}" />
 
 		<execute function="#assertClick" locator1="SOActivities#ACTIVITIES_COMMENT" value1="1 Comment" />
-		<execute action="SOActivities#assertAlertNotPresent" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${taskDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${taskDescription2}" />
+		<execute function="#assertAlertNotPresent" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile}" />
+		<execute function="#assertTextNotPresent" value1="${taskDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${taskDescription2}" />
 
 		<execute macro="SOContactsCenter#disconnectFromConnection">
 			<var name="userEmailAddress" value="${userEmailAddress1}" />
@@ -757,12 +757,12 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 
 		<execute macro="User#logoutAndLoginPG">
@@ -772,12 +772,12 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
-		<execute action="SOActivities#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 	</command>
 
@@ -864,7 +864,7 @@
 			<var name="userAddressType" value="${userAddressType}" />
 		</execute>
 
-		<execute action="SOProfile#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOProfile#addInstantMessenger">
 			<var name="userInstantMessengerAIM" value="${userInstantMessengerAIM}" />
@@ -875,13 +875,13 @@
 			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
 		</execute>
 
-		<execute action="SOProfile#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOProfile#addIntroduction">
 			<var name="userIntroduction" value="${userIntroduction}" />
 		</execute>
 
-		<execute action="SOProfile#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOProfile#addPhoneNumbers">
 			<var name="userPhoneNumberExtension" value="${userPhoneNumberExtension}" />
@@ -889,33 +889,33 @@
 			<var name="userPhoneNumberType" value="${userPhoneNumberType}" />
 		</execute>
 
-		<execute action="SOProfile#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOProfile#addProjects">
 			<var name="userProjectDescription" value="${userProjectDescription}" />
 			<var name="userProjectTitle" value="${userProjectTitle}" />
 		</execute>
 
-		<execute action="SOProfile#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOProfile#addSMS">
 			<var name="userSMS" value="${userSMS}" />
 		</execute>
 
-		<execute action="SOProfile#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOProfile#addSocialNetwork">
 			<var name="userSocialNetworkFacebook" value="${userSocialNetworkFacebook}" />
 			<var name="userSocialNetworkTwitter" value="${userSocialNetworkTwitter}" />
 		</execute>
 
-		<execute action="SOProfile#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOProfile#addTag">
 			<var name="userTag" value="${userTag}" />
 		</execute>
 
-		<execute action="SOProfile#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Microblogs" />
@@ -949,15 +949,15 @@
 		<execute function="#click" locator1="Dockbar#USER_NAME" />
 		<execute function="#click" locator1="Dockbar#USER_MY_PROFILE" value1="My Profile" />
 
-		<execute action="SOProfile#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" />
 
-		<execute action="SOProfile#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute function="#click" locator1="SOProfile#NAVIGATION_CONTACTS" />
 
-		<execute action="SOProfile#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 	</command>
 
 	<command known-issues="LIFERAYQA-11088" name="SiteXSSDemo" priority="5">
@@ -1075,7 +1075,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="SOUserBar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="CalendarEvent#addPG">
 			<var name="eventTitle" value="${eventTitle}" />
@@ -1086,7 +1086,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="PGCalendar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents" />
@@ -1100,7 +1100,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents" />
@@ -1109,7 +1109,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_HOME" value1="Home" />
 
@@ -1117,7 +1117,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
@@ -1125,7 +1125,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents" />
@@ -1134,13 +1134,13 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
@@ -1153,7 +1153,7 @@
 			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
 
-		<execute action="PGDocumentsandmediaDocument#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Forums" />
@@ -1166,7 +1166,7 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute action="PGMessageboards#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Forums" />
@@ -1175,20 +1175,20 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="PGMessageboards#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute action="PGMessageboards#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
-		<execute action="PGMessageboards#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Forums" />
@@ -1197,7 +1197,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="PGMessageboards#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOForumsCategoryThread#viewPG">
 			<var name="categoryName" value="${categoryName}" />
@@ -1220,14 +1220,14 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute action="PGBlogs#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute action="PGBlogs#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs" />
@@ -1236,7 +1236,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="PGBlogs#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="BlogsEntry#viewDetailsPG">
 			<var name="entryAuthorFirstName" value="${adminFirstName}" />
@@ -1246,7 +1246,7 @@
 			<var name="pageName" value="Blogs" />
 		</execute>
 
-		<execute action="PGBlogs#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki" />
@@ -1259,7 +1259,7 @@
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 		</execute>
 
-		<execute action="PGWiki#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Members" />
@@ -1268,7 +1268,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="SOMembersPortlet#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOMembersPortlet#inviteMember">
 			<var name="userEmailAddress" value="${userEmailAddress2}" />
@@ -1278,21 +1278,21 @@
 			<var name="userName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOMembersPortlet#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOUserBar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute action="SOUserBar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOMembersAdministration#viewConfirmMemberInvite">
 			<var name="siteDescription" value="${siteDescription}" />
@@ -1304,7 +1304,7 @@
 			<var name="userName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOUserBar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1318,7 +1318,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="SOMembersPortlet#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOMembersPortlet#viewMember">
 			<var name="siteName" value="${siteName}" />
@@ -1329,7 +1329,7 @@
 			<var name="userName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOMembersPortlet#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Members" />
@@ -1351,14 +1351,14 @@
 			<var name="userLoginFullName" value="${userName3}" />
 		</execute>
 
-		<execute action="SOUserBar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOMembersAdministration#ignoreMemberInvite">
 			<var name="senderName" value="${adminName}" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute action="SOUserBar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOMembersAdministration#viewIgnoreMemberInvite">
 			<var name="numberOfMembers" value="2" />
@@ -1371,7 +1371,7 @@
 			<var name="userName" value="${userName3}" />
 		</execute>
 
-		<execute action="SOUserBar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1385,7 +1385,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="SOMembersPortlet#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOMembersPortlet#viewNonMember">
 			<var name="numberOfMembers" value="2" />
@@ -1397,7 +1397,7 @@
 			<var name="userName" value="${userName3}" />
 		</execute>
 
-		<execute action="SOMembersPortlet#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
@@ -1408,7 +1408,7 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute action="SOMembersPortlet#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOMembersAdministration#viewConfirmMemberInvite">
 			<var name="numberOfMembers" value="3" />
@@ -1432,21 +1432,21 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="SOSite#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOEvents#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleShort" value="${eventTitleShort}" />
 		</execute>
 
-		<execute action="SOSite#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteNameFriendly}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOSite#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOBookmarks#addBookmarksEntry">
 			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}" />
@@ -1454,14 +1454,14 @@
 			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl}" />
 		</execute>
 
-		<execute action="SOSite#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteNameFriendly}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOSite#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOBookmarks#viewBookmarksEntry">
 			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}" />
@@ -1469,21 +1469,21 @@
 			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl}" />
 		</execute>
 
-		<execute action="SOSite#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteNameFriendly}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOSite#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="SOSite#viewSOSiteMembership">
 			<var name="numberOfMembers" value="3" />
@@ -1499,6 +1499,6 @@
 			<var name="userScreenName" value="${userScreenName1}" />
 		</execute>
 
-		<execute action="SOMembersPortlet#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 	</command>
 </definition>

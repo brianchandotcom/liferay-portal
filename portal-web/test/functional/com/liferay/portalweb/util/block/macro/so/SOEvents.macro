@@ -23,7 +23,7 @@
 		<execute function="#select" locator1="SOEventsConfiguration#DISPLAY_SETTINGS_MAX_DAYS_DISPLAYED_SELECT" value1="${maxDisplayDays}" />
 		<execute function="#assertClick" locator1="SOEventsConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="SOEventsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="SOEventsConfiguration#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="configureEventsPortletDisplayEvents">
@@ -50,7 +50,7 @@
 		<execute function="#select" locator1="SOEventsConfiguration#DISPLAY_SETTINGS_MAX_EVENTS_TO_DISPLAY_SELECT" value1="${maxDisplayEvents}" />
 		<execute function="#assertClick" locator1="SOEventsConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="SOEventsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="SOEventsConfiguration#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="viewTodaysEventDashboardEvent">
@@ -180,7 +180,7 @@
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_CREATOR" value1="${userName}" />
 		<execute function="#assertElementNotPresent" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
-		<execute action="SOEvents#assertTextNotPresent" value1="${eventTitle}" />
+		<execute function="#assertTextNotPresent" value1="${eventTitle}" />
 	</command>
 
 	<command name="viewTodaysEventSiteEvent">

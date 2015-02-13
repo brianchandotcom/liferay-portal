@@ -137,7 +137,7 @@
 					<execute function="#click" locator1="CPDocumentsandmediaEditfolder#WORKFLOW_SPECIFIC_RESTRICTIONS_RADIO" />
 					<execute function="#assertClick" locator1="CPDocumentsandmediaEditfolder#WORKFLOW_SPECIFIC_RESTRICTIONS_SELECT_DOCUMENT_TYPE_BUTTON" value1="Select Document Type" />
 
-					<execute action="CPDocumentsandmediaAdddocumenttype#selectFrame" value1="relative=top" />
+					<execute function="#selectFrame" value1="relative=top" />
 
 					<execute function="#selectFrame" locator1="CPDocumentsandmediaAdddocumenttypeSelect#SELECT_DOCUMENT_IFRAME" />
 
@@ -145,7 +145,7 @@
 
 					<execute function="#assertClick" locator1="CPDocumentsandmediaAdddocumenttypeSelect#DOCUMENTS_TABLE_CHOOSE" value1="Choose" />
 
-					<execute action="CPDocumentsandmediaEditfolder#selectFrameTop" value1="relative=top" />
+					<execute function="#selectFrameTop" value1="relative=top" />
 					<execute function="#select" locator1="CPDocumentsandmediaEditfolder#WORKFLOW_SPECIFIC_RESTRICTIONS_TYPE_WORKFLOW_SELECT" value1="${workflowDefinition}" />
 					<execute function="#assertClickNoError" locator1="CPDocumentsandmediaEditfolder#SAVE_BUTTON" value1="Save" />
 					<execute function="#confirm" locator1="CPDocumentsandmediaEditfolder#CONFIRMATION" value1="You are making changes to the document types. If a document in this folder or its subfolders is currently in draft or pending workflow states, you may lose some or all of its metadata. A new version will be created for all other documents. Are you sure you wish to continue?" />
@@ -318,7 +318,7 @@
 
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaMovefiles#SELECT_FOLDER_TABLE_FOLDER" value1="${dmFolderName2}" />
 		<execute function="#assertClick" locator1="PGDocumentsandmediaMovefiles#SELECT_FOLDER_TABLE_CHOOSE" value1="Choose" />
-		<execute action="PGDocumentsandmediaMovefiles#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#assertClick" locator1="PGDocumentsandmediaMovefiles#MOVE_BUTTON" value1="Move" />
 
 		<if>
@@ -361,7 +361,7 @@
 		<execute function="#uncheck" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 		<execute function="#assertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="subscribePG">
@@ -463,7 +463,7 @@
 			</else>
 		</if>
 
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewPG">

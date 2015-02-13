@@ -227,7 +227,7 @@
 		<execute function="#click" locator1="SOMessagesAdd#SEND_BUTTON" />
 		<execute function="#pause" locator1="1000" />
 
-		<execute action="SOMessages#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="unblockMember">
@@ -307,6 +307,6 @@
 
 		<execute function="#type" locator1="SOMembersPortlet#MEMBERS_LIST_SEARCH" value1="${userEmailAddress}" />
 		<execute function="#assertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMPTY" value1="There are no results." />
-		<execute action="SOMembersPortlet#assertTextNotPresent" value1="${userLastName}, ${userFirstName}" />
+		<execute function="#assertTextNotPresent" value1="${userLastName}, ${userFirstName}" />
 	</command>
 </definition>

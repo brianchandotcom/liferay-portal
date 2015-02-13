@@ -85,7 +85,7 @@
 	<command name="saveConfiguration">
 		<execute function="#assertClick" locator1="PGWebformConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGWebformConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGWebformConfiguration#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="viewDeletedFieldNotPresent">

@@ -132,7 +132,7 @@
 
 		<execute function="#assertTextEquals" locator1="SOMessages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#INFO_MESSAGE" value1="No messages found." />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageSubject}" />
+		<execute function="#assertTextNotPresent" value1="${messageSubject}" />
 	</command>
 
 	<command name="DeleteMessageBySOUser2" priority="5">
@@ -234,14 +234,14 @@
 		</execute>
 
 		<execute function="#assertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
-		<execute action="SOMessages#assertTextNotPresent" value1="Message Subject" />
-		<execute action="SOMessages#assertTextNotPresent" value1="Message Body" />
+		<execute function="#assertTextNotPresent" value1="Message Subject" />
+		<execute function="#assertTextNotPresent" value1="Message Body" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#assertElementPresent" locator1="SOUserBar#NOTIFICATION" />
 		<execute function="#assertClick" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="1" />
-		<execute action="SOMessages#assertTextNotPresent" value1="${senderName} sent you a message." />
+		<execute function="#assertTextNotPresent" value1="${senderName} sent you a message." />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -311,7 +311,7 @@
 
 		<execute function="#assertTextEquals" locator1="SOMessages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#assertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
-		<execute action="SOMessages#assertTextNotPresent" value1="${messageSubject}" />
+		<execute function="#assertTextNotPresent" value1="${messageSubject}" />
 	</command>
 
 	<command name="DeleteMessagesAll" priority="5">
@@ -948,8 +948,8 @@
 		</execute>
 
 		<execute function="#assertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
-		<execute action="SOMessages#assertTextNotPresent" value1="${messageSubject}" />
-		<execute action="SOMessages#assertTextNotPresent" value1="${messageBody}" />
+		<execute function="#assertTextNotPresent" value1="${messageSubject}" />
+		<execute function="#assertTextNotPresent" value1="${messageBody}" />
 	</command>
 
 	<command name="SendMessageAttachmentMultipleUsers" priority="5">
@@ -1479,8 +1479,8 @@
 		<execute function="#click" locator1="SOMessagesAdd#SEND_BUTTON" />
 
 		<execute function="#assertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
-		<execute action="SOMessages#assertTextNotPresent" value1="${messageSubject}" />
-		<execute action="SOMessages#assertTextNotPresent" value1="${messageBody}" />
+		<execute function="#assertTextNotPresent" value1="${messageSubject}" />
+		<execute function="#assertTextNotPresent" value1="${messageBody}" />
 	</command>
 
 	<command name="SendMessagePortal" priority="5">
@@ -2901,10 +2901,10 @@
 		<var name="key_recipientName" value="Social02" />
 
 		<execute function="#assertTextEquals" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName2} &lt;${userScreenName2}&gt;" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName3}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName3}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName4}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName4}" />
+		<execute function="#assertTextNotPresent" value1="${userName3}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName3}" />
+		<execute function="#assertTextNotPresent" value1="${userName4}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName4}" />
 	</command>
 
 	<command name="ViewAutocompleteMenuSearch" priority="5">
@@ -2984,12 +2984,12 @@
 		<var name="key_recipientName" value="${userFirstName1}" />
 
 		<execute function="#assertTextEquals" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName1} &lt;${userScreenName1}&gt;" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName2}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName2}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName3}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName3}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName4}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName4}" />
+		<execute function="#assertTextNotPresent" value1="${userName2}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName2}" />
+		<execute function="#assertTextNotPresent" value1="${userName3}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName3}" />
+		<execute function="#assertTextNotPresent" value1="${userName4}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName4}" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -3004,12 +3004,12 @@
 		<var name="key_recipientName" value="${userFirstName2}" />
 
 		<execute function="#assertTextEquals" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName2} &lt;${userScreenName2}&gt;" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName1}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName1}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName3}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName3}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName4}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName4}" />
+		<execute function="#assertTextNotPresent" value1="${userName1}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName1}" />
+		<execute function="#assertTextNotPresent" value1="${userName3}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName3}" />
+		<execute function="#assertTextNotPresent" value1="${userName4}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName4}" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -3024,12 +3024,12 @@
 		<var name="key_recipientName" value="${userFirstName3}" />
 
 		<execute function="#assertTextEquals" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName3} &lt;${userScreenName3}&gt;" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName1}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName1}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName2}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName2}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName4}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName4}" />
+		<execute function="#assertTextNotPresent" value1="${userName1}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName1}" />
+		<execute function="#assertTextNotPresent" value1="${userName2}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName2}" />
+		<execute function="#assertTextNotPresent" value1="${userName4}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName4}" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -3044,12 +3044,12 @@
 		<var name="key_recipientName" value="${userFirstName4}" />
 
 		<execute function="#assertTextEquals" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" value1="${userName4} &lt;${userScreenName4}&gt;" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName1}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName1}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName2}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName2}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName3}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName3}" />
+		<execute function="#assertTextNotPresent" value1="${userName1}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName1}" />
+		<execute function="#assertTextNotPresent" value1="${userName2}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName2}" />
+		<execute function="#assertTextNotPresent" value1="${userName3}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName3}" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -3061,14 +3061,14 @@
 		<execute function="#selectFrame" locator1="SOMessagesAdd#NEW_MESSAGE_IFRAME" />
 		<execute function="#type" locator1="SOMessagesAdd#TO_FIELD" value1="Social05" />
 		<execute function="#assertElementNotPresent" locator1="SOMessagesAdd#TO_FIELD_DROPDOWN_LIST" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName1}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName1}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName2}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName2}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName3}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName3}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userName4}" />
-		<execute action="SOMessagesAdd#assertTextNotPresent" value1="${userScreenName4}" />
+		<execute function="#assertTextNotPresent" value1="${userName1}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName1}" />
+		<execute function="#assertTextNotPresent" value1="${userName2}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName2}" />
+		<execute function="#assertTextNotPresent" value1="${userName3}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName3}" />
+		<execute function="#assertTextNotPresent" value1="${userName4}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName4}" />
 	</command>
 
 	<command name="ViewAutocompleteMenuSiteProperty" priority="4">
@@ -3653,131 +3653,131 @@
 		<execute function="#assertClick" locator1="SOMessagesMessage#PREVIOUS_LINK" value1="Previous" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_BUTTON" value1="Page 1 of 2" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#SEARCH_RESULTS" value1="Showing 1 - 20 of 29 results." />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageBody}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody1}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody2}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody3}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody4}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody5}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody6}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody7}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody8}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody9}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody10}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody11}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody12}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody13}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody14}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody15}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody16}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody17}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody18}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody19}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody20}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody21}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody22}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody23}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody24}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody25}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody26}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody27}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody28}" />
+		<execute function="#assertTextPresent" value1="${messageBody}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody1}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody2}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody3}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody4}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody5}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody6}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody7}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody8}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody9}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody10}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody11}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody12}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody13}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody14}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody15}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody16}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody17}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody18}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody19}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody20}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody21}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody22}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody23}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody24}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody25}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody26}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody27}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody28}" />
 		<execute function="#assertClick" locator1="SOMessagesMessage#NEXT_LINK" value1="Next" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_BUTTON" value1="Page 2 of 2" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#SEARCH_RESULTS" value1="Showing 21 - 29 of 29 results." />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageBody}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody1}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody2}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody3}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody4}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody5}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody6}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody7}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody8}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody9}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody10}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody11}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody12}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody13}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody14}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody15}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody16}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody17}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody18}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody19}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody20}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody21}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody22}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody23}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody24}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody25}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody26}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody27}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody28}" />
+		<execute function="#assertTextNotPresent" value1="${messageBody}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody1}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody2}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody3}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody4}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody5}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody6}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody7}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody8}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody9}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody10}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody11}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody12}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody13}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody14}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody15}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody16}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody17}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody18}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody19}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody20}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody21}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody22}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody23}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody24}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody25}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody26}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody27}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody28}" />
 		<execute function="#assertClick" locator1="SOMessagesMessage#FIRST_LINK" value1="First" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_BUTTON" value1="Page 1 of 2" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#SEARCH_RESULTS" value1="Showing 1 - 20 of 29 results." />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageBody}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody1}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody2}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody3}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody4}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody5}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody6}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody7}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody8}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody9}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody10}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody11}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody12}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody13}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody14}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody15}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody16}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody17}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody18}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody19}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody20}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody21}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody22}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody23}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody24}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody25}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody26}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody27}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody28}" />
+		<execute function="#assertTextPresent" value1="${messageBody}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody1}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody2}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody3}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody4}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody5}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody6}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody7}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody8}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody9}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody10}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody11}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody12}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody13}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody14}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody15}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody16}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody17}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody18}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody19}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody20}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody21}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody22}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody23}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody24}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody25}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody26}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody27}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody28}" />
 		<execute function="#assertClick" locator1="SOMessagesMessage#LAST_LINK" value1="Last" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_BUTTON" value1="Page 2 of 2" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#SEARCH_RESULTS" value1="Showing 21 - 29 of 29 results." />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageBody}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody1}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody2}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody3}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody4}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody5}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody6}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody7}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody8}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody9}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody10}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody11}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody12}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody13}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody14}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody15}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody16}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody17}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody18}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody19}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody20}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody21}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody22}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody23}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody24}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody25}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody26}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody27}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody28}" />
+		<execute function="#assertTextNotPresent" value1="${messageBody}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody1}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody2}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody3}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody4}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody5}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody6}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody7}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody8}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody9}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody10}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody11}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody12}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody13}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody14}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody15}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody16}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody17}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody18}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody19}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody20}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody21}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody22}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody23}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody24}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody25}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody26}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody27}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody28}" />
 
 		<var name="key_pageNumber" value="1" />
 
@@ -3785,35 +3785,35 @@
 		<execute function="#click" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_MENU_ITEM" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_BUTTON" value1="Page 1 of 2" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#SEARCH_RESULTS" value1="Showing 1 - 20 of 29 results." />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageBody}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody1}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody2}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody3}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody4}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody5}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody6}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody7}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody8}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody9}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody10}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody11}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody12}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody13}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody14}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody15}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody16}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody17}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody18}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody19}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody20}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody21}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody22}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody23}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody24}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody25}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody26}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody27}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody28}" />
+		<execute function="#assertTextPresent" value1="${messageBody}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody1}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody2}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody3}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody4}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody5}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody6}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody7}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody8}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody9}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody10}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody11}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody12}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody13}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody14}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody15}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody16}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody17}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody18}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody19}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody20}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody21}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody22}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody23}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody24}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody25}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody26}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody27}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody28}" />
 
 		<var name="key_pageNumber" value="2" />
 
@@ -3821,35 +3821,35 @@
 		<execute function="#click" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_MENU_ITEM" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_BUTTON" value1="Page 2 of 2" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#SEARCH_RESULTS" value1="Showing 21 - 29 of 29 results." />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageBody}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody1}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody2}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody3}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody4}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody5}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody6}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody7}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody8}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody9}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody10}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody11}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody12}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody13}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody14}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody15}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody16}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody17}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody18}" />
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageReplyBody19}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody20}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody21}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody22}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody23}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody24}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody25}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody26}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody27}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody28}" />
+		<execute function="#assertTextNotPresent" value1="${messageBody}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody1}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody2}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody3}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody4}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody5}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody6}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody7}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody8}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody9}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody10}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody11}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody12}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody13}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody14}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody15}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody16}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody17}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody18}" />
+		<execute function="#assertTextNotPresent" value1="${messageReplyBody19}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody20}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody21}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody22}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody23}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody24}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody25}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody26}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody27}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody28}" />
 
 		<var name="key_itemsPerPage" value="30" />
 
@@ -3859,35 +3859,35 @@
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#ITEMS_PER_PAGE_DROPDOWN_BUTTON" value1="30 Items per Page" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#PAGE_NUMBER_DROPDOWN_BUTTON" value1="Page 1 of 1" />
 		<execute function="#assertTextEquals" locator1="SOMessagesMessage#SEARCH_RESULTS" value1="Showing 29 results." />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageBody}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody1}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody2}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody3}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody4}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody5}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody6}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody7}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody8}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody9}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody10}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody11}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody12}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody13}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody14}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody15}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody16}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody17}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody18}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody19}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody20}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody21}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody22}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody23}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody24}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody25}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody26}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody27}" />
-		<execute action="SOMessagesMessage#assertTextPresent" value1="${messageReplyBody28}" />
+		<execute function="#assertTextPresent" value1="${messageBody}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody1}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody2}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody3}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody4}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody5}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody6}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody7}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody8}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody9}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody10}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody11}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody12}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody13}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody14}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody15}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody16}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody17}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody18}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody19}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody20}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody21}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody22}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody23}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody24}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody25}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody26}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody27}" />
+		<execute function="#assertTextPresent" value1="${messageReplyBody28}" />
 	</command>
 
 	<command name="ViewMessagesGmail" priority="4">
@@ -4218,10 +4218,10 @@
 
 		<execute function="#assertClick" locator1="SOUserBar#PAGE_NAME" value1="Mensajes" />
 
-		<execute action="SOMessages#assertTextNotPresent" value1="${englishTimeStamp1}" />
+		<execute function="#assertTextNotPresent" value1="${englishTimeStamp1}" />
 		<execute function="#click" locator1="SOMessages#MESSAGE_SUBJECT" />
 
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${englishTimeStamp2}" />
+		<execute function="#assertTextNotPresent" value1="${englishTimeStamp2}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -4246,10 +4246,10 @@
 
 		<execute function="#assertClick" locator1="SOUserBar#PAGE_NAME" value1="Forum" />
 
-		<execute action="SOMessages#assertTextNotPresent" value1="${englishTimeStamp1}" />
+		<execute function="#assertTextNotPresent" value1="${englishTimeStamp1}" />
 		<execute function="#click" locator1="SOMessages#MESSAGE_SUBJECT" />
 
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${englishTimeStamp2}" />
+		<execute function="#assertTextNotPresent" value1="${englishTimeStamp2}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -4274,10 +4274,10 @@
 
 		<execute function="#assertClick" locator1="SOUserBar#PAGE_NAME" value1="Nachrichten" />
 
-		<execute action="SOMessages#assertTextNotPresent" value1="${englishTimeStamp1}" />
+		<execute function="#assertTextNotPresent" value1="${englishTimeStamp1}" />
 		<execute function="#click" locator1="SOMessages#MESSAGE_SUBJECT" />
 
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${englishTimeStamp2}" />
+		<execute function="#assertTextNotPresent" value1="${englishTimeStamp2}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -4302,9 +4302,9 @@
 
 		<execute function="#assertClick" locator1="SOUserBar#PAGE_NAME" value1="消息" />
 
-		<execute action="SOMessages#assertTextNotPresent" value1="${englishTimeStamp1}" />
+		<execute function="#assertTextNotPresent" value1="${englishTimeStamp1}" />
 		<execute function="#click" locator1="SOMessages#MESSAGE_SUBJECT" />
 
-		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${englishTimeStamp2}" />
+		<execute function="#assertTextNotPresent" value1="${englishTimeStamp2}" />
 	</command>
 </definition>

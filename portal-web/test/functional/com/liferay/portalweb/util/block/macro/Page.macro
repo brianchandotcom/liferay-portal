@@ -137,7 +137,7 @@
 
 		<execute function="#pause" locator1="5000" />
 
-		<execute action="CPSitepages#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#assertClick" locator1="CPSitepages#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="CPSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -368,7 +368,7 @@
 		<execute function="#selectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
 		<execute function="#assertClick" locator1="//ul[@class='lfr-nav nav nav-pills']//a[contains(.,'${portletName}')]" value1="${portletName}" />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="gotoMyDashboard">
@@ -740,7 +740,7 @@
 
 	<command name="viewTranslationsPG">
 		<execute function="#open" locator1="${sitePageURL}" />
-		<execute action="Home#assertLocation" value1="${sitePageURL}" />
+		<execute function="#assertLocation" value1="${sitePageURL}" />
 
 		<if>
 			<isset var="childPageName" />

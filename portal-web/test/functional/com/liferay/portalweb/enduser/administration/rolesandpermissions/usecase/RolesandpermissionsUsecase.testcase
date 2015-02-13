@@ -2005,7 +2005,7 @@
 			<var name="portletName" value="Sign In" />
 		</execute>
 
-		<execute action="CPRoles#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 	</command>
 
 	<command name="SiteRoleBookmarksInlinePermissions" priority="4">
@@ -2403,7 +2403,7 @@
 			<var name="roleName" value="${roleName}" />
 		</execute>
 
-		<execute action="CPRolesDefinepermissions#assertTextNotPresent" value1="action.ADD_REPOSITORY" />
+		<execute function="#assertTextNotPresent" value1="action.ADD_REPOSITORY" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />

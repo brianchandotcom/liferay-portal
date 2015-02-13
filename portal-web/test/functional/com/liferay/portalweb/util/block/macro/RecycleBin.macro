@@ -9,7 +9,7 @@
 		<execute function="#confirm" locator1="CPRecyclebin#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="#assertTextEquals" locator1="CPRecyclebin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#assertTextEquals" locator1="CPRecyclebin#INFO_MESSAGE" value1="The Recycle Bin is empty." />
-		<execute action="CPRecyclebin#assertTextNotPresent" value1="${assetName}" />
+		<execute function="#assertTextNotPresent" value1="${assetName}" />
 	</command>
 
 	<command name="emptyCP">
@@ -38,7 +38,7 @@
 		<execute function="#selectFrame" locator1="CPRecyclebin#RECYCLE_BIN_FOLDER_WARNING_IFRAME" />
 		<execute function="#assertTextEquals" locator1="CPRecyclebin#RECYCLE_BIN_FOLDER_WARNING_INFO" value1="The original Folder does not exist anymore. Choose a different Folder to restore ${documentName}." />
 		<execute function="#assertClick" locator1="CPRecyclebin#RECYCLE_BIN_FOLDER_WARNING_CHOOSE_THIS_FOLDER_BUTTON" value1="Choose This Folder" />
-		<execute action="CPRecyclebin#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="CPRecyclebin#SUCCESS_MESSAGE" value1="The ${assetType2} ${documentName} was restored to ${assetRestoreLocation}." />
 	</command>
 
@@ -133,7 +133,7 @@
 
 	<command name="viewDefaultCP">
 		<execute function="#assertTextEquals" locator1="CPRecyclebin#INFO_MESSAGE" value1="The Recycle Bin is empty." />
-		<execute action="CPRecyclebin#assertTextNotPresent" value1="${assetName}" />
+		<execute function="#assertTextNotPresent" value1="${assetName}" />
 	</command>
 
 	<command name="viewDeleteWithDisabledRBViaBlogsCP">

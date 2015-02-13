@@ -69,16 +69,16 @@
 
 		<execute function="#assertClick" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_DISPLAY_CONTENT_DROPDOWN_MENULIST" value1="${contentType}" />
 
-		<execute action="PGUsersegmentcontentdisplay#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGUsersegmentcontentdisplay#SELECT_CONTENT_IFRAME" />
 
 		<var name="key_contentTitle" value="${contentTitle}" />
 
 		<execute function="#assertClick" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" value1="Choose" />
 
-		<execute action="PGUsersegmentcontentdisplay#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGUsersegmentcontentdisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
-		<execute action="PGUsersegmentcontentdisplay#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureOtherwiseContenDisplayRule">
@@ -96,19 +96,19 @@
 
 				<execute function="#click" locator1="PGUsersegmentcontentdisplay#OTHERWISE_PANEL_CONTENT_DROPDOWN_MENULIST" />
 
-				<execute action="PGUsersegmentcontentdisplay#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 				<execute function="#selectFrame" locator1="PGUsersegmentcontentdisplay#SELECT_CONTENT_IFRAME" />
 
 				<var name="key_contentTitle" value="${otherwiseContentTitle}" />
 
 				<execute function="#assertClick" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" value1="Choose" />
 
-				<execute action="PGUsersegmentcontentdisplay#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 			</then>
 			<else>
 				<execute function="#click" locator1="PGUsersegmentcontentdisplay#OTHERWISE_PANEL" />
 				<execute function="#click" locator1="PGUsersegmentcontentdisplay#OTHERWISE_PANEL_DONT_DISPLAY_ANYTHING_RADIO" />
-				<execute action="PGUsersegmentcontentdisplay#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 			</else>
 		</if>
 	</command>
@@ -119,7 +119,7 @@
 		<execute function="#click" locator1="PGUsersegmentcontentdisplay#SAVE_BUTTON" />
 		<execute function="#assertTextEquals" locator1="PGUsersegmentcontentdisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute action="PGUsersegmentcontentdisplay#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewConfiguredDisplayContent">

@@ -8,7 +8,7 @@
 		</if>
 
 		<execute function="#click" locator1="SOMicroblogs#MICROBLOGS_CONTENT_FIELD" />
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute macro="SOMicroblogs#selectViewableByCmd">
 			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
@@ -181,7 +181,7 @@
 		<execute macro="SOMicroblogs#viewCharacterCountdownCmd" />
 
 		<execute function="#click" locator1="SOMicroblogs#POST_BUTTON" />
-		<execute action="SOMicroblogs#pause" value1="1000" />
+		<execute function="#pause" value1="1000" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Microblogs" />
@@ -189,7 +189,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute action="SOMicroblogs#assertTextNotPresent" value1="${microblogsEntryContent}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntryContent}" />
 	</command>
 
 	<command name="addMicroblogsEntryMention">
@@ -201,7 +201,7 @@
 		</if>
 
 		<execute function="#click" locator1="SOMicroblogs#MICROBLOGS_CONTENT_FIELD" />
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute macro="SOMicroblogs#selectViewableByCmd">
 			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
@@ -232,7 +232,7 @@
 		</if>
 
 		<execute function="#click" locator1="SOMicroblogs#MICROBLOGS_CONTENT_FIELD" />
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute macro="SOMicroblogs#selectViewableByCmd">
 			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
@@ -254,7 +254,7 @@
 		<execute function="#makeVisible" locator1="SOMicroblogs#MICROBLOGS_ENTRY_EDIT" />
 		<execute function="#click" locator1="SOMicroblogs#MICROBLOGS_ENTRY_EDIT_LINK" />
 		<execute function="#click" locator1="SOMicroblogs#MICROBLOGS_ENTRY_CONTENT_EDIT_FIELD" />
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute macro="SOMicroblogs#selectViewableByCmd">
 			<var name="editInDashboard" value="true" />
@@ -282,7 +282,7 @@
 		<execute function="#makeVisible" locator1="SOMicroblogs#MICROBLOGS_ENTRY_EDIT" />
 		<execute function="#click" locator1="SOMicroblogs#MICROBLOGS_ENTRY_EDIT_LINK" />
 		<execute function="#click" locator1="SOMicroblogs#MICROBLOGS_ENTRY_CONTENT_EDIT_FIELD" />
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute macro="SOMicroblogs#selectViewableByCmd">
 			<var name="editInDashboard" value="true" />
@@ -414,7 +414,7 @@
 		<execute function="#click" locator1="SOMicroblogs#MICROBLOGS_ENTRY_EDIT_LINK" />
 
 		<execute function="#click" locator1="SOMicroblogs#MICROBLOGS_ENTRY_CONTENT_EDIT_FIELD" />
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute macro="SOMicroblogs#selectViewableByCmd">
 			<var name="editInDashboard" value="true" />
@@ -447,7 +447,7 @@
 		<execute function="#click" locator1="SOMicroblogsProfile#MICROBLOGS_ENTRY_EDIT_LINK" />
 
 		<execute function="#click" locator1="SOMicroblogsProfile#MICROBLOGS_ENTRY_CONTENT_EDIT_FIELD" />
-		<execute action="SOUserBar#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute macro="SOMicroblogs#selectViewableByCmd">
 			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
@@ -898,14 +898,14 @@
 			</then>
 		</if>
 
-		<execute action="SODashboard#assertTextNotPresent" value1="${microblogsEntryContent}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntryContent}" />
 
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntryContent}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntryContent}" />
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntryContent}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntryContent}" />
 
 		<execute function="#click" locator1="SODashboard#NAVIGATION_MICROBLOGS" />
 
@@ -916,7 +916,7 @@
 			</then>
 		</if>
 
-		<execute action="SOMicroblogs#assertTextNotPresent" value1="${microblogsEntryContent}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntryContent}" />
 	</command>
 
 	<command name="viewMicroblogsEntryNotViewableByEveryone">
@@ -1110,11 +1110,11 @@
 		<execute function="#assertClick" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${microblogsEntryAuthorLastName}, ${microblogsEntryAuthorFirstName}" />
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${microblogsEntryAuthorName}" />
 
-		<execute action="SOProfile#assertTextNotPresent" value1="${microblogsEntryContent}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntryContent}" />
 
 		<execute function="#click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
-		<execute action="SOMicroblogsProfile#assertTextNotPresent" value1="${microblogsEntryContent}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntryContent}" />
 	</command>
 
 	<command name="viewOwnMicroblogsEntry">

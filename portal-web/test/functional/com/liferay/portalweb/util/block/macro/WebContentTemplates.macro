@@ -5,7 +5,7 @@
 
 		<execute function="#selectFrame" locator1="CPWebcontentTemplates#TEMPLATES_IFRAME" />
 		<execute function="#assertClick" locator1="CPWebcontentTemplates#ADD" value1="Add" />
-		<execute action="CPWebcontentTemplates#selectFrame" />
+		<execute function="#selectFrame" />
 
 		<execute function="#selectFrame" locator1="CPWebcontentTemplatesAddtemplate#TEMPLATES_IFRAME" />
 		<execute function="#type" locator1="CPWebcontentTemplatesAddtemplate#NAME_FIELD" value1="${templateName}" />
@@ -44,7 +44,7 @@
 			<then>
 				<execute function="#assertClick" locator1="CPWebcontentTemplatesAddtemplate#SELECT_STRUCTURE" value1="Select" />
 
-				<execute action="CPWebcontentTemplatesAddtemplateStructure#selectFrame" />
+				<execute function="#selectFrame" />
 				<execute function="#selectFrame" locator1="CPWebcontentTemplatesAddtemplateStructure#STRUCTURE_IFRAME" />
 
 				<var name="key_structureName" value="${structureName}" />
@@ -53,7 +53,7 @@
 				<execute function="#assertClickNoError" locator1="CPWebcontentTemplatesAddtemplateStructure#STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 				<execute function="#confirm" locator1="CPWebcontentTemplatesAddtemplateStructure#CONFIRMATION" value1="Selecting a new structure will change the available input fields and available templates? Do you want to proceed?" />
 
-				<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" />
+				<execute function="#selectFrame" />
 				<execute function="#selectFrame" locator1="CPWebcontentTemplatesAddtemplate#TEMPLATES_IFRAME" />
 				<execute function="#assertTextEquals" locator1="CPWebcontentTemplatesAddtemplate#STRUCTURE" value1="${structureName}" />
 
@@ -101,7 +101,7 @@
 		</if>
 
 		<execute function="#assertClick" locator1="CPWebcontentTemplatesAddtemplate#SAVE_BUTTON" value1="Save" />
-		<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" />
+		<execute function="#selectFrame" />
 		<execute function="#selectFrame" locator1="CPWebcontentTemplatesAddtemplate#TEMPLATES_IFRAME" />
 		<execute function="#assertTextEquals" locator1="CPWebcontentTemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
@@ -135,14 +135,14 @@
 
 		<execute function="#selectFrame" locator1="CPWebcontentTemplates#TEMPLATES_IFRAME" />
 		<execute function="#assertClick" locator1="CPWebcontentTemplates#ADD" value1="Add" />
-		<execute action="CPWebcontentTemplates#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#selectFrame" locator1="CPWebcontentTemplatesAddtemplate#TEMPLATES_IFRAME" />
 		<execute function="#assertElementNotPresent" locator1="CPWebcontentTemplatesAddtemplate#NAME_FIELD_REQUIRED" />
 		<execute function="#assertClick" locator1="CPWebcontentTemplatesAddtemplate#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="CPWebcontentTemplatesAddtemplate#NAME_FIELD_REQUIRED" value1="This field is required." />
 
-		<execute action="CPWebcontentTemplates#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="advancedSearchCP">
@@ -218,7 +218,7 @@
 			<then>
 				<execute function="#check" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_SELECT_ALL_CHECKBOX" />
 				<execute function="#assertClickNoError" locator1="CPWebcontentTemplates#DELETE_BUTTON" value1="Delete" />
-				<execute action="CPWebcontentTemplates#confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="#confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="#assertTextEquals" locator1="CPWebcontentTemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
@@ -231,7 +231,7 @@
 			<then>
 				<execute function="#check" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_SELECT_ALL_CHECKBOX" />
 				<execute function="#assertClickNoError" locator1="CPWebcontentTemplates#DELETE_BUTTON" value1="Delete" />
-				<execute action="CPWebcontentTemplates#confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="#confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="#assertTextEquals" locator1="CPWebcontentTemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
@@ -274,7 +274,7 @@
 		</if>
 
 		<execute function="#assertClick" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_NAME" value1="${templateName}" />
-		<execute action="CPWebcontentTemplates#selectFrame" />
+		<execute function="#selectFrame" />
 
 		<execute function="#selectFrame" locator1="CPWebcontentTemplatesEdittemplate#TEMPLATES_IFRAME" />
 		<execute function="#assertTextEquals" locator1="CPWebcontentTemplatesEdittemplate#NAME_FIELD" value1="${templateName}" />

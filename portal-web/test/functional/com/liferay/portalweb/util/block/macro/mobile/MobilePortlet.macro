@@ -21,7 +21,7 @@
 
 				<echo message="The xpath ${portletTypeKey} could not be found. Refreshing the page. Attempt number ${i}..." />
 
-				<execute action="Home#refresh" />
+				<execute function="#refresh" />
 
 				<execute macro="MobilePortlet#addPGCmd">
 					<var name="portletName" value="${portletName}" />

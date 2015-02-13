@@ -597,7 +597,7 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="1 Comment" />
+		<execute function="#assertTextNotPresent" value1="1 Comment" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki" />
@@ -611,7 +611,7 @@
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 		</execute>
 
-		<execute action="PGDocumentsandmediaDocument#assertTextNotPresent" value1="${commentContent}" />
+		<execute function="#assertTextNotPresent" value1="${commentContent}" />
 	</command>
 
 	<command name="EditWikiFrontPageComment" priority="5">
@@ -1148,9 +1148,9 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiChildPageContent2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiChildPageTitle2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiChildPageContent3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiChildPageTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${wikiChildPageContent2}" />
+		<execute function="#assertTextNotPresent" value1="${wikiChildPageTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${wikiChildPageContent3}" />
+		<execute function="#assertTextNotPresent" value1="${wikiChildPageTitle3}" />
 	</command>
 </definition>

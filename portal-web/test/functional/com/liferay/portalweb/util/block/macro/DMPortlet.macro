@@ -87,19 +87,19 @@
 		<execute function="#selectFrame" locator1="PGDocumentsandmediaConfiguration#CONFIGURATION_IFRAME" />
 
 		<execute function="#assertClick" locator1="PGDocumentsandmediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_SELECT_BUTTON" value1="Select" />
-		<execute action="PGDocumentsandmediaConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGDocumentsandmediaConfiguration#ROOT_FOLDER_SELECT_FOLDER_IFRAME" />
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaConfiguration#ROOT_FOLDER_SELECT_FOLDER_TABLE_FOLDER" value1="${dmFolderName}" />
 		<execute function="#assertClick" locator1="PGDocumentsandmediaConfiguration#ROOT_FOLDER_SELECT_FOLDER_TABLE_FOLDER_CHOOSE_BUTTON" value1="Choose" />
-		<execute action="PGDocumentsandmediaConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGDocumentsandmediaConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_FIELD" value1="${dmFolderName}" />
 		<execute function="#assertClick" locator1="PGDocumentsandmediaConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGDocumentsandmediaConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewDefaultConfigurationDisplaySettingsPG">
@@ -119,7 +119,7 @@
 		<execute function="#assertChecked" locator1="PGDocumentsandmediaConfiguration#DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaConfiguration#DISPLAY_SETTINGS_MAXIMUM_ENTRIES_TO_DISPLAY_SELECT" value1="20" />
 		<execute function="#assertChecked" locator1="PGDocumentsandmediaConfiguration#DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
-		<execute action="PGDocumentsandmediaConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewDefaultPG">
@@ -139,6 +139,6 @@
 
 		<execute function="#selectFrame" locator1="PGDocumentsandmediaConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_FIELD" value1="${dmFolderName}" />
-		<execute action="PGDocumentsandmediaConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 </definition>

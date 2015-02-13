@@ -647,7 +647,7 @@
 			<var name="portletName" value="${portlet3Name}" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<var name="key_portletName" value="${portlet3Name}" />
 

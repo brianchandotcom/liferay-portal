@@ -8,6 +8,6 @@
 		<execute function="#assertTextEquals" locator1="XSLContentConfiguration#SETUP_XML_URL_FIELD" value1="@portal_url@/o/27/example.xml" />
 		<execute function="#assertTextEquals" locator1="XSLContentConfiguration#SETUP_XSL_URL_FIELD" value1="@portal_url@/o/27/example.xsl" />
 
-		<execute action="XSLContentConfiguration#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 	</command>
 </definition>

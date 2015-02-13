@@ -50,7 +50,7 @@
 		<execute macro="SOMicroblogs#viewCharacterCountdownCmd" />
 
 		<execute function="#click" locator1="SOStatusUpdate#STATUS_UPDATE_POST_BUTTON" />
-		<execute action="SODashboard#pause" value1="1000" />
+		<execute function="#pause" value1="1000" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -61,7 +61,7 @@
 			</then>
 		</if>
 
-		<execute action="SODashboard#assertTextNotPresent" value1="${statusUpdateEntryContent}" />
+		<execute function="#assertTextNotPresent" value1="${statusUpdateEntryContent}" />
 	</command>
 
 	<command name="configureStatusUpdateDisplayPG">
@@ -92,7 +92,7 @@
 				<execute function="#check" locator1="SOStatusUpdateConfiguration#DISPLAY_SETTINGS_DISPLAY_MOST_RECENT_STATUS_CHECKBOX" />
 				<execute function="#assertClick" locator1="SOStatusUpdateConfiguration#SAVE_BUTTON" value1="Save" />
 				<execute function="#assertTextEquals" locator1="SOStatusUpdateConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-				<execute action="SOStatusUpdateConfiguration#selectFrameTop" />
+				<execute function="#selectFrameTop" />
 				<execute function="#click" locator1="SOStatusUpdateConfiguration#CLOSE_BUTTON" />
 
 				<if>

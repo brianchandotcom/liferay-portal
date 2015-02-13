@@ -18,7 +18,7 @@
 		<execute function="#assertClick" locator1="PGRelatedassetsConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGRelatedassetsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 
-		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="gotoBookmarksSelectionPG">

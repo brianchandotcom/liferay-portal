@@ -2228,7 +2228,7 @@
 
 		<execute function="#assertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextNotPresent" value1="${commentBody}" />
+		<execute function="#assertTextNotPresent" value1="${commentBody}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -2248,7 +2248,7 @@
 
 		<execute function="#assertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertTextNotPresent" value1="${commentBody}" />
+		<execute function="#assertTextNotPresent" value1="${commentBody}" />
 
 		<execute macro="DMDocument#viewDocumentNoCommentsCmdPG" />
 	</command>
@@ -2741,13 +2741,13 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="changeLog" value="${changeLog}" />
@@ -2757,7 +2757,7 @@
 			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 	</command>
 
 	<command name="EditDMFolderImage" priority="5">
@@ -3306,8 +3306,8 @@
 		</execute>
 
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmedia#EMPTY_MESSAGE" value1="There are no documents or media files in this folder." />
-		<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="${dmDocument1File}" />
-		<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="${dmDocument2File}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocument1File}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocument2File}" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -3330,13 +3330,13 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="${dmFolder2Name}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolder2Name}" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolder1Name}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="${dmDocument2Name}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocument2Name}" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocument1Description}" />
@@ -3794,10 +3794,10 @@
 			<var name="dmDocumentVersionNumber" value="3.0" />
 		</execute>
 
-		<execute action="SODocuments#assertTextNotPresent" value1="Version 2.0" />
-		<execute action="SODocuments#assertTextNotPresent" value1="DM Document Comment3 Edit" />
-		<execute action="SODocuments#assertTextNotPresent" value1="12.4k" />
-		<execute action="SODocuments#assertTextNotPresent" value1="Major Revision" />
+		<execute function="#assertTextNotPresent" value1="Version 2.0" />
+		<execute function="#assertTextNotPresent" value1="DM Document Comment3 Edit" />
+		<execute function="#assertTextNotPresent" value1="12.4k" />
+		<execute function="#assertTextNotPresent" value1="Major Revision" />
 
 		<execute macro="SODocuments#viewPGDocumentSpecificVersionLog">
 			<var name="changeLog" value="Minor Revision" />
@@ -3841,10 +3841,10 @@
 			<var name="dmDocumentVersionNumber" value="3.0" />
 		</execute>
 
-		<execute action="SODocuments#assertTextNotPresent" value1="Version 2.0" />
-		<execute action="SODocuments#assertTextNotPresent" value1="DM Document Comment3 Edit" />
-		<execute action="SODocuments#assertTextNotPresent" value1="12.4k" />
-		<execute action="SODocuments#assertTextNotPresent" value1="Major Revision" />
+		<execute function="#assertTextNotPresent" value1="Version 2.0" />
+		<execute function="#assertTextNotPresent" value1="DM Document Comment3 Edit" />
+		<execute function="#assertTextNotPresent" value1="12.4k" />
+		<execute function="#assertTextNotPresent" value1="Major Revision" />
 
 		<execute macro="SODocuments#viewPGDocumentSpecificVersionLog">
 			<var name="changeLog" value="Minor Revision" />
@@ -4953,7 +4953,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
 	</command>
 
 	<command known-issues="LPS-45435" name="ViewDMFolderDocumentAsGuest" priority="4">
@@ -5048,7 +5048,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />

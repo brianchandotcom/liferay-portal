@@ -11,7 +11,7 @@
 		<execute function="#assertClick" locator1="PGBlogsAggregatorConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGBlogsAggregatorConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 
-		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewBlogsEntryViaBAPortletPG">
@@ -47,7 +47,7 @@
 
 		<execute function="#assertClick" locator1="PGBlogsAggregatorConfiguration#ORGANIZATION_SELECT_BUTTON" value1="Select" />
 
-		<execute action="PGBlogsAggregatorConfigurationSelectOrganization#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGBlogsAggregatorConfigurationSelectOrganization#SELECT_ORGANIZATION_IFRAME" />
 
 		<var name="key_orgName" value="${orgName}" />
@@ -69,7 +69,7 @@
 			</elseif>
 		</if>
 
-		<execute action="PGBlogsAggregatorConfigurationSelectOrganization#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewSelectOrganizationNoPG">
@@ -83,7 +83,7 @@
 		<execute function="#assertClick" locator1="BasePortletConfiguration#NAVIGATION_SETUP" value1="Setup" />
 
 		<execute function="#assertClick" locator1="PGBlogsAggregatorConfiguration#ORGANIZATION_SELECT_BUTTON" value1="Select" />
-		<execute action="PGBlogsAggregatorConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#selectFrame" locator1="PGBlogsAggregatorConfigurationSelectOrganization#SELECT_ORGANIZATION_IFRAME" />
 		<execute function="#assertElementPresent" locator1="PGBlogsAggregatorConfigurationSelectOrganization#NO_ORGANIZATIONS_MESSAGE" />

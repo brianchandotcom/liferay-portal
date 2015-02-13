@@ -437,12 +437,12 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle2}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle3}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle4}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${userEventTitle2}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${userEventTitle3}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${userEventTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${userEventTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${userEventTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${userEventTitle4}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
@@ -463,12 +463,12 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle1}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle3}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle4}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${userEventTitle1}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${userEventTitle3}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${userEventTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${userEventTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${userEventTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${userEventTitle4}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
@@ -489,12 +489,12 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle1}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle2}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle4}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${userEventTitle1}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${userEventTitle2}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${userEventTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${userEventTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${userEventTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${userEventTitle4}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress4}" />
@@ -515,12 +515,12 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle1}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle2}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle3}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${userEventTitle1}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${userEventTitle2}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${userEventTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${userEventTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${userEventTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${userEventTitle3}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -853,9 +853,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOSite#assertTextNotPresent" value1="${siteEventTitle2}" />
-		<execute action="SOSite#assertTextNotPresent" value1="${siteEventTitle3}" />
-		<execute action="SOSite#assertTextNotPresent" value1="${siteEventTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle4}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
@@ -876,9 +876,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOSite#assertTextNotPresent" value1="${siteEventTitle1}" />
-		<execute action="SOSite#assertTextNotPresent" value1="${siteEventTitle3}" />
-		<execute action="SOSite#assertTextNotPresent" value1="${siteEventTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle4}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
@@ -901,9 +901,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOSite#assertTextNotPresent" value1="${siteEventTitle1}" />
-		<execute action="SOSite#assertTextNotPresent" value1="${siteEventTitle2}" />
-		<execute action="SOSite#assertTextNotPresent" value1="${siteEventTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle4}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress4}" />
@@ -926,8 +926,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOSite#assertTextNotPresent" value1="${siteEventTitle1}" />
-		<execute action="SOSite#assertTextNotPresent" value1="${siteEventTitle2}" />
-		<execute action="SOSite#assertTextNotPresent" value1="${siteEventTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${siteEventTitle3}" />
 	</command>
 </definition>

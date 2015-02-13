@@ -37,7 +37,7 @@
 
 		<execute function="#assertClick" locator1="PGDocumentsandmediaManageMetadatasetsAdd#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGDocumentsandmediaManageMetadatasets#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGDocumentsandmediaManageMetadatasets#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="deletePG">

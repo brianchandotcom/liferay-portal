@@ -11,7 +11,7 @@
 		<execute function="#click" locator1="SOProfileAddAdditionalEmailAddress#PRIMARY_RADIO_BUTTON" />
 		<execute function="#click" locator1="SOProfileAddAdditionalEmailAddress#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_EMAIL_ADDRESS_TITLE" value1="Additional Email Addresses:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_EMAIL_ADDRESS_CONTENT" value1="Email Address ${userAdditionalEmailAddress}" />
 	</command>
@@ -60,7 +60,7 @@
 
 		<execute function="#click" locator1="SOProfileAddAddress#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_ADDRESS_TITLE" value1="Addresses:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_ADDRESS_CONTENT" value1="${userAddressType} ${userAddressStreet1}, ${userAddressCity}, ${userAddressPostalCode}, ${userAddressRegion}, ${userAddressCountry} (Mailing)" />
 	</command>
@@ -135,7 +135,7 @@
 
 		<execute function="#click" locator1="SOProfileAddInstantMessenger#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
@@ -155,7 +155,7 @@
 		<execute function="#type" locator1="SOProfileAddIntroduction#INTRODUCTION_FIELD" value1="${userIntroduction}" />
 		<execute function="#click" locator1="SOProfileAddIntroduction#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INTRODUCTION_TITLE" value1="Introduction:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INTRODUCTION_CONTENT" value1="${userIntroduction}"  />
 	</command>
@@ -180,7 +180,7 @@
 		<execute function="#click" locator1="SOProfileAddPhoneNumber#PRIMARY_RADIO_BUTTON" />
 		<execute function="#click" locator1="SOProfileAddPhoneNumber#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PHONE_NUMBERS_TITLE" value1="Phones:" />
 
 		<if>
@@ -202,15 +202,15 @@
 		<execute function="#selectFrame" locator1="SOProfile#ADD_CONTENT_IFRAME" />
 
 		<execute function="#uploadCommonFile" locator1="SOProfileAddProfilePicture#UPLOAD_IMAGE_FIELD" value1="${imageFileName}" />
-		<execute action="SOProfileAddProfilePicture#pause" value1="1000" />
+		<execute function="#pause" value1="1000" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="SOProfile#ADD_CONTENT_IFRAME" />
 
 		<execute function="#click" locator1="SOProfileAddProfilePicture#SAVE_BUTTON" />
 		<execute function="#pause" locator1="1000" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<var name="key_userName" value="${userName}" />
 
@@ -239,7 +239,7 @@
 
 		<execute function="#click" locator1="SOProfileAddExpertise#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PROJECTS_TITLE" value1="${userProjectTitle}:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PROJECTS_DATES" value1="01 Jan 2012 - Current"  />
 
@@ -261,7 +261,7 @@
 		<execute function="#type" locator1="SOProfileAddSMS#SMS_FIELD" value1="${userSMS}" />
 		<execute function="#click" locator1="SOProfileAddSMS#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SMS_TITLE" value1="SMS:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SMS_CONTENT" value1="${userSMS}"  />
 	</command>
@@ -289,7 +289,7 @@
 
 		<execute function="#click" locator1="SOProfileAddSocialNetwork#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_TITLE" value1="Social Network:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_FACEBOOK_CONTENT" value1="Facebook ${userSocialNetworkFacebook}" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_TWITTER_CONTENT" value1="Twitter ${userSocialNetworkTwitter}" />
@@ -306,7 +306,7 @@
 		<execute function="#click" locator1="SOProfileAddTag#ADD_BUTTON" />
 		<execute function="#click" locator1="SOProfileAddTag#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<var name="key_userTag" value="${userTag}" />
 
@@ -326,7 +326,7 @@
 		<execute function="#click" locator1="SOProfileAddWebsite#PRIMARY_RADIO_BUTTON" />
 		<execute function="#click" locator1="SOProfileAddWebsite#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_WEBSITES_TITLE" value1="Websites:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_WEBSITES_CONTENT" value1="${userWebsiteType} ${userWebsiteURL}" />
 	</command>
@@ -387,7 +387,7 @@
 		<execute function="#click" locator1="SOProfileAddAdditionalEmailAddress#PRIMARY_RADIO_BUTTON" />
 		<execute function="#click" locator1="SOProfileAddAdditionalEmailAddress#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_EMAIL_ADDRESS_TITLE" value1="Additional Email Addresses:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_EMAIL_ADDRESS_CONTENT" value1="Email Address ${userAdditionalEmailAddress}" />
 	</command>
@@ -402,7 +402,7 @@
 		<execute function="#type" locator1="SOProfileAddAdditionalEmailAddress#EMAIL_ADDRESS_FIELD" value1="" />
 		<execute function="#click" locator1="SOProfileAddAdditionalEmailAddress#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertElementPresent" locator1="SOProfile#ADD_EMAIL_ADDRESS" />
 	</command>
 
@@ -450,7 +450,7 @@
 
 		<execute function="#click" locator1="SOProfileAddAddress#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_ADDRESS_TITLE" value1="Addresses:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_ADDRESS_CONTENT" value1="${userAddressType} ${userAddressStreet1}, ${userAddressCity}, ${userAddressPostalCode}, ${userAddressRegion}, ${userAddressCountry} (Mailing)" />
 	</command>
@@ -468,7 +468,7 @@
 		<execute function="#select" locator1="SOProfileAddAddress#COUNTRY_SELECT" value1="" />
 		<execute function="#click" locator1="SOProfileAddAddress#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertElementPresent" locator1="SOProfile#ADD_ADDRESSES" />
 	</command>
 
@@ -523,7 +523,7 @@
 
 		<execute function="#click" locator1="SOProfileAddInstantMessenger#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
@@ -548,7 +548,7 @@
 		<execute function="#type" locator1="SOProfileAddInstantMessenger#YM_FIELD" value1="" />
 		<execute function="#click" locator1="SOProfileAddInstantMessenger#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertElementPresent" locator1="SOProfile#ADD_INSTANT_MESSENGER" />
 	</command>
 
@@ -562,7 +562,7 @@
 		<execute function="#type" locator1="SOProfileAddIntroduction#INTRODUCTION_FIELD" value1="${userIntroduction}" />
 		<execute function="#click" locator1="SOProfileAddIntroduction#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INTRODUCTION_TITLE" value1="Introduction:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_INTRODUCTION_CONTENT" value1="${userIntroduction}"  />
 	</command>
@@ -577,7 +577,7 @@
 		<execute function="#type" locator1="SOProfileAddIntroduction#INTRODUCTION_FIELD" value1="" />
 		<execute function="#click" locator1="SOProfileAddIntroduction#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertElementPresent" locator1="SOProfile#ADD_INTRODUCTION" />
 	</command>
 
@@ -601,7 +601,7 @@
 		<execute function="#click" locator1="SOProfileAddPhoneNumber#PRIMARY_RADIO_BUTTON" />
 		<execute function="#click" locator1="SOProfileAddPhoneNumber#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PHONE_NUMBERS_TITLE" value1="Phones:" />
 
 		<if>
@@ -626,7 +626,7 @@
 		<execute function="#type" locator1="SOProfileAddPhoneNumber#EXTENSION_FIELD" value1="" />
 		<execute function="#click" locator1="SOProfileAddPhoneNumber#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertElementPresent" locator1="SOProfile#ADD_PHONES" />
 	</command>
 
@@ -651,7 +651,7 @@
 
 		<execute function="#click" locator1="SOProfileAddExpertise#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PROJECTS_TITLE" value1="${userProjectTitle}:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_PROJECTS_DATES" value1="01 Feb 2012 - Current"  />
 
@@ -674,7 +674,7 @@
 		<execute function="#type" locator1="SOProfileAddExpertise#DESCRIPTION_FIELD" value1="" />
 		<execute function="#click" locator1="SOProfileAddExpertise#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertElementPresent" locator1="SOProfile#ADD_PROJECTS" />
 	</command>
 
@@ -688,7 +688,7 @@
 		<execute function="#type" locator1="SOProfileAddSMS#SMS_FIELD" value1="${userSMS}" />
 		<execute function="#click" locator1="SOProfileAddSMS#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SMS_TITLE" value1="SMS:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SMS_CONTENT" value1="${userSMS}"  />
 	</command>
@@ -703,7 +703,7 @@
 		<execute function="#type" locator1="SOProfileAddSMS#SMS_FIELD" value1="" />
 		<execute function="#click" locator1="SOProfileAddSMS#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertElementPresent" locator1="SOProfile#ADD_SMS" />
 	</command>
 
@@ -730,7 +730,7 @@
 
 		<execute function="#click" locator1="SOProfileAddSocialNetwork#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_TITLE" value1="Social Network:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_FACEBOOK_CONTENT" value1="Facebook ${userSocialNetworkFacebook}" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_SOCIAL_NETWORK_TWITTER_CONTENT" value1="Twitter ${userSocialNetworkTwitter}" />
@@ -747,7 +747,7 @@
 		<execute function="#type" locator1="SOProfileAddSocialNetwork#TWITTER_FIELD" value1="" />
 		<execute function="#click" locator1="SOProfileAddSocialNetwork#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertElementPresent" locator1="SOProfile#ADD_SOCIAL_NETWORK" />
 	</command>
 
@@ -762,7 +762,7 @@
 		<execute function="#click" locator1="SOProfileAddTag#ADD_BUTTON" />
 		<execute function="#click" locator1="SOProfileAddTag#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<var name="key_userTag" value="${userTag}" />
 
@@ -781,13 +781,13 @@
 			<condition function="#isElementPresent" locator1="SOProfileAddTag#DELETE_TAG_BUTTON" />
 			<then>
 				<execute function="#click" locator1="SOProfileAddTag#DELETE_TAG_BUTTON" />
-				<execute action="SOProfileAddTag#pause" value1="1000" />
+				<execute function="#pause" value1="1000" />
 			</then>
 		</while>
 
 		<execute function="#click" locator1="SOProfileAddTag#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertElementPresent" locator1="SOProfile#ADD_TAGS" />
 	</command>
 
@@ -803,7 +803,7 @@
 		<execute function="#click" locator1="SOProfileAddWebsite#PRIMARY_RADIO_BUTTON" />
 		<execute function="#click" locator1="SOProfileAddWebsite#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_WEBSITES_TITLE" value1="Websites:" />
 		<execute function="#assertTextEquals" locator1="SOProfile#PROFILE_INFO_WEBSITES_CONTENT" value1="${userWebsiteType} ${userWebsiteURL}" />
 	</command>
@@ -818,7 +818,7 @@
 		<execute function="#type" locator1="SOProfileAddWebsite#URL_FIELD" value1="" />
 		<execute function="#click" locator1="SOProfileAddWebsite#SAVE_BUTTON" />
 
-		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertElementPresent" locator1="SOProfile#ADD_WEBSITES" />
 	</command>
 
@@ -885,8 +885,8 @@
 		</if>
 
 		<execute function="#click" locator1="SOMessagesAdd#SEND_BUTTON" />
-		<execute action="SOMessagesAdd#pause" value1="1000" />
-		<execute action="SOMessages#selectFrame" value1="relative=top" />
+		<execute function="#pause" value1="1000" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Messages" />
@@ -1218,7 +1218,7 @@
 		<if>
 			<equals arg1="${siteType}" arg2="Private" />
 			<then>
-				<execute action="SOProfile#assertTextNotPresent" value1="${siteName}" />
+				<execute function="#assertTextNotPresent" value1="${siteName}" />
 				<execute function="#assertElementNotPresent" locator1="SOProfile#PROFILE_INFO_SITES" value1="${siteName}" />
 			</then>
 			<elseif>

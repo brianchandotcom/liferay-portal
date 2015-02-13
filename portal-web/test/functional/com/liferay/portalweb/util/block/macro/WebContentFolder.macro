@@ -54,7 +54,7 @@
 					<execute function="#click" locator1="CPWebcontentEditfolder#WORKFLOW_SPECIFIC_RESTRICTIONS_RADIO" />
 					<execute function="#assertClick" locator1="CPWebcontentEditfolder#WORKFLOW_SPECIFIC_RESTRICTIONS_CHOOSE_STRUCTURE_BUTTON" value1="Choose Structure" />
 
-					<execute action="CPWebcontentStructuresAddstructure#selectFrame" value1="relative=top" />
+					<execute function="#selectFrame" value1="relative=top" />
 
 					<execute function="#selectFrame" locator1="CPWebcontentStructuresAddStructureChoosestructure#STRUCTURE_IFRAME" />
 

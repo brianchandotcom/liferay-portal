@@ -13,7 +13,7 @@
 
 		<execute function="#assertClick" locator1="Myaccount#SAVE_BUTTON_LOCALIZED" value1="${saveButton}" />
 		<execute function="#assertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="${successMessage}" />
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="view">
@@ -27,6 +27,6 @@
 		<execute function="#assertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_ROLES" value1="Roles" />
 		<execute function="#assertTextEquals" locator1="Myaccount#MENU_USER_INFORMATION_CATEGORIZATION" value1="Categorization" />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 </definition>

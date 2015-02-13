@@ -164,7 +164,7 @@
 		<execute function="#assertTextEquals" locator1="BasePortletExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 		<execute function="#assertClick" locator1="BasePortletExport#CURRENT_AND_PREVIOUS_DOWNLOAD" value1="${larFileName}" />
 		<execute function="#downloadTempFile" locator1="${larFileName}" />
-		<execute action="BasePortletExport#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="exportDDL">
@@ -211,7 +211,7 @@
 		<echo message="import file name ${larFileName}" />
 
 		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute action="CPSitepagesExport#downloadTempFile" />
+		<execute function="#downloadTempFile" />
 	</command>
 
 	<command name="exportUserGroups">
@@ -282,7 +282,7 @@
 		<execute function="#assertClick" locator1="CPSitepagesImport#CONTINUE_BUTTON" value1="Continue" />
 		<execute function="#assertClick" locator1="CPSitepagesImport#IMPORT_BUTTON" value1="Import" />
 		<execute function="#assertTextEquals" locator1="CPSitepagesImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
-		<execute action="CPSitepagesImport#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="importSiteCP">
@@ -349,7 +349,7 @@
 				<execute function="#assertClick" locator1="BasePortletImport#CONTINUE_BUTTON" value1="Continue" />
 				<execute function="#assertClick" locator1="BasePortletImport#IMPORT_BUTTON" value1="Import" />
 				<execute function="#assertTextEquals" locator1="BasePortletImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
-				<execute action="BasePortletImport#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 			</else>
 		</if>
 	</command>

@@ -7,6 +7,6 @@
 		<execute function="#type" locator1="PGOpensocialgadgetConfiguration#URL_FIELD" value1="${opensocialGadgetURL}" />
 		<execute function="#assertClick" locator1="PGOpensocialgadgetConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGOpensocialgadgetConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGOpensocialgadgetConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 </definition>

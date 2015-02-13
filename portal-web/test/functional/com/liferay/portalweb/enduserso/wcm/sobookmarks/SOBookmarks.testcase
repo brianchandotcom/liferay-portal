@@ -421,7 +421,7 @@
 
 		<var name="key_bookmarksEntryName" value="${bookmarksEntryName2}" />
 
-		<execute action="SOBookmarks#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
 		<execute function="#assertElementNotPresent" locator1="SOBookmarks#BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
 	</command>
 
@@ -506,7 +506,7 @@
 
 		<var name="key_bookmarksEntryName" value="${bookmarksEntryName2}" />
 
-		<execute action="SOBookmarks#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
 		<execute function="#assertElementNotPresent" locator1="SOBookmarks#BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
 	</command>
 </definition>

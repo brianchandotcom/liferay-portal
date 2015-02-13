@@ -91,7 +91,7 @@
 		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="" />
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#CONTENT_FIELD_FORMATTED_TEXT" value1="${entryContent}" />
-		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 		<execute function="#selectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="#sikuliAssertElementPresent" locator1="SOAnnouncementsAdd#SCREENSHOTS_ANNOUNCEMENTS_ADD_DISTRUBTION_SCOPE_REQUIRED_PNG" />
 		<execute function="#sikuliAssertElementPresent" locator1="SOAnnouncementsAdd#SCREENSHOTS_ANNOUNCEMENTS_ADD_TITLE_REQUIRED_PNG" />
@@ -99,7 +99,7 @@
 		<execute function="#type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="#type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
 		<execute function="#click" locator1="SOAnnouncementsAdd#SAVE_BUTTON" value1="Save" />
-		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
@@ -649,7 +649,7 @@
 		<execute function="#assertElementPresent" locator1="//optgroup[@label='Sites']" />
 		<execute function="#assertElementNotPresent" locator1="//optgroup[@label='Sites']/option[contains(.,'Organization Name')]" />
 		<execute function="#assertElementPresent" locator1="//optgroup[@label='Organizations']/option[contains(.,'Organization Name')]" />
-		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -659,7 +659,7 @@
 		<execute function="#assertElementPresent" locator1="//optgroup[@label='Sites']" />
 		<execute function="#assertElementNotPresent" locator1="//optgroup[@label='Sites']/option[contains(.,'Organization Name')]" />
 		<execute function="#assertElementPresent" locator1="//optgroup[@label='Organizations']/option[contains(.,'Organization Name')]" />
-		<execute action="SOAnnouncementsManage#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
@@ -2747,7 +2747,7 @@
 		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName2}" />
 		<execute function="#assertTextNotEquals" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName3}" />
 		<execute function="#assertTextNotEquals" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName4}" />
-		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
@@ -2766,7 +2766,7 @@
 		<execute function="#assertTextEquals" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName4}" />
 		<execute function="#assertTextNotEquals" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName1}" />
 		<execute function="#assertTextNotEquals" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${teamName2}" />
-		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="ViewSOAnnouncementEntries" priority="4">
@@ -3874,12 +3874,12 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent1}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingRoles" value="${roleName1}" />
@@ -3897,10 +3897,10 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingRoles" value="${roleName2}" />
@@ -3928,8 +3928,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingRoles" value="${roleName3}" />
@@ -3993,8 +3993,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="nonDisplayingRoles" value="${roleName2}" />
@@ -4012,10 +4012,10 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="nonDisplayingRoles" value="${roleName1}" />
@@ -4024,12 +4024,12 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent1}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingRoles" value="${roleName1},${roleName2},${roleName3}" />
@@ -4074,12 +4074,12 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent1}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
 	</command>
 
 	<command name="ViewSOAnnouncementsEntryScopedToSitesViaDashboard" priority="5">
@@ -4158,12 +4158,12 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent1}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingSites" value="${siteName1}" />
@@ -4181,10 +4181,10 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingSites" value="${siteName2}" />
@@ -4212,8 +4212,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingSites" value="${siteName3}" />
@@ -4277,8 +4277,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="nonDisplayingSites" value="${siteName2}" />
@@ -4296,10 +4296,10 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="nonDisplayingSites" value="${siteName1}" />
@@ -4308,12 +4308,12 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent1}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
 
 		<execute macro="SOAnnouncementsEntry#configureAnnouncementEntriesScopeDisplay">
 			<var name="displayingSites" value="${siteName1},${siteName2},${siteName3}" />
@@ -4358,11 +4358,11 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#assertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent1}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOAnnouncements#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
 	</command>
 </definition>

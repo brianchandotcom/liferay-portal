@@ -332,7 +332,7 @@
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
 		<execute function="#assertTextEquals" locator1="SOStatusUpdate#STATUS_UPDATE_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
-		<execute action="SOStatusUpdate#assertTextNotPresent" value1="Microblogs Post Comment" />
+		<execute function="#assertTextNotPresent" value1="Microblogs Post Comment" />
 		<execute function="#click" locator1="SODashboard#NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor">

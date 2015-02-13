@@ -341,7 +341,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="1 Comment" />
+		<execute function="#assertTextNotPresent" value1="1 Comment" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -355,7 +355,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute action="SOTasksTask#assertTextNotPresent" value1="${commentContent}" />
+		<execute function="#assertTextNotPresent" value1="${commentContent}" />
 	</command>
 
 	<command name="EditTaskComment" priority="4">

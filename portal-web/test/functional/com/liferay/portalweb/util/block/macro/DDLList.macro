@@ -58,7 +58,7 @@
 		<execute function="#assertClickNoError" locator1="CPDynamicdatalists#LIST_MENULIST_DELETE" value1="Delete" />
 		<execute function="#confirm" locator1="CPDynamicdatalists#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="#assertTextEquals" locator1="CPDynamicdatalists#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPDynamicdatalists#assertTextNotPresent" value1="${ddlListName}" />
+		<execute function="#assertTextNotPresent" value1="${ddlListName}" />
 	</command>
 
 	<command name="deleteViaDDLDisplayPG">
@@ -71,9 +71,9 @@
 		<execute function="#assertClick" locator1="PGDynamicdatalistsConfiguration#LIST_TABLE_ACTIONS_1" />
 		<execute function="#assertClickNoError" locator1="PGDynamicdatalistsConfiguration#LIST_MENULIST_DELETE" value1="Delete" />
 		<execute function="#confirm" locator1="PGDynamicdatalistsConfiguration#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute action="PGDynamicdatalistsConfiguration#assertTextNotPresent" value1="${ddlListNameEdit}" />
+		<execute function="#assertTextNotPresent" value1="${ddlListNameEdit}" />
 
-		<execute action="PGDynamicdatalists#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="editCP">
@@ -128,7 +128,7 @@
 			</then>
 		</if>
 
-		<execute action="PGDynamicdatalists#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="saveCmd">
@@ -156,7 +156,7 @@
 		<execute function="#assertClick" locator1="PGDynamicdatalistsConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGDynamicdatalistsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 
-		<execute action="PGDynamicdatalists#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="tearDownCP">

@@ -48,7 +48,7 @@
 		<execute function="#assertClick" locator1="PGDocumentsandmediaManageDocumenttypesAdd#FIELDS_LINK" value1="Fields" />
 		<execute function="#click" locator1="PGDocumentsandmediaManageDocumenttypesAdd#NAME_FIELD" />
 
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addPG">
@@ -182,7 +182,7 @@
 	<command name="selectPGMetadataSet">
 		<execute function="#assertClick" locator1="PGDocumentsandmediaManageDocumenttypesAdd#SELECT_METADATA_SET_BUTTON" value1="Select Metadata Set" />
 
-		<execute action="PGDocumentsandmediaManageMetadatasets#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 
 		<execute macro="DMMetadataSet#selectMetadataSetsFrame" />
 
@@ -190,7 +190,7 @@
 
 		<execute function="#assertClick" locator1="PGDocumentsandmediaManageMetadatasets#METADATA_SETS_TABLE_CHOOSE" value1="Choose" />
 
-		<execute action="PGDocumentsandmediaManageMetadatasets#selectFrameTop" value1="relative=top" />
+		<execute function="#selectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="tearDownCP">

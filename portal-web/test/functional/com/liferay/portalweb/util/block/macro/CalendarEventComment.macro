@@ -54,7 +54,7 @@
 		<execute function="#assertTextEquals" locator1="PGCalendar#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute function="#assertElementNotPresent" locator1="PGCalendarAgendaView#MY_CALENDARS_CALENDAR_ADDITIONAL" />
-		<execute action="PGCalendar#assertTextNotPresent" value1="${user} - ${calendarName}" />
+		<execute function="#assertTextNotPresent" value1="${user} - ${calendarName}" />
 	</command>
 
 	<command name="tearDownPG">
@@ -100,7 +100,7 @@
 		<var name="key_user" value="${user}" />
 
 		<execute function="#assertElementNotPresent" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${user} - ${calendarName}" />
-		<execute action="PGCalendar#assertTextNotPresent" value1="${user} - ${calendarName}" />
+		<execute function="#assertTextNotPresent" value1="${user} - ${calendarName}" />
 	</command>
 
 	<command name="viewPG">

@@ -584,8 +584,8 @@
 		<echo message="lar file name ${larFileName}" />
 
 		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute action="CPSitepagesExport#downloadTempFile" />
-		<execute action="CPSitepagesExport#selectFrame" value1="relative=top" />
+		<execute function="#downloadTempFile" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />

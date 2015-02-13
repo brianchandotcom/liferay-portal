@@ -4,7 +4,7 @@
 		<execute function="#assertClick" locator1="PGAssetpublisher#ADD_NEW_MENULIST_BOOKMARKS_ENTRY" value1="Bookmarks Entry" />
 		<execute function="#selectFrame" locator1="PGAssetpublisherAddnewbookmarksentry#BOOKMARKS_IFRAME" />
 		<execute function="#assertClick" locator1="PGAssetpublisherAddnewbookmarksentry#BOOKMARKS_FOLDER_SELECT_BUTTON" value1="Select" />
-		<execute action="PGAssetpublisherAddnewbookmarksentry#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute function="#selectFrame" locator1="PGAssetpublisherAddnewbookmarksentrySelectfolder#SELECT_FOLDER_IFRAME" />
 
@@ -12,7 +12,7 @@
 
 		<execute function="#assertClick" locator1="PGAssetpublisherAddnewbookmarksentrySelectfolder#SELECT_FOLDER_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
-		<execute action="PGAssetpublisherAddnewbookmarksentry#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 
 		<execute function="#selectFrame" locator1="PGAssetpublisherAddnewbookmarksentry#BOOKMARKS_IFRAME" />
 		<execute function="#type" locator1="PGAssetpublisherAddnewbookmarksentry#BOOKMARKS_NAME_FIELD" value1="${bookmarkName}" />
@@ -147,7 +147,7 @@
 		<execute function="#type" locator1="PGBookmarksAddBookmarkRelatedAssets#URL_FIELD" value1="${bookmarkURL}" />
 
 		<execute function="#assertClick" locator1="PGBookmarksAddBookmarkRelatedAssets#SAVE_BUTTON" value1="Save" />
-		<execute action="PGBookmarksAddBookmarkRelatedAssets#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addToSubfolderCP">
@@ -265,7 +265,7 @@
 
 		<execute function="#assertClick" locator1="PGBookmarksSelectFolder#FOLDERS_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
-		<execute action="CPBookmarksEditbookmark#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#assertClick" locator1="PGBookmarksEditBookmark#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGBookmarksFolder#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -307,7 +307,7 @@
 		<execute function="#selectFrame" locator1="CPBookmarksEditbookmarkSelectfolder#SELECT_FOLDER_IFRAME" />
 		<execute function="#assertClick" locator1="CPBookmarksEditbookmarkSelectfolder#CHOOSE_THIS_FOLDER_BUTTON" value1="Choose This Folder" />
 
-		<execute action="CPBookmarksEditbookmark#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertTextEquals" locator1="CPBookmarksEditbookmark#FOLDER_NAME" value1="Home" />
 		<execute function="#assertClick" locator1="CPBookmarksEditbookmark#SAVE_BUTTON" value1="Save" />
 
@@ -443,8 +443,8 @@
 	</command>
 
 	<command name="viewNoPG">
-		<execute action="PGBookmarks#assertTextNotPresent" value1="${bookmarkName}" />
-		<execute action="PGBookmarks#assertTextNotPresent" value1="${bookmarkURL}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarkName}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarkURL}" />
 	</command>
 
 	<command name="viewPG">

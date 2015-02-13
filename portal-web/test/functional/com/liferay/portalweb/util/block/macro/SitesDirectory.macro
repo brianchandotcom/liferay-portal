@@ -28,7 +28,7 @@
 		</if>
 
 		<execute function="#assertClick" locator1="PGSitesdirectoryConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute action="PGSitesdirectoryConfiguration#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="viewDefaultConfigurationPG">
@@ -39,7 +39,7 @@
 		<execute function="#selectFrame" locator1="PGSitesdirectoryConfiguration#SITES_DIRECTORY_IFRAME" />
 		<execute function="#assertTextEquals" locator1="PGSitesdirectoryConfiguration#SETUP_SITES_SELECT" value1="Top Level Parent Level Siblings Children" />
 		<execute function="#assertTextEquals" locator1="PGSitesdirectoryConfiguration#SETUP_DISPLAY_STYLE_SELECT" value1="Icon Descriptive List List Hierarchy" />
-		<execute action="PGSitesdirectoryConfiguration#selectFrameTop" />
+		<execute function="#selectFrameTop" />
 	</command>
 
 	<command name="viewDescriptivePG">

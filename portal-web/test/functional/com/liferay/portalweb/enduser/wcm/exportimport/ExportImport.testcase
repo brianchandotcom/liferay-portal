@@ -125,10 +125,10 @@
 		<echo message="import file name ${larFileName}" />
 
 		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute action="CPSitepagesExport#downloadTempFile" />
+		<execute function="#downloadTempFile" />
 
 		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute action="CPSitepagesExport#downloadTempFile" />
+		<execute function="#downloadTempFile" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -190,7 +190,7 @@
 		<echo message="import file name ${larFileName}" />
 
 		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute action="CPSitepagesExport#downloadTempFile" />
+		<execute function="#downloadTempFile" />
 
 		<execute macro="Page#gotoPagesCP">
 			<var name="portletName" value="Site Pages" />
@@ -238,7 +238,7 @@
 		<echo message="import file name ${larFileName}" />
 
 		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute action="CPSitepagesExport#downloadTempFile" />
+		<execute function="#downloadTempFile" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -265,7 +265,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="DMPortlet#configureRootFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
@@ -286,7 +286,7 @@
 		<echo message="import file name ${larFileName}" />
 
 		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute action="CPSitepagesExport#downloadTempFile" />
+		<execute function="#downloadTempFile" />
 
 		<execute macro="LAR#importSiteCP">
 			<var name="larFileName" value="${larFileName}" />
@@ -360,7 +360,7 @@
 		<echo message="import file name ${larFileName}" />
 
 		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute action="CPSitepagesExport#downloadTempFile" />
+		<execute function="#downloadTempFile" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -403,7 +403,7 @@
 			<var name="portletName" value="Sample LAR" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="SampleLARPortlet#addSampleBooking" />
 
@@ -447,7 +447,7 @@
 			<var name="portletName" value="Sample LAR" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="LAR#importPortlet">
 			<var name="larFileName" value="SampleLARPortlet.lar" />
@@ -528,8 +528,8 @@
 		<echo message="lar file name ${larFileName}" />
 
 		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute action="CPSitepagesExport#downloadTempFile" />
-		<execute action="CPSitepagesExport#selectFrame" value1="relative=top" />
+		<execute function="#downloadTempFile" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -599,7 +599,7 @@
 		<echo message="import file name ${larFileName}" />
 
 		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute action="CPSitepagesExport#downloadTempFile" />
+		<execute function="#downloadTempFile" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -654,7 +654,7 @@
 		<echo message="import file name ${larFileName}" />
 
 		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute action="CPSitepagesExport#downloadTempFile" />
+		<execute function="#downloadTempFile" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -746,8 +746,8 @@
 		<echo message="lar file name ${larFileName}" />
 
 		<execute function="#click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute action="CPSitepagesExport#downloadTempFile" />
-		<execute action="CPSitepagesExport#selectFrame" value1="relative=top" />
+		<execute function="#downloadTempFile" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />

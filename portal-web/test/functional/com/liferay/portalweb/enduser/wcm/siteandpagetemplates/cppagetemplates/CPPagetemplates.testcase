@@ -132,7 +132,7 @@
 			<var name="successMessage" value="Su petición ha terminado con éxito." />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="PageTemplate#viewDefaultLocalizedCP">
 			<var name="blogDescriptionTranslation" value="Crear, editar y ver los blogs de esta página. Explorar temas utilizando etiquetas y conectar con otros miembros de ese blog." />

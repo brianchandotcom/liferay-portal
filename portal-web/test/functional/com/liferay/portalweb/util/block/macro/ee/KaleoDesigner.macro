@@ -44,12 +44,12 @@
 		<var name="key_nodeType" value="${nodeType?replace('-', '_')}" />
 
 		<execute function="#sikuliMouseMove" locator1="Kaleodesigner#NODE_CORNER" />
-		<execute action="Kaleodesigner#sikuliLeftMouseDown" />
+		<execute function="#sikuliLeftMouseDown" />
 
 		<var name="key_nodeType" value="${nodeTypeDestination?replace('-', '_')}" />
 
 		<execute function="#sikuliMouseMove" locator1="Kaleodesigner#NODE_CORNER" />
-		<execute action="Kaleodesigner#sikuliLeftMouseUp" />
+		<execute function="#sikuliLeftMouseUp" />
 		<execute function="#click" locator1="Kaleodesigner#VIEW_FORM_CONNECTOR_DEFAULT" />
 
 		<execute macro="KaleoDesigner#editConnectorName">

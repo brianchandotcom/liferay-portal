@@ -217,14 +217,14 @@
 		<execute function="#type" locator1="CPSites#BASIC_SEARCH_FIELD" value1="Parent" />
 		<execute function="#assertClick" locator1="CPSites#BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute function="#assertTextEquals" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
-		<execute action="CPSites#assertTextNotPresent" value1="${childSiteName}" />
+		<execute function="#assertTextNotPresent" value1="${childSiteName}" />
 
 		<var name="key_siteName" value="${childSiteName}" />
 
 		<execute function="#type" locator1="CPSites#BASIC_SEARCH_FIELD" value1="Child" />
 		<execute function="#assertClick" locator1="CPSites#BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute function="#assertTextEquals" locator1="CPSites#SITE_TABLE_NAME" value1="${childSiteName}" />
-		<execute action="CPSites#assertTextNotPresent" value1="${siteName}" />
+		<execute function="#assertTextNotPresent" value1="${siteName}" />
 		<execute function="#type" locator1="CPSites#BASIC_SEARCH_FIELD" value1="Site" />
 		<execute function="#assertClick" locator1="CPSites#BASIC_SEARCH_BUTTON" value1="Search" />
 

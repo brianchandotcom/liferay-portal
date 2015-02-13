@@ -433,8 +433,8 @@
 		<execute function="#assertElementNotPresent" locator1="CPSiteteams#TEAM_TABLE_NAME" value1="${teamName}" />
 		<execute function="#assertElementNotPresent" locator1="CPSiteteams#TEAM_TABLE_DESCRIPTION" value1="${teamDescription}" />
 		<execute function="#assertElementNotPresent" locator1="CPSiteteams#TEAM_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPSiteteams#assertTextNotPresent" value1="${teamName}" />
-		<execute action="CPSiteteams#assertTextNotPresent" value1="${teamDescription}" />
+		<execute function="#assertTextNotPresent" value1="${teamName}" />
+		<execute function="#assertTextNotPresent" value1="${teamDescription}" />
 
 		<execute macro="Page#gotoUsersCP">
 			<var name="portletName" value="Site Teams" />
@@ -523,7 +523,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOSite#assertTextNotPresent" value1="${pageName}" />
+		<execute function="#assertTextNotPresent" value1="${pageName}" />
 	</command>
 
 	<command name="ViewSiteRoleSOUser" priority="4">

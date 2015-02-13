@@ -35,7 +35,7 @@
 			</else>
 		</if>
 
-		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewConfigurationCheckboxes">
@@ -63,7 +63,7 @@
 			</then>
 		</if>
 
-		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewConfigurationPreview">
@@ -91,7 +91,7 @@
 			</then>
 		</if>
 
-		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewCurrentLocationPG">

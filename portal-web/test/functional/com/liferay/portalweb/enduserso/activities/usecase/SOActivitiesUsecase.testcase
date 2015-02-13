@@ -251,51 +251,51 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl2}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${siteName2}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody2}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl3}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${siteName3}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody3}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject3}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl4}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent4}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${siteName4}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody4}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject4}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit4}" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName2}" />
@@ -326,51 +326,51 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl1}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${siteName1}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody1}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject1}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl3}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${siteName3}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody3}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject3}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl4}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent4}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${siteName4}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody4}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject4}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit4}" />
 
 		<execute macro="Page#openURL">
 			<var name="pageAccess" value="Private" />
@@ -402,51 +402,51 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl1}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${siteName1}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody1}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject1}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl2}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${siteName2}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody2}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl4}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent4}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${siteName4}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody4}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject4}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit4}" />
 
 		<execute macro="Page#openURL">
 			<var name="pageAccess" value="Private" />
@@ -478,51 +478,51 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl1}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${siteName1}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody1}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject1}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl2}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${siteName2}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody2}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl3}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${siteName3}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody3}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject3}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit3}" />
 	</command>
 
 	<command name="ActivitiesDemo2" priority="5">
@@ -924,51 +924,51 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl2}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${siteName2}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody2}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl3}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${siteName3}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody3}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject3}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl4}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent4}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${siteName4}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody4}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject4}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit4}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
@@ -1002,51 +1002,51 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl1}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${siteName1}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody1}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject1}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl3}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${siteName3}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody3}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject3}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl4}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent4}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${siteName4}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody4}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject4}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit4}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
@@ -1080,51 +1080,51 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject4}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl1}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${siteName1}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody1}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject1}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl2}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${siteName2}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody2}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName4}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl4}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile4}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription4}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName4}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent4}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle4}" />
+		<execute function="#assertTextNotPresent" value1="${siteName4}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody4}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject4}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit4}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress4}" />
@@ -1158,51 +1158,51 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject3}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl1}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile1}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription1}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName1}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent1}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle1}" />
+		<execute function="#assertTextNotPresent" value1="${siteName1}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody1}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject1}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit1}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl2}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile2}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription2}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName2}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent2}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle2}" />
+		<execute function="#assertTextNotPresent" value1="${siteName2}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody2}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit2}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName3}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl3}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile3}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription3}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName3}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent3}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle3}" />
+		<execute function="#assertTextNotPresent" value1="${siteName3}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody3}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject3}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit3}" />
 	</command>
 
 	<command name="ViewBlockedUserActivitiesByAdminUsers" priority="3">
@@ -1442,13 +1442,13 @@
 
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${userName3}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody1}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody2}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject1}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntry1}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntry2}" />
+		<execute function="#assertTextNotPresent" value1="${userName3}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
@@ -1459,13 +1459,13 @@
 
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${userName3}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody1}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody2}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject1}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntry1}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntry2}" />
+		<execute function="#assertTextNotPresent" value1="${userName3}" />
 	</command>
 
 	<command name="ViewBlockedUserActivitiesByRegularUsers" priority="3">
@@ -1687,13 +1687,13 @@
 
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${userName3}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody1}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody2}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject1}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntry1}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntry2}" />
+		<execute function="#assertTextNotPresent" value1="${userName3}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
@@ -1704,13 +1704,13 @@
 
 		<execute function="#assertClick" locator1="SOActivities#NAVIGATION_FOLLOWING" value1="Following" />
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry1}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${userName3}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody1}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody2}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject1}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntry1}" />
+		<execute function="#assertTextNotPresent" value1="${microblogsEntry2}" />
+		<execute function="#assertTextNotPresent" value1="${userName3}" />
 	</command>
 
 	<command known-issues="SOS-2266,SOS-2267" name="ViewDeletedSiteActivities" priority="5">
@@ -1791,23 +1791,23 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${eventDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${eventTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContent}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="FrontPage" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle}" />
+		<execute function="#assertTextNotPresent" value1="${eventDescription}" />
+		<execute function="#assertTextNotPresent" value1="${eventTitle}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContent}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit}" />
+		<execute function="#assertTextNotPresent" value1="FrontPage" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
@@ -1815,44 +1815,44 @@
 		</execute>
 
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${eventDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${eventTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContent}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="FrontPage" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle}" />
+		<execute function="#assertTextNotPresent" value1="${eventDescription}" />
+		<execute function="#assertTextNotPresent" value1="${eventTitle}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContent}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit}" />
+		<execute function="#assertTextNotPresent" value1="FrontPage" />
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${eventDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${eventTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContent}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="FrontPage" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle}" />
+		<execute function="#assertTextNotPresent" value1="${eventDescription}" />
+		<execute function="#assertTextNotPresent" value1="${eventTitle}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContent}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit}" />
+		<execute function="#assertTextNotPresent" value1="FrontPage" />
 	</command>
 
 	<command known-issues="SOS-2370" name="ViewEditedSiteActivities" priority="5">
@@ -2151,22 +2151,22 @@
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${adminName}" />
 
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContent}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle}" />
+		<execute function="#assertTextNotPresent" value1="${siteName}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContent}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit}" />
 	</command>
 
 	<command known-issues="SOS-2179" name="ViewPrivateSiteActivitiesProfileByNonMember" priority="5">
@@ -2266,22 +2266,22 @@
 		<execute function="#assertClick" locator1="SOContactscenter#USER_DETAILS_NAME" value1="${adminName}" />
 
 		<execute function="#assertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderDescription}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${siteName}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContent}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryName}" />
+		<execute function="#assertTextNotPresent" value1="${bookmarksEntryUrl}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentFile}" />
+		<execute function="#assertTextNotPresent" value1="${dmDocumentTitle}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderDescription}" />
+		<execute function="#assertTextNotPresent" value1="${dmFolderName}" />
+		<execute function="#assertTextNotPresent" value1="${entryContent}" />
+		<execute function="#assertTextNotPresent" value1="${entryTitle}" />
+		<execute function="#assertTextNotPresent" value1="${siteName}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContent}" />
+		<execute function="#assertTextNotPresent" value1="${wikiPageContentEdit}" />
 	</command>
 
 	<command name="ViewReplyActivities" priority="5">

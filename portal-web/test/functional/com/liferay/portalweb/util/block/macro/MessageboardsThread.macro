@@ -231,7 +231,7 @@
 	</command>
 
 	<command name="assertAlertNotPresent">
-		<execute action="PGMessageboards#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 	</command>
 
 	<command name="banUser">
@@ -465,7 +465,7 @@
 		<if>
 			<equals arg1="${explanationPost}" arg2="true" />
 			<then>
-				<execute action="PGMessageboardsMovethread#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 				<execute function="#assertElementPresent" locator1="PGMessageboardsMovethread#CATEGORY_FIELD" />
 				<execute function="#check" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_CHECKBOX" />
 				<execute function="#type" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${explanationSubject}" />
@@ -473,7 +473,7 @@
 			</then>
 		</if>
 
-		<execute action="PGMessageboardsMovethread#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertElementPresent" locator1="PGMessageboardsMovethread#CATEGORY_FIELD" />
 		<execute function="#assertClick" locator1="PGMessageboardsMovethread#MOVE_THREAD_BUTTON" value1="Move Thread" />
 	</command>
@@ -514,7 +514,7 @@
 		<if>
 			<equals arg1="${explanationPost}" arg2="true" />
 			<then>
-				<execute action="PGMessageboardsMovethread#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 				<execute function="#assertElementPresent" locator1="PGMessageboardsMovethread#CATEGORY_FIELD" />
 				<execute function="#check" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_CHECKBOX" />
 				<execute function="#type" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${explanationSubject}" />
@@ -522,7 +522,7 @@
 			</then>
 		</if>
 
-		<execute action="PGMessageboardsMovethread#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#assertElementPresent" locator1="PGMessageboardsMovethread#CATEGORY_FIELD" />
 		<execute function="#assertClick" locator1="PGMessageboardsMovethread#MOVE_THREAD_BUTTON" value1="Move Thread" />
 	</command>
@@ -578,7 +578,7 @@
 		<execute function="#uncheck" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 		<execute function="#assertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="replyCP">
@@ -824,7 +824,7 @@
 		<var name="key_threadSubject" value="${threadSubject}" />
 
 		<execute function="#assertTextEquals" locator1="CPMessageboards#INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
-		<execute action="CPMessageboards#assertTextNotPresent" value1="${threadSubject}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject}" />
 		<execute function="#assertElementNotPresent" locator1="CPMessageboards#THREAD_TABLE_CHECKBOX" />
 		<execute function="#assertElementNotPresent" locator1="CPMessageboards#THREAD_TABLE_THREAD" />
 		<execute function="#assertElementNotPresent" locator1="CPMessageboards#THREAD_TABLE_FLAG" />
@@ -890,7 +890,7 @@
 		<var name="key_threadSubject" value="${threadSubject}" />
 
 		<execute function="#assertTextEquals" locator1="PGMessageboards#INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
-		<execute action="CPMessageboards#assertTextNotPresent" value1="${threadSubject}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject}" />
 		<execute function="#assertElementNotPresent" locator1="PGMessageboards#THREAD_TABLE_THREAD"  />
 		<execute function="#assertElementNotPresent" locator1="PGMessageboards#THREAD_TABLE_STARTED_BY" />
 		<execute function="#assertElementNotPresent" locator1="PGMessageboards#THREAD_TABLE_POSTS" />
@@ -900,7 +900,7 @@
 	<command name="viewNoXSSPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertAlertNotPresent" />
+		<execute function="#assertAlertNotPresent" />
 		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSubject}" />
 		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
 		<execute function="#assertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />

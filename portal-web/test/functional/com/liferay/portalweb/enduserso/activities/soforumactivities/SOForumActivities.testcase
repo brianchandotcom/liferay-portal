@@ -146,7 +146,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${userName}" />
+		<execute function="#assertTextNotPresent" value1="${userName}" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
@@ -168,7 +168,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${userName}" />
+		<execute function="#assertTextNotPresent" value1="${userName}" />
 
 		<execute macro="Page#gotoMyProfile" />
 
@@ -191,7 +191,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${userName}" />
+		<execute function="#assertTextNotPresent" value1="${userName}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -615,9 +615,9 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName2}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody2}" />
 	</command>
 
 	<command known-issues="LPS-45435" name="ViewRemoveMBThreadViewPermissionActivities" priority="4">
@@ -720,7 +720,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
-		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
+		<execute function="#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute function="#assertTextNotPresent" value1="${threadBody2}" />
 	</command>
 </definition>

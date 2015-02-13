@@ -6,20 +6,20 @@
 		<execute function="#assertTextEquals" locator1="PGWebcontentdisplayEditwebcontent#STRUCTURE_NAME" value1="${structureName}" />
 		<execute function="#assertClick" locator1="PGWebcontentdisplayEditwebcontent#SELECT_TEMPLATE" value1="Select" />
 
-		<execute action="PGWebcontentdisplayEdittemplate#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGWebcontentdisplayEdittemplate#TEMPLATES_LIST_IFRAME" />
 
 		<var name="key_templateName" value="${templateName}" />
 
 		<execute function="#assertClick" locator1="PGWebcontentdisplayEdittemplate#CHOOSE_BUTTON" value1="Choose" />
-		<execute action="CPWebcontentTemplates#confirm" value1="Selecting a new template will delete all unsaved content. Do you want to proceed?" />
+		<execute function="#confirm" value1="Selecting a new template will delete all unsaved content. Do you want to proceed?" />
 
-		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGWebcontentdisplayEditwebcontent#WEB_CONTENT_EDIT_IFRAME" />
 		<execute function="#assertTextEquals" locator1="PGWebcontentdisplayEditwebcontent#TEMPLATE_NAME" value1="${templateName}" />
 		<execute function="#assertClick" locator1="PGWebcontentdisplayEditwebcontent#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureScopePG">
@@ -81,7 +81,7 @@
 
 		<execute function="#assertClick" locator1="PGWebcontentdisplayConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGWebcontentdisplayConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editTemplate">
@@ -100,7 +100,7 @@
 			</else>
 		</if>
 
-		<execute action="PGWebcontentdisplayEdittemplate#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGWebcontentdisplayEdittemplate#TEMPLATES_IFRAME" />
 		<execute function="#type" locator1="PGWebcontentdisplayEdittemplate#NAME_FIELD" value1="Template Edit" />
 
@@ -116,18 +116,18 @@
 		<if>
 			<equals arg1="${editTemplateButton}" arg2="true" />
 			<then>
-				<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 			</then>
 			<else>
 				<execute function="#pause" locator1="2000" />
 				<execute function="#sikuliClick" locator1="PGWebcontentdisplayEdittemplate#CLOSE_BUTTON_PNG" />
 
-				<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 				<execute function="#selectFrame" locator1="PGWebcontentdisplayEditwebcontent#WEB_CONTENT_EDIT_IFRAME" />
 				<execute function="#assertTextEquals" locator1="PGWebcontentdisplayEditwebcontent#TEMPLATE_NAME" value1="${templateName}" />
 				<execute function="#assertClick" locator1="PGWebcontentdisplayEditwebcontent#PUBLISH_BUTTON" value1="Publish" />
 
-				<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 			</else>
 		</if>
 
@@ -153,13 +153,13 @@
 			<isset var="webContentSearchValue" />
 			<then>
 				<execute function="#assertClick" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select Web Content" />
-				<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 				<execute function="#selectFrame" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_IFRAME" />
 				<execute function="#type" locator1="PGWebcontentdisplayConfiguration#SEARCH_FIELD" value1="${webContentSearchValue}" />
 			</then>
 			<else>
 				<execute function="#assertClick" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select Web Content" />
-				<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
+				<execute function="#selectFrame" value1="relative=top" />
 				<execute function="#selectFrame" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_IFRAME" />
 				<execute function="#type" locator1="PGWebcontentdisplayConfiguration#SEARCH_FIELD" value1="${webContentTitle}" />
 			</else>
@@ -181,7 +181,7 @@
 			</then>
 		</if>
 
-		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="searchWebContentNo">
@@ -191,7 +191,7 @@
 
 		<execute function="#selectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="#assertClick" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select Web Content" />
-		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_IFRAME" />
 
 		<execute function="#type" locator1="PGWebcontentdisplayConfiguration#SEARCH_FIELD" value1="${webContentTitle}" />
@@ -200,7 +200,7 @@
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute function="#assertElementNotPresent" locator1="PGWebcontentdisplayConfiguration#WEB_CONTENT_TABLE_TITLE" value1="${webContentTitle}" />
-		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectWebContent">
@@ -212,18 +212,18 @@
 		<execute function="#selectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
 
 		<execute function="#assertClick" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select Web Content" />
-		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_IFRAME" />
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute function="#assertClick" locator1="PGWebcontentdisplayConfiguration#WEB_CONTENT_CHOOSE_BUTTON" value1="Choose" />
-		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 		<execute function="#selectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="#assertTextEquals" locator1="PGWebcontentdisplayConfiguration#INFO_MESSAGE_ARTICLE" value1="${webContentTitle} (Modified)" />
 		<execute function="#assertClick" locator1="PGWebcontentdisplayConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="PGWebcontentdisplayConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="tearDownScopePG">

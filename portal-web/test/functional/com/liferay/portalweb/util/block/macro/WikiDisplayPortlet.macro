@@ -23,7 +23,7 @@
 		<execute function="#assertClick" locator1="PGWikidisplayConfigurationScope#SCOPE_MENULIST_SITE" value1="${siteName}" />
 		<execute function="#assertTextEquals" locator1="PGWikidisplayConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute function="#assertSelectedLabel" locator1="PGWikidisplayConfigurationScope#SCOPE_SELECT" value1="${siteName}" />
-		<execute action="PGWikidisplayConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureSetupPG">
@@ -52,6 +52,6 @@
 		<execute function="#assertSelectedLabel" locator1="PGWikidisplayConfiguration#WIKI_PAGE_SELECT" value1="${wikiPageName}" />
 
 		<execute function="#assertTextEquals" locator1="PGWikidisplayConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGWikidisplayConfiguration#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 </definition>

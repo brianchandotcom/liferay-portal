@@ -62,7 +62,7 @@
 			</then>
 		</if>
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="approveTaskByDetails">
@@ -104,7 +104,7 @@
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_DUE_DATE" />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="approveTaskByNotifications">
@@ -178,7 +178,7 @@
 			</then>
 		</if>
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="assignToMeTaskByDetails">
@@ -217,7 +217,7 @@
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasks#ASSIGNED_TO_ME_TABLE_DUE_DATE" />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="assignToMeTaskByNotifications">
@@ -365,7 +365,7 @@
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_DUE_DATE" />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="rejectTaskByDetails">
@@ -407,7 +407,7 @@
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_DUE_DATE" />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="resubmitTaskByActions">
@@ -434,7 +434,7 @@
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_DUE_DATE" />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="resubmitTaskByDetails">
@@ -476,7 +476,7 @@
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_DUE_DATE" />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="tearDownPortalWorkflow">
@@ -598,7 +598,7 @@
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasks#ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="#assertTextEquals" locator1="CPMyworkflowtasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" value1="${workflowDueDateFormatted} ${workflowDueDateTime}" />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="uploadDefinition">
@@ -623,7 +623,7 @@
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" />
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasks#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewCompletedTasksCP">
@@ -637,7 +637,7 @@
 		<execute function="#assertTextEquals" locator1="CPMyworkflowtasks#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
 		<execute function="#assertTextEquals" locator1="CPMyworkflowtasks#COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewDefaultMySubmissionsCP">
@@ -648,7 +648,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPMysubmissionsCompleted#INFO_MESSAGE" value1="There are no completed publications requested by me." />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewDefaultMyWorkflowTasksCP">
@@ -660,7 +660,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPMyworkflowtasksCompleted#INFO_MESSAGE" value1="There are no completed tasks." />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewDefinition">
@@ -693,7 +693,7 @@
 		<execute function="#assertElementPresent" locator1="CPMysubmissions#PENDING_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="#assertElementPresent" locator1="CPMysubmissions#PENDING_TABLE_END_DATE" />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewRejectTask">
@@ -717,7 +717,7 @@
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="#assertElementPresent" locator1="CPMyworkflowtasks#ASSIGNED_TO_ME_TABLE_DUE_DATE" />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="withdrawTaskByActions">
@@ -735,7 +735,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPMysubmissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="withdrawTaskByDetails">
@@ -761,7 +761,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPMysubmissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="withdrawTaskCompletedNoByActions">
@@ -769,7 +769,7 @@
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
-		<execute action="CPMysubmissions#assertClick"  locator1="NAVIGATION_COMPLETED" value1="Completed" />
+		<execute function="#assertClick"  locator1="NAVIGATION_COMPLETED" value1="Completed" />
 
 		<execute function="#assertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_DEFINITION" value1="${workflowDefinition}" />
 		<execute function="#assertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
@@ -778,9 +778,9 @@
 		<execute function="#assertElementPresent" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="#assertElementPresent" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_END_DATE" />
 		<execute function="#assertElementNotPresent" locator1="//div[@id='_158_workflowInstancesSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[7]/span/a[contains(@id,'menu_withdraw-submission')]/span" />
-		<execute action="CPMysubmissionsCompleted#assertTextNotPresent" value1="Withdraw Submission" />
+		<execute function="#assertTextNotPresent" value1="Withdraw Submission" />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="withdrawTaskCompletedNoByDetails">
@@ -789,7 +789,7 @@
 		<var name="key_workflowAssetContent" value="${workflowAssetContent}" />
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
-		<execute action="CPMysubmissions#assertClick"  locator1="NAVIGATION_COMPLETED" value1="Completed" />
+		<execute function="#assertClick"  locator1="NAVIGATION_COMPLETED" value1="Completed" />
 
 		<execute function="#assertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_DEFINITION" value1="${workflowDefinition}" />
 		<execute function="#assertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
@@ -804,8 +804,8 @@
 		<execute function="#assertTextEquals" locator1="CPMysubmissionsTask#PREVIEW_CONTENT" value1="${workflowAssetContent}" />
 		<execute function="#assertTextEquals" locator1="CPMysubmissionsTask#MENU_WORKFLOW_NAME" value1="${workflowDefinition}" />
 		<execute function="#assertElementNotPresent" locator1="CPMysubmissionsTask#MENU_WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
-		<execute action="CPMysubmissionsTask#assertTextNotPresent" value1="Withdraw Submission" />
+		<execute function="#assertTextNotPresent" value1="Withdraw Submission" />
 
-		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 </definition>

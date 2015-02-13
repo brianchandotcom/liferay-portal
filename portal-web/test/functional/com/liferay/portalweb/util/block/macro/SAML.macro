@@ -93,7 +93,7 @@
 		</execute>
 
 		<execute function="#pause" locator1="5000" />
-		<execute action="Home#assertLocation" value1="${spURL}" />
+		<execute function="#assertLocation" value1="${spURL}" />
 	</command>
 
 	<command name="executeSPInitiatedSSO">
@@ -107,6 +107,6 @@
 		</execute>
 
 		<execute function="#pause" locator1="5000" />
-		<execute action="Home#assertLocation" value1="${spURL}" />
+		<execute function="#assertLocation" value1="${spURL}" />
 	</command>
 </definition>

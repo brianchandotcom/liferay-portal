@@ -234,7 +234,7 @@
 		<execute function="#assertClick" locator1="PGMessageboardsBannedusers#BANNED_USERS_TABLE_UNBAN_THIS_USER" value1="Unban This User" />
 		<execute function="#assertTextEquals" locator1="PGMessageboardsBannedusers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="#assertElementNotPresent" locator1="PGMessageboardsBannedusers#BANNED_USERS_TABLE_BANNED_USER" />
-		<execute action="PGMessageboardsBannedusers#assertTextNotPresent" value1="${userScreenName}" />
+		<execute function="#assertTextNotPresent" value1="${userScreenName}" />
 	</command>
 
 	<command name="viewAnonymousPostingConfigurationCP">

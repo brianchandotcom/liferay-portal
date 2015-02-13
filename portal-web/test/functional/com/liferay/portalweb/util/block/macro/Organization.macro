@@ -364,7 +364,7 @@
 		<execute function="#assertClickNoError" locator1="CPUsersandorganizations#ORGANIZATION_MENULIST_DELETE" value1="Delete" />
 		<execute function="#confirm" locator1="CPUsersandorganizations#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizations#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPUsersandorganizations#assertTextNotPresent" value1="${orgName}" />
+		<execute function="#assertTextNotPresent" value1="${orgName}" />
 	</command>
 
 	<command name="editSiteCP">
@@ -461,7 +461,7 @@
 		<var name="key_orgName" value="${parentOrgName}" />
 
 		<execute function="#assertClick" locator1="CPUsersandorganizationsOrganizationEditSelectParentOrganization#ORGANIZATION_TABLE_CHOOSE_BUTTON" value1="Choose" />
-		<execute action="CPUsersandorganizationsOrganizationEditSelectParentOrganization#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#PARENT_ORGANIZATION_TABLE_NAME" value1="${parentOrgName}" />
 		<execute function="#assertClick" locator1="CPUsersandorganizationsOrganizationEdit#SAVE_BUTTON" value1="Save" />
@@ -608,7 +608,7 @@
 			</elseif>
 		</if>
 
-		<execute action="CPUsersandorganizationsOrganizationEditSelectParentOrganization#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewRemoveMemberCP">
@@ -619,7 +619,7 @@
 
 		<execute function="#assertTextEquals" locator1="CPUsersandorganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 		<execute function="#assertClick" locator1="CPUsersandorganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-		<execute action="CPUsersandorganizationsOrganization#assertTextNotPresent" value1="${userFirstName}" />
+		<execute function="#assertTextNotPresent" value1="${userFirstName}" />
 	</command>
 
 	<command name="viewSubOrganizationCP">

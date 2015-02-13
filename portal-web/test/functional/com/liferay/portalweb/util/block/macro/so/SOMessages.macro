@@ -38,7 +38,7 @@
 		<execute function="#click" locator1="SOMessagesAdd#SEND_BUTTON" />
 		<execute function="#pause" locator1="1000" />
 
-		<execute action="SOMessages#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 
 		<if>
 			<isset var="partialMessageBody" />

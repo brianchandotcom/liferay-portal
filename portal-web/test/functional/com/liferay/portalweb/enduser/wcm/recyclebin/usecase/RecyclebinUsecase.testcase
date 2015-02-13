@@ -510,7 +510,7 @@
 
 		<execute function="#pause" locator1="120000" />
 
-		<execute action="Home#refresh" />
+		<execute function="#refresh" />
 
 		<execute macro="RecycleBin#viewDefaultCP">
 			<var name="assetName" value="Blogs Entry Title" />

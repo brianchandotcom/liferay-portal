@@ -37,7 +37,7 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute action="Home#assertLocation" value1="http://localhost:8080/web/guest/landing" />
+		<execute function="#assertLocation" value1="http://localhost:8080/web/guest/landing" />
 	</command>
 
 	<command name="DeletePortalInstance" priority="4">
@@ -281,7 +281,7 @@
 			<var name="virtualHostsURL" value="http://www.charlie.com:8080" />
 		</execute>
 
-		<execute action="Home#assertHTMLSourceTextPresent" value1="http://www.charlie.com:8080" />
+		<execute function="#assertHTMLSourceTextPresent" value1="http://www.charlie.com:8080" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
@@ -293,7 +293,7 @@
 		<var name="key_pageName" value="Private Page" />
 
 		<execute function="#assertTextEquals" locator1="Home#PAGE" value1="Private Page" />
-		<execute action="Home#assertHTMLSourceTextPresent" value1="http://www.charlie.com:8080" />
+		<execute function="#assertHTMLSourceTextPresent" value1="http://www.charlie.com:8080" />
 
 		<execute macro="User#logoutPG" />
 

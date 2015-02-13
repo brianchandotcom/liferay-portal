@@ -208,7 +208,7 @@
 		<execute function="#uncheck" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 		<execute function="#assertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
 		<execute function="#assertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Permissions#selectFrame" value1="relative=top" />
+		<execute function="#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="subscribePG">
@@ -282,7 +282,7 @@
 	<command name="viewNoCP">
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute action="CPMessageboards#assertTextNotPresent" value1="${categoryName}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName}" />
 		<execute function="#assertElementNotPresent" locator1="CPMessageboards#CATEGORY_TABLE_CHECKBOX" />
 		<execute function="#assertElementNotPresent" locator1="CPMessageboards#CATEGORY_TABLE_CATEGORY" />
 		<execute function="#assertElementNotPresent" locator1="CPMessageboards#CATEGORY_TABLE_CATEGORIES" />
@@ -294,7 +294,7 @@
 	<command name="viewNoPG">
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute action="PGMessageboards#assertTextNotPresent" value1="${categoryName}" />
+		<execute function="#assertTextNotPresent" value1="${categoryName}" />
 		<execute function="#assertElementNotPresent" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORY" />
 		<execute function="#assertElementNotPresent" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORIES" />
 		<execute function="#assertElementNotPresent" locator1="PGMessageboards#CATEGORY_TABLE_THREADS" />

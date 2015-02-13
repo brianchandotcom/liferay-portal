@@ -441,6 +441,9 @@ public class SPIAgentRequestTest {
 
 	@Test
 	public void testContentTypeIsNull() throws Exception {
+		CookieUtil cookieUtil = new CookieUtil();
+
+		cookieUtil.setCookie(new CookieImpl());
 
 		// Captured session attributes
 
@@ -472,10 +475,6 @@ public class SPIAgentRequestTest {
 		Assert.assertNull(populatedHttpServletRequest.getCookies());
 
 		_mockHttpServletRequest.setCookies(_cookie1, _cookie2);
-
-		CookieUtil cookieUtil = new CookieUtil();
-
-		cookieUtil.setCookie(new CookieImpl());
 
 		spiAgentRequest = new SPIAgentRequest(_mockHttpServletRequest);
 

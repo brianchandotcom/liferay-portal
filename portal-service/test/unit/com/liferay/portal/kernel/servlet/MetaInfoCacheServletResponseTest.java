@@ -56,6 +56,10 @@ public class MetaInfoCacheServletResponseTest {
 
 	@Test
 	public void testAddCookie() {
+		CookieUtil cookieUtil = new CookieUtil();
+
+		cookieUtil.setCookie(new CookieImpl());
+
 		final List<Cookie> cookies = new ArrayList<>();
 
 		StubHttpServletResponse stubHttpServletResponse =
@@ -107,10 +111,6 @@ public class MetaInfoCacheServletResponseTest {
 		Assert.assertTrue(cookieHeaders.contains(cookieHeader1));
 		Assert.assertEquals(1, cookies.size());
 		Assert.assertEquals(cookie1, cookies.get(0));
-
-		CookieUtil cookieUtil = new CookieUtil();
-
-		cookieUtil.setCookie(new CookieImpl());
 
 		setCookieHeaders = metaInfoCacheServletResponse.getHeaders(
 			HttpHeaders.SET_COOKIE);

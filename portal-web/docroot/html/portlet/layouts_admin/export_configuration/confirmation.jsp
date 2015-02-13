@@ -38,18 +38,14 @@ else if (exportImportConfiguration.getType() == ExportImportConfigurationConstan
 
 Map<String, Serializable> settingsMap = exportImportConfiguration.getSettingsMap();
 
-long[] layoutIds = GetterUtil.getLongValues(settingsMap.get("layoutIds"));
 Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
-
-boolean quickPublish = ParamUtil.getBoolean(request, "quickPublish");
+long[] layoutIds = GetterUtil.getLongValues(settingsMap.get("layoutIds"));
 %>
 
-<c:if test="<%= !quickPublish %>">
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		title="<%= exportImportConfiguration.getName() %>"
-	/>
-</c:if>
+<liferay-ui:header
+	backURL="<%= backURL %>"
+	title="<%= exportImportConfiguration.getName() %>"
+/>
 
 <div id="confirmationSection">
 	<span class="selected-labels" id="<portlet:namespace />exportImportConfigurationDescription">

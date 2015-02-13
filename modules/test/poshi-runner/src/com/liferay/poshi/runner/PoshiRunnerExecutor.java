@@ -62,8 +62,6 @@ public class PoshiRunnerExecutor {
 
 				return (boolean)_returnObject;
 			}
-
-			return false;
 		}
 		else if (elementName.equals("contains")) {
 			String string = PoshiRunnerVariablesUtil.replaceCommandVars(

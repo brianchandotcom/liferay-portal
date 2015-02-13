@@ -197,7 +197,7 @@
 
 	<command name="AddKBArticleWithSourceViaKBAdmin" priority="5">
 		<var name="kbArticleContentSource">
-			<![CDATA[<b>Knowledge Base's Article Content</b>]]>
+			<![CDATA[<b>Knowledge Base&rsquo;s Article Content</b>]]>
 		</var>
 
 		<execute macro="Page#gotoContentCP">
@@ -215,6 +215,8 @@
 			<var name="kbAuthor" value="Test Test" />
 			<var name="kbPriority" value="1.0" />
 		</execute>
+
+		<execute function="Pause" value1="5000" />
 
 		<execute macro="KBArticle#viewCP">
 			<var name="kbArticleContent" value="Knowledge Base’s Article Content" />

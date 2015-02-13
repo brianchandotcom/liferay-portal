@@ -77,20 +77,6 @@ public class PortletRatingsDefinitionUtil {
 					ServiceReference<PortletRatingsDefinition>
 						serviceReference) {
 
-					String portletId = (String)serviceReference.getProperty(
-						"javax.portlet.name");
-
-					if (Validator.isNull(portletId)) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"PortletRatingsDefinition must contain " +
-									"javax.portlet.name, model.class.name, " +
-										"ratings.type.default properties");
-						}
-
-						return null;
-					}
-
 					String[] classNames = null;
 
 					Object modelClassName = serviceReference.getProperty(
@@ -107,23 +93,28 @@ public class PortletRatingsDefinitionUtil {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"PortletRatingsDefinition must contain " +
-									"javax.portlet.name, model.class.name, " +
-									"ratings.type.default properties");
+									"javax.portlet.name");
 						}
 
 						return null;
 					}
 
-					RatingsType defaultRatingsType = RatingsType.parse(
-						(String)serviceReference.getProperty(
-							"ratings.type.default"));
+					Registry registry = RegistryUtil.getRegistry();
 
-					if (defaultRatingsType == null) {
+					PortletRatingsDefinition portletRatingsDefinition =
+						registry.getService(serviceReference);
+
+					RatingsType defaultRatingsType =
+						portletRatingsDefinition.getDefaultRatingsType();
+					String portletId = portletRatingsDefinition.getPortletId();
+
+					if ((defaultRatingsType == null) ||
+						Validator.isNull(portletId)) {
+
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"PortletRatingsDefinition must contain " +
-									"javax.portlet.name, model.class.name, " +
-										"ratings.type.default properties");
+									"portletId and defaultRatingsType");
 						}
 
 						return null;

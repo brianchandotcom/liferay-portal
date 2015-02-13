@@ -14,9 +14,16 @@
 
 package com.liferay.portlet.ratings.definition;
 
+import com.liferay.portlet.ratings.RatingsType;
+
 /**
  * @author Roberto Díaz
  * @author Sergio González
  */
 public interface PortletRatingsDefinition {
+
+	public RatingsType getDefaultRatingsType();
+
+	public String getPortletId();
+
 }

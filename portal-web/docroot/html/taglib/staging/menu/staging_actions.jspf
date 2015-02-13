@@ -14,22 +14,6 @@
  */
 --%>
 
-<%
-boolean localPublishing = true;
-
-if (liveGroup.isStaged() && liveGroup.isStagedRemotely()) {
-	localPublishing = false;
-}
-
-int exportImportConfigurationType = ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL;
-
-if (!localPublishing) {
-	exportImportConfigurationType = ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE;
-}
-
-List<ExportImportConfiguration> recentExportImportConfigurations = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurations(groupId, exportImportConfigurationType, 0, PropsValues.STAGING_PUBLISH_BUTTON_EXPORT_IMPORT_CONFIGURATION_DISPLAY_COUNT, new ExportImportConfigurationModifiedDateComparator(false));
-%>
-
 <c:choose>
 	<c:when test="<%= group.isCompany() && GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.PUBLISH_STAGING) %>">
 		<liferay-ui:icon
@@ -100,76 +84,28 @@ List<ExportImportConfiguration> recentExportImportConfigurations = ExportImportC
 				</c:otherwise>
 			</c:choose>
 
-			<%
-			String linkCssClass = StringPool.BLANK;
+			<liferay-util:buffer var="publishLink">
 
-			if (!groupType.isControlPanel()) {
-				linkCssClass = "btn btn-success";
-			}
-			%>
+				<%
+				String linkCssClass = StringPool.BLANK;
 
-			<liferay-util:buffer var="publishLinkForControlPanel">
+				if (!groupType.isControlPanel()) {
+					linkCssClass = "btn btn-success";
+				}
+				%>
+
 				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
-			</liferay-util:buffer>
-
-			<liferay-util:buffer var="publishLinkForLayout">
-				<portlet:renderURL var="publishRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/staging_bar/publish_layouts" />
-					<portlet:param name="tabs2" value="current-and-previous" />
-					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-					<portlet:param name="quickPublish" value="<%= String.valueOf(true) %>" />
-				</portlet:renderURL>
-
-				<liferay-ui:icon-menu cssClass='<%= linkCssClass + " publish-link" %>' direction="down" extended="<%= false %>" icon="" message="publish" showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= false %>">
-					<liferay-ui:icon
-						iconCssClass="icon icon-cog"
-						id='<%= layoutSetBranchId + "publishLink" %>'
-						message='<%= "open-publishing-configuration" %>'
-						url="<%= publishRenderURL.toString() %>"
-					/>
-
-					<%
-					if (recentExportImportConfigurations.size() > 0) {
-						%>
-
-							<li class="divider"></li>
-
-						<%
-					}
-
-					for (ExportImportConfiguration exportImportConfiguration : recentExportImportConfigurations) {
-					%>
-
-						<portlet:renderURL var="confirmationURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-							<portlet:param name="struts_action" value="/staging_bar/confirmation" />
-							<portlet:param name="redirect" value="<%= publishRedirectURL.toString() %>" />
-							<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
-						</portlet:renderURL>
-
-						<liferay-ui:icon
-							iconCssClass="icon icon-archive"
-							message="<%= exportImportConfiguration.getName() %>"
-							url="<%= confirmationURL.toString() %>"
-							useDialog="<%= true %>"
-						/>
-
-					<%
-					}
-					%>
-
-				</liferay-ui:icon-menu>
 			</liferay-util:buffer>
 
 			<c:choose>
 				<c:when test="<%= !onlyActions %>">
 					<li class="publish-link-container">
-						<%= publishLinkForControlPanel %>
+						<%= publishLink %>
 					</li>
 				</c:when>
 				<c:otherwise>
 					<div class="<%= cssClass %> publish-link-container">
-						<%= publishLinkForLayout %>
+						<%= publishLink %>
 					</div>
 				</c:otherwise>
 			</c:choose>

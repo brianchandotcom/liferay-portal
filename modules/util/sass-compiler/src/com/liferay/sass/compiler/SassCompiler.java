@@ -17,9 +17,13 @@ package com.liferay.sass.compiler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.sass.compiler.libsass.SassLibrary;
 import com.liferay.sass.compiler.libsass.SassLibrary.Sass_Context;
+import com.liferay.sass.compiler.libsass.SassLibrary.Sass_Data_Context;
 import com.liferay.sass.compiler.libsass.SassLibrary.Sass_File_Context;
 import com.liferay.sass.compiler.libsass.SassLibrary.Sass_Options;
 import com.liferay.sass.compiler.libsass.SassLibrary.Sass_Output_Style;
+
+import com.sun.jna.Memory;
+import com.sun.jna.Native;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -127,6 +131,70 @@ public class SassCompiler {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
+	public String compileString(
+			String input, String includePath, String imgPath)
+		throws SassCompilerException {
+
+		// NONE((byte)0), DEFAULT((byte)1), MAP((byte)2);
+
+		byte sourceComments = (byte)0;
+
+		Sass_Data_Context sassDataContext = null;
+
+		try {
+			Memory pointer = toPointer(input);
+
+			sassDataContext = _sassLibrary.sass_make_data_context(pointer);
+
+			Sass_Options sassOptions = _sassLibrary.sass_make_options();
+
+			_sassLibrary.sass_option_set_image_path(sassOptions, imgPath);
+			_sassLibrary.sass_option_set_include_path(sassOptions, includePath);
+			_sassLibrary.sass_option_set_output_style(
+				sassOptions, Sass_Output_Style.SASS_STYLE_COMPACT);
+			_sassLibrary.sass_option_set_source_comments(
+				sassOptions, sourceComments);
+
+			_sassLibrary.sass_data_context_set_options(
+				sassDataContext, sassOptions);
+
+			_sassLibrary.sass_compile_data_context(sassDataContext);
+
+			Sass_Context sassContext =
+				_sassLibrary.sass_data_context_get_context(sassDataContext);
+
+			int errorStatus = _sassLibrary.sass_context_get_error_status(
+				sassContext);
+
+			if (errorStatus != 0) {
+				String errorMessage =
+					_sassLibrary.sass_context_get_error_message(sassContext);
+
+				throw new SassCompilerException(errorMessage);
+			}
+
+			String output = _sassLibrary.sass_context_get_output_string(
+				sassContext);
+
+			if (output == null) {
+				throw new SassCompilerException("Null output");
+			}
+
+			return output;
+		}
+		finally {
+			try {
+				if (sassDataContext != null) {
+					_sassLibrary.sass_delete_data_context(sassDataContext);
+				}
+			}
+			catch (Throwable t) {
+				throw new SassCompilerException(t);
+			}
+		}
+	}
+
 	private File getOutputFile(File file) {
 		return new File(file.getParentFile(), getOutputFileName(file));
 	}
@@ -149,6 +217,15 @@ public class SassCompiler {
 		String fileName = file.getName();
 
 		return fileName.endsWith(".scss");
+	}
+
+	private Memory toPointer(String input) {
+		byte[] data = Native.toByteArray(input);
+		Memory pointer = new Memory(data.length + 1);
+		pointer.write(0, data, 0, data.length);
+		pointer.setByte(data.length, (byte)0);
+
+		return pointer;
 	}
 
 	private void write(File file, String string) throws IOException {

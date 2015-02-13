@@ -96,15 +96,14 @@ public class VelocityTemplateTest {
 
 		singleVMPoolUtil.setSingleVMPool(singleVMPoolImpl);
 
-		MockTemplateResourceLoader templateResourceLoader =
-			new MockTemplateResourceLoader();
+		_templateResourceLoader = new MockTemplateResourceLoader();
 
-		templateResourceLoader.activate(Collections.<String, Object>emptyMap());
+		_templateResourceLoader.activate(Collections.<String, Object>emptyMap());
 
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceRegistration = registry.registerService(
-			TemplateResourceLoader.class, templateResourceLoader);
+			TemplateResourceLoader.class, _templateResourceLoader);
 	}
 
 	@AfterClass
@@ -161,6 +160,9 @@ public class VelocityTemplateTest {
 			".resourceModificationCheckInterval",
 			_velocityEngineConfiguration.resourceModificationCheckInterval() +
 			"");
+		extendedProperties.setProperty(
+			VelocityTemplateResourceLoader.class.getName(),
+			_templateResourceLoader);
 		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
 			_velocityEngineConfiguration.logger());
@@ -406,6 +408,8 @@ public class VelocityTemplateTest {
 
 	private static ServiceRegistration<TemplateResourceLoader>
 		_serviceRegistration;
+
+	private static MockTemplateResourceLoader _templateResourceLoader;
 
 	private TemplateContextHelper _templateContextHelper;
 	private VelocityEngine _velocityEngine;

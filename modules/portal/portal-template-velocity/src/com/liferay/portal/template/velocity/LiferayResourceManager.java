@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
@@ -116,23 +117,15 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		field.set(
 			runtimeServices, new FastExtendedProperties(extendedProperties));
 
-		Vector<String> vectorVelocimacroLibray =
-			(Vector<String>) extendedProperties.get("velocimacro.library");
+		_macroTemplateIds = (Vector<String>)extendedProperties.get(
+			VelocityEngine.VM_LIBRARY);
 
-		_macroTemplateIds = new String[vectorVelocimacroLibray.size()];
+		_resourceModificationCheckInterval = GetterUtil.getInteger(
+			extendedProperties.get(
+				"liferay." + VelocityEngine.RESOURCE_LOADER +
+					".resourceModificationCheckInterval"),
+			60);
 
-		vectorVelocimacroLibray.toArray(_macroTemplateIds);
-
-		String resourceModificationCheckInterval =
-			(String)extendedProperties.get("resourceModificationCheckInterval");
-
-		if (resourceModificationCheckInterval == null) {
-			resourceModificationCheckInterval = "60";
-		}
-		else {
-			_resourceModificationCheckInterval = Integer.parseInt(
-				resourceModificationCheckInterval);
-		}
 
 		super.initialize(runtimeServices);
 	}
@@ -194,7 +187,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		return template;
 	}
 
-	private String[] _macroTemplateIds;
+	private Vector<String> _macroTemplateIds;
 	private final PortalCache<TemplateResource, Object> _portalCache;
 	private int _resourceModificationCheckInterval = 60;
 

@@ -55,8 +55,8 @@ public interface VelocityEngineConfiguration {
 	public String[] restrictedVariables();
 
 	@Meta.AD(
-			deflt = "VM_global_library.vm,VM_liferay.vm", required = false
+		deflt = "VM_global_library.vm|VM_liferay.vm", required = false
 	)
-	public String velocimacroLibrary();
+	public String[] velocimacroLibrary();
 
 }

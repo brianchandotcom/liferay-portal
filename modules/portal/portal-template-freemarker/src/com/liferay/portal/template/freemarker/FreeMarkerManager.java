@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -225,7 +226,8 @@ public class FreeMarkerManager extends BaseTemplateManager {
 				Configuration.class, "cache");
 
 			TemplateCache templateCache = new LiferayTemplateCache(
-				_configuration, _freemarkerEngineConfiguration);
+				_configuration, _freemarkerEngineConfiguration,
+				templateResourceLoader);
 
 			field.set(_configuration, templateCache);
 		}
@@ -265,6 +267,14 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		TemplateContextHelper templateContextHelper) {
 
 		super.setTemplateContextHelper(templateContextHelper);
+	}
+
+	@Override
+	@Reference(service = FreemarkerTemplateResourceLoader.class, unbind = "-")
+	public void setTemplateResourceLoader(
+		TemplateResourceLoader templateResourceLoader) {
+
+		super.setTemplateResourceLoader(templateResourceLoader);
 	}
 
 	@Activate

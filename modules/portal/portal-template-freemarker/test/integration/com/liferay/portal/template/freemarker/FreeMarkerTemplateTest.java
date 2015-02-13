@@ -66,8 +66,15 @@ public class FreeMarkerTemplateTest {
 		_configuration = new Configuration();
 
 		try {
+			FreeMarkerTemplateResourceLoader freeMarkerTemplateResourceLoader =
+				new FreeMarkerTemplateResourceLoader();
+
+			freeMarkerTemplateResourceLoader.activate(
+				Collections.<String, Object>emptyMap());
+
 			TemplateCache templateCache = new LiferayTemplateCache(
-				_configuration, _freemarkerEngineConfiguration);
+				_configuration, _freemarkerEngineConfiguration,
+				freeMarkerTemplateResourceLoader);
 
 			ReflectionTestUtil.setFieldValue(
 				_configuration, "cache", templateCache);

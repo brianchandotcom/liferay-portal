@@ -156,7 +156,7 @@
 	}
 
 	.entry-navigation {
-		margin: 40px 0;
+		padding: 40px 0;
 		width: 100%;
 
 		h2 {
@@ -179,9 +179,13 @@
 			@include ellipsis;
 		}
 
-		.entry-content-body {
-			font-size: 18px;
-			font-weight: 400;
+		.entry-content {
+			overflow: hidden;
+
+			.entry-content-body {
+				font-size: 18px;
+				font-weight: 400;
+			}
 		}
 
 		.small-image {
@@ -190,35 +194,28 @@
 			background-size: cover;
 			float: right;
 			height: 140px;
-			margin-left: 10px;
+			margin-left: 60px;
 			width: 140px;
 		}
 
-		.next-entry-content, .previous-entry-content {
-			margin-top: 5px;
-			padding-bottom: 10px;
-		}
-
 		.previous-entry .previous-entry-content {
-			border-right: 1px solid #CCC;
-			padding-right: 15px;
+			padding-right: 60px;
+
+			&.bordered {
+				border-right: 1px solid #EDEEF0;
+
+				 @include respond-to(phone) {
+					 border-right-width: 0;
+				 }
+			}
 		}
 
-		.entry-content {
-			overflow: hidden;
-		}
+		.next-entry-container {
+			margin-left: 30px;
 
-		@include respond-to(phone) {
-			.next-entry, .previous-entry {
-				padding: 0;
-			}
-
-			.next-entry {
-				margin-top: 20px;
-			}
-
-			.previous-entry .previous-entry-content {
-				border-right-width: 0;
+			@include respond-to(phone) {
+				margin-left: 0;
+				margin-top: 40px;
 			}
 		}
 	}

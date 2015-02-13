@@ -812,10 +812,6 @@
 
 		<action path="/journal_content_search/view" forward="portlet.journal_content_search.view" />
 
-		<!-- Language -->
-
-		<action path="/language/view" forward="portlet.language.view" />
-
 		<!-- Layout Prototypes -->
 
 		<action path="/layout_prototypes/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />

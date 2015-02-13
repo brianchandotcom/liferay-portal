@@ -122,6 +122,15 @@ public class VelocityManager extends BaseTemplateManager {
 			return;
 		}
 
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		Class<?> clazz = getClass();
+
+		currentThread.setContextClassLoader(clazz.getClassLoader());
+
+		try {
 		_velocityEngine = new VelocityEngine();
 
 		ExtendedProperties extendedProperties = new FastExtendedProperties();
@@ -210,11 +219,13 @@ public class VelocityManager extends BaseTemplateManager {
 
 		_velocityEngine.setExtendedProperties(extendedProperties);
 
-		try {
 			_velocityEngine.init();
 		}
 		catch (Exception e) {
 			throw new TemplateException(e);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

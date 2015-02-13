@@ -15,14 +15,13 @@
 package com.liferay.portal.backgroundtask.messaging;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskLockHelperUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.BackgroundTaskLocalService;
-import com.liferay.portal.service.LockLocalServiceUtil;
 
 /**
  * @author Michael C. Han
@@ -47,10 +46,15 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 			executeQueuedBackgroundTasks(taskExecutorClassName);
 		}
 		else if (status == BackgroundTaskConstants.STATUS_QUEUED) {
-			boolean locked = LockLocalServiceUtil.isLocked(
-				BackgroundTaskExecutor.class.getName(), taskExecutorClassName);
+			long backgroundTaskId = (Long)message.get("backgroundTaskId");
 
-			if (!locked) {
+			BackgroundTask backgroundTask =
+				_backgroundTaskLocalService.fetchBackgroundTask(
+					backgroundTaskId);
+
+			if (!BackgroundTaskLockHelperUtil.isLockedBackgroundTask(
+					backgroundTask)) {
+
 				executeQueuedBackgroundTasks(taskExecutorClassName);
 			}
 		}

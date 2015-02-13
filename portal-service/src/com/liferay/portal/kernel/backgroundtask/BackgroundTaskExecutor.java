@@ -27,6 +27,8 @@ public interface BackgroundTaskExecutor {
 	public BackgroundTaskStatusMessageTranslator
 		getBackgroundTaskStatusMessageTranslator();
 
+	public int getIsolationLevel();
+
 	public String handleException(BackgroundTask backgroundTask, Exception e);
 
 	public boolean isSerial();

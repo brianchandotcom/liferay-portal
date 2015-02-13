@@ -44,6 +44,11 @@ public class DelegatingBackgroundTaskExecutor
 	}
 
 	@Override
+	public int getIsolationLevel() {
+		return _backgroundTaskExecutor.getIsolationLevel();
+	}
+
+	@Override
 	public String handleException(BackgroundTask backgroundTask, Exception e) {
 		return _backgroundTaskExecutor.handleException(backgroundTask, e);
 	}

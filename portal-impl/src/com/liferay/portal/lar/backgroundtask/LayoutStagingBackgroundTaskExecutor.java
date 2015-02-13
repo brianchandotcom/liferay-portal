@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -77,9 +76,6 @@ public class LayoutStagingBackgroundTaskExecutor
 
 		long userId = MapUtil.getLong(settingsMap, "userId");
 		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-
-		StagingUtil.lockGroup(userId, targetGroupId);
-
 		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
 
 		clearBackgroundTaskStatus(backgroundTask);
@@ -134,8 +130,6 @@ public class LayoutStagingBackgroundTaskExecutor
 		}
 		finally {
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
-
-			StagingUtil.unlockGroup(targetGroupId);
 		}
 
 		return processMissingReferences(

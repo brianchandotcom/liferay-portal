@@ -1332,16 +1332,16 @@ public abstract class BaseAssetSearchTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group1, serviceContext);
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
-
-		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
-
 		for (String title : titles) {
 			addBaseModel(parentBaseModel, title, serviceContext);
 		}
 
 		assetEntryQuery.setOrderByCol1("title");
 		assetEntryQuery.setOrderByType1(orderByType);
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+
+		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
 		AssetEntry[] assetEntries = search(assetEntryQuery, searchContext);
 
@@ -1350,7 +1350,7 @@ public abstract class BaseAssetSearchTestCase {
 
 			String field = assetEntry.getTitle(LocaleUtil.getDefault());
 
-			Assert.assertEquals(field, orderedTitles[i]);
+			Assert.assertEquals(orderedTitles[i], field);
 		}
 	}
 

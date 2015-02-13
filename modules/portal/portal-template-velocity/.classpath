@@ -28,11 +28,14 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
-	<classpathentry kind="lib" path="lib/javax.servlet.jsp.jstl.jar" />
-	<classpathentry kind="lib" path="lib/org.freemarker.jar" />
+	<classpathentry kind="lib" path="lib/commons-collections.jar" />
+	<classpathentry kind="lib" path="lib/commons-lang.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.compendium.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
+	<classpathentry kind="lib" path="lib/oro.jar" />
+	<classpathentry kind="lib" path="lib/velocity-tools.jar" />
+	<classpathentry kind="lib" path="lib/velocity.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.3.jar" />
-	<classpathentry kind="lib" path="/portal-master/.ivy/cache/junit/junit/jars/junit-4.12.jar" />
+	<classpathentry kind="lib" path="/portal-master/.ivy/cache/junit/junit/jars/junit-4.11.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

@@ -12,22 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.template;
+package com.liferay.portal.template.velocity;
 
-import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.template.ClassLoaderResourceParser;
 
 /**
- * @author Igor Spasic
+ * @author Raymond Augé
  */
-public class VelocityTemplateResourceLoader
-	extends DefaultTemplateResourceLoader {
-
-	public VelocityTemplateResourceLoader() {
-		super(
-			TemplateConstants.LANG_TYPE_VM,
-			PropsValues.VELOCITY_ENGINE_RESOURCE_PARSERS,
-			PropsValues.VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL);
-	}
-
+public class VelocityBundleResourceParser extends ClassLoaderResourceParser {
 }

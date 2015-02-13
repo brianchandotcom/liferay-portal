@@ -288,6 +288,15 @@ public class PoshiRunnerExecutor {
 	public static void runFunctionElement(Element executeElement)
 		throws Exception {
 
+		List<Element> executeVarElements = executeElement.elements("var");
+
+		for (Element executeVarElement : executeVarElements) {
+			String name = executeVarElement.attributeValue("name");
+			String value = executeVarElement.attributeValue("value");
+
+			PoshiRunnerVariablesUtil.putIntoExecuteMap(name, value);
+		}
+
 		String classCommandName = executeElement.attributeValue("function");
 
 		String className = classCommandName;

@@ -46,6 +46,23 @@ public class PoshiRunnerExecutor {
 
 			return true;
 		}
+		else if (elementName.equals("condition")) {
+			if (element.attributeValue("action") != null) {
+				runActionElement(element);
+
+				return (boolean)_returnObject;
+			}
+			else if (element.attributeValue("function") != null) {
+				runFunctionElement(element);
+
+				return (boolean)_returnObject;
+			}
+			else if (element.attributeValue("selenium") != null) {
+				runSeleniumElement(element);
+
+				return (boolean)_returnObject;
+			}
+		}
 		else if (elementName.equals("contains")) {
 			String string = PoshiRunnerVariablesUtil.replaceCommandVars(
 				element.attributeValue("string"));
@@ -494,7 +511,7 @@ public class PoshiRunnerExecutor {
 			selenium,
 			parameterClasses.toArray(new Class[parameterClasses.size()]));
 
-		method.invoke(
+		_returnObject = method.invoke(
 			_liferaySelenium, arguments.toArray(new String[arguments.size()]));
 	}
 
@@ -513,5 +530,6 @@ public class PoshiRunnerExecutor {
 
 	private static final LiferaySelenium _liferaySelenium =
 		SeleniumUtil.getSelenium();
+	private static Object _returnObject = null;
 
 }

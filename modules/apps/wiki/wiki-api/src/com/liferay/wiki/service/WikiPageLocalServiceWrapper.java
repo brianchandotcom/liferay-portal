@@ -1017,18 +1017,6 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
-	public void setWikiServiceConfiguration(
-		com.liferay.wiki.configuration.WikiServiceConfiguration wikiServiceConfiguration) {
-		_wikiPageLocalService.setWikiServiceConfiguration(wikiServiceConfiguration);
-	}
-
-	@Override
-	public void setWikiSettingsProvider(
-		com.liferay.portal.kernel.settings.SettingsProvider<com.liferay.wiki.settings.WikiSettings> wikiSettingsProvider) {
-		_wikiPageLocalService.setWikiSettingsProvider(wikiSettingsProvider);
-	}
-
-	@Override
 	public void subscribePage(long userId, long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiPageLocalService.subscribePage(userId, nodeId, title);

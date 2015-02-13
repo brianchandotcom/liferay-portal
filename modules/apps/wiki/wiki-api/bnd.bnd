@@ -1,7 +1,11 @@
 Bundle-Name: Liferay Wiki API
 Bundle-SymbolicName: com.liferay.wiki.api
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.wiki.*
+Export-Package: com.liferay.wiki.*,\
+	!com.liferay.wiki.configuration.*,\
+	!com.liferay.wiki.settings.*
 Include-Resource:\
 	classes,\
     @../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+
+-metatype: *

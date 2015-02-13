@@ -32,6 +32,10 @@ public class MockResourceManager implements ResourceManager, ResourceRetriever {
 		_content = content;
 	}
 
+	public String getContent() {
+		return _content;
+	}
+
 	@Override
 	public InputStream getInputStream() {
 		return new ByteArrayInputStream(_content.getBytes());

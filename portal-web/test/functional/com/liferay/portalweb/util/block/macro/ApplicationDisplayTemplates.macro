@@ -40,7 +40,7 @@
 
 		<execute action="PGADTConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
-		<execute action="BaseLiferay#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 
 		<if>
 			<condition action="PGADTConfiguration#isElementPresent" locator-key1="NAVIGATION_DISPLAY_SETTINGS" />

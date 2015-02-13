@@ -38,7 +38,7 @@
 		</if>
 
 		<execute action="SODashboard#mouseOver" locator-key1="NAVIGATION_DASHBOARD" />
-		<execute action="SODashboard#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<while>
 			<condition action="SODashboard#isElementPresent" locator-key1="NAVIGATION_USER_ADDED_PAGE" />

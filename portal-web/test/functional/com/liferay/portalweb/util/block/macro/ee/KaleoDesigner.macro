@@ -101,11 +101,11 @@
 		</if>
 
 		<execute action="Kaleodesigner#assertClick" locator-key1="SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="Kaleodesigner#type" locator-key1="SOURCE_KALEO_XML_CONTENT" value1="${sourceXML}" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_TAB" value1="View" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 	</command>
 
 	<command name="addNodeViaViewTab">
@@ -182,11 +182,11 @@
 ]]>
 		</var>
 		<execute action="Kaleodesigner#assertClick" locator-key1="SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="Kaleodesigner#type" locator-key1="SOURCE_KALEO_XML_CONTENT" value1="${sourceXML}" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_TAB" value1="View" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 	</command>
 
 	<command name="deleteConnector">
@@ -195,7 +195,7 @@
 		<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_CONNECTOR" />
 		<execute action="Kaleodesigner#keyPress" locator-key1="VIEW_FORM_CONNECTOR" value1="\DELETE" />
 		<execute action="Kaleodesigner#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected connector(s)?" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<execute macro="KaleoDesigner#viewConnectorNotPresent">
 			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
@@ -207,7 +207,7 @@
 
 		<execute action="Kaleodesigner#clickNoError" locator-key1="VIEW_FORM_NODE_DELETE_ICON" />
 		<execute action="Kaleodesigner#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected node(s)?" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<execute macro="KaleoDesigner#viewNodeNotPresent">
 			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
@@ -373,12 +373,12 @@
 					</then>
 				</if>
 
-				<execute action="Kaleodesigner#pause" locator1="1000" />
+				<execute function="#pause" locator1="1000" />
 				<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SAVE_BUTTON" value1="Save" />
 			</then>
 		</if>
 
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 	</command>
 
@@ -431,11 +431,11 @@
 
 	<command name="eraseDefinitionViaSourceXML">
 		<execute action="Kaleodesigner#assertClick" locator-key1="SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="Kaleodesigner#type" locator-key1="SOURCE_KALEO_XML_CONTENT" value1="" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_TAB" value1="View" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 	</command>
 
 	<command name="latestVersionDraft">
@@ -684,14 +684,14 @@
 		<var name="key_line" value="${line}" />
 
 		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE_CONTENT" value1="${kdSourceXML}" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_TAB" value1="View" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 	</command>
 
 	<command name="viewSourceXMLTab">
 		<execute action="Kaleodesigner#assertClick" locator-key1="SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 	</command>
 
 	<command name="viewTableDefinitionDraftViaKDCP">
@@ -718,6 +718,6 @@
 
 	<command name="viewViewTab">
 		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_TAB" value1="View" />
-		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 	</command>
 </definition>

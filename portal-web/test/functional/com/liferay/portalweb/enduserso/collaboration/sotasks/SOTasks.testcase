@@ -541,7 +541,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute action="SOTasks#pause" locator1="150000" />
+		<execute function="#pause" locator1="150000" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

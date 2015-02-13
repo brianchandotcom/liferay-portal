@@ -367,12 +367,12 @@
 		<var name="i" value="1" />
 
 		<for list="${commentList}" param="comment">
-			<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="xpath=(//div[@class='task-activity-comment'])[${i}]" value1="${comment}" />
+			<execute function="#assertTextEquals" locator1="xpath=(//div[@class='task-activity-comment'])[${i}]" value1="${comment}" />
 
 			<var name="i" value="${i?increment()}" />
 		</for>
 
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertElementNotPresent" locator1="xpath=(//div[@class='task-activity-comment'])[${i}]" />
+		<execute function="#assertElementNotPresent" locator1="xpath=(//div[@class='task-activity-comment'])[${i}]" />
 	</command>
 
 	<command name="viewMyCompletedRequestsComment">

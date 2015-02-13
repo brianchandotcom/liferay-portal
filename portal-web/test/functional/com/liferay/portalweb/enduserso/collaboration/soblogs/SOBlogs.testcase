@@ -231,7 +231,7 @@
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="3 Views," />
 
-		<execute action="Home#open" locator1="http://localhost:8080/web/open-site-name/blogs/-/blogs/rss" />
+		<execute function="#open" locator1="http://localhost:8080/web/open-site-name/blogs/-/blogs/rss" />
 
 		<execute action="PGBlogsRSS#assertTextEquals" locator-key1="FEED_TITLE" value1="Open Site Name" />
 		<execute action="PGBlogsRSS#assertTextEquals" locator-key1="FEED_SUBTITLE" value1="Open Site Name" />
@@ -2257,7 +2257,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -2285,9 +2285,9 @@
 			<var name="userPassword" property-value="email.address.2" />
 		</execute>
 
-		<execute action="Home#open" locator1="${blogEntryURL}" />
+		<execute function="#open" locator1="${blogEntryURL}" />
 
-		<execute action="BaseLiferay#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
@@ -2373,7 +2373,7 @@
 			<var name="flagReason" value="${flagReason}" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -2397,7 +2397,7 @@
 			<var name="userPassword" value="email.password.2" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080" />
+		<execute function="#open" locator1="http://localhost:8080" />
 	</command>
 
 	<command name="ViewSOBlogsEntriesMaxItemsToDisplay5" priority="4">

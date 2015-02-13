@@ -101,9 +101,9 @@
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<if>
-			<condition action="SODashboard#isElementPresent" locator1="//div[@id='navigation']//li[contains(.,'Calendar')]/a/span" />
+			<condition function="#isElementPresent" locator1="//div[@id='navigation']//li[contains(.,'Calendar')]/a/span" />
 			<then>
-				<execute action="SODashboard#click" locator1="//div[@id='navigation']//li[contains(.,'Calendar')]/a/span" />
+				<execute function="#click" locator1="//div[@id='navigation']//li[contains(.,'Calendar')]/a/span" />
 
 				<execute macro="CalendarEvent#tearDownPG" />
 			</then>

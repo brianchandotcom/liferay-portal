@@ -1167,16 +1167,16 @@
 		<var name="i" value="1" />
 
 		<while>
-			<condition action="PGCalendarAgendaView#isElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${i}]" />
+			<condition function="#isElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${i}]" />
 			<then>
-				<execute action="PGCalendarAgendaView#click" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${i}]" />
+				<execute function="#click" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${i}]" />
 
 				<if>
 					<condition action="PGCalendarAgendaView#isElementNotPresent" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
 					<then>
 						<var name="i" value="${i?increment()}" />
 
-						<execute action="PGCalendarAgendaView#click" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${i}]" />
+						<execute function="#click" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${i}]" />
 					</then>
 				</if>
 			</then>
@@ -1213,10 +1213,10 @@
 		<var name="key_eventTitle" value="${eventTitle}" />
 
 		<while>
-			<condition action="PGCalendarAgendaView#isElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]//div[contains(.,'${key_eventTitle}')])[${i}]" />
+			<condition function="#isElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]//div[contains(.,'${key_eventTitle}')])[${i}]" />
 			<then>
-				<execute action="PGCalendarAgendaView#assertElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]//div[contains(.,'${key_eventTitle}')])[${i}]" />
-				<execute action="PGCalendarAgendaView#assertTextEquals" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]//div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
+				<execute function="#assertElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]//div[contains(.,'${key_eventTitle}')])[${i}]" />
+				<execute function="#assertTextEquals" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]//div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
 				<var name="i" value="${i?increment()}" />
 			</then>
 		</while>
@@ -1278,10 +1278,10 @@
 		<var name="key_eventTitle" value="${eventTitle}" />
 
 		<while>
-			<condition action="PGCalendarDayView#isElementPresent" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
+			<condition function="#isElementPresent" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
 			<then>
-				<execute action="PGCalendarDayView#assertElementPresent" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
-				<execute action="PGCalendarDayView#assertTextEquals" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
+				<execute function="#assertElementPresent" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
+				<execute function="#assertTextEquals" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
 				<var name="i" value="${i?increment()}" />
 			</then>
 		</while>
@@ -1435,10 +1435,10 @@
 		<var name="key_eventTitle" value="${eventTitle}" />
 
 		<while>
-			<condition action="PGCalendarMonthView#isElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
+			<condition function="#isElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
 			<then>
-				<execute action="PGCalendarMonthView#assertElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
-				<execute action="PGCalendarMonthView#assertTextEquals" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
+				<execute function="#assertElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
+				<execute function="#assertTextEquals" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
 				<var name="i" value="${i?increment()}" />
 			</then>
 		</while>
@@ -1455,10 +1455,10 @@
 						<execute action="PGCalendarMonthView#assertElementPresent" locator-key1="SCHEDULER_EVENT_MONTH_VIEW_SHOW_MORE_DIALOG_BOX" />
 
 						<while>
-							<condition action="PGCalendarMonthView#isElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
+							<condition function="#isElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
 							<then>
-								<execute action="PGCalendarMonthView#assertElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
-								<execute action="PGCalendarMonthView#assertTextEquals" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
+								<execute function="#assertElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
+								<execute function="#assertTextEquals" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
 								<var name="i" value="${i?increment()}" />
 							</then>
 						</while>
@@ -1553,10 +1553,10 @@
 		<var name="key_eventTitle" value="${eventTitle}" />
 
 		<while>
-			<condition action="PGCalendar#isElementPresent" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
+			<condition function="#isElementPresent" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
 			<then>
-				<execute action="PGCalendar#assertElementPresent" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
-				<execute action="PGCalendar#assertTextEquals" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
+				<execute function="#assertElementPresent" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
+				<execute function="#assertTextEquals" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
 				<var name="i" value="${i?increment()}" />
 			</then>
 		</while>

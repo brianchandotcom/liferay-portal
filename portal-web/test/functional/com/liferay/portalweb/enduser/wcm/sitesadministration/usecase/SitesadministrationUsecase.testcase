@@ -619,7 +619,7 @@
 
 		<execute action="Gmail#click" locator-key1="EMAIL_ADDRESS_VERIFICATION_URL" />
 
-		<execute action="Home#selectWindow" locator1="title=Verify Email Address - Site Name - Liferay" />
+		<execute function="#selectWindow" locator1="title=Verify Email Address - Site Name - Liferay" />
 		<execute action="Home#assertLocation" value1="${emailAddressVerificationURL}" />
 
 		<execute macro="Site#viewDefaultThemePG" />
@@ -701,7 +701,7 @@
 			<var name="siteFriendlyURLEdit" value="/liferay" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080/web/liferay/site-page-name" />
+		<execute function="#open" locator1="http://localhost:8080/web/liferay/site-page-name" />
 
 		<execute action="Home#assertLocation" value1="http://localhost:8080/web/liferay/site-page-name" />
 

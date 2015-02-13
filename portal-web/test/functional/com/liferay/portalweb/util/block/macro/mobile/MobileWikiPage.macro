@@ -4,7 +4,7 @@
 
 		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
 
-		<execute action="PGWiki#pause" locator1="2000" />
+		<execute function="#pause" locator1="2000" />
 
 		<execute action="PGWikiAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 

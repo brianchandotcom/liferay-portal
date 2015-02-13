@@ -3,7 +3,7 @@
 		<var name="key_teamName" value="${teamName}" />
 
 		<execute action="CPSiteteams#assertClick" locator-key1="ADD_TEAM_BUTTON" value1="Add Team" />
-		<execute action="CPSiteteams#pause" locator1="3000" />
+		<execute function="#pause" locator1="3000" />
 
 		<execute action="CPSiteteamsAddteam#type" locator-key1="NAME_FIELD" value1="${teamName}" />
 		<execute action="CPSiteteamsAddteam#type" locator-key1="DESCRIPTION_FIELD" value1="${teamDescription}" />
@@ -73,10 +73,10 @@
 	</command>
 
 	<command name="definePermissionPG">
-		<execute action="Permissions#check" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
+		<execute function="#check" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
 		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Permissions#assertChecked" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
+		<execute function="#assertChecked" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
 	</command>
 
 	<command name="deleteCP">
@@ -105,10 +105,10 @@
 	</command>
 
 	<command name="removePermissionPG">
-		<execute action="Permissions#uncheck" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
+		<execute function="#uncheck" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
 		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Permissions#assertNotChecked" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
+		<execute function="#assertNotChecked" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
 	</command>
 
 	<command name="tearDownCP">

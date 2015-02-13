@@ -3842,8 +3842,8 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOMicroblogs#assertClick" locator1="//ul[contains(@class,'nav nav-tabs')]/li[contains(.,'Tijdlijn')]/a" value1="Tijdlijn" />
-		<execute action="SOMicroblogs#pause" locator1="1000" />
+		<execute function="#assertClick" locator1="//ul[contains(@class,'nav nav-tabs')]/li[contains(.,'Tijdlijn')]/a" value1="Tijdlijn" />
+		<execute function="#pause" locator1="1000" />
 
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent1}" />
 

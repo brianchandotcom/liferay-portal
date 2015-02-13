@@ -81,7 +81,7 @@
 		</execute>
 
 		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Processing report. This may take several minutes." />
-		<execute action="CPReportsadmin#pause" locator1="180000" />
+		<execute function="#pause" locator1="180000" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />
@@ -208,7 +208,7 @@
 			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" value="${emailAddress3}" />
@@ -233,7 +233,7 @@
 			<var name="userPassword" value="${emailPassword3}" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080" />
+		<execute function="#open" locator1="http://localhost:8080" />
 	</command>
 
 	<command name="DownloadReportCSV" priority="5">
@@ -593,7 +593,7 @@
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" value="${emailAddress2}" />
@@ -617,7 +617,7 @@
 
 		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK" value1="report" />
 
-		<execute action="Home#selectWindow" locator1="title=Reports Admin - Liferay" />
+		<execute function="#selectWindow" locator1="title=Reports Admin - Liferay" />
 
 		<execute macro="ReportsAdmin#viewReportEntryFields">
 			<var name="dataSource" value="portal" />
@@ -632,7 +632,7 @@
 			<var name="userPassword" value="${emailPassword2}" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080" />
+		<execute function="#open" locator1="http://localhost:8080" />
 	</command>
 
 	<command name="ViewEmailRecipientDelivery" priority="5">
@@ -672,7 +672,7 @@
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" value="${emailAddress2}" />
@@ -702,7 +702,7 @@
 			<var name="userPassword" value="${emailPassword2}" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080" />
+		<execute function="#open" locator1="http://localhost:8080" />
 	</command>
 
 	<command name="ViewReportDefinitionParametersFields" priority="3">

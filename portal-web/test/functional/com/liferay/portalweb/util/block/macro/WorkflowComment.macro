@@ -5,7 +5,7 @@
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowComment" value="${workflowComment}" />
 
-		<execute action="CPMyworkflowtasks#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<if>
 			<equals arg1="${workflowTaskCompleted}" arg2="true" />
@@ -19,7 +19,7 @@
 			</else>
 		</if>
 
-		<execute action="CPMyworkflowtasks#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<if>
 			<condition action="CPMyworkflowtasksTask#isElementPresent" locator-key1="COMMENTS_BE_THE_FIRST" />

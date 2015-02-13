@@ -182,7 +182,7 @@
 
 		<execute action="CPPagetemplatesEdit#assertClick" locator-key1="OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
 
-		<execute action="Home#selectWindow" locator1="title=${pageTemplateName} - Liferay" />
+		<execute function="#selectWindow" locator1="title=${pageTemplateName} - Liferay" />
 
 		<var name="key_pageName" value="${pageTemplateName}" />
 
@@ -204,7 +204,7 @@
 
 		<execute action="CPPagetemplatesEdit#assertClick" locator-key1="OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
 
-		<execute action="Home#selectWindow" locator1="title=${pageTemplateName} Edit - Liferay" />
+		<execute function="#selectWindow" locator1="title=${pageTemplateName} Edit - Liferay" />
 
 		<var name="key_pageName" value="${pageTemplateName}" />
 

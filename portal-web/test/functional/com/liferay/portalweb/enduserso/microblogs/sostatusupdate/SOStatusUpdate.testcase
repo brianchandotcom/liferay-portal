@@ -345,9 +345,9 @@
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentLink" />
 
-		<execute action="SOMicroblogs#assertTextEquals" locator1="xpath=(//div[@class='user-name']/span/a)[2]" value1="${adminName}" />
-		<execute action="SOMicroblogs#assertTextEquals" locator1="xpath=(//div[@class='content'])[2]" value1="${microblogsEntryContent} ${userName}" />
-		<execute action="SOMicroblogs#assertTextEquals" locator1="xpath=(//span[@class='action comment']/a)[2]" value1="1 Comment" />
-		<execute action="SOMicroblogs#assertTextEquals" locator1="//span[@class='action repost']/a" value1="Repost" />
+		<execute function="#assertTextEquals" locator1="xpath=(//div[@class='user-name']/span/a)[2]" value1="${adminName}" />
+		<execute function="#assertTextEquals" locator1="xpath=(//div[@class='content'])[2]" value1="${microblogsEntryContent} ${userName}" />
+		<execute function="#assertTextEquals" locator1="xpath=(//span[@class='action comment']/a)[2]" value1="1 Comment" />
+		<execute function="#assertTextEquals" locator1="//span[@class='action repost']/a" value1="Repost" />
 	</command>
 </definition>

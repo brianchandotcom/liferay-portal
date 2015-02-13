@@ -479,7 +479,7 @@
 			<then>
 				<execute action="SOAnnouncementsConfiguration#click" locator-key1="ANNOUNCEMENTS_DISPLAYED_DISPLAYING_SITES_SELECT_OPTION" />
 				<execute action="SOAnnouncementsConfiguration#click" locator-key1="ANNOUNCEMENTS_DISPLAYED_MOVE_SITES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
-				<execute action="SOAnnouncementsConfiguration#pause" locator1="1000" />
+				<execute function="#pause" locator1="1000" />
 			</then>
 		</while>
 
@@ -490,7 +490,7 @@
 			<then>
 				<execute action="SOAnnouncementsConfiguration#click" locator-key1="ANNOUNCEMENTS_DISPLAYED_DISPLAYING_ROLES_SELECT_OPTION" />
 				<execute action="SOAnnouncementsConfiguration#click" locator-key1="ANNOUNCEMENTS_DISPLAYED_MOVE_ROLES_FROM_DISPLAYING_TO_AVAILABLE_BUTTON" />
-				<execute action="SOAnnouncementsConfiguration#pause" locator1="1000" />
+				<execute function="#pause" locator1="1000" />
 			</then>
 		</while>
 

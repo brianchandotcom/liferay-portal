@@ -29,7 +29,7 @@
 		</if>
 
 		<if>
-			<condition action="Dockbar#isElementPresent" locator1="//a[@id='_145_addPanel']" />
+			<condition function="#isElementPresent" locator1="//a[@id='_145_addPanel']" />
 			<then>
 				<execute macro="TestUtils#pass" />
 			</then>
@@ -39,7 +39,7 @@
 		</if>
 
 		<if>
-			<condition action="Dockbar#isElementNotPresent" locator1="//a[@id='_145_addPanel']" />
+			<condition function="#isElementNotPresent" locator1="//a[@id='_145_addPanel']" />
 			<then>
 				<execute macro="TestUtils#fail" />
 			</then>

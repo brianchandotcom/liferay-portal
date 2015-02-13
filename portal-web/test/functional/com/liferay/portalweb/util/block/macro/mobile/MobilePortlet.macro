@@ -30,7 +30,7 @@
 		</while>
 
 		<execute action="MobiledockbarAddpanelapplications#assertTextEquals" locator-key1="PORTLET_ADDED_SUCCESS_MESSAGE" value1="${portletName} Added Skip to Content" />
-		<execute action="MobiledockbarAddpanelapplications#pause" locator1="4000" />
+		<execute function="#pause" locator1="4000" />
 		<execute action="MobiledockbarAddpanelapplications#assertNotVisible" locator-key1="PORTLET_ADDED_SUCCESS_MESSAGE" />
 		<execute action="MobiledockbarAddpanelapplications#click" locator-key1="CLOSE_BUTTON" />
 
@@ -62,7 +62,7 @@
 			</then>
 		</if>
 
-		<execute action="MobiledockbarAddpanelapplications#assertClick" locator1="${portletLocator}" value1="Add" />
+		<execute function="#assertClick" locator1="${portletLocator}" value1="Add" />
 
 		<echo message="Adding ${portletName} portlet..." />
 
@@ -73,7 +73,7 @@
 				<equals arg1="${portletName}" arg2="Media Gallery" />
 			</or>
 			<then>
-				<execute action="MobiledockbarAddpanelapplications#pause" locator1="30000" />
+				<execute function="#pause" locator1="30000" />
 			</then>
 		</if>
 	</command>

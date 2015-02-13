@@ -31,7 +31,7 @@
 			<var name="pageName" value="IFrame Page" />
 		</execute>
 
-		<execute action="PGIFrame#pause" locator1="2000" />
+		<execute function="#pause" locator1="2000" />
 
 		<take-screenshot />
 
@@ -60,7 +60,7 @@
 			<var name="pageName" value="Web Proxy Page" />
 		</execute>
 
-		<execute action="PGWebProxy#assertElementPresent" locator1="//div[@title='Google Images']" />
+		<execute function="#assertElementPresent" locator1="//div[@title='Google Images']" />
 
 		<take-screenshot />
 

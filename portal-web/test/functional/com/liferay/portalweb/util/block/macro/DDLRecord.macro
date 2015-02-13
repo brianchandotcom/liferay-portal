@@ -159,7 +159,7 @@
 
 		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${document}" />
 		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#type" locator-key1="TITLE_FIELD" value1="${ddlRecordFieldData}" />
-		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<var name="key_documentTitle" value="${ddlRecordFieldData}" />
@@ -178,7 +178,7 @@
 
 		<execute action="OS#sikuliClick" locator-key1="FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
 		<execute action="OS#sikuliUploadCommonFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${document}" />
-		<execute action="Home#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 
 		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="DOCUMENTS_AND_MEDIA_FIELD" value1="${document}" />
 	</command>
@@ -189,7 +189,7 @@
 		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="FIELD_LABEL" value1="${fieldName}" />
 		<execute action="CPDynamicdatalistsListAddrecord#sikuliClick" locator-key1="GEOLOCATION_SHARE_LOCATION_BUTTON_PNG" />
 		<execute action="CPDynamicdatalistsListAddrecord#sikuliClick" locator-key1="GEOLOCATION_SHARE_LOCATION_BUTTON_PNG" />
-		<execute action="CPDynamicdatalistsListAddrecord#pause" locator1="2000" />
+		<execute function="#pause" locator1="2000" />
 		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator-key1="GEOLOCATION_MAP_DIAMOND_BAR_PNG" />
 		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator-key1="GEOLOCATION_MAP_DIRECTIONAL_ARROWS_PNG" />
 		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator-key1="GEOLOCATION_MAP_LOCATION_PIN_PNG" />
@@ -254,14 +254,14 @@
 		<var name="i" value="1" />
 
 		<while>
-			<condition action="CPDynamicdatalistsListAddrecord#isElementPresent" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]" />
+			<condition function="#isElementPresent" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]" />
 			<then>
 				<var name="i" value="${i?increment()}" />
 
 				<if>
-					<condition action="CPDynamicdatalistsListAddrecord#isElementPresent" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]" />
+					<condition function="#isElementPresent" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]" />
 					<then>
-						<execute action="CPDynamicdatalistsListAddrecord#type" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')]/../input)[${i}]" value1="${ddlRecordFieldData} ${i}" />
+						<execute function="#type" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')]/../input)[${i}]" value1="${ddlRecordFieldData} ${i}" />
 					</then>
 				</if>
 			</then>
@@ -300,14 +300,14 @@
 		<var name="i" value="1" />
 
 		<while>
-			<condition action="CPDynamicdatalistsListAddrecord#isElementPresent" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" />
+			<condition function="#isElementPresent" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" />
 			<then>
 				<var name="i" value="${i?increment()}" />
 
 				<if>
-					<condition action="CPDynamicdatalistsListAddrecord#isElementPresent" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" />
+					<condition function="#isElementPresent" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" />
 					<then>
-						<execute action="CPDynamicdatalistsListAddrecord#type" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" value1="${ddlRecordFieldData} ${i}" />
+						<execute function="#type" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" value1="${ddlRecordFieldData} ${i}" />
 					</then>
 				</if>
 			</then>

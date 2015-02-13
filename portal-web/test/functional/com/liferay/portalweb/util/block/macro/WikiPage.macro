@@ -262,14 +262,14 @@
 			</else>
 		</if>
 
-		<execute action="CKEditor#assertElementPresent" locator1="//html[@dir='${textDirection}']" />
-		<execute action="CKEditor#selectFrame" locator1="relative=top" />
+		<execute function="#assertElementPresent" locator1="//html[@dir='${textDirection}']" />
+		<execute function="#selectFrame" locator1="relative=top" />
 
 		<execute action="PGWikiEditpage#click" locator-key1="PUBLISH_BUTTON_LOCALIZED" />
 
 		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="SUCCESS_MESSAGE_LOCALIZED" value1="${successMessage}" />
 
-		<execute action="PGWiki#assertElementPresent" locator1="//html[@dir='${textDirection}']" />
+		<execute function="#assertElementPresent" locator1="//html[@dir='${textDirection}']" />
 
 		<var name="key_htmlTags" value="p" />
 
@@ -1310,7 +1310,7 @@
 			</else>
 		</if>
 
-		<execute action="PGWiki#assertElementPresent" locator1="//html[@dir='${textDirection}']" />
+		<execute function="#assertElementPresent" locator1="//html[@dir='${textDirection}']" />
 
 		<var name="key_htmlTags" value="p" />
 

@@ -133,7 +133,7 @@
 
 		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${inviteMembersPortletLocalizedUpperCase}" />
 
-		<execute action="Home#assertTextEquals" locator1="//div[contains(@class,'portlet-borderless')]/span[@class='portlet-title-default' and .='${membersPortletLocalized}']" value1="${membersPortletLocalizedUpperCase}" />
+		<execute function="#assertTextEquals" locator1="//div[contains(@class,'portlet-borderless')]/span[@class='portlet-title-default' and .='${membersPortletLocalized}']" value1="${membersPortletLocalizedUpperCase}" />
 	</command>
 
 	<command name="viewSOSite">
@@ -192,7 +192,7 @@
 		</if>
 
 		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="SOUserBarSitesDirectory#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
 		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription}" />
 		<execute action="SOUserBarSitesDirectory#click" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
@@ -289,7 +289,7 @@
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="SOUserBar#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName}" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_UNFAVORITE_SITE_ICON" />
 		<execute action="SOUserBar#assertElementNotPresent" locator-key1="GO_TO_FAVORITE_SITE_ICON" />
@@ -314,7 +314,7 @@
 
 		<execute action="SOUserBarSitesDirectory#select" locator-key1="SITE_CATEGORY_SELECT" value1="My Favorites" />
 		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="SOUserBarSitesDirectory#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
 		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription}" />
 		<execute action="SOUserBarSitesDirectory#assertElementPresent" locator-key1="UNFAVORITE_SITE_ICON" />
@@ -341,7 +341,7 @@
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="SOUserBar#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName}" />
 
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITE_NAME_LINK" />
@@ -407,7 +407,7 @@
 
 		<execute action="SOUserBarSitesDirectory#select" locator-key1="SITE_CATEGORY_SELECT" value1="My Sites" />
 		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="SOUserBarSitesDirectory#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
 		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription}" />
 

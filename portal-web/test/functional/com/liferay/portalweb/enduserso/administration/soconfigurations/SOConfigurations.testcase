@@ -203,7 +203,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="Home#open" locator1="http://localhost:8080" />
+		<execute function="#open" locator1="http://localhost:8080" />
 	</command>
 
 	<command name="AssignSORoleUserGroup" priority="3">

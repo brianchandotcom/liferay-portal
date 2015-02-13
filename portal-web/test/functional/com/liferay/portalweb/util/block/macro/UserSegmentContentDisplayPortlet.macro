@@ -212,7 +212,7 @@
 			</then>
 		</if>
 
-		<execute action="Home#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 
 		<if>
 			<isset var="preview2Text" />

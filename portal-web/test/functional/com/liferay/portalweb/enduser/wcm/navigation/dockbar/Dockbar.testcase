@@ -56,11 +56,11 @@
 
 		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'drag-content-item')]" />
 
-		<execute action="Dockbar#assertNotVisible" locator1="${portletLocator}" />
+		<execute function="#assertNotVisible" locator1="${portletLocator}" />
 
 		<execute action="DockbarAddpanelapplications#type" locator-key1="SEARCH_FIELD" value1="${portletName}" />
 
-		<execute action="Dockbar#assertVisible" locator1="${portletLocator}" />
+		<execute function="#assertVisible" locator1="${portletLocator}" />
 	</command>
 
 	<command name="ViewAddPageField" priority="5">

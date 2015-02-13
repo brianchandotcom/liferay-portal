@@ -510,7 +510,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
 		</execute>
 
-		<execute action="Home#pause" locator1="180000" />
+		<execute function="#pause" locator1="180000" />
 
 		<execute macro="DMDocument#gotoPG">
 			<var name="dmDocumentTitle" value="Document_1.mp4" />
@@ -526,7 +526,7 @@
 			<then>
 				<var name="videoGenerationTimeCounter" value="${videoGenerationTimeCounter?increment()}" />
 
-				<execute action="Home#pause" locator1="30000" />
+				<execute function="#pause" locator1="30000" />
 
 				<execute macro="Page#gotoPG">
 					<var name="pageName" value="Documents and Media Page" />
@@ -540,8 +540,8 @@
 
 		<var attribute="poster" locator="//video" name="videoPreviewThumbnailLink" />
 
-		<execute action="Home#open" locator1="${videoPreviewThumbnailLink}" />
-		<execute action="Home#pause" locator1="1000" />
+		<execute function="#open" locator1="${videoPreviewThumbnailLink}" />
+		<execute function="#pause" locator1="1000" />
 
 		<var name="key_videoGenerationThumbnailResolution" value="640" />
 
@@ -782,14 +782,14 @@
 		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute action="PGDocumentsandmedia#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Documents and Media is temporarily unavailable." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Documents and Media is temporarily unavailable." />
 
 		<execute macro="DMDocument#viewPG">

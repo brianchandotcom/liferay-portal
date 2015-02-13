@@ -271,7 +271,7 @@
 			<var name="pageName" value="Page Name" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080/web/usersn/page-name?p_p_id=130&amp;p_p_state=maximized" />
+		<execute function="#open" locator1="http://localhost:8080/web/usersn/page-name?p_p_id=130&amp;p_p_state=maximized" />
 
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
 
@@ -544,7 +544,7 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -573,7 +573,7 @@
 
 		<execute action="Gmail#close" />
 
-		<execute action="Home#selectWindow" locator1="null" />
+		<execute function="#selectWindow" locator1="null" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -601,7 +601,7 @@
 
 		<execute action="Gmail#close" />
 
-		<execute action="Home#selectWindow" locator1="null" />
+		<execute function="#selectWindow" locator1="null" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -622,11 +622,11 @@
 		<execute action="Home#assertElementNotPresent" locator-key1="ERROR_MESSAGE" />
 		<execute action="Home#assertElementNotPresent" locator-key1="ERROR_MESSAGE_ALERT_ERROR" />
 
-		<execute action="Home#open" locator1="${blogEntryURL}" />
+		<execute function="#open" locator1="${blogEntryURL}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 
-		<execute action="Home#open" locator1="${messageBoardsThreadURL}" />
+		<execute function="#open" locator1="${messageBoardsThreadURL}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 	</command>
@@ -769,7 +769,7 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -798,7 +798,7 @@
 
 		<execute action="Gmail#close" />
 
-		<execute action="Home#selectWindow" locator1="null" />
+		<execute function="#selectWindow" locator1="null" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -826,7 +826,7 @@
 
 		<execute action="Gmail#close" />
 
-		<execute action="Home#selectWindow" locator1="null" />
+		<execute function="#selectWindow" locator1="null" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -853,7 +853,7 @@
 		<execute action="Home#assertElementNotPresent" locator-key1="ERROR_MESSAGE" />
 		<execute action="Home#assertElementNotPresent" locator-key1="ERROR_MESSAGE_ALERT_ERROR" />
 
-		<execute action="Home#open" locator1="${blogEntryURL}" />
+		<execute function="#open" locator1="${blogEntryURL}" />
 
 		<execute macro="BlogsEntry#viewDetailsPG">
 			<var name="blogEntryURL" value="${blogEntryURL}" />
@@ -865,7 +865,7 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute action="Home#open" locator1="${messageBoardsThreadURL}" />
+		<execute function="#open" locator1="${messageBoardsThreadURL}" />
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
@@ -1011,7 +1011,7 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -1040,7 +1040,7 @@
 
 		<execute action="Gmail#close" />
 
-		<execute action="Home#selectWindow" locator1="null" />
+		<execute function="#selectWindow" locator1="null" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -1068,7 +1068,7 @@
 
 		<execute action="Gmail#close" />
 
-		<execute action="Home#selectWindow" locator1="null" />
+		<execute function="#selectWindow" locator1="null" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -1090,7 +1090,7 @@
 
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 
-		<execute action="Home#open" locator1="${blogEntryURL}" />
+		<execute function="#open" locator1="${blogEntryURL}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 
@@ -1098,7 +1098,7 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute action="Home#open" locator1="${messageBoardsThreadURL}" />
+		<execute function="#open" locator1="${messageBoardsThreadURL}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 	</command>

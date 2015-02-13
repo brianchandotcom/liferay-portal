@@ -36,7 +36,7 @@
 		</if>
 
 		<execute action="SOMessagesAdd#click" locator-key1="SEND_BUTTON" />
-		<execute action="SOMessagesAdd#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<execute action="SOMessages#selectFrame" value1="relative=top" />
 

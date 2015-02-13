@@ -388,9 +388,9 @@
 
 		<var name="ddlRecordFieldData" value="Contenido" />
 
-		<execute action="CPDynamicdatalistsListEditrecordtranslation#assertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][1]/input[@value='${ddlRecordFieldData}'])" />
-		<execute action="CPDynamicdatalistsListEditrecordtranslation#assertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][2]/input[@value='Content 2'])" />
-		<execute action="CPDynamicdatalistsListEditrecordtranslation#assertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][3]/input[@value='${ddlRecordFieldData} 2'])" />
+		<execute function="#assertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][1]/input[@value='${ddlRecordFieldData}'])" />
+		<execute function="#assertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][2]/input[@value='Content 2'])" />
+		<execute function="#assertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][3]/input[@value='${ddlRecordFieldData} 2'])" />
 	</command>
 
 	<command name="AssertConfigurationMenulist" priority="3">
@@ -672,7 +672,7 @@
 
 		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
 		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_VIEW" value1="View" />
-		<execute action="PGDynamicdatalists#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<var method="selenium#getLocation()" name="adminViewURL" />
 
@@ -682,7 +682,7 @@
 
 		<execute macro="DDLRecord#editPG" />
 
-		<execute action="PGDynamicdatalists#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<var method="selenium#getLocation()" name="adminEditURL" />
 
@@ -702,13 +702,13 @@
 		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_2" value1="${fieldFieldLabel2} ${ddlRecordFieldData2}" />
 		<execute action="PGDynamicdatalistsDisplayrecord#assertElementNotPresent" locator-key1="EDIT_BUTTON" />
 
-		<execute action="Home#open" locator1="${adminViewURL}" />
+		<execute function="#open" locator1="${adminViewURL}" />
 
 		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel1} ${ddlRecordFieldData1}" />
 		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_2" value1="${fieldFieldLabel2} ${ddlRecordFieldData2}" />
 		<execute action="PGDynamicdatalistsDisplayrecord#assertElementNotPresent" locator-key1="EDIT_BUTTON" />
 
-		<execute action="Home#open" locator1="${adminEditURL}" />
+		<execute function="#open" locator1="${adminEditURL}" />
 
 		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="ADD_TRANSLATION_BUTTON" value1="Add Translation" />
 
@@ -722,14 +722,14 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute action="Home#open" locator1="${adminEditURL}" />
+		<execute function="#open" locator1="${adminEditURL}" />
 
 		<execute action="PGDynamicdatalistsEditrecord#assertElementNotPresent" locator-key1="AVAILABLE_TRANSLATIONS_LINK" value1="${localizedLanguage}" />
 		<execute action="PGDynamicdatalistsEditrecord#type" locator-key1="FIELD_1" value1="${fieldFieldLabel1Edit}" />
 		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 
-		<execute action="Home#open" locator1="${adminEditURL}" />
+		<execute function="#open" locator1="${adminEditURL}" />
 
 		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel1}" />
 		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="FIELD_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON" value1="Choose from Document Library" />
@@ -738,13 +738,13 @@
 
 		<execute action="PGLogin#assertTextEquals" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
 
-		<execute action="Home#open" locator1="${adminEditURL}" />
+		<execute function="#open" locator1="${adminEditURL}" />
 
 		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="FIELD_CLEAR_BUTTON" value1="Clear" />
 		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 
-		<execute action="Home#open" locator1="${adminEditURL}" />
+		<execute function="#open" locator1="${adminEditURL}" />
 
 		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
 		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
@@ -992,7 +992,7 @@
 			<var name="ddlListRecordName" value="Text" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Users and Organizations - Control Panel - Liferay" />
+		<execute function="#selectWindow" locator1="title=Users and Organizations - Control Panel - Liferay" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -1008,15 +1008,15 @@
 			<var name="roleName" value="Guest" />
 		</execute>
 
-		<execute action="Home#selectWindow" locator1="title=Data Definition Page Name - Liferay" />
+		<execute function="#selectWindow" locator1="title=Data Definition Page Name - Liferay" />
 
 		<execute macro="DDLList#attemptDeleteRecordViaDDLDisplayPG">
 			<var name="ddlListRecordName" value="Text" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsViewusers#close" locator1="title=Data Definition Page Page Name - Liferay" />
+		<execute function="#close" locator1="title=Data Definition Page Page Name - Liferay" />
 
-		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Dynamic Data Lists - Control Panel - Liferay" />
+		<execute function="#selectWindow" locator1="title=Dynamic Data Lists - Control Panel - Liferay" />
 	</command>
 
 	<command known-issues="LPS-49842" name="AssertUserUpdateRejectedRecord" priority="4">
@@ -1499,34 +1499,34 @@
 
 		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[1]" value1="Employee" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[2]" value1="Age" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[3]" value1="Department" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[4]" value1="Description" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[5]" value1="Start Date" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[6]" value1="Salary" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[7]" value1="Profile Picture" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[8]" value1="Name" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[9]" value1="Resume" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[10]" value1="Weekly Hours" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[11]" value1="Years Worked" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[12]" value1="Status" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[13]" value1="Modified Date" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[14]" value1="Author" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[1]/a" value1="true" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[2]/a" value1="30" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[3]/a" value1="QA Engineer" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[4]/a" value1="Joe Engineer works in QA" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[5]/a" value1="4/1/15" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[6]/a" value1="35000.0" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[7]" value1="" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[8]/a" value1="Joe Engineer" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[9]/a" value1="Document Title" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[10]/a" value1="40" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[11]/a" value1="5+" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[12]/span/span/span/strong" value1="Approved" />
-		<execute action="PGDynamicdatalists#assertElementPresent" locator1="//tbody[@class='table-data']/tr/td[13]/a" value1="Modified Date" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[14]/a" value1="Test Test" />
+		<execute function="#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[1]" value1="Employee" />
+		<execute function="#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[2]" value1="Age" />
+		<execute function="#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[3]" value1="Department" />
+		<execute function="#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[4]" value1="Description" />
+		<execute function="#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[5]" value1="Start Date" />
+		<execute function="#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[6]" value1="Salary" />
+		<execute function="#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[7]" value1="Profile Picture" />
+		<execute function="#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[8]" value1="Name" />
+		<execute function="#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[9]" value1="Resume" />
+		<execute function="#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[10]" value1="Weekly Hours" />
+		<execute function="#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[11]" value1="Years Worked" />
+		<execute function="#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[12]" value1="Status" />
+		<execute function="#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[13]" value1="Modified Date" />
+		<execute function="#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[14]" value1="Author" />
+		<execute function="#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[1]/a" value1="true" />
+		<execute function="#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[2]/a" value1="30" />
+		<execute function="#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[3]/a" value1="QA Engineer" />
+		<execute function="#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[4]/a" value1="Joe Engineer works in QA" />
+		<execute function="#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[5]/a" value1="4/1/15" />
+		<execute function="#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[6]/a" value1="35000.0" />
+		<execute function="#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[7]" value1="" />
+		<execute function="#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[8]/a" value1="Joe Engineer" />
+		<execute function="#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[9]/a" value1="Document Title" />
+		<execute function="#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[10]/a" value1="40" />
+		<execute function="#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[11]/a" value1="5+" />
+		<execute function="#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[12]/span/span/span/strong" value1="Approved" />
+		<execute function="#assertElementPresent" locator1="//tbody[@class='table-data']/tr/td[13]/a" value1="Modified Date" />
+		<execute function="#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[14]/a" value1="Test Test" />
 
 		<execute macro="DDLTemplate#editFormTemplatePG">
 			<var name="ddlFormTemplateNameEdit" value="Template Rev" />
@@ -1540,7 +1540,7 @@
 
 		<execute macro="DDLTemplate#saveFormTemplateViaDDLDisplayPG" />
 
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[6]" value1="Pay" />
+		<execute function="#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[6]" value1="Pay" />
 
 		<execute macro="DDLTemplate#editFormTemplatePG">
 			<var name="ddlFormTemplateNameEdit" value="Template Rev" />
@@ -1802,9 +1802,9 @@
 
 		<var name="ddlRecordFieldData" value="Contenido" />
 
-		<execute action="CPDynamicdatalistsListEditrecordtranslation#assertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][1]/input[@value='${ddlRecordFieldData}'])" />
-		<execute action="CPDynamicdatalistsListEditrecordtranslation#assertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][2]/input[@value='${ddlRecordFieldData} 3'])" />
-		<execute action="CPDynamicdatalistsListEditrecordtranslation#assertElementNotPresent" locator1="xpath=(//div[@data-fieldname='Text'])[3]" />
+		<execute function="#assertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][1]/input[@value='${ddlRecordFieldData}'])" />
+		<execute function="#assertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][2]/input[@value='${ddlRecordFieldData} 3'])" />
+		<execute function="#assertElementNotPresent" locator1="xpath=(//div[@data-fieldname='Text'])[3]" />
 	</command>
 
 	<command name="TemplateAddDeletedField" priority="4">

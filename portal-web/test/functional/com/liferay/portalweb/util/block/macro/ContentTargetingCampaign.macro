@@ -250,7 +250,7 @@
 	</command>
 
 	<command name="saveCP">
-		<execute action="CPContenttargetingAddcampaign#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 		<execute action="CPContenttargetingAddcampaign#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPContenttargetingAddcampaign#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -282,7 +282,7 @@
 		<execute action="CPContenttargetingCampaignReports#click" locator-key1="REPORT_ACTIONS" />
 		<execute action="CPContenttargetingCampaignReports#assertClick" locator-key1="REPORT_ACTIONS_MENULIST_VIEW_REPORT" value1="View Report" />
 		<execute action="CPContenttargetingCampaignReports#click" locator-key1="UPDATE_REPORT_BUTTON" />
-		<execute action="CPContenttargetingCampaignReports#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="CPContenttargetingCampaignReports#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<if>

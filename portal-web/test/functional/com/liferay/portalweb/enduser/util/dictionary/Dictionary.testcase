@@ -30,10 +30,10 @@
 
 		<var name="key_dictionaryTerm" value="${dictionaryTerm}" />
 
-		<execute action="Dictionary#selectWindow" locator1="title=Dog | Define Dog at Dictionary.com" />
+		<execute function="#selectWindow" locator1="title=Dog | Define Dog at Dictionary.com" />
 		<execute action="Dictionary#assertTextEquals" locator-key1="DICTIONARY_WORD" value1="${dictionaryTerm}" />
 
-		<execute action="Dictionary#close" locator1="title=Dog | Define Dog at Dictionary.com" />
-		<execute action="Dictionary#selectWindow" locator1="title=Dictionary Page - Liferay" />
+		<execute function="#close" locator1="title=Dog | Define Dog at Dictionary.com" />
+		<execute function="#selectWindow" locator1="title=Dictionary Page - Liferay" />
 	</command>
 </definition>

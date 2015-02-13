@@ -1116,7 +1116,7 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 	</command>
 
 	<command name="PublishWCViaRemoteStaging" priority="5">

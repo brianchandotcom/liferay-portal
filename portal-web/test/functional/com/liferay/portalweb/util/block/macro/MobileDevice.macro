@@ -32,12 +32,12 @@
 		<if>
 			<equals arg1="${deviceType}" arg2="smartphone" />
 			<then>
-				<execute action="Dockbar#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 640px;') and contains(@style,'width: 400px;')]" />
+				<execute function="#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 640px;') and contains(@style,'width: 400px;')]" />
 
 				<take-screenshot />
 
 				<execute action="DockbarPreviewpanel#click" locator-key1="PREVIEW_SMARTPHONE" />
-				<execute action="Dockbar#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 400px;') and contains(@style,'width: 640px;')]" />
+				<execute function="#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 400px;') and contains(@style,'width: 640px;')]" />
 
 				<take-screenshot />
 			</then>
@@ -45,12 +45,12 @@
 				<equals arg1="${deviceType}" arg2="tablet" />
 				<then>
 					<execute action="DockbarPreviewpanel#click" locator-key1="PREVIEW_TABLET" />
-					<execute action="Dockbar#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 900px;') and contains(@style,'width: 760px;')]" />
+					<execute function="#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 900px;') and contains(@style,'width: 760px;')]" />
 
 					<take-screenshot />
 
 					<execute action="DockbarPreviewpanel#click" locator-key1="PREVIEW_TABLET" />
-					<execute action="Dockbar#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 760px;') and contains(@style,'width: 900px;')]" />
+					<execute function="#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 760px;') and contains(@style,'width: 900px;')]" />
 
 					<take-screenshot />
 				</then>
@@ -59,7 +59,7 @@
 				<equals arg1="${deviceType}" arg2="desktop" />
 				<then>
 					<execute action="DockbarPreviewpanel#click" locator-key1="PREVIEW_DESKTOP" />
-					<execute action="Dockbar#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 1050px;') and contains(@style,'width: 1300px;')]" />
+					<execute function="#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 1050px;') and contains(@style,'width: 1300px;')]" />
 
 					<take-screenshot />
 				</then>
@@ -91,7 +91,7 @@
 						</else>
 					</if>
 
-					<execute action="Dockbar#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: ${height}px;') and contains(@style,'width: ${width}px;')]" />
+					<execute function="#assertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: ${height}px;') and contains(@style,'width: ${width}px;')]" />
 
 					<take-screenshot />
 				</then>
@@ -99,7 +99,7 @@
 		</if>
 
 		<execute action="DockbarPreviewpanel#assertTextEquals" locator-key1="PREVIEW_MESSAGE" value1="Preview may not be accurate." />
-		<execute action="Dockbar#selectFrame" locator1="//iframe[@id='devicePreviewIframe']" />
+		<execute function="#selectFrame" locator1="//iframe[@id='devicePreviewIframe']" />
 	</command>
 
 	<command name="selectMobileDevice">

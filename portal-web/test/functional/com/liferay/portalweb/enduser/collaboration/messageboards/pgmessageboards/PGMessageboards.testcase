@@ -937,7 +937,7 @@
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -961,7 +961,7 @@
 			<var name="userPassword" property-value="email.password.2" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080" />
+		<execute function="#open" locator1="http://localhost:8080" />
 	</command>
 
 	<command name="ViewMBThreadAndReplyThreadInGmail" priority="5">
@@ -1063,7 +1063,7 @@
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -1086,9 +1086,9 @@
 			<var name="gmailReplyMessage" value="MB Thread Message Subject Reply" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080" />
+		<execute function="#open" locator1="http://localhost:8080" />
 
-		<execute action="BaseLiferay#pause" locator1="60000" />
+		<execute function="#pause" locator1="60000" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1122,7 +1122,7 @@
 			<var name="userPassword" property-value="email.password.2" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080" />
+		<execute function="#open" locator1="http://localhost:8080" />
 	</command>
 
 	<command name="ViewSubcategorySubscriptionViaMySubscriptionsPage" priority="5">

@@ -2,9 +2,9 @@
 	<property name="testray.main.component.name" value="Tools" />
 
 	<command name="StopAndStartAppServer" priority="5">
-		<execute action="BaseLiferay#antCommand" locator1="build-test.xml" value1="stop-app-server" />
+		<execute function="#antCommand" locator1="build-test.xml" value1="stop-app-server" />
 
-		<execute action="BaseLiferay#antCommand" locator1="build-test.xml" value1="start-app-server" />
+		<execute function="#antCommand" locator1="build-test.xml" value1="start-app-server" />
 
 		<execute macro="User#firstLoginPG" />
 	</command>

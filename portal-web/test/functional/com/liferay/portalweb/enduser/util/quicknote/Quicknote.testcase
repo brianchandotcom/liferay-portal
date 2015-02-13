@@ -23,7 +23,7 @@
 
 		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
 
-		<execute action="Dockbar#assertClick" locator1="${portletLocator}" value1="Add" />
+		<execute function="#assertClick" locator1="${portletLocator}" value1="Add" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Quick Note Page" />

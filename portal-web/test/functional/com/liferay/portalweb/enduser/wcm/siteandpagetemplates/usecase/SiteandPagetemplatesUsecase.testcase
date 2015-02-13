@@ -376,7 +376,7 @@
 			<var name="siteName" value="Site Template Name" />
 		</execute>
 
-		<execute action="Home#selectWindow" locator1="title=home - Site Template Name - Liferay" />
+		<execute function="#selectWindow" locator1="title=home - Site Template Name - Liferay" />
 
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="false" />
@@ -405,7 +405,7 @@
 
 		<execute action="CPSitepages#close" />
 
-		<execute action="Home#selectWindow" locator1="null" />
+		<execute function="#selectWindow" locator1="null" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
@@ -423,7 +423,7 @@
 			<var name="siteName" value="Site Template Name" />
 		</execute>
 
-		<execute action="Home#selectWindow" locator1="title=home - Site Template Name - Liferay" />
+		<execute function="#selectWindow" locator1="title=home - Site Template Name - Liferay" />
 
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="false" />
@@ -434,7 +434,7 @@
 
 		<execute action="CPSitepages#close" />
 
-		<execute action="Home#selectWindow" locator1="null" />
+		<execute function="#selectWindow" locator1="null" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -569,7 +569,7 @@
 			<var name="siteName" value="Site Template Name" />
 		</execute>
 
-		<execute action="Home#selectWindow" locator1="title=home - Site Template Name - Liferay" />
+		<execute function="#selectWindow" locator1="title=home - Site Template Name - Liferay" />
 
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="false" />
@@ -612,7 +612,7 @@
 
 		<execute action="CPSitepages#close" />
 
-		<execute action="Home#selectWindow" locator1="null" />
+		<execute function="#selectWindow" locator1="null" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="password" value="test" />
@@ -625,7 +625,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertElementNotPresent" locator1="link=home" />
+		<execute function="#assertElementNotPresent" locator1="link=home" />
 
 		<execute macro="Portlet#viewNoSpecificPG">
 			<var name="portletName" value="Recent Bloggers" />
@@ -937,7 +937,7 @@
 			<var name="pageTemplateName" value="Wiki" />
 		</execute>
 
-		<execute action="Home#selectWindow" locator1="title=Wiki - Liferay" />
+		<execute function="#selectWindow" locator1="title=Wiki - Liferay" />
 
 		<execute macro="Dockbar#viewAddTabsWithNoAddPagePermission" />
 	</command>

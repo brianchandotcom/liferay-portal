@@ -22,7 +22,7 @@
 		</if>
 
 		<execute action="DockbarAddpanelpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
-		<execute action="DockbarAddpanelpage#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<var name="key_pageName" value="${pageName}" />
 
@@ -57,7 +57,7 @@
 
 				<execute action="Home#refresh" />
 
-				<execute action="Dockbar#pause" locator1="1000" />
+				<execute function="#pause" locator1="1000" />
 
 				<if>
 					<and>
@@ -239,7 +239,7 @@
 		</if>
 
 		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="SOUserBarSitesDirectory#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
 		<execute action="SOUserBarSitesDirectory#clickNoError" locator-key1="DELETE_SITE_ICON" />
 		<execute action="SOUserBarSitesDirectory#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete ${siteName}?" />
@@ -257,7 +257,7 @@
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="SOUserBar#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName}" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_FAVORITE_SITE_ICON" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_UNFAVORITE_SITE_ICON" />
@@ -265,7 +265,7 @@
 
 	<command name="gotoDashboardPG">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-		<execute action="SOUserBar#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_PORTLET_LOADED" />
 
@@ -299,7 +299,7 @@
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
 
 		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="SOUserBarSitesDirectory#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
 		<execute action="SOUserBarSitesDirectory#clickNoError" locator-key1="JOIN_SITE_ICON" />
 		<execute action="SOUserBarSitesDirectory#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to join ${siteName}?" />
@@ -316,7 +316,7 @@
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
 
 		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="SOUserBarSitesDirectory#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
 		<execute action="SOUserBarSitesDirectory#clickNoError" locator-key1="LEAVE_SITE_ICON" />
 		<execute action="SOUserBarSitesDirectory#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to leave ${siteName}?" />
@@ -460,7 +460,7 @@
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="SOUserBar#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName}" />
 	</command>
 
@@ -485,7 +485,7 @@
 		<execute macro="SOUser#firstLoginPG" />
 
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_COUNT" />
-		<execute action="SOUserBar#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<while>
 			<condition action="SOUserBar#isElementPresent" locator-key1="NOTIFICATION_MENU_REQUEST_IGNORE" />
@@ -494,7 +494,7 @@
 			</then>
 		</while>
 
-		<execute action="SOUserBar#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<while>
 			<condition action="SOUserBar#isTextNotEqual" locator-key1="NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK" value1="Notifications (0)" />

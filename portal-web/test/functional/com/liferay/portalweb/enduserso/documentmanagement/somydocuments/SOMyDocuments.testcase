@@ -3490,7 +3490,7 @@
 		</execute>
 
 		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_STYLE" />
-		<execute action="PGDocumentsandmedia#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<execute action="SODocuments#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_DOCUMENTS_DISPLAY_STYLES_PNG" />
 	</command>

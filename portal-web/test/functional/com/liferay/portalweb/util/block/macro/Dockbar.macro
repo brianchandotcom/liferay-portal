@@ -1,13 +1,13 @@
 <definition>
 	<command name="showEditField">
 		<if>
-			<condition action="Dockbar#isElementNotPresent" locator1="//div[@id='_145_${fieldLabel}Content']" value1="${fieldName}" />
+			<condition function="#isElementNotPresent" locator1="//div[@id='_145_${fieldLabel}Content']" value1="${fieldName}" />
 			<then>
 				<execute action="DockbarEditpanel#assertClick" locator-key1="${fieldKey}" value1="${fieldName}" />
 			</then>
 		</if>
 
-		<execute action="Dockbar#assertElementPresent" locator1="//div[@id='_145_${fieldLabel}Content']" />
+		<execute function="#assertElementPresent" locator1="//div[@id='_145_${fieldLabel}Content']" />
 	</command>
 
 	<command name="viewAddTabsWithNoAddPagePermission">

@@ -15,7 +15,7 @@
 		</if>
 
 		<execute action="PGDocumentsandmediaDocument#type" locator-key1="COMMENTS_COMMENT_FIELD" value1="${commentBody}" />
-		<execute action="PGDocumentsandmediaDocument#pause" locator1="3000" />
+		<execute function="#pause" locator1="3000" />
 
 		<if>
 			<condition action="PGDocumentsandmediaDocument#isElementPresent" locator-key1="COMMENTS_SUBMIT_BUTTON" value1="Submit" />
@@ -27,7 +27,7 @@
 			</else>
 		</if>
 
-		<execute action="PGDocumentsandmediaDocument#pause" locator1="3000" />
+		<execute function="#pause" locator1="3000" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>
 

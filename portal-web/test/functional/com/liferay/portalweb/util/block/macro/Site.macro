@@ -522,7 +522,7 @@
 		<execute action="CPSites#selectFrame" locator-key1="CONFIGURATION_FRAME" />
 		<execute action="CPSites#type" locator-key1="EXPORT_FILE_NAME" value1="${fileName}" />
 		<execute action="CPSites#assertClick" locator-key1="CONFIGURATION_EXPORT_BUTTON" value1="Export" />
-		<execute action="CPSites#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 		<execute action="CPSites#assertClick" locator-key1="DOWNLOAD_FILE" value1="${fileDownload}" />
 	</command>
 
@@ -549,7 +549,7 @@
 		<execute action="CPSites#assertClick" locator-key1="IMPORT_CONTINUE" value1="Continue" />
 		<execute action="CPSites#assertClick" locator-key1="IMPORT_CONTINUE_2" value1="Continue" />
 		<execute action="CPSites#assertClick" locator-key1="IMPORT" value1="Import" />
-		<execute action="CPSites#pause" locator1="2000" />
+		<execute function="#pause" locator1="2000" />
 	</command>
 
 	<command name="inactivateCP">
@@ -788,7 +788,7 @@
 			</then>
 		</if>
 
-		<execute action="CPSitesAddSelectSite#close" locator1="null" />
+		<execute function="#close" locator1="null" />
 		<execute action="CPSitesAdd#selectFrame" value1="relative=top" />
 	</command>
 

@@ -40,7 +40,7 @@
 	</tear-down>
 
 	<command name="AssertLoginURLRedirectsToDashboard" priority="4">
-		<execute action="Home#open" locator1="http://localhost:8080/login" />
+		<execute function="#open" locator1="http://localhost:8080/login" />
 		<execute action="Home#assertLocation" value1="http://localhost:8080/user/test/so/dashboard" />
 
 		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_DASHBOARD" value1="Dashboard" />
@@ -368,7 +368,7 @@
 		<execute action="SOMessages#check" locator-key1="MESSAGE_CHECKBOX" />
 		<execute action="SOMessages#assertClickNoError" locator-key1="MARK_AS_READ_BUTTON" value1="Mark as Read" />
 		<execute action="SOMessages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to mark the selected messages as read?" />
-		<execute action="SOMessages#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="SOMessages#assertElementNotPresent" locator-key1="MESSAGE_UNREAD" />
 
 		<execute macro="SOMessages#viewMessageNotification">
@@ -690,7 +690,7 @@
 	</command>
 
 	<command name="SetHomeURL" priority="4">
-		<execute action="Home#open" locator1="http://localhost:8080/" />
+		<execute function="#open" locator1="http://localhost:8080/" />
 		<execute action="Home#assertLocation" value1="http://localhost:8080/" />
 
 		<execute macro="Page#gotoCP">
@@ -700,7 +700,7 @@
 		<execute action="CPPortalsettings#type" locator-key1="NAVIGATION_HOME_URL_FIELD" value1="/user" />
 		<execute action="CPPortalsettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="Home#open" locator1="http://localhost:8080/" />
+		<execute function="#open" locator1="http://localhost:8080/" />
 		<execute action="Home#assertLocation" value1="http://localhost:8080/user/test/so/dashboard" />
 
 		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_DASHBOARD" value1="Dashboard" />

@@ -230,7 +230,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute action="SOAnnouncements#pause" locator1="70000" />
+		<execute function="#pause" locator1="70000" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -470,7 +470,7 @@
 			<var name="viewImmediately" value="false" />
 		</execute>
 
-		<execute action="SOAnnouncements#pause" locator1="120000" />
+		<execute function="#pause" locator1="120000" />
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
@@ -504,7 +504,7 @@
 			<var name="viewImmediately" value="false" />
 		</execute>
 
-		<execute action="SOAnnouncements#pause" locator1="120000" />
+		<execute function="#pause" locator1="120000" />
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
@@ -646,9 +646,9 @@
 		<execute action="SOAnnouncements#assertClick" locator-key1="ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
 
 		<execute action="SOAnnouncementsAdd#selectFrame" locator-key1="ADD_ENTRY_IFRAME" />
-		<execute action="SOAnnouncementsAdd#assertElementPresent" locator1="//optgroup[@label='Sites']" />
-		<execute action="SOAnnouncementsAdd#assertElementNotPresent" locator1="//optgroup[@label='Sites']/option[contains(.,'Organization Name')]" />
-		<execute action="SOAnnouncementsAdd#assertElementPresent" locator1="//optgroup[@label='Organizations']/option[contains(.,'Organization Name')]" />
+		<execute function="#assertElementPresent" locator1="//optgroup[@label='Sites']" />
+		<execute function="#assertElementNotPresent" locator1="//optgroup[@label='Sites']/option[contains(.,'Organization Name')]" />
+		<execute function="#assertElementPresent" locator1="//optgroup[@label='Organizations']/option[contains(.,'Organization Name')]" />
 		<execute action="SOAnnouncementsAdd#selectFrameTop" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
@@ -656,9 +656,9 @@
 		<execute action="SOAnnouncements#assertClick" locator-key1="ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
 
 		<execute action="SOAnnouncementsManage#selectFrame" locator-key1="MANAGE_ENTRY_IFRAME" />
-		<execute action="SOAnnouncementsManage#assertElementPresent" locator1="//optgroup[@label='Sites']" />
-		<execute action="SOAnnouncementsManage#assertElementNotPresent" locator1="//optgroup[@label='Sites']/option[contains(.,'Organization Name')]" />
-		<execute action="SOAnnouncementsManage#assertElementPresent" locator1="//optgroup[@label='Organizations']/option[contains(.,'Organization Name')]" />
+		<execute function="#assertElementPresent" locator1="//optgroup[@label='Sites']" />
+		<execute function="#assertElementNotPresent" locator1="//optgroup[@label='Sites']/option[contains(.,'Organization Name')]" />
+		<execute function="#assertElementPresent" locator1="//optgroup[@label='Organizations']/option[contains(.,'Organization Name')]" />
 		<execute action="SOAnnouncementsManage#selectFrameTop" />
 
 		<execute macro="Page#openURL">
@@ -2354,7 +2354,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="60000" />
+		<execute function="#pause" locator1="60000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -2377,7 +2377,7 @@
 			<var name="userPassword" property-value="email.password.2" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080" />
+		<execute function="#open" locator1="http://localhost:8080" />
 	</command>
 
 	<command known-issues="LPS-42413" name="ViewAnnouncementEntryInGmail" priority="5">
@@ -2454,7 +2454,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="60000" />
+		<execute function="#pause" locator1="60000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -2477,7 +2477,7 @@
 			<var name="userPassword" property-value="email.address.2" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080" />
+		<execute function="#open" locator1="http://localhost:8080" />
 	</command>
 
 	<command name="ViewAnnouncementTeamScopes" priority="5">

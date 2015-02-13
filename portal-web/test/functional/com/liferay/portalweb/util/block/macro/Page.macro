@@ -131,11 +131,11 @@
 		<execute action="CPSitepages#selectFrame" locator-key1="LOGO_UPLOAD_IMAGE_IFRAME" />
 		<execute action="CPSitepages#uploadCommonFile" locator-key1="LOGO_UPLOAD_BROWSE_BUTTON" value1="${logoFile}" />
 
-		<execute action="Home#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 
 		<execute action="CPSitepages#assertClick" locator-key1="LOGO_UPLOAD_SAVE_BUTTON" value1="Save" />
 
-		<execute action="Home#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 
 		<execute action="CPSitepages#selectFrameTop" />
 		<execute action="CPSitepages#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
@@ -366,7 +366,7 @@
 		<execute action="Dockbar#assertClick" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
 
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-		<execute action="Myaccount#assertClick" locator1="//ul[@class='lfr-nav nav nav-pills']//a[contains(.,'${portletName}')]" value1="${portletName}" />
+		<execute function="#assertClick" locator1="//ul[@class='lfr-nav nav nav-pills']//a[contains(.,'${portletName}')]" value1="${portletName}" />
 
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
 	</command>
@@ -739,7 +739,7 @@
 	</command>
 
 	<command name="viewTranslationsPG">
-		<execute action="Home#open" locator1="${sitePageURL}" />
+		<execute function="#open" locator1="${sitePageURL}" />
 		<execute action="Home#assertLocation" value1="${sitePageURL}" />
 
 		<if>
@@ -770,7 +770,7 @@
 
 	<command name="viewWithWorkflowPG">
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
-		<execute action="Home#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 
 		<execute action="PGStaging#assertClick" locator-key1="STAGING_DROP_DOWN_BUTTON" value1="Staging" />
 		<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="${workflowStatus}" />

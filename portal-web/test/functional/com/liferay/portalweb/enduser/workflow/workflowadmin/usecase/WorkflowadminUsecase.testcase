@@ -424,7 +424,7 @@
 
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
 
-		<execute action="CPMyworkflowtasks#assertElementNotPresent" locator1="//div[@id='workflowMyRolesTasksPanelContent']//tr[3]/td" />
+		<execute function="#assertElementNotPresent" locator1="//div[@id='workflowMyRolesTasksPanelContent']//tr[3]/td" />
 
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
 	</command>

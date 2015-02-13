@@ -286,7 +286,7 @@
 		<var name="key_dmFolderName" value="${dmFolderName1}" />
 
 		<execute action="CPDocumentsandmediaMovefolder#assertClick" locator-key1="FOLDER_WINDOW_FOLDER_CHOOSE_BUTTON" value1="Choose" />
-		<execute action="CPDocumentsandmediaMovefolder#selectFrame" locator1="relative=top" />
+		<execute function="#selectFrame" locator1="relative=top" />
 		<execute action="CPDocumentsandmediaMovefolder#assertTextEquals" locator-key1="NEW_FOLDER" value1="${dmFolderName1}" />
 		<execute action="CPDocumentsandmediaMovefolder#assertClick" locator-key1="MOVE_BUTTON" value1="Move" />
 

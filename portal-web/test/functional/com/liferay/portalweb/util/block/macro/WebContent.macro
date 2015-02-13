@@ -42,7 +42,7 @@
 			<then>
 				<execute action="CPWebcontentAddwebcontent#click" locator-key1="AUDIO_BUTTON" />
 				<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="AUDIO_BROWSE_SERVER_BUTTON" value1="Browse Server" />
-				<execute action="CPWebcontentAddwebcontent#pause" locator1="10000" />
+				<execute function="#pause" locator1="10000" />
 				<execute action="CPWebcontentAddwebcontent#selectFrame" locator-key1="BROWSE_IFRAME" />
 				<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="CHOOSE_BUTTON" value1="Choose" />
 				<execute action="CPWebcontentAddwebcontent#selectFrame" value1="relative=top" />
@@ -277,14 +277,14 @@
 				<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
 				<execute action="PGAssetpublisherAddnewwebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-				<execute action="PGAssetpublisher#pause" locator1="5000" />
+				<execute function="#pause" locator1="5000" />
 				<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
 				<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_GENERIC" />
 			</then>
 			<else>
 				<execute action="PGAssetpublisherAddnewwebcontent#assertClickNoError" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
-				<execute action="PGAssetpublisher#pause" locator1="5000" />
+				<execute function="#pause" locator1="5000" />
 				<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
 
 				<var name="key_assetTitle" value="${webContentTitle}" />
@@ -360,7 +360,7 @@
 						<if>
 							<equals arg1="${webContentJavascript}" arg2="true" />
 							<then>
-								<execute action="PGWebcontentdisplay#assertTextEquals" locator1="//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]" value1="${embeddedPortletTitle}" />
+								<execute function="#assertTextEquals" locator1="//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]" value1="${embeddedPortletTitle}" />
 							</then>
 							<elseif>
 								<equals arg1="${pageBreak}" arg2="true" />
@@ -609,7 +609,7 @@
 		<if>
 			<equals arg1="${webContentJavascript}" arg2="true" />
 			<then>
-				<execute action="PGWebcontentdisplay#assertTextEquals" locator1="//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]" value1="${embeddedPortletTitle}" />
+				<execute function="#assertTextEquals" locator1="//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]" value1="${embeddedPortletTitle}" />
 			</then>
 			<else>
 				<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
@@ -810,7 +810,7 @@
 		<execute action="PGAssetpublisherAddnewwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="PGAssetpublisherAddnewwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
 		<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
-		<execute action="PGAssetpublisherAddnewwebcontent#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 
 		<execute action="PGAssetpublisher#selectFrame" />
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no results." />
@@ -921,7 +921,7 @@
 
 		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="MENU_DISPLAY_PAGE" value1="Display Page" />
 		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="DISPLAY_PAGE_CHOOSE" value1="Choose" />
-		<execute action="CPWebcontentAddwebcontent#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 
 		<var name="key_pageName" value="${pageName}" />
 
@@ -959,7 +959,7 @@
 		<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="MENU_CONTENT" value1="Content" />
 		<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGAssetpublisher#pause" locator1="3000" />
+		<execute function="#pause" locator1="3000" />
 		<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
 	</command>
 
@@ -1021,7 +1021,7 @@
 		<if>
 			<equals arg1="${webContentJavascript}" arg2="true" />
 			<then>
-				<execute action="PGWebcontentdisplay#assertTextEquals" locator1="//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]" value1="${embeddedPortletTitle}" />
+				<execute function="#assertTextEquals" locator1="//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]" value1="${embeddedPortletTitle}" />
 			</then>
 			<else>
 				<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContentEdit}" />
@@ -1043,7 +1043,7 @@
 		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" />
 
 		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
-		<execute action="PGWebcontentdisplayEditwebcontent#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="TOOLBAR_VIEW_HISTORY" value1="View History" />
 
 		<var name="key_historyStatus" value="Expired" />
@@ -1126,7 +1126,7 @@
 		</execute>
 
 		<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
-		<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator1="//input[contains(@id,'_15_Text') and @type='text']" value1="${webContentText}" />
+		<execute function="#assertTextEquals" locator1="//input[contains(@id,'_15_Text') and @type='text']" value1="${webContentText}" />
 		<execute action="CPWebcontentEditwebcontent#assertClick" locator-key1="BASIC_PREVIEW_BUTTON" value1="Basic Preview" />
 
 		<execute action="CPWebcontentPreview#selectFrame" locator-key1="PREVIEW_IFRAME" />

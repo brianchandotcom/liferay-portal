@@ -1803,9 +1803,9 @@
 			<var name="kfProcessFieldData" value="option 2" />
 		</execute>
 
-		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][1]/label" value1="Text" />
-		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][2]/label" value1="Text Box" />
-		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][3]/div/label" value1="Select" />
+		<execute function="#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][1]/label" value1="Text" />
+		<execute function="#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][2]/label" value1="Text Box" />
+		<execute function="#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][3]/div/label" value1="Select" />
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
 
@@ -1837,8 +1837,8 @@
 			<var name="fieldName" value="Text Box" />
 		</execute>
 
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][1]/label" value1="Text" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][2]/div/label" value1="Select" />
+		<execute function="#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][1]/label" value1="Text" />
+		<execute function="#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][2]/div/label" value1="Select" />
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
 
@@ -1871,9 +1871,9 @@
 			<var name="kfProcessFieldData" value="option 2" />
 		</execute>
 
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][1]/label" value1="Text" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][2]/label" value1="Text Box" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][3]/label" value1="Select" />
+		<execute function="#assertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][1]/label" value1="Text" />
+		<execute function="#assertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][2]/label" value1="Text Box" />
+		<execute function="#assertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][3]/label" value1="Select" />
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
@@ -2161,7 +2161,7 @@
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" value="${user2EmailAddress}" />
@@ -2185,7 +2185,7 @@
 			<var name="userPassword" value="${user2EmailPassword}" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080" />
+		<execute function="#open" locator1="http://localhost:8080" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${user2EmailAddress}" />
@@ -2201,7 +2201,7 @@
 			<var name="workflowTask" value="review" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" value="${user2EmailAddress}" />
@@ -2225,7 +2225,7 @@
 			<var name="userPassword" value="${user2EmailPassword}" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080" />
+		<execute function="#open" locator1="http://localhost:8080" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -2238,7 +2238,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#logoutAndLogin">
 			<var name="userEmailAddress" value="${user3EmailAddress}" />
@@ -2261,7 +2261,7 @@
 			<var name="userPassword" value="${user3EmailPassword}" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080" />
+		<execute function="#open" locator1="http://localhost:8080" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${user3EmailAddress}" />
@@ -2282,7 +2282,7 @@
 			<var name="workflowTask" value="update" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#logoutAndLogin">
 			<var name="userEmailAddress" value="${user2EmailAddress}" />
@@ -2306,7 +2306,7 @@
 			<var name="userPassword" value="${user2EmailPassword}" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080" />
+		<execute function="#open" locator1="http://localhost:8080" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${user2EmailAddress}" />

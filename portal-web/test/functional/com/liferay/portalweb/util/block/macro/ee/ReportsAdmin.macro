@@ -23,7 +23,7 @@
 		<execute action="CPReportsadminAddreportentry#assertClick" locator-key1="GENERATE_BUTTON" value1="Generate" />
 
 		<execute action="CPReportsadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPReportsadmin#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 	</command>
 
 	<command name="addScheduleEntry">
@@ -75,7 +75,7 @@
 		<execute action="CPReportsadminAddscheduleentry#assertClick" locator-key1="SCHEDULE_BUTTON" value1="Schedule" />
 
 		<execute action="CPReportsadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPReportsadmin#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 	</command>
 
 	<command name="addSource">
@@ -153,7 +153,7 @@
 		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
 		<execute action="CPReportsadminViewreportentry#assertClick" locator-key1="ENTRY_FILE_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPReportsadminViewreportentry#assertClick" locator-key1="ENTRY_FILE_MENULIST_DOWNLOAD" value1="Download" />
-		<execute action="CPReportsadminViewreportentry#pause" locator1="2000" />
+		<execute function="#pause" locator1="2000" />
 
 		<take-screenshot />
 

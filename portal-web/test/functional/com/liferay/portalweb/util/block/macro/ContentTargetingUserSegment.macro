@@ -327,7 +327,7 @@
 		<execute action="CPContenttargetingUserSegmentReports#assertClick" locator-key1="USER_SEGMENT_REPORTS_TABLE_ACTIONS_MENULIST_VIEW_REPORT" value1="View Report" />
 
 		<execute action="CPContenttargetingUserSegmentReports#click" locator-key1="UPDATE_REPORT" />
-		<execute action="CPContenttargetingUserSegmentReports#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 	</command>
 
 	<command name="viewReportContent">

@@ -114,8 +114,8 @@
 			<var name="userScreenName" value="test1" />
 		</execute>
 
-		<execute action="Home#close" locator1="title=Welcome - Liferay" />
-		<execute action="Home#selectWindow" locator1="title=Users and Organizations - Liferay" />
+		<execute function="#close" locator1="title=Welcome - Liferay" />
+		<execute function="#selectWindow" locator1="title=Users and Organizations - Liferay" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Audit Reports" />
@@ -189,7 +189,7 @@
 
 		<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction4}" />
 
-		<execute action="CPAuditreports#assertTextEquals" locator1="xpath=(//tr[contains(.,'${resourceAction5}') and contains(.,'${resourceName2}')]/td[4])[2]" value1="${resourceName2}" />
-		<execute action="CPAuditreports#assertTextEquals" locator1="xpath=(//tr[contains(.,'${resourceAction5}') and contains(.,'${resourceName2}')]/td[5])[2]" value1="${resourceAction5}" />
+		<execute function="#assertTextEquals" locator1="xpath=(//tr[contains(.,'${resourceAction5}') and contains(.,'${resourceName2}')]/td[4])[2]" value1="${resourceName2}" />
+		<execute function="#assertTextEquals" locator1="xpath=(//tr[contains(.,'${resourceAction5}') and contains(.,'${resourceName2}')]/td[5])[2]" value1="${resourceAction5}" />
 	</command>
 </definition>

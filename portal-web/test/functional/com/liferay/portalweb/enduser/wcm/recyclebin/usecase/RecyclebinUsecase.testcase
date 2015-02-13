@@ -508,7 +508,7 @@
 			<var name="deleteUser" value="Test Test" />
 		</execute>
 
-		<execute action="Home#pause" locator1="120000" />
+		<execute function="#pause" locator1="120000" />
 
 		<execute action="Home#refresh" />
 

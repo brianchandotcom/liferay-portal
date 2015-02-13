@@ -128,14 +128,14 @@
 		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGKnowledgebasearticleConfiguration#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
 
-		<execute action="PGKnowledgebasearticleConfigurationArticle#selectWindow" locator1="title=Knowledge Base Article" />
+		<execute function="#selectWindow" locator1="title=Knowledge Base Article" />
 
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute action="PGKnowledgebasearticleConfigurationArticle#assertClick" locator-key1="ARTICLE_TABLE_CHOOSE_BUTTON" value1="Choose" />
-		<execute action="PGKnowledgebasearticleConfigurationArticle#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 
-		<execute action="PGKnowledgebasearticleConfiguration#selectWindow" locator1="title=${pageName} - Liferay" />
+		<execute function="#selectWindow" locator1="title=${pageName} - Liferay" />
 		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" value1="relative=top" />
 		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGKnowledgebasearticleConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
@@ -463,13 +463,13 @@
 		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGKnowledgebasearticleConfiguration#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
 
-		<execute action="PGKnowledgebasearticleConfigurationArticle#selectWindow" locator1="title=Knowledge Base Article" />
+		<execute function="#selectWindow" locator1="title=Knowledge Base Article" />
 
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute action="PGKnowledgebasearticleConfigurationArticle#assertClick" locator-key1="ARTICLE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
-		<execute action="PGKnowledgebasearticleConfiguration#selectWindow" locator1="title=${pageName} - Liferay" />
+		<execute function="#selectWindow" locator1="title=${pageName} - Liferay" />
 		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" value1="relative=top" />
 		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGKnowledgebasearticleConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />

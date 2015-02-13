@@ -26,7 +26,7 @@
 
 		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
 		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
-		<execute action="Dockbar#click" locator1="//a[@title='Back']" />
+		<execute function="#click" locator1="//a[@title='Back']" />
 
 		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${adminName}" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${adminEmailAddress}" />

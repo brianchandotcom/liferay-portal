@@ -28,7 +28,7 @@
 			</else>
 		</if>
 
-		<execute action="CPSitepages#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
 
 		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
@@ -71,7 +71,7 @@
 
 		<execute macro="SitePage#addCmd" />
 
-		<execute action="CPSitepages#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_ADD_PAGE" value1="Add Page" />
 
 		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
@@ -446,7 +446,7 @@
 		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
 		<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 		<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
-		<execute action="CPSitepages#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 
 		<if>
 			<condition action="CPSitepages#isElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
@@ -634,7 +634,7 @@
 		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_ROOT_LINK" />
 		<execute action="CPSitepages#click" locator-key1="TOOLBAR_VIEW_PAGES" />
 
-		<execute action="BaseLiferay#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 	</command>
 
 	<command name="viewPagesOrderCP">

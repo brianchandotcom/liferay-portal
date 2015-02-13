@@ -7,7 +7,7 @@
 
 		<execute action="CopyAndPaste#assertTextEquals" locator-key1="PASTE_TEXT_AREA" value1="Your content goes here." />
 
-		<execute action="CopyAndPaste#selectFrame" locator1="//body" />
+		<execute function="#selectFrame" locator1="//body" />
 
 		<execute action="CopyAndPaste#assertTextEquals" locator-key1="COPY_TEST_LABEL" value1="An iFrame containing the TinyMCE WYSIWYG Editor" />
 

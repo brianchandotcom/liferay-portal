@@ -18,7 +18,7 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="PGBlogs#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<if>
 			<condition action="PGBlogsEntry#isElementPresent" locator-key1="COMMENTS_BE_THE_FIRST" />

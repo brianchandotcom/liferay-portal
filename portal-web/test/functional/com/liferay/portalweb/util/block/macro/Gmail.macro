@@ -1,8 +1,8 @@
 <definition>
 	<command name="gotoHtmlMode">
-		<execute action="Home#open" locator1="https://mail.google.com/mail/?ui=html&amp;zy=h" />
+		<execute function="#open" locator1="https://mail.google.com/mail/?ui=html&amp;zy=h" />
 
-		<execute action="BaseLiferay#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 	</command>
 
 	<command name="gotoMail">
@@ -10,7 +10,7 @@
 
 		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME" value1="${emailFromUserName}" />
 		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE" value1="${gmailMessageTitle}" />
-		<execute action="Gmail#pause" locator1="3000" />
+		<execute function="#pause" locator1="3000" />
 	</command>
 
 	<command name="gotoMailMessage">
@@ -19,12 +19,12 @@
 
 		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_MAIL_USER_NAME" value1="${emailFromUserName}" />
 		<execute action="Gmail#click" locator-key1="GMAIL_EMAIL_MESSAGE_TITLE" value1="${gmailMessageTitle}" />
-		<execute action="Gmail#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 	</command>
 
 	<command name="login">
-		<execute action="Home#open" locator1="http://www.gmail.com" />
-		<execute action="Home#pause" locator1="5000" />
+		<execute function="#open" locator1="http://www.gmail.com" />
+		<execute function="#pause" locator1="5000" />
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
@@ -44,7 +44,7 @@
 				<execute action="Gmail#type" locator-key1="LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
 				<execute action="Gmail#check" locator-key1="LOGIN_STAY_SIGNED_IN_CHECKBOX" />
 				<execute action="Gmail#click" locator-key1="LOGIN_SIGN_IN_BUTTON" />
-				<execute action="Gmail#pause" locator1="5000" />
+				<execute function="#pause" locator1="5000" />
 			</then>
 			<elseif>
 				<condition action="Gmail#isElementPresent" locator-key1="GMAIL_HTML_MODE_USER_SCREENNAME" />
@@ -59,8 +59,8 @@
 	</command>
 
 	<command name="logoutAndLogin">
-		<execute action="Home#open" locator1="http://www.gmail.com" />
-		<execute action="Home#pause" locator1="3000" />
+		<execute function="#open" locator1="http://www.gmail.com" />
+		<execute function="#pause" locator1="3000" />
 
 		<execute macro="Gmail#gotoHtmlMode" />
 
@@ -84,7 +84,7 @@
 		<execute action="Gmail#type" locator-key1="LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
 		<execute action="Gmail#check" locator-key1="LOGIN_STAY_SIGNED_IN_CHECKBOX" />
 		<execute action="Gmail#click" locator-key1="LOGIN_SIGN_IN_BUTTON" />
-		<execute action="Gmail#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 	</command>
 
 	<command name="openMessageContinueReadingButton">
@@ -98,10 +98,10 @@
 		<if>
 			<isset var="contentTitle" />
 			<then>
-				<execute action="Home#selectWindow" locator1="title=${contentTitle} - ${pageName} - Liferay" />
+				<execute function="#selectWindow" locator1="title=${contentTitle} - ${pageName} - Liferay" />
 			</then>
 			<else>
-				<execute action="Home#selectWindow" locator1="title=${pageName} - Liferay" />
+				<execute function="#selectWindow" locator1="title=${pageName} - Liferay" />
 			</else>
 		</if>
 	</command>
@@ -119,10 +119,10 @@
 		<if>
 			<isset var="contentTitle" />
 			<then>
-				<execute action="Home#selectWindow" locator1="title=${contentTitle} - ${pageName} - Liferay" />
+				<execute function="#selectWindow" locator1="title=${contentTitle} - ${pageName} - Liferay" />
 			</then>
 			<else>
-				<execute action="Home#selectWindow" locator1="title=${pageName} - Liferay" />
+				<execute function="#selectWindow" locator1="title=${pageName} - Liferay" />
 			</else>
 		</if>
 	</command>
@@ -146,7 +146,7 @@
 			<then>
 				<execute action="Gmail#check" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_GENERIC" />
 				<execute action="Gmail#click" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_DELETE_BUTTON" />
-				<execute action="Gmail#pause" locator1="3000" />
+				<execute function="#pause" locator1="3000" />
 			</then>
 		</while>
 	</command>
@@ -183,7 +183,7 @@
 
 	<command name="viewSocialOfficeMessageMail">
 		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE_SOCIAL_OFFICE_MESSAGE" value1="${senderName} sent you a message on Liferay" />
-		<execute action="Gmail#pause" locator1="3000" />
+		<execute function="#pause" locator1="3000" />
 
 		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_SUMMARY" value1="${senderName} sent you a message." />
 		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_SUBJECT" value1="${messageSubject}" />

@@ -193,7 +193,7 @@
 
 		<execute action="PGKnowledgebasedisplaySelectParentArticle#selectFrame" locator-key1="SELECT_PARENT_IFRAME" />
 		<execute action="PGKnowledgebasedisplaySelectParentArticle#assertElementPresent" locator-key1="BREADCRUMB_HOME" />
-		<execute action="PGKnowledgebasedisplaySelectParentArticle#assertElementNotPresent" locator1="//ul[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]" />
+		<execute function="#assertElementNotPresent" locator1="//ul[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]" />
 	</command>
 
 	<command name="DeleteKBArticleViaKBDisplay" priority="4">
@@ -530,7 +530,7 @@
 			<var name="pageName" value="Welcome" />
 		</execute>
 
-		<execute action="Home#open" locator1="${kbAricleFriendlyURL}" />
+		<execute function="#open" locator1="${kbAricleFriendlyURL}" />
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
 			<var name="kbArticleContent" value="Knowledge Base Article2 Content" />
@@ -641,7 +641,7 @@
 			<var name="pageName" value="Welcome" />
 		</execute>
 
-		<execute action="Home#open" locator1="${kbAricleFriendlyURL}" />
+		<execute function="#open" locator1="${kbAricleFriendlyURL}" />
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
 			<var name="kbArticleContent" value="Knowledge Base Article2 Content" />

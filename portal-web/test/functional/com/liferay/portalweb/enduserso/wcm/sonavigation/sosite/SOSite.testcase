@@ -40,7 +40,7 @@
 
 		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
 		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
-		<execute action="Dockbar#click" locator1="//a[@title='Back']" />
+		<execute function="#click" locator1="//a[@title='Back']" />
 
 		<execute action="SOSite#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
 		<execute action="SOSite#assertTextEquals" locator-key1="NAVIGATION_HOME" value1="Home" />

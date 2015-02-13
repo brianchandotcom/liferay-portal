@@ -32,7 +32,7 @@
 					<condition action="CPDocumentsandmedia#isElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_GENERIC" />
 					<then>
 						<execute action="CPDocumentsandmedia#check" locator-key1="TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
-						<execute action="CPDocumentsandmedia#pause" locator1="1000" />
+						<execute function="#pause" locator1="1000" />
 						<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
 						<execute action="CPDocumentsandmedia#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 						<execute action="CPDocumentsandmedia#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />

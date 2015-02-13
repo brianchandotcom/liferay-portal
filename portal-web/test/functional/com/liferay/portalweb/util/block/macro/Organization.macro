@@ -338,8 +338,8 @@
 
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_ASSIGN_ORGANIZATION_ROLES" value1="Assign Organization Roles" />
 
-		<execute action="CPUsersandorganizationsAssignuserroles#assertTextEquals" locator1="//tr[contains(.,'${roleName}')]/td[1]/a" value1="${roleName}" />
-		<execute action="CPUsersandorganizationsAssignuserroles#click" locator1="//tr[contains(.,'${roleName}')]/td[1]/a" value1="${roleName}" />
+		<execute function="#assertTextEquals" locator1="//tr[contains(.,'${roleName}')]/td[1]/a" value1="${roleName}" />
+		<execute function="#click" locator1="//tr[contains(.,'${roleName}')]/td[1]/a" value1="${roleName}" />
 
 		<execute action="CPUsersandorganizationsAssignuserrolesUser#assertClick" locator-key1="AVAILABLE" value1="Available" />
 		<execute action="CPUsersandorganizationsAssignuserrolesUser#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />

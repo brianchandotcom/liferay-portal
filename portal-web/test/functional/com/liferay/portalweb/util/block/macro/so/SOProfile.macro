@@ -208,7 +208,7 @@
 		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
 
 		<execute action="SOProfileAddProfilePicture#click" locator-key1="SAVE_BUTTON" />
-		<execute action="SOProfileAddProfilePicture#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<execute action="SOProfile#selectFrame" value1="relative=top" />
 
@@ -1055,7 +1055,7 @@
 		<execute macro="Page#openURL" />
 
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#assertClick" locator1="//span[contains(.,'${myProfileLocalized}')]" value1="${myProfileLocalized}" />
+		<execute function="#assertClick" locator1="//span[contains(.,'${myProfileLocalized}')]" value1="${myProfileLocalized}" />
 
 		<execute macro="SOUserBar#showEditControls" />
 

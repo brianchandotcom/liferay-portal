@@ -3323,7 +3323,7 @@
 
 		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertClick" locator-key1="DETAILS" value1="Details" />
 		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertClick" locator-key1="DETAILS_PARENT_SELECT_BUTTON" value1="Select" />
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertTextEquals" locator1="//div[contains(@class,'modal-header')]/h3" value1="Field Set" />
+		<execute function="#assertTextEquals" locator1="//div[contains(@class,'modal-header')]/h3" value1="Field Set" />
 	</command>
 
 	<command name="ViewNoUnpublishedWorkflowMessage" priority="3">

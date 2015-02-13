@@ -105,7 +105,7 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute action="Home#open" locator1="${url}${articleID}" />
+		<execute function="#open" locator1="${url}${articleID}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
 	</command>
@@ -115,7 +115,7 @@
 
 		<execute macro="Api#gotoPAuthURL" />
 
-		<execute action="Jsonwebservices#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="Jsonwebservices#assertElementNotPresent" locator-key1="SECURITY_TEST_PAGE_POPULATED" />
 	</command>
 
@@ -132,8 +132,8 @@
 	<command name="ValidateForwardURLPG" priority="4">
 		<property name="custom.properties" value="virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}" />
 
-		<execute action="Home#open" locator1="http://localhost:8080/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com" />
-		<execute action="Home#pause" locator1="3000" />
+		<execute function="#open" locator1="http://localhost:8080/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com" />
+		<execute function="#pause" locator1="3000" />
 
 		<var name="key_pageName" value="Welcome" />
 
@@ -146,7 +146,7 @@
 			<var name="pageName" value="Test" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080/html/common/forward_jsp.jsp?FORWARD_URL=http://localhost:8080/web/guest/test" />
+		<execute function="#open" locator1="http://localhost:8080/html/common/forward_jsp.jsp?FORWARD_URL=http://localhost:8080/web/guest/test" />
 
 		<var name="key_pageName" value="Test" />
 
@@ -178,25 +178,25 @@
 			]]>
 		</var>
 
-		<execute action="Home#open" locator1="${maliciousURL1}" />
+		<execute function="#open" locator1="${maliciousURL1}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 		<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_CONTENT" value1="The requested resource was not found." />
 		<execute action="Home#assertElementPresent" locator-key1="URL_ERROR_MESSAGE" />
 
-		<execute action="Home#open" locator1="${maliciousURL2}" />
+		<execute function="#open" locator1="${maliciousURL2}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 		<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_CONTENT" value1="The requested resource was not found." />
 		<execute action="Home#assertElementPresent" locator-key1="URL_ERROR_MESSAGE" />
 
-		<execute action="Home#open" locator1="${maliciousURL3}" />
+		<execute function="#open" locator1="${maliciousURL3}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 		<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_CONTENT" value1="The requested resource was not found." />
 		<execute action="Home#assertElementPresent" locator-key1="URL_ERROR_MESSAGE" />
 
-		<execute action="Home#open" locator1="${maliciousURL4}" />
+		<execute function="#open" locator1="${maliciousURL4}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 		<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_CONTENT" value1="The requested resource was not found." />
@@ -310,7 +310,7 @@
 	<command name="ViewJSONWSNoXSS" priority="5">
 		<var name="url" value="http://localhost:8080/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E" />
 
-		<execute action="Home#open" locator1="${url}" />
+		<execute function="#open" locator1="${url}" />
 		<execute action="Home#assertAlertNotPresent" />
 	</command>
 
@@ -321,7 +321,7 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute action="Home#open" locator1="${url}" />
+		<execute function="#open" locator1="${url}" />
 		<execute action="Home#assertAlertNotPresent" />
 
 		<execute action="Home#refresh" />
@@ -364,10 +364,10 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute action="Home#open" locator1="${url1}" />
+		<execute function="#open" locator1="${url1}" />
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 
-		<execute action="Home#open" locator1="${url2}" />
+		<execute function="#open" locator1="${url2}" />
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
 	</command>
 
@@ -469,10 +469,10 @@
 			]]>
 		</var>
 
-		<execute action="Home#open" locator1="${maliciousURL1}" />
+		<execute function="#open" locator1="${maliciousURL1}" />
 		<execute action="Home#assertAlertNotPresent" />
 
-		<execute action="Home#open" locator1="${maliciousURL2}" />
+		<execute function="#open" locator1="${maliciousURL2}" />
 		<execute action="Home#assertAlertNotPresent" />
 
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
@@ -480,13 +480,13 @@
 
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
 
-		<execute action="Home#open" locator1="${maliciousURL3}" />
+		<execute function="#open" locator1="${maliciousURL3}" />
 		<execute action="Home#assertAlertNotPresent" />
 
-		<execute action="Home#open" locator1="${maliciousURL4}" />
+		<execute function="#open" locator1="${maliciousURL4}" />
 		<execute action="Home#assertAlertNotPresent" />
 
-		<execute action="Home#open" locator1="${maliciousURL5}" />
+		<execute function="#open" locator1="${maliciousURL5}" />
 		<execute action="Home#assertAlertNotPresent" />
 	</command>
 

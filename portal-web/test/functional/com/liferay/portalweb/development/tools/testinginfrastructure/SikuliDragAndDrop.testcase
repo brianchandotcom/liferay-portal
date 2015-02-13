@@ -46,6 +46,6 @@
 
 		<execute action="SikuliDragAndDrop#sikuliDragAndDrop" locator-key1="CALENDAR_EVENT_IMAGE" value1="80,0" />
 
-		<execute action="CPSites#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 	</command>
 </definition>

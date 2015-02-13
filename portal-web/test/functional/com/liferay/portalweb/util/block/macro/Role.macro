@@ -225,7 +225,7 @@
 		<if>
 			<isset var="roleUser" />
 			<then>
-				<execute action="CPRoles#assertTextEquals" locator1="//tr[contains(.,'${roleName}') and contains(.,'${roleUser}')]/td[1]/a" value1="${roleUser}" />
+				<execute function="#assertTextEquals" locator1="//tr[contains(.,'${roleName}') and contains(.,'${roleUser}')]/td[1]/a" value1="${roleUser}" />
 				<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS" />
 			</then>
 			<else>

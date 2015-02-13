@@ -175,7 +175,7 @@
 		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
 
-		<execute action="Home#pause" locator1="3000" />
+		<execute function="#pause" locator1="3000" />
 
 		<execute action="PGBlogsAdd#click" locator-key1="SETTINGS_TAB" />
 

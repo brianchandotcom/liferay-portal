@@ -119,7 +119,7 @@
 				<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
 			</then>
 			<else>
-				<execute action="PGWebcontentdisplayEdittemplate#pause" locator1="2000" />
+				<execute function="#pause" locator1="2000" />
 				<execute action="PGWebcontentdisplayEdittemplate#sikuliClick" locator-key1="CLOSE_BUTTON_PNG" />
 
 				<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />

@@ -458,7 +458,7 @@
 		<execute action="SOMessages#check" locator-key1="MESSAGE_CHECKBOX" />
 		<execute action="SOMessages#assertClickNoError" locator-key1="MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
 		<execute action="SOMessages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to mark the selected messages as unread?" />
-		<execute action="SOMessages#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="SOMessages#assertElementPresent" locator-key1="MESSAGE_UNREAD" />
 	</command>
 
@@ -514,7 +514,7 @@
 
 		<execute action="SOMessagesMessage#assertClickNoError" locator-key1="MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
 		<execute action="SOMessagesMessage#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to mark the message as unread?" />
-		<execute action="SOMessages#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<var name="key_messageBody" value="${messageBody}" />
 
@@ -623,7 +623,7 @@
 		<execute action="SOMessages#check" locator-key1="SELECT_ALL_CHECKBOX" />
 		<execute action="SOMessages#assertClickNoError" locator-key1="MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
 		<execute action="SOMessages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to mark the selected messages as unread?" />
-		<execute action="SOMessages#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 
 		<var name="key_messageBody" value="${messageBody1}" />
 
@@ -3419,7 +3419,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -3966,7 +3966,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.2" />

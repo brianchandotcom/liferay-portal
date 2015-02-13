@@ -25,7 +25,7 @@
 		<execute action="TCat#sikuliUploadTCatFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD" value1="ROOT.war" />
 		<execute action="TCat#sikuliClick" locator-key1="NEW_ARTIFACT_ADD_BUTTON" />
 
-		<execute action="TCat#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 		<execute action="TCat#click" locator-key1="DEPLOYMENT_TAB" />
 		<execute action="TCat#click" locator-key1="NEW_DEPLOYMENT_BUTTON" />
 		<execute action="TCat#type" locator-key1="NEW_DEPLOYMENT_NAME_FIELD" value1="Liferay" />
@@ -38,6 +38,6 @@
 		<execute action="TCat#sikuliClick" locator-key1="TOMCAT_SERVER_OPTION" />
 		<execute action="TCat#click" locator-key1="SERVER_DEPLOY_BUTTON" />
 
-		<execute action="TCat#pause" locator1="160000" />
+		<execute function="#pause" locator1="160000" />
 	</command>
 </definition>

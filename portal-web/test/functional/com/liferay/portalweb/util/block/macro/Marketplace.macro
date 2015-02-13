@@ -52,7 +52,7 @@
 		<execute action="CPStore#click" locator-key1="PURCHASED_SEARCH_BUTTON" />
 		<execute action="CPStore#click" locator-key1="PURCHASED_INSTALL_BUTTON" />
 		<execute action="CPStore#selectFrame" value1="relative=top" />
-		<execute action="CPStore#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 	</command>
 
 	<command name="signIn">

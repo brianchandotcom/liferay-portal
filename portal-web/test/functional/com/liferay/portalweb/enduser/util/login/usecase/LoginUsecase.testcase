@@ -18,7 +18,7 @@
 
 		<execute action="PGLogin#assertElementNotPresent" locator-key1="SIGN_IN_BUTTON" />
 
-		<execute action="Home#pause" locator1="60000" />
+		<execute function="#pause" locator1="60000" />
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_EXPIRED_SESSION" value1="Warning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
 		<execute action="Home#refresh" />
 
@@ -30,7 +30,7 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute action="Home#pause" locator1="60000" />
+		<execute function="#pause" locator1="60000" />
 		<execute action="Home#assertElementNotPresent" locator-key1="ERROR_MESSAGE_EXPIRED_SESSION" />
 		<execute action="Home#refresh" />
 
@@ -45,7 +45,7 @@
 
 		<execute action="PGLogin#assertElementNotPresent" locator-key1="SIGN_IN_BUTTON" />
 
-		<execute action="Home#pause" locator1="60000" />
+		<execute function="#pause" locator1="60000" />
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_EXPIRED_SESSION" value1="Warning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
 		<execute action="Home#refresh" />
 

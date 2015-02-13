@@ -5,7 +5,7 @@
 		<execute action="PGReportsdisplayViewreportentry#assertTextEquals" locator-key1="ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
 		<execute action="PGReportsdisplayViewreportentry#assertClick" locator-key1="ENTRY_FILE_TABLE_ACTIONS" value1="Actions" />
 		<execute action="PGReportsdisplayViewreportentry#assertClick" locator-key1="ENTRY_FILE_MENULIST_DOWNLOAD" value1="Download" />
-		<execute action="PGReportsdisplayViewreportentry#pause" locator1="2000" />
+		<execute function="#pause" locator1="2000" />
 
 		<if>
 			<equals arg1="${reportFormat}" arg2="pdf" />

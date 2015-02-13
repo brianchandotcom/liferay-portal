@@ -176,7 +176,7 @@
 
 		<var name="key_siteName" value="Liferay" />
 
-		<execute action="SOUserBar#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="Liferay" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_ADD_SITE_BUTTON" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />

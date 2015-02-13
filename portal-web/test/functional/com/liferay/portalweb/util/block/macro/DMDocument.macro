@@ -337,7 +337,7 @@
 		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
 		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGAssetpublisher#selectFrame" locator1="relative=top" />
+		<execute function="#selectFrame" locator1="relative=top" />
 	</command>
 
 	<command name="addPGViaFlashUploader">
@@ -918,7 +918,7 @@
 
 		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGAssetpublisher#selectFrame" locator1="relative=top" />
+		<execute function="#selectFrame" locator1="relative=top" />
 	</command>
 
 	<command name="editPGViaMG">
@@ -1079,7 +1079,7 @@
 			</else>
 		</if>
 
-		<execute action="CPDocumentsandmediaMovedocument#selectFrame" locator1="relative=top" />
+		<execute function="#selectFrame" locator1="relative=top" />
 		<execute action="CPDocumentsandmediaMovedocument#assertTextEquals" locator-key1="NEW_FOLDER" value1="${dmFolderName}" />
 		<execute action="CPDocumentsandmediaMovedocument#assertClick" locator-key1="MOVE_BUTTON" value1="Move" />
 

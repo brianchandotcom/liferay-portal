@@ -33,7 +33,7 @@
 	</command>
 
 	<command name="addAbstractSmallImagePG">
-		<execute action="PGBlogsAdd#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 		<execute action="PGBlogsAdd#check" locator-key1="ABSTRACT_USE_SMALL_IMAGE_CHECKBOX" />
 
 		<if>
@@ -127,7 +127,7 @@
 		</if>
 
 		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="CPBlogsAdd#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="CPBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
@@ -160,7 +160,7 @@
 
 		<execute action="CPBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="CPBlogsAdd#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 		<execute action="CPBlogsAdd#assertTextEquals" locator-key1="SAVE_STATUS" value1="Draft saved at" />
 
 		<execute action="CPBlogsEdit#assertTextEquals" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
@@ -174,7 +174,7 @@
 
 		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="PGBlogsAdd#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 		<execute action="PGBlogsAdd#assertTextEquals" locator-key1="SAVE_STATUS" value1="Draft saved at" />
 
 		<execute action="PGBlogsEdit#assertTextEquals" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
@@ -280,7 +280,7 @@
 			</then>
 		</if>
 
-		<execute action="PGBlogsAdd#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<if>
@@ -378,7 +378,7 @@
 		<execute action="PGAssetpublisherAddnewblogsentry#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 		<execute action="PGAssetpublisherAddnewblogsentry#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
 		<execute action="PGAssetpublisherAddnewblogsentry#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGAssetpublisherAddnewblogsentry#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 		<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
 
 		<var name="key_assetTitle" value="${entryTitle}" />
@@ -518,7 +518,7 @@
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
-		<execute action="PGBlogsEntry#pause" locator1="3000" />
+		<execute function="#pause" locator1="3000" />
 		<execute action="PGBlogsEntry#copy" locator-key1="COMMENTS_TRACKBACK_URL" />
 
 		<if>
@@ -541,7 +541,7 @@
 		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle2}" />
 		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent2}" />
 		<execute action="PGBlogsAdd#paste" locator-key1="TRACKBACKS_TO_SEND_FIELD" />
-		<execute action="PGBlogsAdd#pause" locator1="3000" />
+		<execute function="#pause" locator1="3000" />
 		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 	</command>
 
@@ -560,7 +560,7 @@
 		</if>
 
 		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="CPBlogsAdd#pause" locator1="1000" />
+		<execute function="#pause" locator1="1000" />
 		<execute action="CPBlogsAdd#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
@@ -603,7 +603,7 @@
 		<execute action="PGAssetpublisherAddnewblogsentry#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 		<execute action="PGAssetpublisherAddnewblogsentry#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
 		<execute action="PGAssetpublisherAddnewblogsentry#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
-		<execute action="PGAssetpublisherAddnewblogsentry#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 
 		<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
 
@@ -1248,7 +1248,7 @@
 
 		<var name="friendlyURL" value="http://localhost:8080/web/guest/${pageNameURL}/-/blogs/${entryTitleURL}" />
 
-		<execute action="Home#open" locator1="${friendlyURL}" />
+		<execute function="#open" locator1="${friendlyURL}" />
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
@@ -1418,7 +1418,7 @@
 	</command>
 
 	<command name="viewRSS">
-		<execute action="Home#open" locator1="http://localhost:8080/web/guest/blogs-page/-/blogs/rss" />
+		<execute function="#open" locator1="http://localhost:8080/web/guest/blogs-page/-/blogs/rss" />
 
 		<execute action="PGBlogsRSS#assertTextEquals" locator-key1="FEED_TITLE" value1="Liferay" />
 		<execute action="PGBlogsRSS#assertTextEquals" locator-key1="FEED_SUBTITLE" value1="Liferay" />
@@ -1507,13 +1507,13 @@
 	</command>
 
 	<command name="viewViewCountPG">
-		<execute action="Home#click" locator1="link=${pageName}" />
+		<execute function="#click" locator1="link=${pageName}" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 
-		<execute action="Home#click" locator1="link=${pageName}" />
+		<execute function="#click" locator1="link=${pageName}" />
 
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 
@@ -1530,7 +1530,7 @@
 			</else>
 		</if>
 
-		<execute action="Home#click" locator1="link=${pageName}" />
+		<execute function="#click" locator1="link=${pageName}" />
 
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 

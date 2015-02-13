@@ -201,7 +201,7 @@
 			<var name="userFullName" value="Test Test" />
 		</execute>
 
-		<execute action="PGBlogsEntry#assertClick" locator1="//div[@class='lfr-discussion-message']/a" value1="Read More" />
+		<execute function="#assertClick" locator1="//div[@class='lfr-discussion-message']/a" value1="Read More" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="Blogs Entry2 Title" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="Blogs Entry2 Content" />
 
@@ -277,7 +277,7 @@
 		</execute>
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_TRACKBACK_URL" value1="http://www.able.com:8080/blogs-page/-/blogs/trackback/blogs-entry3-title" />
-		<execute action="PGBlogsEntry#assertClick" locator1="//div[@class='lfr-discussion-message']/a" value1="Read More" />
+		<execute function="#assertClick" locator1="//div[@class='lfr-discussion-message']/a" value1="Read More" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="Blogs Entry4 Title" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="Blogs Entry4 Content" />
 
@@ -334,7 +334,7 @@
 		</execute>
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_TRACKBACK_URL" value1="http://${ipAddress}:8080/web/guest/blogs-page/-/blogs/trackback/blogs-entry5-title" />
-		<execute action="PGBlogsEntry#assertClick" locator1="//div[@class='lfr-discussion-message']/a" value1="Read More" />
+		<execute function="#assertClick" locator1="//div[@class='lfr-discussion-message']/a" value1="Read More" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="Blogs Entry6 Title" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="Blogs Entry6 Content" />
 
@@ -900,7 +900,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute action="PGBlogs#pause" locator1="120000" />
+		<execute function="#pause" locator1="120000" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName2}" />

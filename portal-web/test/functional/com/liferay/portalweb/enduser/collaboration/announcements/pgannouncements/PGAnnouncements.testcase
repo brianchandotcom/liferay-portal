@@ -119,7 +119,7 @@
 		</execute>
 
 		<execute action="PGAnnouncements#assertTextNotPresent" value1="${entryTitle}" />
-		<execute action="PGAnnouncements#pause" locator1="120000" />
+		<execute function="#pause" locator1="120000" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

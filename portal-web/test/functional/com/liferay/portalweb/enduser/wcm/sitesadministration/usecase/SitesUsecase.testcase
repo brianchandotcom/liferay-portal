@@ -730,7 +730,7 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute action="Home#open" locator1="${siteGuestViewURL}" />
+		<execute function="#open" locator1="${siteGuestViewURL}" />
 
 		<var name="key_portletName" value="${portlet2Name}" />
 
@@ -796,7 +796,7 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute action="Home#open" locator1="${siteGuestViewURL}" />
+		<execute function="#open" locator1="${siteGuestViewURL}" />
 
 		<execute action="PGPollsdisplay#assertTextEquals" locator-key1="ERROR_MESSAGE_1_COLUMN_1" value1="You do not have the roles required to access this portlet." />
 		<execute action="PGPollsdisplay#assertTextEquals" locator-key1="ERROR_MESSAGE_1_COLUMN_2" value1="You do not have the roles required to access this portlet." />

@@ -316,7 +316,7 @@
 		</execute>
 
 		<execute action="Home#assertTextNotPresent" locator-key1="PAGE_2_GUEST_VIEW" value1="New Page Name" />
-		<execute action="Home#pause" locator1="120000" />
+		<execute function="#pause" locator1="120000" />
 
 		<execute macro="Page#gotoPG">
 			<var name="nodePort" value="9080" />

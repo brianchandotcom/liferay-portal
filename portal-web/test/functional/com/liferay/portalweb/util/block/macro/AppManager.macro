@@ -12,7 +12,7 @@
 		<execute action="CPAppmanager#assertClick" locator-key1="APP_ACTIONS" value1="Actions" />
 		<execute action="CPAppmanager#assertClickNoError" locator-key1="APP_ACTIONS_MENULIST_UNINSTALL" value1="Uninstall" />
 		<execute action="CPAppmanager#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to uninstall this?" />
-		<execute action="CPAppmanager#pause" locator1="15000" />
+		<execute function="#pause" locator1="15000" />
 	</command>
 
 	<command name="viewAppCP">

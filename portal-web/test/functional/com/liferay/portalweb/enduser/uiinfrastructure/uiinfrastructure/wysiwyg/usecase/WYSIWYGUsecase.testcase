@@ -115,7 +115,7 @@
 
 		<execute action="CKEditor#assertTextEquals" locator-key1="TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
 		<execute action="CKEditor#assertTextEquals" locator-key1="TOOLBAR_SIZE_BUTTON_PORTLET" value1="Size" />
-		<execute action="CKEditor#assertElementPresent" locator1="" value1="//script[contains(@src,'/html/js/editor/ckeditor/plugins/bbcode/bbcode_parser.js')]" />
+		<execute function="#assertElementPresent" locator1="" value1="//script[contains(@src,'/html/js/editor/ckeditor/plugins/bbcode/bbcode_parser.js')]" />
 		<execute action="CKEditor#assertClick" locator-key1="TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
 		<execute action="CKEditor#selectFrame" locator-key1="TOOLBAR_FORMAT_IFRAME" />
 

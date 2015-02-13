@@ -509,9 +509,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="SOBlogs#assertTextEquals" locator1="//span[contains(@class,'portlet-title-text') and contains(.,'Blogs')]" value1="Blogs" />
-		<execute action="SOBlogs#assertTextEquals" locator1="//span[contains(@class,'portlet-title-text') and contains(.,'Recent Bloggers')]" value1="Recent Bloggers" />
-		<execute action="SOBlogs#assertTextEquals" locator1="//div[@class='portlet-body' and contains(.,'There are no recent bloggers.')]" value1="There are no recent bloggers." />
+		<execute function="#assertTextEquals" locator1="//span[contains(@class,'portlet-title-text') and contains(.,'Blogs')]" value1="Blogs" />
+		<execute function="#assertTextEquals" locator1="//span[contains(@class,'portlet-title-text') and contains(.,'Recent Bloggers')]" value1="Recent Bloggers" />
+		<execute function="#assertTextEquals" locator1="//div[@class='portlet-body' and contains(.,'There are no recent bloggers.')]" value1="There are no recent bloggers." />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />

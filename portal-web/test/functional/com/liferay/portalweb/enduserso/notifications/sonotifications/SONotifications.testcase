@@ -4513,7 +4513,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" property-value="email.address.3" />
@@ -4550,7 +4550,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="#pause" locator1="30000" />
 
 		<execute macro="Gmail#logoutAndLogin">
 			<var name="userEmailAddress" property-value="email.address.2" />
@@ -5671,7 +5671,7 @@
 
 		<execute macro="SOUserBar#viewNoNotifications" />
 
-		<execute action="SODashboard#pause" locator1="180000" />
+		<execute function="#pause" locator1="180000" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -5762,7 +5762,7 @@
 
 		<execute macro="SOUserBar#viewNoNotifications" />
 
-		<execute action="SODashboard#pause" locator1="180000" />
+		<execute function="#pause" locator1="180000" />
 
 		<execute macro="SOAnnouncementsEntry#viewNotificationPG">
 			<var name="entryAuthor" value="${adminName}" />

@@ -92,7 +92,7 @@
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
-		<execute action="Home#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 		<execute action="Home#assertLocation" value1="${spURL}" />
 	</command>
 
@@ -106,7 +106,7 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute action="Home#pause" locator1="5000" />
+		<execute function="#pause" locator1="5000" />
 		<execute action="Home#assertLocation" value1="${spURL}" />
 	</command>
 </definition>

@@ -194,8 +194,8 @@
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsViewusers#close" locator1="title=Welcome - Liferay" />
-		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Users and Organizations - Liferay" />
+		<execute function="#close" locator1="title=Welcome - Liferay" />
+		<execute function="#selectWindow" locator1="title=Users and Organizations - Liferay" />
 
 		<execute macro="Page#gotoCP" />
 
@@ -238,8 +238,8 @@
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsViewusers#close" locator1="title=Welcome - Liferay" />
-		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Users and Organizations - Liferay" />
+		<execute function="#close" locator1="title=Welcome - Liferay" />
+		<execute function="#selectWindow" locator1="title=Users and Organizations - Liferay" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -249,8 +249,8 @@
 			<var name="userScreenName" value="usersn3" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsViewusers#close" locator1="title=Welcome - Liferay" />
-		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Users and Organizations - Liferay" />
+		<execute function="#close" locator1="title=Welcome - Liferay" />
+		<execute function="#selectWindow" locator1="title=Users and Organizations - Liferay" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -260,8 +260,8 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsViewusers#close" locator1="title=Welcome - Liferay" />
-		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Users and Organizations - Liferay" />
+		<execute function="#close" locator1="title=Welcome - Liferay" />
+		<execute function="#selectWindow" locator1="title=Users and Organizations - Liferay" />
 	</command>
 
 	<command name="MultipleUsersandOrganizations" priority="4">

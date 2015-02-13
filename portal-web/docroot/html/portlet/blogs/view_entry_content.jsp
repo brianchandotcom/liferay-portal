@@ -224,67 +224,81 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 			</div>
 
 			<div class="entry-footer">
-				<div class="entry-author icon-user">
-					<liferay-ui:message key="written-by" /> <%= HtmlUtil.escape(PortalUtil.getUserName(entry)) %>
+				<div class="entry-author">
+					<liferay-ui:user-display
+						userId="<%= entry.getUserId() %>"
+						userName="<%= entry.getUserName() %>"
+					>
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+					</liferay-ui:user-display>
 				</div>
 
-				<div class="stats">
-					<c:if test="<%= assetEntry != null %>">
-						<span class="view-count">
-							<c:choose>
-								<c:when test="<%= assetEntry.getViewCount() == 1 %>">
-									<%= assetEntry.getViewCount() %> <liferay-ui:message key="view" />,
-								</c:when>
-								<c:when test="<%= assetEntry.getViewCount() > 1 %>">
-									<%= assetEntry.getViewCount() %> <liferay-ui:message key="views" />,
-								</c:when>
-							</c:choose>
-						</span>
+				<div class="entry-social">
+					<c:if test="<%= blogsPortletInstanceSettings.isEnableRatings() %>">
+						<div class="ratings">
+							<liferay-ui:ratings
+								className="<%= BlogsEntry.class.getName() %>"
+								classPK="<%= entry.getEntryId() %>"
+							/>
+						</div>
 					</c:if>
 
-					<c:if test="<%= blogsPortletInstanceSettings.isEnableComments() %>">
-						<span class="comments">
+					<c:if test="<%= blogsPortletInstanceSettings.isEnableFlags() %>">
+						<div class="flags">
+							<liferay-ui:flags
+								className="<%= BlogsEntry.class.getName() %>"
+								classPK="<%= entry.getEntryId() %>"
+								contentTitle="<%= entry.getTitle() %>"
+								reportedUserId="<%= entry.getUserId() %>"
+							/>
+						</div>
+					</c:if>
 
-							<%
-							int commentsCount = BlogsUtil.getCommentsCount(entry);
-							%>
-
-							<c:choose>
-								<c:when test='<%= strutsAction.equals("/blogs/view_entry") %>'>
-									<%= commentsCount %> <liferay-ui:message key='<%= (commentsCount == 1) ? "comment" : "comments" %>' />
-								</c:when>
-								<c:otherwise>
-									<aui:a href='<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + StringPool.POUND + "blogsCommentsPanelContainer" %>'><%= commentsCount %> <liferay-ui:message key='<%= (commentsCount == 1) ? "comment" : "comments" %>' /></aui:a>
-								</c:otherwise>
-							</c:choose>
-						</span>
+					<c:if test='<%= blogsPortletInstanceSettings.isEnableSocialBookmarks() && blogsPortletInstanceSettings.getSocialBookmarksDisplayPosition().equals("bottom") %>'>
+						<div class="social-bookmarks">
+							<liferay-ui:social-bookmarks
+								contentId="<%= String.valueOf(entry.getEntryId()) %>"
+								displayStyle="<%= blogsPortletInstanceSettings.getSocialBookmarksDisplayStyle() %>"
+								target="_blank"
+								title="<%= entry.getTitle() %>"
+								types="<%= blogsPortletInstanceSettings.getSocialBookmarksTypes() %>"
+								url="<%= PortalUtil.getCanonicalURL(bookmarkURL.toString(), themeDisplay, layout) %>"
+							/>
+						</div>
 					</c:if>
 				</div>
+			</div>
 
-				<c:if test="<%= blogsPortletInstanceSettings.isEnableFlags() %>">
-					<liferay-ui:flags
-						className="<%= BlogsEntry.class.getName() %>"
-						classPK="<%= entry.getEntryId() %>"
-						contentTitle="<%= entry.getTitle() %>"
-						reportedUserId="<%= entry.getUserId() %>"
-					/>
-				</c:if>
+			<div class="entry-metadata">
+				<liferay-ui:asset-categories-available
+					className="<%= BlogsEntry.class.getName() %>"
+					classPK="<%= entry.getEntryId() %>"
+				>
+					<h2><liferay-ui:message key="categories" /></h2>
 
-				<span class="entry-categories">
-					<liferay-ui:asset-categories-summary
-						className="<%= BlogsEntry.class.getName() %>"
-						classPK="<%= entry.getEntryId() %>"
-						portletURL="<%= renderResponse.createRenderURL() %>"
-					/>
-				</span>
+					<div class="entry-categories">
+						<liferay-ui:asset-categories-summary
+							className="<%= BlogsEntry.class.getName() %>"
+							classPK="<%= entry.getEntryId() %>"
+							portletURL="<%= renderResponse.createRenderURL() %>"
+						/>
+					</div>
+				</liferay-ui:asset-categories-available>
 
-				<span class="entry-tags">
-					<liferay-ui:asset-tags-summary
-						className="<%= BlogsEntry.class.getName() %>"
-						classPK="<%= entry.getEntryId() %>"
-						portletURL="<%= renderResponse.createRenderURL() %>"
-					/>
-				</span>
+				<liferay-ui:asset-tags-available
+					className="<%= BlogsEntry.class.getName() %>"
+					classPK="<%= entry.getEntryId() %>"
+				>
+					<div class="entry-tags">
+						<h2><liferay-ui:message key="tags" /></h2>
+
+						<liferay-ui:asset-tags-summary
+							className="<%= BlogsEntry.class.getName() %>"
+							classPK="<%= entry.getEntryId() %>"
+							portletURL="<%= renderResponse.createRenderURL() %>"
+						/>
+					</div>
+				</liferay-ui:asset-tags-available>
 
 				<c:if test='<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) || strutsAction.equals("/blogs/view_entry") %>'>
 					<c:if test="<%= blogsPortletInstanceSettings.isEnableRelatedAssets() %>">
@@ -295,24 +309,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 								classPK="<%= entry.getEntryId() %>"
 							/>
 						</div>
-					</c:if>
-
-					<c:if test="<%= blogsPortletInstanceSettings.isEnableRatings() %>">
-						<liferay-ui:ratings
-							className="<%= BlogsEntry.class.getName() %>"
-							classPK="<%= entry.getEntryId() %>"
-						/>
-					</c:if>
-
-					<c:if test='<%= blogsPortletInstanceSettings.isEnableSocialBookmarks() && blogsPortletInstanceSettings.getSocialBookmarksDisplayPosition().equals("bottom") %>'>
-						<liferay-ui:social-bookmarks
-							contentId="<%= String.valueOf(entry.getEntryId()) %>"
-							displayStyle="<%= blogsPortletInstanceSettings.getSocialBookmarksDisplayStyle() %>"
-							target="_blank"
-							title="<%= entry.getTitle() %>"
-							types="<%= blogsPortletInstanceSettings.getSocialBookmarksTypes() %>"
-							url="<%= PortalUtil.getCanonicalURL(bookmarkURL.toString(), themeDisplay, layout) %>"
-						/>
 					</c:if>
 				</c:if>
 			</div>

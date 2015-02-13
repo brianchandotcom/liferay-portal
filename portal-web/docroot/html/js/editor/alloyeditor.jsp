@@ -130,8 +130,8 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	<c:choose>
 		<c:when test="<%= showSource %>">
 			<div class="alloy-editor-switch">
-				<button class="btn btn-default btn-xs hide icon-fullscreen" id="<%= name %>Fullscreen" type="button">
-				</button>
+				<button class="btn btn-default btn-xs hide icon-fullscreen" id="<%= name %>Fullscreen" type="button"></button>
+
 				<button class="btn btn-default btn-xs" id="<%= name %>Switch" type="button">
 					&lt;&#47;&gt;
 				</button>
@@ -160,6 +160,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 </div>
 
 <aui:script use="aui-base,alloy-editor,liferay-editor-image-uploader">
+
 	<%
 	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
 
@@ -324,8 +325,9 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 			var editorWrapper = A.one('#<%= name %>Wrapper');
 			var editorSwitch = A.one('#<%= name %>Switch');
-			var editorSwitchContainer = editorSwitch.ancestor();
 			var editorFullscreen = A.one('#<%= name %>Fullscreen');
+
+			var editorSwitchContainer = editorSwitch.ancestor();
 
 			var toggleEditorModeUI = function() {
 				editorWrapper.toggleClass(CSS_SHOW_SOURCE);
@@ -388,6 +390,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 				function(event) {
 					if (fullScreenDialog) {
 						fullScreenEditor.set('value', window['<%= name %>'].getHTML());
+
 						fullScreenDialog.show();
 					}
 					else {

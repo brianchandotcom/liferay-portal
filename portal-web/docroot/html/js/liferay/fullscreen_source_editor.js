@@ -104,10 +104,10 @@ AUI.add(
 
 						var boundingBox = instance.get(STR_BOUNDING_BOX);
 
-						var onChangeFn = A.debounce('_onEditorChange', instance.get('previewDelay'), instance);
+						var onChangeTask = A.debounce('_onEditorChange', instance.get('previewDelay'), instance);
 
 						instance._eventHandles = [
-							instance._editor.on('change', onChangeFn),
+							instance._editor.on('change', onChangeTask),
 							instance.on('layoutChange', instance._onLayoutChange),
 							instance.on('valueChange', instance._onValueChange),
 							boundingBox.one(STR_DOT + instance.getClassName('header')).delegate(STR_CLICK, instance._onLayoutClick, '[data-layout]', instance),

@@ -1117,10 +1117,8 @@ body.yui3-skin-sam .yui3-widget-mask {
 	}
 }
 
-.lfr-source-editor-fullscreen {
-	.lfr-source-editor {
-		border-width: 0;
-	}
+.lfr-source-editor-fullscreen .lfr-source-editor {
+	border-width: 0;
 }
 
 /* ---------- Alloy editor ---------- */

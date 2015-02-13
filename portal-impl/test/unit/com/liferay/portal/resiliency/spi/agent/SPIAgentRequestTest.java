@@ -41,6 +41,7 @@ import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.resiliency.spi.agent.SPIAgentRequest.AgentHttpServletRequestWrapper;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
+import com.liferay.portal.util.CookieImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
@@ -440,6 +441,9 @@ public class SPIAgentRequestTest {
 
 	@Test
 	public void testContentTypeIsNull() throws Exception {
+		CookieUtil cookieUtil = new CookieUtil();
+
+		cookieUtil.setCookie(new CookieImpl());
 
 		// Captured session attributes
 

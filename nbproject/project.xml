@@ -401,6 +401,7 @@
 				<classpath mode="compile">lib/portal/freshcookies-security.jar</classpath>
 				<classpath mode="compile">lib/portal/gif89.jar</classpath>
 				<classpath mode="compile">lib/portal/groovy.jar</classpath>
+				<classpath mode="compile">lib/portal/guava.jar</classpath>
 				<classpath mode="compile">lib/portal/hessian.jar</classpath>
 				<classpath mode="compile">lib/portal/hibernate-commons-annotations</classpath>
 				<classpath mode="compile">lib/portal/hibernate-core.jar</classpath>

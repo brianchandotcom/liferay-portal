@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.wiki.settings.provider;
+package com.liferay.wiki.configuration.impl;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.wiki.settings.WikiConfiguration;
+import com.liferay.wiki.configuration.WikiConfiguration;
 
 import java.util.Map;
 

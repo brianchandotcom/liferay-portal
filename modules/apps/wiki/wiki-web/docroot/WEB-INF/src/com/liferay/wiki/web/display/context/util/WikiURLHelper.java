@@ -16,8 +16,8 @@ package com.liferay.wiki.web.display.context.util;
 
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.wiki.configuration.WikiConfiguration;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.settings.WikiConfiguration;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;

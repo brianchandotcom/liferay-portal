@@ -16,7 +16,7 @@ package com.liferay.wiki.web.settings;
 
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
 import com.liferay.portal.kernel.settings.SettingsProvider;
-import com.liferay.wiki.settings.WikiConfiguration;
+import com.liferay.wiki.configuration.WikiConfiguration;
 import com.liferay.wiki.settings.WikiPortletInstanceSettings;
 import com.liferay.wiki.settings.WikiSettings;
 

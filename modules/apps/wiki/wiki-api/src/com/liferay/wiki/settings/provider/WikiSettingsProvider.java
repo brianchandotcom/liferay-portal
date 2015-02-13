@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsProvider;
+import com.liferay.wiki.configuration.WikiConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
-import com.liferay.wiki.settings.WikiConfiguration;
 import com.liferay.wiki.settings.WikiSettings;
 
 import java.util.Map;

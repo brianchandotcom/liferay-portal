@@ -518,12 +518,15 @@
 
 	<target name="build-css" depends="build-themes">
 		<property name="sass.tmp.dir" value="${basedir}/sass_tmp_dir" />
+		<path id="web-lib.classpath">
+			<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
+		</path>
 
 		<mkdir dir="${sass.tmp.dir}" />
 
 		<java
 			classname="com.liferay.portal.tools.SassToCssBuilder"
-			classpathref="project.classpath"
+			classpathref="web.classpath"
 			fork="true"
 			newenvironment="true"
 			outputproperty="build-css.output"

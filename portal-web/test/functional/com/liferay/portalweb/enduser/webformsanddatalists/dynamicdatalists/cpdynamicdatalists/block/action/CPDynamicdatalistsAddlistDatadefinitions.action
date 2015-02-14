@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertClick">
-		<case comparator="startsWith" locator-key1="DATA_DEFINITION_TABLE_CHOOSE_BUTTON_">
-			<execute function="AssertClick#assertTextClick" />
-		</case>
-	</command>
-</definition>

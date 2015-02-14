@@ -101,18 +101,18 @@
 			<var name="siteScopeName" value="Test Test" />
 		</execute>
 
-		<execute action="Home#assertElementNotPresent" locator-key1="SITE_ADMINISTRATION_CONFIGURATION_SITE_SETTINGS" value1="Site Settings" />
+		<execute function="AssertElementNotPresent" locator1="Home#SITE_ADMINISTRATION_CONFIGURATION_SITE_SETTINGS" value1="Site Settings" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 		</execute>
 
-		<execute action="Home#click" locator-key1="SCOPE_SELECTOR" />
+		<execute function="Click" locator1="Home#SCOPE_SELECTOR" />
 
 		<var name="key_siteScopeName" value="Test Test" />
 
-		<execute action="Home#click" locator-key1="SCOPE_SELECTOR_MENULIST_ITEM" />
-		<execute action="Home#assertElementNotPresent" locator-key1="SITE_ADMINISTRATION_CONFIGURATION_SITE_SETTINGS" value1="Site Settings" />
+		<execute function="Click" locator1="Home#SCOPE_SELECTOR_MENULIST_ITEM" />
+		<execute function="AssertElementNotPresent" locator1="Home#SITE_ADMINISTRATION_CONFIGURATION_SITE_SETTINGS" value1="Site Settings" />
 	</command>
 
 	<command known-issues="LPS-48176" name="ImpersonatingAdministratorandOwner" priority="5">
@@ -194,8 +194,8 @@
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsViewusers#close" locator1="title=Welcome - Liferay" />
-		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Users and Organizations - Liferay" />
+		<execute function="Close" locator1="title=Welcome - Liferay" />
+		<execute function="SelectWindow" locator1="title=Users and Organizations - Liferay" />
 
 		<execute macro="Page#gotoCP" />
 
@@ -238,8 +238,8 @@
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsViewusers#close" locator1="title=Welcome - Liferay" />
-		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Users and Organizations - Liferay" />
+		<execute function="Close" locator1="title=Welcome - Liferay" />
+		<execute function="SelectWindow" locator1="title=Users and Organizations - Liferay" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -249,8 +249,8 @@
 			<var name="userScreenName" value="usersn3" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsViewusers#close" locator1="title=Welcome - Liferay" />
-		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Users and Organizations - Liferay" />
+		<execute function="Close" locator1="title=Welcome - Liferay" />
+		<execute function="SelectWindow" locator1="title=Users and Organizations - Liferay" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -260,8 +260,8 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsViewusers#close" locator1="title=Welcome - Liferay" />
-		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Users and Organizations - Liferay" />
+		<execute function="Close" locator1="title=Welcome - Liferay" />
+		<execute function="SelectWindow" locator1="title=Users and Organizations - Liferay" />
 	</command>
 
 	<command name="MultipleUsersandOrganizations" priority="4">
@@ -402,7 +402,7 @@
 		<for list="${userScreenNameList}" param="userScreenName">
 			<var name="key_userScreenName" value="${userScreenName}" />
 
-			<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+			<execute function="AssertTextEquals" locator1="CPUsersandorganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		</for>
 
 		<execute macro="Page#gotoCP">
@@ -445,44 +445,44 @@
 		<for list="usersn2,usersn4" param="userScreenName">
 			<var name="key_userScreenName" value="${userScreenName}" />
 
-			<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+			<execute function="AssertTextEquals" locator1="CPUsersandorganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		</for>
 
 		<for list="usersn1,usersn3,usersn5" param="userScreenName">
 			<var name="key_userScreenName" value="${userScreenName}" />
 
-			<execute action="CPUsersandorganizations#assertTextNotPresent" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+			<execute function="AssertTextNotPresent" locator1="CPUsersandorganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		</for>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<execute action="CPSites#assertTextNotPresent" value1="Organization Name 1" />
+		<execute function="AssertTextNotPresent" value1="Organization Name 1" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
 
 		<execute macro="Page#gotoPagesCP">
 			<var name="portletName" value="Site Pages" />
 		</execute>
 
-		<execute action="Home#click" locator-key1="SCOPE_SELECTOR" />
+		<execute function="Click" locator1="Home#SCOPE_SELECTOR" />
 
 		<var name="key_siteScopeName" value="Organization Name 1" />
 
-		<execute action="Home#assertTextNotPresent" locator-key1="SCOPE_SELECTOR_MENULIST_ITEM" value1="${siteScopeName}" />
+		<execute function="AssertTextNotPresent" locator1="Home#SCOPE_SELECTOR_MENULIST_ITEM" value1="${siteScopeName}" />
 
 		<var name="key_siteScopeName" value="${siteName}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="SCOPE_SELECTOR_MENULIST_ITEM" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="Home#SCOPE_SELECTOR_MENULIST_ITEM" value1="${siteName}" />
 
 		<execute macro="Page#openURL" />
 
-		<execute action="Dockbar#assertClick" locator-key1="MY_SITES" value1="My Sites" />
-		<execute action="Dockbar#assertTextNotPresent" locator-key1="MY_SITES_SITE_NAME" value1="Organization Name 1" />
-		<execute action="Dockbar#assertTextNotPresent" locator-key1="MY_SITES_SITE_NAME" value1="Organization Name 2" />
+		<execute function="AssertClick" locator1="Dockbar#MY_SITES" value1="My Sites" />
+		<execute function="AssertTextNotPresent" locator1="Dockbar#MY_SITES_SITE_NAME" value1="Organization Name 1" />
+		<execute function="AssertTextNotPresent" locator1="Dockbar#MY_SITES_SITE_NAME" value1="Organization Name 2" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -495,30 +495,30 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute action="Dockbar#assertClick" locator-key1="MY_SITES" value1="My Sites" />
-		<execute action="Dockbar#assertTextNotPresent" locator-key1="MY_SITES_SITE_NAME" value1="Organization Name 1" />
-		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Organization Name 2" />
+		<execute function="AssertClick" locator1="Dockbar#MY_SITES" value1="My Sites" />
+		<execute function="AssertTextNotPresent" locator1="Dockbar#MY_SITES_SITE_NAME" value1="Organization Name 1" />
+		<execute function="AssertTextPresent" locator1="Dockbar#MY_SITES_SITE_NAME" value1="Organization Name 2" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="Dockbar#assertClick" locator-key1="MY_SITES_PUBLIC_SITE" value1="${siteName}" />
+		<execute function="AssertClick" locator1="Dockbar#MY_SITES_PUBLIC_SITE" value1="${siteName}" />
 
-		<execute action="Home#click" locator-key1="PAGE_NAVIGATION_BAR" />
-		<execute action="Home#assertTextEquals" locator-key1="PAGE_TEMPLATE_1" value1="Home" />
-		<execute action="Home#assertTextEquals" locator-key1="PAGE_TEMPLATE_2" value1="Wiki" />
+		<execute function="Click" locator1="Home#PAGE_NAVIGATION_BAR" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE_1" value1="Home" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE_2" value1="Wiki" />
 
 		<for list="Message Boards,User Statistics,Upcoming Events" param="portletTitleName">
 			<var name="key_portletTitleName" value="${portletTitleName}" />
 
-			<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_TITLE" value1="${portletTitleName}" />
+			<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_TITLE" value1="${portletTitleName}" />
 		</for>
 
-		<execute action="Home#assertClick" locator-key1="PAGE_TEMPLATE_2" value1="Wiki" />
+		<execute function="AssertClick" locator1="Home#PAGE_TEMPLATE_2" value1="Wiki" />
 
 		<for list="Wiki,Categories Navigation,Tag Cloud" param="portletTitleName">
 			<var name="key_portletTitleName" value="${portletTitleName}" />
 
-			<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_TITLE" value1="${portletTitleName}" />
+			<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_TITLE" value1="${portletTitleName}" />
 		</for>
 
 		<execute macro="Page#gotoCP">
@@ -768,16 +768,16 @@
 			<var name="siteName" value="Site Name I" />
 		</execute>
 
-		<execute action="Dockbar#assertClick" locator-key1="MY_SITES" value1="My Sites" />
-		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Site Name A" />
-		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Site Name B" />
-		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Site Name C" />
-		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Site Name D" />
-		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Site Name E" />
-		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Site Name F" />
-		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Site Name G" />
-		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Site Name H" />
-		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Site Name I" />
+		<execute function="AssertClick" locator1="Dockbar#MY_SITES" value1="My Sites" />
+		<execute function="AssertTextPresent" locator1="Dockbar#MY_SITES_SITE_NAME" value1="Site Name A" />
+		<execute function="AssertTextPresent" locator1="Dockbar#MY_SITES_SITE_NAME" value1="Site Name B" />
+		<execute function="AssertTextPresent" locator1="Dockbar#MY_SITES_SITE_NAME" value1="Site Name C" />
+		<execute function="AssertTextPresent" locator1="Dockbar#MY_SITES_SITE_NAME" value1="Site Name D" />
+		<execute function="AssertTextPresent" locator1="Dockbar#MY_SITES_SITE_NAME" value1="Site Name E" />
+		<execute function="AssertTextPresent" locator1="Dockbar#MY_SITES_SITE_NAME" value1="Site Name F" />
+		<execute function="AssertTextPresent" locator1="Dockbar#MY_SITES_SITE_NAME" value1="Site Name G" />
+		<execute function="AssertTextPresent" locator1="Dockbar#MY_SITES_SITE_NAME" value1="Site Name H" />
+		<execute function="AssertTextPresent" locator1="Dockbar#MY_SITES_SITE_NAME" value1="Site Name I" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -799,8 +799,8 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute action="Dockbar#assertClick" locator-key1="MY_SITES" value1="My Sites" />
-		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Site Name I" />
+		<execute function="AssertClick" locator1="Dockbar#MY_SITES" value1="My Sites" />
+		<execute function="AssertTextPresent" locator1="Dockbar#MY_SITES_SITE_NAME" value1="Site Name I" />
 	</command>
 
 	<command name="OrganizationSiteDefaultUserAssociations" priority="3">
@@ -975,26 +975,26 @@
 			<var name="portletName" value="Password Policies" />
 		</execute>
 
-		<execute action="CPPasswordpolicies#click" locator-key1="DEFAULT_PASSWORD_POLICY_TABLE_ACTIONS_BUTTON" />
-		<execute action="CPPasswordpolicies#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
+		<execute function="Click" locator1="CPPasswordpolicies#DEFAULT_PASSWORD_POLICY_TABLE_ACTIONS_BUTTON" />
+		<execute function="AssertClick" locator1="CPPasswordpolicies#ACTIONS_MENULIST_EDIT" value1="Edit" />
 
-		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#check" locator-key1="SYNTAX_CHECKING_ENABLED_CHECKBOX" />
-		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#uncheck" locator-key1="ALLOW_DICTIONARY_WORDS_CHECKBOX" />
-		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="MINIMUM_ALPHA_NUMERIC_FIELD" value1="0" />
-		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="MINIMUM_LENGTH_FIELD" value1="0" />
-		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="MINIMUM_LOWER_CASE_FIELD" value1="0" />
-		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="MINIMUM_NUMBERS_FIELD" value1="0" />
-		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="MINIMUM_SYMBOLS_FIELD" value1="0" />
-		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="MINIMUM_UPPER_CASE_FIELD" value1="0" />
+		<execute function="Check" locator1="CPPasswordpoliciesDefaultpasswordpolicy#SYNTAX_CHECKING_ENABLED_CHECKBOX" />
+		<execute function="Uncheck" locator1="CPPasswordpoliciesDefaultpasswordpolicy#ALLOW_DICTIONARY_WORDS_CHECKBOX" />
+		<execute function="Type" locator1="CPPasswordpoliciesDefaultpasswordpolicy#MINIMUM_ALPHA_NUMERIC_FIELD" value1="0" />
+		<execute function="Type" locator1="CPPasswordpoliciesDefaultpasswordpolicy#MINIMUM_LENGTH_FIELD" value1="0" />
+		<execute function="Type" locator1="CPPasswordpoliciesDefaultpasswordpolicy#MINIMUM_LOWER_CASE_FIELD" value1="0" />
+		<execute function="Type" locator1="CPPasswordpoliciesDefaultpasswordpolicy#MINIMUM_NUMBERS_FIELD" value1="0" />
+		<execute function="Type" locator1="CPPasswordpoliciesDefaultpasswordpolicy#MINIMUM_SYMBOLS_FIELD" value1="0" />
+		<execute function="Type" locator1="CPPasswordpoliciesDefaultpasswordpolicy#MINIMUM_UPPER_CASE_FIELD" value1="0" />
 
 		<var name="atLeastFourCharNoNumbers">
 			<![CDATA[(?=.{4})(?:[a-zA-Z]*)
 			]]>
 		</var>
 
-		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="REGULAR_EXPRESSION_FIELD" value1="${atLeastFourCharNoNumbers}" /> -->
+		<execute function="Type" locator1="CPPasswordpoliciesDefaultpasswordpolicy#REGULAR_EXPRESSION_FIELD" value1="${atLeastFourCharNoNumbers}" /> -->
 
-		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="CPPasswordpoliciesDefaultpasswordpolicy#SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -1021,16 +1021,16 @@
 			<var name="portletName" value="Password Policies" />
 		</execute>
 
-		<execute action="CPPasswordpolicies#click" locator-key1="DEFAULT_PASSWORD_POLICY_TABLE_ACTIONS_BUTTON" />
-		<execute action="CPPasswordpolicies#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
+		<execute function="Click" locator1="CPPasswordpolicies#DEFAULT_PASSWORD_POLICY_TABLE_ACTIONS_BUTTON" />
+		<execute function="AssertClick" locator1="CPPasswordpolicies#ACTIONS_MENULIST_EDIT" value1="Edit" />
 
 		<var name="atLeastSixCharNumbersPermitted">
 			<![CDATA[(?=.{6})(?:[a-zA-Z0-9]*)
 			]]>
 		</var>
 
-		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="REGULAR_EXPRESSION_FIELD" value1="${atLeastSixCharNumbersPermitted}" />
-		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="CPPasswordpoliciesDefaultpasswordpolicy#REGULAR_EXPRESSION_FIELD" value1="${atLeastSixCharNumbersPermitted}" />
+		<execute function="AssertClick" locator1="CPPasswordpoliciesDefaultpasswordpolicy#SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -1068,11 +1068,11 @@
 			<var name="portletName" value="Password Policies" />
 		</execute>
 
-		<execute action="CPPasswordpolicies#click" locator-key1="DEFAULT_PASSWORD_POLICY_TABLE_ACTIONS_BUTTON" />
-		<execute action="CPPasswordpolicies#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
+		<execute function="Click" locator1="CPPasswordpolicies#DEFAULT_PASSWORD_POLICY_TABLE_ACTIONS_BUTTON" />
+		<execute function="AssertClick" locator1="CPPasswordpolicies#ACTIONS_MENULIST_EDIT" value1="Edit" />
 
-		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="MINIMUM_NUMBERS_FIELD" value1="2" />
-		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="CPPasswordpoliciesDefaultpasswordpolicy#MINIMUM_NUMBERS_FIELD" value1="2" />
+		<execute function="AssertClick" locator1="CPPasswordpoliciesDefaultpasswordpolicy#SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />

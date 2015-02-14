@@ -1,11 +1,11 @@
 <definition>
 	<command name="addPG">
-		<execute action="MobilePGBlogs#click" locator-key1="REORDER_ICON" />
-		<execute action="MobilePGBlogs#assertClick" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
+		<execute function="Click" locator1="MobilePGBlogs#REORDER_ICON" />
+		<execute function="AssertClick" locator1="MobilePGBlogs#ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
 
-		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
-		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute function="Type" locator1="PGBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type" locator1="PGBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="AssertClick" locator1="PGBlogsAdd#PUBLISH_BUTTON" value1="Publish" />
 	</command>
 
 	<command name="tearDownCP">
@@ -13,14 +13,14 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute action="MobileCPBlogs#click" locator-key1="REORDER_ICON" />
+		<execute function="Click" locator1="MobileCPBlogs#REORDER_ICON" />
 
 		<if>
-			<condition action="MobileCPBlogs#isElementPresent" locator-key1="ENTRY_TABLE_ALL_CHECKBOX" />
+			<condition function="IsElementPresent" locator1="MobileCPBlogs#ENTRY_TABLE_ALL_CHECKBOX" />
 			<then>
-				<execute action="MobileCPBlogs#click" locator-key1="ENTRY_TABLE_ALL_CHECKBOX" />
-				<execute action="MobileCPBlogs#assertClick" locator-key1="RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
-				<execute action="MobileCPBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
+				<execute function="Click" locator1="MobileCPBlogs#ENTRY_TABLE_ALL_CHECKBOX" />
+				<execute function="AssertClick" locator1="MobileCPBlogs#RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
+				<execute function="AssertTextEquals" locator1="MobileCPBlogs#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</if>
 	</command>

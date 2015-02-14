@@ -1,7 +1,0 @@
-<definition>
-	<command name="isElementPresent">
-		<case locator-key1="I_AGREE_BUTTON">
-			<execute function="IsElementPresent#pauseIsElementPresent" />
-		</case>
-	</command>
-</definition>

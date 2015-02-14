@@ -1,7 +1,0 @@
-<definition>
-	<command name="close">
-		<default>
-			<execute function="Close#closeWindow" />
-		</default>
-	</command>
-</definition>

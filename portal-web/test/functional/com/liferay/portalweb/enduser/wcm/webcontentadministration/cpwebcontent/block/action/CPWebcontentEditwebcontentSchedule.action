@@ -1,7 +1,0 @@
-<definition>
-	<command name="type">
-		<case locator-key1="SCHEDULE_EXPIRATION_DATE_FIELD">
-			<execute function="Type#clickAtSendKeys" />
-		</case>
-	</command>
-</definition>

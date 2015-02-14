@@ -1,7 +1,0 @@
-<definition>
-	<command name="close">
-		<case locator1="home - Liferay">
-			<execute function="Close#closeWindow" />
-		</case>
-	</command>
-</definition>

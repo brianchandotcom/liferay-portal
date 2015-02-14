@@ -1,7 +1,0 @@
-<definition>
-	<command name="dragAndDrop">
-		<case locator-key1="CALENDAR_EVENT">
-			<execute function="DragAndDrop#dragAndDrop" />
-		</case>
-	</command>
-</definition>

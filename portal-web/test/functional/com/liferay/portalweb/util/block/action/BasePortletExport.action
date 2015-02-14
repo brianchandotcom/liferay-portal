@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertClick">
-		<case locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD">
-			<execute function="AssertClick#assertPartialTextClickAt" />
-		</case>
-	</command>
-</definition>

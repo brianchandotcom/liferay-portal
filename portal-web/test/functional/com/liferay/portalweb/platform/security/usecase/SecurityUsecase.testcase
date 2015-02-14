@@ -55,22 +55,22 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute action="CAS#assertTextEquals" locator-key1="APP_NAME_HEADER" value1="Central Authentication Service (CAS)" />
-		<execute action="CAS#assertTextEquals" locator-key1="LOGOUT_SUCCESSFUL_HEADER" value1="Logout successful" />
-		<execute action="CAS#assertTextEquals" locator-key1="LOGOUT_SUCCESSFUL_MESSAGE_1" value1="You have successfully logged out of the Central Authentication Service." />
-		<execute action="CAS#assertTextEquals" locator-key1="LOGOUT_SUCCESSFUL_MESSAGE_2" value1="For security reasons, exit your web browser." />
+		<execute function="AssertTextEquals" locator1="CAS#APP_NAME_HEADER" value1="Central Authentication Service (CAS)" />
+		<execute function="AssertTextEquals" locator1="CAS#LOGOUT_SUCCESSFUL_HEADER" value1="Logout successful" />
+		<execute function="AssertTextEquals" locator1="CAS#LOGOUT_SUCCESSFUL_MESSAGE_1" value1="You have successfully logged out of the Central Authentication Service." />
+		<execute function="AssertTextEquals" locator1="CAS#LOGOUT_SUCCESSFUL_MESSAGE_2" value1="For security reasons, exit your web browser." />
 
 		<execute macro="Page#openURL" />
 
-		<execute action="Dockbar#assertClick" locator-key1="USER_SIGN_IN" value1="Sign In" />
+		<execute function="AssertClick" locator1="Dockbar#USER_SIGN_IN" value1="Sign In" />
 
-		<execute action="CAS#type" locator-key1="NETID_FIELD" value1="${userScreenName}" />
-		<execute action="CAS#type" locator-key1="PASSWORD_FIELD" value1="${userScreenName}" />
-		<execute action="CAS#assertClick" locator-key1="LOGIN_BUTTON" value1="LOGIN" />
+		<execute function="Type" locator1="CAS#NETID_FIELD" value1="${userScreenName}" />
+		<execute function="Type" locator1="CAS#PASSWORD_FIELD" value1="${userScreenName}" />
+		<execute function="AssertClick" locator1="CAS#LOGIN_BUTTON" value1="LOGIN" />
 
 		<var name="key_pageName" value="Welcome" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="Welcome" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="Welcome" />
 
 		<execute macro="User#logoutPG" />
 
@@ -97,17 +97,17 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" />
+		<execute function="Click" locator1="PGWebcontentdisplay#EDIT_WEB_CONTENT" />
 
-		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
+		<execute function="SelectFrame" locator1="PGWebcontentdisplayEditwebcontent#WEB_CONTENT_IFRAME" />
 
-		<var locator-key="ARTICLE_ID" name="articleID" path="PGWebcontentdisplayEditwebcontent" />
+		<var locator="PGWebcontentdisplayEditwebcontent#ARTICLE_ID" name="articleID" />
 
 		<execute macro="User#logoutPG" />
 
-		<execute action="Home#open" locator1="${url}${articleID}" />
+		<execute function="Open" locator1="${url}${articleID}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
 	</command>
 
 	<command name="ValidateBeanIdentifierUserPermissions" priority="4">
@@ -115,8 +115,8 @@
 
 		<execute macro="Api#gotoPAuthURL" />
 
-		<execute action="Jsonwebservices#pause" locator1="1000" />
-		<execute action="Jsonwebservices#assertElementNotPresent" locator-key1="SECURITY_TEST_PAGE_POPULATED" />
+		<execute function="Pause" locator1="1000" />
+		<execute function="AssertElementNotPresent" locator1="Jsonwebservices#SECURITY_TEST_PAGE_POPULATED" />
 	</command>
 
 	<command known-issues="LPS-49848" name="ValidateCannotStealAdminAccount" priority="5">
@@ -124,33 +124,33 @@
 
 		<execute macro="Api#gotoPAuthURL" />
 
-		<execute action="Jsonwebservices#assertTextEquals" locator-key1="SECURITY_TEST_PAGE_BODY" value1="{&quot;message&quot;:&quot;com.liferay.portal.security.auth.PrincipalException&quot;,&quot;exception&quot;:&quot;com.liferay.portal.security.auth.PrincipalException&quot;}" />
+		<execute function="AssertTextEquals" locator1="Jsonwebservices#SECURITY_TEST_PAGE_BODY" value1="{&quot;message&quot;:&quot;com.liferay.portal.security.auth.PrincipalException&quot;,&quot;exception&quot;:&quot;com.liferay.portal.security.auth.PrincipalException&quot;}" />
 
-		<execute action="Jsonwebservices#assertTextNotPresent" locator-key1="SECURITY_TEST_PAGE_BODY" value1="companyId" />
+		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="Jsonwebservices#SECURITY_TEST_PAGE_BODY" value1="companyId" />
 	</command>
 
 	<command name="ValidateForwardURLPG" priority="4">
 		<property name="custom.properties" value="virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}" />
 
-		<execute action="Home#open" locator1="http://localhost:8080/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com" />
-		<execute action="Home#pause" locator1="3000" />
+		<execute function="Open" locator1="http://localhost:8080/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com" />
+		<execute function="Pause" locator1="3000" />
 
 		<var name="key_pageName" value="Welcome" />
 
-		<execute action="Home#assertElementPresent" locator-key1="PAGE" value1="Welcome" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />
 
-		<execute action="PGHelloworld#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Hello World" />
-		<execute action="PGHelloworld#assertElementPresent" locator-key1="PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
+		<execute function="AssertTextEquals#assertText" locator1="PGHelloworld#PORTLET_TITLE" value1="Hello World" />
+		<execute function="AssertElementPresent" locator1="PGHelloworld#PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080/html/common/forward_jsp.jsp?FORWARD_URL=http://localhost:8080/web/guest/test" />
+		<execute function="Open" locator1="http://localhost:8080/html/common/forward_jsp.jsp?FORWARD_URL=http://localhost:8080/web/guest/test" />
 
 		<var name="key_pageName" value="Test" />
 
-		<execute action="Home#assertElementPresent" locator-key1="PAGE" value1="Test" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Test" />
 	</command>
 
 	<command name="ValidateXSSVulnerabilities" priority="5">
@@ -178,29 +178,29 @@
 			]]>
 		</var>
 
-		<execute action="Home#open" locator1="${maliciousURL1}" />
+		<execute function="Open" locator1="${maliciousURL1}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
-		<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_CONTENT" value1="The requested resource was not found." />
-		<execute action="Home#assertElementPresent" locator-key1="URL_ERROR_MESSAGE" />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute function="AssertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
 
-		<execute action="Home#open" locator1="${maliciousURL2}" />
+		<execute function="Open" locator1="${maliciousURL2}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
-		<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_CONTENT" value1="The requested resource was not found." />
-		<execute action="Home#assertElementPresent" locator-key1="URL_ERROR_MESSAGE" />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute function="AssertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
 
-		<execute action="Home#open" locator1="${maliciousURL3}" />
+		<execute function="Open" locator1="${maliciousURL3}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
-		<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_CONTENT" value1="The requested resource was not found." />
-		<execute action="Home#assertElementPresent" locator-key1="URL_ERROR_MESSAGE" />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute function="AssertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
 
-		<execute action="Home#open" locator1="${maliciousURL4}" />
+		<execute function="Open" locator1="${maliciousURL4}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
-		<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_CONTENT" value1="The requested resource was not found." />
-		<execute action="Home#assertElementPresent" locator-key1="URL_ERROR_MESSAGE" />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute function="AssertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
 	</command>
 
 	<command name="ViewBookmarkNoXSS" priority="4">
@@ -216,7 +216,7 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_CONTENT" value1="You are signed in as Test ${userLastNameEdit}." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONTENT" value1="You are signed in as Test ${userLastNameEdit}." />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Bookmarks" />
@@ -233,7 +233,7 @@
 			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>
 
-		<execute action="PGBookmarksAddBookmarkRelatedAssets#assertAlertNotPresent" />
+		<execute function="AssertAlertNotPresent" />
 	</command>
 
 	<command name="ViewControlPanelNoXSS" priority="4">
@@ -259,13 +259,13 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute action="Dockbar#assertClick" locator-key1="MY_SITES" value1="My Sites" />
-		<execute action="Dockbar#assertClick" locator-key1="MY_SITES_SITE_NAME" value1="${siteName}" />
-		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
-		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick" locator1="Dockbar#MY_SITES" value1="My Sites" />
+		<execute function="AssertClick" locator1="Dockbar#MY_SITES_SITE_NAME" value1="${siteName}" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
+		<execute function="AssertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
-		<execute action="Home#assertAlertNotPresent" />
-		<execute action="Home#assertTextEquals" locator-key1="CONTROL_PANEL_MANAGE_BUTTON" value1="Manage ${siteName}" />
+		<execute function="AssertAlertNotPresent" />
+		<execute function="AssertTextEquals" locator1="Home#CONTROL_PANEL_MANAGE_BUTTON" value1="Manage ${siteName}" />
 	</command>
 
 	<command known-issues="LPS-44790" name="ViewExternalWebappsPG" priority="5">
@@ -291,7 +291,7 @@
 			<var name="pageName" value="External Webapps Test Page" />
 		</execute>
 
-		<execute action="PGOpensocialgadget#assertTextEquals" locator-key1="PORTLET_TITLE" value1="To-Do List" />
+		<execute function="AssertTextEquals" locator1="PGOpensocialgadget#PORTLET_TITLE" value1="To-Do List" />
 	</command>
 
 	<command name="ViewGoogleAnalyticsIDNoXSS" priority="5">
@@ -304,14 +304,14 @@
 		</execute>
 
 		<execute macro="Page#openURL" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="AssertAlertNotPresent" />
 	</command>
 
 	<command name="ViewJSONWSNoXSS" priority="5">
 		<var name="url" value="http://localhost:8080/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E" />
 
-		<execute action="Home#open" locator1="${url}" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="Open" locator1="${url}" />
+		<execute function="AssertAlertNotPresent" />
 	</command>
 
 	<command name="ViewLiferayPortletListNoXSS" priority="5">
@@ -321,14 +321,14 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute action="Home#open" locator1="${url}" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="Open" locator1="${url}" />
+		<execute function="AssertAlertNotPresent" />
 
-		<execute action="Home#refresh" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="Refresh" />
+		<execute function="AssertAlertNotPresent" />
 
 		<execute macro="Page#openURL" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="AssertAlertNotPresent" />
 	</command>
 
 	<command name="ViewLookAndFeelNoXSS" priority="4">
@@ -351,7 +351,7 @@
 			<var name="portletOption" value="Look and Feel" />
 		</execute>
 
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="AssertAlertNotPresent" />
 	</command>
 
 	<command name="ViewNoDisplayPortletConfigurationPermission" priority="5">
@@ -364,11 +364,11 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute action="Home#open" locator1="${url1}" />
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+		<execute function="Open" locator1="${url1}" />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
 
-		<execute action="Home#open" locator1="${url2}" />
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
+		<execute function="Open" locator1="${url2}" />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
 	</command>
 
 	<command name="ViewRecycleBinNoXSS" priority="4">
@@ -403,7 +403,7 @@
 			<var name="assetType" value="Blogs Entry" />
 		</execute>
 
-		<execute action="CPRecyclebin#assertAlertNotPresent" />
+		<execute function="AssertAlertNotPresent" />
 	</command>
 
 	<command known-issues="LPS-47697" name="ViewUpdateUserViaJSONWS" priority="5">
@@ -433,9 +433,9 @@
 			<var name="userScreenName" value="test1" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsUser#assertValue" locator-key1="DETAILS_USER_ID_FIELD" value1="${userId}" />
-		<execute action="CPUsersandorganizationsUser#assertSelectedLabel" locator-key1="DETAILS_GENDER_SELECT" value1="Male" />
-		<execute action="CPUsersandorganizationsUser#assertValue" locator-key1="DETAILS_BIRTHDAY_FIELD" value1="${userBirthdayMonth}/${userBirthdayDay}/${userBirthdayYear}" />
+		<execute function="AssertValue" locator1="CPUsersandorganizationsUser#DETAILS_USER_ID_FIELD" value1="${userId}" />
+		<execute function="AssertSelectedLabel" locator1="CPUsersandorganizationsUser#DETAILS_GENDER_SELECT" value1="Male" />
+		<execute function="AssertValue" locator1="CPUsersandorganizationsUser#DETAILS_BIRTHDAY_FIELD" value1="${userBirthdayMonth}/${userBirthdayDay}/${userBirthdayYear}" />
 	</command>
 
 	<command name="ViewURLValidateNoXSS" priority="5">
@@ -469,25 +469,25 @@
 			]]>
 		</var>
 
-		<execute action="Home#open" locator1="${maliciousURL1}" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="Open" locator1="${maliciousURL1}" />
+		<execute function="AssertAlertNotPresent" />
 
-		<execute action="Home#open" locator1="${maliciousURL2}" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="Open" locator1="${maliciousURL2}" />
+		<execute function="AssertAlertNotPresent" />
 
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#assertClick" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+		<execute function="Click" locator1="Dockbar#USER_NAME" />
+		<execute function="AssertClick" locator1="Dockbar#USER_MY_ACCOUNT" value1="My Account" />
 
-		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
 
-		<execute action="Home#open" locator1="${maliciousURL3}" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="Open" locator1="${maliciousURL3}" />
+		<execute function="AssertAlertNotPresent" />
 
-		<execute action="Home#open" locator1="${maliciousURL4}" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="Open" locator1="${maliciousURL4}" />
+		<execute function="AssertAlertNotPresent" />
 
-		<execute action="Home#open" locator1="${maliciousURL5}" />
-		<execute action="Home#assertAlertNotPresent" />
+		<execute function="Open" locator1="${maliciousURL5}" />
+		<execute function="AssertAlertNotPresent" />
 	</command>
 
 	<command name="ViewWikiNoXSS" priority="4">
@@ -538,10 +538,10 @@
 
 		<var name="key_wikiPageTitle" value="Wiki Page Title" />
 
-		<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="Wiki Page Title" />
+		<execute function="AssertClick" locator1="CPWikiAllpages#WIKI_PAGE_TABLE_PAGE" value1="Wiki Page Title" />
 
-		<execute action="CPWikiWikipage#assertClick" locator-key1="WIKI_PAGE_ACTIONS_DETAILS" value1="Details" />
+		<execute function="AssertClick" locator1="CPWikiWikipage#WIKI_PAGE_ACTIONS_DETAILS" value1="Details" />
 
-		<execute action="CPWikiWikipage#assertAlertNotPresent" />
+		<execute function="AssertAlertNotPresent" />
 	</command>
 </definition>

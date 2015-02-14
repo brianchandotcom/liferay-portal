@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertTextEquals">
-		<case locator-key1="TRASH_ENTRIES_MAX_AGE_FIELD">
-			<execute function="AssertTextEquals#assertValue" />
-		</case>
-	</command>
-</definition>

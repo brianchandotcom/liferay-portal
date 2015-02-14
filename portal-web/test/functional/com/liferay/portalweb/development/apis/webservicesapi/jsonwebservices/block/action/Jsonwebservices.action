@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertTextNotPresent">
-		<case locator-key1="SECURITY_TEST_PAGE_BODY">
-			<execute function="AssertTextNotEquals#assertNotPartialText" />
-		</case>
-	</command>
-</definition>

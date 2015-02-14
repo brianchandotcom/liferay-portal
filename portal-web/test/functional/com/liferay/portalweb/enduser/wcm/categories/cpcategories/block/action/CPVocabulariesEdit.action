@@ -1,7 +1,0 @@
-<definition>
-	<command name="isElementNotPresent">
-		<case locator-key1="ASSOCIATED_ASSET_TYPES_SELECT">
-			<execute function="IsElementNotPresent#isNotVisible" />
-		</case>
-	</command>
-</definition>

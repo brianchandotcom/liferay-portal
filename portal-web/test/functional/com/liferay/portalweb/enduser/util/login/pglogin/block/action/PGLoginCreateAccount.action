@@ -1,7 +1,0 @@
-<definition>
-	<command name="close">
-		<case locator-key1="CREATE_ACCOUNT_POP_UP_WINDOW">
-			<execute function="Close#closeWindow" />
-		</case>
-	</command>
-</definition>

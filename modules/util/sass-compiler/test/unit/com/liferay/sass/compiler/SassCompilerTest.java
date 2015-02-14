@@ -37,7 +37,7 @@ public class SassCompilerTest {
 	}
 
 	@Test
-	public void testCompile() throws Exception {
+	public void testCompileFile() throws Exception {
 		SassCompiler sassCompiler = new SassCompiler();
 
 		Assert.assertNotNull(sassCompiler);
@@ -64,6 +64,21 @@ public class SassCompilerTest {
 			Assert.assertEquals(
 				stripNewLines(expectedOutput), stripNewLines(actualOutput));
 		}
+	}
+
+	@Test
+	public void testCompileString() throws Exception {
+		SassCompiler sassCompiler = new SassCompiler();
+
+		Assert.assertNotNull(sassCompiler);
+
+		String input = "foo { margin: 21px * 2; }";
+		String expectedOutput = "foo { margin: 42px; }";
+
+		String actualOutput = sassCompiler.compileString(input, "", "");
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
 	}
 
 	protected String getBaseDir() {

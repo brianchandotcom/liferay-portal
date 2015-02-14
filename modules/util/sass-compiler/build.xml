@@ -4,7 +4,7 @@
 <project>
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
-	<property name="auto.deploy.dir" value="../../../lib/development/" />
+	<property name="auto.deploy.dir" value="../../../lib/portal/" />
 
 	<macrodef name="build-libsass">
 		<attribute name="libsass.lib.file" />

@@ -134,6 +134,7 @@
 	<classpathentry kind="lib" path="lib/portal/chemistry-opencmis-commons-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/chemistry-opencmis-commons-impl.jar"/>
 	<classpathentry kind="lib" path="lib/portal/closure-compiler.jar"/>
+	<classpathentry kind="lib" path="lib/portal/com.liferay.sass.compiler.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-codec.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-collections.jar"/>

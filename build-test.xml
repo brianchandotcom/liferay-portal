@@ -1616,6 +1616,50 @@ create database lportal${database.index} character set utf8;</echo>
 		</if>
 	</target>
 
+	<target name="copy-test-logs">
+		<if>
+			<isset property="jenkins.testray.results.dir" />
+			<then>
+				<antelope:stringutil property="job.name" string="${env.JOB_NAME}">
+					<antelope:replace regex="," replacement="_" />
+				</antelope:stringutil>
+
+				<property name="testray.logs.dir" value="${jenkins.testray.results.dir}/logs/${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
+
+				<mkdir dir="${testray.logs.dir}" />
+
+				<copy
+					failonerror="false"
+					file="portal-web/test-results/functional/report.html"
+					tofile="${testray.logs.dir}/report.html"
+				/>
+
+				<copy failonerror="false" todir="${testray.logs.dir}/screenshots">
+					<fileset
+						dir="portal-web/test-results/functional/screenshots"
+					/>
+				</copy>
+
+				<propertyregex
+					input="${env.BUILD_URL}"
+					property="jenkins.build.url"
+					regexp="https:\/\/([^\.]+)\.[^\/]+"
+					replace="http://\1"
+				/>
+
+				<propertyregex
+					input="${jenkins.build.url}"
+					override="true"
+					property="jenkins.build.url"
+					regexp="http:\/\/([^\/]+)\/(\d+)"
+					replace="http://\1-\2/\2"
+				/>
+
+				<get dest="${testray.logs.dir}/console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
+			</then>
+		</if>
+	</target>
+
 	<target name="deploy-extra-apps">
 		<var name="extra.apps.zip.file.name" value="${jenkins.shared.user.content.dir}/jobs/${top.level.job.name}/builds/${top.level.build.number}/downloads/extraapps.zip" />
 
@@ -4384,44 +4428,6 @@ if (ppstate.equals("normal")) {
 							file="${jenkins.results.xml.file}"
 							tofile="${jenkins.shared.results.dir}/${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml"
 						/>
-					</then>
-				</if>
-
-				<if>
-					<isset property="jenkins.testray.results.dir" />
-					<then>
-						<property name="testray.logs.dir" value="${jenkins.testray.results.dir}/logs/${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
-
-						<mkdir dir="${testray.logs.dir}" />
-
-						<copy
-							failonerror="false"
-							file="portal-web/test-results/functional/report.html"
-							tofile="${testray.logs.dir}/report.html"
-						/>
-
-						<copy failonerror="false" todir="${testray.logs.dir}/screenshots">
-							<fileset
-								dir="portal-web/test-results/functional/screenshots"
-							/>
-						</copy>
-
-						<propertyregex
-							input="${env.BUILD_URL}"
-							property="jenkins.build.url"
-							regexp="https:\/\/([^\.]+)\.[^\/]+"
-							replace="http://\1"
-						/>
-
-						<propertyregex
-							input="${jenkins.build.url}"
-							override="true"
-							property="jenkins.build.url"
-							regexp="http:\/\/([^\/]+)\/(\d+)"
-							replace="http://\1-\2/\2"
-						/>
-
-						<get dest="${testray.logs.dir}/console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
 					</then>
 				</if>
 			</then>

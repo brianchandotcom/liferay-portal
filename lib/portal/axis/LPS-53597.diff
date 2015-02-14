@@ -1,0 +1,17 @@
+Index: src/org/apache/axis/description/JavaServiceDesc.java
+===================================================================
+--- src/org/apache/axis/description/JavaServiceDesc.java	(revision 1659749)
++++ src/org/apache/axis/description/JavaServiceDesc.java	(working copy)
+@@ -701,10 +707,10 @@
+                         }
+                         if (paramClass == null) {
+                             paramClass = getTypeMapping().getClassForQName(param.getTypeQName(),
+-                                                                           type);
++                                                                           null);
+                         }
+ 
+-                        if (paramClass != null) {
++                        if (paramClass != null && paramClass != Object.class) {
+                             // This is a match if the paramClass is somehow
+                             // convertable to the "real" parameter type.  If not,
+                             // break out of this loop.

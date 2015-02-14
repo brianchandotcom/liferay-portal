@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertTextEquals">
-		<case locator-key1="SUBSCRIBER_PORTLET_MESSAGE">
-			<execute function="AssertTextEquals#assertPartialText" value1="${randomNumber}" />
-		</case>
-	</command>
-</definition>

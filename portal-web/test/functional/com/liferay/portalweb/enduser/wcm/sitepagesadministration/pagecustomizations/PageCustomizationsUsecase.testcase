@@ -160,13 +160,13 @@
 			<var name="columnId" value="1" />
 		</execute>
 
-		<execute action="Home#assertClick" locator-key1="PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
+		<execute function="AssertClick" locator1="Home#PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="Wiki" />
@@ -308,13 +308,13 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertClick" locator-key1="PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
+		<execute function="AssertClick" locator1="Home#PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Language" />
@@ -335,7 +335,7 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="Web Content Display" />
@@ -353,7 +353,7 @@
 			<var name="portletName" value="Language" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="Language" />
@@ -447,13 +447,13 @@
 			<var name="pageName" value="Site Page Name" />
 		</execute>
 
-		<execute action="Home#assertClick" locator-key1="PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
+		<execute function="AssertClick" locator1="Home#PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Language" />
@@ -468,7 +468,7 @@
 			<var name="pageName" value="Site Page Name" />
 		</execute>
 
-		<execute action="Home#assertClick" locator-key1="PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
+		<execute function="AssertClick" locator1="Home#PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="Language" />
@@ -478,9 +478,9 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute action="Home#assertClick" locator-key1="PAGE_CUSTOMIZATION_VIEW_MY_CUSTOMIZED_PAGE" value1="View My Customized Page" />
-		<execute action="Home#assertClickNoError" locator-key1="PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
-		<execute action="Home#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to reset your customizations to default?" />
+		<execute function="AssertClick" locator1="Home#PAGE_CUSTOMIZATION_VIEW_MY_CUSTOMIZED_PAGE" value1="View My Customized Page" />
+		<execute function="AssertClickNoError" locator1="Home#PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
+		<execute function="Confirm" locator1="Home#CONFIRMATION" value1="Are you sure you want to reset your customizations to default?" />
 
 		<execute macro="Portlet#viewNoSpecificPG">
 			<var name="portletName" value="Language" />
@@ -524,8 +524,8 @@
 			<var name="pageName" value="Site Page Name" />
 		</execute>
 
-		<execute action="Home#assertClickNoError" locator-key1="PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
-		<execute action="Home#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to reset your customizations to default?" />
+		<execute function="AssertClickNoError" locator1="Home#PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
+		<execute function="Confirm" locator1="Home#CONFIRMATION" value1="Are you sure you want to reset your customizations to default?" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="Language" />

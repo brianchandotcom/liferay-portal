@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertTextEquals">
-		<case locator-key1="DISPLAY_SETTINGS_MAXIMUM_ENTRIES_TO_DISPLAY_SELECT">
-			<execute function="AssertTextEquals#assertValue" />
-		</case>
-	</command>
-</definition>

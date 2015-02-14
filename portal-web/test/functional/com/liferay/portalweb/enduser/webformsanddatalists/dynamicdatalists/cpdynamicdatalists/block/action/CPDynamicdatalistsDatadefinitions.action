@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertClick">
-		<case comparator="startsWith" locator-key1="DATA_DEFINITION_TABLE_ACTIONS">
-			<execute function="AssertClick#pauseAssertTextClickAt" />
-		</case>
-	</command>
-</definition>

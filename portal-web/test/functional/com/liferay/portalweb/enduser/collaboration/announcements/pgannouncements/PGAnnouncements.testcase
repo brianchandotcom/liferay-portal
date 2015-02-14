@@ -72,16 +72,16 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGAnnouncements#click" locator-key1="NAVIGATION_MANAGE_ENTRIES" />
+		<execute function="Click" locator1="PGAnnouncements#NAVIGATION_MANAGE_ENTRIES" />
 
-		<execute action="PGAnnouncementsManageentries#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute action="PGAnnouncementsManageentries#click" locator-key1="ADD_ENTRY_BUTTON" />
+		<execute function="Select#selectAndWait" locator1="PGAnnouncementsManageentries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute function="Click" locator1="PGAnnouncementsManageentries#ADD_ENTRY_BUTTON" />
 
-		<execute action="PGAnnouncementsAddentry#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
-		<execute action="PGAnnouncementsAddentry#type" locator-key1="URL_FIELD" value1="${entryURL}" />
-		<execute action="PGAnnouncementsAddentry#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="Type" locator1="PGAnnouncementsAddentry#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type" locator1="PGAnnouncementsAddentry#URL_FIELD" value1="${entryURL}" />
+		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGAnnouncementsAddentry#CONTENT_FIELD" value1="${entryContent}" />
 
-		<execute action="PGAnnouncementsAddentry#uncheck" locator-key1="DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX" />
+		<execute function="Uncheck" locator1="PGAnnouncementsAddentry#DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX" />
 
 		<var attribute="value" locator="//input[@id='_84_displayDateHour']" name="displayDateHour" />
 		<var name="displayDateHourLength" value="${displayDateHour?length()}" />
@@ -111,15 +111,15 @@
 
 		<var name="displayDate" value="${displayDateHour}:${displayDateMinuteFuture} ${displayDateAMPM}" />
 
-		<execute action="PGAnnouncementsAddentry#type" locator-key1="DISPLAY_DATE_TIME_INPUT" value1="${displayDate}" />
-		<execute action="PGAnnouncementsAddentry#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="PGAnnouncementsAddentry#DISPLAY_DATE_TIME_INPUT" value1="${displayDate}" />
+		<execute function="AssertClick" locator1="PGAnnouncementsAddentry#SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGAnnouncements#assertTextNotPresent" value1="${entryTitle}" />
-		<execute action="PGAnnouncements#pause" locator1="120000" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle}" />
+		<execute function="Pause" locator1="120000" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -157,15 +157,15 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGAnnouncements#assertTextNotPresent" value1="${entryTitle}" />
-		<execute action="PGAnnouncements#click" locator-key1="NAVIGATION_MANAGE_ENTRIES" />
+		<execute function="AssertTextNotPresent" value1="${entryTitle}" />
+		<execute function="Click" locator1="PGAnnouncements#NAVIGATION_MANAGE_ENTRIES" />
 
-		<execute action="PGAnnouncementsManageentries#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute function="Select#selectAndWait" locator1="PGAnnouncementsManageentries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TYPE" value1="${distributionScope}" />
+		<execute function="AssertTextEquals" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_TYPE" value1="${distributionScope}" />
 	</command>
 
 	<command name="AddAnnouncementsEntryPriorityImportant" priority="5">

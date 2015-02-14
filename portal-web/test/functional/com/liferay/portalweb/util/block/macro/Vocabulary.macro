@@ -2,39 +2,39 @@
 	<command name="addAssociatedAssetTypeViaVocabularyCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 
-		<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
-		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="Click" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<if>
-			<condition action="CPVocabulariesEdit#isElementNotPresent" locator-key1="ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPVocabulariesEdit#ASSOCIATED_ASSET_TYPES_SELECT" />
 			<then>
-				<execute action="CPVocabulariesEdit#assertClick" locator-key1="ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
+				<execute function="AssertClick" locator1="CPVocabulariesEdit#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
 			</then>
 		</if>
 
-		<execute action="CPVocabulariesEdit#click" locator-key1="ASSOCIATED_ASSET_TYPES_ADD_BUTTON" />
-		<execute action="CPVocabulariesEdit#select" locator-key1="ASSOCIATED_ASSET_TYPES_SELECT_2" value1="${vocabularyAssociatedAssetType2}" />
-		<execute action="CPVocabulariesEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="Click" locator1="CPVocabulariesEdit#ASSOCIATED_ASSET_TYPES_ADD_BUTTON" />
+		<execute function="Select" locator1="CPVocabulariesEdit#ASSOCIATED_ASSET_TYPES_SELECT_2" value1="${vocabularyAssociatedAssetType2}" />
+		<execute function="AssertClick" locator1="CPVocabulariesEdit#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addCP">
-		<execute action="CPCategories#assertClick" locator-key1="ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
-		<execute action="CPVocabulariesAdd#type" locator-key1="NAME_FIELD" value1="${vocabularyName}" />
+		<execute function="AssertClick" locator1="CPCategories#ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
+		<execute function="Type" locator1="CPVocabulariesAdd#NAME_FIELD" value1="${vocabularyName}" />
 
 		<if>
 			<isset var="vocabularyDescription" />
 			<then>
-				<execute action="CPVocabulariesAdd#type" locator-key1="DESCRIPTION_FIELD" value1="${vocabularyDescription}" />
+				<execute function="Type" locator1="CPVocabulariesAdd#DESCRIPTION_FIELD" value1="${vocabularyDescription}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${allowMultipleCategories}" arg2="False" />
 			<then>
-				<execute action="CPVocabulariesAdd#uncheck" locator-key1="ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
+				<execute function="Uncheck" locator1="CPVocabulariesAdd#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
 			</then>
 		</if>
 
@@ -43,8 +43,8 @@
 			<then>
 				<var name="key_localizationName" value="${localizationNameKey}" />
 
-				<execute action="CPVocabulariesAdd#click" locator-key1="LOCALIZATION_NAME" />
-				<execute action="CPVocabulariesAdd#type" locator-key1="NAME_FIELD" value1="${localizationName}" />
+				<execute function="Click" locator1="CPVocabulariesAdd#LOCALIZATION_NAME" />
+				<execute function="Type" locator1="CPVocabulariesAdd#NAME_FIELD" value1="${localizationName}" />
 			</then>
 		</if>
 
@@ -53,122 +53,122 @@
 			<then>
 				<var name="key_localizationName" value="${localization2NameKey}" />
 
-				<execute action="CPVocabulariesAdd#click" locator-key1="LOCALIZATION_NAME" />
-				<execute action="CPVocabulariesAdd#type" locator-key1="NAME_FIELD" value1="${localization2Name}" />
+				<execute function="Click" locator1="CPVocabulariesAdd#LOCALIZATION_NAME" />
+				<execute function="Type" locator1="CPVocabulariesAdd#NAME_FIELD" value1="${localization2Name}" />
 			</then>
 		</if>
 
-		<execute action="CPVocabulariesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="CPVocabulariesAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 	</command>
 
 	<command name="addViewableByCP">
-		<execute action="CPCategories#assertClick" locator-key1="ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
+		<execute function="AssertClick" locator1="CPCategories#ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
 
-		<execute action="CPVocabulariesAdd#type" locator-key1="NAME_FIELD" value1="${vocabularyName}" />
-		<execute action="CPVocabulariesAdd#select" locator-key1="VIEWABLE_BY_SELECT" value1="${viewableBy}" />
-		<execute action="CPVocabulariesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="CPVocabulariesAdd#NAME_FIELD" value1="${vocabularyName}" />
+		<execute function="Select" locator1="CPVocabulariesAdd#VIEWABLE_BY_SELECT" value1="${viewableBy}" />
+		<execute function="AssertClick" locator1="CPVocabulariesAdd#SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 	</command>
 
 	<command name="addVocabularyWithNullTitle">
-		<execute action="CPCategories#assertClick" locator-key1="ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
-		<execute action="CPVocabulariesAdd#type" locator-key1="NAME_FIELD" value1=" " />
+		<execute function="AssertClick" locator1="CPCategories#ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
+		<execute function="Type" locator1="CPVocabulariesAdd#NAME_FIELD" value1=" " />
 
-		<execute action="CPVocabulariesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPVocabulariesAdd#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Your request failed to complete." />
-		<execute action="CPVocabulariesAdd#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid name." />
+		<execute function="AssertClick" locator1="CPVocabulariesAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="CPVocabulariesAdd#ERROR_MESSAGE" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals" locator1="CPVocabulariesAdd#ERROR_MESSAGE_2" value1="Please enter a valid name." />
 	</command>
 
 	<command name="addWithAssociatedAssetTypeCP">
-		<execute action="CPCategories#assertClick" locator-key1="ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
-		<execute action="CPVocabulariesAdd#type" locator-key1="NAME_FIELD" value1="${vocabularyName}" />
+		<execute function="AssertClick" locator1="CPCategories#ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
+		<execute function="Type" locator1="CPVocabulariesAdd#NAME_FIELD" value1="${vocabularyName}" />
 
 		<if>
-			<condition action="CPVocabulariesAdd#isElementNotPresent" locator-key1="ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_SELECT" />
 			<then>
-				<execute action="CPVocabulariesAdd#assertClick" locator-key1="ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
+				<execute function="AssertClick" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
 			</then>
 		</if>
 
-		<execute action="CPVocabulariesAdd#select" locator-key1="ASSOCIATED_ASSET_TYPES_SELECT" value1="${vocabularyAssociatedAssetType}" />
-		<execute action="CPVocabulariesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="Select" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_SELECT" value1="${vocabularyAssociatedAssetType}" />
+		<execute function="AssertClick" locator1="CPVocabulariesAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 	</command>
 
 	<command name="deleteAssociatedAssetTypeViaVocabularyCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 
-		<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
-		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="Click" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<if>
-			<condition action="CPVocabulariesEdit#isElementNotPresent" locator-key1="ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPVocabulariesEdit#ASSOCIATED_ASSET_TYPES_SELECT" />
 			<then>
-				<execute action="CPVocabulariesEdit#assertClick" locator-key1="ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
+				<execute function="AssertClick" locator1="CPVocabulariesEdit#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
 			</then>
 		</if>
 
-		<execute action="CPVocabulariesEdit#click" locator-key1="ASSOCIATED_ASSET_TYPES_DELETE_BUTTON_2" />
-		<execute action="CPVocabulariesEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="Click" locator1="CPVocabulariesEdit#ASSOCIATED_ASSET_TYPES_DELETE_BUTTON_2" />
+		<execute function="AssertClick" locator1="CPVocabulariesEdit#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deleteByActionsCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
-		<execute action="CPCategories#check" locator-key1="ALL_VOCABULARIES_CHECKBOX" />
-		<execute action="CPCategories#click" locator-key1="ACTIONS_BUTTON" />
-		<execute action="CPCategories#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
-		<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPCategories#assertTextNotPresent" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="Check" locator1="CPCategories#ALL_VOCABULARIES_CHECKBOX" />
+		<execute function="Click" locator1="CPCategories#ACTIONS_BUTTON" />
+		<execute function="AssertClickNoError" locator1="CPCategories#ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute function="Confirm" locator1="CPCategories#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextNotPresent" value1="${vocabularyName}" />
 	</command>
 
 	<command name="deleteByDetailsCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 
-		<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_MENULIST_ARROW" />
-		<execute action="CPCategories#assertClickNoError" locator-key1="VOCABULARY_ENTRY_MENULIST_DELETE" value1="Delete" />
+		<execute function="Click" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_ARROW" />
+		<execute function="AssertClickNoError" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_DELETE" value1="Delete" />
 
-		<execute action="CPVocabulariesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm" locator1="CPVocabulariesEdit#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPCategories#assertTextNotPresent" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextNotPresent" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 	</command>
 
 	<command name="editCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
-		<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
-		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="Click" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
-		<execute action="CPVocabulariesEdit#type" locator-key1="NAME_FIELD" value1="${vocabularyNameEdit}" />
-		<execute action="CPVocabulariesEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="Type" locator1="CPVocabulariesEdit#NAME_FIELD" value1="${vocabularyNameEdit}" />
+		<execute function="AssertClick" locator1="CPVocabulariesEdit#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<var name="key_vocabularyName" value="${vocabularyNameEdit}" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyNameEdit}" />
+		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyNameEdit}" />
 	</command>
 
 	<command name="tearDownCP">
@@ -177,12 +177,12 @@
 		</execute>
 
 		<if>
-			<condition action="CPCategories#isElementPresent" locator-key1="VOCABULARY_ENTRY_GENERIC" />
+			<condition function="IsElementPresent" locator1="CPCategories#VOCABULARY_ENTRY_GENERIC" />
 			<then>
-				<execute action="CPCategories#check" locator-key1="ALL_VOCABULARIES_CHECKBOX" />
-				<execute action="CPCategories#click" locator-key1="ACTIONS_BUTTON" />
-				<execute action="CPCategories#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
-				<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Check" locator1="CPCategories#ALL_VOCABULARIES_CHECKBOX" />
+				<execute function="Click" locator1="CPCategories#ACTIONS_BUTTON" />
+				<execute function="AssertClickNoError" locator1="CPCategories#ACTIONS_MENULIST_DELETE" value1="Delete" />
+				<execute function="Confirm" locator1="CPCategories#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</if>
 	</command>
@@ -190,14 +190,14 @@
 	<command name="viewCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 
 		<if>
 			<equals arg1="${allowMultipleCategories}" arg2="False" />
 			<then>
-				<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
-				<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
-				<execute action="CPVocabulariesEdit#assertNotChecked" locator-key1="ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
+				<execute function="Click" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+				<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
+				<execute function="AssertNotChecked" locator1="CPVocabulariesEdit#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
 			</then>
 		</if>
 	</command>
@@ -205,50 +205,50 @@
 	<command name="viewVocabularyPermissionsCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
-		<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
-		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="Click" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_PERMISSIONS" value1="Permissions" />
 
-		<execute action="CPVocabulariesEditPermissions#selectFrame" locator-key1="PERMISSION_IFRAME" />
+		<execute function="SelectFrame" locator1="CPVocabulariesEditPermissions#PERMISSION_IFRAME" />
 
 		<if>
 			<equals arg1="${viewableBy}" arg2="Anyone (Guest Role)" />
 			<then>
-				<execute action="CPVocabulariesEditPermissions#assertChecked" locator-key1="GUEST_VIEW_CHECKBOX" />
-				<execute action="CPVocabulariesEditPermissions#assertChecked" locator-key1="OWNER_VIEW_CHECKBOX" />
-				<execute action="CPVocabulariesEditPermissions#assertChecked" locator-key1="SITE_MEMBER_VIEW_CHECKBOX" />
+				<execute function="AssertChecked" locator1="CPVocabulariesEditPermissions#GUEST_VIEW_CHECKBOX" />
+				<execute function="AssertChecked" locator1="CPVocabulariesEditPermissions#OWNER_VIEW_CHECKBOX" />
+				<execute function="AssertChecked" locator1="CPVocabulariesEditPermissions#SITE_MEMBER_VIEW_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${viewableBy}" arg2="Owner" />
 				<then>
-					<execute action="CPVocabulariesEditPermissions#assertChecked" locator-key1="OWNER_VIEW_CHECKBOX" />
+					<execute function="AssertChecked" locator1="CPVocabulariesEditPermissions#OWNER_VIEW_CHECKBOX" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${viewableBy}" arg2="Site Members" />
 				<then>
-					<execute action="CPVocabulariesEditPermissions#assertChecked" locator-key1="SITE_MEMBER_VIEW_CHECKBOX" />
+					<execute function="AssertChecked" locator1="CPVocabulariesEditPermissions#SITE_MEMBER_VIEW_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute action="CPCategories#selectFrameTop" value1="relative=top" />
+		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="viewWithAssociatedAssetTypeCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
-		<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
-		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="Click" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<if>
-			<condition action="CPVocabulariesAdd#isElementNotPresent" locator-key1="ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_SELECT" />
 			<then>
-				<execute action="CPVocabulariesAdd#assertClick" locator-key1="ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
+				<execute function="AssertClick" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
 			</then>
 		</if>
 
-		<execute action="CPVocabulariesAdd#assertSelectedLabel" locator-key1="ASSOCIATED_ASSET_TYPES_SELECT" value1="${vocabularyAssociatedAssetType}" />
+		<execute function="AssertSelectedLabel" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_SELECT" value1="${vocabularyAssociatedAssetType}" />
 	</command>
 </definition>

@@ -25,11 +25,11 @@
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
 
-		<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
-		<execute action="CPReportsadminAddreportdefinition#type" locator-key1="DEFINITION_NAME_FIELD" value1="Reports Definition Name" />
-		<execute action="CPReportsadminAddreportdefinition#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPReportsadminAddreportdefinition#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-		<execute action="CPReportsadminAddreportdefinition#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid file." />
+		<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
+		<execute function="Type" locator1="CPReportsadminAddreportdefinition#DEFINITION_NAME_FIELD" value1="Reports Definition Name" />
+		<execute function="AssertClick" locator1="CPReportsadminAddreportdefinition#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="CPReportsadminAddreportdefinition#ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals" locator1="CPReportsadminAddreportdefinition#ERROR_MESSAGE_2" value1="Please enter a valid file." />
 	</command>
 
 	<command name="DownloadReportPG" priority="5">
@@ -91,22 +91,22 @@
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
 
-		<execute action="CPReportsadmin#assertTextEquals" locator-key1="DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON" value1="20 Items per Page" />
-		<execute action="CPReportsadmin#click" locator-key1="DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON" />
+		<execute function="AssertTextEquals" locator1="CPReportsadmin#DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON" value1="20 Items per Page" />
+		<execute function="Click" locator1="CPReportsadmin#DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON" />
 
 		<var name="key_itemsPerPage" value="5" />
 
-		<execute action="CPReportsadmin#click" locator-key1="DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_MENU_ITEM" />
-		<execute action="CPReportsadmin#assertTextEquals" locator-key1="DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON" value1="5 Items per Page" />
-		<execute action="CPReportsadmin#assertTextEquals" locator-key1="DEFINITIONS_PAGINATION_PAGE_NUMBER_DROPDOWN_BUTTON" value1="Page 1 of 2" />
+		<execute function="Click" locator1="CPReportsadmin#DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_MENU_ITEM" />
+		<execute function="AssertTextEquals" locator1="CPReportsadmin#DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON" value1="5 Items per Page" />
+		<execute function="AssertTextEquals" locator1="CPReportsadmin#DEFINITIONS_PAGINATION_PAGE_NUMBER_DROPDOWN_BUTTON" value1="Page 1 of 2" />
 
 		<var name="key_reportsDefinitionName" value="Reports Definition 6" />
 
-		<execute action="CPReportsadmin#assertElementNotPresent" locator-key1="DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" />
-		<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_PAGINATION_NEXT_BUTTON" value1="Next" />
-		<execute action="CPReportsadmin#assertTextEquals" locator-key1="DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" value1="Reports Definition 6" />
-		<execute action="CPReportsadmin#assertClick" locator-key1="DEFINITIONS_PAGINATION_PREVIOUS_BUTTON" value1="Previous" />
-		<execute action="CPReportsadmin#assertElementNotPresent" locator-key1="DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" />
+		<execute function="AssertElementNotPresent" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" />
+		<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_PAGINATION_NEXT_BUTTON" value1="Next" />
+		<execute function="AssertTextEquals" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" value1="Reports Definition 6" />
+		<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_PAGINATION_PREVIOUS_BUTTON" value1="Previous" />
+		<execute function="AssertElementNotPresent" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" />
 	</command>
 
 	<command name="ViewReportEmailNewConfiguration" priority="5">
@@ -183,7 +183,7 @@ Thanks,<br/>
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
 		</execute>
 
-		<execute action="BaseLiferay#pause" locator1="30000" />
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" value="${emailAddress3}" />
@@ -230,7 +230,7 @@ Thanks,<br/>
 			<var name="userPassword" value="${emailPassword2}" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080" />
+		<execute function="Open" locator1="http://localhost:8080" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />

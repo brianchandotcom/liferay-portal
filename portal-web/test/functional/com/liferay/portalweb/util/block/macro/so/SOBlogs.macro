@@ -1,66 +1,66 @@
 <definition>
 	<command name="configureRecentBlogsPortletSelectionMethod">
 		<if>
-			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+			<condition function="IsElementNotPresent" locator1="SOUserBar#VISIBLE_PAGE_CONTROLS" />
 			<then>
-				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+				<execute function="Click" locator1="SOUserBar#TOGGLE_DOCKBAR" />
 			</then>
 		</if>
 
 		<if>
-			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+			<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
-				<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
 			</then>
 		</if>
 
-		<execute action="SOBlogs#click" locator-key1="RECENT_BLOGS_OPTIONS" />
+		<execute function="Click" locator1="SOBlogs#RECENT_BLOGS_OPTIONS" />
 
-		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
 
-		<execute action="SOBlogsRecentBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="SOBlogsRecentBlogsConfiguration#select" locator-key1="SETUP_SELECTION_METHOD_SELECT" value1="${selectionMethod}" />
-		<execute action="SOBlogsRecentBlogsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="SOBlogsRecentBlogsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="SOBlogsRecentBlogsConfiguration#selectFrameTop" />
+		<execute function="SelectFrame" locator1="SOBlogsRecentBlogsConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="Select" locator1="SOBlogsRecentBlogsConfiguration#SETUP_SELECTION_METHOD_SELECT" value1="${selectionMethod}" />
+		<execute function="AssertClick" locator1="SOBlogsRecentBlogsConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="SOBlogsRecentBlogsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="removeSocialBookmarksPG">
 		<if>
-			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+			<condition function="IsElementNotPresent" locator1="SOUserBar#VISIBLE_PAGE_CONTROLS" />
 			<then>
-				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+				<execute function="Click" locator1="SOUserBar#TOGGLE_DOCKBAR" />
 			</then>
 		</if>
 
 		<if>
-			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+			<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
-				<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
 			</then>
 		</if>
 
-		<execute action="SOBlogs#makeVisible" locator-key1="BLOGS_PORTLET_OPTIONS" />
-		<execute action="SOBlogs#click" locator-key1="BLOGS_PORTLET_OPTIONS_LINK" />
+		<execute function="MakeVisible" locator1="SOBlogs#BLOGS_PORTLET_OPTIONS" />
+		<execute function="Click" locator1="SOBlogs#BLOGS_PORTLET_OPTIONS_LINK" />
 
-		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
 
-		<execute action="PGBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="PGBlogsConfiguration#uncheck" locator-key1="SOCIAL_BOOKMARKS_TWITTER_CHECKBOX" />
-		<execute action="PGBlogsConfiguration#uncheck" locator-key1="SOCIAL_BOOKMARKS_FACEBOOK_CHECKBOX" />
-		<execute action="PGBlogsConfiguration#uncheck" locator-key1="SOCIAL_BOOKMARKS_GOOGLE_PLUS_CHECKBOX" />
-		<execute action="PGBlogsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute function="SelectFrame" locator1="PGBlogsConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="Uncheck" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_TWITTER_CHECKBOX" />
+		<execute function="Uncheck" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_FACEBOOK_CHECKBOX" />
+		<execute function="Uncheck" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_GOOGLE_PLUS_CHECKBOX" />
+		<execute function="AssertClick" locator1="PGBlogsConfiguration#SAVE_BUTTON" value1="Save" />
 
-		<execute action="PGBlogsConfiguration#assertElementPresent" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="PGBlogsConfiguration#selectFrameTop" />
+		<execute function="AssertElementPresent" locator1="PGBlogsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="viewBlogsEntryRecentBlogs">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="SOBlogs#assertTextEquals" locator-key1="RECENT_BLOGS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="SOBlogs#RECENT_BLOGS_ENTRY_TITLE" value1="${entryTitle}" />
 
 		<if>
 			<not>
@@ -70,26 +70,26 @@
 				</and>
 			</not>
 			<then>
-				<execute action="SOBlogs#assertTextEquals" locator-key1="RECENT_BLOGS_ENTRY_AUTHOR" value1="By Test Test" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SOBlogs#RECENT_BLOGS_ENTRY_AUTHOR" value1="By Test Test" />
 			</then>
 			<else>
 				<if>
 					<isset var="entryAuthorMiddleName" />
 					<then>
-						<execute action="SOBlogs#assertTextEquals" locator-key1="RECENT_BLOGS_ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorMiddleName} ${entryAuthorLastName}" />
+						<execute function="AssertTextEquals#assertPartialText" locator1="SOBlogs#RECENT_BLOGS_ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorMiddleName} ${entryAuthorLastName}" />
 					</then>
 					<else>
-						<execute action="SOBlogs#assertTextEquals" locator-key1="RECENT_BLOGS_ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorLastName}" />
+						<execute function="AssertTextEquals#assertPartialText" locator1="SOBlogs#RECENT_BLOGS_ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorLastName}" />
 					</else>
 				</if>
 			</else>
 		</if>
 
-		<execute action="SOBlogs#assertElementPresent" locator-key1="RECENT_BLOGS_ENTRY_DATE" />
-		<execute action="SOBlogs#assertClick" locator-key1="RECENT_BLOGS_ENTRY_READ_MORE_LINK" value1="Read More" />
+		<execute function="AssertElementPresent" locator1="SOBlogs#RECENT_BLOGS_ENTRY_DATE" />
+		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="SOBlogs#RECENT_BLOGS_ENTRY_READ_MORE_LINK" value1="Read More" />
 
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 
 		<if>
 			<not>
@@ -99,43 +99,43 @@
 				</and>
 			</not>
 			<then>
-				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_AUTHOR" value1="By Test Test" />
+				<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_AUTHOR" value1="By Test Test" />
 			</then>
 			<else>
 				<if>
 					<isset var="entryAuthorMiddleName" />
 					<then>
-						<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorMiddleName} ${entryAuthorLastName}" />
+						<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorMiddleName} ${entryAuthorLastName}" />
 					</then>
 					<else>
-						<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorLastName}" />
+						<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorLastName}" />
 					</else>
 				</if>
 			</else>
 		</if>
 
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="YOUR_RATING" value1="Your Rating" />
+		<execute function="AssertTextEquals" locator1="PGBlogsEntry#YOUR_RATING" value1="Your Rating" />
 
 		<if>
-			<condition action="PGBlogsEntry#isElementPresent" locator-key1="PREVIOUS" />
+			<condition function="IsElementPresent" locator1="PGBlogsEntry#PREVIOUS" />
 			<then>
-				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="PREVIOUS" value1="Previous" />
+				<execute function="AssertTextEquals" locator1="PGBlogsEntry#PREVIOUS" value1="Previous" />
 			</then>
 			<else>
-				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="PREVIOUS_LINK" value1="Previous" />
+				<execute function="AssertTextEquals" locator1="PGBlogsEntry#PREVIOUS_LINK" value1="Previous" />
 			</else>
 		</if>
 
 		<if>
-			<condition action="PGBlogsEntry#isElementPresent" locator-key1="NEXT" />
+			<condition function="IsElementPresent" locator1="PGBlogsEntry#NEXT" />
 			<then>
-				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="NEXT" value1="Next" />
+				<execute function="AssertTextEquals" locator1="PGBlogsEntry#NEXT" value1="Next" />
 			</then>
 			<else>
-				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="NEXT_LINK" value1="Next" />
+				<execute function="AssertTextEquals" locator1="PGBlogsEntry#NEXT_LINK" value1="Next" />
 			</else>
 		</if>
 
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS" value1="Comments" />
+		<execute function="AssertTextEquals#assertTextWaitForInlineCKEditor" locator1="PGBlogsEntry#COMMENTS" value1="Comments" />
 	</command>
 </definition>

@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertTextEquals">
-		<case locator-key1="VALIDATION_ERROR_LIST_ITEM">
-			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-	</command>
-</definition>

@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertTextEquals">
-		<case comparator="startsWith" locator-key1="THREAD_TABLE_LAST_POST">
-			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-	</command>
-</definition>

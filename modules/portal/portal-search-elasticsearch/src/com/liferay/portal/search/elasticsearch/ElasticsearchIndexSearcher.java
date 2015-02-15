@@ -391,7 +391,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected SearchResponse doSearch(
-		SearchContext searchContext, Query query, int start, int end,
+			SearchContext searchContext, Query query, int start, int end,
 			boolean count)
 		throws ParseException {
 

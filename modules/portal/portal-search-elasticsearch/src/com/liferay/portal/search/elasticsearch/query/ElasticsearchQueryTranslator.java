@@ -41,28 +41,28 @@ public class ElasticsearchQueryTranslator
 	public void setBooleanQueryTranslator(
 		BooleanQueryTranslator booleanQueryTranslator) {
 
-		this._booleanQueryTranslator = booleanQueryTranslator;
+		_booleanQueryTranslator = booleanQueryTranslator;
 	}
 
 	@Reference
 	public void setTermQueryTranslator(
 		TermQueryTranslator termQueryTranslator) {
 
-		this._termQueryTranslator = termQueryTranslator;
+		_termQueryTranslator = termQueryTranslator;
 	}
 
 	@Reference
 	public void setTermRangeQueryTranslator(
 		TermRangeQueryTranslator termRangeQueryTranslator) {
 
-		this._termRangeQueryTranslator = termRangeQueryTranslator;
+		_termRangeQueryTranslator = termRangeQueryTranslator;
 	}
 
 	@Reference
 	public void setWildcardQueryTranslator(
 		WildcardQueryTranslator wildcardQueryTranslator) {
 
-		this._wildcardQueryTranslator = wildcardQueryTranslator;
+		_wildcardQueryTranslator = wildcardQueryTranslator;
 	}
 
 	@Override

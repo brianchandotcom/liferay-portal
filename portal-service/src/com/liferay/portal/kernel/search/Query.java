@@ -21,7 +21,7 @@ import java.io.Serializable;
  */
 public interface Query extends Serializable {
 
-	public <T> T accept(QueryVisitor<T> visitor);
+	public <T> T accept(QueryVisitor<T> queryVisitor);
 
 	public QueryConfig getQueryConfig();
 

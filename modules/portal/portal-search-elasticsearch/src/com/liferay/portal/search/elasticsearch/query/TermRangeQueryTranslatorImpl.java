@@ -34,9 +34,9 @@ public class TermRangeQueryTranslatorImpl implements TermRangeQueryTranslator {
 			termRangeQuery.getField());
 
 		rangeQueryBuilder.from(termRangeQuery.getLowerTerm());
-		rangeQueryBuilder.to(termRangeQuery.getUpperTerm());
 		rangeQueryBuilder.includeLower(termRangeQuery.includesLower());
 		rangeQueryBuilder.includeUpper(termRangeQuery.includesUpper());
+		rangeQueryBuilder.to(termRangeQuery.getUpperTerm());
 
 		return rangeQueryBuilder;
 	}

@@ -24,9 +24,9 @@ import java.io.InputStream;
  */
 public interface ModuleFramework {
 
-	public Object addBundle(String location) throws PortalException;
+	public long addBundle(String location) throws PortalException;
 
-	public Object addBundle(String location, InputStream inputStream)
+	public long addBundle(String location, InputStream inputStream)
 		throws PortalException;
 
 	public Object getFramework();

@@ -1380,7 +1380,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 	private static final String[] _USER_PROPERTY_NAMES = {
 		"comments", "emailAddress", "firstName", "greeting", "jobTitle",
-		"languageId", "lastName", "middleName", "openId", "timeZoneId"
+		"languageId", "lastName", "middleName", "openId", "portraitId",
+		"timeZoneId"
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

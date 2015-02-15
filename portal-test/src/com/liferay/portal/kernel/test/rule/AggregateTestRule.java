@@ -68,7 +68,8 @@ public class AggregateTestRule implements TestRule {
 		SynchronousDestinationTestRule.class.getName(),
 		SynchronousMailTestRule.class.getName(),
 		"com.liferay.portlet.documentlibrary.webdav." +
-			"WebDAVEnvironmentConfigTestRule"
+			"WebDAVEnvironmentConfigTestRule",
+		"com.liferay.portal.test.rule.SyntheticBundleRule"
 	};
 
 	private static final Comparator<TestRule> _testRuleComparator =

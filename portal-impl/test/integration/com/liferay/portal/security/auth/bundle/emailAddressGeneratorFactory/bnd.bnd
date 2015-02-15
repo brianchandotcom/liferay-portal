@@ -1,0 +1,4 @@
+Bundle-Activator: $(bundle.package).Activator
+Bundle-Description: Test Bundle for EmailAddressGeneratorFactory
+Bundle-Version: 1.0
+Private-Package: $(bundle.package).*

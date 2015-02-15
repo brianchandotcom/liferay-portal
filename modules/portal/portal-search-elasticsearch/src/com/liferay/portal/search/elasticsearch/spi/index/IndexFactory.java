@@ -12,27 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch;
+package com.liferay.portal.search.elasticsearch.spi.index;
 
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
-
-import java.util.Collection;
+import org.elasticsearch.client.AdminClient;
 
 /**
  * @author Michael C. Han
  */
-public interface ElasticsearchUpdateDocumentCommand {
+public interface IndexFactory {
 
-	public String updateDocument(
-			String documentType, SearchContext searchContext, Document document,
-			boolean deleteFirst)
-		throws SearchException;
+	public void createIndices(AdminClient adminClient, long companyId)
+		throws Exception;
 
-	public void updateDocuments(
-			String documentType, SearchContext searchContext,
-			Collection<Document> documents, boolean deleteFirst)
-		throws SearchException;
+	public void deleteIndices(AdminClient adminClient, long companyId)
+		throws Exception;
 
 }

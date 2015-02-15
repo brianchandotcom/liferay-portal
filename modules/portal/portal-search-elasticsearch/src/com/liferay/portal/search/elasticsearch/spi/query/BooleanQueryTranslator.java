@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.index;
+package com.liferay.portal.search.elasticsearch.spi.query;
 
-import org.elasticsearch.client.AdminClient;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.QueryVisitor;
+
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
- * @author Michael C. Han
+ * @author Miguel Angelo Caldas Gallindo
  */
-public interface IndexFactory {
+public interface BooleanQueryTranslator {
 
-	public void createIndices(AdminClient adminClient, long companyId)
-		throws Exception;
-
-	public void deleteIndices(AdminClient adminClient, long companyId)
-		throws Exception;
+	QueryBuilder translate(
+		BooleanQuery booleanQuery, QueryVisitor<QueryBuilder> queryVisitor);
 
 }

@@ -12,19 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.query;
+package com.liferay.portal.search.elasticsearch.spi.facet;
 
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.QueryVisitor;
-
-import org.elasticsearch.index.query.QueryBuilder;
+import com.liferay.portal.kernel.search.facet.Facet;
 
 /**
- * @author Miguel Angelo Caldas Gallindo
+ * @author Michael C. Han
  */
-public interface BooleanQueryTranslator {
+public interface FacetProcessor<T> {
 
-	QueryBuilder translate(
-		BooleanQuery booleanQuery, QueryVisitor<QueryBuilder> queryVisitor);
+	public void processFacet(T searchRequestBuilder, Facet facet);
 
 }

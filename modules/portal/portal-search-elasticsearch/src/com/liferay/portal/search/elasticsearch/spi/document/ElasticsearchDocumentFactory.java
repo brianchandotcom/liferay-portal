@@ -12,17 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.query;
+package com.liferay.portal.search.elasticsearch.spi.document;
 
-import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.search.Document;
 
-import org.elasticsearch.index.query.QueryBuilder;
+import java.io.IOException;
 
 /**
- * @author Miguel Angelo Caldas Gallindo
+ * @author Michael C. Han
  */
-public interface TermQueryTranslator {
+public interface ElasticsearchDocumentFactory {
 
-	QueryBuilder translate(TermQuery termQuery);
+	public String getElasticsearchDocument(Document document)
+		throws IOException;
 
 }

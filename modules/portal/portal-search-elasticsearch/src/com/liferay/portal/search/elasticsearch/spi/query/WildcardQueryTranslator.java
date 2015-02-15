@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.facet;
+package com.liferay.portal.search.elasticsearch.spi.query;
 
-import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.WildcardQuery;
+
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
- * @author Michael C. Han
+ * @author Miguel Angelo Caldas Gallindo
  */
-public interface FacetProcessor<T> {
+public interface WildcardQueryTranslator {
 
-	public void processFacet(T searchRequestBuilder, Facet facet);
+	QueryBuilder translate(WildcardQuery wildcardQuery);
 
 }

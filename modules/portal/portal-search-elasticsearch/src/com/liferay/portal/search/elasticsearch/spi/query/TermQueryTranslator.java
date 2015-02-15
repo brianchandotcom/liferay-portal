@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.query;
+package com.liferay.portal.search.elasticsearch.spi.query;
 
-import com.liferay.portal.kernel.search.WildcardQuery;
+import com.liferay.portal.kernel.search.TermQuery;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-public interface WildcardQueryTranslator {
+public interface TermQueryTranslator {
 
-	QueryBuilder translate(WildcardQuery wildcardQuery);
+	QueryBuilder translate(TermQuery termQuery);
 
 }

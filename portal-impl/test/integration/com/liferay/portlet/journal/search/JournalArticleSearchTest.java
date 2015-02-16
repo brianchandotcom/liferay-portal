@@ -98,6 +98,16 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			ddmTemplate.getTemplateKey(), serviceContext);
 	}
 
+	@Override
+	public BaseModel<?> getParentBaseModel(
+			Group group, ServiceContext serviceContext)
+		throws Exception {
+
+		return JournalTestUtil.addFolder(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), serviceContext);
+	}
+
 	@Test
 	public void testMatchNotOnlyCompanyIdButAlsoQueryTerms() throws Exception {
 		SearchContext searchContext = new SearchContext();
@@ -239,16 +249,6 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 		return JournalTestUtil.addFolder(
 			(Long)parentBaseModel.getPrimaryKeyObj(),
-			RandomTestUtil.randomString(), serviceContext);
-	}
-
-	@Override
-	protected BaseModel<?> getParentBaseModel(
-			Group group, ServiceContext serviceContext)
-		throws Exception {
-
-		return JournalTestUtil.addFolder(
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), serviceContext);
 	}
 

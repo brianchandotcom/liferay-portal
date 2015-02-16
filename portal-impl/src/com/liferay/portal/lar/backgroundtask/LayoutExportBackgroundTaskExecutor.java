@@ -49,7 +49,6 @@ public class LayoutExportBackgroundTaskExecutor
 	public LayoutExportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
 			new LayoutExportImportBackgroundTaskStatusMessageTranslator());
-		setSerial(false);
 	}
 
 	@Override

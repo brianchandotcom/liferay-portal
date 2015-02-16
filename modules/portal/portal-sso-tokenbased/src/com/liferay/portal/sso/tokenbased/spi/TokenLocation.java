@@ -19,6 +19,6 @@ package com.liferay.portal.sso.tokenbased.spi;
  */
 public enum TokenLocation {
 
-	COOKIE, REQUEST, REQUEST_HEADER, SESSION;
+	COOKIE, REQUEST, REQUEST_HEADER, SESSION
 
 }

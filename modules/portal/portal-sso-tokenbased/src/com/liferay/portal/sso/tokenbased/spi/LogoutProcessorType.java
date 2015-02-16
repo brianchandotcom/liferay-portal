@@ -19,21 +19,6 @@ package com.liferay.portal.sso.tokenbased.spi;
  */
 public enum LogoutProcessorType {
 
-	COOKIE("cookie"), REDIRECT("redirect");
-
-	public String getValue() {
-		return _value;
-	}
-
-	@Override
-	public String toString() {
-		return _value;
-	}
-
-	private LogoutProcessorType(String value) {
-		_value = value;
-	}
-
-	private final String _value;
+	COOKIE, REDIRECT
 
 }

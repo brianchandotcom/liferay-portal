@@ -7,9 +7,6 @@
 	<property name="client.url" value="http://localhost:8080/api/axis" />
 
 	<target name="build-client" depends="clean">
-		<echo message="Make sure the server is listening on ${client.url}." />
-		<echo message="" />
-
 		<remake-dir dir="src" />
 
 		<!--

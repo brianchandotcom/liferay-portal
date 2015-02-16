@@ -185,7 +185,6 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase
 		orderTestHelper.testOrderByDDMIntegerField();
 	}
 
-	@Ignore
 	@Test
 	public void testOrderByDDMNumberField() throws Exception {
 		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);

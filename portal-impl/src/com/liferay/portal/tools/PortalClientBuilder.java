@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.portal.kernel.io.DummyOutputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -24,17 +26,37 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.util.ant.Wsdl2JavaTask;
+import com.liferay.util.axis.AxisServlet;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLStreamHandler;
+import java.net.URLStreamHandlerFactory;
 
 import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockServletConfig;
+import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class PortalClientBuilder {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		ToolDependencies.wireBasic();
 
 		if (args.length == 4) {
@@ -46,36 +68,39 @@ public class PortalClientBuilder {
 	}
 
 	public PortalClientBuilder(
-		String fileName, String outputDir, String mappingFile, String url) {
+			String fileName, String outputDir, String mappingFile, String url)
+		throws Exception {
 
-		try {
-			Document document = SAXReaderUtil.read(new File(fileName));
+		URL.setURLStreamHandlerFactory(new DirectURLStreamHandlerFactory());
 
-			Element rootElement = document.getRootElement();
+		File file = new File(fileName);
 
-			List<Element> serviceElements = rootElement.elements("service");
+		File parentFile = file.getParentFile();
 
-			for (Element serviceElement : serviceElements) {
-				String serviceName = serviceElement.attributeValue("name");
+		_axisServlet = _createAxisServlet(parentFile.getParentFile());
 
-				if (serviceName.startsWith("Plugin_") &&
-					!FileUtil.exists(mappingFile)) {
+		Document document = SAXReaderUtil.read(new File(fileName));
 
-					_writePluginMappingFile(mappingFile, serviceElement);
-				}
+		Element rootElement = document.getRootElement();
 
-				if (serviceName.startsWith("Plugin_") ||
-					serviceName.startsWith("Portal_") ||
-					serviceName.startsWith("Portlet_")) {
+		List<Element> serviceElements = rootElement.elements("service");
 
-					Wsdl2JavaTask.generateJava(
-						url + "/" + serviceName + "?wsdl", outputDir,
-						mappingFile);
-				}
+		for (Element serviceElement : serviceElements) {
+			String serviceName = serviceElement.attributeValue("name");
+
+			if (serviceName.startsWith("Plugin_") &&
+				!FileUtil.exists(mappingFile)) {
+
+				_writePluginMappingFile(mappingFile, serviceElement);
 			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
+
+			if (serviceName.startsWith("Plugin_") ||
+				serviceName.startsWith("Portal_") ||
+				serviceName.startsWith("Portlet_")) {
+
+				Wsdl2JavaTask.generateJava(
+					url + "/" + serviceName + "?wsdl", outputDir, mappingFile);
+			}
 		}
 
 		File testNamespace = new File(outputDir + "/com/liferay/portal");
@@ -85,6 +110,65 @@ public class PortalClientBuilder {
 				"Please update " + mappingFile + " to namespace " +
 					"com.liferay.portal to com.liferay.client.soap.portal");
 		}
+	}
+
+	private HttpServlet _createAxisServlet(final File docRoot)
+		throws ServletException {
+
+		AxisServlet axisServlet = new AxisServlet();
+
+		MockServletConfig mockServletConfig = new MockServletConfig(
+			new MockServletContext(
+				new ResourceLoader() {
+
+					@Override
+					public Resource getResource(String name) {
+						return new FileSystemResource(new File(docRoot, name));
+					}
+
+					@Override
+					public ClassLoader getClassLoader() {
+						return AxisServlet.class.getClassLoader();
+					}
+
+				}),
+			"Axis Servlet");
+
+		axisServlet.init(mockServletConfig);
+
+		return axisServlet;
+	}
+
+	private byte[] _getWSDLContent(URL url) throws IOException {
+		String path = url.getPath();
+
+		int index = path.lastIndexOf(CharPool.SLASH);
+
+		String servletPath = path.substring(0, index);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(
+				_axisServlet.getServletContext(), "GET", path);
+
+		mockHttpServletRequest.setPathInfo(path.substring(index));
+		mockHttpServletRequest.setQueryString(url.getQuery());
+		mockHttpServletRequest.setScheme(url.getProtocol());
+		mockHttpServletRequest.setServerName(url.getHost());
+		mockHttpServletRequest.setServerPort(url.getPort());
+		mockHttpServletRequest.setServletPath(servletPath);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		try {
+			_axisServlet.service(
+				mockHttpServletRequest, mockHttpServletResponse);
+		}
+		catch (ServletException se) {
+			throw new IOException(se);
+		}
+
+		return mockHttpServletResponse.getContentAsByteArray();
 	}
 
 	private void _writePluginMappingFile(
@@ -142,6 +226,49 @@ public class PortalClientBuilder {
 		sb.append("urn:http.service.knowledgebase.liferay.com\n");
 
 		FileUtil.write(mappingFile, sb.toString());
+	}
+
+	private final HttpServlet _axisServlet;
+
+	private class DirectURLConnection extends URLConnection {
+
+		public DirectURLConnection(URL url) {
+			super(url);
+		}
+
+		@Override
+		public void connect() throws IOException {
+		}
+
+		@Override
+		public InputStream getInputStream() throws IOException {
+			return new UnsyncByteArrayInputStream(_getWSDLContent(url));
+		}
+
+		@Override
+		public OutputStream getOutputStream() {
+			return new DummyOutputStream();
+		}
+
+	}
+
+	private class DirectURLStreamHandler extends URLStreamHandler {
+
+		@Override
+		protected URLConnection openConnection(URL url) throws IOException {
+			return new DirectURLConnection(url);
+		}
+
+	}
+
+	private class DirectURLStreamHandlerFactory
+		implements URLStreamHandlerFactory {
+
+		@Override
+		public URLStreamHandler createURLStreamHandler(String protocol) {
+			return new DirectURLStreamHandler();
+		}
+
 	}
 
 }

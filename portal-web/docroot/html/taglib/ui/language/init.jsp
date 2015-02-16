@@ -26,24 +26,7 @@ String formName = (String)request.getAttribute("liferay-ui:language:formName");
 String formAction = (String)request.getAttribute("liferay-ui:language:formAction");
 
 if (Validator.isNull(formAction)) {
-	LiferayPortletURL liferayPortletURL = null;
-
-	if (portletResponse != null) {
-		LiferayPortletResponse liferayPortletResponse = (LiferayPortletResponse)portletResponse;
-
-		liferayPortletURL = liferayPortletResponse.createLiferayPortletURL(PortletKeys.LANGUAGE, PortletRequest.ACTION_PHASE);
-	}
-	else {
-		liferayPortletURL = new PortletURLImpl(request, PortletKeys.LANGUAGE, plid, PortletRequest.ACTION_PHASE);
-	}
-
-	liferayPortletURL.setAnchor(false);
-	liferayPortletURL.setParameter("struts_action", "/language/view");
-	liferayPortletURL.setParameter("redirect", currentURL);
-	liferayPortletURL.setPortletMode(PortletMode.VIEW);
-	liferayPortletURL.setWindowState(WindowState.NORMAL);
-
-	formAction = liferayPortletURL.toString();
+	formAction = themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" + themeDisplay.getPlid() + "&redirect=" + currentURL;
 }
 
 boolean displayCurrentLocale = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:language:displayCurrentLocale"), true);

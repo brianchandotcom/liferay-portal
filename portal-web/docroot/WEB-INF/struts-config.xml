@@ -101,6 +101,8 @@
 			<forward name="portal.update_email_address" path="portal.update_email_address" />
 		</action>
 
+		<action path="/portal/update_language" type="com.liferay.portal.action.UpdateLanguageAction" />
+
 		<action path="/portal/update_layout" type="com.liferay.portal.action.UpdateLayoutAction" />
 
 		<action path="/portal/update_password" type="com.liferay.portal.action.UpdatePasswordAction">
@@ -812,9 +814,7 @@
 
 		<!-- Language -->
 
-		<action path="/language/view" type="com.liferay.portlet.language.action.ViewAction">
-			<forward name="portlet.language.view" path="portlet.language.view" />
-		</action>
+		<action path="/language/view" forward="portlet.language.view" />
 
 		<!-- Layout Prototypes -->
 

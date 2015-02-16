@@ -54,8 +54,8 @@ public class PortletImportBackgroundTaskExecutor
 			exportImportConfiguration.getSettingsMap();
 
 		long userId = MapUtil.getLong(settingsMap, "userId");
-		long plid = MapUtil.getLong(settingsMap, "plid");
-		long groupId = MapUtil.getLong(settingsMap, "groupId");
+		long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 		String portletId = MapUtil.getString(settingsMap, "portletId");
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
@@ -65,7 +65,7 @@ public class PortletImportBackgroundTaskExecutor
 
 		for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
 			LayoutLocalServiceUtil.importPortletInfo(
-				userId, plid, groupId, portletId, parameterMap,
+				userId, targetPlid, targetGroupId, portletId, parameterMap,
 				attachmentsFileEntry.getContentStream());
 		}
 

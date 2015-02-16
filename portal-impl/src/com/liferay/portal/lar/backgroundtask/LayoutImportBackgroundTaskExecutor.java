@@ -54,7 +54,7 @@ public class LayoutImportBackgroundTaskExecutor
 			exportImportConfiguration.getSettingsMap();
 
 		long userId = MapUtil.getLong(settingsMap, "userId");
-		long groupId = MapUtil.getLong(settingsMap, "groupId");
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 		boolean privateLayout = MapUtil.getBoolean(
 			settingsMap, "privateLayout");
 		Map<String, String[]> parameterMap =
@@ -65,7 +65,7 @@ public class LayoutImportBackgroundTaskExecutor
 
 		for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
 			LayoutLocalServiceUtil.importLayouts(
-				userId, groupId, privateLayout, parameterMap,
+				userId, targetGroupId, privateLayout, parameterMap,
 				attachmentsFileEntry.getContentStream());
 		}
 

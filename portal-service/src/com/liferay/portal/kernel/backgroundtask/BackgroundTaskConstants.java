@@ -28,6 +28,8 @@ public class BackgroundTaskConstants {
 
 	public static final int ISOLATION_LEVEL_GROUP = 3;
 
+	public static final int ISOLATION_LEVEL_NOT_ISOLATED = 4;
+
 	public static final String LABEL_CANCELLED = "cancelled";
 
 	public static final String LABEL_FAILED = "failed";

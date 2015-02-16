@@ -20,22 +20,17 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,123 +64,6 @@ public class BreadcrumbTag extends IncludeTag {
 		_showPortletBreadcrumb = showPortletBreadcrumb;
 	}
 
-	protected void buildGuestGroupBreadcrumb(
-			ThemeDisplay themeDisplay, StringBundler sb)
-		throws Exception {
-
-		BreadcrumbEntry breadcrumbEntry =
-			BreadcrumbUtil.getGuestGroupBreadcrumbEntry(themeDisplay);
-
-		if (breadcrumbEntry == null) {
-			return;
-		}
-
-		sb.append("<li><a href=\"");
-		sb.append(breadcrumbEntry.getURL());
-		sb.append("\">");
-		sb.append(HtmlUtil.escape(breadcrumbEntry.getTitle()));
-		sb.append("</a></li>");
-	}
-
-	protected void buildLayoutBreadcrumb(
-			ThemeDisplay themeDisplay, StringBundler sb)
-		throws Exception {
-
-		List<BreadcrumbEntry> breadcrumbEntries =
-			BreadcrumbUtil.getLayoutBreadcrumbEntries(themeDisplay);
-
-		for (BreadcrumbEntry breadcrumbEntry : breadcrumbEntries) {
-			sb.append("<li><a href=\"");
-			sb.append(breadcrumbEntry.getURL());
-			sb.append("\" ");
-
-			Layout layout = (Layout)breadcrumbEntry.getBaseModel();
-
-			if (layout.isTypeControlPanel()) {
-				sb.append("target=\"_top\"");
-			}
-			else {
-				sb.append(PortalUtil.getLayoutTarget(layout));
-			}
-
-			sb.append(StringPool.GREATER_THAN);
-			sb.append(HtmlUtil.escape(breadcrumbEntry.getTitle()));
-			sb.append("</a></li>");
-		}
-	}
-
-	protected void buildParentGroupsBreadcrumb(
-			ThemeDisplay themeDisplay, StringBundler sb)
-		throws Exception {
-
-		List<BreadcrumbEntry> breadcrumbEntries =
-			BreadcrumbUtil.getParentGroupBreadcrumbEntries(themeDisplay);
-
-		for (BreadcrumbEntry breadcrumbEntry : breadcrumbEntries) {
-			sb.append("<li><a href=\"");
-			sb.append(breadcrumbEntry.getURL());
-			sb.append("\">");
-			sb.append(HtmlUtil.escape(breadcrumbEntry.getTitle()));
-			sb.append("</a></li>");
-		}
-	}
-
-	protected void buildPortletBreadcrumb(
-			HttpServletRequest request, ThemeDisplay themeDisplay,
-			StringBundler sb)
-		throws Exception {
-
-		List<BreadcrumbEntry> breadcrumbEntries =
-			BreadcrumbUtil.getPortletBreadcrumbEntries(request);
-
-		for (BreadcrumbEntry breadcrumbEntry : breadcrumbEntries) {
-			if (!_showCurrentGroup) {
-				String siteGroupName = themeDisplay.getSiteGroupName();
-
-				if (siteGroupName.equals(breadcrumbEntry.getTitle())) {
-					continue;
-				}
-			}
-
-			sb.append("<li>");
-
-			if (Validator.isNotNull(breadcrumbEntry.getURL())) {
-				sb.append("<a href=\"");
-				sb.append(HtmlUtil.escape(breadcrumbEntry.getURL()));
-				sb.append("\"");
-				sb.append(AUIUtil.buildData(breadcrumbEntry.getData()));
-				sb.append(StringPool.GREATER_THAN);
-
-				sb.append(HtmlUtil.escape(breadcrumbEntry.getTitle()));
-
-				sb.append("</a>");
-			}
-			else {
-				sb.append(HtmlUtil.escape(breadcrumbEntry.getTitle()));
-			}
-
-			sb.append("</li>");
-		}
-	}
-
-	protected void buildScopeGroupBreadcrumb(
-			ThemeDisplay themeDisplay, StringBundler sb)
-		throws Exception {
-
-		BreadcrumbEntry breadcrumbEntry =
-			BreadcrumbUtil.getScopeGroupBreadcrumbEntry(themeDisplay);
-
-		if (breadcrumbEntry == null) {
-			return;
-		}
-
-		sb.append("<li><a href=\"");
-		sb.append(breadcrumbEntry.getURL());
-		sb.append("\">");
-		sb.append(HtmlUtil.escape(breadcrumbEntry.getTitle()));
-		sb.append("</a></li>");
-	}
-
 	@Override
 	protected void cleanUp() {
 		_displayStyle = _DISPLAY_STYLE;
@@ -196,86 +74,41 @@ public class BreadcrumbTag extends IncludeTag {
 		_showPortletBreadcrumb = true;
 	}
 
-	protected String getBreadcrumbString(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected List<BreadcrumbEntry> getBreadcrumbEntries(
+		HttpServletRequest request) {
 
-		StringBundler sb = new StringBundler();
+		List<Integer> breadcrumbEntryTypes = new ArrayList<>();
+
+		if (_showCurrentGroup) {
+			breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_CURRENT_GROUP);
+		}
+
+		if (_showGuestGroup) {
+			breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_GUEST_GROUP);
+		}
+
+		if (_showLayout) {
+			breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_LAYOUT);
+		}
+
+		if (_showParentGroups) {
+			breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_PARENT_GROUP);
+		}
+
+		if (_showPortletBreadcrumb) {
+			breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_PORTLET);
+		}
+
+		List<BreadcrumbEntry> breadcrumbEntries = Collections.emptyList();
 
 		try {
-			if (_showGuestGroup) {
-				buildGuestGroupBreadcrumb(themeDisplay, sb);
-			}
-
-			if (_showParentGroups) {
-				buildParentGroupsBreadcrumb(themeDisplay, sb);
-			}
-
-			if (_showCurrentGroup) {
-				buildScopeGroupBreadcrumb(themeDisplay, sb);
-			}
-
-			if (_showLayout) {
-				buildLayoutBreadcrumb(themeDisplay, sb);
-			}
-
-			if (_showPortletBreadcrumb) {
-				buildPortletBreadcrumb(request, themeDisplay, sb);
-			}
+			breadcrumbEntries = BreadcrumbUtil.getBreadcrumbEntries(
+				request, ArrayUtil.toIntArray(breadcrumbEntryTypes));
 		}
 		catch (Exception e) {
-			_log.error(e, e);
 		}
 
-		String breadcrumbString = sb.toString();
-
-		if (Validator.isNull(breadcrumbString)) {
-			return StringPool.BLANK;
-		}
-
-		String breadcrumbTruncateClass = StringPool.BLANK;
-
-		String[] breadcrumbArray = breadcrumbString.split("<li", -1);
-
-		boolean breadcrumbTruncate = false;
-
-		if (breadcrumbArray.length > 3) {
-			breadcrumbTruncate = true;
-		}
-
-		if (breadcrumbTruncate) {
-			breadcrumbTruncateClass = " breadcrumb-truncate";
-		}
-
-		int x = breadcrumbString.indexOf("<li") + 3;
-		int y = breadcrumbString.lastIndexOf("<li") + 3;
-
-		if (x == y) {
-			breadcrumbString = StringUtil.insert(
-				breadcrumbString,
-				" class=\"active only" + breadcrumbTruncateClass + "\"", x);
-		}
-		else {
-			breadcrumbString = StringUtil.insert(
-				breadcrumbString,
-				" class=\"active last" + breadcrumbTruncateClass + "\"", y);
-
-			breadcrumbString = StringUtil.insert(
-				breadcrumbString,
-				" class=\"first" + breadcrumbTruncateClass + "\"", x);
-		}
-
-		if (breadcrumbTruncate) {
-			y = breadcrumbString.lastIndexOf("<li");
-
-			int z = breadcrumbString.lastIndexOf("<li", y - 1) + 3;
-
-			breadcrumbString = StringUtil.insert(
-				breadcrumbString,
-				" class=\"current-parent" + breadcrumbTruncateClass + "\"", z);
-		}
-
-		return breadcrumbString;
+		return breadcrumbEntries;
 	}
 
 	@Override
@@ -314,8 +147,8 @@ public class BreadcrumbTag extends IncludeTag {
 		initShowParentGroups(request);
 
 		request.setAttribute(
-			"liferay-ui:breadcrumb:breadcrumbString",
-			getBreadcrumbString(request));
+			"liferay-ui:breadcrumb:breadcrumbEntries",
+			getBreadcrumbEntries(request));
 
 		String displayStyle = _displayStyle;
 

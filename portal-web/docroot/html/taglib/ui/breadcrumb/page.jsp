@@ -19,7 +19,7 @@
 <div id="<portlet:namespace />breadcrumbs-defaultScreen">
 	<h1 class="hide-accessible"><liferay-ui:message key="breadcrumbs" /></h1>
 
-	<c:if test="<%= Validator.isNotNull(breadcrumbString) %>">
+	<c:if test="<%= breadcrumbEntries.size() > 0 %>">
 		<liferay-util:include page='<%= "/html/taglib/ui/breadcrumb/display_style_" + displayStyle + ".jsp" %>' />
 	</c:if>
 </div>

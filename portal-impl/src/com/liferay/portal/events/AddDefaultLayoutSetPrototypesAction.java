@@ -132,7 +132,9 @@ public class AddDefaultLayoutSetPrototypesAction
 		updatePortletSetup(layout, portletId, preferences);
 
 		portletId = addPortletId(
-			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
+			layout,
+			"com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+			"column-2");
 
 		preferences = new HashMap<>();
 
@@ -163,7 +165,9 @@ public class AddDefaultLayoutSetPrototypesAction
 		updatePortletSetup(layout, portletId, preferences);
 
 		portletId = addPortletId(
-			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
+			layout,
+			"com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+			"column-2");
 
 		preferences = new HashMap<>();
 
@@ -212,7 +216,9 @@ public class AddDefaultLayoutSetPrototypesAction
 		addPortletId(layout, PortletKeys.USER_STATISTICS, "column-2");
 
 		portletId = addPortletId(
-			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
+			layout,
+			"com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+			"column-2");
 
 		preferences = new HashMap<>();
 

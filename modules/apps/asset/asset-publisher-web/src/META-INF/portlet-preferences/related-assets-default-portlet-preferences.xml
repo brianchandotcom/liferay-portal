@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<portlet-preferences>
+	<preference>
+		<name>assetLinkBehavior</name>
+		<value>viewInPortlet</value>
+	</preference>
+	<preference>
+		<name>displayStyle</name>
+		<value>title-list</value>
+	</preference>
+</portlet-preferences>

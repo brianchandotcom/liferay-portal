@@ -255,11 +255,8 @@ public class MBTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		MBThreadFlagLocalServiceUtil.addThreadFlag(
+		return MBThreadFlagLocalServiceUtil.addThreadFlag(
 			TestPropsValues.getUserId(), thread, serviceContext);
-
-		return MBThreadFlagLocalServiceUtil.getThreadFlag(
-			TestPropsValues.getUserId(), thread);
 	}
 
 	public static List<ObjectValuePair<String, InputStream>> getInputStreamOVPs(

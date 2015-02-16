@@ -15,12 +15,19 @@
 package com.liferay.portlet.messageboards.service.permission;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import org.junit.Assert;
@@ -61,9 +68,18 @@ public class MBMessagePermissionTest extends BasePermissionTestCase {
 
 	@Override
 	protected void doSetUp() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
 		_message = MBTestUtil.addMessage(group.getGroupId());
 
-		MBCategory category = MBTestUtil.addCategory(group.getGroupId());
+		MBCategory category =
+			MBCategoryServiceUtil.addCategory(
+				TestPropsValues.getUserId(),
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				serviceContext);
 
 		_submessage = MBTestUtil.addMessage(
 			group.getGroupId(), category.getCategoryId());

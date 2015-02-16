@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -70,7 +69,7 @@ public class DynamicCSSUtil {
 				return;
 			}
 
-			if (PropsKeys.SASS_COMPILER_IMPL.equals("libsass")) {
+			if (PropsValues.SASS_COMPILER_IMPL.equals("libsass")) {
 				_sassCompiler = new SassCompiler();
 			}
 			else {
@@ -559,7 +558,7 @@ public class DynamicCSSUtil {
 			}
 		}
 		
-		if (PropsKeys.SASS_COMPILER_IMPL.equals("libsass")) {
+		if (PropsValues.SASS_COMPILER_IMPL.equals("libsass")) {
 			String inputPaths = commonSassPath + File.pathSeparator +  
 					cssThemePath;
 			

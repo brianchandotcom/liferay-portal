@@ -15,10 +15,10 @@
 package com.liferay.portal.tools.sass;
 
 import com.liferay.portal.kernel.util.NamedThreadFactory;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.scripting.ruby.RubyExecutor;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.sass.compiler.SassCompiler;
 
 import java.io.File;
@@ -69,7 +69,7 @@ public class SassExecutorUtil {
 
 		int threads = 1;
 		
-		if (PropsKeys.SASS_COMPILER_IMPL.equals("libsass")) {
+		if (PropsValues.SASS_COMPILER_IMPL.equals("libsass")) {
 			_sassCompiler = new SassCompiler();
 		}
 		else {
@@ -115,7 +115,7 @@ public class SassExecutorUtil {
 		}
 		
 		
-		if (PropsKeys.SASS_COMPILER_IMPL.equals("libsass")) {
+		if (PropsValues.SASS_COMPILER_IMPL.equals("libsass")) {
 			try {
 				String includePath = _portalCommonDirName + File.pathSeparator + cssThemePath;
 				

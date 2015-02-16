@@ -273,8 +273,12 @@
 		}
 
 		.taglib-user-display {
-			display: inline-block;
+			display: block;
 			margin-top: 28px;
+
+			@include respond-to(phone, tablet) {
+				margin-top: 0;
+			}
 		}
 
 		.previous-entry {
@@ -297,7 +301,12 @@
 
 				@include respond-to(phone) {
 					margin-left: 0;
-					margin-top: 40px;
+				}
+			}
+
+			> h2 {
+				@include respond-to(phone) {
+					margin-top: 60px;
 				}
 			}
 		}

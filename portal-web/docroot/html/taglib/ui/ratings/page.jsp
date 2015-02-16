@@ -86,7 +86,7 @@ if (ratingsEntry != null) {
 									<a class="rating-element <%= (i <= yourScoreStars) ? "icon-star" : "icon-star-empty" %>" href="javascript:;"></a>
 
 									<div class="rating-input-container">
-										<label for="<%= ratingId %>"><liferay-ui:message arguments="<%= new Object[] {i, numberOfStars} %>" key='<%= (yourScoreStars == i) ? "you-have-rated-this-x-stars-out-of-x" : "rate-this-x-stars-out-of-x" %>' translateArguments="<%= false %>" /></label>
+										<label for="<%= ratingId %>"><liferay-ui:message arguments="<%= new Object[] {i, numberOfStars} %>" key='<%= (yourScoreStars == i) ? (i == 1 ? "you-have-rated-this-x-star-out-of-x" : "you-have-rated-this-x-stars-out-of-x") : (i == 1 ? "rate-this-x-star-out-of-x" : "rate-this-x-stars-out-of-x") %>' translateArguments="<%= false %>" /></label>
 
 										<input checked="<%= i == yourScoreStars %>" class="rating-input" id="<%= ratingId %>" name="<portlet:namespace />rating" type="radio" value="<%= i %>">
 									</div>
@@ -114,7 +114,7 @@ if (ratingsEntry != null) {
 							for (int i = 1; i <= numberOfStars; i++) {
 							%>
 
-								<span class="rating-element <%= (i <= averageIndex) ? "icon-star" : "icon-star-empty" %>" title="<%= TrashUtil.isInTrash(className, classPK) ? LanguageUtil.get(request, "ratings-are-disabled-because-this-entry-is-in-the-recycle-bin") : ((i == 1) ? LanguageUtil.format(request, "the-average-rating-is-x-stars-out-of-x", new Object[] {averageScore * numberOfStars, numberOfStars}, false) : StringPool.BLANK) %>"></span>
+								<span class="rating-element <%= (i <= averageIndex) ? "icon-star" : "icon-star-empty" %>" title="<%= TrashUtil.isInTrash(className, classPK) ? LanguageUtil.get(request, "ratings-are-disabled-because-this-entry-is-in-the-recycle-bin") : ((i == 1) ? LanguageUtil.format(request, ((averageScore * numberOfStars == 1.0) ? "the-average-rating-is-x-star-out-of-x" : "the-average-rating-is-x-stars-out-of-x"), new Object[] {averageScore * numberOfStars, numberOfStars}, false) : StringPool.BLANK) %>"></span>
 
 							<%
 							}

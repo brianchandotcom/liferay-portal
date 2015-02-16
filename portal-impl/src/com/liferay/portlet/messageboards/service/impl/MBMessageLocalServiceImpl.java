@@ -119,6 +119,9 @@ import javax.servlet.http.HttpServletRequest;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
+import org.owasp.html.HtmlPolicyBuilder;
+import org.owasp.html.PolicyFactory;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -169,6 +172,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		long categoryId = MBCategoryConstants.DISCUSSION_CATEGORY_ID;
 
+		String format = PropsValues.DISCUSSION_COMMENTS_FORMAT;
+
+		if (format.equals("html")) {
+			body = sanitizeHTML(body);
+		}
+
 		if (Validator.isNull(subject)) {
 			if (Validator.isNotNull(body)) {
 				int pos = Math.min(body.length(), 50);
@@ -193,9 +202,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = addMessage(
 			userId, userName, groupId, categoryId, threadId, parentMessageId,
-			subject, body, PropsValues.DISCUSSION_COMMENTS_FORMAT,
-			inputStreamOVPs, anonymous, priority, allowPingbacks,
-			serviceContext);
+			subject, body, format, inputStreamOVPs, anonymous, priority,
+			allowPingbacks, serviceContext);
 
 		// Discussion
 
@@ -1428,6 +1436,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String subject, String body, ServiceContext serviceContext)
 		throws PortalException {
 
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
+
+		String format = message.getFormat();
+
+		if (format.equals("html")) {
+			body = sanitizeHTML(body);
+		}
+
 		if (Validator.isNull(subject)) {
 			if (Validator.isNotNull(body)) {
 				int pos = Math.min(body.length(), 50);
@@ -2253,6 +2269,16 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				}
 			}
 		}
+	}
+
+	protected String sanitizeHTML(String html) {
+		HtmlPolicyBuilder htmlPolicyBuilder = new HtmlPolicyBuilder();
+
+		htmlPolicyBuilder.allowElements("a", "em", "p", "strong", "u");
+
+		PolicyFactory policyFactory = htmlPolicyBuilder.toFactory();
+
+		return policyFactory.sanitize(html);
 	}
 
 	protected void startWorkflowInstance(

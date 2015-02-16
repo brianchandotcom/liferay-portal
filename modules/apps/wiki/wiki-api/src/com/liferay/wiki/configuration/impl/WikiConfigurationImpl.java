@@ -28,8 +28,8 @@ import org.osgi.service.component.annotations.Modified;
  * @author Iván Zaera
  */
 @Component(
-	configurationPid = "com.liferay.wiki", immediate = true,
-	service = WikiConfiguration.class
+	configurationPid = "com.liferay.wiki.configuration.WikiServiceConfiguration",
+	immediate = true, service = WikiConfiguration.class
 )
 public class WikiConfigurationImpl implements WikiConfiguration {
 

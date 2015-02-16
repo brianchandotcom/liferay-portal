@@ -36,7 +36,7 @@ public interface WikiConfiguration {
 	 */
 	@Meta.AD(
 		deflt =
-			"com/liferay/wiki/settings/dependencies/" +
+			"com/liferay/wiki/configuration/dependencies/" +
 				"portlet-display-templates.xml",
 		required = false
 	)

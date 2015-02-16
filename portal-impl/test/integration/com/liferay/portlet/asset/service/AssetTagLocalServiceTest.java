@@ -73,7 +73,7 @@ public class AssetTagLocalServiceTest {
 		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
 
 		BlogsEntry blogsEntry =
-				BlogsEntryLocalServiceUtil.addEntry(
+			BlogsEntryLocalServiceUtil.addEntry(
 				TestPropsValues.getUserId(), "Test",
 				RandomTestUtil.randomString(), serviceContext);
 

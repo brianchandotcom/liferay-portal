@@ -38,7 +38,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +48,7 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
@@ -163,7 +163,6 @@ public class FindActionTest {
 			BlogsEntryLocalServiceUtil.addEntry(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), serviceContext);
-
 	}
 
 	protected HttpServletRequest getHttpServletRequest() throws Exception {

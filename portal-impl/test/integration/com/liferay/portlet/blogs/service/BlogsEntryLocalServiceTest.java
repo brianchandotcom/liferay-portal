@@ -48,6 +48,7 @@ import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.io.InputStream;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -467,8 +468,7 @@ public class BlogsEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), userId);
 
-		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
-			2012, 1, 1);
+		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(2012, 1, 1);
 
 		BlogsEntry entry =
 			BlogsEntryLocalServiceUtil.addEntry(
@@ -483,9 +483,7 @@ public class BlogsEntryLocalServiceTest {
 		return entry;
 	}
 
-	protected BlogsEntry addEntryWithSmallImage(long userId)
-		throws Exception {
-
+	protected BlogsEntry addEntryWithSmallImage(long userId) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), userId);
@@ -554,7 +552,8 @@ public class BlogsEntryLocalServiceTest {
 
 		if (smallImage) {
 			entry = addEntryWithSmallImage(TestPropsValues.getUserId());
-		} else {
+		}
+		else {
 			entry = addEntry(false);
 		}
 

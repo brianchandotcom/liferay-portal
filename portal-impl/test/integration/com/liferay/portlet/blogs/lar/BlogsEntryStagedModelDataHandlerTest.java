@@ -49,9 +49,8 @@ public class BlogsEntryStagedModelDataHandlerTest
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			TransactionalTestRule.INSTANCE);
 
-
 	protected BlogsEntry addEntry(Group group, boolean approved)
-			throws Exception {
+		throws Exception {
 
 		ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(

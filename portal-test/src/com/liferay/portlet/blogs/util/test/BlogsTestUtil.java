@@ -15,8 +15,8 @@
 package com.liferay.portlet.blogs.util.test;
 
 import com.liferay.portal.kernel.editor.EditorConstants;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -26,6 +26,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.io.Serializable;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;

@@ -42,7 +42,6 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.impl.AssetEntryServiceImpl;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.RatingsEntryServiceUtil;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
@@ -884,7 +883,6 @@ public class AssetEntryQueryTest {
 		Date now = new Date();
 
 		for (int i = 0; i < viewCounts.length; i++) {
-
 			BlogsEntry entry =
 				BlogsEntryLocalServiceUtil.addEntry(
 					TestPropsValues.getUserId(), RandomTestUtil.randomString(),

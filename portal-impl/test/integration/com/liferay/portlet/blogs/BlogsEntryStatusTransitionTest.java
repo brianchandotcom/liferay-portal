@@ -39,6 +39,7 @@ import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 
 import java.io.Serializable;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;

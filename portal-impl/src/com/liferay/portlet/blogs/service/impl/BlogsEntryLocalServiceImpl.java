@@ -1197,8 +1197,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Entry
 
-		User user = userPersistence.findByPrimaryKey(userId);
-
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
 		long coverImageFileEntryId = entry.getCoverImageFileEntryId();

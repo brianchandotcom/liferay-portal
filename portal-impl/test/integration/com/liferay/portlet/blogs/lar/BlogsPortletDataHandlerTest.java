@@ -50,7 +50,6 @@ public class BlogsPortletDataHandlerTest
 		BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
-
 	}
 
 	@Override

@@ -32,7 +32,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
@@ -61,19 +60,6 @@ public class CommentsSubscriptionTest {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER);
-	}
-
-	protected BlogsEntry addEntry() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		BlogsEntry entry =
-			BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), serviceContext);
-
-		return entry;
 	}
 
 	@Test
@@ -112,6 +98,19 @@ public class CommentsSubscriptionTest {
 			BlogsEntry.class.getName(), blogsEntry.getEntryId());
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+	}
+
+	protected BlogsEntry addEntry() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		BlogsEntry entry =
+			BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		return entry;
 	}
 
 	@DeleteAfterTestRun

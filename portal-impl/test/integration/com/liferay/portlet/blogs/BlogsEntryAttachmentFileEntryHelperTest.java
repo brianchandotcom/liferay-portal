@@ -38,6 +38,7 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -91,8 +91,8 @@ public class AssetCategoryLocalServiceTest {
 
 		BlogsEntry blogsEntry =
 			BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), serviceContext);
 
 		AssetTestIndexer assetTestIndexer = new AssetTestIndexer();
 

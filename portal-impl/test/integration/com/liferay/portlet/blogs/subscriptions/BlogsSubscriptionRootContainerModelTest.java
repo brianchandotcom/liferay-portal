@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.service.ServiceContext;
@@ -75,9 +74,8 @@ public class BlogsSubscriptionRootContainerModelTest
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		ServiceContext serviceContext =
-			BlogsTestUtil.getServiceContext(
-				Constants.ADD, group.getGroupId(), TestPropsValues.getUserId());
+		ServiceContext serviceContext = BlogsTestUtil.getServiceContext(
+			Constants.ADD, group.getGroupId(), TestPropsValues.getUserId());
 
 		BlogsEntry entry =
 			BlogsEntryLocalServiceUtil.addEntry(

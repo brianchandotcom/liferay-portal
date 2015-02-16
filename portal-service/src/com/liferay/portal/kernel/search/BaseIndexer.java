@@ -683,8 +683,25 @@ public abstract class BaseIndexer implements Indexer {
 
 		document.addNumber(Field.VIEW_COUNT, assetEntry.getViewCount());
 
-		document.addLocalizedKeyword(
-			"localized_title", assetEntry.getTitleMap(), true, true);
+		// Use a complete title map in order to sort properly on each locale
+
+		Map<Locale, String> titleMap = assetEntry.getTitleMap();
+
+		Locale[] availableLocales = LanguageUtil.getAvailableLocales(
+			assetEntry.getGroupId());
+
+		String defaultTitle = titleMap.get(
+			LocaleUtil.fromLanguageId(assetEntry.getDefaultLanguageId()));
+
+		for (Locale availableLocale : availableLocales) {
+			if (!titleMap.containsKey(availableLocale) ||
+				Validator.isNull(titleMap.get(availableLocale))) {
+
+				titleMap.put(availableLocale, defaultTitle);
+			}
+		}
+
+		document.addLocalizedKeyword("localized_title", titleMap, true, true);
 		document.addKeyword("visible", assetEntry.isVisible());
 	}
 

@@ -4,6 +4,8 @@ Bundle-Description: Implmentation of Liferay Portal SSO integration \
 Bundle-Name: Liferay Portal Token Based SSO
 Bundle-SymbolicName: com.liferay.portal.sso.tokenbased
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.sso.tokenbased.spi.*;version=${plugin.full.version}
 Include-Resource:\
 	classes,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*

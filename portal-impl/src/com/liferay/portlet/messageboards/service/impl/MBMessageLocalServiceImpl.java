@@ -193,8 +193,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = addMessage(
 			userId, userName, groupId, categoryId, threadId, parentMessageId,
-			subject, body, MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs,
-			anonymous, priority, allowPingbacks, serviceContext);
+			subject, body, PropsValues.DISCUSSION_COMMENTS_FORMAT,
+			inputStreamOVPs, anonymous, priority, allowPingbacks,
+			serviceContext);
 
 		// Discussion
 

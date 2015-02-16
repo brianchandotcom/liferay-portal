@@ -615,6 +615,8 @@ public interface PropsKeys {
 
 	public static final String DISCUSSION_COMMENTS_DELTA_VALUE = "discussion.comments.delta.value";
 
+	public static final String DISCUSSION_COMMENTS_FORMAT = "discussion.comments.format";
+
 	public static final String DISCUSSION_EMAIL_BODY = "discussion.email.body";
 
 	public static final String DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED = "discussion.email.comments.added.enabled";

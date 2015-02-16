@@ -1147,7 +1147,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException {
 
 		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+			ExportImportConfigurationSettingsMapFactory.buildExportSettingsMap(
 				userId, plid, groupId, portletId, parameterMap,
 				Constants.EXPORT, startDate, endDate, fileName);
 
@@ -1963,7 +1963,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException {
 
 		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				userId, groupId, privateLayout, null, parameterMap,
 				Constants.IMPORT, null, null, file.getName());
 
@@ -2198,7 +2198,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException {
 
 		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				userId, plid, groupId, portletId, parameterMap,
 				Constants.IMPORT, null, null, file.getName());
 

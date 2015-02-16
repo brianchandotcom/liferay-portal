@@ -92,23 +92,27 @@ import org.springframework.context.ApplicationContext;
 public class ModuleFrameworkImpl implements ModuleFramework {
 
 	@Override
-	public Object addBundle(String location) throws PortalException {
-		return addBundle(location, null);
+	public long addBundle(String location) throws PortalException {
+		Bundle bundle = addBundle(location, null, true);
+
+		return bundle.getBundleId();
 	}
 
 	@Override
-	public Object addBundle(String location, InputStream inputStream)
+	public long addBundle(String location, InputStream inputStream)
 		throws PortalException {
 
-		return addBundle(location, inputStream, true);
+		Bundle bundle = addBundle(location, inputStream, true);
+
+		return bundle.getBundleId();
 	}
 
-	public Object addBundle(
+	public Bundle addBundle(
 			String location, InputStream inputStream, boolean checkPermission)
 		throws PortalException {
 
 		if (_framework == null) {
-			return null;
+			throw new IllegalStateException("Framework not initialized!");
 		}
 
 		if (checkPermission) {
@@ -722,7 +726,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				return;
 			}
 
-			Bundle bundle = (Bundle)addBundle(
+			Bundle bundle = addBundle(
 				initialBundleURL.toString(), inputStream, false);
 
 			if ((bundle == null) || _isFragmentBundle(bundle)) {

@@ -14,12 +14,12 @@
 
 package com.liferay.language.web.portlet.template;
 
+import com.liferay.language.web.constants.LanguagePortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
@@ -41,7 +41,7 @@ public class LanguagePortletDisplayTemplateHandler
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
-			PortletKeys.LANGUAGE, locale);
+			LanguagePortletKeys.LANGUAGE, locale);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -49,7 +49,7 @@ public class LanguagePortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return PortletKeys.LANGUAGE;
+		return LanguagePortletKeys.LANGUAGE;
 	}
 
 	@Override

@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.assetpublisher.util;
+package com.liferay.asset.publisher.util;
 
+import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;

@@ -17,6 +17,8 @@ package com.liferay.portal.search.test;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -48,6 +50,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
+import org.junit.Assume;
 
 /**
  * @author Preston Crary
@@ -69,6 +72,8 @@ public abstract class TestOrderHelper {
 	}
 
 	public void orderByDDMNumberField() throws Exception {
+		Assume.assumeTrue(isOrderByDDMNumberFieldImplementedForSearchEngine());
+
 		orderByDDMField(
 			new String[] {"3", "3.14", "12.34", "2.72", "1.41", "23.45", "20"},
 			new String[] {"1.41", "2.72", "3", "3.14", "12.34", "20", "23.45"},
@@ -100,6 +105,19 @@ public abstract class TestOrderHelper {
 		Group group, ServiceContext serviceContext) throws Exception;
 
 	protected abstract String getSearchableAssetStructureClassName();
+
+	protected boolean isOrderByDDMNumberFieldImplementedForSearchEngine() {
+		SearchEngine searchEngine = SearchEngineUtil.getSearchEngine(
+			SearchEngineUtil.getDefaultSearchEngineId());
+
+		String vendor = searchEngine.getVendor();
+
+		if (vendor.equals("Elasticsearch") || vendor.equals("SOLR")) {
+			return true;
+		}
+
+		return false;
+	}
 
 	protected void orderByDDMField(
 			String[] unsortedValues, final String[] sortedValues,

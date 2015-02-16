@@ -110,7 +110,6 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		orderTestHelper.orderByDDMIntegerField();
 	}
 
-	@Ignore
 	@Test
 	public void testOrderByDDMNumberField() throws Exception {
 		TestOrderHelper orderTestHelper =

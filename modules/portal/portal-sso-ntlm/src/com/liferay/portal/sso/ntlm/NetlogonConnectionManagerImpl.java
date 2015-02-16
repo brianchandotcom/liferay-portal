@@ -44,7 +44,11 @@ import org.osgi.service.component.annotations.Modified;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = NetlogonConnectionManager.class)
+@Component(
+	configurationPid =
+		"com.liferay.portal.sso.ntlm.configuration.NtlmConfiguration",
+	immediate = true, service = NetlogonConnectionManager.class
+)
 public class NetlogonConnectionManagerImpl
 	implements NetlogonConnectionManager {
 

@@ -51,7 +51,11 @@ import org.osgi.service.component.annotations.Modified;
  * @author Wesley Gong
  * @author Daeyoung Song
  */
-@Component(immediate = true, service = AutoLogin.class)
+@Component(
+	configurationPid =
+		"com.liferay.portal.sso.cas.configuration.CASConfiguration",
+	immediate = true, service = AutoLogin.class
+)
 public class CASAutoLogin extends BaseAutoLogin {
 
 	@Activate

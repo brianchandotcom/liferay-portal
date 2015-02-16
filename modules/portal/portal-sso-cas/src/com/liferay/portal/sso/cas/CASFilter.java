@@ -56,6 +56,8 @@ import org.osgi.service.component.annotations.Modified;
  * @author Zsolt Balogh
  */
 @Component(
+	configurationPid =
+		"com.liferay.portal.sso.cas.configuration.CASConfiguration",
 	immediate = true,
 	property = {
 		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",

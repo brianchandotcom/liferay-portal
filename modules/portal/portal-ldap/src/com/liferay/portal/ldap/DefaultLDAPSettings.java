@@ -42,7 +42,11 @@ import org.osgi.service.component.annotations.Modified;
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = LDAPSettings.class)
+@Component(
+	configurationPid =
+		"com.liferay.portal.ldap.configuration.LDAPConfiguration",
+	immediate = true, service = LDAPSettings.class
+)
 public class DefaultLDAPSettings implements LDAPSettings {
 
 	@Override

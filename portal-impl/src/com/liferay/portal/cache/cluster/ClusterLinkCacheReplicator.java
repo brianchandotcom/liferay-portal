@@ -36,25 +36,16 @@ public class ClusterLinkCacheReplicator
 		implements CacheListener<K, V>, CacheReplicator {
 
 	public ClusterLinkCacheReplicator(Properties properties) {
-		if (properties != null) {
-			_replicatePuts = GetterUtil.getBoolean(
-				properties.getProperty(_REPLICATE_PUTS), true);
-			_replicatePutsViaCopy = GetterUtil.getBoolean(
-				properties.getProperty(_REPLICATE_PUTS_VIA_COPY));
-			_replicateRemovals = GetterUtil.getBoolean(
-				properties.getProperty(_REPLICATE_REMOVALS), true);
-			_replicateUpdates = GetterUtil.getBoolean(
-				properties.getProperty(_REPLICATE_UPDATES), true);
-			_replicateUpdatesViaCopy = GetterUtil.getBoolean(
-				properties.getProperty(_REPLICATE_UPDATES_VIA_COPY));
-		}
-		else {
-			_replicatePuts = true;
-			_replicatePutsViaCopy = false;
-			_replicateRemovals = true;
-			_replicateUpdates = true;
-			_replicateUpdatesViaCopy = false;
-		}
+		_replicatePuts = GetterUtil.getBoolean(
+			properties.getProperty(_REPLICATE_PUTS), true);
+		_replicatePutsViaCopy = GetterUtil.getBoolean(
+			properties.getProperty(_REPLICATE_PUTS_VIA_COPY));
+		_replicateRemovals = GetterUtil.getBoolean(
+			properties.getProperty(_REPLICATE_REMOVALS), true);
+		_replicateUpdates = GetterUtil.getBoolean(
+			properties.getProperty(_REPLICATE_UPDATES), true);
+		_replicateUpdatesViaCopy = GetterUtil.getBoolean(
+			properties.getProperty(_REPLICATE_UPDATES_VIA_COPY));
 	}
 
 	@Override

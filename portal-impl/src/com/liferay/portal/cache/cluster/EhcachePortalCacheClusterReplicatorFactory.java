@@ -27,6 +27,10 @@ public class EhcachePortalCacheClusterReplicatorFactory
 
 	@Override
 	public CacheEventListener createCacheEventListener(Properties properties) {
+		if (properties == null) {
+			properties = new Properties();
+		}
+
 		return new EhcachePortalCacheClusterReplicator(properties);
 	}
 

@@ -19,22 +19,6 @@ package com.liferay.portal.sso.tokenbased.spi;
  */
 public enum TokenLocation {
 
-	COOKIE("cookie"), REQUEST("request"), REQUEST_HEADER("requestHeader"),
-	SESSION("session");
-
-	public String getValue() {
-		return _value;
-	}
-
-	@Override
-	public String toString() {
-		return _value;
-	}
-
-	private TokenLocation(String value) {
-		_value = value;
-	}
-
-	private final String _value;
+	COOKIE, REQUEST, REQUEST_HEADER, SESSION;
 
 }

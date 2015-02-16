@@ -16,6 +16,8 @@ package com.liferay.portal.sso.tokenbased.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.sso.tokenbased.spi.TokenLocation;
+
 /**
  * @author Michael C. Han
  */
@@ -33,21 +35,11 @@ public interface TokenBasedConfiguration {
 	@Meta.AD(deflt = "false", required = false)
 	public boolean importFromLDAP();
 
-	@Meta.AD(
-		deflt = "cookie", optionValues = {"cookie", "none", "redirect"},
-		required = false
-	)
-	public String logoutProcessorType();
-
 	@Meta.AD(deflt ="", required = false)
 	public String logoutRedirectURL();
 
-	@Meta.AD(
-		deflt = "requestHeader",
-		optionValues = {"cookie", "request", "requestHeader", "session"},
-		required = false
-	)
-	public String tokenLocation();
+	@Meta.AD(deflt = "REQUEST_HEADER", required = false)
+	public TokenLocation tokenLocation();
 
 	@Meta.AD(deflt = "SM_USER", required = false)
 	public String userTokenName();

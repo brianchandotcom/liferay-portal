@@ -30,6 +30,7 @@ import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.sso.tokenbased.configuration.TokenBasedConfiguration;
 import com.liferay.portal.sso.tokenbased.constants.TokenBasedPropsKeys;
+import com.liferay.portal.sso.tokenbased.spi.TokenLocation;
 import com.liferay.portal.sso.tokenbased.spi.TokenRetriever;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -79,14 +80,13 @@ public class TokenBasedAutoLogin extends BaseAutoLogin {
 			companyId, TokenBasedPropsKeys.USER_TOKEN_NAME,
 			_tokenBasedConfiguration.userTokenName());
 
-		String tokenLocationName = _tokenBasedConfiguration.tokenLocation();
+		TokenLocation tokenLocation = _tokenBasedConfiguration.tokenLocation();
 
-		TokenRetriever tokenRetriever = _tokenRetrievers.get(tokenLocationName);
+		TokenRetriever tokenRetriever = _tokenRetrievers.get(tokenLocation);
 
 		if (tokenRetriever == null) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No TokenRetriever defined for : " + tokenLocationName);
+				_log.warn("No TokenRetriever defined for : " + tokenLocation);
 			}
 
 			return null;
@@ -113,12 +113,11 @@ public class TokenBasedAutoLogin extends BaseAutoLogin {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setTokenRetriever(TokenRetriever tokenRetriever) {
-		_tokenRetrievers.put(
-			tokenRetriever.getTokenLocation().getValue(), tokenRetriever);
+		_tokenRetrievers.put(tokenRetriever.getTokenLocation(), tokenRetriever);
 	}
 
 	protected void unsetTokenRetriever(TokenRetriever tokenRetriever) {
-		_tokenRetrievers.remove(tokenRetriever.getTokenLocation().getValue());
+		_tokenRetrievers.remove(tokenRetriever.getTokenLocation());
 	}
 
 	private User _retrieveUser(long companyId, String login)
@@ -189,7 +188,7 @@ public class TokenBasedAutoLogin extends BaseAutoLogin {
 		TokenBasedAutoLogin.class);
 
 	private volatile TokenBasedConfiguration _tokenBasedConfiguration;
-	private final Map<String, TokenRetriever> _tokenRetrievers =
+	private final Map<TokenLocation, TokenRetriever> _tokenRetrievers =
 		new ConcurrentHashMap<>();
 
 }

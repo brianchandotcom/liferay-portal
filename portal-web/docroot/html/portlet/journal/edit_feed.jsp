@@ -165,7 +165,11 @@ if (feed != null) {
 				</aui:field-wrapper>
 			</c:when>
 			<c:otherwise>
-				<aui:input name="url" type="resource" value="<%= feedURL.toString() %>" />
+				<aui:field-wrapper>
+					<aui:input name="url" type="resource" value="<%= feedURL.toString() %>" />
+
+					<aui:a href="<%= feedURL.toString() %>" label="preview" target="_blank" />
+				</aui:field-wrapper>
 			</c:otherwise>
 		</c:choose>
 	</aui:fieldset>
@@ -315,15 +319,6 @@ if (feed != null) {
 
 		<c:if test="<%= hasSavePermission %>">
 			<aui:button type="submit" />
-
-			<c:if test="<%= feed != null %>">
-
-				<%
-				String taglibPreviewButton = "Liferay.Util.openWindow({id:'" + renderResponse.getNamespace() + "preview', title: '" + UnicodeLanguageUtil.get(request, "feed") + "', uri: '" + feedURL + "'});";
-				%>
-
-				<aui:button onClick="<%= taglibPreviewButton %>" value="preview" />
-			</c:if>
 		</c:if>
 
 		<aui:button href="<%= redirect %>" type="cancel" />

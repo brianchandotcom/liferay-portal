@@ -19,7 +19,9 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Iván Zaera
  */
-@Meta.OCD(id = "com.liferay.wiki.portlet.instance")
+@Meta.OCD(
+	id = "com.liferay.wiki.configuration.WikiPortletInstanceConfiguration"
+)
 public interface WikiPortletInstanceConfiguration {
 
 	/**

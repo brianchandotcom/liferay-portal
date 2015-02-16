@@ -28,8 +28,9 @@ import org.osgi.service.component.annotations.Modified;
  * @author Iván Zaera
  */
 @Component(
-	configurationPid = "com.liferay.wiki.portlet.instance", immediate = true,
-	service = WikiPortletInstanceConfiguration.class
+	configurationPid =
+		"com.liferay.wiki.configuration.WikiPortletInstanceConfiguration",
+	immediate = true, service = WikiPortletInstanceConfiguration.class
 )
 public class WikiPortletInstanceConfigurationImpl
 	implements WikiPortletInstanceConfiguration {

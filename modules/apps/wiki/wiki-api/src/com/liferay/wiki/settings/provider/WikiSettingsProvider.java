@@ -33,8 +33,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  */
 @Component(
-	configurationPid =
-		"com.liferay.wiki.configuration.WikiServiceConfiguration",
 	immediate = true,
 	property = {
 		"class.name=com.liferay.wiki.settings.WikiSettings"

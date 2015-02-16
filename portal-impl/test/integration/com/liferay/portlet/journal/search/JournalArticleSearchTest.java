@@ -140,7 +140,6 @@ public class JournalArticleSearchTest extends BaseSearchTestCase
 		assertEquals(0, query, searchContext);
 	}
 
-	@Ignore
 	@Test
 	public void testOrderByDDMBooleanField() throws Exception {
 		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);
@@ -163,7 +162,6 @@ public class JournalArticleSearchTest extends BaseSearchTestCase
 		orderTestHelper.testOrderByDDMNumberField();
 	}
 
-	@Ignore
 	@Test
 	public void testOrderByDDMTextField() throws Exception {
 		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);

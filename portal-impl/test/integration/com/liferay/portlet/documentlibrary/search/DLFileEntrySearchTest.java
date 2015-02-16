@@ -171,7 +171,6 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase
 	public void testLocalizedSearch() throws Exception {
 	}
 
-	@Ignore
 	@Test
 	public void testOrderByDDMBooleanField() throws Exception {
 		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);
@@ -194,7 +193,6 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase
 		orderTestHelper.testOrderByDDMNumberField();
 	}
 
-	@Ignore
 	@Test
 	public void testOrderByDDMTextField() throws Exception {
 		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);

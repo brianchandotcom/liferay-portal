@@ -20,6 +20,11 @@ package com.liferay.portal.kernel.search;
 public abstract class BaseQueryImpl implements Query {
 
 	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return null;
+	}
+
+	@Override
 	public QueryConfig getQueryConfig() {
 		if (_queryConfig == null) {
 			_queryConfig = new QueryConfig();

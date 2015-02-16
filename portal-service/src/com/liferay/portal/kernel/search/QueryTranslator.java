@@ -17,9 +17,9 @@ package com.liferay.portal.kernel.search;
 /**
  * @author Raymond Augé
  */
-public interface QueryTranslator {
+public interface QueryTranslator<T> {
 
-	public Object translate(Query query) throws ParseException;
+	public T translate(Query query) throws ParseException;
 
 	public Object translateForSolr(Query query) throws ParseException;
 

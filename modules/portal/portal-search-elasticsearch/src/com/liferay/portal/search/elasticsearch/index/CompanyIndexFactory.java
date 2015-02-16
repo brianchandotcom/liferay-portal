@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.elasticsearch.spi.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.util.LogUtil;
 
 import java.util.HashMap;

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SpellCheckIndexWriter;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch.spi.ElasticsearchUpdateDocumentCommand;
 import com.liferay.portal.search.elasticsearch.util.DocumentTypes;
 import com.liferay.portal.search.elasticsearch.util.LogUtil;
 

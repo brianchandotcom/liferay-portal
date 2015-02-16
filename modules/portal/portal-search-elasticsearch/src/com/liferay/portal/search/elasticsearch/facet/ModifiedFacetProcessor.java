@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch.facet;
 
+import com.liferay.portal.search.elasticsearch.spi.facet.FacetProcessor;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

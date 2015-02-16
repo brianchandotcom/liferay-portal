@@ -97,6 +97,16 @@ public class PerFieldAnalyzer extends Analyzer implements Tokenizer {
 		return analyzer.getPositionIncrementGap(fieldName);
 	}
 
+	public boolean isSubstringSearchAlways(String fieldName) {
+		Analyzer analyzer = getAnalyzer(fieldName);
+
+		if (analyzer instanceof LikeKeywordAnalyzer) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	public final TokenStream reusableTokenStream(
 			String fieldName, Reader reader)

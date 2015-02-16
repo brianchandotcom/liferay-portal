@@ -17,7 +17,8 @@ package com.liferay.portal.search.elasticsearch.connection;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.search.elasticsearch.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch.spi.connection.ElasticsearchConnection;
+import com.liferay.portal.search.elasticsearch.spi.index.IndexFactory;
 
 import java.util.Map;
 

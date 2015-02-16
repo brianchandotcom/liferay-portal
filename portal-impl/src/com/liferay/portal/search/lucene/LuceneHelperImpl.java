@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.proxy.MessageValuesThreadLocal;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.QueryPreProcessConfiguration;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -233,14 +234,8 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 		Analyzer analyzer = getAnalyzer();
 
-		if (analyzer instanceof PerFieldAnalyzer) {
-			PerFieldAnalyzer perFieldAnalyzer = (PerFieldAnalyzer)analyzer;
-
-			Analyzer fieldAnalyzer = perFieldAnalyzer.getAnalyzer(field);
-
-			if (fieldAnalyzer instanceof LikeKeywordAnalyzer) {
-				like = true;
-			}
+		if (_queryPreProcessConfiguration.isSubstringSearchAlways(field)) {
+			like = true;
 		}
 
 		if (like) {
@@ -676,6 +671,12 @@ public class LuceneHelperImpl implements LuceneHelper {
 		_analyzer = analyzer;
 	}
 
+	public void setQueryPreProcessConfiguration(
+		QueryPreProcessConfiguration queryPreProcessConfiguration) {
+
+		_queryPreProcessConfiguration = queryPreProcessConfiguration;
+	}
+
 	public void setVersion(Version version) {
 		_version = version;
 	}
@@ -1019,6 +1020,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		new ConcurrentHashMap<>();
 	private final LoadIndexClusterEventListener _loadIndexClusterEventListener;
 	private ThreadPoolExecutor _luceneIndexThreadPoolExecutor;
+	private QueryPreProcessConfiguration _queryPreProcessConfiguration;
 	private Version _version;
 
 	private static class ShutdownSyncJob implements Runnable {

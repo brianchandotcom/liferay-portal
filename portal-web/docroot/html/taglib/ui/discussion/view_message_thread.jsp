@@ -135,6 +135,10 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 				<%
 				String msgBody = message.getBody();
+
+				if (message.isFormatBBCode()) {
+					msgBody = MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
+				}
 				%>
 
 				<div class="lfr-discussion-message-body">

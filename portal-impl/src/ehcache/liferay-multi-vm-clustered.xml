@@ -25,11 +25,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</defaultCache>
 
 	<!-- Entity cache -->
@@ -41,11 +37,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -54,11 +46,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -67,11 +55,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -80,11 +64,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -93,11 +73,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -106,11 +82,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -119,11 +91,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -132,11 +100,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -145,11 +109,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -158,11 +118,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 
 	<!-- FinderCache -->
@@ -174,11 +130,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -187,11 +139,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -200,11 +148,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -213,11 +157,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -226,11 +166,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -239,11 +175,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -252,11 +184,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -265,11 +193,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -278,11 +202,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -291,11 +211,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -304,11 +220,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -317,11 +229,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -330,11 +238,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -343,11 +247,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -356,11 +256,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -369,11 +265,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -382,11 +274,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -395,11 +283,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -408,11 +292,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -421,11 +301,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -434,11 +310,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
+		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
 	</cache>
 
 	<!-- Other -->
@@ -452,7 +324,7 @@
 	>
 		<cacheEventListenerFactory
 			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
 	</cache>
@@ -465,7 +337,7 @@
 	>
 		<cacheEventListenerFactory
 			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
 	</cache>
@@ -478,7 +350,7 @@
 	>
 		<cacheEventListenerFactory
 			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
 	</cache>
@@ -491,7 +363,7 @@
 	>
 		<cacheEventListenerFactory
 			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
 	</cache>
@@ -504,7 +376,7 @@
 	>
 		<cacheEventListenerFactory
 			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
 	</cache>
@@ -517,7 +389,7 @@
 	>
 		<cacheEventListenerFactory
 			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
 	</cache>
@@ -530,7 +402,7 @@
 	>
 		<cacheEventListenerFactory
 			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
 	</cache>
@@ -543,7 +415,7 @@
 	>
 		<cacheEventListenerFactory
 			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
 	</cache>
@@ -556,7 +428,7 @@
 	>
 		<cacheEventListenerFactory
 			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
 	</cache>
@@ -569,7 +441,7 @@
 	>
 		<cacheEventListenerFactory
 			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
 	</cache>
@@ -582,7 +454,7 @@
 	>
 		<cacheEventListenerFactory
 			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
 	</cache>

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/language/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 Locale[] locales = LocaleUtil.fromLanguageIds(languageIds);

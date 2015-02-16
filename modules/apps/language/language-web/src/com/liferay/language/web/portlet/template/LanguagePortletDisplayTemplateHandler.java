@@ -17,6 +17,7 @@ package com.liferay.language.web.portlet.template;
 import com.liferay.language.web.constants.LanguagePortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
@@ -26,10 +27,20 @@ import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateCon
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Garcia
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name="+ LanguagePortletKeys.LANGUAGE
+	},
+	service = TemplateHandler.class
+)
 public class LanguagePortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
@@ -40,8 +51,11 @@ public class LanguagePortletDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language");
+
 		String portletTitle = PortalUtil.getPortletTitle(
-			LanguagePortletKeys.LANGUAGE, locale);
+			LanguagePortletKeys.LANGUAGE, resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));

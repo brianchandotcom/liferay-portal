@@ -78,23 +78,17 @@ public class DocumentImpl implements Document {
 
 		String fieldName = sort.getFieldName();
 
-		if (fieldName.endsWith(_SORTABLE_FIELD_SUFFIX)) {
+		if (DocumentImpl.isSortableFieldName(fieldName)) {
 			return fieldName;
 		}
 
-		String sortFieldName = null;
+		if ((sort.getType() == Sort.STRING_TYPE) &&
+			!DocumentImpl.isSortableTextField(fieldName)) {
 
-		if (DocumentImpl.isSortableTextField(fieldName) ||
-			(sort.getType() != Sort.STRING_TYPE)) {
-
-			sortFieldName = DocumentImpl.getSortableFieldName(fieldName);
+			return scoreFieldName;
 		}
 
-		if (Validator.isNull(sortFieldName)) {
-			sortFieldName = scoreFieldName;
-		}
-
-		return sortFieldName;
+		return DocumentImpl.getSortableFieldName(fieldName);
 	}
 
 	public static boolean isSortableFieldName(String name) {

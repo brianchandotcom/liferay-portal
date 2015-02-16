@@ -13,7 +13,6 @@
 	<resource file="resource-actions/dynamicdatamapping.xml" />
 	<resource file="resource-actions/expando.xml" />
 	<resource file="resource-actions/journal.xml" />
-	<resource file="resource-actions/language.xml" />
 	<resource file="resource-actions/login.xml" />
 	<resource file="resource-actions/messageboards.xml" />
 	<resource file="resource-actions/mobiledevicerules.xml" />

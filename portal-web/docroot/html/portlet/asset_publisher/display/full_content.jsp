@@ -193,10 +193,10 @@ request.setAttribute("view.jsp-showIconLabel", true);
 				<%
 				String assetEntryClassName = assetEntry.getClassName();
 
-				PortletRatingsDefinition.RatingsType ratingsType = PortletRatingsDefinition.RatingsType.STARS;
+				RatingsType ratingsType = RatingsType.STARS;
 
 				if (assetEntryClassName.equals(MBDiscussion.class.getName()) || assetEntryClassName.equals(MBMessage.class.getName())) {
-					ratingsType = PortletRatingsDefinition.RatingsType.THUMBS;
+					ratingsType = RatingsType.THUMBS;
 				}
 				%>
 

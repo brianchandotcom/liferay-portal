@@ -18,6 +18,8 @@
 
 <%
 PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
+
+CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDisplayContext = new CompanyPortletRatingsDefinitionDisplayContext(companyPortletPreferences, request);
 %>
 
 <liferay-ui:error-marker key="errorSection" value="ratings" />
@@ -33,49 +35,40 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 <aui:fieldset>
 
 	<%
-	String[] portletIds = PortletRatingsDefinitionUtil.getPortletIds();
+	Map<String, Map<String, RatingsType>> companyRatingsTypeMaps = companyPortletRatingsDefinitionDisplayContext.getCompanyRatingsTypeMaps();
 
-	for (String portletId : portletIds) {
+	for (String portletId : companyRatingsTypeMaps.keySet()) {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 	%>
 
 		<p>
-			<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
+			<strong><%= PortalUtil.getPortletTitle(portlet, application, locale) %></strong>
 		</p>
 
 		<%
-		String[] classNames = PortletRatingsDefinitionUtil.getClassNames(portletId);
+		Map<String, RatingsType> ratingsTypeMap = companyRatingsTypeMaps.get(portletId);
+
+		Set<String> classNames = ratingsTypeMap.keySet();
 
 		for (String className : classNames) {
+			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
+
+			RatingsType ratingsType = ratingsTypeMap.get(className);
 		%>
 
-			<c:if test="<%= classNames.length > 1 %>">
-				<p><%= ResourceActionsUtil.getModelResource(locale, className) %></p>
-			</c:if>
+			<aui:select label="<%= (classNames.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "settings--" + propertyKey + "--" %>'>
 
-			<%
-			String propertyKey = className + StringPool.UNDERLINE + "RatingsType";
+				<%
+				for (RatingsType curRatingsType : RatingsType.values()) {
+				%>
 
-			PortletRatingsDefinition.RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(portletId, className);
+					<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= Validator.equals(ratingsType, curRatingsType) %>" value="<%= curRatingsType.getValue() %>" />
 
-			String ratingsTypeString = PrefsParamUtil.getString(companyPortletPreferences, request, propertyKey, defaultRatingsType.toString());
-			%>
+				<%
+				}
+				%>
 
-			<div class="row-fields">
-				<aui:select label='<%= (classNames.length > 1) ? ResourceActionsUtil.getModelResource(locale, className) : "" %>' name='<%= "settings--" + propertyKey + "--" %>'>
-
-					<%
-					for (PortletRatingsDefinition.RatingsType curRatingsType : PortletRatingsDefinition.RatingsType.values()) {
-					%>
-
-						<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= ratingsTypeString.equals(curRatingsType.getValue()) %>" value="<%= curRatingsType.getValue() %>" />
-
-					<%
-					}
-					%>
-
-				</aui:select>
-			</div>
+			</aui:select>
 
 	<%
 		}

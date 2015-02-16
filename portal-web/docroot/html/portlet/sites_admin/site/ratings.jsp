@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
-PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
-
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
 UnicodeProperties groupTypeSettings = null;
@@ -29,6 +27,8 @@ if (liveGroup != null) {
 else {
 	groupTypeSettings = new UnicodeProperties();
 }
+
+GroupPortletRatingsDefinitionDisplayContext groupPortletRatingsDefinitionDisplayContext = new GroupPortletRatingsDefinitionDisplayContext(groupTypeSettings, request);
 %>
 
 <liferay-ui:error-marker key="errorSection" value="ratings" />
@@ -44,44 +44,40 @@ else {
 <aui:fieldset>
 
 	<%
-	String[] portletIds = PortletRatingsDefinitionUtil.getPortletIds();
+	Map<String, Map<String, RatingsType>> groupRatingsTypeMaps = groupPortletRatingsDefinitionDisplayContext.getGroupRatingsTypeMaps();
 
-	for (String portletId : portletIds) {
+	for (String portletId : groupRatingsTypeMaps.keySet()) {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 	%>
 
 		<p>
-			<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
+			<strong><%= PortalUtil.getPortletTitle(portlet, application, locale) %></strong>
 		</p>
 
 		<%
-		String[] classNames = PortletRatingsDefinitionUtil.getClassNames(portletId);
+		Map<String, RatingsType> ratingsTypeMap = groupRatingsTypeMaps.get(portletId);
+
+		Set<String> classNames = ratingsTypeMap.keySet();
 
 		for (String className : classNames) {
-			String propertyKey = className + StringPool.UNDERLINE + "RatingsType";
+			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
 
-			PortletRatingsDefinition.RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(portletId, className);
-
-			String companyRatingsTypeString = PrefsParamUtil.getString(companyPortletPreferences, request, propertyKey, defaultRatingsType.toString());
-
-			String ratingsTypeString = PropertiesParamUtil.getString(groupTypeSettings, request, propertyKey, companyRatingsTypeString);
+			RatingsType ratingsType = ratingsTypeMap.get(className);
 		%>
 
-			<div class="ratings-type-select">
-				<aui:select label='<%= (classNames.length > 1) ? ResourceActionsUtil.getModelResource(locale, className) : "" %>' name='<%= "TypeSettingsProperties--" + propertyKey + "--" %>'>
+			<aui:select label="<%= (classNames.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "TypeSettingsProperties--" + propertyKey + "--" %>'>
 
-					<%
-					for (PortletRatingsDefinition.RatingsType ratingsType : PortletRatingsDefinition.RatingsType.values()) {
-					%>
+				<%
+				for (RatingsType curRatingsType : RatingsType.values()) {
+				%>
 
-						<aui:option label="<%= LanguageUtil.get(request, ratingsType.getValue()) %>" selected="<%= ratingsTypeString.equals(ratingsType.getValue()) %>" value="<%= ratingsType.getValue() %>" />
+					<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= Validator.equals(ratingsType, curRatingsType) %>" value="<%= curRatingsType.getValue() %>" />
 
-					<%
-					}
-					%>
+				<%
+				}
+				%>
 
-				</aui:select>
-			</div>
+			</aui:select>
 
 	<%
 		}

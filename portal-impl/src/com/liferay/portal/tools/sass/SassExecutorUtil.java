@@ -15,12 +15,14 @@
 package com.liferay.portal.tools.sass;
 
 import com.liferay.portal.kernel.util.NamedThreadFactory;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.scripting.ruby.RubyExecutor;
+import com.liferay.sass.compiler.SassCompiler;
 
+import java.io.File;
 import java.io.IOException;
-
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutorService;
@@ -36,6 +38,7 @@ import org.jruby.runtime.builtin.IRubyObject;
 /**
  * @author Minhchau Dang
  * @author Shuyang Zhou
+ * @author David Truong
  */
 public class SassExecutorUtil {
 
@@ -64,8 +67,32 @@ public class SassExecutorUtil {
 	public static void init(String docrootDirName, String portalCommonDirName)
 		throws IOException {
 
+		int threads = 1;
+		
+		if (PropsKeys.SASS_COMPILER_IMPL.equals("libsass")) {
+			_sassCompiler = new SassCompiler();
+		}
+		else {
+			threads = 2;
+			
+			RubyExecutor rubyExecutor = new RubyExecutor();
+
+			rubyExecutor.setExecuteInSeparateThread(false);
+
+			_scriptingContainer = rubyExecutor.getScriptingContainer();
+
+			_scriptingContainer.setCurrentDirectory(System.getProperty("user.dir"));
+
+			String rubyScript = StringUtil.read(
+				SassExecutorUtil.class.getClassLoader(),
+				"com/liferay/portal/servlet/filters/dynamiccss" +
+					"/dependencies/main.rb");
+
+			_scriptObject = _scriptingContainer.runScriptlet(rubyScript);
+		}
+		
 		_executorService = Executors.newFixedThreadPool(
-			2,
+			threads,
 			new NamedThreadFactory(
 				"SassExecutor", Thread.NORM_PRIORITY,
 				SassExecutorUtil.class.getClassLoader()));
@@ -74,21 +101,6 @@ public class SassExecutorUtil {
 
 		_docrootDirName = docrootDirName;
 		_portalCommonDirName = portalCommonDirName;
-
-		RubyExecutor rubyExecutor = new RubyExecutor();
-
-		rubyExecutor.setExecuteInSeparateThread(false);
-
-		_scriptingContainer = rubyExecutor.getScriptingContainer();
-
-		_scriptingContainer.setCurrentDirectory(System.getProperty("user.dir"));
-
-		String rubyScript = StringUtil.read(
-			SassExecutorUtil.class.getClassLoader(),
-			"com/liferay/portal/servlet/filters/dynamiccss" +
-				"/dependencies/main.rb");
-
-		_scriptObject = _scriptingContainer.runScriptlet(rubyScript);
 	}
 
 	public static String parse(String fileName, String content) {
@@ -101,43 +113,60 @@ public class SassExecutorUtil {
 		if (pos >= 0) {
 			cssThemePath = filePath.substring(0, pos + 4);
 		}
-
-		try {
-			return _scriptingContainer.callMethod(
-				_scriptObject, "process",
-				new Object[] {
-					content, _portalCommonDirName, filePath, cssThemePath,
-					_TMP_DIR, false
-				},
-				String.class);
-		}
-		catch (Exception e) {
-			if (e instanceof RaiseException) {
-				RaiseException raiseException = (RaiseException)e;
-
-				RubyException rubyException = raiseException.getException();
-
-				System.err.println(
-					String.valueOf(rubyException.message.toJava(String.class)));
-
-				IRubyObject iRubyObject = rubyException.getBacktrace();
-
-				RubyArray rubyArray = (RubyArray)iRubyObject.toJava(
-					RubyArray.class);
-
-				for (int i = 0; i < rubyArray.size(); i++) {
-					Object object = rubyArray.get(i);
-
-					System.err.println(String.valueOf(object));
-				}
+		
+		
+		if (PropsKeys.SASS_COMPILER_IMPL.equals("libsass")) {
+			try {
+				String includePath = _portalCommonDirName + File.pathSeparator + cssThemePath;
+				
+				return _sassCompiler.compileString(content, includePath, "");
 			}
-			else {
+			catch (Exception e) {
 				e.printStackTrace();
+
+				_exception = new Exception("Unable to parse " + fileName, e);
+
+				_mainThread.interrupt();
 			}
+		}
+		else {
+			try {
+				return _scriptingContainer.callMethod(
+					_scriptObject, "process",
+					new Object[] {
+						content, _portalCommonDirName, filePath, cssThemePath,
+						_TMP_DIR, false
+					},
+					String.class);
+			}
+			catch (Exception e) {
+				if (e instanceof RaiseException) {
+					RaiseException raiseException = (RaiseException)e;
+	
+					RubyException rubyException = raiseException.getException();
+	
+					System.err.println(
+						String.valueOf(rubyException.message.toJava(String.class)));
+	
+					IRubyObject iRubyObject = rubyException.getBacktrace();
+	
+					RubyArray rubyArray = (RubyArray)iRubyObject.toJava(
+						RubyArray.class);
+	
+					for (int i = 0; i < rubyArray.size(); i++) {
+						Object object = rubyArray.get(i);
+	
+						System.err.println(String.valueOf(object));
+					}
+				}
+				else {
+					e.printStackTrace();
+				}
 
-			_exception = new Exception("Unable to parse " + fileName, e);
+				_exception = new Exception("Unable to parse " + fileName, e);
 
-			_mainThread.interrupt();
+				_mainThread.interrupt();
+			}
 		}
 
 		return content;
@@ -182,6 +211,7 @@ public class SassExecutorUtil {
 	private static String _portalCommonDirName;
 	private static final ConcurrentMap<String, SassFile> _sassFileCache =
 		new ConcurrentHashMap<>();
+	private static SassCompiler _sassCompiler;
 	private static ScriptingContainer _scriptingContainer;
 	private static Object _scriptObject;
 

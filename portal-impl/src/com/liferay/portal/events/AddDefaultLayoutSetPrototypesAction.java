@@ -123,23 +123,6 @@ public class AddDefaultLayoutSetPrototypesAction
 
 		updatePortletSetup(layout, portletId, preferences);
 
-		portletId = addPortletId(
-			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
-
-		preferences = new HashMap<>();
-
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
-			preferences.put(
-				"portletSetupTitle_" + locale,
-				LanguageUtil.get(locale, "recent-content"));
-		}
-
-		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
-
-		updatePortletSetup(layout, portletId, preferences);
-
 		// Documents layout
 
 		layout = addLayout(
@@ -151,23 +134,6 @@ public class AddDefaultLayoutSetPrototypesAction
 		preferences = new HashMap<>();
 
 		preferences.put("portletSetupShowBorders", Boolean.FALSE.toString());
-
-		updatePortletSetup(layout, portletId, preferences);
-
-		portletId = addPortletId(
-			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
-
-		preferences = new HashMap<>();
-
-		preferences.put("anyAssetType", Boolean.FALSE.toString());
-
-		for (Locale locale : locales) {
-			preferences.put(
-				"portletSetupTitle_" + locale,
-				LanguageUtil.get(locale, "upcoming-events"));
-		}
-
-		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
 
 		updatePortletSetup(layout, portletId, preferences);
 	}
@@ -203,28 +169,9 @@ public class AddDefaultLayoutSetPrototypesAction
 
 		addPortletId(layout, PortletKeys.USER_STATISTICS, "column-2");
 
-		portletId = addPortletId(
-			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
-
-		preferences = new HashMap<>();
-
-		preferences.put("anyAssetType", Boolean.FALSE.toString());
-
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
-			preferences.put(
-				"portletSetupTitle_" + locale,
-				LanguageUtil.get(locale, "upcoming-events"));
-		}
-
-		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
-
-		updatePortletSetup(layout, portletId, preferences);
-
 		// Wiki layout
 
-		layout = addLayout(layoutSet, "wiki", "/wiki", "2_columns_iii");
+		addLayout(layoutSet, "wiki", "/wiki", "2_columns_iii");
 	}
 
 	protected void doRun(long companyId) throws Exception {

@@ -19,7 +19,7 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Julio Camarero
  */
-@Meta.OCD(id = "com.liferay.ip.geocoder")
+@Meta.OCD(id = "com.liferay.ip.geocoder.internal.IPGeocoderConfiguration")
 public interface IPGeocoderConfiguration {
 
 	@Meta.AD(

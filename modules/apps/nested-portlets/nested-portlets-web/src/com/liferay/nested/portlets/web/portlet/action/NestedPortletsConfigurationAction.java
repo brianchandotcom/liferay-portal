@@ -60,7 +60,9 @@ import org.osgi.service.component.annotations.Modified;
  * @author Peter Fellwock
  */
 @Component(
-	configurationPid = "com.liferay.nested.portlets.web",
+	configurationPid =
+		"com.liferay.nested.portlets.web.configuration." +
+			"NestedPortletsConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"javax.portlet.name=" + NestedPortletsPortletKeys.NESTED_PORTLETS

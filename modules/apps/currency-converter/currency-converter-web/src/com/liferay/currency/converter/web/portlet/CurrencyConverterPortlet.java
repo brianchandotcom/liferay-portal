@@ -40,8 +40,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-		configurationPid = "com.liferay.currency.converter.web",
-		configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	configurationPid =
+		"com.liferay.currency.converter.web.configuration." +
+			"CurrencyConverterConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-currency-converter",
 		"com.liferay.portlet.display-category=category.finance",

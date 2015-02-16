@@ -19,7 +19,11 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Peter Fellwock
  */
-@Meta.OCD(id = "com.liferay.portal.template.freemarker")
+@Meta.OCD(
+	id =
+		"com.liferay.portal.template.freemarker.configuration." +
+			"FreemarkerEngineConfiguration"
+)
 public interface FreemarkerEngineConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)

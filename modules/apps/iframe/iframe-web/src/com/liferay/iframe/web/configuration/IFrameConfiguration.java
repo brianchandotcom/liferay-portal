@@ -19,7 +19,7 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Peter Fellwock
  */
-@Meta.OCD(id = "com.liferay.iframe.web")
+@Meta.OCD(id = "com.liferay.iframe.web.configuration.IFrameConfiguration")
 public interface IFrameConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)

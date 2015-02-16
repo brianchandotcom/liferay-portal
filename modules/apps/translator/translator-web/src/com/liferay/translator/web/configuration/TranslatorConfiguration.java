@@ -21,7 +21,8 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Peter Fellwock
  */
 @Meta.OCD(
-	id = "com.liferay.translator.web", localization = "content.Language"
+	id = "com.liferay.translator.web.configuration.TranslatorConfiguration",
+	localization = "content.Language"
 )
 public interface TranslatorConfiguration {
 

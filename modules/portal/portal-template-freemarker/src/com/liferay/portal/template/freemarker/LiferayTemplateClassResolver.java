@@ -37,7 +37,9 @@ import org.osgi.service.component.annotations.Modified;
  * @author Raymond Augé
  */
 @Component(
-	configurationPid = "com.liferay.portal.template.freemarker",
+	configurationPid =
+		"com.liferay.portal.template.freemarker.configuration." +
+			"FreemarkerEngineConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true
 )
 public class LiferayTemplateClassResolver implements TemplateClassResolver {

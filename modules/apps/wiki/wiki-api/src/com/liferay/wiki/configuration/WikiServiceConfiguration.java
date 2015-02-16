@@ -19,7 +19,7 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Iván Zaera
  */
-@Meta.OCD(id = "com.liferay.wiki.service")
+@Meta.OCD(id = "com.liferay.wiki.configuration.WikiServiceConfiguration")
 public interface WikiServiceConfiguration {
 
 	/**

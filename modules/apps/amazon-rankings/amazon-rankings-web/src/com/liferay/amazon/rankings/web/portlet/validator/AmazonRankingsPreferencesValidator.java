@@ -41,7 +41,9 @@ import org.osgi.service.component.annotations.Modified;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	configurationPid = "com.liferay.amazon.rankings.web",
+	configurationPid =
+		"com.liferay.amazon.rankings.web.configuration." +
+			"AmazonRankingsConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"javax.portlet.name=" + AmazonRankingsPortletKeys.AMAZON_RANKINGS

@@ -41,7 +41,8 @@ import org.osgi.service.component.annotations.Modified;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	configurationPid = "com.liferay.iframe.web",
+	configurationPid =
+		"com.liferay.iframe.web.configuration.IFrameConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"javax.portlet.name=" + IFramePortletKeys.IFRAME

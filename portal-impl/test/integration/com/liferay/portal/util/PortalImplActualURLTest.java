@@ -138,7 +138,8 @@ public class PortalImplActualURLTest {
 			(LayoutTypePortlet)layout.getLayoutType();
 
 		String portletId = layoutTypePortlet.addPortletId(
-			TestPropsValues.getUserId(), PortletKeys.ASSET_PUBLISHER,
+			TestPropsValues.getUserId(),
+			"com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
 			"column-1", 0);
 
 		layoutTypePortlet.setTypeSettingsProperty(

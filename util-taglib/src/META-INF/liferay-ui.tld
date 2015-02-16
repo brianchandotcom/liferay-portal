@@ -3200,7 +3200,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>displayStyle</name>
+			<name>displayStyleDefinition</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

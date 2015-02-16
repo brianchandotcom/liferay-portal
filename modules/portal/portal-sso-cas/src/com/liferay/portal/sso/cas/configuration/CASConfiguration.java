@@ -20,7 +20,8 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Michael C. Han
  */
 @Meta.OCD(
-	id = "com.liferay.portal.sso.cas", localization = "content.Language"
+	id = "com.liferay.portal.sso.cas.configuration.CASConfiguration",
+	localization = "content.Language"
 )
 public interface CASConfiguration {
 

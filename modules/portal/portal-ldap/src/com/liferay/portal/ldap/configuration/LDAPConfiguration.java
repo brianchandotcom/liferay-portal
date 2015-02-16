@@ -19,7 +19,10 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Michael C. Han
  */
-@Meta.OCD(id = "com.liferay.portal.ldap", localization = "content.Language")
+@Meta.OCD(
+	id = "com.liferay.portal.ldap.configuration.LDAPConfigurationp",
+	localization = "content.Language"
+)
 public interface LDAPConfiguration {
 
 	@Meta.AD(deflt = "false", id = "export.enabled", required = false)

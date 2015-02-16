@@ -124,6 +124,19 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		return (DLFileEntry)fileEntry.getModel();
 	}
 
+	@Override
+	public BaseModel<?> getParentBaseModel(
+			Group group, ServiceContext serviceContext)
+		throws Exception {
+
+		Folder folder = DLAppTestUtil.addFolder(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH),
+			serviceContext);
+
+		return (DLFolder)folder.getModel();
+	}
+
 	@Ignore()
 	@Override
 	@Test
@@ -253,19 +266,6 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 		Folder folder = DLAppTestUtil.addFolder(
 			(Long)parentBaseModel.getPrimaryKeyObj(),
-			RandomTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH),
-			serviceContext);
-
-		return (DLFolder)folder.getModel();
-	}
-
-	@Override
-	protected BaseModel<?> getParentBaseModel(
-			Group group, ServiceContext serviceContext)
-		throws Exception {
-
-		Folder folder = DLAppTestUtil.addFolder(
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH),
 			serviceContext);
 

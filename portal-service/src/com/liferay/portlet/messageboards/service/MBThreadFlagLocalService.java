@@ -59,8 +59,8 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	public com.liferay.portlet.messageboards.model.MBThreadFlag addMBThreadFlag(
 		com.liferay.portlet.messageboards.model.MBThreadFlag mbThreadFlag);
 
-	public void addThreadFlag(long userId,
-		com.liferay.portlet.messageboards.model.MBThread thread,
+	public com.liferay.portlet.messageboards.model.MBThreadFlag addThreadFlag(
+		long userId, com.liferay.portlet.messageboards.model.MBThread thread,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

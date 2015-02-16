@@ -52,11 +52,11 @@ public class MBThreadFlagLocalServiceUtil {
 		return getService().addMBThreadFlag(mbThreadFlag);
 	}
 
-	public static void addThreadFlag(long userId,
-		com.liferay.portlet.messageboards.model.MBThread thread,
+	public static com.liferay.portlet.messageboards.model.MBThreadFlag addThreadFlag(
+		long userId, com.liferay.portlet.messageboards.model.MBThread thread,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addThreadFlag(userId, thread, serviceContext);
+		return getService().addThreadFlag(userId, thread, serviceContext);
 	}
 
 	/**

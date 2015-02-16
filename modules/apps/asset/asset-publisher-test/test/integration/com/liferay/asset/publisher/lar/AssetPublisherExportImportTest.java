@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.lar;
+package com.liferay.asset.publisher.lar;
 
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -42,14 +44,12 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.util.test.AssetTestUtil;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
@@ -85,7 +85,7 @@ public class AssetPublisherExportImportTest
 
 	@Override
 	public String getPortletId() throws Exception {
-		return PortletKeys.ASSET_PUBLISHER +
+		return AssetPublisherPortletKeys.ASSET_PUBLISHER +
 			PortletConstants.INSTANCE_SEPARATOR + RandomTestUtil.randomString();
 	}
 

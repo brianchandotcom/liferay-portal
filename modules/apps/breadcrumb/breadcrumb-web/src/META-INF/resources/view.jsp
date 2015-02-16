@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/breadcrumb/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 List<Integer> breadcrumbEntryTypes = new ArrayList<Integer>();

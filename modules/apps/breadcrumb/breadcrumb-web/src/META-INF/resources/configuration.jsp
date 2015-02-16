@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/breadcrumb/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(Layout.class.getName());
@@ -72,7 +72,6 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 
 		<liferay-portlet:preview
 			portletName="<%= portletResource %>"
-			queryString="struts_action=/breadcrumb/view"
 			showBorders="<%= true %>"
 		/>
 	</aui:col>

@@ -307,8 +307,6 @@ public interface PropsKeys {
 
 	public static final String BREADCRUMB_DISPLAY_STYLE_OPTIONS = "breadcrumb.display.style.options";
 
-	public static final String BREADCRUMB_DISPLAY_TEMPLATES_CONFIG = "breadcrumb.display.templates.config";
-
 	public static final String BREADCRUMB_SHOW_GUEST_GROUP = "breadcrumb.show.guest.group";
 
 	public static final String BREADCRUMB_SHOW_PARENT_GROUPS = "breadcrumb.show.parent.groups";

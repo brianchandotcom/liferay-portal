@@ -194,14 +194,6 @@
 		<put name="portlet_content" value="/portlet/blogs_aggregator/view.jsp" />
 	</definition>
 
-	<!-- Breadcrumb -->
-
-	<definition name="portlet.breadcrumb" extends="portlet" />
-
-	<definition name="portlet.breadcrumb.view" extends="portlet.breadcrumb">
-		<put name="portlet_content" value="/portlet/breadcrumb/view.jsp" />
-	</definition>
-
 	<!-- Calendar -->
 
 	<definition name="portlet.calendar" extends="portlet" />

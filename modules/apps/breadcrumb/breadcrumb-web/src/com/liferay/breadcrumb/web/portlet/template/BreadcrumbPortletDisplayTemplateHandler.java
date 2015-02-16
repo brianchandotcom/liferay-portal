@@ -12,28 +12,39 @@
  * details.
  */
 
-package com.liferay.portlet.breadcrumb.template;
+package com.liferay.breadcrumb.web.portlet.template;
 
+import com.liferay.breadcrumb.web.configuration.BreadcrumbConfigurationValues;
+import com.liferay.breadcrumb.web.constants.BreadcrumbPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author José Manuel Navarro
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + BreadcrumbPortletKeys.BREADCRUMB
+	},
+	service = TemplateHandler.class
+)
 public class BreadcrumbPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
@@ -54,8 +65,11 @@ public class BreadcrumbPortletDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language");
+
 		String portletTitle = PortalUtil.getPortletTitle(
-			getResourceName(), locale);
+			BreadcrumbPortletKeys.BREADCRUMB, resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -63,7 +77,7 @@ public class BreadcrumbPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return PortletKeys.BREADCRUMB;
+		return BreadcrumbPortletKeys.BREADCRUMB;
 	}
 
 	@Override
@@ -92,7 +106,7 @@ public class BreadcrumbPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return PropsValues.BREADCRUMB_DISPLAY_TEMPLATES_CONFIG;
+		return BreadcrumbConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

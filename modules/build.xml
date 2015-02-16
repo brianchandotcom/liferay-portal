@@ -7,6 +7,7 @@
 		<dirset dir="apps/asset" includes="*" />
 		<dirset dir="apps/blogs" includes="*" />
 		<dirset dir="apps/bookmarks" includes="*" />
+		<dirset dir="apps/breadcrumb" includes="*" />
 		<dirset dir="apps/configuration-admin" includes="*" />
 		<dirset dir="apps/currency-converter" includes="*" />
 		<dirset dir="apps/dictionary" includes="*" />

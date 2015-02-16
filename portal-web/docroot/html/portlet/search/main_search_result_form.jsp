@@ -51,7 +51,7 @@ if (assetRendererFactory != null) {
 
 	viewFullContentURL = _getViewFullContentURL(request, themeDisplay, className, document);
 
-	viewFullContentURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view_content.jsp");
+	viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
 
 	if (Validator.isNotNull(returnToFullPageURL)) {
 		viewFullContentURL.setParameter("returnToFullPageURL", returnToFullPageURL);

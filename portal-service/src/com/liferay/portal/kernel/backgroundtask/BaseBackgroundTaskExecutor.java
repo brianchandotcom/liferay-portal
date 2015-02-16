@@ -42,10 +42,6 @@ public abstract class BaseBackgroundTaskExecutor
 
 	@Override
 	public int getIsolationLevel() {
-		if (_isolationLevel == 0) {
-			_isolationLevel = BackgroundTaskConstants.ISOLATION_LEVEL_CLASS;
-		}
-
 		return _isolationLevel;
 	}
 
@@ -56,7 +52,13 @@ public abstract class BaseBackgroundTaskExecutor
 
 	@Override
 	public boolean isSerial() {
-		return _serial;
+		if (_isolationLevel ==
+				BackgroundTaskConstants.ISOLATION_LEVEL_NOT_ISOLATED) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	protected Locale getLocale(BackgroundTask backgroundTask) {
@@ -95,16 +97,12 @@ public abstract class BaseBackgroundTaskExecutor
 		_isolationLevel = isolationLevel;
 	}
 
-	protected void setSerial(boolean serial) {
-		_serial = serial;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseBackgroundTaskExecutor.class);
 
 	private BackgroundTaskStatusMessageTranslator
 		_backgroundTaskStatusMessageTranslator;
-	private int _isolationLevel;
-	private boolean _serial;
+	private int _isolationLevel =
+		BackgroundTaskConstants.ISOLATION_LEVEL_NOT_ISOLATED;
 
 }

@@ -639,6 +639,7 @@ create index IX_A19C89FF on SystemEvent (groupId, systemEventSetKey);
 
 create unique index IX_143DC786 on Team (groupId, name);
 
+create index IX_22BA920 on Ticket (classNameId, classPK, type_);
 create index IX_B2468446 on Ticket (key_);
 
 create unique index IX_B35F73D5 on TrashEntry (classNameId, classPK);

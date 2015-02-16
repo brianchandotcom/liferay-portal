@@ -175,6 +175,19 @@ public class TicketPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_T() {
+		try {
+			_persistence.countByC_C_T(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+			_persistence.countByC_C_T(0L, 0L, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Ticket newTicket = addTicket();
 

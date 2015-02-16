@@ -47,14 +47,14 @@ import javax.portlet.PortletRequest;
 public class ExportImportConfigurationSettingsMapFactory {
 
 	public static Map<String, Serializable> buildExportSettingsMap(
-		long userId, long plid, long sourceGroupId, String portletId,
+		long userId, long sourcePlid, long sourceGroupId, String portletId,
 		Map<String, String[]> parameterMap, String cmd, Date startDate,
 		Date endDate, String fileName) {
 
 		return buildSettingsMap(
-			userId, sourceGroupId, plid, 0, 0, portletId, null, null, null,
-			parameterMap, StringPool.BLANK, 0, StringPool.BLANK, null, 0, null,
-			cmd, startDate, endDate, null, null, fileName);
+			userId, sourceGroupId, sourcePlid, 0, 0, portletId, null, null,
+			null, parameterMap, StringPool.BLANK, 0, StringPool.BLANK, null, 0,
+			null, cmd, startDate, endDate, null, null, fileName);
 	}
 
 	public static Map<String, Serializable> buildImportSettingsMap(
@@ -70,14 +70,14 @@ public class ExportImportConfigurationSettingsMapFactory {
 	}
 
 	public static Map<String, Serializable> buildImportSettingsMap(
-		long userId, long plid, long targetGroupId, String portletId,
+		long userId, long targetPlid, long targetGroupId, String portletId,
 		Map<String, String[]> parameterMap, String cmd, Date startDate,
 		Date endDate, String fileName) {
 
 		return buildSettingsMap(
-			userId, 0, plid, targetGroupId, 0, portletId, null, null, null,
-			parameterMap, StringPool.BLANK, 0, StringPool.BLANK, null, 0, null,
-			cmd, startDate, endDate, null, null, fileName);
+			userId, 0, 0, targetGroupId, targetPlid, portletId, null, null,
+			null, parameterMap, StringPool.BLANK, 0, StringPool.BLANK, null, 0,
+			null, cmd, startDate, endDate, null, null, fileName);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(

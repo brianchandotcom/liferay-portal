@@ -1793,10 +1793,6 @@ public interface PropsKeys {
 
 	public static final String MY_SITES_SHOW_USER_PUBLIC_SITES_WITH_NO_LAYOUTS = "my.sites.show.user.public.sites.with.no.layouts";
 
-	public static final String NAVIGATION_DISPLAY_STYLE_DEFAULT = "navigation.display.style.default";
-
-	public static final String NAVIGATION_DISPLAY_STYLE_OPTIONS = "navigation.display.style.options";
-
 	public static final String NET_SF_EHCACHE_CONFIGURATION_RESOURCE_NAME = "net.sf.ehcache.configurationResourceName";
 
 	public static final String NETVIBES_SERVLET_MAPPING = "netvibes.servlet.mapping";

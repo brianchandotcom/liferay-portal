@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/navigation/init.jsp" %>
+package com.liferay.navigation.web.constants;
 
-<liferay-ui:navigation
-	bulletStyle="<%= bulletStyle %>"
-	displayStyle="<%= displayStyle %>"
-	headerType="<%= headerType %>"
-	includedLayouts="<%= includedLayouts %>"
-	nestedChildren="<%= nestedChildren %>"
-	preview="<%= preview %>"
-	rootLayoutLevel="<%= rootLayoutLevel %>"
-	rootLayoutType="<%= rootLayoutType %>"
-/>
+/**
+ * @author Eudaldo Alonso
+ */
+public class NavigationPortletKeys {
+
+	public static final String NAVIGATION =
+		"com_liferay_navigation_web_portlet_NavigationPortlet";
+
+}

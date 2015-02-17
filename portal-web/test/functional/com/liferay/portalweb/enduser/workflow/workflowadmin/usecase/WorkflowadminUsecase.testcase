@@ -462,7 +462,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="XSSScriptWebContent" priority="5">
+	<command name="XSSScriptWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

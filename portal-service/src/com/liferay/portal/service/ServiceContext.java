@@ -1006,12 +1006,11 @@ public class ServiceContext implements Cloneable, Serializable {
 			setUserId(serviceContext.getUserId());
 		}
 
-		// Field _uuid is used directly, because getUuid() would set it to null
+		// serviceContext_uuid is used directly, because
+		// serviceContext.getUuid() would set it to null
 
-		String uuid = serviceContext._uuid;
-
-		if (Validator.isNotNull(uuid)) {
-			setUuid(uuid);
+		if (Validator.isNotNull(serviceContext._uuid)) {
+			setUuid(serviceContext._uuid);
 		}
 
 		if (serviceContext.getWorkflowAction() > 0) {

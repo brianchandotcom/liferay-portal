@@ -12,20 +12,35 @@
  * details.
  */
 
-package com.liferay.portal.xsl;
+package com.liferay.portal.template.xsl;
 
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.BaseTemplateManager;
+import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.template.xsl.configuration.XSLEngineConfiguration;
+import com.liferay.portal.xsl.XSLTemplateResource;
 
 import java.util.Map;
+
+import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Tina Tian
  */
-@DoPrivileged
+@Component(
+	configurationPid = "com.liferay.portal.template.xsl.configuration.XSLEngineConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = TemplateManager.class
+)
 public class XSLManager extends BaseTemplateManager {
 
 	@Override
@@ -51,6 +66,14 @@ public class XSLManager extends BaseTemplateManager {
 
 	@Override
 	public void init() {
+		templateContextHelper = new TemplateContextHelper();
+	}
+
+	@Activate
+	@Modified
+	protected void activate(ComponentContext componentContext) {
+		_xslEngineConfiguration = Configurable.createConfigurable(
+			XSLEngineConfiguration.class, componentContext.getProperties());
 	}
 
 	@Override
@@ -63,7 +86,10 @@ public class XSLManager extends BaseTemplateManager {
 			(XSLTemplateResource)templateResource;
 
 		return new XSLTemplate(
-			xslTemplateResource, errorTemplateResource, templateContextHelper);
+			xslTemplateResource, errorTemplateResource, templateContextHelper,
+			_xslEngineConfiguration);
 	}
+
+	private volatile XSLEngineConfiguration _xslEngineConfiguration;
 
 }

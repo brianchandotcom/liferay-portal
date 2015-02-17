@@ -30,7 +30,9 @@ public class UpgradeLanguagePreferences extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String[] getPortletIds() {
-		return new String[] {PortletKeys.LANGUAGE};
+		return new String[] {
+			"com_liferay_language_web_portlet_LanguagePortlet"
+		};
 	}
 
 	@SuppressWarnings("deprecation")

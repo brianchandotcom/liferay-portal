@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.language.action;
+package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -27,7 +27,6 @@ import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
@@ -38,17 +37,12 @@ import com.liferay.portlet.admin.util.AdminUtil;
 import java.util.List;
 import java.util.Locale;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts.Globals;
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -56,25 +50,20 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewAction extends PortletAction {
+public class UpdateLanguageAction extends Action {
 
 	@Override
-	public void processAction(
+	public ActionForward execute(
 			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			actionResponse);
 		HttpSession session = request.getSession();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String languageId = ParamUtil.getString(actionRequest, "languageId");
+		String languageId = ParamUtil.getString(request, "languageId");
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
@@ -91,7 +80,7 @@ public class ViewAction extends PortletAction {
 				Contact contact = user.getContact();
 
 				AdminUtil.updateUser(
-					actionRequest, user.getUserId(), user.getScreenName(),
+					request, user.getUserId(), user.getScreenName(),
 					user.getEmailAddress(), user.getFacebookId(),
 					user.getOpenId(), languageId, user.getTimeZoneId(),
 					user.getGreeting(), user.getComments(), contact.getSmsSn(),
@@ -109,7 +98,7 @@ public class ViewAction extends PortletAction {
 
 		// Send redirect
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		String redirect = ParamUtil.getString(request, "redirect");
 
 		String layoutURL = StringPool.BLANK;
 		String queryString = StringPool.BLANK;
@@ -162,22 +151,9 @@ public class ViewAction extends PortletAction {
 			redirect = redirect + queryString;
 		}
 
-		actionResponse.sendRedirect(redirect);
-	}
+		response.sendRedirect(redirect);
 
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		return actionMapping.findForward("portlet.language.view");
-	}
-
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
+		return null;
 	}
 
 	protected boolean isGroupFriendlyURL(
@@ -207,7 +183,5 @@ public class ViewAction extends PortletAction {
 
 		return false;
 	}
-
-	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
 
 }

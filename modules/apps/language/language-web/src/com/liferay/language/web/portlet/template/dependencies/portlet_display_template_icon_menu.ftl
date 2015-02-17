@@ -1,14 +1,6 @@
 <#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 
 <#if entries?has_content>
-	<#assign portletURL = renderResponse.createActionURL() />
-
-	${portletURL.setAnchor(false)}
-	${portletURL.setParameter("struts_action", "/language/view")}
-	${portletURL.setParameter("redirect", currentURL)}
-	${portletURL.setPortletMode("view")}
-	${portletURL.setWindowState("normal")}
-
 	<@liferay_ui["icon-menu"] icon="../aui/globe" message=locale.getDisplayName(locale)>
 		<#assign languageId = localeUtil.toLanguageId(locale) />
 
@@ -16,12 +8,14 @@
 			<#assign currentLanguageId = localeUtil.toLanguageId(entry) />
 
 			<#if currentLanguageId != languageId>
+				<#assign updateLanguageURL = themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" + themeDisplay.getPlid() + "&languageId=" + currentLanguageId + "&redirect=" + currentURL />
+
 				<@liferay_ui["icon"]
 					image="../language/" + currentLanguageId
 					label=true
 					lang=localeUtil.toW3cLanguageId(entry)
 					message=entry.getDisplayName(locale)
-					url=httpUtil.setParameter(portletURL.toString(), renderResponse.getNamespace() + "languageId", currentLanguageId)
+					url=updateLanguageURL
 				/>
 			</#if>
 		</#list>

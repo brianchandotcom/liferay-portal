@@ -123,14 +123,6 @@ public class AddDefaultLayoutSetPrototypesAction
 
 		updatePortletSetup(layout, portletId, preferences);
 
-		portletId = addPortletId(layout, PortletKeys.LANGUAGE, "column-2");
-
-		preferences = new HashMap<>();
-
-		preferences.put("displayStyle", "3");
-
-		updatePortletSetup(layout, portletId, preferences);
-
 		portletId = addPortletId(
 			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
 

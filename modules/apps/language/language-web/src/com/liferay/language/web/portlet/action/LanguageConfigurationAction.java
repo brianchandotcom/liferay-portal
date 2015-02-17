@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,14 +11,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/language/init.jsp" %>
+package com.liferay.language.web.portlet.action;
 
-<%
-Locale[] locales = LocaleUtil.fromLanguageIds(languageIds);
-%>
+import com.liferay.language.web.constants.LanguagePortletKeys;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 
-<liferay-ui:ddm-template-renderer displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= ListUtil.fromArray(locales) %>">
-	<liferay-ui:language displayCurrentLocale="<%= displayCurrentLocale %>" displayStyle="<%= displayStyle %>" languageIds="<%= languageIds %>" />
-</liferay-ui:ddm-template-renderer>
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Eudaldo Alonso
+ */
+@Component(
+	property = {
+		"javax.portlet.name=" + LanguagePortletKeys.LANGUAGE
+	},
+	service = ConfigurationAction.class
+)
+public class LanguageConfigurationAction extends DefaultConfigurationAction {
+}

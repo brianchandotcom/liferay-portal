@@ -12,24 +12,35 @@
  * details.
  */
 
-package com.liferay.portlet.language.template;
+package com.liferay.language.web.portlet.template;
 
+import com.liferay.language.web.configuration.LanguageConfigurationValues;
+import com.liferay.language.web.constants.LanguagePortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Garcia
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name="+ LanguagePortletKeys.LANGUAGE
+	},
+	service = TemplateHandler.class
+)
 public class LanguagePortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
@@ -40,8 +51,11 @@ public class LanguagePortletDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language");
+
 		String portletTitle = PortalUtil.getPortletTitle(
-			PortletKeys.LANGUAGE, locale);
+			LanguagePortletKeys.LANGUAGE, resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -49,7 +63,7 @@ public class LanguagePortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return PortletKeys.LANGUAGE;
+		return LanguagePortletKeys.LANGUAGE;
 	}
 
 	@Override
@@ -85,7 +99,7 @@ public class LanguagePortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return PropsValues.LANGUAGE_DISPLAY_TEMPLATES_CONFIG;
+		return LanguageConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

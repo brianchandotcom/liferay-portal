@@ -32,7 +32,7 @@ for (int i = 0; i < locales.length; i++) {
 		image='<%= "../language/" + currentLanguageId %>'
 		lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"
 		message="<%= LocaleUtil.getLongDisplayName(locales[i], duplicateLanguages) %>"
-		url="<%= currentLanguage ? null : HttpUtil.setParameter(formAction, namespace + name, currentLanguageId) %>"
+		url="<%= currentLanguage ? null : HttpUtil.setParameter(formAction, name, currentLanguageId) %>"
 	/>
 
 <%

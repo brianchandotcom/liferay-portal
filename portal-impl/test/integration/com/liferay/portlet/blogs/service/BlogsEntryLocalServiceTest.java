@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -48,6 +49,7 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.io.InputStream;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -466,9 +468,13 @@ public class BlogsEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), userId);
 
+		Calendar displayDateCalendar = CalendarFactoryUtil.getCalendar(
+			2012, 1, 1);
+
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 			userId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(), displayDateCalendar.getTime(),
+			serviceContext);
 
 		if (statusInTrash) {
 			entry = BlogsEntryLocalServiceUtil.moveEntryToTrash(userId, entry);
@@ -505,11 +511,13 @@ public class BlogsEntryLocalServiceTest {
 		ImageSelector smallImageSelector = new ImageSelector(
 			fileEntry.getFileEntryId(), StringPool.BLANK, null);
 
+		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(2012, 1, 1);
+
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 			userId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new Date(), true, true,
-			new String[0], coverImageSelector, smallImageSelector,
+			RandomTestUtil.randomString(), displayCalendar.getTime(), true,
+			true, new String[0], coverImageSelector, smallImageSelector,
 			serviceContext);
 
 		return entry;

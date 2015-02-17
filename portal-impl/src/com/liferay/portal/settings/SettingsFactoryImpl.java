@@ -58,6 +58,13 @@ import javax.portlet.PortletPreferences;
 @DoPrivileged
 public class SettingsFactoryImpl implements SettingsFactory {
 
+	public SettingsFactoryImpl() {
+		registerSettingsMetadata(
+			"com.liferay.portal", null, new String[] {}, null,
+			new ClassLoaderResourceManager(
+				PortalClassLoaderUtil.getClassLoader()));
+	}
+
 	@Override
 	public void clearCache() {
 		_portletPropertiesMap.clear();
@@ -82,14 +89,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		return applyFallbackKeys(
 			serviceName, companyPortletPreferencesSettings);
-	}
-
-	@Override
-	public Settings getGroupServiceCompanyDefaultSettings(
-		long companyId, String serviceName) {
-
-		return getCompanyPortletPreferencesSettings(
-			companyId, serviceName, null);
 	}
 
 	@Override
@@ -133,6 +132,14 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	@Override
+	public Settings getPortalServiceSettings(String serviceName) {
+		Settings portalPropertiesSettings = getPortalPropertiesSettings();
+
+		return getServiceConfigurationBeanSettings(
+			serviceName, portalPropertiesSettings);
+	}
+
+	@Override
 	public ArchivedSettings getPortletInstanceArchivedSettings(
 			long groupId, String portletId, String name)
 		throws PortalException {
@@ -170,21 +177,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		}
 
 		return archivedSettingsList;
-	}
-
-	@Override
-	public Settings getPortletInstanceCompanyDefaultSettings(
-		long companyId, String portletId) {
-
-		return getCompanyPortletPreferencesSettings(companyId, portletId, null);
-	}
-
-	@Override
-	public Settings getPortletInstanceGroupDefaultSettings(
-			long groupId, String portletId)
-		throws PortalException {
-
-		return getGroupPortletPreferencesSettings(groupId, portletId, null);
 	}
 
 	@Override
@@ -227,7 +219,9 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		settingsId = PortletConstants.getRootPortletId(settingsId);
 
-		_fallbackKeysMap.put(settingsId, fallbackKeys);
+		if (fallbackKeys != null) {
+			_fallbackKeysMap.put(settingsId, fallbackKeys);
+		}
 
 		List<String> multiValuedKeysList = new ArrayList<>();
 
@@ -322,9 +316,11 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	protected Settings getPortalPropertiesSettings() {
 		return new PropertiesSettings(
-			getPortalProperties(),
-			new ClassLoaderResourceManager(
-				PortalClassLoaderUtil.getClassLoader()));
+			new LocationVariableResolver(
+				new ClassLoaderResourceManager(
+					PortalClassLoaderUtil.getClassLoader()),
+				this),
+			getPortalProperties());
 	}
 
 	protected PortletPreferences getPortletInstancePortletPreferences(
@@ -394,8 +390,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		String settingsId, Settings parentSettings) {
 
 		return new ServiceConfigurationBeanSettings(
-			getServiceConfigurationBean(settingsId),
-			getResourceManager(settingsId), parentSettings);
+			new LocationVariableResolver(getResourceManager(settingsId), this),
+			getServiceConfigurationBean(settingsId), parentSettings);
 	}
 
 	private final ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =

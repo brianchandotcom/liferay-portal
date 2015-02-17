@@ -424,12 +424,6 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	}
 
 	@Override
-	public void setWikiSettingsProvider(
-		com.liferay.portal.kernel.settings.SettingsProvider<com.liferay.wiki.settings.WikiSettings> wikiSettingsProvider) {
-		_wikiPageService.setWikiSettingsProvider(wikiSettingsProvider);
-	}
-
-	@Override
 	public void subscribePage(long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiPageService.subscribePage(nodeId, title);

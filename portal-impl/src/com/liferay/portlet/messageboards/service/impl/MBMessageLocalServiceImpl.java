@@ -79,6 +79,7 @@ import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
+import com.liferay.portlet.messageboards.model.MBDiscussionAllowedContent;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
@@ -131,6 +132,11 @@ import org.owasp.html.PolicyFactory;
  * @author Shuyang Zhou
  */
 public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
+
+	public MBMessageLocalServiceImpl() {
+		_mbDiscussionAllowedContent = new MBDiscussionAllowedContent(
+			PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
+	}
 
 	@Override
 	public MBMessage addDiscussionMessage(
@@ -1369,6 +1375,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			deletedFileName);
 	}
 
+	public void setMBDiscussionAllowedContent(
+		MBDiscussionAllowedContent mbDiscussionAllowedContent) {
+
+		_mbDiscussionAllowedContent = mbDiscussionAllowedContent;
+	}
+
 	@Override
 	public void subscribeMessage(long userId, long messageId)
 		throws PortalException {
@@ -2276,11 +2288,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		htmlPolicyBuilder.allowStandardUrlProtocols();
 
+		Map<String, String[]> allowedContentElementAttributes =
+			_mbDiscussionAllowedContent.getAllowedContentElementAttributes();
+
 		for (String allowedContentElement :
-				_allowedContentElementAttributes.keySet()) {
+				allowedContentElementAttributes.keySet()) {
 
 			String[] allowedContentAttributes =
-				_allowedContentElementAttributes.get(allowedContentElement);
+				allowedContentElementAttributes.get(allowedContentElement);
 
 			if (allowedContentAttributes != null) {
 				htmlPolicyBuilder.allowAttributes(allowedContentAttributes).
@@ -2446,35 +2461,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageLocalServiceImpl.class);
 
-	private static final Map<String, String[]>
-		_allowedContentElementAttributes = new HashMap<>();
-
-	static {
-		String[] allowedContentElementAttributesArray = StringUtil.split(
-			PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT,
-			StringPool.SEMICOLON);
-
-		for (String allowedContentElementAttributes :
-				allowedContentElementAttributesArray) {
-
-			int x = allowedContentElementAttributes.indexOf(
-				StringPool.OPEN_BRACKET);
-			int y = allowedContentElementAttributes.indexOf(
-				StringPool.CLOSE_BRACKET);
-
-			String allowedContentElement = allowedContentElementAttributes;
-			String[] allowedContentAttributes = new String[0];
-
-			if ((x != -1) && (y != -1)) {
-				allowedContentElement =
-					allowedContentElementAttributes.substring(0, x);
-				allowedContentAttributes = StringUtil.split(
-					allowedContentElementAttributes.substring(x + 1, y));
-			}
-
-			_allowedContentElementAttributes.put(
-				allowedContentElement, allowedContentAttributes);
-		}
-	}
+	private MBDiscussionAllowedContent _mbDiscussionAllowedContent;
 
 }

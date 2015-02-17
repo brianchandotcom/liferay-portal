@@ -850,14 +850,6 @@
 		<put name="portlet_content" value="/portlet/my_sites/view.jsp" />
 	</definition>
 
-	<!-- Navigation -->
-
-	<definition name="portlet.navigation" extends="portlet" />
-
-	<definition name="portlet.navigation.view" extends="portlet.navigation">
-		<put name="portlet_content" value="/portlet/navigation/view.jsp" />
-	</definition>
-
 	<!-- News -->
 
 	<definition name="portlet.news" extends="portlet" />

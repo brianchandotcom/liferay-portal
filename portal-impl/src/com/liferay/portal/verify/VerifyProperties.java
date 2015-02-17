@@ -532,6 +532,21 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.ldap"
 		},
 
+		// Navigation
+
+		new String[] {
+			"navigation.display.style", "display.style",
+			"com.liferay.navigation.web"
+		},
+		new String[] {
+			"navigation.display.style.default", "display.style.default",
+			"com.liferay.navigation.web"
+		},
+		new String[] {
+			"navigation.display.style.options", "display.style.options",
+			"com.liferay.navigation.web"
+		},
+
 		// Nested Portlets
 
 		new String[] {

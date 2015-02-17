@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.MailServiceTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -72,8 +73,12 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 	@Test
 	public void testEmailEntryUpdatedNotSentIfNotSpecified() throws Exception {
-		ServiceContext serviceContext = BlogsTestUtil.getServiceContext(
-			Constants.ADD, _group.getGroupId(), TestPropsValues.getUserId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		BlogsTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
@@ -101,8 +106,12 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 		setUpBlogsSettings();
 
-		ServiceContext serviceContext = BlogsTestUtil.getServiceContext(
-			Constants.ADD, _group.getGroupId(), TestPropsValues.getUserId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		BlogsTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
@@ -134,8 +143,12 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 		setUpBlogsSettings();
 
-		ServiceContext serviceContext = BlogsTestUtil.getServiceContext(
-			Constants.ADD, _group.getGroupId(), TestPropsValues.getUserId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		BlogsTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),

@@ -16,9 +16,9 @@ package com.liferay.portlet.blogs.util.test;
 
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
@@ -93,18 +93,17 @@ public class BlogsTestUtil {
 			expectedEntry.isSmallImage(), actualEntry.isSmallImage());
 	}
 
-	public static ServiceContext getServiceContext(
-			String command, long groupId, long userId)
+	public static void populateNotificationsServiceContext(
+			ServiceContext serviceContext, String command)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId, userId);
-
 		serviceContext.setAttribute("entryURL", "http://localhost");
-		serviceContext.setCommand(command);
-		serviceContext.setLayoutFullURL("http://localhost");
 
-		return serviceContext;
+		if (Validator.isNotNull(command)) {
+			serviceContext.setCommand(command);
+		}
+
+		serviceContext.setLayoutFullURL("http://localhost");
 	}
 
 	public static String getTempBlogsEntryAttachmentFileEntryImgTag(

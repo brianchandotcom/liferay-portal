@@ -984,6 +984,34 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
+		// LPS-52699
+
+		if (line.matches(
+				".*The web application \\[\\] created a ThreadLocal with key " +
+					"of type.*")) {
+
+			if (line.contains("[org.apache.xml.security.algorithms." +
+					"SignatureAlgorithm$1]")) {
+
+				return true;
+			}
+
+			if (line.contains("[org.apache.xml.security.algorithms." +
+					"MessageDigestAlgorithm$1]")) {
+				return true;
+			}
+
+			if (line.contains("[org.apache.xml.security.utils." +
+					"UnsyncBufferedOutputStream$1]")) {
+				return true;
+			}
+
+			if (line.contains("[org.apache.xml.security.utils." +
+					"UnsyncByteArrayOutputStream$1]")) {
+				return true;
+			}
+		}
+
 		// WCM-202
 
 		if (line.contains("No score point assigners available")) {

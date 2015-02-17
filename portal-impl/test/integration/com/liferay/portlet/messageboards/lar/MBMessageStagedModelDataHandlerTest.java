@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.lar.test.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
@@ -36,6 +37,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -104,9 +106,19 @@ public class MBMessageStagedModelDataHandlerTest
 			MBTestUtil.getInputStreamOVPs(
 				"attachment.txt", getClass(), StringPool.BLANK);
 
-		MBMessage message = MBTestUtil.addMessageWithWorkflowAndAttachments(
-			group.getGroupId(), category.getCategoryId(), true,
-			objectValuePairs);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_PUBLISH);
+
+		MBMessage message = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			group.getGroupId(), category.getCategoryId(), 0, 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			MBMessageConstants.DEFAULT_FORMAT, objectValuePairs, false, 0.0,
+			false, serviceContext);
 
 		MBMessageLocalServiceUtil.updateAnswer(message, true, false);
 
@@ -143,11 +155,34 @@ public class MBMessageStagedModelDataHandlerTest
 
 		List<StagedModel> stagedModels = new ArrayList<>();
 
-		stagedModels.add(
-			MBTestUtil.addMessageWithWorkflow(group.getGroupId(), true));
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
-		stagedModels.add(
-			MBTestUtil.addMessageWithWorkflow(group.getGroupId(), false));
+		serviceContext.setLayoutFullURL("http://localhost");
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		MBMessage approvedMessage =
+			MBMessageLocalServiceUtil.addMessage(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				group.getGroupId(),
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				serviceContext);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		MBMessage draftMessage =
+			MBMessageLocalServiceUtil.addMessage(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				group.getGroupId(),
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				serviceContext);
+
+		stagedModels.add(approvedMessage);
+
+		stagedModels.add(draftMessage);
 
 		return stagedModels;
 	}

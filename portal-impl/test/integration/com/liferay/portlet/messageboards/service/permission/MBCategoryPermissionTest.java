@@ -26,8 +26,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
-import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -71,12 +70,12 @@ public class MBCategoryPermissionTest extends BasePermissionTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		_category = MBCategoryServiceUtil.addCategory(
+		_category = MBCategoryLocalServiceUtil.addCategory(
 			TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
-		_subcategory = MBCategoryServiceUtil.addCategory(
+		_subcategory = MBCategoryLocalServiceUtil.addCategory(
 			TestPropsValues.getUserId(), _category.getCategoryId(),
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}

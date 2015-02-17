@@ -44,6 +44,7 @@ import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.ClassRule;
@@ -131,7 +132,10 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 		}
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(message.getGroupId());
+			ServiceContextTestUtil.getServiceContext(
+				message.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setLayoutFullURL("http://localhost");
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			MBTestUtil.getInputStreamOVPs(
@@ -151,9 +155,20 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 
 		MBCategory category = (MBCategory)parentBaseModel;
 
-		return MBTestUtil.addMessage(
-			category.getGroupId(), category.getCategoryId(), keywords, approved,
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		if (approved) {
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+		} else {
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+
+		return MBMessageLocalServiceUtil.addMessage(
+			serviceContext.getUserId(), RandomTestUtil.randomString(),
+			category.getGroupId(), category.getCategoryId(), keywords, keywords,
 			serviceContext);
+
 	}
 
 	@Override
@@ -227,10 +242,18 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 
 		MBMessage message = (MBMessage)baseModel;
 
-		message.setSubject(keywords);
-		message.setBody(keywords);
+		ServiceContext updateServiceContext =
+			ServiceContextTestUtil.getServiceContext(
+				message.getGroupId(), TestPropsValues.getUserId());
 
-		return MBTestUtil.updateMessage(message, keywords, keywords, true);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return MBMessageLocalServiceUtil.updateMessage(
+			TestPropsValues.getUserId(), message.getMessageId(),
+			keywords, keywords,
+			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
+			Collections.<String>emptyList(), message.getPriority(),
+			message.isAllowPingbacks(), updateServiceContext);
 	}
 
 }

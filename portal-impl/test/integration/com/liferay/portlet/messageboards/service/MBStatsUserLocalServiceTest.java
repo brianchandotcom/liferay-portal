@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.service;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -27,13 +28,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import java.io.InputStream;
-
 import java.util.Collections;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -162,9 +161,20 @@ public class MBStatsUserLocalServiceTest {
 	}
 
 	protected void addMessage(int workflowAction) throws Exception {
-		_message = MBTestUtil.addMessageWithWorkflow(
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setLayoutFullURL("http://localhost");
+		serviceContext.setWorkflowAction(workflowAction);
+
+		_message = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			workflowAction == WorkflowConstants.ACTION_PUBLISH);
+			0, 0, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			MBMessageConstants.DEFAULT_FORMAT,
+			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
+			false, 0.0, false, serviceContext);
 	}
 
 	protected int getStatsUserMessageCount() throws Exception {
@@ -175,20 +185,19 @@ public class MBStatsUserLocalServiceTest {
 	}
 
 	protected void updateMessage(int workflowAction) throws Exception {
-		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			Collections.emptyList();
-		List<String> existingFiles = Collections.emptyList();
-
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
 
+		serviceContext.setLayoutFullURL("http://localhost");
 		serviceContext.setWorkflowAction(workflowAction);
 
 		_message = MBMessageLocalServiceUtil.updateMessage(
 			TestPropsValues.getUserId(), _message.getMessageId(),
-			_message.getSubject(), _message.getBody(), inputStreamOVPs,
-			existingFiles, _message.getPriority(), _message.getAllowPingbacks(),
-			serviceContext);
+			_message.getSubject(), _message.getBody(),
+			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
+			Collections.<String>emptyList(), _message.getPriority(),
+			_message.getAllowPingbacks(), serviceContext);
 	}
 
 	@DeleteAfterTestRun

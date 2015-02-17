@@ -14,15 +14,24 @@
 
 package com.liferay.portlet.messageboards.social;
 
+import java.io.InputStream;
+import java.util.Collections;
+
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBMessageConstants;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
 
@@ -45,11 +54,9 @@ public class MBMessageActivityInterpreterTest
 
 	@Override
 	protected void addActivities() throws Exception {
-		message = MBTestUtil.addMessage(group.getGroupId());
+		message = addMessage(null);
 
-		message = MBTestUtil.addMessage(
-			group.getGroupId(), message.getCategoryId(), message.getThreadId(),
-			message.getMessageId());
+		message = addMessage(message);
 	}
 
 	@Override
@@ -77,6 +84,32 @@ public class MBMessageActivityInterpreterTest
 
 	@Override
 	protected void renameModels() throws Exception {
+	}
+
+	protected MBMessage addMessage(MBMessage parentMessage) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
+		long parentMessageId = 0;
+		long threadId = 0;
+
+		if (parentMessage != null) {
+			categoryId = parentMessage.getCategoryId();
+			parentMessageId = parentMessage.getMessageId();
+			threadId = parentMessage.getThreadId();
+		}
+
+		return MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			group.getGroupId(), categoryId, threadId, parentMessageId,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			MBMessageConstants.DEFAULT_FORMAT,
+			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
+			false, 0.0, false, serviceContext);
 	}
 
 	@Override

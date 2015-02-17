@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -43,9 +42,7 @@ import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.InputStream;
-
 import java.text.DateFormat;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -78,23 +75,16 @@ public class MBMessageLocalServiceTest {
 
 		TrashUtil.disableTrash(_group);
 
-		User user = TestPropsValues.getUser();
-		List<ObjectValuePair<String, InputStream>> objectValuePairs =
-			MBTestUtil.getInputStreamOVPs(
-				"attachment.txt", getClass(), StringPool.BLANK);
+		MBMessage message = addMessage(null, true);
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
 
-		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			user.getUserId(), user.getFullName(), _group.getGroupId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			MBMessageConstants.DEFAULT_FORMAT, objectValuePairs, false, 0,
-			false, serviceContext);
+		serviceContext.setLayoutFullURL("http://localhost");
 
 		MBMessageLocalServiceUtil.updateMessage(
-			user.getUserId(), message.getMessageId(),
+			TestPropsValues.getUserId(), message.getMessageId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
 			Collections.<String>emptyList(), 0, false, serviceContext);
@@ -103,31 +93,22 @@ public class MBMessageLocalServiceTest {
 			0,
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
 				message.getGroupId(), message.getAttachmentsFolderId()));
-
-		MBTestUtil.addMessage(_group.getGroupId());
 	}
 
 	@Test
 	public void testDeleteAttachmentsWhenUpdatingMessageAndTrashEnabled()
 		throws Exception {
 
-		User user = TestPropsValues.getUser();
-		List<ObjectValuePair<String, InputStream>> objectValuePairs =
-			MBTestUtil.getInputStreamOVPs(
-				"attachment.txt", getClass(), StringPool.BLANK);
+		MBMessage message = addMessage(null, true);
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
 
-		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			user.getUserId(), user.getFullName(), _group.getGroupId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			MBMessageConstants.DEFAULT_FORMAT, objectValuePairs, false, 0,
-			false, serviceContext);
+		serviceContext.setLayoutFullURL("http://localhost");
 
 		MBMessageLocalServiceUtil.updateMessage(
-			user.getUserId(), message.getMessageId(),
+			TestPropsValues.getUserId(), message.getMessageId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
 			Collections.<String>emptyList(), 0, false, serviceContext);
@@ -148,9 +129,9 @@ public class MBMessageLocalServiceTest {
 
 	@Test
 	public void testGetNoAssetMessages() throws Exception {
-		MBTestUtil.addMessage(_group.getGroupId());
+		addMessage(null, false);
 
-		MBMessage message = MBTestUtil.addMessage(_group.getGroupId());
+		MBMessage message = addMessage(null, false);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			MBMessage.class.getName(), message.getMessageId());
@@ -168,19 +149,15 @@ public class MBMessageLocalServiceTest {
 
 	@Test
 	public void testThreadLastPostDate() throws Exception {
-		MBMessage parentMessage = MBTestUtil.addMessage(_group.getGroupId());
+		MBMessage parentMessage = addMessage(null, false);
 
 		Thread.sleep(2000);
 
-		MBMessage firstReplyMessage = MBTestUtil.addMessage(
-			_group.getGroupId(), parentMessage.getCategoryId(),
-			parentMessage.getThreadId(), parentMessage.getMessageId());
+		MBMessage firstReplyMessage = addMessage(parentMessage, false);
 
 		Thread.sleep(2000);
 
-		MBMessage secondReplyMessage = MBTestUtil.addMessage(
-			_group.getGroupId(), parentMessage.getCategoryId(),
-			parentMessage.getThreadId(), parentMessage.getMessageId());
+		MBMessage secondReplyMessage = addMessage(parentMessage, false);
 
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			PropsValues.INDEX_DATE_FORMAT_PATTERN);
@@ -199,6 +176,42 @@ public class MBMessageLocalServiceTest {
 		Assert.assertEquals(
 			dateFormat.format(mbThread.getLastPostDate()),
 			dateFormat.format(firstReplyMessage.getModifiedDate()));
+	}
+
+	protected MBMessage addMessage(
+			MBMessage parentMessage, boolean addAttachments)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
+		long parentMessageId = 0;
+		long threadId = 0;
+
+		if (parentMessage != null) {
+			categoryId = parentMessage.getCategoryId();
+			parentMessageId = parentMessage.getMessageId();
+			threadId = parentMessage.getThreadId();
+		}
+
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			Collections.emptyList();
+
+		if (addAttachments) {
+			inputStreamOVPs = MBTestUtil.getInputStreamOVPs(
+				"attachment.txt", getClass(), StringPool.BLANK);
+		}
+
+		return MBMessageLocalServiceUtil.addMessage(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				_group.getGroupId(), categoryId, threadId, parentMessageId,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs,
+				false, 0.0, false, serviceContext);
 	}
 
 	@DeleteAfterTestRun

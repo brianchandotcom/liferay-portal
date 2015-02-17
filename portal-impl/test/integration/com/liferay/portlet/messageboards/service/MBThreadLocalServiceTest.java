@@ -17,14 +17,18 @@ package com.liferay.portlet.messageboards.service;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import java.util.List;
 
@@ -52,9 +56,9 @@ public class MBThreadLocalServiceTest {
 
 	@Test
 	public void testGetNoAssetThreads() throws Exception {
-		MBTestUtil.addMessage(_group.getGroupId());
+		addMessage();
 
-		MBMessage message = MBTestUtil.addMessage(_group.getGroupId());
+		MBMessage message = addMessage();
 
 		MBThread thread = message.getThread();
 
@@ -69,6 +73,20 @@ public class MBThreadLocalServiceTest {
 
 		Assert.assertEquals(1, threads.size());
 		Assert.assertEquals(thread, threads.get(0));
+	}
+
+	protected MBMessage addMessage() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 	@DeleteAfterTestRun

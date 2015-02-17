@@ -48,6 +48,10 @@ public class PortletDataContextFactoryImpl
 	public PortletDataContext clonePortletDataContext(
 		PortletDataContext portletDataContext) {
 
+		if (portletDataContext == null) {
+			return null;
+		}
+
 		PortletDataContext clonePortletDataContext =
 			new PortletDataContextImpl();
 

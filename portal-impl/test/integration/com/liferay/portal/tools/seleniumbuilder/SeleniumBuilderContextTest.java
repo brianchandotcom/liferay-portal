@@ -59,7 +59,7 @@ public class SeleniumBuilderContextTest {
 	public void testActionCaseElementInvalidAttributeValue() throws Exception {
 		test(
 			"ActionCaseElementInvalidAttributeValue_5.action",
-			"Error 1010: Invalid locator-key LOCATOR_KEY_1 at " + _DIR_NAME +
+			"Error 1010: Invalid locator-key LOCATOR_KEY_1 ast " + _DIR_NAME +
 				"/ActionCaseElementInvalidAttributeValue_5.action:3");
 
 		test(

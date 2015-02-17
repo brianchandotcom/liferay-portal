@@ -14,7 +14,9 @@
 
 package com.liferay.portal.wab.extender.internal;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.portal.wab.extender.internal.configuration.WabExtenderConfiguration;
 import com.liferay.portal.wab.extender.internal.event.EventUtil;
 
 import java.util.Dictionary;
@@ -43,11 +45,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(
-	configurationPid = "com.liferay.portal.wab.extender",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	property = {
-		"com.liferay.portal.wab.extender.stop.timeout=60000"
-	}
+	configurationPid = "com.liferay.portal.wab.extender.internal.configuration.WabExtenderConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true
 )
 public class WabFactory extends AbstractExtender {
 
@@ -60,9 +59,8 @@ public class WabFactory extends AbstractExtender {
 		Dictionary<String, Object> properties =
 			componentContext.getProperties();
 
-		_stopTimeout = GetterUtil.getLong(
-			properties.get("com.liferay.portal.wab.extender.stop.timeout"),
-			60000);
+		_wabExtenderConfiguration = Configurable.createConfigurable(
+			WabExtenderConfiguration.class, properties);
 
 		try {
 			_webBundleDeployer = new WebBundleDeployer(
@@ -132,7 +130,7 @@ public class WabFactory extends AbstractExtender {
 	private ExtendedHttpService _extendedHttpService;
 	private Logger _logger;
 	private SAXParserFactory _saxParserFactory;
-	private long _stopTimeout;
+	private WabExtenderConfiguration _wabExtenderConfiguration;
 	private WebBundleDeployer _webBundleDeployer;
 
 	private class WABExtension implements Extension {
@@ -144,7 +142,9 @@ public class WabFactory extends AbstractExtender {
 		@Override
 		public void destroy() throws Exception {
 			try {
-				_started.await(_stopTimeout, TimeUnit.MILLISECONDS);
+				_started.await(
+					_wabExtenderConfiguration.stopTimeout(),
+					TimeUnit.MILLISECONDS);
 			}
 			catch (InterruptedException ie) {
 				_logger.log(

@@ -19,7 +19,9 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Peter Fellwock
  */
-@Meta.OCD(id = "com.liferay.portal.template.velocity")
+@Meta.OCD(
+	id = "com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration"
+)
 public interface VelocityEngineConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)

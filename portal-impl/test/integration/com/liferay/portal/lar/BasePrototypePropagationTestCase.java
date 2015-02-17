@@ -247,7 +247,11 @@ public abstract class BasePrototypePropagationTestCase {
 	protected Layout propagateChanges(Layout layout) throws Exception {
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
-		return LayoutLocalServiceUtil.getLayout(layout.getPlid());
+		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+
+		Thread.sleep(2000);
+
+		return layout;
 	}
 
 	protected abstract void setLinkEnabled(boolean linkEnabled)

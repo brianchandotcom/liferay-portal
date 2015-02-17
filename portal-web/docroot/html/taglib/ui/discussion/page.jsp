@@ -147,7 +147,7 @@ int messagesCount = messages.size();
 										Map<String, Object> dataTextEditor = new HashMap<String, Object>();
 
 										JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
-										editorConfig.put("allowedContent", "em p strong u");
+										editorConfig.put("allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
 										editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
 
 										JSONObject editorOptions = JSONFactoryUtil.createJSONObject();

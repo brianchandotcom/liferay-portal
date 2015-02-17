@@ -2274,7 +2274,21 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	protected String sanitizeHTML(String html) {
 		HtmlPolicyBuilder htmlPolicyBuilder = new HtmlPolicyBuilder();
 
-		htmlPolicyBuilder.allowElements("a", "em", "p", "strong", "u");
+		htmlPolicyBuilder.allowStandardUrlProtocols();
+
+		for (String allowedContentElement :
+				_allowedContentElementAttributes.keySet()) {
+
+			String[] allowedContentAttributes =
+				_allowedContentElementAttributes.get(allowedContentElement);
+
+			if (allowedContentAttributes != null) {
+				htmlPolicyBuilder.allowAttributes(allowedContentAttributes).
+					onElements(allowedContentElement);
+			}
+
+			htmlPolicyBuilder.allowElements(allowedContentElement);
+		}
 
 		PolicyFactory policyFactory = htmlPolicyBuilder.toFactory();
 
@@ -2431,5 +2445,36 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageLocalServiceImpl.class);
+
+	private static final Map<String, String[]>
+		_allowedContentElementAttributes = new HashMap<>();
+
+	static {
+		String[] allowedContentElementAttributesArray = StringUtil.split(
+			PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT,
+			StringPool.SEMICOLON);
+
+		for (String allowedContentElementAttributes :
+				allowedContentElementAttributesArray) {
+
+			int x = allowedContentElementAttributes.indexOf(
+				StringPool.OPEN_BRACKET);
+			int y = allowedContentElementAttributes.indexOf(
+				StringPool.CLOSE_BRACKET);
+
+			String allowedContentElement = allowedContentElementAttributes;
+			String[] allowedContentAttributes = new String[0];
+
+			if ((x != -1) && (y != -1)) {
+				allowedContentElement =
+					allowedContentElementAttributes.substring(0, x);
+				allowedContentAttributes = StringUtil.split(
+					allowedContentElementAttributes.substring(x + 1, y));
+			}
+
+			_allowedContentElementAttributes.put(
+				allowedContentElement, allowedContentAttributes);
+		}
+	}
 
 }

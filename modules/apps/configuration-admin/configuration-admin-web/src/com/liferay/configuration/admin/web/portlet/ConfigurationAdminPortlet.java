@@ -58,6 +58,8 @@ import org.osgi.service.metatype.MetaTypeService;
 		"com.liferay.portlet.control-panel-entry-weight=11",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=false",
+		"javax.portlet.display-name=Configuration Admin",
+		"javax.portlet.info.keywords=osgi,configuration,admin",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.ftl",
 		"javax.portlet.resource-bundle=content.Language",

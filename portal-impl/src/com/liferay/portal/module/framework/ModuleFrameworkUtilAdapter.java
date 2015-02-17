@@ -29,11 +29,11 @@ import java.io.InputStream;
  */
 public class ModuleFrameworkUtilAdapter {
 
-	public static Object addBundle(String location) throws PortalException {
+	public static long addBundle(String location) throws PortalException {
 		return _moduleFramework.addBundle(location);
 	}
 
-	public static Object addBundle(String location, InputStream inputStream)
+	public static long addBundle(String location, InputStream inputStream)
 		throws PortalException {
 
 		return _moduleFramework.addBundle(location, inputStream);

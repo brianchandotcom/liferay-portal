@@ -92,47 +92,19 @@ import org.springframework.context.ApplicationContext;
 public class ModuleFrameworkImpl implements ModuleFramework {
 
 	@Override
-	public Object addBundle(String location) throws PortalException {
-		return addBundle(location, null);
+	public long addBundle(String location) throws PortalException {
+		Bundle bundle = _addBundle(location, null, true);
+
+		return bundle.getBundleId();
 	}
 
 	@Override
-	public Object addBundle(String location, InputStream inputStream)
+	public long addBundle(String location, InputStream inputStream)
 		throws PortalException {
 
-		return addBundle(location, inputStream, true);
-	}
+		Bundle bundle = _addBundle(location, inputStream, true);
 
-	public Object addBundle(
-			String location, InputStream inputStream, boolean checkPermission)
-		throws PortalException {
-
-		if (_framework == null) {
-			return null;
-		}
-
-		if (checkPermission) {
-			_checkPermission();
-		}
-
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		if (inputStream != null) {
-			Bundle bundle = getBundle(bundleContext, inputStream);
-
-			if (bundle != null) {
-				return bundle;
-			}
-		}
-
-		try {
-			return bundleContext.installBundle(location, inputStream);
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new PortalException(be);
-		}
+		return bundle.getBundleId();
 	}
 
 	/**
@@ -473,6 +445,38 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
+	private Bundle _addBundle(
+			String location, InputStream inputStream, boolean checkPermission)
+		throws PortalException {
+
+		if (_framework == null) {
+			throw new IllegalStateException("Framework not initialized!");
+		}
+
+		if (checkPermission) {
+			_checkPermission();
+		}
+
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		if (inputStream != null) {
+			Bundle bundle = getBundle(bundleContext, inputStream);
+
+			if (bundle != null) {
+				return bundle;
+			}
+		}
+
+		try {
+			return bundleContext.installBundle(location, inputStream);
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+
+			throw new PortalException(be);
+		}
+	}
+
 	private Map<String, String> _buildFrameworkProperties(Class<?> clazz) {
 		Map<String, String> properties = new HashMap<>();
 
@@ -722,7 +726,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				return;
 			}
 
-			Bundle bundle = (Bundle)addBundle(
+			Bundle bundle = _addBundle(
 				initialBundleURL.toString(), inputStream, false);
 
 			if ((bundle == null) || _isFragmentBundle(bundle)) {

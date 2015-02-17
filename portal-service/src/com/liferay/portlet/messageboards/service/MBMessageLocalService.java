@@ -532,6 +532,9 @@ public interface MBMessageLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
+	public void setMBDiscussionAllowedContent(
+		com.liferay.portlet.messageboards.model.MBDiscussionAllowedContent mbDiscussionAllowedContent);
+
 	public void subscribeMessage(long userId, long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

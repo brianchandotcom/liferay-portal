@@ -736,6 +736,12 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
+	public void setMBDiscussionAllowedContent(
+		com.liferay.portlet.messageboards.model.MBDiscussionAllowedContent mbDiscussionAllowedContent) {
+		_mbMessageLocalService.setMBDiscussionAllowedContent(mbDiscussionAllowedContent);
+	}
+
+	@Override
 	public void subscribeMessage(long userId, long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_mbMessageLocalService.subscribeMessage(userId, messageId);

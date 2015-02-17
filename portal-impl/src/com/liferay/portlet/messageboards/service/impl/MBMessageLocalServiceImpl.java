@@ -79,6 +79,7 @@ import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
+import com.liferay.portlet.messageboards.model.MBDiscussionAllowedContent;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
@@ -119,6 +120,9 @@ import javax.servlet.http.HttpServletRequest;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
+import org.owasp.html.HtmlPolicyBuilder;
+import org.owasp.html.PolicyFactory;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -128,6 +132,11 @@ import net.htmlparser.jericho.StartTag;
  * @author Shuyang Zhou
  */
 public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
+
+	public MBMessageLocalServiceImpl() {
+		_mbDiscussionAllowedContent = new MBDiscussionAllowedContent(
+			PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
+	}
 
 	@Override
 	public MBMessage addDiscussionMessage(
@@ -169,6 +178,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		long categoryId = MBCategoryConstants.DISCUSSION_CATEGORY_ID;
 
+		String format = PropsValues.DISCUSSION_COMMENTS_FORMAT;
+
+		if (format.equals("html")) {
+			body = sanitizeHTML(body);
+		}
+
 		if (Validator.isNull(subject)) {
 			if (Validator.isNotNull(body)) {
 				int pos = Math.min(body.length(), 50);
@@ -193,8 +208,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = addMessage(
 			userId, userName, groupId, categoryId, threadId, parentMessageId,
-			subject, body, MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs,
-			anonymous, priority, allowPingbacks, serviceContext);
+			subject, body, format, inputStreamOVPs, anonymous, priority,
+			allowPingbacks, serviceContext);
 
 		// Discussion
 
@@ -1360,6 +1375,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			deletedFileName);
 	}
 
+	public void setMBDiscussionAllowedContent(
+		MBDiscussionAllowedContent mbDiscussionAllowedContent) {
+
+		_mbDiscussionAllowedContent = mbDiscussionAllowedContent;
+	}
+
 	@Override
 	public void subscribeMessage(long userId, long messageId)
 		throws PortalException {
@@ -1426,6 +1447,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long userId, long messageId, String className, long classPK,
 			String subject, String body, ServiceContext serviceContext)
 		throws PortalException {
+
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
+
+		String format = message.getFormat();
+
+		if (format.equals("html")) {
+			body = sanitizeHTML(body);
+		}
 
 		if (Validator.isNull(subject)) {
 			if (Validator.isNotNull(body)) {
@@ -2254,6 +2283,33 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	protected String sanitizeHTML(String html) {
+		HtmlPolicyBuilder htmlPolicyBuilder = new HtmlPolicyBuilder();
+
+		htmlPolicyBuilder.allowStandardUrlProtocols();
+
+		Map<String, String[]> allowedContentElementAttributes =
+			_mbDiscussionAllowedContent.getAllowedContentElementAttributes();
+
+		for (String allowedContentElement :
+				allowedContentElementAttributes.keySet()) {
+
+			String[] allowedContentAttributes =
+				allowedContentElementAttributes.get(allowedContentElement);
+
+			if (allowedContentAttributes != null) {
+				htmlPolicyBuilder.allowAttributes(allowedContentAttributes).
+					onElements(allowedContentElement);
+			}
+
+			htmlPolicyBuilder.allowElements(allowedContentElement);
+		}
+
+		PolicyFactory policyFactory = htmlPolicyBuilder.toFactory();
+
+		return policyFactory.sanitize(html);
+	}
+
 	protected void startWorkflowInstance(
 			long userId, MBMessage message, ServiceContext serviceContext)
 		throws PortalException {
@@ -2404,5 +2460,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageLocalServiceImpl.class);
+
+	private MBDiscussionAllowedContent _mbDiscussionAllowedContent;
 
 }

@@ -611,9 +611,13 @@ public interface PropsKeys {
 
 	public static final String DIRECT_SERVLET_CONTEXT_RELOAD = "direct.servlet.context.reload";
 
+	public static final String DISCUSSION_COMMENTS_ALLOWED_CONTENT = "discussion.comments.allowed.content";
+
 	public static final String DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER = "discussion.comments.always.editable.by.owner";
 
 	public static final String DISCUSSION_COMMENTS_DELTA_VALUE = "discussion.comments.delta.value";
+
+	public static final String DISCUSSION_COMMENTS_FORMAT = "discussion.comments.format";
 
 	public static final String DISCUSSION_EMAIL_BODY = "discussion.email.body";
 

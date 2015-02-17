@@ -676,6 +676,11 @@ public class MBMessageLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static void setMBDiscussionAllowedContent(
+		com.liferay.portlet.messageboards.model.MBDiscussionAllowedContent mbDiscussionAllowedContent) {
+		getService().setMBDiscussionAllowedContent(mbDiscussionAllowedContent);
+	}
+
 	public static void subscribeMessage(long userId, long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().subscribeMessage(userId, messageId);

@@ -72,7 +72,7 @@ public class XSLManager extends BaseTemplateManager {
 	@Activate
 	@Modified
 	protected void activate(ComponentContext componentContext) {
-		_XSLEngineConfiguration = Configurable.createConfigurable(
+		_xslEngineConfiguration = Configurable.createConfigurable(
 			XSLEngineConfiguration.class, componentContext.getProperties());
 	}
 
@@ -87,9 +87,9 @@ public class XSLManager extends BaseTemplateManager {
 
 		return new XSLTemplate(
 			xslTemplateResource, errorTemplateResource, templateContextHelper,
-			_XSLEngineConfiguration);
+			_xslEngineConfiguration);
 	}
 
-	private volatile XSLEngineConfiguration _XSLEngineConfiguration;
+	private volatile XSLEngineConfiguration _xslEngineConfiguration;
 
 }

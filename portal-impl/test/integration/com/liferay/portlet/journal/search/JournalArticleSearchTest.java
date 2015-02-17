@@ -32,6 +32,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.search.test.BaseSearchTestCase;
+import com.liferay.portal.search.test.OrderTestHelper;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -71,7 +72,8 @@ import org.junit.Test;
  * @author Tibor Lipusz
  */
 @Sync
-public class JournalArticleSearchTest extends BaseSearchTestCase {
+public class JournalArticleSearchTest extends BaseSearchTestCase
+	implements OrderTestHelper.TestCase {
 
 	@ClassRule
 	@Rule
@@ -79,6 +81,51 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Override
+	public BaseModel<?> addBaseModel(
+			BaseModel<?> parentBaseModel, String keywords,
+			DDMStructure ddmStructure, DDMTemplate ddmTemplate,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		_ddmStructure = ddmStructure;
+
+		JournalFolder folder = (JournalFolder)parentBaseModel;
+
+		String content = DDMStructureTestUtil.getSampleStructuredContent(
+			"name", keywords);
+
+		return JournalTestUtil.addArticleWithXMLContent(
+			folder.getFolderId(), content, ddmStructure.getStructureKey(),
+			ddmTemplate.getTemplateKey(), serviceContext);
+	}
+
+	@Override
+	public String getAssetEntryQueryOrderByCol1() {
+		return DDMIndexerUtil.encodeName(
+			_ddmStructure.getStructureId(), "name");
+	}
+
+	@Override
+	public String getBaseModelClassName() {
+		return super.getBaseModelClassName();
+	}
+
+	@Override
+	public String getBaseModelStructureClassName() {
+		return getBaseModelClassName();
+	}
+
+	@Override
+	public BaseModel<?> getParentBaseModel(
+			Group group, ServiceContext serviceContext)
+		throws Exception {
+
+		return JournalTestUtil.addFolder(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), serviceContext);
+	}
 
 	@Test
 	public void testMatchNotOnlyCompanyIdButAlsoQueryTerms() throws Exception {
@@ -93,6 +140,34 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		assertEquals(0, query, searchContext);
 	}
 
+	@Test
+	public void testOrderByDDMBooleanField() throws Exception {
+		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);
+
+		orderTestHelper.testOrderByDDMBooleanField();
+	}
+
+	@Test
+	public void testOrderByDDMIntegerField() throws Exception {
+		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);
+
+		orderTestHelper.testOrderByDDMIntegerField();
+	}
+
+	@Test
+	public void testOrderByDDMNumberField() throws Exception {
+		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);
+
+		orderTestHelper.testOrderByDDMNumberField();
+	}
+
+	@Test
+	public void testOrderByDDMTextField() throws Exception {
+		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);
+
+		orderTestHelper.testOrderByDDMTextField();
+	}
+
 	@Ignore()
 	@Override
 	@Test
@@ -105,24 +180,19 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		JournalFolder folder = (JournalFolder)parentBaseModel;
-
 		String definition = DDMStructureTestUtil.getSampleStructureDefinition(
 			"name");
 
-		_ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			serviceContext.getScopeGroupId(), JournalArticle.class.getName(),
 			definition);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			serviceContext.getScopeGroupId(), _ddmStructure.getStructureId());
+			serviceContext.getScopeGroupId(), ddmStructure.getStructureId());
 
-		String content = DDMStructureTestUtil.getSampleStructuredContent(
-			"name", getSearchKeywords());
-
-		return JournalTestUtil.addArticleWithXMLContent(
-			folder.getFolderId(), content, _ddmStructure.getStructureKey(),
-			ddmTemplate.getTemplateKey(), serviceContext);
+		return addBaseModel(
+			parentBaseModel, keywords, ddmStructure, ddmTemplate,
+			serviceContext);
 	}
 
 	@Override
@@ -226,16 +296,6 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 		return JournalTestUtil.addFolder(
 			(Long)parentBaseModel.getPrimaryKeyObj(),
-			RandomTestUtil.randomString(), serviceContext);
-	}
-
-	@Override
-	protected BaseModel<?> getParentBaseModel(
-			Group group, ServiceContext serviceContext)
-		throws Exception {
-
-		return JournalTestUtil.addFolder(
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), serviceContext);
 	}
 

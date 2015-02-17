@@ -38,6 +38,8 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.text.Format;
 
 import java.util.Date;
@@ -75,7 +77,13 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 					Serializable value = field.getValue(locale);
 
-					if (value instanceof Boolean) {
+					if (value instanceof BigDecimal) {
+						document.addNumber(name, (BigDecimal)value);
+					}
+					else if (value instanceof BigDecimal[]) {
+						document.addNumber(name, (BigDecimal[])value);
+					}
+					else if (value instanceof Boolean) {
 						document.addKeyword(name, (Boolean)value);
 					}
 					else if (value instanceof Boolean[]) {
@@ -177,10 +185,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		StringBundler sb = new StringBundler(7);
 
-		sb.append(DDM_FIELD_NAMESPACE);
-		sb.append(StringPool.DOUBLE_UNDERLINE);
+		sb.append(DDM_FIELD_PREFIX);
 		sb.append(ddmStructureId);
-		sb.append(StringPool.DOUBLE_UNDERLINE);
+		sb.append(DDM_FIELD_SEPARATOR);
 		sb.append(fieldName);
 
 		if (locale != null) {
@@ -275,6 +282,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 		}
 
 		return sb.toString();
+	}
+
+	@Override
+	public boolean isSortableFieldName(String fieldName) {
+		return fieldName.startsWith(DDMIndexer.DDM_FIELD_PREFIX);
 	}
 
 	protected Fields toFields(

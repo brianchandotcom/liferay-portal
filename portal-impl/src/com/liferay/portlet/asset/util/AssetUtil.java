@@ -76,7 +76,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerImpl;
+import com.liferay.portlet.dynamicdatamapping.util.DDMIndexer;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.io.Serializable;
@@ -820,11 +820,9 @@ public class AssetUtil {
 
 		int sortType = getSortType(sortField);
 
-		if (sortField.startsWith(
-				DDMIndexerImpl.DDM_FIELD_NAMESPACE +
-					StringPool.DOUBLE_UNDERLINE)) {
-
-			String[] sortFields = sortField.split(StringPool.DOUBLE_UNDERLINE);
+		if (sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
+			String[] sortFields = sortField.split(
+				DDMIndexer.DDM_FIELD_SEPARATOR);
 
 			long ddmStructureId = GetterUtil.getLong(sortFields[1]);
 			String fieldName = sortFields[2];

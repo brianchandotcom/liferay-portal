@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -59,9 +58,7 @@ public class AssetEntryQuery {
 	public static String checkOrderByCol(String orderByCol) {
 		if (ArrayUtil.contains(ORDER_BY_COLUMNS, orderByCol) ||
 			((orderByCol != null) &&
-			 orderByCol.startsWith(
-				DDMIndexer.DDM_FIELD_NAMESPACE +
-					StringPool.DOUBLE_UNDERLINE))) {
+			 orderByCol.startsWith(DDMIndexer.DDM_FIELD_PREFIX))) {
 
 			return orderByCol;
 		}

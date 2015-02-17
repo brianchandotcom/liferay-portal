@@ -45,7 +45,7 @@ public class PortletToolbar {
 		_serviceTracker.open();
 	}
 
-	public Menu getContentAdditionMenu(
+	public Menu getPortletTitleMenu(
 		String portletId, PortletRequest portletRequest) {
 
 		Menu menu = new Menu();
@@ -55,7 +55,7 @@ public class PortletToolbar {
 		menu.setExtended(false);
 		menu.setIcon("../aui/plus-sign-2");
 
-		List<MenuItem> contentAdditionMenuItems = new ArrayList<>();
+		List<MenuItem> portletTitleMenuItems = new ArrayList<>();
 
 		for (PortletToolbarContributorLocator
 				portletToolbarContributorLocator :
@@ -72,19 +72,19 @@ public class PortletToolbar {
 			for (PortletToolbarContributor portletToolbarContributor :
 					portletToolbarContributors) {
 
-				List<MenuItem> curContentAdditionMenuItems =
-					portletToolbarContributor.getContentAdditionMenuItems(
+				List<MenuItem> curPortletTitleMenuItems =
+					portletToolbarContributor.getPortletTitleMenuItems(
 						portletRequest);
 
-				if (curContentAdditionMenuItems == null) {
+				if (curPortletTitleMenuItems == null) {
 					continue;
 				}
 
-				contentAdditionMenuItems.addAll(curContentAdditionMenuItems);
+				portletTitleMenuItems.addAll(curPortletTitleMenuItems);
 			}
 		}
 
-		menu.setMenuItems(contentAdditionMenuItems);
+		menu.setMenuItems(portletTitleMenuItems);
 
 		menu.setMessage("add");
 		menu.setShowArrow(false);

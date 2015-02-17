@@ -44,7 +44,7 @@ public class BlogsPortletToolbarContributor
 	implements PortletToolbarContributor {
 
 	@Override
-	public List<MenuItem> getContentAdditionMenuItems(
+	public List<MenuItem> getPortletTitleMenuItems(
 		PortletRequest portletRequest) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -59,12 +59,12 @@ public class BlogsPortletToolbarContributor
 
 		List<MenuItem> menuItems = new ArrayList<>();
 
-		menuItems.add(getAddEntryMenuItem(portletRequest, themeDisplay));
+		menuItems.add(getPortletTitleMenuItem(portletRequest, themeDisplay));
 
 		return menuItems;
 	}
 
-	protected URLMenuItem getAddEntryMenuItem(
+	protected URLMenuItem getPortletTitleMenuItem(
 		PortletRequest portletRequest, ThemeDisplay themeDisplay) {
 
 		URLMenuItem urlMenuItem = new URLMenuItem();

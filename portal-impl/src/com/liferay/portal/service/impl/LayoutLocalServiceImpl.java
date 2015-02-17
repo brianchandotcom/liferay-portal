@@ -1146,10 +1146,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Date startDate, Date endDate, String fileName)
 		throws PortalException {
 
+		User user = userPersistence.findByPrimaryKey(userId);
+
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildExportSettingsMap(
 				userId, plid, groupId, portletId, parameterMap,
-				Constants.EXPORT, startDate, endDate, fileName);
+				Constants.EXPORT, startDate, endDate, user.getLocale(),
+				user.getTimeZone(), fileName);
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -1962,10 +1965,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Map<String, String[]> parameterMap, File file)
 		throws PortalException {
 
+		User user = userPersistence.findByPrimaryKey(userId);
+
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				userId, groupId, privateLayout, null, parameterMap,
-				Constants.IMPORT, null, null, file.getName());
+				Constants.IMPORT, null, null, user.getLocale(),
+				user.getTimeZone(), file.getName());
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -2197,10 +2203,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			String portletId, Map<String, String[]> parameterMap, File file)
 		throws PortalException {
 
+		User user = userPersistence.findByPrimaryKey(userId);
+
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				userId, plid, groupId, portletId, parameterMap,
-				Constants.IMPORT, null, null, file.getName());
+				Constants.IMPORT, null, null, user.getLocale(),
+				user.getTimeZone(), file.getName());
 
 		ServiceContext serviceContext = new ServiceContext();
 

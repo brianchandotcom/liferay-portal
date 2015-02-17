@@ -79,6 +79,10 @@ public class ZipReaderImpl implements ZipReader {
 
 		File[] files = (File[])_zipFile.listFiles();
 
+		if (files == null) {
+			return null;
+		}
+
 		for (File file : files) {
 			if (!file.isDirectory()) {
 				folderEntries.add(file.getEnclEntryName());

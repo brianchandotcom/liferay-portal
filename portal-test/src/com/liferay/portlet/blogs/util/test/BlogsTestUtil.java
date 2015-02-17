@@ -93,19 +93,6 @@ public class BlogsTestUtil {
 			expectedEntry.isSmallImage(), actualEntry.isSmallImage());
 	}
 
-	public static void populateNotificationsServiceContext(
-			ServiceContext serviceContext, String command)
-		throws Exception {
-
-		serviceContext.setAttribute("entryURL", "http://localhost");
-
-		if (Validator.isNotNull(command)) {
-			serviceContext.setCommand(command);
-		}
-
-		serviceContext.setLayoutFullURL("http://localhost");
-	}
-
 	public static String getTempBlogsEntryAttachmentFileEntryImgTag(
 		long dataImageId, String url) {
 
@@ -120,6 +107,19 @@ public class BlogsTestUtil {
 		sb.append("\"/>");
 
 		return sb.toString();
+	}
+
+	public static void populateNotificationsServiceContext(
+			ServiceContext serviceContext, String command)
+		throws Exception {
+
+		serviceContext.setAttribute("entryURL", "http://localhost");
+
+		if (Validator.isNotNull(command)) {
+			serviceContext.setCommand(command);
+		}
+
+		serviceContext.setLayoutFullURL("http://localhost");
 	}
 
 	protected static BlogsEntry updateStatus(

@@ -37,9 +37,9 @@ import org.osgi.service.component.annotations.Modified;
  * @author Tina Tian
  */
 @Component(
-		configurationPid = "com.liferay.portal.template.xsl",
-		configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-		service = TemplateManager.class
+	configurationPid = "com.liferay.portal.template.xsl",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = TemplateManager.class
 )
 public class XSLManager extends BaseTemplateManager {
 

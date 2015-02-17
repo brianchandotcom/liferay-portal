@@ -664,7 +664,7 @@ public class VerifyProperties extends VerifyProcess {
 			"xsl.content.xsl.secure.processing.enabled",
 			"xsl.secure.processing.enabled", "com.liferay.xsl.content.web"
 		},
-		
+
 		// XSL Engine
 
 		new String[] {

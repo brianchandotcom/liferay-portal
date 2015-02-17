@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -42,6 +43,7 @@ import com.liferay.portal.lar.PortletImporter;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -56,14 +58,14 @@ import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.util.test.AssetTestUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBMessageDisplay;
+import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 import com.liferay.portlet.ratings.util.test.RatingsTestUtil;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -156,10 +158,29 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			return;
 		}
 
-		MBTestUtil.addDiscussionMessage(
-			stagingGroup.getGroupId(),
-			ExportImportClassedModelUtil.getClassName(stagedModel),
-			ExportImportClassedModelUtil.getClassPK(stagedModel));
+		String className =
+			ExportImportClassedModelUtil.getClassName(stagedModel);
+
+		long classPK = ExportImportClassedModelUtil.getClassPK(stagedModel);
+
+		User user = TestPropsValues.getUser();
+
+		MBMessageDisplay messageDisplay =
+			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
+				user.getUserId(), stagingGroup.getGroupId(), className,
+				classPK, WorkflowConstants.STATUS_APPROVED);
+
+		MBThread thread =  messageDisplay.getThread();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), user.getUserId());
+
+		MBMessageLocalServiceUtil.addDiscussionMessage(
+			user.getUserId(), user.getFullName(), stagingGroup.getGroupId(),
+			className, classPK, thread.getThreadId(), thread.getRootMessageId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(50),
+			serviceContext);
 	}
 
 	protected List<StagedModel> addDependentStagedModel(

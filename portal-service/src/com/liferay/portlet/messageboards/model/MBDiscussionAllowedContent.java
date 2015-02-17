@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Sergio González
@@ -26,6 +28,12 @@ import java.util.Map;
 public class MBDiscussionAllowedContent {
 
 	public MBDiscussionAllowedContent(String allowedContent) {
+		Pattern paddingPattern = Pattern.compile("\\s+");
+
+		Matcher matcher = paddingPattern.matcher(allowedContent);
+
+		allowedContent = matcher.replaceAll(StringPool.BLANK);
+
 		String[] allowedContentElementAttributesArray = StringUtil.split(
 			allowedContent, StringPool.SEMICOLON);
 

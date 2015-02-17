@@ -38,7 +38,6 @@ import com.liferay.portlet.notifications.test.BaseUserNotificationTestCase;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
-
 /**
  * @author Roberto Díaz
  * @author Sergio González

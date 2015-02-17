@@ -117,23 +117,20 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_PUBLISH);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			stagingGroup.getGroupId(), category.getCategoryId(), 0, 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			MBMessageConstants.DEFAULT_FORMAT, null, false, 0.0,
-			false, serviceContext);
+			MBMessageConstants.DEFAULT_FORMAT, null, false, 0.0, false,
+			serviceContext);
 
 		MBThreadFlagLocalServiceUtil.addThreadFlag(
 			TestPropsValues.getUserId(), message.getThread(), serviceContext);
 
 		User user = UserTestUtil.addUser(
-				RandomTestUtil.randomString(), TestPropsValues.getGroupId());
+			RandomTestUtil.randomString(), TestPropsValues.getGroupId());
 
 		MBBanLocalServiceUtil.addBan(
 			TestPropsValues.getUserId(), user.getUserId(), serviceContext);

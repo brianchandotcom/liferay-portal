@@ -43,6 +43,7 @@ import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -135,8 +136,6 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				message.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setLayoutFullURL("http://localhost");
-
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			MBTestUtil.getInputStreamOVPs(
 				"OSX_Test.docx", getClass(), getSearchKeywords());
@@ -155,11 +154,10 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 
 		MBCategory category = (MBCategory)parentBaseModel;
 
-		serviceContext.setLayoutFullURL("http://localhost");
-
 		if (approved) {
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-		} else {
+		}
+		else {
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
@@ -168,7 +166,6 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 			serviceContext.getUserId(), RandomTestUtil.randomString(),
 			category.getGroupId(), category.getCategoryId(), keywords, keywords,
 			serviceContext);
-
 	}
 
 	@Override
@@ -246,11 +243,9 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				message.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setLayoutFullURL("http://localhost");
-
 		return MBMessageLocalServiceUtil.updateMessage(
-			TestPropsValues.getUserId(), message.getMessageId(),
-			keywords, keywords,
+			TestPropsValues.getUserId(), message.getMessageId(), keywords,
+			keywords,
 			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
 			Collections.<String>emptyList(), message.getPriority(),
 			message.isAllowPingbacks(), updateServiceContext);

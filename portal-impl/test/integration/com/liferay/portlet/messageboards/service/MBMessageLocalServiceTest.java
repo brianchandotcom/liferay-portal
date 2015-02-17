@@ -42,7 +42,9 @@ import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.InputStream;
+
 import java.text.DateFormat;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -81,8 +83,6 @@ public class MBMessageLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setLayoutFullURL("http://localhost");
-
 		MBMessageLocalServiceUtil.updateMessage(
 			TestPropsValues.getUserId(), message.getMessageId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -104,8 +104,6 @@ public class MBMessageLocalServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
-
-		serviceContext.setLayoutFullURL("http://localhost");
 
 		MBMessageLocalServiceUtil.updateMessage(
 			TestPropsValues.getUserId(), message.getMessageId(),
@@ -186,8 +184,6 @@ public class MBMessageLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setLayoutFullURL("http://localhost");
-
 		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
 		long parentMessageId = 0;
 		long threadId = 0;
@@ -210,8 +206,8 @@ public class MBMessageLocalServiceTest {
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				_group.getGroupId(), categoryId, threadId, parentMessageId,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs,
-				false, 0.0, false, serviceContext);
+				MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
+				false, serviceContext);
 	}
 
 	@DeleteAfterTestRun

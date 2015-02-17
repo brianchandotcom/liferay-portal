@@ -14,9 +14,6 @@
 
 package com.liferay.portlet.messageboards.social;
 
-import java.io.InputStream;
-import java.util.Collections;
-
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -34,6 +31,10 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
+
+import java.io.InputStream;
+
+import java.util.Collections;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -57,6 +58,30 @@ public class MBMessageActivityInterpreterTest
 		message = addMessage(null);
 
 		message = addMessage(message);
+	}
+
+	protected MBMessage addMessage(MBMessage parentMessage) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
+		long parentMessageId = 0;
+		long threadId = 0;
+
+		if (parentMessage != null) {
+			categoryId = parentMessage.getCategoryId();
+			parentMessageId = parentMessage.getMessageId();
+			threadId = parentMessage.getThreadId();
+		}
+
+		return MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			group.getGroupId(), categoryId, threadId, parentMessageId,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			MBMessageConstants.DEFAULT_FORMAT,
+			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
+			false, 0.0, false, serviceContext);
 	}
 
 	@Override
@@ -84,32 +109,6 @@ public class MBMessageActivityInterpreterTest
 
 	@Override
 	protected void renameModels() throws Exception {
-	}
-
-	protected MBMessage addMessage(MBMessage parentMessage) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
-		long parentMessageId = 0;
-		long threadId = 0;
-
-		if (parentMessage != null) {
-			categoryId = parentMessage.getCategoryId();
-			parentMessageId = parentMessage.getMessageId();
-			threadId = parentMessage.getThreadId();
-		}
-
-		return MBMessageLocalServiceUtil.addMessage(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			group.getGroupId(), categoryId, threadId, parentMessageId,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			MBMessageConstants.DEFAULT_FORMAT,
-			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
-			false, 0.0, false, serviceContext);
 	}
 
 	@Override

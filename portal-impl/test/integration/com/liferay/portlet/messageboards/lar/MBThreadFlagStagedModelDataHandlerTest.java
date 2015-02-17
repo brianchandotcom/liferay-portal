@@ -64,8 +64,6 @@ public class MBThreadFlagStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setLayoutFullURL("http://localhost");
-
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,

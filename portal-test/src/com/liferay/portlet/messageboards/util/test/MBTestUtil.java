@@ -282,6 +282,17 @@ public class MBTestUtil {
 		return inputStreamOVPs;
 	}
 
+	public static void populateNotificationsServiceContext(
+			ServiceContext serviceContext, String command)
+		throws Exception {
+
+		if (Validator.isNotNull(command)) {
+			serviceContext.setCommand(command);
+		}
+
+		serviceContext.setLayoutFullURL("http://localhost");
+	}
+
 	public static MBMessage updateDiscussionMessage(
 			long userId, long groupId, long messageId, String className,
 			long classPK)

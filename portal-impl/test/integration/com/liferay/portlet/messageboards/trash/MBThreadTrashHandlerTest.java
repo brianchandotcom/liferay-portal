@@ -42,6 +42,7 @@ import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 
 import java.io.InputStream;
+
 import java.util.Calendar;
 import java.util.Collections;
 
@@ -153,9 +154,9 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		if (approved) {
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-		} else {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+		else {
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
 
 		String keywords = getSearchKeywords();

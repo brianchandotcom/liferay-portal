@@ -29,7 +29,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -66,7 +65,6 @@ public class MBBanStagedModelDataHandlerTest
 
 		return MBBanLocalServiceUtil.addBan(
 			TestPropsValues.getUserId(), user.getUserId(), serviceContext);
-
 	}
 
 	@Override

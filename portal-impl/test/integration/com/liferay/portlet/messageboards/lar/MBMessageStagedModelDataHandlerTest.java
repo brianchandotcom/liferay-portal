@@ -44,6 +44,7 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +79,7 @@ public class MBMessageStagedModelDataHandlerTest
 				ServiceContextTestUtil.getServiceContext(
 					group.getGroupId(), TestPropsValues.getUserId());
 
-		MBCategory category = 
+		MBCategory category =
 			MBCategoryServiceUtil.addCategory(
 				TestPropsValues.getUserId(),
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
@@ -110,8 +111,7 @@ public class MBMessageStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_PUBLISH);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
@@ -159,7 +159,6 @@ public class MBMessageStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setLayoutFullURL("http://localhost");
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		MBMessage approvedMessage =

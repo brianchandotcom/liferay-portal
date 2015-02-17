@@ -32,6 +32,7 @@ import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
 
 import java.io.InputStream;
+
 import java.util.Collections;
 
 import org.junit.Assert;
@@ -165,7 +166,6 @@ public class MBStatsUserLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setLayoutFullURL("http://localhost");
 		serviceContext.setWorkflowAction(workflowAction);
 
 		_message = MBMessageLocalServiceUtil.addMessage(
@@ -189,7 +189,6 @@ public class MBStatsUserLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setLayoutFullURL("http://localhost");
 		serviceContext.setWorkflowAction(workflowAction);
 
 		_message = MBMessageLocalServiceUtil.updateMessage(

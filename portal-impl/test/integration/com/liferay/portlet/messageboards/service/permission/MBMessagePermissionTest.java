@@ -72,26 +72,22 @@ public class MBMessagePermissionTest extends BasePermissionTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setLayoutFullURL("http://localhost");
-
 		_message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
-		MBCategory category =
-			MBCategoryLocalServiceUtil.addCategory(
-				TestPropsValues.getUserId(),
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				serviceContext);
+		MBCategory category = MBCategoryLocalServiceUtil.addCategory(
+			TestPropsValues.getUserId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		_submessage = MBMessageLocalServiceUtil.addMessage(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				group.getGroupId(), category.getCategoryId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				serviceContext);
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			group.getGroupId(), category.getCategoryId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 	@Override

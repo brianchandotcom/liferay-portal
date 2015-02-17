@@ -70,8 +70,6 @@ public class MBExportImportTest extends BasePortletExportImportTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setLayoutFullURL("http://localhost");
-
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
@@ -125,8 +123,8 @@ public class MBExportImportTest extends BasePortletExportImportTestCase {
 				groupId, TestPropsValues.getUserId());
 
 		return MBMessageLocalServiceUtil.addMessage(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), groupId,
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 	}
@@ -144,8 +142,8 @@ public class MBExportImportTest extends BasePortletExportImportTestCase {
 		serviceContext.setModifiedDate(createdDate);
 
 		return MBMessageLocalServiceUtil.addMessage(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), groupId,
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 	}

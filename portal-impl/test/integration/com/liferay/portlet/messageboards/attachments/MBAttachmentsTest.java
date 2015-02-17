@@ -42,6 +42,7 @@ import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -347,8 +348,6 @@ public class MBAttachmentsTest {
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), user.getUserId());
 
-			serviceContext.setLayoutFullURL("http://localhost");
-
 			_message = MBMessageLocalServiceUtil.addMessage(
 				user.getUserId(), user.getFullName(), _group.getGroupId(),
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, "Subject",
@@ -359,8 +358,6 @@ public class MBAttachmentsTest {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId());
-
-			serviceContext.setLayoutFullURL("http://localhost");
 
 			List<ObjectValuePair<String, InputStream>> objectValuePairs =
 				MBTestUtil.getInputStreamOVPs(
@@ -386,18 +383,16 @@ public class MBAttachmentsTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setLayoutFullURL("http://localhost");
-
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-				Collections.emptyList();
+			Collections.emptyList();
 
 		return MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			_message.getGroupId(), _message.getCategoryId(),
 			_message.getThreadId(), _message.getMessageId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs,
-			false, 0.0, false, serviceContext);
+			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
+			false, serviceContext);
 	}
 
 	private void _trashMBAttachments(boolean restore) throws Exception {
@@ -416,8 +411,6 @@ public class MBAttachmentsTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
-
-		serviceContext.setLayoutFullURL("http://localhost");
 
 		String fileName = "OSX_Test.docx";
 

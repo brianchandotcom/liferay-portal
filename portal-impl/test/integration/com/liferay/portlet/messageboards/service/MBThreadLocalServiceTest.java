@@ -80,8 +80,6 @@ public class MBThreadLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setLayoutFullURL("http://localhost");
-
 		return MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,

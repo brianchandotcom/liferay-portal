@@ -14,9 +14,6 @@
 
 package com.liferay.portlet.messageboards.notifications;
 
-import java.io.InputStream;
-import java.util.Collections;
-
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
@@ -37,7 +34,12 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.notifications.test.BaseUserNotificationTestCase;
+
+import java.io.InputStream;
+
+import java.util.Collections;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -62,8 +64,8 @@ public class MBUserNotificationTest extends BaseUserNotificationTestCase {
 				ServiceContextTestUtil.getServiceContext(
 					group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
+		MBTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
 
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
@@ -80,10 +82,10 @@ public class MBUserNotificationTest extends BaseUserNotificationTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
+		MBTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
 
-		_category = 
+		_category =
 			MBCategoryServiceUtil.addCategory(
 				TestPropsValues.getUserId(),
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
@@ -112,8 +114,8 @@ public class MBUserNotificationTest extends BaseUserNotificationTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				message.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setCommand(Constants.UPDATE);
-		serviceContext.setLayoutFullURL("http://localhost");
+		MBTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.UPDATE);
 
 		message = MBMessageLocalServiceUtil.updateMessage(
 			TestPropsValues.getUserId(), message.getMessageId(),

@@ -28,9 +28,7 @@ import java.util.regex.Pattern;
 public class MBDiscussionAllowedContent {
 
 	public MBDiscussionAllowedContent(String allowedContent) {
-		Pattern paddingPattern = Pattern.compile("\\s+");
-
-		Matcher matcher = paddingPattern.matcher(allowedContent);
+		Matcher matcher = _paddingPattern.matcher(allowedContent);
 
 		allowedContent = matcher.replaceAll(StringPool.BLANK);
 
@@ -66,5 +64,6 @@ public class MBDiscussionAllowedContent {
 
 	private final Map<String, String[]> _allowedContentElementAttributes =
 		new HashMap<>();
+	private final Pattern _paddingPattern = Pattern.compile("\\s+");
 
 }

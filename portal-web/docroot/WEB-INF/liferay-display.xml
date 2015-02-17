@@ -9,11 +9,7 @@
 		<portlet id="71" />
 		<portlet id="184" />
 		<portlet id="77" />
-		<portlet id="101" />
 		<portlet id="110" />
-		<portlet id="175" />
-		<portlet id="193" />
-		<portlet id="194" />
 	</category>
 	<category name="category.collaboration">
 		<portlet id="19" />
@@ -64,7 +60,6 @@
 		<portlet id="164" />
 		<portlet id="166" />
 		<portlet id="167" />
-		<portlet id="173" />
 		<portlet id="174" />
 		<portlet id="176" />
 		<portlet id="178" />

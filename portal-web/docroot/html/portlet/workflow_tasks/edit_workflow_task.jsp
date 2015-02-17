@@ -66,7 +66,7 @@ else {
 
 	PortletURL viewFullContentURL = PortletURLFactoryUtil.create(request, portletId, plid, PortletRequest.RENDER_PHASE);
 
-	viewFullContentURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view_content.jsp");
+	viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
 	viewFullContentURL.setParameter("redirect", currentURL);
 
 	if (assetEntry != null) {

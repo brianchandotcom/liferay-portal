@@ -34,10 +34,10 @@ import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.util.test.AssetTestUtil;
+import com.liferay.portlet.util.test.PortletKeys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -95,7 +95,7 @@ public class PortletDataContextReferencesTest {
 	@Test
 	public void testCleanUpMissingReferences() throws Exception {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PortletKeys.ASSET_PUBLISHER);
+			PortletKeys.TEST);
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
 			_group.getGroupId());
@@ -211,7 +211,7 @@ public class PortletDataContextReferencesTest {
 	@Test
 	public void testMultipleMissingReferences() throws Exception {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PortletKeys.ASSET_PUBLISHER);
+			PortletKeys.TEST);
 
 		_portletDataContext.addReferenceElement(
 			portlet, _portletDataContext.getExportDataRootElement(),

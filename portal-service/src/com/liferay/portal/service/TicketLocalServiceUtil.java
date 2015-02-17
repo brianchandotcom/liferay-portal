@@ -40,6 +40,15 @@ public class TicketLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.TicketLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.model.Ticket addSingleTicket(
+		long companyId, java.lang.String className, long classPK, int type,
+		java.lang.String extraInfo, java.util.Date expirationDate,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .addSingleTicket(companyId, className, classPK, type,
+			extraInfo, expirationDate, serviceContext);
+	}
+
 	public static com.liferay.portal.model.Ticket addTicket(long companyId,
 		java.lang.String className, long classPK, int type,
 		java.lang.String extraInfo, java.util.Date expirationDate,

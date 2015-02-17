@@ -1425,7 +1425,7 @@ public class StagingImpl implements Staging {
 
 		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 
-		Group liveGroup = GroupLocalServiceUtil.getGroup(groupId);
+		Group liveGroup = getLiveGroup(groupId);
 
 		Map<String, String[]> parameterMap = getStagingParameters(
 			portletRequest);
@@ -1438,8 +1438,8 @@ public class StagingImpl implements Staging {
 				Group stagingGroup = liveGroup.getStagingGroup();
 
 				publishLayouts(
-					portletRequest, stagingGroup.getGroupId(), groupId,
-					parameterMap, false);
+					portletRequest, stagingGroup.getGroupId(),
+					liveGroup.getGroupId(), parameterMap, false);
 			}
 		}
 	}

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.zip.InvalidZipException;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.model.User;
@@ -329,6 +330,10 @@ public class MediaWikiImporter implements WikiImporter {
 			imagesInputStream);
 
 		List<String> entries = zipReader.getEntries();
+
+		if (entries == null) {
+			throw new ImportFilesException();
+		}
 
 		int total = entries.size();
 

@@ -52,10 +52,9 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 		ServiceContext serviceContext = BlogsTestUtil.getServiceContext(
 			Constants.ADD, group.getGroupId(), TestPropsValues.getUserId());
 
-		BlogsEntry entry =
-			BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), "Title", "Content",
-				serviceContext);
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		return entry;
 	}
@@ -75,10 +74,8 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			BlogsTestUtil.getServiceContext(
-				Constants.UPDATE, group.getGroupId(),
-				TestPropsValues.getUserId());
+		ServiceContext serviceContext = BlogsTestUtil.getServiceContext(
+			Constants.UPDATE, group.getGroupId(), TestPropsValues.getUserId());
 
 		serviceContext.setAttribute("sendEmailEntryUpdated", true);
 

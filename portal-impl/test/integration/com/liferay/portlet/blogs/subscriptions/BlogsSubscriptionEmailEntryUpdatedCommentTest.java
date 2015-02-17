@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.MailServiceTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -71,15 +72,12 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 	@Test
 	public void testEmailEntryUpdatedNotSentIfNotSpecified() throws Exception {
-		ServiceContext serviceContext =
-			BlogsTestUtil.getServiceContext(
-				Constants.ADD, _group.getGroupId(),
-				TestPropsValues.getUserId());
+		ServiceContext serviceContext = BlogsTestUtil.getServiceContext(
+			Constants.ADD, _group.getGroupId(), TestPropsValues.getUserId());
 
-		BlogsEntry entry =
-			BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), "Title", "Content",
-				serviceContext);
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		BlogsEntryLocalServiceUtil.subscribe(
 			_user.getUserId(), _group.getGroupId());
@@ -103,15 +101,12 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 		setUpBlogsSettings();
 
-		ServiceContext serviceContext =
-			BlogsTestUtil.getServiceContext(
-				Constants.ADD, _group.getGroupId(),
-				TestPropsValues.getUserId());
+		ServiceContext serviceContext = BlogsTestUtil.getServiceContext(
+			Constants.ADD, _group.getGroupId(), TestPropsValues.getUserId());
 
-		BlogsEntry entry =
-			BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), "Title", "Content",
-				serviceContext);
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		BlogsEntryLocalServiceUtil.subscribe(
 			_user.getUserId(), _group.getGroupId());
@@ -139,20 +134,18 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 		setUpBlogsSettings();
 
-		ServiceContext serviceContext =
-			BlogsTestUtil.getServiceContext(
-				Constants.ADD, _group.getGroupId(),
-				TestPropsValues.getUserId());
+		ServiceContext serviceContext = BlogsTestUtil.getServiceContext(
+			Constants.ADD, _group.getGroupId(), TestPropsValues.getUserId());
 
-		BlogsEntry entry =
-			BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), "Title", "Content",
-				serviceContext);
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		BlogsEntryLocalServiceUtil.subscribe(
 			_user.getUserId(), _group.getGroupId());
 
 		serviceContext.setCommand(Constants.UPDATE);
+
 		serviceContext.setAttribute(
 			"sendEmailEntryUpdated", Boolean.TRUE.toString());
 

@@ -89,10 +89,9 @@ public class AssetCategoryLocalServiceTest {
 		serviceContext.setAssetCategoryIds(
 			new long[] {assetCategory.getCategoryId()});
 
-		BlogsEntry blogsEntry =
-			BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), serviceContext);
+		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		AssetTestIndexer assetTestIndexer = new AssetTestIndexer();
 

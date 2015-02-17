@@ -829,8 +829,10 @@ public class AssetEntryQueryTest {
 		threadLocalCache.removeAll();
 
 		ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), TestPropsValues.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		// Needs to be the exact same date for all the blog entries
 
 		Date now = new Date();
 
@@ -879,6 +881,8 @@ public class AssetEntryQueryTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
+
+		// Needs to be the exact same date for all the blog entries
 
 		Date now = new Date();
 

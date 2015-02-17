@@ -219,13 +219,14 @@ public class AssetTagFinderTest {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId,TestPropsValues.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId());
 
 		serviceContext.setAssetTagNames(new String[] {assetTagName});
 
 		BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), serviceContext);
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	protected Group addScopeGroup() throws Exception {

@@ -65,12 +65,9 @@ public class BlogsExportImportTest extends BasePortletExportImportTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				groupId, TestPropsValues.getUserId());
 
-		BlogsEntry entry =
-			BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), serviceContext);
-
-		return entry;
+		return BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	@Override
@@ -85,8 +82,8 @@ public class BlogsExportImportTest extends BasePortletExportImportTestCase {
 		serviceContext.setModifiedDate(createdDate);
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), serviceContext);
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		return entry;
 	}

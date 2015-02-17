@@ -49,31 +49,19 @@ public class BlogsEntryStagedModelDataHandlerTest
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			TransactionalTestRule.INSTANCE);
 
-	protected BlogsEntry addEntry(Group group, boolean approved)
-		throws Exception {
-
-		ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group, TestPropsValues.getUserId());
-
-		if (approved) {
-			return BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), serviceContext);
-		}
-
-		return BlogsTestUtil.addEntryWithWorkflow(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(), false,
-			serviceContext);
-	}
-
 	@Override
 	protected StagedModel addStagedModel(
 			Group group,
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		return addEntry(group, true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId());
+
+		return BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	@Override
@@ -82,8 +70,21 @@ public class BlogsEntryStagedModelDataHandlerTest
 
 		List<StagedModel> stagedModels = new ArrayList<>();
 
-		stagedModels.add(addEntry(group, true));
-		stagedModels.add(addEntry(group, false));
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId());
+
+		BlogsEntry approvedEntry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		stagedModels.add(approvedEntry);
+
+		BlogsEntry pendingEntry = BlogsTestUtil.addEntryWithWorkflow(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), false,
+			serviceContext);
+
+		stagedModels.add(pendingEntry);
 
 		return stagedModels;
 	}

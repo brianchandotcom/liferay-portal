@@ -44,8 +44,8 @@ public class BlogsPortletDataHandlerTest
 	@Override
 	protected void addStagedModels() throws Exception {
 		ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					stagingGroup, TestPropsValues.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup, TestPropsValues.getUserId());
 
 		BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),

@@ -53,10 +53,9 @@ public class BlogsActivityInterpreterTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		_entry =
-			BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), "Title", "Content",
-				serviceContext);
+		_entry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	@Override

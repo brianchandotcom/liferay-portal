@@ -468,13 +468,9 @@ public class BlogsEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), userId);
 
-		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(2012, 1, 1);
-
-		BlogsEntry entry =
-			BlogsEntryLocalServiceUtil.addEntry(
-				userId, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), displayCalendar.getTime(),
-				serviceContext);
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			userId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		if (statusInTrash) {
 			entry = BlogsEntryLocalServiceUtil.moveEntryToTrash(userId, entry);
@@ -488,12 +484,7 @@ public class BlogsEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), userId);
 
-		ImageSelector coverImageSelector = null;
-		ImageSelector smallImageSelector = null;
-
-		Class<?> clazz = BlogsTestUtil.class;
-
-		ClassLoader classLoader = clazz.getClassLoader();
+		ClassLoader classLoader = getClass().getClassLoader();
 
 		InputStream inputStream = classLoader.getResourceAsStream(
 			"com/liferay/portal/util/dependencies/test.jpg");
@@ -512,7 +503,8 @@ public class BlogsEntryLocalServiceTest {
 				MimeTypesUtil.getContentType("image.jpg"));
 		}
 
-		smallImageSelector = new ImageSelector(
+		ImageSelector coverImageSelector = null;
+		ImageSelector smallImageSelector = new ImageSelector(
 			fileEntry.getFileEntryId(), StringPool.BLANK, null);
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(

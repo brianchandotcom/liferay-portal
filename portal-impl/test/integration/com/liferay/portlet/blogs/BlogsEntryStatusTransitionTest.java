@@ -71,14 +71,12 @@ public class BlogsEntryStatusTransitionTest extends BaseBlogsEntryTestCase {
 		user = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), group.getGroupId());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), user.getUserId());
+		ServiceContext serviceContext = ServiceContextTestUtil.getServiceContext(
+			group.getGroupId(), user.getUserId());
 
-		entry =
-			BlogsTestUtil.addEntryWithWorkflow(
-				user.getUserId(), RandomTestUtil.randomString(), false,
-				serviceContext);
+		entry = BlogsTestUtil.addEntryWithWorkflow(
+			user.getUserId(), RandomTestUtil.randomString(), false,
+			serviceContext);
 	}
 
 	@Test

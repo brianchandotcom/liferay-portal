@@ -66,7 +66,13 @@ public class CommentsSubscriptionTest {
 	public void testSubscriptionMBDiscussionWhenAddingMBMessage()
 		throws Exception {
 
-		BlogsEntry blogsEntry = addEntry();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		MBDiscussionLocalServiceUtil.subscribeDiscussion(
 			_user.getUserId(), _group.getGroupId(), BlogsEntry.class.getName(),
@@ -83,7 +89,13 @@ public class CommentsSubscriptionTest {
 	public void testSubscriptionMBDiscussionWhenUpdatingMBMessage()
 		throws Exception {
 
-		BlogsEntry blogsEntry = addEntry();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		MBMessage mbMessage = MBTestUtil.addDiscussionMessage(
 			_group.getGroupId(), BlogsEntry.class.getName(),
@@ -98,19 +110,6 @@ public class CommentsSubscriptionTest {
 			BlogsEntry.class.getName(), blogsEntry.getEntryId());
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
-	}
-
-	protected BlogsEntry addEntry() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		BlogsEntry entry =
-			BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), serviceContext);
-
-		return entry;
 	}
 
 	@DeleteAfterTestRun

@@ -77,10 +77,9 @@ public class BlogsSubscriptionRootContainerModelTest
 		ServiceContext serviceContext = BlogsTestUtil.getServiceContext(
 			Constants.ADD, group.getGroupId(), TestPropsValues.getUserId());
 
-		BlogsEntry entry =
-			BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), "Title", "Content",
-				serviceContext);
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		return entry.getEntryId();
 	}
@@ -95,10 +94,8 @@ public class BlogsSubscriptionRootContainerModelTest
 
 	@Override
 	protected void updateBaseModel(long baseModelId) throws Exception {
-		ServiceContext serviceContext =
-			BlogsTestUtil.getServiceContext(
-				Constants.UPDATE, group.getGroupId(),
-				TestPropsValues.getUserId());
+		ServiceContext serviceContext = BlogsTestUtil.getServiceContext(
+			Constants.UPDATE, group.getGroupId(), TestPropsValues.getUserId());
 
 		serviceContext.setAttribute("sendEmailEntryUpdated", true);
 

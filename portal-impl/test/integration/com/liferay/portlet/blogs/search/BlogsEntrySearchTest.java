@@ -159,7 +159,7 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 
 		return BlogsEntryLocalServiceUtil.updateEntry(
 			serviceContext.getUserId(), entry.getEntryId(), keywords,
-			RandomTestUtil.randomString(), serviceContext);
+			entry.getContent(), serviceContext);
 	}
 
 }

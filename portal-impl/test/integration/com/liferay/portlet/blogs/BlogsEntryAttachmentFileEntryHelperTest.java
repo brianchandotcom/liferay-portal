@@ -175,13 +175,12 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 		throws Exception {
 
 		ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
 
-		BlogsEntry entry =
-			BlogsEntryLocalServiceUtil.addEntry(
-				_user.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), serviceContext);
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		List<FileEntry> tempFileEntries = new ArrayList<>();
 

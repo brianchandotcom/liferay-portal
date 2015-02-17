@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.taglib.ui.LanguageTag;
 
@@ -30,7 +29,9 @@ public class UpgradeLanguagePreferences extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String[] getPortletIds() {
-		return new String[] {PortletKeys.LANGUAGE};
+		return new String[] {
+			"com_liferay_language_web_portlet_LanguagePortlet"
+		};
 	}
 
 	@SuppressWarnings("deprecation")

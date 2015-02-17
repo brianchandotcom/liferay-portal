@@ -19,7 +19,9 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Peter Fellwock
  */
-@Meta.OCD(id = "com.liferay.portal.template.xsl")
+@Meta.OCD(
+	id = "com.liferay.portal.template.xsl.configuration.XSLEngineConfiguration"
+)
 public interface XSLEngineConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)

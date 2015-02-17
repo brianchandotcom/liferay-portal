@@ -751,6 +751,10 @@ public abstract class BaseDB implements DB {
 	protected String evaluateVM(String templateId, String templateContent)
 		throws Exception {
 
+		if (Validator.isNull(templateContent)) {
+			return StringPool.BLANK;
+		}
+
 		ClassLoader classLoader = ClassLoaderUtil.getContextClassLoader();
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();

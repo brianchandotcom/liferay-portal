@@ -918,13 +918,12 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		boolean overwriteImages,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.updateEntry(userId, entryId, title,
 			subtitle, description, content, displayDate, allowPingbacks,
 			allowTrackbacks, trackbacks, coverImageImageSelector,
-			smallImageImageSelector, overwriteImages, serviceContext);
+			smallImageImageSelector, serviceContext);
 	}
 
 	@Override

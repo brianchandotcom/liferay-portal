@@ -858,14 +858,12 @@ public class BlogsEntryLocalServiceUtil {
 		java.lang.String[] trackbacks,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		boolean overwriteImages,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateEntry(userId, entryId, title, subtitle, description,
 			content, displayDate, allowPingbacks, allowTrackbacks, trackbacks,
-			coverImageImageSelector, smallImageImageSelector, overwriteImages,
-			serviceContext);
+			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
 	public static com.liferay.portlet.blogs.model.BlogsEntry updateEntry(

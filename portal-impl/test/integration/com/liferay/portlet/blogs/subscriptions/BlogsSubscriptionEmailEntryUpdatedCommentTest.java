@@ -87,7 +87,8 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 		BlogsEntryLocalServiceUtil.subscribe(
 			_user.getUserId(), _group.getGroupId());
 
-		serviceContext.setCommand(Constants.UPDATE);
+		BlogsTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.UPDATE);
 
 		serviceContext.setAttribute(
 			"emailEntryUpdatedComment", "This entry was updated.");
@@ -120,7 +121,8 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 		BlogsEntryLocalServiceUtil.subscribe(
 			_user.getUserId(), _group.getGroupId());
 
-		serviceContext.setCommand(Constants.UPDATE);
+		BlogsTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.UPDATE);
 
 		serviceContext.setAttribute(
 			"emailEntryUpdatedComment", "This entry was updated.");
@@ -157,7 +159,8 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 		BlogsEntryLocalServiceUtil.subscribe(
 			_user.getUserId(), _group.getGroupId());
 
-		serviceContext.setCommand(Constants.UPDATE);
+		BlogsTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.UPDATE);
 
 		serviceContext.setAttribute(
 			"sendEmailEntryUpdated", Boolean.TRUE.toString());

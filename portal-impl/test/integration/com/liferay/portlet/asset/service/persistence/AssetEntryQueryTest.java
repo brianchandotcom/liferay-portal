@@ -887,10 +887,9 @@ public class AssetEntryQueryTest {
 		Date now = new Date();
 
 		for (int i = 0; i < viewCounts.length; i++) {
-			BlogsEntry entry =
-				BlogsEntryLocalServiceUtil.addEntry(
-					TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(), now, serviceContext);
+			BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), now, serviceContext);
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 				BlogsEntry.class.getName(), entry.getEntryId());

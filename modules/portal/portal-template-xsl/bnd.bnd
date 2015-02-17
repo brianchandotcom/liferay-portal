@@ -1,8 +1,6 @@
 Bundle-Name: Liferay Portal Template XSL
 Bundle-SymbolicName: com.liferay.portal.template.xsl
 Bundle-Version: 1.0.0
-Import-Package:\
-	*
 Include-Resource:\
 	classes,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\

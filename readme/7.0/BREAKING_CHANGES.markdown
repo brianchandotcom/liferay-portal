@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `6e73e36`.*
+*This document has been reviewed through commit `7763533`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -979,7 +979,7 @@ IDs.
 
 ------------------------------------------------------------------------------
 
-### Moved the `AssetPublisherUtil` class and removed it from the public API 
+### Moved the `AssetPublisherUtil` Class and Removed It from the Public API
 - **Date:** 2015-Feb-11
 - **JIRA Ticket:** LPS-52744
 
@@ -1007,27 +1007,27 @@ different parts of the portal.
 
 ---------------------------------------
 
-### Removed operations that have Fields class as reference from the StorageAdapter interface
+### Removed Operations That Used the `Fields` Class from the `StorageAdapter` Interface
 - **Date:** 2015-Feb-11
 - **JIRA Ticket:** LPS-53021
 
 #### What changed?
 
-All operations that used to have Fields class as reference were removed from 
-StorageAdapter interface.
+All operations that used the `Fields` class have been removed from the
+`StorageAdapter` interface.
 
 #### Who is affected?
 
-This affects developers who have written code that calls directly those 
+This affects developers who have written code that directly calls these 
 operations. 
 
 #### How should I update my code?
 
-You should replace your code to use DDMFormValues class instead of the Fields 
-class.
+You should update your code to use the `DDMFormValues` class instead of the
+`Fields` class.
 
 #### Why was this change made?
 
-This change was made due deprecation of the Fields class. 
+This change has been made due to the deprecation of the `Fields` class. 
 
 ---------------------------------------

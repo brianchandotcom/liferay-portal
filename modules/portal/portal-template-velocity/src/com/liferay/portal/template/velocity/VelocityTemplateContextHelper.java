@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Peter Fellwock
  */
 @Component(
-	configurationPid = "com.liferay.portal.template.velocity",
+	configurationPid = "com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = {TemplateContextHelper.class, VelocityTemplateContextHelper.class}
 )

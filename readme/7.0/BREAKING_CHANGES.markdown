@@ -1031,3 +1031,32 @@ You should update your code to use the `DDMFormValues` class instead of the
 This change has been made due to the deprecation of the `Fields` class. 
 
 ---------------------------------------
+
+### DLProcessor needs to implement a new method getType()
+- **Date:** 2015-Feb-17
+- **JIRA Ticket:** LPS-53574
+
+#### What changed?
+
+DLProcessor has a new method getType()
+
+#### Who is affected?
+
+All developers who have created DLProcessor
+
+#### How should I update my code?
+
+You need to implement the method in the DLProcessor and return the type of
+Processor. You can check the class DLProcessorConstants to see the types.
+class.
+
+#### Why was this change made?
+
+Before we were forcing developers to extend one of the existing DLProcessors and
+we were checking the instance of the class to determine what type of processor
+was.
+
+With the new change developers don't need to extend any particular class to
+create their own DLProcessor.
+
+---------------------------------------

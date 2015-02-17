@@ -102,6 +102,7 @@ public class SynchronousDestinationTestCallback
 
 			replaceDestination(DestinationNames.ASYNC_SERVICE);
 			replaceDestination(DestinationNames.BACKGROUND_TASK);
+			replaceDestination(DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR);
 			replaceDestination(
 				DestinationNames.DOCUMENT_LIBRARY_RAW_METADATA_PROCESSOR);
 			replaceDestination(

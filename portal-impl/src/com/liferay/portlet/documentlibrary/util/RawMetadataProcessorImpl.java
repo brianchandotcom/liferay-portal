@@ -36,6 +36,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -89,6 +90,11 @@ public class RawMetadataProcessorImpl
 		if (fileEntryMetadataCount == 0) {
 			trigger(fileVersion);
 		}
+	}
+
+	@Override
+	public String getType() {
+		return DLProcessorConstants.RAW_METADATA_PROCESSOR;
 	}
 
 	@Override

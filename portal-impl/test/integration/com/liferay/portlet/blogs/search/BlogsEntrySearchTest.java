@@ -123,7 +123,7 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		return BlogsTestUtil.addEntry(
+		return BlogsTestUtil.addEntryWithWorkflow(
 			TestPropsValues.getUserId(), keywords, approved, serviceContext);
 	}
 
@@ -156,9 +156,9 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 
 		BlogsEntry entry = (BlogsEntry)baseModel;
 
-		entry.setTitle(keywords);
-
-		return BlogsTestUtil.updateEntry(entry, keywords, true);
+		return BlogsEntryLocalServiceUtil.updateEntry(
+			serviceContext.getUserId(), entry.getEntryId(), keywords,
+			entry.getContent(), serviceContext);
 	}
 
 }

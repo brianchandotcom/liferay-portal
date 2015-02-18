@@ -84,6 +84,11 @@ public class PoshiRunnerGetterUtil {
 		String classCommandName) {
 
 		int x = classCommandName.indexOf("#");
+		int y = classCommandName.indexOf("(");
+
+		if (y != -1) {
+			return classCommandName.substring(x + 1, y);
+		}
 
 		return classCommandName.substring(x + 1);
 	}
@@ -144,10 +149,7 @@ public class PoshiRunnerGetterUtil {
 		String classCommandName = PoshiRunnerVariablesUtil.replaceCommandVars(
 			element.attributeValue("method"));
 
-		String commandName = getCommandNameFromClassCommandName(
-			classCommandName);
-
-		Matcher matcher = _parameterPattern.matcher(commandName);
+		Matcher matcher = _parameterPattern.matcher(classCommandName);
 
 		String[] parameters = null;
 
@@ -159,48 +161,35 @@ public class PoshiRunnerGetterUtil {
 			parameters = parameterString.split(",");
 		}
 
-		commandName = commandName.replaceAll("(\\(.*\\))+", "");
-
-		LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
-
-		Class clazz = liferaySelenium.getClass();
-
-		Object object = liferaySelenium;
-
 		String className = getClassNameFromClassCommandName(classCommandName);
-
-		if (!className.equals("selenium")) {
-			clazz = Class.forName("com.liferay.poshi.runner.util." + className);
-
-			object = null;
-		}
+		String commandName = getCommandNameFromClassCommandName(
+			classCommandName);
 
 		if (className.equals("MathUtil")) {
-			Integer[] integer = new Integer[parameters.length];
+			Integer[] integers = new Integer[parameters.length];
 
 			for (int i = 0; i < parameters.length; i++) {
-				integer[i] = Integer.parseInt(parameters[i].trim());
+				integers[i] = Integer.parseInt(parameters[i].trim());
 			}
 
-			Method[] mathMethods = MathUtil.class.getDeclaredMethods();
+			Method[] methods = MathUtil.class.getDeclaredMethods();
 
-			for (Method mathMethod : mathMethods) {
-				if (mathMethod.getName().equals(commandName)) {
-					Class[] parameterTypes = mathMethod.getParameterTypes();
+			for (Method method : methods) {
+				String methodName = method.getName();
 
-					Method method = MathUtil.class.getMethod(
-						commandName, parameterTypes);
+				if (methodName.equals(commandName)) {
+					Class[] parameterTypes = method.getParameterTypes();
 
 					if (parameterTypes.length > 1 ) {
-						Object obj = method.invoke(object, integer);
+						Object returnObject = method.invoke(null, integers);
 
-						return obj.toString();
+						return returnObject.toString();
 					}
 					else {
-						Object obj = method.invoke(
-							object, new Object[]{integer});
+						Object returnObject = method.invoke(
+							null, new Object[]{integers});
 
-						return obj.toString();
+						return returnObject.toString();
 					}
 				}
 			}
@@ -216,15 +205,27 @@ public class PoshiRunnerGetterUtil {
 				}
 			}
 
+			Class clazz = null;
+			Object object = null;
+
+			if (className.equals("selenium")) {
+				LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
+
+				clazz = liferaySelenium.getClass();
+				object = liferaySelenium;
+			}
+			else {
+				clazz = Class.forName(
+					"com.liferay.poshi.runner.util." + className);
+			}
+
 			Method method = clazz.getMethod(
 				commandName,
 				parameterClasses.toArray(new Class[parameterClasses.size()]));
 
-			method.setAccessible(true);
+			Object returnObject = method.invoke(object, parameters);
 
-			Object obj = method.invoke(object, parameters);
-
-			return obj.toString();
+			return returnObject.toString();
 		}
 
 		return null;

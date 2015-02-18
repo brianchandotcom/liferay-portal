@@ -238,7 +238,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			}
 		}
 		while ((bbCodeItem.getType() != BBCodeParser.TYPE_TAG_END) &&
-			   !tag.equals(bbCodeItem.getValue()));
+			!tag.equals(bbCodeItem.getValue()));
 
 		if (consume) {
 			marker.setValue(index - 1);
@@ -333,9 +333,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 		value = handleNewLine(bbCodeItems, tags, marker, value);
 
-		for (int i = 0; i < _EMOTICONS.length; i++) {
-			String[] emoticon = _EMOTICONS[i];
-
+		for (String[] emoticon : _EMOTICONS) {
 			value = StringUtil.replace(value, emoticon[1], emoticon[0]);
 		}
 
@@ -615,7 +613,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			handleBold(sb, tags);
 		}
 		else if (tag.equals("center") || tag.equals("justify") ||
-				 tag.equals("left") || tag.equals("right")) {
+				tag.equals("left") || tag.equals("right")) {
 
 			handleTextAlign(sb, tags, bbCodeItem);
 		}

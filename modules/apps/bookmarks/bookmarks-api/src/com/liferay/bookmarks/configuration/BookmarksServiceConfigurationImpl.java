@@ -58,6 +58,11 @@ public class BookmarksServiceConfigurationImpl
 	}
 
 	@Override
+	public String emailEntryUpdatedSubject() {
+		return _bookmarksServiceConfiguration.emailEntryUpdatedSubject();
+	}
+
+	@Override
 	public String emailFromAddress() {
 		return _bookmarksServiceConfiguration.emailFromAddress();
 	}
@@ -88,18 +93,18 @@ public class BookmarksServiceConfigurationImpl
 	}
 
 	@Override
-	public boolean foldersSearchVisible() {
-		return _bookmarksServiceConfiguration.foldersSearchVisible();
+	public boolean showFoldersSearch() {
+		return _bookmarksServiceConfiguration.showFoldersSearch();
 	}
 
 	@Override
-	public boolean relatedAssetsEnabled() {
-		return _bookmarksServiceConfiguration.relatedAssetsEnabled();
+	public boolean enableRelatedAssets() {
+		return _bookmarksServiceConfiguration.enableRelatedAssets();
 	}
 
 	@Override
-	public boolean subfoldersVisible() {
-		return _bookmarksServiceConfiguration.subfoldersVisible();
+	public boolean showSubfolders() {
+		return _bookmarksServiceConfiguration.showSubfolders();
 	}
 
 	@Activate

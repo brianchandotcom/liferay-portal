@@ -25,8 +25,7 @@ import aQute.bnd.annotation.metatype.Meta;
 public interface BookmarksServiceConfiguration {
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/bookmarks/dependencies/" +
-			"email_entry_added_body.tmpl}",
+		deflt = "${resource:com/liferay/bookmarks/configuration/dependencies/email_entry_added_body.tmpl}",
 		required = false
 	)
 	public String emailEntryAddedBody();
@@ -35,21 +34,25 @@ public interface BookmarksServiceConfiguration {
 	public boolean emailEntryAddedEnabled();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/bookmarks/dependencies/" +
-			"email_entry_added_subject.tmpl}",
+		deflt = "${resource:com/liferay/bookmarks/configuration/dependencies/email_entry_added_subject.tmpl}",
 		required = false
 	)
 	public String emailEntryAddedSubject();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/bookmarks/dependencies/ +" +
-			"email_entry_updated_body.tmpl}",
+		deflt = "${resource:com/liferay/bookmarks/configuration/dependencies/email_entry_updated_body.tmpl}",
 		required = false
 	)
 	public String emailEntryUpdatedBody();
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean emailEntryUpdatedEnabled();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/bookmarks/configuration/dependencies/email_entry_updated_subject.tmpl}",
+		required = false
+	)
+	public String emailEntryUpdatedSubject();
 
 	@Meta.AD(deflt = "", required = false)
 	public String emailFromAddress();
@@ -72,12 +75,12 @@ public interface BookmarksServiceConfiguration {
 	public int foldersPerPage();
 
 	@Meta.AD(deflt = "true", required = false)
-	public boolean foldersSearchVisible();
+	public boolean showFoldersSearch();
 
 	@Meta.AD(deflt = "true", required = false)
-	public boolean relatedAssetsEnabled();
+	public boolean enableRelatedAssets();
 
 	@Meta.AD(deflt = "true", required = false)
-	public boolean subfoldersVisible();
+	public boolean showSubfolders();
 
 }

@@ -2447,6 +2447,10 @@
 
 		<column name="subscriptionId" type="long" primary="true" />
 
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
@@ -2460,20 +2464,19 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="frequency" type="String" />
-		<column name="groupId" type="long" />
 
 		<!-- Finder methods -->
 
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
+		<finder name="G_U" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+		</finder>
 		<finder name="U_C" return-type="Collection">
 			<finder-column name="userId" />
 			<finder-column name="classNameId" />
-		</finder>
-		<finder name="U_G" return-type="Collection">
-			<finder-column name="userId" />
-			<finder-column name="groupId" />
 		</finder>
 		<finder name="C_C_C" return-type="Collection">
 			<finder-column name="companyId" />

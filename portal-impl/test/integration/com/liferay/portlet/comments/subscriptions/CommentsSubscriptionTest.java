@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
@@ -35,8 +34,7 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
@@ -83,7 +81,16 @@ public class CommentsSubscriptionTest {
 			_user.getUserId(), _group.getGroupId(), BlogsEntry.class.getName(),
 			blogsEntry.getEntryId());
 
-		addDiscussion(BlogsEntry.class.getName(), blogsEntry.getEntryId());
+		MBTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
+
+		MBMessageLocalServiceUtil.addDiscussionMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), BlogsEntry.class.getName(),
+			blogsEntry.getEntryId(), 0,
+			MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(50),
+			serviceContext);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
@@ -100,8 +107,16 @@ public class CommentsSubscriptionTest {
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
-		MBMessage message = addDiscussion(
-			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+		MBTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
+
+		MBMessage message = MBMessageLocalServiceUtil.addDiscussionMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), BlogsEntry.class.getName(),
+			blogsEntry.getEntryId(), 0,
+			MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(50),
+			serviceContext);
 
 		MBDiscussionLocalServiceUtil.subscribeDiscussion(
 			_user.getUserId(), _group.getGroupId(), BlogsEntry.class.getName(),
@@ -117,30 +132,6 @@ public class CommentsSubscriptionTest {
 			serviceContext);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
-	}
-
-	protected MBMessage addDiscussion(String className, long classPK)
-		throws Exception {
-
-		MBMessageDisplay messageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				TestPropsValues.getUserId(), _group.getGroupId(), className,
-				classPK, WorkflowConstants.STATUS_APPROVED);
-
-		MBThread thread =  messageDisplay.getThread();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		MBTestUtil.populateNotificationsServiceContext(
-			serviceContext, Constants.ADD);
-
-		return MBMessageLocalServiceUtil.addDiscussionMessage(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			_group.getGroupId(), className, classPK, thread.getThreadId(),
-			thread.getRootMessageId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(50), serviceContext);
 	}
 
 	@DeleteAfterTestRun

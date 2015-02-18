@@ -87,8 +87,8 @@ public class MBCategoryStagedModelDataHandlerTest
 		MBCategory category = (MBCategory)dependentStagedModels.get(0);
 
 		ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
 		return MBCategoryServiceUtil.addCategory(
 				TestPropsValues.getUserId(), category.getCategoryId(),

@@ -185,7 +185,7 @@ public class MBMessageLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
-		long parentMessageId = 0;
+		long parentMessageId = MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;
 		long threadId = 0;
 
 		if (parentMessage != null) {

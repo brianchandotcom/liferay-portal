@@ -85,12 +85,10 @@ public class MBUserNotificationTest extends BaseUserNotificationTestCase {
 		MBTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.ADD);
 
-		_category =
-			MBCategoryServiceUtil.addCategory(
-				TestPropsValues.getUserId(),
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				serviceContext);
+		_category = MBCategoryServiceUtil.addCategory(
+			TestPropsValues.getUserId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
 
 	@Override

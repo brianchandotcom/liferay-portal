@@ -179,11 +179,9 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			serviceContext.getScopeGroupId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, 0, 0,
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			MBMessageConstants.DEFAULT_FORMAT,
-			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
-			false, 0.0, false, serviceContext);
+			serviceContext);
 
 		return message.getThread();
 	}

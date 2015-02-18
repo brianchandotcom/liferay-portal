@@ -306,7 +306,7 @@ public class MBAttachmentsTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		_category =  MBCategoryServiceUtil.addCategory(
+		_category = MBCategoryServiceUtil.addCategory(
 			TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);

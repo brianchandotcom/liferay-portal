@@ -76,15 +76,13 @@ public class MBMessageStagedModelDataHandlerTest
 			new HashMap<>();
 
 		ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
-		MBCategory category =
-			MBCategoryServiceUtil.addCategory(
-				TestPropsValues.getUserId(),
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				serviceContext);
+		MBCategory category = MBCategoryServiceUtil.addCategory(
+			TestPropsValues.getUserId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, MBCategory.class, category);
@@ -161,27 +159,23 @@ public class MBMessageStagedModelDataHandlerTest
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		MBMessage approvedMessage =
-			MBMessageLocalServiceUtil.addMessage(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				group.getGroupId(),
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				serviceContext);
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		MBMessage draftMessage =
-			MBMessageLocalServiceUtil.addMessage(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				group.getGroupId(),
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				serviceContext);
+		MBMessage approvedMessage = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 
 		stagedModels.add(approvedMessage);
 
-		stagedModels.add(draftMessage);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		MBMessage pendingMessage = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		stagedModels.add(pendingMessage);
 
 		return stagedModels;
 	}

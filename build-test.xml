@@ -322,6 +322,112 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-test-class-name">
+		<sequential>
+			<var name="test.class.name" unset="true" />
+
+			<get-test-simple-class-name />
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					import org.apache.tools.ant.DirectoryScanner;
+
+					String testSimpleClassName = project.getProperty("test.simple.class.name");
+
+					String testName = testSimpleClassName.substring(0, testSimpleClassName.length() - 8);
+
+					project.setProperty("test.name", testName);
+
+					try {
+						DirectoryScanner directoryScanner = new DirectoryScanner();
+
+						if (project.getProperty("test.basedir") != null) {
+							directoryScanner.setBasedir(project.getProperty("test.basedir"));
+						}
+						else {
+							directoryScanner.setBasedir(project.getBaseDir());
+						}
+
+						directoryScanner.setIncludes(new String[] {"**/test/functional/**/" + testName + ".testcase"});
+
+						directoryScanner.scan();
+
+						String[] fileNames = directoryScanner.getIncludedFiles();
+
+						String fileName = fileNames[0];
+
+						int x = fileName.indexOf("/test/functional/") + 17;
+
+						String className = fileName.substring(x);
+
+						className = className.replaceAll("/", ".");
+						className = className.replaceAll(".testcase", "TestCase");
+
+						project.setProperty("test.class.name", className);
+					}
+					catch (Exception e) {
+					}
+				]]>
+			</script>
+
+			<fail message="${test.name}.testcase does not exist." unless="test.class.name" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-test-method-name">
+		<sequential>
+			<fail message="Please set the property ${test.class}" unless="test.class" />
+
+			<var name="test.method.name" unset="true" />
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					String testClass = project.getProperty("test.class");
+
+					int x = testClass.indexOf("#");
+
+					if (x != -1) {
+						String testMethodName = testClass.substring(x + 1);
+
+						if (!testMethodName.startsWith("test")) {
+							testMethodName = "test" + testMethodName;
+						}
+
+						project.setProperty("test.method.name", testMethodName);
+					}
+				]]>
+			</script>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-test-simple-class-name">
+		<sequential>
+			<fail message="Please set the property ${test.class}" unless="test.class" />
+
+			<var name="test.simple.class.name" unset="true" />
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					String testClass = project.getProperty("test.class");
+
+					String testSimpleClassName = testClass;
+
+					if (testClass.contains("#")) {
+						int x = testClass.indexOf("#");
+
+						testSimpleClassName =  testClass.substring(0, x);
+					}
+
+					if (!testSimpleClassName.endsWith("TestCase")) {
+						testSimpleClassName = testSimpleClassName + "TestCase";
+					}
+
+					project.setProperty("test.simple.class.name", testSimpleClassName);
+				]]>
+			</script>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-testray-components">
 		<sequential>
 			<property file="${basedir}/test.run.properties" />

@@ -15,14 +15,14 @@
 		</h1>
 
 		<#list portlet_toolbar.getPortletTitleMenus(portlet_id, renderRequest) as portletTitleMenu>
-			<menu class="portlet-topper-toolbar portlet-title-menu" id="portlet-topper-toolbar-portlet-title-menu_${portlet_id}" type="toolbar">
+			<menu class="portlet-title-menu portlet-topper-toolbar" id="portlet-topper-toolbar-portlet-title-menu_${portlet_id}" type="toolbar">
 				<@liferay_ui["menu"] menu=portletTitleMenu />
 			</menu>
 		</#list>
 
 		<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_${portlet_id}" type="toolbar">
 			<#if portlet_display.isShowBackIcon()>
-				<a href="${portlet_back_url}" class="portlet-icon-back"><@liferay.language key="return-to-full-page" /></a>
+				<a class="portlet-icon-back" href="${portlet_back_url}"><@liferay.language key="return-to-full-page" /></a>
 			<#else>
 				${theme.portletIconOptions()}
 			</#if>

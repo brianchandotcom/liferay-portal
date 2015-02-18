@@ -24,9 +24,9 @@ body.portlet {
 		z-index: 300;
 
 		&.portlet-title-menu {
-			 position: relative;
-			 display: inline-block;
-		 }
+			display: inline-block;
+			position: relative;
+		}
 
 		a {
 			color: inherit;

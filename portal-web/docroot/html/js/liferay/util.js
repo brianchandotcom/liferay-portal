@@ -1495,8 +1495,10 @@
 				Util.openWindow(
 					config,
 					function(dialogWindow) {
-						eventHandles.push(dialogWindow.after(['destroy', 'visibleChange'], detachSelectionOnHideFn));
-						eventHandles.push(dialogWindow.iframe.after(['load'], disableSelectedAssetsAfterLoadFn));
+						eventHandles.push(
+							dialogWindow.after(['destroy', 'visibleChange'], detachSelectionOnHideFn),
+							dialogWindow.iframe.after(['load'], disableSelectedAssetsAfterLoadFn)
+						);
 
 						Liferay.on('destroyPortlet', destroyDialog);
 					}

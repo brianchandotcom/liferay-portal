@@ -1852,7 +1852,7 @@ ${marketplace.portlet.properties}</echo>
 		<antcall target="clean-up-logs" />
 	</target>
 
-	<target name="generate-backup-results-xml" depends="generate-test-properties">
+	<target name="generate-backup-results-xml">
 		<if>
 			<and>
 				<isset property="env.JENKINS_HOME" />
@@ -1860,12 +1860,19 @@ ${marketplace.portlet.properties}</echo>
 			</and>
 			<then>
 				<if>
-					<not>
-						<isset property="test.method.name" />
-					</not>
+					<contains string="${test.class}" substring="#" />
 					<then>
-						<property name="test.method.name" value="" />
+						<get-test-method-name />
+						<get-test-class-name />
 					</then>
+					<elseif>
+						<isset property="test.class" />
+						<then>
+							<get-test-class-name />
+
+							<property name="test.method.name" value="" />
+						</then>
+					</elseif>
 				</if>
 
 				<property name="results.xml.file" value="portal-web/test-results/functional/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml" />
@@ -2142,12 +2149,13 @@ ${marketplace.portlet.properties}</echo>
 		<if>
 			<contains string="${test.class}" substring="#" />
 			<then>
-				<antcallback return="test.class.name,test.method.name,test.simple.class.name" target="parse-test-class" />
+				<get-test-method-name />
+				<get-test-simple-class-name />
 			</then>
 			<elseif>
 				<isset property="test.class" />
 				<then>
-					<antcallback return="test.class.name,test.simple.class.name" target="parse-test-class" />
+					<get-test-simple-class-name />
 
 					<property name="test.method.name" value="[A-Za-z]*" />
 				</then>
@@ -2348,83 +2356,6 @@ ${marketplace.portlet.properties}</echo>
 			<else>
 				<echo message="File ${file} does not exist." />
 			</else>
-		</if>
-	</target>
-
-	<target name="parse-test-class">
-		<script classpathref="project.classpath" language="beanshell">
-			<![CDATA[
-				import org.apache.tools.ant.DirectoryScanner;
-
-				String testClass = project.getProperty("test.class");
-
-				String testSimpleClassName = testClass;
-
-				if (testClass.contains("#")) {
-					int x = testClass.indexOf("#");
-
-					String testMethodName = testClass.substring(x + 1);
-
-					if (!testMethodName.startsWith("test")) {
-						testMethodName = "test" + testMethodName;
-					}
-
-					project.setProperty("test.method.name", testMethodName);
-
-					testSimpleClassName =  testClass.substring(0, x);
-				}
-
-				if (!testSimpleClassName.endsWith("TestCase")) {
-					testSimpleClassName = testSimpleClassName + "TestCase";
-				}
-
-				project.setProperty("test.simple.class.name", testSimpleClassName);
-
-				String testName = testSimpleClassName.substring(0, testSimpleClassName.length() - 8);
-
-				project.setProperty("test.name", testName);
-
-				try {
-					DirectoryScanner directoryScanner = new DirectoryScanner();
-
-					if (project.getProperty("test.basedir") != null) {
-						directoryScanner.setBasedir(project.getProperty("test.basedir"));
-					}
-					else {
-						directoryScanner.setBasedir(project.getBaseDir());
-					}
-
-					directoryScanner.setIncludes(new String[] {"**/test/functional/**/" + testName + ".testcase"});
-
-					directoryScanner.scan();
-
-					String[] fileNames = directoryScanner.getIncludedFiles();
-
-					String fileName = fileNames[0];
-
-					int x = fileName.indexOf("/test/functional/") + 17;
-
-					String className = fileName.substring(x);
-
-					className = className.replaceAll("/", ".");
-					className = className.replaceAll(".testcase", "TestCase");
-
-					project.setProperty("test.class.name", className);
-				}
-				catch (Exception e) {
-				}
-			]]>
-		</script>
-
-		<fail message="${test.name}.testcase does not exist." unless="test.class.name" />
-
-		<if>
-			<not>
-				<isset property="test.basedir" />
-			</not>
-			<then>
-				<property name="test.basedir" value="${basedir.unix}/portal-web" />
-			</then>
 		</if>
 	</target>
 
@@ -4399,7 +4330,8 @@ if (ppstate.equals("normal")) {
 		<if>
 			<contains string="${test.class}" substring="#" />
 			<then>
-				<antcallback return="test.method.name,test.simple.class.name" target="parse-test-class" />
+				<get-test-method-name />
+				<get-test-simple-class-name />
 
 				<var name="test.class" unset="true" />
 				<var name="test.methods" unset="true" />
@@ -4411,7 +4343,7 @@ if (ppstate.equals("normal")) {
 				</ant>
 			</then>
 			<else>
-				<antcallback return="test.simple.class.name" target="parse-test-class" />
+				<get-test-simple-class-name />
 
 				<var name="test.class" unset="true" />
 

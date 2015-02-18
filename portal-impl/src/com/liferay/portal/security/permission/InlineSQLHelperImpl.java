@@ -565,9 +565,12 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			for (int j = 0; j < groupIds.length; j++) {
 				long groupId = groupIds[j];
 
-				if (!permissionChecker.hasPermission(
+				if (permissionChecker.hasPermission(
 						groupId, className, 0, ActionKeys.VIEW)) {
 
+					viewableGroupIds.add(groupId);
+				}
+				else {
 					if ((j > 0) && hasPreviousViewableGroup) {
 						nonViewableSB.append(" OR ");
 					}
@@ -579,9 +582,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 					nonViewableSB.append(" = ");
 					nonViewableSB.append(groupId);
 					nonViewableSB.append(StringPool.CLOSE_PARENTHESIS);
-				}
-				else {
-					viewableGroupIds.add(groupId);
 				}
 			}
 

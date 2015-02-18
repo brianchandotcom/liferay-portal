@@ -45,7 +45,15 @@ public class BlogsPortletToolbarContributor
 	implements PortletToolbarContributor {
 
 	@Override
-	public Menu getPortletTitleMenu(PortletRequest portletRequest) {
+	public List<Menu> getPortletTitleMenus(PortletRequest portletRequest) {
+		List<Menu> menus = new ArrayList<>();
+
+		menus.add(getPortletTitleMenu(portletRequest));
+
+		return menus;
+	}
+
+	protected Menu getPortletTitleMenu(PortletRequest portletRequest) {
 		Menu menu = new Menu();
 
 		menu.setCssClass("portlet-options");
@@ -58,26 +66,6 @@ public class BlogsPortletToolbarContributor
 		menu.setShowWhenSingleIcon(true);
 
 		return menu;
-	}
-
-	public List<MenuItem> getPortletTitleMenuItems(
-		PortletRequest portletRequest) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (!_resourcePermissionChecker.checkResource(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY)) {
-
-			return Collections.<MenuItem>emptyList();
-		}
-
-		List<MenuItem> menuItems = new ArrayList<>();
-
-		menuItems.add(getPortletTitleMenuItem(portletRequest, themeDisplay));
-
-		return menuItems;
 	}
 
 	protected URLMenuItem getPortletTitleMenuItem(
@@ -102,6 +90,26 @@ public class BlogsPortletToolbarContributor
 		urlMenuItem.setURL(portletURL.toString());
 
 		return urlMenuItem;
+	}
+
+	protected List<MenuItem> getPortletTitleMenuItems(
+		PortletRequest portletRequest) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!_resourcePermissionChecker.checkResource(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY)) {
+
+			return Collections.<MenuItem>emptyList();
+		}
+
+		List<MenuItem> menuItems = new ArrayList<>();
+
+		menuItems.add(getPortletTitleMenuItem(portletRequest, themeDisplay));
+
+		return menuItems;
 	}
 
 	@Reference(

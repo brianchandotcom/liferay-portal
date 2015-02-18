@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.portlet.toolbar;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -64,15 +65,15 @@ public class PortletToolbar {
 			for (PortletToolbarContributor portletToolbarContributor :
 					portletToolbarContributors) {
 
-				Menu portletTitleMenu =
-					portletToolbarContributor.getPortletTitleMenu(
+				List<Menu> curPortletTitleMenus =
+					portletToolbarContributor.getPortletTitleMenus(
 						portletRequest);
 
-				if (portletTitleMenu == null) {
+				if (ListUtil.isEmpty(curPortletTitleMenus)) {
 					continue;
 				}
 
-				portletTitleMenus.add(portletTitleMenu);
+				portletTitleMenus.addAll(curPortletTitleMenus);
 			}
 		}
 

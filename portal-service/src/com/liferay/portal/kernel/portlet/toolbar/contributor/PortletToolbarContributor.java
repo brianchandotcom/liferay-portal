@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.portlet.toolbar.contributor;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 
+import java.util.List;
+
 import javax.portlet.PortletRequest;
 
 /**
@@ -23,6 +25,6 @@ import javax.portlet.PortletRequest;
  */
 public interface PortletToolbarContributor {
 
-	public Menu getPortletTitleMenu(PortletRequest portletRequest);
+	public List<Menu> getPortletTitleMenus(PortletRequest portletRequest);
 
 }

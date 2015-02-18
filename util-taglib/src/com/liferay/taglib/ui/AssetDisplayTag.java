@@ -38,6 +38,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AssetDisplayTag extends IncludeTag {
 
+	public int getAbstractLength() {
+		return _abstractLength;
+	}
+
 	public AssetEntry getAssetEntry() {
 		return _assetEntry;
 	}
@@ -62,6 +66,10 @@ public class AssetDisplayTag extends IncludeTag {
 		return _template;
 	}
 
+	public String getViewURL() {
+		return _viewURL;
+	}
+
 	public boolean isShowComments() {
 		return _showComments;
 	}
@@ -72,6 +80,10 @@ public class AssetDisplayTag extends IncludeTag {
 
 	public boolean isShowHeader() {
 		return _showHeader;
+	}
+
+	public void setAbstractLength(int abstractLength) {
+		_abstractLength = abstractLength;
 	}
 
 	public void setAssetEntry(AssetEntry assetEntry) {
@@ -112,8 +124,13 @@ public class AssetDisplayTag extends IncludeTag {
 		_template = template;
 	}
 
+	public void setViewURL(String viewURL) {
+		_viewURL = viewURL;
+	}
+
 	@Override
 	protected void cleanUp() {
+		_abstractLength = 200;
 		_assetEntry = null;
 		_assetRenderer = null;
 		_className = null;
@@ -123,6 +140,7 @@ public class AssetDisplayTag extends IncludeTag {
 		_showExtraInfo = false;
 		_showHeader = false;
 		_template = AssetRenderer.TEMPLATE_FULL_CONTENT;
+		_viewURL = null;
 	}
 
 	@Override
@@ -132,6 +150,9 @@ public class AssetDisplayTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-ui:asset-display:abstractLength", _abstractLength);
+
 		AssetEntry assetEntry = _assetEntry;
 
 		if ((assetEntry == null) && Validator.isNotNull(_className) &&
@@ -189,6 +210,8 @@ public class AssetDisplayTag extends IncludeTag {
 			servletContext = portletBag.getServletContext();
 		}
 
+		request.setAttribute(WebKeys.ASSET_ENTRY_VIEW_URL, _viewURL);
+
 		addParam("showComments", String.valueOf(_showComments));
 		addParam("showExtraInfo", String.valueOf(_showExtraInfo));
 		addParam("showHeader", String.valueOf(_showHeader));
@@ -197,6 +220,7 @@ public class AssetDisplayTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetDisplayTag.class);
 
+	private int _abstractLength = 200;
 	private AssetEntry _assetEntry;
 	private AssetRenderer _assetRenderer;
 	private AssetRendererFactory _assetRendererFactory;
@@ -207,5 +231,6 @@ public class AssetDisplayTag extends IncludeTag {
 	private boolean _showExtraInfo;
 	private boolean _showHeader;
 	private String _template = AssetRenderer.TEMPLATE_FULL_CONTENT;
+	private String _viewURL;
 
 }

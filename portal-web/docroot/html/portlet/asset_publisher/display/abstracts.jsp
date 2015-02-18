@@ -21,7 +21,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
 AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAttribute("view.jsp-assetRendererFactory");
 AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view.jsp-assetRenderer");
 
-
 request.setAttribute("view.jsp-showIconLabel", true);
 
 String title = (String)request.getAttribute("view.jsp-title");
@@ -33,10 +32,6 @@ if (Validator.isNull(title)) {
 boolean viewInContext = ((Boolean)request.getAttribute("view.jsp-viewInContext")).booleanValue();
 
 String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetEntry, viewInContext);
-
-String viewURLMessage = viewInContext ? assetRenderer.getViewInContextMessage() : "read-more-x-about-x";
-
-String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());
 %>
 
 <div class="asset-abstract <%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %>">
@@ -90,23 +85,14 @@ String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletReque
 
 	<div class="asset-content">
 		<div class="asset-summary">
-
-			<%
-			String path = assetRenderer.render(renderRequest, renderResponse, AssetRenderer.TEMPLATE_ABSTRACT);
-
-			request.setAttribute(WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH, assetPublisherDisplayContext.getAbstractLength());
-			request.setAttribute(WebKeys.ASSET_ENTRY_VIEW_URL, viewURL);
-			request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
-			%>
-
-			<c:choose>
-				<c:when test="<%= path == null %>">
-					<%= HtmlUtil.escape(summary) %>
-				</c:when>
-				<c:otherwise>
-					<liferay-util:include page="<%= path %>" portletId="<%= assetRendererFactory.getPortletId() %>" />
-				</c:otherwise>
-			</c:choose>
+			<liferay-ui:asset-display
+				abstractLength="<%= assetPublisherDisplayContext.getAbstractLength() %>"
+				assetEntry="<%= assetEntry %>"
+				assetRenderer="<%= assetRenderer %>"
+				assetRendererFactory="<%= assetRendererFactory %>"
+				template="<%= AssetRenderer.TEMPLATE_ABSTRACT %>"
+				viewURL="<%= viewURL %>"
+			/>
 		</div>
 	</div>
 

@@ -550,14 +550,16 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("(((InlineSQLResourcePermission.primKey = CAST_TEXT(");
+		sb.append("(");
+
+		sb.append("(InlineSQLResourcePermission.primKey = CAST_TEXT(");
 		sb.append(classPKField);
 		sb.append("))");
 
-		if (Validator.isNotNull(groupIdField)) {
-			sb.append("AND ((");
-
+		if (Validator.isNotNull(groupIdField) && (groupIds.length > 0)) {
 			boolean hasPreviousViewableGroup = false;
+
+			StringBundler nonViewableSB = new StringBundler();
 
 			List<Long> viewableGroupIds = new ArrayList<>();
 
@@ -568,16 +570,16 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 						groupId, className, 0, ActionKeys.VIEW)) {
 
 					if ((j > 0) && hasPreviousViewableGroup) {
-						sb.append(" OR ");
+						nonViewableSB.append(" OR ");
 					}
 
 					hasPreviousViewableGroup = true;
 
-					sb.append(StringPool.OPEN_PARENTHESIS);
-					sb.append(groupIdField);
-					sb.append(" = ");
-					sb.append(groupId);
-					sb.append(StringPool.CLOSE_PARENTHESIS);
+					nonViewableSB.append(StringPool.OPEN_PARENTHESIS);
+					nonViewableSB.append(groupIdField);
+					nonViewableSB.append(" = ");
+					nonViewableSB.append(groupId);
+					nonViewableSB.append(StringPool.CLOSE_PARENTHESIS);
 
 				}
 				else {
@@ -585,7 +587,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				}
 			}
 
-			sb.append(StringPool.CLOSE_PARENTHESIS);
+			sb.append(" AND (");
+
+			if (nonViewableSB.length() > 0) {
+				sb.append("(");
+				sb.append(nonViewableSB.toString());
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
 
 			if (!viewableGroupIds.isEmpty()) {
 				for (Long viewableGroupId : viewableGroupIds) {
@@ -599,8 +607,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				}
 			}
 
-			sb.append(")))");
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 		}
+
+		sb.append(")");
 
 		String roleIdsOrOwnerIdSQL = getRoleIdsOrOwnerIdSQL(
 			permissionChecker, groupIds, userIdField);

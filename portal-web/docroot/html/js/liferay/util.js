@@ -1449,26 +1449,24 @@
 
 			var disableSelectedAssets = function(event) {
 				if (selectedData && selectedData.length) {
-					var selectorButtons = event.currentTarget.node.get('contentWindow').get('document').all('.lfr-search-container .selector-button');
+					var currentWindow = event.currentTarget.node.get('contentWindow.document');
+
+					var selectorButtons = currentWindow.all('.lfr-search-container .selector-button');
 
 					A.some(
 						selectorButtons,
-						function(item, index, collection) {
-							for (var i = 0; i < selectedData.length; i++) {
-								var assetEntryId = item.attr('data-assetentryid');
+						function(item, index) {
+							var assetEntryId = item.attr('data-assetentryid');
 
-								if (assetEntryId === selectedData[i]) {
-									item.attr('disabled', true);
+							var assetEntryIndex = A.Array.indexOf(selectedData, assetEntryId);
 
-									selectedData.splice(i, 1);
+							if (assetEntryIndex > -1) {
+								item.attr('disabled', true);
 
-									break;
-								}
+								selectedData.splice(assetEntryIndex, 1);
 							}
 
-							if (!selectedData.length) {
-								return true;
-							}
+							return !selectedData.length;
 						}
 					);
 				}

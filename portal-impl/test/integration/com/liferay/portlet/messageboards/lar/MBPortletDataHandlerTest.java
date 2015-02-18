@@ -121,9 +121,8 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			stagingGroup.getGroupId(), category.getCategoryId(), 0, 0,
+			stagingGroup.getGroupId(), category.getCategoryId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			MBMessageConstants.DEFAULT_FORMAT, null, false, 0.0, false,
 			serviceContext);
 
 		MBThreadFlagLocalServiceUtil.addThreadFlag(

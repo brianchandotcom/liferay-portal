@@ -12,28 +12,22 @@
  * details.
  */
 
-package com.liferay.sync.engine.filesystem;
-
-import java.util.HashMap;
-import java.util.Map;
+package com.liferay.sync.engine.filesystem.listener;
 
 /**
- * @author Shinn Lok
+ * @author Michael Young
  */
-public class WatcherRegistry {
+public abstract class BaseWatchEventListener implements WatchEventListener {
 
-	public static Watcher getWatcher(long syncAccountId) {
-		return _watchers.get(syncAccountId);
+	public BaseWatchEventListener(long syncAccountId) {
+		_syncAccountId = syncAccountId;
 	}
 
-	public static void register(long syncAccountId, Watcher watcher) {
-		_watchers.put(syncAccountId, watcher);
+	@Override
+	public long getSyncAccountId() {
+		return _syncAccountId;
 	}
 
-	public static void unregister(long syncAccountId) {
-		_watchers.remove(syncAccountId);
-	}
-
-	private static final Map<Long, Watcher> _watchers = new HashMap<>();
+	private final long _syncAccountId;
 
 }

@@ -16,7 +16,6 @@ package com.liferay.sync.engine.service.persistence;
 
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
-import com.j256.ormlite.stmt.SelectArg;
 import com.j256.ormlite.stmt.Where;
 
 import com.liferay.sync.engine.model.SyncWatchEvent;
@@ -53,29 +52,6 @@ public class SyncWatchEventPersistence
 		where.eq("syncAccountId", syncAccountId);
 
 		delete(deleteBuilder.prepare());
-	}
-
-	public SyncWatchEvent fetchByE_F_T(
-			String eventType, String filePathName, long timestamp)
-		throws SQLException {
-
-		QueryBuilder<SyncWatchEvent, Long> queryBuilder = queryBuilder();
-
-		Where<SyncWatchEvent, Long> where = queryBuilder.where();
-
-		where.eq("eventType", eventType);
-		where.eq("filePathName", new SelectArg(filePathName));
-		where.between("timestamp", timestamp - 1000, timestamp + 1000);
-
-		where.and(3);
-
-		List<SyncWatchEvent> syncWatchEvents = query(queryBuilder.prepare());
-
-		if ((syncWatchEvents == null) || syncWatchEvents.isEmpty()) {
-			return null;
-		}
-
-		return syncWatchEvents.get(0);
 	}
 
 	public SyncWatchEvent fetchBySyncAccountId_Last(long syncAccountId)

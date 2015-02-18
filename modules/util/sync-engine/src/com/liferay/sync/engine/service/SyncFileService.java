@@ -378,6 +378,12 @@ public class SyncFileService {
 
 		// Local sync file
 
+		SyncFile targetSyncFile = fetchSyncFile(filePath.toString());
+
+		if (targetSyncFile != null) {
+			deleteSyncFile(targetSyncFile, false);
+		}
+
 		syncFile.setFilePathName(filePath.toString());
 		syncFile.setParentFolderId(folderId);
 
@@ -401,6 +407,12 @@ public class SyncFileService {
 
 		// Local sync file
 
+		SyncFile targetSyncFile = fetchSyncFile(filePath.toString());
+
+		if (targetSyncFile != null) {
+			deleteSyncFile(targetSyncFile, false);
+		}
+
 		updateSyncFile(filePath, parentFolderId, syncFile);
 
 		// Remote sync file
@@ -418,6 +430,42 @@ public class SyncFileService {
 		ModelListener<SyncFile> modelListener) {
 
 		_syncFilePersistence.registerModelListener(modelListener);
+	}
+
+	public static SyncFile renameFileSyncFile(
+			Path filePath, long syncAccountId, SyncFile syncFile)
+		throws Exception {
+
+		// Local sync file
+
+		String name = _getName(filePath, syncFile);
+		String sourceFileName = syncFile.getName();
+		String sourceVersion = syncFile.getVersion();
+
+		syncFile.setFilePathName(filePath.toString());
+		syncFile.setName(name);
+
+		update(syncFile);
+
+		// Remote sync file
+
+		if ((syncFile.getState() != SyncFile.STATE_ERROR) &&
+			(syncFile.getState() != SyncFile.STATE_UNSYNCED)) {
+
+			String type = syncFile.getType();
+
+			if (type.equals(SyncFile.TYPE_FILE)) {
+				FileEventUtil.updateFile(
+					filePath, syncAccountId, syncFile, null, name,
+					syncFile.getChecksum(), sourceFileName, sourceVersion,
+					syncFile.getChecksum());
+			}
+			else {
+				FileEventUtil.updateFolder(filePath, syncAccountId, syncFile);
+			}
+		}
+
+		return syncFile;
 	}
 
 	public static SyncFile resyncFolder(SyncFile syncFile) throws Exception {

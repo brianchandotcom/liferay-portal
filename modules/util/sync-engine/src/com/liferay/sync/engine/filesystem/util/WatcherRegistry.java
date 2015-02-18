@@ -12,17 +12,30 @@
  * details.
  */
 
-package com.liferay.sync.engine.filesystem;
+package com.liferay.sync.engine.filesystem.util;
 
-import java.nio.file.Path;
+import com.liferay.sync.engine.filesystem.Watcher;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * @author Michael Young
+ * @author Shinn Lok
  */
-public interface WatchEventListener {
+public class WatcherRegistry {
 
-	public long getSyncAccountId();
+	public static Watcher getWatcher(long syncAccountId) {
+		return _watchers.get(syncAccountId);
+	}
 
-	public void watchEvent(String eventType, Path filePath);
+	public static void register(long syncAccountId, Watcher watcher) {
+		_watchers.put(syncAccountId, watcher);
+	}
+
+	public static void unregister(long syncAccountId) {
+		_watchers.remove(syncAccountId);
+	}
+
+	private static final Map<Long, Watcher> _watchers = new HashMap<>();
 
 }

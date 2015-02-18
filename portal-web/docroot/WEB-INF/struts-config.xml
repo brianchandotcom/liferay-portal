@@ -1509,6 +1509,8 @@
 
 		<action path="/search/view" forward="portlet.search.view" />
 
+		<action path="/search/view_content" forward="portlet.search.view_content" />
+
 		<!-- Shopping -->
 
 		<action path="/shopping/cart" type="com.liferay.portlet.shopping.action.CartAction">

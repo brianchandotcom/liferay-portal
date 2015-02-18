@@ -108,11 +108,11 @@
 
 			var searchContainerData = searchContainer.getData();
 
-			if (!searchContainerData.length) {
-				searchContainerData = [];
+			if (searchContainerData) {
+				searchContainerData = searchContainerData.split(',');
 			}
 			else {
-				searchContainerData = searchContainerData.split(',');
+				searchContainerData = [];
 			}
 
 			Liferay.Util.selectEntity(

@@ -23,10 +23,9 @@
 	<portlet>
 		<portlet-name>3</portlet-name>
 		<icon>/html/icons/search.png</icon>
-		<struts-path>search</struts-path>
 		<configuration-action-class>com.liferay.portlet.search.action.ConfigurationActionImpl</configuration-action-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<restore-current-view>false</restore-current-view>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>

@@ -556,15 +556,15 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		sb.append("))");
 
 		if (Validator.isNotNull(groupIdField) && (groupIds.length > 0)) {
+			sb.append(" AND (");
+
 			boolean hasPreviousNonViewableGroup = false;
 
 			StringBundler nonViewableSB = new StringBundler();
 
 			List<Long> viewableGroupIds = new ArrayList<>();
 
-			for (int j = 0; j < groupIds.length; j++) {
-				long groupId = groupIds[j];
-
+			for (long groupId : groupIds) {
 				if (permissionChecker.hasPermission(
 						groupId, className, 0, ActionKeys.VIEW)) {
 
@@ -586,26 +586,27 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				}
 			}
 
-			sb.append(" AND (");
-
-			if (nonViewableSB.length() > 0) {
+			if (hasPreviousNonViewableGroup) {
 				sb.append(StringPool.OPEN_PARENTHESIS);
 				sb.append(nonViewableSB.toString());
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
 			if (!viewableGroupIds.isEmpty()) {
-				for (int k = 0; k < viewableGroupIds.size(); k++) {
-					if (k > 0) {
-						sb.append(" OR ");
-					}
+				if (hasPreviousNonViewableGroup) {
+					sb.append(" OR ");
+				}
 
+				for (Long viewableGroupId : viewableGroupIds) {
 					sb.append(StringPool.OPEN_PARENTHESIS);
 					sb.append(groupIdField);
 					sb.append(" = ");
-					sb.append(viewableGroupIds.get(k));
+					sb.append(viewableGroupId);
 					sb.append(StringPool.CLOSE_PARENTHESIS);
+					sb.append(" OR ");
 				}
+
+				sb.setIndex(sb.index() - 1);
 			}
 
 			sb.append(StringPool.CLOSE_PARENTHESIS);

@@ -39,6 +39,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
@@ -56,7 +57,6 @@ import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
 
 import java.io.ByteArrayInputStream;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -207,8 +207,14 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 			_group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString());
 
-		DLFileShortcut dlFileShortcut = DLAppTestUtil.addDLFileShortcut(
-			fileEntry, _group.getGroupId(), parentFolder.getFolderId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		DLFileShortcut dlFileShortcut = DLAppLocalServiceUtil.addFileShortcut(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			parentFolder.getFolderId(), fileEntry.getFileEntryId(),
+			serviceContext);
 
 		DLAppServiceUtil.moveFileShortcutToTrash(
 			dlFileShortcut.getFileShortcutId());

@@ -68,11 +68,12 @@ public class DLFileShortcutLocalServiceTreeTest {
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), folderA.getFolderId(), "Entry.txt");
 
-		DLFileShortcut dlFileShortcut = DLAppTestUtil.addDLFileShortcut(
+		DLFileShortcut dlFileShortcut = addDLFileShortcut(
 			fileEntry, TestPropsValues.getGroupId(), folderAA.getFolderId());
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
 
 		DLAppLocalServiceUtil.moveFolder(
 			TestPropsValues.getUserId(), folderAA.getFolderId(),
@@ -107,12 +108,25 @@ public class DLFileShortcutLocalServiceTreeTest {
 		}
 	}
 
+	protected DLFileShortcut addDLFileShortcut(
+			FileEntry fileEntry, long groupId, long folderId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId());
+
+		return DLAppLocalServiceUtil.addFileShortcut(
+			TestPropsValues.getUserId(), groupId, folderId,
+			fileEntry.getFileEntryId(), serviceContext);
+	}
+
 	protected void createTree() throws Exception {
 		_fileEntry = DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"Entry A.txt");
 
-		DLFileShortcut dlFileShortcutA = DLAppTestUtil.addDLFileShortcut(
+		DLFileShortcut dlFileShortcutA = addDLFileShortcut(
 			_fileEntry, TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
@@ -122,7 +136,7 @@ public class DLFileShortcutLocalServiceTreeTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"Folder A");
 
-		DLFileShortcut dlFileShortcutAA = DLAppTestUtil.addDLFileShortcut(
+		DLFileShortcut dlFileShortcutAA = addDLFileShortcut(
 			_fileEntry, TestPropsValues.getGroupId(), _folder.getFolderId());
 
 		_dlFileShortcuts.add(dlFileShortcutAA);

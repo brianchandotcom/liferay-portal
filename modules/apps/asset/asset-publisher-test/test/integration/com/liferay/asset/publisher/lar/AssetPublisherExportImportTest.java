@@ -53,7 +53,7 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.util.test.AssetTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -328,14 +328,15 @@ public class AssetPublisherExportImportTest
 
 	@Test
 	public void testOneDLFileEntryType() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), DLFileEntryType.class.getName());
 
-		DLFileEntryType dlFileEntryType = DLAppTestUtil.addDLFileEntryType(
-			group.getGroupId(), ddmStructure.getStructureId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+		DLFileEntryType dlFileEntryType = addDLFileEntryType(
+			group.getGroupId(), ddmStructure.getStructureId(), serviceContext);
 
 		serviceContext.setUuid(ddmStructure.getUuid());
 
@@ -346,12 +347,9 @@ public class AssetPublisherExportImportTest
 
 		serviceContext.setUuid(dlFileEntryType.getUuid());
 
-		DLFileEntryType importedDLFileEntryType =
-			DLAppTestUtil.addDLFileEntryType(
-				TestPropsValues.getUserId(), importedGroup.getGroupId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				new long[] {importedDDMStructure.getStructureId()},
-				serviceContext);
+		DLFileEntryType importedDLFileEntryType = addDLFileEntryType(
+			importedGroup.getGroupId(), importedDDMStructure.getStructureId(),
+			serviceContext);
 
 		Map<String, String[]> preferenceMap = new HashMap<>();
 
@@ -453,14 +451,15 @@ public class AssetPublisherExportImportTest
 
 	@Test
 	public void testSeveralDLFileEntryTypes() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
 		DDMStructure ddmStructure1 = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), DLFileEntryType.class.getName());
 
-		DLFileEntryType dlFileEntryType1 = DLAppTestUtil.addDLFileEntryType(
-			group.getGroupId(), ddmStructure1.getStructureId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+		DLFileEntryType dlFileEntryType1 = addDLFileEntryType(
+			group.getGroupId(), ddmStructure1.getStructureId(), serviceContext);
 
 		serviceContext.setUuid(ddmStructure1.getUuid());
 
@@ -471,18 +470,17 @@ public class AssetPublisherExportImportTest
 
 		serviceContext.setUuid(dlFileEntryType1.getUuid());
 
-		DLFileEntryType importedDLFileEntryType1 =
-			DLAppTestUtil.addDLFileEntryType(
-				TestPropsValues.getUserId(), importedGroup.getGroupId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				new long[] {importedDDMStructure1.getStructureId()},
-				serviceContext);
+		DLFileEntryType importedDLFileEntryType1 = addDLFileEntryType(
+			importedGroup.getGroupId(), importedDDMStructure1.getStructureId(),
+			serviceContext);
 
 		DDMStructure ddmStructure2 = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), DLFileEntryType.class.getName());
 
-		DLFileEntryType dlFileEntryType2 = DLAppTestUtil.addDLFileEntryType(
-			group.getGroupId(), ddmStructure2.getStructureId());
+		serviceContext.setUuid(null);
+
+		DLFileEntryType dlFileEntryType2 = addDLFileEntryType(
+			group.getGroupId(), ddmStructure2.getStructureId(), serviceContext);
 
 		serviceContext.setUuid(ddmStructure2.getUuid());
 
@@ -493,12 +491,9 @@ public class AssetPublisherExportImportTest
 
 		serviceContext.setUuid(dlFileEntryType2.getUuid());
 
-		DLFileEntryType importedDLFileEntryType2 =
-			DLAppTestUtil.addDLFileEntryType(
-				TestPropsValues.getUserId(), importedGroup.getGroupId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				new long[] {importedDDMStructure2.getStructureId()},
-				serviceContext);
+		DLFileEntryType importedDLFileEntryType2 = addDLFileEntryType(
+			importedGroup.getGroupId(), importedDDMStructure2.getStructureId(),
+			serviceContext);
 
 		Map<String, String[]> preferenceMap = new HashMap<>();
 
@@ -702,6 +697,16 @@ public class AssetPublisherExportImportTest
 			layout.isPrivateLayout());
 
 		Assert.assertNotNull(importedLayout);
+	}
+
+	protected DLFileEntryType addDLFileEntryType(
+			long groupId, long ddmStructureId, ServiceContext serviceContext)
+		throws Exception {
+
+		return DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+			serviceContext.getUserId(), groupId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {ddmStructureId},
+			serviceContext);
 	}
 
 	@Override

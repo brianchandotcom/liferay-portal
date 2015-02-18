@@ -1102,6 +1102,10 @@
 		<put name="portlet_content" value="/portlet/search/view.jsp" />
 	</definition>
 
+	<definition name="portlet.search.view_content" extends="portlet.search">
+		<put name="portlet_content" value="/portlet/search/view_content.jsp" />
+	</definition>
+
 	<!-- Shopping -->
 
 	<definition name="portlet.shopping" extends="portlet" />

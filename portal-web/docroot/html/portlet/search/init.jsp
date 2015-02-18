@@ -141,41 +141,4 @@ private String _checkViewURL(ThemeDisplay themeDisplay, String viewURL, String c
 
 	return viewURL;
 }
-
-private PortletURL _getViewFullContentURL(HttpServletRequest request, ThemeDisplay themeDisplay, String className, Document document) throws Exception {
-	String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.Action.VIEW);
-
-	long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
-
-	if (groupId == 0) {
-		Layout layout = themeDisplay.getLayout();
-
-		groupId = layout.getGroupId();
-	}
-
-	long scopeGroupId = GetterUtil.getLong(document.get(Field.SCOPE_GROUP_ID));
-
-	if (scopeGroupId == 0) {
-		scopeGroupId = themeDisplay.getScopeGroupId();
-	}
-
-	long plid = LayoutConstants.DEFAULT_PLID;
-
-	Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
-
-	if (layout != null) {
-		plid = layout.getPlid();
-	}
-
-	if (plid == 0) {
-		plid = LayoutServiceUtil.getDefaultPlid(groupId, scopeGroupId, portletId);
-	}
-
-	PortletURL portletURL = PortletURLFactoryUtil.create(request, portletId, plid, PortletRequest.RENDER_PHASE);
-
-	portletURL.setPortletMode(PortletMode.VIEW);
-	portletURL.setWindowState(WindowState.MAXIMIZED);
-
-	return portletURL;
-}
 %>

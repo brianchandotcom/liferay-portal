@@ -24,6 +24,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.asset.model.Renderer;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -45,10 +46,6 @@ public class AssetDisplayTag extends IncludeTag {
 		return _assetEntry;
 	}
 
-	public AssetRenderer getAssetRenderer() {
-		return _assetRenderer;
-	}
-
 	public AssetRendererFactory getAssetRendererFactory() {
 		return _assetRendererFactory;
 	}
@@ -59,6 +56,10 @@ public class AssetDisplayTag extends IncludeTag {
 
 	public long getClassPK() {
 		return _classPK;
+	}
+
+	public Renderer getRenderer() {
+		return _renderer;
 	}
 
 	public String getTemplate() {
@@ -90,7 +91,7 @@ public class AssetDisplayTag extends IncludeTag {
 	}
 
 	public void setAssetRenderer(AssetRenderer assetRenderer) {
-		_assetRenderer = assetRenderer;
+		_renderer = assetRenderer;
 	}
 
 	public void setAssetRendererFactory(
@@ -105,6 +106,10 @@ public class AssetDisplayTag extends IncludeTag {
 
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
+	}
+
+	public void setRenderer(Renderer renderer) {
+		_renderer = renderer;
 	}
 
 	public void setShowComments(boolean showComments) {
@@ -131,10 +136,10 @@ public class AssetDisplayTag extends IncludeTag {
 	protected void cleanUp() {
 		_abstractLength = 200;
 		_assetEntry = null;
-		_assetRenderer = null;
 		_className = null;
 		_classPK = 0;
 		_page = null;
+		_renderer = null;
 		_showComments = false;
 		_showExtraInfo = false;
 		_showHeader = false;
@@ -154,26 +159,37 @@ public class AssetDisplayTag extends IncludeTag {
 
 		AssetEntry assetEntry = _assetEntry;
 
-		if ((assetEntry == null) && Validator.isNotNull(_className) &&
-			(_classPK > 0)) {
-
-			assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-				_className, _classPK);
+		if (assetEntry == null) {
+			if (Validator.isNotNull(_className) && (_classPK > 0)) {
+				assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					_className, _classPK);
+			}
+			else if (_renderer != null) {
+				assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					_renderer.getClassName(), _renderer.getClassPK());
+			}
 		}
 
 		request.setAttribute(
 			"liferay-ui:asset-display:assetEntry", _assetEntry);
 
-		AssetRenderer assetRenderer = _assetRenderer;
+		Renderer renderer = _renderer;
 
-		if (assetRenderer == null && (assetEntry != null)) {
-			assetRenderer = assetEntry.getAssetRenderer();
+		if ((renderer == null) && (assetEntry != null)) {
+			renderer = assetEntry.getAssetRenderer();
 		}
 
-		request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
+		if (renderer instanceof AssetRenderer) {
+			AssetRenderer assetRenderer = (AssetRenderer)renderer;
+
+			request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
+		}
+		else {
+			request.setAttribute("liferay-ui:asset-display:renderer", renderer);
+		}
 
 		try {
-			_page = assetRenderer.render(
+			_page = renderer.render(
 				(RenderRequest)pageContext.getAttribute("renderRequest"),
 				(RenderResponse)pageContext.getAttribute("renderResponse"),
 				_template);
@@ -188,7 +204,7 @@ public class AssetDisplayTag extends IncludeTag {
 
 		AssetRendererFactory assetRendererFactory = _assetRendererFactory;
 
-		if (assetRendererFactory == null && (assetEntry != null)) {
+		if ((assetRendererFactory == null) && (assetEntry != null)) {
 			assetRendererFactory = assetEntry.getAssetRendererFactory();
 		}
 
@@ -216,11 +232,11 @@ public class AssetDisplayTag extends IncludeTag {
 
 	private int _abstractLength = 200;
 	private AssetEntry _assetEntry;
-	private AssetRenderer _assetRenderer;
 	private AssetRendererFactory _assetRendererFactory;
 	private String _className;
 	private long _classPK;
 	private String _page;
+	private Renderer _renderer;
 	private boolean _showComments;
 	private boolean _showExtraInfo;
 	private boolean _showHeader;

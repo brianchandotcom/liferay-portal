@@ -8,6 +8,7 @@
 		<dirset dir="apps/blogs" includes="*" />
 		<dirset dir="apps/bookmarks" includes="*" />
 		<dirset dir="apps/breadcrumb" includes="*" />
+		<dirset dir="apps/comments" includes="*" />
 		<dirset dir="apps/configuration-admin" includes="*" />
 		<dirset dir="apps/currency-converter" includes="*" />
 		<dirset dir="apps/dictionary" includes="*" />
@@ -19,6 +20,7 @@
 		<dirset dir="apps/invitation" includes="*" />
 		<dirset dir="apps/journal" includes="*" />
 		<dirset dir="apps/loan-calculator" includes="*" />
+		<dirset dir="apps/message-boards" includes="*" />
 		<dirset dir="apps/navigation" includes="*" />
 		<dirset dir="apps/nested-portlets" includes="*" />
 		<dirset dir="apps/network-utilities" includes="*" />

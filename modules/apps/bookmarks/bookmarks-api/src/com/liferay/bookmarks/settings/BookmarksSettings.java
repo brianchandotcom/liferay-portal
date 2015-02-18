@@ -14,17 +14,11 @@
 
 package com.liferay.bookmarks.settings;
 
-import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
-import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
 
@@ -44,26 +38,45 @@ public class BookmarksSettings {
 		"showSubfolders"
 	};
 
+	public static final String[] MULTI_VALUED_KEYS = new String[] {
+		"entryColumns", "folderColumns"
+	};
+
+	public static FallbackKeys getFallbackKeys() {
+		FallbackKeys fallbackKeys = new FallbackKeys();
+
+		fallbackKeys.add(
+			"emailFromAddress", "email.from.address",
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS );
+		fallbackKeys.add(
+			"emailFromName", "email.from.name",
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		fallbackKeys.add(
+			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		fallbackKeys.add(
+			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+
+		return fallbackKeys;
+	}
+
 	public static BookmarksSettings getInstance(long groupId)
 		throws PortalException {
 
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, BookmarksConstants.SERVICE_NAME);
+		BookmarksSettingsProvider bookmarksSettingsProvider =
+			BookmarksSettingsProvider.getBookmarksSettingsProvider();
 
-		return new BookmarksSettings(settings);
+		return bookmarksSettingsProvider.getGroupServiceSettings(groupId);
 	}
 
 	public static BookmarksSettings getInstance(
 			long groupId, Map<String, String[]> parameterMap)
 		throws PortalException {
 
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, BookmarksConstants.SERVICE_NAME);
+		BookmarksSettingsProvider bookmarksSettingsProvider =
+			BookmarksSettingsProvider.getBookmarksSettingsProvider();
 
-		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
-			parameterMap, settings);
-
-		return new BookmarksSettings(parameterMapSettings);
+		return bookmarksSettingsProvider.getGroupServiceSettings(
+			groupId, parameterMap);
 	}
 
 	public BookmarksSettings(Settings settings) {
@@ -158,53 +171,6 @@ public class BookmarksSettings {
 
 	public boolean isShowSubfolders() {
 		return _typedSettings.getBooleanValue("showSubfolders");
-	}
-
-	private static FallbackKeys _getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
-
-		fallbackKeys.add("emailEntryAddedBody", "email.entry.added.body");
-		fallbackKeys.add("emailEntryAddedEnabled","email.entry.added.enabled");
-		fallbackKeys.add("emailEntryAddedSubject", "email.entry.added.subject");
-		fallbackKeys.add("emailEntryUpdatedBody", "email.entry.updated.body");
-		fallbackKeys.add(
-			"emailEntryUpdatedEnabled", "email.entry.updated.enabled");
-		fallbackKeys.add(
-			"emailEntryUpdatedSubject", "email.entry.updated.subject");
-		fallbackKeys.add(
-			"emailFromAddress", "email.from.address",
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS );
-		fallbackKeys.add(
-			"emailFromName", "email.from.name",
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		fallbackKeys.add("enableRelatedAssets", "related.assets.enabled");
-		fallbackKeys.add(
-			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		fallbackKeys.add("entryColumns", "entry.columns");
-		fallbackKeys.add("folderColumns", "folder.columns");
-		fallbackKeys.add(
-			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		fallbackKeys.add("showFoldersSearch", "folders.search.visible");
-		fallbackKeys.add("showSubfolders", "subfolders.visible");
-
-		return fallbackKeys;
-	}
-
-	private static final String[] _MULTI_VALUED_KEYS = {
-		"entryColumns", "folderColumns"
-	};
-
-	private static final ResourceManager _resourceManager =
-		new ClassLoaderResourceManager(
-			BookmarksSettings.class.getClassLoader());
-
-	static {
-		SettingsFactory settingsFactory =
-			SettingsFactoryUtil.getSettingsFactory();
-
-		settingsFactory.registerSettingsMetadata(
-			BookmarksConstants.SERVICE_NAME, _getFallbackKeys(),
-			_MULTI_VALUED_KEYS, null, _resourceManager);
 	}
 
 	private final TypedSettings _typedSettings;

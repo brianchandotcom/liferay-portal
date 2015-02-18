@@ -324,19 +324,17 @@
 
 	<macrodef name="get-test-class-name">
 		<sequential>
+			<fail message="Please set the property ${test.class}" unless="test.class" />
+
 			<var name="test.class.name" unset="true" />
 
-			<get-test-simple-class-name />
+			<get-test-name />
 
 			<script classpathref="project.classpath" language="beanshell">
 				<![CDATA[
 					import org.apache.tools.ant.DirectoryScanner;
 
-					String testSimpleClassName = project.getProperty("test.simple.class.name");
-
-					String testName = testSimpleClassName.substring(0, testSimpleClassName.length() - 8);
-
-					project.setProperty("test.name", testName);
+					String testName = project.getProperty("test.name");
 
 					try {
 						DirectoryScanner directoryScanner = new DirectoryScanner();
@@ -400,29 +398,21 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="get-test-simple-class-name">
+	<macrodef name="get-test-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}" unless="test.class" />
 
-			<var name="test.simple.class.name" unset="true" />
+			<var name="test.name" unset="true" />
+
+			<get-test-simple-class-name />
 
 			<script classpathref="project.classpath" language="beanshell">
 				<![CDATA[
-					String testClass = project.getProperty("test.class");
+					String testSimpleClassName = project.getProperty("test.simple.class.name");
 
-					String testSimpleClassName = testClass;
+					String testName = testSimpleClassName.substring(0, testSimpleClassName.length() - 8);
 
-					if (testClass.contains("#")) {
-						int x = testClass.indexOf("#");
-
-						testSimpleClassName =  testClass.substring(0, x);
-					}
-
-					if (!testSimpleClassName.endsWith("TestCase")) {
-						testSimpleClassName = testSimpleClassName + "TestCase";
-					}
-
-					project.setProperty("test.simple.class.name", testSimpleClassName);
+					project.setProperty("test.name", testName);
 				]]>
 			</script>
 		</sequential>
@@ -530,6 +520,34 @@
 							break;
 						}
 					}
+				]]>
+			</script>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-test-simple-class-name">
+		<sequential>
+			<fail message="Please set the property ${test.class}" unless="test.class" />
+
+			<var name="test.simple.class.name" unset="true" />
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					String testClass = project.getProperty("test.class");
+
+					String testSimpleClassName = testClass;
+
+					if (testClass.contains("#")) {
+						int x = testClass.indexOf("#");
+
+						testSimpleClassName =  testClass.substring(0, x);
+					}
+
+					if (!testSimpleClassName.endsWith("TestCase")) {
+						testSimpleClassName = testSimpleClassName + "TestCase";
+					}
+
+					project.setProperty("test.simple.class.name", testSimpleClassName);
 				]]>
 			</script>
 		</sequential>
@@ -1862,8 +1880,9 @@ ${marketplace.portlet.properties}</echo>
 				<if>
 					<contains string="${test.class}" substring="#" />
 					<then>
-						<get-test-method-name />
 						<get-test-class-name />
+
+						<get-test-method-name />
 					</then>
 					<elseif>
 						<isset property="test.class" />
@@ -2150,14 +2169,15 @@ ${marketplace.portlet.properties}</echo>
 			<contains string="${test.class}" substring="#" />
 			<then>
 				<get-test-method-name />
+
 				<get-test-simple-class-name />
 			</then>
 			<elseif>
 				<isset property="test.class" />
 				<then>
-					<get-test-simple-class-name />
-
 					<property name="test.method.name" value="[A-Za-z]*" />
+
+					<get-test-simple-class-name />
 				</then>
 			</elseif>
 		</if>
@@ -4331,6 +4351,7 @@ if (ppstate.equals("normal")) {
 			<contains string="${test.class}" substring="#" />
 			<then>
 				<get-test-method-name />
+
 				<get-test-simple-class-name />
 
 				<var name="test.class" unset="true" />

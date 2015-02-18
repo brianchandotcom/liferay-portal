@@ -21,19 +21,6 @@
 		<system>true</system>
 	</portlet>
 	<portlet>
-		<portlet-name>3</portlet-name>
-		<icon>/html/icons/search.png</icon>
-		<configuration-action-class>com.liferay.portlet.search.action.ConfigurationActionImpl</configuration-action-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<restore-current-view>false</restore-current-view>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<header-portlet-css>/html/portlet/search/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-search</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
-	</portlet>
-	<portlet>
 		<portlet-name>9</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>admin</struts-path>

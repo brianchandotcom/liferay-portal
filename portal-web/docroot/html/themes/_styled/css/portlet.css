@@ -23,6 +23,11 @@ body.portlet {
 		top: 3px;
 		z-index: 300;
 
+		&.portlet-title-menu {
+			 position: relative;
+			 display: inline-block;
+		 }
+
 		a {
 			color: inherit;
 
@@ -56,15 +61,11 @@ body.portlet {
 			color: transparent;
 			font-size: 0;
 		}
-
-		&.add-content {
-			right: 30px;
-		}
 	}
 }
 
 .portlet-title {
-	display: block;
+	display: inline;
 
 	img {
 		vertical-align: middle;

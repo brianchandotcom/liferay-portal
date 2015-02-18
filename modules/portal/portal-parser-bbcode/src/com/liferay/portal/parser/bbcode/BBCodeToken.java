@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.parser.bbcode;
+package com.liferay.portal.parser.bbcode;
 
 import com.liferay.portal.kernel.util.StringUtil;
 

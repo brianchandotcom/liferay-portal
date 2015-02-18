@@ -556,7 +556,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		sb.append("))");
 
 		if (Validator.isNotNull(groupIdField) && (groupIds.length > 0)) {
-			boolean hasPreviousViewableGroup = false;
+			boolean hasPreviousNonViewableGroup = false;
 
 			StringBundler nonViewableSB = new StringBundler();
 
@@ -571,11 +571,12 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 					viewableGroupIds.add(groupId);
 				}
 				else {
-					if ((j > 0) && hasPreviousViewableGroup) {
+					if (hasPreviousNonViewableGroup) {
 						nonViewableSB.append(" OR ");
 					}
-
-					hasPreviousViewableGroup = true;
+					else {
+						hasPreviousNonViewableGroup = true;
+					}
 
 					nonViewableSB.append(StringPool.OPEN_PARENTHESIS);
 					nonViewableSB.append(groupIdField);

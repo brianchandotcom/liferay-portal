@@ -14,7 +14,6 @@
 
 package com.liferay.blogs.portlet.toolbar.item;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
@@ -48,22 +47,19 @@ public class BlogsPortletToolbarContributor
 	public List<Menu> getPortletTitleMenus(PortletRequest portletRequest) {
 		List<Menu> menus = new ArrayList<>();
 
-		menus.add(getPortletTitleMenu(portletRequest));
+		menus.add(getAddEntryPortletTitleMenu(portletRequest));
 
 		return menus;
 	}
 
-	protected Menu getPortletTitleMenu(PortletRequest portletRequest) {
+	protected Menu getAddEntryPortletTitleMenu(PortletRequest portletRequest) {
 		Menu menu = new Menu();
 
-		menu.setCssClass("portlet-options");
 		menu.setDirection("down");
 		menu.setExtended(false);
 		menu.setIcon("../aui/plus-sign-2");
 		menu.setMenuItems(getPortletTitleMenuItems(portletRequest));
-		menu.setMessage("add");
 		menu.setShowArrow(false);
-		menu.setShowWhenSingleIcon(true);
 
 		return menu;
 	}
@@ -73,8 +69,7 @@ public class BlogsPortletToolbarContributor
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setLabel(
-			LanguageUtil.get(themeDisplay.getLocale(), "add-entry"));
+		urlMenuItem.setIcon("icon-plus-sign-2");
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			portletRequest, PortletKeys.BLOGS, themeDisplay.getPlid(),
@@ -102,7 +97,7 @@ public class BlogsPortletToolbarContributor
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY)) {
 
-			return Collections.<MenuItem>emptyList();
+			return Collections.emptyList();
 		}
 
 		List<MenuItem> menuItems = new ArrayList<>();

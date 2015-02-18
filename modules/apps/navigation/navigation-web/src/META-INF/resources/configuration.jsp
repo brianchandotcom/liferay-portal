@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/navigation/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <aui:row>
 	<aui:col width="<%= 50 %>">
@@ -33,7 +33,7 @@
 					<optgroup label="<liferay-ui:message key="predefined" />">
 
 						<%
-						for (String displayStyleOption : PropsValues.NAVIGATION_DISPLAY_STYLE_OPTIONS) {
+						for (String displayStyleOption : NavigationWebConfigurationValues.DISPLAY_STYLE_OPTIONS) {
 						%>
 
 							<aui:option label="<%= displayStyleOption %>" selected="<%= displayStyle.equals(displayStyleOption) %>" />
@@ -120,7 +120,6 @@
 	<aui:col width="<%= 50 %>">
 		<liferay-portlet:preview
 			portletName="<%= portletResource %>"
-			queryString="struts_action=/navigation/view"
 			showBorders="<%= true %>"
 		/>
 	</aui:col>

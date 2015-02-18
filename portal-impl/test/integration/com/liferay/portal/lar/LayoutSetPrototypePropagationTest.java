@@ -49,7 +49,6 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
@@ -58,6 +57,7 @@ import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.portlet.util.test.PortletKeys;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -257,59 +257,67 @@ public class LayoutSetPrototypePropagationTest
 		throws Exception {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			TestPropsValues.getCompanyId(), PortletKeys.NAVIGATION);
+			TestPropsValues.getCompanyId(), PortletKeys.TEST);
 
-		portlet.setPreferencesUniquePerLayout(false);
+		boolean preferencesUniquePerLayout =
+			portlet.getPreferencesUniquePerLayout();
 
-		_layoutSetPrototypeLayout = LayoutTestUtil.addLayout(
-			_layoutSetPrototypeGroup, true, layoutPrototype, true);
+		try {
+			portlet.setPreferencesUniquePerLayout(false);
 
-		Map<String, String[]> preferenceMap = new HashMap<>();
+			_layoutSetPrototypeLayout = LayoutTestUtil.addLayout(
+				_layoutSetPrototypeGroup, true, layoutPrototype, true);
 
-		preferenceMap.put("bulletStyle", new String[] {"Dots"});
+			Map<String, String[]> preferenceMap = new HashMap<>();
 
-		String navigationPortletId1 = LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), _layoutSetPrototypeLayout,
-			PortletKeys.NAVIGATION, "column-1", preferenceMap);
+			preferenceMap.put("bulletStyle", new String[]{"Dots"});
 
-		preferenceMap.put("bulletStyle", new String[] {"Arrows"});
+			String testPortletId1 = LayoutTestUtil.addPortletToLayout(
+				TestPropsValues.getUserId(), _layoutSetPrototypeLayout,
+				PortletKeys.TEST, "column-1", preferenceMap);
 
-		String navigationPortletId2 = LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), _layoutSetPrototypeLayout,
-			PortletKeys.NAVIGATION, "column-2", preferenceMap);
+			preferenceMap.put("bulletStyle", new String[]{"Arrows"});
 
-		propagateChanges(group);
+			String testPortletId2 = LayoutTestUtil.addPortletToLayout(
+				TestPropsValues.getUserId(), _layoutSetPrototypeLayout,
+				PortletKeys.TEST, "column-2", preferenceMap);
 
-		Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-			group.getGroupId(), false,
-			_layoutSetPrototypeLayout.getFriendlyURL());
+			propagateChanges(group);
 
-		PortletPreferences navigationPortletIdPortletPreferences =
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				group.getGroupId(), layout, PortletKeys.NAVIGATION, null);
+			Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+				group.getGroupId(), false,
+				_layoutSetPrototypeLayout.getFriendlyURL());
 
-		Assert.assertEquals(
-			"Arrows",
-			navigationPortletIdPortletPreferences.getValue(
-				"bulletStyle", StringPool.BLANK));
+			PortletPreferences testPortletIdPortletPreferences =
+				PortletPreferencesFactoryUtil.getPortletSetup(
+					group.getGroupId(), layout, PortletKeys.TEST, null);
 
-		PortletPreferences navigationPortletId1PortletPreferences =
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				layout, navigationPortletId1, null);
+			Assert.assertEquals(
+				"Arrows",
+				testPortletIdPortletPreferences.getValue(
+					"bulletStyle", StringPool.BLANK));
 
-		Assert.assertEquals(
-			"Arrows",
-			navigationPortletId1PortletPreferences.getValue(
-				"bulletStyle", StringPool.BLANK));
+			PortletPreferences testPortletId1PortletPreferences =
+				PortletPreferencesFactoryUtil.getPortletSetup(
+					layout, testPortletId1, null);
 
-		PortletPreferences navigationPortletId2PortletPreferences =
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				layout, navigationPortletId2, null);
+			Assert.assertEquals(
+				"Arrows",
+				testPortletId1PortletPreferences.getValue(
+					"bulletStyle", StringPool.BLANK));
 
-		Assert.assertEquals(
-			"Arrows",
-			navigationPortletId2PortletPreferences.getValue(
-				"bulletStyle", StringPool.BLANK));
+			PortletPreferences testPortletId2PortletPreferences =
+				PortletPreferencesFactoryUtil.getPortletSetup(
+					layout, testPortletId2, null);
+
+			Assert.assertEquals(
+				"Arrows",
+				testPortletId2PortletPreferences.getValue(
+					"bulletStyle", StringPool.BLANK));
+		}
+		finally {
+			portlet.setPreferencesUniquePerLayout(preferencesUniquePerLayout);
+		}
 	}
 
 	@Test

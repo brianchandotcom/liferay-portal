@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
@@ -27,6 +28,12 @@ public interface DDMIndexer {
 
 	public static final String DDM_FIELD_NAMESPACE = "ddm";
 
+	public static final String DDM_FIELD_PREFIX =
+		DDMIndexer.DDM_FIELD_NAMESPACE + DDMIndexer.DDM_FIELD_SEPARATOR;
+
+	public static final String DDM_FIELD_SEPARATOR =
+		StringPool.DOUBLE_UNDERLINE;
+
 	public void addAttributes(
 		Document document, DDMStructure ddmStructure,
 		DDMFormValues ddmFormValues);
@@ -38,5 +45,7 @@ public interface DDMIndexer {
 
 	public String extractIndexableAttributes(
 		DDMStructure ddmStructure, DDMFormValues ddmFormValues, Locale locale);
+
+	public boolean isSortableFieldName(String fieldName);
 
 }

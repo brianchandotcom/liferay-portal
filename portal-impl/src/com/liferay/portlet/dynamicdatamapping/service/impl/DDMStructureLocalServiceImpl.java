@@ -1524,15 +1524,13 @@ public class DDMStructureLocalServiceImpl
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			structure.getClassName());
 
-		if (indexer != null) {
-			List<Long> ddmStructureIds = getChildrenStructureIds(
-				structure.getGroupId(), structure.getStructureId());
+		List<Long> ddmStructureIds = getChildrenStructureIds(
+			structure.getGroupId(), structure.getStructureId());
 
-			indexer.reindexDDMStructures(ddmStructureIds);
-		}
+		indexer.reindexDDMStructures(ddmStructureIds);
 
 		return structure;
 	}

@@ -32,6 +32,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.search.test.BaseSearchTestCase;
+import com.liferay.portal.search.test.TestOrderHelper;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -93,10 +94,60 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		assertEquals(0, query, searchContext);
 	}
 
+	@Test
+	public void testOrderByDDMBooleanField() throws Exception {
+		TestOrderHelper orderTestHelper =
+			new JournalArticleSearchTestOrderHelper(group);
+
+		orderTestHelper.orderByDDMBooleanField();
+	}
+
+	@Test
+	public void testOrderByDDMIntegerField() throws Exception {
+		TestOrderHelper orderTestHelper =
+			new JournalArticleSearchTestOrderHelper(group);
+
+		orderTestHelper.orderByDDMIntegerField();
+	}
+
+	@Test
+	public void testOrderByDDMNumberField() throws Exception {
+		TestOrderHelper orderTestHelper =
+			new JournalArticleSearchTestOrderHelper(group);
+
+		orderTestHelper.orderByDDMNumberField();
+	}
+
+	@Test
+	public void testOrderByDDMTextField() throws Exception {
+		TestOrderHelper orderTestHelper =
+			new JournalArticleSearchTestOrderHelper(group);
+
+		orderTestHelper.orderByDDMTextField();
+	}
+
 	@Ignore()
 	@Override
 	@Test
 	public void testSearchAttachments() throws Exception {
+	}
+
+	protected BaseModel<?> addBaseModel(
+			BaseModel<?> parentBaseModel, String keywords,
+			DDMStructure ddmStructure, DDMTemplate ddmTemplate,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		_ddmStructure = ddmStructure;
+
+		JournalFolder folder = (JournalFolder)parentBaseModel;
+
+		String content = DDMStructureTestUtil.getSampleStructuredContent(
+			"name", keywords);
+
+		return JournalTestUtil.addArticleWithXMLContent(
+			folder.getFolderId(), content, ddmStructure.getStructureKey(),
+			ddmTemplate.getTemplateKey(), serviceContext);
 	}
 
 	@Override
@@ -105,24 +156,19 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		JournalFolder folder = (JournalFolder)parentBaseModel;
-
 		String definition = DDMStructureTestUtil.getSampleStructureDefinition(
 			"name");
 
-		_ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			serviceContext.getScopeGroupId(), JournalArticle.class.getName(),
 			definition);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			serviceContext.getScopeGroupId(), _ddmStructure.getStructureId());
+			serviceContext.getScopeGroupId(), ddmStructure.getStructureId());
 
-		String content = DDMStructureTestUtil.getSampleStructuredContent(
-			"name", getSearchKeywords());
-
-		return JournalTestUtil.addArticleWithXMLContent(
-			folder.getFolderId(), content, _ddmStructure.getStructureKey(),
-			ddmTemplate.getTemplateKey(), serviceContext);
+		return addBaseModel(
+			parentBaseModel, keywords, ddmStructure, ddmTemplate,
+			serviceContext);
 	}
 
 	@Override
@@ -315,6 +361,47 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			_ddmStructure.getParentStructureId(), _ddmStructure.getNameMap(),
 			_ddmStructure.getDescriptionMap(), ddmForm, ddmFormLayout,
 			serviceContext);
+	}
+
+	protected class JournalArticleSearchTestOrderHelper
+		extends TestOrderHelper {
+
+		protected JournalArticleSearchTestOrderHelper(Group group)
+			throws Exception {
+
+			super(group);
+		}
+
+		@Override
+		protected BaseModel<?> addSearchableAsset(
+				BaseModel<?> parentBaseModel, String keywords,
+				DDMStructure ddmStructure, DDMTemplate ddmTemplate,
+				ServiceContext serviceContext)
+			throws Exception {
+
+			return addBaseModel(
+				parentBaseModel, keywords, ddmStructure, ddmTemplate,
+				serviceContext);
+		}
+
+		@Override
+		protected String getSearchableAssetClassName() {
+			return getBaseModelClassName();
+		}
+
+		@Override
+		protected BaseModel<?> getSearchableAssetParentBaseModel(
+				Group group, ServiceContext serviceContext)
+			throws Exception {
+
+			return getParentBaseModel(group, serviceContext);
+		}
+
+		@Override
+		protected String getSearchableAssetStructureClassName() {
+			return getBaseModelClassName();
+		}
+
 	}
 
 	private DDMStructure _ddmStructure;

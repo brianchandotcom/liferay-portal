@@ -595,19 +595,15 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 			if (!viewableGroupIds.isEmpty()) {
 				for (int k = 0; k < viewableGroupIds.size(); k++) {
-					long viewableGroupId = viewableGroupIds.get(k);
-
-					if (Validator.isNotNull(groupIdField)) {
-						if (k > 0) {
-							sb.append(" OR ");
-						}
-
-						sb.append(StringPool.OPEN_PARENTHESIS);
-						sb.append(groupIdField);
-						sb.append(" = ");
-						sb.append(viewableGroupId);
-						sb.append(StringPool.CLOSE_PARENTHESIS);
+					if (k > 0) {
+						sb.append(" OR ");
 					}
+
+					sb.append(StringPool.OPEN_PARENTHESIS);
+					sb.append(groupIdField);
+					sb.append(" = ");
+					sb.append(viewableGroupIds.get(k));
+					sb.append(StringPool.CLOSE_PARENTHESIS);
 				}
 			}
 

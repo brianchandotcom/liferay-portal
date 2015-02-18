@@ -38,13 +38,12 @@ import com.liferay.portal.tools.SassToCssBuilder;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.sass.compiler.SassCompiler;
 
 import java.io.File;
-
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,7 +51,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.time.StopWatch;
-
 import org.jruby.RubyArray;
 import org.jruby.RubyException;
 import org.jruby.embed.ScriptingContainer;
@@ -71,16 +69,21 @@ public class DynamicCSSUtil {
 				return;
 			}
 
-			RubyExecutor rubyExecutor = new RubyExecutor();
-
-			_scriptingContainer = rubyExecutor.getScriptingContainer();
-
-			String rubyScript = StringUtil.read(
-				ClassLoaderUtil.getPortalClassLoader(),
-				"com/liferay/portal/servlet/filters/dynamiccss" +
-					"/dependencies/main.rb");
-
-			_scriptObject = _scriptingContainer.runScriptlet(rubyScript);
+			if (PropsValues.SASS_COMPILER_IMPL.equals("libsass")) {
+				_sassCompiler = new SassCompiler();
+			}
+			else {
+				RubyExecutor rubyExecutor = new RubyExecutor();
+	
+				_scriptingContainer = rubyExecutor.getScriptingContainer();
+	
+				String rubyScript = StringUtil.read(
+					ClassLoaderUtil.getPortalClassLoader(),
+					"com/liferay/portal/servlet/filters/dynamiccss" +
+						"/dependencies/main.rb");
+	
+				_scriptObject = _scriptingContainer.runScriptlet(rubyScript);
+			}
 
 			RTLCSSUtil.init();
 
@@ -554,40 +557,48 @@ public class DynamicCSSUtil {
 						_SASS_COMMON_DIR;
 			}
 		}
-
-		File sassTempDir = _getSassTempDir(servletContext);
-
-		Object[] arguments = new Object[] {
-			content, commonSassPath, resourcePath, cssThemePath,
-			sassTempDir.getCanonicalPath(), _log.isDebugEnabled()
-		};
-
-		try {
-			content = _scriptingContainer.callMethod(
-				_scriptObject, "process", arguments, String.class);
+		
+		if (PropsValues.SASS_COMPILER_IMPL.equals("libsass")) {
+			String inputPaths = commonSassPath + File.pathSeparator +  
+					cssThemePath;
+			
+			content = _sassCompiler.compileString(content, inputPaths, "");
 		}
-		catch (Exception e) {
-			if (e instanceof RaiseException) {
-				RaiseException raiseException = (RaiseException)e;
-
-				RubyException rubyException = raiseException.getException();
-
-				_log.error(
-					String.valueOf(rubyException.message.toJava(String.class)));
-
-				IRubyObject iRubyObject = rubyException.getBacktrace();
-
-				RubyArray rubyArray = (RubyArray)iRubyObject.toJava(
-					RubyArray.class);
-
-				for (int i = 0; i < rubyArray.size(); i++) {
-					Object object = rubyArray.get(i);
-
-					_log.error(String.valueOf(object));
-				}
+		else {
+			File sassTempDir = _getSassTempDir(servletContext);
+	
+			Object[] arguments = new Object[] {
+				content, commonSassPath, resourcePath, cssThemePath,
+				sassTempDir.getCanonicalPath(), _log.isDebugEnabled()
+			};
+	
+			try {
+				content = _scriptingContainer.callMethod(
+					_scriptObject, "process", arguments, String.class);
 			}
-			else {
-				_log.error(e, e);
+			catch (Exception e) {
+				if (e instanceof RaiseException) {
+					RaiseException raiseException = (RaiseException)e;
+	
+					RubyException rubyException = raiseException.getException();
+	
+					_log.error(
+						String.valueOf(rubyException.message.toJava(String.class)));
+	
+					IRubyObject iRubyObject = rubyException.getBacktrace();
+	
+					RubyArray rubyArray = (RubyArray)iRubyObject.toJava(
+						RubyArray.class);
+	
+					for (int i = 0; i < rubyArray.size(); i++) {
+						Object object = rubyArray.get(i);
+	
+						_log.error(String.valueOf(object));
+					}
+				}
+				else {
+					_log.error(e, e);
+				}
 			}
 		}
 
@@ -612,6 +623,7 @@ public class DynamicCSSUtil {
 		"\\/([^\\/]+)-theme\\/", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _portalThemePattern = Pattern.compile(
 		"themes\\/([^\\/]+)\\/css", Pattern.CASE_INSENSITIVE);
+	private static SassCompiler _sassCompiler;
 	private static ScriptingContainer _scriptingContainer;
 	private static Object _scriptObject;
 

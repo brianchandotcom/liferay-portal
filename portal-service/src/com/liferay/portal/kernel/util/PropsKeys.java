@@ -2221,6 +2221,8 @@ public interface PropsKeys {
 
 	public static final String SANITIZER_IMPL = "sanitizer.impl";
 
+	public static final String SASS_COMPILER_IMPL = "sass.compiler.impl";
+	
 	public static final String SC_IMAGE_MAX_SIZE = "sc.image.max.size";
 
 	public static final String SC_IMAGE_THUMBNAIL_MAX_HEIGHT = "sc.image.thumbnail.max.height";

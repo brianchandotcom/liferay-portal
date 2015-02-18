@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContr
 import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -25,6 +26,7 @@ import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -47,6 +49,10 @@ public class PortletToolbar {
 
 	public List<Menu> getPortletTitleMenus(
 		String portletId, PortletRequest portletRequest) {
+
+		if ((portletRequest == null) || Validator.isNull(portletId)) {
+			return Collections.emptyList();
+		}
 
 		List<Menu> portletTitleMenus = new ArrayList<>();
 

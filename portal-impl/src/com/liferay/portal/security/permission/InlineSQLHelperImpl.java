@@ -552,19 +552,21 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		sb.append("(((InlineSQLResourcePermission.primKey = CAST_TEXT(");
 		sb.append(classPKField);
-		sb.append(")) AND ((");
+		sb.append("))");
 
-		boolean hasPreviousViewableGroup = false;
+		if (Validator.isNotNull(groupIdField)) {
+			sb.append("AND ((");
 
-		List<Long> viewableGroupIds = new ArrayList<>();
+			boolean hasPreviousViewableGroup = false;
 
-		for (int j = 0; j < groupIds.length; j++) {
-			long groupId = groupIds[j];
+			List<Long> viewableGroupIds = new ArrayList<>();
 
-			if (!permissionChecker.hasPermission(
-					groupId, className, 0, ActionKeys.VIEW)) {
+			for (int j = 0; j < groupIds.length; j++) {
+				long groupId = groupIds[j];
 
-				if (Validator.isNotNull(groupIdField)) {
+				if (!permissionChecker.hasPermission(
+						groupId, className, 0, ActionKeys.VIEW)) {
+
 					if ((j > 0) && hasPreviousViewableGroup) {
 						sb.append(" OR ");
 					}
@@ -576,29 +578,29 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 					sb.append(" = ");
 					sb.append(groupId);
 					sb.append(StringPool.CLOSE_PARENTHESIS);
+
 				}
-
-			}
-			else {
-				viewableGroupIds.add(groupId);
-			}
-		}
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		if (!viewableGroupIds.isEmpty()) {
-			for (Long viewableGroupId : viewableGroupIds) {
-				if (Validator.isNotNull(groupIdField)) {
-					sb.append(" OR (");
-					sb.append(groupIdField);
-					sb.append(" = ");
-					sb.append(viewableGroupId);
-					sb.append(StringPool.CLOSE_PARENTHESIS);
+				else {
+					viewableGroupIds.add(groupId);
 				}
 			}
-		}
 
-		sb.append(")))");
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			if (!viewableGroupIds.isEmpty()) {
+				for (Long viewableGroupId : viewableGroupIds) {
+					if (Validator.isNotNull(groupIdField)) {
+						sb.append(" OR (");
+						sb.append(groupIdField);
+						sb.append(" = ");
+						sb.append(viewableGroupId);
+						sb.append(StringPool.CLOSE_PARENTHESIS);
+					}
+				}
+			}
+
+			sb.append(")))");
+		}
 
 		String roleIdsOrOwnerIdSQL = getRoleIdsOrOwnerIdSQL(
 			permissionChecker, groupIds, userIdField);

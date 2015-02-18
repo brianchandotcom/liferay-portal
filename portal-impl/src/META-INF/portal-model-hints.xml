@@ -921,6 +921,7 @@
 	<model name="com.liferay.portal.model.Subscription">
 		<field name="mvccVersion" type="long" />
 		<field name="subscriptionId" type="long" />
+		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
@@ -929,7 +930,6 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="frequency" type="String" />
-		<field name="groupId" type="long" />
 	</model>
 	<model name="com.liferay.portal.model.SystemEvent">
 		<field name="mvccVersion" type="long" />

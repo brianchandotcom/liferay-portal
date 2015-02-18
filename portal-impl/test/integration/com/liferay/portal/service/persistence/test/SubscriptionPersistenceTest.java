@@ -117,6 +117,8 @@ public class SubscriptionPersistenceTest {
 
 		newSubscription.setMvccVersion(RandomTestUtil.nextLong());
 
+		newSubscription.setGroupId(RandomTestUtil.nextLong());
+
 		newSubscription.setCompanyId(RandomTestUtil.nextLong());
 
 		newSubscription.setUserId(RandomTestUtil.nextLong());
@@ -133,8 +135,6 @@ public class SubscriptionPersistenceTest {
 
 		newSubscription.setFrequency(RandomTestUtil.randomString());
 
-		newSubscription.setGroupId(RandomTestUtil.nextLong());
-
 		_subscriptions.add(_persistence.update(newSubscription));
 
 		Subscription existingSubscription = _persistence.findByPrimaryKey(newSubscription.getPrimaryKey());
@@ -143,6 +143,8 @@ public class SubscriptionPersistenceTest {
 			newSubscription.getMvccVersion());
 		Assert.assertEquals(existingSubscription.getSubscriptionId(),
 			newSubscription.getSubscriptionId());
+		Assert.assertEquals(existingSubscription.getGroupId(),
+			newSubscription.getGroupId());
 		Assert.assertEquals(existingSubscription.getCompanyId(),
 			newSubscription.getCompanyId());
 		Assert.assertEquals(existingSubscription.getUserId(),
@@ -161,8 +163,6 @@ public class SubscriptionPersistenceTest {
 			newSubscription.getClassPK());
 		Assert.assertEquals(existingSubscription.getFrequency(),
 			newSubscription.getFrequency());
-		Assert.assertEquals(existingSubscription.getGroupId(),
-			newSubscription.getGroupId());
 	}
 
 	@Test
@@ -178,12 +178,12 @@ public class SubscriptionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByU_C() {
+	public void testCountByG_U() {
 		try {
-			_persistence.countByU_C(RandomTestUtil.nextLong(),
+			_persistence.countByG_U(RandomTestUtil.nextLong(),
 				RandomTestUtil.nextLong());
 
-			_persistence.countByU_C(0L, 0L);
+			_persistence.countByG_U(0L, 0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -191,12 +191,12 @@ public class SubscriptionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByU_G() {
+	public void testCountByU_C() {
 		try {
-			_persistence.countByU_G(RandomTestUtil.nextLong(),
+			_persistence.countByU_C(RandomTestUtil.nextLong(),
 				RandomTestUtil.nextLong());
 
-			_persistence.countByU_G(0L, 0L);
+			_persistence.countByU_C(0L, 0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -278,10 +278,10 @@ public class SubscriptionPersistenceTest {
 
 	protected OrderByComparator<Subscription> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Subscription",
-			"mvccVersion", true, "subscriptionId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"frequency", true, "groupId", true);
+			"mvccVersion", true, "subscriptionId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true,
+			"frequency", true);
 	}
 
 	@Test
@@ -513,6 +513,8 @@ public class SubscriptionPersistenceTest {
 
 		subscription.setMvccVersion(RandomTestUtil.nextLong());
 
+		subscription.setGroupId(RandomTestUtil.nextLong());
+
 		subscription.setCompanyId(RandomTestUtil.nextLong());
 
 		subscription.setUserId(RandomTestUtil.nextLong());
@@ -528,8 +530,6 @@ public class SubscriptionPersistenceTest {
 		subscription.setClassPK(RandomTestUtil.nextLong());
 
 		subscription.setFrequency(RandomTestUtil.randomString());
-
-		subscription.setGroupId(RandomTestUtil.nextLong());
 
 		_subscriptions.add(_persistence.update(subscription));
 

@@ -85,6 +85,8 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 		sb.append(mvccVersion);
 		sb.append(", subscriptionId=");
 		sb.append(subscriptionId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -101,8 +103,6 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 		sb.append(classPK);
 		sb.append(", frequency=");
 		sb.append(frequency);
-		sb.append(", groupId=");
-		sb.append(groupId);
 		sb.append("}");
 
 		return sb.toString();
@@ -114,6 +114,7 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 
 		subscriptionImpl.setMvccVersion(mvccVersion);
 		subscriptionImpl.setSubscriptionId(subscriptionId);
+		subscriptionImpl.setGroupId(groupId);
 		subscriptionImpl.setCompanyId(companyId);
 		subscriptionImpl.setUserId(userId);
 
@@ -148,8 +149,6 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 			subscriptionImpl.setFrequency(frequency);
 		}
 
-		subscriptionImpl.setGroupId(groupId);
-
 		subscriptionImpl.resetOriginalValues();
 
 		return subscriptionImpl;
@@ -159,6 +158,7 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		subscriptionId = objectInput.readLong();
+		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
@@ -167,7 +167,6 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		frequency = objectInput.readUTF();
-		groupId = objectInput.readLong();
 	}
 
 	@Override
@@ -175,6 +174,7 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(subscriptionId);
+		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
@@ -196,12 +196,11 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 		else {
 			objectOutput.writeUTF(frequency);
 		}
-
-		objectOutput.writeLong(groupId);
 	}
 
 	public long mvccVersion;
 	public long subscriptionId;
+	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
@@ -210,5 +209,4 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 	public long classNameId;
 	public long classPK;
 	public String frequency;
-	public long groupId;
 }

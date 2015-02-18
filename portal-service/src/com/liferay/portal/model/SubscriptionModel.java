@@ -92,6 +92,22 @@ public interface SubscriptionModel extends AttachedModel, BaseModel<Subscription
 	public void setSubscriptionId(long subscriptionId);
 
 	/**
+	 * Returns the group ID of this subscription.
+	 *
+	 * @return the group ID of this subscription
+	 */
+	@Override
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this subscription.
+	 *
+	 * @param groupId the group ID of this subscription
+	 */
+	@Override
+	public void setGroupId(long groupId);
+
+	/**
 	 * Returns the company ID of this subscription.
 	 *
 	 * @return the company ID of this subscription
@@ -244,22 +260,6 @@ public interface SubscriptionModel extends AttachedModel, BaseModel<Subscription
 	 * @param frequency the frequency of this subscription
 	 */
 	public void setFrequency(String frequency);
-
-	/**
-	 * Returns the group ID of this subscription.
-	 *
-	 * @return the group ID of this subscription
-	 */
-	@Override
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this subscription.
-	 *
-	 * @param groupId the group ID of this subscription
-	 */
-	@Override
-	public void setGroupId(long groupId);
 
 	@Override
 	public boolean isNew();

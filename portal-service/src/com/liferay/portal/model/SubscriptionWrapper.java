@@ -54,6 +54,7 @@ public class SubscriptionWrapper implements Subscription,
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("subscriptionId", getSubscriptionId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -62,7 +63,6 @@ public class SubscriptionWrapper implements Subscription,
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("frequency", getFrequency());
-		attributes.put("groupId", getGroupId());
 
 		return attributes;
 	}
@@ -79,6 +79,12 @@ public class SubscriptionWrapper implements Subscription,
 
 		if (subscriptionId != null) {
 			setSubscriptionId(subscriptionId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -127,12 +133,6 @@ public class SubscriptionWrapper implements Subscription,
 
 		if (frequency != null) {
 			setFrequency(frequency);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
 		}
 	}
 

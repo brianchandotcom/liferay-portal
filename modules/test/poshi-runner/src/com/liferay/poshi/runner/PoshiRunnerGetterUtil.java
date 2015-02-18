@@ -14,7 +14,10 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.selenium.LiferaySelenium;
+import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.FileUtil;
+import com.liferay.poshi.runner.util.MathUtil;
 import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
 
@@ -25,6 +28,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 
+import java.lang.reflect.Method;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -78,6 +84,11 @@ public class PoshiRunnerGetterUtil {
 		String classCommandName) {
 
 		int x = classCommandName.indexOf("#");
+		int y = classCommandName.indexOf("(");
+
+		if (y != -1) {
+			return classCommandName.substring(x + 1, y);
+		}
 
 		return classCommandName.substring(x + 1);
 	}
@@ -103,7 +114,7 @@ public class PoshiRunnerGetterUtil {
 		String line = null;
 
 		while ((line = bufferedReader.readLine()) != null) {
-			Matcher matcher = _pattern.matcher(line);
+			Matcher matcher = _tagPattern.matcher(line);
 
 			if (matcher.find()) {
 				for (String reservedTag : _reservedTags) {
@@ -134,7 +145,94 @@ public class PoshiRunnerGetterUtil {
 		return document.getRootElement();
 	}
 
-	private static final Pattern _pattern = Pattern.compile("<[a-z\\-]+");
+	public static String getVarMethodValue(Element element) throws Exception {
+		String classCommandName = PoshiRunnerVariablesUtil.replaceCommandVars(
+			element.attributeValue("method"));
+
+		Matcher matcher = _parameterPattern.matcher(classCommandName);
+
+		String[] parameters = null;
+
+		while (matcher.find()) {
+			String parameterString = matcher.group(1);
+
+			parameterString = parameterString.replaceAll("\"", "");
+
+			parameters = parameterString.split(",");
+		}
+
+		String className = getClassNameFromClassCommandName(classCommandName);
+		String commandName = getCommandNameFromClassCommandName(
+			classCommandName);
+
+		if (className.equals("MathUtil")) {
+			Integer[] integers = new Integer[parameters.length];
+
+			for (int i = 0; i < parameters.length; i++) {
+				integers[i] = Integer.parseInt(parameters[i].trim());
+			}
+
+			Method[] methods = MathUtil.class.getDeclaredMethods();
+
+			for (Method method : methods) {
+				String methodName = method.getName();
+
+				if (methodName.equals(commandName)) {
+					Class[] parameterTypes = method.getParameterTypes();
+
+					if (parameterTypes.length > 1 ) {
+						Object returnObject = method.invoke(null, integers);
+
+						return returnObject.toString();
+					}
+					else {
+						Object returnObject = method.invoke(
+							null, new Object[]{integers});
+
+						return returnObject.toString();
+					}
+				}
+			}
+		}
+		else {
+			List<Class> parameterClasses = new ArrayList<>();
+
+			if (parameters != null) {
+				for (int i = 0; i < parameters.length; i++) {
+					parameters[i] = parameters[i].trim();
+
+					parameterClasses.add(String.class);
+				}
+			}
+
+			Class clazz = null;
+			Object object = null;
+
+			if (className.equals("selenium")) {
+				LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
+
+				clazz = liferaySelenium.getClass();
+				object = liferaySelenium;
+			}
+			else {
+				clazz = Class.forName(
+					"com.liferay.poshi.runner.util." + className);
+			}
+
+			Method method = clazz.getMethod(
+				commandName,
+				parameterClasses.toArray(new Class[parameterClasses.size()]));
+
+			Object returnObject = method.invoke(object, parameters);
+
+			return returnObject.toString();
+		}
+
+		return null;
+	}
+
+	private static final Pattern _parameterPattern = Pattern.compile(
+		"\\(([^)]+)\\)");
 	private static final List<String> _reservedTags = Arrays.asList(
 		new String[] {
 			"and", "case", "command", "condition", "contains", "default",
@@ -143,5 +241,6 @@ public class PoshiRunnerGetterUtil {
 			"property", "set-up", "take-screenshot", "td", "tear-down", "then",
 			"tr", "while", "var"
 		});
+	private static final Pattern _tagPattern = Pattern.compile("<[a-z\\-]+");
 
 }

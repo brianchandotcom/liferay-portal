@@ -389,6 +389,13 @@ public class PDFProcessorImpl
 					destinationFileVersion.getFileEntryId(),
 					destinationFileVersion.getVersion());
 
+				if ("PWC".equals(destinationFileVersion.getVersion())) {
+					File file = new File(
+						DocumentConversionUtil.getFilePath(tempFileId, "pdf"));
+
+					FileUtil.delete(file);
+				}
+
 				File file = DocumentConversionUtil.convert(
 					tempFileId, inputStream, extension, "pdf");
 

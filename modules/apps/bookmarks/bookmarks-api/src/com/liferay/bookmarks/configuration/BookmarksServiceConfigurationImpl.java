@@ -73,6 +73,11 @@ public class BookmarksServiceConfigurationImpl
 	}
 
 	@Override
+	public boolean enableRelatedAssets() {
+		return _bookmarksServiceConfiguration.enableRelatedAssets();
+	}
+
+	@Override
 	public int entriesPerPage() {
 		return _bookmarksServiceConfiguration.entriesPerPage();
 	}
@@ -95,11 +100,6 @@ public class BookmarksServiceConfigurationImpl
 	@Override
 	public boolean showFoldersSearch() {
 		return _bookmarksServiceConfiguration.showFoldersSearch();
-	}
-
-	@Override
-	public boolean enableRelatedAssets() {
-		return _bookmarksServiceConfiguration.enableRelatedAssets();
 	}
 
 	@Override

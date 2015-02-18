@@ -60,6 +60,9 @@ public interface BookmarksServiceConfiguration {
 	@Meta.AD(deflt = "", required = false)
 	public String emailFromName();
 
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enableRelatedAssets();
+
 	@Meta.AD(deflt = "20", required = false)
 	public int entriesPerPage();
 
@@ -76,9 +79,6 @@ public interface BookmarksServiceConfiguration {
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean showFoldersSearch();
-
-	@Meta.AD(deflt = "true", required = false)
-	public boolean enableRelatedAssets();
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean showSubfolders();

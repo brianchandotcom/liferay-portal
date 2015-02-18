@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.portlet.toolbar;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -45,17 +44,10 @@ public class PortletToolbar {
 		_serviceTracker.open();
 	}
 
-	public Menu getPortletTitleMenu(
+	public List<Menu> getPortletTitleMenus(
 		String portletId, PortletRequest portletRequest) {
 
-		Menu menu = new Menu();
-
-		menu.setCssClass("portlet-options");
-		menu.setDirection("down");
-		menu.setExtended(false);
-		menu.setIcon("../aui/plus-sign-2");
-
-		List<MenuItem> portletTitleMenuItems = new ArrayList<>();
+		List<Menu> portletTitleMenus = new ArrayList<>();
 
 		for (PortletToolbarContributorLocator
 				portletToolbarContributorLocator :
@@ -72,25 +64,19 @@ public class PortletToolbar {
 			for (PortletToolbarContributor portletToolbarContributor :
 					portletToolbarContributors) {
 
-				List<MenuItem> curPortletTitleMenuItems =
-					portletToolbarContributor.getPortletTitleMenuItems(
+				Menu portletTitleMenu =
+					portletToolbarContributor.getPortletTitleMenu(
 						portletRequest);
 
-				if (curPortletTitleMenuItems == null) {
+				if (portletTitleMenu == null) {
 					continue;
 				}
 
-				portletTitleMenuItems.addAll(curPortletTitleMenuItems);
+				portletTitleMenus.add(portletTitleMenu);
 			}
 		}
 
-		menu.setMenuItems(portletTitleMenuItems);
-
-		menu.setMessage("add");
-		menu.setShowArrow(false);
-		menu.setShowWhenSingleIcon(true);
-
-		return menu;
+		return portletTitleMenus;
 	}
 
 	private static final List<PortletToolbarContributorLocator>

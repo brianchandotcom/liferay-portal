@@ -16,6 +16,7 @@ package com.liferay.blogs.portlet.toolbar.item;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -44,6 +45,21 @@ public class BlogsPortletToolbarContributor
 	implements PortletToolbarContributor {
 
 	@Override
+	public Menu getPortletTitleMenu(PortletRequest portletRequest) {
+		Menu menu = new Menu();
+
+		menu.setCssClass("portlet-options");
+		menu.setDirection("down");
+		menu.setExtended(false);
+		menu.setIcon("../aui/plus-sign-2");
+		menu.setMenuItems(getPortletTitleMenuItems(portletRequest));
+		menu.setMessage("add");
+		menu.setShowArrow(false);
+		menu.setShowWhenSingleIcon(true);
+
+		return menu;
+	}
+
 	public List<MenuItem> getPortletTitleMenuItems(
 		PortletRequest portletRequest) {
 

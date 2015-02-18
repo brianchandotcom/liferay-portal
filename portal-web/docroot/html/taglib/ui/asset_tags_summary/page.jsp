@@ -21,6 +21,7 @@ String[] assetTagNames = StringUtil.split((String)request.getAttribute("liferay-
 String className = (String)request.getAttribute("liferay-ui:asset-tags-summary:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-tags-summary:classPK"));
 String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-summary:message"), StringPool.BLANK);
+String paramName = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-summary:paramName"), "tag");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:asset-tags-summary:portletURL");
 
 if (assetTagNames.length == 0) {
@@ -39,7 +40,7 @@ if (assetTagNames.length == 0) {
 
 				<%
 				for (int i = 0; i < assetTagNames.length; i++) {
-					portletURL.setParameter("tag", assetTagNames[i]);
+					portletURL.setParameter(paramName, assetTagNames[i]);
 				%>
 
 					<a class=" icon-tag tag" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= assetTagNames[i] %></a>

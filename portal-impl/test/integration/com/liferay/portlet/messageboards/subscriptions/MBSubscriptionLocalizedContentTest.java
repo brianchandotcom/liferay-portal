@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -32,10 +31,6 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.MBConstants;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.subscriptions.test.BaseSubscriptionLocalizedContentTestCase;
-
-import java.io.InputStream;
-
-import java.util.Collections;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -112,10 +107,7 @@ public class MBSubscriptionLocalizedContentTest
 
 		MBMessageLocalServiceUtil.updateMessage(
 			TestPropsValues.getUserId(), message.getMessageId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
-			Collections.<String>emptyList(), message.getPriority(),
-			message.isAllowPingbacks(), serviceContext);
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 }

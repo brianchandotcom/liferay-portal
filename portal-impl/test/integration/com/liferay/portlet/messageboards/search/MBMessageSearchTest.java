@@ -45,7 +45,6 @@ import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.ClassRule;
@@ -245,10 +244,7 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 
 		return MBMessageLocalServiceUtil.updateMessage(
 			TestPropsValues.getUserId(), message.getMessageId(), keywords,
-			keywords,
-			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
-			Collections.<String>emptyList(), message.getPriority(),
-			message.isAllowPingbacks(), updateServiceContext);
+			updateServiceContext);
 	}
 
 }

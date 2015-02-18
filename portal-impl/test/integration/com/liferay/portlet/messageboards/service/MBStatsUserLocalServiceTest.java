@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -29,10 +28,6 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
-
-import java.io.InputStream;
-
-import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -190,10 +185,7 @@ public class MBStatsUserLocalServiceTest {
 
 		_message = MBMessageLocalServiceUtil.updateMessage(
 			TestPropsValues.getUserId(), _message.getMessageId(),
-			_message.getSubject(), _message.getBody(),
-			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
-			Collections.<String>emptyList(), _message.getPriority(),
-			_message.getAllowPingbacks(), serviceContext);
+			_message.getBody(), serviceContext);
 	}
 
 	@DeleteAfterTestRun

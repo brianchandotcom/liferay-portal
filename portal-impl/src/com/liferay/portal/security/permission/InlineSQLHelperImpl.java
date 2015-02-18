@@ -192,7 +192,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		return replacePermissionCheck(
 			sql, className, classPKField, userIdField, groupIdField, groupIds,
-			bridgeJoin);	}
+			bridgeJoin);
+	}
 
 	@Override
 	public String replacePermissionCheck(
@@ -550,7 +551,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("(");
+		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		sb.append("(InlineSQLResourcePermission.primKey = CAST_TEXT(");
 		sb.append(classPKField);
@@ -580,7 +581,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 					nonViewableSB.append(" = ");
 					nonViewableSB.append(groupId);
 					nonViewableSB.append(StringPool.CLOSE_PARENTHESIS);
-
 				}
 				else {
 					viewableGroupIds.add(groupId);
@@ -590,7 +590,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			sb.append(" AND (");
 
 			if (nonViewableSB.length() > 0) {
-				sb.append("(");
+				sb.append(StringPool.OPEN_PARENTHESIS);
 				sb.append(nonViewableSB.toString());
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -616,7 +616,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 		}
 
-		sb.append(")");
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		String roleIdsOrOwnerIdSQL = getRoleIdsOrOwnerIdSQL(
 			permissionChecker, groupIds, userIdField);

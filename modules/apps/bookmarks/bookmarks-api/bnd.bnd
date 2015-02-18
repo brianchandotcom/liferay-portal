@@ -2,4 +2,6 @@ Bundle-Name: Liferay Bookmarks API
 Bundle-SymbolicName: com.liferay.bookmarks.api
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.bookmarks.*
-Include-Resource: classes
+Include-Resource:\
+	classes,\
+	@../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*

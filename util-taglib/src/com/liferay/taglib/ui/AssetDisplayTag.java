@@ -14,7 +14,6 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletBag;
@@ -158,13 +157,8 @@ public class AssetDisplayTag extends IncludeTag {
 		if ((assetEntry == null) && Validator.isNotNull(_className) &&
 			(_classPK > 0)) {
 
-			try {
-				assetEntry = AssetEntryLocalServiceUtil.getEntry(
-					_className, _classPK);
-			}
-			catch (PortalException e) {
-				_log.error(e);
-			}
+			assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				_className, _classPK);
 		}
 
 		request.setAttribute(
@@ -172,7 +166,7 @@ public class AssetDisplayTag extends IncludeTag {
 
 		AssetRenderer assetRenderer = _assetRenderer;
 
-		if (assetRenderer == null) {
+		if (assetRenderer == null && (assetEntry != null)) {
 			assetRenderer = assetEntry.getAssetRenderer();
 		}
 
@@ -194,7 +188,7 @@ public class AssetDisplayTag extends IncludeTag {
 
 		AssetRendererFactory assetRendererFactory = _assetRendererFactory;
 
-		if (assetRendererFactory == null) {
+		if (assetRendererFactory == null && (assetEntry != null)) {
 			assetRendererFactory = assetEntry.getAssetRendererFactory();
 		}
 

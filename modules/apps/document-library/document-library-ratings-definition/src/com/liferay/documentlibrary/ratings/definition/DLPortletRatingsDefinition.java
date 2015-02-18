@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.ratings.definition;
+package com.liferay.documentlibrary.ratings.definition;
 
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.ratings.RatingsType;
@@ -25,19 +25,19 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"
+		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileEntry"
 	}
 )
-public class BlogsPortletRatingsDefinition implements PortletRatingsDefinition {
+public class DLPortletRatingsDefinition implements PortletRatingsDefinition {
 
 	@Override
 	public RatingsType getDefaultRatingsType() {
-		return RatingsType.THUMBS;
+		return RatingsType.STARS;
 	}
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.BLOGS;
+		return PortletKeys.DOCUMENT_LIBRARY;
 	}
 
 }

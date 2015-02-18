@@ -382,12 +382,12 @@ public class UserIndexer extends BaseIndexer {
 			try {
 				indexer.reindex(user.getContact());
 			}
-			catch (NoSuchContactException nscce) {
+			catch (NoSuchContactException nsce) {
 
 				// This is a temporary workaround for LPS-46825
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nscce, nscce);
+					_log.debug(nsce, nsce);
 				}
 			}
 		}

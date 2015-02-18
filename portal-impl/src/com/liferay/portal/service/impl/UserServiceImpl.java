@@ -515,7 +515,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 		catch (PrincipalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("No guest user found", pe);
+				_log.warn("No users found", pe);
 			}
 		}
 
@@ -1511,7 +1511,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 		catch (PrincipalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("No guest user found", pe);
+				_log.warn("No users found", pe);
 			}
 		}
 

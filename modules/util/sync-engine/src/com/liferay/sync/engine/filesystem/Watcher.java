@@ -293,6 +293,40 @@ public abstract class Watcher implements Runnable {
 		return false;
 	}
 
+	protected void processFailedFilePaths() throws IOException {
+		List<Path> failedFilePaths = getFailedFilePaths();
+
+		for (Path failedFilePath : failedFilePaths) {
+			if (Files.notExists(failedFilePath)) {
+				failedFilePaths.remove(failedFilePath);
+
+				continue;
+			}
+
+			if (!Files.isReadable(failedFilePath)) {
+				continue;
+			}
+
+			failedFilePaths.remove(failedFilePath);
+
+			if (Files.isDirectory(failedFilePath)) {
+				registerFilePath(failedFilePath);
+			}
+
+			SyncFile syncFile = SyncFileService.fetchSyncFile(
+				failedFilePath.toString());
+
+			if (syncFile == null) {
+				fireWatchEventListener(
+					SyncWatchEvent.EVENT_TYPE_CREATE, failedFilePath);
+			}
+			else if (FileUtil.isModified(syncFile, failedFilePath)) {
+				fireWatchEventListener(
+					SyncWatchEvent.EVENT_TYPE_MODIFY, failedFilePath);
+			}
+		}
+	}
+
 	protected void processMissingFilePath(Path missingFilePath) {
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			_watchEventListener.getSyncAccountId());

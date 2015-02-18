@@ -15,11 +15,7 @@ package com.liferay.sync.engine.filesystem;
 
 import com.liferay.sync.engine.SyncEngine;
 import com.liferay.sync.engine.filesystem.listener.WatchEventListener;
-import com.liferay.sync.engine.model.SyncFile;
-import com.liferay.sync.engine.model.SyncWatchEvent;
-import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.util.BidirectionalMap;
-import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.OSDetector;
 
 import java.io.IOException;
@@ -49,8 +45,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JPathWatcher extends Watcher {
 
-	public JPathWatcher(
-			Path filePath, WatchEventListener watchEventListener)
+	public JPathWatcher(Path filePath, WatchEventListener watchEventListener)
 		throws IOException {
 
 		super(filePath, watchEventListener);
@@ -215,40 +210,6 @@ public class JPathWatcher extends Watcher {
 		FileSystem fileSystem = FileSystems.getDefault();
 
 		_watchService = fileSystem.newWatchService();
-	}
-
-	protected void processFailedFilePaths() throws IOException {
-		List<Path> failedFilePaths = getFailedFilePaths();
-
-		for (Path failedFilePath : failedFilePaths) {
-			if (Files.notExists(failedFilePath)) {
-				failedFilePaths.remove(failedFilePath);
-
-				continue;
-			}
-
-			if (!Files.isReadable(failedFilePath)) {
-				continue;
-			}
-
-			failedFilePaths.remove(failedFilePath);
-
-			if (Files.isDirectory(failedFilePath)) {
-				registerFilePath(failedFilePath);
-			}
-
-			SyncFile syncFile = SyncFileService.fetchSyncFile(
-				failedFilePath.toString());
-
-			if (syncFile == null) {
-				fireWatchEventListener(
-					SyncWatchEvent.EVENT_TYPE_CREATE, failedFilePath);
-			}
-			else if (FileUtil.isModified(syncFile, failedFilePath)) {
-				fireWatchEventListener(
-					SyncWatchEvent.EVENT_TYPE_MODIFY, failedFilePath);
-			}
-		}
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

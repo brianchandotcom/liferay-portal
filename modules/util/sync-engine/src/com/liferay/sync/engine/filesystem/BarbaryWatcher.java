@@ -93,13 +93,13 @@ public class BarbaryWatcher extends Watcher {
 					File file = watchEvent.context();
 
 					if (file == null) {
-						_logger.error(watchEvent.context().getPath());
-
 						continue;
 					}
 
 					processWatchEvent(kind.name(), file.toPath());
 				}
+
+				processFailedFilePaths();
 
 				if (!watchKey.reset()) {
 					if (_logger.isTraceEnabled()) {

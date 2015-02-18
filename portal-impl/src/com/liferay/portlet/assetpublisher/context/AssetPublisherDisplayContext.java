@@ -652,9 +652,9 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isEnableSetAsDefaultAssetPublisher() {
-		String portletName = getPortletName();
+		String rootPortletId = getRootPortletId();
 
-		if (portletName.equals(PortletKeys.ASSET_PUBLISHER)) {
+		if (rootPortletId.equals(PortletKeys.ASSET_PUBLISHER)) {
 			return true;
 		}
 

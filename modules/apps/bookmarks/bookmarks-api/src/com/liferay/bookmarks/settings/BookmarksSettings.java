@@ -14,17 +14,11 @@
 
 package com.liferay.bookmarks.settings;
 
-import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
-import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
 
@@ -68,23 +62,21 @@ public class BookmarksSettings {
 	public static BookmarksSettings getInstance(long groupId)
 		throws PortalException {
 
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, BookmarksConstants.SERVICE_NAME);
+		BookmarksSettingsProvider bookmarksSettingsProvider =
+			BookmarksSettingsProvider.getBookmarksSettingsProvider();
 
-		return new BookmarksSettings(settings);
+		return bookmarksSettingsProvider.getGroupServiceSettings(groupId);
 	}
 
 	public static BookmarksSettings getInstance(
 			long groupId, Map<String, String[]> parameterMap)
 		throws PortalException {
 
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, BookmarksConstants.SERVICE_NAME);
+		BookmarksSettingsProvider bookmarksSettingsProvider =
+			BookmarksSettingsProvider.getBookmarksSettingsProvider();
 
-		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
-			parameterMap, settings);
-
-		return new BookmarksSettings(parameterMapSettings);
+		return bookmarksSettingsProvider.getGroupServiceSettings(
+			groupId, parameterMap);
 	}
 
 	public BookmarksSettings(Settings settings) {

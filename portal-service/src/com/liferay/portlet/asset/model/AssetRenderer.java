@@ -27,15 +27,13 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
 /**
  * @author Jorge Ferrer
  * @author Juan Fernández
  */
-public interface AssetRenderer {
+public interface AssetRenderer extends Renderer {
 
 	public static final String TEMPLATE_ABSTRACT = "abstract";
 
@@ -57,10 +55,6 @@ public interface AssetRenderer {
 	@Deprecated
 	public String[] getAvailableLocales() throws Exception;
 
-	public String getClassName();
-
-	public long getClassPK();
-
 	public DDMFormValuesReader getDDMFormValuesReader();
 
 	public String getDiscussionPath();
@@ -68,10 +62,6 @@ public interface AssetRenderer {
 	public Date getDisplayDate();
 
 	public long getGroupId();
-
-	public String getIconCssClass() throws PortalException;
-
-	public String getIconPath(PortletRequest portletRequest);
 
 	public String getNewName(String oldName, String token);
 
@@ -90,15 +80,10 @@ public interface AssetRenderer {
 	@Deprecated
 	public String getSummary(Locale locale);
 
-	public String getSummary(
-		PortletRequest portletRequest, PortletResponse portletResponse);
-
 	public String[] getSupportedConversions();
 
 	public String getThumbnailPath(PortletRequest portletRequest)
 		throws Exception;
-
-	public String getTitle(Locale locale);
 
 	public String getURLDownload(ThemeDisplay themeDisplay);
 
@@ -162,11 +147,6 @@ public interface AssetRenderer {
 	public boolean isPreviewInContext();
 
 	public boolean isPrintable();
-
-	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			String template)
-		throws Exception;
 
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement

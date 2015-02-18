@@ -56,6 +56,8 @@ public class MBTestUtil {
 			ServiceContext serviceContext, String command)
 		throws Exception {
 
+		serviceContext.setAttribute("entryURL", "http://localhost");
+
 		if (Validator.isNotNull(command)) {
 			serviceContext.setCommand(command);
 		}

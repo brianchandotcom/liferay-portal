@@ -163,10 +163,10 @@
 		},
 
 		disableElements: function(el) {
-			var el = $(el)[0];
+			var currentElement = $(el)[0];
 
-			if (el) {
-				var children = el.getElementsByTagName('*');
+			if (currentElement) {
+				var children = currentElement.getElementsByTagName('*');
 
 				var emptyFnFalse = _.constant(false);
 
@@ -1435,9 +1435,40 @@
 
 			var eventHandles = [Liferay.on(eventName, callback)];
 
+			var selectedData = config.selectedData;
+
+			if (selectedData) {
+				config.dialog.destroyOnHide = true;
+			}
+
 			var detachSelectionOnHideFn = function(event) {
 				if (!event.newVal) {
 					(new A.EventHandle(eventHandles)).detach();
+				}
+			};
+
+			var disableSelectedAssets = function(event) {
+				if (selectedData && selectedData.length) {
+					var currentWindow = event.currentTarget.node.get('contentWindow.document');
+
+					var selectorButtons = currentWindow.all('.lfr-search-container .selector-button');
+
+					A.some(
+						selectorButtons,
+						function(item, index) {
+							var assetEntryId = item.attr('data-assetentryid');
+
+							var assetEntryIndex = A.Array.indexOf(selectedData, assetEntryId);
+
+							if (assetEntryIndex > -1) {
+								item.attr('disabled', true);
+
+								selectedData.splice(assetEntryIndex, 1);
+							}
+
+							return !selectedData.length;
+						}
+					);
 				}
 			};
 
@@ -1462,7 +1493,10 @@
 				Util.openWindow(
 					config,
 					function(dialogWindow) {
-						eventHandles.push(dialogWindow.after(['destroy', 'visibleChange'], detachSelectionOnHideFn));
+						eventHandles.push(
+							dialogWindow.after(['destroy', 'visibleChange'], detachSelectionOnHideFn),
+							dialogWindow.iframe.after(['load'], disableSelectedAssets)
+						);
 
 						Liferay.on('destroyPortlet', destroyDialog);
 					}

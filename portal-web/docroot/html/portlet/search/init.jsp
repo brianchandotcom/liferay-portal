@@ -38,7 +38,6 @@ page import="com.liferay.portal.kernel.xml.Element" %><%@
 page import="com.liferay.portal.kernel.xml.SAXReaderUtil" %><%@
 page import="com.liferay.portal.security.permission.comparator.ModelResourceComparator" %><%@
 page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
-page import="com.liferay.portlet.asset.NoSuchCategoryException" %><%@
 page import="com.liferay.portlet.search.context.SearchDisplayContext" %><%@
 page import="com.liferay.taglib.aui.ScriptTag" %><%@
 page import="com.liferay.util.PropertyComparator" %>

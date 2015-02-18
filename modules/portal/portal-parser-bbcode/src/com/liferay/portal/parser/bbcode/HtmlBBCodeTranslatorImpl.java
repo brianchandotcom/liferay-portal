@@ -613,7 +613,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			handleBold(sb, tags);
 		}
 		else if (tag.equals("center") || tag.equals("justify") ||
-				tag.equals("left") || tag.equals("right")) {
+				 tag.equals("left") || tag.equals("right")) {
 
 			handleTextAlign(sb, tags, bbCodeItem);
 		}

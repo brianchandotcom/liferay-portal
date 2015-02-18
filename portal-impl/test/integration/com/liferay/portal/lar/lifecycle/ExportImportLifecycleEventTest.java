@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -182,6 +183,10 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 		).thenReturn(
 			mockHttpServletRequest
 		);
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setLocale(LocaleUtil.getDefault());
 
 		when(
 			portletRequest.getAttribute(WebKeys.THEME_DISPLAY)

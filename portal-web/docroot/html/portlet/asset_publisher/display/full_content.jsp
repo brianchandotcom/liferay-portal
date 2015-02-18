@@ -43,7 +43,6 @@ String languageId = LanguageUtil.getLanguageId(request);
 
 String title = assetRenderer.getTitle(LocaleUtil.fromLanguageId(languageId));
 
-boolean show = ((Boolean)request.getAttribute("view.jsp-show")).booleanValue();
 boolean print = ((Boolean)request.getAttribute("view.jsp-print")).booleanValue();
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
@@ -232,14 +231,12 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		</c:if>
 	</div>
 
-	<c:if test="<%= show %>">
-		<liferay-ui:asset-metadata
-			className="<%= assetEntry.getClassName() %>"
-			classPK="<%= assetEntry.getClassPK() %>"
-			filterByMetadata="<%= true %>"
-			metadataFields="<%= assetPublisherDisplayContext.getMetadataFields() %>"
-		/>
-	</c:if>
+	<liferay-ui:asset-metadata
+		className="<%= assetEntry.getClassName() %>"
+		classPK="<%= assetEntry.getClassPK() %>"
+		filterByMetadata="<%= true %>"
+		metadataFields="<%= assetPublisherDisplayContext.getMetadataFields() %>"
+	/>
 </div>
 
 <c:if test="<%= !assetPublisherDisplayContext.isShowAssetTitle() && ((assetEntryIndex + 1) < results.size()) %>">

@@ -558,9 +558,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		if (Validator.isNotNull(groupIdField) && (groupIds.length > 0)) {
 			sb.append(" AND (");
 
-			boolean hasPreviousNonViewableGroup = false;
+			boolean hasPreviousNonviewableGroup = false;
 
-			StringBundler nonViewableSB = new StringBundler();
+			StringBundler nonviewableSB = new StringBundler();
 
 			List<Long> viewableGroupIds = new ArrayList<>();
 
@@ -571,29 +571,29 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 					viewableGroupIds.add(groupId);
 				}
 				else {
-					if (hasPreviousNonViewableGroup) {
-						nonViewableSB.append(" OR ");
+					if (hasPreviousNonviewableGroup) {
+						nonviewableSB.append(" OR ");
 					}
 					else {
-						hasPreviousNonViewableGroup = true;
+						hasPreviousNonviewableGroup = true;
 					}
 
-					nonViewableSB.append(StringPool.OPEN_PARENTHESIS);
-					nonViewableSB.append(groupIdField);
-					nonViewableSB.append(" = ");
-					nonViewableSB.append(groupId);
-					nonViewableSB.append(StringPool.CLOSE_PARENTHESIS);
+					nonviewableSB.append(StringPool.OPEN_PARENTHESIS);
+					nonviewableSB.append(groupIdField);
+					nonviewableSB.append(" = ");
+					nonviewableSB.append(groupId);
+					nonviewableSB.append(StringPool.CLOSE_PARENTHESIS);
 				}
 			}
 
-			if (hasPreviousNonViewableGroup) {
+			if (hasPreviousNonviewableGroup) {
 				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(nonViewableSB.toString());
+				sb.append(nonviewableSB.toString());
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
 			if (!viewableGroupIds.isEmpty()) {
-				if (hasPreviousNonViewableGroup) {
+				if (hasPreviousNonviewableGroup) {
 					sb.append(" OR ");
 				}
 

@@ -568,8 +568,17 @@ public interface MBMessageLocalService extends BaseLocalService,
 	public com.liferay.portlet.messageboards.model.MBMessage updateMBMessage(
 		com.liferay.portlet.messageboards.model.MBMessage mbMessage);
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	public com.liferay.portlet.messageboards.model.MBMessage updateMessage(
 		long messageId, java.lang.String body)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portlet.messageboards.model.MBMessage updateMessage(
+		long userId, long messageId, java.lang.String body,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBMessage updateMessage(

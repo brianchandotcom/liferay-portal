@@ -347,7 +347,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Attachments
 
-		if ((inputStreamOVPs != null) && !inputStreamOVPs.isEmpty()) {
+		if (ListUtil.isNotEmpty(inputStreamOVPs)) {
 			Folder folder = message.addAttachmentsFolder();
 
 			PortletFileRepositoryUtil.addPortletFileEntries(

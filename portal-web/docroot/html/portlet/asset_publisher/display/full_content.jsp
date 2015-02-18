@@ -189,21 +189,9 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 		<c:if test="<%= assetPublisherDisplayContext.isEnableRatings() %>">
 			<div class="asset-ratings">
-
-				<%
-				String assetEntryClassName = assetEntry.getClassName();
-
-				RatingsType ratingsType = RatingsType.STARS;
-
-				if (assetEntryClassName.equals(MBDiscussion.class.getName()) || assetEntryClassName.equals(MBMessage.class.getName())) {
-					ratingsType = RatingsType.THUMBS;
-				}
-				%>
-
 				<liferay-ui:ratings
 					className="<%= assetEntry.getClassName() %>"
 					classPK="<%= assetEntry.getClassPK() %>"
-					type="<%= ratingsType.getValue() %>"
 				/>
 			</div>
 		</c:if>

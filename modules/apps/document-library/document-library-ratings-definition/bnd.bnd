@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Document Library Ratings Definition
+Bundle-SymbolicName: com.liferay.documentlibrary.ratings.definition
+Bundle-Version: 1.0.0
+Include-Resource: classes

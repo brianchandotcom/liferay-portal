@@ -1447,7 +1447,7 @@
 				}
 			};
 
-			var disableSelectedAssetsAfterLoadFn = function(event) {
+			var disableSelectedAssets = function(event) {
 				if (selectedData && selectedData.length) {
 					var selectorButtons = event.currentTarget.node.get('contentWindow').get('document').all('.lfr-search-container .selector-button');
 
@@ -1497,7 +1497,7 @@
 					function(dialogWindow) {
 						eventHandles.push(
 							dialogWindow.after(['destroy', 'visibleChange'], detachSelectionOnHideFn),
-							dialogWindow.iframe.after(['load'], disableSelectedAssetsAfterLoadFn)
+							dialogWindow.iframe.after(['load'], disableSelectedAssets)
 						);
 
 						Liferay.on('destroyPortlet', destroyDialog);

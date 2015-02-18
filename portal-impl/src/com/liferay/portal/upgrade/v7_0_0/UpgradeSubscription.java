@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PortalUtil;
@@ -37,7 +36,6 @@ import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,42 +57,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 		updateSubscriptionGroupIds();
 	}
 
-	protected String getClassName(long classNameId) throws SQLException {
-		String className = _classNamesMap.get(classNameId);
-
-		if (className == null) {
-			Connection con = null;
-			PreparedStatement ps = null;
-			ResultSet rs = null;
-
-			try {
-				con = DataAccess.getUpgradeOptimizedConnection();
-
-				ps = con.prepareStatement(
-					"select value from ClassName_ where classNameId = ?");
-
-				ps.setLong(1, classNameId);
-
-				rs = ps.executeQuery();
-
-				if (rs.next()) {
-					className = rs.getString("value");
-				}
-				else {
-					className = "";
-				}
-			}
-			finally {
-				DataAccess.cleanUp(con, ps, rs);
-			}
-
-			_classNamesMap.put(classNameId, className);
-		}
-
-		return className;
-	}
-
-	protected long getGroupId(String className, long classPK) throws Exception {
+	protected long getGroupId(long classNameId, long classPK) throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -102,7 +65,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			String sql = _classNameSQL.get(className);
+			String sql = _classNameIdSQL.get(classNameId);
 
 			ps = con.prepareStatement(sql);
 
@@ -166,10 +129,10 @@ public class UpgradeSubscription extends UpgradeProcess {
 	}
 
 	protected void updateSubscriptionGroupId(
-			long subscriptionId, String className, long classPK)
+			long subscriptionId, long classNameId, long classPK)
 		throws Exception {
 
-		long groupId = getGroupId(className, classPK);
+		long groupId = getGroupId(classNameId, classPK);
 
 		if ((groupId == 0) && isExistingGroup(classPK)) {
 			groupId = classPK;
@@ -201,12 +164,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 				long classNameId = rs.getLong("classNameId");
 				long classPK = rs.getLong("classPK");
 
-				String className = getClassName(classNameId);
-
-				if (Validator.isNotNull(className)) {
-					updateSubscriptionGroupId(
-						subscriptionId, className, classPK);
-				}
+				updateSubscriptionGroupId(subscriptionId, classNameId, classPK);
 			}
 		}
 		finally {
@@ -214,56 +172,60 @@ public class UpgradeSubscription extends UpgradeProcess {
 		}
 	}
 
-	private static final Map<String, String> _classNameSQL = new HashMap();
+	private static final Map<Long, String> _classNameIdSQL = new HashMap();
 
 	static {
-		_classNameSQL.put(
-			BlogsEntry.class.getName(),
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(BlogsEntry.class.getName()),
 			"select groupId from BlogsEntry where entryId = ?");
-		_classNameSQL.put(
-			"com.liferay.bookmarks.model.BookmarksEntry",
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(
+				"com.liferay.bookmarks.model.BookmarksEntry"),
 			"select groupId from BookmarksEntry where entryId = ?");
-		_classNameSQL.put(
-			"com.liferay.bookmarks.model.BookmarksFolder",
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(
+				"com.liferay.bookmarks.model.BookmarksFolder"),
 			"select groupId from BookmarksFolder where folderId = ?");
-		_classNameSQL.put(
-			DDMStructure.class.getName(),
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(DDMStructure.class.getName()),
 			"select groupId from DDMStructure where structureId = ?");
-		_classNameSQL.put(
-			DLFileEntry.class.getName(),
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(DLFileEntry.class.getName()),
 			"select groupId from DLFileEntry where fileEntryId = ?");
-		_classNameSQL.put(
-			DLFileEntryType.class.getName(),
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(DLFileEntryType.class.getName()),
 			"select groupId from DLFileEntryType where fileEntryTypeId = ?");
-		_classNameSQL.put(
-			DLFolder.class.getName(),
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(DLFolder.class.getName()),
 			"select groupId from DLFolder where folderId = ?");
-		_classNameSQL.put(
-			JournalFolder.class.getName(),
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(JournalFolder.class.getName()),
 			"select groupId from JournalFolder where folderId = ?");
-		_classNameSQL.put(
-			Layout.class.getName(),
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(Layout.class.getName()),
 			"select groupId from Layout where plid = ?");
-		_classNameSQL.put(
-			MBCategory.class.getName(),
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(MBCategory.class.getName()),
 			"select groupId from MBCategory where categoryId = ?");
-		_classNameSQL.put(
-			MBThread.class.getName(),
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(MBThread.class.getName()),
 			"select groupId from MBThread where threadId = ?");
-		_classNameSQL.put(
-			SCProductEntry.class.getName(),
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(SCProductEntry.class.getName()),
 			"select groupId from SCProductEntry where productEntryId = ?");
-		_classNameSQL.put(
-			ShoppingOrder.class.getName(),
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(ShoppingOrder.class.getName()),
 			"select groupId from ShoppingOrder where orderId = ?");
-		_classNameSQL.put(
-			"com.liferay.portlet.wiki.model.WikiNode",
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(
+				"com.liferay.portlet.wiki.model.WikiNode"),
 			"select groupId from WikiNode where nodeId = ?");
-		_classNameSQL.put(
-			"com.liferay.portlet.wiki.model.WikiPage",
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(
+				"com.liferay.portlet.wiki.model.WikiPage"),
 			"select groupId from WikiPage where resourcePrimKey = ?");
-		_classNameSQL.put(
-			WorkflowInstance.class.getName(),
+		_classNameIdSQL.put(
+			PortalUtil.getClassNameId(WorkflowInstance.class.getName()),
 			"select groupId from WorkflowInstance where workflowInstanceId = " +
 				"?");
 	}

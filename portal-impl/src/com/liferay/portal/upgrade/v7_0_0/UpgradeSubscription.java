@@ -49,11 +49,6 @@ import java.util.Map;
  */
 public class UpgradeSubscription extends UpgradeProcess {
 
-	public interface SQLVisitor {
-		public void visit(ResultSet rs) throws Exception;
-
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateSubscriptionClassNames(
@@ -61,7 +56,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 		updateSubscriptionClassNames(
 			JournalArticle.class.getName(), JournalFolder.class.getName());
 
-		updateGroupIds();
+		updateSubscriptionGroupIds();
 	}
 
 	protected String getClassName(long classNameId) throws SQLException {
@@ -99,38 +94,61 @@ public class UpgradeSubscription extends UpgradeProcess {
 		return className;
 	}
 
-	protected long getLongSQL(String sql) throws Exception {
-		final long[] value = new long[1];
+	protected long getGroupId(String className, long classPK) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
-		visitSQL(
-			sql, new SQLVisitor() {
-				@Override
-				public void visit(ResultSet rs) throws Exception {
-					value[0] = rs.getLong(1);
-				}
-			});
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
 
-		return value[0];
+			String sql = _classNameSQL.get(className);
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, classPK);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				return rs.getLong("groupId");
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return 0;
 	}
 
-	protected void updateGroupIds() throws Exception {
-		visitSQL(
-			"select subscriptionId, classNameId, classPK from Subscription",
-			new SQLVisitor() {
-				@Override
-				public void visit(ResultSet rs) throws Exception {
-					long subscriptionId = rs.getLong("subscriptionId");
-					long classNameId = rs.getLong("classNameId");
-					long classPK = rs.getLong("classPK");
+	protected boolean isExistingGroup(long groupId) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
-					String className = getClassName(classNameId);
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
 
-					if (Validator.isNotNull(className)) {
-						updateSubscriptionGroupId(
-							subscriptionId, className, classPK);
-					}
+			ps = con.prepareStatement(
+				"select count(*) from Group_ where groupId = ?");
+
+			ps.setLong(1, groupId);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				int count = rs.getInt(1);
+
+				if (count > 0) {
+					return true;
 				}
-			});
+			}
+
+			return false;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	protected void updateSubscriptionClassNames(
@@ -151,89 +169,10 @@ public class UpgradeSubscription extends UpgradeProcess {
 			long subscriptionId, String className, long classPK)
 		throws Exception {
 
-		long groupId = 0;
+		long groupId = getGroupId(className, classPK);
 
-		if (className.equals(BlogsEntry.class.getName())) {
-			groupId = getLongSQL(
-				"select groupId from BlogsEntry where entryId = " + classPK);
-		}
-		else if (className.equals(
-					"com.liferay.bookmarks.model.BookmarksEntry")) {
-
-			groupId = getLongSQL(
-				"select groupId from BookmarksEntry where entryId = " +
-					classPK);
-		}
-		else if (className.equals(
-					"com.liferay.bookmarks.model.BookmarksFolder")) {
-
-			groupId = getLongSQL(
-				"select groupId from BookmarksFolder where folderId = " +
-					classPK);
-		}
-		else if (className.equals(DDMStructure.class.getName())) {
-			groupId = getLongSQL(
-				"select groupId from DDMStructure where structureId = " +
-					classPK);
-		}
-		else if (className.equals(DLFileEntry.class)) {
-			groupId = getLongSQL(
-				"select groupId from DLFileEntry where fileEntryId = " +
-					classPK);
-		}
-		else if (className.equals(DLFileEntryType.class.getName())) {
-			groupId = getLongSQL(
-				"select groupId from DLFileEntryType where fileEntryTypeId = " +
-					classPK);
-		}
-		else if (className.equals(DLFolder.class.getName())) {
-			groupId = getLongSQL(
-				"select groupId from DLFolder where folderId = " + classPK);
-		}
-		else if (className.equals(JournalFolder.class.getName())) {
-			groupId = getLongSQL(
-				"select groupId from JournalFolder where folderId = " +
-					classPK);
-		}
-		else if (className.equals(Layout.class.getName())) {
-			groupId = getLongSQL(
-				"select groupId from Layout where plid = " + classPK);
-		}
-		else if (className.equals(MBCategory.class.getName())) {
-			groupId = getLongSQL(
-				"select groupId from MBCategory where categoryId = " + classPK);
-		}
-		else if (className.equals(MBThread.class.getName())) {
-			groupId = getLongSQL(
-				"select groupId from MBThread where threadId = " + classPK);
-		}
-		else if (className.equals(SCProductEntry.class.getName())) {
-			groupId = getLongSQL(
-				"select groupId from SCProductEntry where productEntryId = " +
-					classPK);
-		}
-		else if (className.equals(ShoppingOrder.class.getName())) {
-			groupId = getLongSQL(
-				"select groupId from ShoppingOrder where orderId = " + classPK);
-		}
-		else if (className.equals("com.liferay.portlet.wiki.model.WikiNode")) {
-			groupId = getLongSQL(
-				"select groupId from WikiNode where nodeId = " + classPK);
-		}
-		else if (className.equals("com.liferay.portlet.wiki.model.WikiPage")) {
-			groupId = getLongSQL(
-				"select groupId from WikiPage where resourcePrimKey = " +
-					classPK);
-		}
-		else if (className.equals(WorkflowInstance.class.getName())) {
-			groupId = getLongSQL(
-				"select groupId from WorkflowInstance where " +
-					"workflowInstanceId = " + classPK);
-		}
-
-		if (groupId == 0) {
-			groupId = getLongSQL(
-				"select groupId from Group_ where groupId = " + classPK);
+		if ((groupId == 0) && isExistingGroup(classPK)) {
+			groupId = classPK;
 		}
 
 		if (groupId != 0) {
@@ -243,7 +182,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 		}
 	}
 
-	protected void visitSQL(String sql, SQLVisitor visitor) throws Exception {
+	protected void updateSubscriptionGroupIds() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -251,17 +190,82 @@ public class UpgradeSubscription extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(
+				"select subscriptionId, classNameId, classPK from " +
+					"Subscription");
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				visitor.visit(rs);
+				long subscriptionId = rs.getLong("subscriptionId");
+				long classNameId = rs.getLong("classNameId");
+				long classPK = rs.getLong("classPK");
+
+				String className = getClassName(classNameId);
+
+				if (Validator.isNotNull(className)) {
+					updateSubscriptionGroupId(
+						subscriptionId, className, classPK);
+				}
 			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
+	}
+
+	private static final Map<String, String> _classNameSQL = new HashMap();
+
+	static {
+		_classNameSQL.put(
+			BlogsEntry.class.getName(),
+			"select groupId from BlogsEntry where entryId = ?");
+		_classNameSQL.put(
+			"com.liferay.bookmarks.model.BookmarksEntry",
+			"select groupId from BookmarksEntry where entryId = ?");
+		_classNameSQL.put(
+			"com.liferay.bookmarks.model.BookmarksFolder",
+			"select groupId from BookmarksFolder where folderId = ?");
+		_classNameSQL.put(
+			DDMStructure.class.getName(),
+			"select groupId from DDMStructure where structureId = ?");
+		_classNameSQL.put(
+			DLFileEntry.class.getName(),
+			"select groupId from DLFileEntry where fileEntryId = ?");
+		_classNameSQL.put(
+			DLFileEntryType.class.getName(),
+			"select groupId from DLFileEntryType where fileEntryTypeId = ?");
+		_classNameSQL.put(
+			DLFolder.class.getName(),
+			"select groupId from DLFolder where folderId = ?");
+		_classNameSQL.put(
+			JournalFolder.class.getName(),
+			"select groupId from JournalFolder where folderId = ?");
+		_classNameSQL.put(
+			Layout.class.getName(),
+			"select groupId from Layout where plid = ?");
+		_classNameSQL.put(
+			MBCategory.class.getName(),
+			"select groupId from MBCategory where categoryId = ?");
+		_classNameSQL.put(
+			MBThread.class.getName(),
+			"select groupId from MBThread where threadId = ?");
+		_classNameSQL.put(
+			SCProductEntry.class.getName(),
+			"select groupId from SCProductEntry where productEntryId = ?");
+		_classNameSQL.put(
+			ShoppingOrder.class.getName(),
+			"select groupId from ShoppingOrder where orderId = ?");
+		_classNameSQL.put(
+			"com.liferay.portlet.wiki.model.WikiNode",
+			"select groupId from WikiNode where nodeId = ?");
+		_classNameSQL.put(
+			"com.liferay.portlet.wiki.model.WikiPage",
+			"select groupId from WikiPage where resourcePrimKey = ?");
+		_classNameSQL.put(
+			WorkflowInstance.class.getName(),
+			"select groupId from WorkflowInstance where workflowInstanceId = " +
+				"?");
 	}
 
 	private final Map<Long, String> _classNamesMap = new HashMap<>();

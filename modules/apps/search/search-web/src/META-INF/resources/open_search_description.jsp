@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/common/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -23,7 +23,7 @@ PortletURLImpl searchURL = new PortletURLImpl(request, PortletKeys.SEARCH, theme
 
 searchURL.setEscapeXml(true);
 
-searchURL.setParameter("mvcPath", "/html/portlet/search/search.jsp");
+searchURL.setParameter("mvcPath", "/search.jsp");
 searchURL.setParameter("groupId", String.valueOf(groupId));
 
 response.setContentType(ContentTypes.TEXT_XML_UTF8);

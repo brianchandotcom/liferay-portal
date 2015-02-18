@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/search/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long assetEntryId = ParamUtil.getLong(request, "assetEntryId");
@@ -34,7 +34,7 @@ AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
 			<%
 			PortletURL redirectURL = renderResponse.createRenderURL();
 
-			redirectURL.setParameter("mvcPath", "/html/portlet/search/edit_content_redirect.jsp");
+			redirectURL.setParameter("mvcPath", "/edit_content_redirect.jsp");
 
 			PortletURL editPortletURL = assetRenderer.getURLEdit((LiferayPortletRequest)renderRequest, (LiferayPortletResponse)renderResponse, LiferayWindowState.POP_UP, redirectURL);
 

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/search/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs2 = ParamUtil.getString(request, "tabs2");
@@ -36,15 +36,15 @@ String tabs2 = ParamUtil.getString(request, "tabs2");
 		refresh="<%= false %>"
 	>
 		<liferay-ui:section>
-			<%@ include file="/html/portlet/search/display_settings.jspf" %>
+			<%@ include file="/display_settings.jspf" %>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<%@ include file="/html/portlet/search/spell_check_settings.jspf" %>
+			<%@ include file="/spell_check_settings.jspf" %>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<%@ include file="/html/portlet/search/other_settings.jspf" %>
+			<%@ include file="/other_settings.jspf" %>
 		</liferay-ui:section>
 	</liferay-ui:tabs>
 

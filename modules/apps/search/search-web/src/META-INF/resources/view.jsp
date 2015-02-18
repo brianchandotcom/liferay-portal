@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/search/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -23,7 +23,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/html/portlet/search/search.jsp");
+portletURL.setParameter("mvcPath", "/search.jsp");
 portletURL.setParameter("redirect", currentURL);
 portletURL.setPortletMode(PortletMode.VIEW);
 portletURL.setWindowState(WindowState.MAXIMIZED);

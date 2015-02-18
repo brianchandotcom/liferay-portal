@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/search/facets/init.jsp" %>
+<%@ include file="/facets/init.jsp" %>
 
 <%
 String[] assetCategoryIdsOrNames = StringUtil.split(fieldParam);

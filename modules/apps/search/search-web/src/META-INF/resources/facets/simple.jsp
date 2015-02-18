@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/search/facets/init.jsp" %>
+<%@ include file="/facets/init.jsp" %>
 
 <div class="<%= cssClass %>" id="<%= randomNamespace %>facet">
 	<aui:input label="" name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="text" value="<%= fieldParam %>" />

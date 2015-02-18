@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/search/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -36,7 +36,7 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="mvcPath" value="/html/portlet/search/search.jsp" />
+	<portlet:param name="mvcPath" value="/search.jsp" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="get" name="fm" onSubmit="event.preventDefault();">
@@ -94,11 +94,11 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 		).render();
 	</aui:script>
 
-	<%@ include file="/html/portlet/search/main_search.jspf" %>
+	<%@ include file="/main_search.jspf" %>
 
 	<c:if test="<%= searchDisplayContext.isDisplayOpenSearchResults() %>">
 		<liferay-ui:panel collapsible="<%= true %>" cssClass="open-search-panel" extended="<%= true %>" id="searchOpenSearchPanelContainer" persistState="<%= true %>" title="open-search">
-			<%@ include file="/html/portlet/search/open_search.jspf" %>
+			<%@ include file="/open_search.jspf" %>
 		</liferay-ui:panel>
 	</c:if>
 </aui:form>

@@ -48,4 +48,4 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 SearchDisplayContext searchDisplayContext = new SearchDisplayContext(request, portletPreferences);
 %>
 
-<%@ include file="/html/portlet/search/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

@@ -104,7 +104,7 @@
 
 			var searchContainerName = '<portlet:namespace/>assetLinksSearchContainer';
 
-			searchContainer = Liferay.SearchContainer.get(searchContainerName);
+			var searchContainer = Liferay.SearchContainer.get(searchContainerName);
 
 			var searchContainerData = searchContainer.getData();
 

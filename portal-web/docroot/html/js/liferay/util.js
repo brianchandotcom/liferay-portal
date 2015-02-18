@@ -163,10 +163,10 @@
 		},
 
 		disableElements: function(el) {
-			var el = $(el)[0];
+			var currentElement = $(el)[0];
 
-			if (el) {
-				var children = el.getElementsByTagName('*');
+			if (currentElement) {
+				var children = currentElement.getElementsByTagName('*');
 
 				var emptyFnFalse = _.constant(false);
 
@@ -1454,7 +1454,7 @@
 					A.some(
 						selectorButtons,
 						function(item, index, collection) {
-							for (var i = 0; i < selectedData.length; i++){
+							for (var i = 0; i < selectedData.length; i++) {
 								var assetEntryId = item.attr('data-assetentryid');
 
 								if (assetEntryId === selectedData[i]) {

@@ -44,6 +44,8 @@ public abstract class BaseWebDriverImpl
 
 		super(webDriver);
 
+		System.setProperty("java.awt.headless", "false");
+
 		String dependenciesDirName =
 			"portal-web//test//functional//com//liferay//portalweb//" +
 				"dependencies//";

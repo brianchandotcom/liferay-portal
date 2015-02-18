@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.ratings.definition;
+package com.liferay.comments.ratings.definition;
 
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.ratings.RatingsType;
@@ -25,10 +25,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"
+		"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion"
 	}
 )
-public class BlogsPortletRatingsDefinition implements PortletRatingsDefinition {
+public class CommentsPortletRatingsDefinition
+	implements PortletRatingsDefinition {
 
 	@Override
 	public RatingsType getDefaultRatingsType() {
@@ -37,7 +38,7 @@ public class BlogsPortletRatingsDefinition implements PortletRatingsDefinition {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.BLOGS;
+		return PortletKeys.COMMENTS;
 	}
 
 }

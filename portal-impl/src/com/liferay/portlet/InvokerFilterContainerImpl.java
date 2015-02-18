@@ -103,7 +103,11 @@ public class InvokerFilterContainerImpl
 				registry.registerService(
 					PortletFilter.class, portletFilter, properties);
 
-			_serviceRegistrations.add(serviceRegistration);
+			ServiceRegistrationTuple serviceRegistrationTuple =
+				new ServiceRegistrationTuple(
+					portletFilterModel, serviceRegistration);
+
+			_serviceRegistrationTuples.add(serviceRegistrationTuple);
 		}
 
 		ClassLoader classLoader = ClassLoaderUtil.getContextClassLoader();
@@ -128,7 +132,9 @@ public class InvokerFilterContainerImpl
 					registry.registerService(
 						PortletFilter.class, portletFilter, properties);
 
-				_serviceRegistrations.add(serviceRegistration);
+				_serviceRegistrationTuples.add(
+					new ServiceRegistrationTuple(
+						portletFilterModel, serviceRegistration));
 			}
 		}
 		finally {
@@ -138,13 +144,21 @@ public class InvokerFilterContainerImpl
 
 	@Override
 	public void close() {
-		for (ServiceRegistration<?> serviceRegistration :
-				_serviceRegistrations) {
+		Registry registry = RegistryUtil.getRegistry();
+
+		for (ServiceRegistrationTuple serviceRegistrationTuple :
+			_serviceRegistrationTuples) {
+
+			PortletFilterFactory.destroy(
+				serviceRegistrationTuple.getPortletFilterModel());
+
+			ServiceRegistration<PortletFilter> serviceRegistration =
+				serviceRegistrationTuple.getServiceRegistration();
 
 			serviceRegistration.unregister();
 		}
 
-		_serviceRegistrations.clear();
+		_serviceRegistrationTuples.clear();
 
 		_serviceTracker.close();
 
@@ -185,9 +199,31 @@ public class InvokerFilterContainerImpl
 		new CopyOnWriteArrayList<>();
 	private final List<ResourceFilter> _resourceFilters =
 		new CopyOnWriteArrayList<>();
-	private final List<ServiceRegistration<PortletFilter>>
-		_serviceRegistrations = new CopyOnWriteArrayList<>();
+	private final List<ServiceRegistrationTuple>
+		_serviceRegistrationTuples = new CopyOnWriteArrayList<>();
 	private final ServiceTracker<PortletFilter, PortletFilter> _serviceTracker;
+
+	private static class ServiceRegistrationTuple {
+		private final com.liferay.portal.model.PortletFilter
+			_portletFilterModel;
+		private final ServiceRegistration<PortletFilter> _serviceRegistration;
+
+		public ServiceRegistrationTuple(
+			com.liferay.portal.model.PortletFilter portletFilterModel,
+			ServiceRegistration<PortletFilter> serviceRegistration) {
+
+			_portletFilterModel = portletFilterModel;
+			_serviceRegistration = serviceRegistration;
+		}
+
+		public com.liferay.portal.model.PortletFilter getPortletFilterModel() {
+			return _portletFilterModel;
+		}
+
+		public ServiceRegistration<PortletFilter> getServiceRegistration() {
+			return _serviceRegistration;
+		}
+	}
 
 	private class PortletFilterServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<PortletFilter, PortletFilter> {

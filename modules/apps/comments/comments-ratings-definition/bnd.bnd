@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Blogs Ratings Definition
+Bundle-SymbolicName: com.liferay.blogs.ratings.definition
+Bundle-Version: 1.0.0
+Include-Resource: classes

@@ -32,7 +32,7 @@ public class SyncWatchEventService {
 
 	public static SyncWatchEvent addSyncWatchEvent(
 			String eventType, String filePathName, String fileType,
-			long syncAccountId)
+			String previousFilePathName, long syncAccountId)
 		throws Exception {
 
 		SyncWatchEvent syncWatchEvent = new SyncWatchEvent();
@@ -40,6 +40,7 @@ public class SyncWatchEventService {
 		syncWatchEvent.setEventType(eventType);
 		syncWatchEvent.setFilePathName(filePathName);
 		syncWatchEvent.setFileType(fileType);
+		syncWatchEvent.setPreviousFilePathName(previousFilePathName);
 		syncWatchEvent.setSyncAccountId(syncAccountId);
 		syncWatchEvent.setTimestamp(System.currentTimeMillis());
 
@@ -94,35 +95,6 @@ public class SyncWatchEventService {
 			}
 
 			return null;
-		}
-	}
-
-	public static SyncWatchEvent fetchSyncWatchEvent(
-		String eventType, String filePathName, long timestamp) {
-
-		try {
-			return _syncWatchEventPersistence.fetchByE_F_T(
-				eventType, filePathName, timestamp);
-		}
-		catch (SQLException sqle) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug(sqle.getMessage(), sqle);
-			}
-
-			return null;
-		}
-	}
-
-	public static List<SyncWatchEvent> findAll() {
-		try {
-			return _syncWatchEventPersistence.queryForAll();
-		}
-		catch (SQLException sqle) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug(sqle.getMessage(), sqle);
-			}
-
-			return Collections.emptyList();
 		}
 	}
 

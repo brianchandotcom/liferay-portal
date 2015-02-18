@@ -28,6 +28,8 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/ch.securityvision.xattrj.jar" />
+	<classpathentry kind="lib" path="lib/com.barbarysoftware.watchservice.jar" />
 	<classpathentry kind="lib" path="lib/com.btr.proxy.vole.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.io.delta.jar" />
 	<classpathentry kind="lib" path="lib/commons-codec.jar" />
@@ -41,6 +43,8 @@
 	<classpathentry kind="lib" path="lib/jackson-annotations.jar" />
 	<classpathentry kind="lib" path="lib/jackson-core.jar" />
 	<classpathentry kind="lib" path="lib/jackson-databind.jar" />
+	<classpathentry kind="lib" path="lib/jna.jar" />
+	<classpathentry kind="lib" path="lib/jpathwatch.jar" />
 	<classpathentry kind="lib" path="lib/logback-classic.jar" />
 	<classpathentry kind="lib" path="lib/logback-core.jar" />
 	<classpathentry kind="lib" path="lib/net.sf.jpathwatch.jar" />

@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.sync.engine.filesystem;
+package com.liferay.sync.engine.filesystem.listener;
 
+import com.liferay.sync.engine.filesystem.Watcher;
+import com.liferay.sync.engine.filesystem.util.WatcherRegistry;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
@@ -26,6 +28,7 @@ import com.liferay.sync.engine.service.SyncWatchEventService;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.Set;
 
@@ -85,9 +88,44 @@ public class SyncSiteWatchEventListener extends BaseWatchEventListener {
 				return;
 			}
 
+			if (eventType.equals(SyncWatchEvent.EVENT_TYPE_RENAME_FROM)) {
+				_previousFilePath = filePath;
+
+				return;
+			}
+
+			String previousFilePathName = null;
+
+			if (eventType.equals(SyncWatchEvent.EVENT_TYPE_RENAME_TO)) {
+				if (_previousFilePath == null) {
+					Watcher watcher = WatcherRegistry.getWatcher(
+						getSyncAccountId());
+
+					watcher.walkFileTree(Paths.get(filePathName));
+
+					eventType = SyncWatchEvent.EVENT_TYPE_CREATE;
+				}
+				else {
+					if (parentFilePath.equals(_previousFilePath.getParent())) {
+						eventType = SyncWatchEvent.EVENT_TYPE_RENAME;
+					}
+					else {
+						eventType = SyncWatchEvent.EVENT_TYPE_MOVE;
+					}
+
+					previousFilePathName = _previousFilePath.toString();
+				}
+			}
+			else if (_previousFilePath != null) {
+				eventType = SyncWatchEvent.EVENT_TYPE_DELETE;
+				filePathName = _previousFilePath.toString();
+			}
+
 			SyncWatchEventService.addSyncWatchEvent(
 				eventType, filePathName, getFileType(eventType, filePath),
-				getSyncAccountId());
+				previousFilePathName, getSyncAccountId());
+
+			_previousFilePath = null;
 		}
 		catch (Exception e) {
 			_logger.error(e.getMessage(), e);
@@ -135,8 +173,8 @@ public class SyncSiteWatchEventListener extends BaseWatchEventListener {
 			SyncWatchEventService.fetchLastSyncWatchEvent(syncAccountId);
 
 		if ((lastSyncWatchEvent == null) ||
-			!eventType.equals(lastSyncWatchEvent.getEventType()) ||
-			!filePathName.equals(lastSyncWatchEvent.getFilePathName())) {
+			!filePathName.equals(lastSyncWatchEvent.getFilePathName()) ||
+			!eventType.equals(lastSyncWatchEvent.getEventType())) {
 
 			return false;
 		}
@@ -146,5 +184,7 @@ public class SyncSiteWatchEventListener extends BaseWatchEventListener {
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		SyncWatchEventService.class);
+
+	private Path _previousFilePath;
 
 }

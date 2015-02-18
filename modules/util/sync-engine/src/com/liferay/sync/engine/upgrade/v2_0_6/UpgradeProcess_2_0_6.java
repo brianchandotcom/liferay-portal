@@ -57,6 +57,10 @@ public class UpgradeProcess_2_0_6 extends UpgradeProcess {
 					filePath, String.valueOf(syncFile.getSyncFileId()));
 			}
 		}
+
+		syncFilePersistence.updateRaw(
+			"ALTER TABLE `SyncWatchEvent` ADD COLUMN previousFilePathName" +
+				" VARCHAR(16777216);");
 	}
 
 }

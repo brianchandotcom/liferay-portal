@@ -12,22 +12,17 @@
  * details.
  */
 
-package com.liferay.sync.engine.filesystem;
+package com.liferay.sync.engine.filesystem.listener;
+
+import java.nio.file.Path;
 
 /**
  * @author Michael Young
  */
-public abstract class BaseWatchEventListener implements WatchEventListener {
+public interface WatchEventListener {
 
-	public BaseWatchEventListener(long syncAccountId) {
-		_syncAccountId = syncAccountId;
-	}
+	public long getSyncAccountId();
 
-	@Override
-	public long getSyncAccountId() {
-		return _syncAccountId;
-	}
-
-	private final long _syncAccountId;
+	public void watchEvent(String eventType, Path filePath);
 
 }

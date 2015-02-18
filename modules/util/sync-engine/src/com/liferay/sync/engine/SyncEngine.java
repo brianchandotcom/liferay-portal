@@ -21,10 +21,12 @@ import com.liferay.sync.engine.documentlibrary.util.BatchDownloadEvent;
 import com.liferay.sync.engine.documentlibrary.util.BatchEventManager;
 import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.documentlibrary.util.ServerEventUtil;
-import com.liferay.sync.engine.filesystem.SyncSiteWatchEventListener;
+import com.liferay.sync.engine.filesystem.BarbaryWatcher;
+import com.liferay.sync.engine.filesystem.JPathWatcher;
 import com.liferay.sync.engine.filesystem.SyncWatchEventProcessor;
-import com.liferay.sync.engine.filesystem.WatchEventListener;
 import com.liferay.sync.engine.filesystem.Watcher;
+import com.liferay.sync.engine.filesystem.listener.SyncSiteWatchEventListener;
+import com.liferay.sync.engine.filesystem.listener.WatchEventListener;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
@@ -37,6 +39,7 @@ import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
 import com.liferay.sync.engine.util.ConnectionRetryUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.LoggerUtil;
+import com.liferay.sync.engine.util.OSDetector;
 import com.liferay.sync.engine.util.PropsValues;
 import com.liferay.sync.engine.util.SyncEngineUtil;
 
@@ -210,7 +213,14 @@ public class SyncEngine {
 		WatchEventListener watchEventListener = new SyncSiteWatchEventListener(
 			syncAccountId);
 
-		Watcher watcher = new Watcher(filePath, true, watchEventListener);
+		Watcher watcher = null;
+
+		if (OSDetector.isApple()) {
+			watcher = new BarbaryWatcher(filePath, watchEventListener);
+		}
+		else {
+			watcher = new JPathWatcher(filePath, watchEventListener);
+		}
 
 		_executorService.execute(watcher);
 

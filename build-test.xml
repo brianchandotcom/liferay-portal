@@ -4062,17 +4062,29 @@ if (ppstate.equals("normal")) {
 
 				import org.apache.tools.ant.DirectoryScanner;
 
-				List getClassGroups(List classFileNames, int groupsSize) {
+				List getClassGroups(List classFileNames, int groupsSize, String[] isolateTestClassNames) {
 					List classFileNameGroups = new ArrayList(groupsSize);
 
 					for (int i = 0; i < groupsSize; i++) {
 						classFileNameGroups.add(new ArrayList());
 					}
 
+					groupsSize = groupsSize - isolateTestClassNames.length;
+
 					int i = 0;
 
 					for (String classFileName : classFileNames) {
+						if (Arrays.binarySearch(isolateTestClassNames, classFileName) > -1) {
+							continue;
+						}
+
 						List classFileNameGroup = classFileNameGroups.get(i++ % groupsSize);
+
+						classFileNameGroup.add(classFileName);
+					}
+
+					for (String classFileName : isolateTestClassNames) {
+						List classFileNameGroup = classFileNameGroups.get(groupsSize++);
 
 						classFileNameGroup.add(classFileName);
 					}
@@ -4124,9 +4136,13 @@ if (ppstate.equals("normal")) {
 
 				String[] autoBalanceTestClassNames = autoBalanceTestClassNamesString.split(",");
 
+				String isolateTestClassNamesString = project.getProperty("test.class.names.isolate");
+
+				String[] isolateTestClassNames = isolateTestClassNamesString.split(",");
+
 				List classFileNames = getClassFileNames();
 
-				List testClassGroups = getClassGroups(classFileNames, allTestClassGroupsSize);
+				List testClassGroups = getClassGroups(classFileNames, allTestClassGroupsSize, isolateTestClassNames);
 
 				for (i = 0; i < allTestClassGroupsSize; i++) {
 					List testClassGroup = testClassGroups.get(i);

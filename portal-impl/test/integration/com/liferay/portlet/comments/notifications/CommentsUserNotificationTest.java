@@ -134,7 +134,7 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		MBMessage message = (MBMessage) baseModel;
+		MBMessage message = (MBMessage)baseModel;
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

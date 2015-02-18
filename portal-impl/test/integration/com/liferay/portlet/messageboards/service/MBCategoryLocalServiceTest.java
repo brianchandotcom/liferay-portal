@@ -78,14 +78,12 @@ public class MBCategoryLocalServiceTest {
 		MBCategory excludedCategory1 = MBCategoryServiceUtil.addCategory(
 			TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			serviceContext);
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		MBCategory excludedCategory2 = MBCategoryServiceUtil.addCategory(
 			TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			serviceContext);
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		Assert.assertEquals(
 			initialCategoriesCount + 3,

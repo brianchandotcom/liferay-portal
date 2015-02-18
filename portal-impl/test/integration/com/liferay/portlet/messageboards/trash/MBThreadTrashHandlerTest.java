@@ -156,7 +156,8 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 		}
 		else {
-			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
 
 		String keywords = getSearchKeywords();

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,4 +62,5 @@ public class MBTestUtil {
 
 		serviceContext.setLayoutFullURL("http://localhost");
 	}
+
 }

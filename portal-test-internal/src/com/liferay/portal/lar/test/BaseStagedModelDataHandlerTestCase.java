@@ -66,6 +66,7 @@ import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 import com.liferay.portlet.ratings.util.test.RatingsTestUtil;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -158,8 +159,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			return;
 		}
 
-		String className =
-			ExportImportClassedModelUtil.getClassName(stagedModel);
+		String className = ExportImportClassedModelUtil.getClassName(
+			stagedModel);
 
 		long classPK = ExportImportClassedModelUtil.getClassPK(stagedModel);
 
@@ -167,8 +168,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		MBMessageDisplay messageDisplay =
 			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				user.getUserId(), stagingGroup.getGroupId(), className,
-				classPK, WorkflowConstants.STATUS_APPROVED);
+				user.getUserId(), stagingGroup.getGroupId(), className, classPK,
+				WorkflowConstants.STATUS_APPROVED);
 
 		MBThread thread =  messageDisplay.getThread();
 

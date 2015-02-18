@@ -69,25 +69,19 @@ public interface WikiPortletInstanceConfiguration {
 	public String enableRss();
 
 	@Meta.AD(
-		deflt =
-			"${portal-service-property://com.liferay.portal/" +
-				"search.container.page.default.delta}",
+		deflt = "${portal-service-property://com.liferay.portal/search.container.page.default.delta}",
 		required = false
 	)
 	public String rssDelta();
 
 	@Meta.AD(
-		deflt =
-			"${portal-service-property://com.liferay.portal/" +
-				"rss.feed.display.style.default}",
+		deflt = "${portal-service-property://com.liferay.portal/rss.feed.display.style.default}",
 		required = false
 	)
 	public String rssDisplayStyle();
 
 	@Meta.AD(
-		deflt =
-			"${portal-service-property://com.liferay.portal/" +
-				"rss.feed.type.default}",
+		deflt = "${portal-service-property://com.liferay.portal/rss.feed.type.default}",
 		required = false
 	)
 	public String rssFeedType();

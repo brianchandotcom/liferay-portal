@@ -35,33 +35,25 @@ public interface WikiConfiguration {
 	 * default display templates for the Wiki portlet.
 	 */
 	@Meta.AD(
-		deflt =
-			"com/liferay/wiki/configuration/dependencies/" +
-				"portlet-display-templates.xml",
+		deflt = "com/liferay/wiki/configuration/dependencies/portlet-display-templates.xml",
 		required = false
 	)
 	public String displayTemplatesConfig();
 
 	@Meta.AD(
-		deflt =
-			"${portal-service-property://com.liferay.portal/" +
-				"admin.email.from.address}",
+		deflt = "${portal-service-property://com.liferay.portal/admin.email.from.address}",
 		required = false
 	)
 	public String emailFromAddress();
 
 	@Meta.AD(
-		deflt =
-			"${portal-service-property://com.liferay.portal/" +
-				"admin.email.from.name}",
+		deflt = "${portal-service-property://com.liferay.portal/admin.email.from.name}",
 		required = false
 	)
 	public String emailFromName();
 
 	@Meta.AD(
-		deflt =
-			"${resource:com/liferay/wiki/configuration/dependencies" +
-				"/email_page_added_body.tmpl}",
+		deflt = "${resource:com/liferay/wiki/configuration/dependencies/email_page_added_body.tmpl}",
 		required = false
 	)
 	public String emailPageAddedBody();
@@ -72,17 +64,13 @@ public interface WikiConfiguration {
 	public String emailPageAddedEnabled();
 
 	@Meta.AD(
-		deflt =
-			"${resource:com/liferay/wiki/configuration/dependencies" +
-				"/email_page_added_subject.tmpl}",
+		deflt = "${resource:com/liferay/wiki/configuration/dependencies/email_page_added_subject.tmpl}",
 		required = false
 	)
 	public String emailPageAddedSubject();
 
 	@Meta.AD(
-		deflt =
-			"${resource:com/liferay/wiki/configuration/dependencies" +
-				"/email_page_updated_body.tmpl}",
+		deflt = "${resource:com/liferay/wiki/configuration/dependencies/email_page_updated_body.tmpl}",
 		required = false
 	)
 	public String emailPageUpdatedBody();
@@ -93,9 +81,7 @@ public interface WikiConfiguration {
 	public String emailPageUpdatedEnabled();
 
 	@Meta.AD(
-		deflt =
-			"${resource:com/liferay/wiki/configuration/dependencies" +
-				"/email_page_updated_subject.tmpl}",
+		deflt = "${resource:com/liferay/wiki/configuration/dependencies/email_page_updated_subject.tmpl}",
 		required = false
 	)
 	public String emailPageUpdatedSubject();

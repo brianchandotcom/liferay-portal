@@ -185,61 +185,6 @@ public abstract class Watcher implements Runnable {
 		map.clear();
 	}
 
-	protected void doProcessWatchEvent(String eventType, Path filePath)
-		throws IOException {
-
-		if (eventType.equals(SyncWatchEvent.EVENT_TYPE_CREATE)) {
-			if (isIgnoredFilePath(filePath)) {
-				return;
-			}
-
-			addCreatedFilePathName(filePath.toString());
-
-			if (_downloadedFilePathNames.remove(filePath.toString())) {
-				return;
-			}
-
-			fireWatchEventListener(eventType, filePath);
-
-			if (Files.isDirectory(filePath)) {
-				walkFileTree(filePath);
-			}
-		}
-		else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_DELETE)) {
-			processMissingFilePath(filePath);
-
-			if (Files.notExists(filePath.getParent())) {
-				return;
-			}
-
-			fireWatchEventListener(SyncWatchEvent.EVENT_TYPE_DELETE, filePath);
-		}
-		else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_MODIFY)) {
-			if (_downloadedFilePathNames.remove(filePath.toString()) ||
-				(removeCreatedFilePathName(filePath.toString()) &&
-				 !FileUtil.isValidChecksum(filePath)) ||
-				Files.notExists(filePath) ||
-				Files.isDirectory(filePath)) {
-
-				return;
-			}
-
-			fireWatchEventListener(SyncWatchEvent.EVENT_TYPE_MODIFY, filePath);
-		}
-		else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_RENAME_FROM)) {
-			fireWatchEventListener(
-				SyncWatchEvent.EVENT_TYPE_RENAME_FROM, filePath);
-		}
-		else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_RENAME_TO)) {
-			if (isIgnoredFilePath(filePath)) {
-				return;
-			}
-
-			fireWatchEventListener(
-				SyncWatchEvent.EVENT_TYPE_RENAME_TO, filePath);
-		}
-	}
-
 	protected void fireWatchEventListener(String eventType, Path filePath) {
 		_watchEventListener.watchEvent(eventType, filePath);
 	}
@@ -357,7 +302,62 @@ public abstract class Watcher implements Runnable {
 	protected void processWatchEvent(String eventType, Path filePath)
 		throws IOException {
 
-		doProcessWatchEvent(eventType, filePath);
+		if (!OSDetector.isLinux() &&
+			filePath.startsWith(_baseFilePath.resolve(".data"))) {
+
+			return;
+		}
+
+		if (eventType.equals(SyncWatchEvent.EVENT_TYPE_CREATE)) {
+			if (isIgnoredFilePath(filePath)) {
+				return;
+			}
+
+			addCreatedFilePathName(filePath.toString());
+
+			if (_downloadedFilePathNames.remove(filePath.toString())) {
+				return;
+			}
+
+			fireWatchEventListener(eventType, filePath);
+
+			if (Files.isDirectory(filePath)) {
+				walkFileTree(filePath);
+			}
+		}
+		else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_DELETE)) {
+			processMissingFilePath(filePath);
+
+			if (Files.notExists(filePath.getParent())) {
+				return;
+			}
+
+			fireWatchEventListener(SyncWatchEvent.EVENT_TYPE_DELETE, filePath);
+		}
+		else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_MODIFY)) {
+			if (_downloadedFilePathNames.remove(filePath.toString()) ||
+				(removeCreatedFilePathName(filePath.toString()) &&
+				 !FileUtil.isValidChecksum(filePath)) ||
+				Files.notExists(filePath) ||
+				Files.isDirectory(filePath)) {
+
+				return;
+			}
+
+			fireWatchEventListener(SyncWatchEvent.EVENT_TYPE_MODIFY, filePath);
+		}
+		else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_RENAME_FROM)) {
+			fireWatchEventListener(
+				SyncWatchEvent.EVENT_TYPE_RENAME_FROM, filePath);
+		}
+		else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_RENAME_TO)) {
+			if (isIgnoredFilePath(filePath)) {
+				return;
+			}
+
+			fireWatchEventListener(
+				SyncWatchEvent.EVENT_TYPE_RENAME_TO, filePath);
+		}
 	}
 
 	protected boolean removeCreatedFilePathName(String filePathName) {

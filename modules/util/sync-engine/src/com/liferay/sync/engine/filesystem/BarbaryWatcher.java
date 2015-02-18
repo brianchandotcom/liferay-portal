@@ -46,6 +46,17 @@ public class BarbaryWatcher extends Watcher {
 	}
 
 	@Override
+	public void close() {
+		try {
+			_watchService.close();
+		}
+		catch (Exception e) {
+		}
+
+		super.close();
+	}
+
+	@Override
 	public void registerFilePath(Path filePath) throws IOException {
 		if (!filePath.equals(getBaseFilePath())) {
 			return;
@@ -125,19 +136,6 @@ public class BarbaryWatcher extends Watcher {
 	@Override
 	protected void initWatchService() {
 		_watchService = WatchService.newWatchService();
-	}
-
-	@Override
-	protected void processWatchEvent(String eventType, Path filePath)
-		throws IOException {
-
-		Path baseFilePath = getBaseFilePath();
-
-		if (filePath.startsWith(baseFilePath.resolve(".data"))) {
-			return;
-		}
-
-		doProcessWatchEvent(eventType, filePath);
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

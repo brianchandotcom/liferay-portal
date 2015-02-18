@@ -665,6 +665,8 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 	</c:if>
 
 	<c:if test="<%= !(inlineEdit && Validator.isNotNull(inlineEditSaveURL)) %>">
+		var editorIdInitial = CKEDITOR.instances['<%= name %>'].id;
+
 		A.getWin().on(
 			'resize',
 			A.debounce(
@@ -673,17 +675,23 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 						var ckeditorInstance = CKEDITOR.instances['<%= name %>'];
 
 						if (ckeditorInstance) {
-							var currentDialog = CKEDITOR.dialog.getCurrent();
+							var editorIdCurrent = ckeditorInstance.id;
 
-							if (currentDialog) {
-								currentDialog.hide();
+							if (editorIdCurrent === editorIdInitial) {
+								var currentDialog = CKEDITOR.dialog.getCurrent();
+
+								if (currentDialog) {
+									currentDialog.hide();
+								}
+
+								ckEditorContent = ckeditorInstance.getData()
+
+								window['<%= name %>'].dispose();
+
+								window['<%= name %>'].create()
+
+								editorIdInitial = CKEDITOR.instances['<%= name %>'].id;
 							}
-
-							ckEditorContent = ckeditorInstance.getData();
-
-							window['<%= name %>'].dispose();
-
-							window['<%= name %>'].create();
 						}
 					}
 				},

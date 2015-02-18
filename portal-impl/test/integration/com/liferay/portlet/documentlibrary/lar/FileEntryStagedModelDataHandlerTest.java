@@ -20,12 +20,15 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -122,7 +125,7 @@ public class FileEntryStagedModelDataHandlerTest
 		addDependentStagedModel(
 			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
-		DLFileEntryType dlFileEntryType = DLAppTestUtil.addDLFileEntryType(
+		DLFileEntryType dlFileEntryType = addDLFileEntryType(
 			companyGroup.getGroupId(), ddmStructure.getStructureId());
 
 		addDependentStagedModel(
@@ -152,7 +155,7 @@ public class FileEntryStagedModelDataHandlerTest
 		addDependentStagedModel(
 			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
-		DLFileEntryType dlFileEntryType = DLAppTestUtil.addDLFileEntryType(
+		DLFileEntryType dlFileEntryType = addDLFileEntryType(
 			group.getGroupId(), ddmStructure.getStructureId());
 
 		addDependentStagedModel(
@@ -165,6 +168,20 @@ public class FileEntryStagedModelDataHandlerTest
 			dependentStagedModelsMap, DLFolder.class, folder);
 
 		return dependentStagedModelsMap;
+	}
+
+	protected DLFileEntryType addDLFileEntryType(
+			long groupId, long ddmStructureId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId());
+
+		return DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {ddmStructureId},
+			serviceContext);
 	}
 
 	@Override

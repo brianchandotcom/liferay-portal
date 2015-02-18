@@ -62,7 +62,8 @@ public class DLFolderFinderTest {
 		_group = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
 
 		_folder = DLAppLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), _group.getGroupId(),
@@ -84,8 +85,10 @@ public class DLFolderFinderTest {
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), _folder.getFolderId(), "FE1.txt", "FE1.txt");
 
-		_dlFileShortcut = DLAppTestUtil.addDLFileShortcut(
-			_group.getGroupId(), fileEntry);
+		_dlFileShortcut = DLAppLocalServiceUtil.addFileShortcut(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			fileEntry.getFolderId(), fileEntry.getFileEntryId(),
+			serviceContext);
 
 		DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), _folder.getFolderId(), "FE2.pdf",

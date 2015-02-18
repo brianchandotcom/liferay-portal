@@ -32,6 +32,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
@@ -41,7 +42,9 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -169,16 +172,24 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		portletDataContext.isPathProcessed(
 			ExportImportPathUtil.getModelPath(ddmStructure));
 
-		DLFileEntryType dlFileEntryType = DLAppTestUtil.addDLFileEntryType(
-			stagingGroup.getGroupId(), ddmStructure.getStructureId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId());
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				new long[] {ddmStructure.getStructureId()}, serviceContext);
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			stagingGroup.getGroupId(), folder.getFolderId(),
 			RandomTestUtil.randomString(),
 			dlFileEntryType.getFileEntryTypeId());
 
-		DLAppTestUtil.addDLFileShortcut(
-			fileEntry, stagingGroup.getGroupId(), folder.getFolderId());
+		DLAppLocalServiceUtil.addFileShortcut(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			folder.getFolderId(), fileEntry.getFileEntryId(), serviceContext);
 	}
 
 	@Override

@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -67,8 +70,15 @@ public class DLSubscriptionClassTypeTest
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			DLFileEntry.class.getName());
 
-		DLFileEntryType fileEntryType = DLAppTestUtil.addDLFileEntryType(
-			group.getGroupId(), ddmStructure.getStructureId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		DLFileEntryType fileEntryType =
+			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				new long[] {ddmStructure.getStructureId()}, serviceContext);
 
 		return fileEntryType.getFileEntryTypeId();
 	}

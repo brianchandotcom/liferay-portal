@@ -35,7 +35,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
@@ -46,7 +46,6 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.ByteArrayInputStream;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,8 +88,8 @@ public class DLFileEntryDDMFormValuesReaderTest {
 	protected DLFileEntryType addDLFileEntryType(ServiceContext serviceContext)
 		throws Exception {
 
-		return DLAppTestUtil.addDLFileEntryType(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+		return DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+			serviceContext.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), StringPool.BLANK, new long[0],
 			serviceContext);
 	}

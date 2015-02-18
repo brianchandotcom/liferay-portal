@@ -466,12 +466,71 @@ public class RoleServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.portal.model.Role> search(
+		HttpPrincipal httpPrincipal, long companyId, java.lang.String keywords,
+		java.lang.Integer[] types,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> obc) {
+		try {
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
+					"search", _searchParameterTypes13);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, keywords, types, params, start, end, obc);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portal.model.Role>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
+		java.lang.String keywords, java.lang.Integer[] types,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
+		try {
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
+					"searchCount", _searchCountParameterTypes14);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, keywords, types, params);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void unsetUserRoles(HttpPrincipal httpPrincipal, long userId,
 		long[] roleIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
-					"unsetUserRoles", _unsetUserRolesParameterTypes13);
+					"unsetUserRoles", _unsetUserRolesParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					roleIds);
@@ -503,7 +562,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
-					"updateRole", _updateRoleParameterTypes14);
+					"updateRole", _updateRoleParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, roleId,
 					name, titleMap, descriptionMap, subtype, serviceContext);
@@ -574,10 +633,19 @@ public class RoleServiceHttp {
 	private static final Class<?>[] _hasUserRolesParameterTypes12 = new Class[] {
 			long.class, long.class, java.lang.String[].class, boolean.class
 		};
-	private static final Class<?>[] _unsetUserRolesParameterTypes13 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes13 = new Class[] {
+			long.class, java.lang.String.class, java.lang.Integer[].class,
+			java.util.LinkedHashMap.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _searchCountParameterTypes14 = new Class[] {
+			long.class, java.lang.String.class, java.lang.Integer[].class,
+			java.util.LinkedHashMap.class
+		};
+	private static final Class<?>[] _unsetUserRolesParameterTypes15 = new Class[] {
 			long.class, long[].class
 		};
-	private static final Class<?>[] _updateRoleParameterTypes14 = new Class[] {
+	private static final Class<?>[] _updateRoleParameterTypes16 = new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class

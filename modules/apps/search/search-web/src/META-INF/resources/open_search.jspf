@@ -22,10 +22,10 @@
 String primarySearch = ParamUtil.getString(request, "primarySearch");
 
 if (Validator.isNotNull(primarySearch)) {
-	portalPreferences.setValue(PortletKeys.SEARCH, "primary-search", primarySearch);
+	portalPreferences.setValue(SearchPortletKeys.SEARCH, "primary-search", primarySearch);
 }
 else {
-	primarySearch = portalPreferences.getValue(PortletKeys.SEARCH, "primary-search", StringPool.BLANK);
+	primarySearch = portalPreferences.getValue(SearchPortletKeys.SEARCH, "primary-search", StringPool.BLANK);
 }
 
 List<OpenSearch> openSearchInstances = com.liferay.search.web.util.SearchUtil.getOpenSearchInstances(primarySearch);

@@ -577,6 +577,11 @@
 		<tag-class>com.liferay.taglib.ui.AssetDisplayTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>abstractLength</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>assetEntry</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -618,6 +623,11 @@
 		</attribute>
 		<attribute>
 			<name>template</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>viewURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

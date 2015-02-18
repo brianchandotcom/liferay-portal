@@ -29,11 +29,14 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.math.BigDecimal;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -78,23 +81,21 @@ public class DocumentImpl implements Document {
 
 		String fieldName = sort.getFieldName();
 
-		if (fieldName.endsWith(_SORTABLE_FIELD_SUFFIX)) {
+		if (DocumentImpl.isSortableFieldName(fieldName)) {
 			return fieldName;
 		}
 
-		String sortFieldName = null;
-
-		if (DocumentImpl.isSortableTextField(fieldName) ||
-			(sort.getType() != Sort.STRING_TYPE)) {
-
-			sortFieldName = DocumentImpl.getSortableFieldName(fieldName);
+		if (DDMIndexerUtil.isSortableFieldName(fieldName)) {
+			return fieldName;
 		}
 
-		if (Validator.isNull(sortFieldName)) {
-			sortFieldName = scoreFieldName;
+		if ((sort.getType() == Sort.STRING_TYPE) &&
+			!DocumentImpl.isSortableTextField(fieldName)) {
+
+			return scoreFieldName;
 		}
 
-		return sortFieldName;
+		return DocumentImpl.getSortableFieldName(fieldName);
 	}
 
 	public static boolean isSortableFieldName(String name) {
@@ -454,6 +455,16 @@ public class DocumentImpl implements Document {
 	@Override
 	public void addModifiedDate(Date modifiedDate) {
 		addDate(Field.MODIFIED, modifiedDate);
+	}
+
+	@Override
+	public void addNumber(String name, BigDecimal value) {
+		addNumber(name, String.valueOf(value), BigDecimal.class);
+	}
+
+	@Override
+	public void addNumber(String name, BigDecimal[] values) {
+		addNumber(name, ArrayUtil.toStringArray(values), BigDecimal.class);
 	}
 
 	@Override

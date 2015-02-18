@@ -330,6 +330,10 @@ public class MediaWikiImporter implements WikiImporter {
 
 		List<String> entries = zipReader.getEntries();
 
+		if (entries == null) {
+			throw new ImportFilesException();
+		}
+
 		int total = entries.size();
 
 		if (total > 0) {

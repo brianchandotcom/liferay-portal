@@ -115,23 +115,15 @@ public class AddDefaultLayoutSetPrototypesAction
 
 		Layout layout = addLayout(layoutSet, "home", "/home", "2_columns_i");
 
-		String portletId = addPortletId(layout, PortletKeys.SEARCH, "column-2");
-
-		Map<String, String> preferences = new HashMap<>();
-
-		preferences.put("portletSetupShowBorders", Boolean.FALSE.toString());
-
-		updatePortletSetup(layout, portletId, preferences);
-
 		// Documents layout
 
 		layout = addLayout(
 			layoutSet, "documents-and-media", "/documents", "1_column");
 
-		portletId = addPortletId(
+		String portletId = addPortletId(
 			layout, PortletKeys.DOCUMENT_LIBRARY, "column-1");
 
-		preferences = new HashMap<>();
+		Map<String, String> preferences = new HashMap<>();
 
 		preferences.put("portletSetupShowBorders", Boolean.FALSE.toString());
 
@@ -158,14 +150,6 @@ public class AddDefaultLayoutSetPrototypesAction
 		Layout layout = addLayout(layoutSet, "home", "/home", "2_columns_iii");
 
 		addPortletId(layout, PortletKeys.MESSAGE_BOARDS, "column-1");
-
-		String portletId = addPortletId(layout, PortletKeys.SEARCH, "column-2");
-
-		Map<String, String> preferences = new HashMap<>();
-
-		preferences.put("portletSetupShowBorders", Boolean.FALSE.toString());
-
-		updatePortletSetup(layout, portletId, preferences);
 
 		addPortletId(layout, PortletKeys.USER_STATISTICS, "column-2");
 

@@ -1,3 +1,5 @@
+@import "mixins";
+
 .lfr-preview-file {
 	position: relative;
 }
@@ -75,6 +77,10 @@
 	max-height: 440px;
 	max-width: 100%;
 	vertical-align: middle;
+
+	@include respond-to(phone) {
+		max-height: 65%;
+	}
 }
 
 .lfr-preview-file-images {

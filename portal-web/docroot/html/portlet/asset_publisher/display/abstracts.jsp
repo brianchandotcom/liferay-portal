@@ -21,7 +21,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
 AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAttribute("view.jsp-assetRendererFactory");
 AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view.jsp-assetRenderer");
 
-boolean show = ((Boolean)request.getAttribute("view.jsp-show")).booleanValue();
 
 request.setAttribute("view.jsp-showIconLabel", true);
 
@@ -40,83 +39,81 @@ String viewURLMessage = viewInContext ? assetRenderer.getViewInContextMessage() 
 String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());
 %>
 
-<c:if test="<%= show %>">
-	<div class="asset-abstract <%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %>">
-		<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
+<div class="asset-abstract <%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %>">
+	<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
 
-		<h4 class="asset-title">
-			<c:if test="<%= Validator.isNotNull(viewURL) %>">
-				<a href="<%= viewURL %>">
-			</c:if>
-
-			<i class="<%= assetRenderer.getIconCssClass() %>"></i>
-
-			<%= HtmlUtil.escape(title) %>
-
-			<c:if test="<%= Validator.isNotNull(viewURL) %>">
-				</a>
-			</c:if>
-		</h4>
-
-		<%
-		String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
-		%>
-
-		<c:if test='<%= ArrayUtil.contains(metadataFields, String.valueOf("author")) %>'>
-			<div class="asset-author">
-
-				<%
-				User userDisplay = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
-
-				String displayDate = StringPool.BLANK;
-
-				if (assetEntry.getPublishDate() != null) {
-					displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getPublishDate().getTime(), true), false);
-				}
-				else if (assetEntry.getModifiedDate() != null) {
-					displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getModifiedDate().getTime(), true), false);
-				}
-				%>
-
-				<div class="asset-avatar">
-					<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />
-				</div>
-
-				<div class="asset-user-info">
-					<span class="user-info"><%= userDisplay.getFullName() %></span>
-
-					<span class="date-info"><%= displayDate %></span>
-				</div>
-			</div>
+	<h4 class="asset-title">
+		<c:if test="<%= Validator.isNotNull(viewURL) %>">
+			<a href="<%= viewURL %>">
 		</c:if>
 
-		<div class="asset-content">
-			<div class="asset-summary">
+		<i class="<%= assetRenderer.getIconCssClass() %>"></i>
 
-				<%
-				String path = assetRenderer.render(renderRequest, renderResponse, AssetRenderer.TEMPLATE_ABSTRACT);
+		<%= HtmlUtil.escape(title) %>
 
-				request.setAttribute(WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH, assetPublisherDisplayContext.getAbstractLength());
-				request.setAttribute(WebKeys.ASSET_ENTRY_VIEW_URL, viewURL);
-				request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
-				%>
+		<c:if test="<%= Validator.isNotNull(viewURL) %>">
+			</a>
+		</c:if>
+	</h4>
 
-				<c:choose>
-					<c:when test="<%= path == null %>">
-						<%= HtmlUtil.escape(summary) %>
-					</c:when>
-					<c:otherwise>
-						<liferay-util:include page="<%= path %>" portletId="<%= assetRendererFactory.getPortletId() %>" />
-					</c:otherwise>
-				</c:choose>
+	<%
+	String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
+	%>
+
+	<c:if test='<%= ArrayUtil.contains(metadataFields, String.valueOf("author")) %>'>
+		<div class="asset-author">
+
+			<%
+			User userDisplay = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
+
+			String displayDate = StringPool.BLANK;
+
+			if (assetEntry.getPublishDate() != null) {
+				displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getPublishDate().getTime(), true), false);
+			}
+			else if (assetEntry.getModifiedDate() != null) {
+				displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getModifiedDate().getTime(), true), false);
+			}
+			%>
+
+			<div class="asset-avatar">
+				<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />
+			</div>
+
+			<div class="asset-user-info">
+				<span class="user-info"><%= userDisplay.getFullName() %></span>
+
+				<span class="date-info"><%= displayDate %></span>
 			</div>
 		</div>
+	</c:if>
 
-		<liferay-ui:asset-metadata
-			className="<%= assetEntry.getClassName() %>"
-			classPK="<%= assetEntry.getClassPK() %>"
-			filterByMetadata="<%= true %>"
-			metadataFields="<%= metadataFields %>"
-		/>
+	<div class="asset-content">
+		<div class="asset-summary">
+
+			<%
+			String path = assetRenderer.render(renderRequest, renderResponse, AssetRenderer.TEMPLATE_ABSTRACT);
+
+			request.setAttribute(WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH, assetPublisherDisplayContext.getAbstractLength());
+			request.setAttribute(WebKeys.ASSET_ENTRY_VIEW_URL, viewURL);
+			request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
+			%>
+
+			<c:choose>
+				<c:when test="<%= path == null %>">
+					<%= HtmlUtil.escape(summary) %>
+				</c:when>
+				<c:otherwise>
+					<liferay-util:include page="<%= path %>" portletId="<%= assetRendererFactory.getPortletId() %>" />
+				</c:otherwise>
+			</c:choose>
+		</div>
 	</div>
-</c:if>
+
+	<liferay-ui:asset-metadata
+		className="<%= assetEntry.getClassName() %>"
+		classPK="<%= assetEntry.getClassPK() %>"
+		filterByMetadata="<%= true %>"
+		metadataFields="<%= metadataFields %>"
+	/>
+</div>

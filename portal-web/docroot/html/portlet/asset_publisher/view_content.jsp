@@ -66,7 +66,6 @@ try {
 	request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
 	request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 	request.setAttribute("view.jsp-title", title);
-	request.setAttribute("view.jsp-show", Boolean.TRUE);
 	request.setAttribute("view.jsp-print", new Boolean(print));
 %>
 

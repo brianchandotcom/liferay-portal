@@ -131,7 +131,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 		<c:when test='<%= topLink.equals("home") %>'>
 			<aui:row>
 				<c:if test="<%= folder != null %>">
-					<aui:col md="12">
+					<aui:col width="<%= 100 %>">
 						<liferay-ui:header
 							localizeTitle="<%= false %>"
 							title="<%= folder.getName() %>"

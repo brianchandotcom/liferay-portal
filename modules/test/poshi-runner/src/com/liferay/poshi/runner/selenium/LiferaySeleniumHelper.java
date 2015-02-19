@@ -57,6 +57,9 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import org.sikuli.api.robot.Mouse;
+import org.sikuli.api.robot.desktop.DesktopMouse;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -1137,13 +1140,21 @@ public class LiferaySeleniumHelper {
 	public static void sikuliLeftMouseDown(LiferaySelenium liferaySelenium)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		liferaySelenium.pause("1000");
+
+		Mouse mouse = new DesktopMouse();
+
+		mouse.press();
 	}
 
 	public static void sikuliLeftMouseUp(LiferaySelenium liferaySelenium)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		liferaySelenium.pause("1000");
+
+		Mouse mouse = new DesktopMouse();
+
+		mouse.release();
 	}
 
 	public static void sikuliMouseMove(
@@ -1156,13 +1167,21 @@ public class LiferaySeleniumHelper {
 	public static void sikuliRightMouseDown(LiferaySelenium liferaySelenium)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		liferaySelenium.pause("1000");
+
+		Mouse mouse = new DesktopMouse();
+
+		mouse.rightPress();
 	}
 
 	public static void sikuliRightMouseUp(LiferaySelenium liferaySelenium)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		liferaySelenium.pause("1000");
+
+		Mouse mouse = new DesktopMouse();
+
+		mouse.rightRelease();
 	}
 
 	public static void sikuliType(

@@ -47,30 +47,6 @@ public class SearchDisplayContext {
 		_portletPreferences = portletPreferences;
 	}
 
-	public String buildAssetCategoryPath(
-			AssetCategory assetCategory, Locale locale)
-		throws Exception {
-
-		List<AssetCategory> assetCategories = assetCategory.getAncestors();
-
-		if (assetCategories.isEmpty()) {
-			return HtmlUtil.escape(assetCategory.getTitle(locale));
-		}
-
-		Collections.reverse(assetCategories);
-
-		StringBundler sb = new StringBundler(assetCategories.size() * 2 + 1);
-
-		for (AssetCategory curAssetCategory : assetCategories) {
-			sb.append(HtmlUtil.escape(curAssetCategory.getTitle(locale)));
-			sb.append(" &raquo; ");
-		}
-
-		sb.append(HtmlUtil.escape(assetCategory.getTitle(locale)));
-
-		return sb.toString();
-	}
-
 	public String checkViewURL(
 		String viewURL, String currentURL, boolean inheritRedirect) {
 

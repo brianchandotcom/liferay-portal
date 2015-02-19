@@ -153,7 +153,7 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 				</c:if>
 
 				<c:if test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">
-					<aui:select changesContext="<%= true %>" helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-will-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
+					<aui:select changesContext="<%= true %>" helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
 
 						<%
 						for (String curLangType : ddmDisplay.getTemplateLanguageTypes()) {
@@ -327,7 +327,7 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 					title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
 				},
 				function(event) {
-					if (confirm('<%= UnicodeLanguageUtil.get(request, "selecting-a-new-structure-will-change-the-available-input-fields-and-available-templates") %>') && (document.<portlet:namespace />fm.<portlet:namespace />classPK.value != event.ddmstructureid)) {
+					if (confirm('<%= UnicodeLanguageUtil.get(request, "selecting-a-new-structure-changes-the-available-input-fields-and-available-templates") %>') && (document.<portlet:namespace />fm.<portlet:namespace />classPK.value != event.ddmstructureid)) {
 						document.<portlet:namespace />fm.<portlet:namespace />classPK.value = event.ddmstructureid;
 
 						Liferay.fire('<portlet:namespace />refreshEditor');

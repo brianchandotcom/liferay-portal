@@ -56,10 +56,10 @@ AUI.add(
 						validator: Lang.isObject,
 						value: {
 							draft: Liferay.Language.get('draft'),
-							editStructure: Liferay.Language.get('editing-the-current-structure-will-delete-all-unsaved-content'),
-							editTemplate: Liferay.Language.get('editing-the-current-template-will-delete-all-unsaved-content'),
-							selectStructure: Liferay.Language.get('selecting-a-new-structure-will-change-the-available-input-fields-and-available-templates'),
-							selectTemplate: Liferay.Language.get('selecting-a-new-template-will-delete-all-unsaved-content'),
+							editStructure: Liferay.Language.get('editing-the-current-structure-deletes-all-unsaved-content'),
+							editTemplate: Liferay.Language.get('editing-the-current-template-deletes-all-unsaved-content'),
+							selectStructure: Liferay.Language.get('selecting-a-new-structure-changes-the-available-input-fields-and-available-templates'),
+							selectTemplate: Liferay.Language.get('selecting-a-new-template-deletes-all-unsaved-content'),
 							structures: Liferay.Language.get('structures'),
 							templates: Liferay.Language.get('templates')
 						}

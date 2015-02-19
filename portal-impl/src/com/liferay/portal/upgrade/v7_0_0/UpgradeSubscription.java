@@ -73,7 +73,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			if (rs.next()) {
 				return rs.getLong("groupId");
 			}
 		}
@@ -99,7 +99,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			if (rs.next()) {
 				int count = rs.getInt(1);
 
 				if (count > 0) {

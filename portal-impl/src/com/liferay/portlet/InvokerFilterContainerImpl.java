@@ -204,10 +204,6 @@ public class InvokerFilterContainerImpl
 	private final ServiceTracker<PortletFilter, PortletFilter> _serviceTracker;
 
 	private static class ServiceRegistrationTuple {
-		private final com.liferay.portal.model.PortletFilter
-			_portletFilterModel;
-		private final ServiceRegistration<PortletFilter> _serviceRegistration;
-
 		public ServiceRegistrationTuple(
 			com.liferay.portal.model.PortletFilter portletFilterModel,
 			ServiceRegistration<PortletFilter> serviceRegistration) {
@@ -223,6 +219,11 @@ public class InvokerFilterContainerImpl
 		public ServiceRegistration<PortletFilter> getServiceRegistration() {
 			return _serviceRegistration;
 		}
+
+		private final com.liferay.portal.model.PortletFilter
+			_portletFilterModel;
+		private final ServiceRegistration<PortletFilter> _serviceRegistration;
+
 	}
 
 	private class PortletFilterServiceTrackerCustomizer

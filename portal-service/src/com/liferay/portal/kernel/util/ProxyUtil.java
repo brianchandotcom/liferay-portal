@@ -89,37 +89,6 @@ public class ProxyUtil {
 		return _constructors.containsKey(clazz);
 	}
 
-	private static Constructor<?> getConstructor(Class<?> clazz) {
-
-		Constructor<?> constructor = null;
-
-		WeakReference<Constructor<?>> constructorWeakReference =
-			_constructors.get(clazz);
-
-		if (constructorWeakReference == null ||
-			((constructor = constructorWeakReference.get()) == null)) {
-
-				try {
-					constructor = clazz.getConstructor(_argumentsClazz);
-
-					constructor.setAccessible(true);
-
-					WeakReference<Constructor<?>> weakReference =
-						new WeakReference<Constructor<?>>(constructor);
-
-					_constructors.putIfAbsent(clazz, weakReference);
-
-					return constructor;
-				}
-				catch (Exception e) {
-					throw new InternalError(e.toString());
-				}
-		}
-		else {
-			return constructor;
-		}
-	}
-
 	public static Object newProxyInstance(
 		ClassLoader classLoader, Class<?>[] interfaces,
 		InvocationHandler invocationHandler) {
@@ -136,6 +105,36 @@ public class ProxyUtil {
 		}
 	}
 
+	private static Constructor<?> getConstructor(Class<?> clazz) {
+		Constructor<?> constructor = null;
+
+		WeakReference<Constructor<?>> constructorWeakReference =
+			_constructors.get(clazz);
+
+		if (constructorWeakReference == null ||
+			((constructor = constructorWeakReference.get()) == null)) {
+
+				try {
+					constructor = clazz.getConstructor(_argumentsClazz);
+
+					constructor.setAccessible(true);
+
+					WeakReference<Constructor<?>> weakReference =
+						new WeakReference<>(constructor);
+
+					_constructors.putIfAbsent(clazz, weakReference);
+
+					return constructor;
+				}
+				catch (Exception e) {
+					throw new InternalError(e.toString());
+				}
+		}
+		else {
+			return constructor;
+		}
+	}
+
 	private static final Class<?>[] _argumentsClazz = {InvocationHandler.class};
 	private static final ConcurrentMap
 		<ClassLoader, ConcurrentMap<LookupKey, Class<?>>> _classReferences =
@@ -143,9 +142,8 @@ public class ProxyUtil {
 				<ClassLoader, ConcurrentMap<LookupKey, Class<?>>>(
 					FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static final ConcurrentMap<Class<?>, WeakReference<Constructor<?>>>
-		_constructors =
-			new ConcurrentReferenceKeyHashMap<>(
-				FinalizeManager.WEAK_REFERENCE_FACTORY);
+		_constructors = new ConcurrentReferenceKeyHashMap<>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static final Field _invocationHandlerField;
 
 	static {

@@ -35,6 +35,8 @@ public interface User extends UserModel, PersistedModel {
 	public void addRemotePreference(
 		com.liferay.portal.kernel.util.RemotePreference remotePreference);
 
+	public com.liferay.portal.model.Contact fetchContact();
+
 	/**
 	* Returns the user's addresses.
 	*

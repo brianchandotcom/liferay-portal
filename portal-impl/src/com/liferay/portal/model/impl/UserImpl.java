@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Digester;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.RemotePreference;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.SilentPrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -70,7 +70,6 @@ import com.liferay.portal.service.WebsiteLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -98,6 +97,18 @@ public class UserImpl extends UserBaseImpl {
 	@Override
 	public void addRemotePreference(RemotePreference remotePreference) {
 		_remotePreferences.put(remotePreference.getName(), remotePreference);
+	}
+
+	@Override
+	public Contact fetchContact() {
+		try {
+			ShardUtil.pushCompanyService(getCompanyId());
+
+			return ContactLocalServiceUtil.fetchContact(getContactId());
+		}
+		finally {
+			ShardUtil.popCompanyService();
+		}
 	}
 
 	/**
@@ -475,26 +486,22 @@ public class UserImpl extends UserBaseImpl {
 
 		long prefixId = 0;
 
-		try {
-			if (usePrefix) {
-				Contact contact = getContact();
+		if (usePrefix) {
+			Contact contact = fetchContact();
 
+			if (contact != null) {
 				prefixId = contact.getPrefixId();
 			}
-		}
-		catch (PortalException pe) {
 		}
 
 		long suffixId = 0;
 
-		try {
-			if (useSuffix) {
-				Contact contact = getContact();
+		if (useSuffix) {
+			Contact contact = fetchContact();
 
+			if (contact != null) {
 				suffixId = contact.getSuffixId();
 			}
-		}
-		catch (PortalException pe) {
 		}
 
 		return fullNameGenerator.getLocalizedFullName(
@@ -944,8 +951,8 @@ public class UserImpl extends UserBaseImpl {
 
 			emailAddressVerificationRequired = company.isStrangersVerify();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (PortalException pe) {
+			_log.error(pe, pe);
 		}
 
 		if (emailAddressVerificationRequired) {
@@ -997,15 +1004,9 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean isTermsOfUseComplete() {
-		boolean termsOfUseRequired = false;
-
-		try {
-			termsOfUseRequired = PrefsPropsUtil.getBoolean(
-				getCompanyId(), PropsKeys.TERMS_OF_USE_REQUIRED);
-		}
-		catch (SystemException se) {
-			termsOfUseRequired = PropsValues.TERMS_OF_USE_REQUIRED;
-		}
+		boolean termsOfUseRequired = SilentPrefsPropsUtil.getBoolean(
+			getCompanyId(), PropsKeys.TERMS_OF_USE_REQUIRED,
+			PropsValues.TERMS_OF_USE_REQUIRED);
 
 		if (termsOfUseRequired) {
 			return super.isAgreedToTermsOfUse();

@@ -406,7 +406,7 @@ if (Validator.isNull(redirect)) {
 
 				<c:if test="<%= !newPage && approved %>">
 					<div class="alert alert-info">
-						<liferay-ui:message key="a-new-version-will-be-created-automatically-if-this-content-is-modified" />
+						<liferay-ui:message key="a-new-version-is-created-automatically-if-this-content-is-modified" />
 					</div>
 				</c:if>
 

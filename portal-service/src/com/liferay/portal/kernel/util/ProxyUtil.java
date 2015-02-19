@@ -122,7 +122,7 @@ public class ProxyUtil {
 					WeakReference<Constructor<?>> weakReference =
 						new WeakReference<>(constructor);
 
-					_constructors.putIfAbsent(clazz, weakReference);
+					_constructors.put(clazz, weakReference);
 
 					return constructor;
 				}

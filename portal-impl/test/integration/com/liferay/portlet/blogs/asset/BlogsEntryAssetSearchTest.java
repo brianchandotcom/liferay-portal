@@ -79,9 +79,9 @@ public class BlogsEntryAssetSearchTest extends BaseAssetSearchTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		return BlogsTestUtil.addEntry(
+		return BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), titleMap.get(LocaleUtil.getDefault()),
-			true, serviceContext);
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	@Override

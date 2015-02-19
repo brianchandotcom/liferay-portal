@@ -3,7 +3,6 @@
 
 <project>
 	<property name="import.shared" value="asset-publisher-web" />
-	<property name="osgi.ide.dependencies" value="antlr3-runtime.jar" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 </project>

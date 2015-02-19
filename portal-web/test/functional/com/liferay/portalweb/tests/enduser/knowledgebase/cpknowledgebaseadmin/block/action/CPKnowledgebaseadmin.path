@@ -39,6 +39,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIGURATION_ICON</td>
+	<td>//a[contains(@class,'dropdown-toggle')]/i[contains(@class,'icon-cog')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_MENULIST_CONFIGURATION</td>
+	<td>//a/span[contains(.,'Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIRMATION</td>
 	<td></td>
 	<td></td>
@@ -71,6 +81,21 @@
 <tr>
 	<td>SELECT_ALL_CHECKBOX</td>
 	<td>//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIBE_BUTTON</td>
+	<td>//span[contains(.,'Subscribe')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNSUBSCRIBE_BUTTON</td>
+	<td>//span[contains(.,'Unsubscribe')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_BREADCRUMB</td>
+	<td>//li[contains(@class,'active last') and contains(.,'${kbFolderName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -183,6 +208,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ARTICLE_TABLE_CREATE_DATE</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_CREATE_DATE_POPUP</td>
+	<td>//div[contains(@class,'tooltip-inner')]/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ARTICLE_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[9]//a</td>
 	<td></td>
@@ -226,6 +261,63 @@
 <tr>
 	<td>ARTICLE_MENULIST_DELETE</td>
 	<td>//a[contains(@id,'kbArticlesAdminSearchContainer') and contains(@id,'menu_delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER_TABLE-->
+<tr>
+	<td>FOLDER_TABLE_FOLDER</td>
+	<td>//tr[contains(.,'${kbFolderName}')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_AUTHOR</td>
+	<td>//tr[contains(.,'${kbFolderName}')]/td[2]/a[contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_CREATE_DATE</td>
+	<td>//tr[contains(.,'${kbFolderName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_MODIFIED_DATE</td>
+	<td>//tr[contains(.,'${kbFolderName}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_ACTIONS_BUTTON</td>
+	<td>//tr[contains(.,'${kbFolderName}')]/td[5]//span[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER_MENULIST-->
+<tr>
+	<td>FOLDER_MENULIST_EDIT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li[contains(.,'Edit')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENULIST_MOVE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li[contains(.,'Move')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENULIST_DELETE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li[contains(.,'Delete')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENULIST_PERMISSIONS</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li[contains(.,'Permissions')]/a</td>
 	<td></td>
 </tr>
 <tr>

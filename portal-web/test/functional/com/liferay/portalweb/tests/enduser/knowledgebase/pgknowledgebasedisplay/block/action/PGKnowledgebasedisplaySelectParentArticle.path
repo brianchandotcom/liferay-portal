@@ -39,8 +39,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FOLDER_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_kbFolderName}')]//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHOOSE_BUTTON</td>
 	<td>//tr[contains(.,'${key_kbArticleTitle}')]//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_kbFolderName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>

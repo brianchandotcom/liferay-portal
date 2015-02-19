@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TITLE</td>
+	<td>title=${key_pageTitle}</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//b[contains(.,'Your message has been sent.')]</td>
 	<td></td>
@@ -132,6 +142,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GMAIL_HTML_MODE_BACK_TO_INBOX_LINK</td>
+	<td>//a[contains(.,'Back to Inbox')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -160,6 +175,21 @@
 <tr>
 	<td>GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE</td>
 	<td>//form[@method='POST']//table[2]/tbody/tr[contains(.,'${key_gmailAssetType}')]/td[3]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE_1</td>
+	<td>//form[@method='POST']//table[2]/tbody/tr[1][contains(.,'${key_gmailAssetType}')]/td[3]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE_2</td>
+	<td>//form[@method='POST']//table[2]/tbody/tr[2][contains(.,'${key_gmailAssetType}')]/td[3]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE_3</td>
+	<td>//form[@method='POST']//table[2]/tbody/tr[3][contains(.,'${key_gmailAssetType}')]/td[3]/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -201,6 +231,11 @@
 <tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_BODY</td>
 	<td>//tr[contains(.,'${key_gmailAssetType}')]//td/div[@class='msg']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_BODY_ARTICLE_DATE</td>
+	<td>//tr//td/div[contains(.,'${gmailKBArticleDate}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -251,6 +286,11 @@
 <tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_BODY_CLOSING</td>
 	<td>//tr[contains(.,'${key_gmailAssetType}')]//td/div[@class='msg']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_BODY_KB_URL</td>
+	<td>//a[contains(.,'Article Link')]</td>
 	<td></td>
 </tr>
 <tr>

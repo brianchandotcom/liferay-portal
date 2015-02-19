@@ -124,7 +124,7 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 </aui:fieldset>
 
 <aui:fieldset label="virtual-hosts">
-	<liferay-ui:message key="enter-the-public-and-private-virtual-host-that-will-map-to-the-public-and-private-friendly-url" />
+	<liferay-ui:message key="enter-the-public-and-private-virtual-host-that-maps-to-the-public-and-private-friendly-url" />
 
 	<liferay-ui:message arguments="<%= new Object[] {HttpUtil.getProtocol(request), themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic()} %>" key="for-example,-if-the-public-virtual-host-is-www.helloworld.com-and-the-friendly-url-is-/helloworld" translateArguments="<%= false %>" />
 

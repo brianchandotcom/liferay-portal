@@ -43,7 +43,7 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 	<c:if test="<%= liveGroup.isLayoutSetPrototype() && !PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO %>">
 		<div class="alert alert-warning">
-			<liferay-ui:message key="modifying-the-site-template-logo-will-only-affect-sites-that-are-not-yet-created" />
+			<liferay-ui:message key="modifying-the-site-template-logo-only-affects-sites-that-are-not-yet-created" />
 		</div>
 	</c:if>
 

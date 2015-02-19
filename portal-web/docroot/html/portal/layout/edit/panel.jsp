@@ -33,7 +33,7 @@ if (selLayout != null) {
 <aui:input cssClass="layout-description" id="descriptionPanel" label="description" name="TypeSettingsProperties--description--" type="textarea" value="<%= description %>" wrap="soft" />
 
 <div class="alert alert-info">
-	<liferay-ui:message key="select-the-applications-that-will-be-available-in-the-panel" />
+	<liferay-ui:message key="select-the-applications-that-are-available-in-the-panel" />
 </div>
 
 <aui:input id='<%= HtmlUtil.escapeAttribute(idPrefix) + "panelSelectedPortlets" %>' name="TypeSettingsProperties--panelSelectedPortlets--" type="hidden" value="<%= panelSelectedPortlets %>" />

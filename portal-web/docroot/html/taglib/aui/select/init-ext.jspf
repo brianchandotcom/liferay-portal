@@ -29,7 +29,7 @@ if (Validator.isNull(label) && changesContext) {
 	sb.append(LanguageUtil.get(request, title));
 	sb.append(StringPool.SPACE);
 	sb.append(StringPool.OPEN_PARENTHESIS);
-	sb.append(LanguageUtil.get(request, "changing-the-value-of-this-field-will-reload-the-page"));
+	sb.append(LanguageUtil.get(request, "changing-the-value-of-this-field-reloads-the-page"));
 	sb.append(StringPool.CLOSE_PARENTHESIS);
 
 	title = sb.toString();

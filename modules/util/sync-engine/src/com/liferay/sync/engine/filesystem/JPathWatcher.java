@@ -207,17 +207,18 @@ public class JPathWatcher extends Watcher {
 	}
 
 	@Override
-	protected void initWatchService() {
+	protected void init() {
 		FileSystem fileSystem = FileSystems.getDefault();
 
 		_watchService = fileSystem.newWatchService();
+
+		_filePaths = new BidirectionalMap<>();
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		JPathWatcher.class);
 
-	private final BidirectionalMap<WatchKey, Path> _filePaths =
-		new BidirectionalMap<>();
+	private BidirectionalMap<WatchKey, Path> _filePaths;
 	private WatchService _watchService;
 
 }

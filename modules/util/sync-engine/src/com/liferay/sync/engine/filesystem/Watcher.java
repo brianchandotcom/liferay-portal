@@ -59,7 +59,7 @@ public abstract class Watcher implements Runnable {
 		_baseFilePath = filePath;
 		_watchEventListener = watchEventListener;
 
-		initWatchService();
+		init();
 
 		walkFileTree(_baseFilePath);
 
@@ -197,7 +197,7 @@ public abstract class Watcher implements Runnable {
 		return _failedFilePaths;
 	}
 
-	protected abstract void initWatchService();
+	protected abstract void init();
 
 	protected boolean isIgnoredFilePath(Path filePath) {
 		if (Files.notExists(filePath)) {

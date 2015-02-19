@@ -134,7 +134,7 @@ public class BarbaryWatcher extends Watcher {
 	}
 
 	@Override
-	protected void initWatchService() {
+	protected void init() {
 		_watchService = WatchService.newWatchService();
 	}
 

@@ -56,7 +56,10 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -954,15 +957,54 @@ public abstract class BaseAssetSearchTestCase {
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
 				_group1.getGroupId(), new String[]{getBaseModelClassName()});
 
-		String[] titles = {
-			"open", "liferay", "social", "osgi", "content", "life"
+		String[] defaultTitles = {
+			"open", "liferay", "content", "social", "osgi", "life"
 		};
 
-		String[] orderedTitles = {
+		String[] frenchTitles = {
+			"ouvert", "liferay", "content", "social", "osgi", "vie"
+		};
+
+		List<Map<Locale, String>> titleMaps = new ArrayList<>();
+
+		for (int i = 0; i < defaultTitles.length; i++) {
+			Map<Locale, String> titleMap = new HashMap<>();
+
+			titleMap.put(LocaleUtil.getDefault(), defaultTitles[i]);
+			titleMap.put(LocaleUtil.FRANCE, frenchTitles[i]);
+
+			titleMaps.add(titleMap);
+		}
+
+		String[] defaultOrderedTitles = {
 			"content", "life", "liferay", "open", "osgi", "social"
 		};
 
-		testOrderByTitle(assetEntryQuery, "asc", titles, orderedTitles);
+		String[] frenchOrderedTitles = {
+			"content", "liferay", "osgi", "ouvert", "social", "vie"
+		};
+
+		List<Map<Locale, String>> orderedTitleMaps = new ArrayList<>();
+
+		for (int i = 0; i < defaultOrderedTitles.length; i++) {
+			Map<Locale, String> titleMap = new HashMap<>();
+
+			titleMap.put(LocaleUtil.getDefault(), defaultOrderedTitles[i]);
+
+			String orderedTitle = frenchOrderedTitles[i];
+
+			if (!isLocalizableTitle()) {
+				orderedTitle = defaultOrderedTitles[i];
+			}
+
+			titleMap.put(LocaleUtil.FRANCE, orderedTitle);
+
+			orderedTitleMaps.add(titleMap);
+		}
+
+		testOrderByTitle(
+			assetEntryQuery, "asc", titleMaps, orderedTitleMaps,
+			new Locale[] {LocaleUtil.getDefault(), LocaleUtil.FRANCE});
 	}
 
 	@Test
@@ -971,15 +1013,54 @@ public abstract class BaseAssetSearchTestCase {
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
 				_group1.getGroupId(), new String[]{getBaseModelClassName()});
 
-		String[] titles = {
-			"open", "liferay", "social", "osgi", "content", "life"
+		String[] defaultTitles = {
+			"open", "liferay", "content", "social", "osgi", "life"
 		};
 
-		String[] orderedTitles = {
+		String[] frenchTitles = {
+			"ouvert", "liferay", "content", "social", "osgi", "vie"
+		};
+
+		List<Map<Locale, String>> titleMaps = new ArrayList<>();
+
+		for (int i = 0; i < defaultTitles.length; i++) {
+			Map<Locale, String> titleMap = new HashMap<>();
+
+			titleMap.put(LocaleUtil.getDefault(), defaultTitles[i]);
+			titleMap.put(LocaleUtil.FRANCE, frenchTitles[i]);
+
+			titleMaps.add(titleMap);
+		}
+
+		String[] defaultOrderedTitles = {
 			"social", "osgi", "open", "liferay", "life", "content"
 		};
 
-		testOrderByTitle(assetEntryQuery, "desc", titles, orderedTitles);
+		String[] frenchOrderedTitles = {
+			"vie", "social", "ouvert", "osgi", "liferay", "content"
+		};
+
+		List<Map<Locale, String>> orderedTitleMaps = new ArrayList<>();
+
+		for (int i = 0; i < defaultOrderedTitles.length; i++) {
+			Map<Locale, String> titleMap = new HashMap<>();
+
+			titleMap.put(LocaleUtil.getDefault(), defaultOrderedTitles[i]);
+
+			String orderedTitle = frenchOrderedTitles[i];
+
+			if (!isLocalizableTitle()) {
+				orderedTitle = defaultOrderedTitles[i];
+			}
+
+			titleMap.put(LocaleUtil.FRANCE, orderedTitle);
+
+			orderedTitleMaps.add(titleMap);
+		}
+
+		testOrderByTitle(
+			assetEntryQuery, "desc", titleMaps, orderedTitleMaps,
+			new Locale[] {LocaleUtil.getDefault(), LocaleUtil.FRANCE});
 	}
 
 	@Test
@@ -1014,6 +1095,11 @@ public abstract class BaseAssetSearchTestCase {
 
 		testPaginationType(assetEntryQuery, 5);
 	}
+
+	protected abstract BaseModel<?> addBaseModel(
+			BaseModel<?> parentBaseModel, Map<Locale, String> titleMap,
+			ServiceContext serviceContext)
+		throws Exception;
 
 	protected BaseModel<?> addBaseModel(
 			BaseModel<?> parentBaseModel, String keywords, Date expirationDate,
@@ -1107,6 +1193,10 @@ public abstract class BaseAssetSearchTestCase {
 	}
 
 	protected abstract String getSearchKeywords();
+
+	protected boolean isLocalizableTitle() {
+		return true;
+	}
 
 	protected AssetEntry[] search(
 			AssetEntryQuery assetEntryQuery, SearchContext searchContext)
@@ -1323,7 +1413,8 @@ public abstract class BaseAssetSearchTestCase {
 
 	protected void testOrderByTitle(
 			AssetEntryQuery assetEntryQuery, String orderByType,
-			String[] titles, String[] orderedTitles)
+			List<Map<Locale, String>> titleMaps,
+			List<Map<Locale, String>> orderedTitleMaps, Locale[] locales)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -1332,25 +1423,33 @@ public abstract class BaseAssetSearchTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group1, serviceContext);
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
-
-		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
-
-		for (String title : titles) {
-			addBaseModel(parentBaseModel, title, serviceContext);
+		for (Map<Locale, String> titleMap : titleMaps) {
+			addBaseModel(parentBaseModel, titleMap, serviceContext);
 		}
 
 		assetEntryQuery.setOrderByCol1("title");
 		assetEntryQuery.setOrderByType1(orderByType);
 
-		AssetEntry[] assetEntries = search(assetEntryQuery, searchContext);
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 
-		for (int i = 0; i < assetEntries.length; i++) {
-			AssetEntry assetEntry = assetEntries[i];
+		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
-			String field = assetEntry.getTitle(LocaleUtil.getDefault());
+		AssetEntry[] assetEntries;
 
-			Assert.assertEquals(field, orderedTitles[i]);
+		for (Locale locale : locales) {
+			searchContext.setLocale(locale);
+
+			assetEntries = search(assetEntryQuery, searchContext);
+
+			for (int i = 0; i < assetEntries.length; i++) {
+				AssetEntry assetEntry = assetEntries[i];
+
+				String field = assetEntry.getTitle(locale);
+
+				Map<Locale, String> orderedTitleMap = orderedTitleMaps.get(i);
+
+				Assert.assertEquals(orderedTitleMap.get(locale), field);
+			}
 		}
 	}
 

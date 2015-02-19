@@ -222,6 +222,11 @@ public class PortletAppImpl implements PortletApp {
 		_warFile = warFile;
 	}
 
+	@Override
+	public void removePortlet(Portlet portletModel) {
+		_portlets.remove(portletModel);
+	}
+
 	private final Map<String, String[]> _containerRuntimeOptions =
 		new HashMap<>();
 	private String _contextPath = StringPool.BLANK;

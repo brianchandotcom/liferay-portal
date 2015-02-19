@@ -87,4 +87,5 @@ public interface PortletApp extends Serializable {
 
 	public void setWARFile(boolean warFile);
 
+	public void removePortlet(Portlet portletModel);
 }

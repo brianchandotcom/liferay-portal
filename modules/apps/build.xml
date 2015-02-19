@@ -19,6 +19,7 @@
 		<dirset dir="iframe" includes="*" />
 		<dirset dir="invitation" includes="*" />
 		<dirset dir="journal" includes="*" />
+		<dirset dir="language" includes="*" />
 		<dirset dir="loan-calculator" includes="*" />
 		<dirset dir="message-boards" includes="*" />
 		<dirset dir="navigation" includes="*" />

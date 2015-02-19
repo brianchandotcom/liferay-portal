@@ -6,6 +6,9 @@ Import-Package:\
 	!com.sun.org.apache.xpath.internal,\
 	!com.sun.org.apache.xpath.internal.objects,\
 	!org.apache.log,\
+	!org.mozilla.javascript,\
+	!org.python.core,\
+	!org.python.util,\
 	!org.slf4j.spi,\
 	!org.zeroturnaround.javarebel,\
 	*

@@ -382,6 +382,10 @@ public class LayoutStagedModelDataHandler
 			if (existingLayout == null) {
 				layoutId = LayoutLocalServiceUtil.getNextLayoutId(
 					groupId, privateLayout);
+
+				if (Validator.isNumber(friendlyURL.substring(1))) {
+					friendlyURL = StringPool.SLASH + layoutId;
+				}
 			}
 		}
 		else if (layoutsImportMode.equals(
@@ -444,6 +448,10 @@ public class LayoutStagedModelDataHandler
 			if (existingLayout == null) {
 				layoutId = LayoutLocalServiceUtil.getNextLayoutId(
 					groupId, privateLayout);
+
+				if (Validator.isNumber(friendlyURL.substring(1))) {
+					friendlyURL = StringPool.SLASH + layoutId;
+				}
 			}
 		}
 
@@ -482,6 +490,10 @@ public class LayoutStagedModelDataHandler
 
 				layoutId = LayoutLocalServiceUtil.getNextLayoutId(
 					groupId, privateLayout);
+
+				if (Validator.isNumber(friendlyURL.substring(1))) {
+					friendlyURL = StringPool.SLASH + layoutId;
+				}
 			}
 			else {
 				importedLayout.setCreateDate(layout.getCreateDate());

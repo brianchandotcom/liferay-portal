@@ -15,12 +15,14 @@
 package com.liferay.language.web.upgrade;
 
 import com.liferay.language.web.constants.LanguagePortletKeys;
+import com.liferay.language.web.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -29,8 +31,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Raymond Augé
- * @author Peter Fellwock
+ * @author Eudaldo Alonso
+ * @author Julio Camarero
  */
 @Component(
 	immediate = true, service = LanguageWebUpgrade.class
@@ -50,21 +52,25 @@ public class LanguageWebUpgrade {
 
 	@Activate
 	protected void upgrade() throws PortalException {
-		UpgradePortletId upgradePortletId = new UpgradePortletId() {
+		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
-			@Override
-			protected String[][] getRenamePortletIdsArray() {
-				return new String[][] {
-					new String[] {"82", LanguagePortletKeys.LANGUAGE}
-				};
+		upgradeProcesses.add(
+			new UpgradePortletId() {
+
+				@Override
+				protected String[][] getRenamePortletIdsArray() {
+					return new String[][] {
+						new String[] {"82", LanguagePortletKeys.LANGUAGE}
+					};
+				}
+
 			}
+		);
 
-		};
+		upgradeProcesses.add(new UpgradePortletPreferences());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.language.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
-			false);
+			"com.liferay.language.web", upgradeProcesses, 1, 0, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

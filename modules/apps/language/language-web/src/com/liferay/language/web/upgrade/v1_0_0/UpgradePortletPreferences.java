@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.language.web.upgrade.v1_0_0;
 
+import com.liferay.language.web.constants.LanguagePortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.taglib.ui.LanguageTag;
 
@@ -26,11 +26,11 @@ import javax.portlet.ReadOnlyException;
 /**
  * @author Eduardo Garcia
  */
-public class UpgradeLanguagePreferences extends BaseUpgradePortletPreferences {
+public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String[] getPortletIds() {
-		return new String[] {PortletKeys.LANGUAGE};
+		return new String[] {LanguagePortletKeys.LANGUAGE};
 	}
 
 	@SuppressWarnings("deprecation")

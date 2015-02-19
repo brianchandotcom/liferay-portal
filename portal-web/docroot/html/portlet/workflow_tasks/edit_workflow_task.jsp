@@ -55,36 +55,6 @@ if ((workflowTask.getAssigneeUserId() == user.getUserId()) && !workflowTask.isCo
 
 PortletURL editPortletURL = workflowHandler.getURLEdit(classPK, liferayPortletRequest, liferayPortletResponse);
 PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, liferayPortletRequest, liferayPortletResponse);
-
-String viewFullContentURLString = null;
-
-if ((assetRenderer != null) && assetRenderer.isPreviewInContext()) {
-	viewFullContentURLString = assetRenderer.getURLViewInContext((LiferayPortletRequest)renderRequest, (LiferayPortletResponse)renderResponse, null);
-}
-else {
-	String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.Action.VIEW);
-
-	PortletURL viewFullContentURL = PortletURLFactoryUtil.create(request, portletId, plid, PortletRequest.RENDER_PHASE);
-
-	viewFullContentURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view_content.jsp");
-	viewFullContentURL.setParameter("redirect", currentURL);
-
-	if (assetEntry != null) {
-		viewFullContentURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
-		viewFullContentURL.setParameter("assetEntryVersionId", String.valueOf(classPK));
-	}
-
-	if (assetRendererFactory != null) {
-		viewFullContentURL.setParameter("type", assetRendererFactory.getType());
-	}
-
-	viewFullContentURL.setParameter("showEditURL", String.valueOf(showEditURL));
-	viewFullContentURL.setParameter("workflowAssetPreview", Boolean.TRUE.toString());
-
-	viewFullContentURLString = viewFullContentURL.toString();
-}
-
-request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 %>
 
 <portlet:renderURL var="backURL">
@@ -186,7 +156,20 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 					<div class="task-content-actions">
 						<liferay-ui:icon-list>
 							<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
-								<liferay-ui:icon iconCssClass="icon-search" message="view[action]" method="get" target='<%= assetRenderer.isPreviewInContext() ? "_blank" : StringPool.BLANK %>' url="<%= viewFullContentURLString %>" />
+								<portlet:renderURL var="viewFullContentURL">
+									<portlet:param name="struts_action" value="/workflow_tasks/view_content" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+
+									<c:if test="<%= assetEntry != null %>">
+										<portlet:param name="assetEntryId" value="<%= String.valueOf(assetEntry.getEntryId()) %>" />
+										<portlet:param name="assetEntryVersionId" value="<%= String.valueOf(classPK) %>" />
+									</c:if>
+
+									<portlet:param name="type" value="<%= assetRendererFactory.getType() %>" />
+									<portlet:param name="showEditURL" value="<%= String.valueOf(showEditURL) %>" />
+								</portlet:renderURL>
+
+								<liferay-ui:icon iconCssClass="icon-search" message="view[action]" method="get" target='<%= assetRenderer.isPreviewInContext() ? "_blank" : StringPool.BLANK %>' url="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext((LiferayPortletRequest)renderRequest, (LiferayPortletResponse)renderResponse, null) : viewFullContentURL.toString() %>" />
 
 								<c:if test="<%= viewDiffsPortletURL != null %>">
 
@@ -240,20 +223,10 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 						/>
 					</h3>
 
-					<%
-					String path = workflowHandler.render(classPK, renderRequest, renderResponse, AssetRenderer.TEMPLATE_ABSTRACT);
-
-					request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
-					%>
-
-					<c:choose>
-						<c:when test="<%= path == null %>">
-							<%= HtmlUtil.escape(workflowHandler.getSummary(classPK, renderRequest, renderResponse)) %>
-						</c:when>
-						<c:otherwise>
-							<liferay-util:include page="<%= path %>" portletId="<%= assetRendererFactory.getPortletId() %>" />
-						</c:otherwise>
-					</c:choose>
+					<liferay-ui:asset-display
+						assetRenderer="<%= assetRenderer %>"
+						template="<%= AssetRenderer.TEMPLATE_ABSTRACT %>"
+					/>
 
 					<%
 					String[] metadataFields = new String[] {"author", "categories", "tags"};

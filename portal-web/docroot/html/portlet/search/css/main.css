@@ -1,4 +1,14 @@
 .portlet-search {
+	.asset-actions {
+		float: right;
+		font-size: 11px;
+		font-weight: normal;
+
+		.icon-edit-sign {
+			font-size: 2em;
+		}
+	}
+
 	.entry-tags {
 		margin: 3px 0 0;
 	}

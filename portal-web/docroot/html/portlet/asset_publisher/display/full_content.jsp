@@ -43,7 +43,6 @@ String languageId = LanguageUtil.getLanguageId(request);
 
 String title = assetRenderer.getTitle(LocaleUtil.fromLanguageId(languageId));
 
-boolean show = ((Boolean)request.getAttribute("view.jsp-show")).booleanValue();
 boolean print = ((Boolean)request.getAttribute("view.jsp-print")).booleanValue();
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
@@ -154,18 +153,12 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			/>
 		</c:if>
 
-		<%
-		String path = assetRenderer.render(renderRequest, renderResponse, AssetRenderer.TEMPLATE_FULL_CONTENT);
-
-		request.setAttribute(WebKeys.ASSET_RENDERER_FACTORY, assetRendererFactory);
-		request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
-		%>
-
-		<liferay-util:include page="<%= path %>" portletId="<%= assetRendererFactory.getPortletId() %>">
-			<liferay-util:param name="showComments" value="<%= Boolean.FALSE.toString() %>" />
-			<liferay-util:param name="showExtraInfo" value="<%= String.valueOf(assetPublisherDisplayContext.isShowExtraInfo()) %>" />
-			<liferay-util:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
-		</liferay-util:include>
+		<liferay-ui:asset-display
+			assetEntry="<%= assetEntry %>"
+			assetRenderer="<%= assetRenderer %>"
+			assetRendererFactory="<%= assetRendererFactory %>"
+			showExtraInfo="<%= assetPublisherDisplayContext.isShowExtraInfo() %>"
+		/>
 
 		<c:if test="<%= assetPublisherDisplayContext.isEnableFlags() %>">
 			<div class="asset-flag">
@@ -232,14 +225,12 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		</c:if>
 	</div>
 
-	<c:if test="<%= show %>">
-		<liferay-ui:asset-metadata
-			className="<%= assetEntry.getClassName() %>"
-			classPK="<%= assetEntry.getClassPK() %>"
-			filterByMetadata="<%= true %>"
-			metadataFields="<%= assetPublisherDisplayContext.getMetadataFields() %>"
-		/>
-	</c:if>
+	<liferay-ui:asset-metadata
+		className="<%= assetEntry.getClassName() %>"
+		classPK="<%= assetEntry.getClassPK() %>"
+		filterByMetadata="<%= true %>"
+		metadataFields="<%= assetPublisherDisplayContext.getMetadataFields() %>"
+	/>
 </div>
 
 <c:if test="<%= !assetPublisherDisplayContext.isShowAssetTitle() && ((assetEntryIndex + 1) < results.size()) %>">

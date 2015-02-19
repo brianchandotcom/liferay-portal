@@ -29,7 +29,9 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -57,6 +59,7 @@ import java.awt.image.RenderedImage;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.PushbackInputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -162,6 +165,25 @@ public class UploadImageAction extends PortletAction {
 				FileEntry tempFileEntry = getTempImageFileEntry(
 					resourceRequest);
 
+				InputStream inputStream = tempFileEntry.getContentStream();
+
+				PushbackInputStream pbis = new PushbackInputStream(
+					inputStream, 3);
+
+				byte[] magicBytes = new byte[3];
+
+				pbis.read(magicBytes);
+				pbis.unread(magicBytes);
+
+				inputStream = pbis;
+
+				if (ArrayUtil.containsAll(_flashMagicBytes[0], magicBytes) ||
+					ArrayUtil.containsAll(_flashMagicBytes[1], magicBytes) ||
+					ArrayUtil.containsAll(_flashMagicBytes[2], magicBytes)) {
+
+					return;
+				}
+
 				serveTempImageFile(
 					resourceResponse, tempFileEntry.getContentStream());
 			}
@@ -184,11 +206,21 @@ public class UploadImageAction extends PortletAction {
 
 		String contentType = uploadPortletRequest.getContentType("fileName");
 
+		String fileName = uploadPortletRequest.getFileName("fileName");
+
+		File file = uploadPortletRequest.getFile("fileName");
+
+		String mimeType = MimeTypesUtil.getContentType(file, fileName);
+
+		if (!StringUtil.equalsIgnoreCase(
+				ContentTypes.APPLICATION_OCTET_STREAM, mimeType)) {
+
+			contentType = mimeType;
+		}
+
 		if (!MimeTypesUtil.isWebImage(contentType)) {
 			throw new ImageTypeException();
 		}
-
-		String fileName = uploadPortletRequest.getFileName("fileName");
 
 		try {
 			TempFileEntryUtil.deleteTempFileEntry(
@@ -198,18 +230,9 @@ public class UploadImageAction extends PortletAction {
 		catch (Exception e) {
 		}
 
-		InputStream inputStream = null;
-
-		try {
-			inputStream = uploadPortletRequest.getFileAsStream("fileName");
-
-			return TempFileEntryUtil.addTempFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				getTempImageFolderName(), fileName, inputStream, contentType);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
+		return TempFileEntryUtil.addTempFileEntry(
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			getTempImageFolderName(), fileName, file, contentType);
 	}
 
 	protected FileEntry getTempImageFileEntry(PortletRequest portletRequest)
@@ -409,5 +432,8 @@ public class UploadImageAction extends PortletAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UploadImageAction.class);
+
+	private static final byte[][] _flashMagicBytes =
+		{ {0x46, 0x57, 0x53}, {0x43, 0x57, 0x53}, {0x5a, 0x57, 0x53} };
 
 }

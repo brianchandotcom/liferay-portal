@@ -32,7 +32,7 @@ AUI.add(
 						value: {
 							addTemplate: Liferay.Language.get('please-add-a-template-to-render-this-structure'),
 							permissions: Liferay.Language.get('permissions'),
-							saveAsDraftBeforePreview: Liferay.Language.get('in-order-to-preview-your-changes,-the-web-content-will-be-saved-as-a-draft')
+							saveAsDraftBeforePreview: Liferay.Language.get('in-order-to-preview-your-changes,-the-web-content-is-saved-as-a-draft')
 						}
 					}
 				},

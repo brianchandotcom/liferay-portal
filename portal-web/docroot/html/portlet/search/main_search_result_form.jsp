@@ -120,8 +120,6 @@ else if (assetRenderer != null) {
 
 	summary.setHighlight(highlightEnabled);
 	summary.setQueryTerms(queryTerms);
-
-	PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL");
 	%>
 
 	<span class="asset-entry">
@@ -167,6 +165,11 @@ else if (assetRenderer != null) {
 				</c:if>
 
 				<c:if test="<%= assetEntry != null %>">
+
+					<%
+					PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL");
+					%>
+
 					<liferay-ui:asset-tags-summary
 						className="<%= className %>"
 						classPK="<%= classPK %>"

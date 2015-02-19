@@ -66,7 +66,7 @@ public class WorkflowStatusTag extends BaseWorkflowStatusTag {
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
 	private static final String _HELP_MESSAGE_DEFAULT =
-		"a-new-version-will-be-created-automatically-if-this-content-is-" +
+		"a-new-version-is-created-automatically-if-this-content-is-" +
 			"modified";
 
 }

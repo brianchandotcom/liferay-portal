@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.filesystem;
 
+import com.barbarysoftware.watchservice.ClosedWatchServiceException;
 import com.barbarysoftware.watchservice.ExtendedWatchEventKind;
 import com.barbarysoftware.watchservice.StandardWatchEventKind;
 import com.barbarysoftware.watchservice.WatchEvent;
@@ -85,6 +86,9 @@ public class BarbaryWatcher extends Watcher {
 				try {
 					watchKey = _watchService.take();
 				}
+				catch (ClosedWatchServiceException cwse) {
+					break;
+				}
 				catch (Exception e) {
 					if (_logger.isTraceEnabled()) {
 						_logger.trace(e.getMessage(), e);
@@ -99,13 +103,13 @@ public class BarbaryWatcher extends Watcher {
 					WatchEvent<File> watchEvent =
 						(WatchEvent<File>)watchEvents.get(i);
 
-					WatchEvent.Kind<?> kind = watchEvent.kind();
-
 					File file = watchEvent.context();
 
 					if (file == null) {
 						continue;
 					}
+
+					WatchEvent.Kind<?> kind = watchEvent.kind();
 
 					processWatchEvent(kind.name(), file.toPath());
 				}

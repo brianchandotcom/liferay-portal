@@ -16,6 +16,7 @@ package com.liferay.sync.engine.util;
 
 import ch.securityvision.xattrj.Xattrj;
 
+import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncFileService;
 
@@ -28,10 +29,13 @@ import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 
@@ -63,6 +67,79 @@ public class FileUtil {
 		}
 
 		return checksum1.equals(checksum2);
+	}
+
+	public static void fireDeleteEvents(Path filePath) throws IOException {
+		long startTime = System.currentTimeMillis();
+
+		Files.walkFileTree(
+			filePath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+					Path filePath, BasicFileAttributes basicFileAttributes) {
+
+					SyncFile syncFile = SyncFileService.fetchSyncFile(
+						filePath.toString());
+
+					if (syncFile == null) {
+						syncFile = SyncFileService.fetchSyncFile(
+							FileUtil.getFileKey(filePath));
+					}
+
+					if (syncFile != null) {
+						syncFile.setLocalSyncTime(System.currentTimeMillis());
+
+						SyncFileService.update(syncFile);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+					Path filePath, BasicFileAttributes basicFileAttributes) {
+
+					SyncFile syncFile = SyncFileService.fetchSyncFile(
+						filePath.toString());
+
+					if (syncFile == null) {
+						syncFile = SyncFileService.fetchSyncFile(
+							FileUtil.getFileKey(filePath));
+					}
+
+					if (syncFile != null) {
+						syncFile.setLocalSyncTime(System.currentTimeMillis());
+
+						SyncFileService.update(syncFile);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			}
+		);
+
+		List<SyncFile> deletedSyncFiles = SyncFileService.findSyncFiles(
+			filePath.toString(), startTime);
+
+		for (SyncFile deletedSyncFile : deletedSyncFiles) {
+			if (deletedSyncFile.getTypePK() == 0) {
+				SyncFileService.deleteSyncFile(deletedSyncFile);
+
+				continue;
+			}
+
+			if (deletedSyncFile.isFolder()) {
+				FileEventUtil.deleteFolder(
+					deletedSyncFile.getSyncAccountId(), deletedSyncFile);
+			}
+			else {
+				FileEventUtil.deleteFile(
+					deletedSyncFile.getSyncAccountId(), deletedSyncFile);
+			}
+		}
 	}
 
 	public static String getChecksum(Path filePath) throws IOException {

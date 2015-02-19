@@ -89,6 +89,8 @@ public class PACLAggregateTest {
 		public void run(RunNotifier runNotifier) {
 			_runNotifier = runNotifier;
 
+			System.setProperty("catalina.base", ".");
+
 			super.run(runNotifier);
 		}
 

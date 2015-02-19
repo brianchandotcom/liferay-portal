@@ -220,6 +220,11 @@ public class BundlePortletApp implements PortletApp, ServletContextListener {
 		_portletApp.setWARFile(warFile);
 	}
 
+	@Override
+	public void removePortlet(Portlet portletModel) {
+		_portletApp.removePortlet(portletModel);
+	}
+
 	private final String _contextPath;
 	private final BundlePluginPackage _pluginPackage;
 	private final Portlet _portalPortletModel;

@@ -51,7 +51,6 @@ for (int assetEntryIndex = 0; assetEntryIndex < results.size(); assetEntryIndex+
 
 	request.setAttribute("view.jsp-title", title);
 
-	request.setAttribute("view.jsp-show", Boolean.TRUE);
 	request.setAttribute("view.jsp-print", Boolean.FALSE);
 
 	try {

@@ -24,8 +24,15 @@ Document document = (Document)row.getObject();
 String className = document.get(Field.ENTRY_CLASS_NAME);
 
 String downloadURL = null;
-String returnToFullPageURL = (String)request.getAttribute("search.jsp-returnToFullPageURL");
-PortletURL viewFullContentURL = null;
+
+PortletURL viewFullContentURL = renderResponse.createRenderURL();
+
+viewFullContentURL.setPortletMode(PortletMode.VIEW);
+viewFullContentURL.setWindowState(WindowState.MAXIMIZED);
+
+viewFullContentURL.setParameter("struts_action", "/search/view_content");
+viewFullContentURL.setParameter("redirect", currentURL);
+
 String viewURL = null;
 
 AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
@@ -49,24 +56,8 @@ if (assetRendererFactory != null) {
 
 	downloadURL = assetRenderer.getURLDownload(themeDisplay);
 
-	viewFullContentURL = _getViewFullContentURL(request, themeDisplay, className, document);
-
-	viewFullContentURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view_content.jsp");
-
-	if (Validator.isNotNull(returnToFullPageURL)) {
-		viewFullContentURL.setParameter("returnToFullPageURL", returnToFullPageURL);
-	}
-
 	viewFullContentURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
 	viewFullContentURL.setParameter("type", assetRendererFactory.getType());
-
-	if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
-		if ((assetRenderer.getGroupId() > 0) && (assetRenderer.getGroupId() != scopeGroupId)) {
-			viewFullContentURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
-		}
-
-		viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
-	}
 
 	if (viewInContext || !assetEntry.isVisible()) {
 		inheritRedirect = true;
@@ -84,12 +75,6 @@ if (assetRendererFactory != null) {
 	}
 }
 else {
-	viewFullContentURL = _getViewFullContentURL(request, themeDisplay, className, document);
-
-	if (Validator.isNotNull(returnToFullPageURL)) {
-		viewFullContentURL.setParameter("returnToFullPageURL", returnToFullPageURL);
-	}
-
 	viewURL = viewFullContentURL.toString();
 }
 

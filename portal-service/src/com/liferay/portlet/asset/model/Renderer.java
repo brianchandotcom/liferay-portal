@@ -12,35 +12,38 @@
  * details.
  */
 
-package com.liferay.portal.kernel.trash;
+package com.liferay.portlet.asset.model;
 
-import com.liferay.portlet.asset.model.Renderer;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 /**
- * @author Zsolt Berentey
+ * @author Julio Camarero
  */
-public interface TrashRenderer extends Renderer {
+public interface Renderer {
 
-	public String getNewName(String oldName, String token);
+	public String getClassName();
 
-	public String getPortletId();
+	public long getClassPK();
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(PortletRequest,
-	 *             PortletResponse)}
-	 */
-	@Deprecated
-	public String getSummary(Locale locale);
+	public String getIconCssClass() throws PortalException;
 
-	public String getType();
+	public String getIconPath(PortletRequest portletRequest);
 
-	public String renderActions(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+	public String getSummary(
+		PortletRequest portletRequest, PortletResponse portletResponse);
+
+	public String getTitle(Locale locale);
+
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			String template)
 		throws Exception;
 
 }

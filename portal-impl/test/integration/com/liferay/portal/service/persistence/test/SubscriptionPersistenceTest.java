@@ -117,6 +117,8 @@ public class SubscriptionPersistenceTest {
 
 		newSubscription.setMvccVersion(RandomTestUtil.nextLong());
 
+		newSubscription.setGroupId(RandomTestUtil.nextLong());
+
 		newSubscription.setCompanyId(RandomTestUtil.nextLong());
 
 		newSubscription.setUserId(RandomTestUtil.nextLong());
@@ -141,6 +143,8 @@ public class SubscriptionPersistenceTest {
 			newSubscription.getMvccVersion());
 		Assert.assertEquals(existingSubscription.getSubscriptionId(),
 			newSubscription.getSubscriptionId());
+		Assert.assertEquals(existingSubscription.getGroupId(),
+			newSubscription.getGroupId());
 		Assert.assertEquals(existingSubscription.getCompanyId(),
 			newSubscription.getCompanyId());
 		Assert.assertEquals(existingSubscription.getUserId(),
@@ -167,6 +171,19 @@ public class SubscriptionPersistenceTest {
 			_persistence.countByUserId(RandomTestUtil.nextLong());
 
 			_persistence.countByUserId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_U() {
+		try {
+			_persistence.countByG_U(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
+
+			_persistence.countByG_U(0L, 0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -261,9 +278,9 @@ public class SubscriptionPersistenceTest {
 
 	protected OrderByComparator<Subscription> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Subscription",
-			"mvccVersion", true, "subscriptionId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"mvccVersion", true, "subscriptionId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true,
 			"frequency", true);
 	}
 
@@ -495,6 +512,8 @@ public class SubscriptionPersistenceTest {
 		Subscription subscription = _persistence.create(pk);
 
 		subscription.setMvccVersion(RandomTestUtil.nextLong());
+
+		subscription.setGroupId(RandomTestUtil.nextLong());
 
 		subscription.setCompanyId(RandomTestUtil.nextLong());
 

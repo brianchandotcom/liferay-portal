@@ -185,6 +185,9 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	public void deleteSubscriptions(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public void deleteSubscriptions(long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
 	/**

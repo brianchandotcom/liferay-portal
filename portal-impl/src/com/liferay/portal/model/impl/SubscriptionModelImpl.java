@@ -67,6 +67,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "mvccVersion", Types.BIGINT },
 			{ "subscriptionId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
@@ -76,7 +77,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 			{ "classPK", Types.BIGINT },
 			{ "frequency", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Subscription (mvccVersion LONG default 0,subscriptionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,frequency VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Subscription (mvccVersion LONG default 0,subscriptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,frequency VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Subscription";
 	public static final String ORDER_BY_JPQL = " ORDER BY subscription.subscriptionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Subscription.subscriptionId ASC";
@@ -95,8 +96,9 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
-	public static final long USERID_COLUMN_BITMASK = 8L;
-	public static final long SUBSCRIPTIONID_COLUMN_BITMASK = 16L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long USERID_COLUMN_BITMASK = 16L;
+	public static final long SUBSCRIPTIONID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Subscription"));
 
@@ -139,6 +141,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("subscriptionId", getSubscriptionId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -166,6 +169,12 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 		if (subscriptionId != null) {
 			setSubscriptionId(subscriptionId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -235,6 +244,28 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	@Override
 	public void setSubscriptionId(long subscriptionId) {
 		_subscriptionId = subscriptionId;
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@Override
@@ -444,6 +475,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 		subscriptionImpl.setMvccVersion(getMvccVersion());
 		subscriptionImpl.setSubscriptionId(getSubscriptionId());
+		subscriptionImpl.setGroupId(getGroupId());
 		subscriptionImpl.setCompanyId(getCompanyId());
 		subscriptionImpl.setUserId(getUserId());
 		subscriptionImpl.setUserName(getUserName());
@@ -514,6 +546,10 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	public void resetOriginalValues() {
 		SubscriptionModelImpl subscriptionModelImpl = this;
 
+		subscriptionModelImpl._originalGroupId = subscriptionModelImpl._groupId;
+
+		subscriptionModelImpl._setOriginalGroupId = false;
+
 		subscriptionModelImpl._originalCompanyId = subscriptionModelImpl._companyId;
 
 		subscriptionModelImpl._setOriginalCompanyId = false;
@@ -540,6 +576,8 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		subscriptionCacheModel.mvccVersion = getMvccVersion();
 
 		subscriptionCacheModel.subscriptionId = getSubscriptionId();
+
+		subscriptionCacheModel.groupId = getGroupId();
 
 		subscriptionCacheModel.companyId = getCompanyId();
 
@@ -588,12 +626,14 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", subscriptionId=");
 		sb.append(getSubscriptionId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", userId=");
@@ -617,7 +657,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Subscription");
@@ -630,6 +670,10 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		sb.append(
 			"<column><column-name>subscriptionId</column-name><column-value><![CDATA[");
 		sb.append(getSubscriptionId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -675,6 +719,9 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		};
 	private long _mvccVersion;
 	private long _subscriptionId;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;

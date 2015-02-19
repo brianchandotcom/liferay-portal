@@ -234,7 +234,7 @@
 >
 	<#local subscriptionModel = dataFactory.newSubscriptionModel(_entry)>
 
-	insert into Subscription values (${subscriptionModel.mvccVersion}, ${subscriptionModel.subscriptionId}, ${subscriptionModel.companyId}, ${subscriptionModel.userId}, '${subscriptionModel.userName}', '${dataFactory.getDateString(subscriptionModel.createDate)}', '${dataFactory.getDateString(subscriptionModel.modifiedDate)}', '${subscriptionModel.classNameId}', ${subscriptionModel.classPK}, '${subscriptionModel.frequency}');
+	insert into Subscription values (${subscriptionModel.mvccVersion}, ${subscriptionModel.subscriptionId}, ${subscriptionModel.groupId}, ${subscriptionModel.companyId}, ${subscriptionModel.userId}, '${subscriptionModel.userName}', '${dataFactory.getDateString(subscriptionModel.createDate)}', '${dataFactory.getDateString(subscriptionModel.modifiedDate)}', '${subscriptionModel.classNameId}', ${subscriptionModel.classPK}, '${subscriptionModel.frequency}');
 </#macro>
 
 <#macro insertUser

@@ -22,6 +22,7 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 String redirect = (String)request.getAttribute("configuration.jsp-redirect");
 String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
 String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle");
+long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupId, layout);
 %>
 
 <liferay-ui:tabs
@@ -113,7 +114,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
 						ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
 
-						List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getSharedContentSiteGroupIds(company.getCompanyId(), scopeGroupId, user.getUserId()), locale);
+						List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(ArrayUtil.unique(PortalUtil.getCurrentAndAncestorSiteGroupIds(groupIds)), locale);
 
 						if (classTypes.isEmpty()) {
 							continue;
@@ -572,7 +573,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		<%
 		ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
 
-		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getSharedContentSiteGroupIds(company.getCompanyId(), scopeGroupId, user.getUserId()), locale);
+		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(ArrayUtil.unique(PortalUtil.getCurrentAndAncestorSiteGroupIds(groupIds)), locale);
 
 		if (assetAvailableClassTypes.isEmpty()) {
 			continue;

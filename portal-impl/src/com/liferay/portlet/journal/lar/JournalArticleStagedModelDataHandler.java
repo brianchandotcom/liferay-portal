@@ -273,6 +273,12 @@ public class JournalArticleStagedModelDataHandler
 	protected boolean countStagedModel(
 		PortletDataContext portletDataContext, JournalArticle article) {
 
+		if (article.getClassNameId() ==
+			PortalUtil.getClassNameId(DDMStructure.class)) {
+
+			return false;
+		}
+
 		return !portletDataContext.isModelCounted(
 			JournalArticleResource.class.getName(),
 			article.getResourcePrimKey());
@@ -306,13 +312,19 @@ public class JournalArticleStagedModelDataHandler
 			portletDataContext, article, ddmStructure,
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 
-		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-			article.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class),
-			article.getDDMTemplateKey(), true);
+		if (article.getClassNameId() !=
+			PortalUtil.getClassNameId(DDMStructure.class)) {
 
-		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, article, ddmTemplate,
-			PortletDataContext.REFERENCE_TYPE_STRONG);
+			DDMTemplate ddmTemplate =
+				DDMTemplateLocalServiceUtil.getTemplate(
+					article.getGroupId(),
+					PortalUtil.getClassNameId(DDMStructure.class),
+					article.getDDMTemplateKey(), true);
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, article, ddmTemplate,
+				PortletDataContext.REFERENCE_TYPE_STRONG);
+		}
 
 		Layout layout = article.getLayout();
 

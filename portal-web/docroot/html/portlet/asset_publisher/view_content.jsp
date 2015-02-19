@@ -44,17 +44,10 @@ try {
 	else {
 		assetEntry = assetRendererFactory.getAssetEntry(assetEntryId);
 
-		if (portletName.equals(PortletKeys.MY_WORKFLOW_INSTANCES) || portletName.equals(PortletKeys.MY_WORKFLOW_TASKS) || portletName.equals(PortletKeys.WORKFLOW_DEFINITIONS) || portletName.equals(PortletKeys.WORKFLOW_INSTANCES) || portletName.equals(PortletKeys.WORKFLOW_TASKS)) {
-			long assetEntryVersionId = ParamUtil.getLong(request, "assetEntryVersionId");
-
-			assetRenderer = assetRendererFactory.getAssetRenderer(assetEntryVersionId, AssetRendererFactory.TYPE_LATEST);
-		}
-		else {
-			assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST_APPROVED);
-		}
+		assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 	}
 
-	if (!assetEntry.isVisible() && (assetRenderer.getAssetRendererType() == AssetRendererFactory.TYPE_LATEST_APPROVED)) {
+	if (!assetEntry.isVisible()) {
 		throw new NoSuchModelException();
 	}
 

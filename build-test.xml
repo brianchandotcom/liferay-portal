@@ -418,6 +418,54 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-testcase-property">
+		<attribute name="property.name" />
+
+		<sequential>
+			<fail message="Please set the property ${test.class}" unless="test.class" />
+
+			<var name="property.name" unset="true" />
+			<var name="@{property.name}" unset="true" />
+
+			<property name="property.name" value="@{property.name}" />
+
+			<get-test-method-name />
+			<get-test-simple-class-name />
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					String propertyName = project.getProperty("property.name");
+					String testMethodName = project.getProperty("test.method.name");
+					String testSimpleClassName = project.getProperty("test.simple.class.name");
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append(testSimpleClassName);
+					sb.append(".");
+					sb.append(testMethodName);
+					sb.append(".");
+					sb.append(propertyName);
+
+					String propertyValue = project.getProperty(sb.toString());
+
+					if (propertyValue == null) {
+						sb = new StringBuilder();
+
+						sb.append(testSimpleClassName);
+						sb.append(".");
+						sb.append("all");
+						sb.append(".");
+						sb.append(propertyName);
+
+						propertyValue = project.getProperty(sb.toString());
+					}
+
+					project.setProperty(propertyName, propertyValue);
+				]]>
+			</script>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-testray-components">
 		<sequential>
 			<property file="${basedir}/test.run.properties" />

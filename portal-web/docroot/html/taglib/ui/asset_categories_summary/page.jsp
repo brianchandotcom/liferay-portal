@@ -19,6 +19,7 @@
 <%
 String className = (String)request.getAttribute("liferay-ui:asset-categories-summary:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-categories-summary:classPK"));
+String paramName = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-summary:paramName"), "categoryId");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:asset-categories-summary:portletURL");
 
 AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
@@ -43,7 +44,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 					for (AssetCategory category : curCategories) {
 						category = category.toEscapedModel();
 
-						portletURL.setParameter("categoryId", String.valueOf(category.getCategoryId()));
+						portletURL.setParameter(paramName, String.valueOf(category.getCategoryId()));
 					%>
 
 						<a class="asset-category" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= _buildCategoryPath(category, themeDisplay) %></a>

@@ -144,6 +144,8 @@ public class IndexerRegistryUtil {
 
 			_indexers.put(indexer.getClassName(), indexer);
 
+			_indexers.put(indexer.getClass().getName(), indexer);
+
 			return indexer;
 		}
 

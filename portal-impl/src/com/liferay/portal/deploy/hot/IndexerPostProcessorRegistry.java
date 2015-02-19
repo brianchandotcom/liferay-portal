@@ -26,6 +26,9 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Raymond Augé
  */
@@ -68,18 +71,36 @@ public class IndexerPostProcessorRegistry {
 			IndexerPostProcessor indexerPostProcessor = registry.getService(
 				serviceReference);
 
-			String indexerClassName = (String)serviceReference.getProperty(
+			Object indexerClassNameProperty = serviceReference.getProperty(
 				"indexer.class.name");
 
-			Indexer indexer = IndexerRegistryUtil.getIndexer(indexerClassName);
+			List<String> indexerClassNames = new ArrayList<String>();
 
-			if (indexer == null) {
-				_log.error("No indexer for " + indexerClassName + " was found");
-
-				return null;
+			if (indexerClassNameProperty instanceof String ) {
+				indexerClassNames.add((String)indexerClassNameProperty);
+			}
+			else if (indexerClassNameProperty instanceof String[]) {
+				for( String indexerClassName : (String[])indexerClassNameProperty ) {
+					indexerClassNames.add(indexerClassName);
+				}
+			}
+			else if (indexerClassNameProperty instanceof List<?>) {
+				for( Object indexerClassName : (List<?>)indexerClassNameProperty ) {
+					indexerClassNames.add(indexerClassName.toString());
+				}
 			}
 
-			indexer.registerIndexerPostProcessor(indexerPostProcessor);
+			for (String indexerClassName : indexerClassNames) {
+				Indexer indexer = IndexerRegistryUtil.getIndexer(indexerClassName);
+
+				if (indexer == null) {
+					_log.error("No indexer for " + indexerClassName + " was found");
+
+					continue;
+				}
+
+				indexer.registerIndexerPostProcessor(indexerPostProcessor);
+			}
 
 			return indexerPostProcessor;
 		}
@@ -99,14 +120,37 @@ public class IndexerPostProcessorRegistry {
 
 			registry.ungetService(serviceReference);
 
-			String indexerClassName = (String)serviceReference.getProperty(
-				"indexer.class.name");
+			Object indexerClassNameProperty = serviceReference.getProperty(
+					"indexer.class.name");
 
-			Indexer indexer = IndexerRegistryUtil.getIndexer(indexerClassName);
+			List<String> indexerClassNames = new ArrayList<String>();
 
-			indexer.unregisterIndexerPostProcessor(indexerPostProcessor);
+			if (indexerClassNameProperty instanceof String ) {
+				indexerClassNames.add((String)indexerClassNameProperty);
+			}
+			else if (indexerClassNameProperty instanceof String[]) {
+				for( String indexerClassName : (String[])indexerClassNameProperty ) {
+					indexerClassNames.add(indexerClassName);
+				}
+			}
+			else if (indexerClassNameProperty instanceof List<?>) {
+				for( Object indexerClassName : (List<?>)indexerClassNameProperty ) {
+					indexerClassNames.add(indexerClassName.toString());
+				}
+			}
+
+			for (String indexerClassName : indexerClassNames ) {
+				Indexer indexer = IndexerRegistryUtil.getIndexer(indexerClassName);
+
+				if (indexer == null) {
+					_log.error("No indexer for " + indexerClassName + " was found");
+
+					continue;
+				}
+
+				indexer.unregisterIndexerPostProcessor(indexerPostProcessor);
+			}
 		}
-
 	}
 
 }

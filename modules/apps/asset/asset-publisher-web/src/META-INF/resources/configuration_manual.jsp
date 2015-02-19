@@ -160,7 +160,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 								else {
 									ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
 
-									List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getSharedContentSiteGroupIds(company.getCompanyId(), scopeGroupId, user.getUserId()), locale);
+									List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(ArrayUtil.unique(PortalUtil.getCurrentAndAncestorSiteGroupIds(groupIds)), locale);
 
 									for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
 										assetBrowserURL.setParameter("subtypeSelectionId", String.valueOf(assetAvailableClassType.getClassTypeId()));

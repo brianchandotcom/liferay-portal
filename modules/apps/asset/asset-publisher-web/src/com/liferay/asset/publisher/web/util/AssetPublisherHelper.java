@@ -30,9 +30,8 @@ import com.liferay.portlet.asset.util.AssetUtil;
 import javax.portlet.PortletURL;
 
 /**
- * Provides utility methods to be used from the Asset Publisher Display
- * Templates. This class is injected in the context of Asset Publisher Display
- * Templates.
+ * Provides utility methods to be used from Asset Publisher display templates.
+ * This class is injected in the context of Asset Publisher display templates.
  *
  * @author Juan Fernández
  */

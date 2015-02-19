@@ -14,8 +14,8 @@
 
 package com.liferay.blogs.portlet.toolbar.item;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -44,33 +44,32 @@ public class BlogsPortletToolbarContributor
 	implements PortletToolbarContributor {
 
 	@Override
-	public List<MenuItem> getContentAdditionMenuItems(
-		PortletRequest portletRequest) {
+	public List<Menu> getPortletTitleMenus(PortletRequest portletRequest) {
+		List<Menu> menus = new ArrayList<>();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		menus.add(getAddEntryPortletTitleMenu(portletRequest));
 
-		if (!_resourcePermissionChecker.checkResource(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY)) {
-
-			return Collections.<MenuItem>emptyList();
-		}
-
-		List<MenuItem> menuItems = new ArrayList<>();
-
-		menuItems.add(getAddEntryMenuItem(portletRequest, themeDisplay));
-
-		return menuItems;
+		return menus;
 	}
 
-	protected URLMenuItem getAddEntryMenuItem(
+	protected Menu getAddEntryPortletTitleMenu(PortletRequest portletRequest) {
+		Menu menu = new Menu();
+
+		menu.setDirection("down");
+		menu.setExtended(false);
+		menu.setIcon("../aui/plus-sign-2");
+		menu.setMenuItems(getPortletTitleMenuItems(portletRequest));
+		menu.setShowArrow(false);
+
+		return menu;
+	}
+
+	protected URLMenuItem getPortletTitleMenuItem(
 		PortletRequest portletRequest, ThemeDisplay themeDisplay) {
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setLabel(
-			LanguageUtil.get(themeDisplay.getLocale(), "add-entry"));
+		urlMenuItem.setIcon("icon-plus-sign-2");
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			portletRequest, PortletKeys.BLOGS, themeDisplay.getPlid(),
@@ -86,6 +85,26 @@ public class BlogsPortletToolbarContributor
 		urlMenuItem.setURL(portletURL.toString());
 
 		return urlMenuItem;
+	}
+
+	protected List<MenuItem> getPortletTitleMenuItems(
+		PortletRequest portletRequest) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!_resourcePermissionChecker.checkResource(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY)) {
+
+			return Collections.emptyList();
+		}
+
+		List<MenuItem> menuItems = new ArrayList<>();
+
+		menuItems.add(getPortletTitleMenuItem(portletRequest, themeDisplay));
+
+		return menuItems;
 	}
 
 	@Reference(

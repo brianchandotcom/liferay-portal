@@ -535,10 +535,6 @@ html {
 	background-color: #A9A9A9;
 }
 
-.signed-in.controls-visible .portlet-title {
-	padding-right: 80px;
-}
-
 .portlet-asset-publisher .asset-title, .portlet-asset-publisher .header-title, .portlet-asset-publisher li.title-list, .portlet-blogs .entry-title, .portlet-blogs .header-title, .portlet-message-boards .header-title {
 	@include hyphens;
 }

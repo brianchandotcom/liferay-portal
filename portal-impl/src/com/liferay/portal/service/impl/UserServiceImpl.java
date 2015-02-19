@@ -18,6 +18,8 @@ import com.liferay.portal.RequiredUserException;
 import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.UserFieldException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -104,15 +106,12 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			return;
 		}
 
-		try {
-			GroupPermissionUtil.check(
-				getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
-		}
-		catch (PrincipalException pe) {
+		boolean hasPermission = GroupPermissionUtil.contains(
+			getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
+
+		if (!hasPermission) {
 
 			// Allow any user to join open sites
-
-			boolean hasPermission = false;
 
 			if (userIds.length == 1) {
 				User user = getUser();
@@ -515,6 +514,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			creatorUserId = getGuestOrUserId();
 		}
 		catch (PrincipalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("No users found", pe);
+			}
 		}
 
 		checkAddUserPermission(
@@ -944,11 +946,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	public boolean hasGroupUser(long groupId, long userId)
 		throws PortalException {
 
-		try {
-			UserPermissionUtil.check(
-				getPermissionChecker(), userId, ActionKeys.VIEW);
-		}
-		catch (PrincipalException pe) {
+		if (!UserPermissionUtil.contains(
+				getPermissionChecker(), userId, ActionKeys.VIEW)) {
+
 			GroupPermissionUtil.check(
 				getPermissionChecker(), groupId, ActionKeys.VIEW_MEMBERS);
 		}
@@ -970,11 +970,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	public boolean hasRoleUser(long roleId, long userId)
 		throws PortalException {
 
-		try {
-			UserPermissionUtil.check(
-				getPermissionChecker(), userId, ActionKeys.VIEW);
-		}
-		catch (PrincipalException pe) {
+		if (!UserPermissionUtil.contains(
+				getPermissionChecker(), userId, ActionKeys.VIEW)) {
+
 			RolePermissionUtil.check(
 				getPermissionChecker(), roleId, ActionKeys.VIEW_MEMBERS);
 		}
@@ -1001,11 +999,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			long companyId, String name, long userId, boolean inherited)
 		throws PortalException {
 
-		try {
-			UserPermissionUtil.check(
-				getPermissionChecker(), userId, ActionKeys.VIEW);
-		}
-		catch (PrincipalException pe) {
+		if (!UserPermissionUtil.contains(
+				getPermissionChecker(), userId, ActionKeys.VIEW)) {
+
 			Role role = roleLocalService.getRole(companyId, name);
 
 			RolePermissionUtil.check(
@@ -1234,11 +1230,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			return;
 		}
 
-		try {
-			GroupPermissionUtil.check(
-				getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
-		}
-		catch (PrincipalException pe) {
+		if (!GroupPermissionUtil.contains(
+				getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS)) {
 
 			// Allow any user to leave open and restricted sites
 
@@ -1517,6 +1510,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			creatorUserId = getGuestOrUserId();
 		}
 		catch (PrincipalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("No users found", pe);
+			}
 		}
 
 		checkAddUserPermission(
@@ -2824,5 +2820,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			throw ufe;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserServiceImpl.class);
 
 }

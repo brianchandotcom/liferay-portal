@@ -153,18 +153,10 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 
 		MBCategory category = (MBCategory)parentBaseModel;
 
-		if (approved) {
-			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-		}
-		else {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-		}
-
-		return MBMessageLocalServiceUtil.addMessage(
-			serviceContext.getUserId(), RandomTestUtil.randomString(),
-			category.getGroupId(), category.getCategoryId(), keywords, keywords,
-			serviceContext);
+		return MBTestUtil.addMessageWithWorkflow(
+			serviceContext.getUserId(), category.getGroupId(),
+			category.getCategoryId(), RandomTestUtil.randomString(),
+			keywords, approved, serviceContext);
 	}
 
 	@Override
@@ -241,6 +233,9 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 		ServiceContext updateServiceContext =
 			ServiceContextTestUtil.getServiceContext(
 				message.getGroupId(), TestPropsValues.getUserId());
+
+		updateServiceContext.setWorkflowAction(
+			WorkflowConstants.ACTION_PUBLISH);
 
 		return MBMessageLocalServiceUtil.updateMessage(
 			TestPropsValues.getUserId(), message.getMessageId(), keywords,

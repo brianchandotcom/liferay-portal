@@ -39,6 +39,7 @@ import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
+import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 
 import java.io.InputStream;
@@ -152,21 +153,12 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		MBCategory category = (MBCategory)parentBaseModel;
 
-		if (approved) {
-			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-		}
-		else {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-		}
-
 		String keywords = getSearchKeywords();
 
-		MBMessage message =
-			MBMessageLocalServiceUtil.addMessage(
-				serviceContext.getUserId(), RandomTestUtil.randomString(),
-				category.getGroupId(), category.getCategoryId(), keywords,
-				keywords, serviceContext);
+		MBMessage message = MBTestUtil.addMessageWithWorkflow(
+			serviceContext.getUserId(), category.getGroupId(),
+			category.getCategoryId(), keywords, keywords, approved,
+			serviceContext);
 
 		return message.getThread();
 	}

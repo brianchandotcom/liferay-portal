@@ -28,6 +28,7 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
+import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -55,7 +56,7 @@ public class MBStatsUserLocalServiceTest {
 	public void testUpdateStatsUserWhenAddingDraftMessage() throws Exception {
 		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
-		addMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
+		addMessage(false);
 
 		Assert.assertEquals(
 			initialStatsUserMessageCount, getStatsUserMessageCount());
@@ -67,7 +68,7 @@ public class MBStatsUserLocalServiceTest {
 
 		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
-		addMessage(WorkflowConstants.ACTION_PUBLISH);
+		addMessage(true);
 
 		Assert.assertEquals(
 			initialStatsUserMessageCount + 1, getStatsUserMessageCount());
@@ -77,7 +78,7 @@ public class MBStatsUserLocalServiceTest {
 	public void testUpdateStatsUserWhenDeletingDraftMessage() throws Exception {
 		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
-		addMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
+		addMessage(false);
 
 		MBMessageLocalServiceUtil.deleteMessage(_message.getMessageId());
 
@@ -91,7 +92,7 @@ public class MBStatsUserLocalServiceTest {
 
 		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
-		addMessage(WorkflowConstants.ACTION_PUBLISH);
+		addMessage(true);
 
 		MBMessageLocalServiceUtil.deleteMessage(_message.getMessageId());
 
@@ -105,7 +106,7 @@ public class MBStatsUserLocalServiceTest {
 
 		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
-		addMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
+		addMessage(false);
 
 		updateMessage(WorkflowConstants.ACTION_PUBLISH);
 
@@ -119,7 +120,7 @@ public class MBStatsUserLocalServiceTest {
 
 		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
-		addMessage(WorkflowConstants.ACTION_PUBLISH);
+		addMessage(true);
 
 		updateMessage(WorkflowConstants.ACTION_PUBLISH);
 
@@ -133,7 +134,7 @@ public class MBStatsUserLocalServiceTest {
 
 		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
-		addMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
+		addMessage(false);
 
 		updateMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -147,7 +148,7 @@ public class MBStatsUserLocalServiceTest {
 
 		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
-		addMessage(WorkflowConstants.ACTION_PUBLISH);
+		addMessage(true);
 
 		updateMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -155,18 +156,16 @@ public class MBStatsUserLocalServiceTest {
 			initialStatsUserMessageCount, getStatsUserMessageCount());
 	}
 
-	protected void addMessage(int workflowAction) throws Exception {
+	protected void addMessage(boolean approved) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setWorkflowAction(workflowAction);
-
-		_message = MBMessageLocalServiceUtil.addMessage(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+		_message = MBTestUtil.addMessageWithWorkflow(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+			approved, serviceContext);
 	}
 
 	protected int getStatsUserMessageCount() throws Exception {

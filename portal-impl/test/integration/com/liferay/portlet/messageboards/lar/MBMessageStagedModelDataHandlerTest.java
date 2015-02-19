@@ -157,22 +157,18 @@ public class MBMessageStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		MBMessage approvedMessage = MBMessageLocalServiceUtil.addMessage(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+		MBMessage approvedMessage = MBTestUtil.addMessageWithWorkflow(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
 			serviceContext);
 
 		stagedModels.add(approvedMessage);
 
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		MBMessage pendingMessage = MBMessageLocalServiceUtil.addMessage(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+		MBMessage pendingMessage = MBTestUtil.addMessageWithWorkflow(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			serviceContext);
 
 		stagedModels.add(pendingMessage);

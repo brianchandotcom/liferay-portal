@@ -14,20 +14,58 @@
 
 package com.liferay.portlet.messageboards.util.test;
 
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
  * @author Daniel Kocsis
  */
 public class MBTestUtil {
+
+	public static MBMessage addMessageWithWorkflow(
+			long userId, long groupId, long categoryId, String subject,
+			String body, boolean approved, ServiceContext serviceContext)
+		throws Exception {
+
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		try {
+			WorkflowThreadLocal.setEnabled(true);
+
+			serviceContext = (ServiceContext)serviceContext.clone();
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			MBMessage message = MBMessageLocalServiceUtil.addMessage(
+				serviceContext.getUserId(), RandomTestUtil.randomString(),
+				groupId, categoryId, subject, body, serviceContext);
+
+			if (approved) {
+				return updateStatus(message, serviceContext);
+			}
+
+			return message;
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
+	}
 
 	public static List<ObjectValuePair<String, InputStream>> getInputStreamOVPs(
 		String fileName, Class<?> clazz, String keywords) {
@@ -63,6 +101,21 @@ public class MBTestUtil {
 		}
 
 		serviceContext.setLayoutFullURL("http://localhost");
+	}
+
+	protected static MBMessage updateStatus(
+			MBMessage message, ServiceContext serviceContext)
+		throws Exception {
+
+		Map<String, Serializable> workflowContext = new HashMap<>();
+
+		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+
+		message = MBMessageLocalServiceUtil.updateStatus(
+			message.getUserId(), message.getMessageId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
+
+		return message;
 	}
 
 }

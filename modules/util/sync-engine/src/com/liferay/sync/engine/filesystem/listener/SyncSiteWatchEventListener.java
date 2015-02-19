@@ -24,6 +24,7 @@ import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.service.SyncWatchEventService;
+import com.liferay.sync.engine.util.FileUtil;
 
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -49,7 +50,9 @@ public class SyncSiteWatchEventListener extends BaseWatchEventListener {
 		addSyncWatchEvent(eventType, filePath);
 	}
 
-	protected void addSyncWatchEvent(String eventType, Path filePath) {
+	protected synchronized void addSyncWatchEvent(
+		String eventType, Path filePath) {
+
 		try {
 			String filePathName = filePath.toString();
 
@@ -94,36 +97,70 @@ public class SyncSiteWatchEventListener extends BaseWatchEventListener {
 				return;
 			}
 
+			String fileType = getFileType(eventType, filePath);
+
 			String previousFilePathName = null;
 
 			if (eventType.equals(SyncWatchEvent.EVENT_TYPE_RENAME_TO)) {
 				if (_previousFilePath == null) {
-					Watcher watcher = WatcherRegistry.getWatcher(
-						getSyncAccountId());
-
-					watcher.walkFileTree(Paths.get(filePathName));
-
 					eventType = SyncWatchEvent.EVENT_TYPE_CREATE;
+
+					if (fileType.equals(SyncFile.TYPE_FOLDER)) {
+						SyncFile syncFile = SyncFileService.fetchSyncFile(
+							filePathName);
+
+						if (syncFile != null) {
+							FileUtil.fireDeleteEvents(Paths.get(filePathName));
+						}
+
+						Watcher watcher = WatcherRegistry.getWatcher(
+							getSyncAccountId());
+
+						watcher.walkFileTree(Paths.get(filePathName));
+					}
 				}
 				else {
+					previousFilePathName = _previousFilePath.toString();
+
 					if (parentFilePath.equals(_previousFilePath.getParent())) {
 						eventType = SyncWatchEvent.EVENT_TYPE_RENAME;
 					}
 					else {
-						eventType = SyncWatchEvent.EVENT_TYPE_MOVE;
-					}
+						SyncFile syncFile = SyncFileService.fetchSyncFile(
+							filePathName);
 
-					previousFilePathName = _previousFilePath.toString();
+						if ((syncFile != null) &&
+							fileType.equals(SyncFile.TYPE_FOLDER)) {
+
+							_previousFilePath = null;
+
+							FileUtil.fireDeleteEvents(Paths.get(filePathName));
+
+							Watcher watcher = WatcherRegistry.getWatcher(
+								getSyncAccountId());
+
+							watcher.walkFileTree(Paths.get(filePathName));
+
+							watchEvent(
+								SyncWatchEvent.EVENT_TYPE_DELETE, filePath);
+
+							return;
+						}
+						else {
+							eventType = SyncWatchEvent.EVENT_TYPE_MOVE;
+						}
+					}
 				}
 			}
 			else if (_previousFilePath != null) {
 				eventType = SyncWatchEvent.EVENT_TYPE_DELETE;
+
 				filePathName = _previousFilePath.toString();
 			}
 
 			SyncWatchEventService.addSyncWatchEvent(
-				eventType, filePathName, getFileType(eventType, filePath),
-				previousFilePathName, getSyncAccountId());
+				eventType, filePathName, fileType, previousFilePathName,
+				getSyncAccountId());
 
 			_previousFilePath = null;
 		}

@@ -12,22 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.model.impl;
+package com.liferay.productivitycenter.layout;
 
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.struts.StrutsUtil;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
@@ -40,85 +36,35 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Raymond Augé
+ * @author Adolfo Pérez
  */
-public class LayoutTypeControllerImpl implements LayoutTypeController {
-
-	public LayoutTypeControllerImpl(String type) {
-		_type = type;
-
-		Filter filter = new Filter(type);
-
-		_configurationActionDelete = StringUtil.split(
-			GetterUtil.getString(
-				PropsUtil.get(
-					PropsKeys.LAYOUT_CONFIGURATION_ACTION_DELETE, filter)));
-		_configurationActionUpdate = StringUtil.split(
-			GetterUtil.getString(
-				PropsUtil.get(
-					PropsKeys.LAYOUT_CONFIGURATION_ACTION_UPDATE, filter)));
-		_editPage = GetterUtil.getString(
-			PropsUtil.get(PropsKeys.LAYOUT_EDIT_PAGE, filter));
-		_firstPageable = GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LAYOUT_FIRST_PAGEABLE, filter));
-		_parentable = GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LAYOUT_PARENTABLE, filter), true);
-		_sitemapable = GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LAYOUT_SITEMAPABLE, filter), true);
-		_url = GetterUtil.getString(
-			PropsUtil.get(PropsKeys.LAYOUT_URL, filter));
-		_urlFriendliable = GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LAYOUT_URL_FRIENDLIABLE, filter), true);
-		_viewPage = GetterUtil.getString(
-			PropsUtil.get(PropsKeys.LAYOUT_VIEW_PAGE, filter));
-	}
+@Component(
+	immediate = true, property = { "layout.type=user_personal_panel" },
+	service = LayoutTypeController.class
+)
+public class UserPersonalPanelLayoutController implements LayoutTypeController {
 
 	@Override
 	public String[] getConfigurationActionDelete() {
-		return _configurationActionDelete;
+		return _NO_CONFIGURATION_ACTIONS;
 	}
 
 	@Override
 	public String[] getConfigurationActionUpdate() {
-		return _configurationActionUpdate;
+		return _NO_CONFIGURATION_ACTIONS;
 	}
 
 	@Override
 	public String getEditPage() {
-		return StrutsUtil.TEXT_HTML_DIR + _editPage;
+		return StrutsUtil.TEXT_HTML_DIR + _EDIT_PAGE;
 	}
 
 	@Override
 	public String getURL() {
-		return _url;
-	}
-
-	public String getViewPath(String portletId, boolean wap) {
-		String path = StrutsUtil.TEXT_HTML_DIR;
-
-		if (wap) {
-			path = StrutsUtil.TEXT_WAP_DIR;
-		}
-
-		// Manually check the p_p_id. See LEP-1724.
-
-		if (Validator.isNotNull(portletId)) {
-			if (_type.equals(LayoutConstants.TYPE_PANEL)) {
-				path += "/portal/layout/view/panel.jsp";
-			}
-			else if (_type.equals(LayoutConstants.TYPE_CONTROL_PANEL)) {
-				path += "/portal/layout/view/control_panel.jsp";
-			}
-			else {
-				path += "/portal/layout/view/portlet.jsp";
-			}
-		}
-		else {
-			path = StrutsUtil.TEXT_HTML_DIR + _viewPage;
-		}
-
-		return path;
+		return _URL;
 	}
 
 	@Override
@@ -158,22 +104,22 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 
 	@Override
 	public boolean isFirstPageable() {
-		return _firstPageable;
+		return true;
 	}
 
 	@Override
 	public boolean isParentable() {
-		return _parentable;
+		return false;
 	}
 
 	@Override
 	public boolean isSitemapable() {
-		return _sitemapable;
+		return _SITEMAPABLE;
 	}
 
 	@Override
 	public boolean isURLFriendliable() {
-		return _urlFriendliable;
+		return _URL_FRIENDLIABLE;
 	}
 
 	@Override
@@ -192,15 +138,29 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 		}
 	}
 
-	private final String[] _configurationActionDelete;
-	private final String[] _configurationActionUpdate;
-	private final String _editPage;
-	private final boolean _firstPageable;
-	private final boolean _parentable;
-	private final boolean _sitemapable;
-	private final String _type;
-	private final String _url;
-	private final boolean _urlFriendliable;
-	private final String _viewPage;
+	protected String getViewPath(String portletId, boolean wap) {
+		if (wap) {
+			return StrutsUtil.TEXT_WAP_DIR + _VIEW_PATH;
+		}
+
+		return StrutsUtil.TEXT_HTML_DIR + _VIEW_PATH;
+	}
+
+	private static final String _EDIT_PAGE =
+		"/layout/edit/user_personal_panel.jsp";
+
+	private static final String[] _NO_CONFIGURATION_ACTIONS = new String[0];
+
+	private static final boolean _SITEMAPABLE = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.LAYOUT_SITEMAPABLE), true);
+
+	private static final String _URL = GetterUtil.getString(
+		PropsUtil.get(PropsKeys.LAYOUT_URL));
+
+	private static final boolean _URL_FRIENDLIABLE = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.LAYOUT_URL_FRIENDLIABLE), true);
+
+	private static final String _VIEW_PATH =
+		"/layout/view/user_personal_panel.jsp";
 
 }

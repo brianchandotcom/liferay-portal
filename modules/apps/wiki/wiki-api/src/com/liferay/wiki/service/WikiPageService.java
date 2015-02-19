@@ -296,9 +296,6 @@ public interface WikiPageService extends BaseService {
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public void setWikiSettingsProvider(
-		com.liferay.portal.kernel.settings.SettingsProvider<com.liferay.wiki.settings.WikiSettings> wikiSettingsProvider);
-
 	public void subscribePage(long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

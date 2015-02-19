@@ -17,6 +17,7 @@ package com.liferay.wiki.asset;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.settings.SettingsProvider;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -32,6 +33,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermission;
+import com.liferay.wiki.service.settings.WikiServiceSettingsProvider;
 import com.liferay.wiki.settings.WikiSettings;
 import com.liferay.wiki.util.WikiUtil;
 
@@ -69,7 +71,11 @@ public class WikiPageAssetRenderer
 	public WikiPageAssetRenderer(WikiPage page) throws PortalException {
 		_page = page;
 
-		_wikiSettings = WikiSettings.getInstance(page.getGroupId());
+		SettingsProvider<WikiSettings> settingsProvider =
+			_getWikiSettingsProvider();
+
+		_wikiSettings = settingsProvider.getGroupServiceSettings(
+			page.getGroupId());
 	}
 
 	@Override
@@ -304,6 +310,13 @@ public class WikiPageAssetRenderer
 	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/page.png";
+	}
+
+	private SettingsProvider<WikiSettings> _getWikiSettingsProvider() {
+		WikiServiceSettingsProvider wikiServiceSettingsProvider =
+			WikiServiceSettingsProvider.getWikiServiceSettingsProvider();
+
+		return wikiServiceSettingsProvider.getWikiSettingsProvider();
 	}
 
 	private final WikiPage _page;

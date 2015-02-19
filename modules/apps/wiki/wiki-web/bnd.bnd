@@ -35,7 +35,6 @@ Import-Package: \
 	com.liferay.portlet.social.service,\
 	\
 	com.liferay.wiki.asset,\
-	com.liferay.wiki.configuration,\
 	com.liferay.wiki.constants,\
 	com.liferay.wiki.importer.impl,\
 	com.liferay.wiki.indexer,\

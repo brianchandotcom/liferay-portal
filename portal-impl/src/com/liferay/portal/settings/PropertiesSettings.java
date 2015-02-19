@@ -14,7 +14,6 @@
 
 package com.liferay.portal.settings;
 
-import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.settings.BaseSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,21 +27,20 @@ import java.util.Properties;
 public class PropertiesSettings extends BaseSettings {
 
 	public PropertiesSettings(
-		Properties properties, ResourceManager resourceManager) {
+		LocationVariableResolver locationVariableResolver,
+		Properties properties) {
 
-		this(properties, resourceManager, null);
+		this(locationVariableResolver, properties, null);
 	}
 
 	public PropertiesSettings(
-		Properties properties, ResourceManager resourceManager,
-		Settings parentSettings) {
+		LocationVariableResolver locationVariableResolver,
+		Properties properties, Settings parentSettings) {
 
 		super(parentSettings);
 
+		_locationVariableResolver = locationVariableResolver;
 		_properties = properties;
-
-		_locationVariableResolver = new LocationVariableResolver(
-			resourceManager);
 	}
 
 	@Override

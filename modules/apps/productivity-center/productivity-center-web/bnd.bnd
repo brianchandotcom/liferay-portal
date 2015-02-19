@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Productivity Center Web
+Bundle-SymbolicName: com.liferay.productivitycenter.web
+Bundle-Version: 1.0.0
+Import-Package: *
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
+Require-Capability:\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/portlet))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/theme))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))"

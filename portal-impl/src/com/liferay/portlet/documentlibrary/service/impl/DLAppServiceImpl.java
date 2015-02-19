@@ -215,7 +215,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			changeLog, file, serviceContext);
 
 		dlAppHelperLocalService.addFileEntry(
-			getUserId(), fileEntry, fileEntry.getFileVersion(), serviceContext);
+			getUserId(), fileEntry, null, serviceContext);
 
 		return fileEntry;
 	}
@@ -300,7 +300,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			changeLog, is, size, serviceContext);
 
 		dlAppHelperLocalService.addFileEntry(
-			getUserId(), fileEntry, fileEntry.getFileVersion(), serviceContext);
+			getUserId(), fileEntry, null, serviceContext);
 
 		return fileEntry;
 	}
@@ -454,8 +454,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
-		DLProcessorRegistryUtil.cleanUp(fileEntry.getLatestFileVersion());
-
 		FileVersion draftFileVersion = repository.cancelCheckOut(fileEntryId);
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -498,10 +496,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getFileEntryRepository(fileEntryId);
 
-		FileEntry oldFileEntry = repository.getFileEntry(fileEntryId);
-
-		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
-
 		repository.checkInFileEntry(
 			getUserId(), fileEntryId, majorVersion, changeLog, serviceContext);
 
@@ -510,7 +504,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
 		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, oldFileVersion, fileVersion,
+			getUserId(), fileEntry, null, fileVersion,
 			fileVersion.getFileVersionId());
 	}
 
@@ -556,10 +550,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getFileEntryRepository(fileEntryId);
 
-		FileEntry oldFileEntry = repository.getFileEntry(fileEntryId);
-
-		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
-
 		repository.checkInFileEntry(
 			getUserId(), fileEntryId, lockUuid, serviceContext);
 
@@ -568,7 +558,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
 		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, oldFileVersion, fileVersion,
+			getUserId(), fileEntry, null, fileVersion,
 			fileVersion.getFileVersionId());
 	}
 
@@ -599,17 +589,13 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getFileEntryRepository(fileEntryId);
 
-		FileEntry oldFileEntry = repository.getFileEntry(fileEntryId);
-
-		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
-
 		FileEntry fileEntry = repository.checkOutFileEntry(
 			fileEntryId, serviceContext);
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
 		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, oldFileVersion, fileVersion, fileEntryId);
+			getUserId(), fileEntry, null, fileVersion, fileEntryId);
 	}
 
 	/**
@@ -646,17 +632,13 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getFileEntryRepository(fileEntryId);
 
-		FileEntry oldFileEntry = repository.getFileEntry(fileEntryId);
-
-		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
-
 		FileEntry fileEntry = repository.checkOutFileEntry(
 			fileEntryId, owner, expirationTime, serviceContext);
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
 		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, oldFileVersion, fileVersion, fileEntryId);
+			getUserId(), fileEntry, null, fileVersion, fileEntryId);
 
 		return fileEntry;
 	}
@@ -2602,8 +2584,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileEntry fileEntry = getFileEntry(fileEntryId);
 
 		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, fileEntry.getFileVersion(version),
-			fileEntry.getFileVersion(), serviceContext);
+			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
+			serviceContext);
 	}
 
 	@Override
@@ -2912,8 +2894,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			getUserId(), fileEntryId, sourceFileName, mimeType, title,
 			description, changeLog, majorVersion, file, serviceContext);
 
-		DLProcessorRegistryUtil.cleanUp(fileEntry.getLatestFileVersion());
-
 		dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
 			serviceContext);
@@ -2995,22 +2975,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getFileEntryRepository(fileEntryId);
 
-		FileEntry oldFileEntry = repository.getFileEntry(fileEntryId);
-
-		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
-
 		FileEntry fileEntry = repository.updateFileEntry(
 			getUserId(), fileEntryId, sourceFileName, mimeType, title,
 			description, changeLog, majorVersion, is, size, serviceContext);
 
-		if (is != null) {
-			DLProcessorRegistryUtil.cleanUp(fileEntry.getLatestFileVersion());
-
-			oldFileVersion = null;
-		}
-
 		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, oldFileVersion, fileEntry.getFileVersion(),
+			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
 			serviceContext);
 
 		return fileEntry;
@@ -3035,8 +3005,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			getUserId(), fileEntryId, sourceFileName, mimeType, title,
 			description, changeLog, majorVersion, file, serviceContext);
 
-		DLProcessorRegistryUtil.cleanUp(fileEntry.getLatestFileVersion());
-
 		repository.checkInFileEntry(
 			getUserId(), fileEntryId, majorVersion, changeLog, serviceContext);
 
@@ -3057,25 +3025,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getFileEntryRepository(fileEntryId);
 
-		FileEntry oldFileEntry = repository.getFileEntry(fileEntryId);
-
-		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
-
 		FileEntry fileEntry = repository.updateFileEntry(
 			getUserId(), fileEntryId, sourceFileName, mimeType, title,
 			description, changeLog, majorVersion, is, size, serviceContext);
-
-		if (is != null) {
-			DLProcessorRegistryUtil.cleanUp(fileEntry.getLatestFileVersion());
-
-			oldFileVersion = null;
-		}
 
 		repository.checkInFileEntry(
 			getUserId(), fileEntryId, majorVersion, changeLog, serviceContext);
 
 		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, oldFileVersion, fileEntry.getFileVersion(),
+			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
 			serviceContext);
 
 		return fileEntry;
@@ -3217,12 +3175,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			latestFileVersion.getContentStream(false),
 			latestFileVersion.getSize(), serviceContext);
 
-		FileVersion oldDestinationFileVersion =
-			destinationFileEntry.getFileVersion();
-
 		dlAppHelperLocalService.addFileEntry(
-			getUserId(), destinationFileEntry, oldDestinationFileVersion,
-			serviceContext);
+			getUserId(), destinationFileEntry, null, serviceContext);
 
 		for (int i = fileVersions.size() - 2; i >= 0; i--) {
 			FileVersion fileVersion = fileVersions.get(i);
@@ -3243,11 +3197,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 					destinationFileEntry.getFileVersion();
 
 				dlAppHelperLocalService.updateFileEntry(
-					getUserId(), destinationFileEntry,
-					oldDestinationFileVersion, destinationFileVersion,
-					serviceContext);
-
-				oldDestinationFileVersion = destinationFileVersion;
+					getUserId(), destinationFileEntry, null,
+					destinationFileVersion, serviceContext);
 			}
 			catch (PortalException pe) {
 				toRepository.deleteFileEntry(
@@ -3284,8 +3235,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 						curDestFolder.getFolderId(), serviceContext);
 
 					dlAppHelperLocalService.addFileEntry(
-						getUserId(), fileEntry, fileEntry.getFileVersion(),
-						serviceContext);
+						getUserId(), fileEntry, null, serviceContext);
 
 					fileEntries.add(fileEntry);
 				}

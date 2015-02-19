@@ -14,9 +14,13 @@
 
 package com.liferay.portal.repository.external;
 
+import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
+import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
+import com.liferay.portal.repository.capabilities.LiferayProcessorCapability;
 
 /**
  * @author Adolfo Pérez
@@ -41,6 +45,14 @@ public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 	}
 
 	@Override
+	public void registerCapabilities(
+		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
+
+		capabilityRegistry.addSupportedCapability(
+			ProcessorCapability.class, _processorCapability);
+	}
+
+	@Override
 	public void registerRepositoryFactory(
 		RepositoryFactoryRegistry repositoryFactoryRegistry) {
 
@@ -48,6 +60,8 @@ public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 	}
 
 	private final String _className;
+	private final LiferayProcessorCapability _processorCapability =
+		new LiferayProcessorCapability();
 	private final RepositoryFactory _repositoryFactory;
 
 }

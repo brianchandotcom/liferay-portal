@@ -247,7 +247,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(), true, null, 0,
 			_serviceContext);
 
-		Assert.assertEquals(1, count.get());
+		Assert.assertEquals(2, count.get());
 	}
 
 	@Test

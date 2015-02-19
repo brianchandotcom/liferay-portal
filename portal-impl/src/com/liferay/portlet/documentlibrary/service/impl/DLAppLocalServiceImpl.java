@@ -49,7 +49,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
-import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -201,7 +200,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			changeLog, file, serviceContext);
 
 		dlAppHelperLocalService.addFileEntry(
-			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
+			userId, fileEntry, null, serviceContext);
 
 		return fileEntry;
 	}
@@ -289,7 +288,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			changeLog, is, size, serviceContext);
 
 		dlAppHelperLocalService.addFileEntry(
-			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
+			userId, fileEntry, null, serviceContext);
 
 		return fileEntry;
 	}
@@ -718,10 +717,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 				// Move file entries within repository
 
-				FileEntry fileEntry = fromLocalRepository.moveFileEntry(
+				return fromLocalRepository.moveFileEntry(
 					userId, fileEntryId, newFolderId, serviceContext);
-
-				return fileEntry;
 			}
 
 			// Move file entries between repositories
@@ -797,26 +794,20 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 				}
 			}
 
-			Folder folder = null;
-
 			if (sourceLocalRepository.getRepositoryId() ==
 					destinationLocalRepository.getRepositoryId()) {
 
 				// Move file entries within repository
 
-				folder = sourceLocalRepository.moveFolder(
+				return sourceLocalRepository.moveFolder(
 					userId, folderId, parentFolderId, serviceContext);
 			}
-			else {
 
-				// Move file entries between repositories
+			// Move file entries between repositories
 
-				folder = moveFolders(
-					userId, folderId, parentFolderId, sourceLocalRepository,
-					destinationLocalRepository, serviceContext);
-			}
-
-			return folder;
+			return moveFolders(
+				userId, folderId, parentFolderId, sourceLocalRepository,
+				destinationLocalRepository, serviceContext);
 		}
 		finally {
 			SystemEventHierarchyEntryThreadLocal.pop(Folder.class);
@@ -1073,8 +1064,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
 
-		DLProcessorRegistryUtil.cleanUp(fileEntry.getLatestFileVersion(true));
-
 		dlAppHelperLocalService.updateFileEntry(
 			userId, fileEntry, null, fileEntry.getFileVersion(),
 			serviceContext);
@@ -1158,23 +1147,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
-		FileEntry oldFileEntry = localRepository.getFileEntry(fileEntryId);
-
-		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
-
 		FileEntry fileEntry = localRepository.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 
-		if (is != null) {
-			DLProcessorRegistryUtil.cleanUp(
-				fileEntry.getLatestFileVersion(true));
-
-			oldFileVersion = null;
-		}
-
 		dlAppHelperLocalService.updateFileEntry(
-			userId, fileEntry, oldFileVersion, fileEntry.getFileVersion(),
+			userId, fileEntry, null, fileEntry.getFileVersion(),
 			serviceContext);
 
 		return fileEntry;
@@ -1325,8 +1303,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		}
 
 		dlAppHelperLocalService.addFileEntry(
-			userId, destinationFileEntry, destinationFileEntry.getFileVersion(),
-			serviceContext);
+			userId, destinationFileEntry, null, serviceContext);
 
 		return destinationFileEntry;
 	}
@@ -1427,16 +1404,11 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			long folderId, long groupId)
 		throws PortalException {
 
-		LocalRepository localRepository = null;
-
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			localRepository = getLocalRepository(groupId);
-		}
-		else {
-			localRepository = getFolderLocalRepository(folderId);
+			return getLocalRepository(groupId);
 		}
 
-		return localRepository;
+		return getFolderLocalRepository(folderId);
 	}
 
 	protected LocalRepository getLocalRepository(long repositoryId)

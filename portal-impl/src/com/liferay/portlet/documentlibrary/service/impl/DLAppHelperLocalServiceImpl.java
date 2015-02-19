@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -67,7 +66,6 @@ import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceB
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
-import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -82,7 +80,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 /**
  * Provides the local service helper for the document library application.
@@ -108,8 +105,6 @@ public class DLAppHelperLocalServiceImpl
 				fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
 				fileEntry.getFileEntryId(), WorkflowConstants.ACTION_PUBLISH);
 		}
-
-		registerDLProcessorCallback(fileEntry, null);
 	}
 
 	@Override
@@ -223,10 +218,6 @@ public class DLAppHelperLocalServiceImpl
 		subscriptionLocalService.deleteSubscriptions(
 			fileEntry.getCompanyId(), DLFileEntryConstants.getClassName(),
 			fileEntry.getFileEntryId());
-
-		// File previews
-
-		DLProcessorRegistryUtil.cleanUp(fileEntry);
 
 		// File ranks
 
@@ -1263,8 +1254,6 @@ public class DLAppHelperLocalServiceImpl
 			updateAsset(
 				userId, fileEntry, destinationFileVersion, assetClassPk);
 		}
-
-		registerDLProcessorCallback(fileEntry, sourceFileVersion);
 	}
 
 	@Override
@@ -1282,8 +1271,6 @@ public class DLAppHelperLocalServiceImpl
 			serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
-
-		registerDLProcessorCallback(fileEntry, sourceFileVersion);
 	}
 
 	@Override
@@ -1975,23 +1962,6 @@ public class DLAppHelperLocalServiceImpl
 			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
 
 		subscriptionSender.flushNotificationsAsync();
-	}
-
-	protected void registerDLProcessorCallback(
-		final FileEntry fileEntry, final FileVersion fileVersion) {
-
-		TransactionCommitCallbackRegistryUtil.registerCallback(
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					DLProcessorRegistryUtil.trigger(
-						fileEntry, fileVersion, true);
-
-					return null;
-				}
-
-			});
 	}
 
 	protected <T extends RepositoryModel<T>> void triggerRepositoryEvent(

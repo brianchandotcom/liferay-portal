@@ -5,3 +5,5 @@ Export-Package: com.liferay.wiki.*
 Include-Resource:\
 	classes,\
     @../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+
+-metatype: *

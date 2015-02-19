@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	configurationPid = "com.liferay.bookmarks.configuration.BookmarksServiceConfiguration",
 	immediate = true,
 	property = {
 		"class.name=com.liferay.bookmarks.settings.BookmarksSettings"
@@ -79,20 +78,22 @@ public class BookmarksSettingsProvider
 	}
 
 	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		BookmarksServiceConfiguration bookmarksServiceConfiguration =
-			Configurable.createConfigurable(
-				BookmarksServiceConfiguration.class, properties);
-
+	protected void activate() {
 		_settingsFactory.registerSettingsMetadata(
 			BookmarksConstants.SERVICE_NAME,
 			BookmarksSettings.getFallbackKeys(),
-			BookmarksSettings.MULTI_VALUED_KEYS, bookmarksServiceConfiguration,
+			BookmarksSettings.MULTI_VALUED_KEYS, _bookmarksServiceConfiguration,
 			new ClassLoaderResourceManager(
 				BookmarksSettings.class.getClassLoader()));
 
 		_bookmarksSettingsProvider = this;
+	}
+
+	@Reference(unbind = "-")
+	protected void setBookmarksServiceConfiguration(
+		BookmarksServiceConfiguration bookmarksServiceConfiguration) {
+
+		_bookmarksServiceConfiguration = bookmarksServiceConfiguration;
 	}
 
 	@Deactivate
@@ -107,6 +108,7 @@ public class BookmarksSettingsProvider
 
 	private static BookmarksSettingsProvider _bookmarksSettingsProvider;
 
+	private BookmarksServiceConfiguration _bookmarksServiceConfiguration;
 	private SettingsFactory _settingsFactory;
 
 }

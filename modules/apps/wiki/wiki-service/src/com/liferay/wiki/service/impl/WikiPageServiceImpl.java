@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -41,6 +42,7 @@ import com.liferay.wiki.service.base.WikiPageServiceBaseImpl;
 import com.liferay.wiki.service.permission.WikiNodePermission;
 import com.liferay.wiki.service.permission.WikiPagePermission;
 import com.liferay.wiki.settings.WikiSettings;
+import com.liferay.wiki.settings.WikiSettingsProvider;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 
@@ -705,12 +707,6 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			getUserId(), nodeId, title, version, serviceContext);
 	}
 
-	public void setWikiSettingsProvider(
-		SettingsProvider<WikiSettings> wikiSettingsProvider) {
-
-		_wikiSettingsProvider = wikiSettingsProvider;
-	}
-
 	@Override
 	public void subscribePage(long nodeId, String title)
 		throws PortalException {
@@ -896,6 +892,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		}
 	}
 
+	@BeanReference(type = WikiSettingsProvider.class)
 	private SettingsProvider<WikiSettings> _wikiSettingsProvider;
 
 }

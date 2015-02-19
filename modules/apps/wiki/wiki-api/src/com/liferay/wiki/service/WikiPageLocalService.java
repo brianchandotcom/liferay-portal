@@ -703,12 +703,6 @@ public interface WikiPageLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public void setWikiServiceConfiguration(
-		com.liferay.wiki.configuration.WikiServiceConfiguration wikiServiceConfiguration);
-
-	public void setWikiSettingsProvider(
-		com.liferay.portal.kernel.settings.SettingsProvider<com.liferay.wiki.settings.WikiSettings> wikiSettingsProvider);
-
 	public void subscribePage(long userId, long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

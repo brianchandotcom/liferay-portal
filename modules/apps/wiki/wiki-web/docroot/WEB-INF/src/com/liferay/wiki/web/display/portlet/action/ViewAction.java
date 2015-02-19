@@ -24,7 +24,7 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.wiki.configuration.WikiServiceConfiguration;
-import com.liferay.wiki.configuration.WikiServiceConfigurationProvider;
+import com.liferay.wiki.configuration.WikiServiceConfigurationImpl;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -62,7 +62,7 @@ public class ViewAction extends PortletAction {
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			WikiServiceConfiguration wikiServiceConfiguration =
-				WikiServiceConfigurationProvider.getWikiServiceConfiguration();
+				WikiServiceConfigurationImpl.getWikiServiceConfiguration();
 
 			String title = ParamUtil.getString(
 				renderRequest, "title",

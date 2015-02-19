@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  */
 @Component(
-	configurationPid = "com.liferay.wiki.configuration.WikiServiceConfiguration",
 	immediate = true,
 	property = {
 		"class.name=com.liferay.wiki.settings.WikiSettings"
@@ -78,15 +77,10 @@ public class WikiSettingsProvider implements SettingsProvider<WikiSettings> {
 	}
 
 	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		WikiServiceConfiguration wikiServiceConfiguration =
-			Configurable.createConfigurable(
-				WikiServiceConfiguration.class, properties);
-
+	protected void activate() {
 		_settingsFactory.registerSettingsMetadata(
 			WikiConstants.SERVICE_NAME, WikiSettings.getFallbackKeys(),
-			WikiSettings.MULTI_VALUED_KEYS, wikiServiceConfiguration,
+			WikiSettings.MULTI_VALUED_KEYS, _wikiServiceConfiguration,
 			new ClassLoaderResourceManager(
 				WikiSettings.class.getClassLoader()));
 
@@ -103,8 +97,16 @@ public class WikiSettingsProvider implements SettingsProvider<WikiSettings> {
 		_settingsFactory = settingsFactory;
 	}
 
+	@Reference
+	protected void setWikiServiceConfiguration(
+		WikiServiceConfiguration wikiServiceConfiguration) {
+
+		_wikiServiceConfiguration = wikiServiceConfiguration;
+	}
+
 	private static WikiSettingsProvider _wikiSettingsProvider;
 
 	private SettingsFactory _settingsFactory;
+	private WikiServiceConfiguration _wikiServiceConfiguration;
 
 }

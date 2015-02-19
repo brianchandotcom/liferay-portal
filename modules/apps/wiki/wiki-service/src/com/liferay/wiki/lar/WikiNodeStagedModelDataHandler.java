@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.wiki.configuration.WikiServiceConfiguration;
-import com.liferay.wiki.configuration.WikiServiceConfigurationProvider;
+import com.liferay.wiki.configuration.WikiServiceConfigurationImpl;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
@@ -118,7 +118,7 @@ public class WikiNodeStagedModelDataHandler
 		WikiNode importedNode = null;
 
 		WikiServiceConfiguration wikiServiceConfiguration =
-			WikiServiceConfigurationProvider.getWikiServiceConfiguration();
+			WikiServiceConfigurationImpl.getWikiServiceConfiguration();
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			WikiNode existingNode = fetchStagedModelByUuidAndGroupId(

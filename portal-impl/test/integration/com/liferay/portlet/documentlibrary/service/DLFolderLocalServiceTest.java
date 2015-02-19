@@ -29,6 +29,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -68,9 +69,15 @@ public class DLFolderLocalServiceTest {
 
 		Assert.assertNotNull(assetEntry);
 
+		List<DLFolder> baseDLFolders =
+			DLFolderLocalServiceUtil.getNoAssetFolders();
+
 		AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
 
-		List<DLFolder> dlFolders = DLFolderLocalServiceUtil.getNoAssetFolders();
+		List<DLFolder> dlFolders = new ArrayList<>(
+			DLFolderLocalServiceUtil.getNoAssetFolders());
+
+		dlFolders.removeAll(baseDLFolders);
 
 		Assert.assertEquals(1, dlFolders.size());
 		Assert.assertEquals(dlFolder, dlFolders.get(0));

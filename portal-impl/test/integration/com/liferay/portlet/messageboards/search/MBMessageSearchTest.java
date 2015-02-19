@@ -155,8 +155,8 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 
 		return MBTestUtil.addMessageWithWorkflow(
 			serviceContext.getUserId(), category.getGroupId(),
-			category.getCategoryId(), RandomTestUtil.randomString(),
-			keywords, approved, serviceContext);
+			category.getCategoryId(), RandomTestUtil.randomString(), keywords,
+			approved, serviceContext);
 	}
 
 	@Override

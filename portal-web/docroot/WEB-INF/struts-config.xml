@@ -1288,6 +1288,8 @@
 
 		<action path="/my_workflow_instances/view" forward="portlet.workflow_instances.view" />
 
+		<action path="/my_workflow_instances/view_content" forward="portlet.workflow_instances.view_content" />
+
 		<!-- My Workflow Tasks -->
 
 		<action path="/my_workflow_tasks/edit_workflow_task" type="com.liferay.portlet.workflowtasks.action.EditWorkflowTaskAction">
@@ -1300,6 +1302,8 @@
 		</action>
 
 		<action path="/my_workflow_tasks/view" forward="portlet.workflow_tasks.view" />
+
+		<action path="/my_workflow_tasks/view_content" forward="portlet.workflow_instances.view_content" />
 
 		<!-- News -->
 
@@ -1922,6 +1926,8 @@
 		</action>
 
 		<action path="/workflow_definitions/view" forward="portlet.workflow_definitions.view" />
+
+		<action path="/workflow_definitions/view_content" forward="portlet.workflow_instances.view_content" />
 
 		<!-- Workflow Instances -->
 

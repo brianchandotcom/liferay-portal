@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.io.InputStream;
 
@@ -187,8 +186,8 @@ public abstract class BaseSpellCheckIndexWriter
 
 		uidSB.append(String.valueOf(companyId));
 		uidSB.append(StringPool.UNDERLINE);
-		uidSB.append(PortletKeys.SEARCH);
-		uidSB.append(_PORTLET_SEPARATOR);
+		uidSB.append(Field.SPELL_CHECK_WORD);
+		uidSB.append(StringPool.UNDERLINE);
 
 		int length = 4;
 

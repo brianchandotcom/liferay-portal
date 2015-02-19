@@ -81,27 +81,14 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 		userParams.put("inherit", Boolean.TRUE);
 		userParams.put("usersGroups", new Long(group.getGroupId()));
 	}
+	else if (group.isLimitedToParentSiteMembers()) {
+		userParams.put("inherit", Boolean.TRUE);
+		userParams.put("usersGroups", new Long(group.getParentGroupId()));
+	}
 	%>
 
 	<liferay-ui:search-container-results>
-		<c:choose>
-			<c:when test='<%= tabs1.equals("summary") || tabs2.equals("current") || !group.isLimitedToParentSiteMembers() %>'>
-				<%@ include file="/html/portlet/users_admin/user_search_results.jspf" %>
-			</c:when>
-			<c:otherwise>
-
-				<%
-				total = UserLocalServiceUtil.getGroupUsersCount(group.getParentGroupId());
-
-				searchContainer.setTotal(total);
-
-				results = UserLocalServiceUtil.getGroupUsers(group.getParentGroupId(), userSearchContainer.getStart(), userSearchContainer.getEnd());
-
-				searchContainer.setResults(results);
-				%>
-
-			</c:otherwise>
-		</c:choose>
+		<%@ include file="/html/portlet/users_admin/user_search_results.jspf" %>
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row

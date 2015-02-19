@@ -337,7 +337,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	protected void addSort(
 		SearchRequestBuilder searchRequestBuilder, Sort[] sorts) {
 
-		if ((sorts == null) || (sorts.length == 0)) {
+		if (ArrayUtil.isEmpty(sorts)) {
 			return;
 		}
 

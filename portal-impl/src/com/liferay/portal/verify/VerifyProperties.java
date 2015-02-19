@@ -461,6 +461,13 @@ public class VerifyProperties extends VerifyProcess {
 			"publish.to.live.by.default", "com.liferay.journal.content.web"
 		},
 
+		// Language
+
+		new String[] {
+			"language.display.templates.config", "display.templates.config",
+			"com.liferay.language.web"
+		},
+
 		// LDAP
 
 		new String[] {

@@ -608,14 +608,6 @@
 		<put name="portlet_content" value="/portlet/journal_content_search/view.jsp" />
 	</definition>
 
-	<!-- Language -->
-
-	<definition name="portlet.language" extends="portlet" />
-
-	<definition name="portlet.language.view" extends="portlet.language">
-		<put name="portlet_content" value="/portlet/language/view.jsp" />
-	</definition>
-
 	<!-- Layout Prototypes -->
 
 	<definition name="portlet.layout_prototypes" extends="portlet" />

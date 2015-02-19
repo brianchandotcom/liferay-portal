@@ -23,15 +23,40 @@ String type = ParamUtil.getString(request, "type");
 AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(type);
 
 AssetEntry assetEntry = assetRendererFactory.getAssetEntry(assetEntryId);
+
+AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
 %>
 
 <c:if test="<%= (assetEntry != null) && assetEntry.isVisible() %>">
+	<c:if test="<%= assetRenderer.hasEditPermission(permissionChecker) %>">
+		<div class="asset-actions lfr-meta-actions">
+
+			<%
+			PortletURL redirectURL = renderResponse.createRenderURL();
+
+			redirectURL.setParameter("struts_action", "/search/edit_content_redirect");
+
+			PortletURL editPortletURL = assetRenderer.getURLEdit((LiferayPortletRequest)renderRequest, (LiferayPortletResponse)renderResponse, LiferayWindowState.POP_UP, redirectURL);
+
+			String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format(request, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + HtmlUtil.escapeJS(editPortletURL.toString()) + "'});";
+			%>
+
+			<liferay-ui:icon
+				iconCssClass="icon-edit-sign"
+				message='<%= HtmlUtil.render(LanguageUtil.format(request, "edit-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false)) %>'
+				url="<%= taglibEditURL %>"
+			/>
+		</div>
+	</c:if>
+
 	<liferay-ui:header
 		localizeTitle="<%= false %>"
-		title="<%= assetEntry.getTitle(locale) %>"
+		title="<%= assetRenderer.getTitle(locale) %>"
 	/>
 
 	<liferay-ui:asset-display
 		assetEntry="<%= assetEntry %>"
+		assetRenderer="<%= assetRenderer %>"
+		assetRendererFactory="<%= assetRendererFactory %>"
 	/>
 </c:if>

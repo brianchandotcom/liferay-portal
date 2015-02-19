@@ -1501,6 +1501,8 @@
 
 		<!-- Search -->
 
+		<action path="/search/edit_content_redirect" forward="portlet.search.edit_content_redirect" />
+
 		<action path="/search/open_search" type="com.liferay.portlet.search.action.OpenSearchAction" />
 
 		<action path="/search/open_search_description.xml" forward="/portlet/search/open_search_description.jsp" />
@@ -1938,6 +1940,8 @@
 
 		<action path="/workflow_instances/view" forward="portlet.workflow_instances.view" />
 
+		<action path="/workflow_instances/view_content" forward="portlet.workflow_instances.view_content" />
+
 		<!-- Workflow Tasks -->
 
 		<action path="/workflow_tasks/edit_workflow_task" type="com.liferay.portlet.workflowtasks.action.EditWorkflowTaskAction">
@@ -1950,6 +1954,8 @@
 		</action>
 
 		<action path="/workflow_tasks/view" forward="portlet.workflow_tasks.view" />
+
+		<action path="/workflow_tasks/view_content" forward="portlet.workflow_instances.view_content" />
 	</action-mappings>
 
 	<!-- Custom Request Processor -->

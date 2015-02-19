@@ -1094,6 +1094,10 @@
 
 	<definition name="portlet.search" extends="portlet" />
 
+	<definition name="portlet.search.edit_content_redirect" extends="portlet.search">
+		<put name="portlet_content" value="/portlet/search/edit_content_redirect.jsp" />
+	</definition>
+
 	<definition name="portlet.search.search" extends="portlet.search">
 		<put name="portlet_content" value="/portlet/search/search.jsp" />
 	</definition>
@@ -1440,6 +1444,10 @@
 
 	<definition name="portlet.workflow_instances.view" extends="portlet.workflow_instances">
 		<put name="portlet_content" value="/portlet/workflow_instances/view.jsp" />
+	</definition>
+
+	<definition name="portlet.workflow_instances.view_content" extends="portlet.workflow_instances">
+		<put name="portlet_content" value="/portlet/workflow_instances/view_content.jsp" />
 	</definition>
 
 	<!-- Workflow Tasks -->

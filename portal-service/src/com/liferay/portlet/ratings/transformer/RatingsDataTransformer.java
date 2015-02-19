@@ -16,6 +16,7 @@ package com.liferay.portlet.ratings.transformer;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.ratings.RatingsType;
 
 /**
  * @author Roberto Díaz
@@ -24,7 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 public interface RatingsDataTransformer {
 
 	public ActionableDynamicQuery.PerformActionMethod transformRatingsData(
-			final String fromRatingsType, final String toRatingsType)
+			final RatingsType fromRatingsType, final RatingsType toRatingsType)
 		throws PortalException;
 
 }

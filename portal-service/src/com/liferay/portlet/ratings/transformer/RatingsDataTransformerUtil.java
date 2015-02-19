@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.ratings.RatingsType;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionUtil;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionValues;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
@@ -89,10 +90,14 @@ public class RatingsDataTransformerUtil {
 		for (String className : portletRatingsDefinitionValuesMap.keySet()) {
 			String propertyKey = getPropertyKey(className);
 
-			_transformRatingsData(
-				"companyId", companyId, className,
-				oldPortletPreferences.getValue(propertyKey, StringPool.BLANK),
+			RatingsType fromRatingsType = RatingsType.parse(
+				oldPortletPreferences.getValue(propertyKey, StringPool.BLANK));
+			RatingsType toRatingsType = RatingsType.parse(
 				properties.getProperty(propertyKey));
+
+			_transformRatingsData(
+				"companyId", companyId, className, fromRatingsType,
+				toRatingsType);
 		}
 	}
 
@@ -116,17 +121,20 @@ public class RatingsDataTransformerUtil {
 		for (String className : portletRatingsDefinitionValuesMap.keySet()) {
 			String propertyKey = getPropertyKey(className);
 
-			_transformRatingsData(
-				"groupId", groupId, className,
-				oldProperties.getProperty(propertyKey),
+			RatingsType fromRatingsType = RatingsType.parse(
+				oldProperties.getProperty(propertyKey));
+			RatingsType toRatingsType = RatingsType.parse(
 				properties.getProperty(propertyKey));
+
+			_transformRatingsData(
+				"groupId", groupId, className, fromRatingsType, toRatingsType);
 		}
 	}
 
 	private void _transformRatingsData(
 			final String classPKFieldName, final long classPKFieldValue,
-			final String className, String fromRatingsType,
-			String toRatingsType)
+			final String className, RatingsType fromRatingsType,
+			RatingsType toRatingsType)
 		throws PortalException {
 
 		if (Validator.isNull(fromRatingsType) ||

@@ -23,6 +23,7 @@ import com.liferay.poshi.runner.util.HtmlUtil;
 import com.liferay.poshi.runner.util.LocaleUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.RuntimeVariables;
+import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
@@ -589,6 +590,14 @@ public class LiferaySeleniumHelper {
 
 	public static String getNumberIncrement(String value) {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
+	}
+
+	public static String getPortalRootDirName() throws Exception {
+		File file = new File("../../../" + StringPool.PERIOD);
+
+		String absolutePath = file.getAbsolutePath();
+
+		return absolutePath.substring(0, absolutePath.length() - 1);
 	}
 
 	public static boolean isConfirmation(

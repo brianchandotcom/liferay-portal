@@ -57,12 +57,12 @@ public class DDLRecordTestHelper {
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 			if (ddmFormField.isLocalizable()) {
 				ddmFormValues.addDDMFormFieldValue(
-					createLocalizedTextDDMFormFieldValue(
+					createLocalizedDDMFormFieldValue(
 						ddmFormField.getName(), RandomTestUtil.randomString()));
 			}
 			else {
 				ddmFormValues.addDDMFormFieldValue(
-					createUnlocalizedTextDDMFormFieldValue(
+					createUnlocalizedDDMFormFieldValue(
 						ddmFormField.getName(), RandomTestUtil.randomString()));
 			}
 		}
@@ -87,17 +87,17 @@ public class DDLRecordTestHelper {
 		return _recordSet;
 	}
 
-	protected DDMFormFieldValue createLocalizedTextDDMFormFieldValue(
+	protected DDMFormFieldValue createLocalizedDDMFormFieldValue(
 		String name, String enValue) {
 
-		return DDMFormValuesTestUtil.createLocalizedTextDDMFormFieldValue(
+		return DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
 			name, enValue);
 	}
 
-	protected DDMFormFieldValue createUnlocalizedTextDDMFormFieldValue(
+	protected DDMFormFieldValue createUnlocalizedDDMFormFieldValue(
 		String name, String value) {
 
-		return DDMFormValuesTestUtil.createUnlocalizedTextDDMFormFieldValue(
+		return DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 			name, value);
 	}
 

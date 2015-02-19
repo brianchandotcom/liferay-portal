@@ -43,15 +43,21 @@ public class DDMFormValuesTestUtil {
 	}
 
 	public static DDMFormFieldValue createDDMFormFieldValue(
-		String name, Value value) {
+		String instanceId, String name, Value value) {
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
-		ddmFormFieldValue.setInstanceId(StringUtil.randomString());
+		ddmFormFieldValue.setInstanceId(instanceId);
 		ddmFormFieldValue.setName(name);
 		ddmFormFieldValue.setValue(value);
 
 		return ddmFormFieldValue;
+	}
+
+	public static DDMFormFieldValue createDDMFormFieldValue(
+		String name, Value value) {
+
+		return createDDMFormFieldValue(StringUtil.randomString(), name, value);
 	}
 
 	public static DDMFormValues createDDMFormValues(
@@ -65,32 +71,31 @@ public class DDMFormValuesTestUtil {
 		return ddmFormValues;
 	}
 
-	public static DDMFormFieldValue createLocalizedTextDDMFormFieldValue(
+	public static DDMFormFieldValue createLocalizedDDMFormFieldValue(
 		String name, String enValue) {
 
 		Value localizedValue = new LocalizedValue(LocaleUtil.US);
 
 		localizedValue.addString(LocaleUtil.US, enValue);
 
-		return createTextDDMFormFieldValue(name, localizedValue);
+		return createDDMFormFieldValue(name, localizedValue);
 	}
 
-	public static DDMFormFieldValue createTextDDMFormFieldValue(
-		String name, Value value) {
+	public static Value createLocalizedValue(
+		String enValue, String ptValue, Locale defaultLocale) {
 
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+		Value value = new LocalizedValue(defaultLocale);
 
-		ddmFormFieldValue.setInstanceId(StringUtil.randomString());
-		ddmFormFieldValue.setName(name);
-		ddmFormFieldValue.setValue(value);
+		value.addString(LocaleUtil.BRAZIL, ptValue);
+		value.addString(LocaleUtil.US, enValue);
 
-		return ddmFormFieldValue;
+		return value;
 	}
 
-	public static DDMFormFieldValue createUnlocalizedTextDDMFormFieldValue(
+	public static DDMFormFieldValue createUnlocalizedDDMFormFieldValue(
 		String name, String value) {
 
-		return createTextDDMFormFieldValue(name, new UnlocalizedValue(value));
+		return createDDMFormFieldValue(name, new UnlocalizedValue(value));
 	}
 
 }

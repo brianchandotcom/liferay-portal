@@ -203,12 +203,12 @@ public class DDLRecordSearchTest {
 		DDMFormValues ddmFormValues = createDDMFormValues();
 
 		DDMFormFieldValue nameDDMFormFieldValue =
-			createLocalizedTextDDMFormFieldValue("name", name);
+			createLocalizedDDMFormFieldValue("name", name);
 
 		ddmFormValues.addDDMFormFieldValue(nameDDMFormFieldValue);
 
 		DDMFormFieldValue descriptionDDMFormFieldValue =
-			createLocalizedTextDDMFormFieldValue("description", description);
+			createLocalizedDDMFormFieldValue("description", description);
 
 		ddmFormValues.addDDMFormFieldValue(descriptionDDMFormFieldValue);
 
@@ -246,10 +246,10 @@ public class DDLRecordSearchTest {
 			LocaleUtil.US);
 	}
 
-	protected DDMFormFieldValue createLocalizedTextDDMFormFieldValue(
+	protected DDMFormFieldValue createLocalizedDDMFormFieldValue(
 		String name, String enValue) {
 
-		return DDMFormValuesTestUtil.createLocalizedTextDDMFormFieldValue(
+		return DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
 			name, enValue);
 	}
 

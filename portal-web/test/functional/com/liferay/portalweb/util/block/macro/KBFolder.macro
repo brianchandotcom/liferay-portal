@@ -1,0 +1,27 @@
+<definition>
+	<command name="addCP">
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_BUTTON" value1="Add" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_MENULIST_FOLDER" value1="Folder" />
+
+		<execute action="CPKnowledgebaseadminAddfolder#type" locator-key1="TITLE_FIELD" value1="${kbFolderName}" />
+
+		<execute action="CPKnowledgebaseadminAddfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="deleteCP">
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="FOLDER_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPKnowledgebaseadmin#assertClickNoError" locator-key1="FOLDER_MENULIST_DELETE" value1="Delete" />
+
+		<execute action="CPKnowledgebaseadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="gotoCP">
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="FOLDER_TABLE_FOLDER" value1="${kbFolderName}" />
+
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="FOLDER_BREADCRUMB" value1="${kbFolderName}" />
+	</command>
+</definition>

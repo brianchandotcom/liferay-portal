@@ -122,6 +122,64 @@
 		</if>
 	</command>
 
+	<command name="configureEmailCP">
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="CONFIGURATION_ICON" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="CONFIGURATION_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="CPKnowledgebaseadminConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+		<if>
+			<isset var="emailFrom" />
+			<then>
+				<execute action="CPKnowledgebaseadminConfiguration#assertClick" locator-key1="NAVIGATION_EMAIL_FROM_TAB" value1="Email From" />
+
+				<execute action="CPKnowledgebaseadminConfiguration#type" locator-key1="EMAIL_FROM_NAME_FIELD" value1="${userName}" />
+				<execute action="CPKnowledgebaseadminConfiguration#type" locator-key1="EMAIL_FROM_ADDRESS_FIELD" value1="${userEmailAddress}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="suggestionReceived" />
+			<then>
+				<execute action="CPKnowledgebaseadminConfiguration#assertClick" locator-key1="NAVIGATION_SUGGESTION_RECEIVED_TAB" value1="Suggestion Received Email" />
+
+				<execute action="CPKnowledgebaseadminConfiguration#type" locator-key1="SUGGESTION_RECEIVED_EMAIL_BODY_FIELD" value1="[$COMMENT_CREATE_DATE$] &lt;a href=&quot;[$ARTICLE_URL$]&quot;&gt;Article Link &lt;/a&gt;" />
+
+				<execute action="CPKnowledgebaseadminConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+				<execute action="CPKnowledgebaseadminConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+			</then>
+		</if>
+
+		<if>
+			<isset var="suggestionInProgress" />
+			<then>
+				<execute action="CPKnowledgebaseadminConfiguration#assertClick" locator-key1="NAVIGATION_SUGGESTION_IN_PROGRESS_TAB" value1="Suggestion in Progress Email" />
+
+				<execute action="CPKnowledgebaseadminConfiguration#type" locator-key1="SUGGESTION_IN_PROGRESS_EMAIL_BODY_FIELD" value1="[$COMMENT_CREATE_DATE$] &lt;a href=&quot;[$ARTICLE_URL$]&quot;&gt;Article Link &lt;/a&gt;" />
+
+				<execute action="CPKnowledgebaseadminConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+				<execute action="CPKnowledgebaseadminConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+			</then>
+		</if>
+
+		<if>
+			<isset var="suggestionResolved" />
+			<then>
+				<execute action="CPKnowledgebaseadminConfiguration#assertClick" locator-key1="NAVIGATION_SUGGESTION_RESOLVED_TAB" value1="Suggestion Resolved Email" />
+
+				<execute action="CPKnowledgebaseadminConfiguration#type" locator-key1="SUGGESTION_RESOLVED_EMAIL_BODY_FIELD" value1="[$COMMENT_CREATE_DATE$] &lt;a href=&quot;[$ARTICLE_URL$]&quot;&gt;Article Link &lt;/a&gt;" />
+
+				<execute action="CPKnowledgebaseadminConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+				<execute action="CPKnowledgebaseadminConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+			</then>
+		</if>
+
+		<execute action="CPKnowledgebaseadminConfiguration#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="configureKBArticle">
 		<execute function="AssertClick" locator1="PGKnowledgebasearticle#CONFIGURE_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
 
@@ -140,6 +198,32 @@
 		<execute function="SelectFrame" locator1="PGKnowledgebasearticleConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="AssertClick" locator1="PGKnowledgebasearticleConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasearticleConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="configureKBArticleDisplay">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGKnowledgebasedisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+		<execute action="PGKnowledgebasedisplayConfiguration#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
+
+		<execute action="PGKnowledgebasedisplayConfiguration#selectFrame" value1="relative=top" />
+
+		<execute action="PGKnowledgebasedisplaySelectParentArticleDisplay#selectFrame" locator-key1="SELECT_PARENT_DISPLAY_IFRAME" />
+
+		<execute action="PGKnowledgebasedisplaySelectParentArticleDisplay#assertClick" locator-key1="CHOOSE_BUTTON" value1="Choose" />
+
+		<execute action="PGKnowledgebasedisplaySelectParentArticleDisplay#selectFrame" value1="relative=top" />
+
+		<execute action="PGKnowledgebasedisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+		<execute action="PGKnowledgebasedisplayConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="PGKnowledgebasedisplayConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureKBDisplaySettingsPG">
@@ -193,7 +277,23 @@
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
+	
+	<command name="configureKBFolderDisplay">
+		<var name="key_kbFolderName" value="${kbFolderName}" />
 
+		<execute action="PGKnowledgebasedisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGKnowledgebasedisplayConfiguration#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
+		<execute action="PGKnowledgebasedisplayConfiguration#selectFrame" value1="relative=top" />
+
+		<execute action="PGKnowledgebasedisplaySelectParentArticleDisplay#selectFrame" locator-key1="SELECT_PARENT_DISPLAY_IFRAME" />
+		<execute action="PGKnowledgebasedisplaySelectParentArticleDisplay#assertClick" locator-key1="FOLDER_CHOOSE_BUTTON" value1="Choose" />
+		<execute action="PGKnowledgebasedisplaySelectParentArticleDisplay#selectFrame" value1="relative=top" />
+
+		<execute action="PGKnowledgebasedisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGKnowledgebasedisplayConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGKnowledgebasedisplayConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+	
 	<command name="configureKBRatingTypePG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
@@ -218,6 +318,8 @@
 		<execute action="PGKnowledgebasedisplayConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGKnowledgebasedisplayConfiguration#assertClick" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
+
+
 
 	<command name="configureKBSection">
 		<execute macro="Portlet#gotoPortletOptions">
@@ -559,6 +661,13 @@
 
 		<execute function="Click" locator1="CPKnowledgebaseadmin#SCOPE_SELECTOR_BUTTON" />
 		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#SCOPE_MENU" value1="${kbPageScope}" />
+	</command>
+
+	<command name="subscribeCP">
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="SUBSCRIBE_BUTTON" value1="Subscribe" />
+
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPKnowledgebaseadmin#assertTextNotEquals" locator-key1="UNSUBSCRIBE_BUTTON" />
 	</command>
 
 	<command name="tearDownCP">
@@ -909,6 +1018,87 @@
 		</if>
 	</command>
 
+	<command name="viewKBSuggestionNotificationsInGmail">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		<var name="pageName" value="${pageName}" />
+
+		<execute action="CPKnowledgebaseadmin#mouseOver" locator-key1="ARTICLE_TABLE_CREATE_DATE" />
+
+		<var locator-key="ARTICLE_TABLE_CREATE_DATE_POPUP" name="publishDate" path="CPKnowledgebaseadmin" />
+
+		<var name="key_publishDate" value="${publishDate}" />
+		<var name="separator" value=" " />
+
+		<var method="StringUtil#extractFirst(${key_publishDate}, ${separator})" name="gmailKBArticleDate" />
+
+		<execute macro="Gmail#login">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#viewMultipleMail">
+			<var name="emailFromUserName" value="${userName}" />
+			<var name="gmailAssetType" value="" />
+			<var name="gmailKBArticleDate" value="${gmailKBArticleDate}" />
+			<var name="gmailMessageKBArticleURL" value="${gmailMessageKBArticleURL}" />
+			<var name="gmailMessageTitle" value="We have received your suggestion for article ${kbArticleTitle} - ${gmailKBArticleDate} Article Link" />
+			<var name="gmailMessageTitleInside" value="We have received your suggestion for article ${kbArticleTitle}" />
+			<var name="kbArticleContent" value="${kbArticleContent}" />
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+			<var name="number" value="3" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Gmail#selectWindowKBSuggestionReceived">
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
+
+		<execute macro="Gmail#backtoInbox" />
+
+		<execute macro="Gmail#viewMultipleMail">
+			<var name="emailFromUserName" value="${userName}" />
+			<var name="gmailAssetType" value="" />
+			<var name="gmailKBArticleDate" value="${gmailKBArticleDate}" />
+			<var name="gmailMessageKBArticleURL" value="${gmailMessageKBArticleURL}" />
+			<var name="gmailMessageTitle" value="We are reviewing your suggestion for article ${kbArticleTitle} - ${gmailKBArticleDate} Article Link" />
+			<var name="gmailMessageTitleInside" value="We are reviewing your suggestion for article ${kbArticleTitle}" />
+			<var name="kbArticleContent" value="${kbArticleContent}" />
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+			<var name="number" value="2" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Gmail#selectWindowKBSuggestionReviewing">
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
+
+		<execute macro="Gmail#backtoInbox" />
+
+		<execute macro="Gmail#viewMultipleMail">
+			<var name="emailFromUserName" value="${userName}" />
+			<var name="gmailAssetType" value="" />
+			<var name="gmailKBArticleDate" value="${gmailKBArticleDate}" />
+			<var name="gmailMessageKBArticleURL" value="${gmailMessageKBArticleURL}" />
+			<var name="gmailMessageTitle" value="We have resolved your suggestion for article ${kbArticleTitle} - ${gmailKBArticleDate} Article Link" />
+			<var name="gmailMessageTitleInside" value="We have resolved your suggestion for article ${kbArticleTitle}" />
+			<var name="kbArticleContent" value="${kbArticleContent}" />
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+			<var name="number" value="1" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Gmail#selectWindowKBSuggestionResolved">
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
+
+		<execute macro="Gmail#tearDown">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="test" />
+		</execute>
+	</command>
+
 	<command name="viewNavigationLinksPG">
 		<if>
 			<equals arg1="${previous}" arg2="true" />
@@ -944,6 +1134,11 @@
 	<command name="viewNoViaKBSectionPG">
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasesection#SECTIONS_TITLE" value1="General" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGKnowledgebasesection#PORTLET_BODY" value1="No articles were found" />
+	</command>
+
+	<command name="viewPGViaKBDisplay">
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
 	</command>
 
 	<command name="viewRelatedAssetCP">

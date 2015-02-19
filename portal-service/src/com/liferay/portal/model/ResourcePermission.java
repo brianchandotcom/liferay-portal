@@ -40,5 +40,4 @@ public interface ResourcePermission extends ResourcePermissionModel,
 
 	public void removeResourceAction(java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
 }

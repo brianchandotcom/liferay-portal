@@ -117,6 +117,7 @@ public class SubscriptionLocalServiceImpl
 
 			subscription = subscriptionPersistence.create(subscriptionId);
 
+			subscription.setGroupId(groupId);
 			subscription.setCompanyId(user.getCompanyId());
 			subscription.setUserId(user.getUserId());
 			subscription.setUserName(user.getFullName());
@@ -272,6 +273,18 @@ public class SubscriptionLocalServiceImpl
 	public void deleteSubscriptions(long userId) throws PortalException {
 		List<Subscription> subscriptions = subscriptionPersistence.findByUserId(
 			userId);
+
+		for (Subscription subscription : subscriptions) {
+			deleteSubscription(subscription);
+		}
+	}
+
+	@Override
+	public void deleteSubscriptions(long userId, long groupId)
+		throws PortalException {
+
+		List<Subscription> subscriptions = subscriptionPersistence.findByG_U(
+			groupId, userId);
 
 		for (Subscription subscription : subscriptions) {
 			deleteSubscription(subscription);

@@ -54,6 +54,7 @@ public class SubscriptionWrapper implements Subscription,
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("subscriptionId", getSubscriptionId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -78,6 +79,12 @@ public class SubscriptionWrapper implements Subscription,
 
 		if (subscriptionId != null) {
 			setSubscriptionId(subscriptionId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -202,6 +209,16 @@ public class SubscriptionWrapper implements Subscription,
 	@Override
 	public java.lang.String getFrequency() {
 		return _subscription.getFrequency();
+	}
+
+	/**
+	* Returns the group ID of this subscription.
+	*
+	* @return the group ID of this subscription
+	*/
+	@Override
+	public long getGroupId() {
+		return _subscription.getGroupId();
 	}
 
 	/**
@@ -380,6 +397,16 @@ public class SubscriptionWrapper implements Subscription,
 	@Override
 	public void setFrequency(java.lang.String frequency) {
 		_subscription.setFrequency(frequency);
+	}
+
+	/**
+	* Sets the group ID of this subscription.
+	*
+	* @param groupId the group ID of this subscription
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_subscription.setGroupId(groupId);
 	}
 
 	/**

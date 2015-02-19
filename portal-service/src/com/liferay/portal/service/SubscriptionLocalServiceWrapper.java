@@ -200,6 +200,12 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	@Override
+	public void deleteSubscriptions(long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_subscriptionLocalService.deleteSubscriptions(userId, groupId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _subscriptionLocalService.dynamicQuery();
 	}

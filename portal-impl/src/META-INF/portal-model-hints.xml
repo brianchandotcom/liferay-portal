@@ -921,6 +921,7 @@
 	<model name="com.liferay.portal.model.Subscription">
 		<field name="mvccVersion" type="long" />
 		<field name="subscriptionId" type="long" />
+		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />

@@ -2447,6 +2447,10 @@
 
 		<column name="subscriptionId" type="long" primary="true" />
 
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
@@ -2464,6 +2468,10 @@
 		<!-- Finder methods -->
 
 		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="G_U" return-type="Collection">
+			<finder-column name="groupId" />
 			<finder-column name="userId" />
 		</finder>
 		<finder name="U_C" return-type="Collection">

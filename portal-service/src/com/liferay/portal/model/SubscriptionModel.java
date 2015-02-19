@@ -39,8 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SubscriptionModel extends AttachedModel, AuditedModel,
-	BaseModel<Subscription>, MVCCModel {
+public interface SubscriptionModel extends AttachedModel, BaseModel<Subscription>,
+	GroupedModel, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -90,6 +90,22 @@ public interface SubscriptionModel extends AttachedModel, AuditedModel,
 	 * @param subscriptionId the subscription ID of this subscription
 	 */
 	public void setSubscriptionId(long subscriptionId);
+
+	/**
+	 * Returns the group ID of this subscription.
+	 *
+	 * @return the group ID of this subscription
+	 */
+	@Override
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this subscription.
+	 *
+	 * @param groupId the group ID of this subscription
+	 */
+	@Override
+	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the company ID of this subscription.

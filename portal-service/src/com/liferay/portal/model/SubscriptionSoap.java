@@ -35,6 +35,7 @@ public class SubscriptionSoap implements Serializable {
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setSubscriptionId(model.getSubscriptionId());
+		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
@@ -111,6 +112,14 @@ public class SubscriptionSoap implements Serializable {
 		_subscriptionId = subscriptionId;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -177,6 +186,7 @@ public class SubscriptionSoap implements Serializable {
 
 	private long _mvccVersion;
 	private long _subscriptionId;
+	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;

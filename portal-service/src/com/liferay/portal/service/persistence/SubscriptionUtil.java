@@ -250,6 +250,161 @@ public class SubscriptionUtil {
 	}
 
 	/**
+	* Returns all the subscriptions where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the matching subscriptions
+	*/
+	public static java.util.List<com.liferay.portal.model.Subscription> findByG_U(
+		long groupId, long userId) {
+		return getPersistence().findByG_U(groupId, userId);
+	}
+
+	/**
+	* Returns a range of all the subscriptions where groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SubscriptionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of subscriptions
+	* @param end the upper bound of the range of subscriptions (not inclusive)
+	* @return the range of matching subscriptions
+	*/
+	public static java.util.List<com.liferay.portal.model.Subscription> findByG_U(
+		long groupId, long userId, int start, int end) {
+		return getPersistence().findByG_U(groupId, userId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the subscriptions where groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SubscriptionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of subscriptions
+	* @param end the upper bound of the range of subscriptions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching subscriptions
+	*/
+	public static java.util.List<com.liferay.portal.model.Subscription> findByG_U(
+		long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Subscription> orderByComparator) {
+		return getPersistence()
+				   .findByG_U(groupId, userId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first subscription in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching subscription
+	* @throws com.liferay.portal.NoSuchSubscriptionException if a matching subscription could not be found
+	*/
+	public static com.liferay.portal.model.Subscription findByG_U_First(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Subscription> orderByComparator)
+		throws com.liferay.portal.NoSuchSubscriptionException {
+		return getPersistence()
+				   .findByG_U_First(groupId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the first subscription in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching subscription, or <code>null</code> if a matching subscription could not be found
+	*/
+	public static com.liferay.portal.model.Subscription fetchByG_U_First(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Subscription> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_U_First(groupId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last subscription in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching subscription
+	* @throws com.liferay.portal.NoSuchSubscriptionException if a matching subscription could not be found
+	*/
+	public static com.liferay.portal.model.Subscription findByG_U_Last(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Subscription> orderByComparator)
+		throws com.liferay.portal.NoSuchSubscriptionException {
+		return getPersistence()
+				   .findByG_U_Last(groupId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last subscription in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
+	*/
+	public static com.liferay.portal.model.Subscription fetchByG_U_Last(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Subscription> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_U_Last(groupId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the subscriptions before and after the current subscription in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param subscriptionId the primary key of the current subscription
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next subscription
+	* @throws com.liferay.portal.NoSuchSubscriptionException if a subscription with the primary key could not be found
+	*/
+	public static com.liferay.portal.model.Subscription[] findByG_U_PrevAndNext(
+		long subscriptionId, long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Subscription> orderByComparator)
+		throws com.liferay.portal.NoSuchSubscriptionException {
+		return getPersistence()
+				   .findByG_U_PrevAndNext(subscriptionId, groupId, userId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the subscriptions where groupId = &#63; and userId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	*/
+	public static void removeByG_U(long groupId, long userId) {
+		getPersistence().removeByG_U(groupId, userId);
+	}
+
+	/**
+	* Returns the number of subscriptions where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the number of matching subscriptions
+	*/
+	public static int countByG_U(long groupId, long userId) {
+		return getPersistence().countByG_U(groupId, userId);
+	}
+
+	/**
 	* Returns all the subscriptions where userId = &#63; and classNameId = &#63;.
 	*
 	* @param userId the user ID

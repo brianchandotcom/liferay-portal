@@ -32,58 +32,50 @@ boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT)
 
 AssetEntry assetEntry = null;
 
-try {
-	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(type);
-	AssetRenderer assetRenderer = null;
+AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(type);
+AssetRenderer assetRenderer = null;
 
-	if (Validator.isNotNull(urlTitle)) {
-		assetRenderer = assetRendererFactory.getAssetRenderer(groupId, urlTitle);
+if (Validator.isNotNull(urlTitle)) {
+	assetRenderer = assetRendererFactory.getAssetRenderer(groupId, urlTitle);
 
-		assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
-	}
-	else {
-		assetEntry = assetRendererFactory.getAssetEntry(assetEntryId);
-
-		assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
-	}
-
-	if (!assetEntry.isVisible()) {
-		throw new NoSuchModelException();
-	}
-
-	String title = assetRenderer.getTitle(locale);
-
-	request.setAttribute("view.jsp-results", new ArrayList());
-	request.setAttribute("view.jsp-assetEntryIndex", new Integer(0));
-	request.setAttribute("view.jsp-assetEntry", assetEntry);
-	request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
-	request.setAttribute("view.jsp-assetRenderer", assetRenderer);
-	request.setAttribute("view.jsp-title", title);
-	request.setAttribute("view.jsp-print", new Boolean(print));
-%>
-
-	<div>
-		<liferay-util:include page="/html/portlet/asset_publisher/display/full_content.jsp" />
-	</div>
-
-	<liferay-util:include page="/html/portlet/asset_publisher/asset_html_metadata.jsp" />
-
-<%
-	PortalUtil.addPortletBreadcrumbEntry(request, title, currentURL);
+	assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
 }
-catch (NoSuchModelException nsme) {
-	SessionErrors.add(renderRequest, NoSuchModelException.class.getName());
-%>
+else {
+	assetEntry = assetRendererFactory.getAssetEntry(assetEntryId);
 
-	<liferay-util:include page="/html/portlet/asset_publisher/error.jsp" />
-
-<%
-}
-catch (Exception e) {
-	_log.error(e);
+	assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 }
 %>
 
-<%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.asset_publisher.view_content_jsp");
-%>
+<c:choose>
+	<c:when test="<%= assetEntry.isVisible() %>">
+
+		<%
+		String title = assetRenderer.getTitle(locale);
+
+		request.setAttribute("view.jsp-results", new ArrayList());
+		request.setAttribute("view.jsp-assetEntryIndex", new Integer(0));
+		request.setAttribute("view.jsp-assetEntry", assetEntry);
+		request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
+		request.setAttribute("view.jsp-assetRenderer", assetRenderer);
+		request.setAttribute("view.jsp-title", title);
+		request.setAttribute("view.jsp-print", new Boolean(print));
+
+		PortalUtil.addPortletBreadcrumbEntry(request, title, currentURL);
+		%>
+
+		<div>
+			<liferay-util:include page="/html/portlet/asset_publisher/display/full_content.jsp" />
+		</div>
+
+		<liferay-util:include page="/html/portlet/asset_publisher/asset_html_metadata.jsp" />
+	</c:when>
+	<c:otherwise>
+
+		<%
+		SessionErrors.add(renderRequest, NoSuchModelException.class.getName());
+		%>
+
+		<liferay-util:include page="/html/portlet/asset_publisher/error.jsp" />
+	</c:otherwise>
+</c:choose>

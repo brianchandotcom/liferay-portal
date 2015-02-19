@@ -19,11 +19,41 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.ratings.RatingsType;
 
 /**
+ * An interface defining the transformations that will be applied to the ratings
+ * data when the ratings type used by an entity is changed to use a different
+ * ratings type.
+ *
+ * <p>
+ * RatingsDataTransformer implementation will need to be registered in the
+ * OSGI Registry. The portal will invoke the highest ranking OSGI component
+ * implementing this interface when the ratings type of an entity is changed.
+ * </p>
+ *
  * @author Roberto Díaz
  * @author Sergio González
  */
 public interface RatingsDataTransformer {
 
+	/**
+	 * Defines the transformations that will be applied on a ratings entry when
+	 * ratings type is changed from <code>fromRatingsType</code> to
+	 * <code>toRatingsType</code>.
+	 *
+	 * <p>
+	 * This methow will return a
+	 * <code>ActionableDynamicQuery.PerformActionMethod</code> that will operate
+	 * on a {@link com.liferay.portlet.ratings.model.RatingsEntry} entity to
+	 * transform its values based when the ratings type is changed.
+	 * </p>
+	 *
+	 * @param  fromRatingsType the previous ratings type
+	 * @param  toRatingsType the final ratings type
+	 * @return a ActionableDynamicQuery.PerformActionMethod with the actions
+	 *         that needs to be applied to the RatingsEntry when the ratings
+	 *         type changes.
+	 * @throws PortalException if the transformation cannot be applied
+	 *         successfully.
+	 */
 	public ActionableDynamicQuery.PerformActionMethod transformRatingsData(
 			final RatingsType fromRatingsType, final RatingsType toRatingsType)
 		throws PortalException;

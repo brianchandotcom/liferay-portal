@@ -15,21 +15,14 @@
 package com.liferay.portlet.search.context;
 
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.util.ContentUtil;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.PortletPreferences;
 

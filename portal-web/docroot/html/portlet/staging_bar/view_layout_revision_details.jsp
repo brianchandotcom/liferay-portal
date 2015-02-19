@@ -46,7 +46,7 @@ else if (hasWorkflowTask) {
 	taglibHelpMessage = "you-are-currently-reviewing-this-page.-you-can-make-changes-and-send-them-to-the-next-step-in-the-workflow-when-ready";
 }
 else {
-	taglibHelpMessage = "a-new-version-will-be-created-automatically-if-this-page-is-modified";
+	taglibHelpMessage = "a-new-version-is-created-automatically-if-this-page-is-modified";
 }
 %>
 

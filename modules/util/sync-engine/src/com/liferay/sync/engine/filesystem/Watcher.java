@@ -338,8 +338,8 @@ public abstract class Watcher implements Runnable {
 			if (_downloadedFilePathNames.remove(filePath.toString()) ||
 				(removeCreatedFilePathName(filePath.toString()) &&
 				 !FileUtil.isValidChecksum(filePath)) ||
-				Files.notExists(filePath) ||
-				Files.isDirectory(filePath)) {
+				Files.notExists(filePath) || Files.isDirectory(filePath) ||
+				isIgnoredFilePath(filePath)) {
 
 				return;
 			}

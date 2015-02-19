@@ -1345,47 +1345,56 @@ create database lportal${database.index} character set utf8;</echo>
 					</else>
 				</if>
 
+				<get-database-property property.name="database.device-name" />
+
 				<if>
-					<not>
-						<equals arg1="${database.sql-replacement.drop-schema.token}" arg2="" />
-					</not>
+					<equals arg1="${database.type}" arg2="db2" />
 					<then>
 						<replace file="create.sql">
-							<replacefilter token="${database.sql-replacement.drop-schema.token}" value="${database.sql-replacement.drop-schema.value}" />
+							<replacetoken>create database lportal;</replacetoken>
+							<replacevalue>create database lportal pagesize 8192;</replacevalue>
 						</replace>
 					</then>
+					<elseif>
+						<equals arg1="${database.type}" arg2="sybase" />
+						<then>
+							<replace file="create.sql">
+								<replacefilter>
+									<replacetoken>use master</replacetoken>
+									<replacevalue expandProperties="true"><![CDATA[use master
+dump transaction master with no_log
+go
+if exists (select * from master.dbo.sysdatabases where name = "lportal")
+begin
+drop database lportal
+end
+go
+create database lportal on ${database.device-name} = "250m"
+go]]></replacevalue>
+								</replacefilter>
+								<replacefilter>
+									<replacetoken>use lportal</replacetoken>
+									<replacevalue><![CDATA[use lportal
+go]]></replacevalue>
+								</replacefilter>
+							</replace>
+						</then>
+					</elseif>
 				</if>
+
+				<get-database-property property.name="database.schema" />
 
 				<if>
 					<not>
-						<equals arg1="${database.sql-replacement.create-schema.token}" arg2="" />
+						<equals arg1="${database.schema}" arg2="lportal" />
 					</not>
 					<then>
-						<replace file="create.sql">
-							<replacefilter token="${database.sql-replacement.create-schema.token}" value="${database.sql-replacement.create-schema.value}" />
-						</replace>
-					</then>
-				</if>
-
-				<if>
-					<not>
-						<equals arg1="${database.sql-replacement.use-schema.token}" arg2="" />
-					</not>
-					<then>
-						<replace file="create.sql">
-							<replacefilter token="${database.sql-replacement.use-schema.token}" value="${database.sql-replacement.use-schema.value}" />
-						</replace>
-					</then>
-				</if>
-
-				<if>
-					<not>
-						<equals arg1="${database.sql-replacement.create-schema-secondary.token}" arg2="" />
-					</not>
-					<then>
-						<replace file="create.sql">
-							<replacefilter token="${database.sql-replacement.create-schema-secondary.token}" value="${database.sql-replacement.create-schema-secondary.value}" />
-						</replace>
+						<replaceregexp
+							file="create.sql"
+							flags="g"
+							match="lportal"
+							replace="${database.schema}"
+						/>
 					</then>
 				</if>
 			</then>

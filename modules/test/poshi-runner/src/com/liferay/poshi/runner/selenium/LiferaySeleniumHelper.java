@@ -58,8 +58,15 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import org.sikuli.api.DesktopScreenRegion;
+import org.sikuli.api.ImageTarget;
+import org.sikuli.api.ScreenRegion;
 import org.sikuli.api.robot.Mouse;
 import org.sikuli.api.robot.desktop.DesktopMouse;
+import org.sikuli.api.visual.Canvas;
+import org.sikuli.api.visual.CanvasBuilder.ElementAdder;
+import org.sikuli.api.visual.CanvasBuilder.ElementAreaSetter;
+import org.sikuli.api.visual.DesktopCanvas;
 
 /**
  * @author Brian Wing Shun Chan
@@ -1122,14 +1129,52 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		ScreenRegion desktopScreenRegion = new DesktopScreenRegion();
+
+		liferaySelenium.pause("1000");
+
+		File file = new File(
+			getPortalRootDirName() + liferaySelenium.getSikuliImagesDirName() +
+				image);
+
+		ImageTarget imageTarget = new ImageTarget(file);
+
+		ScreenRegion screenRegion = desktopScreenRegion.wait(imageTarget, 5000);
+
+		if (screenRegion != null) {
+			throw new Exception("Element is present");
+		}
 	}
 
 	public static void sikuliAssertElementPresent(
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		ScreenRegion desktopScreenRegion = new DesktopScreenRegion();
+
+		liferaySelenium.pause("1000");
+
+		File file = new File(
+			getPortalRootDirName() + liferaySelenium.getSikuliImagesDirName() +
+				image);
+
+		ImageTarget imageTarget = new ImageTarget(file);
+
+		ScreenRegion screenRegion = desktopScreenRegion.wait(imageTarget, 5000);
+
+		if (screenRegion == null) {
+			throw new Exception("Element is not present");
+		}
+
+		Canvas canvas = new DesktopCanvas();
+
+		ElementAdder elementAdder = canvas.add();
+
+		ElementAreaSetter elementAreaSetter = elementAdder.box();
+
+		elementAreaSetter.around(screenRegion);
+
+		canvas.display(2);
 	}
 
 	public static void sikuliClick(

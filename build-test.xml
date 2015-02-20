@@ -1345,7 +1345,7 @@ create database lportal${database.index} character set utf8;</echo>
 					</else>
 				</if>
 
-				<get-database-property property.name="database.device-name" />
+				<get-database-property property.name="database.device.name" />
 
 				<if>
 					<equals arg1="${database.type}" arg2="db2" />
@@ -1369,7 +1369,7 @@ begin
 drop database lportal
 end
 go
-create database lportal on ${database.device-name} = "250m"
+create database lportal on ${database.device.name} = "250m"
 go]]></replacevalue>
 								</replacefilter>
 								<replacefilter>
@@ -3978,23 +3978,6 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							</exec>
 						</then>
 					</elseif>
-					<else>
-						<exec executable="${plink.executable}">
-							<arg line="-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c mkdir C:\temporary" />
-						</exec>
-
-						<exec executable="${pscp.executable}">
-							<arg line="-pw ${vm.password} create.sql ${vm.username}@${database.host}:\temporary" />
-						</exec>
-
-						<exec executable="${plink.executable}">
-							<arg line="-pw ${vm.password} ${vm.username}@${database.host} ${database.remote-schema-command}" />
-						</exec>
-
-						<exec executable="${plink.executable}">
-							<arg line="-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c rmdir /q /s C:\temporary" />
-						</exec>
-					</else>
 				</if>
 			</then>
 		</if>

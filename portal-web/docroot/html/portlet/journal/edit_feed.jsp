@@ -349,7 +349,7 @@ if (feed != null) {
 				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
 			},
 			function(event) {
-				if (confirm('<%= UnicodeLanguageUtil.get(request, "selecting-a-new-structure-will-change-the-available-templates-and-available-feed-item-content") %>') && (document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value != event.structurekey)) {
+				if (confirm('<%= UnicodeLanguageUtil.get(request, "selecting-a-new-structure-changes-the-available-templates-and-available-feed-item-content") %>') && (document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value != event.structurekey)) {
 					document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value = event.ddmstructurekey;
 					document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value = '';
 					document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value = '';

@@ -30,4 +30,4 @@ request.setAttribute("edit_pages.jsp-editable", true);
 
 <legend><liferay-ui:message key="css" /></legend>
 
-<aui:input label="insert-custom-css-that-will-be-loaded-after-the-theme" name="regularCss" type="textarea" value="<%= layoutSet.getCss() %>" />
+<aui:input label="insert-custom-css-that-is-loaded-after-the-theme" name="regularCss" type="textarea" value="<%= layoutSet.getCss() %>" />

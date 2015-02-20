@@ -39,11 +39,11 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 	</liferay-ui:error>
 
-	<p><%= LanguageUtil.get(request, "upload-a-logo-for-the-" + (layoutsAdminDisplayContext.isPrivateLayout() ? "private" : "public") + "-pages-that-will-be-used-instead-of-the-default-enterprise-logo") %></p>
+	<p><%= LanguageUtil.get(request, "upload-a-logo-for-the-" + (layoutsAdminDisplayContext.isPrivateLayout() ? "private" : "public") + "-pages-that-is-used-instead-of-the-default-enterprise-logo") %></p>
 
 	<c:if test="<%= liveGroup.isLayoutSetPrototype() && !PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO %>">
 		<div class="alert alert-warning">
-			<liferay-ui:message key="modifying-the-site-template-logo-will-only-affect-sites-that-are-not-yet-created" />
+			<liferay-ui:message key="modifying-the-site-template-logo-only-affects-sites-that-are-not-yet-created" />
 		</div>
 	</c:if>
 

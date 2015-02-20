@@ -69,6 +69,10 @@ public class SettingsFactoryUtil {
 			layout, portletId);
 	}
 
+	public static Settings getServerSettings(String settingsId) {
+		return getSettingsFactory().getServerSettings(settingsId);
+	}
+
 	public static SettingsFactory getSettingsFactory() {
 		PortalRuntimePermission.checkGetBeanProperty(SettingsFactoryUtil.class);
 

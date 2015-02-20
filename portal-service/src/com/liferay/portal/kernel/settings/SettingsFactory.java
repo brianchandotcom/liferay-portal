@@ -46,6 +46,8 @@ public interface SettingsFactory {
 	public Settings getPortletInstanceSettings(Layout layout, String portletId)
 		throws PortalException;
 
+	public Settings getServerSettings(String settingsId);
+
 	public void registerSettingsMetadata(
 		String settingsId, FallbackKeys fallbackKeys,
 		String[] multiValuedKeysArray, Object serviceConfigurationBean,

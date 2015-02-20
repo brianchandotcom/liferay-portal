@@ -58,6 +58,13 @@ import javax.portlet.PortletPreferences;
 @DoPrivileged
 public class SettingsFactoryImpl implements SettingsFactory {
 
+	public SettingsFactoryImpl() {
+		registerSettingsMetadata(
+			"com.liferay.portal", null, null, null,
+			new ClassLoaderResourceManager(
+				PortalClassLoaderUtil.getClassLoader()));
+	}
+
 	@Override
 	public void clearCache() {
 		_portletPropertiesMap.clear();
@@ -197,6 +204,14 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	@Override
+	public Settings getServerSettings(String settingsId) {
+		Settings portalPropertiesSettings = getPortalPropertiesSettings();
+
+		return getServiceConfigurationBeanSettings(
+			settingsId, portalPropertiesSettings);
+	}
+
+	@Override
 	public void registerSettingsMetadata(
 		String settingsId, FallbackKeys fallbackKeys,
 		String[] multiValuedKeysArray, Object serviceConfigurationBean,
@@ -204,15 +219,20 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		settingsId = PortletConstants.getRootPortletId(settingsId);
 
-		_fallbackKeysMap.put(settingsId, fallbackKeys);
+		if (fallbackKeys != null) {
+			_fallbackKeysMap.put(settingsId, fallbackKeys);
+		}
 
-		List<String> multiValuedKeysList = new ArrayList<>();
+		if (multiValuedKeysArray != null) {
+			List<String> multiValuedKeysList = new ArrayList<>();
 
-		Collections.addAll(multiValuedKeysList, multiValuedKeysArray);
+			Collections.addAll(multiValuedKeysList, multiValuedKeysArray);
 
-		multiValuedKeysList = Collections.unmodifiableList(multiValuedKeysList);
+			multiValuedKeysList = Collections.unmodifiableList(
+				multiValuedKeysList);
 
-		_multiValuedKeysMap.put(settingsId, multiValuedKeysList);
+			_multiValuedKeysMap.put(settingsId, multiValuedKeysList);
+		}
 
 		if (serviceConfigurationBean != null) {
 			_serviceConfigurationBeans.put(

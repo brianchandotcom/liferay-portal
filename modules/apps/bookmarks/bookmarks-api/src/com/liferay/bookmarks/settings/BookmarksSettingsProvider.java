@@ -14,7 +14,7 @@
 
 package com.liferay.bookmarks.settings;
 
-import com.liferay.bookmarks.configuration.BookmarksServiceConfiguration;
+import com.liferay.bookmarks.configuration.BookmarksConfiguration;
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
@@ -79,7 +79,7 @@ public class BookmarksSettingsProvider
 		_settingsFactory.registerSettingsMetadata(
 			BookmarksConstants.SERVICE_NAME,
 			BookmarksSettings.getFallbackKeys(),
-			BookmarksSettings.MULTI_VALUED_KEYS, _bookmarksServiceConfiguration,
+			BookmarksSettings.MULTI_VALUED_KEYS, _bookmarksConfiguration,
 			new ClassLoaderResourceManager(
 				BookmarksSettings.class.getClassLoader()));
 
@@ -92,10 +92,10 @@ public class BookmarksSettingsProvider
 	}
 
 	@Reference(unbind = "-")
-	protected void setBookmarksServiceConfiguration(
-		BookmarksServiceConfiguration bookmarksServiceConfiguration) {
+	protected void setBookmarksConfiguration(
+		BookmarksConfiguration bookmarksConfiguration) {
 
-		_bookmarksServiceConfiguration = bookmarksServiceConfiguration;
+		_bookmarksConfiguration = bookmarksConfiguration;
 	}
 
 	@Reference
@@ -105,7 +105,7 @@ public class BookmarksSettingsProvider
 
 	private static BookmarksSettingsProvider _bookmarksSettingsProvider;
 
-	private BookmarksServiceConfiguration _bookmarksServiceConfiguration;
+	private BookmarksConfiguration _bookmarksConfiguration;
 	private SettingsFactory _settingsFactory;
 
 }

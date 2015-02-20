@@ -14,8 +14,8 @@
 
 package com.liferay.wiki.parser.creole.ast;
 
-import com.liferay.wiki.configuration.WikiServiceConfiguration;
-import com.liferay.wiki.configuration.WikiServiceConfigurationImpl;
+import com.liferay.wiki.configuration.WikiConfiguration;
+import com.liferay.wiki.service.settings.WikiServiceSettingsProvider;
 
 /**
  * @author Miguel Pastor
@@ -34,11 +34,14 @@ public abstract class URLNode extends ASTNode {
 
 		_link = link;
 
-		WikiServiceConfiguration wikiServiceConfiguration =
-			WikiServiceConfigurationImpl.getWikiServiceConfiguration();
+		WikiServiceSettingsProvider wikiServiceSettingsProvider =
+			WikiServiceSettingsProvider.getWikiServiceSettingsProvider();
+
+		WikiConfiguration wikiConfiguration =
+			wikiServiceSettingsProvider.getWikiConfiguration();
 
 		_supportedProtocols =
-			wikiServiceConfiguration.parsersCreoleSupportedProtocols();
+			wikiConfiguration.parsersCreoleSupportedProtocols();
 	}
 
 	public URLNode(String link) {

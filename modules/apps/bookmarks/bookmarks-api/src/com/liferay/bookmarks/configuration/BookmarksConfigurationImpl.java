@@ -26,95 +26,93 @@ import org.osgi.service.component.annotations.Modified;
  * @author Adolfo Pérez
  */
 @Component(
-	configurationPid = "com.liferay.bookmarks.configuration.BookmarksServiceConfiguration",
-	immediate = true, service = BookmarksServiceConfiguration.class
+	configurationPid = "com.liferay.bookmarks.configuration.BookmarksConfiguration",
+	immediate = true, service = BookmarksConfiguration.class
 )
-public class BookmarksServiceConfigurationImpl
-	implements BookmarksServiceConfiguration {
+public class BookmarksConfigurationImpl implements BookmarksConfiguration {
 
 	@Override
 	public String emailEntryAddedBody() {
-		return _bookmarksServiceConfiguration.emailEntryAddedBody();
+		return _bookmarksConfiguration.emailEntryAddedBody();
 	}
 
 	@Override
 	public boolean emailEntryAddedEnabled() {
-		return _bookmarksServiceConfiguration.emailEntryAddedEnabled();
+		return _bookmarksConfiguration.emailEntryAddedEnabled();
 	}
 
 	@Override
 	public String emailEntryAddedSubject() {
-		return _bookmarksServiceConfiguration.emailEntryAddedSubject();
+		return _bookmarksConfiguration.emailEntryAddedSubject();
 	}
 
 	@Override
 	public String emailEntryUpdatedBody() {
-		return _bookmarksServiceConfiguration.emailEntryUpdatedBody();
+		return _bookmarksConfiguration.emailEntryUpdatedBody();
 	}
 
 	@Override
 	public boolean emailEntryUpdatedEnabled() {
-		return _bookmarksServiceConfiguration.emailEntryUpdatedEnabled();
+		return _bookmarksConfiguration.emailEntryUpdatedEnabled();
 	}
 
 	@Override
 	public String emailEntryUpdatedSubject() {
-		return _bookmarksServiceConfiguration.emailEntryUpdatedSubject();
+		return _bookmarksConfiguration.emailEntryUpdatedSubject();
 	}
 
 	@Override
 	public String emailFromAddress() {
-		return _bookmarksServiceConfiguration.emailFromAddress();
+		return _bookmarksConfiguration.emailFromAddress();
 	}
 
 	@Override
 	public String emailFromName() {
-		return _bookmarksServiceConfiguration.emailFromName();
+		return _bookmarksConfiguration.emailFromName();
 	}
 
 	@Override
 	public boolean enableRelatedAssets() {
-		return _bookmarksServiceConfiguration.enableRelatedAssets();
+		return _bookmarksConfiguration.enableRelatedAssets();
 	}
 
 	@Override
 	public int entriesPerPage() {
-		return _bookmarksServiceConfiguration.entriesPerPage();
+		return _bookmarksConfiguration.entriesPerPage();
 	}
 
 	@Override
 	public String[] entryColumns() {
-		return _bookmarksServiceConfiguration.entryColumns();
+		return _bookmarksConfiguration.entryColumns();
 	}
 
 	@Override
 	public String[] folderColumns() {
-		return _bookmarksServiceConfiguration.folderColumns();
+		return _bookmarksConfiguration.folderColumns();
 	}
 
 	@Override
 	public int foldersPerPage() {
-		return _bookmarksServiceConfiguration.foldersPerPage();
+		return _bookmarksConfiguration.foldersPerPage();
 	}
 
 	@Override
 	public boolean showFoldersSearch() {
-		return _bookmarksServiceConfiguration.showFoldersSearch();
+		return _bookmarksConfiguration.showFoldersSearch();
 	}
 
 	@Override
 	public boolean showSubfolders() {
-		return _bookmarksServiceConfiguration.showSubfolders();
+		return _bookmarksConfiguration.showSubfolders();
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_bookmarksServiceConfiguration = Configurable.createConfigurable(
-			BookmarksServiceConfiguration.class, properties);
+		_bookmarksConfiguration = Configurable.createConfigurable(
+			BookmarksConfiguration.class, properties);
 	}
 
-	private volatile BookmarksServiceConfiguration
-		_bookmarksServiceConfiguration;
+	private volatile BookmarksConfiguration _bookmarksConfiguration;
 
 }

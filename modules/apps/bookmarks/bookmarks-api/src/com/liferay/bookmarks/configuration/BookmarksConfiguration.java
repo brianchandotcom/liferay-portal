@@ -20,9 +20,9 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Adolfo Pérez
  */
 @Meta.OCD(
-	id = "com.liferay.bookmarks.configuration.BookmarksServiceConfiguration"
+	id = "com.liferay.bookmarks.configuration.BookmarksConfiguration"
 )
-public interface BookmarksServiceConfiguration {
+public interface BookmarksConfiguration {
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/bookmarks/configuration/dependencies/email_entry_added_body.tmpl}",

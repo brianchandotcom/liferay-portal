@@ -14,14 +14,11 @@
 
 package com.liferay.wiki.settings;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
-
-import java.util.Map;
 
 /**
  * @author Iván Zaera
@@ -37,32 +34,20 @@ public class WikiSettings {
 		"rssAbstractLength",
 	};
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {WikiSettingsProvider#getGroupServiceSettings(long)}
-	 */
-	@Deprecated
-	public static WikiSettings getInstance(long groupId)
-		throws PortalException {
+	public static final String[] MULTI_VALUED_KEYS = {};
 
-		WikiSettingsProvider wikiSettingsProvider =
-			WikiSettingsProvider.getWikiSettingsProvider();
+	public static FallbackKeys getFallbackKeys() {
+		FallbackKeys fallbackKeys = new FallbackKeys();
 
-		return wikiSettingsProvider.getGroupServiceSettings(groupId);
+		fallbackKeys.add(
+			"emailFromAddress", PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		fallbackKeys.add("emailFromName", PropsKeys.ADMIN_EMAIL_FROM_NAME);
+
+		return fallbackKeys;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {WikiSettingsProvider#getGroupServiceSettings(long,String[])}
-	 */
-	@Deprecated
-	public static WikiSettings getInstance(
-			long groupId, Map<String, String[]> parameterMap)
-		throws PortalException {
-
-		WikiSettingsProvider wikiSettingsProvider =
-			WikiSettingsProvider.getWikiSettingsProvider();
-
-		return wikiSettingsProvider.getGroupServiceSettings(
-			groupId, parameterMap);
+	public WikiSettings(Settings settings) {
+		_typedSettings = new TypedSettings(settings);
 	}
 
 	public String getDefaultFormat() {
@@ -142,22 +127,6 @@ public class WikiSettings {
 	public boolean isPageMinorEditSendMail() {
 		return _typedSettings.getBooleanValue("pageMinorEditSendEmail");
 	}
-
-	protected static FallbackKeys getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
-
-		fallbackKeys.add(
-			"emailFromAddress", PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		fallbackKeys.add("emailFromName", PropsKeys.ADMIN_EMAIL_FROM_NAME);
-
-		return fallbackKeys;
-	}
-
-	protected WikiSettings(Settings settings) {
-		_typedSettings = new TypedSettings(settings);
-	}
-
-	protected static final String[] MULTI_VALUED_KEYS = {};
 
 	private final TypedSettings _typedSettings;
 

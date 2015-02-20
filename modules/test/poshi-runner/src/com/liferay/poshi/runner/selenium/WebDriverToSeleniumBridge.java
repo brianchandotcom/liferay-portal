@@ -17,12 +17,15 @@ package com.liferay.poshi.runner.selenium;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.ListUtil;
 import com.liferay.poshi.runner.util.StringUtil;
+
 import com.thoughtworks.selenium.Selenium;
 
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+
 import java.io.StringReader;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,10 +56,12 @@ import org.openqa.selenium.internal.WrapsDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import org.xml.sax.InputSource;
 
 /**

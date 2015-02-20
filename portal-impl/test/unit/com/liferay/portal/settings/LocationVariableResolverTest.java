@@ -89,6 +89,20 @@ public class LocationVariableResolverTest extends PowerMockito {
 	}
 
 	@Test
+	public void testResolveVariableWithResource() {
+		String value = _locationVariableResolver.resolve(
+			"${resource:template.ftl}");
+
+		Assert.assertEquals(_mockResourceManager.getContent(), value);
+
+		List<String> requestedLocations =
+			_mockResourceManager.getRequestedLocations();
+
+		Assert.assertEquals(1, requestedLocations.size());
+		Assert.assertEquals("template.ftl", requestedLocations.get(0));
+	}
+
+	@Test
 	public void testResolveVariableWithServerProperty() {
 		Settings mockSettings = mock(Settings.class);
 
@@ -112,20 +126,6 @@ public class LocationVariableResolverTest extends PowerMockito {
 			_locationVariableResolver.resolve(
 				"${server-property://com.liferay.portal/" +
 					"admin.email.from.address}"));
-	}
-
-	@Test
-	public void testResolveVariableWithResource() {
-		String value = _locationVariableResolver.resolve(
-			"${resource:template.ftl}");
-
-		Assert.assertEquals(_mockResourceManager.getContent(), value);
-
-		List<String> requestedLocations =
-			_mockResourceManager.getRequestedLocations();
-
-		Assert.assertEquals(1, requestedLocations.size());
-		Assert.assertEquals("template.ftl", requestedLocations.get(0));
 	}
 
 	private LocationVariableResolver _locationVariableResolver;

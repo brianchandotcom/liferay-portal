@@ -17,8 +17,11 @@ package com.liferay.portlet.messageboards.trash;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
@@ -27,7 +30,9 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
@@ -37,7 +42,10 @@ import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 
+import java.io.InputStream;
+
 import java.util.Calendar;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -145,9 +153,12 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		MBCategory category = (MBCategory)parentBaseModel;
 
-		MBMessage message = MBTestUtil.addMessage(
-			category.getGroupId(), category.getCategoryId(),
-			getSearchKeywords(), approved, serviceContext);
+		String keywords = getSearchKeywords();
+
+		MBMessage message = MBTestUtil.addMessageWithWorkflow(
+			serviceContext.getUserId(), category.getGroupId(),
+			category.getCategoryId(), keywords, keywords, approved,
+			serviceContext);
 
 		return message.getThread();
 	}
@@ -157,8 +168,12 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 			boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
-		MBMessage message = MBTestUtil.addMessage(
-			serviceContext.getScopeGroupId());
+		MBMessage message = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			serviceContext.getScopeGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 
 		return message.getThread();
 	}
@@ -214,7 +229,9 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 			Group group, long parentBaseModelId, ServiceContext serviceContext)
 		throws Exception {
 
-		return MBTestUtil.addCategory(group.getGroupId(), parentBaseModelId);
+		return MBCategoryLocalServiceUtil.addCategory(
+			TestPropsValues.getUserId(), parentBaseModelId,
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
 
 	@Override
@@ -222,7 +239,10 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
-		return MBTestUtil.addCategory(serviceContext);
+		return MBCategoryLocalServiceUtil.addCategory(
+			TestPropsValues.getUserId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
 
 	@Override
@@ -301,9 +321,17 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 	protected void replyMessage(BaseModel<?> baseModel) throws Exception {
 		MBThread thread = (MBThread)baseModel;
 
-		MBTestUtil.addMessage(
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				thread.getGroupId(), TestPropsValues.getUserId());
+
+		MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			thread.getGroupId(), thread.getCategoryId(), thread.getThreadId(),
-			thread.getRootMessageId());
+			thread.getRootMessageId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), MBMessageConstants.DEFAULT_FORMAT,
+			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
+			false, 0.0, false, serviceContext);
 	}
 
 	@Override

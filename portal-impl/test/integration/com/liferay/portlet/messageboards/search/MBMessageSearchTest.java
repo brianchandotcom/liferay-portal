@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
@@ -32,6 +34,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -129,7 +132,8 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 		}
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(message.getGroupId());
+			ServiceContextTestUtil.getServiceContext(
+				message.getGroupId(), TestPropsValues.getUserId());
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			MBTestUtil.getInputStreamOVPs(
@@ -149,9 +153,10 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 
 		MBCategory category = (MBCategory)parentBaseModel;
 
-		return MBTestUtil.addMessage(
-			category.getGroupId(), category.getCategoryId(), keywords, approved,
-			serviceContext);
+		return MBTestUtil.addMessageWithWorkflow(
+			serviceContext.getUserId(), category.getGroupId(),
+			category.getCategoryId(), RandomTestUtil.randomString(), keywords,
+			approved, serviceContext);
 	}
 
 	@Override
@@ -176,7 +181,10 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
-		return MBTestUtil.addCategory(serviceContext);
+		return MBCategoryServiceUtil.addCategory(
+			TestPropsValues.getUserId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
 
 	@Override
@@ -222,10 +230,16 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 
 		MBMessage message = (MBMessage)baseModel;
 
-		message.setSubject(keywords);
-		message.setBody(keywords);
+		ServiceContext updateServiceContext =
+			ServiceContextTestUtil.getServiceContext(
+				message.getGroupId(), TestPropsValues.getUserId());
 
-		return MBTestUtil.updateMessage(message, keywords, keywords, true);
+		updateServiceContext.setWorkflowAction(
+			WorkflowConstants.ACTION_PUBLISH);
+
+		return MBMessageLocalServiceUtil.updateMessage(
+			TestPropsValues.getUserId(), message.getMessageId(), keywords,
+			updateServiceContext);
 	}
 
 }

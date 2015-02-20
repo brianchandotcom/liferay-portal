@@ -17,6 +17,11 @@ package com.liferay.portlet.messageboards.subscriptions;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortletKeys;
@@ -46,8 +51,17 @@ public class MBSubscriptionLocalizedContentTest
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		MBMessage message = MBTestUtil.addMessage(
-			group.getGroupId(), containerModelId, true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		MBTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
+
+		MBMessage message = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			group.getGroupId(), containerModelId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		return message.getMessageId();
 	}
@@ -84,7 +98,16 @@ public class MBSubscriptionLocalizedContentTest
 	protected void updateBaseModel(long baseModelId) throws Exception {
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
 
-		MBTestUtil.updateMessage(message, true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				message.getGroupId(), TestPropsValues.getUserId());
+
+		MBTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.UPDATE);
+
+		MBMessageLocalServiceUtil.updateMessage(
+			TestPropsValues.getUserId(), message.getMessageId(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 }

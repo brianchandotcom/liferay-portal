@@ -38,14 +38,14 @@ public class MBThreadFlagLocalServiceImpl
 	extends MBThreadFlagLocalServiceBaseImpl {
 
 	@Override
-	public void addThreadFlag(
+	public MBThreadFlag addThreadFlag(
 			long userId, MBThread thread, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		if (user.isDefaultUser()) {
-			return;
+			return null;
 		}
 
 		long threadId = thread.getThreadId();
@@ -94,6 +94,8 @@ public class MBThreadFlagLocalServiceImpl
 
 			mbThreadFlagPersistence.update(threadFlag);
 		}
+
+		return threadFlag;
 	}
 
 	@Override

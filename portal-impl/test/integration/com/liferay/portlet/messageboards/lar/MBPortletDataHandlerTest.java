@@ -18,19 +18,30 @@ import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LongWrapper;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -55,10 +66,18 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	public void testDeleteAllFolders() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		MBCategory parentCategory = MBTestUtil.addCategory(group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
-		MBCategory childCategory = MBTestUtil.addCategory(
-			group.getGroupId(), parentCategory.getCategoryId());
+		MBCategory parentCategory = MBCategoryServiceUtil.addCategory(
+			TestPropsValues.getUserId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+
+		MBCategory childCategory = MBCategoryServiceUtil.addCategory(
+			TestPropsValues.getUserId(), parentCategory.getCategoryId(),
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		MBCategoryLocalServiceUtil.moveCategoryToTrash(
 			TestPropsValues.getUserId(), childCategory.getCategoryId());
@@ -88,15 +107,31 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected void addStagedModels() throws Exception {
-		MBCategory category = MBTestUtil.addCategory(stagingGroup.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId());
 
-		MBMessage message = MBTestUtil.addMessageWithWorkflow(
-			stagingGroup.getGroupId(), category.getCategoryId(), true);
+		MBCategory category = MBCategoryServiceUtil.addCategory(
+			TestPropsValues.getUserId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
-		MBTestUtil.addThreadFlag(
-			stagingGroup.getGroupId(), message.getThread());
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		MBTestUtil.addBan(stagingGroup.getGroupId());
+		MBMessage message = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			stagingGroup.getGroupId(), category.getCategoryId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		MBThreadFlagLocalServiceUtil.addThreadFlag(
+			TestPropsValues.getUserId(), message.getThread(), serviceContext);
+
+		User user = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), TestPropsValues.getGroupId());
+
+		MBBanLocalServiceUtil.addBan(
+			TestPropsValues.getUserId(), user.getUserId(), serviceContext);
 	}
 
 	@Override

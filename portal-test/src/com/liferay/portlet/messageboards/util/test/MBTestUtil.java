@@ -15,35 +15,18 @@
 package com.liferay.portlet.messageboards.util.test;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.messageboards.model.MBBan;
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageConstants;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.model.MBThreadFlag;
-import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
 
 import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,212 +37,34 @@ import java.util.Map;
  */
 public class MBTestUtil {
 
-	public static MBBan addBan(long groupId) throws Exception {
-		User user = UserTestUtil.addUser(
-			RandomTestUtil.randomString(), TestPropsValues.getGroupId());
-
-		return addBan(groupId, user.getUserId());
-	}
-
-	public static MBBan addBan(long groupId, long banUserId) throws Exception {
-		return addBan(TestPropsValues.getUserId(), groupId, banUserId);
-	}
-
-	public static MBBan addBan(long userId, long groupId, long banUserId)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return MBBanLocalServiceUtil.addBan(userId, banUserId, serviceContext);
-	}
-
-	public static MBCategory addCategory(long groupId) throws Exception {
-		return addCategory(
-			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
-	}
-
-	public static MBCategory addCategory(long groupId, long parentCategoryId)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return addCategory(
-			RandomTestUtil.randomString(), parentCategoryId, serviceContext);
-	}
-
-	public static MBCategory addCategory(ServiceContext serviceContext)
-		throws Exception {
-
-		return MBCategoryServiceUtil.addCategory(
-			TestPropsValues.getUserId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
-	}
-
-	public static MBCategory addCategory(
-			String name, long parentCategoryId, ServiceContext serviceContext)
-		throws Exception {
-
-		return MBCategoryServiceUtil.addCategory(
-			TestPropsValues.getUserId(), parentCategoryId, name,
-			RandomTestUtil.randomString(), serviceContext);
-	}
-
-	public static MBMessage addDiscussionMessage(
-			long groupId, String className, long classPK)
-		throws Exception {
-
-		return addDiscussionMessage(
-			TestPropsValues.getUser(), groupId, className, classPK);
-	}
-
-	public static MBMessage addDiscussionMessage(
-			User user, long groupId, String className, long classPK)
-		throws Exception {
-
-		MBMessageDisplay messageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				user.getUserId(), groupId, className, classPK,
-				WorkflowConstants.STATUS_APPROVED);
-
-		MBThread thread =  messageDisplay.getThread();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return MBMessageLocalServiceUtil.addDiscussionMessage(
-			user.getUserId(), user.getFullName(), groupId, className, classPK,
-			thread.getThreadId(), thread.getRootMessageId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(50),
-			serviceContext);
-	}
-
-	public static MBMessage addMessage(long groupId) throws Exception {
-		return addMessage(
-			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
-	}
-
-	public static MBMessage addMessage(long groupId, long categoryId)
-		throws Exception {
-
-		return addMessage(groupId, categoryId, 0, 0);
-	}
-
-	public static MBMessage addMessage(
-			long groupId, long categoryId, boolean approved)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return addMessage(
-			groupId, categoryId, StringPool.BLANK, approved, serviceContext);
-	}
-
-	public static MBMessage addMessage(
-			long groupId, long categoryId, long threadId, long parentMessageId)
-		throws Exception {
-
-		long userId = TestPropsValues.getUserId();
-		String userName = RandomTestUtil.randomString();
-		String subject = RandomTestUtil.randomString();
-		String body = RandomTestUtil.randomString();
-		String format = MBMessageConstants.DEFAULT_FORMAT;
-		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			Collections.emptyList();
-		boolean anonymous = false;
-		double priority = 0.0;
-		boolean allowPingbacks = false;
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return MBMessageLocalServiceUtil.addMessage(
-			userId, userName, groupId, categoryId, threadId, parentMessageId,
-			subject, body, format, inputStreamOVPs, anonymous, priority,
-			allowPingbacks, serviceContext);
-	}
-
-	public static MBMessage addMessage(
-			long groupId, long categoryId, ServiceContext serviceContext)
-		throws Exception {
-
-		return addMessage(
-			groupId, categoryId, StringPool.BLANK, false, serviceContext);
-	}
-
-	public static MBMessage addMessage(
-			long groupId, long categoryId, String keywords, boolean approved,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		String subject = "subject";
-		String body = "body";
-
-		if (!Validator.isBlank(keywords)) {
-			subject = keywords;
-			body = keywords;
-		}
-
-		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			serviceContext.getUserId(), RandomTestUtil.randomString(), groupId,
-			categoryId, subject, body, serviceContext);
-
-		if (!approved) {
-			message = updateStatus(message, serviceContext);
-		}
-
-		return message;
-	}
-
 	public static MBMessage addMessageWithWorkflow(
-			long groupId, boolean approved)
+			long userId, long groupId, long categoryId, String subject,
+			String body, boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
-		return addMessageWithWorkflow(
-			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, approved);
-	}
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
-	public static MBMessage addMessageWithWorkflow(
-			long groupId, long categoryId, boolean approved)
-		throws Exception {
+		try {
+			WorkflowThreadLocal.setEnabled(true);
 
-		return addMessageWithWorkflowAndAttachments(
-			groupId, categoryId, approved, null);
-	}
+			serviceContext = (ServiceContext)serviceContext.clone();
 
-	public static MBMessage addMessageWithWorkflowAndAttachments(
-			long groupId, long categoryId, boolean approved,
-			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
-		throws Exception {
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
+			MBMessage message = MBMessageLocalServiceUtil.addMessage(
+				serviceContext.getUserId(), RandomTestUtil.randomString(),
+				groupId, categoryId, subject, body, serviceContext);
 
-		return addMessage(
-			groupId, categoryId, true, approved, inputStreamOVPs,
-			serviceContext);
-	}
+			if (approved) {
+				return updateStatus(message, serviceContext);
+			}
 
-	public static MBThreadFlag addThreadFlag(long groupId, MBThread thread)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		MBThreadFlagLocalServiceUtil.addThreadFlag(
-			TestPropsValues.getUserId(), thread, serviceContext);
-
-		return MBThreadFlagLocalServiceUtil.getThreadFlag(
-			TestPropsValues.getUserId(), thread);
+			return message;
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
 	}
 
 	public static List<ObjectValuePair<String, InputStream>> getInputStreamOVPs(
@@ -285,114 +90,17 @@ public class MBTestUtil {
 		return inputStreamOVPs;
 	}
 
-	public static MBMessage updateDiscussionMessage(
-			long userId, long groupId, long messageId, String className,
-			long classPK)
+	public static void populateNotificationsServiceContext(
+			ServiceContext serviceContext, String command)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
+		serviceContext.setAttribute("entryURL", "http://localhost");
 
-		serviceContext.setCommand(Constants.UPDATE);
+		if (Validator.isNotNull(command)) {
+			serviceContext.setCommand(command);
+		}
+
 		serviceContext.setLayoutFullURL("http://localhost");
-
-		return MBMessageLocalServiceUtil.updateDiscussionMessage(
-			userId, messageId, className, classPK,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(50),
-			serviceContext);
-	}
-
-	public static MBMessage updateDiscussionMessage(
-			long groupId, long messageId, String className, long classPK)
-		throws Exception {
-
-		return updateDiscussionMessage(
-			TestPropsValues.getUserId(), groupId, messageId, className,
-			classPK);
-	}
-
-	public static MBMessage updateMessage(MBMessage message, boolean approved)
-		throws Exception {
-
-		return updateMessage(
-			message, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(50), approved);
-	}
-
-	public static MBMessage updateMessage(
-			MBMessage message, String subject, String body, boolean approved)
-		throws Exception {
-
-		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
-
-		try {
-			WorkflowThreadLocal.setEnabled(true);
-
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(message.getGroupId());
-
-			serviceContext.setCommand(Constants.UPDATE);
-			serviceContext.setLayoutFullURL("http://localhost");
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-
-			message = MBMessageLocalServiceUtil.updateMessage(
-				TestPropsValues.getUserId(), message.getMessageId(), subject,
-				body,
-				Collections.<ObjectValuePair<String, InputStream>>emptyList(),
-				Collections.<String>emptyList(), message.getPriority(),
-				message.isAllowPingbacks(), serviceContext);
-
-			if (approved) {
-				message = updateStatus(message, serviceContext);
-			}
-
-			return message;
-		}
-		finally {
-			WorkflowThreadLocal.setEnabled(workflowEnabled);
-		}
-	}
-
-	protected static MBMessage addMessage(
-			long groupId, long categoryId, boolean workflowEnabled,
-			boolean approved,
-			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		long userId = TestPropsValues.getUserId();
-		String userName = RandomTestUtil.randomString();
-		long threadId = 0;
-		long parentMessageId = 0;
-		String subject = RandomTestUtil.randomString();
-		String body = RandomTestUtil.randomString();
-		String format = MBMessageConstants.DEFAULT_FORMAT;
-		boolean anonymous = false;
-		double priority = 0.0;
-		boolean allowPingbacks = false;
-
-		if (inputStreamOVPs == null) {
-			inputStreamOVPs = Collections.emptyList();
-		}
-
-		if (workflowEnabled) {
-			if (approved) {
-				serviceContext.setWorkflowAction(
-					WorkflowConstants.ACTION_PUBLISH);
-			}
-			else {
-				serviceContext.setWorkflowAction(
-					WorkflowConstants.ACTION_SAVE_DRAFT);
-			}
-		}
-
-		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			userId, userName, groupId, categoryId, threadId, parentMessageId,
-			subject, body, format, inputStreamOVPs, anonymous, priority,
-			allowPingbacks, serviceContext);
-
-		return MBMessageLocalServiceUtil.getMessage(message.getMessageId());
 	}
 
 	protected static MBMessage updateStatus(

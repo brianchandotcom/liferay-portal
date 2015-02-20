@@ -91,7 +91,6 @@ import com.liferay.wiki.model.impl.WikiPageDisplayImpl;
 import com.liferay.wiki.model.impl.WikiPageImpl;
 import com.liferay.wiki.service.base.WikiPageLocalServiceBaseImpl;
 import com.liferay.wiki.settings.WikiSettings;
-import com.liferay.wiki.settings.WikiSettingsProvider;
 import com.liferay.wiki.social.WikiActivityKeys;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
@@ -3353,7 +3352,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	@BeanReference(type = WikiConfiguration.class)
 	private WikiConfiguration _wikiConfiguration;
 
-	@BeanReference(type = WikiSettingsProvider.class)
+	@BeanReference(name = "com.liferay.wiki.settings.WikiSettingsProvider")
 	private SettingsProvider<WikiSettings> _wikiSettingsProvider;
 
 }

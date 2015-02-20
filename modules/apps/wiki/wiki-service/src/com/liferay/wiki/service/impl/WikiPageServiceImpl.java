@@ -42,7 +42,6 @@ import com.liferay.wiki.service.base.WikiPageServiceBaseImpl;
 import com.liferay.wiki.service.permission.WikiNodePermission;
 import com.liferay.wiki.service.permission.WikiPagePermission;
 import com.liferay.wiki.settings.WikiSettings;
-import com.liferay.wiki.settings.WikiSettingsProvider;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 
@@ -892,7 +891,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		}
 	}
 
-	@BeanReference(type = WikiSettingsProvider.class)
+	@BeanReference(name = "com.liferay.wiki.settings.WikiSettingsProvider")
 	private SettingsProvider<WikiSettings> _wikiSettingsProvider;
 
 }

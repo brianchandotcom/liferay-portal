@@ -34,6 +34,22 @@ public class WikiSettings {
 		"rssAbstractLength",
 	};
 
+	public static final String[] MULTI_VALUED_KEYS = {};
+
+	public static FallbackKeys getFallbackKeys() {
+		FallbackKeys fallbackKeys = new FallbackKeys();
+
+		fallbackKeys.add(
+			"emailFromAddress", PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		fallbackKeys.add("emailFromName", PropsKeys.ADMIN_EMAIL_FROM_NAME);
+
+		return fallbackKeys;
+	}
+
+	public WikiSettings(Settings settings) {
+		_typedSettings = new TypedSettings(settings);
+	}
+
 	public String getDefaultFormat() {
 		return _typedSettings.getValue("defaultFormat");
 	}
@@ -111,22 +127,6 @@ public class WikiSettings {
 	public boolean isPageMinorEditSendMail() {
 		return _typedSettings.getBooleanValue("pageMinorEditSendEmail");
 	}
-
-	protected static FallbackKeys getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
-
-		fallbackKeys.add(
-			"emailFromAddress", PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		fallbackKeys.add("emailFromName", PropsKeys.ADMIN_EMAIL_FROM_NAME);
-
-		return fallbackKeys;
-	}
-
-	protected WikiSettings(Settings settings) {
-		_typedSettings = new TypedSettings(settings);
-	}
-
-	protected static final String[] MULTI_VALUED_KEYS = {};
 
 	private final TypedSettings _typedSettings;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.settings;
+package com.liferay.wiki.settings.provider;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsProvider;
 import com.liferay.wiki.configuration.WikiConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
+import com.liferay.wiki.settings.WikiSettings;
 
 import java.util.Map;
 

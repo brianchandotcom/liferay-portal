@@ -49,7 +49,7 @@ int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupIns
 
 <div class="<%= (mdrRuleGroupInstancesCount == 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />inheritRuleGroupInstancesContainer">
 	<div class="alert alert-info">
-		<liferay-ui:message arguments="<%= rootNodeNameLink %>" key="mobile-device-rules-will-be-inhertited-from-x" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments="<%= rootNodeNameLink %>" key="mobile-device-rules-are-inhertited-from-x" translateArguments="<%= false %>" />
 	</div>
 </div>
 

@@ -57,7 +57,7 @@ double trashEntriesMaxAge = PropertiesParamUtil.getInteger(groupTypeSettings, re
 			var trashEnabled = trashEnabledCheckbox.prop('checked');
 
 			if (!trashEnabled && trashEnabledDefault) {
-				if (!confirm('<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "disabling-the-recycle-bin-will-prevent-the-restoring-of-content-that-has-been-moved-to-the-recycle-bin")) %>')) {
+				if (!confirm('<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "disabling-the-recycle-bin-prevents-the-restoring-of-content-that-has-been-moved-to-the-recycle-bin")) %>')) {
 					trashEnabledCheckbox.prop('checked', true);
 
 					trashEnabled = true;

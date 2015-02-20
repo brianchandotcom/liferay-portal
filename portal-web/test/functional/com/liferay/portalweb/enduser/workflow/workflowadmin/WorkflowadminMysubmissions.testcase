@@ -24,7 +24,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMeByActions" priority="5">
+	<command name="WithdrawTaskAssignedToMeByActions" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -68,7 +68,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMeByDetails" priority="5">
+	<command name="WithdrawTaskAssignedToMeByDetails" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -114,7 +114,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMyRolesByActions" priority="5">
+	<command name="WithdrawTaskAssignedToMyRolesByActions" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -148,7 +148,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMyRolesByDetails" priority="5">
+	<command name="WithdrawTaskAssignedToMyRolesByDetails" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 

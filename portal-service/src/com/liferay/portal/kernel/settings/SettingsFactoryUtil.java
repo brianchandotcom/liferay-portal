@@ -38,13 +38,6 @@ public class SettingsFactoryUtil {
 			companyId, serviceName);
 	}
 
-	public static Settings getGroupServiceCompanyDefaultSettings(
-		long companyId, String serviceName) {
-
-		return getSettingsFactory().getGroupServiceCompanyDefaultSettings(
-			companyId, serviceName);
-	}
-
 	public static Settings getGroupServiceSettings(
 			long groupId, String serviceName)
 		throws PortalException {
@@ -68,27 +61,16 @@ public class SettingsFactoryUtil {
 			groupId, portletId);
 	}
 
-	public static Settings getPortletInstanceCompanyDefaultSettings(
-		long companyId, String portletId) {
-
-		return getSettingsFactory().getPortletInstanceCompanyDefaultSettings(
-			companyId, portletId);
-	}
-
-	public static Settings getPortletInstanceGroupDefaultSettings(
-			long groupId, String portletId)
-		throws PortalException {
-
-		return getSettingsFactory().getPortletInstanceGroupDefaultSettings(
-			groupId, portletId);
-	}
-
 	public static Settings getPortletInstanceSettings(
 			Layout layout, String portletId)
 		throws PortalException {
 
 		return getSettingsFactory().getPortletInstanceSettings(
 			layout, portletId);
+	}
+
+	public static Settings getServerSettings(String settingsId) {
+		return getSettingsFactory().getServerSettings(settingsId);
 	}
 
 	public static SettingsFactory getSettingsFactory() {

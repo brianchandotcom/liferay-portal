@@ -299,6 +299,62 @@ public class VerifyProperties extends VerifyProcess {
 			"display.templates.config", "com.liferay.asset.tags.web"
 		},
 
+		// Asset Publisher
+
+		new String[] {
+			"asset.publisher.check.interval", "check.interval",
+			"com.liferay.asset.publisher.web"
+		},
+		new String[] {
+			"asset.publisher.email.from.name", "email.from.name",
+			"com.liferay.asset.publisher.web"
+		},
+		new String[] {
+			"asset.publisher.email.from.address", "email.from.address",
+			"com.liferay.asset.publisher.web"
+		},
+		new String[] {
+			"asset.publisher.email.asset.entry.added.enabled",
+			"email.asset.entry.added.enabled", "com.liferay.asset.publisher.web"
+		},
+		new String[] {
+			"asset.publisher.email.asset.entry.added.subject",
+			"email.asset.entry.added.subject", "com.liferay.asset.publisher.web"
+		},
+		new String[] {
+			"asset.publisher.email.asset.entry.added.body",
+			"email.asset.entry.added.body", "com.liferay.asset.publisher.web"
+		},
+		new String[] {
+			"asset.publisher.display.style.default", "display.style.default",
+			"com.liferay.asset.publisher.web"
+		},
+		new String[] {
+			"asset.publisher.display.styles", "display.styles",
+			"com.liferay.asset.publisher.web"
+		},
+		new String[] {
+			"asset.publisher.display.templates.config",
+			"display.templates.config", "com.liferay.asset.publisher.web"
+		},
+		new String[] {
+			"asset.publisher.dynamic.subscription.limit",
+			"dynamic.subscription.limit", "com.liferay.asset.publisher.web"
+		},
+		new String[] {
+			"asset.publisher.permission.checking.configurable",
+			"permission.checking.configurable",
+			"com.liferay.asset.publisher.web"
+		},
+		new String[] {
+			"asset.publisher.query.form.configuration",
+			"query.form.configuration", "com.liferay.asset.publisher.web"
+		},
+		new String[] {
+			"asset.publisher.search.with.index", "search.with.index",
+			"com.liferay.asset.publisher.web"
+		},
+
 		// Bookmarks
 
 		new String[] {

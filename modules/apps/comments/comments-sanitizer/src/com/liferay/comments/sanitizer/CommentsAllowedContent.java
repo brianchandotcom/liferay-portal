@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model;
+package com.liferay.comments.sanitizer;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -25,9 +25,9 @@ import java.util.regex.Pattern;
 /**
  * @author Sergio González
  */
-public class MBDiscussionAllowedContent {
+public class CommentsAllowedContent {
 
-	public MBDiscussionAllowedContent(String allowedContent) {
+	public CommentsAllowedContent(String allowedContent) {
 		Matcher matcher = _paddingPattern.matcher(allowedContent);
 
 		allowedContent = matcher.replaceAll(StringPool.BLANK);

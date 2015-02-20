@@ -92,7 +92,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 			<aui:input name="name" />
 
 			<div class="form-group">
-				<aui:input helpMessage="if-checked-this-page-wont-show-up-in-the-navigation-menu" label="hide-from-navigation-menu" name="hidden" />
+				<aui:input helpMessage="if-checked-this-page-does-not-show-up-in-the-navigation-menu" label="hide-from-navigation-menu" name="hidden" />
 			</div>
 
 			<c:choose>

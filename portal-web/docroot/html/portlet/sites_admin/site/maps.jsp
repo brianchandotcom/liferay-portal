@@ -46,7 +46,7 @@ String groupGoogleMapsAPIKey = PropertiesParamUtil.getString(groupTypeSettings, 
 <aui:input checked='<%= groupMapsAPIProvider.equals("Google") %>' helpMessage="use-google-maps-as-the-maps-api-provider" id="mapsGoogleMapsEnabled" label="google-maps" name="TypeSettingsProperties--mapsAPIProvider--" type="radio" value="Google" />
 
 <div class="maps-google-maps-api-key" id="<portlet:namespace />googleMapsAPIKey">
-	<aui:input helpMessage="set-the-google-maps-api-key-that-will-be-used-for-this-set-of-pages" label='<%= LanguageUtil.get(request, "google-maps-api-key") + " (" + LanguageUtil.get(request, "optional") + ")" %>' name="TypeSettingsProperties--googleMapsAPIKey--" size="40" type="text" value="<%= groupGoogleMapsAPIKey %>" />
+	<aui:input helpMessage="set-the-google-maps-api-key-that-is-used-for-this-set-of-pages" label='<%= LanguageUtil.get(request, "google-maps-api-key") + " (" + LanguageUtil.get(request, "optional") + ")" %>' name="TypeSettingsProperties--googleMapsAPIKey--" size="40" type="text" value="<%= groupGoogleMapsAPIKey %>" />
 </div>
 
 <aui:input checked='<%= groupMapsAPIProvider.equals("OpenStreet") %>' helpMessage="use-openstreetmap-as-the-maps-api-provider" id="mapsOpenStreetMapEnabled" label="openstreetmap" name="TypeSettingsProperties--mapsAPIProvider--" type="radio" value="OpenStreet" />

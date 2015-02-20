@@ -327,7 +327,7 @@ public class JournalFolderServiceTest {
 		try {
 			JournalArticleLocalServiceUtil.moveArticle(
 				_group.getGroupId(), article.getArticleId(),
-				folder.getFolderId());
+				folder.getFolderId(), serviceContext);
 
 			Assert.fail();
 		}
@@ -340,7 +340,7 @@ public class JournalFolderServiceTest {
 		try {
 			JournalArticleLocalServiceUtil.moveArticle(
 				_group.getGroupId(), article.getArticleId(),
-				subfolder.getFolderId());
+				subfolder.getFolderId(), serviceContext);
 
 			Assert.fail();
 		}

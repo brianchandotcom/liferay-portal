@@ -3294,10 +3294,42 @@ public class JournalArticleLocalServiceImpl
 	 * Moves the web content article matching the group and article ID to a new
 	 * folder.
 	 *
+	 * @param      groupId the primary key of the web content article's group
+	 * @param      articleId the primary key of the web content article
+	 * @param      newFolderId the primary key of the web content article's new
+	 *             folder
+	 * @return     the updated web content article, which was moved to a new
+	 *             folder
+	 * @throws     PortalException if a matching web content article could not
+	 *             be found
+	 * @deprecated As of 7.0.0, replaced by {@link #moveArticle(long, String,
+	 *             long, ServiceContext)}
+	 */
+	@Deprecated
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public JournalArticle moveArticle(
+			long groupId, String articleId, long newFolderId)
+		throws PortalException {
+
+		return moveArticle(groupId, articleId, newFolderId, null);
+	}
+
+	/**
+	 * Moves the web content article matching the group and article ID to a new
+	 * folder.
+	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
 	 * @param  newFolderId the primary key of the web content article's new
 	 *         folder
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date, status date, and portlet preferences. With
+	 *         respect to social activities, by setting the service context's
+	 *         command to {@link
+	 *         com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
+	 *         is considered a web content update activity; otherwise it is
+	 *         considered a web content add activity.
 	 * @return the updated web content article, which was moved to a new folder
 	 * @throws PortalException if a matching web content article could not be
 	 *         found
@@ -3305,7 +3337,8 @@ public class JournalArticleLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle moveArticle(
-			long groupId, String articleId, long newFolderId)
+			long groupId, String articleId, long newFolderId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		JournalArticle latestArticle = getLatestArticle(groupId, articleId);
@@ -3321,6 +3354,12 @@ public class JournalArticleLocalServiceImpl
 			article.setTreePath(article.buildTreePath());
 
 			journalArticlePersistence.update(article);
+
+			if (serviceContext != null) {
+				notifySubscribers(
+					serviceContext.getUserId(), article, article.getUrlTitle(),
+					serviceContext);
+			}
 		}
 
 		return getArticle(groupId, articleId);
@@ -3382,7 +3421,8 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		return moveArticle(groupId, article.getArticleId(), newFolderId);
+		return moveArticle(
+			groupId, article.getArticleId(), newFolderId, serviceContext);
 	}
 
 	/**

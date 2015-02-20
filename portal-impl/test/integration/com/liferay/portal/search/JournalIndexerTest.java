@@ -707,6 +707,9 @@ public class JournalIndexerTest {
 			initialSearchCount1 + 1,
 			searchCount(_group.getGroupId(), searchContext1));
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
 		if (moveToTrash) {
 			JournalFolderLocalServiceUtil.moveFolderToTrash(
 				TestPropsValues.getUserId(), folder1.getFolderId());
@@ -714,9 +717,6 @@ public class JournalIndexerTest {
 			Assert.assertEquals(
 				initialSearchCount1,
 				searchCount(_group.getGroupId(), searchContext1));
-
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 			article = JournalArticleLocalServiceUtil.getArticle(
 				article.getId());
@@ -728,7 +728,7 @@ public class JournalIndexerTest {
 		else {
 			JournalArticleLocalServiceUtil.moveArticle(
 				_group.getGroupId(), article.getArticleId(),
-				folder2.getFolderId());
+				folder2.getFolderId(), serviceContext);
 		}
 
 		Assert.assertEquals(

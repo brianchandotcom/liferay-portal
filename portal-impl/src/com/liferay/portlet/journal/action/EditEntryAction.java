@@ -250,7 +250,7 @@ public class EditEntryAction extends PortletAction {
 			try {
 				JournalArticleServiceUtil.moveArticle(
 					themeDisplay.getScopeGroupId(),
-					HtmlUtil.unescape(articleId), newFolderId);
+					HtmlUtil.unescape(articleId), newFolderId, serviceContext);
 			}
 			catch (InvalidDDMStructureException idse) {
 				invalidArticleIds.add(articleId);

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
@@ -354,6 +355,37 @@ public abstract class DLAppTestUtil {
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true, approved);
 	}
 
+	public static FileEntry addFileEntryWithWorkflow(
+			long userId, long groupId, long folderId, String sourceFileName,
+			boolean approved, ServiceContext serviceContext)
+		throws Exception {
+
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		try {
+			WorkflowThreadLocal.setEnabled(true);
+
+			serviceContext = (ServiceContext)serviceContext.clone();
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+				TestPropsValues.getUserId(), groupId, folderId, sourceFileName,
+				ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
+				serviceContext);
+
+			if (approved) {
+				return updateStatus(fileEntry, serviceContext);
+			}
+
+			return fileEntry;
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
+	}
+
 	public static Folder addFolder(long groupId, long parentFolderId)
 		throws Exception {
 
@@ -642,7 +674,7 @@ public abstract class DLAppTestUtil {
 			serviceContext);
 	}
 
-	protected static void updateStatus(
+	protected static FileEntry updateStatus(
 			FileEntry fileEntry, ServiceContext serviceContext)
 		throws Exception {
 
@@ -655,6 +687,8 @@ public abstract class DLAppTestUtil {
 			TestPropsValues.getUserId(), fileEntry,
 			fileEntry.getLatestFileVersion(), WorkflowConstants.STATUS_PENDING,
 			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
+
+		return DLAppLocalServiceUtil.getFileEntry(fileEntry.getFileEntryId());
 	}
 
 	private static final String _CONTENT =

@@ -146,12 +146,10 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 			long groupId, long folderId, ServiceContext serviceContext)
 		throws Exception {
 
-		serviceContext = (ServiceContext)serviceContext.clone();
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Text.txt");
+		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
+			TestPropsValues.getUserId(), groupId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Text.txt", true,
+			serviceContext);
 
 		return DLAppServiceUtil.addFileShortcut(
 			groupId, folderId, fileEntry.getFileEntryId(), serviceContext);

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.ratings.RatingsType;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionUtil;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionValues;
@@ -92,6 +91,15 @@ public class RatingsDataTransformerUtil {
 
 			RatingsType fromRatingsType = RatingsType.parse(
 				oldPortletPreferences.getValue(propertyKey, StringPool.BLANK));
+
+			if (fromRatingsType == null) {
+				PortletRatingsDefinitionValues portletRatingsDefinitionValues =
+					portletRatingsDefinitionValuesMap.get(className);
+
+				fromRatingsType =
+					portletRatingsDefinitionValues.getDefaultRatingsType();
+			}
+
 			RatingsType toRatingsType = RatingsType.parse(
 				properties.getProperty(propertyKey));
 
@@ -123,6 +131,15 @@ public class RatingsDataTransformerUtil {
 
 			RatingsType fromRatingsType = RatingsType.parse(
 				oldProperties.getProperty(propertyKey));
+
+			if (fromRatingsType == null) {
+				PortletRatingsDefinitionValues portletRatingsDefinitionValues =
+					portletRatingsDefinitionValuesMap.get(className);
+
+				fromRatingsType =
+					portletRatingsDefinitionValues.getDefaultRatingsType();
+			}
+
 			RatingsType toRatingsType = RatingsType.parse(
 				properties.getProperty(propertyKey));
 
@@ -137,10 +154,7 @@ public class RatingsDataTransformerUtil {
 			RatingsType toRatingsType)
 		throws PortalException {
 
-		if (Validator.isNull(fromRatingsType) ||
-			Validator.isNull(toRatingsType) ||
-			fromRatingsType.equals(toRatingsType)) {
-
+		if ((toRatingsType == null) || fromRatingsType.equals(toRatingsType)) {
 			return;
 		}
 

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -193,8 +194,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = addMessage(
 			userId, userName, groupId, categoryId, threadId, parentMessageId,
-			subject, body, MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs,
-			anonymous, priority, allowPingbacks, serviceContext);
+			subject, body, PropsValues.DISCUSSION_COMMENTS_FORMAT,
+			inputStreamOVPs, anonymous, priority, allowPingbacks,
+			serviceContext);
 
 		// Discussion
 
@@ -249,9 +251,19 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		long messageId = counterLocalService.increment();
 
+		Map<String, Object> options = new HashMap<>();
+
+		boolean discussion = false;
+
+		if (categoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID) {
+			discussion = true;
+		}
+
+		options.put("discussion", discussion);
+
 		body = SanitizerUtil.sanitize(
 			user.getCompanyId(), groupId, userId, MBMessage.class.getName(),
-			messageId, "text/" + format, body);
+			messageId, "text/" + format, Sanitizer.MODE_ALL, body, options);
 
 		validate(subject, body);
 
@@ -1481,10 +1493,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		Date modifiedDate = serviceContext.getModifiedDate(new Date());
 		subject = ModelHintsUtil.trimString(
 			MBMessage.class.getName(), "subject", subject);
+
+		Map<String, Object> options = new HashMap<>();
+
+		options.put("discussion", message.isDiscussion());
+
 		body = SanitizerUtil.sanitize(
 			message.getCompanyId(), message.getGroupId(), userId,
 			MBMessage.class.getName(), messageId, "text/" + message.getFormat(),
-			body);
+			Sanitizer.MODE_ALL, body, options);
 
 		validate(subject, body);
 

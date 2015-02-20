@@ -16,8 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.wiki.configuration.WikiServiceConfiguration" %><%@
-page import="com.liferay.wiki.configuration.WikiServiceConfigurationImpl" %><%@
+<%@ page import="com.liferay.wiki.configuration.WikiConfiguration" %><%@
+page import="com.liferay.wiki.configuration.WikiConfigurationImpl" %><%@
 page import="com.liferay.wiki.constants.WikiConstants" %><%@
 page import="com.liferay.wiki.constants.WikiPortletKeys" %><%@
 page import="com.liferay.wiki.constants.WikiWebKeys" %><%@
@@ -69,7 +69,7 @@ WikiSettings wikiSettings = wikiRequestHelper.getWikiSettings();
 
 WikiPortletInstanceSettingsHelper wikiPortletInstanceSettingsHelper = new WikiPortletInstanceSettingsHelper(wikiRequestHelper);
 
-WikiServiceConfiguration wikiServiceConfiguration = WikiServiceConfigurationImpl.getWikiServiceConfiguration();
+WikiConfiguration wikiConfiguration = WikiConfigurationImpl.getWikiConfiguration();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

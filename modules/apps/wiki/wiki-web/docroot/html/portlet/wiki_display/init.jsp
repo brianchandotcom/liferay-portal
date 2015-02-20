@@ -16,8 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.wiki.configuration.WikiServiceConfiguration" %><%@
-page import="com.liferay.wiki.configuration.WikiServiceConfigurationImpl" %><%@
+<%@ page import="com.liferay.wiki.configuration.WikiConfiguration" %><%@
+page import="com.liferay.wiki.configuration.WikiConfigurationImpl" %><%@
 page import="com.liferay.wiki.exception.NoSuchNodeException" %><%@
 page import="com.liferay.wiki.model.WikiNode" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
@@ -25,10 +25,10 @@ page import="com.liferay.wiki.service.WikiNodeServiceUtil" %><%@
 page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %>
 
 <%
-WikiServiceConfiguration wikiServiceConfiguration = WikiServiceConfigurationImpl.getWikiServiceConfiguration();
+WikiConfiguration wikiConfiguration = WikiConfigurationImpl.getWikiConfiguration();
 
 long nodeId = GetterUtil.getLong(portletPreferences.getValue("nodeId", StringPool.BLANK));
-String title = GetterUtil.getString(portletPreferences.getValue("title", wikiServiceConfiguration.frontPageName()));
+String title = GetterUtil.getString(portletPreferences.getValue("title", wikiConfiguration.frontPageName()));
 %>
 
 <%@ include file="/html/portlet/wiki_display/init-ext.jsp" %>

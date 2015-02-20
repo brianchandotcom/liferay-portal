@@ -27,108 +27,108 @@ import org.osgi.service.component.annotations.Modified;
  * @author Iván Zaera
  */
 @Component(
-	configurationPid = "com.liferay.wiki.configuration.WikiServiceConfiguration",
-	immediate = true, service = WikiServiceConfiguration.class
+	configurationPid = "com.liferay.wiki.configuration.WikiConfiguration",
+	immediate = true, service = WikiConfiguration.class
 )
-public class WikiServiceConfigurationImpl implements WikiServiceConfiguration {
+public class WikiConfigurationImpl implements WikiConfiguration {
 
-	public static WikiServiceConfiguration getWikiServiceConfiguration() {
-		if (_wikiServiceConfigurationImpl == null) {
+	public static WikiConfiguration getWikiConfiguration() {
+		if (_wikiConfigurationImpl == null) {
 			throw new IllegalStateException(
-				"WikiServiceConfiguration is not yet available");
+				"WikiConfiguration is not yet available");
 		}
 
-		return _wikiServiceConfigurationImpl;
+		return _wikiConfigurationImpl;
 	}
 
 	public String defaultFormat() {
-		return _wikiServiceConfiguration.defaultFormat();
+		return _wikiConfiguration.defaultFormat();
 	}
 
 	public String emailFromAddress() {
-		return _wikiServiceConfiguration.emailFromAddress();
+		return _wikiConfiguration.emailFromAddress();
 	}
 
 	public String emailFromName() {
-		return _wikiServiceConfiguration.emailFromName();
+		return _wikiConfiguration.emailFromName();
 	}
 
 	public String emailPageAddedBody() {
-		return _wikiServiceConfiguration.emailPageAddedBody();
+		return _wikiConfiguration.emailPageAddedBody();
 	}
 
 	public boolean emailPageAddedEnabled() {
-		return _wikiServiceConfiguration.emailPageAddedEnabled();
+		return _wikiConfiguration.emailPageAddedEnabled();
 	}
 
 	public String emailPageAddedSubject() {
-		return _wikiServiceConfiguration.emailPageAddedSubject();
+		return _wikiConfiguration.emailPageAddedSubject();
 	}
 
 	public String emailPageUpdatedBody() {
-		return _wikiServiceConfiguration.emailPageUpdatedBody();
+		return _wikiConfiguration.emailPageUpdatedBody();
 	}
 
 	public boolean emailPageUpdatedEnabled() {
-		return _wikiServiceConfiguration.emailPageUpdatedEnabled();
+		return _wikiConfiguration.emailPageUpdatedEnabled();
 	}
 
 	public String emailPageUpdatedSubject() {
-		return _wikiServiceConfiguration.emailPageUpdatedSubject();
+		return _wikiConfiguration.emailPageUpdatedSubject();
 	}
 
 	public String frontPageName() {
-		return _wikiServiceConfiguration.frontPageName();
+		return _wikiConfiguration.frontPageName();
 	}
 
 	public String initialNodeName() {
-		return _wikiServiceConfiguration.initialNodeName();
+		return _wikiConfiguration.initialNodeName();
 	}
 
 	public boolean pageCommentsEnabled() {
-		return _wikiServiceConfiguration.pageCommentsEnabled();
+		return _wikiConfiguration.pageCommentsEnabled();
 	}
 
 	public boolean pageMinorEditAddSocialActivity() {
-		return _wikiServiceConfiguration.pageMinorEditAddSocialActivity();
+		return _wikiConfiguration.pageMinorEditAddSocialActivity();
 	}
 
 	public boolean pageMinorEditSendEmail() {
-		return _wikiServiceConfiguration.pageMinorEditSendEmail();
+		return _wikiConfiguration.pageMinorEditSendEmail();
 	}
 
 	public String pageTitlesRegexp() {
-		return _wikiServiceConfiguration.pageTitlesRegexp();
+		return _wikiConfiguration.pageTitlesRegexp();
 	}
 
 	public String pageTitlesRemoveRegexp() {
-		return _wikiServiceConfiguration.pageTitlesRemoveRegexp();
+		return _wikiConfiguration.pageTitlesRemoveRegexp();
 	}
 
 	public String[] parsersCreoleSupportedProtocols() {
-		return _wikiServiceConfiguration.parsersCreoleSupportedProtocols();
+		return _wikiConfiguration.parsersCreoleSupportedProtocols();
 	}
 
 	public int rssAbstractLength() {
-		return _wikiServiceConfiguration.rssAbstractLength();
+		return _wikiConfiguration.rssAbstractLength();
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_wikiServiceConfiguration = Configurable.createConfigurable(
-			WikiServiceConfiguration.class, properties);
+		_wikiConfiguration = Configurable.createConfigurable(
+			WikiConfiguration.class, properties);
 
-		_wikiServiceConfigurationImpl = this;
+		_wikiConfigurationImpl = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_wikiServiceConfigurationImpl = null;
+		_wikiConfigurationImpl = null;
 	}
 
-	private static WikiServiceConfigurationImpl _wikiServiceConfigurationImpl;
+	private static WikiConfigurationImpl _wikiConfigurationImpl;
 
-	private volatile WikiServiceConfiguration _wikiServiceConfiguration;
+	private volatile WikiConfiguration _wikiConfiguration;
 
 }

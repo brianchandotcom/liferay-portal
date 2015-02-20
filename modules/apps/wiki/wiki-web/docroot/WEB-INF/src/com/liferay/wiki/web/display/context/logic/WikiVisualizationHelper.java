@@ -17,7 +17,7 @@ package com.liferay.wiki.web.display.context.logic;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.wiki.configuration.WikiServiceConfiguration;
+import com.liferay.wiki.configuration.WikiConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -33,11 +33,11 @@ public class WikiVisualizationHelper {
 	public WikiVisualizationHelper(
 		WikiRequestHelper wikiRequestHelper,
 		WikiPortletInstanceSettingsHelper wikiPortletInstanceSettingsHelper,
-		WikiServiceConfiguration wikiServiceConfiguration) {
+		WikiConfiguration wikiConfiguration) {
 
 		_wikiRequestHelper = wikiRequestHelper;
 		_wikiPortletInstanceSettingsHelper = wikiPortletInstanceSettingsHelper;
-		_wikiServiceConfiguration = wikiServiceConfiguration;
+		_wikiConfiguration = wikiConfiguration;
 	}
 
 	public boolean isFrontPageNavItemSelected() {
@@ -45,7 +45,7 @@ public class WikiVisualizationHelper {
 
 		String strutsAction = _wikiRequestHelper.getStrutsAction();
 
-		String frontPageName = _wikiServiceConfiguration.frontPageName();
+		String frontPageName = _wikiConfiguration.frontPageName();
 
 		if (Validator.isNull(strutsAction) ||
 			(wikiPage != null) && frontPageName.equals(wikiPage.getTitle())) {
@@ -126,9 +126,9 @@ public class WikiVisualizationHelper {
 	}
 
 	private String _strutsPath;
+	private final WikiConfiguration _wikiConfiguration;
 	private final WikiPortletInstanceSettingsHelper
 		_wikiPortletInstanceSettingsHelper;
 	private final WikiRequestHelper _wikiRequestHelper;
-	private final WikiServiceConfiguration _wikiServiceConfiguration;
 
 }

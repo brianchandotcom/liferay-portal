@@ -19,8 +19,8 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Iván Zaera
  */
-@Meta.OCD(id = "com.liferay.wiki.configuration.WikiServiceConfiguration")
-public interface WikiServiceConfiguration {
+@Meta.OCD(id = "com.liferay.wiki.configuration.WikiConfiguration")
+public interface WikiConfiguration {
 
 	/**
 	 * Set the default wiki format.

@@ -23,8 +23,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.wiki.configuration.WikiServiceConfiguration;
-import com.liferay.wiki.configuration.WikiServiceConfigurationImpl;
+import com.liferay.wiki.configuration.WikiConfiguration;
+import com.liferay.wiki.configuration.WikiConfigurationImpl;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -61,13 +61,13 @@ public class ViewAction extends PortletAction {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			WikiServiceConfiguration wikiServiceConfiguration =
-				WikiServiceConfigurationImpl.getWikiServiceConfiguration();
+			WikiConfiguration wikiConfiguration =
+				WikiConfigurationImpl.getWikiConfiguration();
 
 			String title = ParamUtil.getString(
 				renderRequest, "title",
 				portletPreferences.getValue(
-					"title", wikiServiceConfiguration.frontPageName()));
+					"title", wikiConfiguration.frontPageName()));
 			double version = ParamUtil.getDouble(renderRequest, "version");
 
 			WikiNode node = getNode(renderRequest);
@@ -82,7 +82,7 @@ public class ViewAction extends PortletAction {
 
 			if ((page == null) || page.isInTrash()) {
 				page = WikiPageServiceUtil.getPage(
-					node.getNodeId(), wikiServiceConfiguration.frontPageName());
+					node.getNodeId(), wikiConfiguration.frontPageName());
 			}
 
 			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsProvider;
-import com.liferay.wiki.configuration.WikiServiceConfiguration;
+import com.liferay.wiki.configuration.WikiConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 
 import java.util.Map;
@@ -77,7 +77,7 @@ public class WikiSettingsProvider implements SettingsProvider<WikiSettings> {
 	protected void activate() {
 		_settingsFactory.registerSettingsMetadata(
 			WikiConstants.SERVICE_NAME, WikiSettings.getFallbackKeys(),
-			WikiSettings.MULTI_VALUED_KEYS, _wikiServiceConfiguration,
+			WikiSettings.MULTI_VALUED_KEYS, _wikiConfiguration,
 			new ClassLoaderResourceManager(
 				WikiSettings.class.getClassLoader()));
 
@@ -95,15 +95,13 @@ public class WikiSettingsProvider implements SettingsProvider<WikiSettings> {
 	}
 
 	@Reference
-	protected void setWikiServiceConfiguration(
-		WikiServiceConfiguration wikiServiceConfiguration) {
-
-		_wikiServiceConfiguration = wikiServiceConfiguration;
+	protected void setWikiConfiguration(WikiConfiguration wikiConfiguration) {
+		_wikiConfiguration = wikiConfiguration;
 	}
 
 	private static WikiSettingsProvider _wikiSettingsProvider;
 
 	private SettingsFactory _settingsFactory;
-	private WikiServiceConfiguration _wikiServiceConfiguration;
+	private WikiConfiguration _wikiConfiguration;
 
 }

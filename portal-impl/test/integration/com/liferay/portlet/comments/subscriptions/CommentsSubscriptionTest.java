@@ -131,9 +131,9 @@ public class CommentsSubscriptionTest {
 
 		MBMessageDisplay messageDisplay =
 			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			BlogsEntry.class.getName(), entry.getEntryId(),
-			WorkflowConstants.STATUS_APPROVED);
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				BlogsEntry.class.getName(), entry.getEntryId(),
+				WorkflowConstants.STATUS_APPROVED);
 
 		MBThread thread =  messageDisplay.getThread();
 

@@ -424,6 +424,8 @@
 		<sequential>
 			<fail message="Please set the property ${test.class}" unless="test.class" />
 
+			<property file="${project.dir}/test.generated.properties" />
+
 			<var name="property.name" unset="true" />
 			<var name="@{property.name}" unset="true" />
 

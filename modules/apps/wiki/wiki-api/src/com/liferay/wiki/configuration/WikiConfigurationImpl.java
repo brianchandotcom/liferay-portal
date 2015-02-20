@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 
 /**
@@ -31,15 +30,6 @@ import org.osgi.service.component.annotations.Modified;
 	immediate = true, service = WikiConfiguration.class
 )
 public class WikiConfigurationImpl implements WikiConfiguration {
-
-	public static WikiConfiguration getWikiConfiguration() {
-		if (_wikiConfigurationImpl == null) {
-			throw new IllegalStateException(
-				"WikiConfiguration is not yet available");
-		}
-
-		return _wikiConfigurationImpl;
-	}
 
 	public String defaultFormat() {
 		return _wikiConfiguration.defaultFormat();
@@ -118,16 +108,7 @@ public class WikiConfigurationImpl implements WikiConfiguration {
 	protected void activate(Map<String, Object> properties) {
 		_wikiConfiguration = Configurable.createConfigurable(
 			WikiConfiguration.class, properties);
-
-		_wikiConfigurationImpl = this;
 	}
-
-	@Deactivate
-	protected void deactivate() {
-		_wikiConfigurationImpl = null;
-	}
-
-	private static WikiConfigurationImpl _wikiConfigurationImpl;
 
 	private volatile WikiConfiguration _wikiConfiguration;
 

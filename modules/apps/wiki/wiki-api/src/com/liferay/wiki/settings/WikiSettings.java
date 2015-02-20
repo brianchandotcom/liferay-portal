@@ -14,14 +14,11 @@
 
 package com.liferay.wiki.settings;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
-
-import java.util.Map;
 
 /**
  * @author Iván Zaera
@@ -36,34 +33,6 @@ public class WikiSettings {
 		"pageMinorEditAddSocialActivity", "pageMinorEditSendEmail",
 		"rssAbstractLength",
 	};
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {WikiSettingsProvider#getGroupServiceSettings(long)}
-	 */
-	@Deprecated
-	public static WikiSettings getInstance(long groupId)
-		throws PortalException {
-
-		WikiSettingsProvider wikiSettingsProvider =
-			WikiSettingsProvider.getWikiSettingsProvider();
-
-		return wikiSettingsProvider.getGroupServiceSettings(groupId);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {WikiSettingsProvider#getGroupServiceSettings(long,String[])}
-	 */
-	@Deprecated
-	public static WikiSettings getInstance(
-			long groupId, Map<String, String[]> parameterMap)
-		throws PortalException {
-
-		WikiSettingsProvider wikiSettingsProvider =
-			WikiSettingsProvider.getWikiSettingsProvider();
-
-		return wikiSettingsProvider.getGroupServiceSettings(
-			groupId, parameterMap);
-	}
 
 	public String getDefaultFormat() {
 		return _typedSettings.getValue("defaultFormat");

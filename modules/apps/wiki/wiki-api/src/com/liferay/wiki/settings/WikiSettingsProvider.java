@@ -27,7 +27,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -64,15 +63,6 @@ public class WikiSettingsProvider implements SettingsProvider<WikiSettings> {
 			new ParameterMapSettings(parameterMap, settings));
 	}
 
-	protected static WikiSettingsProvider getWikiSettingsProvider() {
-		if (_wikiSettingsProvider == null) {
-			throw new IllegalStateException(
-				"Wiki settings provider is not available");
-		}
-
-		return _wikiSettingsProvider;
-	}
-
 	@Activate
 	protected void activate() {
 		_settingsFactory.registerSettingsMetadata(
@@ -80,13 +70,6 @@ public class WikiSettingsProvider implements SettingsProvider<WikiSettings> {
 			WikiSettings.MULTI_VALUED_KEYS, _wikiConfiguration,
 			new ClassLoaderResourceManager(
 				WikiSettings.class.getClassLoader()));
-
-		_wikiSettingsProvider = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_wikiSettingsProvider = null;
 	}
 
 	@Reference
@@ -98,8 +81,6 @@ public class WikiSettingsProvider implements SettingsProvider<WikiSettings> {
 	protected void setWikiConfiguration(WikiConfiguration wikiConfiguration) {
 		_wikiConfiguration = wikiConfiguration;
 	}
-
-	private static WikiSettingsProvider _wikiSettingsProvider;
 
 	private SettingsFactory _settingsFactory;
 	private WikiConfiguration _wikiConfiguration;

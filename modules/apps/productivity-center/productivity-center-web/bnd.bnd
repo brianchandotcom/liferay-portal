@@ -4,17 +4,24 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.exception,\
+	com.liferay.portal.kernel.io,\
 	com.liferay.portal.kernel.io.unsync,\
+	com.liferay.portal.kernel.log,\
 	com.liferay.portal.kernel.servlet,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.model,\
-	com.liferay.portal.struts,\
+	com.liferay.portal.servlet.jsp.compiler,\
 	com.liferay.portal.util,\
-	javax.servlet
+	javax.servlet,\
+	javax.servlet.http,\
+	javax.servlet.jsp,\
+	org.osgi.framework,\
+	org.osgi.service.http.context,\
+	org.osgi.service.http.whiteboard
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
-	@../../../../util-java/util-java.jar!/com/liferay/taglib/servlet/**
+	@../../../../util-taglib/util-taglib.jar!/com/liferay/taglib/servlet/**
 Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\

@@ -22,7 +22,8 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 String redirect = (String)request.getAttribute("configuration.jsp-redirect");
 String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
 String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle");
-long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupId, layout);
+
+long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(assetPublisherDisplayContext.getGroupIds());
 %>
 
 <liferay-ui:tabs
@@ -114,7 +115,7 @@ long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupI
 					for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
 						ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
 
-						List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(ArrayUtil.unique(PortalUtil.getCurrentAndAncestorSiteGroupIds(groupIds)), locale);
+						List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(groupIds, locale);
 
 						if (classTypes.isEmpty()) {
 							continue;
@@ -298,7 +299,7 @@ long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupI
 							String categoryIds = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);
 
 							if (Validator.isNotNull(tagNames) || Validator.isNotNull(categoryIds) || (queryLogicIndexes.length == 1)) {
-								request.setAttribute("configuration.jsp-categorizableGroupIds", _getCategorizableGroupIds(assetPublisherDisplayContext.getGroupIds()));
+								request.setAttribute("configuration.jsp-categorizableGroupIds", _getCategorizableGroupIds(groupIds));
 								request.setAttribute("configuration.jsp-index", String.valueOf(index));
 								request.setAttribute("configuration.jsp-queryLogicIndex", String.valueOf(queryLogicIndex));
 
@@ -573,7 +574,7 @@ long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupI
 		<%
 		ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
 
-		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(ArrayUtil.unique(PortalUtil.getCurrentAndAncestorSiteGroupIds(groupIds)), locale);
+		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(groupIds, locale);
 
 		if (assetAvailableClassTypes.isEmpty()) {
 			continue;

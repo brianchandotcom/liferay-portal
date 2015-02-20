@@ -19,9 +19,11 @@ import com.thoughtworks.selenium.Selenium;
 import io.appium.java_client.MobileDriver;
 
 import java.io.IOException;
+
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
+
 import org.w3c.dom.Node;
 
 /**

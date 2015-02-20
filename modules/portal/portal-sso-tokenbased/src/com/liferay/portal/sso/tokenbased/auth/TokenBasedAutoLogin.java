@@ -43,6 +43,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -52,7 +53,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = AutoLogin.class)
+@Component(
+	configurationPid = "com.liferay.portal.sso.tokenbased.configuration.TokenBasedConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = AutoLogin.class
+)
 public class TokenBasedAutoLogin extends BaseAutoLogin {
 
 	@Activate

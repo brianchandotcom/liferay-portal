@@ -22,7 +22,8 @@ import com.liferay.portal.sso.tokenbased.spi.TokenLocation;
  * @author Michael C. Han
  */
 @Meta.OCD(
-	id = "com.liferay.portal.sso.tokenbased", localization = "content.Language"
+	id = "com.liferay.portal.sso.tokenbased.configuration.TokenBasedConfiguration",
+	localization = "content.Language"
 )
 public interface TokenBasedConfiguration {
 

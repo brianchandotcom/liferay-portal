@@ -41,12 +41,9 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -56,8 +53,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xmlrpc.Method;
-import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.language.LiferayResourceBundle;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.notifications.UserNotificationHandlerImpl;
 import com.liferay.portal.security.permission.PermissionPropagator;
@@ -75,14 +70,9 @@ import com.liferay.portlet.social.model.impl.SocialRequestInterpreterImpl;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 
-import java.io.InputStream;
-
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.portlet.PreferencesValidator;
 
@@ -178,29 +168,7 @@ public class PortletBagFactory {
 			newPreferencesValidatorInstances(portlet);
 
 		ResourceBundleTracker resourceBundleTracker = new ResourceBundleTracker(
-			portlet.getPortletId());
-
-		String resourceBundle = portlet.getResourceBundle();
-
-		if (Validator.isNotNull(resourceBundle) &&
-			!resourceBundle.equals(StrutsResourceBundle.class.getName())) {
-
-			initResourceBundle(resourceBundleTracker, portlet, null);
-			initResourceBundle(
-				resourceBundleTracker, portlet, LocaleUtil.getDefault());
-
-			Set<String> supportedLanguageIds = portlet.getSupportedLocales();
-
-			if (supportedLanguageIds.isEmpty()) {
-				supportedLanguageIds = SetUtil.fromArray(PropsValues.LOCALES);
-			}
-
-			for (String supportedLanguageId : supportedLanguageIds) {
-				Locale locale = LocaleUtil.fromLanguageId(supportedLanguageId);
-
-				initResourceBundle(resourceBundleTracker, portlet, locale);
-			}
-		}
+			portlet, _classLoader);
 
 		PortletBag portletBag = new PortletBagImpl(
 			portlet.getPortletId(), _servletContext, portletInstance,
@@ -308,63 +276,6 @@ public class PortletBagFactory {
 		return (javax.portlet.Portlet)portletClass.newInstance();
 	}
 
-	protected InputStream getResourceBundleInputStream(
-		String resourceBundleName, Locale locale) {
-
-		resourceBundleName = resourceBundleName.replace(
-			StringPool.PERIOD, StringPool.SLASH);
-
-		Locale newLocale = locale;
-
-		InputStream inputStream = null;
-
-		while (inputStream == null) {
-			locale = newLocale;
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(resourceBundleName);
-
-			if (locale != null) {
-				String localeName = locale.toString();
-
-				if (localeName.length() > 0) {
-					sb.append(StringPool.UNDERLINE);
-					sb.append(localeName);
-				}
-			}
-
-			if (!resourceBundleName.endsWith(".properties")) {
-				sb.append(".properties");
-			}
-
-			String localizedResourceBundleName = sb.toString();
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Attempting to load " + localizedResourceBundleName);
-			}
-
-			inputStream = _classLoader.getResourceAsStream(
-				localizedResourceBundleName);
-
-			if (locale == null) {
-				break;
-			}
-
-			newLocale = LanguageResources.getSuperLocale(locale);
-
-			if (newLocale == null) {
-				break;
-			}
-
-			if (newLocale.equals(locale)) {
-				break;
-			}
-		}
-
-		return inputStream;
-	}
-
 	protected <S> ServiceTrackerList<S> getServiceTrackerList(
 		Class<S> clazz, Portlet portlet) {
 
@@ -375,42 +286,6 @@ public class PortletBagFactory {
 		return ServiceTrackerCollections.list(
 			clazz, "(javax.portlet.name=" + portlet.getPortletId() + ")",
 			properties);
-	}
-
-	protected void initResourceBundle(
-		ResourceBundleTracker resourceBundleTracker, Portlet portlet,
-		Locale locale) {
-
-		try {
-			InputStream inputStream = getResourceBundleInputStream(
-				portlet.getResourceBundle(), locale);
-
-			if (inputStream != null) {
-				ResourceBundle parentResourceBundle = null;
-
-				if (locale != null) {
-					parentResourceBundle =
-						resourceBundleTracker.getResouceBundle(
-							StringPool.BLANK);
-				}
-
-				ResourceBundle resourceBundle = new LiferayResourceBundle(
-					parentResourceBundle, inputStream, StringPool.UTF8);
-
-				String languageId = null;
-
-				if (locale != null) {
-					languageId = LocaleUtil.toLanguageId(locale);
-				}
-
-				resourceBundleTracker.register(languageId, resourceBundle);
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
-			}
-		}
 	}
 
 	protected List<AssetRendererFactory> newAssetRendererFactoryInstances(

@@ -25,7 +25,7 @@ groupParams.put("active", Boolean.FALSE);
 
 int inactiveGroupsCount = GroupLocalServiceUtil.searchCount(themeDisplay.getCompanyId(), null, null, groupParams);
 
-List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(company.getCompanyId(), includeSystemPortlets, false);
+List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(company.getCompanyId(), searchDisplayContext.isIncludeSystemPortlets(), false);
 
 portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, locale));
 
@@ -201,7 +201,7 @@ for (int i = 0; i < portlets.size(); i++) {
 						entryTitle = PortalUtil.getPortletTitle(PortletKeys.DOCUMENT_LIBRARY, locale) + " " + CharPool.RAQUO + " " + entryTitle;
 					}
 
-					if (dlLinkToViewURL) {
+					if (searchDisplayContext.isDLLinkToViewURL()) {
 						long dlPlid = PortalUtil.getPlidFromPortletId(fileEntry.getRepositoryId(), PortletKeys.DOCUMENT_LIBRARY);
 
 						PortletURL viewURL = new PortletURLImpl(request, PortletKeys.DOCUMENT_LIBRARY, dlPlid, PortletRequest.RENDER_PHASE);

@@ -1,0 +1,52 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<div class="configuration-style" id="<portlet:namespace />configurationStyle">
+	<aui:field-wrapper>
+		<aui:input checked="<%= !searchDisplayContext.isAdvancedConfiguration() %>" id="basic" label="basic" name="preferences--advancedConfiguration--" type="radio" value="false" />
+		<aui:input checked="<%= searchDisplayContext.isAdvancedConfiguration() %>" id="advanced" label="advanced" name="preferences--advancedConfiguration--" type="radio" value="true" />
+	</aui:field-wrapper>
+</div>
+
+<div class="basic-configuration <%= (searchDisplayContext.isAdvancedConfiguration() ? "hide" : StringPool.BLANK) %>" id="<portlet:namespace />basicConfiguration">
+	<aui:input name="preferences--displayScopeFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayScopeFacet() %>" />
+
+	<aui:input name="preferences--displayAssetTypeFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayAssetTypeFacet() %>" />
+
+	<aui:input name="preferences--displayAssetTagsFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayAssetTagsFacet() %>" />
+
+	<aui:input name="preferences--displayAssetCategoriesFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayAssetCategoriesFacet() %>" />
+
+	<aui:input name="preferences--displayFolderFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayFolderFacet() %>" />
+
+	<aui:input name="preferences--displayUserFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayUserFacet() %>" />
+
+	<aui:input name="preferences--displayModifiedRangeFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayModifiedRangeFacet() %>" />
+</div>
+
+<div class="advanced-configuration <%= (!searchDisplayContext.isAdvancedConfiguration() ? "hide" : StringPool.BLANK) %>" id="<portlet:namespace />advancedConfiguration">
+
+	<%
+	JSONObject searchConfigurationJSONObject = JSONFactoryUtil.createJSONObject(searchDisplayContext.getSearchConfiguration());
+	%>
+
+	<aui:input cssClass="search-configuration-text" helpMessage="search-configuration-help" name="preferences--searchConfiguration--" type="textarea" value="<%= searchConfigurationJSONObject.toString(4) %>" />
+</div>
+
+<aui:script>
+	Liferay.Util.toggleRadio('<portlet:namespace />advanced', '<portlet:namespace />advancedConfiguration', '<portlet:namespace />basicConfiguration');
+	Liferay.Util.toggleRadio('<portlet:namespace />basic', '<portlet:namespace />basicConfiguration', '<portlet:namespace />advancedConfiguration');
+</aui:script>

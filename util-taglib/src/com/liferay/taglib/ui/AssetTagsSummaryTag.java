@@ -49,6 +49,10 @@ public class AssetTagsSummaryTag extends IncludeTag {
 		_message = message;
 	}
 
+	public void setParamName(String paramName) {
+		_paramName = paramName;
+	}
+
 	public void setPortletURL(PortletURL portletURL) {
 		_portletURL = portletURL;
 	}
@@ -59,6 +63,7 @@ public class AssetTagsSummaryTag extends IncludeTag {
 		_className = null;
 		_classPK = 0;
 		_message = null;
+		_paramName = null;
 		_portletURL = null;
 	}
 
@@ -77,6 +82,8 @@ public class AssetTagsSummaryTag extends IncludeTag {
 			"liferay-ui:asset-tags-summary:classPK", String.valueOf(_classPK));
 		request.setAttribute("liferay-ui:asset-tags-summary:message", _message);
 		request.setAttribute(
+			"liferay-ui:asset-tags-summary:paramName", _paramName);
+		request.setAttribute(
 			"liferay-ui:asset-tags-summary:portletURL", _portletURL);
 	}
 
@@ -87,6 +94,7 @@ public class AssetTagsSummaryTag extends IncludeTag {
 	private String _className;
 	private long _classPK;
 	private String _message;
+	private String _paramName;
 	private PortletURL _portletURL;
 
 }

@@ -107,7 +107,7 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 
 	<%@ include file="/html/portlet/search/main_search.jspf" %>
 
-	<c:if test="<%= displayOpenSearchResults %>">
+	<c:if test="<%= searchDisplayContext.isDisplayOpenSearchResults() %>">
 		<liferay-ui:panel collapsible="<%= true %>" cssClass="open-search-panel" extended="<%= true %>" id="searchOpenSearchPanelContainer" persistState="<%= true %>" title="open-search">
 			<%@ include file="/html/portlet/search/open_search.jspf" %>
 		</liferay-ui:panel>

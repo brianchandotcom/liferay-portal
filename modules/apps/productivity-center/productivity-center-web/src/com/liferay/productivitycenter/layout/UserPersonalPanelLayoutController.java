@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -27,12 +26,10 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.productivitycenter.util.BundlerServletUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
-import java.net.URL;
-
 import java.util.Collection;
-import java.util.Dictionary;
 import java.util.Locale;
 import java.util.Map;
 
@@ -48,7 +45,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.http.context.ServletContextHelper;
-import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
  * @author Adolfo Pérez
@@ -149,70 +145,15 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_servletContextName = bundleContext.getBundle().getSymbolicName();
+		Bundle bundle = bundleContext.getBundle();
 
-		_servletServiceRegistration = createJspServlet(bundleContext);
+		_servletContextName = bundle.getSymbolicName();
 
-		_servletContextHelperServiceRegistration = createContext(
-			bundleContext.getBundle());
-	}
+		_servletServiceRegistration = BundlerServletUtil.createJspServlet(
+			_servletContextName, bundleContext);
 
-	protected ServiceRegistration<ServletContextHelper> createContext(
-		Bundle bundle) {
-
-		ServletContextHelper servletContextHelper =
-			new ServletContextHelper(bundle) {
-
-				@Override
-				public URL getResource(String name) {
-					return super.getResource("/META-INF/resources" + name);
-				}
-
-			};
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
-			_servletContextName);
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
-			"/" + bundle.getSymbolicName());
-
-		return bundleContext.registerService(
-			ServletContextHelper.class, servletContextHelper, properties);
-	}
-
-	protected ServiceRegistration<Servlet> createJspServlet(
-		BundleContext bundleContext) {
-
-		Servlet servlet = null;
-
-		try {
-			Class<?> clazz = Class.forName(
-				"com.liferay.portal.servlet.jsp.compiler.JspServlet");
-
-			servlet = (Servlet)clazz.newInstance();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			_servletContextName);
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME, "jsp");
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "*.jsp");
-
-		return bundleContext.registerService(
-			Servlet.class, servlet, properties);
+		_servletContextHelperServiceRegistration =
+			BundlerServletUtil.createContext(_servletContextName, bundle);
 	}
 
 	@Deactivate

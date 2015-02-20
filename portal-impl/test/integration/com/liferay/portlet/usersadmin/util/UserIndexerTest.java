@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -38,6 +40,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -63,6 +67,38 @@ public class UserIndexerTest {
 		_indexer = new UserIndexer();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext();
+	}
+
+	@Test
+	public void testEmptyQuery() throws Exception {
+		Assume.assumeTrue(isEmptyQueryImplementedForSearchEngine());
+
+		addUser();
+
+		assertHits("", 1);
+	}
+
+	@Test
+	public void testLikeCharacter() throws Exception {
+		Assume.assumeTrue(isEmptyQueryImplementedForSearchEngine());
+
+		addUser();
+
+		assertHits("%", 1);
+		assertHits("%" + RandomTestUtil.randomString(), 0);
+	}
+
+	@Test
+	public void testLuceneQueryParserUnfriendlyCharacters() throws Exception {
+		Assume.assumeTrue(isAPIWithoutQueryParserImplementedForSearchEngine());
+
+		addUser();
+
+		assertHits("!", 0);
+		assertHits("!" + RandomTestUtil.randomString(), 0);
+
+		assertHits("@", 0);
+		assertHits("@" + RandomTestUtil.randomString(), 0);
 	}
 
 	@Test
@@ -98,6 +134,12 @@ public class UserIndexerTest {
 		user = assertSearchOneUser("SCREE");
 
 		Assert.assertEquals("screen", user.getScreenName());
+	}
+
+	protected void addUser() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		_users.add(user);
 	}
 
 	protected void addUser(
@@ -137,18 +179,49 @@ public class UserIndexerTest {
 		_users.add(user);
 	}
 
+	protected Hits assertHits(final String keywords, final int length)
+		throws Exception {
+
+		return IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			new Callable<Hits>() {
+
+				@Override
+				public Hits call() throws Exception {
+					SearchContext searchContext =
+						SearchContextTestUtil.getSearchContext();
+
+					searchContext.setKeywords(keywords);
+
+					Hits hits = _indexer.search(searchContext);
+
+					Assert.assertEquals(length, hits.getLength());
+
+					return hits;
+				}
+
+			});
+	}
+
 	protected User assertSearchOneUser(String keywords) throws Exception {
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
-
-		searchContext.setKeywords(keywords);
-
-		Hits hits = _indexer.search(searchContext);
-
-		Assert.assertEquals(1, hits.getLength());
+		Hits hits = assertHits(keywords, 1);
 
 		long userId = UserIndexer.getUserId(hits.doc(0));
 
 		return UserLocalServiceUtil.getUser(userId);
+	}
+
+	protected boolean isAPIWithoutQueryParserImplementedForSearchEngine() {
+		SearchEngine searchEngine = SearchEngineUtil.getSearchEngine(
+			SearchEngineUtil.getDefaultSearchEngineId());
+
+		String vendor = searchEngine.getVendor();
+
+		if (vendor.equals("Elasticsearch")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean isCaseInsensitiveWildcardsImplementedForSearchEngine() {
@@ -158,6 +231,19 @@ public class UserIndexerTest {
 		String vendor = searchEngine.getVendor();
 
 		if (vendor.equals("Elasticsearch")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isEmptyQueryImplementedForSearchEngine() {
+		SearchEngine searchEngine = SearchEngineUtil.getSearchEngine(
+			SearchEngineUtil.getDefaultSearchEngineId());
+
+		String vendor = searchEngine.getVendor();
+
+		if (vendor.equals("Elasticsearch") || vendor.equals("Lucene")) {
 			return true;
 		}
 

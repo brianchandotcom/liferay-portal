@@ -30,7 +30,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.wiki.configuration.WikiConfiguration;
-import com.liferay.wiki.configuration.WikiConfigurationImpl;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -44,6 +43,7 @@ import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermission;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
+import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
 
 import java.util.Arrays;
 import java.util.List;
@@ -144,8 +144,11 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		WikiWebSettingsProvider wikiWebSettingsProvider =
+			WikiWebSettingsProvider.getWikiWebSettingsProvider();
+
 		WikiConfiguration wikiConfiguration =
-			WikiConfigurationImpl.getWikiConfiguration();
+			wikiWebSettingsProvider.getWikiConfiguration();
 
 		WikiPage page = WikiPageLocalServiceUtil.fetchPage(
 			nodeId, wikiConfiguration.frontPageName(), 0);
@@ -244,8 +247,11 @@ public class ActionUtil {
 			}
 		}
 
+		WikiWebSettingsProvider wikiWebSettingsProvider =
+			WikiWebSettingsProvider.getWikiWebSettingsProvider();
+
 		WikiConfiguration wikiConfiguration =
-			WikiConfigurationImpl.getWikiConfiguration();
+			wikiWebSettingsProvider.getWikiConfiguration();
 
 		if (Validator.isNull(title)) {
 			title = wikiConfiguration.frontPageName();

@@ -17,15 +17,17 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.wiki.configuration.WikiConfiguration" %><%@
-page import="com.liferay.wiki.configuration.WikiConfigurationImpl" %><%@
 page import="com.liferay.wiki.exception.NoSuchNodeException" %><%@
 page import="com.liferay.wiki.model.WikiNode" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
 page import="com.liferay.wiki.service.WikiNodeServiceUtil" %><%@
-page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %>
+page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %><%@
+page import="com.liferay.wiki.web.settings.WikiWebSettingsProvider" %>
 
 <%
-WikiConfiguration wikiConfiguration = WikiConfigurationImpl.getWikiConfiguration();
+WikiWebSettingsProvider wikiWebSettingsProvider = WikiWebSettingsProvider.getWikiWebSettingsProvider();
+
+WikiConfiguration wikiConfiguration = wikiWebSettingsProvider.getWikiConfiguration();
 
 long nodeId = GetterUtil.getLong(portletPreferences.getValue("nodeId", StringPool.BLANK));
 String title = GetterUtil.getString(portletPreferences.getValue("title", wikiConfiguration.frontPageName()));

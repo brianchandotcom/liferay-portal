@@ -17,7 +17,6 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.wiki.configuration.WikiConfiguration" %><%@
-page import="com.liferay.wiki.configuration.WikiConfigurationImpl" %><%@
 page import="com.liferay.wiki.constants.WikiConstants" %><%@
 page import="com.liferay.wiki.constants.WikiPortletKeys" %><%@
 page import="com.liferay.wiki.constants.WikiWebKeys" %><%@
@@ -59,7 +58,8 @@ page import="com.liferay.wiki.web.display.context.logic.WikiPortletInstanceSetti
 page import="com.liferay.wiki.web.display.context.logic.WikiVisualizationHelper" %><%@
 page import="com.liferay.wiki.web.display.context.util.WikiRequestHelper" %><%@
 page import="com.liferay.wiki.web.display.context.util.WikiURLHelper" %><%@
-page import="com.liferay.wiki.web.settings.WikiPortletInstanceSettings" %>
+page import="com.liferay.wiki.web.settings.WikiPortletInstanceSettings" %><%@
+page import="com.liferay.wiki.web.settings.WikiWebSettingsProvider" %>
 
 <%
 WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);
@@ -69,7 +69,9 @@ WikiSettings wikiSettings = wikiRequestHelper.getWikiSettings();
 
 WikiPortletInstanceSettingsHelper wikiPortletInstanceSettingsHelper = new WikiPortletInstanceSettingsHelper(wikiRequestHelper);
 
-WikiConfiguration wikiConfiguration = WikiConfigurationImpl.getWikiConfiguration();
+WikiWebSettingsProvider wikiWebSettingsProvider = WikiWebSettingsProvider.getWikiWebSettingsProvider();
+
+WikiConfiguration wikiConfiguration = wikiWebSettingsProvider.getWikiConfiguration();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

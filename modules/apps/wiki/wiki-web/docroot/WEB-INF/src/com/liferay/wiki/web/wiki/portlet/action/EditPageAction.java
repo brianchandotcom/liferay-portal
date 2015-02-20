@@ -39,7 +39,6 @@ import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.configuration.WikiConfiguration;
-import com.liferay.wiki.configuration.WikiConfigurationImpl;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.DuplicatePageException;
 import com.liferay.wiki.exception.NoSuchNodeException;
@@ -54,6 +53,7 @@ import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -272,8 +272,11 @@ public class EditPageAction extends PortletAction {
 				page = WikiPageServiceUtil.getPage(nodeId, title, false);
 			}
 			catch (NoSuchPageException nspe2) {
+				WikiWebSettingsProvider wikiWebSettingsProvider =
+					WikiWebSettingsProvider.getWikiWebSettingsProvider();
+
 				WikiConfiguration wikiConfiguration =
-					WikiConfigurationImpl.getWikiConfiguration();
+					wikiWebSettingsProvider.getWikiConfiguration();
 
 				if (title.equals(wikiConfiguration.frontPageName()) &&
 					(version == 0)) {
@@ -346,8 +349,11 @@ public class EditPageAction extends PortletAction {
 
 			String title = TrashUtil.getOriginalTitle(pageResource.getTitle());
 
+			WikiWebSettingsProvider wikiWebSettingsProvider =
+				WikiWebSettingsProvider.getWikiWebSettingsProvider();
+
 			WikiConfiguration wikiConfiguration =
-				WikiConfigurationImpl.getWikiConfiguration();
+				wikiWebSettingsProvider.getWikiConfiguration();
 
 			if (title.equals(wikiConfiguration.frontPageName())) {
 				WikiPage overridePage = WikiPageLocalServiceUtil.fetchPage(

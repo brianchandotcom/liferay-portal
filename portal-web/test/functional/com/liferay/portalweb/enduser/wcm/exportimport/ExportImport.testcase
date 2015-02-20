@@ -213,6 +213,19 @@
 		</execute>
 	</command>
 
+	<command name="ExportImportCorruptedFile" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Bookmarks" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="Bookmarks-Corrupted.lar" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="//li[contains(@class,'upload-error')]" value1="The file Bookmarks-Corrupted.lar cannot be imported." />
+	</command>
+
 	<command name="ExportImportDMRootFolder" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />

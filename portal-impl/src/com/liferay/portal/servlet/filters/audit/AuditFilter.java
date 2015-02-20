@@ -37,9 +37,7 @@ public class AuditFilter extends BasePortalFilter implements TryFilter {
 		AuditRequestThreadLocal auditRequestThreadLocal =
 			AuditRequestThreadLocal.getAuditThreadLocal();
 
-		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
-
-		AuditRequest auditRequest = new AuditRequest(httpServletRequest);
+		AuditRequest auditRequest = new AuditRequest(request);
 
 		auditRequestThreadLocal.setClientHost(request.getRemoteHost());
 		auditRequestThreadLocal.setClientIP(auditRequest.getRemoteAddr());

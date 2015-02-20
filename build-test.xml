@@ -3365,7 +3365,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 		<if>
 			<and>
 				<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
-				<isset property="test.build.portal.war.url" />
+				<matches pattern="http" string="${test.build.portal.war.url}" />
 			</and>
 			<then>
 				<property name="test.app.server.jboss.eap.version" value="6.1" />
@@ -3450,7 +3450,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 		<if>
 			<and>
 				<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
-				<isset property="test.build.portal.war.url" />
+				<matches pattern="http" string="${test.build.portal.war.url}" />
 			</and>
 			<then>
 				<antcall target="prepare-test-bundle">
@@ -3500,7 +3500,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 		<if>
 			<and>
 				<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
-				<isset property="test.build.portal.war.url" />
+				<matches pattern="http" string="${test.build.portal.war.url}" />
 			</and>
 			<then>
 				<antcall target="prepare-test-bundle">
@@ -3577,7 +3577,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 plugins.includes=marketplace-portlet</echo>
 
 				<if>
-					<isset property="test.build.portal.war.url" />
+					<matches pattern="http" string="${test.build.portal.war.url}" />
 					<then>
 						<mkdir dir="dist" />
 

@@ -64,6 +64,8 @@ import org.sikuli.api.ScreenRegion;
 import org.sikuli.api.robot.Mouse;
 import org.sikuli.api.robot.desktop.DesktopMouse;
 import org.sikuli.api.visual.Canvas;
+import org.sikuli.api.visual.CanvasBuilder.ElementAdder;
+import org.sikuli.api.visual.CanvasBuilder.ElementAreaSetter;
 import org.sikuli.api.visual.DesktopCanvas;
 
 /**
@@ -1131,16 +1133,15 @@ public class LiferaySeleniumHelper {
 
 		liferaySelenium.pause("1000");
 
-		File imageFile = new File(
+		File file = new File(
 			getPortalRootDirName() + liferaySelenium.getSikuliImagesDirName() +
-			image);
+				image);
 
-		ImageTarget imageTarget = new ImageTarget(imageFile);
+		ImageTarget imageTarget = new ImageTarget(file);
 
-		ScreenRegion imageScreenRegion = desktopScreenRegion.wait(
-			imageTarget, 5000);
+		ScreenRegion screenRegion = desktopScreenRegion.wait(imageTarget, 5000);
 
-		if (imageScreenRegion != null) {
+		if (screenRegion != null) {
 			throw new Exception("Element is present");
 		}
 	}
@@ -1153,25 +1154,27 @@ public class LiferaySeleniumHelper {
 
 		liferaySelenium.pause("1000");
 
-		File imageFile = new File(
+		File file = new File(
 			getPortalRootDirName() + liferaySelenium.getSikuliImagesDirName() +
-			image);
+				image);
 
-		ImageTarget imageTarget = new ImageTarget(imageFile);
+		ImageTarget imageTarget = new ImageTarget(file);
 
-		ScreenRegion imageScreenRegion = desktopScreenRegion.wait(
-			imageTarget, 5000);
+		ScreenRegion screenRegion = desktopScreenRegion.wait(imageTarget, 5000);
 
-		if (imageScreenRegion == null) {
+		if (screenRegion == null) {
 			throw new Exception("Element is not present");
 		}
 
-		else {
-			Canvas canvas = new DesktopCanvas();
+		Canvas canvas = new DesktopCanvas();
 
-			canvas.add().box().around(imageScreenRegion);
-			canvas.display(2);
-		}
+		ElementAdder elementAdder = canvas.add();
+
+		ElementAreaSetter elementAreaSetter = elementAdder.box();
+
+		elementAreaSetter.around(screenRegion);
+
+		canvas.display(2);
 	}
 
 	public static void sikuliClick(

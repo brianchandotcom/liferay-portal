@@ -3,6 +3,24 @@
 <project name="portal-test-plugins" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<macrodef name="get-auto-deploy-dir">
+		<sequential>
+			<var name="auto.deploy.dir" unset="true" />
+
+			<get-testcase-property property.name="plugins.deployment.type" />
+
+			<if>
+				<equals arg1="${plugins.deployment.type}" arg2="osgi" />
+				<then>
+					<var name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+				</then>
+				<else>
+					<var name="auto.deploy.dir" value="${liferay.home}/deploy" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<target name="deploy-extra-apps">
 		<fail message="Please set the property ${extra.apps.zip.file.name}" unless="extra.apps.zip.file.name" />
 
@@ -13,6 +31,8 @@
 	</target>
 
 	<target name="deploy-simple-server-plugins">
+		<get-auto-deploy-dir />
+
 		<if>
 			<equals arg1="${app.server.type}" arg2="jboss" />
 			<then>
@@ -20,7 +40,7 @@
 app.server.type=${app.server.type}
 app.server.jboss.dir=${app.server.dir}
 
-auto.deploy.dir=${liferay.home}/deploy
+auto.deploy.dir=${auto.deploy.dir}
 
 plugins.includes=${plugins.includes}</echo>
 			</then>
@@ -28,7 +48,7 @@ plugins.includes=${plugins.includes}</echo>
 				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
 app.server.type=${app.server.type}
 
-auto.deploy.dir=${liferay.home}/deploy
+auto.deploy.dir=${auto.deploy.dir}
 
 plugins.includes=${plugins.includes}</echo>
 			</else>
@@ -180,10 +200,12 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 			select="${select}"
 		/>
 
+		<get-auto-deploy-dir />
+
 		<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
 app.server.type=${app.server.type}
 
-auto.deploy.dir=${liferay.home}/deploy
+auto.deploy.dir=${auto.deploy.dir}
 
 plugins.includes=${test.plugin}</echo>
 

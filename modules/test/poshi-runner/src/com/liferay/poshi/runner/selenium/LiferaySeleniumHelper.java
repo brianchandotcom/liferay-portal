@@ -1181,7 +1181,15 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		ScreenRegion screenRegion = new DesktopScreenRegion();
+
+		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
+
+		screenRegion = screenRegion.find(imageTarget);
+
+		Mouse mouse = new DesktopMouse();
+
+		mouse.click(screenRegion.getCenter());
 	}
 
 	public static void sikuliDragAndDrop(
@@ -1215,7 +1223,15 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		ScreenRegion screenRegion = new DesktopScreenRegion();
+
+		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
+
+		screenRegion = screenRegion.find(imageTarget);
+
+		Mouse mouse = new DesktopMouse();
+
+		mouse.move(screenRegion.getCenter());
 	}
 
 	public static void sikuliRightMouseDown(LiferaySelenium liferaySelenium)

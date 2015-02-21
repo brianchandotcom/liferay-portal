@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>CONFIGURATION_IFRAME</td>
-	<td>//iframe[contains(@id,'knowledgebaseportlet') and contains(@id,'configurationIframeDialog_iframe')]</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog_iframe')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -31,6 +31,11 @@
 <tr>
 	<td>DISPLAY_SETTINGS</td>
 	<td>//a[contains(.,'Display Settings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_OR_FOLDER_FIELD</td>
+	<td>//input[contains(@id,'configurationKBObject')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -270,6 +270,11 @@
 </tr>
 <!--FOLDER_TABLE-->
 <tr>
+	<td>FOLDER_TABLE_HEADER</td>
+	<td>//th[contains(.,'Folder')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FOLDER_TABLE_FOLDER</td>
 	<td>//tr[contains(.,'${kbFolderName}')]/td/a</td>
 	<td></td>
@@ -292,6 +297,11 @@
 <tr>
 	<td>FOLDER_TABLE_ACTIONS_BUTTON</td>
 	<td>//tr[contains(.,'${kbFolderName}')]/td[5]//span[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_ACTIONS_BUTTON_GENERIC</td>
+	<td>//td[5]//a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>

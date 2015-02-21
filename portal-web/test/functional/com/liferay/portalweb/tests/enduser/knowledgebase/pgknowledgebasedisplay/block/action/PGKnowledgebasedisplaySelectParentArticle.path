@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FOLDER_TITLE_LINK</td>
+	<td>//tr[contains(.,'${key_kbFolderName}')]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHOOSE_BUTTON</td>
 	<td>//tr[contains(.,'${key_kbArticleTitle}')]//button[contains(.,'Choose')]</td>
 	<td></td>

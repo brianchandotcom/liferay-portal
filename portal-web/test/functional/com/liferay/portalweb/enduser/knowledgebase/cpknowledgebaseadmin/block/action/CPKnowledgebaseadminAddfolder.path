@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>
-	<td>//button[contains(.,'Cancel')]</td>
+	<td>//a[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>

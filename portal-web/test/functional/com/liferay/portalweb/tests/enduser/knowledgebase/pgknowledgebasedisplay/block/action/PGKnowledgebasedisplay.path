@@ -176,6 +176,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ARTICLE_NAVIGATION_GRANDCHILD</td>
+	<td>//div[@class='kbarticle-navigation']//a[contains(.,'${key_kbGrandchildArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER-->
+<tr>
+	<td>FOLDER_SELECT_DROPDOWN</td>
+	<td>//select[contains(@id,'rootKBFolderId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_SELECT_OPTION</td>
+	<td>//select[contains(@id,'rootKBFolderId')]/option[contains(.,'${key_kbFolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

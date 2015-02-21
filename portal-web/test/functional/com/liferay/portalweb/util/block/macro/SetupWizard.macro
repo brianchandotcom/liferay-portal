@@ -24,8 +24,8 @@
 		<execute function="AssertClick" locator1="Setupwizard#DATABASE_CHANGE_LINK" value1="(Change)" />
 
 		<execute function="AssertTextEquals#assertText" locator1="Setupwizard#DATABASE_CHANGE_DATABASE_TYPE_LABEL" value1="Database Type" />
-		<execute function="AssertTextEquals#assertText" locator1="Setupwizard#DATABASE_CHANGE_JDBC_URL_LABEL" value1="JDBC URL (Required)" />
-		<execute function="AssertTextEquals#assertText" locator1="Setupwizard#DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_LABEL" value1="JDBC Driver Class Name (Required)" />
+		<execute function="AssertTextEquals#assertText" locator1="Setupwizard#DATABASE_CHANGE_JDBC_URL_LABEL" value1="JDBC URL Required" />
+		<execute function="AssertTextEquals#assertText" locator1="Setupwizard#DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_LABEL" value1="JDBC Driver Class Name Required" />
 		<execute function="AssertTextEquals#assertText" locator1="Setupwizard#DATABASE_CHANGE_USER_NAME_LABEL" value1="User Name" />
 		<execute function="AssertTextEquals#assertText" locator1="Setupwizard#DATABASE_CHANGE_PASSWORD_LABEL" value1="Password" />
 		<execute function="AssertClick" locator1="Setupwizard#FINISH_CONFIGURATION_BUTTON" value1="Finish Configuration" />

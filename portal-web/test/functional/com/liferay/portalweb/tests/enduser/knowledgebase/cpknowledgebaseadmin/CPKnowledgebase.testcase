@@ -11,6 +11,8 @@
 
 		<execute macro="BlogsEntry#tearDownCP" />
 
+		<execute macro="KBFolder#tearDownCP" />
+
 		<execute macro="KBArticle#tearDownCP" />
 
 		<execute macro="KBTemplate#tearDownCP" />
@@ -226,6 +228,42 @@
 		<execute function="AssertTextNotEquals" locator1="CPKnowledgebaseadminArticle#CONTENT" value1="${kbArticleContentSource}" />
 	</command>
 
+	<command name="AddKBFolder" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="kbFolderDescription" value="KB Folder 1 Description" />
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBFolder#gotoCP">
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBArticle#viewDefaultCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#viewFolderTable">
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="kbFolderDescription" value="KB Folder 2 Description" />
+			<var name="kbFolderName" value="KB Folder 2" />
+		</execute>
+
+		<execute macro="KBFolder#gotoCP">
+			<var name="kbFolderName" value="KB Folder 2" />
+		</execute>
+
+		<execute macro="KBArticle#viewDefaultCP" />
+	</command>
+
 	<command name="AddTemplateCP" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
@@ -243,6 +281,23 @@
 		<execute macro="KBTemplate#viewCP">
 			<var name="kbTemplateContent" value="Knowledge Base Template Content" />
 			<var name="kbTemplateTitle" value="Knowledge Base Template Title" />
+		</execute>
+	</command>
+
+	<command name="CannotAddDuplicateKBFolder" priority="3">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="kbFolderDescription" value="KB Folder 1 Description" />
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="kbAddDuplicate" value="true" />
+			<var name="kbFolderDescription" value="KB Folder 1 Description" />
+			<var name="kbFolderName" value="KB Folder 1" />
 		</execute>
 	</command>
 
@@ -272,6 +327,35 @@
 		</execute>
 
 		<execute macro="KBArticle#viewDefaultCP" />
+	</command>
+
+	<command name="DeleteKBFolder" priority ="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="kbFolderDescription" value="KB Folder 1 Description" />
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBFolder#gotoCP">
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBArticle#viewDefaultCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#viewFolderTable">
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBFolder#deleteCP">
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
 	</command>
 
 	<command name="EditKBArticleViaKBAdmin" priority="5">
@@ -308,6 +392,41 @@
 		<execute macro="KBArticle#viewCP">
 			<var name="kbArticleContent" value="Knowledge Base Article Content Edit" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title Edit" />
+		</execute>
+	</command>
+
+	<command name="EditKBFolder" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="kbFolderDescription" value="KB Folder 1 Description" />
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBFolder#gotoCP">
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBArticle#viewDefaultCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#viewFolderTable">
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBFolder#editCP">
+			<var name="kbFolderDescription" value="KB Folder 1 Description Edited" />
+			<var name="kbFolderEditedName" value="KB Folder 1 Edited" />
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBFolder#viewFolderTable">
+			<var name="kbFolderName" value="KB Folder 1 Edited" />
 		</execute>
 	</command>
 

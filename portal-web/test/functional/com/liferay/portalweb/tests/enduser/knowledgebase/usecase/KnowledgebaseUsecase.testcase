@@ -9,13 +9,14 @@
 	<tear-down>
 		<execute macro="Page#tearDownPG" />
 
+		<execute macro="KBFolder#tearDownCP" />
+
 		<execute macro="KBArticle#tearDownCP" />
 	</tear-down>
 
 	<command name="DeleteConfiguredKBFolder" priority="4">
 		<var name="kbArticleContent" value="Article Content" />
 		<var name="kbArticleTitle" value="KB article outside folder" />
-		<var name="kbFolderName" value="KB Folder" />
 		<var name="pageName" value="Knowledge Base Page" />
 
 		<execute macro="Page#addPG">
@@ -44,11 +45,12 @@
 		</execute>
 
 		<execute macro="KBFolder#addCP">
-			<var name="kbFolderName" value="${kbFolderName}" />
+			<var name="kbFolderDescription" value="KB Folder Description" />
+			<var name="kbFolderName" value="KB Folder" />
 		</execute>
 
 		<execute macro="KBFolder#gotoCP">
-			<var name="kbFolderName" value="${kbFolderName}" />
+			<var name="kbFolderName" value="KB Folder" />
 		</execute>
 
 		<execute macro="KBArticle#addCP">
@@ -61,7 +63,7 @@
 		</execute>
 
 		<execute macro="KBArticle#configureKBFolderDisplay">
-			<var name="kbFolderName" value="${kbFolderName}" />
+			<var name="kbFolderName" value="KB Folder" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -69,7 +71,7 @@
 		</execute>
 
 		<execute macro="KBFolder#deleteCP">
-			<var name="kbFolderName" value="${kbFolderName}" />
+			<var name="kbFolderName" value="KB Folder" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -420,6 +422,101 @@
 		</execute>
 	</command>
 
+	<command name="ViewConfiguredKBArticleWithinFolderViaKBDisplay" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="kbFolderDescription" value="KB Folder Description" />
+			<var name="kbFolderName" value="KB Folder" />
+		</execute>
+
+		<execute macro="KBFolder#gotoCP">
+			<var name="kbFolderName" value="KB Folder" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#configureKBArticleDisplay">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
+			<var name="kbFolderName" value="KB Folder" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
+		</execute>
+	</command>
+
+	<command name="viewDefaultFolderViaKBDisplay" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="kbFolderDescription" value="KB Folder Description" />
+			<var name="kbFolderName" value="KB Folder" />
+		</execute>
+
+		<execute macro="KBFolder#gotoCP">
+			<var name="kbFolderName" value="KB Folder" />
+		</execute>
+
+		<execute macro="KBArticle#viewDefaultCP" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#viewDefaultViaKBDisplayPG" />
+	</command>
+
 	<command name="ViewImportedKBArticlesInHierarchyWithMarkdownFormat" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
@@ -653,6 +750,130 @@
 		</execute>
 	</command>
 
+	<command name="ViewKBArticlesHierarchyWithinFolders" priority="4">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="kbFolderDescription" value="KB Folder 1 Description" />
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBFolder#gotoCP">
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Folder 1 Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#addChildPGViaKBAdmin">
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
+			<var name="kbChildArticleContent" value="Knowledge Base Article Folder 1 Content 1 Child" />
+			<var name="kbChildArticleTitle" value="Knowledge Base Article Folder 1 Title 1 Child" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBAdminCP">
+			<var name="hasChildArticle" value="true" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#addChildPGViaKBAdmin">
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1 Child" />
+			<var name="kbChildArticleContent" value="Knowledge Base Article Folder 1 Content 1 Grandchild" />
+			<var name="kbChildArticleTitle" value="Knowledge Base Article Folder 1 Title 1 Grandchild" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="kbFolderDescription" value="KB Folder 2 Description" />
+			<var name="kbFolderName" value="KB Folder 2" />
+		</execute>
+
+		<execute macro="KBFolder#gotoCP">
+			<var name="kbFolderName" value="KB Folder 2" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Folder 2 Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#addChildPGViaKBAdmin">
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
+			<var name="kbChildArticleContent" value="Knowledge Base Article Folder 2 Content 1 Child" />
+			<var name="kbChildArticleTitle" value="Knowledge Base Article Folder 2 Title 1 Child" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBAdminCP">
+			<var name="hasChildArticle" value="true" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#addChildPGViaKBAdmin">
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
+			<var name="kbChildArticleContent" value="Knowledge Base Article Folder 2 Content 1 Grandchild" />
+			<var name="kbChildArticleTitle" value="Knowledge Base Article Folder 2 Title 1 Grandchild" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Folder 2 Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPGHierarchyNavigationPG">
+			<var name="kbChildArticleTitle" value="Knowledge Base Article Folder 2 Title 1 Child" />
+			<var name="kbGrandchildArticleTitle" value="Knowledge Base Article Folder 2 Title 1 Grandchild" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Folder 2 Content 1 Grandchild" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1 Grandchild" />
+		</execute>
+
+		<execute macro="KBFolder#gotoViaKBDisplayPG">
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Folder 1 Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPGHierarchyNavigationPG">
+			<var name="kbChildArticleTitle" value="Knowledge Base Article Folder 1 Title 1 Child" />
+			<var name="kbGrandchildArticleTitle" value="Knowledge Base Article Folder 1 Title 1 Grandchild" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Folder 1 Content 1 Grandchild" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1 Grandchild" />
+		</execute>
+	</command>
+
 	<command name="ViewKBArticlesInDifferentScopesPerSite" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page 1" />
@@ -740,6 +961,169 @@
 		<execute macro="KBArticle#viewViaKBArticlePG">
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title for Page 2" />
+		</execute>
+	</command>
+
+	<command name="ViewKBArticlesInKBFolder" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="kbFolderDescription" value="KB Folder 1 Description" />
+			<var name="kbFolderName" value="KB Folder" />
+		</execute>
+
+		<execute macro="KBFolder#gotoCP">
+			<var name="kbFolderName" value="KB Folder" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
+		</execute>
+	</command>
+
+	<command name="ViewKBArticlesInMultipleKBFolders" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="kbFolderDescription" value="KB Folder 1 Description" />
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBFolder#gotoCP">
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Folder 1 Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Folder 1 Content 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 2" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="kbFolderDescription" value="KB Folder 2 Description" />
+			<var name="kbFolderName" value="KB Folder 2" />
+		</execute>
+
+		<execute macro="KBFolder#gotoCP">
+			<var name="kbFolderName" value="KB Folder 2" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Folder 2 Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Folder 2 Content 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBFolder#gotoViaKBDisplayPG">
+			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Folder 1 Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 2" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Folder 1 Content 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 1 Title 2" />
+		</execute>
+
+		<execute macro="KBFolder#gotoViaKBDisplayPG">
+			<var name="kbFolderName" value="KB Folder 2" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Folder 2 Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 2" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Folder 2 Content 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 2" />
 		</execute>
 	</command>
 
@@ -890,12 +1274,12 @@
 		<var name="kbArticleContent" value="This is some test content" />
 		<var name="kbArticleTitle" value="Test KB Article Title" />
 		<var name="kbSuggestionBody" value="A suggestion for KB Article" />
+		<var name="pageName" value="Knowledge Base Display Page" />
 		<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
 		<var name="userName" value="Test Test" />
 		<var name="userPassword" value="dontwasteyourlife1" />
 		<var name="userScreenName" value="usersn" />
 		<var name="virtualHost" value="localhost" />
-		<var name="pageName" value="Knowledge Base Display Page" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />

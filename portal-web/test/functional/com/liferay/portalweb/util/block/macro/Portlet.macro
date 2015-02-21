@@ -77,7 +77,7 @@
 				</or>
 			</not>
 			<then>
-				<var name="i" value="${i?increment()}" />
+				<var name="i" value="MathUtil#sum(${i}, 1)" />
 
 				<echo message="The xpath ${portletTypeKey} could not be found. Refreshing the page. Attempt number ${i}..." />
 
@@ -122,7 +122,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" locator1="Dockbar#${portletLocator}" value1="Add" />
+		<execute function="AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" locator1="${portletLocator}" value1="Add" />
 
 		<echo message="Adding ${portletName} portlet..." />
 

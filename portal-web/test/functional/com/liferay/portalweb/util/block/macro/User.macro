@@ -1431,7 +1431,10 @@
 		</if>
 
 		<if>
-			<equals arg1="${authenticationMethod}" arg2="By Screen Name" />
+			<and>
+				<isset var="authenticationMethod" />
+				<equals arg1="${authenticationMethod}" arg2="By Screen Name" />
+			</and>
 			<then>
 				<execute function="Type" locator1="PGLogin#SCREEN_NAME_FIELD" value1="${userScreenName}" />
 			</then>
@@ -1443,7 +1446,10 @@
 		<execute function="Type" locator1="PGLogin#PASSWORD_FIELD" value1="${password}" />
 
 		<if>
-			<equals arg1="${rememberMeChecked}" arg2="true" />
+			<and>
+				<isset var="rememberMeChecked" />
+				<equals arg1="${rememberMeChecked}" arg2="true" />
+			</and>
 			<then>
 				<execute function="Check" locator1="PGLogin#REMEMBER_ME_CHECKBOX" />
 			</then>
@@ -1467,7 +1473,10 @@
 			<then>
 				<if>
 					<not>
-						<equals arg1="${syntaxCheckingEnabled}" arg2="true" />
+						<and>
+							<isset var="syntaxCheckingEnabled" />
+							<equals arg1="${syntaxCheckingEnabled}" arg2="true" />
+						</and>
 					</not>
 					<then>
 						<execute function="Type" locator1="PGLoginNewpassword#PASSWORD_FIELD" value1="test" />

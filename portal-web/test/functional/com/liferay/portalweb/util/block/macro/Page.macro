@@ -48,7 +48,10 @@
 			</then>
 			<elseif>
 				<not>
-					<equals arg1="${defaultURL}" arg2="false" />
+					<and>
+						<isset var="defaultURL" />
+						<equals arg1="${defaultURL}" arg2="false" />
+					</and>
 				</not>
 				<then>
 					<execute macro="Page#openURL" />
@@ -70,11 +73,11 @@
 			</then>
 		</if>
 
-		<var name="key_pageType" value="${pageTemplateName}" />
-
 		<if>
 			<isset var="pageTemplateName" />
 			<then>
+				<var name="key_pageType" value="${pageTemplateName}" />
+
 				<execute function="AssertTextEquals" locator1="CPSitepagesAddpage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
 				<execute function="Click" locator1="CPSitepagesAddpage#PAGE_TYPE_RADIO" />
 				<execute function="AssertTextEquals" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
@@ -409,7 +412,10 @@
 			</then>
 			<elseif>
 				<not>
-					<equals arg1="${defaultURL}" arg2="false" />
+					<and>
+						<isset var="defaultURL" />
+						<equals arg1="${defaultURL}" arg2="false" />
+					</and>
 				</not>
 				<then>
 					<execute macro="Page#openURL" />
@@ -418,10 +424,16 @@
 		</if>
 
 		<if>
-			<equals arg1="${soPage}" arg2="true" />
+			<and>
+				<isset var="soPage" />
+				<equals arg1="${soPage}" arg2="true" />
+			</and>
 			<then>
 				<if>
-					<equals arg1="${soDashboard}" arg2="true" />
+					<and>
+						<isset var="soDashboard" />
+						<equals arg1="${soDashboard}" arg2="true" />
+					</and>
 					<then>
 						<var name="key_pageName" value="${pageName}" />
 
@@ -480,7 +492,10 @@
 
 	<command name="openURL">
 		<if>
-			<equals arg1="${pageAccess}" arg2="Private" />
+			<and>
+				<isset var="pageAccess" />
+				<equals arg1="${pageAccess}" arg2="Private" />
+			</and>
 			<then>
 				<var name="pageAccessURL" value="/group" />
 			</then>
@@ -510,7 +525,10 @@
 		</if>
 
 		<if>
-			<equals arg1="${pageStaging}" arg2="true" />
+			<and>
+				<isset var="pageStaging" />
+				<equals arg1="${pageStaging}" arg2="true" />
+			</and>
 			<then>
 				<var name="pageStagingURL" value="-staging" />
 			</then>

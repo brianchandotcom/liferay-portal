@@ -14,6 +14,7 @@
 
 package com.liferay.portal.json;
 
+import com.liferay.portal.json.transformer.CompanyJSONTransformer;
 import com.liferay.portal.json.transformer.FileJSONTransformer;
 import com.liferay.portal.json.transformer.JSONArrayJSONTransformer;
 import com.liferay.portal.json.transformer.JSONObjectJSONTransformer;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletDisplayModel;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
@@ -83,6 +85,7 @@ public class JSONInit {
 		TypeJsonSerializerMap typeSerializerMap = JoddJson.defaultSerializers;
 
 		Class<?>[][] classesArray = new Class<?>[][] {
+			new Class[] {Company.class, CompanyJSONTransformer.class},
 			new Class[] {File.class, FileJSONTransformer.class},
 			new Class[] {JSONArray.class, JSONArrayJSONTransformer.class},
 			new Class[] {JSONObject.class, JSONObjectJSONTransformer.class},

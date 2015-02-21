@@ -25,8 +25,8 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.util.StringPlus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,30 +71,16 @@ public class IndexerPostProcessorRegistry {
 			IndexerPostProcessor indexerPostProcessor = registry.getService(
 				serviceReference);
 
-			Object indexerClassNameProperty = serviceReference.getProperty(
-				"indexer.class.name");
-
-			List<String> indexerClassNames = new ArrayList<String>();
-
-			if (indexerClassNameProperty instanceof String ) {
-				indexerClassNames.add((String)indexerClassNameProperty);
-			}
-			else if (indexerClassNameProperty instanceof String[]) {
-				for( String indexerClassName : (String[])indexerClassNameProperty ) {
-					indexerClassNames.add(indexerClassName);
-				}
-			}
-			else if (indexerClassNameProperty instanceof List<?>) {
-				for( Object indexerClassName : (List<?>)indexerClassNameProperty ) {
-					indexerClassNames.add(indexerClassName.toString());
-				}
-			}
+			List<String> indexerClassNames = StringPlus.asList(
+				serviceReference.getProperty("indexer.class.name"));
 
 			for (String indexerClassName : indexerClassNames) {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(indexerClassName);
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					indexerClassName);
 
 				if (indexer == null) {
-					_log.error("No indexer for " + indexerClassName + " was found");
+					_log.error(
+						"No indexer for " + indexerClassName + " was found");
 
 					continue;
 				}
@@ -120,30 +106,16 @@ public class IndexerPostProcessorRegistry {
 
 			registry.ungetService(serviceReference);
 
-			Object indexerClassNameProperty = serviceReference.getProperty(
-					"indexer.class.name");
-
-			List<String> indexerClassNames = new ArrayList<String>();
-
-			if (indexerClassNameProperty instanceof String ) {
-				indexerClassNames.add((String)indexerClassNameProperty);
-			}
-			else if (indexerClassNameProperty instanceof String[]) {
-				for( String indexerClassName : (String[])indexerClassNameProperty ) {
-					indexerClassNames.add(indexerClassName);
-				}
-			}
-			else if (indexerClassNameProperty instanceof List<?>) {
-				for( Object indexerClassName : (List<?>)indexerClassNameProperty ) {
-					indexerClassNames.add(indexerClassName.toString());
-				}
-			}
+			List<String> indexerClassNames = StringPlus.asList(
+				serviceReference.getProperty("indexer.class.name"));
 
 			for (String indexerClassName : indexerClassNames ) {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(indexerClassName);
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					indexerClassName);
 
 				if (indexer == null) {
-					_log.error("No indexer for " + indexerClassName + " was found");
+					_log.error(
+						"No indexer for " + indexerClassName + " was found");
 
 					continue;
 				}

@@ -731,6 +731,67 @@ public class HttpImpl implements Http {
 	}
 
 	@Override
+	public String normalizePath(String uri) {
+		if (Validator.isNull(uri)) {
+			return uri;
+		}
+
+		uri = removePathParameters(uri);
+
+		String path = null;
+		String queryString = null;
+
+		int pos = uri.indexOf('?');
+
+		if (pos != -1) {
+			path = uri.substring(0, pos);
+			queryString = uri.substring(pos + 1);
+		}
+		else {
+			path = uri;
+		}
+
+		String[] uriParts = StringUtil.split(
+			path.substring(1), StringPool.SLASH);
+
+		List<String> parts = new ArrayList<>(uriParts.length);
+
+		for (int i = 0; i < uriParts.length; i++) {
+			String curUriPart = URLCodec.decodeURL(uriParts[i]);
+			String prevUriPart = null;
+
+			if (i > 0) {
+				prevUriPart = URLCodec.decodeURL(uriParts[i - 1]);
+			}
+
+			if (curUriPart.equals(StringPool.DOUBLE_PERIOD)) {
+				if (!prevUriPart.equals(StringPool.PERIOD)) {
+					parts.remove(parts.size() - 1);
+				}
+			}
+			else if ((curUriPart.length() > 0) &&
+					 !curUriPart.equals(StringPool.PERIOD)) {
+
+				parts.add(URLCodec.encodeURL(curUriPart));
+			}
+		}
+
+		StringBundler sb = new StringBundler(parts.size() * 2 + 2);
+
+		for (String part : parts) {
+			sb.append(StringPool.SLASH);
+			sb.append(part);
+		}
+
+		if (Validator.isNotNull(queryString)) {
+			sb.append(StringPool.QUESTION);
+			sb.append(queryString);
+		}
+
+		return sb.toString();
+	}
+
+	@Override
 	public Map<String, String[]> parameterMapFromString(String queryString) {
 		Map<String, String[]> parameterMap = new LinkedHashMap<>();
 
@@ -997,10 +1058,17 @@ public class HttpImpl implements Http {
 				sb.append(StringPool.SLASH);
 				sb.append(uriPart);
 			}
+			else if (pos == 0) {
+				continue;
+			}
 			else {
 				sb.append(StringPool.SLASH);
 				sb.append(uriPart.substring(0, pos));
 			}
+		}
+
+		if (sb.length() == 0) {
+			return StringPool.SLASH;
 		}
 
 		return sb.toString();

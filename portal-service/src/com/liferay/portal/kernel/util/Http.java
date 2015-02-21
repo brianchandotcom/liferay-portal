@@ -128,6 +128,8 @@ public interface Http {
 
 	public boolean isSecure(String url);
 
+	public String normalizePath(String uri);
+
 	public Map<String, String[]> parameterMapFromString(String queryString);
 
 	public String parameterMapToString(Map<String, String[]> parameterMap);

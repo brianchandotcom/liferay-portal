@@ -193,6 +193,10 @@ public class HttpUtil {
 		return getHttp().isSecure(url);
 	}
 
+	public static String normalizePath(String uri) {
+		return getHttp().normalizePath(uri);
+	}
+
 	public static Map<String, String[]> parameterMapFromString(
 		String queryString) {
 

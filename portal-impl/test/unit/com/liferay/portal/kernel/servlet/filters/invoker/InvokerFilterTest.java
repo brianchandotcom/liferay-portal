@@ -42,6 +42,27 @@ public class InvokerFilterTest extends PowerMockito {
 	}
 
 	@Test
+	public void testGetURIWithDoubleSlash() {
+		InvokerFilter invokerFilter = new InvokerFilter();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(
+				HttpMethods.GET,
+				"/c///portal/%2e/login;jsessionid=ae01b0f2af.worker1");
+
+		Assert.assertEquals(
+			"/c/portal/login", invokerFilter.getURI(mockHttpServletRequest));
+
+		mockHttpServletRequest =
+			new MockHttpServletRequest(
+				HttpMethods.GET,
+				"/c///portal/%2e/../login;jsessionid=ae01b0f2af.worker1");
+
+		Assert.assertEquals(
+			"/c/portal/login", invokerFilter.getURI(mockHttpServletRequest));
+	}
+
+	@Test
 	public void testGetURIWithJSessionId() {
 		InvokerFilter invokerFilter = new InvokerFilter();
 

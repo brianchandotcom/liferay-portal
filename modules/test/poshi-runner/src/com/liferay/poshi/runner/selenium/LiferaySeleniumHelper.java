@@ -592,6 +592,19 @@ public class LiferaySeleniumHelper {
 		return EmailCommands.getEmailSubject(GetterUtil.getInteger(index));
 	}
 
+	public static ImageTarget getImageTarget(
+			LiferaySelenium liferaySelenium, String image)
+		throws Exception {
+
+		File file = new File(
+			getPortalRootDirName() + liferaySelenium.getSikuliImagesDirName() +
+				image);
+
+		ImageTarget imageTarget = new ImageTarget(file);
+
+		return imageTarget;
+	}
+
 	public static String getNumberDecrement(String value) {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) - 1);
 	}
@@ -1132,13 +1145,7 @@ public class LiferaySeleniumHelper {
 
 		ScreenRegion screenRegion = new DesktopScreenRegion();
 
-		liferaySelenium.pause("1000");
-
-		File file = new File(
-			getPortalRootDirName() + liferaySelenium.getSikuliImagesDirName() +
-				image);
-
-		ImageTarget imageTarget = new ImageTarget(file);
+		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
 
 		if (screenRegion.wait(imageTarget, 5000) != null) {
 			throw new Exception("Element is present");
@@ -1151,13 +1158,7 @@ public class LiferaySeleniumHelper {
 
 		ScreenRegion screenRegion = new DesktopScreenRegion();
 
-		liferaySelenium.pause("1000");
-
-		File file = new File(
-			getPortalRootDirName() + liferaySelenium.getSikuliImagesDirName() +
-				image);
-
-		ImageTarget imageTarget = new ImageTarget(file);
+		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
 
 		screenRegion = screenRegion.wait(imageTarget, 5000);
 

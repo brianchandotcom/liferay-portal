@@ -53,9 +53,11 @@ public class SPIConfigurationTest {
 		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
 
 		SAXReaderImpl secureSAXReader = new SAXReaderImpl();
+
 		secureSAXReader.setSecure(true);
 
 		saxReaderUtil.setSecureSAXReader(secureSAXReader);
+
 		saxReaderUtil.setUnsecureSAXReader(new SAXReaderImpl());
 	}
 

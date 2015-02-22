@@ -3625,6 +3625,8 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 		<antcall target="compile-test" inheritAll="false" />
 
 		<antcall target="record-test-class-file-names" inheritAll="false" />
+
+		<antcall target="record-test-plugin-names" inheritAll="false" />
 	</target>
 
 	<target name="prepare-test-build-tomcat-dependents">

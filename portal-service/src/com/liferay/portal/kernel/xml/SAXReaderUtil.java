@@ -247,18 +247,22 @@ public class SAXReaderUtil {
 	}
 
 	protected static boolean isCallerWhitelisted() {
-		StackTraceElement[] callStack = new Exception().getStackTrace();
+		StringBundler sb = new StringBundler(3);
 
-		StackTraceElement caller = callStack[3];
+		Exception e = new Exception();
 
-		StringBundler stringBundler = new StringBundler(3);
+		StackTraceElement[] stackTraceElements = e.getStackTrace();
 
-		stringBundler.append(caller.getClassName());
-		stringBundler.append(StringPool.PERIOD);
-		stringBundler.append(caller.getMethodName());
+		StackTraceElement stackTraceElement = stackTraceElements[3];
 
-		for (String trustedCall : _XML_SECURITY_WHITELIST) {
-			if (stringBundler.toString().contains(trustedCall)) {
+		sb.append(stackTraceElement.getClassName());
+		sb.append(StringPool.POUND);
+		sb.append(stackTraceElement.getMethodName());
+
+		String callerSignature = sb.toString();
+
+		for (String whitelistSignature : _XML_SECURITY_WHITELIST) {
+			if (whitelistSignature.startsWith(callerSignature)) {
 				return true;
 			}
 		}

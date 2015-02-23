@@ -472,8 +472,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 							DefaultNoticeableFuture<Map<Path, Path>>
 								defaultNoticeableFuture =
-									new DefaultNoticeableFuture
-										<Map<Path, Path>>();
+									new DefaultNoticeableFuture<>();
 
 							defaultNoticeableFuture.set(mergedPaths);
 
@@ -559,8 +558,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 							DefaultNoticeableFuture<Map<Path, Path>>
 								defaultNoticeableFuture =
-									new DefaultNoticeableFuture
-										<Map<Path, Path>>();
+									new DefaultNoticeableFuture<>();
 
 							defaultNoticeableFuture.set(mergedPaths);
 
@@ -683,8 +681,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 							DefaultNoticeableFuture<Map<Path, Path>>
 								defaultNoticeableFuture =
-									new DefaultNoticeableFuture
-										<Map<Path, Path>>();
+									new DefaultNoticeableFuture<>();
 
 							defaultNoticeableFuture.set(mergedPaths);
 
@@ -760,8 +757,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 							DefaultNoticeableFuture<Map<Path, Path>>
 								defaultNoticeableFuture =
-									new DefaultNoticeableFuture
-										<Map<Path, Path>>();
+									new DefaultNoticeableFuture<>();
 
 							defaultNoticeableFuture.set(mergedPaths);
 

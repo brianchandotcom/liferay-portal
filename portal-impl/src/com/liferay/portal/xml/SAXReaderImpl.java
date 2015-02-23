@@ -121,9 +121,8 @@ public class SAXReaderImpl implements SAXReader {
 				new ProcessingInstructionImpl(oldProcessingInstruction));
 		}
 
-		return new NodeList
-			<ProcessingInstruction, org.dom4j.ProcessingInstruction>(
-				newProcessingInstructions, oldProcessingInstructions);
+		return new NodeList<>(
+			newProcessingInstructions, oldProcessingInstructions);
 	}
 
 	public static List<org.dom4j.Attribute> toOldAttributes(

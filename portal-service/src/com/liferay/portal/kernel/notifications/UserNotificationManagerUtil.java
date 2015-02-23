@@ -310,8 +310,7 @@ public class UserNotificationManagerUtil {
 			_userNotificationDefinitionServiceRegistrations =
 				new ConcurrentHashMap<>();
 	private final Map<String, Map<String, UserNotificationHandler>>
-		_userNotificationHandlers = new ConcurrentHashMap
-			<String, Map<String, UserNotificationHandler>>();
+		_userNotificationHandlers = new ConcurrentHashMap<>();
 	private final ServiceRegistrationMap<UserNotificationHandler>
 		_userNotificationHandlerServiceRegistrations =
 			new ServiceRegistrationMap<>();

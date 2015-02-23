@@ -98,8 +98,7 @@ public class RenderParametersPool {
 				WebKeys.PORTLET_RENDER_PARAMETERS);
 
 		if (renderParametersPool == null) {
-			renderParametersPool = new ConcurrentHashMap
-				<Long, Map<String, Map<String, String[]>>>();
+			renderParametersPool = new ConcurrentHashMap<>();
 
 			session.setAttribute(
 				WebKeys.PORTLET_RENDER_PARAMETERS, renderParametersPool);

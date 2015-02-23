@@ -156,9 +156,7 @@ public class LockRegistry {
 	private static final Object _dummyValue = new Object();
 	private static final ConcurrentHashMap
 		<String, ConcurrentHashMap<String, ReentrantLock>>
-			_lockGroupMap =
-				new ConcurrentHashMap
-					<String, ConcurrentHashMap<String, ReentrantLock>>();
+			_lockGroupMap = new ConcurrentHashMap<>();
 	private static final Map<String, Object> _prematureLockReleases =
 		new ConcurrentHashMap<>();
 

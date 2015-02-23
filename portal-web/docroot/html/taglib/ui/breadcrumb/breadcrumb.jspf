@@ -41,10 +41,9 @@ for (int i = 0; i < breadcrumbEntries.size(); i++) {
 		}
 		else if (i == (breadcrumbEntries.size() - 1)) {
 			cssClass = "active last" + breadcrumbTruncateClass;
-
-			if (breadcrumbTruncate) {
-				cssClass += " current-parent";
-			}
+		}
+		else if (i == (breadcrumbEntries.size() - 2)) {
+			cssClass = "current-parent" + breadcrumbTruncateClass;
 		}
 	}
 %>

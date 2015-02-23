@@ -15,8 +15,6 @@
 package com.liferay.wiki.web.settings;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
-import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -38,14 +36,13 @@ import javax.portlet.ValidatorException;
 /**
  * @author Iván Zaera
  */
+@Settings.Config(
+	ids = {
+		WikiPortletKeys.WIKI, WikiPortletKeys.WIKI_ADMIN,
+		WikiPortletKeys.WIKI_DISPLAY
+	}
+)
 public class WikiPortletInstanceSettings {
-
-	public static final String[] ALL_KEYS = {
-		"displayStyle", "displayStyleGroupId", "hiddenNodes", "rssDelta",
-		"rssDisplayStyle", "rssFeedType", "visibleNodes",
-		"enableCommentRatings", "enableComments", "enablePageRatings",
-		"enableRelatedAssets", "enableRss", "hiddenNodes", "visibleNodes"
-	};
 
 	public static WikiPortletInstanceSettings getInstance(
 			Layout layout, String portletId)
@@ -85,14 +82,17 @@ public class WikiPortletInstanceSettings {
 		return _typedSettings.getValues("hiddenNodes");
 	}
 
+	@Settings.Property(name = "rssDelta")
 	public int getRssDelta() {
 		return _typedSettings.getIntegerValue("rssDelta");
 	}
 
+	@Settings.Property(name = "rssDisplayStyle")
 	public String getRssDisplayStyle() {
 		return _typedSettings.getValue("rssDisplayStyle");
 	}
 
+	@Settings.Property(name = "rssFeedType")
 	public String getRssFeedType() {
 		return _typedSettings.getValue("rssFeedType");
 	}
@@ -105,6 +105,7 @@ public class WikiPortletInstanceSettings {
 		return _typedSettings.getBooleanValue("enableCommentRatings");
 	}
 
+	@Settings.Property(name = "enableComments")
 	public boolean isEnablePageComments() {
 		return _typedSettings.getBooleanValue("enableComments");
 	}
@@ -117,6 +118,7 @@ public class WikiPortletInstanceSettings {
 		return _typedSettings.getBooleanValue("enableRelatedAssets");
 	}
 
+	@Settings.Property(name = "enableRss")
 	public boolean isEnableRSS() {
 		if (!PortalUtil.isRSSFeedsEnabled()) {
 			return false;
@@ -160,27 +162,12 @@ public class WikiPortletInstanceSettings {
 		return fallbackKeys;
 	}
 
-	private static final String[] _MULTI_VALUED_KEYS = {
-		"hiddenNodes", "visibleNodes"
-	};
-
-	private static final ResourceManager _resourceManager =
-		new ClassLoaderResourceManager(
-			WikiPortletInstanceSettings.class.getClassLoader());
-
 	static {
 		SettingsFactory settingsFactory =
 			SettingsFactoryUtil.getSettingsFactory();
 
 		settingsFactory.registerSettingsMetadata(
-			WikiPortletKeys.WIKI, _getFallbackKeys(), _MULTI_VALUED_KEYS, null,
-			_resourceManager);
-		settingsFactory.registerSettingsMetadata(
-			WikiPortletKeys.WIKI_ADMIN, _getFallbackKeys(), _MULTI_VALUED_KEYS,
-			null, _resourceManager);
-		settingsFactory.registerSettingsMetadata(
-			WikiPortletKeys.WIKI_DISPLAY, _getFallbackKeys(),
-			_MULTI_VALUED_KEYS, null, _resourceManager);
+			WikiPortletInstanceSettings.class, null, _getFallbackKeys());
 	}
 
 	private final TypedSettings _typedSettings;

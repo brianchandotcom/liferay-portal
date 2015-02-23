@@ -144,8 +144,6 @@ public class InvokerFilterContainerImpl
 
 	@Override
 	public void close() {
-		Registry registry = RegistryUtil.getRegistry();
-
 		for (ServiceRegistrationTuple serviceRegistrationTuple :
 				_serviceRegistrationTuples) {
 

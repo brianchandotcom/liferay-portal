@@ -187,6 +187,11 @@ public class PortletAppImpl implements PortletApp {
 	}
 
 	@Override
+	public void removePortlet(Portlet portletModel) {
+		_portlets.remove(portletModel);
+	}
+
+	@Override
 	public void setDefaultNamespace(String defaultNamespace) {
 		_defaultNamespace = defaultNamespace;
 	}

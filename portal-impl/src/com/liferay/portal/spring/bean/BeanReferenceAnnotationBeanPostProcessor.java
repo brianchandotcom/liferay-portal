@@ -164,7 +164,7 @@ public class BeanReferenceAnnotationBeanPostProcessor
 			ReflectionUtils.makeAccessible(field);
 
 			BeanReferenceRefreshUtil.registerRefreshPoint(
-				targetBean, field, referencedBeanName);
+				_beanFactory, targetBean, field, referencedBeanName);
 
 			try {
 				field.set(targetBean, referencedBean);

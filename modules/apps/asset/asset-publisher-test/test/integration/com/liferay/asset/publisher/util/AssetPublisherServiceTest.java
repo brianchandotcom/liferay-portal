@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.util;
 
+import com.liferay.arquillian.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -48,6 +49,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.portlet.MockPortletPreferences;
 import org.springframework.mock.web.portlet.MockPortletRequest;
@@ -55,6 +57,7 @@ import org.springframework.mock.web.portlet.MockPortletRequest;
 /**
  * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 public class AssetPublisherServiceTest {
 
 	@ClassRule

@@ -82,7 +82,6 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -97,7 +96,6 @@ import java.util.TreeSet;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -1382,6 +1380,13 @@ public class DLImpl implements DL {
 
 			return serviceContext.getPortalURL() +
 				serviceContext.getCurrentURL();
+		}
+
+		String entryURL = GetterUtil.getString(
+			serviceContext.getAttribute("entryURL"));
+
+		if (Validator.isNotNull(entryURL)) {
+			return entryURL;
 		}
 
 		HttpServletRequest request = serviceContext.getRequest();

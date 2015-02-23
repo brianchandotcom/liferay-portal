@@ -170,6 +170,7 @@ public class PortletBagImpl implements PortletBag {
 		close(_schedulerEntryInstances);
 		close(_socialActivityInterpreterInstances);
 		close(_socialRequestInterpreterInstances);
+		close(_stagedModelDataHandlerInstances);
 		close(_templateHandlerInstances);
 		close(_trashHandlerInstances);
 		close(_urlEncoderInstances);

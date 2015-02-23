@@ -268,7 +268,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			ContextLoader.getCurrentWebApplicationContext();
 
 		try {
-			BeanReferenceRefreshUtil.refresh(applicationContext);
+			BeanReferenceRefreshUtil.refresh(
+				applicationContext.getAutowireCapableBeanFactory());
 		}
 		catch (Exception e) {
 			_log.error(e, e);

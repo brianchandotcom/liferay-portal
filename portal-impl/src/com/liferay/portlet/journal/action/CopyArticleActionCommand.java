@@ -14,84 +14,74 @@
 
 package com.liferay.portlet.journal.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.journal.ArticleIdException;
 import com.liferay.portlet.journal.DuplicateArticleIdException;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletSession;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Eduardo Garcia
  */
-public class CopyArticleActionCommand extends PortletAction {
+public class CopyArticleActionCommand extends BaseActionCommand {
+
+	protected void copyArticle(PortletRequest portletRequest) throws Exception {
+		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+		String oldArticleId = ParamUtil.getString(
+			portletRequest, "oldArticleId");
+		String newArticleId = ParamUtil.getString(
+			portletRequest, "newArticleId");
+		boolean autoArticleId = ParamUtil.getBoolean(
+			portletRequest, "autoArticleId");
+		double version = ParamUtil.getDouble(portletRequest, "version");
+
+		JournalArticleServiceUtil.copyArticle(
+			groupId, oldArticleId, newArticleId, autoArticleId, version);
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
 		try {
-			copyArticle(actionRequest);
-
-			sendRedirect(actionRequest, actionResponse);
+			copyArticle(portletRequest);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchArticleException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(portletRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.journal.error");
+				PortletSession portletSession = portletRequest.getPortletSession();
+
+				PortletContext portletContext = portletSession.getPortletContext();
+
+				PortletRequestDispatcher portletRequestDispatcher =
+					portletContext.getRequestDispatcher(
+						"/html/portlet/journal/error.jsp");
+
+				portletRequestDispatcher.include(portletRequest, portletResponse);
 			}
 			else if (e instanceof DuplicateArticleIdException ||
 					 e instanceof ArticleIdException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(portletRequest, e.getClass());
 			}
 			else {
 				throw e;
 			}
 		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.journal.copy_article"));
-	}
-
-	protected void copyArticle(ActionRequest actionRequest) throws Exception {
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		String oldArticleId = ParamUtil.getString(
-			actionRequest, "oldArticleId");
-		String newArticleId = ParamUtil.getString(
-			actionRequest, "newArticleId");
-		boolean autoArticleId = ParamUtil.getBoolean(
-			actionRequest, "autoArticleId");
-		double version = ParamUtil.getDouble(actionRequest, "version");
-
-		JournalArticleServiceUtil.copyArticle(
-			groupId, oldArticleId, newArticleId, autoArticleId, version);
 	}
 
 }

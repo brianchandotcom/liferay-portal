@@ -5,4 +5,15 @@
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+
+	<target name="jar">
+		<build-css
+			module.dir="${basedir}"
+			sass.docroot.dir="src/META-INF/resources/"
+		/>
+
+		<jar-macro
+			module.dir="${basedir}"
+		/>
+	</target>
 </project>

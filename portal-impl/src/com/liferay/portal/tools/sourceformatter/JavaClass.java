@@ -357,7 +357,7 @@ public class JavaClass {
 		}
 
 		String newJavaTermContent = StringUtil.replaceFirst(
-			javaTermContent, modifierDefinition, modifierDefinition + "final ");
+			javaTermContent, modifierDefinition, modifierDefinition + " final");
 
 		_content = StringUtil.replace(
 			_content, javaTermContent, newJavaTermContent);
@@ -394,8 +394,9 @@ public class JavaClass {
 		}
 
 		Pattern pattern = Pattern.compile(
-			"\t(private |protected |public )(static )?(transient )?(final)?" +
-				"([\\s\\S]*?)" + javaTerm.getName());
+			"\t(private |protected |public )" +
+				"(((final|static|transient)( |\n))*)([\\s\\S]*?)" +
+					javaTerm.getName());
 
 		String javaTermContent = javaTerm.getContent();
 
@@ -405,9 +406,12 @@ public class JavaClass {
 			return;
 		}
 
-		boolean isFinal = Validator.isNotNull(matcher.group(4));
-		boolean isStatic = Validator.isNotNull(matcher.group(2));
-		String javaFieldType = StringUtil.trim(matcher.group(5));
+		String modifierDefinition = StringUtil.trim(
+			javaTermContent.substring(matcher.start(1), matcher.start(6)));
+
+		boolean isFinal = modifierDefinition.contains("final");
+		boolean isStatic = modifierDefinition.contains("static");
+		String javaFieldType = StringUtil.trim(matcher.group(6));
 
 		if (isFinal && isStatic && javaFieldType.startsWith("Map<")) {
 			checkMutableFieldType(javaTerm);
@@ -428,9 +432,6 @@ public class JavaClass {
 			}
 		}
 		else {
-			String modifierDefinition = javaTermContent.substring(
-				matcher.start(1), matcher.start(5));
-
 			checkFinalableFieldType(
 				javaTerm, annotationsExclusions, modifierDefinition);
 		}

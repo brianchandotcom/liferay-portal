@@ -76,7 +76,7 @@ int messagesCount = messages.size();
 						</div>
 
 						<%
-						String taglibPostReplyURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "postReplyForm0', '" + namespace + randomNamespace + "postReplyBody0');";
+						String taglibPostReplyURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "postReplyForm0');";
 						%>
 
 						<c:if test="<%= messagesCount == 1 %>">
@@ -270,7 +270,7 @@ int messagesCount = messages.size();
 				<portlet:namespace />sendMessage(form);
 			}
 
-			function <%= randomNamespace %>hideForm(rowId, textAreaId, textAreaValue) {
+			function <%= randomNamespace %>hideForm(rowId) {
 				var form = AUI.$('#' + rowId);
 
 				form.css('display', 'none');
@@ -404,7 +404,7 @@ int messagesCount = messages.size();
 				<%= randomNamespace %>showForm(formId);
 			}
 
-			function <%= randomNamespace %>showForm(rowId, textAreaId) {
+			function <%= randomNamespace %>showForm(rowId) {
 				var form = AUI.$('#' + rowId);
 
 				form.css('display', 'block');

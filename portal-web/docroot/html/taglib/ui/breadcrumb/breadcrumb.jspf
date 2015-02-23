@@ -49,7 +49,7 @@ for (int i = 0; i < breadcrumbEntries.size(); i++) {
 %>
 
 	<li class="<%= cssClass %>">
-		<aui:a data="<%= breadcrumbEntry.getData() %>" href="<%= HtmlUtil.escape(breadcrumbEntry.getURL()) %>" label="<%= HtmlUtil.escape(breadcrumbEntry.getTitle()) %>" />
+		<aui:a data="<%= breadcrumbEntry.getData() %>" href="<%= breadcrumbEntry.getURL() %>" label="<%= HtmlUtil.escape(breadcrumbEntry.getTitle()) %>" />
 	</li>
 
 <%

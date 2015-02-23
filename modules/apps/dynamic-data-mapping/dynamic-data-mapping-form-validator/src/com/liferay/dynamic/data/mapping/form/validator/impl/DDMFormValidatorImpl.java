@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.validator;
+package com.liferay.dynamic.data.mapping.form.validator.impl;
 
+import com.liferay.dynamic.data.mapping.form.validator.DDMFormValidationException;
+import com.liferay.dynamic.data.mapping.form.validator.DDMFormValidator;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.dynamicdatamapping.DDMFormValidationException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;

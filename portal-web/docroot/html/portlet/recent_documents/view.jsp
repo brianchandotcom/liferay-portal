@@ -33,12 +33,6 @@ List<DLFileRank> fileRanks = DLAppLocalServiceUtil.getFileRanks(scopeGroupId, us
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileRank.getFileEntryId());
 
 				fileEntry = fileEntry.toEscapedModel();
-
-				PortletURL rowURL = renderResponse.createActionURL();
-
-				rowURL.setParameter("struts_action", "/recent_documents/get_file");
-				rowURL.setParameter("fileEntryId", String.valueOf(fileRank.getFileEntryId()));
-				rowURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 		%>
 
 				<li>
@@ -46,7 +40,7 @@ List<DLFileRank> fileRanks = DLAppLocalServiceUtil.getFileRanks(scopeGroupId, us
 						iconCssClass="<%= fileEntry.getIconCssClass() %>"
 						label="<%= true %>"
 						message="<%= fileEntry.getTitle() %>"
-						url="<%= rowURL.toString() %>"
+						url="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>"
 					/>
 				</li>
 

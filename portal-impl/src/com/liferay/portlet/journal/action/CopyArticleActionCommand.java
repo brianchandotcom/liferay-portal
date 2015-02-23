@@ -36,7 +36,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  */
-public class CopyArticleAction extends PortletAction {
+public class CopyArticleActionCommand extends PortletAction {
 
 	@Override
 	public void processAction(

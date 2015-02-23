@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.validator;
+package com.liferay.dynamic.data.mapping.form.validator;
 
-import com.liferay.portlet.dynamicdatamapping.DDMFormValidationException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
 /**

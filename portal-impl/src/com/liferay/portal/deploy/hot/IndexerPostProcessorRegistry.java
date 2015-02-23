@@ -123,6 +123,7 @@ public class IndexerPostProcessorRegistry {
 				indexer.unregisterIndexerPostProcessor(indexerPostProcessor);
 			}
 		}
+
 	}
 
 }

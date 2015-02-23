@@ -29,7 +29,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Bruno Farache
  */
-public class ExportArticleAction extends PortletAction {
+public class ExportArticleActionCommand extends PortletAction {
 
 	@Override
 	public void processAction(

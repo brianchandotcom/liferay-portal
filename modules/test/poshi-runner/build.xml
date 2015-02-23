@@ -8,6 +8,12 @@
 
 	<!--<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />-->
 
+	<target name="prepare-poshi-runner" depends="compile">
+		<echo file="classes/poshi-runner-ext.properties">
+			test.class.command.name=${test.case.name}
+		</echo>
+	</target>
+
 	<target name="prepare-sikuli" depends="compile">
 		<if>
 			<os family="unix" />
@@ -21,7 +27,7 @@
 		</if>
 	</target>
 
-	<target name="start-poshi-runner" depends="prepare-sikuli">
+	<target name="start-poshi-runner" depends="prepare-poshi-runner,prepare-sikuli">
 		<fail message="Please set the property ${test.case.name}." unless="test.case.name" />
 
 		<mkdir dir="test-results" />
@@ -30,7 +36,6 @@
 			<classpath refid="plugin.classpath" />
 			<formatter type="brief" usefile="false" />
 			<formatter type="xml" />
-			<sysproperty key="test.case.name" value="${test.case.name}" />
 			<test name="com.liferay.poshi.runner.PoshiRunner" todir="test-results" />
 		</junit>
 	</target>

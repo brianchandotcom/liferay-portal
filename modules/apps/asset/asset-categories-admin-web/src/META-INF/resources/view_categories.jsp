@@ -36,12 +36,12 @@ if (Validator.isNull(redirect)) {
 
 	backURL.setParameter("mvcPath", "/view_categories.jsp");
 
-	if ((category != null) && !category.isRootCategory()) {
+	if (category != null) {
 		backURL.setParameter("categoryId", String.valueOf(category.getParentCategoryId()));
-	}
 
-	if (vocabularyId > 0) {
-		backURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
+		if (vocabularyId > 0) {
+			backURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
+		}
 	}
 
 	redirect = backURL.toString();

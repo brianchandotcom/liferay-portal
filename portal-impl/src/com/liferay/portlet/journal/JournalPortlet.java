@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -40,8 +39,10 @@ import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -75,7 +76,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -83,9 +83,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Eduardo Garcia
@@ -105,7 +102,7 @@ public class JournalPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		doDeleteArticles(actionRequest, false);
+		doDeleteArticles(actionRequest, actionResponse, false);
 	}
 
 	public void expireArticles(
@@ -126,13 +123,15 @@ public class JournalPortlet extends MVCPortlet {
 					actionRequest, HtmlUtil.unescape(expireArticleId));
 			}
 		}
+
+		sendEditArticleRedirect(actionRequest, actionResponse);
 	}
 
 	public void moveArticlesToTrash(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		doDeleteArticles(actionRequest, true);
+		doDeleteArticles(actionRequest, actionResponse, true);
 	}
 
 	public void previewArticle(
@@ -140,182 +139,6 @@ public class JournalPortlet extends MVCPortlet {
 		throws Exception {
 
 		updateArticle(actionRequest, actionResponse);
-	}
-
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		JournalArticle article = null;
-		String oldUrlTitle = StringPool.BLANK;
-
-		try {
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
-			if (uploadException != null) {
-				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-					throw new LiferayFileItemException();
-				}
-				else if (uploadException.isExceededSizeLimit()) {
-					throw new ArticleContentSizeException();
-				}
-
-				throw new PortalException(uploadException.getCause());
-			}
-			else if (Validator.isNull(cmd)) {
-				return;
-			}
-			else if (cmd.equals(Constants.ADD) ||
-					 cmd.equals(Constants.PREVIEW) ||
-					 cmd.equals(Constants.UPDATE)) {
-
-				Object[] contentAndImages = updateArticle(actionRequest);
-
-				article = (JournalArticle)contentAndImages[0];
-				oldUrlTitle = ((String)contentAndImages[1]);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteArticles(actionRequest, false);
-			}
-			else if (cmd.equals(Constants.EXPIRE)) {
-				expireArticles(actionRequest);
-			}
-			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteArticles(actionRequest, true);
-			}
-			else if (cmd.equals(Constants.SUBSCRIBE)) {
-				subscribeStructure(actionRequest);
-			}
-			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
-				unsubscribeStructure(actionRequest);
-			}
-
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			int workflowAction = ParamUtil.getInteger(
-				actionRequest, "workflowAction",
-				WorkflowConstants.ACTION_PUBLISH);
-
-			String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
-
-			String namespace = PortalUtil.getPortletNamespace(portletId);
-
-			if (Validator.isNotNull(oldUrlTitle)) {
-				String oldRedirectParam = namespace + "redirect";
-
-				String oldRedirect = HttpUtil.getParameter(
-					redirect, oldRedirectParam, false);
-
-				if (Validator.isNotNull(oldRedirect)) {
-					String newRedirect = HttpUtil.decodeURL(oldRedirect);
-
-					newRedirect = StringUtil.replace(
-						newRedirect, oldUrlTitle, article.getUrlTitle());
-					newRedirect = StringUtil.replace(
-						newRedirect, oldRedirectParam, "redirect");
-
-					redirect = StringUtil.replace(
-						redirect, oldRedirect, newRedirect);
-				}
-			}
-
-			if (cmd.equals(Constants.DELETE) &&
-				!ActionUtil.hasArticle(actionRequest)) {
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)actionRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				PortletURL portletURL = PortletURLFactoryUtil.create(
-					actionRequest, portletConfig.getPortletName(),
-					themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-				redirect = portletURL.toString();
-			}
-
-			if ((article != null) &&
-				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
-
-				redirect = getSaveAndContinueRedirect(
-					portletConfig, actionRequest, article, redirect);
-
-				if (cmd.equals(Constants.PREVIEW)) {
-					SessionMessages.add(actionRequest, "previewRequested");
-
-					hideDefaultSuccessMessage(actionRequest);
-				}
-
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
-			else {
-				WindowState windowState = actionRequest.getWindowState();
-
-				if (!windowState.equals(LiferayWindowState.POP_UP)) {
-					sendRedirect(actionRequest, actionResponse, redirect);
-				}
-				else {
-					redirect = PortalUtil.escapeRedirect(redirect);
-
-					if (Validator.isNotNull(redirect)) {
-						if (cmd.equals(Constants.ADD) && (article != null)) {
-							redirect = HttpUtil.addParameter(
-								redirect, namespace + "className",
-								JournalArticle.class.getName());
-							redirect = HttpUtil.addParameter(
-								redirect, namespace + "classPK",
-								JournalArticleAssetRenderer.getClassPK(
-									article));
-						}
-
-						actionResponse.sendRedirect(redirect);
-					}
-				}
-			}
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchArticleException ||
-				e instanceof NoSuchStructureException ||
-				e instanceof NoSuchTemplateException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.journal.error");
-			}
-			else if (e instanceof ArticleContentException ||
-					 e instanceof ArticleContentSizeException ||
-					 e instanceof ArticleDisplayDateException ||
-					 e instanceof ArticleExpirationDateException ||
-					 e instanceof ArticleIdException ||
-					 e instanceof ArticleSmallImageNameException ||
-					 e instanceof ArticleSmallImageSizeException ||
-					 e instanceof ArticleTitleException ||
-					 e instanceof ArticleVersionException ||
-					 e instanceof DuplicateArticleIdException ||
-					 e instanceof DuplicateFileException ||
-					 e instanceof FileSizeException ||
-					 e instanceof LiferayFileItemException ||
-					 e instanceof StorageFieldRequiredException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException ||
-					 e instanceof LocaleException) {
-
-				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
-			else {
-				throw e;
-			}
-		}
 	}
 
 	public void subscribeStructure(
@@ -331,6 +154,8 @@ public class JournalPortlet extends MVCPortlet {
 		JournalArticleServiceUtil.subscribeStructure(
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			ddmStructureId);
+
+		sendEditArticleRedirect(actionRequest, actionResponse);
 	}
 
 	public void unsubscribeStructure(
@@ -346,11 +171,28 @@ public class JournalPortlet extends MVCPortlet {
 		JournalArticleServiceUtil.unsubscribeStructure(
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			ddmStructureId);
+
+		sendEditArticleRedirect(actionRequest, actionResponse);
 	}
 
-	public Object[] updateArticle(
+	public void updateArticle(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		UploadException uploadException =
+			(UploadException)actionRequest.getAttribute(
+				WebKeys.UPLOAD_EXCEPTION);
+
+		if (uploadException != null) {
+			if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+				throw new LiferayFileItemException();
+			}
+			else if (uploadException.isExceededSizeLimit()) {
+				throw new ArticleContentSizeException();
+			}
+
+			throw new PortalException(uploadException.getCause());
+		}
 
 		UploadPortletRequest uploadPortletRequest =
 			PortalUtil.getUploadPortletRequest(actionRequest);
@@ -564,11 +406,13 @@ public class JournalPortlet extends MVCPortlet {
 				actionRequest, portletResource, article.getArticleId());
 		}
 
-		return new Object[] {article, oldUrlTitle};
+		sendEditArticleRedirect(
+			actionRequest, actionResponse, article, oldUrlTitle);
 	}
 
 	protected void doDeleteArticles(
-			ActionRequest actionRequest, boolean moveToTrash)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			boolean moveToTrash)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -608,6 +452,8 @@ public class JournalPortlet extends MVCPortlet {
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
+
+		sendEditArticleRedirect(actionRequest, actionResponse);
 	}
 
 	@Override
@@ -616,9 +462,17 @@ public class JournalPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		if (SessionErrors.contains(
+				renderRequest, NoSuchArticleException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, NoSuchStructureException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, NoSuchTemplateException.class.getName()) ||
+			SessionErrors.contains(
 				renderRequest, PrincipalException.class.getName())) {
 
-			include("/error.jsp", renderRequest, renderResponse);
+			include(
+				"/portlet/journal/html/error.jsp", renderRequest,
+				renderResponse);
 		}
 		else {
 			super.doDispatch(renderRequest, renderResponse);
@@ -626,8 +480,8 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	protected String getSaveAndContinueRedirect(
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			JournalArticle article, String redirect)
+			ActionRequest actionRequest, JournalArticle article,
+			String redirect)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -637,10 +491,10 @@ public class JournalPortlet extends MVCPortlet {
 			actionRequest, "referringPortletResource");
 
 		PortletURLImpl portletURL = new PortletURLImpl(
-			actionRequest, portletConfig.getPortletName(),
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+			actionRequest, PortletKeys.JOURNAL, themeDisplay.getPlid(),
+			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/journal/edit_article");
+		portletURL.setParameter("mvcPath", "edit_article.jsp");
 		portletURL.setParameter("redirect", redirect, false);
 		portletURL.setParameter(
 			"referringPortletResource", referringPortletResource, false);
@@ -661,11 +515,124 @@ public class JournalPortlet extends MVCPortlet {
 
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
-		if (cause instanceof PrincipalException) {
+		if (cause instanceof ArticleContentException ||
+			cause instanceof ArticleContentSizeException ||
+			cause instanceof ArticleDisplayDateException ||
+			cause instanceof ArticleExpirationDateException ||
+			cause instanceof ArticleIdException ||
+			cause instanceof ArticleSmallImageNameException ||
+			cause instanceof ArticleSmallImageSizeException ||
+			cause instanceof ArticleTitleException ||
+			cause instanceof ArticleVersionException ||
+			cause instanceof AssetCategoryException ||
+			cause instanceof AssetTagException ||
+			cause instanceof DuplicateArticleIdException ||
+			cause instanceof DuplicateFileException ||
+			cause instanceof FileSizeException ||
+			cause instanceof LiferayFileItemException ||
+			cause instanceof LocaleException ||
+			cause instanceof StorageFieldRequiredException ||
+			super.isSessionErrorException(cause)) {
+
 			return true;
 		}
 
 		return false;
+	}
+
+	protected void sendEditArticleRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		sendEditArticleRedirect(
+			actionRequest, actionResponse, null, StringPool.BLANK);
+	}
+
+	protected void sendEditArticleRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			JournalArticle article, String oldUrlTitle)
+		throws Exception {
+
+		String actionName = ParamUtil.getString(
+			actionRequest, ActionRequest.ACTION_NAME);
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		int workflowAction = ParamUtil.getInteger(
+			actionRequest, "workflowAction", WorkflowConstants.ACTION_PUBLISH);
+
+		String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
+
+		String namespace = PortalUtil.getPortletNamespace(portletId);
+
+		if (Validator.isNotNull(oldUrlTitle)) {
+			String oldRedirectParam = namespace + "redirect";
+
+			String oldRedirect = HttpUtil.getParameter(
+				redirect, oldRedirectParam, false);
+
+			if (Validator.isNotNull(oldRedirect)) {
+				String newRedirect = HttpUtil.decodeURL(oldRedirect);
+
+				newRedirect = StringUtil.replace(
+					newRedirect, oldUrlTitle, article.getUrlTitle());
+				newRedirect = StringUtil.replace(
+					newRedirect, oldRedirectParam, "redirect");
+
+				redirect = StringUtil.replace(
+					redirect, oldRedirect, newRedirect);
+			}
+		}
+
+		if (actionName.equals("deleteArticle") &&
+			!ActionUtil.hasArticle(actionRequest)) {
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			PortletURL portletURL = PortletURLFactoryUtil.create(
+				actionRequest, portletDisplay.getPortletName(),
+				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+			redirect = portletURL.toString();
+		}
+
+		if ((article != null) &&
+			(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
+
+			redirect = getSaveAndContinueRedirect(
+				actionRequest, article, redirect);
+
+			if (actionName.equals("previewArticle")) {
+				SessionMessages.add(actionRequest, "previewRequested");
+
+				hideDefaultSuccessMessage(actionRequest);
+			}
+		}
+		else {
+			WindowState windowState = actionRequest.getWindowState();
+
+			if (windowState.equals(LiferayWindowState.POP_UP)) {
+				redirect = PortalUtil.escapeRedirect(redirect);
+
+				if (Validator.isNotNull(redirect)) {
+					if (actionName.equals("addArticle") && (article != null)) {
+						redirect = HttpUtil.addParameter(
+							redirect, namespace + "className",
+							JournalArticle.class.getName());
+						redirect = HttpUtil.addParameter(
+							redirect, namespace + "classPK",
+							JournalArticleAssetRenderer.getClassPK(article));
+					}
+
+					actionResponse.sendRedirect(redirect);
+				}
+			}
+		}
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	protected void updateContentSearch(

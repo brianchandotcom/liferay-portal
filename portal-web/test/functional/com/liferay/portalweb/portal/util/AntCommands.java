@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
+import com.liferay.portalweb.util.TestPropsValues;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -62,7 +63,8 @@ public class AntCommands implements Callable<Void> {
 			sb.append(_fileName);
 			sb.append(" ");
 			sb.append(_target);
-			sb.append(" -Dtest.ant.launched.by.selenium=true");
+			sb.append(" -Dtest.ant.launched.by.selenium=true -Dtest.class=");
+			sb.append(TestPropsValues.TEST_CLASS_COMMAND_NAME);
 		}
 
 		Process process = runtime.exec(sb.toString());

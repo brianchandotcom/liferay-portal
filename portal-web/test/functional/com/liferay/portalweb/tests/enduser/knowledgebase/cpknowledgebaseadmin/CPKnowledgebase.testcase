@@ -148,6 +148,28 @@
 		</execute>
 	</command>
 
+	<command name="AddKBArticleWithAttachmentViaKBAdmin" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleAttachment" value="document_1.txt" />
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#viewKBArticleWithAttachmentCP">
+			<var name="kbArticleAttachment" value="Document_1.txt (0.3k) Delete" />
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+	</command>
+
 	<command name="AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
@@ -355,6 +377,38 @@
 
 		<execute macro="KBFolder#deleteCP">
 			<var name="kbFolderName" value="KB Folder 1" />
+		</execute>
+	</command>
+
+	<command name="EditKBArticleAndAddAttachmentViaKBAdmin" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#editCP">
+			<var name="kbArticleAttachment" value="Document_1.txt" />
+			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edit" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="kbArticleTitleEdit" value="Knowledge Base Article Title Edit" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#viewKBArticleWithAttachmentCP">
+			<var name="kbArticleAttachment" value="Document_1.txt (0.3k) Delete" />
+			<var name="kbArticleContent" value="Knowledge Base Article Content Edit" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title Edit" />
 		</execute>
 	</command>
 

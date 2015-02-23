@@ -73,12 +73,12 @@ public class WikiSettingsProvider implements SettingsProvider<WikiSettings> {
 				WikiSettings.class.getClassLoader()));
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setWikiConfiguration(WikiConfiguration wikiConfiguration) {
 		_wikiConfiguration = wikiConfiguration;
 	}

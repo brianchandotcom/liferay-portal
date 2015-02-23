@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.template.BaseTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -113,6 +114,10 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 			String tip = ddmStructure.getFieldTip(fieldName, locale);
 			String dataType = ddmStructure.getFieldDataType(fieldName);
 			boolean repeatable = ddmStructure.getFieldRepeatable(fieldName);
+
+			if (Validator.isNull(dataType)) {
+				continue;
+			}
 
 			templateVariableGroup.addFieldVariable(
 				label, getFieldVariableClass(), fieldName, tip, dataType,

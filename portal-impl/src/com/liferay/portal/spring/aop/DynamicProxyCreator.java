@@ -89,8 +89,6 @@ public class DynamicProxyCreator
 		new DynamicProxyCreator();
 
 	private final List<ObjectValuePair<BeanMatcher, InvocationHandlerFactory>>
-		_beanMatcherInvocationHandlerFactories =
-			new ArrayList
-				<ObjectValuePair<BeanMatcher, InvocationHandlerFactory>>();
+		_beanMatcherInvocationHandlerFactories = new ArrayList<>();
 
 }

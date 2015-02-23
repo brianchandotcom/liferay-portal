@@ -453,7 +453,6 @@ public class RepositoryLocalServiceImpl
 	private final Map<Long, LocalRepository> _localRepositoriesByRepositoryId =
 		new ConcurrentHashMap<>();
 	private final Map<Long, com.liferay.portal.kernel.repository.Repository>
-		_repositoriesByRepositoryId = new ConcurrentHashMap
-			<Long, com.liferay.portal.kernel.repository.Repository>();
+		_repositoriesByRepositoryId = new ConcurrentHashMap<>();
 
 }

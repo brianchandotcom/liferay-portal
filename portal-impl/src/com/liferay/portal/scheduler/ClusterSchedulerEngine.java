@@ -636,8 +636,7 @@ public class ClusterSchedulerEngine
 
 	private String _beanIdentifier;
 	private final Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
-		_memoryClusteredJobs = new ConcurrentHashMap
-			<String, ObjectValuePair<SchedulerResponse, TriggerState>>();
+		_memoryClusteredJobs = new ConcurrentHashMap<>();
 	private boolean _portalReady;
 	private final java.util.concurrent.locks.Lock _readLock;
 	private ClusterMasterTokenTransitionListener

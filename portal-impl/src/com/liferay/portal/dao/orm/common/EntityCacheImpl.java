@@ -440,9 +440,7 @@ public class EntityCacheImpl
 
 	private MultiVMPool _multiVMPool;
 	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>
-		_portalCaches =
-			new ConcurrentHashMap
-				<String, PortalCache<Serializable, Serializable>>();
+		_portalCaches = new ConcurrentHashMap<>();
 
 	private static class CacheKey implements Externalizable {
 

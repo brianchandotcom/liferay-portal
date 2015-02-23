@@ -679,6 +679,8 @@ public abstract class DLAppTestUtil {
 			boolean approved)
 		throws Exception {
 
+		serviceContext.setAttribute("entryURL", "http://localhost");
+
 		if (Validator.isNotNull(command)) {
 			serviceContext.setCommand(command);
 		}

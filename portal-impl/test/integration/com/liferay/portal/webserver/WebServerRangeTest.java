@@ -17,7 +17,6 @@ package com.liferay.portal.webserver;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -45,6 +44,7 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
@@ -192,7 +192,7 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
 			parentFolder.getFolderId(), fileName, ContentTypes.TEXT_PLAIN,
-			_SAMPLE_DATA.getBytes(), serviceContext); 
+			_SAMPLE_DATA.getBytes(), serviceContext);
 
 		String path =
 			fileEntry.getGroupId() + "/" + fileEntry.getFolderId() + "/" +

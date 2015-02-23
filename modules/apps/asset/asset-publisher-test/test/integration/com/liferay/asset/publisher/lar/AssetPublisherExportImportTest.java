@@ -676,6 +676,16 @@ public class AssetPublisherExportImportTest
 		testSortByAssetVocabulary(true);
 	}
 
+	protected DLFileEntryType addDLFileEntryType(
+			long groupId, long ddmStructureId, ServiceContext serviceContext)
+		throws Exception {
+
+		return DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+			serviceContext.getUserId(), groupId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {ddmStructureId},
+			serviceContext);
+	}
+
 	@Override
 	protected void exportImportPortlet(String portletId) throws Exception {
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
@@ -697,16 +707,6 @@ public class AssetPublisherExportImportTest
 			layout.isPrivateLayout());
 
 		Assert.assertNotNull(importedLayout);
-	}
-
-	protected DLFileEntryType addDLFileEntryType(
-			long groupId, long ddmStructureId, ServiceContext serviceContext)
-		throws Exception {
-
-		return DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-			serviceContext.getUserId(), groupId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new long[] {ddmStructureId},
-			serviceContext);
 	}
 
 	@Override

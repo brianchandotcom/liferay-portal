@@ -90,6 +90,23 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		revertVersion(true, true);
 	}
 
+	protected FileEntry addFileEntry(long folderId, String sourceFileName)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, Constants.ADD,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+
+		return DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), group.getGroupId(), folderId,
+			sourceFileName, ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString().getBytes(), serviceContext);
+	}
+
 	protected void assertFileEntryTitle(String fileName)
 		throws PortalException {
 
@@ -124,24 +141,6 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 				assertFileEntryTitle(fileName);
 			}
 		}
-	}
-
-	protected FileEntry addFileEntry(
-			long folderId, String sourceFileName)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
-		DLAppTestUtil.populateServiceContext(
-			serviceContext, Constants.ADD,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
-
-		return DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), group.getGroupId(), folderId,
-			sourceFileName, ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString().getBytes(), serviceContext);
 	}
 
 	protected void deleteVersion(boolean versioned, boolean leaveCheckedOut)

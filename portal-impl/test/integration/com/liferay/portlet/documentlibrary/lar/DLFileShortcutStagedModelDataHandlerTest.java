@@ -87,8 +87,7 @@ public class DLFileShortcutStagedModelDataHandlerTest
 			TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString().getBytes(),
-			serviceContext);
+			RandomTestUtil.randomString().getBytes(), serviceContext);
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DLFileEntry.class, fileEntry);

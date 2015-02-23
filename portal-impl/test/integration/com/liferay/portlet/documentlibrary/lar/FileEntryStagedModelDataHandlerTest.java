@@ -219,8 +219,8 @@ public class FileEntryStagedModelDataHandlerTest
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		DLAppTestUtil.populateServiceContext(
-			serviceContext, Constants.ADD,
-			dlFileEntryType.getFileEntryTypeId(), true);
+			serviceContext, Constants.ADD, dlFileEntryType.getFileEntryTypeId(),
+			true);
 
 		return DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),

@@ -59,7 +59,8 @@ public class DocumentLibraryUserNotificationTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		DLAppTestUtil.populateServiceContext(serviceContext, Constants.ADD,
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, Constants.ADD,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
 
 		FileEntry fileEntry =  DLAppLocalServiceUtil.addFileEntry(

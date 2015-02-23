@@ -227,6 +227,34 @@ public abstract class DLAppTestUtil {
 			userId, groupId, repositoryId, mappedId, serviceContext);
 	}
 
+	public static void populateServiceContext(
+			ServiceContext serviceContext, String command, long fileEntryTypeId,
+			boolean approved)
+		throws Exception {
+
+		serviceContext.setAttribute("entryURL", "http://localhost");
+
+		if (Validator.isNotNull(command)) {
+			serviceContext.setCommand(command);
+		}
+
+		if (approved) {
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+		}
+		else {
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+
+		if (fileEntryTypeId !=
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) {
+
+			serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
+		}
+
+		serviceContext.setLayoutFullURL("http://localhost");
+	}
+
 	public static FileEntry updateFileEntry(
 			long groupId, long fileEntryId, boolean majorVersion)
 		throws Exception {
@@ -372,34 +400,6 @@ public abstract class DLAppTestUtil {
 		DLFileEntryTypeLocalServiceUtil.updateFolderFileEntryTypes(
 			dlFolder, ListUtil.toList(fileEntryTypeIds), defaultFileEntryTypeId,
 			serviceContext);
-	}
-
-	public static void populateServiceContext(
-			ServiceContext serviceContext, String command, long fileEntryTypeId,
-			boolean approved)
-		throws Exception {
-
-		serviceContext.setAttribute("entryURL", "http://localhost");
-
-		if (Validator.isNotNull(command)) {
-			serviceContext.setCommand(command);
-		}
-
-		if (approved) {
-			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-		}
-		else {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-		}
-
-		if (fileEntryTypeId !=
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) {
-
-			serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
-		}
-
-		serviceContext.setLayoutFullURL("http://localhost");
 	}
 
 	protected static FileEntry updateStatus(

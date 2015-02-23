@@ -1393,7 +1393,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			serviceContext);
 	}
 
-
 	protected static AtomicInteger registerDLSyncEventProcessorMessageListener(
 		final String targetEvent) {
 

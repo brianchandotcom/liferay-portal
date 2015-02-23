@@ -20,13 +20,20 @@
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 AssetTag tag = (AssetTag)row.getObject();
+
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= AssetTagPermission.contains(permissionChecker, tag, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/edit_tag.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="tagId" value="<%= String.valueOf(tag.getTagId()) %>" />
 		</portlet:renderURL>
 
@@ -40,8 +47,8 @@ AssetTag tag = (AssetTag)row.getObject();
 
 	<c:if test="<%= AssetTagPermission.contains(permissionChecker, tag, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteTag" var="deleteURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="tagId" value="<%= String.valueOf(tag.getTagId()) %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

@@ -50,6 +50,8 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.control-panel-entry-category=site_administration.content",
 		"com.liferay.portlet.control-panel-entry-weight=20.0",
 		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.friendly-url-mapping=tags_admin",
+		"com.liferay.portlet.friendly-url-routes=com/liferay/asset/tags/admin/web/portlet/route/asset-tags-admin-friendly-url-routes.xml",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/asset_tag_admin.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",

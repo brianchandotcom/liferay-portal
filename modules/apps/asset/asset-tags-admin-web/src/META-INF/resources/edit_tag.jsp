@@ -17,7 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(renderRequest, "redirect");
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
 
 long tagId = ParamUtil.getLong(request, "tagId");
 
@@ -25,14 +31,16 @@ AssetTag tag = AssetTagLocalServiceUtil.fetchAssetTag(tagId);
 %>
 
 <liferay-ui:header
+	backURL="<%= redirect %>"
 	title='<%= (tag != null) ? tag.getName() : "add-tag" %>'
 />
 
-<portlet:actionURL name="editTag" var="editTagURL" />
+<portlet:actionURL name="editTag" var="editTagURL">
+	<portlet:param name="redirect" value="<%= redirect %>" />
+</portlet:actionURL>
 
 <aui:form action="<%= editTagURL %>" method="post" name="fm">
 	<aui:input name="mvcPath" type="hidden" value="/edit_tag.jsp" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-ui:error exception="<%= AssetTagException.class %>">
 

@@ -17,20 +17,28 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(renderRequest, "redirect");
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
 
 long[] mergeTagIds = StringUtil.split(ParamUtil.getString(renderRequest, "mergeTagIds"), 0L);
 %>
 
 <liferay-ui:header
+	backURL="<%= redirect %>"
 	title="merge-tags"
 />
 
-<portlet:actionURL name="mergeTag" var="mergeURL" />
+<portlet:actionURL name="mergeTag" var="mergeURL">
+	<portlet:param name="redirect" value="<%= redirect %>" />
+</portlet:actionURL>
 
 <aui:form action="<%= mergeURL %>" method="post" name="fm" onSubmit="event.preventDefault();">
 	<aui:input name="mvcPath" type="hidden" value="/merge_tag.jsp" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="mergeTagIds" type="hidden" />
 
 	<div class="merge-tags">

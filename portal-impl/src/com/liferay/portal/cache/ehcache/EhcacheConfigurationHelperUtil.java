@@ -152,9 +152,8 @@ public class EhcacheConfigurationHelperUtil {
 				cacheManagerListenerConfigurations,
 				defaultPortalCacheConfiguration, portalCacheConfigurations);
 
-		return new ObjectValuePair
-			<Configuration, PortalCacheManagerConfiguration>(
-				ehcacheConfiguration, portalCacheManagerConfiguration);
+		return new ObjectValuePair<>(
+			ehcacheConfiguration, portalCacheManagerConfiguration);
 	}
 
 	private static CacheListenerScope _getCacheListenerScope(

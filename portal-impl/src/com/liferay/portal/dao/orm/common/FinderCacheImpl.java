@@ -363,8 +363,6 @@ public class FinderCacheImpl
 
 	private MultiVMPool _multiVMPool;
 	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>
-		_portalCaches =
-			new ConcurrentHashMap
-				<String, PortalCache<Serializable, Serializable>>();
+		_portalCaches = new ConcurrentHashMap<>();
 
 }

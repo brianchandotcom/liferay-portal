@@ -15,15 +15,19 @@
 package com.liferay.dynamic.data.mapping.form.validator.impl;
 
 import com.liferay.dynamic.data.mapping.form.validator.DDMFormValidationException;
+import com.liferay.dynamic.data.mapping.form.validator.DDMFormValidator;
 import com.liferay.portal.bean.BeanPropertiesImpl;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
+
+import java.util.Locale;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,12 +35,11 @@ import org.junit.Test;
 /**
  * @author Marcellus Tavares
  */
-public class DDMFormValidatorTest extends BaseDDMTestCase {
+public class DDMFormValidatorTest {
 
 	@Before
 	public void setUp() {
 		setUpBeanPropertiesUtil();
-		setUpDDMFormValidatorUtil();
 	}
 
 	@Test(expected = DDMFormValidationException.class)
@@ -48,12 +51,12 @@ public class DDMFormValidatorTest extends BaseDDMTestCase {
 		ddmForm.setAvailableLocales(createAvailableLocales(LocaleUtil.BRAZIL));
 		ddmForm.setDefaultLocale(LocaleUtil.US);
 
-		DDMFormValidatorUtil.validate(ddmForm);
+		_ddmFormValidator.validate(ddmForm);
 	}
 
 	@Test(expected = DDMFormValidationException.class)
 	public void testValidationWithInvalidFieldIndexType() throws Exception {
-		DDMForm ddmForm = createDDMForm(
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
 		DDMFormField ddmFormField = new DDMFormField(
@@ -63,12 +66,12 @@ public class DDMFormValidatorTest extends BaseDDMTestCase {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		DDMFormValidatorUtil.validate(ddmForm);
+		_ddmFormValidator.validate(ddmForm);
 	}
 
 	@Test(expected = DDMFormValidationException.class)
 	public void testValidationWithInvalidFieldName() throws Exception {
-		DDMForm ddmForm = createDDMForm(
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
 		DDMFormField ddmFormField = new DDMFormField(
@@ -76,26 +79,26 @@ public class DDMFormValidatorTest extends BaseDDMTestCase {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		DDMFormValidatorUtil.validate(ddmForm);
+		_ddmFormValidator.validate(ddmForm);
 	}
 
 	@Test(expected = DDMFormValidationException.class)
 	public void testValidationWithInvalidFieldType() throws Exception {
-		DDMForm ddmForm = createDDMForm(
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
 		DDMFormField ddmFormField = new DDMFormField("Text", null);
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		DDMFormValidatorUtil.validate(ddmForm);
+		_ddmFormValidator.validate(ddmForm);
 	}
 
 	@Test(expected = DDMFormValidationException.class)
 	public void testValidationWithNoOptionsSetForFieldOptions()
 		throws Exception {
 
-		DDMForm ddmForm = createDDMForm(
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
 		DDMFormField ddmFormField = new DDMFormField(
@@ -103,7 +106,7 @@ public class DDMFormValidatorTest extends BaseDDMTestCase {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		DDMFormValidatorUtil.validate(ddmForm);
+		_ddmFormValidator.validate(ddmForm);
 	}
 
 	@Test(expected = DDMFormValidationException.class)
@@ -113,7 +116,7 @@ public class DDMFormValidatorTest extends BaseDDMTestCase {
 		ddmForm.setAvailableLocales(null);
 		ddmForm.setDefaultLocale(LocaleUtil.US);
 
-		DDMFormValidatorUtil.validate(ddmForm);
+		_ddmFormValidator.validate(ddmForm);
 	}
 
 	@Test(expected = DDMFormValidationException.class)
@@ -122,14 +125,14 @@ public class DDMFormValidatorTest extends BaseDDMTestCase {
 
 		ddmForm.setDefaultLocale(null);
 
-		DDMFormValidatorUtil.validate(ddmForm);
+		_ddmFormValidator.validate(ddmForm);
 	}
 
 	@Test(expected = DDMFormValidationException.class)
 	public void testValidationWithWrongAvailableLocalesSetForFieldOptions()
 		throws Exception {
 
-		DDMForm ddmForm = createDDMForm(
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
 		DDMFormField ddmFormField = new DDMFormField(
@@ -143,14 +146,14 @@ public class DDMFormValidatorTest extends BaseDDMTestCase {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		DDMFormValidatorUtil.validate(ddmForm);
+		_ddmFormValidator.validate(ddmForm);
 	}
 
 	@Test(expected = DDMFormValidationException.class)
 	public void testValidationWithWrongAvailableLocalesSetForLabel()
 		throws Exception {
 
-		DDMForm ddmForm = createDDMForm(
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
 		DDMFormField ddmFormField = new DDMFormField(
@@ -162,14 +165,14 @@ public class DDMFormValidatorTest extends BaseDDMTestCase {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		DDMFormValidatorUtil.validate(ddmForm);
+		_ddmFormValidator.validate(ddmForm);
 	}
 
 	@Test(expected = DDMFormValidationException.class)
 	public void testValidationWithWrongDefaultLocaleSetForFieldOptions()
 		throws Exception {
 
-		DDMForm ddmForm = createDDMForm(
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
 		DDMFormField ddmFormField = new DDMFormField(
@@ -185,14 +188,14 @@ public class DDMFormValidatorTest extends BaseDDMTestCase {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		DDMFormValidatorUtil.validate(ddmForm);
+		_ddmFormValidator.validate(ddmForm);
 	}
 
 	@Test(expected = DDMFormValidationException.class)
 	public void testValidationWithWrongDefaultLocaleSetForLabel()
 		throws Exception {
 
-		DDMForm ddmForm = createDDMForm(
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
 		DDMFormField ddmFormField = new DDMFormField(
@@ -206,7 +209,11 @@ public class DDMFormValidatorTest extends BaseDDMTestCase {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		DDMFormValidatorUtil.validate(ddmForm);
+		_ddmFormValidator.validate(ddmForm);
+	}
+
+	protected Set<Locale> createAvailableLocales(Locale... locales) {
+		return DDMFormTestUtil.createAvailableLocales(locales);
 	}
 
 	protected void setUpBeanPropertiesUtil() {
@@ -215,10 +222,7 @@ public class DDMFormValidatorTest extends BaseDDMTestCase {
 		beanPropertiesUtil.setBeanProperties(new BeanPropertiesImpl());
 	}
 
-	protected void setUpDDMFormValidatorUtil() {
-		DDMFormValidatorUtil ddmFormValidatorUtil = new DDMFormValidatorUtil();
-
-		ddmFormValidatorUtil.setDDMFormValidator(new DDMFormValidatorImpl());
-	}
+	private final DDMFormValidator _ddmFormValidator =
+		new DDMFormValidatorImpl();
 
 }

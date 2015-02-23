@@ -16,9 +16,7 @@ package com.liferay.productivitycenter.layout;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -81,12 +79,9 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 			Layout layout)
 		throws Exception {
 
-		String portletId = ParamUtil.getString(request, "p_p_id");
-
-		String path = getViewPath(portletId, BrowserSnifferUtil.isWap(request));
-
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			Portal.PATH_MODULE + StringPool.SLASH + _servletContextName + path);
+			Portal.PATH_MODULE + StringPool.SLASH + _servletContextName +
+				_VIEW_PATH);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -161,10 +156,6 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 		_servletServiceRegistration.unregister();
 
 		_servletContextHelperServiceRegistration.unregister();
-	}
-
-	protected String getViewPath(String portletId, boolean wap) {
-		return _VIEW_PATH;
 	}
 
 	private static final String _EDIT_PAGE =

@@ -31,7 +31,7 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 /**
  * @author Adolfo Pérez
  */
-public class BundlerServletUtil {
+public class BundleServletUtil {
 
 	public static ServiceRegistration<ServletContextHelper> createContext(
 		String servletContextName, Bundle bundle) {

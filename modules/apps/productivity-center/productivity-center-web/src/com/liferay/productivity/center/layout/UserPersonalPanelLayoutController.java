@@ -24,7 +24,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.productivity.center.util.BundlerServletUtil;
+import com.liferay.productivity.center.util.BundleServletUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.Collection;
@@ -144,11 +144,11 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 
 		_servletContextName = bundle.getSymbolicName();
 
-		_servletServiceRegistration = BundlerServletUtil.createJspServlet(
+		_servletServiceRegistration = BundleServletUtil.createJspServlet(
 			_servletContextName, bundleContext);
 
 		_servletContextHelperServiceRegistration =
-			BundlerServletUtil.createContext(_servletContextName, bundle);
+			BundleServletUtil.createContext(_servletContextName, bundle);
 	}
 
 	@Deactivate

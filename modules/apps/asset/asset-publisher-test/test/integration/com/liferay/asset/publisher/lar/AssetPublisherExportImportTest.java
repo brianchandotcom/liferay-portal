@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.lar;
 
+import com.liferay.arquillian.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
@@ -68,10 +69,12 @@ import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Julio Camarero
  */
+@RunWith(Arquillian.class)
 @Sync
 public class AssetPublisherExportImportTest
 	extends BasePortletExportImportTestCase {

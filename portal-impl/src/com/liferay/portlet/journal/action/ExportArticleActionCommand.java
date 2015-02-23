@@ -14,45 +14,34 @@
 
 package com.liferay.portlet.journal.action;
 
-import com.liferay.portal.struts.ActionConstants;
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.journal.util.ExportArticleUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Bruno Farache
+ * @author Eduardo Garcia
  */
-public class ExportArticleActionCommand extends PortletAction {
+public class ExportArticleActionCommand extends BaseActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
 		try {
-			ExportArticleUtil.sendFile(actionRequest, actionResponse);
-
-			setForward(actionRequest, ActionConstants.COMMON_NULL);
+			ExportArticleUtil.sendFile(portletRequest, portletResponse);
 		}
 		catch (Exception e) {
-			PortalUtil.sendError(e, actionRequest, actionResponse);
+			PortalUtil.sendError(
+				e, (ActionRequest)portletRequest,
+				(ActionResponse)portletResponse);
 		}
 	}
-
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
-	}
-
-	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
 
 }

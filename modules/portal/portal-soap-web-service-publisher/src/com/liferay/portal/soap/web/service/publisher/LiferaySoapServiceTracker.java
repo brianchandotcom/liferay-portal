@@ -52,10 +52,20 @@ public class LiferaySoapServiceTracker {
 	protected void start() {
 		Bus bus = _createBus();
 
+		_registerLiferayJaxWsProvider();
+
+		BusFactory.setDefaultBus(bus);
+		
 		_registerCXFServlet(bus, _contextPath);
 	}
 
 	protected void stop() {
+		try {
+			_providerServiceRegistration.unregister();
+		}
+		catch (Exception e) {
+		}
+
 		try {
 			_servletServiceRegistration.unregister();
 		}
@@ -111,6 +121,13 @@ public class LiferaySoapServiceTracker {
 
 		_servletServiceRegistration = _bundleContext.registerService(
 			Servlet.class, _cxfServlet, properties);
+	}
+
+	private void _registerLiferayJaxWsProvider() {
+		ProviderImpl providerImpl = new ProviderImpl();
+
+		_providerServiceRegistration = _bundleContext.registerService(
+			Provider.class, providerImpl, null);
 	}
 
 	private final BundleContext _bundleContext;

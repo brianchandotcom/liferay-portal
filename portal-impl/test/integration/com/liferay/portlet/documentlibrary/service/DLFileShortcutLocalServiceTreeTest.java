@@ -111,8 +111,20 @@ public class DLFileShortcutLocalServiceTreeTest {
 		}
 	}
 
-	protected FileEntry addFileEntry(
-			long folderId, String sourceFileName)
+	protected DLFileShortcut addDLFileShortcut(
+			FileEntry fileEntry, long groupId, long folderId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId());
+
+		return DLAppLocalServiceUtil.addFileShortcut(
+			TestPropsValues.getUserId(), groupId, folderId,
+			fileEntry.getFileEntryId(), serviceContext);
+	}
+
+	protected FileEntry addFileEntry(long folderId, String sourceFileName)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -127,19 +139,6 @@ public class DLFileShortcutLocalServiceTreeTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), folderId,
 			sourceFileName, ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString().getBytes(), serviceContext);
-	}
-
-	protected DLFileShortcut addDLFileShortcut(
-			FileEntry fileEntry, long groupId, long folderId)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				groupId, TestPropsValues.getUserId());
-
-		return DLAppLocalServiceUtil.addFileShortcut(
-			TestPropsValues.getUserId(), groupId, folderId,
-			fileEntry.getFileEntryId(), serviceContext);
 	}
 
 	protected void createTree() throws Exception {

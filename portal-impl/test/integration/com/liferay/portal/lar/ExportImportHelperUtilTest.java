@@ -74,8 +74,10 @@ import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import java.io.File;
 import java.io.InputStream;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -90,6 +92,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
 import org.powermock.api.mockito.PowerMockito;
 
 /**
@@ -123,9 +126,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		_fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
-			serviceContext);
+			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomBytes(), serviceContext);
 
 		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)_fileEntry;
 

@@ -70,8 +70,7 @@ public class DLFileVersionLocalServiceTreeTest {
 		Folder folderAA = DLAppTestUtil.addFolder(
 			_group.getGroupId(), folderA.getFolderId(), "Folder AA");
 
-		FileEntry fileEntry = addFileEntry(
-			folderAA.getFolderId(), "Entry.txt");
+		FileEntry fileEntry = addFileEntry(folderAA.getFolderId(), "Entry.txt");
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -118,8 +117,7 @@ public class DLFileVersionLocalServiceTreeTest {
 		}
 	}
 
-	protected FileEntry addFileEntry(
-			long folderId, String sourceFileName)
+	protected FileEntry addFileEntry(long folderId, String sourceFileName)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -147,7 +145,7 @@ public class DLFileVersionLocalServiceTreeTest {
 			"Folder A");
 
 		FileEntry fileEntryAA = addFileEntry(
-			 _folder.getFolderId(), "Entry AA.txt");
+			_folder.getFolderId(), "Entry AA.txt");
 
 		_fileEntries.add(fileEntryAA);
 	}

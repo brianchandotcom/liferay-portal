@@ -89,8 +89,7 @@ public class DLFileEntryFinderTest {
 		_group = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		_repository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
@@ -1442,8 +1441,8 @@ public class DLFileEntryFinderTest {
 		DLAppServiceUtil.moveFolderToTrash(folderC.getFolderId());
 
 		FileEntry fileEntry = addFileEntry(
-			_user.getUserId(), repositoryId, folder.getFolderId(),
-			"FE1.txt", titleSuffix, ContentTypes.TEXT_PLAIN,
+			_user.getUserId(), repositoryId, folder.getFolderId(), "FE1.txt",
+			titleSuffix, ContentTypes.TEXT_PLAIN,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
 		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;

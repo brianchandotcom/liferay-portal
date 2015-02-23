@@ -194,7 +194,6 @@ public class SocialActivityServiceTest {
 			RandomTestUtil.randomBytes(), serviceContext);
 	}
 
-
 	protected void deleteGuestPermission(FileEntry fileEntry) throws Exception {
 		Role role = RoleLocalServiceUtil.getRole(
 			_group.getCompanyId(), RoleConstants.GUEST);

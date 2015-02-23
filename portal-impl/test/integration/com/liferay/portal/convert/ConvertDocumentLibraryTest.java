@@ -62,6 +62,7 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -191,6 +192,23 @@ public class ConvertDocumentLibraryTest {
 			DBStore.class.getName(), store.getClass().getName());
 	}
 
+	protected FileEntry addFileEntry(
+			long folderId, String fileName, String mimeType, byte[] bytes)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, Constants.ADD,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+
+		return DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), folderId,
+			fileName, mimeType, bytes, serviceContext);
+	}
+
 	protected Image addImage() throws Exception {
 		return ImageLocalServiceUtil.updateImage(
 			CounterLocalServiceUtil.increment(),
@@ -239,8 +257,8 @@ public class ConvertDocumentLibraryTest {
 
 		FileEntry rootFileEntry = addFileEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString().getBytes());
+			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString().getBytes());
 
 		Folder folder = DLAppTestUtil.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -278,23 +296,6 @@ public class ConvertDocumentLibraryTest {
 				folderDLFileEntry.getCompanyId(),
 				folderDLFileEntry.getDataRepositoryId(),
 				folderDLFileEntry.getName()));
-	}
-
-	protected FileEntry addFileEntry(
-			long folderId, String fileName, String mimeType, byte[] bytes)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		DLAppTestUtil.populateServiceContext(
-			serviceContext, Constants.ADD,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
-
-		return DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), folderId,
-			fileName, mimeType, bytes, serviceContext);
 	}
 
 	protected void testMigrateDL(long folderId) throws Exception {

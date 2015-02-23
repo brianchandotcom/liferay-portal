@@ -58,6 +58,7 @@ import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestHelper;
 
 import java.io.File;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;

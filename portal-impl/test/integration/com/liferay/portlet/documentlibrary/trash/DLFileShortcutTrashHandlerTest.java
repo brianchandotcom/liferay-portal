@@ -148,8 +148,8 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
 			TestPropsValues.getUserId(), groupId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Text.txt",
-			"Text.txt", true, serviceContext);
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Text.txt", "Text.txt",
+			true, serviceContext);
 
 		return DLAppServiceUtil.addFileShortcut(
 			groupId, folderId, fileEntry.getFileEntryId(), serviceContext);

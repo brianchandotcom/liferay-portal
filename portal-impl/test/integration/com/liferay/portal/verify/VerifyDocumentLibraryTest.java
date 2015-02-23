@@ -60,6 +60,7 @@ import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
 
 import java.io.ByteArrayInputStream;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -279,21 +280,6 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 		doVerify();
 	}
 
-	protected FileEntry addFileEntry(long folderId) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		DLAppTestUtil.populateServiceContext(
-			serviceContext, Constants.ADD,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
-
-		return DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), folderId,
-			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString().getBytes(), serviceContext);
-	}
-
 	protected DLFileEntry addDLFileEntry() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -333,6 +319,21 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 			null, null, dlFileEntryType.getFileEntryTypeId(), ddmFormValuesMap,
 			null, byteArrayInputStream, byteArrayInputStream.available(),
 			serviceContext);
+	}
+
+	protected FileEntry addFileEntry(long folderId) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, Constants.ADD,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+
+		return DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), folderId,
+			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString().getBytes(), serviceContext);
 	}
 
 	protected Map<String, DDMFormValues> getDDMFormValuesMap(

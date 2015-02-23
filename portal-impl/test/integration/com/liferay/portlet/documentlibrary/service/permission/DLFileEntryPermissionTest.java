@@ -71,17 +71,6 @@ public class DLFileEntryPermissionTest extends BasePermissionTestCase {
 				permissionChecker, _subfileEntry, ActionKeys.VIEW));
 	}
 
-	@Override
-	protected void doSetUp() throws Exception {
-		_fileEntry = addFileEntry(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		Folder folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), true);
-
-		_subfileEntry = addFileEntry(folder.getFolderId());
-	}
-
 	protected FileEntry addFileEntry(long folderId) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -95,6 +84,17 @@ public class DLFileEntryPermissionTest extends BasePermissionTestCase {
 			TestPropsValues.getUserId(), group.getGroupId(), folderId,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString().getBytes(), serviceContext);
+	}
+
+	@Override
+	protected void doSetUp() throws Exception {
+		_fileEntry = addFileEntry(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Folder folder = DLAppTestUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), true);
+
+		_subfileEntry = addFileEntry(folder.getFolderId());
 	}
 
 	@Override

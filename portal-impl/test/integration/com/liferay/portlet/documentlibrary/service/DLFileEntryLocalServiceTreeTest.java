@@ -110,8 +110,7 @@ public class DLFileEntryLocalServiceTreeTest {
 		}
 	}
 
-	protected FileEntry addFileEntry(
-			long folderId, String sourceFileName)
+	protected FileEntry addFileEntry(long folderId, String sourceFileName)
 		throws Exception {
 
 		ServiceContext serviceContext =

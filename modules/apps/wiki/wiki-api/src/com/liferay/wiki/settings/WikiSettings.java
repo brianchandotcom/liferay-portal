@@ -19,22 +19,13 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.wiki.constants.WikiConstants;
 
 /**
  * @author Iván Zaera
  */
+@Settings.Config(ids = WikiConstants.SERVICE_NAME)
 public class WikiSettings {
-
-	public static String[] ALL_KEYS = {
-		"defaultFormat", "emailFromAddress", "emailFromName",
-		"emailPageAddedBody", "emailPageAddedSubject", "emailPageUpdatedBody",
-		"emailPageUpdatedSubject", "emailPageAddedEnabled",
-		"emailPageUpdatedEnabled", "pageCommentsEnabled",
-		"pageMinorEditAddSocialActivity", "pageMinorEditSendEmail",
-		"rssAbstractLength",
-	};
-
-	public static final String[] MULTI_VALUED_KEYS = {};
 
 	public static FallbackKeys getFallbackKeys() {
 		FallbackKeys fallbackKeys = new FallbackKeys();
@@ -66,6 +57,7 @@ public class WikiSettings {
 		return _typedSettings.getLocalizedValuesMap("emailPageAddedBody");
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailPageAddedBodyXml() {
 		LocalizedValuesMap emailPageAddedBodyMap = getEmailPageAddedBody();
 
@@ -76,6 +68,7 @@ public class WikiSettings {
 		return _typedSettings.getLocalizedValuesMap("emailPageAddedSubject");
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailPageAddedSubjectXml() {
 		LocalizedValuesMap emailPageAddedSubjectMap =
 			getEmailPageAddedSubject();
@@ -87,6 +80,7 @@ public class WikiSettings {
 		return _typedSettings.getLocalizedValuesMap("emailPageUpdatedBody");
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailPageUpdatedBodyXml() {
 		LocalizedValuesMap emailPageUpdatedBodyMap = getEmailPageUpdatedBody();
 
@@ -97,6 +91,7 @@ public class WikiSettings {
 		return _typedSettings.getLocalizedValuesMap("emailPageUpdatedSubject");
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailPageUpdatedSubjectXml() {
 		LocalizedValuesMap emailPageUpdatedSubjectMap =
 			getEmailPageUpdatedSubject();
@@ -104,6 +99,7 @@ public class WikiSettings {
 		return emailPageUpdatedSubjectMap.getLocalizationXml();
 	}
 
+	@Settings.Property(name = "rssAbstractLength")
 	public int getRSSAbstractLength() {
 		return _typedSettings.getIntegerValue("rssAbstractLength");
 	}

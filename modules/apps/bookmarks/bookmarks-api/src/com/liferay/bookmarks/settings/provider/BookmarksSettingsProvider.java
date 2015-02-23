@@ -18,7 +18,6 @@ import com.liferay.bookmarks.configuration.BookmarksConfiguration;
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.settings.BookmarksSettings;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
@@ -68,11 +67,8 @@ public class BookmarksSettingsProvider
 	@Activate
 	protected void activate() {
 		_settingsFactory.registerSettingsMetadata(
-			BookmarksConstants.SERVICE_NAME,
-			BookmarksSettings.getFallbackKeys(),
-			BookmarksSettings.MULTI_VALUED_KEYS, _bookmarksConfiguration,
-			new ClassLoaderResourceManager(
-				BookmarksSettings.class.getClassLoader()));
+			BookmarksSettings.class, _bookmarksConfiguration,
+			BookmarksSettings.getFallbackKeys());
 	}
 
 	@Reference(unbind = "-")

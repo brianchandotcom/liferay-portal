@@ -15,8 +15,6 @@
 package com.liferay.portlet.blogs;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
-import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -32,13 +30,8 @@ import java.util.Map;
 /**
  * @author Iván Zaera
  */
+@Settings.Config(ids = BlogsConstants.SERVICE_NAME)
 public class BlogsSettings {
-
-	public static final String[] ALL_KEYS = {
-		"emailEntryAddedBody", "emailEntryAddedSubject",
-		"emailEntryUpdatedBody", "emailEntryUpdatedSubject", "emailFromAddress",
-		"emailFromName", "emailEntryAddedEnabled", "emailEntryUpdatedEnabled"
-	};
 
 	public static BlogsSettings getInstance(long groupId)
 		throws PortalException {
@@ -68,6 +61,7 @@ public class BlogsSettings {
 		return _typedSettings.getLocalizedValuesMap("emailEntryAddedBody");
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailEntryAddedBodyXml() {
 		LocalizedValuesMap emailEntryAddedBodyMap = getEmailEntryAddedBody();
 
@@ -78,6 +72,7 @@ public class BlogsSettings {
 		return _typedSettings.getLocalizedValuesMap("emailEntryAddedSubject");
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailEntryAddedSubjectXml() {
 		LocalizedValuesMap emailEntryAddedSubjectMap =
 			getEmailEntryAddedSubject();
@@ -89,6 +84,7 @@ public class BlogsSettings {
 		return _typedSettings.getLocalizedValuesMap("emailEntryUpdatedBody");
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailEntryUpdatedBodyXml() {
 		LocalizedValuesMap emailEntryUpdatedBodyMap =
 			getEmailEntryUpdatedBody();
@@ -100,6 +96,7 @@ public class BlogsSettings {
 		return _typedSettings.getLocalizedValuesMap("emailEntryUpdatedSubject");
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailEntryUpdatedSubjectXml() {
 		LocalizedValuesMap emailEntryUpdatedSubjectMap =
 			getEmailEntryUpdatedSubject();
@@ -152,18 +149,12 @@ public class BlogsSettings {
 		return fallbackKeys;
 	}
 
-	private static final String[] _MULTI_VALUED_KEYS = {};
-
-	private static final ResourceManager _resourceManager =
-		new ClassLoaderResourceManager(BlogsSettings.class.getClassLoader());
-
 	static {
 		SettingsFactory settingsFactory =
 			SettingsFactoryUtil.getSettingsFactory();
 
 		settingsFactory.registerSettingsMetadata(
-			BlogsConstants.SERVICE_NAME, _getFallbackKeys(), _MULTI_VALUED_KEYS,
-			null, _resourceManager);
+			BlogsSettings.class, null, _getFallbackKeys());
 	}
 
 	private final TypedSettings _typedSettings;

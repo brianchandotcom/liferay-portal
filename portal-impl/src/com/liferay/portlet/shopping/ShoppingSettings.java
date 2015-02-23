@@ -15,8 +15,6 @@
 package com.liferay.portlet.shopping;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
-import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -40,17 +38,8 @@ import java.util.TreeSet;
  * @author Brian Wing Shun Chan
  * @author Eduardo Garcia
  */
+@Settings.Config(ids = ShoppingConstants.SERVICE_NAME)
 public class ShoppingSettings {
-
-	public static final String[] ALL_KEYS = {
-		"alternativeShipping", "ccTypes", "currencyId", "emailFromAddress",
-		"emailFromName", "emailOrderConfirmationBody",
-		"emailOrderConfirmationSubject", "emailOrderShippingBody",
-		"emailOrderShippingSubject", "insurance", "insuranceFormula",
-		"minOrder", "paypalEmailAddress", "shipping", "shippingFormula",
-		"taxRate", "taxState", "emailOrderConfirmationEnabled",
-		"emailOrderShippingEnabled"
-	};
 
 	public static final String CC_NONE = "none";
 
@@ -143,6 +132,7 @@ public class ShoppingSettings {
 		return alternativeShipping;
 	}
 
+	@Settings.Property(ignore = true)
 	public String getAlternativeShippingName(int altShipping) {
 		String altShippingName = StringPool.BLANK;
 
@@ -184,6 +174,7 @@ public class ShoppingSettings {
 		return emailOrderConfirmationBody;
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailOrderConfirmationBodyXml() {
 		LocalizedValuesMap emailOrderConfirmationBodyMap =
 			getEmailOrderConfirmationBody();
@@ -199,6 +190,7 @@ public class ShoppingSettings {
 		return emailOrderConfirmationSubject;
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailOrderConfirmationSubjectXml() {
 		LocalizedValuesMap emailOrderConfirmationSubjectMap =
 			getEmailOrderConfirmationSubject();
@@ -210,6 +202,7 @@ public class ShoppingSettings {
 		return _typedSettings.getLocalizedValuesMap("emailOrderShippingBody");
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailOrderShippingBodyXml() {
 		LocalizedValuesMap emailOrderShippingBodyMap =
 			getEmailOrderShippingBody();
@@ -222,6 +215,7 @@ public class ShoppingSettings {
 			"emailOrderShippingSubject");
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailOrderShippingSubjectXml() {
 		LocalizedValuesMap emailOrderShippingSubjectMap =
 			getEmailOrderShippingSubject();
@@ -335,20 +329,12 @@ public class ShoppingSettings {
 		return fallbackKeys;
 	}
 
-	private static final String[] _MULTI_VALUED_KEYS = {
-		"ccTypes", "insurance", "shipping"
-	};
-
-	private static final ResourceManager _resourceManager =
-		new ClassLoaderResourceManager(ShoppingSettings.class.getClassLoader());
-
 	static {
 		SettingsFactory settingsFactory =
 			SettingsFactoryUtil.getSettingsFactory();
 
 		settingsFactory.registerSettingsMetadata(
-			ShoppingConstants.SERVICE_NAME, _getFallbackKeys(),
-			_MULTI_VALUED_KEYS, null, _resourceManager);
+			ShoppingSettings.class, null, _getFallbackKeys());
 	}
 
 	private final TypedSettings _typedSettings;

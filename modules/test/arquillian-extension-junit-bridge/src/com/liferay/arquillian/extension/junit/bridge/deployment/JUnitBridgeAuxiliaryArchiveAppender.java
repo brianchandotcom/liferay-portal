@@ -15,6 +15,7 @@
 package com.liferay.arquillian.extension.junit.bridge.deployment;
 
 import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridgeExtension;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
@@ -40,6 +41,7 @@ public class JUnitBridgeAuxiliaryArchiveAppender
 			RemoteLoadableExtension.class,
 			LiferayArquillianJUnitBridgeExtension.class);
 		javaArchive.addClass(JUnitBridgeObserver.class);
+		javaArchive.addClass(Arquillian.class);
 
 		return javaArchive;
 	}

@@ -16,9 +16,10 @@ package com.liferay.bookmarks.configuration.impl;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.bookmarks.configuration.BookmarksConfiguration;
+
 import java.util.Map;
 
-import com.liferay.bookmarks.configuration.BookmarksConfiguration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;

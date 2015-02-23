@@ -251,40 +251,6 @@ int messagesCount = messages.size();
 				Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>postReplyButton0', !html);
 			}
 
-			function <%= randomNamespace %>hideForm(rowId, textAreaId, textAreaValue) {
-				var form = document.getElementById(rowId);
-
-				if (form) {
-					form.style.display = 'none';
-				}
-			}
-
-			function <%= randomNamespace %>scrollIntoView(messageId) {
-				document.getElementById('<%= randomNamespace %>messageScroll' + messageId).scrollIntoView();
-			}
-
-			function <%= randomNamespace %>showForm(rowId, textAreaId) {
-				document.getElementById(rowId).style.display = 'block';
-			}
-
-			function <%= randomNamespace %>hideEditor(editorName, formId) {
-				if (window[editorName]) {
-					window[editorName].dispose();
-				}
-
-				<%= randomNamespace %>hideForm(formId);
-			}
-
-			function <%= randomNamespace %>showEditor(editorName, formId) {
-				window[editorName].create();
-
-				var html = window[editorName].getHTML();
-
-				Liferay.Util.toggleDisabled('#' + editorName.replace('Body', 'Button'), (html === ''));
-
-				<%= randomNamespace %>showForm(formId);
-			}
-
 			function <%= randomNamespace %>afterLogin(emailAddress, anonymousAccount) {
 				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
@@ -293,15 +259,29 @@ int messagesCount = messages.size();
 				<portlet:namespace />sendMessage(form, !anonymousAccount);
 			}
 
-			function <%= randomNamespace %>deleteMessage() {
+			function <%= randomNamespace %>deleteMessage(i) {
 				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
 				var messageId = form.fm('messageId' + i).val();
 
-				form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+				form.fm('<%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 				form.fm('messageId').val(messageId);
 
 				<portlet:namespace />sendMessage(form);
+			}
+
+			function <%= randomNamespace %>hideForm(rowId, textAreaId, textAreaValue) {
+				var form = AUI.$('#' + rowId);
+
+				form.css('display', 'none');
+			}
+
+			function <%= randomNamespace %>hideEditor(editorName, formId) {
+				if (window[editorName]) {
+					window[editorName].dispose();
+				}
+
+				<%= randomNamespace %>hideForm(formId);
 			}
 
 			function <portlet:namespace />onMessagePosted(response, refreshPage) {
@@ -329,7 +309,7 @@ int messagesCount = messages.size();
 
 				var parentMessageId = form.fm('parentMessageId' + i).val();
 
-				form.fm('<%= Constants.CMD %>').val('<%= Constants.ADD %>');
+				form.fm('<%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.ADD %>');
 				form.fm('parentMessageId').val(parentMessageId);
 				form.fm('body').val(editorInstance.getHTML());
 
@@ -354,6 +334,10 @@ int messagesCount = messages.size();
 
 					editorInstance.dispose();
 				}
+			}
+
+			function <%= randomNamespace %>scrollIntoView(messageId) {
+				document.getElementById('<%= randomNamespace %>messageScroll' + messageId).scrollIntoView();
 			}
 
 			function <portlet:namespace />sendMessage(form, refreshPage) {
@@ -410,10 +394,26 @@ int messagesCount = messages.size();
 				);
 			}
 
-			function <portlet:namespace />showStatusMessage(type, message) {
-				var messageContainer = AUI.$('#<portlet:namespace />discussion-status-messages');
+			function <%= randomNamespace %>showEditor(editorName, formId) {
+				window[editorName].create();
 
-				messageContainer.removeClass('alert-danger').removeClass('alert-success');
+				var html = window[editorName].getHTML();
+
+				Liferay.Util.toggleDisabled('#' + editorName.replace('Body', 'Button'), (html === ''));
+
+				<%= randomNamespace %>showForm(formId);
+			}
+
+			function <%= randomNamespace %>showForm(rowId, textAreaId) {
+				var form = AUI.$('#' + rowId);
+
+				form.css('display', 'block');
+			}
+
+			function <portlet:namespace />showStatusMessage(type, message) {
+				var messageContainer = AUI.$('#<portlet:namespace />discussionStatusMessages');
+
+				messageContainer.removeClass('alert-danger alert-success');
 
 				messageContainer.addClass('alert alert-' + type);
 
@@ -425,15 +425,13 @@ int messagesCount = messages.size();
 			function <%= randomNamespace %>subscribeToComments(subscribe) {
 				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-				var cmd = form.fm('<%= randomNamespace %><%= Constants.CMD %>');
-
-				var cmdVal = '<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>';
+				var cmd = '<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>';
 
 				if (subscribe) {
-					cmdVal = '<%= Constants.SUBSCRIBE_TO_COMMENTS %>';
+					cmd = '<%= Constants.SUBSCRIBE_TO_COMMENTS %>';
 				}
 
-				cmd.val(cmdVal);
+				form.fm('<%= randomNamespace %><%= Constants.CMD %>').val(cmd);
 
 				<portlet:namespace />sendMessage(form);
 			}

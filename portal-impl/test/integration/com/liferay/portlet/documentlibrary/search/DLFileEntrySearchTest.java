@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -196,17 +197,19 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		DDMFormValues ddmFormValues =
 			FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
 
-		serviceContext.setAttribute(
-			"fileEntryTypeId", dlFileEntryType.getFileEntryTypeId());
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, Constants.ADD, dlFileEntryType.getFileEntryTypeId(),
+			true);
+
 		serviceContext.setAttribute(
 			DDMFormValues.class.getName() + ddmStructure.getStructureId(),
 			ddmFormValues);
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			serviceContext.getScopeGroupId(),
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Text.txt",
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			content.getBytes(), WorkflowConstants.ACTION_PUBLISH,
+			StringPool.BLANK, StringPool.BLANK, content.getBytes(),
 			serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
@@ -242,7 +245,8 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			folderId = dlFolder.getFolderId();
 		}
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			folderId, keywords + ".txt", keywords, approved, serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();

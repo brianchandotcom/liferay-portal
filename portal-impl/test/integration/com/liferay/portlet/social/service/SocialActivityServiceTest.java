@@ -21,8 +21,12 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
@@ -33,12 +37,15 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.social.model.SocialActivity;
@@ -88,10 +95,9 @@ public class SocialActivityServiceTest {
 
 	@Test
 	public void testFilterActivities() throws Exception {
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+		FileEntry fileEntry = addFileEntry(
 			RandomTestUtil.randomString() + ".txt",
-			RandomTestUtil.randomString(), true);
+			RandomTestUtil.randomString());
 
 		deleteGuestPermission(fileEntry);
 
@@ -114,15 +120,12 @@ public class SocialActivityServiceTest {
 	@Test
 	public void testPagingFilterActivities() throws Exception {
 		for (int i = 0; i < 4; i++) {
-			DLAppTestUtil.addFileEntry(
-				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				RandomTestUtil.randomString() + ".txt", String.valueOf(i),
-				true);
+			addFileEntry(
+				RandomTestUtil.randomString() + ".txt", String.valueOf(i));
 
-			FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			FileEntry fileEntry = addFileEntry(
 				RandomTestUtil.randomString() + ".txt",
-				RandomTestUtil.randomString(), true);
+				RandomTestUtil.randomString());
 
 			deleteGuestPermission(fileEntry);
 		}
@@ -172,6 +175,25 @@ public class SocialActivityServiceTest {
 			ServiceTestUtil.setUser(user);
 		}
 	}
+
+	protected FileEntry addFileEntry(String fileName, String title)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, Constants.ADD,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+
+		return DLAppLocalServiceUtil.addFileEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
+			RandomTestUtil.randomBytes(), serviceContext);
+	}
+
 
 	protected void deleteGuestPermission(FileEntry fileEntry) throws Exception {
 		Role role = RoleLocalServiceUtil.getRole(

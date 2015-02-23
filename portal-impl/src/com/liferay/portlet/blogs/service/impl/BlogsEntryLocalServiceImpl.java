@@ -304,17 +304,17 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			smallImageURL = smallImageImageSelector.getImageURL();
 		}
 
+		FileEntry tempSmallImageFileEntry = null;
+
 		if (smallImageFileEntryId != 0) {
-			FileEntry tempFileEntry =
+			tempSmallImageFileEntry =
 				PortletFileRepositoryUtil.getPortletFileEntry(
 					smallImageFileEntryId);
 
 			smallImageFileEntryId = addSmallImageFileEntry(
-				userId, groupId, entryId, tempFileEntry.getMimeType(),
-				tempFileEntry.getTitle(), tempFileEntry.getContentStream());
-
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				tempFileEntry.getFileEntryId());
+				userId, groupId, entryId, tempSmallImageFileEntry.getMimeType(),
+				tempSmallImageFileEntry.getTitle(),
+				tempSmallImageFileEntry.getContentStream());
 		}
 
 		validate(smallImageFileEntryId);
@@ -336,7 +336,21 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		return startWorkflowInstance(userId, entry, serviceContext);
+		entry = startWorkflowInstance(userId, entry, serviceContext);
+
+		if ((coverImageImageSelector != null) &&
+			(coverImageImageSelector.getImageId() != 0)) {
+
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				coverImageImageSelector.getImageId());
+		}
+
+		if (tempSmallImageFileEntry != null) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				tempSmallImageFileEntry.getFileEntryId());
+		}
+
+		return entry;
 	}
 
 	@Override
@@ -1283,6 +1297,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		long smallImageFileEntryId = entry.getSmallImageFileEntryId();
 		String smallImageURL = entry.getSmallImageURL();
 
+		FileEntry tempSmallImageFileEntry = null;
+
 		if (smallImageImageSelector != null) {
 			smallImage = !smallImageImageSelector.isRemoveSmallImage();
 			smallImageFileEntryId = smallImageImageSelector.getImageId();
@@ -1302,17 +1318,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 						entry.getSmallImageFileEntryId());
 				}
 
-				FileEntry tempFileEntry =
+				tempSmallImageFileEntry =
 					PortletFileRepositoryUtil.getPortletFileEntry(
 						smallImageImageSelector.getImageId());
 
 				smallImageFileEntryId = addSmallImageFileEntry(
 					userId, entry.getGroupId(), entry.getEntryId(),
-					tempFileEntry.getMimeType(), tempFileEntry.getTitle(),
-					tempFileEntry.getContentStream());
-
-				PortletFileRepositoryUtil.deletePortletFileEntry(
-					tempFileEntry.getFileEntryId());
+					tempSmallImageFileEntry.getMimeType(),
+					tempSmallImageFileEntry.getTitle(),
+					tempSmallImageFileEntry.getContentStream());
 			}
 		}
 
@@ -1344,7 +1358,21 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		return startWorkflowInstance(userId, entry, serviceContext);
+		entry = startWorkflowInstance(userId, entry, serviceContext);
+
+		if ((coverImageImageSelector != null) &&
+			(coverImageImageSelector.getImageId() != 0)) {
+
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				coverImageImageSelector.getImageId());
+		}
+
+		if (tempSmallImageFileEntry != null) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				tempSmallImageFileEntry.getFileEntryId());
+		}
+
+		return entry;
 	}
 
 	@Override
@@ -1569,7 +1597,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		if (bytes == null) {
-			return coverImageId;
+			return 0;
 		}
 
 		File file = null;
@@ -1598,9 +1626,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				false);
 
 			coverImageId = fileEntry.getFileEntryId();
-
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				coverImageImageSelector.getImageId());
 		}
 		catch (IOException ioe) {
 			if (_log.isDebugEnabled()) {

@@ -147,7 +147,7 @@ public class InvokerFilterContainerImpl
 		Registry registry = RegistryUtil.getRegistry();
 
 		for (ServiceRegistrationTuple serviceRegistrationTuple :
-			_serviceRegistrationTuples) {
+				_serviceRegistrationTuples) {
 
 			PortletFilterFactory.destroy(
 				serviceRegistrationTuple.getPortletFilterModel());
@@ -204,6 +204,7 @@ public class InvokerFilterContainerImpl
 	private final ServiceTracker<PortletFilter, PortletFilter> _serviceTracker;
 
 	private static class ServiceRegistrationTuple {
+
 		public ServiceRegistrationTuple(
 			com.liferay.portal.model.PortletFilter portletFilterModel,
 			ServiceRegistration<PortletFilter> serviceRegistration) {

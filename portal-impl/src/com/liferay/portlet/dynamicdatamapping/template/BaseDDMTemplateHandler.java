@@ -114,9 +114,11 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 			String dataType = ddmStructure.getFieldDataType(fieldName);
 			boolean repeatable = ddmStructure.getFieldRepeatable(fieldName);
 
-			templateVariableGroup.addFieldVariable(
-				label, getFieldVariableClass(), fieldName, tip, dataType,
-				repeatable, getTemplateVariableCodeHandler());
+			if ((dataType != null) && !dataType.isEmpty()) {
+				templateVariableGroup.addFieldVariable(
+					label, getFieldVariableClass(), fieldName, tip, dataType,
+					repeatable, getTemplateVariableCodeHandler());
+			}
 		}
 
 		return templateVariableGroup;

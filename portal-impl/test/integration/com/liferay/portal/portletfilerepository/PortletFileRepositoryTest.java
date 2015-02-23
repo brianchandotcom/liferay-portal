@@ -55,11 +55,15 @@ public class PortletFileRepositoryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_portletId = RandomTestUtil.randomString();
-
 		_group = GroupTestUtil.addGroup();
 
-		_folder = _addPortletFolder(_group.getGroupId(), _portletId);
+		_portletId = RandomTestUtil.randomString();
+
+		_folder = PortletFileRepositoryUtil.addPortletFolder(
+			_group.getGroupId(), TestPropsValues.getUserId(), _portletId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Test
@@ -67,7 +71,6 @@ public class PortletFileRepositoryTest {
 		throws Exception {
 
 		FileEntry fileEntry = _addPortletFileEntry(
-			_group.getGroupId(), _portletId, _folder.getFolderId(),
 			RandomTestUtil.randomString());
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
@@ -80,17 +83,13 @@ public class PortletFileRepositoryTest {
 	public void testFileEntryAddShouldFailIfDuplicateName() throws Exception {
 		String name = RandomTestUtil.randomString();
 
-		_addPortletFileEntry(
-			_group.getGroupId(), _portletId, _folder.getFolderId(), name);
-
-		_addPortletFileEntry(
-			_group.getGroupId(), _portletId, _folder.getFolderId(), name);
+		_addPortletFileEntry(name);
+		_addPortletFileEntry(name);
 	}
 
 	@Test
 	public void testFileEntryAddShouldHaveDefaultVersion() throws Exception {
 		FileEntry fileEntry = _addPortletFileEntry(
-			_group.getGroupId(), _portletId, _folder.getFolderId(),
 			RandomTestUtil.randomString());
 
 		Assert.assertEquals(
@@ -99,13 +98,8 @@ public class PortletFileRepositoryTest {
 
 	@Test
 	public void testFileEntryAddShouldSucceedIfUniqueName() throws Exception {
-		_addPortletFileEntry(
-			_group.getGroupId(), _portletId, _folder.getFolderId(),
-			RandomTestUtil.randomString());
-
-		_addPortletFileEntry(
-			_group.getGroupId(), _portletId, _folder.getFolderId(),
-			RandomTestUtil.randomString());
+		_addPortletFileEntry(RandomTestUtil.randomString());
+		_addPortletFileEntry(RandomTestUtil.randomString());
 
 		int count = PortletFileRepositoryUtil.getPortletFileEntriesCount(
 			_group.getGroupId(), _folder.getFolderId());
@@ -115,9 +109,7 @@ public class PortletFileRepositoryTest {
 
 	@Test
 	public void testFileEntryAddShouldSucceedOnEmptyFolder() throws Exception {
-		_addPortletFileEntry(
-			_group.getGroupId(), _portletId, _folder.getFolderId(),
-			RandomTestUtil.randomString());
+		_addPortletFileEntry(RandomTestUtil.randomString());
 
 		int count = PortletFileRepositoryUtil.getPortletFileEntriesCount(
 			_group.getGroupId(), _folder.getFolderId());
@@ -132,9 +124,7 @@ public class PortletFileRepositoryTest {
 		int fileEntriesToAdd = Math.abs(RandomTestUtil.randomInt()) % 10;
 
 		for (int i = 0; i < fileEntriesToAdd; i++) {
-			_addPortletFileEntry(
-				_group.getGroupId(), _portletId, _folder.getFolderId(),
-				RandomTestUtil.randomString());
+			_addPortletFileEntry(RandomTestUtil.randomString());
 		}
 
 		PortletFileRepositoryUtil.deletePortletFileEntries(
@@ -151,7 +141,6 @@ public class PortletFileRepositoryTest {
 		throws Exception {
 
 		FileEntry fileEntry = _addPortletFileEntry(
-			_group.getGroupId(), _portletId, _folder.getFolderId(),
 			RandomTestUtil.randomString());
 
 		PortletFileRepositoryUtil.deletePortletFileEntry(
@@ -171,7 +160,6 @@ public class PortletFileRepositoryTest {
 		throws Exception {
 
 		FileEntry fileEntry = _addPortletFileEntry(
-			_group.getGroupId(), _portletId, _folder.getFolderId(),
 			RandomTestUtil.randomString());
 
 		PortletFileRepositoryUtil.deletePortletFileEntry(
@@ -189,31 +177,18 @@ public class PortletFileRepositoryTest {
 
 		String name = RandomTestUtil.randomString();
 
-		Folder folder = _addPortletFolder(
-			_group.getGroupId(), _portletId, _folder.getFolderId(), name);
-
-		Folder newFolder = _addPortletFolder(
-			_group.getGroupId(), _portletId, _folder.getFolderId(), name);
-
-		Assert.assertEquals(newFolder, folder);
+		Assert.assertEquals(_addPortletFolder(name), _addPortletFolder(name));
 	}
 
 	@Test
 	public void testFolderAddShouldSucceedIfUniqueName() throws Exception {
-		_addPortletFolder(
-			_group.getGroupId(), _portletId, _folder.getFolderId(),
-			RandomTestUtil.randomString());
-
-		_addPortletFolder(
-			_group.getGroupId(), _portletId, _folder.getFolderId(),
-			RandomTestUtil.randomString());
+		_addPortletFolder(RandomTestUtil.randomString());
+		_addPortletFolder(RandomTestUtil.randomString());
 	}
 
 	@Test
 	public void testFolderAddShouldSucceedOnEmptyFolder() throws Exception {
-		_addPortletFolder(
-			_group.getGroupId(), _portletId, _folder.getFolderId(),
-			RandomTestUtil.randomString());
+		_addPortletFolder(RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -221,9 +196,7 @@ public class PortletFileRepositoryTest {
 		int fileEntriesToAdd = Math.abs(RandomTestUtil.randomInt()) % 10;
 
 		for (int i = 0; i < fileEntriesToAdd; i++) {
-			_addPortletFileEntry(
-				_group.getGroupId(), _portletId, _folder.getFolderId(),
-				RandomTestUtil.randomString());
+			_addPortletFileEntry(RandomTestUtil.randomString());
 		}
 
 		PortletFileRepositoryUtil.deletePortletFolder(_folder.getFolderId());
@@ -241,32 +214,19 @@ public class PortletFileRepositoryTest {
 		PortletFileRepositoryUtil.getPortletFolder(_folder.getFolderId());
 	}
 
-	private static FileEntry _addPortletFileEntry(
-			long groupId, String portletId, long folderId, String name)
-		throws PortalException {
-
+	private FileEntry _addPortletFileEntry(String name) throws PortalException {
 		return PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, TestPropsValues.getUserId(), User.class.getName(),
-			TestPropsValues.getUserId(), portletId, folderId,
-			RandomTestUtil.randomInputStream(), name,
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			User.class.getName(), TestPropsValues.getUserId(), _portletId,
+			_folder.getFolderId(), RandomTestUtil.randomInputStream(), name,
 			ContentTypes.APPLICATION_OCTET_STREAM, false);
 	}
 
-	private static Folder _addPortletFolder(long groupId, String portletId)
-		throws PortalException {
-
-		return _addPortletFolder(
-			groupId, portletId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString());
-	}
-
-	private static Folder _addPortletFolder(
-			long groupId, String portletId, long parentFolderId, String name)
-		throws PortalException {
-
+	private Folder _addPortletFolder(String name) throws PortalException {
 		return PortletFileRepositoryUtil.addPortletFolder(
-			groupId, TestPropsValues.getUserId(), portletId, parentFolderId,
-			name, ServiceContextTestUtil.getServiceContext());
+			_group.getGroupId(), TestPropsValues.getUserId(), _portletId,
+			_folder.getFolderId(), name,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private Folder _folder;

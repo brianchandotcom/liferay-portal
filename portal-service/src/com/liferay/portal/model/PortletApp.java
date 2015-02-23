@@ -79,6 +79,8 @@ public interface PortletApp extends Serializable {
 
 	public boolean isWARFile();
 
+	public void removePortlet(Portlet portletModel);
+
 	public void setDefaultNamespace(String defaultNamespace);
 
 	public void setServletContext(ServletContext servletContext);
@@ -87,5 +89,4 @@ public interface PortletApp extends Serializable {
 
 	public void setWARFile(boolean warFile);
 
-	public void removePortlet(Portlet portletModel);
 }

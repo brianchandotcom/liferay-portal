@@ -187,6 +187,11 @@ public class PortletAppImpl implements PortletApp {
 	}
 
 	@Override
+	public void removePortlet(Portlet portletModel) {
+		_portlets.remove(portletModel);
+	}
+
+	@Override
 	public void setDefaultNamespace(String defaultNamespace) {
 		_defaultNamespace = defaultNamespace;
 	}
@@ -220,11 +225,6 @@ public class PortletAppImpl implements PortletApp {
 	@Override
 	public void setWARFile(boolean warFile) {
 		_warFile = warFile;
-	}
-
-	@Override
-	public void removePortlet(Portlet portletModel) {
-		_portlets.remove(portletModel);
 	}
 
 	private final Map<String, String[]> _containerRuntimeOptions =

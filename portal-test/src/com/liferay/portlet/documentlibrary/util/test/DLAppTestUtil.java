@@ -42,14 +42,13 @@ import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
 import java.io.Serializable;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -371,7 +370,7 @@ public abstract class DLAppTestUtil {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-				TestPropsValues.getUserId(), groupId, folderId, sourceFileName,
+				userId, groupId, folderId, sourceFileName,
 				ContentTypes.TEXT_PLAIN, title, StringPool.BLANK,
 				StringPool.BLANK, RandomTestUtil.randomBytes(), serviceContext);
 
@@ -711,9 +710,9 @@ public abstract class DLAppTestUtil {
 		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
 		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
 
-		DLAppHelperLocalServiceUtil.updateStatus(
-			TestPropsValues.getUserId(), fileEntry,
-			fileEntry.getLatestFileVersion(), WorkflowConstants.STATUS_PENDING,
+		DLFileEntryLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(),
+			fileEntry.getFileVersion().getFileVersionId(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
 
 		return DLAppLocalServiceUtil.getFileEntry(fileEntry.getFileEntryId());

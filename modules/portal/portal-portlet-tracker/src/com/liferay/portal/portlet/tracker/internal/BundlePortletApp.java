@@ -201,6 +201,11 @@ public class BundlePortletApp implements PortletApp, ServletContextListener {
 	}
 
 	@Override
+	public void removePortlet(Portlet portletModel) {
+		_portletApp.removePortlet(portletModel);
+	}
+
+	@Override
 	public void setDefaultNamespace(String defaultNamespace) {
 		_portletApp.setDefaultNamespace(defaultNamespace);
 	}
@@ -218,11 +223,6 @@ public class BundlePortletApp implements PortletApp, ServletContextListener {
 	@Override
 	public void setWARFile(boolean warFile) {
 		_portletApp.setWARFile(warFile);
-	}
-
-	@Override
-	public void removePortlet(Portlet portletModel) {
-		_portletApp.removePortlet(portletModel);
 	}
 
 	private final String _contextPath;

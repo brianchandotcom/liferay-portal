@@ -24,8 +24,10 @@
 	<target name="deploy-extra-apps">
 		<fail message="Please set the property ${extra.apps.zip.file.name}" unless="extra.apps.zip.file.name" />
 
+		<get-auto-deploy-dir />
+
 		<unzip
-			dest="${liferay.home}/deploy"
+			dest="${auto.deploy.dir}"
 			src="${extra.apps.zip.file.name}"
 		/>
 	</target>
@@ -134,7 +136,9 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 						<if>
 							<isset property="plugin.war" />
 							<then>
-								<copy file="${plugin.war}" todir="${liferay.home}/deploy" />
+								<get-auto-deploy-dir />
+
+								<copy file="${plugin.war}" todir="${auto.deploy.deploy}" />
 
 								<var name="plugin.war" unset="true" />
 							</then>

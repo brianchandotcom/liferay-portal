@@ -3228,6 +3228,10 @@ module.framework.properties.osgi.console=11312</echo>
 			</else>
 		</if>
 
+		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+			test.class.command.name=${test.class}
+		</echo>
+
 		<if>
 			<equals arg1="${browser.type}" arg2="firefox" />
 			<then>

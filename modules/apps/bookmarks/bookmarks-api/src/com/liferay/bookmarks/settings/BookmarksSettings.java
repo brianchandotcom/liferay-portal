@@ -15,14 +15,11 @@
 package com.liferay.bookmarks.settings;
 
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
-
-import java.util.Map;
 
 /**
  * @author Iván Zaera
@@ -57,26 +54,6 @@ public class BookmarksSettings {
 			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 
 		return fallbackKeys;
-	}
-
-	public static BookmarksSettings getInstance(long groupId)
-		throws PortalException {
-
-		BookmarksSettingsProvider bookmarksSettingsProvider =
-			BookmarksSettingsProvider.getBookmarksSettingsProvider();
-
-		return bookmarksSettingsProvider.getGroupServiceSettings(groupId);
-	}
-
-	public static BookmarksSettings getInstance(
-			long groupId, Map<String, String[]> parameterMap)
-		throws PortalException {
-
-		BookmarksSettingsProvider bookmarksSettingsProvider =
-			BookmarksSettingsProvider.getBookmarksSettingsProvider();
-
-		return bookmarksSettingsProvider.getGroupServiceSettings(
-			groupId, parameterMap);
 	}
 
 	public BookmarksSettings(Settings settings) {

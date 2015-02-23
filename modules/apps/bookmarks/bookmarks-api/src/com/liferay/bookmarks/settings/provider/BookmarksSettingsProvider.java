@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.bookmarks.settings;
+package com.liferay.bookmarks.settings.provider;
 
 import com.liferay.bookmarks.configuration.BookmarksConfiguration;
 import com.liferay.bookmarks.constants.BookmarksConstants;
+import com.liferay.bookmarks.settings.BookmarksSettings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -27,7 +28,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -65,15 +65,6 @@ public class BookmarksSettingsProvider
 			new ParameterMapSettings(parameterMap, settings));
 	}
 
-	protected static BookmarksSettingsProvider getBookmarksSettingsProvider() {
-		if (_bookmarksSettingsProvider == null) {
-			throw new IllegalStateException(
-				"Bookmarks settings provider is not available");
-		}
-
-		return _bookmarksSettingsProvider;
-	}
-
 	@Activate
 	protected void activate() {
 		_settingsFactory.registerSettingsMetadata(
@@ -82,13 +73,6 @@ public class BookmarksSettingsProvider
 			BookmarksSettings.MULTI_VALUED_KEYS, _bookmarksConfiguration,
 			new ClassLoaderResourceManager(
 				BookmarksSettings.class.getClassLoader()));
-
-		_bookmarksSettingsProvider = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_bookmarksSettingsProvider = null;
 	}
 
 	@Reference(unbind = "-")
@@ -98,12 +82,10 @@ public class BookmarksSettingsProvider
 		_bookmarksConfiguration = bookmarksConfiguration;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
 	}
-
-	private static BookmarksSettingsProvider _bookmarksSettingsProvider;
 
 	private BookmarksConfiguration _bookmarksConfiguration;
 	private SettingsFactory _settingsFactory;

@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.bookmarks.configuration;
+package com.liferay.bookmarks.configuration.impl;
 
 import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.bookmarks.configuration.BookmarksConfiguration;
 
 import java.util.Map;
 

@@ -1267,22 +1267,24 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		long coverImageFileEntryId = entry.getCoverImageFileEntryId();
 		String coverImageURL = entry.getCoverImageURL();
 
+		long deletePreviousCoverImageFileEntryId = 0;
+
 		if (coverImageImageSelector != null) {
 			coverImageFileEntryId = coverImageImageSelector.getImageId();
 			coverImageURL = coverImageImageSelector.getImageURL();
 
 			if (coverImageImageSelector.getImageId() == 0) {
 				if (entry.getCoverImageFileEntryId() != 0) {
-					PortletFileRepositoryUtil.deletePortletFileEntry(
-						entry.getCoverImageFileEntryId());
+					deletePreviousCoverImageFileEntryId =
+						entry.getCoverImageFileEntryId();
 				}
 			}
 			else if (coverImageImageSelector.getImageId() !=
 						entry.getCoverImageFileEntryId()) {
 
 				if (entry.getCoverImageFileEntryId() != 0) {
-					PortletFileRepositoryUtil.deletePortletFileEntry(
-						entry.getCoverImageFileEntryId());
+					deletePreviousCoverImageFileEntryId =
+						entry.getCoverImageFileEntryId();
 				}
 
 				if (coverImageImageSelector.getImageId() != 0) {
@@ -1299,6 +1301,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		FileEntry tempSmallImageFileEntry = null;
 
+		long deletePreviousSmallImageFileEntryId = 0;
+
 		if (smallImageImageSelector != null) {
 			smallImage = !smallImageImageSelector.isRemoveSmallImage();
 			smallImageFileEntryId = smallImageImageSelector.getImageId();
@@ -1306,16 +1310,16 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			if (smallImageImageSelector.getImageId() == 0) {
 				if (entry.getSmallImageFileEntryId() != 0) {
-					PortletFileRepositoryUtil.deletePortletFileEntry(
-						entry.getSmallImageFileEntryId());
+					deletePreviousSmallImageFileEntryId =
+						entry.getSmallImageFileEntryId();
 				}
 			}
 			else if (smallImageImageSelector.getImageId() !=
 						entry.getSmallImageFileEntryId()) {
 
 				if (entry.getSmallImageFileEntryId() != 0) {
-					PortletFileRepositoryUtil.deletePortletFileEntry(
-						entry.getSmallImageFileEntryId());
+					deletePreviousSmallImageFileEntryId =
+						entry.getSmallImageFileEntryId();
 				}
 
 				tempSmallImageFileEntry =
@@ -1359,6 +1363,16 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		entry = startWorkflowInstance(userId, entry, serviceContext);
+
+		if (deletePreviousCoverImageFileEntryId != 0) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				deletePreviousCoverImageFileEntryId);
+		}
+
+		if (deletePreviousSmallImageFileEntryId != 0) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				deletePreviousSmallImageFileEntryId);
+		}
 
 		if ((coverImageImageSelector != null) &&
 			(coverImageImageSelector.getImageId() != 0)) {

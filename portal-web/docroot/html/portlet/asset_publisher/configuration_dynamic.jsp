@@ -165,10 +165,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								</optgroup>
 							</aui:select>
 
-							<c:if test="<%= PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX %>">
+							<aui:input name='<%= "preferences--classTypeIds" + className + "--" %>' type="hidden" />
 
-								<aui:input name='<%= "preferences--classTypeIds" + className + "--" %>' type="hidden" />
-
+							<c:if test="<%= assetPublisherDisplayContext.isShowSubtypeFieldsFilter() %>">
 								<div class="asset-subtypefields-wrapper-enable hide" id="<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper">
 									<aui:input checked="<%= assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>" label="filter-by-field" name='<%= "preferences--subtypeFieldsFilterEnabled" + className + "--" %>' type="checkbox" value="<%= assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>" />
 								</div>
@@ -182,61 +181,61 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								<div class="asset-subtypefields-wrapper hide" id="<portlet:namespace /><%= className %>subtypeFieldsWrapper">
 
 									<%
-										for (ClassType classType: classTypes) {
-											if (classType.getClassTypeFieldsCount() == 0) {
-												continue;
-											}
+									for (ClassType classType: classTypes) {
+										if (classType.getClassTypeFieldsCount() == 0) {
+											continue;
+										}
 									%>
 
-									<span class="asset-subtypefields hide" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>Options">
-										<liferay-portlet:renderURL portletName="<%= PortletKeys.ASSET_PUBLISHER %>" var="selectStructureFieldURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-											<portlet:param name="mvcPath" value="/html/portlet/asset_publisher/select_structure_field.jsp" />
-											<portlet:param name="portletResource" value="<%= assetPublisherDisplayContext.getPortletResource() %>" />
-											<portlet:param name="className" value="<%= assetRendererFactory.getClassName() %>" />
-											<portlet:param name="classTypeId" value="<%= String.valueOf(classType.getClassTypeId()) %>" />
-											<portlet:param name="eventName" value='<%= renderResponse.getNamespace() + "selectDDMStructureField" %>' />
-										</liferay-portlet:renderURL>
+										<span class="asset-subtypefields hide" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>Options">
+											<liferay-portlet:renderURL portletName="<%= PortletKeys.ASSET_PUBLISHER %>" var="selectStructureFieldURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+												<portlet:param name="mvcPath" value="/html/portlet/asset_publisher/select_structure_field.jsp" />
+												<portlet:param name="portletResource" value="<%= assetPublisherDisplayContext.getPortletResource() %>" />
+												<portlet:param name="className" value="<%= assetRendererFactory.getClassName() %>" />
+												<portlet:param name="classTypeId" value="<%= String.valueOf(classType.getClassTypeId()) %>" />
+												<portlet:param name="eventName" value='<%= renderResponse.getNamespace() + "selectDDMStructureField" %>' />
+											</liferay-portlet:renderURL>
 
-										<span class="asset-subtypefields-popup" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>PopUpButton">
-											<aui:button data-href="<%= selectStructureFieldURL.toString() %>" disabled="<%= !assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>" value="select" />
+											<span class="asset-subtypefields-popup" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>PopUpButton">
+												<aui:button data-href="<%= selectStructureFieldURL.toString() %>" disabled="<%= !assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>" value="select" />
+											</span>
 										</span>
-									</span>
 
 									<%
-										}
+									}
 
-										typesRightList = ListUtil.sort(typesRightList, new KeyValuePairComparator(false, true));
+									typesRightList = ListUtil.sort(typesRightList, new KeyValuePairComparator(false, true));
 									%>
 
 								</div>
-
-								<div class="<%= assetSelectedClassTypeIds.length > 1 ? StringPool.BLANK : "hide" %>" id="<portlet:namespace /><%= className %>Boxes">
-									<liferay-ui:input-move-boxes
-											leftBoxName='<%= className + "currentClassTypeIds" %>'
-											leftList="<%= subtypesLeftList %>"
-											leftReorder="true"
-											leftTitle="selected"
-											rightBoxName='<%= className + "availableClassTypeIds" %>'
-											rightList="<%= subtypesRightList %>"
-											rightTitle="available"
-											/>
-								</div>
-
 							</c:if>
 
+							<div class="<%= assetSelectedClassTypeIds.length > 1 ? StringPool.BLANK : "hide" %>" id="<portlet:namespace /><%= className %>Boxes">
+								<liferay-ui:input-move-boxes
+									leftBoxName='<%= className + "currentClassTypeIds" %>'
+									leftList="<%= subtypesLeftList %>"
+									leftReorder="true"
+									leftTitle="selected"
+									rightBoxName='<%= className + "availableClassTypeIds" %>'
+									rightList="<%= subtypesRightList %>"
+									rightTitle="available"
+								/>
+							</div>
 						</div>
 
 					<%
 					}
 					%>
 
-					<div class="asset-subtypefield-selected <%= Validator.isNull(assetPublisherDisplayContext.getDDMStructureFieldName()) ? "hide" : StringPool.BLANK %>">
-						<aui:input name='<%= "preferences--ddmStructureFieldName--" %>' type="hidden" value="<%= assetPublisherDisplayContext.getDDMStructureFieldName() %>" />
+					<c:if test="<%= assetPublisherDisplayContext.isShowSubtypeFieldsFilter() %>">
+						<div class="asset-subtypefield-selected <%= Validator.isNull(assetPublisherDisplayContext.getDDMStructureFieldName()) ? "hide" : StringPool.BLANK %>">
+							<aui:input name='<%= "preferences--ddmStructureFieldName--" %>' type="hidden" value="<%= assetPublisherDisplayContext.getDDMStructureFieldName() %>" />
 
-						<aui:input name='<%= "preferences--ddmStructureFieldValue--" %>' type="hidden" value="<%= assetPublisherDisplayContext.getDDMStructureFieldValue() %>" />
+							<aui:input name='<%= "preferences--ddmStructureFieldValue--" %>' type="hidden" value="<%= assetPublisherDisplayContext.getDDMStructureFieldValue() %>" />
 
-						<aui:input name='<%= "preferences--ddmStructureDisplayFieldValue--" %>' type="hidden" value="<%= assetPublisherDisplayContext.getDDMStructureDisplayFieldValue() %>" />
-					</div>
+							<aui:input name='<%= "preferences--ddmStructureDisplayFieldValue--" %>' type="hidden" value="<%= assetPublisherDisplayContext.getDDMStructureDisplayFieldValue() %>" />
+						</div>
+					</c:if>
 				</aui:fieldset>
 			</liferay-ui:panel>
 
@@ -641,7 +640,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				structureOptions.removeClass('hide');
 
 				if ((selectedSubtype != 'false') && (selectedSubtype != 'true')) {
-
 					orderByColumn1.find('.order-by-subtype').remove();
 					orderByColumn2.find('.order-by-subtype').remove();
 

@@ -31,7 +31,7 @@ public class EhcachePortalCacheClusterReplicatorFactory
 			properties = new Properties();
 		}
 
-		return new EhcachePortalCacheClusterReplicator(properties);
+		return new EhcachePortalCacheClusterReplicator<>(properties);
 	}
 
 }

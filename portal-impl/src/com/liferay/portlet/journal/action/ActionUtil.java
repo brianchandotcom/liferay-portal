@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -50,6 +49,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.portlet.journal.JournalPortlet;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
@@ -94,8 +94,7 @@ public class ActionUtil {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), actionRequest);
 
-		int pos = deleteArticleId.lastIndexOf(
-			EditArticleAction.VERSION_SEPARATOR);
+		int pos = deleteArticleId.lastIndexOf(JournalPortlet.VERSION_SEPARATOR);
 
 		if (pos == -1) {
 			JournalArticleServiceUtil.deleteArticle(
@@ -105,7 +104,7 @@ public class ActionUtil {
 			articleId = articleId.substring(0, pos);
 			version = GetterUtil.getDouble(
 				deleteArticleId.substring(
-					pos + EditArticleAction.VERSION_SEPARATOR.length()));
+					pos + JournalPortlet.VERSION_SEPARATOR.length()));
 
 			JournalArticleServiceUtil.deleteArticle(
 				groupId, articleId, version, articleURL, serviceContext);
@@ -126,8 +125,7 @@ public class ActionUtil {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), actionRequest);
 
-		int pos = expireArticleId.lastIndexOf(
-			EditArticleAction.VERSION_SEPARATOR);
+		int pos = expireArticleId.lastIndexOf(JournalPortlet.VERSION_SEPARATOR);
 
 		if (pos == -1) {
 			JournalArticleServiceUtil.expireArticle(
@@ -137,7 +135,7 @@ public class ActionUtil {
 			articleId = articleId.substring(0, pos);
 			version = GetterUtil.getDouble(
 				expireArticleId.substring(
-					pos + EditArticleAction.VERSION_SEPARATOR.length()));
+					pos + JournalPortlet.VERSION_SEPARATOR.length()));
 
 			JournalArticleServiceUtil.expireArticle(
 				groupId, articleId, version, articleURL, serviceContext);
@@ -166,8 +164,11 @@ public class ActionUtil {
 		}
 	}
 
-	public static void getArticle(HttpServletRequest request) throws Exception {
-		String cmd = ParamUtil.getString(request, Constants.CMD);
+	public static JournalArticle getArticle(HttpServletRequest request)
+		throws Exception {
+
+		String actionName = ParamUtil.getString(
+			request, ActionRequest.ACTION_NAME);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -185,11 +186,13 @@ public class ActionUtil {
 
 		JournalArticle article = null;
 
-		if (cmd.equals(Constants.ADD) && (resourcePrimKey != 0)) {
+		if (actionName.equals("addArticle") && (resourcePrimKey != 0)) {
 			article = JournalArticleLocalServiceUtil.getLatestArticle(
 				resourcePrimKey, status, false);
 		}
-		else if (!cmd.equals(Constants.ADD) && Validator.isNotNull(articleId)) {
+		else if (!actionName.equals("addArticle") &&
+				 Validator.isNotNull(articleId)) {
+
 			article = JournalArticleServiceUtil.getLatestArticle(
 				groupId, articleId, status);
 		}
@@ -210,7 +213,7 @@ public class ActionUtil {
 					ddmStructureKey, true);
 			}
 			catch (NoSuchStructureException nsse1) {
-				return;
+				return null;
 			}
 
 			article = JournalArticleServiceUtil.getArticle(
@@ -228,24 +231,23 @@ public class ActionUtil {
 			article.setVersion(0);
 		}
 
-		request.setAttribute(WebKeys.JOURNAL_ARTICLE, article);
+		return article;
 	}
 
-	public static void getArticle(PortletRequest portletRequest)
+	public static JournalArticle getArticle(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getArticle(request);
-
-		JournalArticle article = (JournalArticle)portletRequest.getAttribute(
-			WebKeys.JOURNAL_ARTICLE);
+		JournalArticle article = getArticle(request);
 
 		JournalUtil.addRecentArticle(portletRequest, article);
+
+		return article;
 	}
 
-	public static void getArticles(HttpServletRequest request)
+	public static List<JournalArticle> getArticles(HttpServletRequest request)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -267,16 +269,17 @@ public class ActionUtil {
 			}
 		}
 
-		request.setAttribute(WebKeys.JOURNAL_ARTICLES, articles);
+		return articles;
 	}
 
-	public static void getArticles(PortletRequest portletRequest)
+	public static List<JournalArticle> getArticles(
+			PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getArticles(request);
+		return getArticles(request);
 	}
 
 	public static Object[] getContentAndImages(
@@ -382,6 +385,42 @@ public class ActionUtil {
 		return getFolders(request);
 	}
 
+	public static boolean hasArticle(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String articleId = ParamUtil.getString(actionRequest, "articleId");
+
+		if (Validator.isNull(articleId)) {
+			String[] articleIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "articleIds"));
+
+			if (articleIds.length <= 0) {
+				return false;
+			}
+
+			articleId = articleIds[0];
+		}
+
+		int pos = articleId.lastIndexOf(JournalPortlet.VERSION_SEPARATOR);
+
+		if (pos != -1) {
+			articleId = articleId.substring(0, pos);
+		}
+
+		try {
+			JournalArticleLocalServiceUtil.getArticle(
+				themeDisplay.getScopeGroupId(), articleId);
+		}
+		catch (NoSuchArticleException nsae) {
+			return false;
+		}
+
+		return true;
+	}
+
 	protected static String getElementInstanceId(
 			String content, String fieldName, int index)
 		throws Exception {
@@ -451,42 +490,6 @@ public class ActionUtil {
 		}
 
 		return images;
-	}
-
-	protected static boolean hasArticle(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String articleId = ParamUtil.getString(actionRequest, "articleId");
-
-		if (Validator.isNull(articleId)) {
-			String[] articleIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "articleIds"));
-
-			if (articleIds.length <= 0) {
-				return false;
-			}
-
-			articleId = articleIds[0];
-		}
-
-		int pos = articleId.lastIndexOf(EditArticleAction.VERSION_SEPARATOR);
-
-		if (pos != -1) {
-			articleId = articleId.substring(0, pos);
-		}
-
-		try {
-			JournalArticleLocalServiceUtil.getArticle(
-				themeDisplay.getScopeGroupId(), articleId);
-		}
-		catch (NoSuchArticleException nsae) {
-			return false;
-		}
-
-		return true;
 	}
 
 }

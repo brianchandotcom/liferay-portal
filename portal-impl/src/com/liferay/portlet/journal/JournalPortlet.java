@@ -43,6 +43,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
@@ -63,6 +64,7 @@ import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -74,6 +76,7 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -82,7 +85,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
 import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
@@ -92,49 +94,24 @@ public class JournalPortlet extends MVCPortlet {
 
 	public static final String VERSION_SEPARATOR = "_version_";
 
-	public void deleteArticles(ActionRequest actionRequest, boolean moveToTrash)
+	public void addArticle(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String[] deleteArticleIds = null;
-
-		String articleId = ParamUtil.getString(actionRequest, "articleId");
-
-		if (Validator.isNotNull(articleId)) {
-			deleteArticleIds = new String[] {articleId};
-		}
-		else {
-			deleteArticleIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "articleIds"));
-		}
-
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
-		for (String deleteArticleId : deleteArticleIds) {
-			if (moveToTrash) {
-				JournalArticle article =
-					JournalArticleServiceUtil.moveArticleToTrash(
-						themeDisplay.getScopeGroupId(),
-						HtmlUtil.unescape(deleteArticleId));
-
-				trashedModels.add(article);
-			}
-			else {
-				ActionUtil.deleteArticle(
-					actionRequest, HtmlUtil.unescape(deleteArticleId));
-			}
-		}
-
-		if (moveToTrash && !trashedModels.isEmpty()) {
-			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
-
-			hideDefaultSuccessMessage(actionRequest);
-		}
+		updateArticle(actionRequest, actionResponse);
 	}
 
-	public void expireArticles(ActionRequest actionRequest) throws Exception {
+	public void deleteArticles(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		doDeleteArticles(actionRequest, false);
+	}
+
+	public void expireArticles(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		String articleId = ParamUtil.getString(actionRequest, "articleId");
 
 		if (Validator.isNotNull(articleId)) {
@@ -149,6 +126,20 @@ public class JournalPortlet extends MVCPortlet {
 					actionRequest, HtmlUtil.unescape(expireArticleId));
 			}
 		}
+	}
+
+	public void moveArticlesToTrash(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		doDeleteArticles(actionRequest, true);
+	}
+
+	public void previewArticle(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		updateArticle(actionRequest, actionResponse);
 	}
 
 	@Override
@@ -327,40 +318,8 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getArticle(renderRequest);
-		}
-		catch (NoSuchArticleException nsae) {
-
-			// Let this slide because the user can manually input a article id
-			// for a new article that does not yet exist.
-
-		}
-		catch (Exception e) {
-			if (//e instanceof NoSuchArticleException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.journal.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.journal.edit_article"));
-	}
-
-	public void subscribeStructure(ActionRequest actionRequest)
+	public void subscribeStructure(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -374,7 +333,8 @@ public class JournalPortlet extends MVCPortlet {
 			ddmStructureId);
 	}
 
-	public void unsubscribeStructure(ActionRequest actionRequest)
+	public void unsubscribeStructure(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -388,7 +348,8 @@ public class JournalPortlet extends MVCPortlet {
 			ddmStructureId);
 	}
 
-	public Object[] updateArticle(ActionRequest actionRequest)
+	public Object[] updateArticle(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -400,7 +361,8 @@ public class JournalPortlet extends MVCPortlet {
 					MapUtil.toString(uploadPortletRequest.getParameterMap()));
 		}
 
-		String cmd = ParamUtil.getString(uploadPortletRequest, Constants.CMD);
+		String actionName = ParamUtil.getString(
+			actionRequest, ActionRequest.ACTION_NAME);
 
 		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
 		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
@@ -529,7 +491,7 @@ public class JournalPortlet extends MVCPortlet {
 		JournalArticle article = null;
 		String oldUrlTitle = StringPool.BLANK;
 
-		if (cmd.equals(Constants.ADD)) {
+		if (actionName.equals("addArticle")) {
 
 			// Add article
 
@@ -554,7 +516,9 @@ public class JournalPortlet extends MVCPortlet {
 
 			String tempOldUrlTitle = article.getUrlTitle();
 
-			if (cmd.equals(Constants.PREVIEW) || cmd.equals(Constants.UPDATE)) {
+			if (actionName.equals("previewArticle") ||
+				actionName.equals("updateArticle")) {
+
 				article = JournalArticleServiceUtil.updateArticle(
 					groupId, folderId, articleId, version, titleMap,
 					descriptionMap, content, ddmStructureKey, ddmTemplateKey,
@@ -579,8 +543,15 @@ public class JournalPortlet extends MVCPortlet {
 
 		// Journal content
 
-		PortletPreferences portletPreferences = getStrictPortletSetup(
-			actionRequest);
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getStrictPortletSetup(
+				themeDisplay.getLayout(), portletResource);
 
 		if (portletPreferences != null) {
 			portletPreferences.setValue(
@@ -589,14 +560,69 @@ public class JournalPortlet extends MVCPortlet {
 
 			portletPreferences.store();
 
-			String portletResource = ParamUtil.getString(
-				actionRequest, "portletResource");
-
 			updateContentSearch(
 				actionRequest, portletResource, article.getArticleId());
 		}
 
 		return new Object[] {article, oldUrlTitle};
+	}
+
+	protected void doDeleteArticles(
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String[] deleteArticleIds = null;
+
+		String articleId = ParamUtil.getString(actionRequest, "articleId");
+
+		if (Validator.isNotNull(articleId)) {
+			deleteArticleIds = new String[] {articleId};
+		}
+		else {
+			deleteArticleIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "articleIds"));
+		}
+
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		for (String deleteArticleId : deleteArticleIds) {
+			if (moveToTrash) {
+				JournalArticle article =
+					JournalArticleServiceUtil.moveArticleToTrash(
+						themeDisplay.getScopeGroupId(),
+						HtmlUtil.unescape(deleteArticleId));
+
+				trashedModels.add(article);
+			}
+			else {
+				ActionUtil.deleteArticle(
+					actionRequest, HtmlUtil.unescape(deleteArticleId));
+			}
+		}
+
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
+
+			hideDefaultSuccessMessage(actionRequest);
+		}
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, PrincipalException.class.getName())) {
+
+			include("/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
 	}
 
 	protected String getSaveAndContinueRedirect(
@@ -631,6 +657,15 @@ public class JournalPortlet extends MVCPortlet {
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof PrincipalException) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void updateContentSearch(

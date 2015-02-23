@@ -11,7 +11,11 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources
+	META-INF/resources=src/META-INF/resources,\
+	META-INF/resources/friends/css=src/META-INF/resources/friends/css/.sass-cache,\
+	META-INF/resources/meetups/css=src/META-INF/resources/meetups/css/.sass-cache,\
+	META-INF/resources/members/css=src/META-INF/resources/members/css/.sass-cache,\
+	META-INF/resources/summary/css=src/META-INF/resources/summary/css/.sass-cache	
 Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\

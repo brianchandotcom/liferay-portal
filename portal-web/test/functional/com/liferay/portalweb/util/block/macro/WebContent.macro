@@ -591,7 +591,7 @@
 		<var name="key_structureName" value="${structureName}" />
 
 		<execute function="AssertClickNoError" locator1="PGWebcontentdisplayAddwebcontentStructures#STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
-		<execute function="Confirm" locator1="PGWebcontentdisplayAddwebcontentStructures#CONFIRMATION" value1="Selecting a new structure will change the available input fields and available templates? Do you want to proceed?" />
+		<execute function="Confirm" locator1="PGWebcontentdisplayAddwebcontentStructures#CONFIRMATION" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="PGWebcontentdisplayAddwebcontent#WEB_CONTENT_IFRAME" />

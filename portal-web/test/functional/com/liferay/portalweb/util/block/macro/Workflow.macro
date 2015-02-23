@@ -769,7 +769,7 @@
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
-		<execute function="AssertClick"  locator1="NAVIGATION_COMPLETED" value1="Completed" />
+		<execute function="AssertClick"  locator1="CPMysubmissionsCompleted#NAVIGATION_COMPLETED" value1="Completed" />
 
 		<execute function="AssertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_DEFINITION" value1="${workflowDefinition}" />
 		<execute function="AssertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
@@ -789,7 +789,7 @@
 		<var name="key_workflowAssetContent" value="${workflowAssetContent}" />
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
-		<execute function="AssertClick"  locator1="NAVIGATION_COMPLETED" value1="Completed" />
+		<execute function="AssertClick"  locator1="CPMysubmissionsCompleted#NAVIGATION_COMPLETED" value1="Completed" />
 
 		<execute function="AssertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_DEFINITION" value1="${workflowDefinition}" />
 		<execute function="AssertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />

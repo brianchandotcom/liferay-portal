@@ -14,6 +14,11 @@
 
 package com.liferay.portal.kernel.settings;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
  * @author Raymond Augé
  * @author Jorge Ferrer
@@ -28,5 +33,18 @@ public interface Settings {
 	public String getValue(String key, String defaultValue);
 
 	public String[] getValues(String key, String[] defaultValue);
+
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.TYPE)
+	public @interface Config {
+		String[] ids();
+	}
+
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.METHOD)
+	public @interface Property {
+		String name() default "";
+		boolean ignore() default false;
+	}
 
 }

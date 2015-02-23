@@ -63,6 +63,16 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 
 	@Override
 	public void close() {
+		for (Map.Entry<FriendlyURLMapper, ServiceRegistration<?>>
+			friendlyURLMapperServiceRegistrationEntry :
+				_serviceRegistrations.entrySet()) {
+
+			ServiceRegistration<?> serviceRegistration =
+				friendlyURLMapperServiceRegistrationEntry.getValue();
+
+			serviceRegistration.unregister();
+		}
+
 		_serviceTracker.close();
 	}
 

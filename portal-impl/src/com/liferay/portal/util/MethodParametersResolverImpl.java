@@ -14,14 +14,15 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.MethodParametersResolver;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 import jodd.paramo.Paramo;
 
@@ -57,7 +58,9 @@ public class MethodParametersResolverImpl implements MethodParametersResolver {
 		return methodParameters;
 	}
 
-	private final Map<AccessibleObject, MethodParameter[]> _methodParameters =
-		new HashMap<>();
+	private static final ConcurrentMap
+		<AccessibleObject, MethodParameter[]> _methodParameters =
+			new ConcurrentReferenceKeyHashMap<>(
+				FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 }

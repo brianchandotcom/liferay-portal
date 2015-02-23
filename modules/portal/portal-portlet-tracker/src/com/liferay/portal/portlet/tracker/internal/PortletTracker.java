@@ -185,6 +185,11 @@ public class PortletTracker
 			return;
 		}
 
+		BundlePortletApp bundlePortletApp =
+			serviceRegistrations.getBundlePortletApp();
+
+		bundlePortletApp.removePortlet(portletModel);
+
 		serviceRegistrations.removeServiceReference(serviceReference);
 
 		BundleContext bundleContext = _componentContext.getBundleContext();
@@ -305,10 +310,11 @@ public class PortletTracker
 		com.liferay.portal.model.Portlet portletModel =
 			_portletLocalService.createPortlet(0);
 
+		portletModel.setPortletId(portletId);
+
 		portletModel.setCompanyId(CompanyConstants.SYSTEM);
 		portletModel.setPluginPackage(bundlePortletApp.getPluginPackage());
 		portletModel.setPortletApp(bundlePortletApp);
-		portletModel.setPortletId(portletId);
 		portletModel.setRoleMappers(bundlePortletApp.getRoleMappers());
 		portletModel.setStrutsPath(portletId);
 

@@ -357,7 +357,7 @@ public abstract class DLAppTestUtil {
 
 	public static FileEntry addFileEntryWithWorkflow(
 			long userId, long groupId, long folderId, String sourceFileName,
-			boolean approved, ServiceContext serviceContext)
+			String title, boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
@@ -372,8 +372,8 @@ public abstract class DLAppTestUtil {
 
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 				TestPropsValues.getUserId(), groupId, folderId, sourceFileName,
-				ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
-				serviceContext);
+				ContentTypes.TEXT_PLAIN, title, StringPool.BLANK,
+				StringPool.BLANK, RandomTestUtil.randomBytes(), serviceContext);
 
 			if (approved) {
 				return updateStatus(fileEntry, serviceContext);

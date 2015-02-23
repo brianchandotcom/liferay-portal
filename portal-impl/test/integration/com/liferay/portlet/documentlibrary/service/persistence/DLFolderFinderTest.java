@@ -20,8 +20,10 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -30,6 +32,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -82,20 +85,22 @@ public class DLFolderFinderTest {
 
 		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), _folder.getFolderId(), "FE1.txt", "FE1.txt");
+		FileEntry fileEntry = addFileEntry(
+			_group.getGroupId(), _folder.getFolderId(), "FE1.txt",
+			ContentTypes.TEXT_PLAIN);
 
 		_dlFileShortcut = DLAppLocalServiceUtil.addFileShortcut(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			fileEntry.getFolderId(), fileEntry.getFileEntryId(),
 			serviceContext);
 
-		DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), _folder.getFolderId(), "FE2.pdf",
-			ContentTypes.APPLICATION_PDF, "FE2.pdf");
+		addFileEntry(
+			_group.getGroupId(), _folder.getFolderId(),"FE2.pdf",
+			ContentTypes.APPLICATION_PDF);
 
-		fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), _folder.getFolderId(), "FE3.txt", "FE3.txt");
+		fileEntry = addFileEntry(
+			_group.getGroupId(), _folder.getFolderId(), "FE3.txt",
+			ContentTypes.TEXT_PLAIN);
 
 		DLAppServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
 	}
@@ -305,6 +310,23 @@ public class DLFolderFinderTest {
 				Assert.fail(String.valueOf(result.getClass()));
 			}
 		}
+	}
+
+	protected FileEntry addFileEntry(
+			long groupId, long folderId, String sourceFileName, String mimeType)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId());
+
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, Constants.ADD,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+
+		return DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), groupId, folderId, sourceFileName,
+			mimeType, RandomTestUtil.randomBytes(), serviceContext);
 	}
 
 	private DLFileShortcut _dlFileShortcut;

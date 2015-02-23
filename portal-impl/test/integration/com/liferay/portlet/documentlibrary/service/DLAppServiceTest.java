@@ -37,7 +37,9 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -63,6 +65,7 @@ import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
@@ -104,17 +107,11 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		public void assetTagsShouldBeOrdered() throws Exception {
 			String fileName = RandomTestUtil.randomString();
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
 			String[] assetTagNames = new String[] {"hello", "world"};
 
-			serviceContext.setAssetTagNames(assetTagNames);
-
-			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			FileEntry fileEntry = addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), fileName,
-				ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
-				StringPool.BLANK, CONTENT.getBytes(), serviceContext);
+				fileName, assetTagNames);
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 				DLFileEntryConstants.getClassName(),
@@ -146,10 +143,10 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
-				_STRIPPED_FILE_NAME);
+				_STRIPPED_FILE_NAME, null);
 			addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
-				_FILE_NAME);
+				_FILE_NAME, null);
 		}
 
 		@Test(expected = DuplicateFileException.class)
@@ -158,10 +155,10 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
-				_FILE_NAME);
+				_FILE_NAME, null);
 			addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
-				_STRIPPED_FILE_NAME);
+				_STRIPPED_FILE_NAME, null);
 		}
 
 		@Test(expected = DuplicateFileException.class)
@@ -170,10 +167,10 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
-				_STRIPPED_FILE_NAME);
+				_STRIPPED_FILE_NAME, null);
 			addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(),
-				_STRIPPED_FILE_NAME, _FILE_NAME);
+				_STRIPPED_FILE_NAME, _FILE_NAME, null);
 		}
 
 		@Test(expected = DuplicateFileException.class)
@@ -239,13 +236,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			String sourceFileName =
 				RandomTestUtil.randomString() + blackListedChar;
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-			DLAppServiceUtil.addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(), sourceFileName,
-				ContentTypes.TEXT_PLAIN, sourceFileName, StringPool.BLANK,
-				StringPool.BLANK, RandomTestUtil.randomBytes(), serviceContext);
+			addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), sourceFileName);
 		}
 
 		@Test(expected = FileExtensionException.class)
@@ -258,15 +250,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 				String sourceFileName = "file.jpg";
 
-				ServiceContext serviceContext =
-					ServiceContextTestUtil.getServiceContext(
-						group.getGroupId());
-
-				DLAppServiceUtil.addFileEntry(
+				addFileEntry(
 					group.getGroupId(), parentFolder.getFolderId(),
-					sourceFileName, ContentTypes.TEXT_PLAIN, sourceFileName,
-					StringPool.BLANK, StringPool.BLANK,
-					RandomTestUtil.randomBytes(), serviceContext);
+					sourceFileName);
 			}
 		}
 
@@ -278,13 +264,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			String blackListedName = PropsValues.DL_NAME_BLACKLIST[i];
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-			DLAppServiceUtil.addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(), blackListedName,
-				ContentTypes.TEXT_PLAIN, blackListedName, StringPool.BLANK,
-				StringPool.BLANK, RandomTestUtil.randomBytes(), serviceContext);
+			addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				blackListedName);
 		}
 
 		@Test
@@ -314,7 +296,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			String fileName = RandomTestUtil.randomString();
 
 			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId());
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), fileName,
@@ -1048,17 +1031,11 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		public void shouldFindFileEntryByAssetTagName() throws Exception {
 			String fileName = RandomTestUtil.randomString();
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
 			String[] assetTagNames = new String[] {"hello", "world"};
 
-			serviceContext.setAssetTagNames(assetTagNames);
-
-			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			FileEntry fileEntry = addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), fileName,
-				ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
-				StringPool.BLANK, CONTENT.getBytes(), serviceContext);
+				fileName, assetTagNames);
 
 			search(fileEntry, false, "hello", true);
 			search(fileEntry, false, "world", true);
@@ -1070,7 +1047,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		public void shouldFindFileEntryByAssetTagNameAfterUpdate()
 			throws Exception {
 
-			long folderId = parentFolder.getFolderId();
 			String fileName = RandomTestUtil.randomString();
 			String description = StringPool.BLANK;
 			String changeLog = StringPool.BLANK;
@@ -1083,9 +1059,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			serviceContext.setAssetTagNames(assetTagNames);
 
-			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-				group.getGroupId(), folderId, fileName, ContentTypes.TEXT_PLAIN,
-				fileName, description, changeLog, bytes, serviceContext);
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), fileName,
+				fileName, assetTagNames);
 
 			assetTagNames = new String[] {"hello", "world", "liferay"};
 
@@ -1393,15 +1369,30 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			long groupId, long folderId, String fileName)
 		throws Exception {
 
-		return addFileEntry(groupId, folderId, fileName, fileName);
+		return addFileEntry(groupId, folderId, fileName, fileName, null);
 	}
 
 	protected static FileEntry addFileEntry(
-			long groupId, long folderId, String fileName, String title)
+			long groupId, long folderId, String fileName, String title,
+			String[] assetTagNames)
 		throws Exception {
 
-		return DLAppTestUtil.addFileEntry(groupId, folderId, fileName, title);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId());
+
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, Constants.ADD,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+
+		serviceContext.setAssetTagNames(assetTagNames);
+
+		return DLAppServiceUtil.addFileEntry(
+			groupId, folderId, fileName, ContentTypes.TEXT_PLAIN, title,
+			StringPool.BLANK, StringPool.BLANK, CONTENT.getBytes(),
+			serviceContext);
 	}
+
 
 	protected static AtomicInteger registerDLSyncEventProcessorMessageListener(
 		final String targetEvent) {

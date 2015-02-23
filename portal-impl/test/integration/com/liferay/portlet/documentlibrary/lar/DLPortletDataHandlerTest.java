@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LongWrapper;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -40,6 +42,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -155,9 +158,19 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
 
-		DLAppTestUtil.addFileEntry(
-			stagingGroup.getGroupId(), repository.getRepositoryId(),
-			folder.getFolderId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId());
+
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, Constants.ADD,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+
+		DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), repository.getRepositoryId(),
+			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString().getBytes(),
+			serviceContext);
 	}
 
 	@Override
@@ -182,10 +195,15 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				new long[] {ddmStructure.getStructureId()}, serviceContext);
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			stagingGroup.getGroupId(), folder.getFolderId(),
-			RandomTestUtil.randomString(),
-			dlFileEntryType.getFileEntryTypeId());
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, Constants.ADD, dlFileEntryType.getFileEntryTypeId(),
+			true);
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString().getBytes(),
+			serviceContext);
 
 		DLAppLocalServiceUtil.addFileShortcut(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),

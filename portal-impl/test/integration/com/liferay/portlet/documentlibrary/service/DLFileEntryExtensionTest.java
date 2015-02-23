@@ -16,10 +16,18 @@ package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileNameException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
@@ -192,55 +200,58 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testAddFileEntryBasic01() throws Exception {
-		addFileEntryBasic(_FILE_NAME, "Test.pdf", "txt", "Test.pdf.txt");
+		doTestAddFileEntryBasic(_FILE_NAME, "Test.pdf", "txt", "Test.pdf.txt");
 	}
 
 	@Test
 	public void testAddFileEntryBasic02() throws Exception {
-		addFileEntryBasic(_FILE_NAME, _FILE_NAME, "txt", _FILE_NAME);
+		doTestAddFileEntryBasic(_FILE_NAME, _FILE_NAME, "txt", _FILE_NAME);
 	}
 
 	@Test
 	public void testAddFileEntryBasic03() throws Exception {
-		addFileEntryBasic(_FILE_NAME, _STRIPPED_FILE_NAME, "txt", _FILE_NAME);
+		doTestAddFileEntryBasic(
+			_FILE_NAME, _STRIPPED_FILE_NAME, "txt", _FILE_NAME);
 	}
 
 	@Test
 	public void testAddFileEntryBasic04() throws Exception {
-		addFileEntryBasic(_FILE_NAME, "", "txt", _FILE_NAME);
+		doTestAddFileEntryBasic(_FILE_NAME, "", "txt", _FILE_NAME);
 	}
 
 	@Test
 	public void testAddFileEntryBasic05() throws Exception {
-		addFileEntryBasic(_STRIPPED_FILE_NAME, _FILE_NAME, "txt", _FILE_NAME);
+		doTestAddFileEntryBasic(
+			_STRIPPED_FILE_NAME, _FILE_NAME, "txt", _FILE_NAME);
 	}
 
 	@Test
 	public void testAddFileEntryBasic06() throws Exception {
-		addFileEntryBasic(
+		doTestAddFileEntryBasic(
 			_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME, "", _STRIPPED_FILE_NAME);
 	}
 
 	@Test
 	public void testAddFileEntryBasic07() throws Exception {
-		addFileEntryBasic(_STRIPPED_FILE_NAME, "", "", _STRIPPED_FILE_NAME);
+		doTestAddFileEntryBasic(
+			_STRIPPED_FILE_NAME, "", "", _STRIPPED_FILE_NAME);
 	}
 
 	@Test
 	public void testAddFileEntryBasic08() throws Exception {
-		addFileEntryBasic("", _FILE_NAME, "txt", _FILE_NAME);
+		doTestAddFileEntryBasic("", _FILE_NAME, "txt", _FILE_NAME);
 	}
 
 	@Test
 	public void testAddFileEntryBasic09() throws Exception {
-		addFileEntryBasic("", _STRIPPED_FILE_NAME, "", _STRIPPED_FILE_NAME);
+		doTestAddFileEntryBasic(
+			"", _STRIPPED_FILE_NAME, "", _STRIPPED_FILE_NAME);
 	}
 
 	@Test
 	public void testAddFileEntryBasic10() throws Exception {
 		try {
-			DLAppTestUtil.addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(), "", "");
+			addFileEntry("", "");
 
 			Assert.fail(
 				"Created document with blank source file name and blank title");
@@ -254,13 +265,10 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 		// "Test.txt" / "Test.txt" followed by "Test" / "Test"
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
-			_FILE_NAME);
+		FileEntry fileEntry = addFileEntry(_FILE_NAME, _FILE_NAME);
 
 		try {
-			FileEntry tempFileEntry = DLAppTestUtil.addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(),
+			FileEntry tempFileEntry = addFileEntry(
 				_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME);
 
 			DLAppLocalServiceUtil.deleteFileEntry(
@@ -274,14 +282,10 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 		// "Test" / "Test" followed by "Test.txt" / "Test.txt"
 
-		fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), _STRIPPED_FILE_NAME,
-			_STRIPPED_FILE_NAME);
+		fileEntry = addFileEntry(_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME);
 
 		try {
-			FileEntry tempFileEntry = DLAppTestUtil.addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
-				_FILE_NAME);
+			FileEntry tempFileEntry = addFileEntry(_FILE_NAME, _FILE_NAME);
 
 			DLAppLocalServiceUtil.deleteFileEntry(
 				tempFileEntry.getFileEntryId());
@@ -295,24 +299,19 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testAddFileEntryWithExtension() throws Exception {
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
-			_FILE_NAME);
+		FileEntry fileEntry = addFileEntry(_FILE_NAME, _FILE_NAME);
 
 		// "Test.txt" / "Test"
 
 		try {
-			DLAppTestUtil.addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
-				_STRIPPED_FILE_NAME);
+			addFileEntry(_FILE_NAME, _STRIPPED_FILE_NAME);
 
 			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe) {
 		}
 
-		FileEntry tempFileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), "Temp.txt", "Temp");
+		FileEntry tempFileEntry = addFileEntry("Temp.txt", "Temp");
 
 		try {
 			DLAppTestUtil.updateFileEntry(
@@ -331,16 +330,14 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		// "Test.txt" / ""
 
 		try {
-			DLAppTestUtil.addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME, "");
+			addFileEntry(_FILE_NAME, "");
 
 			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe) {
 		}
 
-		tempFileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), "Temp.txt", "");
+		tempFileEntry = addFileEntry("Temp.txt", "");
 
 		try {
 			DLAppTestUtil.updateFileEntry(
@@ -359,17 +356,14 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		// "Test" / "Test.txt"
 
 		try {
-			DLAppTestUtil.addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(),
-				_STRIPPED_FILE_NAME, _FILE_NAME);
+			addFileEntry(_STRIPPED_FILE_NAME, _FILE_NAME);
 
 			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe) {
 		}
 
-		tempFileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), "Temp", "Temp.txt");
+		tempFileEntry = addFileEntry( "Temp", "Temp.txt");
 
 		try {
 			DLAppTestUtil.updateFileEntry(
@@ -388,16 +382,14 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		// "" / "Test.txt"
 
 		try {
-			DLAppTestUtil.addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(), "", _FILE_NAME);
+			addFileEntry("", _FILE_NAME);
 
 			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe) {
 		}
 
-		tempFileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), "", "Temp.txt");
+		tempFileEntry = addFileEntry("", "Temp.txt");
 
 		try {
 			DLAppTestUtil.updateFileEntry(
@@ -418,24 +410,20 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testAddFileEntryWithoutExtension() throws Exception {
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), _STRIPPED_FILE_NAME,
-			_STRIPPED_FILE_NAME);
+		FileEntry fileEntry = addFileEntry(
+			_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME);
 
 		// "Test" / ""
 
 		try {
-			DLAppTestUtil.addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(),
-				_STRIPPED_FILE_NAME, "");
+			addFileEntry(_STRIPPED_FILE_NAME, "");
 
 			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe) {
 		}
 
-		FileEntry tempFileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), "Temp", "");
+		FileEntry tempFileEntry = addFileEntry("Temp", "");
 
 		try {
 			DLAppTestUtil.updateFileEntry(
@@ -454,17 +442,14 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		// "" / "Test"
 
 		try {
-			DLAppTestUtil.addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(), "",
-				_STRIPPED_FILE_NAME);
+			addFileEntry("",_STRIPPED_FILE_NAME);
 
 			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileException dfe) {
 		}
 
-		tempFileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), "", "Temp");
+		tempFileEntry = addFileEntry("", "Temp");
 
 		try {
 			DLAppTestUtil.updateFileEntry(
@@ -483,14 +468,31 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
 	}
 
-	protected void addFileEntryBasic(
+	protected FileEntry addFileEntry(String sourceFileName, String title)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, Constants.ADD,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+
+		return DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			parentFolder.getFolderId(), sourceFileName, ContentTypes.TEXT_PLAIN,
+			title, StringPool.BLANK, StringPool.BLANK,
+			RandomTestUtil.randomString().getBytes(),
+			serviceContext);
+	}
+
+	protected void doTestAddFileEntryBasic(
 			String sourceFileName, String title, String extension,
 			String titleWithExtension)
 		throws Exception {
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), sourceFileName,
-			title);
+		FileEntry fileEntry = addFileEntry(sourceFileName, title);
 
 		Assert.assertEquals(
 			"Invalid file extension", extension, fileEntry.getExtension());

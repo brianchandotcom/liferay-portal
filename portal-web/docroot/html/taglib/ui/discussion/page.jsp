@@ -79,25 +79,16 @@ int messagesCount = messages.size();
 						String taglibPostReplyURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "postReplyForm0', '" + namespace + randomNamespace + "postReplyBody0');";
 						%>
 
-						<c:choose>
-							<c:when test="<%= TrashUtil.isInTrash(className, classPK) %>">
-								<div class="alert alert-warning">
-									<liferay-ui:message key="commenting-is-disabled-because-this-entry-is-in-the-recycle-bin" />
-								</div>
-							</c:when>
-							<c:otherwise>
-								<c:if test="<%= messagesCount == 1 %>">
-									<c:choose>
-										<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-											<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
-										</c:when>
-										<c:otherwise>
-											<liferay-ui:message key="no-comments-yet" /> <a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
-										</c:otherwise>
-									</c:choose>
-								</c:if>
-							</c:otherwise>
-						</c:choose>
+						<c:if test="<%= messagesCount == 1 %>">
+							<c:choose>
+								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+									<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:message key="no-comments-yet" /> <a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
 
 						<%
 						boolean subscribed = SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), className, classPK);
@@ -105,7 +96,7 @@ int messagesCount = messages.size();
 						String subscriptionURL = "javascript:" + randomNamespace + "subscribeToComments(" + !subscribed + ");";
 						%>
 
-						<c:if test="<%= themeDisplay.isSignedIn() && !TrashUtil.isInTrash(className, classPK) %>">
+						<c:if test="<%= themeDisplay.isSignedIn() %>">
 							<c:choose>
 								<c:when test="<%= subscribed %>">
 									<liferay-ui:icon

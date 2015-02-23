@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.productivitycenter.layout;
+package com.liferay.productivity.center.layout;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -24,7 +24,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.productivitycenter.util.BundlerServletUtil;
+import com.liferay.productivity.center.util.BundlerServletUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.Collection;

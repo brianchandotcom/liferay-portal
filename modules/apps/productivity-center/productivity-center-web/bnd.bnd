@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Productivity Center Web
-Bundle-SymbolicName: com.liferay.productivitycenter.web
+Bundle-SymbolicName: com.liferay.productivity.center.web
 Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.portal.kernel.configuration,\

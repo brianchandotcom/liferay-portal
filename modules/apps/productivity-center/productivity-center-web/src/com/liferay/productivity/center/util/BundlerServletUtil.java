@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.productivitycenter.util;
+package com.liferay.productivity.center.util;
 
 import com.liferay.portal.kernel.util.HashMapDictionary;
 

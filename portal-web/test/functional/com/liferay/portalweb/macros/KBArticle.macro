@@ -65,6 +65,21 @@
 		</if>
 
 		<if>
+			<isset var="kbArticleAttachment" />
+			<then>
+				<if>
+					<condition function="IsElementNotPresent" locator1="CPKnowledgebaseadminAddarticle#ATTACHMENTS_HEADER_EXPANDED" />
+					<then>
+						<execute function="Click" locator1="CPKnowledgebaseadminAddarticle#ATTACHMENTS_HEADER_COLLAPSED" />
+					</then>
+				</if>
+
+				<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#ATTACHMENTS_SELECT_FILES_BUTTON" value1="Select Files" />
+				<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${kbArticleAttachment}" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="kbArticleSourceURL" />
 			<then>
 				<execute function="Type" locator1="CPKnowledgebaseadminAddarticle#SOURCE_URL_FIELD" value1="${kbArticleSourceURL}" />
@@ -353,12 +368,28 @@
 	<command name="editCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" value1="Actions" />
 		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_EDIT" value1="Edit" />
 
-		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#INFO_MESSAGE" value1="A new version will be created automatically if this content is modified." />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#INFO_MESSAGE" value1="A new version is created automatically if this content is modified." />
 		<execute function="Type" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
 		<execute function="Type#typeFrameWaitForCKEditor" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
+
+		<if>
+			<isset var="kbArticleAttachment" />
+			<then>
+				<if>
+					<condition function="IsElementNotPresent" locator1="CPKnowledgebaseadminAddarticle#ATTACHMENTS_HEADER_EXPANDED" />
+					<then>
+						<execute function="Click" locator1="CPKnowledgebaseadminAddarticle#ATTACHMENTS_HEADER_COLLAPSED" />
+					</then>
+				</if>
+
+				<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#ATTACHMENTS_SELECT_FILES_BUTTON" value1="Select Files" />
+				<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${kbArticleAttachment}" />
+			</then>
+		</if>
+
 		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -943,6 +974,29 @@
 
 		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals#assertValue" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_PRIORITY" value1="${kbPriority}" />
+	</command>
+
+	<command name="viewKBArticleWithAttachmentCP">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_EDIT" value1="Edit" />
+
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#INFO_MESSAGE" value1="A new version is created automatically if this content is modified." />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD" value1="${kbArticleTitle}" />
+
+		<execute function="SelectFrame" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#CONTENT_BODY" value1="${kbArticleContent}" />
+		<execute function="SelectFrame"  value1="relative=top" />
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="CPKnowledgebaseadminAddarticle#ATTACHMENTS_HEADER_EXPANDED" />
+			<then>
+				<execute function="Click" locator1="CPKnowledgebaseadminAddarticle#ATTACHMENTS_HEADER_COLLAPSED" />
+			</then>
+		</if>
+
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" value1="${kbArticleAttachment}" />
 	</command>
 
 	<command name="viewKBDisplayPG">

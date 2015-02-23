@@ -63,7 +63,6 @@ public class ReadWriteLockRegistry {
 	}
 
 	private final ConcurrentMap<ReadWriteLockKey<?>, ReadWriteLock>
-		_readWriteLockMap = new ConcurrentHashMap
-			<ReadWriteLockKey<?>, ReadWriteLock>();
+		_readWriteLockMap = new ConcurrentHashMap<>();
 
 }

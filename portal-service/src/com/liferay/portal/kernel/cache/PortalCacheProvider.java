@@ -54,8 +54,6 @@ public class PortalCacheProvider {
 
 	private static final
 		Map<String, PortalCacheManager<? extends Serializable, ?>>
-			_portalCacheManagers =
-				new ConcurrentHashMap
-					<String, PortalCacheManager<? extends Serializable, ?>>();
+			_portalCacheManagers = new ConcurrentHashMap<>();
 
 }

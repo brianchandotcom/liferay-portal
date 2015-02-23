@@ -134,8 +134,7 @@ public class BatchablePipeTest {
 			new BatchablePipe<>();
 
 		final BlockingQueue<IncreasableEntry<String, Integer>>
-			resultBlockingQueue = new LinkedBlockingQueue
-				<IncreasableEntry<String, Integer>>();
+			resultBlockingQueue = new LinkedBlockingQueue<>();
 
 		ExecutorService putThreadPool = Executors.newFixedThreadPool(5);
 		ExecutorService takeThreadPool = Executors.newFixedThreadPool(5);

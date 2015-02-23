@@ -111,7 +111,7 @@ public class ProxyUtil {
 		WeakReference<Constructor<?>> constructorWeakReference =
 			_constructors.get(clazz);
 
-		if (constructorWeakReference == null ||
+		if ((constructorWeakReference == null) ||
 			((constructor = constructorWeakReference.get()) == null)) {
 
 				try {

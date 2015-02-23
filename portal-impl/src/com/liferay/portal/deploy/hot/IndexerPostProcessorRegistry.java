@@ -25,6 +25,9 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.util.StringPlus;
+
+import java.util.List;
 
 /**
  * @author Raymond Augé
@@ -68,18 +71,22 @@ public class IndexerPostProcessorRegistry {
 			IndexerPostProcessor indexerPostProcessor = registry.getService(
 				serviceReference);
 
-			String indexerClassName = (String)serviceReference.getProperty(
-				"indexer.class.name");
+			List<String> indexerClassNames = StringPlus.asList(
+				serviceReference.getProperty("indexer.class.name"));
 
-			Indexer indexer = IndexerRegistryUtil.getIndexer(indexerClassName);
+			for (String indexerClassName : indexerClassNames) {
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					indexerClassName);
 
-			if (indexer == null) {
-				_log.error("No indexer for " + indexerClassName + " was found");
+				if (indexer == null) {
+					_log.error(
+						"No indexer for " + indexerClassName + " was found");
 
-				return null;
+					continue;
+				}
+
+				indexer.registerIndexerPostProcessor(indexerPostProcessor);
 			}
-
-			indexer.registerIndexerPostProcessor(indexerPostProcessor);
 
 			return indexerPostProcessor;
 		}
@@ -99,12 +106,22 @@ public class IndexerPostProcessorRegistry {
 
 			registry.ungetService(serviceReference);
 
-			String indexerClassName = (String)serviceReference.getProperty(
-				"indexer.class.name");
+			List<String> indexerClassNames = StringPlus.asList(
+				serviceReference.getProperty("indexer.class.name"));
 
-			Indexer indexer = IndexerRegistryUtil.getIndexer(indexerClassName);
+			for (String indexerClassName : indexerClassNames ) {
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					indexerClassName);
 
-			indexer.unregisterIndexerPostProcessor(indexerPostProcessor);
+				if (indexer == null) {
+					_log.error(
+						"No indexer for " + indexerClassName + " was found");
+
+					continue;
+				}
+
+				indexer.unregisterIndexerPostProcessor(indexerPostProcessor);
+			}
 		}
 
 	}

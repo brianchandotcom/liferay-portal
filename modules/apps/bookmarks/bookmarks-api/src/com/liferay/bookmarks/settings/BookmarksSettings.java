@@ -32,12 +32,6 @@ public class BookmarksSettings {
 		FallbackKeys fallbackKeys = new FallbackKeys();
 
 		fallbackKeys.add(
-			"emailFromAddress", "email.from.address",
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS );
-		fallbackKeys.add(
-			"emailFromName", "email.from.name",
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		fallbackKeys.add(
 			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 		fallbackKeys.add(
 			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);

@@ -12,23 +12,17 @@
  * details.
  */
 
-package com.liferay.wiki.web.settings;
+package com.liferay.wiki.settings;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
-import com.liferay.portal.kernel.settings.ParameterMapSettings;
+import com.liferay.portal.kernel.settings.PortletInstanceSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.io.IOException;
-
-import java.util.Map;
 
 import javax.portlet.ValidatorException;
 
@@ -41,28 +35,7 @@ import javax.portlet.ValidatorException;
 		WikiPortletKeys.WIKI_DISPLAY
 	}
 )
-public class WikiPortletInstanceSettings {
-
-	public static WikiPortletInstanceSettings getInstance(
-			Layout layout, String portletId)
-		throws PortalException {
-
-		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
-			layout, portletId);
-
-		return new WikiPortletInstanceSettings(settings);
-	}
-
-	public static WikiPortletInstanceSettings getInstance(
-			Layout layout, String portletId, Map<String, String[]> parameterMap)
-		throws PortalException {
-
-		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
-			layout, portletId);
-
-		return new WikiPortletInstanceSettings(
-			new ParameterMapSettings(parameterMap, settings));
-	}
+public class WikiPortletInstanceSettings implements PortletInstanceSettings {
 
 	public WikiPortletInstanceSettings(Settings settings) {
 		_typedSettings = new TypedSettings(settings);
@@ -141,29 +114,6 @@ public class WikiPortletInstanceSettings {
 			settings.getModifiableSettings();
 
 		modifiableSettings.store();
-	}
-
-	private static FallbackKeys _getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
-
-		fallbackKeys.add("displayStyle", "display.style");
-		fallbackKeys.add("enableComments", "page.comments.enabled");
-		fallbackKeys.add("enableCommentRatings", "comment.ratings.enabled");
-		fallbackKeys.add("enablePageRatings", "page.ratings.enabled");
-		fallbackKeys.add("enableRelatedAssets", "related.assets.enabled");
-		fallbackKeys.add("enableRss", "rss.enabled");
-		fallbackKeys.add(
-			"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		fallbackKeys.add(
-			"rssDisplayStyle", PropsKeys.RSS_FEED_DISPLAY_STYLE_DEFAULT);
-		fallbackKeys.add("rssFeedType", PropsKeys.RSS_FEED_TYPE_DEFAULT);
-
-		return fallbackKeys;
-	}
-
-	static {
-		SettingsFactoryUtil.registerSettingsMetadata(
-			WikiPortletInstanceSettings.class, null, _getFallbackKeys());
 	}
 
 	private final TypedSettings _typedSettings;

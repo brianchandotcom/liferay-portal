@@ -18,12 +18,13 @@ import com.liferay.portal.kernel.display.context.util.BaseStrutsRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.settings.SettingsProvider;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.settings.WikiPortletInstanceSettings;
 import com.liferay.wiki.settings.WikiSettings;
-import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
 import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,16 +61,26 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 			if (_wikiPortletInstanceSettings == null) {
 				String portletId = getPortletId();
 
+				WikiWebSettingsProvider wikiWebSettingsProvider =
+					WikiWebSettingsProvider.getWikiWebSettingsProvider();
+
+				PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
+					wikiPortletIntanceSettingsProvider =
+						wikiWebSettingsProvider.
+							getWikiPortletIntanceSettingsProvider();
+
 				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 					_wikiPortletInstanceSettings =
-						WikiPortletInstanceSettings.getInstance(
-							getLayout(), getResourcePortletId(),
-							getRequest().getParameterMap());
+						wikiPortletIntanceSettingsProvider.
+							getPortletInstanceSettings(
+								getLayout(), getResourcePortletId(),
+								getRequest().getParameterMap());
 				}
 				else {
 					_wikiPortletInstanceSettings =
-						WikiPortletInstanceSettings.getInstance(
-							getLayout(), getPortletId());
+						wikiPortletIntanceSettingsProvider.
+							getPortletInstanceSettings(
+								getLayout(), getPortletId());
 				}
 			}
 

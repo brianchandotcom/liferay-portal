@@ -69,8 +69,11 @@ public interface BookmarksConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean enableRelatedAssets();
 
-	@Meta.AD(deflt = "20", required = false)
-	public int entriesPerPage();
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
+		required = false
+	)
+	public String entriesPerPage();
 
 	@Meta.AD(deflt = "name|url|visits|modified-date|action", required = false)
 	public String[] entryColumns();
@@ -80,8 +83,11 @@ public interface BookmarksConfiguration {
 	)
 	public String[] folderColumns();
 
-	@Meta.AD(deflt = "20", required = false)
-	public int foldersPerPage();
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
+		required = false
+	)
+	public String foldersPerPage();
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean showFoldersSearch();

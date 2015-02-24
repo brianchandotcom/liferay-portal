@@ -67,8 +67,7 @@ public class BookmarksSettingsProvider
 	@Activate
 	protected void activate() {
 		_settingsFactory.registerSettingsMetadata(
-			BookmarksSettings.class, _bookmarksConfiguration,
-			BookmarksSettings.getFallbackKeys());
+			BookmarksSettings.class, _bookmarksConfiguration, null);
 	}
 
 	@Reference(unbind = "-")

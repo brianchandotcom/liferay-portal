@@ -16,28 +16,15 @@ package com.liferay.bookmarks.settings;
 
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.portal.kernel.util.PropsKeys;
 
 /**
  * @author Iván Zaera
  */
 @Settings.Config(ids = BookmarksConstants.SERVICE_NAME)
 public class BookmarksSettings {
-
-	public static FallbackKeys getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
-
-		fallbackKeys.add(
-			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		fallbackKeys.add(
-			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-
-		return fallbackKeys;
-	}
 
 	public BookmarksSettings(Settings settings) {
 		_typedSettings = new TypedSettings(settings);

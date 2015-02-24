@@ -23,7 +23,6 @@ import java.io.IOException;
 import org.apache.felix.dm.DependencyManager;
 import org.apache.felix.dm.ServiceDependency;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -42,13 +41,11 @@ import org.osgi.service.component.annotations.Modified;
 public class LiferaySoapServiceTrackerConfigAdmin {
 
 	@Activate
-	public void activate(
-			final BundleContext bundleContext,
-			final ComponentContext componentContext)
+	protected void activate(final ComponentContext componentContext)
 		throws InvalidSyntaxException, IOException {
 
 		DependencyManager dependencyManager = new DependencyManager(
-			bundleContext);
+			componentContext.getBundleContext());
 
 		_liferaySoapServiceTrackerConfiguration =
 			Configurable.createConfigurable(
@@ -61,24 +58,24 @@ public class LiferaySoapServiceTrackerConfigAdmin {
 
 		LiferaySoapServiceTracker liferaySoapServiceTracker =
 			new LiferaySoapServiceTracker(
-				bundleContext,
+				componentContext.getBundleContext(),
 				_liferaySoapServiceTrackerConfiguration.contextPath(),
 				extensionManager);
 
 		_component.setImplementation(liferaySoapServiceTracker);
 
-		String[] enabledExtensionsArray =
+		String[] enabledExtensions =
 			_liferaySoapServiceTrackerConfiguration.enabledExtensions();
 
-		if (enabledExtensionsArray != null) {
-			for (String enabledExtensionName : enabledExtensionsArray) {
+		if (enabledExtensions != null) {
+			for (String enabledExtensionName : enabledExtensions) {
 				ServiceDependency extensionServiceDependency =
 					dependencyManager.createServiceDependency();
 
 				extensionServiceDependency.setCallbacks(
 					extensionManager, "addExtension", "removeExtension");
 				extensionServiceDependency.setService(
-					Object.class, createExtensionFilter(enabledExtensionName));
+					Object.class, _createExtensionFilter(enabledExtensionName));
 				extensionServiceDependency.setRequired(true);
 
 				_component.add(extensionServiceDependency);
@@ -89,15 +86,15 @@ public class LiferaySoapServiceTrackerConfigAdmin {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_component.stop();
 	}
 
 	@Modified
-	public void modified() {
+	protected void modified() {
 	}
 
-	private String createExtensionFilter(String extensionName) {
+	private String _createExtensionFilter(String extensionName) {
 		return "(&(cxf.extension=true)(extension.name="+ extensionName +
 			")(extension.class=*))";
 	}

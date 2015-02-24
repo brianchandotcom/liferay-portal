@@ -126,41 +126,40 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	protected void formatPortalProperties(String fileName, String content)
 		throws Exception {
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(content));
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
-		int lineCount = 0;
+			int lineCount = 0;
 
-		String line = null;
+			String line = null;
 
-		int previousPos = -1;
+			int previousPos = -1;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			lineCount++;
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineCount++;
 
-			int pos = line.indexOf(StringPool.EQUAL);
+				int pos = line.indexOf(StringPool.EQUAL);
 
-			if (pos == -1) {
-				continue;
+				if (pos == -1) {
+					continue;
+				}
+
+				String property = StringUtil.trim(line.substring(0, pos + 1));
+
+				pos = _portalPortalPropertiesContent.indexOf(
+					StringPool.FOUR_SPACES + property);
+
+				if (pos == -1) {
+					continue;
+				}
+
+				if (pos < previousPos) {
+					processErrorMessage(
+						fileName, "sort " + fileName + " " + lineCount);
+				}
+
+				previousPos = pos;
 			}
-
-			String property = line.substring(0, pos + 1);
-
-			property = property.trim();
-
-			pos = _portalPortalPropertiesContent.indexOf(
-				StringPool.FOUR_SPACES + property);
-
-			if (pos == -1) {
-				continue;
-			}
-
-			if (pos < previousPos) {
-				processErrorMessage(
-					fileName, "sort " + fileName + " " + lineCount);
-			}
-
-			previousPos = pos;
 		}
 	}
 

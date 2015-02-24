@@ -12,18 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.sso.opensso;
+package com.liferay.portal.sso.opensso.servlet.filters;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.servlet.filters.BasePortalFilter;
+import com.liferay.portal.servlet.filters.sso.opensso.OpenSSOUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.FilterChain;
@@ -37,7 +38,7 @@ import javax.servlet.http.HttpSession;
  * @author Prashant Dighe
  * @author Hugo Huijser
  */
-public class OpenSSOFilter extends BasePortalFilter {
+public class OpenSSOFilter extends BaseFilter {
 
 	@Override
 	public boolean isFilterEnabled(
@@ -71,6 +72,11 @@ public class OpenSSOFilter extends BasePortalFilter {
 		}
 
 		return false;
+	}
+
+	@Override
+	protected Log getLog() {
+		return _log;
 	}
 
 	@Override

@@ -85,25 +85,17 @@ public class ClusterNodeResponse implements Serializable {
 		sb.append("{clusterMessageType=");
 		sb.append(_clusterMessageType);
 
-		boolean clusterMessageTypeNotifyOrUpdate = false;
-
 		if (_clusterMessageType.equals(ClusterMessageType.NOTIFY) ||
 			_clusterMessageType.equals(ClusterMessageType.UPDATE)) {
 
-			clusterMessageTypeNotifyOrUpdate = true;
-		}
-
-		if (clusterMessageTypeNotifyOrUpdate) {
 			sb.append(", clusterNode=");
 			sb.append(_clusterNode);
 		}
-
-		if (!clusterMessageTypeNotifyOrUpdate && hasException()) {
+		else if (hasException()) {
 			sb.append(", exception=");
 			sb.append(_exception);
 		}
-
-		if (!clusterMessageTypeNotifyOrUpdate && !hasException()) {
+		else {
 			sb.append(", result=");
 			sb.append(_result);
 		}

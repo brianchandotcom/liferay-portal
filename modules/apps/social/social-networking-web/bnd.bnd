@@ -11,7 +11,9 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources
+	META-INF/resources=src/META-INF/resources,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class
 Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\

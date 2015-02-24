@@ -14,22 +14,9 @@
 
 package com.liferay.portal.portlet.toolbar.contributor.locator;
 
-import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
-import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
-
-import java.util.List;
-
-import javax.portlet.PortletRequest;
-
 import javax.servlet.ServletContext;
 
+import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -38,70 +25,32 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true)
+@Component(immediate = true, service = PortletToolbarContributorLocator.class)
 public class StrutsPortletToolbarContributorLocator
-	implements PortletToolbarContributorLocator {
-
-	@Override
-	public List<PortletToolbarContributor> getPortletToolbarContributors(
-		String portletId, PortletRequest portletRequest) {
-
-		String strutsAction = ParamUtil.getString(
-			portletRequest, "struts_action", "-");
-
-		List<PortletToolbarContributor> portletToolbarContributors =
-			_serviceTrackerMap.getService(
-				portletId.concat(StringPool.PERIOD).concat(strutsAction));
-
-		if (ListUtil.isEmpty(portletToolbarContributors)) {
-			portletToolbarContributors = _serviceTrackerMap.getService(
-				portletId);
-		}
-
-		return portletToolbarContributors;
-	}
+	extends BasePortletToolbarContributorLocator {
 
 	@Activate
 	protected void activate() {
-		_serviceTrackerMap = ServiceTrackerCollections.multiValueMap(
-			PortletToolbarContributor.class, "(javax.portlet.name=*)",
-			new ServiceReferenceMapper<String, PortletToolbarContributor>() {
-
-				@Override
-				public void map(
-					ServiceReference<PortletToolbarContributor>
-						serviceReference,
-					Emitter<String> emitter) {
-
-					String portletName = (String)serviceReference.getProperty(
-						"javax.portlet.name");
-					String strutsAction = (String)serviceReference.getProperty(
-						"struts.action");
-
-					String key = portletName;
-
-					if (strutsAction != null) {
-						key += StringPool.PERIOD.concat(strutsAction);
-					}
-
-					emitter.emit(key);
-				}
-
-			});
-
-		_serviceTrackerMap.open();
+		super.activate();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
+		super.deactivate();
+	}
+
+	@Override
+	protected String getParameterName() {
+		return "struts_action";
+	}
+
+	@Override
+	protected String getPropertyName() {
+		return "struts.action";
 	}
 
 	@Reference(target = "(original.bean=*)", unbind = "-")
 	protected void setServletContext(ServletContext servletContext) {
 	}
-
-	private static ServiceTrackerMap<String, List<PortletToolbarContributor>>
-		_serviceTrackerMap;
 
 }

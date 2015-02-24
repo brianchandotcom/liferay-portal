@@ -23,17 +23,10 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-import com.liferay.portal.model.Repository;
-import com.liferay.portal.model.RepositoryEntry;
-import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
-import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -157,74 +150,6 @@ public abstract class DLAppTestUtil {
 		throws Exception {
 
 		return addFolder(parentFolderId, name, false, serviceContext);
-	}
-
-	public static Repository addRepository(long groupId) throws Exception {
-		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.portal.repository.liferayrepository." +
-				"LiferayRepository");
-
-		return addRepository(groupId, classNameId);
-	}
-
-	public static Repository addRepository(long groupId, long classNameId)
-		throws Exception {
-
-		long userId = TestPropsValues.getUserId();
-
-		Folder folder = addFolder(
-			groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString());
-
-		long parentFolderId = folder.getFolderId();
-
-		String name = RandomTestUtil.randomString();
-		String description = RandomTestUtil.randomString();
-		String portletId = PortletKeys.DOCUMENT_LIBRARY;
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-		boolean hidden = false;
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return addRepository(
-			userId, groupId, classNameId, parentFolderId, name, description,
-			portletId, typeSettingsProperties, hidden, serviceContext);
-	}
-
-	public static Repository addRepository(
-			long userId, long groupId, long classNameId, long parentFolderId,
-			String name, String description, String portletId,
-			UnicodeProperties typeSettingsProperties, boolean hidden,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return RepositoryLocalServiceUtil.addRepository(
-			userId, groupId, classNameId, parentFolderId, name, description,
-			portletId, typeSettingsProperties, hidden, serviceContext);
-	}
-
-	public static RepositoryEntry addRepositoryEntry(
-			long groupId, long repositoryId)
-		throws Exception {
-
-		long userId = TestPropsValues.getUserId();
-		String mappedId = RandomTestUtil.randomString();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return addRepositoryEntry(
-			userId, groupId, repositoryId, mappedId, serviceContext);
-	}
-
-	public static RepositoryEntry addRepositoryEntry(
-			long userId, long groupId, long repositoryId, String mappedId,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return RepositoryEntryLocalServiceUtil.addRepositoryEntry(
-			userId, groupId, repositoryId, mappedId, serviceContext);
 	}
 
 	public static void populateServiceContext(

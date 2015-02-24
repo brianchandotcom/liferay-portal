@@ -14,17 +14,27 @@
 
 package com.liferay.portlet.documentlibrary.lar;
 
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import java.util.HashMap;
@@ -56,10 +66,28 @@ public class RepositoryStagedModelDataHandlerTest
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			new HashMap<>();
 
-		_repository = DLAppTestUtil.addRepository(group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
-		RepositoryEntry repositoryEntry = DLAppTestUtil.addRepositoryEntry(
-			group.getGroupId(), _repository.getRepositoryId());
+		long classNameId = PortalUtil.getClassNameId(
+			LiferayRepository.class.getName());
+
+		Folder folder = DLAppTestUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString());
+
+		_repository = RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
+			folder.getFolderId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), PortletKeys.DOCUMENT_LIBRARY,
+			new UnicodeProperties(), false, serviceContext);
+
+		RepositoryEntry repositoryEntry =
+			RepositoryEntryLocalServiceUtil.addRepositoryEntry(
+				TestPropsValues.getUserId(),group.getGroupId(),
+				_repository.getRepositoryId(), RandomTestUtil.randomString(),
+				serviceContext);
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, RepositoryEntry.class, repositoryEntry);

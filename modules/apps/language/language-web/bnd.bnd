@@ -3,7 +3,8 @@ Bundle-SymbolicName: com.liferay.language.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources
+	META-INF/resources=src/META-INF/resources,\
+	META-INF/resources/css=src/META-INF/resources/css/.sass-cache
 Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\

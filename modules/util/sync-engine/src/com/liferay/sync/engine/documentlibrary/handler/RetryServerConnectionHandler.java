@@ -49,6 +49,8 @@ public class RetryServerConnectionHandler extends GetSyncContextHandler {
 			syncAccount.setState(SyncAccount.STATE_CONNECTED);
 			syncAccount.setUiEvent(SyncAccount.UI_EVENT_NONE);
 
+			SyncAccountService.update(syncAccount);
+
 			FileEventUtil.retryFileTransfers(getSyncAccountId());
 
 			ConnectionRetryUtil.resetRetry(getSyncAccountId());
@@ -56,9 +58,9 @@ public class RetryServerConnectionHandler extends GetSyncContextHandler {
 		else {
 			syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
 			syncAccount.setUiEvent(SyncAccount.UI_EVENT_SYNC_WEB_OUT_OF_DATE);
-		}
 
-		SyncAccountService.update(syncAccount);
+			SyncAccountService.update(syncAccount);
+		}
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

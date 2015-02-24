@@ -45,16 +45,12 @@ import com.liferay.sync.engine.util.SyncEngineUtil;
 
 import java.io.IOException;
 
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -281,79 +277,6 @@ public class SyncEngine {
 		_running = false;
 	}
 
-	protected static void fireDeleteEvents(Path filePath) throws IOException {
-		long startTime = System.currentTimeMillis();
-
-		Files.walkFileTree(
-			filePath,
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult preVisitDirectory(
-					Path filePath, BasicFileAttributes basicFileAttributes) {
-
-					SyncFile syncFile = SyncFileService.fetchSyncFile(
-						filePath.toString());
-
-					if (syncFile == null) {
-						syncFile = SyncFileService.fetchSyncFile(
-							FileUtil.getFileKey(filePath));
-					}
-
-					if (syncFile != null) {
-						syncFile.setLocalSyncTime(System.currentTimeMillis());
-
-						SyncFileService.update(syncFile);
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFile(
-					Path filePath, BasicFileAttributes basicFileAttributes) {
-
-					SyncFile syncFile = SyncFileService.fetchSyncFile(
-						filePath.toString());
-
-					if (syncFile == null) {
-						syncFile = SyncFileService.fetchSyncFile(
-							FileUtil.getFileKey(filePath));
-					}
-
-					if (syncFile != null) {
-						syncFile.setLocalSyncTime(System.currentTimeMillis());
-
-						SyncFileService.update(syncFile);
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			}
-		);
-
-		List<SyncFile> deletedSyncFiles = SyncFileService.findSyncFiles(
-			filePath.toString(), startTime);
-
-		for (SyncFile deletedSyncFile : deletedSyncFiles) {
-			if (deletedSyncFile.getTypePK() == 0) {
-				SyncFileService.deleteSyncFile(deletedSyncFile);
-
-				continue;
-			}
-
-			if (deletedSyncFile.isFolder()) {
-				FileEventUtil.deleteFolder(
-					deletedSyncFile.getSyncAccountId(), deletedSyncFile);
-			}
-			else {
-				FileEventUtil.deleteFile(
-					deletedSyncFile.getSyncAccountId(), deletedSyncFile);
-			}
-		}
-	}
-
 	protected static void scheduleGetSyncDLObjectUpdateEvent(
 		final SyncAccount syncAccount,
 		final SyncWatchEventProcessor syncWatchEventProcessor,
@@ -427,7 +350,7 @@ public class SyncEngine {
 			Path filePath, long syncAccountId)
 		throws IOException {
 
-		fireDeleteEvents(filePath);
+		FileUtil.fireDeleteEvents(filePath);
 
 		FileEventUtil.retryFileTransfers(syncAccountId);
 	}

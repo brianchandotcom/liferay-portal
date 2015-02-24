@@ -390,7 +390,7 @@ public class SyncFile extends StateAwareModel {
 	@DatabaseField(useGetSet = true)
 	protected long size;
 
-	@DatabaseField(useGetSet = true)
+	@DatabaseField(index = true, useGetSet = true)
 	protected long syncAccountId;
 
 	@DatabaseField(generatedId = true, useGetSet = true)

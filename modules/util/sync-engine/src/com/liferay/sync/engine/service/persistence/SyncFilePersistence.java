@@ -158,6 +158,15 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		return queryForFieldValues(fieldValues);
 	}
 
+	public void renameByFilePathName(
+			String sourceFilePathName, String targetFilePathName)
+		throws SQLException {
+
+		updateRaw(
+			"UPDATE SyncFile SET filePathName = REPLACE(filePathName, ?, ?)",
+			sourceFilePathName, targetFilePathName);
+	}
+
 	public void updateByFilePathName(
 			String filePathName, int state, int uiEvent)
 		throws SQLException {

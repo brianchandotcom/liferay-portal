@@ -54,29 +54,7 @@ public class SyncWatchEventPersistence
 		delete(deleteBuilder.prepare());
 	}
 
-	public SyncWatchEvent fetchBySyncAccountId_Last(long syncAccountId)
-		throws SQLException {
-
-		QueryBuilder<SyncWatchEvent, Long> queryBuilder = queryBuilder();
-
-		Where<SyncWatchEvent, Long> where = queryBuilder.where();
-
-		where.eq("syncAccountId", syncAccountId);
-
-		queryBuilder.limit(1L);
-		queryBuilder.orderBy("timestamp", false);
-
-		List<SyncWatchEvent> syncWatchEvents = query(queryBuilder.prepare());
-
-		if ((syncWatchEvents == null) || syncWatchEvents.isEmpty()) {
-			return null;
-		}
-
-		return syncWatchEvents.get(0);
-	}
-
-	public List<SyncWatchEvent> findBySyncAccountId(
-			long syncAccountId, String orderByColumn, boolean ascending)
+	public List<SyncWatchEvent> findBySyncAccountId(long syncAccountId)
 		throws SQLException {
 
 		QueryBuilder<SyncWatchEvent, Long> queryBuilder = queryBuilder();
@@ -86,7 +64,6 @@ public class SyncWatchEventPersistence
 		where.eq("syncAccountId", syncAccountId);
 
 		queryBuilder.orderBy("fileType", false);
-		queryBuilder.orderBy(orderByColumn, ascending);
 
 		return query(queryBuilder.prepare());
 	}

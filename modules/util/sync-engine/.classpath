@@ -44,7 +44,6 @@
 	<classpathentry kind="lib" path="lib/jackson-core.jar" />
 	<classpathentry kind="lib" path="lib/jackson-databind.jar" />
 	<classpathentry kind="lib" path="lib/jna.jar" />
-	<classpathentry kind="lib" path="lib/jpathwatch.jar" />
 	<classpathentry kind="lib" path="lib/logback-classic.jar" />
 	<classpathentry kind="lib" path="lib/logback-core.jar" />
 	<classpathentry kind="lib" path="lib/net.sf.jpathwatch.jar" />

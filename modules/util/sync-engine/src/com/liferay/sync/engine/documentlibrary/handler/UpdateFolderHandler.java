@@ -37,7 +37,7 @@ public class UpdateFolderHandler extends BaseSyncDLObjectHandler {
 		SyncFile remoteSyncFile = objectMapper.readValue(
 			response, new TypeReference<SyncFile>() {});
 
-		SyncFile localSyncFile = (SyncFile)getParameterValue("syncFile");
+		SyncFile localSyncFile = getLocalSyncFile();
 
 		processFilePathChange(localSyncFile, remoteSyncFile);
 

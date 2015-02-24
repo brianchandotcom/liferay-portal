@@ -31,7 +31,7 @@ public abstract class BaseModel {
 		this.uiEvent = uiEvent;
 	}
 
-	@DatabaseField(useGetSet = true)
+	@DatabaseField(index = true, useGetSet = true)
 	protected int uiEvent;
 
 }

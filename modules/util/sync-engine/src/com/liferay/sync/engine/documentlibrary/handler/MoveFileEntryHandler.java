@@ -37,7 +37,7 @@ public class MoveFileEntryHandler extends BaseJSONHandler {
 		SyncFile remoteSyncFile = objectMapper.readValue(
 			response, new TypeReference<SyncFile>() {});
 
-		SyncFile localSyncFile = (SyncFile)getParameterValue("syncFile");
+		SyncFile localSyncFile = getLocalSyncFile();
 
 		localSyncFile.setModifiedTime(remoteSyncFile.getModifiedTime());
 

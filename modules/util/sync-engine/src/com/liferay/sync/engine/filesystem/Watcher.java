@@ -106,7 +106,9 @@ public abstract class Watcher implements Runnable {
 						Path filePath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					if (filePath.equals(_baseFilePath.resolve(".data"))) {
+					if (filePath.equals(_baseFilePath.resolve(".data")) ||
+						isIgnoredFilePath(filePath)) {
+
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
@@ -338,8 +340,7 @@ public abstract class Watcher implements Runnable {
 			if (_downloadedFilePathNames.remove(filePath.toString()) ||
 				(removeCreatedFilePathName(filePath.toString()) &&
 				 !FileUtil.isValidChecksum(filePath)) ||
-				Files.notExists(filePath) ||
-				Files.isDirectory(filePath)) {
+				Files.notExists(filePath) || Files.isDirectory(filePath)) {
 
 				return;
 			}

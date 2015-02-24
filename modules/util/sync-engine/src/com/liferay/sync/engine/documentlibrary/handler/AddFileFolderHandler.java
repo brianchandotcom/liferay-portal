@@ -61,7 +61,7 @@ public class AddFileFolderHandler extends BaseJSONHandler {
 		SyncFile remoteSyncFile = objectMapper.readValue(
 			response, new TypeReference<SyncFile>() {});
 
-		SyncFile localSyncFile = (SyncFile)getParameterValue("syncFile");
+		SyncFile localSyncFile = getLocalSyncFile();
 
 		localSyncFile.setCompanyId(remoteSyncFile.getCompanyId());
 		localSyncFile.setCreateTime(remoteSyncFile.getCreateTime());

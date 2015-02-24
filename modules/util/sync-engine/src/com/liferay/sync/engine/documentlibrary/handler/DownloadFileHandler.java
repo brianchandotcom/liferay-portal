@@ -85,7 +85,7 @@ public class DownloadFileHandler extends BaseHandler {
 			return;
 		}
 
-		SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
+		SyncFile syncFile = getLocalSyncFile();
 
 		SyncFileService.deleteSyncFile(syncFile, false);
 	}
@@ -184,7 +184,7 @@ public class DownloadFileHandler extends BaseHandler {
 
 		InputStream inputStream = null;
 
-		SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
+		SyncFile syncFile = getLocalSyncFile();
 
 		if (isUnsynced(syncFile)) {
 			return;

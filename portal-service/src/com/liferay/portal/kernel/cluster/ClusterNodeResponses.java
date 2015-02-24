@@ -14,10 +14,13 @@
 
 package com.liferay.portal.kernel.cluster;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
+
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -26,13 +29,25 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class ClusterNodeResponses implements Serializable {
 
-	public void addClusterResponse(ClusterNodeResponse clusterNodeResponse) {
+	public ClusterNodeResponses(Set<String> expectedReplyNodeIds) {
+		_expectedReplyNodeIds = new ConcurrentHashSet<>(expectedReplyNodeIds);
+	}
+
+	public boolean addClusterResponse(ClusterNodeResponse clusterNodeResponse) {
 		ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
 
-		_clusterResponsesByClusterNode.put(
-			clusterNode.getClusterNodeId(), clusterNodeResponse);
+		String clusterNodeId = clusterNode.getClusterNodeId();
 
-		_clusterResponsesQueue.offer(clusterNodeResponse);
+		if (_expectedReplyNodeIds.remove(clusterNodeId)) {
+			_clusterResponsesByClusterNode.put(
+				clusterNodeId, clusterNodeResponse);
+
+			_clusterResponsesQueue.offer(clusterNodeResponse);
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public ClusterNodeResponse getClusterResponse(ClusterNode clusterNode) {
@@ -55,5 +70,6 @@ public class ClusterNodeResponses implements Serializable {
 		_clusterResponsesByClusterNode = new HashMap<>();
 	private final BlockingQueue<ClusterNodeResponse> _clusterResponsesQueue =
 		new LinkedBlockingQueue<>();
+	private final Set<String> _expectedReplyNodeIds;
 
 }

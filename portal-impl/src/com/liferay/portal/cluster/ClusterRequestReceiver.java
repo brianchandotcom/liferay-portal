@@ -262,20 +262,15 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			return;
 		}
 
-		ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
+		if (!futureClusterResponses.addClusterNodeResponse(
+				clusterNodeResponse) &&
+			_log.isWarnEnabled()) {
 
-		if (futureClusterResponses.expectsReply(
-				clusterNode.getClusterNodeId())) {
+			ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
 
-			futureClusterResponses.addClusterNodeResponse(clusterNodeResponse);
-		}
-		else {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unexpected cluster node ID " +
-						clusterNode.getClusterNodeId() +
-							" for response container with UUID " + uuid);
-			}
+			_log.warn(
+				"Unexpected cluster node ID " + clusterNode.getClusterNodeId() +
+					" for response container with UUID " + uuid);
 		}
 	}
 

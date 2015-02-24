@@ -657,9 +657,7 @@ public class ClusterMasterExecutorImplTest {
 						ClusterNodeResponse.createResultClusterNodeResponse(
 							_clusterNodes.get(clusterNodeId),
 							ClusterMessageType.EXECUTE,
-							clusterRequest.getUuid(),
-							clusterRequest.isMulticast(),
-							methodHandler.invoke()));
+							clusterRequest.getUuid(), methodHandler.invoke()));
 				}
 				catch (Exception e) {
 					throw new RuntimeException(e);

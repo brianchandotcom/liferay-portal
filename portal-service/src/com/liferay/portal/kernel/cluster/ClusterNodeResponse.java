@@ -25,24 +25,24 @@ public class ClusterNodeResponse implements Serializable {
 
 	public static ClusterNodeResponse createExceptionClusterNodeResponse(
 		ClusterNode clusterNode, ClusterMessageType clusterMessageType,
-		String uuid, boolean multicast, Exception exception) {
+		String uuid, Exception exception) {
 
 		return new ClusterNodeResponse(
-			clusterNode, clusterMessageType, uuid, multicast, null, exception);
+			clusterNode, clusterMessageType, uuid, null, exception);
 	}
 
 	public static ClusterNodeResponse createResultClusterNodeResponse(
 		ClusterNode clusterNode, ClusterMessageType clusterMessageType,
-		String uuid, boolean multicast, Object result) {
+		String uuid, Object result) {
 
 		if ((result != null) && !(result instanceof Serializable)) {
 			return new ClusterNodeResponse(
-				clusterNode, clusterMessageType, uuid, multicast, null,
+				clusterNode, clusterMessageType, uuid, null,
 				new ClusterException("Return value is not serializable"));
 		}
 
 		return new ClusterNodeResponse(
-			clusterNode, clusterMessageType, uuid, multicast, result, null);
+			clusterNode, clusterMessageType, uuid, result, null);
 	}
 
 	public ClusterMessageType getClusterMessageType() {
@@ -78,13 +78,9 @@ public class ClusterNodeResponse implements Serializable {
 		}
 	}
 
-	public boolean isMulticast() {
-		return _multicast;
-	}
-
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{clusterMessageType=");
 		sb.append(_clusterMessageType);
@@ -107,9 +103,6 @@ public class ClusterNodeResponse implements Serializable {
 			sb.append(_exception);
 		}
 
-		sb.append(", multicast=");
-		sb.append(_multicast);
-
 		if (!clusterMessageTypeNotifyOrUpdate && !hasException()) {
 			sb.append(", result=");
 			sb.append(_result);
@@ -124,12 +117,11 @@ public class ClusterNodeResponse implements Serializable {
 
 	private ClusterNodeResponse(
 		ClusterNode clusterNode, ClusterMessageType clusterMessageType,
-		String uuid, boolean multicast, Object result, Exception exception) {
+		String uuid, Object result, Exception exception) {
 
 		_clusterNode = clusterNode;
 		_clusterMessageType = clusterMessageType;
 		_uuid = uuid;
-		_multicast = multicast;
 		_result = result;
 		_exception = exception;
 	}
@@ -137,7 +129,6 @@ public class ClusterNodeResponse implements Serializable {
 	private final ClusterMessageType _clusterMessageType;
 	private final ClusterNode _clusterNode;
 	private final Exception _exception;
-	private final boolean _multicast;
 	private final Object _result;
 	private final String _uuid;
 

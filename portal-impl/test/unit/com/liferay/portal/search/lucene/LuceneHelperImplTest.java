@@ -798,15 +798,13 @@ public class LuceneHelperImplTest {
 						ClusterNodeResponse.createResultClusterNodeResponse(
 							clusterNode, ClusterMessageType.EXECUTE,
 							clusterRequest.getUuid(),
-							clusterRequest.isMulticast(),
 							_invoke(clusterRequest.getMethodHandler())));
 				}
 				catch (Exception e) {
 					futureClusterResponses.addClusterNodeResponse(
 						ClusterNodeResponse.createExceptionClusterNodeResponse(
 							clusterNode, ClusterMessageType.EXECUTE,
-							clusterRequest.getUuid(),
-							clusterRequest.isMulticast(), e));
+							clusterRequest.getUuid(), e));
 				}
 			}
 

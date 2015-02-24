@@ -386,6 +386,16 @@ public class MBMessageLocalServiceUtil {
 			classPK, status);
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getDiscussionMessageDisplay(
+		long userId, long groupId, java.lang.String className, long classPK,
+		int status,
+		java.util.Comparator<com.liferay.portlet.messageboards.model.MBMessage> comparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getDiscussionMessageDisplay(userId, groupId, className,
+			classPK, status, comparator);
+	}
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
 	#getDiscussionMessageDisplay(long, long, String, long, int)}
@@ -549,6 +559,16 @@ public class MBMessageLocalServiceUtil {
 		return getService()
 				   .getMessageDisplay(userId, message, status, threadView,
 			includePrevAndNext);
+	}
+
+	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
+		long userId, com.liferay.portlet.messageboards.model.MBMessage message,
+		int status, java.lang.String threadView, boolean includePrevAndNext,
+		java.util.Comparator<com.liferay.portlet.messageboards.model.MBMessage> comparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMessageDisplay(userId, message, status, threadView,
+			includePrevAndNext, comparator);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(

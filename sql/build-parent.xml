@@ -30,6 +30,22 @@
 		</java>
 	</target>
 
+	<target name="build-module-sql" if="module.sql.dir">
+		<java
+			classname="com.liferay.portal.tools.DBBuilder"
+			classpathref="project.classpath"
+			fork="${fork.mode}"
+		>
+			<jvmarg line="${db.build.debug.jpda}" />
+			<jvmarg value="-Xmx${db.build.java.mx}" />
+			<jvmarg value="-XX:MaxPermSize=${db.build.java.maxpermsize}" />
+			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg value="db.database.name=${database.name}" />
+			<arg value="db.database.types=${database.types}" />
+			<arg value="db.sql.dir=${module.sql.dir}" />
+		</java>
+	</target>
+
 	<target name="clean">
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset

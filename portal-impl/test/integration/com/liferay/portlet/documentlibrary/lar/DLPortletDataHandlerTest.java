@@ -34,6 +34,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -146,7 +147,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		long classNameId = PortalUtil.getClassNameId(
 			LiferayRepository.class.getName());
 
-		Repository repository = DLAppTestUtil.addRepository(
+		Repository repository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			PortletKeys.BACKGROUND_TASK, StringPool.BLANK,

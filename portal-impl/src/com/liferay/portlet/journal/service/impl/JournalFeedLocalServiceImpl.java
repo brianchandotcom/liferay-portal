@@ -339,11 +339,10 @@ public class JournalFeedLocalServiceImpl
 		}
 
 		try {
-			DDMStructure ddmStructure =
-				ddmStructureLocalService.getStructure(
-					groupId,
-					classNameLocalService.getClassNameId(JournalArticle.class),
-					ddmStructureKey);
+			DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+				groupId,
+				classNameLocalService.getClassNameId(JournalArticle.class),
+				ddmStructureKey);
 
 			DDMForm ddmForm = ddmStructure.getDDMForm();
 

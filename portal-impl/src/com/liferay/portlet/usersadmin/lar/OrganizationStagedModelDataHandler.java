@@ -164,12 +164,11 @@ public class OrganizationStagedModelDataHandler
 		if (existingOrganization == null) {
 			serviceContext.setUuid(organization.getUuid());
 
-			importedOrganization =
-				OrganizationLocalServiceUtil.addOrganization(
-					userId, parentOrganizationId, organization.getName(),
-					organization.getType(), organization.getRegionId(),
-					organization.getCountryId(), organization.getStatusId(),
-					organization.getComments(), false, serviceContext);
+			importedOrganization = OrganizationLocalServiceUtil.addOrganization(
+				userId, parentOrganizationId, organization.getName(),
+				organization.getType(), organization.getRegionId(),
+				organization.getCountryId(), organization.getStatusId(),
+				organization.getComments(), false, serviceContext);
 		}
 		else {
 			importedOrganization =

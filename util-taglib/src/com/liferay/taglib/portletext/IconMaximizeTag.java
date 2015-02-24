@@ -43,10 +43,9 @@ public class IconMaximizeTag extends IconTag {
 		setMessage("maximize");
 		setMethod("get");
 
-		String onClick =
-			"submitForm(document.hrefFm, '".concat(
-				HtmlUtil.escapeJS(portletDisplay.getURLMax())).concat(
-					"'); return false;");
+		String onClick = "submitForm(document.hrefFm, '".concat(
+			HtmlUtil.escapeJS(portletDisplay.getURLMax())).concat(
+				"'); return false;");
 
 		setOnClick(onClick);
 

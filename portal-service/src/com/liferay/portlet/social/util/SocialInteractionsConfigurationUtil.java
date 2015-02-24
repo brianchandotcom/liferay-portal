@@ -39,10 +39,9 @@ public class SocialInteractionsConfigurationUtil {
 					SocialInteractionsType.ALL_USERS.toString()));
 		boolean socialInteractionsSitesEnabled = PrefsPropsUtil.getBoolean(
 			companyId, "socialInteractionsSitesEnabled", true);
-		String socialInteractionsSocialRelationTypes =
-			PrefsPropsUtil.getString(
-				companyId, "socialInteractionsSocialRelationTypes",
-				StringPool.BLANK);
+		String socialInteractionsSocialRelationTypes = PrefsPropsUtil.getString(
+			companyId, "socialInteractionsSocialRelationTypes",
+			StringPool.BLANK);
 		boolean socialInteractionsSocialRelationTypesEnabled =
 			PrefsPropsUtil.getBoolean(
 				companyId, "socialInteractionsSocialRelationTypesEnabled",
@@ -130,11 +129,9 @@ public class SocialInteractionsConfigurationUtil {
 					SocialInteractionsType.ALL_USERS.toString()));
 		boolean socialInteractionsSitesEnabled = PrefsPropsUtil.getBoolean(
 			companyId, "socialInteractionsSitesEnabled" + serviceName, true);
-		String socialInteractionsSocialRelationTypes =
-			PrefsPropsUtil.getString(
-				companyId,
-				"socialInteractionsSocialRelationTypes" + serviceName,
-				StringPool.BLANK);
+		String socialInteractionsSocialRelationTypes = PrefsPropsUtil.getString(
+			companyId, "socialInteractionsSocialRelationTypes" + serviceName,
+			StringPool.BLANK);
 		boolean socialInteractionsSocialRelationTypesEnabled =
 			PrefsPropsUtil.getBoolean(
 				companyId,

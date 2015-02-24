@@ -121,10 +121,9 @@ public class NettyFabricAgentRegistrationChannelHandler
 			new FileResponseChannelHandler(
 				repository.getAsyncBroker(), _eventExecutorGroup));
 
-		NettyFabricAgentStub nettyFabricAgentStub =
-			new NettyFabricAgentStub(
-				channel, repository, nettyFabricAgentConfig.getRepositoryPath(),
-				_rpcRelayTimeout, _startupTimeout);
+		NettyFabricAgentStub nettyFabricAgentStub = new NettyFabricAgentStub(
+			channel, repository, nettyFabricAgentConfig.getRepositoryPath(),
+			_rpcRelayTimeout, _startupTimeout);
 
 		if (!_fabricAgentRegistry.registerFabricAgent(
 				nettyFabricAgentStub,

@@ -144,21 +144,20 @@ public class BaseIntrabandTest {
 			ReflectionTestUtil.setFieldValue(
 				AtomicReference.class, "valueOffset", valueOffset + 1);
 
-			FutureTask<Void> registerFutureTask =
-				new FutureTask<>(
-					new Callable<Void>() {
+			FutureTask<Void> registerFutureTask = new FutureTask<>(
+				new Callable<Void>() {
 
-						@Override
-						public Void call() {
-							_mockIntraband.registerDatagramReceiveHandler(
-								_TYPE, datagramReceiveHandler2);
+					@Override
+					public Void call() {
+						_mockIntraband.registerDatagramReceiveHandler(
+							_TYPE, datagramReceiveHandler2);
 
-							Assert.fail();
+						Assert.fail();
 
-							return null;
-						}
+						return null;
+					}
 
-					});
+				});
 
 			Thread registerThread = new Thread(
 				registerFutureTask, "Register Thread");

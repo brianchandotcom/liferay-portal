@@ -116,10 +116,9 @@ public class NettyFabricAgentStubTest {
 		Assert.assertFalse(
 			nettyFabricAgentStub.equals(anotherNettyFabricAgentStub));
 
-		anotherNettyFabricAgentStub =
-			new NettyFabricAgentStub(
-				_embeddedChannel, new MockRepository<Channel>(),
-				Paths.get("AnotherRepositoryPath"), 0, 0);
+		anotherNettyFabricAgentStub = new NettyFabricAgentStub(
+			_embeddedChannel, new MockRepository<Channel>(),
+			Paths.get("AnotherRepositoryPath"), 0, 0);
 
 		Assert.assertTrue(
 			nettyFabricAgentStub.equals(anotherNettyFabricAgentStub));
@@ -388,10 +387,9 @@ public class NettyFabricAgentStubTest {
 
 	@Test
 	public void testExecuteWithInterruption() throws Exception {
-		NettyFabricAgentStub nettyFabricAgentStub =
-			new NettyFabricAgentStub(
-				_embeddedChannel, new MockRepository<Channel>(),
-				Paths.get("RepositoryPath"), 0, Long.MAX_VALUE);
+		NettyFabricAgentStub nettyFabricAgentStub = new NettyFabricAgentStub(
+			_embeddedChannel, new MockRepository<Channel>(),
+			Paths.get("RepositoryPath"), 0, Long.MAX_VALUE);
 
 		Thread currentThread = Thread.currentThread();
 
@@ -424,10 +422,9 @@ public class NettyFabricAgentStubTest {
 
 	@Test
 	public void testExecuteWithTimeout() throws InterruptedException {
-		NettyFabricAgentStub nettyFabricAgentStub =
-			new NettyFabricAgentStub(
-				_embeddedChannel, new MockRepository<Channel>(),
-				Paths.get("RepositoryPath"), 0, 0);
+		NettyFabricAgentStub nettyFabricAgentStub = new NettyFabricAgentStub(
+			_embeddedChannel, new MockRepository<Channel>(),
+			Paths.get("RepositoryPath"), 0, 0);
 
 		Builder builder = new Builder();
 

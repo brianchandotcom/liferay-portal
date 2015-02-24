@@ -466,10 +466,9 @@ public class LocalProcessExecutorTest {
 		ReturnWithoutExitProcessCallable returnWithoutExitProcessCallable =
 			new ReturnWithoutExitProcessCallable("");
 
-		ProcessChannel<String> processChannel =
-			_localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				returnWithoutExitProcessCallable);
+		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
+			_createJPDAProcessConfig(_JPDA_OPTIONS1),
+			returnWithoutExitProcessCallable);
 
 		Future<String> future = processChannel.getProcessNoticeableFuture();
 
@@ -736,10 +735,9 @@ public class LocalProcessExecutorTest {
 		RuntimeExceptionProcessCallable runtimeExceptionProcessCallable =
 			new RuntimeExceptionProcessCallable();
 
-		processChannel =
-			_localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				runtimeExceptionProcessCallable);
+		processChannel = _localProcessExecutor.execute(
+			_createJPDAProcessConfig(_JPDA_OPTIONS1),
+			runtimeExceptionProcessCallable);
 
 		future = processChannel.getProcessNoticeableFuture();
 

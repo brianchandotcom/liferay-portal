@@ -195,16 +195,16 @@ public class DefaultNoticeableFutureTest {
 		Assert.assertSame(flag, defaultNoticeableFuture.get());
 		Assert.assertTrue(flag.get());
 
-		defaultNoticeableFuture =
-			new DefaultNoticeableFuture<Object>(
-				new Runnable() {
+		defaultNoticeableFuture = new DefaultNoticeableFuture<Object>(
+			new Runnable() {
 
-					@Override
-					public void run() {
-						flag.set(false);
-					}
+				@Override
+				public void run() {
+					flag.set(false);
+				}
 
-				}, flag);
+			},
+			flag);
 
 		defaultNoticeableFuture.run();
 

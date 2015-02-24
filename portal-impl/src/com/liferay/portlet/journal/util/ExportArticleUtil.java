@@ -75,10 +75,9 @@ public class ExportArticleUtil extends PortletAction {
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
 			portletResponse);
 
-		JournalArticleDisplay articleDisplay =
-			JournalContentUtil.getDisplay(
-				groupId, articleId, null, "export", languageId, 1,
-				portletRequestModel, themeDisplay);
+		JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(
+			groupId, articleId, null, "export", languageId, 1,
+			portletRequestModel, themeDisplay);
 
 		int pages = articleDisplay.getNumberOfPages();
 

@@ -2012,16 +2012,14 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			exportCurPortletConfiguration = true;
 
-			exportCurPortletArchivedSetups =
-				MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL);
+			exportCurPortletArchivedSetups = MapUtil.getBoolean(
+				parameterMap,
+				PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL);
 			exportCurPortletSetup = MapUtil.getBoolean(
 				parameterMap, PortletDataHandlerKeys.PORTLET_SETUP_ALL);
-			exportCurPortletUserPreferences =
-				MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
+			exportCurPortletUserPreferences = MapUtil.getBoolean(
+				parameterMap,
+				PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
 		}
 		else if (rootPortletId != null) {
 			exportCurPortletConfiguration =

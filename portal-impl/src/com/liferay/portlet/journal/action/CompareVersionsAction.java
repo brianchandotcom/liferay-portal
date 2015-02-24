@@ -138,10 +138,9 @@ public class CompareVersionsAction extends PortletAction {
 			EditArticleAction.VERSION_SEPARATOR);
 
 		if (index != -1) {
-			sourceArticleId =
-				sourceArticleId.substring(
-					index + EditArticleAction.VERSION_SEPARATOR.length(),
-					sourceArticleId.length());
+			sourceArticleId = sourceArticleId.substring(
+				index + EditArticleAction.VERSION_SEPARATOR.length(),
+				sourceArticleId.length());
 		}
 
 		double sourceVersion = GetterUtil.getDouble(sourceArticleId);
@@ -153,10 +152,9 @@ public class CompareVersionsAction extends PortletAction {
 			EditArticleAction.VERSION_SEPARATOR);
 
 		if (index != -1) {
-			targetArticleId =
-				targetArticleId.substring(
-					index + EditArticleAction.VERSION_SEPARATOR.length(),
-					targetArticleId.length());
+			targetArticleId = targetArticleId.substring(
+				index + EditArticleAction.VERSION_SEPARATOR.length(),
+				targetArticleId.length());
 		}
 
 		double targetVersion = GetterUtil.getDouble(targetArticleId);

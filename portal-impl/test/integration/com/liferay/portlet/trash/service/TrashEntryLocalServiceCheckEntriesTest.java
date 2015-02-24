@@ -222,10 +222,9 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 	protected void createFileEntryTrashEntry(Group group, boolean expired)
 		throws Exception {
 
-		FileEntry fileEntry =
-			DLAppTestUtil.addFileEntry(
-				group.getGroupId(), group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			group.getGroupId(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		User user = UserTestUtil.getAdminUser(fileEntry.getCompanyId());
 

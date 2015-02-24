@@ -14,10 +14,12 @@
 
 package com.liferay.portal.tools.sourceformatter.dependencies;
 
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -52,6 +54,21 @@ public class CombineLines extends SuperClass {
 		String test4 =
 			getString("test1", "test2", "test3") + getString("test4", "test5");
 
+		String test5 = getString(
+			"test1", "test2", "test3", "test4", "test5", "test6", "test7",
+			"test8", "test9", "test10", "test11", "test12", "test13", "test14",
+			"test15", "test16", "test17", "test18", "test19);
+
+		String test6 =
+			getString(
+				"test1", "test2", "test3", "test4", "test5", "test6", "test7",
+				"test8", "test9", "test10", "test11", "test12", "test13",
+				"test14", "test15", "test16", "test17", "test18", "test19) +
+			getString(
+				"test1", "test2", "test3", "test4", "test5", "test6", "test7",
+				"test8", "test9", "test10", "test11", "test12", "test13",
+				"test14", "test15", "test16", "test17", "test18", "test19);
+
 		List<String> testList = new ArrayList<>();
 
 		for (String test2 : testList) {
@@ -73,6 +90,16 @@ public class CombineLines extends SuperClass {
 			StringPool.GREATER_THAN_OR_EQUAL;
 
 		return stringWithAFairlyMediumLongName;
+	}
+
+	public Set<String> method5() {
+		Set<String> numbers = SetUtil.fromArray(
+			new String[] {
+				"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
+				"Nine", "Ten"
+			});
+
+		return numbers;
 	}
 
 }

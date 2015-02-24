@@ -31,10 +31,9 @@ public class SettingsDescriptorTest {
 	public void testGetAllKeys() {
 		Set<String> allKeys = _settingsDescriptor.getAllKeys();
 
-		Collection<String> expectedAllKeys =
-			Arrays.asList(
-				"boolean", "long", "string", "stringArray", "stringArray2",
-				"nonRenamedProperty");
+		Collection<String> expectedAllKeys = Arrays.asList(
+			"boolean", "long", "string", "stringArray", "stringArray2",
+			"nonRenamedProperty");
 
 		Assert.assertEquals(allKeys.size(), expectedAllKeys.size());
 		Assert.assertTrue(allKeys.containsAll(expectedAllKeys));
@@ -88,11 +87,11 @@ public class SettingsDescriptorTest {
 		}
 
 		public String[] getStringArray() {
-			return new String[]{};
+			return new String[0];
 		}
 
 		public String[] getStringArray2() {
-			return new String[]{};
+			return new String[0];
 		}
 
 	}

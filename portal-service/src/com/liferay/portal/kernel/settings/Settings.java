@@ -37,14 +37,19 @@ public interface Settings {
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.TYPE)
 	public @interface Config {
-		String[] ids();
+
+		public String[] ids();
+
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.METHOD)
 	public @interface Property {
-		String name() default "";
-		boolean ignore() default false;
+
+		public boolean ignore() default false;
+
+		public String name() default "";
+
 	}
 
 }

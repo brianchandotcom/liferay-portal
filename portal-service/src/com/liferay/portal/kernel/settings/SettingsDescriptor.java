@@ -53,7 +53,7 @@ public class SettingsDescriptor<T> {
 			Settings.Config settingsConfig = _settingsClass.getAnnotation(
 				Settings.Config.class);
 
-			for (String id : settingsConfig.ids()) {
+			for (String id : settingsConfig.settingsIds()) {
 				_ids.add(id);
 			}
 		}

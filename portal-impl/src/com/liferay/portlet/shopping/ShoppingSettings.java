@@ -38,7 +38,7 @@ import java.util.TreeSet;
  * @author Brian Wing Shun Chan
  * @author Eduardo Garcia
  */
-@Settings.Config(ids = ShoppingConstants.SERVICE_NAME)
+@Settings.Config(settingsIds = ShoppingConstants.SERVICE_NAME)
 public class ShoppingSettings {
 
 	public static final String CC_NONE = "none";

@@ -61,7 +61,7 @@ public class SettingsDescriptorTest {
 		Assert.assertTrue(multiValuedKeys.containsAll(expectedMultiValuedKeys));
 	}
 
-	@Settings.Config(ids = {"id.1", "id.2"})
+	@Settings.Config(settingsIds = {"id.1", "id.2"})
 	public class MockSettings {
 
 		public boolean getBoolean() {

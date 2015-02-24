@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * @author Adolfo Pérez
  */
-@Settings.Config(ids = DLConstants.SERVICE_NAME)
+@Settings.Config(settingsIds = DLConstants.SERVICE_NAME)
 public class DLSettings {
 
 	public static DLSettings getInstance(long groupId) throws PortalException {

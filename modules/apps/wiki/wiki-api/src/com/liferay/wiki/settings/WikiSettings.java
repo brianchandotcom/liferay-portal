@@ -22,7 +22,7 @@ import com.liferay.wiki.constants.WikiConstants;
 /**
  * @author Iván Zaera
  */
-@Settings.Config(ids = WikiConstants.SERVICE_NAME)
+@Settings.Config(settingsIds = WikiConstants.SERVICE_NAME)
 public class WikiSettings {
 
 	public WikiSettings(Settings settings) {

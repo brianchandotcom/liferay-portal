@@ -38,7 +38,7 @@ public interface Settings {
 	@Target(ElementType.TYPE)
 	public @interface Config {
 
-		public String[] ids();
+		public String[] settingsIds();
 
 	}
 

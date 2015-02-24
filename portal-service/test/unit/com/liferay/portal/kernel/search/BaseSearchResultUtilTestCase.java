@@ -31,8 +31,6 @@ import com.liferay.registry.RegistryUtil;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
-
 import org.junit.Assert;
 import org.junit.Before;
 
@@ -77,7 +75,7 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 	protected SearchResult assertOneSearchResult(Document document) {
 		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
-			portletURL, document);
+			document);
 
 		Assert.assertEquals(1, searchResults.size());
 
@@ -124,9 +122,6 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 	@Mock
 	protected Portal portal;
-
-	@Mock
-	protected PortletURL portletURL;
 
 	@Mock
 	protected Props props;

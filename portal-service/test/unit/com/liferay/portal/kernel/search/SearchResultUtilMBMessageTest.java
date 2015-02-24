@@ -160,7 +160,7 @@ public class SearchResultUtilMBMessageTest
 			_MB_MESSAGE_CLASS_NAME, SearchTestUtil.ENTRY_CLASS_PK + 1);
 
 		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
-			portletURL, document1, document2);
+			document1, document2);
 
 		Assert.assertEquals( 1, searchResults.size());
 

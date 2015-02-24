@@ -1986,6 +1986,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int tabDiff, boolean addToPreviousLine, boolean extraSpace,
 		boolean removeTabOnNextLine) {
 
+		int previousLineStartPos = getLineStartPos(content, lineCount - 1);
+
 		if (linePart == null) {
 			String combinedLine = previousLine;
 
@@ -2002,24 +2004,24 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if (removeTabOnNextLine) {
-				return StringUtil.replace(
-					content,
-					"\n" + previousLine + "\n" + line + "\n" + nextLine + "\n",
-					"\n" + combinedLine + "\n" + nextLine.substring(1) + "\n");
+				return StringUtil.replaceFirst(
+					content, previousLine + "\n" + line + "\n" + nextLine,
+					combinedLine + "\n" + nextLine.substring(1),
+					previousLineStartPos);
 			}
 
 			if (line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
 				(tabDiff != 0) && !previousLine.contains(" class ") &&
 				Validator.isNull(nextLine)) {
 
-				return StringUtil.replace(
-					content, "\n" + previousLine + "\n" + line + "\n",
-					"\n" + combinedLine);
+				return StringUtil.replaceFirst(
+					content, previousLine + "\n" + line + "\n", combinedLine,
+					previousLineStartPos);
 			}
 
-			return StringUtil.replace(
-				content, "\n" + previousLine + "\n" + line + "\n",
-				"\n" + combinedLine + "\n");
+			return StringUtil.replaceFirst(
+				content, previousLine + "\n" + line, combinedLine,
+				previousLineStartPos);
 		}
 
 		String firstLine = previousLine;
@@ -2056,9 +2058,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		firstLine = StringUtil.trimTrailing(firstLine);
 
-		return StringUtil.replace(
-			content, "\n" + previousLine + "\n" + line + "\n",
-			"\n" + firstLine + "\n" + secondLine + "\n");
+		return StringUtil.replaceFirst(
+			content, previousLine + "\n" + line, firstLine + "\n" + secondLine,
+			previousLineStartPos);
 	}
 
 	protected String getCombinedLinesContent(

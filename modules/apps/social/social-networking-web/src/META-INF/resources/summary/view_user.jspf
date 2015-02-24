@@ -160,7 +160,7 @@
 					</span>
 
 					<c:if test="<%= mbMessagesCount > 0 %>">
-						<div class="user-mb-message-post-count helper-clearfix">
+						<div class="helper-clearfix user-mb-message-post-count">
 							<c:choose>
 								<c:when test="<%= mbPlid != LayoutConstants.DEFAULT_PLID %>">
 									<span class="view-icon">
@@ -199,7 +199,7 @@
 					</c:if>
 
 					<c:if test="<%= blogsEntriesCount > 0 %>">
-						<div class="user-blog-entry-count helper-clearfix">
+						<div class="helper-clearfix user-blog-entry-count">
 							<c:choose>
 								<c:when test="<%= blogsPlid != LayoutConstants.DEFAULT_PLID %>">
 									<span class="view-icon">

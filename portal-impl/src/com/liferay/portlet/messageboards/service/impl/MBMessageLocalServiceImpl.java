@@ -896,6 +896,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			int status)
 		throws PortalException {
 
+		return getDiscussionMessageDisplay(
+			userId, groupId, className, classPK, status,
+			new MessageThreadComparator());
+	}
+
+	@Override
+	public MBMessageDisplay getDiscussionMessageDisplay(
+			long userId, long groupId, String className, long classPK,
+			int status, Comparator<MBMessage> messageThreadComparator)
+		throws PortalException {
+
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		MBMessage message = null;
@@ -943,7 +954,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		return getMessageDisplay(
 			userId, message, status, MBThreadConstants.THREAD_VIEW_COMBINATION,
-			false);
+			false, messageThreadComparator);
 	}
 
 	/**
@@ -1104,6 +1115,18 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			boolean includePrevAndNext)
 		throws PortalException {
 
+		return getMessageDisplay(
+			userId, message, status, threadView, includePrevAndNext,
+			new MessageThreadComparator());
+	}
+
+	@Override
+	public MBMessageDisplay getMessageDisplay(
+			long userId, MBMessage message, int status, String threadView,
+			boolean includePrevAndNext,
+			Comparator<MBMessage> messageThreadComparator)
+		throws PortalException {
+
 		MBCategory category = null;
 
 		if ((message.getCategoryId() !=
@@ -1174,7 +1197,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		return new MBMessageDisplayImpl(
 			message, parentMessage, category, thread, previousThread,
-			nextThread, status, threadView, this);
+			nextThread, status, threadView, this, messageThreadComparator);
 	}
 
 	@Override

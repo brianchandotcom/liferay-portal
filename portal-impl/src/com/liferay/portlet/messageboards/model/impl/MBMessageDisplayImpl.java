@@ -22,6 +22,8 @@ import com.liferay.portlet.messageboards.model.MBThreadConstants;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
+import java.util.Comparator;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
@@ -32,7 +34,8 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 		MBMessage message, MBMessage parentMessage, MBCategory category,
 		MBThread thread, MBThread previousThread, MBThread nextThread,
 		int status, String threadView,
-		MBMessageLocalService messageLocalService) {
+		MBMessageLocalService messageLocalService,
+		Comparator<MBMessage> comparator) {
 
 		_message = message;
 		_parentMessage = parentMessage;
@@ -41,7 +44,7 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 
 		if (!threadView.equals(MBThreadConstants.THREAD_VIEW_FLAT)) {
 			_treeWalker = new MBTreeWalkerImpl(
-				message.getThreadId(), status, messageLocalService);
+				message.getThreadId(), status, messageLocalService, comparator);
 		}
 		else {
 			_treeWalker = null;

@@ -24,20 +24,18 @@ int initialIndex = GetterUtil.getInteger(request.getAttribute("liferay-ui:discus
 int rootIndexPage = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:rootIndexPage"));
 long userId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:userId"));
 
-MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(userId, themeDisplay.getScopeGroupId(), className, classPK, WorkflowConstants.STATUS_ANY);
+MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(userId, themeDisplay.getScopeGroupId(), className, classPK, WorkflowConstants.STATUS_ANY, new MessageThreadComparator());
 
 MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 MBMessage rootMessage = treeWalker.getRoot();
 List<MBMessage> messages = treeWalker.getMessages();
 
-messages = ListUtil.copy(messages);
-
-messages.remove(0);
-
 List<Long> classPKs = new ArrayList<Long>();
 
 for (MBMessage curMessage : messages) {
-	classPKs.add(curMessage.getMessageId());
+	if (!curMessage.isRoot()) {
+		classPKs.add(curMessage.getMessageId());
+	}
 }
 
 List<RatingsEntry> ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(themeDisplay.getUserId(), MBDiscussion.class.getName(), classPKs);
@@ -45,7 +43,7 @@ List<RatingsStats> ratingsStatsList = RatingsStatsLocalServiceUtil.getStats(MBDi
 
 int[] range = treeWalker.getChildrenRange(rootMessage);
 
-for (;rootIndexPage < range[1] - 1; rootIndexPage++) {
+for (;rootIndexPage < range[1]; rootIndexPage++) {
 	if (index >= (initialIndex + PropsValues.DISCUSSION_COMMENTS_DELTA_VALUE)) {
 		break;
 	}
@@ -74,7 +72,7 @@ for (;rootIndexPage < range[1] - 1; rootIndexPage++) {
 	rootIndexPage.val('<%= String.valueOf(rootIndexPage) %>');
 	index.val('<%= String.valueOf(index) %>');
 
-	<c:if test="<%= messages.size() <= (index) %>">
+	<c:if test="<%= messages.size() <= (index + 1) %>">
 		var moreCommentsLink = $('#<%= namespace %>moreComments');
 
 		moreCommentsLink.hide();

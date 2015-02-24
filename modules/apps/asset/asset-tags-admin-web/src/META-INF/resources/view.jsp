@@ -137,7 +137,7 @@
 
 				var mergeURL = '<%= mergeURL %>';
 
-	            location.href = mergeURL.replace("/0000/", "/" + Util.listCheckedExcept(form, '<portlet:namespace />allRowIds') + "/");
+				location.href = mergeURL.replace("/0000/", "/" + Util.listCheckedExcept(form, '<portlet:namespace />allRowIds') + "/");
 			}
 			else {
 				alert('<liferay-ui:message arguments="<%= 2 %>" key="please-choose-at-least-x-tags" />');

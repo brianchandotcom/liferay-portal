@@ -91,10 +91,10 @@ if (layout != null) {
 						handles: Liferay.Data.PORTLET_TOUCH_DRAG_HANDLE_SELECTOR || ['.portlet-title-text'],
 					</c:when>
 					<c:when test="<%= !themeDisplay.isFreeformLayout() %>">
-						handles: ['.portlet-title-default', '.portlet-topper'],
+						handles: Liferay.Data.PORTLET_DRAG_HANDLE_SELECTOR || ['.portlet-title-default', '.portlet-topper'],
 					</c:when>
 					<c:otherwise>
-						handles: ['.portlet-header-bar', '.portlet-title-default', '.portlet-topper'],
+						handles: Liferay.Data.PORTLET_FREEFORM_DRAG_HANDLE_SELECTOR || ['.portlet-header-bar', '.portlet-title-default', '.portlet-topper'],
 					</c:otherwise>
 				</c:choose>
 

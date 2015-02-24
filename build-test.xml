@@ -1492,13 +1492,21 @@ go]]></replacevalue>
 		</if>
 	</target>
 
-	<target name="build-test-results-xml" depends="generate-test-properties">
+	<target name="build-test-results-xml">
 		<get-env-app-server />
 		<get-env-browser />
 		<get-env-database />
 		<get-env-java-jdk />
 		<get-env-liferay-portal />
 		<get-env-operating-system />
+
+		<get-testcase-property property.name="testray.component.names" />
+		<get-testcase-property property.name="testray.main.component.name" />
+		<get-testcase-property property.name="testray.testcase.description" />
+		<get-testcase-property property.name="testray.testcase.name" />
+		<get-testcase-property property.name="testray.testcase.priority" />
+		<get-testcase-property property.name="testray.testcase.product.edition" />
+
 		<get-testray-components />
 		<get-testray-logs />
 		<get-testray-project-name />

@@ -262,7 +262,7 @@ public class SAXReaderUtil {
 		String callerSignature = sb.toString();
 
 		for (String whitelistSignature : _XML_SECURITY_WHITELIST) {
-			if (whitelistSignature.startsWith(callerSignature)) {
+			if (callerSignature.startsWith(whitelistSignature)) {
 				return true;
 			}
 		}

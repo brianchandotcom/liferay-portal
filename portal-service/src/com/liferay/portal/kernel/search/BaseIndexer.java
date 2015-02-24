@@ -93,7 +93,6 @@ import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 /**
  * @author Brian Wing Shun Chan
@@ -345,8 +344,7 @@ public abstract class BaseIndexer implements Indexer {
 	 */
 	@Deprecated
 	@Override
-	public Summary getSummary(
-			Document document, Locale locale, String snippet)
+	public Summary getSummary(Document document, Locale locale, String snippet)
 		throws SearchException {
 
 		return getSummary(document, snippet, null, null);
@@ -362,8 +360,7 @@ public abstract class BaseIndexer implements Indexer {
 			Locale locale = getLocale(portletRequest);
 
 			Summary summary = doGetSummary(
-				document, locale, snippet, portletRequest,
-				portletResponse);
+				document, locale, snippet, portletRequest, portletResponse);
 
 			for (IndexerPostProcessor indexerPostProcessor :
 					_indexerPostProcessors) {

@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.search;
 
 import java.util.Locale;
 
-import javax.portlet.PortletURL;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Ryan Park

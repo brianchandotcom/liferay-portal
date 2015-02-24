@@ -14,12 +14,9 @@
 
 package com.liferay.portlet.directory.util;
 
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -31,7 +28,6 @@ import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 
 import javax.portlet.PortletURL;
 

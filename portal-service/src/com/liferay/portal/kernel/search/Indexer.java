@@ -21,7 +21,6 @@ import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 /**
  * @author Brian Wing Shun Chan
@@ -79,8 +78,7 @@ public interface Indexer {
 	 *             PortletRequest, PortletResponse)}
 	 */
 	@Deprecated
-	public Summary getSummary(
-			Document document, Locale locale, String snippet)
+	public Summary getSummary(Document document, Locale locale, String snippet)
 		throws SearchException;
 
 	public Summary getSummary(

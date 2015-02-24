@@ -31,9 +31,7 @@ import java.util.Locale;
  */
 public class Summary {
 
-	public Summary(
-		Locale locale, String title, String content) {
-
+	public Summary(Locale locale, String title, String content) {
 		_locale = locale;
 		_title = title;
 		_content = content;

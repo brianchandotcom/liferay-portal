@@ -41,7 +41,6 @@ import java.util.TimeZone;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 /**
  * @author Mate Thurzo

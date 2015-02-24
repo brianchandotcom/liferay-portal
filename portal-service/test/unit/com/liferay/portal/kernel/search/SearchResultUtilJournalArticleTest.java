@@ -62,8 +62,7 @@ public class SearchResultUtilJournalArticleTest
 			indexer
 		).getSummary(
 			(Document)Matchers.any(), Matchers.anyString(),
-			(PortletURL)Matchers.any(), (PortletRequest)Matchers.any(),
-			(PortletResponse)Matchers.any());
+			(PortletRequest)Matchers.any(), (PortletResponse)Matchers.any());
 
 		stub(
 			method(IndexerRegistryUtil.class, "getIndexer", String.class)
@@ -82,7 +81,7 @@ public class SearchResultUtilJournalArticleTest
 		Mockito.verify(
 			indexer
 		).getSummary(
-			document, StringPool.BLANK, portletURL, null, null
+			document, StringPool.BLANK, null, null
 		);
 	}
 

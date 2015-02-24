@@ -55,8 +55,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 	@Test
 	public void testNoDocuments() {
-		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
-			portletURL);
+		List<SearchResult> searchResults = SearchTestUtil.getSearchResults();
 
 		Assert.assertEquals(0, searchResults.size());
 	}
@@ -98,7 +97,6 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		Assert.assertEquals(
 			SearchResultUtil.SUMMARY_MAX_CONTENT_LENGTH,
 			summary.getMaxContentLength());
-		Assert.assertSame(portletURL, summary.getPortletURL());
 		Assert.assertEquals(SearchTestUtil.SUMMARY_TITLE, summary.getTitle());
 
 		assertSearchResult(searchResult);
@@ -141,7 +139,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		Document document2 = SearchTestUtil.createDocument(className);
 
 		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
-			portletURL, document1, document2);
+			document1, document2);
 
 		Assert.assertEquals(1, searchResults.size());
 

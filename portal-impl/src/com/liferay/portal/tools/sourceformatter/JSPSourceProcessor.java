@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -34,6 +35,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -1422,6 +1424,32 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			_jspContents.put(commonInitFileName, commonInitFileContent);
 		}
+	}
+
+	@Override
+	protected String sortHTMLAttributes(
+		String line, String value, String attributeAndValue) {
+
+		if (!value.matches("([-a-z]+ )+[-a-z]+")) {
+			return line;
+		}
+
+		List<String> htmlAttributes = ListUtil.fromArray(
+			StringUtil.split(value, StringPool.SPACE));
+
+		Collections.sort(htmlAttributes);
+
+		String newValue = StringUtil.merge(htmlAttributes, StringPool.SPACE);
+
+		if (value.equals(newValue)) {
+			return line;
+		}
+
+		String newAttributeAndValue = StringUtil.replace(
+			attributeAndValue, value, newValue);
+
+		return StringUtil.replace(
+			line, attributeAndValue, newAttributeAndValue);
 	}
 
 	protected String stripJSPImports(String fileName, String content)

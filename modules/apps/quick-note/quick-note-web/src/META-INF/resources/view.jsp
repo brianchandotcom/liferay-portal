@@ -34,8 +34,8 @@
 				</c:if>
 
 				<span class="note-color yellow"></span>
-				<span class="note-color green"></span>
-				<span class="note-color blue"></span>
+				<span class="green note-color"></span>
+				<span class="blue note-color"></span>
 				<span class="note-color red"></span>
 			</td>
 		</tr>

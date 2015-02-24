@@ -34,7 +34,7 @@ String scoreString = numberFormat.format(score);
 		<%= scoreString %> Stars
 	</c:when>
 	<c:otherwise>
-		<div class="taglib-ratings score" id="<%= randomNamespace %>averageRating">
+		<div class="score taglib-ratings" id="<%= randomNamespace %>averageRating">
 			<div class="helper-clearfix" id="<%= randomNamespace %>averageRatingContent">
 
 				<%

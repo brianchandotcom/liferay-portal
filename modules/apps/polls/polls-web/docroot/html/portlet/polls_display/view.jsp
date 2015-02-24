@@ -120,7 +120,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (hasConfigurationPermiss
 	redirectURL.setWindowState(LiferayWindowState.POP_UP);
 	%>
 
-	<div class="lfr-meta-actions icons-container">
+	<div class="icons-container lfr-meta-actions">
 		<div class="lfr-icon-actions">
 			<c:if test="<%= showEditPollIcon %>">
 				<liferay-portlet:renderURL doAsGroupId="<%= scopeGroupId %>" plid="<%= controlPanelPlid %>" portletName="<%= PollsPortletKeys.POLLS %>" refererPlid="<%= plid %>" var="editQuestionURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

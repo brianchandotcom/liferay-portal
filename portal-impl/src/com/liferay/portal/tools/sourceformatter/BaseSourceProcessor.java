@@ -1387,7 +1387,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String currentAttributeAndValue = sb.toString();
 
-			String newLine = formatTagAttributeType(
+			String newLine = sortHTMLAttributes(
+				line, value, currentAttributeAndValue);
+
+			if (!newLine.equals(line)) {
+				return sortAttributes(
+					fileName, newLine, lineCount, allowApostropheDelimeter);
+			}
+
+			newLine = formatTagAttributeType(
 				line, tag, currentAttributeAndValue);
 
 			if (!newLine.equals(line)) {
@@ -1435,6 +1443,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				previousAttributeAndValue = currentAttributeAndValue;
 			}
 		}
+	}
+
+	protected String sortHTMLAttributes(
+		String line, String value, String attributeAndValue) {
+
+		return line;
 	}
 
 	protected String stripRedundantParentheses(String s) {

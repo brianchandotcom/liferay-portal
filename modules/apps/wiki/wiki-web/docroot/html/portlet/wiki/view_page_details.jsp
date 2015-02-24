@@ -52,7 +52,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 	<liferay-util:param name="tabs1" value="details" />
 </liferay-util:include>
 
-<table class="table table-bordered table-hover table-striped page-info">
+<table class="page-info table table-bordered table-hover table-striped">
 <tr>
 	<th class="table-header">
 		<liferay-ui:message key="title" />

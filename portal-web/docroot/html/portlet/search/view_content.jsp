@@ -34,7 +34,7 @@ AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
 			<%
 			PortletURL redirectURL = renderResponse.createRenderURL();
 
-			redirectURL.setParameter("struts_action", "/search/edit_content_redirect");
+			redirectURL.setParameter("mvcPath", "/html/portlet/search/edit_content_redirect.jsp");
 
 			PortletURL editPortletURL = assetRenderer.getURLEdit((LiferayPortletRequest)renderRequest, (LiferayPortletResponse)renderResponse, LiferayWindowState.POP_UP, redirectURL);
 

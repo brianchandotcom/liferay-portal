@@ -23,7 +23,7 @@ PortletURLImpl searchURL = new PortletURLImpl(request, PortletKeys.SEARCH, theme
 
 searchURL.setEscapeXml(true);
 
-searchURL.setParameter("struts_action", "/search/search");
+searchURL.setParameter("mvcPath", "/html/portlet/search/search.jsp");
 searchURL.setParameter("groupId", String.valueOf(groupId));
 
 response.setContentType(ContentTypes.TEXT_XML_UTF8);

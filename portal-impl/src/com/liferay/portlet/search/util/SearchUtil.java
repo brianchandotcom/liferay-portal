@@ -165,7 +165,8 @@ public class SearchUtil extends Action {
 
 		PortletURL viewContentURL = renderResponse.createRenderURL();
 
-		viewContentURL.setParameter("struts_action", "/search/view_content");
+		viewContentURL.setParameter(
+			"mvcPath", "/html/portlet/search/view_content.jsp");
 		viewContentURL.setParameter("redirect", currentURL);
 		viewContentURL.setPortletMode(PortletMode.VIEW);
 		viewContentURL.setWindowState(WindowState.MAXIMIZED);

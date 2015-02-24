@@ -23,7 +23,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/search/search");
+portletURL.setParameter("mvcPath", "/html/portlet/search/search.jsp");
 portletURL.setParameter("redirect", currentURL);
 portletURL.setPortletMode(PortletMode.VIEW);
 portletURL.setWindowState(WindowState.MAXIMIZED);

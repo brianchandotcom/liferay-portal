@@ -2551,6 +2551,8 @@ axis.servlet.hosts.allowed=
 
 tunnel.servlet.hosts.allowed=</echo>
 
+		<get-testcase-property property.name="cluster.enabled" />
+
 		<if>
 			<equals arg1="${cluster.enabled}" arg2="true" />
 			<then>
@@ -2621,6 +2623,8 @@ ${custom.properties}</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="database.jndi.enabled" />
+
 		<if>
 			<equals arg1="${database.jndi.enabled}" arg2="true" />
 			<then>
@@ -2630,6 +2634,8 @@ ${custom.properties}</echo>
 				</replace>
 			</then>
 		</if>
+
+		<get-testcase-property property.name="database.sharding" />
 
 		<if>
 			<and>
@@ -2711,6 +2717,8 @@ portal.security.manager.strategy=liferay</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="mobile.device.enabled" />
+
 		<if>
 			<equals arg1="${mobile.device.enabled}" arg2="true" />
 			<then>
@@ -2719,6 +2727,8 @@ portal.security.manager.strategy=liferay</echo>
 virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}</echo>
 			</then>
 		</if>
+
+		<get-testcase-property property.name="portal.version" />
 
 		<propertyregex
 			input="${portal.version}"
@@ -2905,6 +2915,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
+		<get-testcase-property property.name="captcha.max.challenges" />
+
 		<if>
 			<isset property="captcha.max.challenges" />
 			<then>
@@ -2927,6 +2939,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				<replace file="portal-impl/src/portal-ext.properties" token="permissions.view.dynamic.inheritance=false" value="" />
 			</then>
 		</if>
+
+		<get-testcase-property property.name="setup.wizard.enabled" />
 
 		<if>
 			<equals arg1="${setup.wizard.enabled}" arg2="true" />

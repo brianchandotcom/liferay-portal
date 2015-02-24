@@ -14,6 +14,8 @@
 
 package com.liferay.portal.sso.opensso.auth;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,6 +37,7 @@ import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.security.sso.OpenSSO;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.sso.opensso.configuration.OpenSSOConfiguration;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -46,13 +49,27 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Prashant Dighe
  */
+@Component(
+	configurationPid = "com.liferay.portal.sso.opensso.configuration.OpenSSOConfiguration",
+	immediate = true, service = AutoLogin.class
+)
 public class OpenSSOAutoLogin extends BaseAutoLogin {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_openSSOConfiguration = Configurable.createConfigurable(
+			OpenSSOConfiguration.class, properties);
+	}
 
 	protected User addUser(
 			long companyId, String firstName, String lastName,
@@ -98,7 +115,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 
 		if (!PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED,
-				PropsValues.OPEN_SSO_AUTH_ENABLED)) {
+				_openSSOConfiguration.enabled())) {
 
 			return null;
 		}
@@ -110,21 +127,18 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 			return null;
 		}
 
-		boolean ldapImportEnabled = PrefsPropsUtil.getBoolean(
-			companyId, PropsKeys.OPEN_SSO_LDAP_IMPORT_ENABLED,
-			PropsValues.OPEN_SSO_LDAP_IMPORT_ENABLED);
 		String screenNameAttr = PrefsPropsUtil.getString(
 			companyId, PropsKeys.OPEN_SSO_SCREEN_NAME_ATTR,
-			PropsValues.OPEN_SSO_SCREEN_NAME_ATTR);
+			_openSSOConfiguration.screenNameAttr());
 		String emailAddressAttr = PrefsPropsUtil.getString(
 			companyId, PropsKeys.OPEN_SSO_EMAIL_ADDRESS_ATTR,
-			PropsValues.OPEN_SSO_EMAIL_ADDRESS_ATTR);
+			_openSSOConfiguration.emailAddressAttr());
 		String firstNameAttr = PrefsPropsUtil.getString(
 			companyId, PropsKeys.OPEN_SSO_FIRST_NAME_ATTR,
-			PropsValues.OPEN_SSO_FIRST_NAME_ATTR);
+			_openSSOConfiguration.firstNameAttr());
 		String lastNameAttr = PrefsPropsUtil.getString(
 			companyId, PropsKeys.OPEN_SSO_LAST_NAME_ATTR,
-			PropsValues.OPEN_SSO_LAST_NAME_ATTR);
+			_openSSOConfiguration.lastNameAttr());
 
 		Map<String, String> nameValues = _openSSO.getAttributes(
 			request, serviceUrl);
@@ -158,7 +172,10 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 			}
 		}
 
-		if (ldapImportEnabled) {
+		if (PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.OPEN_SSO_LDAP_IMPORT_ENABLED,
+				_openSSOConfiguration.importFromLDAP())) {
+
 			try {
 				String authType = PrefsPropsUtil.getString(
 					companyId, PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
@@ -244,5 +261,6 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		OpenSSOAutoLogin.class);
 
 	private OpenSSO _openSSO;
+	private volatile OpenSSOConfiguration _openSSOConfiguration;
 
 }

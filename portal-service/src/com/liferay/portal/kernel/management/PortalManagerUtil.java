@@ -88,7 +88,8 @@ public class PortalManagerUtil {
 			futureClusterResponses.get();
 
 		ClusterNodeResponse clusterNodeResponse =
-			clusterNodeResponses.getClusterResponse(clusterNode);
+			clusterNodeResponses.getClusterResponse(
+				clusterNode.getClusterNodeId());
 
 		return (T)clusterNodeResponse.getResult();
 	}

@@ -50,10 +50,6 @@ public class ClusterNodeResponses implements Serializable {
 		return false;
 	}
 
-	public ClusterNodeResponse getClusterResponse(ClusterNode clusterNode) {
-		return getClusterResponse(clusterNode.getClusterNodeId());
-	}
-
 	public ClusterNodeResponse getClusterResponse(String clusterNodeId) {
 		return _clusterResponsesByClusterNode.get(clusterNodeId);
 	}

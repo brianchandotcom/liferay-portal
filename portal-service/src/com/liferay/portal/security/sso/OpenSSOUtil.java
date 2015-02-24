@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.sso.opensso;
+package com.liferay.portal.security.sso;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;

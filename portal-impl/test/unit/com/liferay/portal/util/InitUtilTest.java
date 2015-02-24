@@ -14,8 +14,13 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.test.rule.LogAssertionTestRule;
+
 import java.util.Arrays;
 
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -25,10 +30,29 @@ public class InitUtilTest {
 
 	@Test
 	public void testBaseSeleniumTestCaseSpringConfigs() {
-		InitUtil.initWithSpring(
-			Arrays.asList(
-				"META-INF/management-spring.xml", "META-INF/util-spring.xml"),
-			true);
+		String property = SystemProperties.get("log4j.configure.on.startup");
+
+		SystemProperties.set("log4j.configure.on.startup", StringPool.FALSE);
+
+		try {
+			InitUtil.initWithSpring(
+				Arrays.asList(
+					"META-INF/management-spring.xml",
+					"META-INF/util-spring.xml"),
+				true);
+		}
+		finally {
+			if (property == null) {
+				SystemProperties.clear("log4j.configure.on.startup");
+			}
+			else {
+				SystemProperties.set("log4j.configure.on.startup", property);
+			}
+		}
 	}
+
+	@Rule
+	public LogAssertionTestRule logAssertionTestRule =
+		LogAssertionTestRule.INSTANCE;
 
 }

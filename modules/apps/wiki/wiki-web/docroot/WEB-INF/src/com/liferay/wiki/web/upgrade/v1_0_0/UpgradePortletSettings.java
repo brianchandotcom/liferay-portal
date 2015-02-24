@@ -31,7 +31,7 @@ public class UpgradePortletSettings
 		upgradeMainPortlet(
 			WikiPortletKeys.WIKI, WikiConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-			WikiPortletInstanceSettings.ALL_KEYS, WikiSettings.ALL_KEYS);
+			WikiPortletInstanceSettings.class, WikiSettings.class);
 	}
 
 }

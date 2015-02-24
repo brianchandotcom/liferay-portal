@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 		"javax.portlet.init-param.view-template=/wall/view.jsp",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.supports.mime-type=text/html",
-		"javax.portlet.resource-bundle=content.Language.properties",
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.info.title=Wall", "javax.portlet.info.short-title=Wall",
 		"javax.portlet.keywords=Wall",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user"

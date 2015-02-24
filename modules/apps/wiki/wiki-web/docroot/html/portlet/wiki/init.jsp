@@ -47,6 +47,7 @@ page import="com.liferay.wiki.service.WikiPageServiceUtil" %><%@
 page import="com.liferay.wiki.service.permission.WikiNodePermission" %><%@
 page import="com.liferay.wiki.service.permission.WikiPagePermission" %><%@
 page import="com.liferay.wiki.service.permission.WikiPermission" %><%@
+page import="com.liferay.wiki.settings.WikiPortletInstanceSettings" %><%@
 page import="com.liferay.wiki.settings.WikiSettings" %><%@
 page import="com.liferay.wiki.social.WikiActivityKeys" %><%@
 page import="com.liferay.wiki.util.WikiCacheUtil" %><%@
@@ -58,7 +59,6 @@ page import="com.liferay.wiki.web.display.context.logic.WikiPortletInstanceSetti
 page import="com.liferay.wiki.web.display.context.logic.WikiVisualizationHelper" %><%@
 page import="com.liferay.wiki.web.display.context.util.WikiRequestHelper" %><%@
 page import="com.liferay.wiki.web.display.context.util.WikiURLHelper" %><%@
-page import="com.liferay.wiki.web.settings.WikiPortletInstanceSettings" %><%@
 page import="com.liferay.wiki.web.settings.WikiWebSettingsProvider" %>
 
 <%

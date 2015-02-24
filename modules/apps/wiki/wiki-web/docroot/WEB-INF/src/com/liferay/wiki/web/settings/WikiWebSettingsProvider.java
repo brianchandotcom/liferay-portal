@@ -14,8 +14,10 @@
 
 package com.liferay.wiki.web.settings;
 
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
 import com.liferay.portal.kernel.settings.SettingsProvider;
 import com.liferay.wiki.configuration.WikiConfiguration;
+import com.liferay.wiki.settings.WikiPortletInstanceSettings;
 import com.liferay.wiki.settings.WikiSettings;
 
 import org.osgi.service.component.annotations.Activate;
@@ -37,6 +39,12 @@ public class WikiWebSettingsProvider {
 
 	public WikiConfiguration getWikiConfiguration() {
 		return _wikiConfiguration;
+	}
+
+	public PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
+		getWikiPortletInstanceSettingsProvider() {
+
+		return _wikiPortletInstanceSettingsProvider;
 	}
 
 	public SettingsProvider<WikiSettings> getWikiSettingsProvider() {
@@ -67,6 +75,17 @@ public class WikiWebSettingsProvider {
 		_wikiConfiguration = wikiConfiguration;
 	}
 
+	@Reference(
+		target = "(class.name=com.liferay.wiki.settings.WikiPortletInstanceSettings)"
+	)
+	protected void setWikiPortletInstanceSettingsProvider(
+		PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
+			wikiPortletInstanceSettingsProvider) {
+
+		_wikiPortletInstanceSettingsProvider =
+			wikiPortletInstanceSettingsProvider;
+	}
+
 	protected void unsetSettingsProvider(
 		SettingsProvider<WikiSettings> settingsProvider) {
 
@@ -77,8 +96,17 @@ public class WikiWebSettingsProvider {
 		_wikiConfiguration = null;
 	}
 
+	protected void unsetWikiPortletIntanceSettingsProvider(
+		PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
+			wikiPortletIntanceSettingsProvider) {
+
+		_wikiPortletInstanceSettingsProvider = null;
+	}
+
 	private static WikiWebSettingsProvider _wikiWebSettingsProvider;
 
+	private PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
+		_wikiPortletInstanceSettingsProvider;
 	private SettingsProvider<WikiSettings> _settingsProvider;
 	private WikiConfiguration _wikiConfiguration;
 

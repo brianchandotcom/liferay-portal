@@ -19,18 +19,29 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.search.web.constants.SearchPortletKeys;
 import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Alexander Chow
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + SearchPortletKeys.SEARCH
+	},
+	service = ConfigurationAction.class
+)
 public class SearchConfigurationAction extends DefaultConfigurationAction {
 
 	@Override

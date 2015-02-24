@@ -776,4 +776,16 @@
 			<var name="unitType" value="Length" />
 		</execute>
 	</command>
+
+	<command name="ImportCorruptedFile" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Bookmarks" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="cannotImport" value="true" />
+			<var name="larFileName" value="bookmarks-corrupted.portlet.lar" />
+			<var name="uploadFrom" value="dependencies" />
+		</execute>
+	</command>
 </definition>

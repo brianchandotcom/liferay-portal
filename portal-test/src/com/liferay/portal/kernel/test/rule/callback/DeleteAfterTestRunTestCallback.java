@@ -305,11 +305,10 @@ public class DeleteAfterTestRunTestCallback
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteAfterTestRunTestCallback.class);
 
-	private static final Set<Class<?>> _orderedClasses =
-		new LinkedHashSet<>(
-			Arrays.<Class<?>>asList(
-				User.class, Organization.class, Role.class, UserGroup.class,
-				Group.class, LayoutPrototype.class, LayoutSetPrototype.class,
-				Company.class));
+	private static final Set<Class<?>> _orderedClasses = new LinkedHashSet<>(
+		Arrays.<Class<?>>asList(
+			User.class, Organization.class, Role.class, UserGroup.class,
+			Group.class, LayoutPrototype.class, LayoutSetPrototype.class,
+			Company.class));
 
 }

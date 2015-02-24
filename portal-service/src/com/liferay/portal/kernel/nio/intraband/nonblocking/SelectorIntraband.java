@@ -218,10 +218,9 @@ public class SelectorIntraband extends BaseIntraband {
 		}
 	}
 
-	protected static final ThreadFactory threadFactory =
-		new NamedThreadFactory(
-			SelectorIntraband.class + ".threadFactory", Thread.NORM_PRIORITY,
-			SelectorIntraband.class.getClassLoader());
+	protected static final ThreadFactory threadFactory = new NamedThreadFactory(
+		SelectorIntraband.class + ".threadFactory", Thread.NORM_PRIORITY,
+		SelectorIntraband.class.getClassLoader());
 
 	protected final Thread pollingThread = threadFactory.newThread(
 		new PollingJob());

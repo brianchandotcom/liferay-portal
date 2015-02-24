@@ -66,10 +66,8 @@ public class InvokerFilterContainerImpl
 			"(&(javax.portlet.name=" + rootPortletId + ")(objectClass=" +
 				PortletFilter.class.getName() + "))");
 
-		_serviceTracker =
-			registry.trackServices(
-				filter,
-				new PortletFilterServiceTrackerCustomizer(portletContext));
+		_serviceTracker = registry.trackServices(
+			filter, new PortletFilterServiceTrackerCustomizer(portletContext));
 
 		_serviceTracker.open();
 

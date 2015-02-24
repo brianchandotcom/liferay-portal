@@ -347,10 +347,9 @@ public class InputAssetLinksDisplayContext {
 		ClassTypeReader classTypeReader =
 			assetRendererFactory.getClassTypeReader();
 
-		List<ClassType> classTypes =
-			classTypeReader.getAvailableClassTypes(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
-				_themeDisplay.getLocale());
+		List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
+			_themeDisplay.getLocale());
 
 		if (classTypes.isEmpty()) {
 			return Collections.emptyList();

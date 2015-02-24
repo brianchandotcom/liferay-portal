@@ -173,10 +173,9 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 	}
 
 	protected List<SocialActivity> getActivities() throws Exception {
-		List<SocialActivity> activities =
-			new ArrayList<SocialActivity>(
-				SocialActivityLocalServiceUtil.getGroupActivities(
-					group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+		List<SocialActivity> activities = new ArrayList<SocialActivity>(
+			SocialActivityLocalServiceUtil.getGroupActivities(
+				group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
 		Collections.reverse(activities);
 

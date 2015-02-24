@@ -389,10 +389,8 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 		channelHub.unregisterChannelListener(userId, channelListener);
 	}
 
-	private static final MethodKey _destroyChannelMethodKey =
-		new MethodKey(
-			ChannelHubManagerUtil.class, "destroyChannel", long.class,
-			long.class);
+	private static final MethodKey _destroyChannelMethodKey = new MethodKey(
+		ChannelHubManagerUtil.class, "destroyChannel", long.class, long.class);
 	private static final MethodKey _storeNotificationEventMethodKey =
 		new MethodKey(
 			ChannelHubManagerUtil.class, "storeNotificationEvent", long.class,

@@ -153,10 +153,9 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 				new CallbackConfiguration(
 					ClusterLinkCallbackFactory.INSTANCE, new Properties());
 
-			defaultPortalCacheConfiguration =
-				new PortalCacheConfiguration(
-					PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME,
-					cacheListenerConfigurations, bootstrapLoaderConfiguration);
+			defaultPortalCacheConfiguration = new PortalCacheConfiguration(
+				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME,
+				cacheListenerConfigurations, bootstrapLoaderConfiguration);
 		}
 
 		return new PortalCacheManagerConfiguration(

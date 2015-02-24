@@ -962,10 +962,8 @@ public class UsersAdminImpl implements UsersAdmin {
 			return Collections.emptyList();
 		}
 
-		Set<UserGroupRole> userGroupRoles =
-			new HashSet<UserGroupRole>(
-				UserGroupRoleLocalServiceUtil.getUserGroupRoles(
-					user.getUserId()));
+		Set<UserGroupRole> userGroupRoles = new HashSet<>(
+			UserGroupRoleLocalServiceUtil.getUserGroupRoles(user.getUserId()));
 
 		userGroupRoles.addAll(
 			getUserGroupRoles(

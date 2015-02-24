@@ -148,10 +148,9 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 
 		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(classPK);
 
-		List<JournalArticle> articles =
-			JournalArticleLocalServiceUtil.search(
-				folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
-				start, end);
+		List<JournalArticle> articles = JournalArticleLocalServiceUtil.search(
+			folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
+			start, end);
 
 		for (JournalArticle article : articles) {
 			TrashHandler trashHandler =
@@ -191,10 +190,9 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 
 		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(classPK);
 
-		List<JournalFolder> folders =
-			JournalFolderLocalServiceUtil.getFolders(
-				folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
-				start, end);
+		List<JournalFolder> folders = JournalFolderLocalServiceUtil.getFolders(
+			folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
+			start, end);
 
 		for (JournalFolder curFolder : folders) {
 			TrashHandler trashHandler =

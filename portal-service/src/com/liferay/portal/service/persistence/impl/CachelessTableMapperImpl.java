@@ -46,12 +46,11 @@ public class CachelessTableMapperImpl
 			tableName, leftColumnName, rightColumnName, leftBasePersistence,
 			rightBasePersistence);
 
-		getTableMappingSqlQuery =
-			MappingSqlQueryFactoryUtil.getMappingSqlQuery(
-				leftBasePersistence.getDataSource(),
-				"SELECT * FROM " + tableName + " WHERE " + leftColumnName +
-					" = ? AND " + rightColumnName + " = ?",
-				new int[] {Types.BIGINT, Types.BIGINT}, RowMapper.COUNT);
+		getTableMappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(
+			leftBasePersistence.getDataSource(),
+			"SELECT * FROM " + tableName + " WHERE " + leftColumnName +
+				" = ? AND " + rightColumnName + " = ?",
+			new int[] {Types.BIGINT, Types.BIGINT}, RowMapper.COUNT);
 
 		leftToRightPortalCache = new DummyPortalCache(
 			leftToRightPortalCache.getName(),

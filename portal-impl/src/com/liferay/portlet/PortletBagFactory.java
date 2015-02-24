@@ -703,10 +703,9 @@ public class PortletBagFactory {
 		throws Exception {
 
 		ServiceTrackerList<StagedModelDataHandler<?>>
-			stagedModelDataHandlerInstances =
-				getServiceTrackerList(
-					(Class<StagedModelDataHandler<?>>)(Class<?>)
-						StagedModelDataHandler.class, portlet);
+			stagedModelDataHandlerInstances = getServiceTrackerList(
+				(Class<StagedModelDataHandler<?>>)(Class<?>)
+					StagedModelDataHandler.class, portlet);
 
 		List<String> stagedModelDataHandlerClasses =
 			portlet.getStagedModelDataHandlerClasses();

@@ -345,11 +345,10 @@ public class AssetCategoryLocalServiceImpl
 	public void deleteVocabularyCategories(long vocabularyId)
 		throws PortalException {
 
-		List<AssetCategory> categories =
-			assetCategoryPersistence.findByP_V(
-				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, vocabularyId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new AssetCategoryLeftCategoryIdComparator(false));
+		List<AssetCategory> categories = assetCategoryPersistence.findByP_V(
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, vocabularyId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new AssetCategoryLeftCategoryIdComparator(false));
 
 		assetCategoryLocalService.deleteCategories(categories);
 	}

@@ -139,11 +139,10 @@ public class RPCUtilTest {
 
 		// Channel closed failure, no match key
 
-		Attribute<AsyncBroker<Long, String>> attribute =
-			_embeddedChannel.attr(
-				ReflectionTestUtil.
-					<AttributeKey<AsyncBroker<Long, String>>>getFieldValue(
-						NettyChannelAttributes.class, "_asyncBrokerKey"));
+		Attribute<AsyncBroker<Long, String>> attribute = _embeddedChannel.attr(
+			ReflectionTestUtil.
+				<AttributeKey<AsyncBroker<Long, String>>>getFieldValue(
+					NettyChannelAttributes.class, "_asyncBrokerKey"));
 
 		final AtomicLong keyRef = new AtomicLong();
 

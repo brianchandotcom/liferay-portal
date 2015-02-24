@@ -44,10 +44,8 @@ public class BaseIntrabandPortalCacheManagerTest {
 			BaseIntrabandPortalCacheManager.class,
 			PortalCacheManager.class.getName());
 
-		Constructor<?> constructor =
-			stubClass.getConstructor(
-				String.class, RegistrationReference.class,
-				ExceptionHandler.class);
+		Constructor<?> constructor = stubClass.getConstructor(
+			String.class, RegistrationReference.class, ExceptionHandler.class);
 
 		PortalCacheManager<?, ?> portalCacheManager =
 			(PortalCacheManager<?, ?>)constructor.newInstance(

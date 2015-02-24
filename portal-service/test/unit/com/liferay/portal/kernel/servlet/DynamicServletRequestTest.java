@@ -37,10 +37,9 @@ public class DynamicServletRequestTest {
 		String queryString = PortletParameterUtil.addNamespace(
 			"15", StringPool.BLANK);
 
-		HttpServletRequest request =
-			DynamicServletRequest.addQueryString(
-				new MockHttpServletRequest(),
-				Collections.<String, String[]>emptyMap(), queryString, false);
+		HttpServletRequest request = DynamicServletRequest.addQueryString(
+			new MockHttpServletRequest(),
+			Collections.<String, String[]>emptyMap(), queryString, false);
 
 		Map<String, String[]> parameterMap = request.getParameterMap();
 
@@ -54,10 +53,9 @@ public class DynamicServletRequestTest {
 		String queryString = PortletParameterUtil.addNamespace(
 			"15", "param1=value1&param2=value2&param3=value3");
 
-		HttpServletRequest request =
-			DynamicServletRequest.addQueryString(
-				new MockHttpServletRequest(),
-				Collections.<String, String[]>emptyMap(), queryString, false);
+		HttpServletRequest request = DynamicServletRequest.addQueryString(
+			new MockHttpServletRequest(),
+			Collections.<String, String[]>emptyMap(), queryString, false);
 
 		Map<String, String[]> parameterMap = request.getParameterMap();
 

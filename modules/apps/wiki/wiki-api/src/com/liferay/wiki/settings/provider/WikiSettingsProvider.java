@@ -66,8 +66,7 @@ public class WikiSettingsProvider implements SettingsProvider<WikiSettings> {
 	@Activate
 	protected void activate() {
 		_settingsFactory.registerSettingsMetadata(
-			WikiSettings.class, _wikiConfiguration,
-			WikiSettings.getFallbackKeys());
+			WikiSettings.class, _wikiConfiguration, null);
 	}
 
 	@Reference(unbind = "-")

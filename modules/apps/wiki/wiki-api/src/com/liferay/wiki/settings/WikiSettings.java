@@ -14,11 +14,9 @@
 
 package com.liferay.wiki.settings;
 
-import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.wiki.constants.WikiConstants;
 
 /**
@@ -26,16 +24,6 @@ import com.liferay.wiki.constants.WikiConstants;
  */
 @Settings.Config(ids = WikiConstants.SERVICE_NAME)
 public class WikiSettings {
-
-	public static FallbackKeys getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
-
-		fallbackKeys.add(
-			"emailFromAddress", PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		fallbackKeys.add("emailFromName", PropsKeys.ADMIN_EMAIL_FROM_NAME);
-
-		return fallbackKeys;
-	}
 
 	public WikiSettings(Settings settings) {
 		_typedSettings = new TypedSettings(settings);

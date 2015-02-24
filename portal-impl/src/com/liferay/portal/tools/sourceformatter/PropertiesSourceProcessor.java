@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.ContentUtil;
 
@@ -40,8 +41,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!portalSource && fileName.endsWith("portlet.properties")) {
-			return formatPortletProperties(content);
+		if (fileName.endsWith("portlet.properties")) {
+			return formatPortletProperties(fileName, content);
 		}
 
 		if (fileName.endsWith("source-formatter.properties")) {
@@ -63,7 +64,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		if (portalSource) {
 			includes = new String[] {
 				"**\\portal-ext.properties", "**\\portal-legacy-*.properties",
-				"**\\source-formatter.properties"
+				"**\\portlet.properties", "**\\source-formatter.properties"
 			};
 		}
 		else {
@@ -163,11 +164,65 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String formatPortletProperties(String content) {
+	protected String formatPortletProperties(String fileName, String content)
+		throws Exception {
+
 		if (!content.contains("include-and-override=portlet-ext.properties")) {
 			content =
 				"include-and-override=portlet-ext.properties" + "\n\n" +
 					content;
+		}
+
+		if (!portalSource) {
+			return content;
+		}
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+			int lineCount = 0;
+
+			String line = null;
+
+			String previousProperty = StringPool.BLANK;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineCount++;
+
+				if (lineCount == 1) {
+					continue;
+				}
+
+				if (line.startsWith(StringPool.POUND) ||
+					line.startsWith(StringPool.SPACE) ||
+					line.startsWith(StringPool.TAB)) {
+
+					continue;
+				}
+
+				int pos = line.indexOf(StringPool.EQUAL);
+
+				if (pos == -1) {
+					continue;
+				}
+
+				String property = StringUtil.trim(line.substring(0, pos));
+
+				pos = property.indexOf(StringPool.OPEN_BRACKET);
+
+				if (pos != -1) {
+					property = property.substring(0, pos);
+				}
+
+				if (Validator.isNotNull(previousProperty) &&
+					(previousProperty.compareToIgnoreCase(property) > 0)) {
+
+					processErrorMessage(
+						fileName, "sort: " + fileName + " " + lineCount);
+				}
+
+				previousProperty = property;
+			}
 		}
 
 		return content;

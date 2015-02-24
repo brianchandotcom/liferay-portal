@@ -270,6 +270,10 @@ int messagesCount = messages.size();
 				<portlet:namespace />sendMessage(form);
 			}
 
+			function <%= randomNamespace %>hideDiscussionMessage(messageId) {
+				document.getElementById(messageId).style.display = 'none';
+			}
+
 			function <%= randomNamespace %>hideForm(rowId) {
 				var form = AUI.$('#' + rowId);
 
@@ -392,6 +396,10 @@ int messagesCount = messages.size();
 						}
 					}
 				);
+			}
+
+			function <%= randomNamespace %>showDiscussionMessage(messageId) {
+				document.getElementById(messageId).style.display = 'block';
 			}
 
 			function <%= randomNamespace %>showEditor(editorName, formId) {

@@ -52,6 +52,14 @@
 			clip: rect(auto auto auto auto);
 			position: static;
 		}
+
+		.lfr-discussion-form-edit .alloy-editor-placeholder {
+			border-left: 2px solid transparent;
+
+			p {
+				margin-bottom : 10px;
+			}
+		}
 	}
 
 	.lfr-discussion-details {
@@ -264,5 +272,9 @@
 	.lfr-discussion-form-container .lfr-discussion-form {
 		background: #DDD;
 		border-radius: 4px;
+	}
+
+	.lfr-discussion-form-edit .alloy-editor-placeholder {
+		border-left-color: #DBDDE1;
 	}
 }

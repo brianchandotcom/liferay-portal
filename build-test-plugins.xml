@@ -120,7 +120,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 							<then>
 								<get-auto-deploy-dir />
 
-								<copy file="${plugin.war}" todir="${auto.deploy.deploy}" />
+								<copy file="${plugin.war}" todir="${auto.deploy.dir}" />
 
 								<var name="plugin.war" unset="true" />
 							</then>

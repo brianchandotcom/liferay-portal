@@ -124,6 +124,24 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-auto-deploy-dir">
+		<sequential>
+			<var name="auto.deploy.dir" unset="true" />
+
+			<get-testcase-property property.name="plugins.deployment.type" />
+
+			<if>
+				<equals arg1="${plugins.deployment.type}" arg2="osgi" />
+				<then>
+					<var name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+				</then>
+				<else>
+					<var name="auto.deploy.dir" value="${liferay.home}/deploy" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-database-property">
 		<attribute name="property.name" />
 
@@ -4363,6 +4381,14 @@ if (ppstate.equals("normal")) {
 				<get dest="${testray.logs.dir}/console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
 			</then>
 		</if>
+	</target>
+
+	<target name="remove-plugin">
+		<get-auto-deploy-dir />
+
+		<delete>
+			<fileset dir="${auto.deploy.dir}" includes="${plugin.name}-*.war" />
+		</delete>
 	</target>
 
 	<target name="replace-file">

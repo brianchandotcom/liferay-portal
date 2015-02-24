@@ -626,6 +626,8 @@
 
 	<macrodef name="prepare-additional-bundles">
 		<sequential>
+			<get-testcase-property property.name="app.server.bundles.size" />
+
 			<if>
 				<isset property="app.server.bundles.size" />
 				<then>
@@ -691,6 +693,8 @@
 					<var name="app.server.bundle.index" unset="true" />
 				</then>
 			</if>
+
+			<get-testcase-property property.name="databases.size" />
 
 			<if>
 				<isset property="databases.size" />

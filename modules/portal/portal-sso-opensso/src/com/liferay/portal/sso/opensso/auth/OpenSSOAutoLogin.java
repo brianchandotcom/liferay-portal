@@ -32,9 +32,9 @@ import com.liferay.portal.security.auth.BaseAutoLogin;
 import com.liferay.portal.security.auth.ScreenNameGenerator;
 import com.liferay.portal.security.auth.ScreenNameGeneratorFactory;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
+import com.liferay.portal.security.sso.OpenSSO;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.servlet.filters.sso.opensso.OpenSSOUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -45,6 +45,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -104,7 +106,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		String serviceUrl = PrefsPropsUtil.getString(
 			companyId, PropsKeys.OPEN_SSO_SERVICE_URL);
 
-		if (!OpenSSOUtil.isAuthenticated(request, serviceUrl)) {
+		if (!_openSSO.isAuthenticated(request, serviceUrl)) {
 			return null;
 		}
 
@@ -124,7 +126,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 			companyId, PropsKeys.OPEN_SSO_LAST_NAME_ATTR,
 			PropsValues.OPEN_SSO_LAST_NAME_ATTR);
 
-		Map<String, String> nameValues = OpenSSOUtil.getAttributes(
+		Map<String, String> nameValues = _openSSO.getAttributes(
 			request, serviceUrl);
 
 		String screenName = nameValues.get(screenNameAttr);
@@ -233,7 +235,14 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
+	@Reference
+	protected void setOpenSSO(OpenSSO openSSO) {
+		_openSSO = openSSO;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenSSOAutoLogin.class);
+
+	private OpenSSO _openSSO;
 
 }

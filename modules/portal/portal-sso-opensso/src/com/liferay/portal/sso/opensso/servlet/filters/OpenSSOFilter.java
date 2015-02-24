@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.servlet.filters.sso.opensso.OpenSSOUtil;
+import com.liferay.portal.security.sso.OpenSSO;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -31,6 +31,8 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -115,7 +117,7 @@ public class OpenSSOFilter extends BaseFilter {
 
 			// LEP-5943
 
-			authenticated = OpenSSOUtil.isAuthenticated(request, serviceUrl);
+			authenticated = _openSSO.isAuthenticated(request, serviceUrl);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -131,7 +133,7 @@ public class OpenSSOFilter extends BaseFilter {
 
 			// LEP-5943
 
-			String newSubjectId = OpenSSOUtil.getSubjectId(request, serviceUrl);
+			String newSubjectId = _openSSO.getSubjectId(request, serviceUrl);
 
 			String oldSubjectId = (String)session.getAttribute(_SUBJECT_ID_KEY);
 
@@ -181,8 +183,15 @@ public class OpenSSOFilter extends BaseFilter {
 		response.sendRedirect(redirect);
 	}
 
+	@Reference
+	protected void setOpenSSO(OpenSSO openSSO) {
+		_openSSO = openSSO;
+	}
+
 	private static final String _SUBJECT_ID_KEY = "open.sso.subject.id";
 
 	private static final Log _log = LogFactoryUtil.getLog(OpenSSOFilter.class);
+
+	private OpenSSO _openSSO;
 
 }

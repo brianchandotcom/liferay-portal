@@ -299,7 +299,7 @@ public class JournalPortlet extends MVCPortlet {
 			getForward(renderRequest, "portlet.journal.edit_article"));
 	}
 
-	protected void deleteArticles(
+	public void deleteArticles(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
@@ -342,7 +342,7 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void expireArticles(ActionRequest actionRequest)
+	public void expireArticles(ActionRequest actionRequest)
 		throws Exception {
 
 		String articleId = ParamUtil.getString(actionRequest, "articleId");
@@ -370,7 +370,7 @@ public class JournalPortlet extends MVCPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		String referringPortletResource = ParamUtil.getString(
-			actionRequest, "referringPortletResource");
+				actionRequest, "referringPortletResource");
 
 		PortletURLImpl portletURL = new PortletURLImpl(
 			actionRequest, portletConfig.getPortletName(),
@@ -395,21 +395,21 @@ public class JournalPortlet extends MVCPortlet {
 		return portletURL.toString();
 	}
 
-	protected void subscribeStructure(ActionRequest actionRequest)
+	public void subscribeStructure(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long ddmStructureId = ParamUtil.getLong(
-			actionRequest, "ddmStructureId");
+				actionRequest, "ddmStructureId");
 
 		JournalArticleServiceUtil.subscribeStructure(
-			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-			ddmStructureId);
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				ddmStructureId);
 	}
 
-	protected void unsubscribeStructure(ActionRequest actionRequest)
+	public void unsubscribeStructure(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -423,7 +423,7 @@ public class JournalPortlet extends MVCPortlet {
 			ddmStructureId);
 	}
 
-	protected Object[] updateArticle(ActionRequest actionRequest)
+	public Object[] updateArticle(ActionRequest actionRequest)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =

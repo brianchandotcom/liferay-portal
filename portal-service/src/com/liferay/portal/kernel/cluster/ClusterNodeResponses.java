@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -63,7 +63,7 @@ public class ClusterNodeResponses implements Serializable {
 	}
 
 	private final Map<String, ClusterNodeResponse>
-		_clusterResponsesByClusterNode = new HashMap<>();
+		_clusterResponsesByClusterNode = new ConcurrentHashMap<>();
 	private final BlockingQueue<ClusterNodeResponse> _clusterResponsesQueue =
 		new LinkedBlockingQueue<>();
 	private final Set<String> _expectedReplyNodeIds;

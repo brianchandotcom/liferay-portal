@@ -908,6 +908,8 @@
 				value="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;0&quot;&gt;"
 			/>
 
+			<get-testcase-property property.name="app.server.bundles.size" />
+
 			<if>
 				<isset property="app.server.bundles.size" />
 				<then>

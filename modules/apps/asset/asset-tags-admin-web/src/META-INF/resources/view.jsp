@@ -134,6 +134,7 @@
 					<portlet:param name="mvcPath" value="/merge_tag.jsp" />
 					<portlet:param name="mergeTagIds" value="0000" />
 				</portlet:renderURL>
+
 				var mergeURL = '<%= mergeURL %>';
 
 	            location.href = mergeURL.replace("/0000/", "/" + Util.listCheckedExcept(form, '<portlet:namespace />allRowIds') + "/");

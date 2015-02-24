@@ -33,12 +33,11 @@ long[] mergeTagIds = StringUtil.split(ParamUtil.getString(renderRequest, "mergeT
 	title="merge-tags"
 />
 
-<portlet:actionURL name="mergeTag" var="mergeURL">
-	<portlet:param name="redirect" value="<%= redirect %>" />
-</portlet:actionURL>
+<portlet:actionURL name="mergeTag" var="mergeURL" />
 
 <aui:form action="<%= mergeURL %>" method="post" name="fm" onSubmit="event.preventDefault();">
 	<aui:input name="mvcPath" type="hidden" value="/merge_tag.jsp" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="mergeTagIds" type="hidden" />
 
 	<div class="merge-tags">

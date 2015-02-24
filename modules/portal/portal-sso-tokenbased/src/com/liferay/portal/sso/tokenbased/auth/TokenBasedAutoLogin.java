@@ -85,7 +85,8 @@ public class TokenBasedAutoLogin extends BaseAutoLogin {
 			companyId, TokenBasedPropsKeys.USER_TOKEN_NAME,
 			_tokenBasedConfiguration.userTokenName());
 
-		TokenLocation tokenLocation = _tokenBasedConfiguration.tokenLocation();
+		TokenLocation tokenLocation = TokenLocation.valueOf(
+			_tokenBasedConfiguration.tokenLocation());
 
 		TokenRetriever tokenRetriever = _tokenRetrievers.get(tokenLocation);
 

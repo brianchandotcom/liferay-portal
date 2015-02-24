@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.sso.tokenbased.configuration.TokenBasedConfiguration;
 import com.liferay.portal.sso.tokenbased.constants.TokenBasedPropsKeys;
@@ -66,8 +67,8 @@ public class TokenBasedLogoutAction extends Action {
 				return;
 			}
 
-			String[] authenticationCookies =
-				_tokenBasedConfiguration.authenticationCookies();
+			String[] authenticationCookies = StringUtil.split(
+				_tokenBasedConfiguration.authenticationCookies());
 
 			if (ArrayUtil.isNotEmpty(authenticationCookies)) {
 				LogoutProcessor cookieLogoutProcessor = _logoutProcessors.get(

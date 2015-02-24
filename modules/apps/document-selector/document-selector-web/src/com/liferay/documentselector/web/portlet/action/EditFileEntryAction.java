@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.documentselector.web.documentselector.portlet.action;
+package com.liferay.documentselector.web.portlet.action;
 
 import com.liferay.documentselector.web.util.DocumentSelectorUtil;
 import com.liferay.portal.NoSuchRepositoryEntryException;

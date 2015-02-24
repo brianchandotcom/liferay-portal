@@ -17,22 +17,11 @@
 <%@ include file="/html/portlet/search/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, namespace + "groupId");
+long groupId = ParamUtil.getLong(request, "groupId");
 
-Group group = themeDisplay.getScopeGroup();
+String keywords = ParamUtil.getString(request, "keywords");
 
-String keywords = ParamUtil.getString(request, namespace + "keywords");
-
-PortletURL portletURL = null;
-
-if (portletResponse != null) {
-	LiferayPortletResponse liferayPortletResponse = (LiferayPortletResponse)portletResponse;
-
-	portletURL = liferayPortletResponse.createLiferayPortletURL(PortletKeys.SEARCH, PortletRequest.RENDER_PHASE);
-}
-else {
-	portletURL = new PortletURLImpl(request, PortletKeys.SEARCH, plid, PortletRequest.RENDER_PHASE);
-}
+PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/search/search");
 portletURL.setParameter("redirect", currentURL);
@@ -42,19 +31,24 @@ portletURL.setWindowState(WindowState.MAXIMIZED);
 pageContext.setAttribute("portletURL", portletURL);
 %>
 
-<form action="<%= HtmlUtil.escapeAttribute(portletURL.toString()) %>" method="get" name="<%= randomNamespace %><%= namespace %>fm" onSubmit="<%= randomNamespace %><%= namespace %>search(); return false;">
+<aui:form action="<%= portletURL %>" method="get" name="fm" onSubmit='<%= renderResponse.getNamespace() + "search(); event.preventDefault();" %>'>
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" label="" name='<%= namespace + "keywords" %>' size="30" title="search" type="text" useNamespace="<%= false %>" value="<%= HtmlUtil.escapeAttribute(keywords) %>" />
+		<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search" type="text" value="<%= HtmlUtil.escapeAttribute(keywords) %>" />
 
 		<%
-		String taglibOnClick = "Liferay.Util.focusFormField('#" + namespace + "keywords');";
+		String taglibOnClick = "Liferay.Util.focusFormField('#" + renderResponse.getNamespace() + "keywords');";
 		%>
 
 		<liferay-ui:quick-access-entry label="skip-to-search" onClick="<%= taglibOnClick %>" />
 
-		<aui:select inlineField="<%= true %>" label="" name='<%= namespace + "groupId" %>' title="scope" useNamespace="<%= false %>">
+		<aui:select inlineField="<%= true %>" label="" name="groupId" title="scope">
+
+			<%
+			Group group = themeDisplay.getScopeGroup();
+			%>
+
 			<c:if test="<%= !group.isStagingGroup() %>">
 				<aui:option label="everything" selected="<%= (groupId == 0) %>" value="0" />
 			</c:if>
@@ -63,18 +57,19 @@ pageContext.setAttribute("portletURL", portletURL);
 		</aui:select>
 
 		<aui:field-wrapper inlineField="<%= true %>">
-			<aui:button icon="icon-search" onClick='<%= randomNamespace + namespace + "search();" %>' value="search" />
+			<aui:button icon="icon-search" onClick='<%= renderResponse.getNamespace() + "search();" %>' value="search" />
 		</aui:field-wrapper>
 	</aui:fieldset>
 
 	<aui:script>
-		function <%= randomNamespace %><%= namespace %>search() {
-			var keywords = document.<%= randomNamespace %><%= namespace %>fm.<%= namespace %>keywords.value;
+		function <portlet:namespace />search() {
+			var keywords = document.<portlet:namespace />fm.<portlet:namespace />keywords.value;
 
 			keywords = keywords.replace(/^\s+|\s+$/, '');
 
 			if (keywords != '') {
-				submitForm(document.<%= randomNamespace %><%= namespace %>fm);
+				submitForm(document.<portlet:namespace />fm);
 			}
 		}
 	</aui:script>
+</aui:form>

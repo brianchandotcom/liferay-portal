@@ -53,6 +53,11 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 	}
 
 	@Override
+	public String getClassName() {
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public boolean isEnabled() {
 		return _enabled;
 	}

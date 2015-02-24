@@ -40,9 +40,7 @@ public class SearchDisplayContext {
 		_portletPreferences = portletPreferences;
 	}
 
-	public String checkViewURL(
-		String viewURL, String currentURL, boolean inheritRedirect) {
-
+	public String checkViewURL(String viewURL, String currentURL) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -50,9 +48,9 @@ public class SearchDisplayContext {
 			viewURL.startsWith(themeDisplay.getURLPortal())) {
 
 			viewURL = HttpUtil.setParameter(
-				viewURL, "inheritRedirect", inheritRedirect);
+				viewURL, "inheritRedirect", isViewInContext());
 
-			if (!inheritRedirect) {
+			if (!isViewInContext()) {
 				viewURL = HttpUtil.setParameter(
 					viewURL, "redirect", currentURL);
 			}

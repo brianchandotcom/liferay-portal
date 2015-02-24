@@ -33,7 +33,6 @@ import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -215,9 +214,9 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 
 		@Override
 		protected Summary doGetSummary(
-			Document document, Locale locale, String snippet,
-			PortletURL portletURL, PortletRequest portletRequest,
-			PortletResponse portletResponse) throws Exception {
+				Document document, Locale locale, String snippet,
+				PortletRequest portletRequest, PortletResponse portletResponse)
+			throws Exception {
 
 			return null;
 		}

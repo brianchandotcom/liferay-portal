@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.search;
 
 import java.util.Locale;
 
-import javax.portlet.PortletURL;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Ryan Park
@@ -49,8 +47,7 @@ public class BaseIndexerPostProcessor implements IndexerPostProcessor {
 
 	@Override
 	public void postProcessSummary(
-		Summary summary, Document document, Locale locale, String snippet,
-		PortletURL portletURL) {
+		Summary summary, Document document, Locale locale, String snippet) {
 	}
 
 }

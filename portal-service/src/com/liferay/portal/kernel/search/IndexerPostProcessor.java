@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.search;
 
 import java.util.Locale;
 
-import javax.portlet.PortletURL;
-
 /**
  * @author Ryan Park
  */
@@ -39,7 +37,6 @@ public interface IndexerPostProcessor {
 		throws Exception;
 
 	public void postProcessSummary(
-		Summary summary, Document document, Locale locale, String snippet,
-		PortletURL portletURL);
+		Summary summary, Document document, Locale locale, String snippet);
 
 }

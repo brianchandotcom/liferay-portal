@@ -178,7 +178,6 @@ page import="com.liferay.portal.struts.StrutsUtil" %><%@
 page import="com.liferay.portal.struts.TilesAttributeUtil" %><%@
 page import="com.liferay.portal.theme.ThemeDisplay" %><%@
 page import="com.liferay.portal.upload.LiferayFileItem" %><%@
-page import="com.liferay.portal.util.ClassLoaderUtil" %><%@
 page import="com.liferay.portal.util.JavaScriptBundleUtil" %><%@
 page import="com.liferay.portal.util.LayoutDescription" %><%@
 page import="com.liferay.portal.util.LayoutListUtil" %><%@
@@ -298,8 +297,7 @@ page import="com.liferay.util.PKParser" %><%@
 page import="com.liferay.util.RSSUtil" %><%@
 page import="com.liferay.util.State" %><%@
 page import="com.liferay.util.StateUtil" %><%@
-page import="com.liferay.util.log4j.Levels" %><%@
-page import="com.liferay.util.xml.XMLFormatter" %>
+page import="com.liferay.util.log4j.Levels" %>
 
 <%@ page import="java.io.Serializable" %>
 

@@ -98,9 +98,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 			searchContainer.setTotal(hits.getLength());
 
-			PortletURL hitURL = renderResponse.createRenderURL();
-
-			results = SearchResultUtil.getSearchResults(hits, locale, hitURL);
+			results = SearchResultUtil.getSearchResults(hits, locale);
 
 			searchContainer.setResults(results);
 			%>

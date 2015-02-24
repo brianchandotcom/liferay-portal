@@ -49,7 +49,6 @@ import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 /**
  * @author Marcellus Tavares
@@ -144,25 +143,17 @@ public class DDLIndexer extends BaseIndexer {
 
 	@Override
 	protected Summary doGetSummary(
-		Document document, Locale locale, String snippet, PortletURL portletURL,
+		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		long recordSetId = GetterUtil.getLong(document.get("recordSetId"));
 
 		String title = getTitle(recordSetId, locale);
 
-		String recordId = document.get(Field.ENTRY_CLASS_PK);
-
-		portletURL.setParameter(
-			"struts_action", "/dynamic_data_lists/view_record");
-		portletURL.setParameter("recordId", recordId);
-		portletURL.setParameter("version", document.get(Field.VERSION));
-
 		Summary summary = createSummary(
 			document, Field.TITLE, Field.DESCRIPTION);
 
 		summary.setMaxContentLength(200);
-		summary.setPortletURL(portletURL);
 		summary.setTitle(title);
 
 		return summary;

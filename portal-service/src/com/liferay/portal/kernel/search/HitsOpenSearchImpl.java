@@ -52,11 +52,10 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 	public abstract String getSearchPath();
 
 	public Summary getSummary(
-			Indexer indexer, Document document, Locale locale, String snippet,
-			PortletURL portletURL)
+			Indexer indexer, Document document, Locale locale, String snippet)
 		throws SearchException {
 
-		return indexer.getSummary(document, snippet, portletURL, null, null);
+		return indexer.getSummary(document, snippet, null, null);
 	}
 
 	public abstract String getTitle(String keywords);
@@ -125,7 +124,7 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 			for (int i = 0; i < results.getDocs().length; i++) {
 				Document result = results.doc(i);
 
-				String snippet = results.snippet(i);
+				String snippet = result.get(Field.SNIPPET);
 
 				long resultGroupId = GetterUtil.getLong(
 					result.get(Field.GROUP_ID));
@@ -154,8 +153,7 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 					request, portletId, resultScopeGroupId);
 
 				Summary summary = getSummary(
-					indexer, result, themeDisplay.getLocale(), snippet,
-					portletURL);
+					indexer, result, themeDisplay.getLocale(), snippet);
 
 				String title = summary.getTitle();
 				String url = getURL(

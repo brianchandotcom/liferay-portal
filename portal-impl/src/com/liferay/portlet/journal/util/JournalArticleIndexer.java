@@ -74,7 +74,6 @@ import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 /**
  * @author Brian Wing Shun Chan
@@ -91,9 +90,10 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 	public JournalArticleIndexer() {
 		setDefaultSelectedFieldNames(
-			Field.ARTICLE_ID, Field.COMPANY_ID, Field.DEFAULT_LANGUAGE_ID,
-			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.GROUP_ID,
-			Field.VERSION, Field.UID);
+			Field.ASSET_TAG_NAMES, Field.ARTICLE_ID, Field.COMPANY_ID,
+			Field.DEFAULT_LANGUAGE_ID, Field.ENTRY_CLASS_NAME,
+			Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
+			Field.SCOPE_GROUP_ID, Field.VERSION, Field.UID);
 		setDefaultSelectedLocalizedFieldNames(
 			Field.CONTENT, Field.DESCRIPTION, Field.TITLE);
 		setFilterSearch(true);
@@ -439,7 +439,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 	@Override
 	protected Summary doGetSummary(
-		Document document, Locale locale, String snippet, PortletURL portletURL,
+		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		Locale snippetLocale = getSnippetLocale(document, locale);
@@ -461,16 +461,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		String content = getDDMContentSummary(
 			document, snippetLocale, portletRequest, portletResponse);
 
-		String articleId = document.get(Field.ARTICLE_ID);
-		String groupId = document.get(Field.GROUP_ID);
-		String version = document.get(Field.VERSION);
-
-		portletURL.setParameter("struts_action", "/journal/edit_article");
-		portletURL.setParameter("groupId", groupId);
-		portletURL.setParameter("articleId", articleId);
-		portletURL.setParameter("version", version);
-
-		return new Summary(snippetLocale, title, content, portletURL);
+		return new Summary(snippetLocale, title, content);
 	}
 
 	protected void doReindex(JournalArticle article, boolean allVersions)

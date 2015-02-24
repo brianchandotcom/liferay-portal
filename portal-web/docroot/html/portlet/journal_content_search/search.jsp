@@ -82,9 +82,7 @@
 				for (int i = 0; i < results.size(); i++) {
 					Document doc = results.get(i);
 
-					PortletURL summaryURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-					Summary summary = indexer.getSummary(doc, StringPool.BLANK, summaryURL, renderRequest, renderResponse);
+					Summary summary = indexer.getSummary(doc, StringPool.BLANK, renderRequest, renderResponse);
 
 					summary.setHighlight(PropsValues.INDEX_SEARCH_HIGHLIGHT_ENABLED);
 					summary.setQueryTerms(queryTerms);

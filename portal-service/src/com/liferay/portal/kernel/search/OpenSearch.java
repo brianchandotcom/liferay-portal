@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface OpenSearch {
 
+	public String getClassName();
+
 	public boolean isEnabled();
 
 	public String search(

@@ -35,7 +35,6 @@ import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 /**
  * @author Eudaldo Alonso
@@ -43,14 +42,14 @@ import javax.portlet.PortletURL;
 public class SearchResultUtil {
 
 	public static List<SearchResult> getSearchResults(
-		Hits hits, Locale locale, PortletURL portletURL) {
+		Hits hits, Locale locale) {
 
-		return getSearchResults(hits, locale, portletURL, null, null);
+		return getSearchResults(hits, locale, null, null);
 	}
 
 	public static List<SearchResult> getSearchResults(
-		Hits hits, Locale locale, PortletURL portletURL,
-		PortletRequest portletRequest, PortletResponse portletResponse) {
+		Hits hits, Locale locale, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
 
 		List<SearchResult> searchResults = new ArrayList<>();
 
@@ -111,8 +110,8 @@ public class SearchResultUtil {
 				if (fileEntry != null) {
 					Summary summary = getSummary(
 						document, DLFileEntry.class.getName(),
-						fileEntry.getFileEntryId(), locale, portletURL,
-						portletRequest, portletResponse);
+						fileEntry.getFileEntryId(), locale, portletRequest,
+						portletResponse);
 
 					searchResult.addFileEntry(fileEntry, summary);
 				}
@@ -129,15 +128,15 @@ public class SearchResultUtil {
 
 				if ((mbMessage == null) && (fileEntry == null)) {
 					Summary summary = getSummary(
-						document, className, classPK, locale, portletURL,
-						portletRequest, portletResponse);
+						document, className, classPK, locale, portletRequest,
+						portletResponse);
 
 					searchResult.setSummary(summary);
 				}
 				else {
 					if (searchResult.getSummary() == null) {
 						Summary summary = getSummary(
-							className, classPK, locale, portletURL);
+							className, classPK, locale);
 
 						searchResult.setSummary(summary);
 					}
@@ -157,8 +156,7 @@ public class SearchResultUtil {
 
 	protected static Summary getSummary(
 			Document document, String className, long classPK, Locale locale,
-			PortletURL portletURL, PortletRequest portletRequest,
-			PortletResponse portletResponse)
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(className);
@@ -167,15 +165,14 @@ public class SearchResultUtil {
 			String snippet = document.get(Field.SNIPPET);
 
 			return indexer.getSummary(
-				document, snippet, portletURL, portletRequest, portletResponse);
+				document, snippet, portletRequest, portletResponse);
 		}
 
-		return getSummary(className, classPK, locale, portletURL);
+		return getSummary(className, classPK, locale);
 	}
 
 	protected static Summary getSummary(
-			String className, long classPK, Locale locale,
-			PortletURL portletURL)
+			String className, long classPK, Locale locale)
 		throws PortalException {
 
 		AssetRendererFactory assetRendererFactory =
@@ -195,10 +192,9 @@ public class SearchResultUtil {
 
 		Summary summary = new Summary(
 			assetRenderer.getTitle(locale),
-			assetRenderer.getSearchSummary(locale), portletURL);
+			assetRenderer.getSearchSummary(locale));
 
 		summary.setMaxContentLength(SUMMARY_MAX_CONTENT_LENGTH);
-		summary.setPortletURL(portletURL);
 
 		return summary;
 	}

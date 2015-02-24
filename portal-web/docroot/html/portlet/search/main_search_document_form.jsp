@@ -37,10 +37,6 @@ if (assetRendererFactory != null) {
 
 	assetRenderer = assetRendererFactory.getAssetRenderer(entryClassPK);
 }
-
-String[] queryTerms = (String[])request.getAttribute("search.jsp-queryTerms");
-
-PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL");
 %>
 
 <span class="asset-entry">
@@ -73,6 +69,11 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 
 	<c:if test="<%= (assetEntry != null) && (ArrayUtil.isNotEmpty(assetEntry.getCategoryIds()) || ArrayUtil.isNotEmpty(assetEntry.getTagNames())) %>">
 		<div class="asset-entry-content">
+
+			<%
+			PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL");
+			%>
+
 			<liferay-ui:asset-tags-summary
 				className="<%= entryClassName %>"
 				classPK="<%= entryClassPK %>"
@@ -143,7 +144,33 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 					<td class="value" valign="top">
 						<div class="container">
 							<code>
-								<c:if test="<%= values.length > 1 %>">[</c:if><%for (int i = 0; i < values.length; i++) {%><c:if test="<%= i > 0 %>">, </c:if><c:if test="<%= !field.isNumeric() %>">"</c:if><%= HtmlUtil.escape(values[i]) %><c:if test="<%= !field.isNumeric() %>">"</c:if><%}%><c:if test="<%= values.length > 1 %>">]</c:if>
+
+								<%
+								StringBundler sb = new StringBundler(2 + (4 * values.length));
+
+								for (int i = 0; i < values.length; i++) {
+									if (field.isNumeric()) {
+										sb.append(HtmlUtil.escape(values[i]));
+									}
+									else {
+										sb.append(StringPool.QUOTE);
+										sb.append(HtmlUtil.escape(values[i]));
+										sb.append(StringPool.QUOTE);
+									}
+
+									sb.append(StringPool.COMMA_AND_SPACE);
+								}
+
+								sb.setIndex(sb.index() - 1);
+
+								if (values.length > 1) {
+									sb.setStringAt(StringPool.OPEN_BRACKET, 0);
+
+									sb.append(StringPool.CLOSE_BRACKET);
+								}
+								%>
+
+								<%= sb.toString() %>
 							</code>
 						</div>
 					</td>

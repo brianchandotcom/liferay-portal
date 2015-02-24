@@ -44,7 +44,6 @@ import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 /**
  * @author Jorge Ferrer
@@ -171,7 +170,7 @@ public class PluginPackageIndexer extends BaseIndexer {
 
 	@Override
 	protected Summary doGetSummary(
-		Document document, Locale locale, String snippet, PortletURL portletURL,
+		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		String title = document.get(Field.TITLE);
@@ -182,15 +181,7 @@ public class PluginPackageIndexer extends BaseIndexer {
 			content = StringUtil.shorten(document.get(Field.CONTENT), 200);
 		}
 
-		String moduleId = document.get("moduleId");
-		String repositoryURL = document.get("repositoryURL");
-
-		portletURL.setParameter("struts_action", "/admin/view");
-		portletURL.setParameter("tabs2", "repositories");
-		portletURL.setParameter("moduleId", moduleId);
-		portletURL.setParameter("repositoryURL", repositoryURL);
-
-		return new Summary(title, content, portletURL);
+		return new Summary(title, content);
 	}
 
 	@Override

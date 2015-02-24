@@ -17,16 +17,23 @@ package com.liferay.portlet.blogs.util;
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@OSGiBeanProperties
 public class BlogsOpenSearchImpl extends HitsOpenSearchImpl {
 
 	public static final String SEARCH_PATH = "/c/blogs/open_search";
 
 	public static final String TITLE = "Liferay Blogs Search: ";
+
+	@Override
+	public String getClassName() {
+		return BlogsEntry.class.getName();
+	}
 
 	@Override
 	public Indexer getIndexer() {

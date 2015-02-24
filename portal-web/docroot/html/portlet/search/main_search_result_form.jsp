@@ -24,22 +24,9 @@ Document document = (Document)row.getObject();
 String className = document.get(Field.ENTRY_CLASS_NAME);
 long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
 
-String downloadURL = null;
-
-PortletURL viewFullContentURL = renderResponse.createRenderURL();
-
-viewFullContentURL.setParameter("struts_action", "/search/view_content");
-viewFullContentURL.setParameter("redirect", currentURL);
-viewFullContentURL.setPortletMode(PortletMode.VIEW);
-viewFullContentURL.setWindowState(WindowState.MAXIMIZED);
-
-String viewURL = null;
-
 AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
 AssetRenderer assetRenderer = null;
-
-boolean inheritRedirect = false;
 
 if (assetRendererFactory != null) {
 	long resourcePrimKey = GetterUtil.getLong(document.get(Field.ROOT_ENTRY_CLASS_PK));
@@ -48,33 +35,10 @@ if (assetRendererFactory != null) {
 		classPK = resourcePrimKey;
 	}
 
-	AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(className, classPK);
-
 	assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
-
-	downloadURL = assetRenderer.getURLDownload(themeDisplay);
-
-	viewFullContentURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
-	viewFullContentURL.setParameter("type", assetRendererFactory.getType());
-
-	if (searchDisplayContext.isViewInContext() || !assetEntry.isVisible()) {
-		inheritRedirect = true;
-
-		String viewFullContentURLString = viewFullContentURL.toString();
-
-		viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
-
-		viewURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString);
-
-		viewURL = AssetUtil.checkViewURL(assetEntry, searchDisplayContext.isViewInContext(), viewURL, currentURL, themeDisplay);
-	}
-	else {
-		viewURL = viewFullContentURL.toString();
-	}
 }
-else {
-	viewURL = viewFullContentURL.toString();
-}
+
+String viewURL = com.liferay.portlet.search.util.SearchUtil.getSearchResultViewURL(renderRequest, renderResponse, className, classPK, searchDisplayContext.isViewInContext(), currentURL);
 
 Indexer indexer = IndexerRegistryUtil.getIndexer(className);
 
@@ -83,21 +47,17 @@ Summary summary = null;
 if (indexer != null) {
 	String snippet = document.get(Field.SNIPPET);
 
-	summary = indexer.getSummary(document, snippet, viewFullContentURL, renderRequest, renderResponse);
+	summary = indexer.getSummary(document, snippet, renderRequest, renderResponse);
 }
 else if (assetRenderer != null) {
-	summary = new Summary(locale, assetRenderer.getTitle(locale), assetRenderer.getSearchSummary(locale), viewFullContentURL);
+	summary = new Summary(locale, assetRenderer.getTitle(locale), assetRenderer.getSearchSummary(locale));
 }
 %>
 
 <c:if test="<%= summary != null %>">
 
 	<%
-	if ((assetRendererFactory == null) && searchDisplayContext.isViewInContext()) {
-		viewURL = viewFullContentURL.toString();
-	}
-
-	viewURL = searchDisplayContext.checkViewURL(viewURL, currentURL, inheritRedirect);
+	viewURL = searchDisplayContext.checkViewURL(viewURL, currentURL);
 
 	boolean highlightEnabled = (Boolean)request.getAttribute("search.jsp-highlightEnabled");
 	String[] queryTerms = (String[])request.getAttribute("search.jsp-queryTerms");
@@ -125,13 +85,13 @@ else if (assetRenderer != null) {
 				<%= summary.getHighlightedTitle() %>
 			</a>
 
-			<c:if test="<%= Validator.isNotNull(downloadURL) %>">
+			<c:if test="<%= (assetRenderer != null) && Validator.isNotNull(assetRenderer.getURLDownload(themeDisplay)) %>">
 				<liferay-ui:icon
 					iconCssClass="icon-download-alt"
 					label="<%= false %>"
 					message='<%= LanguageUtil.format(request, "download-x", HtmlUtil.escape(summary.getTitle()), false) %>'
 					method="get"
-					url="<%= downloadURL %>"
+					url="<%= assetRenderer.getURLDownload(themeDisplay) %>"
 				/>
 			</c:if>
 		</span>

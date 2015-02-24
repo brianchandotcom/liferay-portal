@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
-import javax.portlet.PortletURL;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Ryan Park
@@ -33,19 +31,14 @@ import javax.portlet.PortletURL;
  */
 public class Summary {
 
-	public Summary(
-		Locale locale, String title, String content, PortletURL portletURL) {
-
+	public Summary(Locale locale, String title, String content) {
 		_locale = locale;
 		_title = title;
 		_content = content;
-		_portletURL = portletURL;
 	}
 
-	public Summary(String title, String content, PortletURL portletURL) {
-		this(
-			LocaleThreadLocal.getThemeDisplayLocale(), title, content,
-			portletURL);
+	public Summary(String title, String content) {
+		this(LocaleThreadLocal.getThemeDisplayLocale(), title, content);
 	}
 
 	public String getContent() {
@@ -70,10 +63,6 @@ public class Summary {
 
 	public int getMaxContentLength() {
 		return _maxContentLength;
-	}
-
-	public PortletURL getPortletURL() {
-		return _portletURL;
 	}
 
 	public String[] getQueryTerms() {
@@ -116,10 +105,6 @@ public class Summary {
 		setContent(_content);
 	}
 
-	public void setPortletURL(PortletURL portletURL) {
-		_portletURL = portletURL;
-	}
-
 	public void setQueryTerms(String[] queryTerms) {
 		if (ArrayUtil.isEmpty(queryTerms)) {
 			return;
@@ -156,7 +141,6 @@ public class Summary {
 	private boolean _highlight;
 	private Locale _locale;
 	private int _maxContentLength;
-	private PortletURL _portletURL;
 	private String[] _queryTerms;
 	private String _title;
 

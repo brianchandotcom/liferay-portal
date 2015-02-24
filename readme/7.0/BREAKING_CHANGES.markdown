@@ -272,7 +272,7 @@ protected Summary doGetSummary(Document document, Locale locale, String snippet,
 
 With:
 ```
-protected Summary doGetSummary(Document document, Locale locale, String snippet, PortletURL portletURL, PortletRequest portletRequest, PortletResponse portletResponse)
+protected Summary doGetSummary(Document document, Locale locale, String snippet, PortletRequest portletRequest, PortletResponse portletResponse)
 ```
 
 and replace:

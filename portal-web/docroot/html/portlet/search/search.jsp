@@ -23,22 +23,11 @@ if (Validator.isNotNull(redirect)) {
 	portletDisplay.setURLBack(redirect);
 }
 
-String primarySearch = ParamUtil.getString(request, "primarySearch");
-
-if (Validator.isNotNull(primarySearch)) {
-	portalPreferences.setValue(PortletKeys.SEARCH, "primary-search", primarySearch);
-}
-else {
-	primarySearch = portalPreferences.getValue(PortletKeys.SEARCH, "primary-search", StringPool.BLANK);
-}
-
 long groupId = ParamUtil.getLong(request, "groupId");
 
 String keywords = ParamUtil.getString(request, "keywords");
 
 String format = ParamUtil.getString(request, "format");
-
-List<String> portletTitles = new ArrayList<String>();
 
 PortletURL portletURL = PortletURLUtil.getCurrent(renderRequest, renderResponse);
 
@@ -177,12 +166,7 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 
 <%
 String pageSubtitle = LanguageUtil.get(request, "search-results");
-String pageDescription = LanguageUtil.get(request, "search-results");
 String pageKeywords = LanguageUtil.get(request, "search");
-
-if (!portletTitles.isEmpty()) {
-	pageDescription = LanguageUtil.get(request, "searched") + StringPool.SPACE + StringUtil.merge(portletTitles, StringPool.COMMA_AND_SPACE);
-}
 
 if (Validator.isNotNull(keywords)) {
 	pageKeywords = keywords;
@@ -193,10 +177,5 @@ if (Validator.isNotNull(keywords)) {
 }
 
 PortalUtil.setPageSubtitle(pageSubtitle, request);
-PortalUtil.setPageDescription(pageDescription, request);
 PortalUtil.setPageKeywords(pageKeywords, request);
-%>
-
-<%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.search.search_jsp");
 %>

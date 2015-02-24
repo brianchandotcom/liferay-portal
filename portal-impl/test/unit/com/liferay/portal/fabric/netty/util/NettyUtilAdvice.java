@@ -54,17 +54,16 @@ public class NettyUtilAdvice {
 			return;
 		}
 
-		final Future<?> cancellationFuture =
-			_scheduledExecutorService.schedule(
-				new Runnable() {
+		final Future<?> cancellationFuture = _scheduledExecutorService.schedule(
+			new Runnable() {
 
-					@Override
-					public void run() {
-						noticeableFuture.cancel(true);
-					}
+				@Override
+				public void run() {
+					noticeableFuture.cancel(true);
+				}
 
-				},
-				timeout, TimeUnit.MILLISECONDS);
+			},
+			timeout, TimeUnit.MILLISECONDS);
 
 		noticeableFuture.addFutureListener(
 			new FutureListener<T>() {

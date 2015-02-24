@@ -106,26 +106,25 @@ public class TemplateResourceExternalizationTest {
 		String ddmTemplateKey = "testKey";
 		final long templateId = 100;
 
-		DDMTemplate ddmTemplate =
-			(DDMTemplate)ProxyUtil.newProxyInstance(
-				getClass().getClassLoader(), new Class<?>[] {DDMTemplate.class},
-				new InvocationHandler() {
+		DDMTemplate ddmTemplate = (DDMTemplate)ProxyUtil.newProxyInstance(
+			getClass().getClassLoader(), new Class<?>[] {DDMTemplate.class},
+			new InvocationHandler() {
 
-					@Override
-					public Object invoke(
-							Object proxy, Method method, Object[] arguments)
-						throws Throwable {
+				@Override
+				public Object invoke(
+						Object proxy, Method method, Object[] arguments)
+					throws Throwable {
 
-						String methodName = method.getName();
+					String methodName = method.getName();
 
-						if (methodName.equals("getTemplateId")) {
-							return templateId;
-						}
-
-						throw new UnsupportedOperationException();
+					if (methodName.equals("getTemplateId")) {
+						return templateId;
 					}
 
-				});
+					throw new UnsupportedOperationException();
+				}
+
+			});
 
 		DDMTemplateResource ddmTemplateResource = new DDMTemplateResource(
 			ddmTemplateKey, ddmTemplate);

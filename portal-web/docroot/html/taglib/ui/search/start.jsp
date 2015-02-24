@@ -14,5 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/search/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
 
+<liferay-portlet:runtime portletName="com_liferay_search_web_SearchPortlet" />

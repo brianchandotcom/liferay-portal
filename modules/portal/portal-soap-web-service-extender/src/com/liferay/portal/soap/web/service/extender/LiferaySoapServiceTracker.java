@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.soap.web.service.publisher;
+package com.liferay.portal.soap.web.service.extender;
 
-import com.liferay.portal.soap.web.service.publisher.configuration.ExtensionManager;
+import com.liferay.portal.soap.web.service.extender.configuration.ExtensionManager;
 
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -63,11 +63,11 @@ public class LiferaySoapServiceTracker {
 		BundleContext bundleContext, String contextPath,
 		ExtensionManager extensionManager) {
 
-		_logger = LoggerFactory.getLogger(LiferaySoapServiceTracker.class);
-
 		_bundleContext = bundleContext;
 		_contextPath = contextPath;
 		_extensionManager = extensionManager;
+
+		_logger = LoggerFactory.getLogger(LiferaySoapServiceTracker.class);
 	}
 
 	protected void start() {
@@ -87,8 +87,8 @@ public class LiferaySoapServiceTracker {
 				_bundleContext, servicesFilter,
 				new ServerServiceTrackerCustomizer(bus));
 		}
-		catch (InvalidSyntaxException e) {
-			throw new RuntimeException(e);
+		catch (InvalidSyntaxException ise) {
+			throw new RuntimeException(ise);
 		}
 
 		_serverServiceTracker.open();
@@ -232,13 +232,13 @@ public class LiferaySoapServiceTracker {
 			JaxWsEndpointImpl jaxWsEndpoint =
 				(JaxWsEndpointImpl) _server.getEndpoint();
 
-			Binding jaxwsBinding = jaxWsEndpoint.getJaxwsBinding();
+			Binding binding = jaxWsEndpoint.getJaxwsBinding();
 
-			List<Handler> handlerChain = jaxwsBinding.getHandlerChain();
+			List<Handler> handlerChain = binding.getHandlerChain();
 
 			handlerChain.add(handler);
 
-			jaxwsBinding.setHandlerChain(handlerChain);
+			binding.setHandlerChain(handlerChain);
 
 			return handler;
 		}
@@ -255,13 +255,13 @@ public class LiferaySoapServiceTracker {
 			JaxWsEndpointImpl jaxWsEndpoint =
 				(JaxWsEndpointImpl) _server.getEndpoint();
 
-			Binding jaxwsBinding = jaxWsEndpoint.getJaxwsBinding();
+			Binding binding = jaxWsEndpoint.getJaxwsBinding();
 
-			List<Handler> handlerChain = jaxwsBinding.getHandlerChain();
+			List<Handler> handlerChain = binding.getHandlerChain();
 
 			handlerChain.remove(handler);
 
-			jaxwsBinding.setHandlerChain(handlerChain);
+			binding.setHandlerChain(handlerChain);
 
 			_bundleContext.ungetService(reference);
 		}

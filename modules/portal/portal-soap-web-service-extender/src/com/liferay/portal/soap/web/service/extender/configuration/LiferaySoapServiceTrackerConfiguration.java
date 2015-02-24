@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.soap.web.service.publisher.configuration;
+package com.liferay.portal.soap.web.service.extender.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 import aQute.bnd.annotation.metatype.Meta.AD;
@@ -20,7 +20,7 @@ import aQute.bnd.annotation.metatype.Meta.AD;
 /**
  * @author Carlos Sierra Andrés
  */
-@Meta.OCD(id = "com.liferay.portal.soap.web.service.publisher")
+@Meta.OCD(id = "com.liferay.portal.soap.web.service.extender")
 public interface LiferaySoapServiceTrackerConfiguration {
 
 	@AD(

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.soap.web.service.publisher.configuration;
+package com.liferay.portal.soap.web.service.extender.configuration;
 
 import java.util.HashMap;
 import java.util.Map;

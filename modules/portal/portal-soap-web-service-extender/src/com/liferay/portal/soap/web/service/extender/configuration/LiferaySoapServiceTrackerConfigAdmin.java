@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.soap.web.service.publisher.configuration;
+package com.liferay.portal.soap.web.service.extender.configuration;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.soap.web.service.publisher.LiferaySoapServiceTracker;
+import com.liferay.portal.soap.web.service.extender.LiferaySoapServiceTracker;
 
 import java.io.IOException;
 
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	configurationPid = "com.liferay.portal.soap.web.service.publisher",
+	configurationPid = "com.liferay.portal.soap.web.service.extender",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true
 )
 public class LiferaySoapServiceTrackerConfigAdmin {

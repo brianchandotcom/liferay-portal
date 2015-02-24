@@ -123,12 +123,10 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 		Hits hits = DLAppServiceUtil.search(repositoryId, searchContext);
 
 		searchContainer.setTotal(hits.getLength());
-
-		PortletURL hitURL = renderResponse.createRenderURL();
 		%>
 
 		<liferay-ui:search-container-results
-			results="<%= SearchResultUtil.getSearchResults(hits, locale, hitURL) %>"
+			results="<%= SearchResultUtil.getSearchResults(hits, locale) %>"
 		/>
 
 		<liferay-ui:search-container-row

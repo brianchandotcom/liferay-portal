@@ -36,7 +36,7 @@ String title = (String)request.getAttribute("liferay-ui:app-view-search-entry:ti
 String url = (String)request.getAttribute("liferay-ui:app-view-search-entry:url");
 List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-search-entry:versions");
 
-Summary summary = new Summary(title, description, null);
+Summary summary = new Summary(title, description);
 
 summary.setHighlight(highlightEnabled);
 summary.setQueryTerms(queryTerms);
@@ -149,7 +149,7 @@ summary.setQueryTerms(queryTerms);
 		for (MBMessage mbMessage : mbMessages) {
 			User userDisplay = UserLocalServiceUtil.getUser(mbMessage.getUserId());
 
-			summary = new Summary(null, mbMessage.getBody(), null);
+			summary = new Summary(null, mbMessage.getBody());
 
 			summary.setHighlight(highlightEnabled);
 			summary.setQueryTerms(queryTerms);

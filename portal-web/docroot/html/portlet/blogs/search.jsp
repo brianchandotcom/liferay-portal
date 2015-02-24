@@ -70,15 +70,10 @@ String keywords = ParamUtil.getString(request, "keywords");
 		Hits hits = indexer.search(searchContext);
 
 		searchContainer.setTotal(hits.getLength());
-
-		PortletURL hitURL = renderResponse.createRenderURL();
-
-		hitURL.setParameter("struts_action", "/blogs/view_entry");
-		hitURL.setParameter("redirect", currentURL);
 		%>
 
 		<liferay-ui:search-container-results
-			results="<%= SearchResultUtil.getSearchResults(hits, locale, hitURL) %>"
+			results="<%= SearchResultUtil.getSearchResults(hits, locale) %>"
 		/>
 
 		<liferay-ui:search-container-row

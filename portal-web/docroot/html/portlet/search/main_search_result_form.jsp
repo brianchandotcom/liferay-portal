@@ -47,10 +47,10 @@ Summary summary = null;
 if (indexer != null) {
 	String snippet = document.get(Field.SNIPPET);
 
-	summary = indexer.getSummary(document, snippet, null, renderRequest, renderResponse);
+	summary = indexer.getSummary(document, snippet, renderRequest, renderResponse);
 }
 else if (assetRenderer != null) {
-	summary = new Summary(locale, assetRenderer.getTitle(locale), assetRenderer.getSearchSummary(locale), null);
+	summary = new Summary(locale, assetRenderer.getTitle(locale), assetRenderer.getSearchSummary(locale));
 }
 %>
 

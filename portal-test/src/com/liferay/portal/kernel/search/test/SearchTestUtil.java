@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
-
 /**
  * @author Manuel de la Peña
  */
@@ -80,14 +78,12 @@ public class SearchTestUtil {
 		return document;
 	}
 
-	public static List<SearchResult> getSearchResults(
-		PortletURL portletURL, Document... documents) {
-
+	public static List<SearchResult> getSearchResults(Document... documents) {
 		Hits hits = new HitsImpl();
 
 		hits.setDocs(documents);
 
-		return SearchResultUtil.getSearchResults(hits, null, portletURL);
+		return SearchResultUtil.getSearchResults(hits, null);
 	}
 
 }

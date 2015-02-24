@@ -24,7 +24,6 @@ import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -56,8 +55,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 	@Test
 	public void testNoDocuments() {
-		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
-			portletURL);
+		List<SearchResult> searchResults = SearchTestUtil.getSearchResults();
 
 		Assert.assertEquals(0, searchResults.size());
 	}
@@ -99,7 +97,6 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		Assert.assertEquals(
 			SearchResultUtil.SUMMARY_MAX_CONTENT_LENGTH,
 			summary.getMaxContentLength());
-		Assert.assertSame(portletURL, summary.getPortletURL());
 		Assert.assertEquals(SearchTestUtil.SUMMARY_TITLE, summary.getTitle());
 
 		assertSearchResult(searchResult);
@@ -110,13 +107,12 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		Indexer indexer = Mockito.mock(Indexer.class);
 
 		Summary summary = new Summary(
-			null, SearchTestUtil.SUMMARY_TITLE, SearchTestUtil.SUMMARY_CONTENT,
-			null);
+			null, SearchTestUtil.SUMMARY_TITLE, SearchTestUtil.SUMMARY_CONTENT);
 
 		when(
 			indexer.getSummary(
 				(Document)Matchers.any(), Matchers.anyString(),
-				(PortletURL)Matchers.any(), (PortletRequest)Matchers.isNull(),
+				(PortletRequest)Matchers.isNull(),
 				(PortletResponse)Matchers.isNull())
 		).thenReturn(
 			summary
@@ -143,7 +139,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		Document document2 = SearchTestUtil.createDocument(className);
 
 		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
-			portletURL, document1, document2);
+			document1, document2);
 
 		Assert.assertEquals(1, searchResults.size());
 

@@ -153,9 +153,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 
 				searchContainer.setTotal(hits.getLength());
 
-				PortletURL hitURL = liferayPortletResponse.createRenderURL();
-
-				List<SearchResult> searchResultsList = SearchResultUtil.getSearchResults(hits, locale, hitURL);
+				List<SearchResult> searchResultsList = SearchResultUtil.getSearchResults(hits, locale);
 
 				for (int i = 0; i < searchResultsList.size(); i++) {
 					SearchResult searchResult = searchResultsList.get(i);

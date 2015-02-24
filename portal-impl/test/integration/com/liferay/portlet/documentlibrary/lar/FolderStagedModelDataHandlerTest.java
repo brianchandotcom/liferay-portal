@@ -39,6 +39,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -182,8 +183,26 @@ public class FolderStagedModelDataHandlerTest
 		folder = DLAppTestUtil.addFolder(
 			group.getGroupId(), folder.getFolderId());
 
-		DLAppTestUtil.updateFolderFileEntryType(
-			folder, dlFileEntryType.getFileEntryTypeId());
+		DLFolder dlFolder = (DLFolder)folder.getModel();
+
+		dlFolder.setDefaultFileEntryTypeId(
+			dlFileEntryType.getFileEntryTypeId());
+		dlFolder.setRestrictionType(
+			DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW);
+
+		DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				folder.getGroupId(), TestPropsValues.getUserId());
+
+		List<Long> dlFileEntryTypeIds = new ArrayList<Long>();
+
+		dlFileEntryTypeIds.add(dlFileEntryType.getFileEntryTypeId());
+
+		DLFileEntryTypeLocalServiceUtil.updateFolderFileEntryTypes(
+			dlFolder, dlFileEntryTypeIds, dlFileEntryType.getFileEntryTypeId(),
+			serviceContext);
 
 		return folder;
 	}

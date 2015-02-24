@@ -28,7 +28,7 @@ public class UpgradePortletSettings
 	protected void doUpgrade() throws Exception {
 		upgradeDisplayPortlet(
 			WikiPortletKeys.WIKI_DISPLAY, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-			WikiSettings.ALL_KEYS);
+			WikiSettings.class);
 	}
 
 }

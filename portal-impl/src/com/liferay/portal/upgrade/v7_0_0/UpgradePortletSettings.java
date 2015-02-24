@@ -17,9 +17,9 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.upgrade.v7_0_0.util.PortletPreferencesRow;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -138,28 +138,26 @@ public class UpgradePortletSettings extends UpgradeProcess {
 		upgradeMainPortlet(
 			PortletKeys.BLOGS, BlogsConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP,
-			BlogsPortletInstanceSettings.ALL_KEYS, BlogsSettings.ALL_KEYS);
+			BlogsPortletInstanceSettings.class, BlogsSettings.class);
 		upgradeMainPortlet(
 			PortletKeys.DOCUMENT_LIBRARY, DLConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP,
-			DLPortletInstanceSettings.ALL_KEYS, DLSettings.ALL_KEYS);
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, DLPortletInstanceSettings.class,
+			DLSettings.class);
 		upgradeMainPortlet(
 			PortletKeys.MESSAGE_BOARDS, MBConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, StringPool.EMPTY_ARRAY,
-			MBSettings.ALL_KEYS);
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, null, MBSettings.class);
 		upgradeMainPortlet(
 			PortletKeys.SHOPPING, ShoppingConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, StringPool.EMPTY_ARRAY,
-			ShoppingSettings.ALL_KEYS);
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, null, ShoppingSettings.class);
 
 		// Display portlets
 
 		upgradeDisplayPortlet(
 			PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, DLSettings.ALL_KEYS);
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, DLSettings.class);
 		upgradeDisplayPortlet(
 			PortletKeys.MEDIA_GALLERY_DISPLAY,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, DLSettings.ALL_KEYS);
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, DLSettings.class);
 	}
 
 	protected long getGroupId(long plid) throws Exception {
@@ -208,7 +206,8 @@ public class UpgradePortletSettings extends UpgradeProcess {
 	}
 
 	protected void resetPortletPreferencesValues(
-			String portletId, int ownerType, String[] keys)
+			String portletId, int ownerType,
+			SettingsDescriptor<?> settingsDescriptor)
 		throws Exception {
 
 		ResultSet rs = null;
@@ -229,7 +228,7 @@ public class UpgradePortletSettings extends UpgradeProcess {
 				while (names.hasMoreElements()) {
 					String name = names.nextElement();
 
-					for (String key : keys) {
+					for (String key : settingsDescriptor.getAllKeys()) {
 						if (name.startsWith(key)) {
 							jxPortletPreferences.reset(key);
 
@@ -280,7 +279,7 @@ public class UpgradePortletSettings extends UpgradeProcess {
 	}
 
 	protected void upgradeDisplayPortlet(
-			String portletId, int ownerType, String[] serviceKeys)
+			String portletId, int ownerType, Class<?> serviceSettingsClass)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
@@ -291,15 +290,20 @@ public class UpgradePortletSettings extends UpgradeProcess {
 			_log.debug("Delete service keys from portlet settings");
 		}
 
-		resetPortletPreferencesValues(portletId, ownerType, serviceKeys);
+		SettingsDescriptor<?> settingsDescriptor = new SettingsDescriptor<>(
+			serviceSettingsClass);
+
+		resetPortletPreferencesValues(portletId, ownerType, settingsDescriptor);
 
 		resetPortletPreferencesValues(
-			portletId, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, serviceKeys);
+			portletId, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED,
+			settingsDescriptor);
 	}
 
 	protected void upgradeMainPortlet(
 			String portletId, String serviceName, int ownerType,
-			String[] portletInstanceKeys, String[] serviceKeys)
+			Class<?> portletInstanceSettingsClass,
+			Class<?> serviceSettingsClass)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
@@ -308,22 +312,33 @@ public class UpgradePortletSettings extends UpgradeProcess {
 
 		copyPortletSettingsAsServiceSettings(portletId, ownerType, serviceName);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Delete portlet instance keys from service settings");
-		}
+		if (portletInstanceSettingsClass != null) {
+			SettingsDescriptor<?> portletInstanceSettingsDescriptor =
+				new SettingsDescriptor<>(portletInstanceSettingsClass);
 
-		resetPortletPreferencesValues(
-			serviceName, PortletKeys.PREFS_OWNER_TYPE_GROUP,
-			portletInstanceKeys);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Delete portlet instance keys from service settings");
+			}
+
+			resetPortletPreferencesValues(
+				serviceName, PortletKeys.PREFS_OWNER_TYPE_GROUP,
+				portletInstanceSettingsDescriptor);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Delete service keys from portlet settings");
 		}
 
-		resetPortletPreferencesValues(portletId, ownerType, serviceKeys);
+		SettingsDescriptor<?> serviceSettingsDescriptor =
+			new SettingsDescriptor<>(serviceSettingsClass);
 
 		resetPortletPreferencesValues(
-			portletId, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, serviceKeys);
+			portletId, ownerType, serviceSettingsDescriptor);
+
+		resetPortletPreferencesValues(
+			portletId, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED,
+			serviceSettingsDescriptor);
 	}
 
 	private PortletPreferencesRow getPortletPreferencesRow(ResultSet rs)

@@ -14,47 +14,17 @@
 
 package com.liferay.bookmarks.settings;
 
+import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.portal.kernel.util.PropsKeys;
 
 /**
  * @author Iván Zaera
  */
+@Settings.Config(settingsIds = BookmarksConstants.SERVICE_NAME)
 public class BookmarksSettings {
-
-	public static final String[] ALL_KEYS = {
-		"emailEntryAddedBody", "emailEntryAddedSubject",
-		"emailEntryUpdatedBody", "emailEntryUpdatedSubject", "emailFromAddress",
-		"emailFromName", "entriesPerPage", "entryColumns", "folderColumns",
-		"foldersPerPage", "rootFolderId", "emailEntryAddedEnabled",
-		"emailEntryUpdatedEnabled", "enableRelatedAssets", "showFoldersSearch",
-		"showSubfolders"
-	};
-
-	public static final String[] MULTI_VALUED_KEYS = new String[] {
-		"entryColumns", "folderColumns"
-	};
-
-	public static FallbackKeys getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
-
-		fallbackKeys.add(
-			"emailFromAddress", "email.from.address",
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS );
-		fallbackKeys.add(
-			"emailFromName", "email.from.name",
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		fallbackKeys.add(
-			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		fallbackKeys.add(
-			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-
-		return fallbackKeys;
-	}
 
 	public BookmarksSettings(Settings settings) {
 		_typedSettings = new TypedSettings(settings);
@@ -64,6 +34,7 @@ public class BookmarksSettings {
 		return _typedSettings.getLocalizedValuesMap("emailEntryAddedBody");
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailEntryAddedBodyXml() {
 		LocalizedValuesMap emailEntryAddedBody = getEmailEntryAddedBody();
 
@@ -74,6 +45,7 @@ public class BookmarksSettings {
 		return _typedSettings.getLocalizedValuesMap("emailEntryAddedSubject");
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailEntryAddedSubjectXml() {
 		LocalizedValuesMap emailEntryAddedSubject = getEmailEntryAddedSubject();
 
@@ -84,6 +56,7 @@ public class BookmarksSettings {
 		return _typedSettings.getLocalizedValuesMap("emailEntryUpdatedBody");
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailEntryUpdatedBodyXml() {
 		LocalizedValuesMap emailEntryUpdatedBody = getEmailEntryUpdatedBody();
 
@@ -94,6 +67,7 @@ public class BookmarksSettings {
 		return _typedSettings.getLocalizedValuesMap("emailEntryUpdatedSubject");
 	}
 
+	@Settings.Property(ignore = true)
 	public String getEmailEntryUpdatedSubjectXml() {
 		LocalizedValuesMap emailEntryUpdatedSubject =
 			getEmailEntryUpdatedSubject();

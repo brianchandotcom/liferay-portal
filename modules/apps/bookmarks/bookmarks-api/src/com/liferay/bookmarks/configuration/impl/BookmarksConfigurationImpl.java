@@ -79,7 +79,7 @@ public class BookmarksConfigurationImpl implements BookmarksConfiguration {
 	}
 
 	@Override
-	public int entriesPerPage() {
+	public String entriesPerPage() {
 		return _bookmarksConfiguration.entriesPerPage();
 	}
 
@@ -94,7 +94,7 @@ public class BookmarksConfigurationImpl implements BookmarksConfiguration {
 	}
 
 	@Override
-	public int foldersPerPage() {
+	public String foldersPerPage() {
 		return _bookmarksConfiguration.foldersPerPage();
 	}
 

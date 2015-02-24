@@ -49,6 +49,9 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Carlos Sierra Andrés
  */
@@ -60,6 +63,8 @@ public class LiferaySoapServiceTracker {
 		BundleContext bundleContext, String contextPath,
 		ExtensionManager extensionManager) {
 
+		_logger = LoggerFactory.getLogger(LiferaySoapServiceTracker.class);
+
 		_bundleContext = bundleContext;
 		_contextPath = contextPath;
 		_extensionManager = extensionManager;
@@ -69,7 +74,7 @@ public class LiferaySoapServiceTracker {
 		Bus bus = _createBus();
 
 		BusFactory.setDefaultBus(bus);
-		
+
 		_registerCXFServlet(bus, _contextPath);
 
 		try {
@@ -92,18 +97,32 @@ public class LiferaySoapServiceTracker {
 			_serverServiceTracker.close();
 		}
 		catch (Exception e) {
+			if (_logger.isWarnEnabled()) {
+				_logger.warn(
+					"Could not close servicetracker " + _serverServiceTracker);
+			}
 		}
 
 		try {
 			_servletServiceRegistration.unregister();
 		}
 		catch (Exception e) {
+			if (_logger.isWarnEnabled()) {
+				_logger.warn(
+					"Could not unregister CXF servlet " +
+						_servletServiceRegistration);
+			}
 		}
 
 		try {
 			_servletContextHelperRegistration.unregister();
 		}
 		catch (Exception e) {
+			if (_logger.isWarnEnabled()) {
+				_logger.warn(
+					"Could not unregister Servlet context " +
+						_serverServiceTracker);
+			}
 		}
 	}
 
@@ -149,6 +168,7 @@ public class LiferaySoapServiceTracker {
 	private final String _contextPath;
 	private CXFNonSpringServlet _cxfServlet;
 	private final ExtensionManager _extensionManager;
+	private final Logger _logger;
 	private ServiceRegistration<Provider> _providerServiceRegistration;
 	private ServiceTracker<Object, ServerTrackingInformation>
 		_serverServiceTracker;
@@ -307,7 +327,11 @@ public class LiferaySoapServiceTracker {
 				ServiceTracker<Handler, Handler> handlerServiceTracker =
 					trackHandlers(address, server);
 
-				//TODO: log
+				if (_logger.isInfoEnabled()) {
+					_logger.info(
+						"Created JAX-WS server at location " + address +
+							"using " + service);
+				}
 
 				return new ServerTrackingInformation(
 					server, handlerServiceTracker);
@@ -315,7 +339,9 @@ public class LiferaySoapServiceTracker {
 			catch (Throwable t) {
 				_bundleContext.ungetService(serviceReference);
 
-				//TODO: log
+				if (_logger.isErrorEnabled()) {
+					_logger.error(t.getMessage(), t);
+				}
 
 				return null;
 			}

@@ -2433,24 +2433,34 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return lineLength;
 	}
 
-	protected String getNextLine(String content, int lineCount) {
-		int x = -1;
+	protected int getLineStartPos(String content, int lineCount) {
+		int x = 0;
 
-		for (int i = 0; i < lineCount; i++) {
+		for (int i = 1; i < lineCount; i++) {
 			x = content.indexOf("\n", x + 1);
+
+			if (x == -1) {
+				return x;
+			}
 		}
 
-		if (x == -1) {
+		return x + 1;
+	}
+
+	protected String getNextLine(String content, int lineCount) {
+		int nextLineStartPos = getLineStartPos(content, lineCount + 1);
+
+		if (nextLineStartPos == -1) {
 			return null;
 		}
 
-		int y = content.indexOf("\n", x + 1);
+		int nextLineEndPos = content.indexOf("\n", nextLineStartPos);
 
-		if (y == -1) {
-			return content.substring(x + 1);
+		if (nextLineEndPos == -1) {
+			return content.substring(nextLineStartPos);
 		}
 
-		return content.substring(x + 1, y);
+		return content.substring(nextLineStartPos, nextLineEndPos);
 	}
 
 	protected Collection<String> getPluginJavaFiles() {

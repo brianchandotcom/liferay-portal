@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -29,14 +28,10 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -297,34 +292,6 @@ public abstract class DLAppTestUtil {
 			groupId, fileEntryId, RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			majorVersion, true, approved, serviceContext);
-	}
-
-	public static void updateFolderFileEntryType(
-			Folder folder, long fileEntryTypeId)
-		throws Exception {
-
-		updateFolderFileEntryTypes(
-			folder, fileEntryTypeId, new long[] {fileEntryTypeId});
-	}
-
-	public static void updateFolderFileEntryTypes(
-			Folder folder, long defaultFileEntryTypeId, long[] fileEntryTypeIds)
-		throws Exception {
-
-		DLFolder dlFolder = (DLFolder)folder.getModel();
-
-		dlFolder.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
-		dlFolder.setRestrictionType(
-			DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW);
-
-		DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(folder.getGroupId());
-
-		DLFileEntryTypeLocalServiceUtil.updateFolderFileEntryTypes(
-			dlFolder, ListUtil.toList(fileEntryTypeIds), defaultFileEntryTypeId,
-			serviceContext);
 	}
 
 	protected static FileEntry updateStatus(

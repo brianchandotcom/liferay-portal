@@ -29,8 +29,8 @@ Import-Package: \
 	javax.servlet.http,\
 	*
 Include-Resource:\
-	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,\
-	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class
+	classes,\
+	META-INF/resources=src/META-INF/resources
 Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\
@@ -39,6 +39,3 @@ Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/util))"
 Web-ContextPath: /document-selector-web
-
--donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
--wab: docroot

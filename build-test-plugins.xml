@@ -68,6 +68,8 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 
 		<for list="${plugins.includes}" param="plugin">
 			<sequential>
+				<get-testcase-property property.name="portlet.properties.@{plugin}" />
+
 				<if>
 					<isset property="portlet.properties.@{plugin}" />
 					<then>

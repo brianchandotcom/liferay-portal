@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.search.web.configuration.SearchWebConfigurationValues;
 import com.liferay.search.web.constants.SearchPortletKeys;
 import com.liferay.util.ContentUtil;
 
@@ -82,7 +82,7 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 			getParameter(actionRequest, "displayModifiedRangeFacet"));
 
 		String searchConfiguration = ContentUtil.get(
-			PropsValues.SEARCH_FACET_CONFIGURATION);
+			SearchWebConfigurationValues.FACET_CONFIGURATION);
 
 		JSONObject configurationJSONObject = JSONFactoryUtil.createJSONObject(
 			searchConfiguration);
@@ -93,8 +93,9 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 		if (oldFacetsJSONArray == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"The resource " + PropsValues.SEARCH_FACET_CONFIGURATION +
-						" is missing a valid facets JSON array");
+					"The resource " +
+						SearchWebConfigurationValues.FACET_CONFIGURATION +
+							" is missing a valid facets JSON array");
 			}
 		}
 

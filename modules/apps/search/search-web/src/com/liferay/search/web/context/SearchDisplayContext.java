@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.search.web.configuration.SearchWebConfigurationValues;
 import com.liferay.util.ContentUtil;
 
 import javax.portlet.PortletPreferences;
@@ -143,7 +144,7 @@ public class SearchDisplayContext {
 			Validator.isNull(_searchConfiguration)) {
 
 			_searchConfiguration = ContentUtil.get(
-				PropsValues.SEARCH_FACET_CONFIGURATION);
+				SearchWebConfigurationValues.FACET_CONFIGURATION);
 		}
 
 		return _searchConfiguration;

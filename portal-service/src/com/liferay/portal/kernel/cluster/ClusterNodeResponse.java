@@ -23,6 +23,28 @@ import java.io.Serializable;
  */
 public class ClusterNodeResponse implements Serializable {
 
+	public static ClusterNodeResponse createExceptionClusterNodeResponse(
+		ClusterNode clusterNode, ClusterMessageType clusterMessageType,
+		String uuid, boolean multicast, Exception exception) {
+
+		return new ClusterNodeResponse(
+			clusterNode, clusterMessageType, uuid, multicast, null, exception);
+	}
+
+	public static ClusterNodeResponse createResultClusterNodeResponse(
+		ClusterNode clusterNode, ClusterMessageType clusterMessageType,
+		String uuid, boolean multicast, Object result) {
+
+		if ((result != null) && !(result instanceof Serializable)) {
+			return new ClusterNodeResponse(
+				clusterNode, clusterMessageType, uuid, multicast, null,
+				new ClusterException("Return value is not serializable"));
+		}
+
+		return new ClusterNodeResponse(
+			clusterNode, clusterMessageType, uuid, multicast, result, null);
+	}
+
 	public ClusterMessageType getClusterMessageType() {
 		return _clusterMessageType;
 	}
@@ -58,30 +80,6 @@ public class ClusterNodeResponse implements Serializable {
 
 	public boolean isMulticast() {
 		return _multicast;
-	}
-
-	public void setClusterMessageType(ClusterMessageType clusterMessageType) {
-		_clusterMessageType = clusterMessageType;
-	}
-
-	public void setClusterNode(ClusterNode clusterNode) {
-		_clusterNode = clusterNode;
-	}
-
-	public void setException(Exception exception) {
-		_exception = exception;
-	}
-
-	public void setMulticast(boolean multicast) {
-		_multicast = multicast;
-	}
-
-	public void setResult(Object result) {
-		_result = result;
-	}
-
-	public void setUuid(String uuid) {
-		_uuid = uuid;
 	}
 
 	@Override
@@ -124,11 +122,23 @@ public class ClusterNodeResponse implements Serializable {
 		return sb.toString();
 	}
 
-	private ClusterMessageType _clusterMessageType;
-	private ClusterNode _clusterNode;
-	private Exception _exception;
-	private boolean _multicast;
-	private Object _result;
-	private String _uuid;
+	private ClusterNodeResponse(
+		ClusterNode clusterNode, ClusterMessageType clusterMessageType,
+		String uuid, boolean multicast, Object result, Exception exception) {
+
+		_clusterNode = clusterNode;
+		_clusterMessageType = clusterMessageType;
+		_uuid = uuid;
+		_multicast = multicast;
+		_result = result;
+		_exception = exception;
+	}
+
+	private final ClusterMessageType _clusterMessageType;
+	private final ClusterNode _clusterNode;
+	private final Exception _exception;
+	private final boolean _multicast;
+	private final Object _result;
+	private final String _uuid;
 
 }

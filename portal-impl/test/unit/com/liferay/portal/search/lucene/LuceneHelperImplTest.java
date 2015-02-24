@@ -784,14 +784,6 @@ public class LuceneHelperImplTest {
 				new FutureClusterResponses(clusterNodeIds);
 
 			for (ClusterNode clusterNode : _clusterNodes.values()) {
-				ClusterNodeResponse clusterNodeResponse =
-					new ClusterNodeResponse();
-
-				clusterNodeResponse.setClusterMessageType(
-					ClusterMessageType.EXECUTE);
-				clusterNodeResponse.setMulticast(clusterRequest.isMulticast());
-				clusterNodeResponse.setUuid(clusterRequest.getUuid());
-
 				try {
 					clusterNode.setPortalInetSocketAddress(
 						new InetSocketAddress(_portalInetAddress, _port));
@@ -801,18 +793,21 @@ public class LuceneHelperImplTest {
 				catch (IllegalArgumentException iae) {
 				}
 
-				clusterNodeResponse.setClusterNode(clusterNode);
-
 				try {
-					clusterNodeResponse.setResult(
-						_invoke(clusterRequest.getMethodHandler()));
+					futureClusterResponses.addClusterNodeResponse(
+						ClusterNodeResponse.createResultClusterNodeResponse(
+							clusterNode, ClusterMessageType.EXECUTE,
+							clusterRequest.getUuid(),
+							clusterRequest.isMulticast(),
+							_invoke(clusterRequest.getMethodHandler())));
 				}
 				catch (Exception e) {
-					clusterNodeResponse.setException(e);
+					futureClusterResponses.addClusterNodeResponse(
+						ClusterNodeResponse.createExceptionClusterNodeResponse(
+							clusterNode, ClusterMessageType.EXECUTE,
+							clusterRequest.getUuid(),
+							clusterRequest.isMulticast(), e));
 				}
-
-				futureClusterResponses.addClusterNodeResponse(
-					clusterNodeResponse);
 			}
 
 			return futureClusterResponses;

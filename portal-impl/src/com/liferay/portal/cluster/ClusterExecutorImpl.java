@@ -45,8 +45,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.Serializable;
-
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -330,28 +328,17 @@ public class ClusterExecutorImpl
 		ClusterRequest clusterRequest, Object returnValue,
 		Exception exception) {
 
-		ClusterNodeResponse clusterNodeResponse = new ClusterNodeResponse();
-
-		clusterNodeResponse.setClusterNode(getLocalClusterNode());
-		clusterNodeResponse.setClusterMessageType(
-			clusterRequest.getClusterMessageType());
-		clusterNodeResponse.setMulticast(clusterRequest.isMulticast());
-		clusterNodeResponse.setUuid(clusterRequest.getUuid());
-
 		if (exception != null) {
-			clusterNodeResponse.setException(exception);
-		}
-		else {
-			if (returnValue instanceof Serializable) {
-				clusterNodeResponse.setResult(returnValue);
-			}
-			else if (returnValue != null) {
-				clusterNodeResponse.setException(
-					new ClusterException("Return value is not serializable"));
-			}
+			return ClusterNodeResponse.createExceptionClusterNodeResponse(
+				getLocalClusterNode(), clusterRequest.getClusterMessageType(),
+				clusterRequest.getUuid(), clusterRequest.isMulticast(),
+				exception);
 		}
 
-		return clusterNodeResponse;
+		return ClusterNodeResponse.createResultClusterNodeResponse(
+			getLocalClusterNode(), clusterRequest.getClusterMessageType(),
+			clusterRequest.getUuid(), clusterRequest.isMulticast(),
+			returnValue);
 	}
 
 	protected JChannel getControlChannel() {

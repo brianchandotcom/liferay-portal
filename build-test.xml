@@ -1864,6 +1864,8 @@ go]]></replacevalue>
 	<target name="deploy-required-plugins">
 		<ant dir="${lp.plugins.dir}/portlets/marketplace-portlet" target="direct-deploy" />
 
+		<get-testcase-property property.name="marketplace.staging.enabled" />
+
 		<if>
 			<equals arg1="${marketplace.staging.enabled}" arg2="true" />
 			<then>

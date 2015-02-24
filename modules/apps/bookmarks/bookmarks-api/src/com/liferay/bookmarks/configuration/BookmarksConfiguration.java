@@ -54,17 +54,26 @@ public interface BookmarksConfiguration {
 	)
 	public String emailEntryUpdatedSubject();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",
+		required = false
+	)
 	public String emailFromAddress();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/admin.email.from.name}",
+		required = false
+	)
 	public String emailFromName();
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean enableRelatedAssets();
 
-	@Meta.AD(deflt = "20", required = false)
-	public int entriesPerPage();
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
+		required = false
+	)
+	public String entriesPerPage();
 
 	@Meta.AD(deflt = "name|url|visits|modified-date|action", required = false)
 	public String[] entryColumns();
@@ -74,8 +83,11 @@ public interface BookmarksConfiguration {
 	)
 	public String[] folderColumns();
 
-	@Meta.AD(deflt = "20", required = false)
-	public int foldersPerPage();
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
+		required = false
+	)
+	public String foldersPerPage();
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean showFoldersSearch();

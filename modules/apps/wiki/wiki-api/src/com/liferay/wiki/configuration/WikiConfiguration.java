@@ -31,12 +31,14 @@ public interface WikiConfiguration {
 	public String defaultFormat();
 
 	@Meta.AD(
-		deflt = "", required = false
+		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",
+		required = false
 	)
 	public String emailFromAddress();
 
 	@Meta.AD(
-		deflt = "", required = false
+		deflt = "${server-property://com.liferay.portal/admin.email.from.name}",
+		required = false
 	)
 	public String emailFromName();
 

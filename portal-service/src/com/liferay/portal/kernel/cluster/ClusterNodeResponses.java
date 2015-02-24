@@ -26,9 +26,6 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class ClusterNodeResponses implements Serializable {
 
-	public static final ClusterNodeResponses EMPTY_CLUSTER_NODE_RESPONSES =
-		new ClusterNodeResponses();
-
 	public void addClusterResponse(ClusterNodeResponse clusterNodeResponse) {
 		ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
 

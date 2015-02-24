@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * @author Iván Zaera
  */
-@Settings.Config(ids = BlogsConstants.SERVICE_NAME)
+@Settings.Config(settingsIds = BlogsConstants.SERVICE_NAME)
 public class BlogsSettings {
 
 	public static BlogsSettings getInstance(long groupId)

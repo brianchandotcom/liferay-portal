@@ -46,21 +46,6 @@ public class SettingsDescriptor<T> {
 		return _allKeys;
 	}
 
-	public Set<String> getIds() {
-		if (_ids == null) {
-			_ids = new HashSet<>();
-
-			Settings.Config settingsConfig = _settingsClass.getAnnotation(
-				Settings.Config.class);
-
-			for (String id : settingsConfig.ids()) {
-				_ids.add(id);
-			}
-		}
-
-		return _ids;
-	}
-
 	public Set<String> getMultiValuedKeys() {
 		if (_multiValuedKeys == null) {
 			_multiValuedKeys = new HashSet<>();
@@ -77,6 +62,21 @@ public class SettingsDescriptor<T> {
 		}
 
 		return _multiValuedKeys;
+	}
+
+	public Set<String> getSettingsIds() {
+		if (_settingsIds == null) {
+			_settingsIds = new HashSet<>();
+
+			Settings.Config settingsConfig = _settingsClass.getAnnotation(
+				Settings.Config.class);
+
+			for (String settingsId : settingsConfig.settingsIds()) {
+				_settingsIds.add(settingsId);
+			}
+		}
+
+		return _settingsIds;
 	}
 
 	private Method[] _getPropertyMethods() {
@@ -139,8 +139,8 @@ public class SettingsDescriptor<T> {
 	}
 
 	private Set<String> _allKeys;
-	private Set<String> _ids;
 	private Set<String> _multiValuedKeys;
 	private final Class<T> _settingsClass;
+	private Set<String> _settingsIds;
 
 }

@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * @author Iván Zaera
  */
-@Settings.Config(ids = {PortletKeys.BLOGS, PortletKeys.BLOGS_ADMIN})
+@Settings.Config(settingsIds = {PortletKeys.BLOGS, PortletKeys.BLOGS_ADMIN})
 public class BlogsPortletInstanceSettings {
 
 	public static BlogsPortletInstanceSettings getInstance(

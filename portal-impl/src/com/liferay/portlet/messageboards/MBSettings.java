@@ -34,7 +34,7 @@ import java.util.Map;
 /**
  * @author Jorge Ferrer
  */
-@Settings.Config(ids = MBConstants.SERVICE_NAME)
+@Settings.Config(settingsIds = MBConstants.SERVICE_NAME)
 public class MBSettings {
 
 	public static final String[] ALL_KEYS = {

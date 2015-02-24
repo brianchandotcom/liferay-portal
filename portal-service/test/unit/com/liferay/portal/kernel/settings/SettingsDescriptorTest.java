@@ -40,16 +40,6 @@ public class SettingsDescriptorTest {
 	}
 
 	@Test
-	public void testGetIds() {
-		Set<String> ids = _settingsDescriptor.getIds();
-
-		Collection<String> expectedIds = Arrays.asList("id.1", "id.2");
-
-		Assert.assertEquals(ids.size(), expectedIds.size());
-		Assert.assertTrue(ids.containsAll(expectedIds));
-	}
-
-	@Test
 	public void testGetMultiValuedKeys() {
 		Set<String> multiValuedKeys = _settingsDescriptor.getMultiValuedKeys();
 
@@ -61,7 +51,18 @@ public class SettingsDescriptorTest {
 		Assert.assertTrue(multiValuedKeys.containsAll(expectedMultiValuedKeys));
 	}
 
-	@Settings.Config(ids = {"id.1", "id.2"})
+	@Test
+	public void testGetSettingsIds() {
+		Set<String> settingsIds = _settingsDescriptor.getSettingsIds();
+
+		Collection<String> expectedSettingsIds = Arrays.asList(
+			"settingsId.1", "settingsId.2");
+
+		Assert.assertEquals(settingsIds.size(), expectedSettingsIds.size());
+		Assert.assertTrue(settingsIds.containsAll(expectedSettingsIds));
+	}
+
+	@Settings.Config(settingsIds = {"settingsId.1", "settingsId.2"})
 	public class MockSettings {
 
 		public boolean getBoolean() {

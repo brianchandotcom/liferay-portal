@@ -208,7 +208,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		SettingsDescriptor<?> settingsDescriptor = new SettingsDescriptor<>(
 			settingsClass);
 
-		for (String settingsId : settingsDescriptor.getIds()) {
+		for (String settingsId : settingsDescriptor.getSettingsIds()) {
 			_settingsDescriptors.put(settingsId, settingsDescriptor);
 
 			if (fallbackKeys != null) {

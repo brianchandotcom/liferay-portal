@@ -37,7 +37,7 @@ import javax.portlet.ValidatorException;
  * @author Iván Zaera
  */
 @Settings.Config(
-	ids = {
+	settingsIds = {
 		WikiPortletKeys.WIKI, WikiPortletKeys.WIKI_ADMIN,
 		WikiPortletKeys.WIKI_DISPLAY
 	}

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.settings.TypedSettings;
 /**
  * @author Iván Zaera
  */
-@Settings.Config(ids = BookmarksConstants.SERVICE_NAME)
+@Settings.Config(settingsIds = BookmarksConstants.SERVICE_NAME)
 public class BookmarksSettings {
 
 	public BookmarksSettings(Settings settings) {

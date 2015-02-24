@@ -213,19 +213,6 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportCorruptedFile" priority="5">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="Bookmarks-Corrupted.lar" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="//li[contains(@class,'upload-error')]" value1="The file Bookmarks-Corrupted.lar cannot be imported." />
-	</command>
-
 	<command name="ExportImportDMRootFolder" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
@@ -787,6 +774,18 @@
 			<var name="targetUnit" value="Foot" />
 			<var name="targetValue" value="1.0" />
 			<var name="unitType" value="Length" />
+		</execute>
+	</command>
+
+	<command name="ImportCorruptedFile" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Bookmarks" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="cannotImport" value="true" />
+			<var name="larFileName" value="bookmarks-corrupted.portlet.lar" />
+			<var name="uploadFrom" value="dependencies" />
 		</execute>
 	</command>
 </definition>

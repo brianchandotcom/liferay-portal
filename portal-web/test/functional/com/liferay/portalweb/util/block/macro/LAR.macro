@@ -328,7 +328,17 @@
 		<execute function="AssertClick" locator1="BasePortletImport#SELECT_FILE_BUTTON" value1="Select File" />
 
 		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
-		<execute function="SikuliUploadTempFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${larFileName}" />
+
+		<if>
+			<equals arg1="${uploadFrom}" arg2="dependencies" />
+			<then>
+				<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${larFileName}" />
+			</then>
+			<else>
+				<execute function="SikuliUploadTempFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${larFileName}" />
+			</else>
+		</if>
+
 		<execute function="Pause" locator1="5000" />
 
 		<if>
@@ -339,11 +349,17 @@
 		</if>
 
 		<if>
-			<isset var="importValidationMissingItem" />
+			<equals arg1="${cannotImport}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="BasePortletImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
-				<execute function="AssertTextEquals" locator1="BasePortletImport#VALIDATION_ERROR_MESSAGE" value1="An unexpected error occurred while uploading your file." />
+				<execute function="AssertTextEquals" locator1="CPSitepagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
 			</then>
+			<elseif>
+				<isset var="importValidationMissingItem" />
+				<then>
+					<execute function="AssertTextEquals" locator1="BasePortletImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
+					<execute function="AssertTextEquals" locator1="BasePortletImport#VALIDATION_ERROR_MESSAGE" value1="An unexpected error occurred while uploading your file." />
+				</then>
+			</elseif>
 			<else>
 				<execute function="AssertClick" locator1="BasePortletImport#CONTINUE_BUTTON" value1="Continue" />
 				<execute function="AssertClick" locator1="BasePortletImport#CONTINUE_BUTTON" value1="Continue" />

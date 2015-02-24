@@ -27,7 +27,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
+JournalArticle article = ActionUtil.getArticle(request);
 
 long groupId = BeanParamUtil.getLong(article, request, "groupId", scopeGroupId);
 
@@ -122,16 +122,14 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 		<input name="xml" type="hidden" value="" />
 	</aui:form>
 
-	<portlet:actionURL var="editArticleActionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-		<portlet:param name="struts_action" value="/journal/edit_article" />
-	</portlet:actionURL>
+	<portlet:actionURL var="editArticleActionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>" />
 
 	<portlet:renderURL var="editArticleRenderURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-		<portlet:param name="struts_action" value="/journal/edit_article" />
+		<portlet:param name="mvcPath" value="/html/portlet/journal/edit_article.jsp" />
 	</portlet:renderURL>
 
 	<aui:form action="<%= editArticleActionURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm1" onSubmit="event.preventDefault();">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
 		<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
@@ -143,7 +141,7 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 		<aui:input name="classNameId" type="hidden" value="<%= classNameId %>" />
 		<aui:input name="classPK" type="hidden" value="<%= classPK %>" />
 		<aui:input name="articleId" type="hidden" value="<%= articleId %>" />
-		<aui:input name="articleIds" type="hidden" value="<%= articleId + EditArticleAction.VERSION_SEPARATOR + version %>" />
+		<aui:input name="articleIds" type="hidden" value="<%= articleId + JournalPortlet.VERSION_SEPARATOR + version %>" />
 		<aui:input name="version" type="hidden" value="<%= ((article == null) || article.isNew()) ? version : article.getVersion() %>" />
 		<aui:input name="articleURL" type="hidden" value="<%= editArticleRenderURL %>" />
 		<aui:input name="ddmStructureId" type="hidden" />
@@ -257,10 +255,10 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 						%>
 
 						<c:if test="<%= hasSavePermission %>">
-							<aui:button data-cmd="<%= Constants.PUBLISH %>" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+							<aui:button data-actionname="<%= Constants.PUBLISH %>" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
 
 							<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-								<aui:button data-cmd="<%= ((article == null) || Validator.isNull(article.getArticleId())) ? Constants.ADD : Constants.UPDATE %>" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+								<aui:button data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "addArticle" : "updateArticle" %>' name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 							</c:if>
 						</c:if>
 
@@ -283,7 +281,7 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 </div>
 
 <liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/journal/preview_article_content" />
+	<portlet:param name="mvcPath" value="/html/portlet/journal/preview_article_content.jsp" />
 
 	<c:if test="<%= (article != null) %>">
 		<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
@@ -295,7 +293,7 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 
 <portlet:renderURL var="editArticleURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="struts_action" value="/journal/edit_article" />
+	<portlet:param name="mvcPath" value="/html/portlet/journal/edit_article.jsp" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="articleId" value="<%= articleId %>" />
 	<portlet:param name="version" value="<%= String.valueOf(version) %>" />

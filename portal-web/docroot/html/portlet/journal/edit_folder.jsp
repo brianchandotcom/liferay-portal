@@ -38,9 +38,7 @@ if (workflowEnabled) {
 }
 %>
 
-<portlet:actionURL var="editFolderURL">
-	<portlet:param name="struts_action" value="/journal/edit_folder" />
-</portlet:actionURL>
+<portlet:actionURL name='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? "addFolder" : "updateFolder") %>' var="editFolderURL" />
 
 <liferay-util:buffer var="removeDDMStructureIcon">
 	<liferay-ui:icon
@@ -51,7 +49,6 @@ if (workflowEnabled) {
 </liferay-util:buffer>
 
 <aui:form action="<%= editFolderURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? Constants.ADD : Constants.UPDATE) %>' />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 	<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />
@@ -102,7 +99,7 @@ if (workflowEnabled) {
 										title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
 										<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-											<portlet:param name="struts_action" value="/journal/select_folder" />
+											<portlet:param name="mvcPath" value="/html/portletjournal/select_folder.jsp" />
 											<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
 										</portlet:renderURL>
 

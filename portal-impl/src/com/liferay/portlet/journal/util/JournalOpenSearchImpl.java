@@ -155,7 +155,8 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 			return layoutURL;
 		}
 
-		portletURL.setParameter("struts_action", "/journal/view_article");
+		portletURL.setParameter(
+			"mvcPath", "/html/portlet/journal/view_article.jsp");
 		portletURL.setParameter("groupId", String.valueOf(groupId));
 		portletURL.setParameter("articleId", articleId);
 

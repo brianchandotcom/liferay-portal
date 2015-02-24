@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL");
 
-JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
+JournalArticle article = ActionUtil.getArticle(request);
 
 long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 

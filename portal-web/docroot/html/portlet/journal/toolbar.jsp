@@ -21,7 +21,6 @@ long folderId = GetterUtil.getLong((String)liferayPortletRequest.getAttribute("v
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/journal/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
 %>
 
@@ -44,13 +43,13 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">
 
 				<%
-				String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.EXPIRE + "'}); void(0);";
+				String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'expireEntrires'}); void(0);";
 				%>
 
 				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-time" label="expire" />
 
 				<%
-				taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'}); void(0);";
+				taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'moveEntries'}); void(0);";
 				%>
 
 				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-move" label="move" />
@@ -103,7 +102,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				{
 					id: '<portlet:namespace />openFeedsView',
 					title: '<%= UnicodeLanguageUtil.get(request, "feeds") %>',
-					uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/view_feeds" /></liferay-portlet:renderURL>'
+					uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/journal/view_feeds.jsp" /></liferay-portlet:renderURL>'
 				}
 			);
 		}
@@ -118,7 +117,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			Liferay.fire(
 				'<%= renderResponse.getNamespace() %>editEntry',
 				{
-					action: '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>'
+					action: '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "moveArticlesToTrash" : "deleteArticles" %>'
 				}
 			);
 		}

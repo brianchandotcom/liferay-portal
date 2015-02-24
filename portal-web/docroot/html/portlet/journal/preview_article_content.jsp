@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
+JournalArticle article = ActionUtil.getPreviewArticle(renderRequest);
 
 String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey", article.getDDMTemplateKey());
 %>

@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
+JournalArticle article = ActionUtil.getArticle(request);
 
 long groupId = BeanParamUtil.getLong(article, request, "groupId", scopeGroupId);
 String articleId = ParamUtil.getString(request, "articleId");

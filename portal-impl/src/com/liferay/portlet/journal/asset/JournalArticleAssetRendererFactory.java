@@ -157,7 +157,8 @@ public class JournalArticleAssetRendererFactory
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
 			PortletKeys.JOURNAL);
 
-		portletURL.setParameter("struts_action", "/journal/edit_article");
+		portletURL.setParameter(
+			"mvcPath", "/html/portlet/journal/edit_article.jsp");
 
 		return portletURL;
 	}

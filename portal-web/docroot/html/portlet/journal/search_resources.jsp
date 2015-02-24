@@ -37,7 +37,6 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/journal/view");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
 portletURL.setParameter("keywords", keywords);
@@ -75,7 +74,6 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 	<c:if test="<%= folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
 		<span class="change-search-folder">
 			<portlet:renderURL var="changeSearchFolderURL">
-				<portlet:param name="struts_action" value="/journal/view" />
 				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 				<portlet:param name="searchFolderId" value="<%= (folder != null) ? String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(folderId) %>" />
 				<portlet:param name="keywords" value="<%= keywords %>" />
@@ -87,7 +85,6 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 	</c:if>
 
 	<portlet:renderURL var="closeSearchURL">
-		<portlet:param name="struts_action" value="/journal/view" />
 		<portlet:param name="displayStyle" value="<%= journalDisplayContext.getDisplayStyle() %>" />
 	</portlet:renderURL>
 
@@ -99,9 +96,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 	/>
 </div>
 
-<liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="struts_action" value="/journal/view" />
-</liferay-portlet:renderURL>
+<liferay-portlet:renderURL varImpl="searchURL" />
 
 <aui:form action="<%= searchURL %>" method="get" name="fm2">
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
@@ -208,7 +203,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 							<%
 							PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-							rowURL.setParameter("struts_action", "/journal/edit_article");
+							rowURL.setParameter("mvcPath", "/html/portlet/journal/edit_article.jsp");
 							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("groupId", String.valueOf(article.getGroupId()));
 							rowURL.setParameter("folderId", String.valueOf(article.getFolderId()));
@@ -250,7 +245,6 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 
 							PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-							rowURL.setParameter("struts_action", "/journal/view");
 							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
 							rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
@@ -312,7 +306,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 
 							PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-							rowURL.setParameter("struts_action", "/journal/edit_article");
+							rowURL.setParameter("mvcPath", "/html/portlet/journal/edit_article.jsp");
 							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
 							rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));

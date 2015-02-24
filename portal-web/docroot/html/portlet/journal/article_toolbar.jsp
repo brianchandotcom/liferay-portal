@@ -19,7 +19,7 @@
 <%
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
+JournalArticle article = ActionUtil.getArticle(request);
 
 long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 %>
@@ -35,7 +35,7 @@ long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 		</c:if>
 
 		<portlet:renderURL var="viewHistoryURL">
-			<portlet:param name="struts_action" value="/journal/view_article_history" />
+			<portlet:param name="mvcPath" value="/html/portlet/journal/view_article_history.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />

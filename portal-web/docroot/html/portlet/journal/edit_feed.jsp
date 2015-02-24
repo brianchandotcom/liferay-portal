@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-JournalFeed feed = (JournalFeed)request.getAttribute(WebKeys.JOURNAL_FEED);
+JournalFeed feed = ActionUtil.getFeed(request);
 
 long groupId = BeanParamUtil.getLong(feed, request, "groupId", scopeGroupId);
 
@@ -97,18 +97,17 @@ if (feed != null) {
 
 	feedURL.setCacheability(ResourceURL.FULL);
 
-	feedURL.setParameter("struts_action", "/journal/rss");
+	feedURL.setResourceID("rss");
+
 	feedURL.setParameter("groupId", String.valueOf(groupId));
 	feedURL.setParameter("feedId", String.valueOf(feedId));
 }
 %>
 
-<portlet:actionURL var="editFeedURL">
-	<portlet:param name="struts_action" value="/journal/edit_feed" />
-</portlet:actionURL>
+<portlet:actionURL var="editFeedURL" />
 
 <aui:form action="<%= editFeedURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFeed();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="" />
+	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="feedId" type="hidden" value="<%= feedId %>" />
@@ -371,7 +370,7 @@ if (feed != null) {
 	}
 
 	function <portlet:namespace />saveFeed() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= feed == null ? Constants.ADD : Constants.UPDATE %>';
+		document.<portlet:namespace />fm['<portlet:namespace />javax-portlet-action'].value = '<%= feed == null ? "addFeed" : "updateFeed" %>';
 
 		<c:if test="<%= feed == null %>">
 			document.<portlet:namespace />fm.<portlet:namespace />feedId.value = document.<portlet:namespace />fm.<portlet:namespace />newFeedId.value;

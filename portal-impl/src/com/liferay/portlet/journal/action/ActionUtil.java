@@ -292,8 +292,13 @@ public class ActionUtil {
 
 			String className = PortalUtil.getClassName(classNameId);
 
-			article = JournalArticleServiceUtil.getLatestArticle(
-				groupId, className, classPK);
+			try {
+				article = JournalArticleServiceUtil.getLatestArticle(
+					groupId, className, classPK);
+			}
+			catch (NoSuchArticleException nsae) {
+				return null;
+			}
 		}
 		else {
 			DDMStructure ddmStructure = null;
@@ -303,23 +308,28 @@ public class ActionUtil {
 					groupId, PortalUtil.getClassNameId(JournalArticle.class),
 					ddmStructureKey, true);
 			}
-			catch (NoSuchStructureException nsse1) {
+			catch (NoSuchStructureException nsse) {
 				return null;
 			}
 
-			article = JournalArticleServiceUtil.getArticle(
-				ddmStructure.getGroupId(), DDMStructure.class.getName(),
-				ddmStructure.getStructureId());
+			try {
+				article = JournalArticleServiceUtil.getArticle(
+					ddmStructure.getGroupId(), DDMStructure.class.getName(),
+					ddmStructure.getStructureId());
 
-			article.setNew(true);
+				article.setNew(true);
 
-			article.setId(0);
-			article.setGroupId(groupId);
-			article.setClassNameId(
-				JournalArticleConstants.CLASSNAME_ID_DEFAULT);
-			article.setClassPK(0);
-			article.setArticleId(null);
-			article.setVersion(0);
+				article.setId(0);
+				article.setGroupId(groupId);
+				article.setClassNameId(
+					JournalArticleConstants.CLASSNAME_ID_DEFAULT);
+				article.setClassPK(0);
+				article.setArticleId(null);
+				article.setVersion(0);
+			}
+			catch (NoSuchArticleException nsae) {
+				return null;
+			}
 		}
 
 		return article;

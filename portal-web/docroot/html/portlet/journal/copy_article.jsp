@@ -25,12 +25,9 @@ String newArticleId = ParamUtil.getString(request, "newArticleId");
 double version = ParamUtil.getDouble(request, "version");
 %>
 
-<portlet:actionURL var="copyArticleURL">
-	<portlet:param name="struts_action" value="/journal/copy_article" />
-</portlet:actionURL>
+<portlet:actionURL name="copyArticle" var="copyArticleURL" />
 
 <aui:form action="<%= copyArticleURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.COPY %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="oldArticleId" type="hidden" value="<%= oldArticleId %>" />

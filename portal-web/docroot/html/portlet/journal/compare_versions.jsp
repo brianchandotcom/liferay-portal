@@ -22,6 +22,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 long groupId = ParamUtil.getLong(request, "groupId");
 String articleId = ParamUtil.getString(request, "articleId");
 
+ActionUtil.compareVersions(renderRequest, renderResponse);
+
 Set<Locale> availableLocales = (Set<Locale>)request.getAttribute(WebKeys.AVAILABLE_LOCALES);
 String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS);
 String languageId = (String)request.getAttribute(WebKeys.LANGUAGE_ID);
@@ -30,14 +32,13 @@ double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="struts_action" value="/journal/compare_versions" />
+	<portlet:param name="mvcPath" value="/html/portlet/journal/compare_versions.jsp" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="articleId" value="<%= articleId %>" />
 </liferay-portlet:renderURL>
 
-<liferay-portlet:resourceURL varImpl="resourceURL">
-	<portlet:param name="struts_action" value="/journal/compare_versions" />
+<liferay-portlet:resourceURL id="compareVersions" varImpl="resourceURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="articleId" value="<%= articleId %>" />

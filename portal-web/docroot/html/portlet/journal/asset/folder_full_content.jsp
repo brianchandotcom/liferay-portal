@@ -18,10 +18,6 @@
 
 <%
 JournalFolder folder = ActionUtil.getFolder(request);
-
-if (folder == null) {
-	folder = ActionUtil.getFolder(request);
-}
 %>
 
 <c:if test="<%= folder != null %>">

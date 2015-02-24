@@ -23,7 +23,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
+JournalArticle article = ActionUtil.getArticle(request);
 %>
 
 <c:choose>
@@ -37,7 +37,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 		<%
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/journal/view_article_history");
+		portletURL.setParameter("mvcPath", "html/portlet/journal/view_article_history.jsp");
 		portletURL.setParameter("tabs1", tabs1);
 		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter("referringPortletResource", referringPortletResource);
@@ -48,7 +48,6 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 		<liferay-util:include page="/html/portlet/journal/article_header.jsp" />
 
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
 			<aui:input name="groupId" type="hidden" />
 			<aui:input name="articleId" type="hidden" value="<%= article.getArticleId() %>" />
@@ -70,7 +69,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 				>
 
 					<%
-					row.setPrimaryKey(articleVersion.getArticleId() + EditArticleAction.VERSION_SEPARATOR + articleVersion.getVersion());
+					row.setPrimaryKey(articleVersion.getArticleId() + JournalPortlet.VERSION_SEPARATOR + articleVersion.getVersion());
 					%>
 
 					<liferay-ui:search-container-column-text
@@ -158,7 +157,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 						},
 						function(event) {
 							<portlet:renderURL var="compareVersionURL">
-								<portlet:param name="struts_action" value="/journal/compare_versions" />
+								<portlet:param name="mvcPath" value="/html/portlet/journal/compare_versions.jsp" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
 								<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
@@ -180,12 +179,11 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 					if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-version") %>')) {
 						var form = AUI.$(document.<portlet:namespace />fm);
 
-						form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 						form.fm('groupId').val('<%= String.valueOf(article.getGroupId()) %>');
 						form.fm('articleId').val('');
 						form.fm('articleIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-						submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+						submitForm(form, '<portlet:actionURL name="deleteArticles"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 					}
 				}
 			</c:if>
@@ -195,12 +193,11 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 					if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-expire-the-selected-version") %>')) {
 						var form = AUI.$(document.<portlet:namespace />fm);
 
-						form.fm('<%= Constants.CMD %>').val('<%= Constants.EXPIRE %>');
 						form.fm('groupId').val('<%= String.valueOf(article.getGroupId()) %>');
 						form.fm('articleId').val('');
 						form.fm('expireArticleIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-						submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+						submitForm(form, '<portlet:actionURL name="expireArticles"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 					}
 				}
 			</c:if>

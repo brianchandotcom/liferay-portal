@@ -1335,6 +1335,8 @@
 	</macrodef>
 
 	<target name="build-sql-file">
+		<get-testcase-property property.name="portal.version" />
+
 		<if>
 			<isset property="portal.version" />
 			<then>
@@ -1384,6 +1386,8 @@
 				<equals arg1="${database.type}" arg2="hsql" />
 			</not>
 			<then>
+				<get-testcase-property property.name="databases.size" />
+
 				<if>
 					<and>
 						<isset property="databases.size" />

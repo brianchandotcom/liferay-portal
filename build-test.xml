@@ -4158,6 +4158,9 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			<param name="sql.file" value="create-bare-${database.type}.sql" />
 		</antcall>
 
+		<get-testcase-property property.name="data.archive.type" />
+		<get-testcase-property property.name="portal.version" />
+
 		<unzip
 			dest="${liferay.home}"
 			src="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip"

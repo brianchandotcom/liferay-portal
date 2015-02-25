@@ -13,7 +13,7 @@
 					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 				</tstamp>
 
-				<get dest="${tstamp.value}.zip" src="${portlet.tck.url}" />
+				<mirrors-get dest="${tstamp.value}.zip" src="${portlet.tck.url}" />
 
 				<unzip src="${tstamp.value}.zip" dest="tools/tck" />
 

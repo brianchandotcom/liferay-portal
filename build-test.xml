@@ -828,7 +828,7 @@
 
 					<property name="test.build.patching.tool.zip.url" value="${test.fix.pack.base.url}/patching-tool/patching-tool-${patching.tool.version}.zip" />
 
-					<get
+					<mirrors-get
 						dest="${basedir}"
 						src="${test.build.patching.tool.zip.url}"
 					/>
@@ -846,7 +846,7 @@
 						</fileset>
 					</chmod>
 
-					<get
+					<mirrors-get
 						dest="${app.server.dir}/patching-tool/patches"
 						src="${test.build.fix.pack.zip.url}"
 					/>
@@ -1058,7 +1058,7 @@
 						<antelope:substring beginindex="0" endindex="${tomcat.major.version.endindex}" />
 					</antelope:stringutil>
 
-					<get
+					<mirrors-get
 						dest="tomcat.zip"
 						src="${app.server.tomcat.zip.url}"
 					/>
@@ -1353,7 +1353,7 @@
 					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 				</tstamp>
 
-				<get src="${sql.legacy.base.url}/${portal.version.url.path}/${sql.legacy.zip}" dest="${tstamp.value}.zip" />
+				<mirrors-get src="${sql.legacy.base.url}/${portal.version.url.path}/${sql.legacy.zip}" dest="${tstamp.value}.zip" />
 
 				<unzip dest="sql/legacy/${portal.version}" src="${tstamp.value}.zip">
 					<mapper from="[^/]+/(.*)" to="\1" type="regexp" />
@@ -1727,7 +1727,7 @@ go]]></replacevalue>
 
 				<for list="${jdbc.db2.driver}" param="jdbc.driver">
 					<sequential>
-						<get
+						<mirrors-get
 							dest="${todir}"
 							src="${test.jdbc.drivers.url}/db2/8.1.18/@{jdbc.driver}"
 						/>
@@ -1763,7 +1763,7 @@ go]]></replacevalue>
 						/>
 					</delete>
 
-					<get
+					<mirrors-get
 						dest="${todir}"
 						src="${test.jdbc.drivers.url}/oracle/10.2.0.1.0/${jdbc.oracle.driver}"
 					/>
@@ -1782,7 +1782,7 @@ go]]></replacevalue>
 						/>
 					</delete>
 
-					<get
+					<mirrors-get
 						dest="${todir}"
 						src="${test.jdbc.drivers.url}/oracle/11.2.0.1.0/${jdbc.oracle.driver}"
 					/>
@@ -2969,7 +2969,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<fail message="Please set the property ${top.level.build.number}." unless="top.level.build.number" />
 		<fail message="Please set the property ${top.level.job.name}." unless="top.level.job.name" />
 
-		<get dest="extraapps.zip" src="${test.build.extraapps.zip.url}" />
+		<mirrors-get dest="extraapps.zip" src="${test.build.extraapps.zip.url}" />
 
 		<move file="extraapps.zip" todir="${jenkins.shared.user.content.dir}/jobs/${top.level.job.name}/builds/${top.level.build.number}/downloads" />
 	</target>
@@ -3459,7 +3459,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 					app.server.jboss.version=6.1.0
 					app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.1
 					app.server.jboss.zip.name=jboss-eap-6.1.0.zip
-					app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/jboss-eap-6.1.0.zip
+					app.server.jboss.zip.url=http://www.jboss.org/jbossas/downloads/jboss-eap-6.1.0.zip
 				</app-server-properties-update>
 
 				<antcall target="prepare-test-bundle">
@@ -3614,7 +3614,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 			<then>
 				<mkdir dir="${liferay.home}/deploy" />
 
-				<get
+				<mirrors-get
 					dest="${liferay.home}/deploy/license.xml"
 					src="${test.build.license.xml.zip.url}"
 				/>
@@ -3624,7 +3624,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 		<if>
 			<matches pattern="http" string="${test.build.plugins.war.zip.url}" />
 			<then>
-				<get
+				<mirrors-get
 					dest="plugins.war.zip"
 					src="${test.build.plugins.war.zip.url}"
 				/>
@@ -3667,7 +3667,7 @@ plugins.includes=marketplace-portlet</echo>
 					<then>
 						<mkdir dir="dist" />
 
-						<get
+						<mirrors-get
 							dest="dist/liferay-portal-${lp.version}.war"
 							src="${test.build.portal.war.url}"
 						/>
@@ -3696,7 +3696,7 @@ plugins.includes=marketplace-portlet</echo>
 					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 				</tstamp>
 
-				<get
+				<mirrors-get
 					dest="${tstamp.value}.zip"
 					src="${test.build.bundle.zip.url}"
 				/>
@@ -3795,7 +3795,7 @@ plugins.includes=marketplace-portlet</echo>
 
 				<mkdir dir="dist" />
 
-				<get
+				<mirrors-get
 					dest="dist/liferay-portal-${lp.version}.war"
 					src="${test.build.portal.war.url}"
 				/>
@@ -3811,7 +3811,7 @@ plugins.includes=marketplace-portlet</echo>
 
 				<ant antfile="build.xml" target="update-app-server-scripts" inheritAll="false" />
 
-				<get
+				<mirrors-get
 					dest="liferay-portal-dependencies.zip"
 					src="${test.build.portal.dependencies.zip.url}"
 				/>
@@ -4381,7 +4381,7 @@ if (ppstate.equals("normal")) {
 					replace="http://\1-\2/\2"
 				/>
 
-				<get dest="${testray.logs.dir}/console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
+				<mirrors-get dest="${testray.logs.dir}/console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
 			</then>
 		</if>
 	</target>

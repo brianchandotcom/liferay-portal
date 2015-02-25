@@ -38,7 +38,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="build-axis-jar">
-		<get
+		<mirrors-get
 			dest="axis-1.4-sources.zip"
 			src="http://search.maven.org/remotecontent?filepath=axis/axis/1.4/axis-1.4-sources.jar"
 		/>
@@ -99,7 +99,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<param name="javac.srcdir" value="${tstamp.value}" />
 		</antcall>
 
-		<get
+		<mirrors-get
 			dest="${project.dir}/lib/portal/axis.jar.new"
 			src="http://search.maven.org/remotecontent?filepath=axis/axis/1.4/axis-1.4.jar"
 		/>
@@ -136,7 +136,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>-->
 
 	<target name="build-bobo-browse-jar">
-		<get dest="release-3.2.0.zip" src="https://codeload.github.com/senseidb/bobo/zip/release-3.2.0" />
+		<mirrors-get dest="release-3.2.0.zip" src="https://codeload.github.com/senseidb/bobo/zip/release-3.2.0" />
 
 		<tstamp>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
@@ -181,7 +181,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="build-ehcache-xsd">
-		<get dest="ehcache.xsd" src="http://ehcache.org/ehcache.xsd" />
+		<mirrors-get dest="ehcache.xsd" src="http://ehcache.org/ehcache.xsd" />
 
 		<xmltask dest="src/ehcache/ehcache.xsd" source="ehcache.xsd">
 			<replace path="/xs:schema/xs:element[@name='ehcache']/xs:complexType/xs:attribute[@name='name']/@use" withText="required" />
@@ -263,7 +263,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="build-json-java-jar">
-		<get
+		<mirrors-get
 			dest="json-java.zip"
 			src="https://github.com/douglascrockford/JSON-java/zipball/master"
 		/>
@@ -350,7 +350,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 				<available file="${jdk.src.dir}/jdk-src.jar" />
 			</not>
 			<then>
-				<get
+				<mirrors-get
 					dest="${jdk.src.dir}/jdk-src.jar"
 					src="http://www.java.net/download/jdk6/6u21/promoted/b05/jdk-6u21-ea-src-b05-jrl-29_may_2010.jar"
 					verbose="true"
@@ -475,7 +475,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 		<mkdir dir="${tstamp.value}/compass" />
 
-		<get
+		<mirrors-get
 			dest="${tstamp.value}/compass/compass-1.0.1.gem"
 			src="http://rubygems.org/downloads/compass-1.0.1.gem"
 		/>
@@ -522,7 +522,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="build-selenium-java-jar">
-		<get
+		<mirrors-get
 			dest="selenium-firefox-driver-2.42.2-sources.jar"
 			src="http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-firefox-driver/2.42.2/selenium-firefox-driver-2.42.2-sources.jar"
 		/>

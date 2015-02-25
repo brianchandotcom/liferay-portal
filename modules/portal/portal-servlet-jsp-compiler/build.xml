@@ -18,52 +18,52 @@
 			<then>
 				<mkdir dir="${schemas.dir}" />
 
-				<get
+				<mirrors-get
 					dest="${schemas.dir}/jsp_2_0.xsd"
 					src="${schemas.url}/jsp_2_0.xsd"
 				/>
 
-				<get
+				<mirrors-get
 					dest="${schemas.dir}/jsp_2_1.xsd"
 					src="${schemas.url}/jsp_2_1.xsd"
 				/>
 
-				<get
+				<mirrors-get
 					dest="${schemas.dir}/jsp_2_2.xsd"
 					src="${schemas.url}/jsp_2_2.xsd"
 				/>
 
-				<get
+				<mirrors-get
 					dest="${schemas.dir}/jsp_2_3.xsd"
 					src="http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/jsp_2_3.xsd"
 				/>
 
-				<get
+				<mirrors-get
 					dest="${schemas.dir}/jspxml.dtd"
 					src="${schemas.url}/jspxml.dtd"
 				/>
 
-				<get
+				<mirrors-get
 					dest="${schemas.dir}/jspmlx.xsd"
 					src="${schemas.url}/jspxml.xsd"
 				/>
 
-				<get
+				<mirrors-get
 					dest="${schemas.dir}/web-jsptaglibrary_1_1.dtd"
 					src="${schemas.url}/web-jsptaglibrary_1_1.dtd"
 				/>
 
-				<get
+				<mirrors-get
 					dest="${schemas.dir}/web-jsptaglibrary_1_2.dtd"
 					src="${schemas.url}/web-jsptaglibrary_1_2.dtd"
 				/>
 
-				<get
+				<mirrors-get
 					dest="${schemas.dir}/web-jsptaglibrary_2_0.xsd"
 					src="${schemas.url}/web-jsptaglibrary_2_0.xsd"
 				/>
 
-				<get
+				<mirrors-get
 					dest="${schemas.dir}/web-jsptaglibrary_2_1.xsd"
 					src="${schemas.url}/web-jsptaglibrary_2_1.xsd"
 				/>

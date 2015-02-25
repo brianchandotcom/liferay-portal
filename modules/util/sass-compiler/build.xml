@@ -15,7 +15,7 @@
 					<available file="libsass-3.1.0.zip" />
 				</not>
 				<then>
-					<get
+					<mirrors-get
 						dest="libsass-3.1.0.zip"
 						src="https://github.com/sass/libsass/archive/3.1.0.zip"
 					/>
@@ -93,7 +93,7 @@
 				<available file="src/com/liferay/sass/compiler/libsass/SassLibrary.java" />
 			</not>
 			<then>
-				<get
+				<mirrors-get
 					dest="libsass-3.1.0.zip"
 					src="https://github.com/sass/libsass/archive/3.1.0.zip"
 				/>
@@ -105,7 +105,7 @@
 
 				<delete file="libsass-3.1.0.zip" />
 
-				<get
+				<mirrors-get
 					dest="jnaerator-0.11-shaded.jar"
 					src="https://oss.sonatype.org/content/groups/public/com/nativelibs4java/jnaerator/0.11/jnaerator-0.11-shaded.jar"
 				/>
@@ -137,7 +137,7 @@
 			<then>
 				<mkdir dir="test/unit/com/liferay/sass/compiler/dependencies/sass-spec" />
 
-				<get
+				<mirrors-get
 					dest="sass-spec.zip"
 					src="https://github.com/sass/sass-spec/archive/3818b9d686765461add05e996d990b085e15a348.zip"
 				/>

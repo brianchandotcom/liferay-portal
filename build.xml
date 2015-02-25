@@ -416,7 +416,7 @@
 			<then>
 				<mkdir dir="${app.server.geronimo.dir}/repository/org/apache/geronimo/specs/geronimo-el_2.2_spec/1.0.3" />
 
-				<get
+				<mirrors-get
 					dest="${app.server.geronimo.dir}/repository/org/apache/geronimo/specs/geronimo-el_2.2_spec/1.0.3/geronimo-el_2.2_spec-1.0.3.jar"
 					src="http://repo1.maven.org/maven2/org/apache/geronimo/specs/geronimo-el_2.2_spec/1.0.3/geronimo-el_2.2_spec-1.0.3.jar"
 					verbose="true"

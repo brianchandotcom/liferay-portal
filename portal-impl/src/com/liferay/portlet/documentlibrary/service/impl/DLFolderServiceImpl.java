@@ -24,7 +24,7 @@ import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.DLSettings;
+import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -336,9 +336,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
-		DLSettings dlSettings = DLSettings.getInstance(groupId);
+		DLGroupServiceSettings dlGroupServiceSettings =
+			DLGroupServiceSettings.getInstance(groupId);
 
-		if (dlSettings.isShowHiddenMountFolders()) {
+		if (dlGroupServiceSettings.isShowHiddenMountFolders()) {
 			return dlFolderPersistence.filterFindByG_M_P(
 				groupId, true, parentFolderId, start, end, obc);
 		}

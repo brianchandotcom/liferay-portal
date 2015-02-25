@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
+import com.liferay.registry.util.StringPlus;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -33,7 +34,7 @@ import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
-import java.util.Vector;
+import java.util.List;
 
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.Template;
@@ -118,8 +119,8 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		field.set(
 			runtimeServices, new FastExtendedProperties(extendedProperties));
 
-		_macroTemplateIds = (Vector<String>)extendedProperties.get(
-			VelocityEngine.VM_LIBRARY);
+		_macroTemplateIds = StringPlus.asList(
+			extendedProperties.get(VelocityEngine.VM_LIBRARY));
 		_resourceModificationCheckInterval = GetterUtil.getInteger(
 			extendedProperties.get(
 				"liferay." + VelocityEngine.RESOURCE_LOADER +
@@ -189,7 +190,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		return template;
 	}
 
-	private Vector<String> _macroTemplateIds;
+	private List<String> _macroTemplateIds;
 	private final PortalCache<TemplateResource, Object> _portalCache;
 	private int _resourceModificationCheckInterval = 60;
 	private TemplateResourceLoader _templateResourceLoader;

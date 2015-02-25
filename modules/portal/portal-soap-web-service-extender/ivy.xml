@@ -20,7 +20,6 @@
 		<dependency name="cxf-tools-common" org="org.apache.cxf" rev="3.0.3" />
 		<dependency name="cxf-tools-validator" org="org.apache.cxf" rev="3.0.3" />
 		<dependency name="cxf-rt-frontend-jaxws" org="org.apache.cxf" rev="3.0.3" />
-		<dependency name="cxf-rt-frontend-jaxrs" org="org.apache.cxf" rev="3.0.3" />
 		<dependency name="cxf-rt-transports-http" org="org.apache.cxf" rev="3.0.3" />
 		<dependency name="cxf-rt-ws-policy" org="org.apache.cxf" rev="3.0.3" />
 		<dependency name="org.apache.felix.scr" org="org.apache.felix" rev="1.8.2" />

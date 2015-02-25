@@ -31,14 +31,18 @@ public class InitUtilTest {
 
 	@Test
 	public void testBaseSeleniumTestCaseSpringConfigs() {
-		String property = SystemProperties.get("log4j.configure.on.startup");
+		String log4jConfigureOnStartup = SystemProperties.get(
+			_LOG4J_CONFIGURE_ON_STARTUP);
 
-		SystemProperties.set("log4j.configure.on.startup", StringPool.FALSE);
+		SystemProperties.set(_LOG4J_CONFIGURE_ON_STARTUP, StringPool.FALSE);
+
+		String resourceActionsReadPortletResources = SystemProperties.get(
+			_RESOURCE_ACTIONS_READ_PORTLET_RESOURCES);
+
+		SystemProperties.set(
+			_RESOURCE_ACTIONS_READ_PORTLET_RESOURCES, StringPool.FALSE);
 
 		try {
-			PropsUtil.set(
-				PropsKeys.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES, "false");
-
 			InitUtil.initWithSpring(
 				Arrays.asList(
 					"META-INF/management-spring.xml",
@@ -46,11 +50,22 @@ public class InitUtilTest {
 				true);
 		}
 		finally {
-			if (property == null) {
-				SystemProperties.clear("log4j.configure.on.startup");
+			if (resourceActionsReadPortletResources == null) {
+				SystemProperties.clear(
+					_RESOURCE_ACTIONS_READ_PORTLET_RESOURCES);
 			}
 			else {
-				SystemProperties.set("log4j.configure.on.startup", property);
+				SystemProperties.set(
+					_RESOURCE_ACTIONS_READ_PORTLET_RESOURCES,
+					resourceActionsReadPortletResources);
+			}
+
+			if (log4jConfigureOnStartup == null) {
+				SystemProperties.clear(_LOG4J_CONFIGURE_ON_STARTUP);
+			}
+			else {
+				SystemProperties.set(
+					_LOG4J_CONFIGURE_ON_STARTUP, log4jConfigureOnStartup);
 			}
 		}
 	}
@@ -58,5 +73,12 @@ public class InitUtilTest {
 	@Rule
 	public LogAssertionTestRule logAssertionTestRule =
 		LogAssertionTestRule.INSTANCE;
+
+	private static final String _LOG4J_CONFIGURE_ON_STARTUP =
+		"log4j.configure.on.startup";
+
+	private static final String _RESOURCE_ACTIONS_READ_PORTLET_RESOURCES =
+		PropsFiles.PORTAL + StringPool.COLON +
+			PropsKeys.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES;
 
 }

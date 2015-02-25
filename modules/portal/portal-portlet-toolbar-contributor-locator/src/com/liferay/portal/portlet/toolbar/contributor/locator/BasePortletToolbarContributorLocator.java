@@ -97,7 +97,7 @@ public abstract class BasePortletToolbarContributorLocator
 
 	protected abstract String getPropertyName();
 
-	private static ServiceTrackerMap<String, List<PortletToolbarContributor>>
+	private ServiceTrackerMap<String, List<PortletToolbarContributor>>
 		_serviceTrackerMap;
 
 }

@@ -278,7 +278,8 @@ public class EditPageAction extends PortletAction {
 				WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
 					wikiWebSettingsProvider.getWikiGroupServiceConfiguration();
 
-				if (title.equals(wikiGroupServiceConfiguration.frontPageName()) &&
+				if (title.equals(
+						wikiGroupServiceConfiguration.frontPageName()) &&
 					(version == 0)) {
 
 					ServiceContext serviceContext = new ServiceContext();

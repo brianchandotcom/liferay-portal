@@ -892,7 +892,9 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		}
 	}
 
-	@BeanReference(name = "com.liferay.wiki.settings.WikiGroupServiceSettingsProvider")
+	@BeanReference(
+		name = "com.liferay.wiki.settings.WikiGroupServiceSettingsProvider"
+	)
 	private GroupServiceSettingsProvider<WikiGroupServiceSettings>
 		_wikiGroupServiceSettingsProvider;
 

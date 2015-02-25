@@ -77,7 +77,8 @@ public class ActionUtil {
 
 		PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
 			wikiPortletIntanceSettingsProvider =
-				wikiWebSettingsProvider.getWikiPortletInstanceSettingsProvider();
+				wikiWebSettingsProvider.
+					getWikiPortletInstanceSettingsProvider();
 
 		WikiPortletInstanceSettings wikiPortletInstanceSettings =
 			wikiPortletIntanceSettingsProvider.getPortletInstanceSettings(

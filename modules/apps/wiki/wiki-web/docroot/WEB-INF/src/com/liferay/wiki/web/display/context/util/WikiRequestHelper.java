@@ -61,13 +61,15 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 
 				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 					_wikiGroupServiceSettings =
-						wikiGroupServiceSettingsProvider.getGroupServiceSettings(
-							getSiteGroupId(), getRequest().getParameterMap());
+						wikiGroupServiceSettingsProvider.
+							getGroupServiceSettings(
+								getSiteGroupId(),
+								getRequest().getParameterMap());
 				}
 				else {
 					_wikiGroupServiceSettings =
-						wikiGroupServiceSettingsProvider.getGroupServiceSettings(
-							getSiteGroupId());
+						wikiGroupServiceSettingsProvider.
+							getGroupServiceSettings(getSiteGroupId());
 				}
 			}
 

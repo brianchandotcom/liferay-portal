@@ -2185,7 +2185,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			throw new PageTitleException(title + " is reserved");
 		}
 
-		if (Validator.isNotNull(_wikiGroupServiceConfiguration.pageTitlesRegexp())) {
+		if (Validator.isNotNull(
+				_wikiGroupServiceConfiguration.pageTitlesRegexp())) {
+
 			Pattern pattern = Pattern.compile(
 				_wikiGroupServiceConfiguration.pageTitlesRegexp());
 
@@ -3025,7 +3027,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		if (!update && wikiGroupServiceSettings.isEmailPageAddedEnabled()) {
 		}
-		else if (update && wikiGroupServiceSettings.isEmailPageUpdatedEnabled()) {
+		else if (update &&
+				 wikiGroupServiceSettings.isEmailPageUpdatedEnabled()) {
 		}
 		else {
 			return;
@@ -3359,7 +3362,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	@BeanReference(type = WikiGroupServiceConfiguration.class)
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
-	@BeanReference(name = "com.liferay.wiki.settings.WikiGroupServiceSettingsProvider")
+	@BeanReference(
+		name = "com.liferay.wiki.settings.WikiGroupServiceSettingsProvider"
+	)
 	private GroupServiceSettingsProvider<WikiGroupServiceSettings>
 		_wikiGroupServiceSettingsProvider;
 

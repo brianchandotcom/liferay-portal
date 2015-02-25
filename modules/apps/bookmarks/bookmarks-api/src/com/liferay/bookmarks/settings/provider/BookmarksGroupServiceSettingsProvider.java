@@ -84,7 +84,8 @@ public class BookmarksGroupServiceSettingsProvider
 		_settingsFactory = settingsFactory;
 	}
 
-	private BookmarksGroupServiceConfiguration _bookmarksGroupServiceConfiguration;
+	private BookmarksGroupServiceConfiguration
+		_bookmarksGroupServiceConfiguration;
 	private SettingsFactory _settingsFactory;
 
 }

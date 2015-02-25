@@ -113,6 +113,7 @@ public class WikiGroupServiceConfigurationImpl
 			WikiGroupServiceConfiguration.class, properties);
 	}
 
-	private volatile WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private volatile WikiGroupServiceConfiguration
+		_wikiGroupServiceConfiguration;
 
 }

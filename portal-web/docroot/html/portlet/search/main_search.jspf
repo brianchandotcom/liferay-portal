@@ -65,11 +65,6 @@ for (FacetConfiguration facetConfiguration : facetConfigurations) {
 Indexer indexer = FacetedSearcher.getInstance();
 
 Hits hits = indexer.search(searchContext);
-
-String[] queryTerms = hits.getQueryTerms();
-
-request.setAttribute("search.jsp-highlightEnabled", queryConfig.isHighlightEnabled());
-request.setAttribute("search.jsp-queryTerms", queryTerms);
 %>
 
 <aui:row cssClass='<%= "search-layout" + (searchDisplayContext.isShowMenu() ? " menu-column" : StringPool.BLANK) %>'>
@@ -136,6 +131,14 @@ request.setAttribute("search.jsp-queryTerms", queryTerms);
 	</c:if>
 
 	<aui:col cssClass="result" first="<%= !searchDisplayContext.isShowMenu() %>" span="<%= 10 %>">
+
+		<%
+		String[] queryTerms = hits.getQueryTerms();
+
+		request.setAttribute("search.jsp-highlightEnabled", queryConfig.isHighlightEnabled());
+		request.setAttribute("search.jsp-queryTerms", queryTerms);
+		%>
+
 		<%@ include file="/html/portlet/search/main_search_suggest.jspf" %>
 
 		<liferay-ui:search-container

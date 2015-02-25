@@ -54,9 +54,8 @@ public class RoleServiceTest extends BasePermissionTestCase {
 			new LinkedHashMap<String, Object>(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		if (!roles.contains(_role)) {
-			Assert.fail("Role not found with permissions");
-		}
+		Assert.assertTrue(
+			"Role not found with permissions", roles.contains(_role));
 
 		removePortletModelViewPermission();
 
@@ -66,9 +65,8 @@ public class RoleServiceTest extends BasePermissionTestCase {
 			new LinkedHashMap<String, Object>(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		if (roles.contains(_role)) {
-			Assert.fail("Role found without permissions");
-		}
+		Assert.assertFalse(
+			"Role found without permissions", roles.contains(_role));
 	}
 
 	@Test
@@ -103,6 +101,7 @@ public class RoleServiceTest extends BasePermissionTestCase {
 		return Role.class.getName();
 	}
 
+	@Override
 	protected String getRoleName() {
 		return RoleConstants.USER;
 	}

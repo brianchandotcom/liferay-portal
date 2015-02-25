@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.tagscompiler;
+package com.liferay.asset.tags.compiler.web.portlet.route;
 
+import com.liferay.asset.tags.compiler.web.constants.AssetTagsCompilerPortletKeys;
 import com.liferay.portal.kernel.portlet.BaseFriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
@@ -26,11 +28,20 @@ import java.util.Map;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class TagsCompilerFriendlyURLMapper extends BaseFriendlyURLMapper {
+	@Component(
+		property = {
+			"javax.portlet.name=" + AssetTagsCompilerPortletKeys.ASSET_TAGS_COMPILER
+		},
+		service = FriendlyURLMapper.class
+	)
+	public class AssetTagsCompilerFriendlyURLMapper
+		extends BaseFriendlyURLMapper {
 
 	@Override
 	public String buildPath(LiferayPortletURL liferayPortletURL) {

@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
+import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
@@ -34,19 +35,21 @@ import java.util.Map;
  * @author Jorge Ferrer
  */
 @Settings.Config(settingsIds = MBConstants.SERVICE_NAME)
-public class MBSettings {
+public class MBGroupServiceSettings implements GroupServiceSettings {
 
 	public static final String[] ALL_KEYS = {
 	};
 
-	public static MBSettings getInstance(long groupId) throws PortalException {
+	public static MBGroupServiceSettings getInstance(long groupId)
+		throws PortalException {
+
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			groupId, MBConstants.SERVICE_NAME);
 
-		return new MBSettings(settings);
+		return new MBGroupServiceSettings(settings);
 	}
 
-	public static MBSettings getInstance(
+	public static MBGroupServiceSettings getInstance(
 			long groupId, Map<String, String[]> parameterMap)
 		throws PortalException {
 
@@ -56,10 +59,10 @@ public class MBSettings {
 		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
 			parameterMap, settings);
 
-		return new MBSettings(parameterMapSettings);
+		return new MBGroupServiceSettings(parameterMapSettings);
 	}
 
-	public MBSettings(Settings settings) {
+	public MBGroupServiceSettings(Settings settings) {
 		_typedSettings = new TypedSettings(settings);
 	}
 
@@ -259,7 +262,7 @@ public class MBSettings {
 
 	static {
 		SettingsFactoryUtil.registerSettingsMetadata(
-			MBSettings.class, null, _getFallbackKeys());
+			MBGroupServiceSettings.class, null, _getFallbackKeys());
 	}
 
 	private final TypedSettings _typedSettings;

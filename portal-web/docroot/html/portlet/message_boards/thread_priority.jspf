@@ -20,7 +20,7 @@
 >
 
 	<%
-	String[] threadPriority = MBUtil.getThreadPriority(mbSettings, themeDisplay.getLanguageId(), thread.getPriority(), themeDisplay);
+	String[] threadPriority = MBUtil.getThreadPriority(mbGroupServiceSettings, themeDisplay.getLanguageId(), thread.getPriority(), themeDisplay);
 	%>
 
 	<c:if test="<%= (threadPriority != null) && (thread.getPriority() > 0) %>">

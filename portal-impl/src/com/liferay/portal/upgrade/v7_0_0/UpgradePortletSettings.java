@@ -29,7 +29,7 @@ import com.liferay.portlet.blogs.util.BlogsConstants;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.util.DLConstants;
-import com.liferay.portlet.messageboards.MBSettings;
+import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.util.MBConstants;
 import com.liferay.portlet.shopping.ShoppingSettings;
 import com.liferay.portlet.shopping.util.ShoppingConstants;
@@ -146,7 +146,8 @@ public class UpgradePortletSettings extends UpgradeProcess {
 			DLSettings.class);
 		upgradeMainPortlet(
 			PortletKeys.MESSAGE_BOARDS, MBConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, null, MBSettings.class);
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, null,
+			MBGroupServiceSettings.class);
 		upgradeMainPortlet(
 			PortletKeys.SHOPPING, ShoppingConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, null, ShoppingSettings.class);

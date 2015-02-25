@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.LogAssertionTestRule;
@@ -35,6 +36,9 @@ public class InitUtilTest {
 		SystemProperties.set("log4j.configure.on.startup", StringPool.FALSE);
 
 		try {
+			PropsUtil.set(
+				PropsKeys.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES, "false");
+
 			InitUtil.initWithSpring(
 				Arrays.asList(
 					"META-INF/management-spring.xml",

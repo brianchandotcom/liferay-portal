@@ -210,6 +210,8 @@ public class PoshiRunnerExecutor {
 				locator = PoshiRunnerContext.getPathLocator(
 					pathClassName + "#" + locatorKey);
 
+				locator = PoshiRunnerVariablesUtil.replaceExecuteVars(locator);
+
 				PoshiRunnerVariablesUtil.putIntoExecuteMap(
 					"locator" + (i + 1), locator);
 			}
@@ -351,6 +353,9 @@ public class PoshiRunnerExecutor {
 
 					locator = PoshiRunnerContext.getPathLocator(
 						pathClassName + "#" + locatorKey);
+
+					locator = PoshiRunnerVariablesUtil.replaceExecuteVars(
+						locator);
 				}
 
 				PoshiRunnerVariablesUtil.putIntoExecuteMap(

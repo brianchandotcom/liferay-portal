@@ -705,7 +705,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			if (!location.startsWith("file:")) {
 				location =
 					"file:" + PropsValues.MODULE_FRAMEWORK_BASE_DIR +
-						"/static/" + location);
+						"/static/" + location;
 			}
 
 			URL initialBundleURL = new URL(location);

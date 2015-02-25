@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LongWrapper;
 import com.liferay.portal.kernel.util.StringPool;
@@ -162,9 +161,6 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				stagingGroup.getGroupId(), TestPropsValues.getUserId());
 
-		DLAppTestUtil.populateNotificationsServiceContext(
-			serviceContext, Constants.ADD);
-
 		DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), repository.getRepositoryId(),
 			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
@@ -194,8 +190,6 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				new long[] {ddmStructure.getStructureId()}, serviceContext);
 
-		DLAppTestUtil.populateNotificationsServiceContext(
-			serviceContext, Constants.ADD);
 		DLAppTestUtil.populateServiceContext(
 			serviceContext, dlFileEntryType.getFileEntryTypeId());
 

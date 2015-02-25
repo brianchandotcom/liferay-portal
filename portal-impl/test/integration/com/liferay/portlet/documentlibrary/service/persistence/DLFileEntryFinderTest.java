@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -1241,8 +1240,6 @@ public class DLFileEntryFinderTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), userId);
 
-		DLAppTestUtil.populateNotificationsServiceContext(
-			serviceContext, Constants.ADD);
 		DLAppTestUtil.populateServiceContext(serviceContext, fileEntryTypeId);
 
 		return DLAppLocalServiceUtil.addFileEntry(

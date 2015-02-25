@@ -39,7 +39,6 @@ public class PortletExportBackgroundTaskExecutor
 	public PortletExportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
 			new PortletExportImportBackgroundTaskStatusMessageTranslator());
-		setSerial(false);
 	}
 
 	@Override

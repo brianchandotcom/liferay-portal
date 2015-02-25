@@ -66,7 +66,7 @@ public class DLFileEntryActivityInterpreterTest
 			TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString().getBytes(), serviceContext);
+			RandomTestUtil.randomBytes(), serviceContext);
 	}
 
 	@Override

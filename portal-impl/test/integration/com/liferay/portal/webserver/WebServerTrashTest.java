@@ -112,7 +112,7 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
 			parentFolder.getFolderId(), "Test Trash.txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString().getBytes(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
 			serviceContext);
 
 		MockHttpServletResponse mockHttpServletResponse =  testRequestFile(

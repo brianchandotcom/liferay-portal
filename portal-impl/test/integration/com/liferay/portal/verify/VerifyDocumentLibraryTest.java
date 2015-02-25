@@ -333,7 +333,7 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 		return DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), folderId,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString().getBytes(), serviceContext);
+			RandomTestUtil.randomBytes(), serviceContext);
 	}
 
 	protected Map<String, DDMFormValues> getDDMFormValuesMap(

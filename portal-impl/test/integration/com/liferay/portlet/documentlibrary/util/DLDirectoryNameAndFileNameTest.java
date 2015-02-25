@@ -197,7 +197,7 @@ public class DLDirectoryNameAndFileNameTest {
 		return DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, sourceFileName,
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString().getBytes(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
 			serviceContext);
 	}
 

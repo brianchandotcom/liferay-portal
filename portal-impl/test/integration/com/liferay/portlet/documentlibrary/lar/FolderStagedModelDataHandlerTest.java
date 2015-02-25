@@ -196,7 +196,7 @@ public class FolderStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				folder.getGroupId(), TestPropsValues.getUserId());
 
-		List<Long> dlFileEntryTypeIds = new ArrayList<Long>();
+		List<Long> dlFileEntryTypeIds = new ArrayList<>();
 
 		dlFileEntryTypeIds.add(dlFileEntryType.getFileEntryTypeId());
 

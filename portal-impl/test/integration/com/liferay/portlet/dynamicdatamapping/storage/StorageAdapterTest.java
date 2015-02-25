@@ -217,7 +217,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		FileEntry file1 =  DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1.txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString().getBytes(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
 			serviceContext);
 
 		String file1Value = getDocLibraryFieldValue(file1);
@@ -225,7 +225,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		FileEntry file2 =  DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 2.txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString().getBytes(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
 			serviceContext);
 
 		String file2Value = getDocLibraryFieldValue(file2);

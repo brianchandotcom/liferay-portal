@@ -124,7 +124,7 @@ public class DLFileEntryLocalServiceTreeTest {
 		return DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), folderId,
 			sourceFileName, ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString().getBytes(), serviceContext);
+			RandomTestUtil.randomBytes(), serviceContext);
 	}
 
 	protected List<FileEntry> createTree() throws Exception {

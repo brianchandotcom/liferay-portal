@@ -239,7 +239,7 @@ public class DDLExporterTest {
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "file.txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString().getBytes(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
 			serviceContext);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

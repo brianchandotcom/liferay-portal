@@ -96,8 +96,8 @@ public class FileEntryStagedModelDataHandlerTest
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, sourceFileName,
-			ContentTypes.APPLICATION_PDF,
-			RandomTestUtil.randomString().getBytes(), serviceContext);
+			ContentTypes.APPLICATION_PDF, RandomTestUtil.randomBytes(),
+			serviceContext);
 
 		exportImportStagedModel(fileEntry);
 
@@ -225,7 +225,7 @@ public class FileEntryStagedModelDataHandlerTest
 		return DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
 			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString().getBytes(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
 			serviceContext);
 	}
 

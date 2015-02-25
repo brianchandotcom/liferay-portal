@@ -75,7 +75,7 @@ public class DLAssetEntryLocalServiceTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			RandomTestUtil.randomString().getBytes(), serviceContext);
+			RandomTestUtil.randomBytes(), serviceContext);
 
 		String title = RandomTestUtil.randomString();
 

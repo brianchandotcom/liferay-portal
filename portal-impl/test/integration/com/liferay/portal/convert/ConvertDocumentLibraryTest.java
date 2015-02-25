@@ -258,7 +258,7 @@ public class ConvertDocumentLibraryTest {
 		FileEntry rootFileEntry = addFileEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString().getBytes());
+			RandomTestUtil.randomBytes());
 
 		Folder folder = DLAppTestUtil.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -301,7 +301,7 @@ public class ConvertDocumentLibraryTest {
 	protected void testMigrateDL(long folderId) throws Exception {
 		FileEntry fileEntry = addFileEntry(
 			folderId, RandomTestUtil.randomString() + ".txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString().getBytes());
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes());
 
 		_convertProcess.convert();
 

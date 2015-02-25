@@ -16,6 +16,7 @@ package com.liferay.portal.template;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
@@ -24,31 +25,40 @@ import javax.portlet.ReadOnlyException;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author László Csontos
  */
 public class TemplatePortletPreferences {
 
-	public TemplatePortletPreferences() {
-		_portletPreferencesImpl = new PortletPreferencesImpl();
-	}
-
 	public void reset() {
-		_portletPreferencesImpl.reset();
+		PortletPreferencesImpl portletPreferencesImpl =
+			_portletPreferencesImplThreadLocal.get();
+
+		portletPreferencesImpl.reset();
 	}
 
 	public void setValue(String key, String value) throws ReadOnlyException {
-		_portletPreferencesImpl.setValue(key, value);
+		PortletPreferencesImpl portletPreferencesImpl =
+			_portletPreferencesImplThreadLocal.get();
+
+		portletPreferencesImpl.setValue(key, value);
 	}
 
 	public void setValues(String key, String[] values)
 		throws ReadOnlyException {
 
-		_portletPreferencesImpl.setValues(key, values);
+		PortletPreferencesImpl portletPreferencesImpl =
+			_portletPreferencesImplThreadLocal.get();
+
+		portletPreferencesImpl.setValues(key, values);
 	}
 
 	@Override
 	public String toString() {
+		PortletPreferencesImpl portletPreferencesImpl =
+			_portletPreferencesImplThreadLocal.get();
+
 		try {
-			return PortletPreferencesFactoryUtil.toXML(_portletPreferencesImpl);
+			return PortletPreferencesFactoryUtil.toXML(portletPreferencesImpl);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -60,6 +70,16 @@ public class TemplatePortletPreferences {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TemplatePortletPreferences.class);
 
-	private final PortletPreferencesImpl _portletPreferencesImpl;
+	private final ThreadLocal<PortletPreferencesImpl>
+		_portletPreferencesImplThreadLocal =
+			new AutoResetThreadLocal<PortletPreferencesImpl>(
+				TemplatePortletPreferences.class.getName()) {
+
+			@Override
+			protected PortletPreferencesImpl initialValue() {
+				return new PortletPreferencesImpl();
+			}
+
+	};
 
 }

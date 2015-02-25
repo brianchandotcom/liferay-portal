@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<portlet-preferences>
+	<preference>
+		<name>assetVocabularyId</name>
+		<value>-1</value>
+	</preference>
+	<preference>
+		<name>displayStyle</name>
+		<value>title-list</value>
+	</preference>
+</portlet-preferences>

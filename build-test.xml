@@ -4155,6 +4155,7 @@ if (ppstate.equals("normal")) {
 					directoryScanner.setBasedir(project.getBaseDir());
 					directoryScanner.setExcludes(
 						new String[] {
+							"modules/apps/asset/asset-publisher-test/test/integration/**/*Test.java",
 							"modules/apps/bookmarks/bookmarks-test/test/integration/**/*Test.java",
 							"modules/apps/social/social-networking-test/test/integration/**/*Test.java",
 							"modules/apps/wiki/wiki-test/test/integration/**/*Test.java",

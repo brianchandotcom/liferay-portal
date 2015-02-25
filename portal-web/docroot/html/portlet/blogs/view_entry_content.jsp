@@ -54,7 +54,16 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				</portlet:renderURL>
 
 				<div class="entry-title">
-					<h2><aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a></h2>
+					<h2>
+						<c:choose>
+							<c:when test='<%= !strutsAction.equals("/blogs/view_entry") %>'>
+								<aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a>
+							</c:when>
+							<c:otherwise>
+								<%= HtmlUtil.escape(entry.getTitle()) %>
+							</c:otherwise>
+						</c:choose>
+					</h2>
 				</div>
 
 				<%

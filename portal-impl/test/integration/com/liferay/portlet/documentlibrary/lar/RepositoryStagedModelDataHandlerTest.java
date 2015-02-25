@@ -73,13 +73,13 @@ public class RepositoryStagedModelDataHandlerTest
 		long classNameId = PortalUtil.getClassNameId(
 			LiferayRepository.class.getName());
 
-		Folder folder = DLAppTestUtil.addFolder(
+		Folder mountFolder = DLAppTestUtil.addFolder(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
 
 		_repository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
-			folder.getFolderId(), RandomTestUtil.randomString(),
+			mountFolder.getFolderId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), PortletKeys.DOCUMENT_LIBRARY,
 			new UnicodeProperties(), false, serviceContext);
 

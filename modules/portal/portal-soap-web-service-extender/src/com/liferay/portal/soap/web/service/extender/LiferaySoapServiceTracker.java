@@ -20,6 +20,7 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.Servlet;
 
@@ -57,8 +58,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LiferaySoapServiceTracker {
 
-	public static final String CONTEXT_NAME = "LIFERAY_CXF_CONTEXT";
-
 	public LiferaySoapServiceTracker(
 		BundleContext bundleContext, String contextPath,
 		ExtensionManager extensionManager) {
@@ -66,8 +65,6 @@ public class LiferaySoapServiceTracker {
 		_bundleContext = bundleContext;
 		_contextPath = contextPath;
 		_extensionManager = extensionManager;
-
-		_logger = LoggerFactory.getLogger(LiferaySoapServiceTracker.class);
 	}
 
 	protected void start() {
@@ -150,7 +147,8 @@ public class LiferaySoapServiceTracker {
 		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME, CONTEXT_NAME);
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
+			_CONTEXT_NAME);
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, contextPath);
 
@@ -163,7 +161,7 @@ public class LiferaySoapServiceTracker {
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			CONTEXT_NAME);
+			_CONTEXT_NAME);
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME, "CXFServlet");
 		properties.put(
@@ -184,11 +182,15 @@ public class LiferaySoapServiceTracker {
 			Provider.class, providerImpl, null);
 	}
 
+	private static final String _CONTEXT_NAME = "LIFERAY_CXF_CONTEXT";
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		LiferaySoapServiceTracker.class);
+
 	private final BundleContext _bundleContext;
 	private final String _contextPath;
 	private CXFNonSpringServlet _cxfServlet;
 	private final ExtensionManager _extensionManager;
-	private final Logger _logger;
 	private ServiceRegistration<Provider> _providerServiceRegistration;
 	private ServiceTracker<Object, ServerTrackingInformation>
 		_serverServiceTracker;
@@ -286,7 +288,7 @@ public class LiferaySoapServiceTracker {
 			JaxWsServerFactoryBean jaxWsServerFactoryBean =
 				new JaxWsServerFactoryBean();
 
-			HashMap<String, Object> properties = getPropertiesAsMap(
+			Map<String, Object> properties = getPropertiesAsMap(
 				serviceReference);
 
 			jaxWsServerFactoryBean.setProperties(properties);
@@ -350,7 +352,7 @@ public class LiferaySoapServiceTracker {
 				if (_logger.isInfoEnabled()) {
 					_logger.info(
 						"Created JAX-WS server at location " + address +
-							"using " + service);
+							" using " + service);
 				}
 
 				return new ServerTrackingInformation(
@@ -372,27 +374,27 @@ public class LiferaySoapServiceTracker {
 
 		@Override
 		public void modifiedService(
-			ServiceReference<Object> reference,
-			ServerTrackingInformation server) {
+			ServiceReference<Object> serviceReference,
+			ServerTrackingInformation serverTrackingInformation) {
 
-			removedService(reference, server);
+			removedService(serviceReference, serverTrackingInformation);
 
-			addingService(reference);
+			addingService(serviceReference);
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<Object> reference,
+			ServiceReference<Object> serviceReference,
 			ServerTrackingInformation serverTrackingInformation) {
 
 			serverTrackingInformation.getServer().destroy();
 
 			serverTrackingInformation.getServiceTracker().close();
 
-			_bundleContext.ungetService(reference);
+			_bundleContext.ungetService(serviceReference);
 		}
 
-		private HashMap<String, Object> getPropertiesAsMap(
+		private Map<String, Object> getPropertiesAsMap(
 			ServiceReference<Object> serviceReference) {
 
 			String[] propertyKeys = serviceReference.getPropertyKeys();

@@ -1449,8 +1449,6 @@
 
 		<!-- Recent Documents -->
 
-		<action path="/recent_documents/get_file" type="com.liferay.portlet.documentlibrary.action.GetFileAction" />
-
 		<action path="/recent_documents/view" forward="portlet.recent_documents.view" />
 
 		<!-- Requests -->

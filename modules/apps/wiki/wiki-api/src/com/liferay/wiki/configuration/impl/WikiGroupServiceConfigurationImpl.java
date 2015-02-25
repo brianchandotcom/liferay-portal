@@ -16,7 +16,7 @@ package com.liferay.wiki.configuration.impl;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.wiki.configuration.WikiConfiguration;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 
 import java.util.Map;
 
@@ -28,90 +28,91 @@ import org.osgi.service.component.annotations.Modified;
  * @author Iván Zaera
  */
 @Component(
-	configurationPid = "com.liferay.wiki.configuration.WikiConfiguration",
-	immediate = true, service = WikiConfiguration.class
+	configurationPid = "com.liferay.wiki.configuration.WikiGroupServiceConfiguration",
+	immediate = true, service = WikiGroupServiceConfiguration.class
 )
-public class WikiConfigurationImpl implements WikiConfiguration {
+public class WikiGroupServiceConfigurationImpl
+	implements WikiGroupServiceConfiguration {
 
 	public String defaultFormat() {
-		return _wikiConfiguration.defaultFormat();
+		return _wikiGroupServiceConfiguration.defaultFormat();
 	}
 
 	public String emailFromAddress() {
-		return _wikiConfiguration.emailFromAddress();
+		return _wikiGroupServiceConfiguration.emailFromAddress();
 	}
 
 	public String emailFromName() {
-		return _wikiConfiguration.emailFromName();
+		return _wikiGroupServiceConfiguration.emailFromName();
 	}
 
 	public String emailPageAddedBody() {
-		return _wikiConfiguration.emailPageAddedBody();
+		return _wikiGroupServiceConfiguration.emailPageAddedBody();
 	}
 
 	public boolean emailPageAddedEnabled() {
-		return _wikiConfiguration.emailPageAddedEnabled();
+		return _wikiGroupServiceConfiguration.emailPageAddedEnabled();
 	}
 
 	public String emailPageAddedSubject() {
-		return _wikiConfiguration.emailPageAddedSubject();
+		return _wikiGroupServiceConfiguration.emailPageAddedSubject();
 	}
 
 	public String emailPageUpdatedBody() {
-		return _wikiConfiguration.emailPageUpdatedBody();
+		return _wikiGroupServiceConfiguration.emailPageUpdatedBody();
 	}
 
 	public boolean emailPageUpdatedEnabled() {
-		return _wikiConfiguration.emailPageUpdatedEnabled();
+		return _wikiGroupServiceConfiguration.emailPageUpdatedEnabled();
 	}
 
 	public String emailPageUpdatedSubject() {
-		return _wikiConfiguration.emailPageUpdatedSubject();
+		return _wikiGroupServiceConfiguration.emailPageUpdatedSubject();
 	}
 
 	public String frontPageName() {
-		return _wikiConfiguration.frontPageName();
+		return _wikiGroupServiceConfiguration.frontPageName();
 	}
 
 	public String initialNodeName() {
-		return _wikiConfiguration.initialNodeName();
+		return _wikiGroupServiceConfiguration.initialNodeName();
 	}
 
 	public boolean pageCommentsEnabled() {
-		return _wikiConfiguration.pageCommentsEnabled();
+		return _wikiGroupServiceConfiguration.pageCommentsEnabled();
 	}
 
 	public boolean pageMinorEditAddSocialActivity() {
-		return _wikiConfiguration.pageMinorEditAddSocialActivity();
+		return _wikiGroupServiceConfiguration.pageMinorEditAddSocialActivity();
 	}
 
 	public boolean pageMinorEditSendEmail() {
-		return _wikiConfiguration.pageMinorEditSendEmail();
+		return _wikiGroupServiceConfiguration.pageMinorEditSendEmail();
 	}
 
 	public String pageTitlesRegexp() {
-		return _wikiConfiguration.pageTitlesRegexp();
+		return _wikiGroupServiceConfiguration.pageTitlesRegexp();
 	}
 
 	public String pageTitlesRemoveRegexp() {
-		return _wikiConfiguration.pageTitlesRemoveRegexp();
+		return _wikiGroupServiceConfiguration.pageTitlesRemoveRegexp();
 	}
 
 	public String[] parsersCreoleSupportedProtocols() {
-		return _wikiConfiguration.parsersCreoleSupportedProtocols();
+		return _wikiGroupServiceConfiguration.parsersCreoleSupportedProtocols();
 	}
 
 	public int rssAbstractLength() {
-		return _wikiConfiguration.rssAbstractLength();
+		return _wikiGroupServiceConfiguration.rssAbstractLength();
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_wikiConfiguration = Configurable.createConfigurable(
-			WikiConfiguration.class, properties);
+		_wikiGroupServiceConfiguration = Configurable.createConfigurable(
+			WikiGroupServiceConfiguration.class, properties);
 	}
 
-	private volatile WikiConfiguration _wikiConfiguration;
+	private volatile WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

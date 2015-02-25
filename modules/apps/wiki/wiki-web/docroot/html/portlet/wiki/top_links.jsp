@@ -23,8 +23,8 @@ List<WikiNode> nodes = wikiPortletInstanceSettingsHelper.getAllPermittedNodes();
 
 boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT);
 
-WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiConfiguration);
-WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper, wikiPortletInstanceSettingsHelper, wikiConfiguration);
+WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
+WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper, wikiPortletInstanceSettingsHelper, wikiGroupServiceConfiguration);
 %>
 
 <c:if test="<%= wikiVisualizationHelper.isUndoTrashControlVisible() %>">
@@ -79,7 +79,7 @@ WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wi
 			<%
 			PortletURL frontPageURL = wikiURLHelper.getFrontPageURL(node);
 
-			String label = wikiConfiguration.frontPageName();
+			String label = wikiGroupServiceConfiguration.frontPageName();
 			boolean selected = wikiVisualizationHelper.isFrontPageNavItemSelected();
 			%>
 

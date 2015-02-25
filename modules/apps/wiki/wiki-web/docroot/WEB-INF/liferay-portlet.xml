@@ -6,7 +6,7 @@
 		<portlet-name>36</portlet-name>
 		<icon>/html/icons/wiki.png</icon>
 		<struts-path>wiki</struts-path>
-		<configuration-action-class>com.liferay.wiki.web.wiki.portlet.action.WikiSettingsConfigurationAction</configuration-action-class>
+		<configuration-action-class>com.liferay.wiki.web.wiki.portlet.action.WikiGroupServiceSettingsConfigurationAction</configuration-action-class>
 		<friendly-url-mapper-class>com.liferay.wiki.web.wiki.portlet.route.WikiFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>wiki</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/wiki/web/wiki/portlet/route/wiki-friendly-url-routes.xml</friendly-url-routes>
@@ -55,7 +55,7 @@
 		<portlet-name>154</portlet-name>
 		<icon>/html/icons/wiki.png</icon>
 		<struts-path>wiki_admin</struts-path>
-		<configuration-action-class>com.liferay.wiki.web.admin.portlet.action.WikiSettingsConfigurationAction</configuration-action-class>
+		<configuration-action-class>com.liferay.wiki.web.admin.portlet.action.WikiGroupServiceSettingsConfigurationAction</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.wiki.lar.WikiPortletDataHandler</portlet-data-handler-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>

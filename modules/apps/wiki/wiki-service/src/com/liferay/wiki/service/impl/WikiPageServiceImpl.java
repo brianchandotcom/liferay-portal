@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.settings.SettingsProvider;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsProvider;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -41,7 +41,7 @@ import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.base.WikiPageServiceBaseImpl;
 import com.liferay.wiki.service.permission.WikiNodePermission;
 import com.liferay.wiki.service.permission.WikiPagePermission;
-import com.liferay.wiki.settings.WikiSettings;
+import com.liferay.wiki.settings.WikiGroupServiceSettings;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 
@@ -821,14 +821,15 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			else {
 				String value = null;
 
-				WikiSettings wikiSettings =
-					_wikiSettingsProvider.getGroupServiceSettings(
+				WikiGroupServiceSettings wikiGroupServiceSettings =
+					_wikiGroupServiceSettingsProvider.getGroupServiceSettings(
 						page.getGroupId());
 
 				if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
 					value = StringUtil.shorten(
 						HtmlUtil.extractText(page.getContent()),
-						wikiSettings.getRSSAbstractLength(), StringPool.BLANK);
+						wikiGroupServiceSettings.getRSSAbstractLength(),
+						StringPool.BLANK);
 				}
 				else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
 					value = StringPool.BLANK;
@@ -891,7 +892,8 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		}
 	}
 
-	@BeanReference(name = "com.liferay.wiki.settings.WikiSettingsProvider")
-	private SettingsProvider<WikiSettings> _wikiSettingsProvider;
+	@BeanReference(name = "com.liferay.wiki.settings.WikiGroupServiceSettingsProvider")
+	private GroupServiceSettingsProvider<WikiGroupServiceSettings>
+		_wikiGroupServiceSettingsProvider;
 
 }

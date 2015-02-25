@@ -12,18 +12,20 @@
  * details.
  */
 
-package com.liferay.wiki.web.admin.portlet.action;
+package com.liferay.wiki.web.wiki.portlet.action;
 
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
 /**
- * @author Iván Zaera
+ * @author Bruno Farache
  */
-public class WikiSettingsConfigurationAction
+public class WikiGroupServiceSettingsConfigurationAction
 	extends SettingsConfigurationAction {
 
 	@Override
@@ -32,11 +34,17 @@ public class WikiSettingsConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
-		validateEmail(actionRequest, "emailPageAdded");
-		validateEmail(actionRequest, "emailPageUpdated");
-		validateEmailFrom(actionRequest);
+		validateDisplaySettings(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
+	}
+
+	protected void validateDisplaySettings(ActionRequest actionRequest) {
+		String visibleNodes = getParameter(actionRequest, "visibleNodes");
+
+		if (Validator.isNull(visibleNodes)) {
+			SessionErrors.add(actionRequest, "visibleNodesCount");
+		}
 	}
 
 }

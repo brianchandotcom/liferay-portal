@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.wiki.configuration.WikiConfiguration" %><%@
+<%@ page import="com.liferay.wiki.configuration.WikiGroupServiceConfiguration" %><%@
 page import="com.liferay.wiki.constants.WikiConstants" %><%@
 page import="com.liferay.wiki.constants.WikiPortletKeys" %><%@
 page import="com.liferay.wiki.constants.WikiWebKeys" %><%@
@@ -47,8 +47,8 @@ page import="com.liferay.wiki.service.WikiPageServiceUtil" %><%@
 page import="com.liferay.wiki.service.permission.WikiNodePermission" %><%@
 page import="com.liferay.wiki.service.permission.WikiPagePermission" %><%@
 page import="com.liferay.wiki.service.permission.WikiPermission" %><%@
+page import="com.liferay.wiki.settings.WikiGroupServiceSettings" %><%@
 page import="com.liferay.wiki.settings.WikiPortletInstanceSettings" %><%@
-page import="com.liferay.wiki.settings.WikiSettings" %><%@
 page import="com.liferay.wiki.social.WikiActivityKeys" %><%@
 page import="com.liferay.wiki.util.WikiCacheUtil" %><%@
 page import="com.liferay.wiki.util.WikiPageAttachmentsUtil" %><%@
@@ -65,13 +65,13 @@ page import="com.liferay.wiki.web.settings.WikiWebSettingsProvider" %>
 WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);
 
 WikiPortletInstanceSettings wikiPortletInstanceSettings = wikiRequestHelper.getWikiPortletInstanceSettings();
-WikiSettings wikiSettings = wikiRequestHelper.getWikiSettings();
+WikiGroupServiceSettings wikiGroupServiceSettings = wikiRequestHelper.getWikiGroupServiceSettings();
 
 WikiPortletInstanceSettingsHelper wikiPortletInstanceSettingsHelper = new WikiPortletInstanceSettingsHelper(wikiRequestHelper);
 
 WikiWebSettingsProvider wikiWebSettingsProvider = WikiWebSettingsProvider.getWikiWebSettingsProvider();
 
-WikiConfiguration wikiConfiguration = wikiWebSettingsProvider.getWikiConfiguration();
+WikiGroupServiceConfiguration wikiGroupServiceConfiguration = wikiWebSettingsProvider.getWikiGroupServiceConfiguration();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

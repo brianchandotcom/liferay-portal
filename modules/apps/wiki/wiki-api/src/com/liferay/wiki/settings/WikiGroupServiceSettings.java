@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.settings;
 
+import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
@@ -23,9 +24,9 @@ import com.liferay.wiki.constants.WikiConstants;
  * @author Iván Zaera
  */
 @Settings.Config(settingsIds = WikiConstants.SERVICE_NAME)
-public class WikiSettings {
+public class WikiGroupServiceSettings implements GroupServiceSettings {
 
-	public WikiSettings(Settings settings) {
+	public WikiGroupServiceSettings(Settings settings) {
 		_typedSettings = new TypedSettings(settings);
 	}
 

@@ -75,12 +75,10 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
-import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.startlevel.FrameworkStartLevel;
-import org.osgi.framework.wiring.FrameworkWiring;
 
 import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.context.ApplicationContext;
@@ -679,10 +677,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return false;
 	}
 
-	private void _installInitialBundle(
-		String location, List<Bundle> lazyActivationBundles,
-		List<Bundle> startBundles, List<Bundle> refreshBundles) {
-
+	private void _installInitialBundle(String location) {
 		boolean start = false;
 		int startLevel = PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL;
 
@@ -735,7 +730,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 
 			if (!start && _hasLazyActivationPolicy(bundle)) {
-				lazyActivationBundles.add(bundle);
+				bundle.start(Bundle.START_ACTIVATION_POLICY);
 
 				return;
 			}
@@ -750,11 +745,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 
 			if (start) {
-				startBundles.add(bundle);
-			}
-
-			if ((bundle.getState() & Bundle.INSTALLED) != 0) {
-				refreshBundles.add(bundle);
+				bundle.start();
 			}
 		}
 		catch (Exception e) {
@@ -783,7 +774,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			if (ignoredClass.equals(interfaceClassName) ||
 				(ignoredClass.endsWith(StringPool.STAR) &&
-				 interfaceClassName.startsWith(
+				interfaceClassName.startsWith(
 					ignoredClass.substring(0, ignoredClass.length() - 1)))) {
 
 				return true;
@@ -873,80 +864,16 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private void _setupInitialBundles() throws Exception {
-		FrameworkWiring frameworkWiring = _framework.adapt(
-			FrameworkWiring.class);
-
-		List<Bundle> lazyActivationBundles = new ArrayList<>();
-		List<Bundle> startBundles = new ArrayList<>();
-		List<Bundle> refreshBundles = new ArrayList<>();
-
 		for (String initialBundle :
 				PropsValues.MODULE_FRAMEWORK_INITIAL_BUNDLES) {
 
-			_installInitialBundle(
-				initialBundle, lazyActivationBundles, startBundles,
-				refreshBundles);
+			_installInitialBundle(initialBundle);
 		}
-
-		FrameworkListener frameworkListener = new StartupFrameworkListener(
-			startBundles, lazyActivationBundles);
-
-		frameworkWiring.refreshBundles(refreshBundles, frameworkListener);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleFrameworkImpl.class);
 
 	private Framework _framework;
-
-	private class StartupFrameworkListener implements FrameworkListener {
-
-		public StartupFrameworkListener(
-			List<Bundle> startBundles, List<Bundle> lazyActivationBundles) {
-
-			_startBundles = startBundles;
-			_lazyActivationBundles = lazyActivationBundles;
-		}
-
-		@Override
-		public void frameworkEvent(FrameworkEvent frameworkEvent) {
-			if (frameworkEvent.getType() != FrameworkEvent.PACKAGES_REFRESHED) {
-				return;
-			}
-
-			for (Bundle bundle : _startBundles) {
-				try {
-					startBundle(bundle, 0, false);
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
-			}
-
-			for (Bundle bundle : _lazyActivationBundles) {
-				try {
-					startBundle(bundle, Bundle.START_ACTIVATION_POLICY, false);
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
-			}
-
-			try {
-				Bundle bundle = frameworkEvent.getBundle();
-
-				BundleContext bundleContext = bundle.getBundleContext();
-
-				bundleContext.removeFrameworkListener(this);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-
-		private final List<Bundle> _lazyActivationBundles;
-		private final List<Bundle> _startBundles;
-
-	}
 
 }

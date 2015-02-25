@@ -1,17 +1,15 @@
 /**
- * Copyright 2000-present Liferay, Inc.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
 package com.liferay.portal.deploy.hot;
@@ -24,13 +22,19 @@ import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portlet.blogs.util.BlogsIndexer;
+import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 import com.liferay.registry.ServiceTracker;
 
 import java.lang.reflect.Field;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -49,18 +53,19 @@ public class IndexerPostProcessorRegistryTest {
 			new SyntheticBundleRule("bundle.indexerpostprocessorregistry"));
 
 	@BeforeClass
-	public static void setupRegistry() {
-		if (_registry == null) {
-			_registry = new IndexerPostProcessorRegistry();
-		}
+	public static void setUpClass() throws Exception {
+		_registry = new IndexerPostProcessorRegistry();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_registry.close();
 	}
 
 	@Test
-	public void testMultipleEntityIndexerPostProcessors()
-		throws Exception {
-
-		Indexer userIndexer =
-			IndexerRegistryUtil.getIndexer("com.liferay.portal.model.User");
+	public void testMultipleEntityIndexerPostProcessors() throws Exception {
+		Indexer userIndexer = IndexerRegistryUtil.getIndexer(
+			User.class.getName());
 
 		IndexerPostProcessor[] userIndexerPostProcessors =
 			userIndexer.getIndexerPostProcessors();
@@ -72,9 +77,8 @@ public class IndexerPostProcessorRegistryTest {
 
 		assertNotNull(userIndexerPostProcessor);
 
-		Indexer userGroupIndexer =
-			IndexerRegistryUtil.getIndexer(
-				"com.liferay.portal.model.UserGroup");
+		Indexer userGroupIndexer = IndexerRegistryUtil.getIndexer(
+			UserGroup.class.getName());
 
 		IndexerPostProcessor[] userGroupIndexerPostProcessors =
 			userGroupIndexer.getIndexerPostProcessors();
@@ -90,12 +94,9 @@ public class IndexerPostProcessorRegistryTest {
 	}
 
 	@Test
-	public void testMultipleIndexerPostProcessors()
-		throws Exception {
-
-		Indexer mbMessageIndexer =
-			IndexerRegistryUtil.getIndexer(
-				"com.liferay.portlet.messageboards.util.MBMessageIndexer");
+	public void testMultipleIndexerPostProcessors() throws Exception {
+		Indexer mbMessageIndexer = IndexerRegistryUtil.getIndexer(
+			MBMessageIndexer.class.getName());
 
 		IndexerPostProcessor[] mbMessageIndexerPostProcessors =
 			mbMessageIndexer.getIndexerPostProcessors();
@@ -107,9 +108,8 @@ public class IndexerPostProcessorRegistryTest {
 
 		assertNotNull(mbMessageIndexerPostProcessor);
 
-		Indexer mbThreadIndexer =
-			IndexerRegistryUtil.getIndexer(
-				"com.liferay.portlet.messageboards.util.MBThreadIndexer");
+		Indexer mbThreadIndexer = IndexerRegistryUtil.getIndexer(
+			"com.liferay.portlet.messageboards.util.MBThreadIndexer");
 
 		IndexerPostProcessor[] mbThreadIndexerPostProcessors =
 			mbThreadIndexer.getIndexerPostProcessors();
@@ -126,27 +126,20 @@ public class IndexerPostProcessorRegistryTest {
 	}
 
 	@Test
-	public void testNumOfIndexerPostProcessors()
-		throws Exception {
+	public void testNumOfIndexerPostProcessors() throws Exception {
+		Field serviceTrackerField = ReflectionUtil.getDeclaredField(
+			IndexerPostProcessorRegistry.class, "_serviceTracker");
 
-		Field serviceTrackerField =
-			ReflectionUtil.getDeclaredField(
-				IndexerPostProcessorRegistry.class, "_serviceTracker");
-
-		ServiceTracker<IndexerPostProcessor, IndexerPostProcessor>
-			serviceTracker =
-				(ServiceTracker<IndexerPostProcessor, IndexerPostProcessor>)
-					serviceTrackerField.get(_registry);
+		ServiceTracker<?, ?> serviceTracker =
+			(ServiceTracker<?, ?>)serviceTrackerField.get(_registry);
 
 		assertEquals(4, serviceTracker.getServices().length);
 	}
 
 	@Test
-	public void testSingleEntityIndexerPostProcessor()
-		throws Exception {
-
-		Indexer contactIndexer =
-			IndexerRegistryUtil.getIndexer("com.liferay.portal.model.Contact");
+	public void testSingleEntityIndexerPostProcessor() throws Exception {
+		Indexer contactIndexer = IndexerRegistryUtil.getIndexer(
+			Contact.class.getName());
 
 		IndexerPostProcessor[] contactIndexerPostProcessors =
 			contactIndexer.getIndexerPostProcessors();
@@ -160,12 +153,9 @@ public class IndexerPostProcessorRegistryTest {
 	}
 
 	@Test
-	public void testSingleIndexerPostProcessor()
-		throws Exception {
-
-		Indexer blogsIndexer =
-			IndexerRegistryUtil.getIndexer(
-				"com.liferay.portlet.blogs.util.BlogsIndexer");
+	public void testSingleIndexerPostProcessor() throws Exception {
+		Indexer blogsIndexer = IndexerRegistryUtil.getIndexer(
+			BlogsIndexer.class.getName());
 
 		IndexerPostProcessor[] blogIndexerPostProcessors =
 			blogsIndexer.getIndexerPostProcessors();

@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/shopping/init.jsp" %>
 
 <%
-shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), request.getParameterMap());
+shoppingGroupServiceSettings = ShoppingGroupServiceSettings.getInstance(themeDisplay.getSiteGroupId(), request.getParameterMap());
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
@@ -55,13 +55,13 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 			</div>
 
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="paypal-email-address" name="preferences--paypalEmailAddress--" type="text" value="<%= shoppingSettings.getPayPalEmailAddress() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="paypal-email-address" name="preferences--paypalEmailAddress--" type="text" value="<%= shoppingGroupServiceSettings.getPayPalEmailAddress() %>" />
 
 				<aui:field-wrapper label="credit-cards">
 
 					<%
-					String[] ccTypes1 = ShoppingSettings.CC_TYPES;
-					String[] ccTypes2 = shoppingSettings.getCcTypes();
+					String[] ccTypes1 = ShoppingGroupServiceSettings.CC_TYPES;
+					String[] ccTypes2 = shoppingGroupServiceSettings.getCcTypes();
 
 					// Left list
 
@@ -96,10 +96,10 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 				<aui:select label="currency" name="preferences--currencyId--">
 
 					<%
-					for (int i = 0; i < ShoppingSettings.CURRENCY_IDS.length; i++) {
+					for (int i = 0; i < ShoppingGroupServiceSettings.CURRENCY_IDS.length; i++) {
 					%>
 
-						<aui:option label="<%= ShoppingSettings.CURRENCY_IDS[i] %>" selected="<%= shoppingSettings.getCurrencyId().equals(ShoppingSettings.CURRENCY_IDS[i]) %>" />
+						<aui:option label="<%= ShoppingGroupServiceSettings.CURRENCY_IDS[i] %>" selected="<%= shoppingGroupServiceSettings.getCurrencyId().equals(ShoppingGroupServiceSettings.CURRENCY_IDS[i]) %>" />
 
 					<%
 					}
@@ -113,7 +113,7 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 					for (int i = 0; i < StateUtil.STATES.length; i++) {
 					%>
 
-						<aui:option label="<%= StateUtil.STATES[i].getName() %>" selected="<%= shoppingSettings.getTaxState().equals(StateUtil.STATES[i].getId()) %>" value="<%= StateUtil.STATES[i].getId() %>" />
+						<aui:option label="<%= StateUtil.STATES[i].getName() %>" selected="<%= shoppingGroupServiceSettings.getTaxState().equals(StateUtil.STATES[i].getId()) %>" value="<%= StateUtil.STATES[i].getId() %>" />
 
 					<%
 					}
@@ -121,9 +121,9 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 
 				</aui:select>
 
-				<aui:input maxlength="7" name="taxRate" size="7" type="text" value="<%= taxFormat.format(shoppingSettings.getTaxRate()) %>" />
+				<aui:input maxlength="7" name="taxRate" size="7" type="text" value="<%= taxFormat.format(shoppingGroupServiceSettings.getTaxRate()) %>" />
 
-				<aui:input label="minimum-order" maxlength="7" name="preferences--minOrder--" size="7" type="text" value="<%= doubleFormat.format(shoppingSettings.getMinOrder()) %>" />
+				<aui:input label="minimum-order" maxlength="7" name="preferences--minOrder--" size="7" type="text" value="<%= doubleFormat.format(shoppingGroupServiceSettings.getMinOrder()) %>" />
 			</aui:fieldset>
 		</liferay-ui:section>
 
@@ -134,8 +134,8 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 
 			<aui:fieldset>
 				<aui:select label="formula" name="preferences--shippingFormula--">
-					<aui:option label="flat-amount" selected='<%= shoppingSettings.getShippingFormula().equals("flat") %>' value="flat" />
-					<aui:option label="percentage" selected='<%= shoppingSettings.getShippingFormula().equals("percentage") %>' />
+					<aui:option label="flat-amount" selected='<%= shoppingGroupServiceSettings.getShippingFormula().equals("flat") %>' value="flat" />
+					<aui:option label="percentage" selected='<%= shoppingGroupServiceSettings.getShippingFormula().equals("percentage") %>' />
 				</aui:select>
 
 				<aui:field-wrapper label="values">
@@ -144,8 +144,8 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 					int shippingRange = 0;
 
 					for (int i = 0; i < 5; i++) {
-						double shippingRangeA = ShoppingSettings.INSURANCE_RANGE[shippingRange++];
-						double shippingRangeB = ShoppingSettings.INSURANCE_RANGE[shippingRange++];
+						double shippingRangeA = ShoppingGroupServiceSettings.INSURANCE_RANGE[shippingRange++];
+						double shippingRangeB = ShoppingGroupServiceSettings.INSURANCE_RANGE[shippingRange++];
 					%>
 
 					<%= currencyFormat.format(shippingRangeA) %>
@@ -158,7 +158,7 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 						and over
 					</c:if>
 
-					<aui:input label="" maxlength="6" name='<%= "shipping" + i %>' size="6" title="shipping" type="text" value="<%= GetterUtil.getString(shoppingSettings.getShipping()[i]) %>" />
+					<aui:input label="" maxlength="6" name='<%= "shipping" + i %>' size="6" title="shipping" type="text" value="<%= GetterUtil.getString(shoppingGroupServiceSettings.getShipping()[i]) %>" />
 
 					<%
 					}
@@ -175,8 +175,8 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 
 			<aui:fieldset>
 				<aui:select label="formula" name="preferences--insuranceFormula--">
-					<aui:option label="flat-amount" selected='<%= shoppingSettings.getInsuranceFormula().equals("flat") %>' value="flat" />
-					<aui:option label="percentage" selected='<%= shoppingSettings.getInsuranceFormula().equals("percentage") %>' />
+					<aui:option label="flat-amount" selected='<%= shoppingGroupServiceSettings.getInsuranceFormula().equals("flat") %>' value="flat" />
+					<aui:option label="percentage" selected='<%= shoppingGroupServiceSettings.getInsuranceFormula().equals("percentage") %>' />
 				</aui:select>
 
 				<aui:field-wrapper label="values">
@@ -185,8 +185,8 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 					int insuranceRange = 0;
 
 					for (int i = 0; i < 5; i++) {
-						double insuranceRangeA = ShoppingSettings.INSURANCE_RANGE[insuranceRange++];
-						double insuranceRangeB = ShoppingSettings.INSURANCE_RANGE[insuranceRange++];
+						double insuranceRangeA = ShoppingGroupServiceSettings.INSURANCE_RANGE[insuranceRange++];
+						double insuranceRangeB = ShoppingGroupServiceSettings.INSURANCE_RANGE[insuranceRange++];
 					%>
 
 					<%= currencyFormat.format(insuranceRangeA) %>
@@ -199,7 +199,7 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 						and over
 					</c:if>
 
-					<aui:input label="" maxlength="6" name='<%= "insurance" + i %>' size="6" title="insurance" type="text" value="<%= GetterUtil.getString(shoppingSettings.getInsurance()[i]) %>" />
+					<aui:input label="" maxlength="6" name='<%= "insurance" + i %>' size="6" title="insurance" type="text" value="<%= GetterUtil.getString(shoppingGroupServiceSettings.getInsurance()[i]) %>" />
 
 					<%
 					}
@@ -211,33 +211,33 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 
 		<liferay-ui:section>
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" type="text" value="<%= shoppingSettings.getEmailFromName() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" type="text" value="<%= shoppingGroupServiceSettings.getEmailFromName() %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" type="text" value="<%= shoppingSettings.getEmailFromAddress() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" type="text" value="<%= shoppingGroupServiceSettings.getEmailFromAddress() %>" />
 			</aui:fieldset>
 		</liferay-ui:section>
 
 		<%
-		Map<String, String> emailDefinitionTerms = ShoppingUtil.getEmailDefinitionTerms(renderRequest, shoppingSettings.getEmailFromAddress(), shoppingSettings.getEmailFromName());
+		Map<String, String> emailDefinitionTerms = ShoppingUtil.getEmailDefinitionTerms(renderRequest, shoppingGroupServiceSettings.getEmailFromAddress(), shoppingGroupServiceSettings.getEmailFromName());
 		%>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= shoppingSettings.getEmailOrderConfirmationBodyXml() %>"
+				emailBody="<%= shoppingGroupServiceSettings.getEmailOrderConfirmationBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= shoppingSettings.isEmailOrderConfirmationEnabled() %>"
+				emailEnabled="<%= shoppingGroupServiceSettings.isEmailOrderConfirmationEnabled() %>"
 				emailParam="emailOrderConfirmation"
-				emailSubject="<%= shoppingSettings.getEmailOrderConfirmationSubjectXml() %>"
+				emailSubject="<%= shoppingGroupServiceSettings.getEmailOrderConfirmationSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= shoppingSettings.getEmailOrderShippingBodyXml() %>"
+				emailBody="<%= shoppingGroupServiceSettings.getEmailOrderShippingBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= shoppingSettings.isEmailOrderShippingEnabled() %>"
+				emailEnabled="<%= shoppingGroupServiceSettings.isEmailOrderShippingEnabled() %>"
 				emailParam="emailOrderShipping"
-				emailSubject="<%= shoppingSettings.getEmailOrderShippingSubjectXml() %>"
+				emailSubject="<%= shoppingGroupServiceSettings.getEmailOrderShippingSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 	</liferay-ui:tabs>

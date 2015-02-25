@@ -21,6 +21,6 @@ import java.io.Serializable;
  */
 public interface ProcessCallable<T extends Serializable> extends Serializable {
 
-	T call() throws ProcessException;
+	public T call() throws ProcessException;
 
 }

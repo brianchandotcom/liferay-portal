@@ -72,7 +72,7 @@ import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
-import com.liferay.portlet.blogs.BlogsSettings;
+import com.liferay.portlet.blogs.BlogsGroupServiceSettings;
 import com.liferay.portlet.blogs.EntryContentException;
 import com.liferay.portlet.blogs.EntryDisplayDateException;
 import com.liferay.portlet.blogs.EntrySmallImageNameException;
@@ -1804,17 +1804,17 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		BlogsSettings blogsSettings = BlogsSettings.getInstance(
-			entry.getGroupId());
+		BlogsGroupServiceSettings blogsGroupServiceSettings =
+			BlogsGroupServiceSettings.getInstance(entry.getGroupId());
 
 		boolean sendEmailEntryUpdated = GetterUtil.getBoolean(
 			serviceContext.getAttribute("sendEmailEntryUpdated"));
 
 		if (serviceContext.isCommandAdd() &&
-			blogsSettings.isEmailEntryAddedEnabled()) {
+			blogsGroupServiceSettings.isEmailEntryAddedEnabled()) {
 		}
 		else if (sendEmailEntryUpdated && serviceContext.isCommandUpdate() &&
-				 blogsSettings.isEmailEntryUpdatedEnabled()) {
+				 blogsGroupServiceSettings.isEmailEntryUpdatedEnabled()) {
 		}
 		else {
 			return;
@@ -1824,21 +1824,23 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		String entryTitle = entry.getTitle();
 
-		String fromName = blogsSettings.getEmailFromName();
-		String fromAddress = blogsSettings.getEmailFromAddress();
+		String fromName = blogsGroupServiceSettings.getEmailFromName();
+		String fromAddress = blogsGroupServiceSettings.getEmailFromAddress();
 
 		LocalizedValuesMap subjectLocalizedValuesMap = null;
 		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (serviceContext.isCommandUpdate()) {
 			subjectLocalizedValuesMap =
-				blogsSettings.getEmailEntryUpdatedSubject();
-			bodyLocalizedValuesMap = blogsSettings.getEmailEntryUpdatedBody();
+				blogsGroupServiceSettings.getEmailEntryUpdatedSubject();
+			bodyLocalizedValuesMap =
+				blogsGroupServiceSettings.getEmailEntryUpdatedBody();
 		}
 		else {
 			subjectLocalizedValuesMap =
-				blogsSettings.getEmailEntryAddedSubject();
-			bodyLocalizedValuesMap = blogsSettings.getEmailEntryAddedBody();
+				blogsGroupServiceSettings.getEmailEntryAddedSubject();
+			bodyLocalizedValuesMap =
+				blogsGroupServiceSettings.getEmailEntryAddedBody();
 		}
 
 		SubscriptionSender subscriptionSender =

@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v7_0_0.util.PortletPreferencesRow;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.blogs.BlogsGroupServiceSettings;
 import com.liferay.portlet.blogs.BlogsPortletInstanceSettings;
-import com.liferay.portlet.blogs.BlogsSettings;
 import com.liferay.portlet.blogs.util.BlogsConstants;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.DLSettings;
@@ -138,7 +138,8 @@ public class UpgradePortletSettings extends UpgradeProcess {
 		upgradeMainPortlet(
 			PortletKeys.BLOGS, BlogsConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP,
-			BlogsPortletInstanceSettings.class, BlogsSettings.class);
+			BlogsPortletInstanceSettings.class,
+			BlogsGroupServiceSettings.class);
 		upgradeMainPortlet(
 			PortletKeys.DOCUMENT_LIBRARY, DLConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, DLPortletInstanceSettings.class,

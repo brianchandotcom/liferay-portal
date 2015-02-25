@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * @author Iván Zaera
  */
-public interface SettingsProvider<T> {
+public interface GroupServiceSettingsProvider<T extends GroupServiceSettings> {
 
 	public T getGroupServiceSettings(long groupId) throws PortalException;
 

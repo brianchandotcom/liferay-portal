@@ -709,7 +709,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		try {
 			if (!location.startsWith("file:")) {
 				location = "file:".concat(
-					PropsValues.LIFERAY_LIB_PORTAL_DIR.concat(location));
+					PropsValues.MODULE_FRAMEWORK_BASE_DIR.concat(
+						"/static/").concat(location));
 			}
 
 			URL initialBundleURL = new URL(location);

@@ -18,6 +18,7 @@ import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurat
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
@@ -438,6 +440,21 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return _portletResource;
+	}
+
+	public long[] getReferencedEntitiesGroupIds() throws PortalException {
+
+		// Referenced entites are asset subtypes, tags or categories that
+		// are used to filter assets and can belong to a different scope of
+		// the asset they are associated to
+
+		if (_referencedEntitiesGroupIds == null) {
+			_referencedEntitiesGroupIds =
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					getGroupIds(), true);
+		}
+
+		return _referencedEntitiesGroupIds;
 	}
 
 	public String getRootPortletId() {
@@ -1072,6 +1089,7 @@ public class AssetPublisherDisplayContext {
 	private Long _portletDisplayDDMTemplateId;
 	private final PortletPreferences _portletPreferences;
 	private String _portletResource;
+	private long[] _referencedEntitiesGroupIds;
 	private final HttpServletRequest _request;
 	private String _rootPortletId;
 	private Integer _rssDelta;

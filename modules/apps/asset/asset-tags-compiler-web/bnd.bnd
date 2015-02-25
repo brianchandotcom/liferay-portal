@@ -1,0 +1,14 @@
+Bundle-Name: Liferay Asset Tags Compiler Web
+Bundle-SymbolicName: com.liferay.asset.tags.compiler.web
+Bundle-Version: 1.0.0
+Import-Package: \
+	com.liferay.portlet.asset.service.permission,\
+	*
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
+Require-Capability:\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/theme))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))"

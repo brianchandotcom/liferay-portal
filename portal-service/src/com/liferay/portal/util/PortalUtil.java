@@ -713,10 +713,26 @@ public class PortalUtil {
 		return getPortal().getCurrentAndAncestorSiteGroupIds(groupId);
 	}
 
+	public static long[] getCurrentAndAncestorSiteGroupIds(
+			long groupId, boolean checkContentSharingWithChildrenEnabled)
+		throws PortalException {
+
+		return getPortal().getCurrentAndAncestorSiteGroupIds(
+			groupId, checkContentSharingWithChildrenEnabled);
+	}
+
 	public static long[] getCurrentAndAncestorSiteGroupIds(long[] groupIds)
 		throws PortalException {
 
 		return getPortal().getCurrentAndAncestorSiteGroupIds(groupIds);
+	}
+
+	public static long[] getCurrentAndAncestorSiteGroupIds(
+			long[] groupIds, boolean checkContentSharingWithChildrenEnabled)
+		throws PortalException {
+
+		return getPortal().getCurrentAndAncestorSiteGroupIds(
+			groupIds, checkContentSharingWithChildrenEnabled);
 	}
 
 	public static List<Group> getCurrentAndAncestorSiteGroups(long groupId)
@@ -725,10 +741,26 @@ public class PortalUtil {
 		return getPortal().getCurrentAndAncestorSiteGroups(groupId);
 	}
 
+	public static List<Group> getCurrentAndAncestorSiteGroups(
+			long groupId, boolean checkContentSharingWithChildrenEnabled)
+		throws PortalException {
+
+		return getPortal().getCurrentAndAncestorSiteGroups(
+			groupId, checkContentSharingWithChildrenEnabled);
+	}
+
 	public static List<Group> getCurrentAndAncestorSiteGroups(long[] groupIds)
 		throws PortalException {
 
 		return getPortal().getCurrentAndAncestorSiteGroups(groupIds);
+	}
+
+	public static List<Group> getCurrentAndAncestorSiteGroups(
+			long[] groupIds, boolean checkContentSharingWithChildrenEnabled)
+		throws PortalException {
+
+		return getPortal().getCurrentAndAncestorSiteGroups(
+			groupIds, checkContentSharingWithChildrenEnabled);
 	}
 
 	public static String getCurrentCompleteURL(HttpServletRequest request) {

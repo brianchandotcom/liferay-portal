@@ -22,8 +22,6 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 String redirect = (String)request.getAttribute("configuration.jsp-redirect");
 String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
 String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle");
-
-long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(assetPublisherDisplayContext.getGroupIds());
 %>
 
 <liferay-ui:tabs
@@ -115,7 +113,7 @@ long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(assetPublisherDis
 					for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
 						ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
 
-						List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(groupIds, locale);
+						List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(assetPublisherDisplayContext.getReferencedEntitiesGroupIds(), locale);
 
 						if (classTypes.isEmpty()) {
 							continue;
@@ -299,7 +297,7 @@ long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(assetPublisherDis
 							String categoryIds = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);
 
 							if (Validator.isNotNull(tagNames) || Validator.isNotNull(categoryIds) || (queryLogicIndexes.length == 1)) {
-								request.setAttribute("configuration.jsp-categorizableGroupIds", _getCategorizableGroupIds(groupIds));
+								request.setAttribute("configuration.jsp-categorizableGroupIds", assetPublisherDisplayContext.getReferencedEntitiesGroupIds());
 								request.setAttribute("configuration.jsp-index", String.valueOf(index));
 								request.setAttribute("configuration.jsp-queryLogicIndex", String.valueOf(queryLogicIndex));
 
@@ -574,7 +572,7 @@ long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(assetPublisherDis
 		<%
 		ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
 
-		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(groupIds, locale);
+		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(assetPublisherDisplayContext.getReferencedEntitiesGroupIds(), locale);
 
 		if (assetAvailableClassTypes.isEmpty()) {
 			continue;
@@ -767,22 +765,6 @@ long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(assetPublisherDis
 </aui:script>
 
 <%!
-private long[] _getCategorizableGroupIds(long[] groupIds) throws Exception {
-	Set<Long> categorizableGroupIds = new HashSet<Long>(groupIds.length);
-
-	for (long groupId : groupIds) {
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		if (group.isLayout()) {
-			groupId = group.getParentGroupId();
-		}
-
-		categorizableGroupIds.add(groupId);
-	}
-
-	return ArrayUtil.toLongArray(categorizableGroupIds);
-}
-
 private String _getSectionId(String name) {
 	return TextFormatter.format(name, TextFormatter.M);
 }

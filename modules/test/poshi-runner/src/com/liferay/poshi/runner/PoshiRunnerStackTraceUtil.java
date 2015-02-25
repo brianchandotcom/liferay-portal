@@ -27,7 +27,7 @@ public final class PoshiRunnerStackTraceUtil {
 	}
 
 	public static String popFilePath() {
-		return _filePath.pop();
+		return _filePaths.pop();
 	}
 
 	public static String popStackTrace() {
@@ -42,17 +42,15 @@ public final class PoshiRunnerStackTraceUtil {
 				className);
 		}
 
-		_filePath.push(
+		_filePaths.push(
 			PoshiRunnerContext.getFilePath(className + "." + classType));
 	}
 
 	public static void pushStackTrace(String lineNumber) {
-		String filePath = _filePath.peek();
-
-		_stackTrace.push(filePath + ":" + lineNumber + "\n");
+		_stackTrace.push(_filePaths.peek() + ":" + lineNumber + "\n");
 	}
 
-	private static final Stack<String> _filePath = new Stack<>();
+	private static final Stack<String> _filePaths = new Stack<>();
 	private static final Stack<String> _stackTrace = new Stack<>();
 
 }

@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.xml;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -269,12 +271,24 @@ public class SAXReaderUtil {
 
 		for (String whitelistSignature : _XML_SECURITY_WHITELIST) {
 			if (callerSignature.startsWith(whitelistSignature)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unsecure SAXReader allowed for " + callerSignature +
+							" based on '" + whitelistSignature + "' rule");
+				}
+
 				return true;
 			}
 		}
 
+		if (_log.isDebugEnabled()) {
+			_log.debug("Unsecure SAXReader disallowed for " + callerSignature);
+		}
+
 		return false;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(SAXReaderUtil.class);
 
 	private static final String[] _XML_SECURITY_WHITELIST = PropsUtil.getArray(
 		PropsKeys.XML_SECURITY_WHITELIST);

@@ -460,7 +460,7 @@
 	</command>
 
 	<command name="ConfigureXugglerVideoPreviewSizePG" priority="5">
-		<property name="custom.properties" value="dl.file.entry.preview.video.width=0$${line.separator}dl.file.entry.preview.video.height=0" />
+		<property name="custom.properties" value="dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0" />
 
 		<var name="videoGenerationTimeCounter" value="0" />
 		<var name="videoGenerationTimeMaxWaitTime" value="6" />

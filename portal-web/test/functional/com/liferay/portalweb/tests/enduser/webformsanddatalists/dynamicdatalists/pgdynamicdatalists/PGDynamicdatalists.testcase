@@ -1217,7 +1217,7 @@
 	</command>
 
 	<command known-issues="LPS-51615" name="ViewListRecordWithUploadedFreeMarkerDisplayTemplate" priority="5">
-		<property name="custom.properties" value="freemarker.engine.restricted.variables=$${line.separator}velocity.engine.restricted.variables=" />
+		<property name="custom.properties" value="freemarker.engine.restricted.variables=${line.separator}velocity.engine.restricted.variables=" />
 
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateLanguage" value="FreeMarker (.ftl)" />
@@ -1323,7 +1323,7 @@
 	</command>
 
 	<command known-issues="LPS-51615" name="ViewListRecordWithUploadedVelocityDisplayTemplate" priority="5">
-		<property name="custom.properties" value="freemarker.engine.restricted.variables=$${line.separator}velocity.engine.restricted.variables=" />
+		<property name="custom.properties" value="freemarker.engine.restricted.variables=${line.separator}velocity.engine.restricted.variables=" />
 
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateLanguage" value="Velocity (.vm)" />
@@ -1429,7 +1429,7 @@
 	</command>
 
 	<command known-issues="LPS-51615" name="ViewListRecordWithVelocityDisplayTemplate" priority="4">
-		<property name="custom.properties" value="freemarker.engine.restricted.variables=$${line.separator}velocity.engine.restricted.variables=" />
+		<property name="custom.properties" value="freemarker.engine.restricted.variables=${line.separator}velocity.engine.restricted.variables=" />
 
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />

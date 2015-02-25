@@ -1,6 +1,6 @@
 <definition component-name="portal-upgrades">
 	<property name="testray.main.component.name" value="Upgrades" />
-	<property name="custom.properties" value="hibernate.cache.use_query_cache=true$${line.separator}hibernate.cache.use_second_level_cache=true" />
+	<property name="custom.properties" value="hibernate.cache.use_query_cache=true${line.separator}hibernate.cache.use_second_level_cache=true" />
 	<property name="portlet.plugins.includes" value="chat-portlet,test-blob-portlet,test-cache-configuration-portlet,test-clp-portlet,test-dependency-able-portlet,test-dependency-baker-portlet,test-dependency-charlie-portlet,test-dependency-dog-portlet,test-dependency-easy-portlet,test-dependency-fox-portlet,test-event-portlet,test-hook-portlet,test-http-client-portlet,test-jsr-286-plt-26-6-portlet,test-kaleo-portlet,test-localized-portlet,test-log-portlet,test-misc-portlet,test-opensocial-pubsub-portlet,test-pacl-portlet,test-resources-importer-portlet,test-transaction-portlet,test-user-attributes-portlet" />
 	<property name="web.plugins.includes" value="kaleo-web,resources-importer-web" />
 

@@ -973,14 +973,16 @@ public class JavaClass {
 					 !line.startsWith(_indent + "implements") &&
 					 !BaseSourceProcessor.isExcludedFile(
 						 _javaTermAccessLevelModifierExclusionFiles,
-						 _absolutePath, lineCount)) {
+						 _absolutePath)) {
 
 				Matcher matcher = _classPattern.matcher(_content);
 
 				if (matcher.find()) {
 					String insideClass = _content.substring(matcher.end());
 
-					if (insideClass.contains(line)) {
+					if (insideClass.contains(line) &&
+						!isEnumType(line, matcher.group(4))) {
+
 						BaseSourceProcessor.processErrorMessage(
 							_fileName,
 							"Missing access level modifier: " + _fileName +
@@ -1185,6 +1187,16 @@ public class JavaClass {
 		}
 	}
 
+	protected boolean isEnumType(String line, String javaClassType) {
+		if (!javaClassType.equals("enum")) {
+			return false;
+		}
+
+		Matcher matcher = _enumTypePattern.matcher(line + "\n");
+
+		return matcher.find();
+	}
+
 	protected boolean isFinalableField(
 		JavaTerm javaTerm, String javaTermClassName, Pattern pattern,
 		boolean checkOuterClass) {
@@ -1323,7 +1335,10 @@ public class JavaClass {
 	private String _absolutePath;
 	private Pattern _camelCasePattern = Pattern.compile("([a-z])([A-Z0-9])");
 	private Pattern _classPattern = Pattern.compile(
-		"(private |protected |public )(static )*class ([\\s\\S]*?) \\{\n");
+		"(private|protected|public) ((abstract|static) )*" +
+			"(class|enum|interface) ([\\s\\S]*?) \\{\n");
+	private Pattern _enumTypePattern = Pattern.compile(
+		"\t[A-Z0-9]+[ _,;\\(\n]");
 	private int _constructorCount = 0;
 	private String _content;
 	private File _file;

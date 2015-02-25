@@ -46,7 +46,7 @@ public abstract class BasePortletToolbarContributorLocator
 
 		if (ListUtil.isEmpty(portletToolbarContributors)) {
 			portletToolbarContributors = _serviceTrackerMap.getService(
-				portletId);
+				portletId.concat(StringPool.PERIOD).concat(StringPool.STAR));
 		}
 
 		return portletToolbarContributors;

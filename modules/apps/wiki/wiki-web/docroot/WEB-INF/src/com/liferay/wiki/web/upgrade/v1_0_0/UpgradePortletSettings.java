@@ -17,8 +17,8 @@ package com.liferay.wiki.web.upgrade.v1_0_0;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.settings.WikiGroupServiceSettings;
 import com.liferay.wiki.settings.WikiPortletInstanceSettings;
-import com.liferay.wiki.settings.WikiSettings;
 
 /**
  * @author Iván Zaera
@@ -31,7 +31,7 @@ public class UpgradePortletSettings
 		upgradeMainPortlet(
 			WikiPortletKeys.WIKI, WikiConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-			WikiPortletInstanceSettings.class, WikiSettings.class);
+			WikiPortletInstanceSettings.class, WikiGroupServiceSettings.class);
 	}
 
 }

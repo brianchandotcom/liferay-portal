@@ -16,7 +16,7 @@ package com.liferay.wiki.upgrade.v1_0_0;
 
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.settings.WikiSettings;
+import com.liferay.wiki.settings.WikiGroupServiceSettings;
 
 /**
  * @author Iván Zaera
@@ -28,7 +28,7 @@ public class UpgradePortletSettings
 	protected void doUpgrade() throws Exception {
 		upgradeDisplayPortlet(
 			WikiPortletKeys.WIKI_DISPLAY, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-			WikiSettings.class);
+			WikiGroupServiceSettings.class);
 	}
 
 }

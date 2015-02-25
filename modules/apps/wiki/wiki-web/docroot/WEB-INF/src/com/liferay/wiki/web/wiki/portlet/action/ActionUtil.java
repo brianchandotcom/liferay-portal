@@ -30,7 +30,7 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.wiki.configuration.WikiConfiguration;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -77,7 +77,7 @@ public class ActionUtil {
 
 		PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
 			wikiPortletIntanceSettingsProvider =
-				wikiWebSettingsProvider.getWikiPortletIntanceSettingsProvider();
+				wikiWebSettingsProvider.getWikiPortletInstanceSettingsProvider();
 
 		WikiPortletInstanceSettings wikiPortletInstanceSettings =
 			wikiPortletIntanceSettingsProvider.getPortletInstanceSettings(
@@ -155,11 +155,11 @@ public class ActionUtil {
 		WikiWebSettingsProvider wikiWebSettingsProvider =
 			WikiWebSettingsProvider.getWikiWebSettingsProvider();
 
-		WikiConfiguration wikiConfiguration =
-			wikiWebSettingsProvider.getWikiConfiguration();
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
+			wikiWebSettingsProvider.getWikiGroupServiceConfiguration();
 
 		WikiPage page = WikiPageLocalServiceUtil.fetchPage(
-			nodeId, wikiConfiguration.frontPageName(), 0);
+			nodeId, wikiGroupServiceConfiguration.frontPageName(), 0);
 
 		if (page == null) {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -183,7 +183,7 @@ public class ActionUtil {
 
 				page = WikiPageLocalServiceUtil.addPage(
 					themeDisplay.getDefaultUserId(), nodeId,
-					wikiConfiguration.frontPageName(), null,
+					wikiGroupServiceConfiguration.frontPageName(), null,
 					WikiPageConstants.NEW, true, serviceContext);
 			}
 			finally {
@@ -258,11 +258,11 @@ public class ActionUtil {
 		WikiWebSettingsProvider wikiWebSettingsProvider =
 			WikiWebSettingsProvider.getWikiWebSettingsProvider();
 
-		WikiConfiguration wikiConfiguration =
-			wikiWebSettingsProvider.getWikiConfiguration();
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
+			wikiWebSettingsProvider.getWikiGroupServiceConfiguration();
 
 		if (Validator.isNull(title)) {
-			title = wikiConfiguration.frontPageName();
+			title = wikiGroupServiceConfiguration.frontPageName();
 		}
 
 		WikiPage page = null;
@@ -285,7 +285,7 @@ public class ActionUtil {
 			}
 		}
 		catch (NoSuchPageException nspe) {
-			if (title.equals(wikiConfiguration.frontPageName()) &&
+			if (title.equals(wikiGroupServiceConfiguration.frontPageName()) &&
 				(version == 0)) {
 
 				page = getFirstVisiblePage(nodeId, portletRequest);

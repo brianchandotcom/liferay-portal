@@ -67,34 +67,38 @@ public abstract class BasePermissionTestCase {
 
 	protected void addPortletModelViewPermission() throws Exception {
 		RoleTestUtil.addResourcePermission(
-			RoleConstants.GUEST, getResourceName(),
-			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
-			ActionKeys.VIEW);
+			getRoleName(), getResourceName(), ResourceConstants.SCOPE_GROUP,
+			getPrimKey(), ActionKeys.VIEW);
 
 		Role role = RoleLocalServiceUtil.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+			TestPropsValues.getCompanyId(), getRoleName());
 
 		ResourcePermissionLocalServiceUtil.setResourcePermissions(
 			group.getCompanyId(), getResourceName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(group.getGroupId()), role.getRoleId(),
-			new String[] {ActionKeys.VIEW});
+			ResourceConstants.SCOPE_INDIVIDUAL, getPrimKey(), role.getRoleId(),
+			new String[]{ActionKeys.VIEW});
 	}
 
 	protected abstract void doSetUp() throws Exception;
 
+	protected String getPrimKey() {
+		return String.valueOf(group.getGroupId());
+	}
+
 	protected abstract String getResourceName();
+
+	protected String getRoleName() {
+		return RoleConstants.GUEST;
+	}
 
 	protected void removePortletModelViewPermission() throws Exception {
 		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, getResourceName(),
-			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
-			ActionKeys.VIEW);
+			getRoleName(), getResourceName(), ResourceConstants.SCOPE_GROUP,
+			getPrimKey(), ActionKeys.VIEW);
 
 		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, getResourceName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(group.getGroupId()), ActionKeys.VIEW);
+			getRoleName(), getResourceName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, getPrimKey(), ActionKeys.VIEW);
 	}
 
 	@DeleteAfterTestRun

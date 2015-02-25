@@ -467,6 +467,8 @@ public class JournalPortlet extends MVCPortlet {
 		if (SessionErrors.contains(
 				renderRequest, NoSuchArticleException.class.getName()) ||
 			SessionErrors.contains(
+				renderRequest, NoSuchFeedException.class.getName()) ||
+			SessionErrors.contains(
 				renderRequest, NoSuchStructureException.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest, NoSuchTemplateException.class.getName()) ||
@@ -531,6 +533,12 @@ public class JournalPortlet extends MVCPortlet {
 			cause instanceof AssetTagException ||
 			cause instanceof DuplicateArticleIdException ||
 			cause instanceof DuplicateFileException ||
+			cause instanceof DuplicateFeedIdException ||
+			cause instanceof FeedContentFieldException ||
+			cause instanceof FeedIdException ||
+			cause instanceof FeedNameException ||
+			cause instanceof FeedTargetLayoutFriendlyUrlException ||
+			cause instanceof FeedTargetPortletIdException ||
 			cause instanceof FileSizeException ||
 			cause instanceof LiferayFileItemException ||
 			cause instanceof LocaleException ||
@@ -654,52 +662,6 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalPortlet.class);
-
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		if (Validator.isNull(cmd)) {
-			return;
-		}
-
-		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateFeed(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteFeeds(actionRequest);
-			}
-
-			sendRedirect(actionRequest, actionResponse);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFeedException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.journal.error");
-			}
-			else if (e instanceof DuplicateFeedIdException ||
-					 e instanceof FeedContentFieldException ||
-					 e instanceof FeedIdException ||
-					 e instanceof FeedNameException ||
-					 e instanceof FeedTargetLayoutFriendlyUrlException ||
-					 e instanceof FeedTargetPortletIdException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
-		}
-	}
 
 	public void addFeed(
 			ActionRequest actionRequest, ActionResponse actionResponse)

@@ -26,8 +26,8 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.blogs.BlogsGroupServiceSettings;
 import com.liferay.portlet.blogs.BlogsPortletInstanceSettings;
 import com.liferay.portlet.blogs.util.BlogsConstants;
+import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.util.DLConstants;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.util.MBConstants;
@@ -143,7 +143,7 @@ public class UpgradePortletSettings extends UpgradeProcess {
 		upgradeMainPortlet(
 			PortletKeys.DOCUMENT_LIBRARY, DLConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, DLPortletInstanceSettings.class,
-			DLSettings.class);
+			DLGroupServiceSettings.class);
 		upgradeMainPortlet(
 			PortletKeys.MESSAGE_BOARDS, MBConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, null,
@@ -156,10 +156,10 @@ public class UpgradePortletSettings extends UpgradeProcess {
 
 		upgradeDisplayPortlet(
 			PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, DLSettings.class);
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, DLGroupServiceSettings.class);
 		upgradeDisplayPortlet(
 			PortletKeys.MEDIA_GALLERY_DISPLAY,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, DLSettings.class);
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, DLGroupServiceSettings.class);
 	}
 
 	protected long getGroupId(long plid) throws Exception {

@@ -166,7 +166,6 @@
 	<classpathentry kind="lib" path="lib/portal/ehcache.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ehcache-jgroupsreplication.jar"/>
 	<classpathentry kind="lib" path="lib/portal/fastutil.jar"/>
-	<classpathentry kind="lib" path="lib/portal/felix-fileinstall.jar"/>
 	<classpathentry kind="lib" path="lib/portal/fontbox.jar"/>
 	<classpathentry kind="lib" path="lib/portal/freshcookies-security.jar"/>
 	<classpathentry kind="lib" path="lib/portal/gif89.jar"/>

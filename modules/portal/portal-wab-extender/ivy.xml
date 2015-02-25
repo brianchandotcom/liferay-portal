@@ -25,7 +25,6 @@
 		<dependency name="org.apache.aries.jmx.core.whiteboard" org="org.apache.aries.jmx" rev="1.1.1" transitive="false" />
 		<dependency name="org.apache.aries.util" org="org.apache.aries" rev="1.0.0" transitive="false" />
 		<dependency name="org.apache.felix.bundlerepository" org="org.apache.felix" rev="2.0.2" transitive="false" />
-		<dependency name="org.apache.felix.configadmin" org="org.apache.felix" rev="1.8.0" transitive="false" />
 		<dependency name="org.apache.felix.eventadmin" org="org.apache.felix" rev="1.4.2" transitive="false" />
 		<dependency name="org.apache.felix.gogo.command" org="org.apache.felix" rev="0.12.0" transitive="false" />
 		<dependency name="org.apache.felix.gogo.runtime" org="org.apache.felix" rev="0.10.0" transitive="false" />

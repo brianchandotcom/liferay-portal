@@ -399,7 +399,6 @@
 				<classpath mode="compile">lib/portal/ehcache.jar</classpath>
 				<classpath mode="compile">lib/portal/ehcache-jgroupsreplication.jar</classpath>
 				<classpath mode="compile">lib/portal/fastutil.jar</classpath>
-				<classpath mode="compile">lib/portal/felix-fileinstall.jar</classpath>
 				<classpath mode="compile">lib/portal/fontbox.jar</classpath>
 				<classpath mode="compile">lib/portal/freshcookies-security.jar</classpath>
 				<classpath mode="compile">lib/portal/gif89.jar</classpath>

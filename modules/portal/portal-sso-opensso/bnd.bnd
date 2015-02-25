@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal OpenSSO SSO
+Bundle-SymbolicName: com.liferay.portal.sso.opensso
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+
+-metatype: *

@@ -23,6 +23,28 @@ import java.io.Serializable;
  */
 public class ClusterNodeResponse implements Serializable {
 
+	public static ClusterNodeResponse createExceptionClusterNodeResponse(
+		ClusterNode clusterNode, ClusterMessageType clusterMessageType,
+		String uuid, Exception exception) {
+
+		return new ClusterNodeResponse(
+			clusterNode, clusterMessageType, uuid, null, exception);
+	}
+
+	public static ClusterNodeResponse createResultClusterNodeResponse(
+		ClusterNode clusterNode, ClusterMessageType clusterMessageType,
+		String uuid, Object result) {
+
+		if ((result != null) && !(result instanceof Serializable)) {
+			return new ClusterNodeResponse(
+				clusterNode, clusterMessageType, uuid, null,
+				new ClusterException("Return value is not serializable"));
+		}
+
+		return new ClusterNodeResponse(
+			clusterNode, clusterMessageType, uuid, result, null);
+	}
+
 	public ClusterMessageType getClusterMessageType() {
 		return _clusterMessageType;
 	}
@@ -56,63 +78,24 @@ public class ClusterNodeResponse implements Serializable {
 		}
 	}
 
-	public boolean isMulticast() {
-		return _multicast;
-	}
-
-	public void setClusterMessageType(ClusterMessageType clusterMessageType) {
-		_clusterMessageType = clusterMessageType;
-	}
-
-	public void setClusterNode(ClusterNode clusterNode) {
-		_clusterNode = clusterNode;
-	}
-
-	public void setException(Exception exception) {
-		_exception = exception;
-	}
-
-	public void setMulticast(boolean multicast) {
-		_multicast = multicast;
-	}
-
-	public void setResult(Object result) {
-		_result = result;
-	}
-
-	public void setUuid(String uuid) {
-		_uuid = uuid;
-	}
-
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{clusterMessageType=");
 		sb.append(_clusterMessageType);
 
-		boolean clusterMessageTypeNotifyOrUpdate = false;
-
 		if (_clusterMessageType.equals(ClusterMessageType.NOTIFY) ||
 			_clusterMessageType.equals(ClusterMessageType.UPDATE)) {
 
-			clusterMessageTypeNotifyOrUpdate = true;
-		}
-
-		if (clusterMessageTypeNotifyOrUpdate) {
 			sb.append(", clusterNode=");
 			sb.append(_clusterNode);
 		}
-
-		if (!clusterMessageTypeNotifyOrUpdate && hasException()) {
+		else if (hasException()) {
 			sb.append(", exception=");
 			sb.append(_exception);
 		}
-
-		sb.append(", multicast=");
-		sb.append(_multicast);
-
-		if (!clusterMessageTypeNotifyOrUpdate && !hasException()) {
+		else {
 			sb.append(", result=");
 			sb.append(_result);
 		}
@@ -124,11 +107,21 @@ public class ClusterNodeResponse implements Serializable {
 		return sb.toString();
 	}
 
-	private ClusterMessageType _clusterMessageType;
-	private ClusterNode _clusterNode;
-	private Exception _exception;
-	private boolean _multicast;
-	private Object _result;
-	private String _uuid;
+	private ClusterNodeResponse(
+		ClusterNode clusterNode, ClusterMessageType clusterMessageType,
+		String uuid, Object result, Exception exception) {
+
+		_clusterNode = clusterNode;
+		_clusterMessageType = clusterMessageType;
+		_uuid = uuid;
+		_result = result;
+		_exception = exception;
+	}
+
+	private final ClusterMessageType _clusterMessageType;
+	private final ClusterNode _clusterNode;
+	private final Exception _exception;
+	private final Object _result;
+	private final String _uuid;
 
 }

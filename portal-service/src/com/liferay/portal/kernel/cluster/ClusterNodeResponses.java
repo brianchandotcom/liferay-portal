@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.cluster;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
+
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -26,20 +29,25 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class ClusterNodeResponses implements Serializable {
 
-	public static final ClusterNodeResponses EMPTY_CLUSTER_NODE_RESPONSES =
-		new ClusterNodeResponses();
-
-	public void addClusterResponse(ClusterNodeResponse clusterNodeResponse) {
-		ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
-
-		_clusterResponsesByClusterNode.put(
-			clusterNode.getClusterNodeId(), clusterNodeResponse);
-
-		_clusterResponsesQueue.offer(clusterNodeResponse);
+	public ClusterNodeResponses(Set<String> expectedReplyNodeIds) {
+		_expectedReplyNodeIds = new ConcurrentHashSet<>(expectedReplyNodeIds);
 	}
 
-	public ClusterNodeResponse getClusterResponse(ClusterNode clusterNode) {
-		return getClusterResponse(clusterNode.getClusterNodeId());
+	public boolean addClusterResponse(ClusterNodeResponse clusterNodeResponse) {
+		ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
+
+		String clusterNodeId = clusterNode.getClusterNodeId();
+
+		if (_expectedReplyNodeIds.remove(clusterNodeId)) {
+			_clusterResponsesByClusterNode.put(
+				clusterNodeId, clusterNodeResponse);
+
+			_clusterResponsesQueue.offer(clusterNodeResponse);
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public ClusterNodeResponse getClusterResponse(String clusterNodeId) {
@@ -55,8 +63,9 @@ public class ClusterNodeResponses implements Serializable {
 	}
 
 	private final Map<String, ClusterNodeResponse>
-		_clusterResponsesByClusterNode = new HashMap<>();
+		_clusterResponsesByClusterNode = new ConcurrentHashMap<>();
 	private final BlockingQueue<ClusterNodeResponse> _clusterResponsesQueue =
 		new LinkedBlockingQueue<>();
+	private final Set<String> _expectedReplyNodeIds;
 
 }

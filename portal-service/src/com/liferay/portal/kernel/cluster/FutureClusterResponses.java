@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.cluster;
 
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutionException;
@@ -31,7 +30,7 @@ public class FutureClusterResponses
 	extends DefaultNoticeableFuture<ClusterNodeResponses> {
 
 	public FutureClusterResponses(Set<String> clusterNodeIds) {
-		_clusterNodeResponses = new ClusterNodeResponses();
+		_clusterNodeResponses = new ClusterNodeResponses(clusterNodeIds);
 
 		int size = clusterNodeIds.size();
 
@@ -40,21 +39,20 @@ public class FutureClusterResponses
 		}
 
 		_counter = new AtomicInteger(size);
-		_expectedReplyNodeIds = new HashSet<>(clusterNodeIds);
-}
-
-	public void addClusterNodeResponse(
-		ClusterNodeResponse clusterNodeResponse) {
-
-		_clusterNodeResponses.addClusterResponse(clusterNodeResponse);
-
-		if (_counter.decrementAndGet() == 0) {
-			set(_clusterNodeResponses);
-		}
 	}
 
-	public boolean expectsReply(String clusterNodeId) {
-		return _expectedReplyNodeIds.contains(clusterNodeId);
+	public boolean addClusterNodeResponse(
+		ClusterNodeResponse clusterNodeResponse) {
+
+		if (_clusterNodeResponses.addClusterResponse(clusterNodeResponse)) {
+			if (_counter.decrementAndGet() == 0) {
+				set(_clusterNodeResponses);
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -85,6 +83,5 @@ public class FutureClusterResponses
 
 	private final ClusterNodeResponses _clusterNodeResponses;
 	private final AtomicInteger _counter;
-	private final Set<String> _expectedReplyNodeIds;
 
 }

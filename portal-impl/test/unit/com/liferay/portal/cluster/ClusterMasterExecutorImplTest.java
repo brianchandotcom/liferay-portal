@@ -650,28 +650,18 @@ public class ClusterMasterExecutorImplTest {
 				new FutureClusterResponses(clusterNodeIds);
 
 			for (String clusterNodeId : clusterNodeIds) {
-				ClusterNodeResponse clusterNodeResponse =
-					new ClusterNodeResponse();
-
-				clusterNodeResponse.setClusterMessageType(
-					ClusterMessageType.EXECUTE);
-				clusterNodeResponse.setMulticast(clusterRequest.isMulticast());
-				clusterNodeResponse.setUuid(clusterRequest.getUuid());
-				clusterNodeResponse.setClusterNode(
-					_clusterNodes.get(clusterNodeId));
+				MethodHandler methodHandler = clusterRequest.getMethodHandler();
 
 				try {
-					MethodHandler methodHandler =
-						clusterRequest.getMethodHandler();
-
-					clusterNodeResponse.setResult(methodHandler.invoke());
+					futureClusterResponses.addClusterNodeResponse(
+						ClusterNodeResponse.createResultClusterNodeResponse(
+							_clusterNodes.get(clusterNodeId),
+							ClusterMessageType.EXECUTE,
+							clusterRequest.getUuid(), methodHandler.invoke()));
 				}
 				catch (Exception e) {
 					throw new RuntimeException(e);
 				}
-
-				futureClusterResponses.addClusterNodeResponse(
-					clusterNodeResponse);
 			}
 
 			return futureClusterResponses;

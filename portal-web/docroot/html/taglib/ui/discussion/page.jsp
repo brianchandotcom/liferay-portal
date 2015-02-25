@@ -76,7 +76,7 @@ int messagesCount = messages.size();
 						</div>
 
 						<%
-						String taglibPostReplyURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "postReplyForm0');";
+						String taglibPostReplyURL = "javascript:" + randomNamespace + "showEl('" + randomNamespace + "postReplyForm0');";
 						%>
 
 						<c:if test="<%= messagesCount == 1 %>">
@@ -270,14 +270,8 @@ int messagesCount = messages.size();
 				<portlet:namespace />sendMessage(form);
 			}
 
-			function <%= randomNamespace %>hideDiscussionMessage(messageId) {
-				document.getElementById(messageId).style.display = 'none';
-			}
-
-			function <%= randomNamespace %>hideForm(rowId) {
-				var form = AUI.$('#' + rowId);
-
-				form.css('display', 'none');
+			function <%= randomNamespace %>hideEl(elId) {
+				AUI.$('#' + elId).css('display', 'none');
 			}
 
 			function <%= randomNamespace %>hideEditor(editorName, formId) {
@@ -285,7 +279,7 @@ int messagesCount = messages.size();
 					window[editorName].dispose();
 				}
 
-				<%= randomNamespace %>hideForm(formId);
+				<%= randomNamespace %>hideEl(formId);
 			}
 
 			function <portlet:namespace />onMessagePosted(response, refreshPage) {
@@ -398,8 +392,8 @@ int messagesCount = messages.size();
 				);
 			}
 
-			function <%= randomNamespace %>showDiscussionMessage(messageId) {
-				document.getElementById(messageId).style.display = 'block';
+			function <%= randomNamespace %>showEl(elId) {
+				AUI.$('#' + elId).css('display', '');
 			}
 
 			function <%= randomNamespace %>showEditor(editorName, formId) {
@@ -409,13 +403,7 @@ int messagesCount = messages.size();
 
 				Liferay.Util.toggleDisabled('#' + editorName.replace('Body', 'Button'), (html === ''));
 
-				<%= randomNamespace %>showForm(formId);
-			}
-
-			function <%= randomNamespace %>showForm(rowId) {
-				var form = AUI.$('#' + rowId);
-
-				form.css('display', 'block');
+				<%= randomNamespace %>showEl(formId);
 			}
 
 			function <portlet:namespace />showStatusMessage(type, message) {

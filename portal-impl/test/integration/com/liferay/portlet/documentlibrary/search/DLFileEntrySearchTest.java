@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -197,8 +196,6 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		DDMFormValues ddmFormValues =
 			FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
 
-		DLAppTestUtil.populateNotificationsServiceContext(
-			serviceContext, Constants.ADD);
 		DLAppTestUtil.populateServiceContext(
 			serviceContext, dlFileEntryType.getFileEntryTypeId());
 

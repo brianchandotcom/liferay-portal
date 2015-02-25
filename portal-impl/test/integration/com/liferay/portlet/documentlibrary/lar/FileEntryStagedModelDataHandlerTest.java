@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
@@ -87,9 +86,6 @@ public class FileEntryStagedModelDataHandlerTest
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				stagingGroup.getGroupId(), TestPropsValues.getUserId());
-
-		DLAppTestUtil.populateNotificationsServiceContext(
-			serviceContext, Constants.ADD);
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
@@ -216,8 +212,6 @@ public class FileEntryStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		DLAppTestUtil.populateNotificationsServiceContext(
-			serviceContext, Constants.ADD);
 		DLAppTestUtil.populateServiceContext(
 			serviceContext, dlFileEntryType.getFileEntryTypeId());
 

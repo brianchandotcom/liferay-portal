@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -67,7 +66,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
@@ -117,9 +115,6 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_stagingGroup.getGroupId(), TestPropsValues.getUserId());
-
-		DLAppTestUtil.populateNotificationsServiceContext(
-			serviceContext, Constants.ADD);
 
 		_fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),

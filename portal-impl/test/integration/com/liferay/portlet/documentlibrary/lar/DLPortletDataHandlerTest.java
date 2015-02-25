@@ -170,7 +170,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), repository.getRepositoryId(),
 			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString().getBytes(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
 			serviceContext);
 	}
 
@@ -203,7 +203,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString().getBytes(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
 			serviceContext);
 
 		DLAppLocalServiceUtil.addFileShortcut(

@@ -238,7 +238,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 			TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString().getBytes(), serviceContext);
+			RandomTestUtil.randomBytes(), serviceContext);
 
 		User user = UserTestUtil.getAdminUser(fileEntry.getCompanyId());
 

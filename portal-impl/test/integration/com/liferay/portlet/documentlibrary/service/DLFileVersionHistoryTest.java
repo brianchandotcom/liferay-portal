@@ -104,7 +104,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		return DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), group.getGroupId(), folderId,
 			sourceFileName, ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString().getBytes(), serviceContext);
+			RandomTestUtil.randomBytes(), serviceContext);
 	}
 
 	protected void assertFileEntryTitle(String fileName)

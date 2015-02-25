@@ -85,7 +85,7 @@ public class RepositoryStagedModelDataHandlerTest
 
 		RepositoryEntry repositoryEntry =
 			RepositoryEntryLocalServiceUtil.addRepositoryEntry(
-				TestPropsValues.getUserId(),group.getGroupId(),
+				TestPropsValues.getUserId(), group.getGroupId(),
 				_repository.getRepositoryId(), RandomTestUtil.randomString(),
 				serviceContext);
 

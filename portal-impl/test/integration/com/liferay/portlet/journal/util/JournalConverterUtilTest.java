@@ -340,7 +340,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		FileEntry fileEntry =  DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1.txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString().getBytes(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
 			serviceContext);
 
 		Field documentLibraryField = getDocumentLibraryField(

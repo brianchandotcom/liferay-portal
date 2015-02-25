@@ -83,7 +83,7 @@ public class DLFileEntryPermissionTest extends BasePermissionTestCase {
 		return DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), group.getGroupId(), folderId,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString().getBytes(), serviceContext);
+			RandomTestUtil.randomBytes(), serviceContext);
 	}
 
 	@Override

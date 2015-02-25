@@ -138,7 +138,7 @@ public class DLFileShortcutLocalServiceTreeTest {
 		return DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), folderId,
 			sourceFileName, ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString().getBytes(), serviceContext);
+			RandomTestUtil.randomBytes(), serviceContext);
 	}
 
 	protected void createTree() throws Exception {

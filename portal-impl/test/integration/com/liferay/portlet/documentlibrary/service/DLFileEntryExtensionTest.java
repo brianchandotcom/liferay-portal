@@ -483,7 +483,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 			TestPropsValues.getUserId(), group.getGroupId(),
 			parentFolder.getFolderId(), sourceFileName, ContentTypes.TEXT_PLAIN,
 			title, StringPool.BLANK, StringPool.BLANK,
-			RandomTestUtil.randomString().getBytes(), serviceContext);
+			RandomTestUtil.randomBytes(), serviceContext);
 	}
 
 	protected void doTestAddFileEntryBasic(

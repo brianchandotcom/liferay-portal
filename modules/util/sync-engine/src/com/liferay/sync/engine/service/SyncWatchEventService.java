@@ -58,6 +58,10 @@ public class SyncWatchEventService {
 			SyncWatchEvent syncWatchEvent =
 				SyncWatchEventService.fetchSyncWatchEvent(syncWatchEventId);
 
+			if (syncWatchEvent == null) {
+				return;
+			}
+
 			SyncWatchEvent lastSyncWatchEvent = _lastSyncWatchEvents.get(
 				syncWatchEvent.getSyncAccountId());
 
@@ -103,10 +107,55 @@ public class SyncWatchEventService {
 		}
 	}
 
+	public static SyncWatchEvent fetchSyncWatchEvent(
+		String eventType, String filePathName, long timestamp) {
+
+		try {
+			return _syncWatchEventPersistence.fetchByE_F_T(
+				eventType, filePathName, timestamp);
+		}
+		catch (SQLException sqle) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(sqle.getMessage(), sqle);
+			}
+
+			return null;
+		}
+	}
+
+	public static List<SyncWatchEvent> findAll() {
+		try {
+			return _syncWatchEventPersistence.queryForAll();
+		}
+		catch (SQLException sqle) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(sqle.getMessage(), sqle);
+			}
+
+			return Collections.emptyList();
+		}
+	}
+
 	public static List<SyncWatchEvent> findBySyncAccountId(long syncAccountId) {
 		try {
 			return _syncWatchEventPersistence.findBySyncAccountId(
 				syncAccountId);
+		}
+		catch (SQLException sqle) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(sqle.getMessage(), sqle);
+			}
+
+			return Collections.emptyList();
+		}
+	}
+
+	public static List<SyncWatchEvent> findBySyncAccountId(
+		long syncAccountId, String orderByColumn, boolean ascending) {
+
+		try {
+			return _syncWatchEventPersistence.findBySyncAccountId(
+				syncAccountId, orderByColumn, ascending);
 		}
 		catch (SQLException sqle) {
 			if (_logger.isDebugEnabled()) {

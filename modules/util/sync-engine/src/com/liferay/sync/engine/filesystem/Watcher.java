@@ -292,7 +292,7 @@ public abstract class Watcher implements Runnable {
 			SyncSite syncSite = SyncSiteService.fetchSyncSite(
 				missingFilePath.toString(), syncAccount.getSyncAccountId());
 
-			if (syncSite != null) {
+			if ((syncSite != null) && Files.notExists(missingFilePath)) {
 				syncSite.setActive(false);
 				syncSite.setUiEvent(SyncSite.UI_EVENT_SYNC_SITE_FOLDER_MISSING);
 
@@ -328,6 +328,10 @@ public abstract class Watcher implements Runnable {
 			}
 		}
 		else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_DELETE)) {
+			if (Files.exists(filePath)) {
+				return;
+			}
+
 			processMissingFilePath(filePath);
 
 			if (Files.notExists(filePath.getParent())) {
@@ -352,7 +356,9 @@ public abstract class Watcher implements Runnable {
 				SyncWatchEvent.EVENT_TYPE_RENAME_FROM, filePath);
 		}
 		else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_RENAME_TO)) {
-			if (isIgnoredFilePath(filePath)) {
+			if (_downloadedFilePathNames.remove(filePath.toString()) ||
+				isIgnoredFilePath(filePath)) {
+
 				return;
 			}
 

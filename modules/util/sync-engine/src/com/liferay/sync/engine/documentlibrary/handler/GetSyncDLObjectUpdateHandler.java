@@ -106,7 +106,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		else {
 			SyncFileService.update(syncFile);
 
-			downloadFile(syncFile, null, false);
+			downloadFile(syncFile, null, 0, false);
 		}
 	}
 
@@ -169,7 +169,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 	}
 
 	protected void downloadFile(
-		SyncFile syncFile, String sourceVersion, boolean patch) {
+		SyncFile syncFile, String sourceVersion, long sourceVersionId,
+		boolean patch) {
 
 		String targetVersion = syncFile.getVersion();
 
@@ -178,7 +179,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			(Double.valueOf(sourceVersion) < Double.valueOf(targetVersion))) {
 
 			FileEventUtil.downloadPatch(
-				sourceVersion, getSyncAccountId(), syncFile, targetVersion);
+				sourceVersionId, getSyncAccountId(), syncFile,
+				syncFile.getVersionId());
 		}
 		else {
 			FileEventUtil.downloadFile(getSyncAccountId(), syncFile);
@@ -220,7 +222,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				targetFilePath, String.valueOf(sourceSyncFile.getSyncFileId()));
 		}
 		else {
-			downloadFile(sourceSyncFile, null, false);
+			downloadFile(sourceSyncFile, null, 0, false);
 		}
 
 		sourceSyncFile.setModifiedTime(targetSyncFile.getModifiedTime());
@@ -370,6 +372,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		throws Exception {
 
 		String sourceVersion = sourceSyncFile.getVersion();
+		long sourceVersionId = sourceSyncFile.getVersionId();
 
 		boolean filePathChanged = processFilePathChange(
 			sourceSyncFile, targetSyncFile);
@@ -387,6 +390,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		sourceSyncFile.setSize(targetSyncFile.getSize());
 		sourceSyncFile.setUiEvent(SyncFile.UI_EVENT_UPDATED_REMOTE);
 		sourceSyncFile.setVersion(targetSyncFile.getVersion());
+		sourceSyncFile.setVersionId(targetSyncFile.getVersionId());
 
 		SyncFileService.update(sourceSyncFile);
 
@@ -407,14 +411,14 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 					String.valueOf(sourceSyncFile.getSyncFileId()));
 			}
 			else {
-				downloadFile(sourceSyncFile, null, false);
+				downloadFile(sourceSyncFile, null, 0, false);
 			}
 		}
 		else if (targetSyncFile.isFile() &&
 				 FileUtil.isModified(targetSyncFile, filePath)) {
 
 			downloadFile(
-				sourceSyncFile, sourceVersion,
+				sourceSyncFile, sourceVersion, sourceVersionId,
 				!IODeltaUtil.isIgnoredFilePatchingExtension(targetSyncFile));
 		}
 		else {

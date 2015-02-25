@@ -40,12 +40,19 @@ public class UpgradeProcess_2_0_6 extends UpgradeProcess {
 
 	@Override
 	public void upgrade() throws Exception {
+		SyncFilePersistence syncFilePersistence =
+			SyncFileService.getSyncFilePersistence();
+
+		syncFilePersistence.executeRaw(
+			"ALTER TABLE `SyncFile` ADD COLUMN versionId LONG BEFORE state;");
+
+		syncFilePersistence.executeRaw(
+			"ALTER TABLE `SyncWatchEvent` ADD COLUMN previousFilePathName" +
+				" VARCHAR(16777216) BEFORE syncAccountId;");
+
 		if (OSDetector.isWindows()) {
 			return;
 		}
-
-		SyncFilePersistence syncFilePersistence =
-			SyncFileService.getSyncFilePersistence();
 
 		List<SyncFile> syncFiles = syncFilePersistence.queryForAll();
 
@@ -57,10 +64,6 @@ public class UpgradeProcess_2_0_6 extends UpgradeProcess {
 					filePath, String.valueOf(syncFile.getSyncFileId()));
 			}
 		}
-
-		syncFilePersistence.updateRaw(
-			"ALTER TABLE `SyncWatchEvent` ADD COLUMN previousFilePathName" +
-				" VARCHAR(16777216);");
 	}
 
 }

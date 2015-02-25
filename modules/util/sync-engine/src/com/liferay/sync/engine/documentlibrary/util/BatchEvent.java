@@ -203,7 +203,9 @@ public class BatchEvent {
 			}
 		}
 		finally {
-			_zipOutputStream.closeEntry();
+			if (_zipOutputStream != null) {
+				_zipOutputStream.closeEntry();
+			}
 
 			StreamUtil.cleanUp(inputStream);
 		}

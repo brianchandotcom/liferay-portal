@@ -157,7 +157,7 @@ public class CharPool {
 
 	public static final char QUOTE = '\"';
 
-	public static final char RAQUO = '\u00bb'; // '�'
+	public static final char RAQUO = '\u00bb';
 
 	public static final char RETURN = '\r';
 

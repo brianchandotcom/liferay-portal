@@ -41,7 +41,7 @@ public class FutureClusterResponses
 
 		_counter = new AtomicInteger(size);
 		_expectedReplyNodeIds = new HashSet<>(clusterNodeIds);
-}
+	}
 
 	public void addClusterNodeResponse(
 		ClusterNodeResponse clusterNodeResponse) {

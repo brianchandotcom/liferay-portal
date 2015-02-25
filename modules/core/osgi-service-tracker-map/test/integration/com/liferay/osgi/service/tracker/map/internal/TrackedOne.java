@@ -19,7 +19,8 @@ package com.liferay.osgi.service.tracker.map.internal;
  */
 public class TrackedOne {
 
-	public TrackedOne() {}
+	public TrackedOne() {
+	}
 
 	public TrackedOne(String key) {
 		_key = key;

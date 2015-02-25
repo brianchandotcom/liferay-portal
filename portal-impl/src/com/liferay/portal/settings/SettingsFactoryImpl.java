@@ -197,6 +197,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
 	public SettingsDescriptor<?> getSettingsDescriptor(String settingsId) {
+		settingsId = PortletConstants.getRootPortletId(settingsId);
+
 		return _settingsDescriptors.get(settingsId);
 	}
 

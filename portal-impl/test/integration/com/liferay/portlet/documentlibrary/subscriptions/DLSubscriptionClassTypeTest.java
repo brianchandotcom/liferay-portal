@@ -64,8 +64,9 @@ public class DLSubscriptionClassTypeTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		DLAppTestUtil.populateServiceContext(
-			serviceContext, Constants.ADD, classTypeId, true);
+		DLAppTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
+		DLAppTestUtil.populateServiceContext(serviceContext, classTypeId);
 
 		FileEntry fileEntry =  DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId,

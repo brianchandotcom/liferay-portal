@@ -1241,8 +1241,9 @@ public class DLFileEntryFinderTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), userId);
 
-		DLAppTestUtil.populateServiceContext(
-			serviceContext, Constants.ADD, fileEntryTypeId, true);
+		DLAppTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
+		DLAppTestUtil.populateServiceContext(serviceContext, fileEntryTypeId);
 
 		return DLAppLocalServiceUtil.addFileEntry(
 			userId, repositoryId, folderId, fileName, contentType,

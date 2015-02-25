@@ -23,14 +23,14 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
+			<var name="portletName" value="Hello World" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page1" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="Blogs" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="Hello World" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />

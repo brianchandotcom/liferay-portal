@@ -30,6 +30,6 @@ public class TrackedOne {
 		return _key;
 	}
 
-	private final String _key;
+	private String _key;
 
 }

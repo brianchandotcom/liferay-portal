@@ -253,7 +253,13 @@ public class SAXReaderUtil {
 
 		StackTraceElement[] stackTraceElements = e.getStackTrace();
 
-		StackTraceElement stackTraceElement = stackTraceElements[3];
+		StackTraceElement stackTraceElement = stackTraceElements[2];
+
+		if (!stackTraceElement.getMethodName().startsWith("read")) {
+			return false;
+		}
+
+		stackTraceElement = stackTraceElements[3];
 
 		sb.append(stackTraceElement.getClassName());
 		sb.append(StringPool.POUND);

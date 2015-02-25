@@ -101,11 +101,32 @@ public class JournalPortlet extends MVCPortlet {
 		updateArticle(actionRequest, actionResponse);
 	}
 
+	public void addFeed(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		updateFeed(actionRequest, actionResponse);
+	}
+
 	public void deleteArticles(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		doDeleteArticles(actionRequest, actionResponse, false);
+	}
+
+	public void deleteFeeds(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		String[] deleteFeedIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "deleteFeedIds"));
+
+		for (int i = 0; i < deleteFeedIds.length; i++) {
+			JournalFeedServiceUtil.deleteFeed(groupId, deleteFeedIds[i]);
+		}
 	}
 
 	public void expireArticles(
@@ -413,6 +434,66 @@ public class JournalPortlet extends MVCPortlet {
 			actionRequest, actionResponse, article, oldUrlTitle);
 	}
 
+	public void updateFeed(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String actionName = ParamUtil.getString(
+			actionRequest, ActionRequest.ACTION_NAME);
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		String feedId = ParamUtil.getString(actionRequest, "feedId");
+		boolean autoFeedId = ParamUtil.getBoolean(actionRequest, "autoFeedId");
+
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
+		String ddmStructureKey = ParamUtil.getString(
+			actionRequest, "ddmStructureKey");
+		String ddmTemplateKey = ParamUtil.getString(
+			actionRequest, "ddmTemplateKey");
+		String ddmRendererTemplateKey = ParamUtil.getString(
+			actionRequest, "ddmRendererTemplateKey");
+		int delta = ParamUtil.getInteger(actionRequest, "delta");
+		String orderByCol = ParamUtil.getString(actionRequest, "orderByCol");
+		String orderByType = ParamUtil.getString(actionRequest, "orderByType");
+		String targetLayoutFriendlyUrl = ParamUtil.getString(
+			actionRequest, "targetLayoutFriendlyUrl");
+		String targetPortletId = ParamUtil.getString(
+			actionRequest, "targetPortletId");
+		String contentField = ParamUtil.getString(
+			actionRequest, "contentField");
+		String feedType = ParamUtil.getString(
+			actionRequest, "feedType", RSSUtil.FEED_TYPE_DEFAULT);
+
+		String feedFormat = RSSUtil.getFeedTypeFormat(feedType);
+		double feedVersion = RSSUtil.getFeedTypeVersion(feedType);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			JournalFeed.class.getName(), actionRequest);
+
+		if (actionName.equals("addFeed")) {
+
+			// Add feed
+
+			JournalFeedServiceUtil.addFeed(
+				groupId, feedId, autoFeedId, name, description, ddmStructureKey,
+				ddmTemplateKey, ddmRendererTemplateKey, delta, orderByCol,
+				orderByType, targetLayoutFriendlyUrl, targetPortletId,
+				contentField, feedFormat, feedVersion, serviceContext);
+		}
+		else {
+
+			// Update feed
+
+			JournalFeedServiceUtil.updateFeed(
+				groupId, feedId, name, description, ddmStructureKey,
+				ddmTemplateKey, ddmRendererTemplateKey, delta, orderByCol,
+				orderByType, targetLayoutFriendlyUrl, targetPortletId,
+				contentField, feedFormat, feedVersion, serviceContext);
+		}
+	}
+
 	protected void doDeleteArticles(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			boolean moveToTrash)
@@ -662,86 +743,5 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalPortlet.class);
-
-	public void addFeed(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		updateFeed(actionRequest, actionResponse);
-	}
-
-	public void deleteFeeds(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-		String[] deleteFeedIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "deleteFeedIds"));
-
-		for (int i = 0; i < deleteFeedIds.length; i++) {
-			JournalFeedServiceUtil.deleteFeed(groupId, deleteFeedIds[i]);
-		}
-	}
-
-	public void updateFeed(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String actionName = ParamUtil.getString(
-			actionRequest, ActionRequest.ACTION_NAME);
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-		String feedId = ParamUtil.getString(actionRequest, "feedId");
-		boolean autoFeedId = ParamUtil.getBoolean(actionRequest, "autoFeedId");
-
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-		String ddmStructureKey = ParamUtil.getString(
-			actionRequest, "ddmStructureKey");
-		String ddmTemplateKey = ParamUtil.getString(
-			actionRequest, "ddmTemplateKey");
-		String ddmRendererTemplateKey = ParamUtil.getString(
-			actionRequest, "ddmRendererTemplateKey");
-		int delta = ParamUtil.getInteger(actionRequest, "delta");
-		String orderByCol = ParamUtil.getString(actionRequest, "orderByCol");
-		String orderByType = ParamUtil.getString(actionRequest, "orderByType");
-		String targetLayoutFriendlyUrl = ParamUtil.getString(
-			actionRequest, "targetLayoutFriendlyUrl");
-		String targetPortletId = ParamUtil.getString(
-			actionRequest, "targetPortletId");
-		String contentField = ParamUtil.getString(
-			actionRequest, "contentField");
-		String feedType = ParamUtil.getString(
-			actionRequest, "feedType", RSSUtil.FEED_TYPE_DEFAULT);
-
-		String feedFormat = RSSUtil.getFeedTypeFormat(feedType);
-		double feedVersion = RSSUtil.getFeedTypeVersion(feedType);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			JournalFeed.class.getName(), actionRequest);
-
-		if (actionName.equals("addFeed")) {
-
-			// Add feed
-
-			JournalFeedServiceUtil.addFeed(
-				groupId, feedId, autoFeedId, name, description, ddmStructureKey,
-				ddmTemplateKey, ddmRendererTemplateKey, delta, orderByCol,
-				orderByType, targetLayoutFriendlyUrl, targetPortletId,
-				contentField, feedFormat, feedVersion, serviceContext);
-		}
-		else {
-
-			// Update feed
-
-			JournalFeedServiceUtil.updateFeed(
-				groupId, feedId, name, description, ddmStructureKey,
-				ddmTemplateKey, ddmRendererTemplateKey, delta, orderByCol,
-				orderByType, targetLayoutFriendlyUrl, targetPortletId,
-				contentField, feedFormat, feedVersion, serviceContext);
-		}
-	}
 
 }

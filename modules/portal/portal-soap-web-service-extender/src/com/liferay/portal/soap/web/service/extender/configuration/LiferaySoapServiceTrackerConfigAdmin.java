@@ -64,21 +64,21 @@ public class LiferaySoapServiceTrackerConfigAdmin {
 
 		_component.setImplementation(liferaySoapServiceTracker);
 
-		String[] enabledExtensions =
-			_liferaySoapServiceTrackerConfiguration.enabledExtensions();
+		String[] extensions =
+			_liferaySoapServiceTrackerConfiguration.extensions();
 
-		if (enabledExtensions != null) {
-			for (String enabledExtensionName : enabledExtensions) {
-				ServiceDependency extensionServiceDependency =
+		if (extensions != null) {
+			for (String extension : extensions) {
+				ServiceDependency serviceDependency =
 					dependencyManager.createServiceDependency();
 
-				extensionServiceDependency.setCallbacks(
+				serviceDependency.setCallbacks(
 					extensionManager, "addExtension", "removeExtension");
-				extensionServiceDependency.setService(
-					Object.class, _createExtensionFilter(enabledExtensionName));
-				extensionServiceDependency.setRequired(true);
+				serviceDependency.setService(
+					Object.class, _createExtensionFilter(extension));
+				serviceDependency.setRequired(true);
 
-				_component.add(extensionServiceDependency);
+				_component.add(serviceDependency);
 			}
 		}
 

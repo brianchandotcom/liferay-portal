@@ -44,6 +44,13 @@
 				base: PATH_JAVASCRIPT + '/liferay/',
 				combine: COMBINE,
 				modules: {
+					'liferay-alloy-editor': {
+						path: 'alloyeditor.js',
+						requires: [
+							'alloy-editor',
+							'aui-base'
+						]
+					},
 					'liferay-app-view-move': {
 						path: 'app_view_move.js',
 						plugins: {

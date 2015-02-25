@@ -9,6 +9,8 @@ AUI.add(
 
 		var STR_BLANK = '';
 
+		var STR_HOST = 'host';
+
 		var STR_UNDERSCORE = '_';
 
 		var TPL_IMAGE_CONTAINER = '<div class="uploading-image-container"></div>';
@@ -18,10 +20,6 @@ AUI.add(
 		var BlogsUploader = A.Component.create(
 			{
 				ATTRS: {
-					editor: {
-						validator: Lang.isObject
-					},
-
 					strings: {
 						validator: Lang.isObject,
 						value: {
@@ -50,15 +48,20 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance._editor = instance.get('editor');
+						var host = instance.get(STR_HOST);
+
+						var editor = host.getNativeEditor();
 
 						var uploader = instance._getUploader();
 
 						instance._eventHandles = [
+							editor.on('imagedrop', instance._uploadImage, instance),
 							uploader.on('uploadcomplete', instance._onUploadComplete, instance),
 							uploader.on('uploaderror', instance._onUploadError, instance),
 							uploader.on('uploadprogress', instance._onUploadProgress, instance)
 						];
+
+						instance._editor = editor;
 					},
 
 					destructor: function() {
@@ -73,33 +76,6 @@ AUI.add(
 						}
 
 						(new A.EventHandle(instance._eventHandles)).detach();
-					},
-
-					uploadImage: function(image, file) {
-						var instance = this;
-
-						image = A.one(image);
-
-						var randomId = Lang.now() + STR_UNDERSCORE + Liferay.Util.randomInt();
-
-						image.attr('data-random-id', randomId);
-
-						image.addClass(CSS_UPLOADING_IMAGE);
-
-						file = new A.FileHTML5(file);
-
-						file.progressbar = instance._createProgressBar(image);
-
-						var uploader = instance._getUploader();
-
-						uploader.set(
-							'postVarsPerFile',
-							{
-								'randomId': randomId
-							}
-						);
-
-						uploader.upload(file);
 					},
 
 					_createProgressBar: function(image) {
@@ -227,12 +203,42 @@ AUI.add(
 						var alert = instance._getAlert();
 
 						alert.set('bodyContent', strings.uploadingFileError).show();
+					},
+
+					_uploadImage: function(event) {
+						var instance = this;
+
+						var image = event.data.el.$;
+						var file = event.data.file;
+
+						image = A.one(image);
+
+						var randomId = Lang.now() + STR_UNDERSCORE + Liferay.Util.randomInt();
+
+						image.attr('data-random-id', randomId);
+
+						image.addClass(CSS_UPLOADING_IMAGE);
+
+						file = new A.FileHTML5(file);
+
+						file.progressbar = instance._createProgressBar(image);
+
+						var uploader = instance._getUploader();
+
+						uploader.set(
+							'postVarsPerFile',
+							{
+								'randomId': randomId
+							}
+						);
+
+						uploader.upload(file);
 					}
 				}
 			}
 		);
 
-		Liferay.BlogsUploader = BlogsUploader;
+		A.Plugin.LiferayBlogsUploader = BlogsUploader;
 	},
 	'',
 	{

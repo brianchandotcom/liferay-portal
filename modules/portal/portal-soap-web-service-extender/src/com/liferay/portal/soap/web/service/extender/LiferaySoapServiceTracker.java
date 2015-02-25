@@ -141,7 +141,7 @@ public class LiferaySoapServiceTracker {
 
 	private Bus _createBus() {
 		CXFBusFactory busFactory = (CXFBusFactory)CXFBusFactory.newInstance(
-			"org.apache.cxf.bus.CXFBusFactory");
+			CXFBusFactory.class.getName());
 
 		return busFactory.createBus(_extensionManager.getExtensions());
 	}

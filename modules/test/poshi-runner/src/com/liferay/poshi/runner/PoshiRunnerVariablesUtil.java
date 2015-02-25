@@ -40,6 +40,10 @@ public class PoshiRunnerVariablesUtil {
 		return _commandMap.get(replaceCommandVars(key));
 	}
 
+	public static String getValueFromExecuteMap(String key) {
+		return _executeMap.get(replaceCommandVars(key));
+	}
+
 	public static void popCommandMap() {
 		_commandMap = _commandMapStack.pop();
 
@@ -65,8 +69,22 @@ public class PoshiRunnerVariablesUtil {
 	public static String replaceCommandVars(String token) {
 		Matcher matcher = _pattern.matcher(token);
 
-		while (matcher.find()) {
+		while (matcher.find() && _commandMap.containsKey(matcher.group(1))) {
 			String varValue = getValueFromCommandMap(matcher.group(1));
+
+			varValue = Matcher.quoteReplacement(varValue);
+
+			token = StringUtil.replace(token, matcher.group(), varValue);
+		}
+
+		return token;
+	}
+
+	public static String replaceExecuteVars(String token) {
+		Matcher matcher = _pattern.matcher(token);
+
+		while (matcher.find() && _executeMap.containsKey(matcher.group(1))) {
+			String varValue = getValueFromExecuteMap(matcher.group(1));
 
 			varValue = Matcher.quoteReplacement(varValue);
 

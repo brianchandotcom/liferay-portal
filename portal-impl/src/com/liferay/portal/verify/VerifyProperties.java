@@ -623,14 +623,16 @@ public class VerifyProperties extends VerifyProcess {
 			"logout.on.session.expiration", "com.liferay.portal.sso.opensso"
 		},
 		new String[] {
-			"open.sso.logout.url", "logout.url", "com.liferay.portal.sso.opensso"
+			"open.sso.logout.url", "logout.url",
+			"com.liferay.portal.sso.opensso"
 		},
 		new String[] {
 			"open.sso.screen.name.attr", "screen.name.attr",
 			"com.liferay.portal.sso.opensso"
 		},
 		new String[] {
-			"open.sso.service.url", "service.url", "com.liferay.portal.sso.opensso"
+			"open.sso.service.url", "service.url",
+			"com.liferay.portal.sso.opensso"
 		},
 
 		// Polls

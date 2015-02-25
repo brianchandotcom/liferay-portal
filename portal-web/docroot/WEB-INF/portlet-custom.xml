@@ -569,21 +569,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>103</portlet-name>
-		<display-name>Tags Compiler</display-name>
-		<portlet-class>com.liferay.portal.kernel.portlet.LiferayPortlet</portlet-class>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<portlet-info>
-			<title>Tags Compiler</title>
-			<short-title>Tags Compiler</short-title>
-			<keywords>Tags Compiler</keywords>
-		</portlet-info>
-		<supported-public-render-parameter>tags</supported-public-render-parameter>
-	</portlet>
-	<portlet>
 		<portlet-name>107</portlet-name>
 		<display-name>Page Comments</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

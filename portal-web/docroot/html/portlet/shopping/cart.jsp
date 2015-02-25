@@ -83,11 +83,11 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		%>
 
 		if (form.fm('<%= Constants.CMD %>').val() == '<%= Constants.CHECKOUT %>') {
-			if (subtotal < <%= shoppingSettings.getMinOrder() %>) {
+			if (subtotal < <%= shoppingGroupServiceSettings.getMinOrder() %>) {
 				form.fm('<%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
 				form.fm('redirect').val('<%= currentURL %>');
 
-				alert('<%= UnicodeLanguageUtil.format(request, "your-order-cannot-be-processed-because-it-falls-below-the-minimum-required-amount-of-x", currencyFormat.format(shoppingSettings.getMinOrder()), false) %>');
+				alert('<%= UnicodeLanguageUtil.format(request, "your-order-cannot-be-processed-because-it-falls-below-the-minimum-required-amount-of-x", currencyFormat.format(shoppingGroupServiceSettings.getMinOrder()), false) %>');
 
 				return;
 			}
@@ -427,14 +427,14 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		</c:if>
 
 		<c:choose>
-			<c:when test="<%= !shoppingSettings.useAlternativeShipping() %>">
+			<c:when test="<%= !shoppingGroupServiceSettings.useAlternativeShipping() %>">
 				<aui:input name="shipping" type="resource" value="<%= currencyFormat.format(ShoppingUtil.calculateShipping(items)) %>" />
 			</c:when>
 			<c:otherwise>
 				<aui:select label="shipping" name="alternativeShipping">
 
 					<%
-					String[][] alternativeShipping = shoppingSettings.getAlternativeShipping();
+					String[][] alternativeShipping = shoppingGroupServiceSettings.getAlternativeShipping();
 
 					for (int i = 0; i < 10; i++) {
 						String altShippingName = alternativeShipping[0][i];
@@ -479,9 +479,9 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	</aui:fieldset>
 
 	<%
-	String[] ccTypes = shoppingSettings.getCcTypes();
+	String[] ccTypes = shoppingGroupServiceSettings.getCcTypes();
 
-	if (shoppingSettings.usePayPal()) {
+	if (shoppingGroupServiceSettings.usePayPal()) {
 	%>
 
 		<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="paypal" />" src="<%= themeDisplay.getPathThemeImages() %>/shopping/cc_paypal.png" />
@@ -490,7 +490,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 
 	<%
 	}
-	else if (!shoppingSettings.usePayPal() && (ccTypes.length > 0)) {
+	else if (!shoppingGroupServiceSettings.usePayPal() && (ccTypes.length > 0)) {
 		for (int i = 0; i < ccTypes.length; i++) {
 	%>
 

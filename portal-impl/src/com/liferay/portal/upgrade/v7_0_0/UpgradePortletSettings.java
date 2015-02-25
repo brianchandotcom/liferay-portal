@@ -31,7 +31,7 @@ import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.util.DLConstants;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.util.MBConstants;
-import com.liferay.portlet.shopping.ShoppingSettings;
+import com.liferay.portlet.shopping.ShoppingGroupServiceSettings;
 import com.liferay.portlet.shopping.util.ShoppingConstants;
 
 import java.sql.Connection;
@@ -150,7 +150,8 @@ public class UpgradePortletSettings extends UpgradeProcess {
 			MBGroupServiceSettings.class);
 		upgradeMainPortlet(
 			PortletKeys.SHOPPING, ShoppingConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, null, ShoppingSettings.class);
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, null,
+			ShoppingGroupServiceSettings.class);
 
 		// Display portlets
 

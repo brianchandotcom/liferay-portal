@@ -16,6 +16,7 @@ package com.liferay.portlet.shopping;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
+import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
@@ -38,7 +39,7 @@ import java.util.TreeSet;
  * @author Eduardo Garcia
  */
 @Settings.Config(settingsIds = ShoppingConstants.SERVICE_NAME)
-public class ShoppingSettings {
+public class ShoppingGroupServiceSettings implements GroupServiceSettings {
 
 	public static final String CC_NONE = "none";
 
@@ -87,16 +88,16 @@ public class ShoppingSettings {
 		}
 	}
 
-	public static ShoppingSettings getInstance(long groupId)
+	public static ShoppingGroupServiceSettings getInstance(long groupId)
 		throws PortalException {
 
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			groupId, ShoppingConstants.SERVICE_NAME);
 
-		return new ShoppingSettings(settings);
+		return new ShoppingGroupServiceSettings(settings);
 	}
 
-	public static ShoppingSettings getInstance(
+	public static ShoppingGroupServiceSettings getInstance(
 			long groupId, Map<String, String[]> parameterMap)
 		throws PortalException {
 
@@ -106,10 +107,10 @@ public class ShoppingSettings {
 		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
 			parameterMap, settings);
 
-		return new ShoppingSettings(parameterMapSettings);
+		return new ShoppingGroupServiceSettings(parameterMapSettings);
 	}
 
-	public ShoppingSettings(Settings settings) {
+	public ShoppingGroupServiceSettings(Settings settings) {
 		_typedSettings = new TypedSettings(settings);
 	}
 
@@ -330,7 +331,7 @@ public class ShoppingSettings {
 
 	static {
 		SettingsFactoryUtil.registerSettingsMetadata(
-			ShoppingSettings.class, null, _getFallbackKeys());
+			ShoppingGroupServiceSettings.class, null, _getFallbackKeys());
 	}
 
 	private final TypedSettings _typedSettings;

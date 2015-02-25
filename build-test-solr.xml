@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-solr" basedir="." xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-common.xml" />
+
+	<target name="prepare-solr-web-properties">
+		<if>
+			<available file="${lp.plugins.dir}/shared/solr4-shared/src/solr.properties" />
+			<then>
+				<echo file="${lp.plugins.dir}/webs/solr4-web/docroot/WEB-INF/src/solr-ext.properties">server.http.url=http://localhost:8983/solr</echo>
+			</then>
+			<else>
+				<replace
+					file="${lp.plugins.dir}/webs/solr4-web/docroot/WEB-INF/src/META-INF/solr-spring.xml"
+					token="property name=&quot;url&quot; value=&quot;http://localhost:8080/solr&quot;"
+					value="property name=&quot;url&quot; value=&quot;http://localhost:8983/solr&quot;"
+				/>
+			</else>
+		</if>
+	</target>
+</project>

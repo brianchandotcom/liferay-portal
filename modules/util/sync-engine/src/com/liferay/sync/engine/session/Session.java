@@ -123,7 +123,6 @@ public class Session {
 
 		builder.setConnectTimeout(PropsValues.SYNC_HTTP_CONNECTION_TIMEOUT);
 		builder.setSocketTimeout(PropsValues.SYNC_HTTP_SOCKET_TIMEOUT);
-		builder.setStaleConnectionCheckEnabled(false);
 
 		httpClientBuilder.setDefaultRequestConfig(builder.build());
 

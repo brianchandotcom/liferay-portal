@@ -31,6 +31,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.concurrent.Executors;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -95,6 +97,12 @@ public abstract class BaseTestCase {
 			SyncEngine.isRunning()
 		).thenReturn(
 			true
+		);
+
+		Mockito.when(
+			SyncEngine.getExecutorService()
+		).thenReturn(
+			Executors.newCachedThreadPool()
 		);
 	}
 

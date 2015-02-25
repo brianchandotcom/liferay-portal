@@ -176,9 +176,7 @@ public class JPathWatcher extends Watcher {
 						_logger.trace("Unregistered file path {}", filePath);
 					}
 
-					if (Files.notExists(filePath)) {
-						processMissingFilePath(filePath);
-					}
+					processMissingFilePath(filePath);
 
 					if (_filePaths.isEmpty()) {
 						break;

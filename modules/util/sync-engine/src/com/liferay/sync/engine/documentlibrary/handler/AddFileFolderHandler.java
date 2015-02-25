@@ -80,6 +80,7 @@ public class AddFileFolderHandler extends BaseJSONHandler {
 		localSyncFile.setTypeUuid(remoteSyncFile.getTypeUuid());
 		localSyncFile.setUiEvent(SyncFile.UI_EVENT_UPLOADED);
 		localSyncFile.setVersion(remoteSyncFile.getVersion());
+		localSyncFile.setVersionId(remoteSyncFile.getVersionId());
 
 		SyncFileService.update(localSyncFile);
 	}

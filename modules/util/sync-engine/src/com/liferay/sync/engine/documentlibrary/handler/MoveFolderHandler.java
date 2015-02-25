@@ -40,6 +40,8 @@ public class MoveFolderHandler extends BaseJSONHandler {
 			response, new TypeReference<SyncFile>() {});
 
 		localSyncFile.setModifiedTime(remoteSyncFile.getModifiedTime());
+		localSyncFile.setState(SyncFile.STATE_SYNCED);
+		localSyncFile.setUiEvent(SyncFile.UI_EVENT_UPLOADED);
 
 		SyncFileService.update(localSyncFile);
 	}

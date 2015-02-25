@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.service;
 
+import com.liferay.sync.engine.SyncEngine;
 import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.model.ModelListener;
 import com.liferay.sync.engine.model.SyncFile;
@@ -32,6 +33,8 @@ import java.sql.SQLException;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -177,23 +180,14 @@ public class SyncFileService {
 		deleteSyncFile(syncFile, true);
 	}
 
-	public static void deleteSyncFile(SyncFile syncFile, boolean notify) {
+	public static void deleteSyncFile(
+		final SyncFile syncFile, final boolean notify) {
+
 		try {
 
 			// Sync file
 
-			if (syncFile.isFile()) {
-				Path filePath = IODeltaUtil.getChecksumsFilePath(syncFile);
-
-				try {
-					Files.deleteIfExists(filePath);
-				}
-				catch (IOException ioe) {
-					_logger.error(ioe.getMessage(), ioe);
-				}
-			}
-
-			_syncFilePersistence.delete(syncFile, notify);
+			doDeleteSyncFile(syncFile, notify);
 
 			// Sync files
 
@@ -201,21 +195,24 @@ public class SyncFileService {
 				return;
 			}
 
-			List<SyncFile> childSyncFiles = findSyncFiles(
-				syncFile.getTypePK(), syncFile.getSyncAccountId());
+			Callable<Object> callable = new Callable<Object>() {
 
-			for (SyncFile childSyncFile : childSyncFiles) {
-				if (childSyncFile.isFolder()) {
-					deleteSyncFile(childSyncFile, notify);
-				}
-				else {
-					if (notify) {
-						childSyncFile.setUiEvent(syncFile.getUiEvent());
+				@Override
+				public Object call() throws Exception {
+					List<SyncFile> syncFiles =
+						_syncFilePersistence.findByParentFilePathName(
+							syncFile.getFilePathName());
+
+					for (SyncFile syncFile : syncFiles) {
+						doDeleteSyncFile(syncFile, notify);
 					}
 
-					deleteSyncFile(childSyncFile, notify);
+					return null;
 				}
-			}
+
+			};
+
+			_syncFilePersistence.callBatchTasks(callable);
 		}
 		catch (SQLException sqle) {
 			if (_logger.isDebugEnabled()) {
@@ -314,7 +311,7 @@ public class SyncFileService {
 		String filePathName, long localSyncTime) {
 
 		try {
-			return _syncFilePersistence.findByF_L(filePathName, localSyncTime);
+			return _syncFilePersistence.findByPF_L(filePathName, localSyncTime);
 		}
 		catch (SQLException sqle) {
 			if (_logger.isDebugEnabled()) {
@@ -455,7 +452,7 @@ public class SyncFileService {
 
 		String name = _getName(filePath, syncFile);
 		String sourceFileName = syncFile.getName();
-		String sourceVersion = syncFile.getVersion();
+		long sourceVersionId = syncFile.getVersionId();
 
 		syncFile.setFilePathName(filePath.toString());
 		syncFile.setName(name);
@@ -469,7 +466,7 @@ public class SyncFileService {
 
 			FileEventUtil.updateFile(
 				filePath, syncAccountId, syncFile, null, name,
-				syncFile.getChecksum(), sourceFileName, sourceVersion,
+				syncFile.getChecksum(), sourceFileName, sourceVersionId,
 				syncFile.getChecksum());
 		}
 
@@ -568,7 +565,7 @@ public class SyncFileService {
 		String name = _getName(filePath, syncFile);
 		String sourceChecksum = syncFile.getChecksum();
 		String sourceFileName = syncFile.getName();
-		String sourceVersion = syncFile.getVersion();
+		long sourceVersionId = syncFile.getVersionId();
 		String targetChecksum = FileUtil.getChecksum(filePath);
 
 		if (!FileUtil.checksumsEqual(sourceChecksum, targetChecksum) &&
@@ -597,7 +594,8 @@ public class SyncFileService {
 
 			FileEventUtil.updateFile(
 				filePath, syncAccountId, syncFile, deltaFilePath, name,
-				sourceChecksum, sourceFileName, sourceVersion, targetChecksum);
+				sourceChecksum, sourceFileName, sourceVersionId,
+				targetChecksum);
 		}
 
 		return syncFile;
@@ -656,6 +654,34 @@ public class SyncFileService {
 		}
 
 		return syncFile;
+	}
+
+	protected static void doDeleteSyncFile(SyncFile syncFile, boolean notify)
+		throws SQLException {
+
+		if (syncFile.isFile()) {
+			final Path filePath = IODeltaUtil.getChecksumsFilePath(syncFile);
+
+			Runnable runnable = new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						Files.deleteIfExists(filePath);
+					}
+					catch (IOException ioe) {
+						_logger.error(ioe.getMessage(), ioe);
+					}
+				}
+
+			};
+
+			ExecutorService executorService = SyncEngine.getExecutorService();
+
+			executorService.execute(runnable);
+		}
+
+		_syncFilePersistence.delete(syncFile, notify);
 	}
 
 	private static String _getName(Path filePath, SyncFile syncFile) {

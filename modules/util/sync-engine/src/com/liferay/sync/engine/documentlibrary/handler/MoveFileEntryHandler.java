@@ -40,6 +40,8 @@ public class MoveFileEntryHandler extends BaseJSONHandler {
 		SyncFile localSyncFile = getLocalSyncFile();
 
 		localSyncFile.setModifiedTime(remoteSyncFile.getModifiedTime());
+		localSyncFile.setState(SyncFile.STATE_SYNCED);
+		localSyncFile.setUiEvent(SyncFile.UI_EVENT_UPLOADED);
 
 		SyncFileService.update(localSyncFile);
 	}

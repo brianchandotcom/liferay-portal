@@ -371,6 +371,27 @@ public class SearchEngineUtil {
 			new String[assetEntryClassNames.size()]);
 	}
 
+	public static String getQueryString(
+		SearchContext searchContext, Query query) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Search query " + query.toString());
+		}
+
+		SearchEngine searchEngine = getSearchEngine(
+			searchContext.getSearchEngineId());
+
+		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
+
+		try {
+			return indexSearcher.getQueryString(searchContext, query);
+		}
+		catch (ParseException e) {
+		}
+
+		return StringPool.BLANK;
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getSearchEngine(String)}
 	 */

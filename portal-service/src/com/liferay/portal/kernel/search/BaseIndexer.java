@@ -278,6 +278,13 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
+	public String getQueryString(SearchContext searchContext, Query query)
+		throws SearchException {
+
+		return SearchEngineUtil.getQueryString(searchContext, query);
+	}
+
+	@Override
 	public String[] getSearchClassNames() {
 		return new String[] {getClassName()};
 	}

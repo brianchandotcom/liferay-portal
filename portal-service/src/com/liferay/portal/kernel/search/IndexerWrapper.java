@@ -102,6 +102,13 @@ public class IndexerWrapper implements Indexer {
 	}
 
 	@Override
+	public String getQueryString(SearchContext searchContext, Query query)
+		throws SearchException {
+
+		return _indexer.getQueryString(searchContext, query);
+	}
+
+	@Override
 	public String[] getSearchClassNames() {
 		return _indexer.getSearchClassNames();
 	}

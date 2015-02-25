@@ -78,7 +78,7 @@ WikiNode node = (WikiNode)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) && (wikiSettings.isEmailPageAddedEnabled() || wikiSettings.isEmailPageUpdatedEnabled()) %>">
+	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) && (wikiGroupServiceSettings.isEmailPageAddedEnabled() || wikiGroupServiceSettings.isEmailPageUpdatedEnabled()) %>">
 		<c:choose>
 			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiNode.class.getName(), node.getNodeId()) %>">
 				<portlet:actionURL var="unsubscribeURL">

@@ -23,15 +23,15 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v7_0_0.util.PortletPreferencesRow;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.blogs.BlogsGroupServiceSettings;
 import com.liferay.portlet.blogs.BlogsPortletInstanceSettings;
-import com.liferay.portlet.blogs.BlogsSettings;
 import com.liferay.portlet.blogs.util.BlogsConstants;
+import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.util.DLConstants;
-import com.liferay.portlet.messageboards.MBSettings;
+import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.util.MBConstants;
-import com.liferay.portlet.shopping.ShoppingSettings;
+import com.liferay.portlet.shopping.ShoppingGroupServiceSettings;
 import com.liferay.portlet.shopping.util.ShoppingConstants;
 
 import java.sql.Connection;
@@ -138,26 +138,29 @@ public class UpgradePortletSettings extends UpgradeProcess {
 		upgradeMainPortlet(
 			PortletKeys.BLOGS, BlogsConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP,
-			BlogsPortletInstanceSettings.class, BlogsSettings.class);
+			BlogsPortletInstanceSettings.class,
+			BlogsGroupServiceSettings.class);
 		upgradeMainPortlet(
 			PortletKeys.DOCUMENT_LIBRARY, DLConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, DLPortletInstanceSettings.class,
-			DLSettings.class);
+			DLGroupServiceSettings.class);
 		upgradeMainPortlet(
 			PortletKeys.MESSAGE_BOARDS, MBConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, null, MBSettings.class);
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, null,
+			MBGroupServiceSettings.class);
 		upgradeMainPortlet(
 			PortletKeys.SHOPPING, ShoppingConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, null, ShoppingSettings.class);
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, null,
+			ShoppingGroupServiceSettings.class);
 
 		// Display portlets
 
 		upgradeDisplayPortlet(
 			PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, DLSettings.class);
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, DLGroupServiceSettings.class);
 		upgradeDisplayPortlet(
 			PortletKeys.MEDIA_GALLERY_DISPLAY,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, DLSettings.class);
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, DLGroupServiceSettings.class);
 	}
 
 	protected long getGroupId(long plid) throws Exception {

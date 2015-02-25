@@ -12,20 +12,23 @@
  * details.
  */
 
-package com.liferay.wiki.web.wiki.portlet.action;
+package com.liferay.bookmarks.web.portlet.action;
 
+import com.liferay.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
 /**
- * @author Bruno Farache
+ * @author Sergio González
  */
-public class WikiSettingsConfigurationAction
+public class BookmarksGroupServiceSettingsConfigurationAction
 	extends SettingsConfigurationAction {
 
 	@Override
@@ -34,16 +37,27 @@ public class WikiSettingsConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
-		validateDisplaySettings(actionRequest);
+		validateEmail(actionRequest, "emailMessageAdded");
+		validateEmail(actionRequest, "emailMessageUpdated");
+		validateEmailFrom(actionRequest);
+		validateRootFolder(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	protected void validateDisplaySettings(ActionRequest actionRequest) {
-		String visibleNodes = getParameter(actionRequest, "visibleNodes");
+	protected void validateRootFolder(ActionRequest actionRequest)
+		throws Exception {
 
-		if (Validator.isNull(visibleNodes)) {
-			SessionErrors.add(actionRequest, "visibleNodesCount");
+		long rootFolderId = GetterUtil.getLong(
+			getParameter(actionRequest, "rootFolderId"));
+
+		if (rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			try {
+				BookmarksFolderLocalServiceUtil.getFolder(rootFolderId);
+			}
+			catch (NoSuchFolderException nsfe) {
+				SessionErrors.add(actionRequest, "rootFolderIdInvalid");
+			}
 		}
 	}
 

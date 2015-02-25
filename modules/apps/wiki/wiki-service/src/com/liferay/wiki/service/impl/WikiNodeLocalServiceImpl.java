@@ -36,7 +36,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.wiki.configuration.WikiConfiguration;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.DuplicateNodeNameException;
 import com.liferay.wiki.exception.NodeNameException;
@@ -68,8 +68,8 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		throws PortalException {
 
 		return addNode(
-			userId, _wikiConfiguration.initialNodeName(), StringPool.BLANK,
-			serviceContext);
+			userId, _wikiGroupServiceConfiguration.initialNodeName(),
+			StringPool.BLANK, serviceContext);
 	}
 
 	@Override
@@ -565,7 +565,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiNodeLocalServiceImpl.class);
 
-	@BeanReference(type = WikiConfiguration.class)
-	private WikiConfiguration _wikiConfiguration;
+	@BeanReference(type = WikiGroupServiceConfiguration.class)
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

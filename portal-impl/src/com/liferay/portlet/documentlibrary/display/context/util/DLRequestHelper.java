@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.DLSettings;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,6 +30,29 @@ public class DLRequestHelper extends BaseRequestHelper {
 
 	public DLRequestHelper(HttpServletRequest request) {
 		super(request);
+	}
+
+	public DLGroupServiceSettings getDLGroupServiceSettings() {
+		try {
+			if (_dlGroupServiceSettings == null) {
+				String portletId = getPortletId();
+
+				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+					_dlGroupServiceSettings =
+						DLGroupServiceSettings.getInstance(
+							getScopeGroupId(), getRequest().getParameterMap());
+				}
+				else {
+					_dlGroupServiceSettings =
+						DLGroupServiceSettings.getInstance(getScopeGroupId());
+				}
+			}
+
+			return _dlGroupServiceSettings;
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
 	}
 
 	public DLPortletInstanceSettings getDLPortletInstanceSettings() {
@@ -57,28 +80,7 @@ public class DLRequestHelper extends BaseRequestHelper {
 		}
 	}
 
-	public DLSettings getDLSettings() {
-		try {
-			if (_dlSettings == null) {
-				String portletId = getPortletId();
-
-				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-					_dlSettings = DLSettings.getInstance(
-						getScopeGroupId(), getRequest().getParameterMap());
-				}
-				else {
-					_dlSettings = DLSettings.getInstance(getScopeGroupId());
-				}
-			}
-
-			return _dlSettings;
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
-	}
-
+	private DLGroupServiceSettings _dlGroupServiceSettings;
 	private DLPortletInstanceSettings _dlPortletInstanceSettings;
-	private DLSettings _dlSettings;
 
 }

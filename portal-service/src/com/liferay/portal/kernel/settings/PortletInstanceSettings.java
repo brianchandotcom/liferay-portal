@@ -14,19 +14,8 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
-import java.util.Map;
-
 /**
  * @author Iván Zaera
  */
-public interface SettingsProvider<T> {
-
-	public T getGroupServiceSettings(long groupId) throws PortalException;
-
-	public T getGroupServiceSettings(
-			long groupId, Map<String, String[]> parameterMap)
-		throws PortalException;
-
+public interface PortletInstanceSettings {
 }

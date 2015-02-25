@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/bookmarks/init.jsp" %>
 
 <%
-bookmarksSettings = bookmarksSettingsProvider.getGroupServiceSettings(scopeGroupId, request.getParameterMap());
+bookmarksGroupServiceSettings = bookmarksGroupServiceSettingsProvider.getGroupServiceSettings(scopeGroupId, request.getParameterMap());
 
 try {
 	BookmarksFolder rootFolder = BookmarksFolderLocalServiceUtil.getFolder(rootFolderId);
@@ -63,33 +63,33 @@ catch (NoSuchFolderException nsfe) {
 
 		<liferay-ui:section>
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= bookmarksSettings.getEmailFromName() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= bookmarksGroupServiceSettings.getEmailFromName() %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= bookmarksSettings.getEmailFromAddress() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= bookmarksGroupServiceSettings.getEmailFromAddress() %>" />
 			</aui:fieldset>
 		</liferay-ui:section>
 
 		<%
-		Map<String, String> emailDefinitionTerms = BookmarksUtil.getEmailDefinitionTerms(renderRequest, bookmarksSettings.getEmailFromAddress(), bookmarksSettings.getEmailFromName());
+		Map<String, String> emailDefinitionTerms = BookmarksUtil.getEmailDefinitionTerms(renderRequest, bookmarksGroupServiceSettings.getEmailFromAddress(), bookmarksGroupServiceSettings.getEmailFromName());
 		%>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= bookmarksSettings.getEmailEntryAddedBodyXml() %>"
+				emailBody="<%= bookmarksGroupServiceSettings.getEmailEntryAddedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= bookmarksSettings.isEmailEntryAddedEnabled() %>"
+				emailEnabled="<%= bookmarksGroupServiceSettings.isEmailEntryAddedEnabled() %>"
 				emailParam="emailEntryAdded"
-				emailSubject="<%= bookmarksSettings.getEmailEntryAddedSubjectXml() %>"
+				emailSubject="<%= bookmarksGroupServiceSettings.getEmailEntryAddedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= bookmarksSettings.getEmailEntryUpdatedBodyXml() %>"
+				emailBody="<%= bookmarksGroupServiceSettings.getEmailEntryUpdatedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= bookmarksSettings.isEmailEntryUpdatedEnabled() %>"
+				emailEnabled="<%= bookmarksGroupServiceSettings.isEmailEntryUpdatedEnabled() %>"
 				emailParam="emailEntryUpdated"
-				emailSubject="<%= bookmarksSettings.getEmailEntryUpdatedSubjectXml() %>"
+				emailSubject="<%= bookmarksGroupServiceSettings.getEmailEntryUpdatedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 	</liferay-ui:tabs>

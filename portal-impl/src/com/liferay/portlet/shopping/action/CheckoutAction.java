@@ -47,7 +47,7 @@ import com.liferay.portlet.shopping.ShippingPhoneException;
 import com.liferay.portlet.shopping.ShippingStateException;
 import com.liferay.portlet.shopping.ShippingStreetException;
 import com.liferay.portlet.shopping.ShippingZipException;
-import com.liferay.portlet.shopping.ShoppingSettings;
+import com.liferay.portlet.shopping.ShoppingGroupServiceSettings;
 import com.liferay.portlet.shopping.model.ShoppingCart;
 import com.liferay.portlet.shopping.model.ShoppingOrder;
 import com.liferay.portlet.shopping.service.ShoppingOrderLocalServiceUtil;
@@ -160,20 +160,22 @@ public class CheckoutAction extends CartAction {
 
 		ShoppingCart cart = ShoppingUtil.getCart(actionRequest);
 
-		ShoppingSettings shoppingSettings = ShoppingSettings.getInstance(
-			themeDisplay.getScopeGroupId());
+		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
+			ShoppingGroupServiceSettings.getInstance(
+				themeDisplay.getScopeGroupId());
 
 		String returnURL = ShoppingUtil.getPayPalReturnURL(
 			((ActionResponseImpl)actionResponse).createActionURL(), order);
 		String notifyURL = ShoppingUtil.getPayPalNotifyURL(themeDisplay);
 
-		if (shoppingSettings.usePayPal()) {
+		if (shoppingGroupServiceSettings.usePayPal()) {
 			double total = ShoppingUtil.calculateTotal(
 				cart.getItems(), order.getBillingState(), cart.getCoupon(),
 				cart.getAltShipping(), cart.isInsure());
 
 			String redirectURL = ShoppingUtil.getPayPalRedirectURL(
-				shoppingSettings, order, total, returnURL, notifyURL);
+				shoppingGroupServiceSettings, order, total, returnURL,
+				notifyURL);
 
 			actionResponse.sendRedirect(redirectURL);
 		}

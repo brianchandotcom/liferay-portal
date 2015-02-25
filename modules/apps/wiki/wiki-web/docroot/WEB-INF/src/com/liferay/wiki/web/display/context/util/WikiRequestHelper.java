@@ -17,13 +17,14 @@ package com.liferay.wiki.web.display.context.util;
 import com.liferay.portal.kernel.display.context.util.BaseStrutsRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.settings.SettingsProvider;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsProvider;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.settings.WikiSettings;
-import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
+import com.liferay.wiki.settings.WikiGroupServiceSettings;
+import com.liferay.wiki.settings.WikiPortletInstanceSettings;
 import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +46,40 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 		return _categoryId;
 	}
 
+	public WikiGroupServiceSettings getWikiGroupServiceSettings() {
+		try {
+			if (_wikiGroupServiceSettings == null) {
+				String portletId = getPortletId();
+
+				WikiWebSettingsProvider wikiWebSettingsProvider =
+					WikiWebSettingsProvider.getWikiWebSettingsProvider();
+
+				GroupServiceSettingsProvider<WikiGroupServiceSettings>
+					wikiGroupServiceSettingsProvider =
+						wikiWebSettingsProvider.
+							getWikiGroupServiceSettingsProvider();
+
+				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+					_wikiGroupServiceSettings =
+						wikiGroupServiceSettingsProvider.
+							getGroupServiceSettings(
+								getSiteGroupId(),
+								getRequest().getParameterMap());
+				}
+				else {
+					_wikiGroupServiceSettings =
+						wikiGroupServiceSettingsProvider.
+							getGroupServiceSettings(getSiteGroupId());
+				}
+			}
+
+			return _wikiGroupServiceSettings;
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+	}
+
 	public WikiPage getWikiPage() {
 		if (_wikiPage == null) {
 			HttpServletRequest request = getRequest();
@@ -60,16 +95,26 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 			if (_wikiPortletInstanceSettings == null) {
 				String portletId = getPortletId();
 
+				WikiWebSettingsProvider wikiWebSettingsProvider =
+					WikiWebSettingsProvider.getWikiWebSettingsProvider();
+
+				PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
+					wikiPortletIntanceSettingsProvider =
+						wikiWebSettingsProvider.
+							getWikiPortletInstanceSettingsProvider();
+
 				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 					_wikiPortletInstanceSettings =
-						WikiPortletInstanceSettings.getInstance(
-							getLayout(), getResourcePortletId(),
-							getRequest().getParameterMap());
+						wikiPortletIntanceSettingsProvider.
+							getPortletInstanceSettings(
+								getLayout(), getResourcePortletId(),
+								getRequest().getParameterMap());
 				}
 				else {
 					_wikiPortletInstanceSettings =
-						WikiPortletInstanceSettings.getInstance(
-							getLayout(), getPortletId());
+						wikiPortletIntanceSettingsProvider.
+							getPortletInstanceSettings(
+								getLayout(), getPortletId());
 				}
 			}
 
@@ -80,39 +125,9 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 		}
 	}
 
-	public WikiSettings getWikiSettings() {
-		try {
-			if (_wikiSettings == null) {
-				String portletId = getPortletId();
-
-				WikiWebSettingsProvider wikiWebSettingsProvider =
-					WikiWebSettingsProvider.getWikiWebSettingsProvider();
-
-				SettingsProvider<WikiSettings> wikiSettingsProvider =
-					wikiWebSettingsProvider.getWikiSettingsProvider();
-
-				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-					_wikiSettings =
-						wikiSettingsProvider.getGroupServiceSettings(
-							getSiteGroupId(), getRequest().getParameterMap());
-				}
-				else {
-					_wikiSettings =
-						wikiSettingsProvider.getGroupServiceSettings(
-							getSiteGroupId());
-				}
-			}
-
-			return _wikiSettings;
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
-	}
-
 	private Long _categoryId;
+	private WikiGroupServiceSettings _wikiGroupServiceSettings;
 	private WikiPage _wikiPage;
 	private WikiPortletInstanceSettings _wikiPortletInstanceSettings;
-	private WikiSettings _wikiSettings;
 
 }

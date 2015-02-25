@@ -16,6 +16,7 @@ package com.liferay.bookmarks.settings;
 
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
@@ -24,9 +25,9 @@ import com.liferay.portal.kernel.settings.TypedSettings;
  * @author Iván Zaera
  */
 @Settings.Config(settingsIds = BookmarksConstants.SERVICE_NAME)
-public class BookmarksSettings {
+public class BookmarksGroupServiceSettings implements GroupServiceSettings {
 
-	public BookmarksSettings(Settings settings) {
+	public BookmarksGroupServiceSettings(Settings settings) {
 		_typedSettings = new TypedSettings(settings);
 	}
 

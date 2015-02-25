@@ -17,7 +17,7 @@ package com.liferay.wiki.asset;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.settings.SettingsProvider;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsProvider;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -34,7 +34,7 @@ import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermission;
 import com.liferay.wiki.service.settings.WikiServiceSettingsProvider;
-import com.liferay.wiki.settings.WikiSettings;
+import com.liferay.wiki.settings.WikiGroupServiceSettings;
 import com.liferay.wiki.util.WikiUtil;
 
 import java.util.Date;
@@ -74,11 +74,14 @@ public class WikiPageAssetRenderer
 		WikiServiceSettingsProvider wikiServiceSettingsProvider =
 			WikiServiceSettingsProvider.getWikiServiceSettingsProvider();
 
-		SettingsProvider<WikiSettings> wikiSettingsProvider =
-			wikiServiceSettingsProvider.getWikiSettingsProvider();
+		GroupServiceSettingsProvider<WikiGroupServiceSettings>
+			wikiGroupServiceSettingsProvider =
+				wikiServiceSettingsProvider.
+					getWikiGroupServiceSettingsProvider();
 
-		_wikiSettings = wikiSettingsProvider.getGroupServiceSettings(
-			page.getGroupId());
+		_wikiGroupServiceSettings =
+			wikiGroupServiceSettingsProvider.getGroupServiceSettings(
+				page.getGroupId());
 	}
 
 	@Override
@@ -93,7 +96,7 @@ public class WikiPageAssetRenderer
 
 	@Override
 	public String getDiscussionPath() {
-		if (_wikiSettings.isPageCommentsEnabled()) {
+		if (_wikiGroupServiceSettings.isPageCommentsEnabled()) {
 			return "edit_page_discussion";
 		}
 		else {
@@ -316,6 +319,6 @@ public class WikiPageAssetRenderer
 	}
 
 	private final WikiPage _page;
-	private final WikiSettings _wikiSettings;
+	private final WikiGroupServiceSettings _wikiGroupServiceSettings;
 
 }

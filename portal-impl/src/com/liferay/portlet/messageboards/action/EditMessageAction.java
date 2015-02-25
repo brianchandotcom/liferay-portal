@@ -50,7 +50,7 @@ import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 import com.liferay.portlet.messageboards.LockedThreadException;
-import com.liferay.portlet.messageboards.MBSettings;
+import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
@@ -363,7 +363,8 @@ public class EditMessageAction extends PortletAction {
 		String subject = ParamUtil.getString(actionRequest, "subject");
 		String body = ParamUtil.getString(actionRequest, "body");
 
-		MBSettings mbSettings = MBSettings.getInstance(groupId);
+		MBGroupServiceSettings mbGroupServiceSettings =
+			MBGroupServiceSettings.getInstance(groupId);
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			new ArrayList<ObjectValuePair<String, InputStream>>(5);
@@ -417,8 +418,9 @@ public class EditMessageAction extends PortletAction {
 
 					message = MBMessageServiceUtil.addMessage(
 						groupId, categoryId, subject, body,
-						mbSettings.getMessageFormat(), inputStreamOVPs,
-						anonymous, priority, allowPingbacks, serviceContext);
+						mbGroupServiceSettings.getMessageFormat(),
+						inputStreamOVPs, anonymous, priority, allowPingbacks,
+						serviceContext);
 
 					if (question) {
 						MBThreadLocalServiceUtil.updateQuestion(
@@ -431,8 +433,9 @@ public class EditMessageAction extends PortletAction {
 
 					message = MBMessageServiceUtil.addMessage(
 						parentMessageId, subject, body,
-						mbSettings.getMessageFormat(), inputStreamOVPs,
-						anonymous, priority, allowPingbacks, serviceContext);
+						mbGroupServiceSettings.getMessageFormat(),
+						inputStreamOVPs, anonymous, priority, allowPingbacks,
+						serviceContext);
 				}
 			}
 			else {

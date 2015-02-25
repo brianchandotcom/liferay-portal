@@ -733,7 +733,7 @@ public class JournalPortlet extends MVCPortlet {
 			getForward(renderRequest, "portlet.journal.edit_feed"));
 	}
 
-	protected void deleteFeeds(ActionRequest actionRequest) throws Exception {
+	public void deleteFeeds(ActionRequest actionRequest) throws Exception {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 		String[] deleteFeedIds = StringUtil.split(
@@ -744,7 +744,7 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void updateFeed(ActionRequest actionRequest) throws Exception {
+	public void updateFeed(ActionRequest actionRequest) throws Exception {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");

@@ -12,7 +12,10 @@
 	<classpathentry kind="lib" path="/portal-master/lib/global/portlet.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/bnd.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-logging.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/cxf-core.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/cxf-rt-frontend-jaxws.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/log4j.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/org.apache.felix.dependencymanager.jar" />
 	<classpathentry kind="lib" path="/portal-master/portal-service/portal-service.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
@@ -23,12 +26,10 @@
 	<classpathentry kind="lib" path="lib/asm.jar" />
 	<classpathentry kind="lib" path="lib/commons-collections.jar" />
 	<classpathentry kind="lib" path="lib/commons-lang.jar" />
-	<classpathentry kind="lib" path="lib/cxf-core.jar" />
 	<classpathentry kind="lib" path="lib/cxf-rt-bindings-soap.jar" />
 	<classpathentry kind="lib" path="lib/cxf-rt-bindings-xml.jar" />
 	<classpathentry kind="lib" path="lib/cxf-rt-databinding-jaxb.jar" />
 	<classpathentry kind="lib" path="lib/cxf-rt-frontend-jaxrs.jar" />
-	<classpathentry kind="lib" path="lib/cxf-rt-frontend-jaxws.jar" />
 	<classpathentry kind="lib" path="lib/cxf-rt-frontend-simple.jar" />
 	<classpathentry kind="lib" path="lib/cxf-rt-transports-http.jar" />
 	<classpathentry kind="lib" path="lib/cxf-rt-ws-addr.jar" />
@@ -43,7 +44,6 @@
 	<classpathentry kind="lib" path="lib/jaxb-impl.jar" />
 	<classpathentry kind="lib" path="lib/jaxb-xjc.jar" />
 	<classpathentry kind="lib" path="lib/neethi.jar" />
-	<classpathentry kind="lib" path="lib/org.apache.felix.dependencymanager.jar" />
 	<classpathentry kind="lib" path="lib/org.apache.felix.scr.jar" />
 	<classpathentry kind="lib" path="lib/org.eclipse.equinox.http.servlet.jar" />
 	<classpathentry kind="lib" path="lib/org.eclipse.osgi.services.jar" />

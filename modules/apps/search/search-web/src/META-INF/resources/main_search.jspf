@@ -88,7 +88,7 @@ Hits hits = indexer.search(searchContext);
 				request.setAttribute("search.jsp-facet", facet);
 			%>
 
-				<liferay-util:include page='<%= "/facets/" + facetConfiguration.getDisplayStyle() + ".jsp" %>' />
+				<liferay-util:include page='<%= "/facets/" + facetConfiguration.getDisplayStyle() + ".jsp" %>' servletContext="<%= application %>"  />
 
 			<%
 			}

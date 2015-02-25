@@ -129,7 +129,7 @@
 			<var name="auto.deploy.dir" unset="true" />
 
 			<if>
-				<isset property="test.class">
+				<isset property="test.class" />
 				<then>
 					<get-testcase-property property.name="plugins.deployment.type" />
 				</then>

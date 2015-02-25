@@ -1533,16 +1533,6 @@ rerun your task.
 		<propertycopy from="TEST_CLASS_GROUP_${test.class.group.index}" name="test.classes" />
 
 		<test-cmd
-			junit.forkmode="once"
-			test.includes="${test.classes}"
-			test.type="integration"
-		/>
-
-		<report-test-coverage
-			test.type="integration"
-		/>
-
-		<test-cmd
 			junit.forkmode="perTest"
 			test.includes="${test.classes}"
 			test.type="unit"
@@ -1550,6 +1540,16 @@ rerun your task.
 
 		<report-test-coverage
 			test.type="unit"
+		/>
+
+		<test-cmd
+			junit.forkmode="once"
+			test.includes="${test.classes}"
+			test.type="integration"
+		/>
+
+		<report-test-coverage
+			test.type="integration"
 		/>
 	</target>
 

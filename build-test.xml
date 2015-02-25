@@ -2283,86 +2283,6 @@ ${marketplace.portlet.properties}</echo>
 		/>
 	</target>
 
-	<target name="generate-test-properties" depends="check-config">
-		<property file="${project.dir}/test.generated.properties" />
-
-		<var name="mobile.device.type" unset="true" />
-
-		<if>
-			<contains string="${test.class}" substring="#" />
-			<then>
-				<get-test-method-name />
-
-				<get-test-simple-class-name />
-			</then>
-			<elseif>
-				<isset property="test.class" />
-				<then>
-					<property name="test.method.name" value="[A-Za-z]*" />
-
-					<get-test-simple-class-name />
-				</then>
-			</elseif>
-		</if>
-
-		<xmlproperty
-			file="portal-web/test-config/database.xml"
-			keeproot="true"
-		/>
-
-		<echoproperties destfile="${basedir}/test.run.properties">
-			<propertyset>
-				<propertyref prefix="database.${database.type}" />
-				<propertyref prefix="${test.simple.class.name}." />
-			</propertyset>
-		</echoproperties>
-
-		<replaceregexp
-			file="${basedir}/test.run.properties"
-			flags="g"
-			match="database\.${database.type}"
-			replace="database"
-		/>
-
-		<if>
-			<isset property="test.class" />
-			<then>
-				<replaceregexp
-					file="${basedir}/test.run.properties"
-					flags="g"
-					match="${test.simple.class.name}\.(${test.method.name}|all)\."
-					replace=""
-				/>
-
-				<replaceregexp
-					file="${basedir}/test.run.properties"
-					flags="g"
-					match="${test.simple.class.name}.*"
-					replace=""
-				/>
-			</then>
-		</if>
-
-		<property file="${basedir}/test.run.properties" />
-
-		<loadfile property="test.properties.expanded" srcfile="${basedir}/test.run.properties">
-			<filterchain>
-				<expandproperties />
-			</filterchain>
-		</loadfile>
-
-		<echo file="${basedir}/test.run.properties">${test.properties.expanded}</echo>
-
-		<property file="${project.dir}/test.${user.name}.properties" />
-		<property file="${project.dir}/test.${env.COMPUTERNAME}.properties" />
-		<property file="${project.dir}/test.${env.HOST}.properties" />
-		<property file="${project.dir}/test.${env.HOSTNAME}.properties" />
-		<property file="${project.dir}/test.properties" />
-
-		<propertycopy from="mobile.device.resolution[${mobile.device.type}]" name="mobile.device.resolution" />
-		<propertycopy from="mobile.device.user.agent[${mobile.device.type}]" name="mobile.device.user.agent" />
-	</target>
-
 	<target name="kill-spi">
 		<if>
 			<os family="unix" />
@@ -2518,7 +2438,7 @@ hw.keyboard=yes
 		</echo>
 	</target>
 
-	<target name="prepare-portal-ext-properties" depends="generate-test-properties">
+	<target name="prepare-portal-ext-properties">
 		<prepare-fix-pack-bundle />
 
 		<get-database-property property.name="database.driver" />
@@ -3091,7 +3011,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		</replace>
 	</target>
 
-	<target name="prepare-selenium" depends="generate-test-properties">
+	<target name="prepare-selenium">
 		<delete file="portal-web/test/test-portal-web-ext.properties" />
 
 		<if>
@@ -3940,7 +3860,7 @@ plugins.includes=marketplace-portlet</echo>
 		</if>
 	</target>
 
-	<target name="prepare-test-properties" depends="generate-test-properties">
+	<target name="prepare-test-properties">
 		<get-database-property property.name="database.driver" />
 		<get-database-property property.name="database.password" />
 		<get-database-property property.name="database.url" />
@@ -4046,7 +3966,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 		<echo />
 	</target>
 
-	<target name="rebuild-database" depends="generate-test-properties,build-sql-file">
+	<target name="rebuild-database" depends="build-sql-file">
 		<if>
 			<not>
 				<isset property="skip.rebuild-database" />

@@ -21,6 +21,9 @@ import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncFileService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Shinn Lok
  */
@@ -28,6 +31,28 @@ public class MoveFileEntryHandler extends BaseJSONHandler {
 
 	public MoveFileEntryHandler(Event event) {
 		super(event);
+	}
+
+	@Override
+	public boolean handlePortalException(String exception) throws Exception {
+		if (exception.equals(
+				"com.liferay.portlet.documentlibrary.DuplicateFileException")) {
+
+			if (_logger.isDebugEnabled()) {
+				_logger.debug("Handling exception {}", exception);
+			}
+
+			SyncFile localSyncFile = getLocalSyncFile();
+
+			localSyncFile.setState(SyncFile.STATE_SYNCED);
+			localSyncFile.setUiEvent(SyncFile.UI_EVENT_UPLOADED);
+
+			SyncFileService.update(localSyncFile);
+
+			return true;
+		}
+
+		return super.handlePortalException(exception);
 	}
 
 	@Override
@@ -45,5 +70,8 @@ public class MoveFileEntryHandler extends BaseJSONHandler {
 
 		SyncFileService.update(localSyncFile);
 	}
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		MoveFileEntryHandler.class);
 
 }

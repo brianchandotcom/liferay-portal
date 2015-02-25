@@ -19,10 +19,10 @@ package com.liferay.portal.kernel.util;
  */
 public interface Accessor<T, A> {
 
-	A get(T t);
+	public A get(T t);
 
-	Class<A> getAttributeClass();
+	public Class<A> getAttributeClass();
 
-	Class<T> getTypeClass();
+	public Class<T> getTypeClass();
 
 }

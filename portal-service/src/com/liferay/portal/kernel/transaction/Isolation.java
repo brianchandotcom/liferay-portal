@@ -36,12 +36,12 @@ public enum Isolation {
 		return _isolations.get(value);
 	}
 
-	Isolation(int value) {
-		_value = value;
-	}
-
 	public int value() {
 		return _value;
+	}
+
+	private Isolation(int value) {
+		_value = value;
 	}
 
 	private static final Map<Integer, Isolation> _isolations = new HashMap<>();

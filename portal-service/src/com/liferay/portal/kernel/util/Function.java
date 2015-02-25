@@ -19,6 +19,6 @@ package com.liferay.portal.kernel.util;
  */
 public interface Function<T, R> {
 
-	R apply(T t);
+	public R apply(T t);
 
 }

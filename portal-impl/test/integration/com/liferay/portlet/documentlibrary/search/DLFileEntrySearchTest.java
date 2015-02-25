@@ -197,9 +197,10 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		DDMFormValues ddmFormValues =
 			FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
 
+		DLAppTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
 		DLAppTestUtil.populateServiceContext(
-			serviceContext, Constants.ADD, dlFileEntryType.getFileEntryTypeId(),
-			true);
+			serviceContext, dlFileEntryType.getFileEntryTypeId());
 
 		serviceContext.setAttribute(
 			DDMFormValues.class.getName() + ddmStructure.getStructureId(),

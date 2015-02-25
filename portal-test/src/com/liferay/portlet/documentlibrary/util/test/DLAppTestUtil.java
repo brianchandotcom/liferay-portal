@@ -147,9 +147,8 @@ public abstract class DLAppTestUtil {
 		return addFolder(parentFolderId, name, false, serviceContext);
 	}
 
-	public static void populateServiceContext(
-			ServiceContext serviceContext, String command, long fileEntryTypeId,
-			boolean approved)
+	public static void populateNotificationsServiceContext(
+			ServiceContext serviceContext, String command)
 		throws Exception {
 
 		serviceContext.setAttribute("entryURL", "http://localhost");
@@ -158,13 +157,12 @@ public abstract class DLAppTestUtil {
 			serviceContext.setCommand(command);
 		}
 
-		if (approved) {
-			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-		}
-		else {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-		}
+		serviceContext.setLayoutFullURL("http://localhost");
+	}
+
+	public static void populateServiceContext(
+			ServiceContext serviceContext, long fileEntryTypeId)
+		throws Exception {
 
 		if (fileEntryTypeId !=
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) {

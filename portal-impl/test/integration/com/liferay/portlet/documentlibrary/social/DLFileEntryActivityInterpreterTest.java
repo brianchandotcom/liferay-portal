@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -58,9 +57,8 @@ public class DLFileEntryActivityInterpreterTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		DLAppTestUtil.populateServiceContext(
-			serviceContext, Constants.ADD,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+		DLAppTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
 
 		_fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),

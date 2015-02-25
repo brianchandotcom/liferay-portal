@@ -38,7 +38,6 @@ import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -326,9 +325,8 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		DLAppTestUtil.populateServiceContext(
-			serviceContext, Constants.ADD,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+		DLAppTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
 
 		return DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), folderId,

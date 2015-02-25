@@ -28,7 +28,7 @@ import javax.portlet.PortletConfig;
 /**
  * @author Sergio González
  */
-public class BookmarksSettingsConfigurationAction
+public class BookmarksGroupServiceSettingsConfigurationAction
 	extends SettingsConfigurationAction {
 
 	@Override

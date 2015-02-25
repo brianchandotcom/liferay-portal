@@ -14,9 +14,9 @@
 
 package com.liferay.bookmarks.web.settings;
 
-import com.liferay.bookmarks.configuration.BookmarksConfiguration;
-import com.liferay.bookmarks.settings.BookmarksSettings;
-import com.liferay.portal.kernel.settings.SettingsProvider;
+import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
+import com.liferay.bookmarks.settings.BookmarksGroupServiceSettings;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsProvider;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -37,12 +37,14 @@ public class BookmarksWebSettingsProvider {
 		return _bookmarksWebSettingsProvider;
 	}
 
-	public BookmarksConfiguration getBookmarksConfiguration() {
-		return _bookmarksConfiguration;
+	public BookmarksGroupServiceConfiguration getBookmarksGroupServiceConfiguration() {
+		return _bookmarksGroupServiceConfiguration;
 	}
 
-	public SettingsProvider<BookmarksSettings> getBookmarksSettingsProvider() {
-		return _settingsProvider;
+	public GroupServiceSettingsProvider<BookmarksGroupServiceSettings>
+		getBookmarksGroupServiceSettingsProvider() {
+
+		return _bookmarksGroupServiceSettingsProvider;
 	}
 
 	@Activate
@@ -56,36 +58,41 @@ public class BookmarksWebSettingsProvider {
 	}
 
 	@Reference
-	protected void setBookmarksConfiguration(
-		BookmarksConfiguration bookmarksConfiguration) {
+	protected void setBookmarksGroupServiceConfiguration(
+		BookmarksGroupServiceConfiguration bookmarksGroupServiceConfiguration) {
 
-		_bookmarksConfiguration = bookmarksConfiguration;
+		_bookmarksGroupServiceConfiguration =
+			bookmarksGroupServiceConfiguration;
 	}
 
 	@Reference(
-		target = "(class.name=com.liferay.bookmarks.settings.BookmarksSettings)"
+		target = "(class.name=com.liferay.bookmarks.settings.BookmarksGroupServiceSettings)"
 	)
-	protected void setSettingsProvider(
-		SettingsProvider<BookmarksSettings> settingsProvider) {
+	protected void setBookmarksGroupServiceSettingsProvider(
+		GroupServiceSettingsProvider<BookmarksGroupServiceSettings>
+			bookmarksGroupServiceSettingsProvider) {
 
-		_settingsProvider = settingsProvider;
+		_bookmarksGroupServiceSettingsProvider =
+			bookmarksGroupServiceSettingsProvider;
 	}
 
-	protected void unsetBookmarksConfiguration(
-		BookmarksConfiguration bookmarksConfiguration) {
+	protected void unsetBookmarksGroupServiceConfiguration(
+		BookmarksGroupServiceConfiguration bookmarksGroupServiceConfiguration) {
 
-		_bookmarksConfiguration = null;
+		_bookmarksGroupServiceConfiguration = null;
 	}
 
-	protected void unsetSettingsProvider(
-		SettingsProvider<BookmarksSettings> settingsProvider) {
+	protected void unsetBookmarksGroupServiceSettingsProvider(
+		GroupServiceSettingsProvider<BookmarksGroupServiceSettings>
+			bookmarksGroupServiceSettingsProvider) {
 
-		_settingsProvider = null;
+		_bookmarksGroupServiceSettingsProvider = null;
 	}
 
 	private static BookmarksWebSettingsProvider _bookmarksWebSettingsProvider;
 
-	private BookmarksConfiguration _bookmarksConfiguration;
-	private SettingsProvider<BookmarksSettings> _settingsProvider;
+	private BookmarksGroupServiceConfiguration _bookmarksGroupServiceConfiguration;
+	private GroupServiceSettingsProvider<BookmarksGroupServiceSettings>
+		_bookmarksGroupServiceSettingsProvider;
 
 }

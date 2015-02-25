@@ -16,7 +16,7 @@ package com.liferay.bookmarks.configuration.impl;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.bookmarks.configuration.BookmarksConfiguration;
+import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
 
 import java.util.Map;
 
@@ -28,93 +28,94 @@ import org.osgi.service.component.annotations.Modified;
  * @author Adolfo Pérez
  */
 @Component(
-	configurationPid = "com.liferay.bookmarks.configuration.BookmarksConfiguration",
-	immediate = true, service = BookmarksConfiguration.class
+	configurationPid = "com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration",
+	immediate = true, service = BookmarksGroupServiceConfiguration.class
 )
-public class BookmarksConfigurationImpl implements BookmarksConfiguration {
+public class BookmarksGroupServiceConfigurationImpl
+	implements BookmarksGroupServiceConfiguration {
 
 	@Override
 	public String emailEntryAddedBody() {
-		return _bookmarksConfiguration.emailEntryAddedBody();
+		return _bookmarksGroupServiceConfiguration.emailEntryAddedBody();
 	}
 
 	@Override
 	public boolean emailEntryAddedEnabled() {
-		return _bookmarksConfiguration.emailEntryAddedEnabled();
+		return _bookmarksGroupServiceConfiguration.emailEntryAddedEnabled();
 	}
 
 	@Override
 	public String emailEntryAddedSubject() {
-		return _bookmarksConfiguration.emailEntryAddedSubject();
+		return _bookmarksGroupServiceConfiguration.emailEntryAddedSubject();
 	}
 
 	@Override
 	public String emailEntryUpdatedBody() {
-		return _bookmarksConfiguration.emailEntryUpdatedBody();
+		return _bookmarksGroupServiceConfiguration.emailEntryUpdatedBody();
 	}
 
 	@Override
 	public boolean emailEntryUpdatedEnabled() {
-		return _bookmarksConfiguration.emailEntryUpdatedEnabled();
+		return _bookmarksGroupServiceConfiguration.emailEntryUpdatedEnabled();
 	}
 
 	@Override
 	public String emailEntryUpdatedSubject() {
-		return _bookmarksConfiguration.emailEntryUpdatedSubject();
+		return _bookmarksGroupServiceConfiguration.emailEntryUpdatedSubject();
 	}
 
 	@Override
 	public String emailFromAddress() {
-		return _bookmarksConfiguration.emailFromAddress();
+		return _bookmarksGroupServiceConfiguration.emailFromAddress();
 	}
 
 	@Override
 	public String emailFromName() {
-		return _bookmarksConfiguration.emailFromName();
+		return _bookmarksGroupServiceConfiguration.emailFromName();
 	}
 
 	@Override
 	public boolean enableRelatedAssets() {
-		return _bookmarksConfiguration.enableRelatedAssets();
+		return _bookmarksGroupServiceConfiguration.enableRelatedAssets();
 	}
 
 	@Override
 	public String entriesPerPage() {
-		return _bookmarksConfiguration.entriesPerPage();
+		return _bookmarksGroupServiceConfiguration.entriesPerPage();
 	}
 
 	@Override
 	public String[] entryColumns() {
-		return _bookmarksConfiguration.entryColumns();
+		return _bookmarksGroupServiceConfiguration.entryColumns();
 	}
 
 	@Override
 	public String[] folderColumns() {
-		return _bookmarksConfiguration.folderColumns();
+		return _bookmarksGroupServiceConfiguration.folderColumns();
 	}
 
 	@Override
 	public String foldersPerPage() {
-		return _bookmarksConfiguration.foldersPerPage();
+		return _bookmarksGroupServiceConfiguration.foldersPerPage();
 	}
 
 	@Override
 	public boolean showFoldersSearch() {
-		return _bookmarksConfiguration.showFoldersSearch();
+		return _bookmarksGroupServiceConfiguration.showFoldersSearch();
 	}
 
 	@Override
 	public boolean showSubfolders() {
-		return _bookmarksConfiguration.showSubfolders();
+		return _bookmarksGroupServiceConfiguration.showSubfolders();
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_bookmarksConfiguration = Configurable.createConfigurable(
-			BookmarksConfiguration.class, properties);
+		_bookmarksGroupServiceConfiguration = Configurable.createConfigurable(
+			BookmarksGroupServiceConfiguration.class, properties);
 	}
 
-	private volatile BookmarksConfiguration _bookmarksConfiguration;
+	private volatile BookmarksGroupServiceConfiguration _bookmarksGroupServiceConfiguration;
 
 }

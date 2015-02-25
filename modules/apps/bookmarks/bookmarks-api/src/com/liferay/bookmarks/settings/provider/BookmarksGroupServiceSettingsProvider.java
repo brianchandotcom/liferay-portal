@@ -14,14 +14,14 @@
 
 package com.liferay.bookmarks.settings.provider;
 
-import com.liferay.bookmarks.configuration.BookmarksConfiguration;
+import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
 import com.liferay.bookmarks.constants.BookmarksConstants;
-import com.liferay.bookmarks.settings.BookmarksSettings;
+import com.liferay.bookmarks.settings.BookmarksGroupServiceSettings;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsProvider;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.settings.SettingsProvider;
 
 import java.util.Map;
 
@@ -35,46 +35,48 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"class.name=com.liferay.bookmarks.settings.BookmarksSettings"
+		"class.name=com.liferay.bookmarks.settings.BookmarksGroupServiceSettings"
 	},
-	service = SettingsProvider.class
+	service = GroupServiceSettingsProvider.class
 )
-public class BookmarksSettingsProvider
-	implements SettingsProvider<BookmarksSettings> {
+public class BookmarksGroupServiceSettingsProvider
+	implements GroupServiceSettingsProvider<BookmarksGroupServiceSettings> {
 
 	@Override
-	public BookmarksSettings getGroupServiceSettings(long groupId)
+	public BookmarksGroupServiceSettings getGroupServiceSettings(long groupId)
 		throws PortalException {
 
 		Settings settings = _settingsFactory.getGroupServiceSettings(
 			groupId, BookmarksConstants.SERVICE_NAME);
 
-		return new BookmarksSettings(settings);
+		return new BookmarksGroupServiceSettings(settings);
 	}
 
 	@Override
-	public BookmarksSettings getGroupServiceSettings(
+	public BookmarksGroupServiceSettings getGroupServiceSettings(
 			long groupId, Map<String, String[]> parameterMap)
 		throws PortalException {
 
 		Settings settings = _settingsFactory.getGroupServiceSettings(
 			groupId, BookmarksConstants.SERVICE_NAME);
 
-		return new BookmarksSettings(
+		return new BookmarksGroupServiceSettings(
 			new ParameterMapSettings(parameterMap, settings));
 	}
 
 	@Activate
 	protected void activate() {
 		_settingsFactory.registerSettingsMetadata(
-			BookmarksSettings.class, _bookmarksConfiguration, null);
+			BookmarksGroupServiceSettings.class,
+			_bookmarksGroupServiceConfiguration, null);
 	}
 
 	@Reference(unbind = "-")
-	protected void setBookmarksConfiguration(
-		BookmarksConfiguration bookmarksConfiguration) {
+	protected void setBookmarksGroupServiceConfiguration(
+		BookmarksGroupServiceConfiguration bookmarksGroupServiceConfiguration) {
 
-		_bookmarksConfiguration = bookmarksConfiguration;
+		_bookmarksGroupServiceConfiguration =
+			bookmarksGroupServiceConfiguration;
 	}
 
 	@Reference(unbind = "-")
@@ -82,7 +84,7 @@ public class BookmarksSettingsProvider
 		_settingsFactory = settingsFactory;
 	}
 
-	private BookmarksConfiguration _bookmarksConfiguration;
+	private BookmarksGroupServiceConfiguration _bookmarksGroupServiceConfiguration;
 	private SettingsFactory _settingsFactory;
 
 }

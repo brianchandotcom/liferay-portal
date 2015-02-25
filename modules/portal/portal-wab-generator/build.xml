@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="osgi.ide.dependencies" value="ant.jar,asm-debug-all.jar,felix-fileinstall.jar,spring-beans.jar,spring-context.jar,spring-core.jar,spring-web.jar" />
+	<property name="osgi.ide.dependencies" value="ant.jar,asm-debug-all.jar,spring-beans.jar,spring-context.jar,spring-core.jar,spring-web.jar" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 

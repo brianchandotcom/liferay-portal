@@ -59,10 +59,13 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.journal.action.ActionUtil;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalFeedServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.util.RSSUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -698,42 +701,17 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
+	public void addFeed(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		try {
-			String cmd = ParamUtil.getString(renderRequest, Constants.CMD);
-
-			if (!cmd.equals(Constants.ADD)) {
-				ActionUtil.getFeed(renderRequest);
-			}
-		}
-		catch (NoSuchFeedException nsfe) {
-
-			// Let this slide because the user can manually input a feed id for
-			// a new syndicated feed that does not yet exist.
-
-		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.journal.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.journal.edit_feed"));
+		updateFeed(actionRequest, actionResponse);
 	}
 
-	public void deleteFeeds(ActionRequest actionRequest) throws Exception {
+	public void deleteFeeds(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 		String[] deleteFeedIds = StringUtil.split(
@@ -744,8 +722,12 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
-	public void updateFeed(ActionRequest actionRequest) throws Exception {
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+	public void updateFeed(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String actionName = ParamUtil.getString(
+			actionRequest, ActionRequest.ACTION_NAME);
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
@@ -778,7 +760,7 @@ public class JournalPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalFeed.class.getName(), actionRequest);
 
-		if (cmd.equals(Constants.ADD)) {
+		if (actionName.equals("addFeed")) {
 
 			// Add feed
 

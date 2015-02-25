@@ -301,7 +301,9 @@ public class ActionUtil {
 		return new Object[] {content, images};
 	}
 
-	public static void getFeed(HttpServletRequest request) throws Exception {
+	public static JournalFeed getFeed(HttpServletRequest request)
+		throws Exception {
+
 		long groupId = ParamUtil.getLong(request, "groupId");
 		String feedId = ParamUtil.getString(request, "feedId");
 
@@ -311,14 +313,16 @@ public class ActionUtil {
 			feed = JournalFeedServiceUtil.getFeed(groupId, feedId);
 		}
 
-		request.setAttribute(WebKeys.JOURNAL_FEED, feed);
+		return feed;
 	}
 
-	public static void getFeed(PortletRequest portletRequest) throws Exception {
+	public static JournalFeed getFeed(PortletRequest portletRequest)
+		throws Exception {
+
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getFeed(request);
+		return getFeed(request);
 	}
 
 	public static JournalFolder getFolder(HttpServletRequest request)

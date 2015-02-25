@@ -196,7 +196,8 @@ public class EditNodeAction extends PortletAction {
 
 		PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
 			wikiPortletIntanceSettingsProvider =
-				wikiWebSettingsProvider.getWikiPortletInstanceSettingsProvider();
+				wikiWebSettingsProvider.
+					getWikiPortletInstanceSettingsProvider();
 
 		WikiPortletInstanceSettings wikiPortletInstanceSettings =
 			wikiPortletIntanceSettingsProvider.getPortletInstanceSettings(

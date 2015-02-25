@@ -116,6 +116,7 @@ public class BookmarksGroupServiceConfigurationImpl
 			BookmarksGroupServiceConfiguration.class, properties);
 	}
 
-	private volatile BookmarksGroupServiceConfiguration _bookmarksGroupServiceConfiguration;
+	private volatile BookmarksGroupServiceConfiguration
+		_bookmarksGroupServiceConfiguration;
 
 }

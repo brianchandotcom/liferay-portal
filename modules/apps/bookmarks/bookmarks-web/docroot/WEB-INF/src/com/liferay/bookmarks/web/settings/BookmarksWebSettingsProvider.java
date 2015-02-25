@@ -37,7 +37,9 @@ public class BookmarksWebSettingsProvider {
 		return _bookmarksWebSettingsProvider;
 	}
 
-	public BookmarksGroupServiceConfiguration getBookmarksGroupServiceConfiguration() {
+	public BookmarksGroupServiceConfiguration
+		getBookmarksGroupServiceConfiguration() {
+
 		return _bookmarksGroupServiceConfiguration;
 	}
 
@@ -91,7 +93,8 @@ public class BookmarksWebSettingsProvider {
 
 	private static BookmarksWebSettingsProvider _bookmarksWebSettingsProvider;
 
-	private BookmarksGroupServiceConfiguration _bookmarksGroupServiceConfiguration;
+	private BookmarksGroupServiceConfiguration
+		_bookmarksGroupServiceConfiguration;
 	private GroupServiceSettingsProvider<BookmarksGroupServiceSettings>
 		_bookmarksGroupServiceSettingsProvider;
 

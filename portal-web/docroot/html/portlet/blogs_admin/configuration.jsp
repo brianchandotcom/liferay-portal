@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/blogs/init.jsp" %>
 
 <%
-blogsSettings = BlogsSettings.getInstance(scopeGroupId, request.getParameterMap());
+blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId, request.getParameterMap());
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
@@ -44,16 +44,16 @@ blogsSettings = BlogsSettings.getInstance(scopeGroupId, request.getParameterMap(
 
 		<liferay-ui:section>
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= blogsSettings.getEmailFromName() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= blogsGroupServiceSettings.getEmailFromName() %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= blogsSettings.getEmailFromAddress() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= blogsGroupServiceSettings.getEmailFromAddress() %>" />
 			</aui:fieldset>
 
 			<aui:fieldset cssClass="definition-of-terms" label="definition-of-terms">
 				<dl>
 
 					<%
-					Map<String, String> emailFromDefinitionTerms = BlogsUtil.getEmailFromDefinitionTerms(renderRequest, blogsSettings.getEmailFromAddress(), blogsSettings.getEmailFromName());
+					Map<String, String> emailFromDefinitionTerms = BlogsUtil.getEmailFromDefinitionTerms(renderRequest, blogsGroupServiceSettings.getEmailFromAddress(), blogsGroupServiceSettings.getEmailFromName());
 
 					for (Map.Entry<String, String> entry : emailFromDefinitionTerms.entrySet()) {
 					%>
@@ -74,26 +74,26 @@ blogsSettings = BlogsSettings.getInstance(scopeGroupId, request.getParameterMap(
 		</liferay-ui:section>
 
 		<%
-		Map<String, String> emailDefinitionTerms = BlogsUtil.getEmailDefinitionTerms(renderRequest, blogsSettings.getEmailFromAddress(), blogsSettings.getEmailFromName());
+		Map<String, String> emailDefinitionTerms = BlogsUtil.getEmailDefinitionTerms(renderRequest, blogsGroupServiceSettings.getEmailFromAddress(), blogsGroupServiceSettings.getEmailFromName());
 		%>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= blogsSettings.getEmailEntryAddedBodyXml() %>"
+				emailBody="<%= blogsGroupServiceSettings.getEmailEntryAddedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= blogsSettings.isEmailEntryAddedEnabled() %>"
+				emailEnabled="<%= blogsGroupServiceSettings.isEmailEntryAddedEnabled() %>"
 				emailParam="emailEntryAdded"
-				emailSubject="<%= blogsSettings.getEmailEntryAddedSubjectXml() %>"
+				emailSubject="<%= blogsGroupServiceSettings.getEmailEntryAddedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= blogsSettings.getEmailEntryUpdatedBodyXml() %>"
+				emailBody="<%= blogsGroupServiceSettings.getEmailEntryUpdatedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-					emailEnabled="<%= blogsSettings.isEmailEntryUpdatedEnabled() %>"
+					emailEnabled="<%= blogsGroupServiceSettings.isEmailEntryUpdatedEnabled() %>"
 				emailParam="emailEntryUpdated"
-				emailSubject="<%= blogsSettings.getEmailEntryUpdatedSubjectXml() %>"
+				emailSubject="<%= blogsGroupServiceSettings.getEmailEntryUpdatedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 	</liferay-ui:tabs>

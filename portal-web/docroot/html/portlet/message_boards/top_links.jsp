@@ -58,7 +58,7 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 
 			<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
 
-			<c:if test="<%= mbSettings.isEmailMessageAddedEnabled() || mbSettings.isEmailMessageUpdatedEnabled() %>">
+			<c:if test="<%= mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled() %>">
 
 				<%
 				label = "my-subscriptions";

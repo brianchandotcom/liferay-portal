@@ -26,7 +26,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
-import com.liferay.portlet.messageboards.MBSettings;
+import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
@@ -148,8 +148,9 @@ public class SplitThreadAction extends PortletAction {
 			String subject = ParamUtil.getString(actionRequest, "subject");
 			String body = ParamUtil.getString(actionRequest, "body");
 
-			MBSettings mbSettings = MBSettings.getInstance(
-				themeDisplay.getScopeGroupId());
+			MBGroupServiceSettings mbGroupServiceSettings =
+				MBGroupServiceSettings.getInstance(
+					themeDisplay.getScopeGroupId());
 
 			String layoutFullURL = PortalUtil.getLayoutFullURL(themeDisplay);
 
@@ -165,7 +166,7 @@ public class SplitThreadAction extends PortletAction {
 
 			MBMessageServiceUtil.addMessage(
 				oldParentMessageId, subject, body,
-				mbSettings.getMessageFormat(),
+				mbGroupServiceSettings.getMessageFormat(),
 				Collections.<ObjectValuePair<String, InputStream>>emptyList(),
 				false, MBThreadConstants.PRIORITY_NOT_GIVEN,
 				message.getAllowPingbacks(), serviceContext);

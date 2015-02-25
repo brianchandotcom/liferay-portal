@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-    <property name="osgi.ide.dependencies" value="cxf-core.jar,cxf-rt-frontend-jaxws.jar,org.apache.felix.dependencymanager.jar" />
+	<property name="osgi.ide.dependencies" value="cxf-core.jar,cxf-rt-frontend-jaxws.jar,org.apache.felix.dependencymanager.jar" />
 	<property name="osgi.runtime.dependencies" value="org.apache.felix.scr.jar,org.apache.felix.dependencymanager.jar" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />

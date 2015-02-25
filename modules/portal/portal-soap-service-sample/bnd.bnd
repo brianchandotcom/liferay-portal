@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal JAX-WS service sample
+Bundle-SymbolicName: com.liferay.portal.jaxws.service.sample
+Bundle-Version: 1.0.0
+Include-Resource: \
+	classes,\
+	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+
+-metatype: *

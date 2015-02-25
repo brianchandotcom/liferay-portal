@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="import.shared" value="registry-api" />
+
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<path id="plugin.classpath" path="lib/aQute.bnd.jar" />
+
+	<property name="auto.deploy.dir" value="${app.server.lib.portal.dir}" />
+</project>

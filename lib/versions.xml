@@ -2261,6 +2261,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/jaxws-api.jar</file-name>
+				<version>2.2.11</version>
+				<project-name>Java API for XML Web Services </project-name>
+				<project-url>http://jax-ws.java.net</project-url>
+				<licenses>
+					<license>
+						<license-name>CDDL 1.1</license-name>
+						<license-url>http://web.archive.org/web/20090305064954/http://www.sun.com/cddl/cddl.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/jaxws-rt.jar</file-name>
 				<version>2.1.7</version>
 				<project-name>Java API for XML Web Services </project-name>

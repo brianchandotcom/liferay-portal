@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<target name="deploy">
+		<process-ivy
+			module.dir="${basedir}"
+		/>
+
+		<jar destfile="../../../lib/portal/chemistry-opencmis-client-bindings.jar">
+			<zipfileset src="lib/chemistry-opencmis-client-bindings.jar" excludes="META-INF/services/javax.xml.ws.spi.Provider" />
+		</jar>
+	</target>
+</project>

@@ -68,13 +68,8 @@ public abstract class BasePortletToolbarContributorLocator
 					String propertyName = (String)serviceReference.getProperty(
 						getPropertyName());
 
-					String key = portletName;
-
-					if (propertyName != null) {
-						key += StringPool.PERIOD.concat(propertyName);
-					}
-
-					emitter.emit(key);
+					emitter.emit(
+						portletName + StringPool.PERIOD + propertyName);
 				}
 
 			});

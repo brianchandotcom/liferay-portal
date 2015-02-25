@@ -31,7 +31,6 @@ import com.thoughtworks.qdox.model.JavaMethod;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -73,7 +72,22 @@ public class JavaClass {
 			List<String> testAnnotationsExclusionFiles)
 		throws Exception {
 
-		if ((_javaTerms == null) || _javaTerms.isEmpty()) {
+		if (_javaTerms == null) {
+			if (!BaseSourceProcessor.isExcludedFile(
+					_javaTermAccessLevelModifierExclusionFiles,
+					_absolutePath) &&
+				!BaseSourceProcessor.isExcludedFile(
+					javaTermSortExclusionFiles, _absolutePath)) {
+
+				BaseSourceProcessor.processErrorMessage(
+					_fileName,
+					"Parsing error while retrieving java terms " + _fileName);
+			}
+
+			return _content;
+		}
+
+		if (_javaTerms.isEmpty()) {
 			return _content;
 		}
 
@@ -924,7 +938,7 @@ public class JavaClass {
 				Tuple tuple = getJavaTermTuple(line, _content, index);
 
 				if (tuple == null) {
-					return Collections.emptySet();
+					return null;
 				}
 
 				int javaTermEndPosition = 0;
@@ -944,7 +958,7 @@ public class JavaClass {
 						javaTermStartPosition, javaTermEndPosition);
 
 					if (javaTerm == null) {
-						return Collections.emptySet();
+						return null;
 					}
 
 					if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
@@ -973,14 +987,16 @@ public class JavaClass {
 					 !line.startsWith(_indent + "implements") &&
 					 !BaseSourceProcessor.isExcludedFile(
 						 _javaTermAccessLevelModifierExclusionFiles,
-						 _absolutePath, lineCount)) {
+						 _absolutePath)) {
 
 				Matcher matcher = _classPattern.matcher(_content);
 
 				if (matcher.find()) {
 					String insideClass = _content.substring(matcher.end());
 
-					if (insideClass.contains(line)) {
+					if (insideClass.contains(line) &&
+						!isEnumType(line, matcher.group(4))) {
+
 						BaseSourceProcessor.processErrorMessage(
 							_fileName,
 							"Missing access level modifier: " + _fileName +
@@ -1002,7 +1018,7 @@ public class JavaClass {
 				javaTermStartPosition, javaTermEndPosition);
 
 			if (javaTerm == null) {
-				return Collections.emptySet();
+				return null;
 			}
 
 			if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
@@ -1185,6 +1201,16 @@ public class JavaClass {
 		}
 	}
 
+	protected boolean isEnumType(String line, String javaClassType) {
+		if (!javaClassType.equals("enum")) {
+			return false;
+		}
+
+		Matcher matcher = _enumTypePattern.matcher(line + "\n");
+
+		return matcher.find();
+	}
+
 	protected boolean isFinalableField(
 		JavaTerm javaTerm, String javaTermClassName, Pattern pattern,
 		boolean checkOuterClass) {
@@ -1323,7 +1349,10 @@ public class JavaClass {
 	private String _absolutePath;
 	private Pattern _camelCasePattern = Pattern.compile("([a-z])([A-Z0-9])");
 	private Pattern _classPattern = Pattern.compile(
-		"(private |protected |public )(static )*class ([\\s\\S]*?) \\{\n");
+		"(private|protected|public) ((abstract|static) )*" +
+			"(class|enum|interface) ([\\s\\S]*?) \\{\n");
+	private Pattern _enumTypePattern = Pattern.compile(
+		"\t[A-Z0-9]+[ _,;\\(\n]");
 	private int _constructorCount = 0;
 	private String _content;
 	private File _file;

@@ -42,11 +42,12 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public List<ToolbarItem> getToolbarItems() throws PortalException;
 
+	public boolean isDownloadLinkVisible() throws PortalException;
+
 	public boolean isVersionInfoVisible() throws PortalException;
 
 	public void renderPreview(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException;
 
-	boolean isDownloadLinkVisible() throws PortalException;
 }

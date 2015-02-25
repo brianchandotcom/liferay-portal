@@ -257,7 +257,9 @@ public class SAXReaderUtil {
 
 		StackTraceElement stackTraceElement = stackTraceElements[2];
 
-		if (!stackTraceElement.getMethodName().startsWith("read")) {
+		String methodName = stackTraceElement.getMethodName();
+
+		if (!methodName.startsWith("read")) {
 			return false;
 		}
 
@@ -273,8 +275,9 @@ public class SAXReaderUtil {
 			if (callerSignature.startsWith(whitelistSignature)) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Unsecure SAXReader allowed for " + callerSignature +
-							" based on '" + whitelistSignature + "' rule");
+						"Unsecure SAX reader allowed for " + callerSignature +
+							" based on the \"" + whitelistSignature +
+								"\" whitelist");
 				}
 
 				return true;
@@ -282,7 +285,7 @@ public class SAXReaderUtil {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Unsecure SAXReader disallowed for " + callerSignature);
+			_log.debug("Unsecure SAX reader disallowed for " + callerSignature);
 		}
 
 		return false;

@@ -186,16 +186,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 				String fileName = RandomTestUtil.randomString();
 
-				ServiceContext serviceContext =
-					ServiceContextTestUtil.getServiceContext(
-						group.getGroupId());
-
-				byte[] bytes = RandomTestUtil.randomBytes();
-
-				DLAppServiceUtil.addFileEntry(
-					group.getGroupId(), parentFolder.getFolderId(), fileName,
-					ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
-					StringPool.BLANK, bytes, serviceContext);
+				addFileEntry(
+					group.getGroupId(), parentFolder.getFolderId(), fileName);
 			}
 		}
 
@@ -213,13 +205,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				RandomTestUtil.randomString() + blackListedChar +
 					RandomTestUtil.randomString();
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-			DLAppServiceUtil.addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(), sourceFileName,
-				ContentTypes.TEXT_PLAIN, sourceFileName, StringPool.BLANK,
-				StringPool.BLANK, RandomTestUtil.randomBytes(), serviceContext);
+			addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), sourceFileName);
 		}
 
 		@Test(expected = FileNameException.class)
@@ -1051,18 +1038,16 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			String changeLog = StringPool.BLANK;
 			byte[] bytes = CONTENT.getBytes();
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
 			String[] assetTagNames = new String[] {"hello", "world"};
-
-			serviceContext.setAssetTagNames(assetTagNames);
 
 			FileEntry fileEntry = addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), fileName,
 				fileName, assetTagNames);
 
 			assetTagNames = new String[] {"hello", "world", "liferay"};
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 			serviceContext.setAssetTagNames(assetTagNames);
 
@@ -1105,19 +1090,13 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			String fileName = RandomTestUtil.randomString();
 			byte[] bytes = CONTENT.getBytes();
 
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), fileName);
+
+			String[] assetTagNames = new String[] {"hello", "world", "liferay"};
+
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-			String[] assetTagNames = new String[] {"hello", "world"};
-
-			serviceContext.setAssetTagNames(assetTagNames);
-
-			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(), fileName,
-				ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
-				StringPool.BLANK, bytes, serviceContext);
-
-			assetTagNames = new String[] {"hello", "world", "liferay"};
 
 			serviceContext.setAssetTagNames(assetTagNames);
 

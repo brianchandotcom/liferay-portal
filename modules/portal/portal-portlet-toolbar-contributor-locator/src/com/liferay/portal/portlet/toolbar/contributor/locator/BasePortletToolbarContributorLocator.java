@@ -18,14 +18,16 @@ import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContr
 import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
-import javax.portlet.PortletRequest;
 import java.util.List;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author Sergio González
@@ -41,12 +43,11 @@ public abstract class BasePortletToolbarContributorLocator
 			portletRequest, getParameterName(), "-");
 
 		List<PortletToolbarContributor> portletToolbarContributors =
-			_serviceTrackerMap.getService(
-				portletId.concat(StringPool.PERIOD).concat(parameter));
+			_serviceTrackerMap.getService(getKey(portletId, parameter));
 
 		if (ListUtil.isEmpty(portletToolbarContributors)) {
 			portletToolbarContributors = _serviceTrackerMap.getService(
-				portletId.concat(StringPool.PERIOD).concat(StringPool.STAR));
+				getKey(portletId, StringPool.STAR));
 		}
 
 		return portletToolbarContributors;
@@ -65,11 +66,10 @@ public abstract class BasePortletToolbarContributorLocator
 
 					String portletName = (String)serviceReference.getProperty(
 						"javax.portlet.name");
-					String propertyName = (String)serviceReference.getProperty(
+					String propertyValue = (String)serviceReference.getProperty(
 						getPropertyName());
 
-					emitter.emit(
-						portletName + StringPool.PERIOD + propertyName);
+					emitter.emit(getKey(portletName, propertyValue));
 				}
 
 			});
@@ -79,6 +79,18 @@ public abstract class BasePortletToolbarContributorLocator
 
 	protected void deactivate() {
 		_serviceTrackerMap.close();
+	}
+
+	protected String getKey(String portletId, String propertyValue) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(portletId);
+		sb.append(StringPool.PERIOD);
+		sb.append(getPropertyName());
+		sb.append(StringPool.PERIOD);
+		sb.append(propertyValue);
+
+		return sb.toString();
 	}
 
 	protected abstract String getParameterName();

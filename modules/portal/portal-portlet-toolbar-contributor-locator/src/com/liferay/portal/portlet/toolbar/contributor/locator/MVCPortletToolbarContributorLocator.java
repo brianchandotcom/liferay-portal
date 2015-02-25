@@ -14,9 +14,10 @@
 
 package com.liferay.portal.portlet.toolbar.contributor.locator;
 
+import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
+
 import javax.servlet.ServletContext;
 
-import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;

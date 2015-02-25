@@ -37,12 +37,12 @@ public abstract class BasePortletToolbarContributorLocator
 	public List<PortletToolbarContributor> getPortletToolbarContributors(
 		String portletId, PortletRequest portletRequest) {
 
-		String strutsAction = ParamUtil.getString(
+		String parameter = ParamUtil.getString(
 			portletRequest, getParameterName(), "-");
 
 		List<PortletToolbarContributor> portletToolbarContributors =
 			_serviceTrackerMap.getService(
-				portletId.concat(StringPool.PERIOD).concat(strutsAction));
+				portletId.concat(StringPool.PERIOD).concat(parameter));
 
 		if (ListUtil.isEmpty(portletToolbarContributors)) {
 			portletToolbarContributors = _serviceTrackerMap.getService(
@@ -65,13 +65,13 @@ public abstract class BasePortletToolbarContributorLocator
 
 					String portletName = (String)serviceReference.getProperty(
 						"javax.portlet.name");
-					String strutsAction = (String)serviceReference.getProperty(
+					String propertyName = (String)serviceReference.getProperty(
 						getPropertyName());
 
 					String key = portletName;
 
-					if (strutsAction != null) {
-						key += StringPool.PERIOD.concat(strutsAction);
+					if (propertyName != null) {
+						key += StringPool.PERIOD.concat(propertyName);
 					}
 
 					emitter.emit(key);

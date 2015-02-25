@@ -20,7 +20,7 @@
 	</command>
 
 	<command name="AutomaticChangesToDisplayStyle" priority="3">
-		<property name="custom.properties" value="navigation.display.style.options=from-level-1-to-all-sublevels$${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true$${line.separator}navigation.display.style.default=" />
+		<property name="custom.properties" value="navigation.display.style.options=from-level-1-to-all-sublevels${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true${line.separator}navigation.display.style.default=" />
 
 		<var name="pageName" value="Navigation Display Test Page" />
 		<var name="portletName" value="Navigation" />
@@ -39,7 +39,7 @@
 	</command>
 
 	<command name="ManualChangesToDisplayStyle" priority="3">
-		<property name="custom.properties" value="navigation.display.style.options=from-level-1-to-all-sublevels$${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true" />
+		<property name="custom.properties" value="navigation.display.style.options=from-level-1-to-all-sublevels${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true" />
 
 		<var name="pageName" value="Navigation Display Test Page" />
 		<var name="portletName" value="Navigation" />
@@ -82,7 +82,7 @@
 	</command>
 
 	<command name="UserPersonalSiteUserGroupPrivatePage" priority="5">
-		<property name="custom.properties" value="layout.user.private.layouts.enabled=false$${line.separator}layout.user.private.layouts.auto.create=false" />
+		<property name="custom.properties" value="layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -157,7 +157,7 @@
 	</command>
 
 	<command name="ValidateReturnToDefaultStyle" priority="3">
-		<property name="custom.properties" value="navigation.display.style.default=from-level-1-with-title$${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true" />
+		<property name="custom.properties" value="navigation.display.style.default=from-level-1-with-title${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true" />
 
 		<var name="pageName" value="Navigation Display Test Page" />
 		<var name="portletName" value="Navigation" />

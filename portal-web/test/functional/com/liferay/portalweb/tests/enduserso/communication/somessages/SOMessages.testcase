@@ -2642,7 +2642,7 @@
 	</command>
 
 	<command name="ViewAutocompleteMenuExcludedSiteProperty" priority="4">
-		<property name="portlet.properties.private-messaging-portlet" value="autocomplete.recipient.type=site$${line.separator}autocomplete.recipient.site.excludes=Guest" />
+		<property name="portlet.properties.private-messaging-portlet" value="autocomplete.recipient.type=site${line.separator}autocomplete.recipient.site.excludes=Guest" />
 
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />

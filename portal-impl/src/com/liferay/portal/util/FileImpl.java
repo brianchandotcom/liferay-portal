@@ -338,6 +338,10 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	public String extractText(
 		InputStream is, String fileName, int maxStringLength) {
 
+		if (maxStringLength == 0) {
+			return StringPool.BLANK;
+		}
+
 		String text = null;
 
 		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();

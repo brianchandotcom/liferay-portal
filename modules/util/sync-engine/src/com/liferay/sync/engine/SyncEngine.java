@@ -101,6 +101,10 @@ public class SyncEngine {
 		return _eventProcessorExecutorService;
 	}
 
+	public static ExecutorService getExecutorService() {
+		return _executorService;
+	}
+
 	public static synchronized boolean isRunning() {
 		return _running;
 	}

@@ -123,7 +123,6 @@ public class Session {
 
 		builder.setConnectTimeout(PropsValues.SYNC_HTTP_CONNECTION_TIMEOUT);
 		builder.setSocketTimeout(PropsValues.SYNC_HTTP_SOCKET_TIMEOUT);
-		builder.setStaleConnectionCheckEnabled(false);
 
 		httpClientBuilder.setDefaultRequestConfig(builder.build());
 
@@ -401,6 +400,11 @@ public class Session {
 			@Override
 			public void writeTo(OutputStream out) throws IOException {
 				CountingOutputStream output = new CountingOutputStream(out) {
+
+					@Override
+					protected void afterWrite(int n) throws IOException {
+						super.afterWrite(n);
+					}
 
 					@Override
 					protected void beforeWrite(int n) {

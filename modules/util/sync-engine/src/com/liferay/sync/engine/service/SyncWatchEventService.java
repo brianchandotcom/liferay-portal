@@ -58,6 +58,10 @@ public class SyncWatchEventService {
 			SyncWatchEvent syncWatchEvent =
 				SyncWatchEventService.fetchSyncWatchEvent(syncWatchEventId);
 
+			if (syncWatchEvent == null) {
+				return;
+			}
+
 			SyncWatchEvent lastSyncWatchEvent = _lastSyncWatchEvents.get(
 				syncWatchEvent.getSyncAccountId());
 

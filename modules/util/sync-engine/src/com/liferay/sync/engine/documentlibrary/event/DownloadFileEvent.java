@@ -66,10 +66,10 @@ public class DownloadFileEvent extends BaseEvent {
 		sb.append(syncFile.getTypeUuid());
 
 		if ((Boolean)getParameterValue("patch")) {
-			sb.append("?patch=true&sourceVersion=");
-			sb.append(getParameterValue("sourceVersion"));
-			sb.append("&targetVersion=");
-			sb.append(getParameterValue("targetVersion"));
+			sb.append("?patch=true&sourceVersionId=");
+			sb.append(getParameterValue("sourceVersionId"));
+			sb.append("&targetVersionId=");
+			sb.append(getParameterValue("targetVersionId"));
 		}
 		else {
 			sb.append("?version=");

@@ -16,6 +16,8 @@ package com.liferay.sync.engine.documentlibrary.event;
 
 import com.liferay.sync.engine.documentlibrary.handler.Handler;
 import com.liferay.sync.engine.documentlibrary.handler.MoveFileEntryHandler;
+import com.liferay.sync.engine.model.SyncFile;
+import com.liferay.sync.engine.service.SyncFileService;
 
 import java.util.Map;
 
@@ -39,6 +41,13 @@ public class MoveFileEntryEvent extends BaseEvent {
 
 	@Override
 	protected void processRequest() throws Exception {
+		SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
+
+		syncFile.setState(SyncFile.STATE_IN_PROGRESS);
+		syncFile.setUiEvent(SyncFile.UI_EVENT_MOVED_LOCAL);
+
+		SyncFileService.update(syncFile);
+
 		processAsynchronousRequest();
 	}
 

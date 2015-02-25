@@ -19,8 +19,8 @@ package com.liferay.portal.kernel.dao.orm;
  */
 public interface ProjectionList extends Projection {
 
-	ProjectionList add(Projection projection);
+	public ProjectionList add(Projection projection);
 
-	ProjectionList add(Projection projection, String alias);
+	public ProjectionList add(Projection projection, String alias);
 
 }

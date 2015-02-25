@@ -48,5 +48,6 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException;
 
-	boolean isDownloadLinkVisible() throws PortalException;
+	public boolean isDownloadLinkVisible() throws PortalException;
+
 }

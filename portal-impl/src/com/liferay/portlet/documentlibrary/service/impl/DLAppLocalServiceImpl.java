@@ -85,6 +85,18 @@ import java.util.List;
  */
 public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
+	@Override
+	public FileEntry addFileEntry(
+			long userId, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, byte[] bytes,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			userId, repositoryId, folderId, sourceFileName, mimeType, null,
+			StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
+	}
+
 	/**
 	 * Adds a file entry and associated metadata based on a byte array.
 	 *

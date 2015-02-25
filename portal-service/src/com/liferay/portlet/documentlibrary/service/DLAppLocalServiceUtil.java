@@ -40,6 +40,15 @@ public class DLAppLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLAppLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
+		long userId, long repositoryId, long folderId,
+		java.lang.String sourceFileName, java.lang.String mimeType,
+		byte[] bytes, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addFileEntry(userId, repositoryId, folderId,
+			sourceFileName, mimeType, bytes, serviceContext);
+	}
 
 	/**
 	* Adds a file entry and associated metadata based on a byte array.

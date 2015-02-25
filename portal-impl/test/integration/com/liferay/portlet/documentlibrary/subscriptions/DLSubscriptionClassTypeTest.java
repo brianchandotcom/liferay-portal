@@ -19,6 +19,11 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -55,9 +60,18 @@ public class DLSubscriptionClassTypeTest
 			long containerModelId, long classTypeId)
 		throws Exception {
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), containerModelId, RandomTestUtil.randomString(),
-			classTypeId);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		DLAppTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
+		DLAppTestUtil.populateServiceContext(serviceContext, classTypeId);
+
+		FileEntry fileEntry =  DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), group.getGroupId(), containerModelId,
+			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomBytes(), serviceContext);
 
 		return fileEntry.getFileEntryId();
 	}
@@ -67,8 +81,15 @@ public class DLSubscriptionClassTypeTest
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			DLFileEntry.class.getName());
 
-		DLFileEntryType fileEntryType = DLAppTestUtil.addDLFileEntryType(
-			group.getGroupId(), ddmStructure.getStructureId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		DLFileEntryType fileEntryType =
+			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				new long[] {ddmStructure.getStructureId()}, serviceContext);
 
 		return fileEntryType.getFileEntryTypeId();
 	}

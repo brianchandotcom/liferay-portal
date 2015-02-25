@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.User;
@@ -44,6 +43,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchContentException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.DBStore;
@@ -190,6 +190,19 @@ public class ConvertDocumentLibraryTest {
 			DBStore.class.getName(), store.getClass().getName());
 	}
 
+	protected FileEntry addFileEntry(
+			long folderId, String fileName, String mimeType, byte[] bytes)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		return DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), folderId,
+			fileName, mimeType, bytes, serviceContext);
+	}
+
 	protected Image addImage() throws Exception {
 		return ImageLocalServiceUtil.updateImage(
 			CounterLocalServiceUtil.increment(),
@@ -236,19 +249,18 @@ public class ConvertDocumentLibraryTest {
 		_convertProcess.setParameterValues(
 			new String[] {DBStore.class.getName(), delete.toString()});
 
-		FileEntry rootFileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".txt");
+		FileEntry rootFileEntry = addFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomBytes());
 
 		Folder folder = DLAppTestUtil.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString());
 
-		FileEntry folderFileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), folder.getFolderId(), "liferay.jpg",
-			ContentTypes.IMAGE_JPEG, "liferay.jpg",
-			FileUtil.getBytes(getClass(), "dependencies/liferay.jpg"),
-			WorkflowConstants.ACTION_PUBLISH);
+		FileEntry folderFileEntry = addFileEntry(
+			folder.getFolderId(), "liferay.jpg", ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(getClass(), "dependencies/liferay.jpg"));
 
 		ImageProcessorUtil.generateImages(
 			null, folderFileEntry.getFileVersion());
@@ -281,9 +293,9 @@ public class ConvertDocumentLibraryTest {
 	}
 
 	protected void testMigrateDL(long folderId) throws Exception {
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), folderId,
-			RandomTestUtil.randomString() + ".txt");
+		FileEntry fileEntry = addFileEntry(
+			folderId, RandomTestUtil.randomString() + ".txt",
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes());
 
 		_convertProcess.convert();
 

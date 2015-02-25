@@ -128,7 +128,12 @@
 		<sequential>
 			<var name="auto.deploy.dir" unset="true" />
 
-			<get-testcase-property property.name="plugins.deployment.type" />
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="plugins.deployment.type" />
+				</then>
+			</if>
 
 			<if>
 				<equals arg1="${plugins.deployment.type}" arg2="osgi" />

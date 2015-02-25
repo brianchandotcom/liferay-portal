@@ -15,11 +15,9 @@
 package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
-import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 
@@ -32,9 +30,10 @@ import java.util.Map;
 /**
  * @author Daniel Kocsis
  * @author Michael C. Han
+ * @author Akos Thurzo
  */
 public class PortletExportBackgroundTaskExecutor
-	extends BaseBackgroundTaskExecutor {
+	extends BaseExportImportBackgroundTaskExecutor {
 
 	public PortletExportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
@@ -46,35 +45,31 @@ public class PortletExportBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 
-		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
+		ExportImportConfiguration exportImportConfiguration =
+			getExportImportConfiguration(backgroundTask);
 
-		long userId = MapUtil.getLong(taskContextMap, "userId");
-		String fileName = MapUtil.getString(taskContextMap, "fileName");
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
 
-		long plid = MapUtil.getLong(taskContextMap, "plid");
-		long groupId = MapUtil.getLong(taskContextMap, "groupId");
-		String portletId = MapUtil.getString(taskContextMap, "portletId");
+		long sourcePlid = MapUtil.getLong(settingsMap, "sourcePlid");
+		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
+		String portletId = MapUtil.getString(settingsMap, "portletId");
 		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)taskContextMap.get("parameterMap");
-		Date startDate = (Date)taskContextMap.get("startDate");
-		Date endDate = (Date)taskContextMap.get("endDate");
+			(Map<String, String[]>)settingsMap.get("parameterMap");
+		Date startDate = (Date)settingsMap.get("startDate");
+		Date endDate = (Date)settingsMap.get("endDate");
 
 		File larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
-			plid, groupId, portletId, parameterMap, startDate, endDate);
+			sourcePlid, sourceGroupId, portletId, parameterMap, startDate,
+			endDate);
+
+		long userId = MapUtil.getLong(settingsMap, "userId");
+		String fileName = MapUtil.getString(settingsMap, "fileName");
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
 			userId, backgroundTask.getBackgroundTaskId(), fileName, larFile);
 
 		return BackgroundTaskResult.SUCCESS;
-	}
-
-	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e) {
-		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(
-			getLocale(backgroundTask), e, backgroundTask.getTaskContextMap());
-
-		return jsonObject.toString();
 	}
 
 }

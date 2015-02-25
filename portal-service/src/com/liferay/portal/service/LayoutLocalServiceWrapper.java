@@ -656,6 +656,22 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	@Override
 	public long exportPortletInfoAsFileInBackground(long userId,
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutLocalService.exportPortletInfoAsFileInBackground(userId,
+			exportImportConfiguration);
+	}
+
+	@Override
+	public long exportPortletInfoAsFileInBackground(long userId,
+		long exportImportConfigurationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutLocalService.exportPortletInfoAsFileInBackground(userId,
+			exportImportConfigurationId);
+	}
+
+	@Override
+	public long exportPortletInfoAsFileInBackground(long userId,
 		java.lang.String taskName, long plid, long groupId,
 		java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
@@ -1285,6 +1301,23 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	@Override
 	public long importLayoutsInBackground(long userId,
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutLocalService.importLayoutsInBackground(userId,
+			exportImportConfiguration, file);
+	}
+
+	@Override
+	public long importLayoutsInBackground(long userId,
+		long exportImportConfigurationId, java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutLocalService.importLayoutsInBackground(userId,
+			exportImportConfigurationId, file);
+	}
+
+	@Override
+	public long importLayoutsInBackground(long userId,
 		java.lang.String taskName, long groupId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file)
@@ -1371,6 +1404,23 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutLocalService.importPortletInfo(userId, portletId, parameterMap,
 			is);
+	}
+
+	@Override
+	public long importPortletInfoInBackground(long userId,
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutLocalService.importPortletInfoInBackground(userId,
+			exportImportConfiguration, file);
+	}
+
+	@Override
+	public long importPortletInfoInBackground(long userId,
+		long exportImportConfigurationId, java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutLocalService.importPortletInfoInBackground(userId,
+			exportImportConfigurationId, file);
 	}
 
 	@Override

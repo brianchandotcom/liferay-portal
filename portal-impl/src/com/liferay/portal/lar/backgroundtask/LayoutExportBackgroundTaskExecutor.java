@@ -15,12 +15,9 @@
 package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
-import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -31,7 +28,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
-import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 
 import java.io.File;
@@ -44,7 +40,7 @@ import java.util.Map;
  * @author Michael C. Han
  */
 public class LayoutExportBackgroundTaskExecutor
-	extends BaseBackgroundTaskExecutor {
+	extends BaseExportImportBackgroundTaskExecutor {
 
 	public LayoutExportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
@@ -56,15 +52,8 @@ public class LayoutExportBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws PortalException {
 
-		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
-
-		long exportImportConfigurationId = MapUtil.getLong(
-			taskContextMap, "exportImportConfigurationId");
-
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(exportImportConfigurationId);
+			getExportImportConfiguration(backgroundTask);
 
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
@@ -107,14 +96,6 @@ public class LayoutExportBackgroundTaskExecutor
 		}
 
 		return BackgroundTaskResult.SUCCESS;
-	}
-
-	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e) {
-		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(
-			getLocale(backgroundTask), e, backgroundTask.getTaskContextMap());
-
-		return jsonObject.toString();
 	}
 
 }

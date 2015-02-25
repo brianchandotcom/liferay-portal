@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(immediate = true, service = PortletToolbarContributorLocator.class)
-public class StrutsPortletToolbarContributorLocator
+public class MVCPortletToolbarContributorLocator
 	extends BasePortletToolbarContributorLocator {
 
 	@Activate
@@ -42,12 +42,12 @@ public class StrutsPortletToolbarContributorLocator
 
 	@Override
 	protected String getParameterName() {
-		return "struts_action";
+		return "mvcPath";
 	}
 
 	@Override
 	protected String getPropertyName() {
-		return "struts.action";
+		return "mvc.path";
 	}
 
 	@Reference(target = "(original.bean=*)", unbind = "-")

@@ -164,7 +164,7 @@ request.setAttribute("search.jsp-queryTerms", queryTerms);
 						<td valign="top">
 							<div class="container">
 								<code>
-									<%= HtmlUtil.escape(hits.getQuery().toString()) %>
+									<%= HtmlUtil.escape(indexer.getQueryString(searchContext, hits.getQuery())) %>
 								</code>
 							</div>
 						</td>

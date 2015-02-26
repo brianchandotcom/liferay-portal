@@ -53,7 +53,7 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 	title='<%= LanguageUtil.get(request, "new-document") %>'
 />
 
-<portlet:actionURL var="addFileEntryURL" name="addFileEntry">
+<portlet:actionURL name="addFileEntry" var="addFileEntryURL">
 	<portlet:param name="mvcPath" value="/add_file_entry.jsp" />
 	<portlet:param name="type" value="<%= DocumentSelectorUtil.getType(request) %>" />
 </portlet:actionURL>

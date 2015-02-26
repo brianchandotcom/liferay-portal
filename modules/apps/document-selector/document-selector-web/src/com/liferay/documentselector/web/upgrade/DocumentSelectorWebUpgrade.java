@@ -55,8 +55,7 @@ public class DocumentSelectorWebUpgrade {
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
 					new String[] {
-						"200",
-						DocumentSelectorPortletKeys.DOCUMENT_SELECTOR
+						"200", DocumentSelectorPortletKeys.DOCUMENT_SELECTOR
 					}
 				};
 			}

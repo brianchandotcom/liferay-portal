@@ -15,7 +15,6 @@
 package com.liferay.documentselector.web.portlet;
 
 import com.liferay.documentselector.web.util.DocumentSelectorUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,8 +44,6 @@ import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileMimeTypeException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
-import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
@@ -59,6 +56,7 @@ import java.io.InputStream;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -89,8 +87,7 @@ import org.osgi.service.component.annotations.Component;
 public class DocumentSelectorPortlet extends MVCPortlet {
 
 	public void addFileEntry(
-			ActionRequest actionRequest,
-			ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		try {
@@ -241,4 +238,5 @@ public class DocumentSelectorPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentSelectorPortlet.class);
+
 }

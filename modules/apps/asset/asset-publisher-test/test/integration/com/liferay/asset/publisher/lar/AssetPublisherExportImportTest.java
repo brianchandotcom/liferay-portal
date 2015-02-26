@@ -42,6 +42,7 @@ import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -64,6 +65,7 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -89,6 +91,13 @@ public class AssetPublisherExportImportTest
 	public String getPortletId() throws Exception {
 		return AssetPublisherPortletKeys.ASSET_PUBLISHER +
 			PortletConstants.INSTANCE_SEPARATOR + RandomTestUtil.randomString();
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
 	}
 
 	@Test

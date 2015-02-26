@@ -16,6 +16,7 @@ package com.liferay.asset.publisher.web.messaging;
 
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.portlet.AssetPublisherPortlet;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.scheduler.TriggerType;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Diaz
@@ -122,6 +124,10 @@ public class CheckAssetEntryMessageListener
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		AssetPublisherUtil.checkAssetEntries();
+	}
+
+	@Reference
+	protected void setPortlet(AssetPublisherPortlet assetPublisherPortlet) {
 	}
 
 	private SchedulerEntry _schedulerEntry;

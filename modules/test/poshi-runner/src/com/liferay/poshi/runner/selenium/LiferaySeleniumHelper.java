@@ -61,7 +61,10 @@ import org.dom4j.io.SAXReader;
 import org.sikuli.api.DesktopScreenRegion;
 import org.sikuli.api.ImageTarget;
 import org.sikuli.api.ScreenRegion;
+import org.sikuli.api.robot.Key;
+import org.sikuli.api.robot.Keyboard;
 import org.sikuli.api.robot.Mouse;
+import org.sikuli.api.robot.desktop.DesktopKeyboard;
 import org.sikuli.api.robot.desktop.DesktopMouse;
 import org.sikuli.api.visual.Canvas;
 import org.sikuli.api.visual.CanvasBuilder.ElementAdder;
@@ -1256,7 +1259,30 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image, String value)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		sikuliClick(liferaySelenium, image);
+
+		liferaySelenium.pause("1000");
+
+		Keyboard keyboard = new DesktopKeyboard();
+
+		if (value.contains("${line.separator}")) {
+			String[] tokens = StringUtil.split(value, "${line.separator}");
+
+			for (int i = 0; i < tokens.length; i++) {
+				keyboard.type(tokens[i]);
+
+				if ((i + 1) < tokens.length) {
+					keyboard.type(Key.ENTER);
+				}
+			}
+
+			if (value.endsWith("${line.separator}")) {
+				keyboard.type(Key.ENTER);
+			}
+		}
+		else {
+			keyboard.type(value);
+		}
 	}
 
 	public static void sikuliUploadCommonFile(

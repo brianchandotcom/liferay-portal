@@ -1,8 +1,6 @@
 Bundle-Name: Liferay Portal Search Elasticsearch
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.portal.search.elasticsearch.spi.*;version=${plugin.full.version}
 Import-Package:\
 	com.liferay.portal.kernel.log.*,\
 	com.liferay.portal.kernel.messaging.*,\

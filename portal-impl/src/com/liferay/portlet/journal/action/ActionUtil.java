@@ -480,6 +480,23 @@ public class ActionUtil {
 		return getFolders(request);
 	}
 
+	public static JournalArticle getPreviewArticle(
+			PortletRequest portletRequest)
+		throws Exception {
+
+		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+		String articleId = ParamUtil.getString(portletRequest, "articleId");
+		double version = ParamUtil.getDouble(
+			portletRequest, "version", JournalArticleConstants.VERSION_DEFAULT);
+
+		JournalArticle article = JournalArticleServiceUtil.getArticle(
+			groupId, articleId, version);
+
+		JournalUtil.addRecentArticle(portletRequest, article);
+
+		return article;
+	}
+
 	public static boolean hasArticle(ActionRequest actionRequest)
 		throws Exception {
 
@@ -623,23 +640,6 @@ public class ActionUtil {
 		renderRequest.setAttribute(WebKeys.LANGUAGE_ID, languageId);
 
 		return languageId;
-	}
-
-	public static JournalArticle getPreviewArticle
-			(PortletRequest portletRequest)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(portletRequest, "groupId");
-		String articleId = ParamUtil.getString(portletRequest, "articleId");
-		double version = ParamUtil.getDouble(
-			portletRequest, "version", JournalArticleConstants.VERSION_DEFAULT);
-
-		JournalArticle article = JournalArticleServiceUtil.getArticle(
-			groupId, articleId, version);
-
-		JournalUtil.addRecentArticle(portletRequest, article);
-
-		return article;
 	}
 
 }

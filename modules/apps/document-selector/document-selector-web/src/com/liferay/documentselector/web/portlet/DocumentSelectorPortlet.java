@@ -15,7 +15,10 @@
 package com.liferay.documentselector.web.portlet;
 
 import com.liferay.documentselector.web.util.DocumentSelectorUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -74,6 +77,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.system=true",
 		"javax.portlet.display-name=Document Selector",
 		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.resource-bundle=content.Language",
@@ -116,7 +120,16 @@ public class DocumentSelectorPortlet extends MVCPortlet {
 			}
 		}
 		catch (Exception e) {
-			handleUploadException(actionRequest, actionResponse, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e);
+			}
+
+			if (isSessionErrorException(e)) {
+				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else {
+				throw e;
+			}
 		}
 	}
 
@@ -214,8 +227,11 @@ public class DocumentSelectorPortlet extends MVCPortlet {
 			cause instanceof FileMimeTypeException ||
 			cause instanceof FileNameException ||
 			cause instanceof FileSizeException ||
+			cause instanceof InvalidFileVersionException ||
 			cause instanceof LiferayFileItemException ||
+			cause instanceof NoSuchFileEntryException ||
 			cause instanceof NoSuchFolderException ||
+			cause instanceof PrincipalException ||
 			cause instanceof SourceFileNameException ||
 			cause instanceof StorageFieldRequiredException) {
 
@@ -225,62 +241,6 @@ public class DocumentSelectorPortlet extends MVCPortlet {
 		return false;
 	}
 
-	protected void handleUploadException(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			Exception e)
-		throws Exception {
-
-		if (e instanceof AssetCategoryException ||
-			e instanceof AssetTagException) {
-
-			SessionErrors.add(actionRequest, e.getClass(), e);
-		}
-		else if (e instanceof AntivirusScannerException ||
-				 e instanceof DuplicateFileException ||
-				 e instanceof DuplicateFolderNameException ||
-				 e instanceof FileExtensionException ||
-				 e instanceof FileMimeTypeException ||
-				 e instanceof FileNameException ||
-				 e instanceof FileSizeException ||
-				 e instanceof LiferayFileItemException ||
-				 e instanceof NoSuchFolderException ||
-				 e instanceof SourceFileNameException ||
-				 e instanceof StorageFieldRequiredException) {
-
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
-			if (uploadException != null) {
-				String uploadExceptionRedirect = ParamUtil.getString(
-					actionRequest, "uploadExceptionRedirect");
-
-				actionResponse.sendRedirect(uploadExceptionRedirect);
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				return;
-			}
-
-			if (e instanceof AntivirusScannerException) {
-				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
-			else {
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-		}
-		else if (e instanceof InvalidFileVersionException ||
-				 e instanceof NoSuchFileEntryException ||
-				 e instanceof PrincipalException) {
-
-			SessionErrors.add(actionRequest, e.getClass());
-
-			include("/error.jsp", actionRequest, actionResponse);
-		}
-		else {
-			throw e;
-		}
-
-	}
-
+	private static final Log _log = LogFactoryUtil.getLog(
+		DocumentSelectorPortlet.class);
 }

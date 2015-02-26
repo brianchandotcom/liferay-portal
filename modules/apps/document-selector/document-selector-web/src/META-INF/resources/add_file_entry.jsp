@@ -53,12 +53,12 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 	title='<%= LanguageUtil.get(request, "new-document") %>'
 />
 
-<portlet:actionURL var="editFileEntryURL" name="addFileEntry">
-	<portlet:param name="uploadExceptionRedirect" value="<%= currentURL %>" />
+<portlet:actionURL var="addFileEntryURL" name="addFileEntry">
+	<portlet:param name="mvcPath" value="/add_file_entry.jsp" />
 	<portlet:param name="type" value="<%= DocumentSelectorUtil.getType(request) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editFileEntryURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry();" %>'>
+<aui:form action="<%= addFileEntryURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="uploadProgressId" type="hidden" value="<%= uploadProgressId %>" />
@@ -96,6 +96,8 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 		<liferay-ui:message key="the-source-file-does-not-have-the-same-extension-as-the-original-file" />
 	</liferay-ui:error>
 
+	<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
+
 	<%
 	long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
 
@@ -111,6 +113,12 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 	<liferay-ui:asset-categories-error />
 
 	<liferay-ui:asset-tags-error />
+
+	<liferay-ui:error exception="<%= InvalidFileVersionException.class %>" message="file-version-is-invalid" />
+
+	<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="the-document-could-not-be-found" />
+
+	<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
 
 	<aui:fieldset>
 		<aui:field-wrapper>

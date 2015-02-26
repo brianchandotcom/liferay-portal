@@ -162,32 +162,10 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		return newAddresses;
 	}
 
-	protected void handleResponse(
-		Address address, ClusterRequest clusterRequest, Object returnValue,
-		Exception exception) {
-
-		ClusterNodeResponse clusterNodeResponse =
-			_clusterExecutorImpl.generateClusterNodeResponse(
-				clusterRequest, returnValue, exception);
-
-		Channel channel = _clusterExecutorImpl.getControlChannel();
-
-		try {
-			channel.send(
-				(org.jgroups.Address)address.getRealAddress(),
-				clusterNodeResponse);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to send response message " + clusterNodeResponse, e);
-		}
-		catch (Throwable t) {
-			_log.error(t, t);
-		}
-	}
-
 	protected void processClusterRequest(
 		ClusterRequest clusterRequest, Address sourceAddress) {
+
+		Object responsePayload = null;
 
 		ClusterMessageType clusterMessageType =
 			clusterRequest.getClusterMessageType();
@@ -199,55 +177,65 @@ public class ClusterRequestReceiver extends BaseReceiver {
 				sourceAddress, clusterRequest.getOriginatingClusterNode());
 
 			if (clusterMessageType.equals(ClusterMessageType.NOTIFY)) {
-				handleResponse(sourceAddress, clusterRequest, null, null);
-			}
-
-			return;
-		}
-
-		MethodHandler methodHandler = clusterRequest.getMethodHandler();
-
-		Object returnValue = null;
-		Exception exception = null;
-
-		if (methodHandler != null) {
-			try {
-				ClusterInvokeThreadLocal.setEnabled(false);
-
-				returnValue = methodHandler.invoke();
-			}
-			catch (Exception e) {
-				exception = e;
-
-				_log.error("Unable to invoke method " + methodHandler, e);
-			}
-			finally {
-				ClusterInvokeThreadLocal.setEnabled(true);
+				responsePayload = ClusterRequest.createClusterRequest(
+					ClusterMessageType.UPDATE,
+					_clusterExecutorImpl.getLocalClusterNode());
 			}
 		}
 		else {
-			exception = new ClusterException(
-				"Payload is not of type " + MethodHandler.class.getName());
+			MethodHandler methodHandler = clusterRequest.getMethodHandler();
+
+			Object returnValue = null;
+			Exception exception = null;
+
+			if (methodHandler != null) {
+				try {
+					ClusterInvokeThreadLocal.setEnabled(false);
+
+					returnValue = methodHandler.invoke();
+				}
+				catch (Exception e) {
+					exception = e;
+
+					_log.error("Unable to invoke method " + methodHandler, e);
+				}
+				finally {
+					ClusterInvokeThreadLocal.setEnabled(true);
+				}
+			}
+			else {
+				exception = new ClusterException(
+					"Payload is not of type " + MethodHandler.class.getName());
+			}
+
+			if (!clusterRequest.isFireAndForget()) {
+				responsePayload =
+					_clusterExecutorImpl.generateClusterNodeResponse(
+						clusterRequest, returnValue, exception);
+			}
 		}
 
-		if (!clusterRequest.isFireAndForget()) {
-			handleResponse(
-				sourceAddress, clusterRequest, returnValue, exception);
+		if (responsePayload == null) {
+			return;
+		}
+
+		Channel channel = _clusterExecutorImpl.getControlChannel();
+
+		try {
+			channel.send(
+				(org.jgroups.Address)sourceAddress.getRealAddress(),
+				responsePayload);
+		}
+		catch (Exception e) {
+			_log.error("Unable to send message " + responsePayload, e);
+		}
+		catch (Throwable t) {
+			_log.error(t, t);
 		}
 	}
 
 	protected void processClusterResponse(
 		ClusterNodeResponse clusterNodeResponse, Address sourceAddress) {
-
-		ClusterMessageType clusterMessageType =
-			clusterNodeResponse.getClusterMessageType();
-
-		if (clusterMessageType.equals(ClusterMessageType.NOTIFY)) {
-			_clusterExecutorImpl.memberJoined(
-				sourceAddress, clusterNodeResponse.getClusterNode());
-
-			return;
-		}
 
 		String uuid = clusterNodeResponse.getUuid();
 

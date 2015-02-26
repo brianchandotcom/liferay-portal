@@ -16,8 +16,4 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%
-namespace = PortalUtil.getPortletNamespace(PortletKeys.SEARCH);
-
-String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_search_init");
-%>
+<liferay-portlet:runtime portletName="com_liferay_search_web_SearchPortlet" />

@@ -16,7 +16,7 @@ package com.liferay.portal.staging;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -117,7 +117,7 @@ public class StagingLocalizationTest {
 
 		File file = LayoutLocalServiceUtil.exportLayoutsAsFile(
 			_sourceGroup.getGroupId(), false, null,
-			StagingUtil.getStagingParameters(),
+			ExportImportConfigurationParameterMapFactory.buildParameterMap(),
 			new Date(System.currentTimeMillis() - Time.MINUTE), new Date());
 
 		CompanyTestUtil.resetCompanyLocales(
@@ -125,7 +125,8 @@ public class StagingLocalizationTest {
 
 		LayoutLocalServiceUtil.importLayouts(
 			TestPropsValues.getUserId(), _targetGroup.getGroupId(), false,
-			StagingUtil.getStagingParameters(), file);
+			ExportImportConfigurationParameterMapFactory.buildParameterMap(),
+			file);
 
 		JournalArticleResource articleResource =
 			JournalArticleResourceLocalServiceUtil.

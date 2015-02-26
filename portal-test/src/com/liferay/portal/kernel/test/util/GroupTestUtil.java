@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.test.util;
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -167,7 +167,8 @@ public class GroupTestUtil {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		Map<String, String[]> parameters = StagingUtil.getStagingParameters();
+		Map<String, String[]> parameters =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap();
 
 		parameters.put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,

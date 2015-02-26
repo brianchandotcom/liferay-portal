@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lar.lifecycle;
 
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEventListenerRegistryUtil;
@@ -89,8 +90,9 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 		try {
 			layoutExporter.exportLayoutsAsFile(
-				0, false, new long[0], StagingUtil.getStagingParameters(),
-				new Date(), new Date());
+				0, false, new long[0],
+				ExportImportConfigurationParameterMapFactory.
+					buildParameterMap(), new Date(), new Date());
 		}
 		catch (Throwable t) {
 			if (_log.isInfoEnabled()) {
@@ -110,7 +112,8 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 		try {
 			layoutImporter.importLayouts(
 				TestPropsValues.getUserId(), 0, false,
-				StagingUtil.getStagingParameters(), null);
+				ExportImportConfigurationParameterMapFactory.
+					buildParameterMap(), null);
 		}
 		catch (Throwable t) {
 			if (_log.isInfoEnabled()) {
@@ -129,7 +132,8 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 			StagingUtil.publishLayouts(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.nextInt(), false, new long[0],
-				StagingUtil.getStagingParameters(), new Date(), new Date());
+				ExportImportConfigurationParameterMapFactory.
+					buildParameterMap(), new Date(), new Date());
 		}
 		catch (Throwable t) {
 			if (_log.isInfoEnabled()) {
@@ -150,8 +154,8 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 		try {
 			portletExporter.exportPortletInfoAsFile(
 				RandomTestUtil.nextLong(), _group.getGroupId(),
-				StringPool.BLANK, StagingUtil.getStagingParameters(),
-				new Date(), new Date());
+				StringPool.BLANK, ExportImportConfigurationParameterMapFactory.
+					buildParameterMap(), new Date(), new Date());
 		}
 		catch (Throwable t) {
 			if (_log.isInfoEnabled()) {
@@ -171,7 +175,8 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 		try {
 			portletImporter.importPortletInfo(
 				TestPropsValues.getUserId(), 0, 0, StringPool.BLANK,
-				StagingUtil.getStagingParameters(), null);
+				ExportImportConfigurationParameterMapFactory.
+					buildParameterMap(), null);
 		}
 		catch (Throwable t) {
 			if (_log.isInfoEnabled()) {
@@ -243,7 +248,8 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_liveGroup.getGroupId(), false, (long[])null,
-			StagingUtil.getStagingParameters(), startDate, endDate);
+			ExportImportConfigurationParameterMapFactory.buildParameterMap(),
+			startDate, endDate);
 
 		Assert.assertTrue(
 			_firedExportImportLifecycleEventsMap.containsKey(

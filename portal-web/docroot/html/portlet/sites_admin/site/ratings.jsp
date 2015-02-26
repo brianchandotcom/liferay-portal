@@ -29,19 +29,19 @@ else {
 }
 
 GroupPortletRatingsDefinitionDisplayContext groupPortletRatingsDefinitionDisplayContext = new GroupPortletRatingsDefinitionDisplayContext(groupTypeSettings, request);
+
+PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
+
+CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDisplayContext = new CompanyPortletRatingsDefinitionDisplayContext(companyPortletPreferences, request);
 %>
 
 <liferay-ui:error-marker key="errorSection" value="ratings" />
 
 <h3><liferay-ui:message key="ratings" /></h3>
 
-<div class="alert alert-info">
-	<p><liferay-ui:message key="changing-ratings-type-could-lead-to-inaccurate-information" /></p>
-</div>
+<p><liferay-ui:message key="select-the-ratings-type-for-the-following-applications" /></p>
 
-<p><liferay-ui:message key="select-the-ratings-type-for-the-following-portlets" /></p>
-
-<aui:fieldset>
+<aui:fieldset id="ratingsSettingsContainer">
 
 	<%
 	Map<String, Map<String, RatingsType>> groupRatingsTypeMaps = groupPortletRatingsDefinitionDisplayContext.getGroupRatingsTypeMaps();
@@ -66,6 +66,7 @@ GroupPortletRatingsDefinitionDisplayContext groupPortletRatingsDefinitionDisplay
 		%>
 
 			<aui:select label="<%= (classNames.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "TypeSettingsProperties--" + propertyKey + "--" %>'>
+				<aui:option label='<%= LanguageUtil.format(request, "default-value-x", companyPortletRatingsDefinitionDisplayContext.getRatingsType(portletId, className)) %>' selected="<%= ratingsType == null %>" value="<%= StringPool.BLANK %>" />
 
 				<%
 				for (RatingsType curRatingsType : RatingsType.values()) {
@@ -85,3 +86,30 @@ GroupPortletRatingsDefinitionDisplayContext groupPortletRatingsDefinitionDisplay
 	%>
 
 </aui:fieldset>
+
+<aui:script use="aui-base">
+	var ratingsSettingsContainer = A.one('#<portlet:namespace />ratingsSettingsContainer');
+
+	var ratingsTypeChanged = false;
+
+	ratingsSettingsContainer.delegate(
+		'change',
+		function(event) {
+			ratingsTypeChanged = true;
+		},
+		'select'
+	);
+
+	var form = A.one('#<portlet:namespace />fm');
+
+	form.on(
+		'submit',
+		function(event) {
+			if (ratingsTypeChanged && !confirm('<%= UnicodeLanguageUtil.get(request, "if-there-is-existing-ratings-data-those-values-will-be-adapted-to-match-the-new-ratings-type-although-this-may-not-be-accurate") %>')) {
+				event.preventDefault();
+
+				event.stopImmediatePropagation();
+			}
+		}
+	);
+</aui:script>

@@ -44,6 +44,13 @@ public class CompanyPortletRatingsDefinitionDisplayContext {
 		return Collections.unmodifiableMap(_companyRatingsTypeMaps);
 	}
 
+	public RatingsType getRatingsType(String portletId, String className) {
+		Map<String, RatingsType> ratingsTypeMap = _companyRatingsTypeMaps.get(
+			portletId);
+
+		return ratingsTypeMap.get(className);
+	}
+
 	private void _populateRatingsTypeMaps(
 		PortletPreferences companyPortletPreferences,
 		HttpServletRequest request) {

@@ -112,9 +112,10 @@ if (ratingsEntry != null) {
 
 							<%
 							for (int i = 1; i <= numberOfStars; i++) {
+								double averageNumberOfStars = averageScore * numberOfStars;
 							%>
 
-								<span class="rating-element <%= (i <= averageIndex) ? "icon-star" : "icon-star-empty" %>" title="<%= TrashUtil.isInTrash(className, classPK) ? LanguageUtil.get(request, "ratings-are-disabled-because-this-entry-is-in-the-recycle-bin") : ((i == 1) ? LanguageUtil.format(request, ((averageScore * numberOfStars == 1.0) ? "the-average-rating-is-x-star-out-of-x" : "the-average-rating-is-x-stars-out-of-x"), new Object[] {averageScore * numberOfStars, numberOfStars}, false) : StringPool.BLANK) %>"></span>
+								<span class="rating-element <%= (i <= averageIndex) ? "icon-star" : "icon-star-empty" %>" title="<%= TrashUtil.isInTrash(className, classPK) ? LanguageUtil.get(request, "ratings-are-disabled-because-this-entry-is-in-the-recycle-bin") : ((i == 1) ? LanguageUtil.format(request, ((averageNumberOfStars == 1.0) ? "the-average-rating-is-x-star-out-of-x" : "the-average-rating-is-x-stars-out-of-x"), new Object[] {averageNumberOfStars, numberOfStars}, false) : StringPool.BLANK) %>"></span>
 
 							<%
 							}

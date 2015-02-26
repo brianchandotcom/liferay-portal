@@ -226,11 +226,8 @@ public class ClusterRequestReceiver extends BaseReceiver {
 				(org.jgroups.Address)sourceAddress.getRealAddress(),
 				responsePayload);
 		}
-		catch (Exception e) {
-			_log.error("Unable to send message " + responsePayload, e);
-		}
 		catch (Throwable t) {
-			_log.error(t, t);
+			_log.error("Unable to send message " + responsePayload, t);
 		}
 	}
 

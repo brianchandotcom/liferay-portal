@@ -3,10 +3,7 @@ function ${namespace}openDocument(webDavURL) {
 		webDavURL,
 		null,
 		function(exception) {
-			var errorMessage = AUI._.sub(
-				'${errorMessage}',
-				[exception.message]
-			);
+			var errorMessage = AUI._.sub('${errorMessage}', exception.message);
 
 			var openMSOfficeError = AUI.$('#${namespace}openMSOfficeError');
 

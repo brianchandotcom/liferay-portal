@@ -39,7 +39,7 @@
 
 		var containerNode = AUI.$('#${portletNamespace}${namespacedFieldName}Container');
 
-		if (containerNode.is(':hidden')) {
+		if (containerNode.hasClass('hide')) {
 			toggleText = '${languageUtil.get(locale, "hide")}';
 		}
 

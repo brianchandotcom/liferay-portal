@@ -16,7 +16,6 @@ package com.liferay.asset.publisher.util;
 
 import com.liferay.arquillian.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -28,7 +27,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetVocabulary;
@@ -46,7 +44,6 @@ import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,12 +56,6 @@ import org.springframework.mock.web.portlet.MockPortletRequest;
  */
 @RunWith(Arquillian.class)
 public class AssetPublisherServiceTest {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -181,6 +172,10 @@ public class AssetPublisherServiceTest {
 
 		Assert.assertEquals(expectedAssetEntries, filteredAssetEntries);
 	}
+
+	@Rule
+	public final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	protected void addAssetCategories(long vocabularyId) throws Exception {
 		for (String assetCategoryName : _ASSET_CATEGORY_NAMES) {

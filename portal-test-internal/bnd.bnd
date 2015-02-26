@@ -3,9 +3,12 @@ Bundle-SymbolicName: portal-test-internal
 Bundle-Version: 7.0.0
 Export-Package:\
 	com.liferay.portal.lar.test,\
+	com.liferay.portal.service.test,\
 	com.liferay.portal.test.log,\
 	com.liferay.portal.test.rule,\
 	com.liferay.portal.test.rule.callback,\
-	com.liferay.portlet.asset.util.test
+	com.liferay.portal.util.test,\
+	com.liferay.portlet.asset.util.test,\
+	com.liferay.portlet.journal.util.test
 Import-Package: *;resolution:=optional
 Include-Resource: classes

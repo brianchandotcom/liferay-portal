@@ -6,14 +6,20 @@ Export-Package:\
 	com.liferay.portal.kernel.test.rule,\
 	com.liferay.portal.kernel.test.rule.callback,\
 	com.liferay.portal.kernel.test.util,\
+	com.liferay.portlet.documentlibrary.util.test,\
+	com.liferay.portlet.dynamicdatalists.util.test,\
+	com.liferay.portlet.dynamicdatamapping.util.test,\
 	com.liferay.portlet.messageboards.util.test,\
 	com.liferay.portlet.ratings.util.test,\
 	junit.*,\
 	org.hamcrest.*,\
-	org.junit.*
+	org.junit.*,\
+	org.springframework.mock.web.portlet
+Import-Package: *;resolution:=optional
 Include-Resource:\
 	classes,\
 	@${project.dir}/../lib/development/dumbster.jar,\
 	@${project.dir}/../lib/development/hamcrest-core.jar,\
 	@${project.dir}/../lib/development/junit.jar,\
+	@${project.dir}/../lib/development/spring-test.jar,\
 	@${project.dir}/../lib/portal/aspectj-rt.jar

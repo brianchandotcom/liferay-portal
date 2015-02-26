@@ -625,7 +625,10 @@ public class ActionUtil {
 		return languageId;
 	}
 
-	protected void getArticle(PortletRequest portletRequest) throws Exception {
+	public static JournalArticle getPreviewArticle
+			(PortletRequest portletRequest)
+		throws Exception {
+
 		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 		String articleId = ParamUtil.getString(portletRequest, "articleId");
 		double version = ParamUtil.getDouble(
@@ -634,9 +637,9 @@ public class ActionUtil {
 		JournalArticle article = JournalArticleServiceUtil.getArticle(
 			groupId, articleId, version);
 
-		portletRequest.setAttribute(WebKeys.JOURNAL_ARTICLE, article);
-
 		JournalUtil.addRecentArticle(portletRequest, article);
+
+		return article;
 	}
 
 }

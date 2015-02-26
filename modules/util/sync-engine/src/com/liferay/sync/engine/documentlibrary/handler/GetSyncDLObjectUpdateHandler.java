@@ -28,6 +28,7 @@ import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
+import com.liferay.sync.engine.util.SyncEngineUtil;
 
 import java.io.IOException;
 
@@ -63,8 +64,26 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		SyncDLObjectUpdate syncDLObjectUpdate = objectMapper.readValue(
 			response, new TypeReference<SyncDLObjectUpdate>() {});
 
+		boolean firedProcessingState = false;
+		long start = System.currentTimeMillis();
+
 		for (SyncFile targetSyncFile : syncDLObjectUpdate.getSyncDLObjects()) {
 			processSyncFile(targetSyncFile);
+
+			if (!firedProcessingState &&
+				((System.currentTimeMillis() - start) > 1000)) {
+
+				SyncEngineUtil.fireSyncEngineStateChanged(
+					getSyncAccountId(),
+					SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSING);
+
+				firedProcessingState = true;
+			}
+		}
+
+		if (firedProcessingState) {
+			SyncEngineUtil.fireSyncEngineStateChanged(
+				getSyncAccountId(), SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSED);
 		}
 
 		if (getParameterValue("parentFolderId") == null) {

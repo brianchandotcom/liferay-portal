@@ -37,7 +37,7 @@ if (folder != null) {
 		title="home"
 	/>
 
-	<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
+	<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
 
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();

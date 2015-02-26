@@ -34,14 +34,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-	@Component(
-		property = {
-			"javax.portlet.name=" + AssetTagsCompilerPortletKeys.ASSET_TAGS_COMPILER
-		},
-		service = FriendlyURLMapper.class
-	)
-	public class AssetTagsCompilerFriendlyURLMapper
-		extends BaseFriendlyURLMapper {
+@Component(
+	property = {
+		"javax.portlet.name=" + AssetTagsCompilerPortletKeys.ASSET_TAGS_COMPILER
+	},
+	service = FriendlyURLMapper.class
+)
+public class AssetTagsCompilerFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 	@Override
 	public String buildPath(LiferayPortletURL liferayPortletURL) {

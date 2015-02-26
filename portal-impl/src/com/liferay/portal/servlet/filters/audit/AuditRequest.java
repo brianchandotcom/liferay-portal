@@ -32,10 +32,10 @@ public class AuditRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public String getRemoteAddr() {
-		String ip = _request.getHeader(HttpHeaders.X_FORWARDED_FOR);
+		String ipAddress = _request.getHeader(HttpHeaders.X_FORWARDED_FOR);
 
-		if (ip != null) {
-			return ip;
+		if (ipAddress != null) {
+			return ipAddress;
 		}
 
 		return super.getRemoteAddr();

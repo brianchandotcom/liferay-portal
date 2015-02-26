@@ -39,13 +39,9 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 
 <h3><liferay-ui:message key="ratings" /></h3>
 
-<div class="alert alert-info">
-	<p><liferay-ui:message key="changing-ratings-type-could-lead-to-inaccurate-information" /></p>
-</div>
-
 <p><liferay-ui:message key="select-the-ratings-type-for-the-following-portlets" /></p>
 
-<aui:fieldset>
+<aui:fieldset id="ratingsSettingsContainer">
 
 	<%
 	Map<String, Map<String, RatingsType>> groupRatingsTypeMaps = groupPortletRatingsDefinitionDisplayContext.getGroupRatingsTypeMaps();
@@ -90,3 +86,30 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 	%>
 
 </aui:fieldset>
+
+<aui:script use="aui-base">
+	var ratingsSettingsContainer = A.one('#<portlet:namespace />ratingsSettingsContainer');
+
+	var ratingsTypeChanged = false;
+
+	ratingsSettingsContainer.delegate(
+		'change',
+		function(event) {
+			ratingsTypeChanged = true;
+		},
+		'select'
+	);
+
+	var form = A.one('#<portlet:namespace />fm');
+
+	form.on(
+		'submit',
+		function(event) {
+			if (ratingsTypeChanged && !confirm('<%= UnicodeLanguageUtil.get(request, "the-previous-ratings-values-will-be-adapted-to-match-the-new-ratings-type") %>')) {
+				event.preventDefault();
+
+				event.stopImmediatePropagation();
+			}
+		}
+	);
+</aui:script>

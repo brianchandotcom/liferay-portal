@@ -442,19 +442,19 @@ public class AssetPublisherDisplayContext {
 		return _portletResource;
 	}
 
-	public long[] getReferencedEntitiesGroupIds() throws PortalException {
+	public long[] getReferencedModelsGroupIds() throws PortalException {
 
-		// Referenced entites are asset subtypes, tags or categories that
+		// Referenced models are asset subtypes, tags or categories that
 		// are used to filter assets and can belong to a different scope of
 		// the asset they are associated to
 
-		if (_referencedEntitiesGroupIds == null) {
-			_referencedEntitiesGroupIds =
+		if (_referencedModelsGroupIds == null) {
+			_referencedModelsGroupIds =
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(
 					getGroupIds(), true);
 		}
 
-		return _referencedEntitiesGroupIds;
+		return _referencedModelsGroupIds;
 	}
 
 	public String getRootPortletId() {
@@ -1089,7 +1089,7 @@ public class AssetPublisherDisplayContext {
 	private Long _portletDisplayDDMTemplateId;
 	private final PortletPreferences _portletPreferences;
 	private String _portletResource;
-	private long[] _referencedEntitiesGroupIds;
+	private long[] _referencedModelsGroupIds;
 	private final HttpServletRequest _request;
 	private String _rootPortletId;
 	private Integer _rssDelta;

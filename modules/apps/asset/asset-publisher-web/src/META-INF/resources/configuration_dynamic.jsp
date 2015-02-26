@@ -113,7 +113,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
 						ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
 
-						List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(assetPublisherDisplayContext.getReferencedEntitiesGroupIds(), locale);
+						List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(assetPublisherDisplayContext.getReferencedModelsGroupIds(), locale);
 
 						if (classTypes.isEmpty()) {
 							continue;
@@ -297,7 +297,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							String categoryIds = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);
 
 							if (Validator.isNotNull(tagNames) || Validator.isNotNull(categoryIds) || (queryLogicIndexes.length == 1)) {
-								request.setAttribute("configuration.jsp-categorizableGroupIds", assetPublisherDisplayContext.getReferencedEntitiesGroupIds());
+								request.setAttribute("configuration.jsp-categorizableGroupIds", assetPublisherDisplayContext.getReferencedModelsGroupIds());
 								request.setAttribute("configuration.jsp-index", String.valueOf(index));
 								request.setAttribute("configuration.jsp-queryLogicIndex", String.valueOf(queryLogicIndex));
 
@@ -572,7 +572,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		<%
 		ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
 
-		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(assetPublisherDisplayContext.getReferencedEntitiesGroupIds(), locale);
+		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(assetPublisherDisplayContext.getReferencedModelsGroupIds(), locale);
 
 		if (assetAvailableClassTypes.isEmpty()) {
 			continue;

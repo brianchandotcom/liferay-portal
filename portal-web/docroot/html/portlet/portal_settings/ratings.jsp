@@ -30,7 +30,7 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 	<p><liferay-ui:message key="changing-ratings-type-could-lead-to-inaccurate-information" /></p>
 </div>
 
-<p><liferay-ui:message key="select-the-ratings-type-for-the-following-portlets" /></p>
+<p><liferay-ui:message key="select-the-default-ratings-type-for-the-following-portlets" /></p>
 
 <aui:fieldset>
 

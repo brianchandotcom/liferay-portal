@@ -60,9 +60,12 @@ import com.liferay.portlet.journal.action.ActionUtil;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
+import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFeedServiceUtil;
+import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.util.RSSUtil;
@@ -794,36 +797,31 @@ public class JournalPortlet extends MVCPortlet {
 			}
 		}
 	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
+	
+	public void addFolder(
+			ActionRequest actionRequest, ActionResponse actionResponse) 
 		throws Exception {
 
-		try {
-			ActionUtil.getFolder(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFolderException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.journal.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.journal.edit_folder"));
+		updateFolder(actionRequest, actionResponse);
+	}
+	
+	public void deleteFolders(
+			ActionRequest actionRequest, ActionResponse actionResponse) 
+		throws Exception {
+		
+		doDeleteFolders(actionRequest, actionResponse, false);
+	}
+	
+	public void moveFoldersToTrash(
+			ActionRequest actionRequest, ActionResponse actionResponse) 
+		throws Exception {
+		
+		doDeleteFolders(actionRequest, actionResponse, true);
 	}
 
-	public void deleteFolders(
-			ActionRequest actionRequest, boolean moveToTrash)
+	protected void doDeleteFolders(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			boolean moveToTrash)
 		throws Exception {
 
 		long[] deleteFolderIds = null;
@@ -859,7 +857,8 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
-	public void subscribeFolder(ActionRequest actionRequest)
+	public void subscribeFolder(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -871,7 +870,8 @@ public class JournalPortlet extends MVCPortlet {
 			themeDisplay.getScopeGroupId(), folderId);
 	}
 
-	public void unsubscribeFolder(ActionRequest actionRequest)
+	public void unsubscribeFolder(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -883,7 +883,10 @@ public class JournalPortlet extends MVCPortlet {
 			themeDisplay.getScopeGroupId(), folderId);
 	}
 
-	public void updateFolder(ActionRequest actionRequest) throws Exception {
+	public void updateFolder(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
 		long parentFolderId = ParamUtil.getLong(
@@ -922,7 +925,8 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
-	public void updateWorkflowDefinitions(ActionRequest actionRequest)
+	public void updateWorkflowDefinitions(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long[] ddmStructureIds = StringUtil.split(

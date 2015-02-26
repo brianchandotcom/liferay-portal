@@ -107,7 +107,7 @@ if (fileEntryId != 0) {
 </div>
 
 <liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/document_selector/view" />
+	<portlet:param name="mvcPath" value="/view.jsp" />
 	<portlet:param name="tabs1Names" value="documents" />
 	<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 	<portlet:param name="checkContentDisplayPage" value="true" />

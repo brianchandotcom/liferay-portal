@@ -227,9 +227,7 @@ public class DocumentSelectorPortlet extends MVCPortlet {
 			cause instanceof FileMimeTypeException ||
 			cause instanceof FileNameException ||
 			cause instanceof FileSizeException ||
-			cause instanceof InvalidFileVersionException ||
 			cause instanceof LiferayFileItemException ||
-			cause instanceof NoSuchFileEntryException ||
 			cause instanceof NoSuchFolderException ||
 			cause instanceof PrincipalException ||
 			cause instanceof SourceFileNameException ||

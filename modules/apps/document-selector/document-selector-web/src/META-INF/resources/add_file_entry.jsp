@@ -92,6 +92,8 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 	<liferay-ui:error exception="<%= FileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 	<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
 
+	<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+
 	<liferay-ui:error exception="<%= SourceFileNameException.class %>">
 		<liferay-ui:message key="the-source-file-does-not-have-the-same-extension-as-the-original-file" />
 	</liferay-ui:error>
@@ -113,12 +115,6 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 	<liferay-ui:asset-categories-error />
 
 	<liferay-ui:asset-tags-error />
-
-	<liferay-ui:error exception="<%= InvalidFileVersionException.class %>" message="file-version-is-invalid" />
-
-	<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="the-document-could-not-be-found" />
-
-	<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
 
 	<aui:fieldset>
 		<aui:field-wrapper>

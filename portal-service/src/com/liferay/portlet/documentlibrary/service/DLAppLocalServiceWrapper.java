@@ -32,6 +32,16 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 		_dlAppLocalService = dlAppLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
+		long userId, long repositoryId, long folderId,
+		java.lang.String sourceFileName, java.lang.String mimeType,
+		byte[] bytes, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppLocalService.addFileEntry(userId, repositoryId, folderId,
+			sourceFileName, mimeType, bytes, serviceContext);
+	}
+
 	/**
 	* Adds a file entry and associated metadata based on a byte array.
 	*

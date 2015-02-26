@@ -18,16 +18,19 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
@@ -200,15 +203,23 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
-		FileEntry file1 = DLAppTestUtil.addFileEntry(
-			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1.txt");
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+
+		FileEntry file1 =  DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1.txt",
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
+			serviceContext);
 
 		String file1Value = getDocLibraryFieldValue(file1);
 
-		FileEntry file2 = DLAppTestUtil.addFileEntry(
-			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 2.txt");
+		FileEntry file2 =  DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 2.txt",
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
+			serviceContext);
 
 		String file2Value = getDocLibraryFieldValue(file2);
 

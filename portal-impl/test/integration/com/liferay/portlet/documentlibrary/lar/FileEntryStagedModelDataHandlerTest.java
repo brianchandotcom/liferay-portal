@@ -20,12 +20,16 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -79,9 +83,15 @@ public class FileEntryStagedModelDataHandlerTest
 	public void testExportImportFileExtension() throws Exception {
 		String sourceFileName = RandomTestUtil.randomString() + ".pdf";
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			stagingGroup.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, sourceFileName);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId());
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, sourceFileName,
+			ContentTypes.APPLICATION_PDF, RandomTestUtil.randomBytes(),
+			serviceContext);
 
 		exportImportStagedModel(fileEntry);
 
@@ -122,7 +132,7 @@ public class FileEntryStagedModelDataHandlerTest
 		addDependentStagedModel(
 			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
-		DLFileEntryType dlFileEntryType = DLAppTestUtil.addDLFileEntryType(
+		DLFileEntryType dlFileEntryType = addDLFileEntryType(
 			companyGroup.getGroupId(), ddmStructure.getStructureId());
 
 		addDependentStagedModel(
@@ -152,7 +162,7 @@ public class FileEntryStagedModelDataHandlerTest
 		addDependentStagedModel(
 			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
-		DLFileEntryType dlFileEntryType = DLAppTestUtil.addDLFileEntryType(
+		DLFileEntryType dlFileEntryType = addDLFileEntryType(
 			group.getGroupId(), ddmStructure.getStructureId());
 
 		addDependentStagedModel(
@@ -165,6 +175,20 @@ public class FileEntryStagedModelDataHandlerTest
 			dependentStagedModelsMap, DLFolder.class, folder);
 
 		return dependentStagedModelsMap;
+	}
+
+	protected DLFileEntryType addDLFileEntryType(
+			long groupId, long ddmStructureId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId());
+
+		return DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {ddmStructureId},
+			serviceContext);
 	}
 
 	@Override
@@ -184,10 +208,18 @@ public class FileEntryStagedModelDataHandlerTest
 		DLFileEntryType dlFileEntryType =
 			(DLFileEntryType)fileEntryTypeDependentStagedModels.get(0);
 
-		return DLAppTestUtil.addFileEntry(
-			group.getGroupId(), folder.getFolderId(),
-			RandomTestUtil.randomString(),
-			dlFileEntryType.getFileEntryTypeId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, dlFileEntryType.getFileEntryTypeId());
+
+		return DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
+			serviceContext);
 	}
 
 	protected void exportImportStagedModel(StagedModel stagedModel)

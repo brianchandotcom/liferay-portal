@@ -1384,6 +1384,13 @@ public class DLImpl implements DL {
 				serviceContext.getCurrentURL();
 		}
 
+		String entryURL = GetterUtil.getString(
+			serviceContext.getAttribute("entryURL"));
+
+		if (Validator.isNotNull(entryURL)) {
+			return entryURL;
+		}
+
 		HttpServletRequest request = serviceContext.getRequest();
 
 		if ((request == null) || (serviceContext.getThemeDisplay() == null)) {

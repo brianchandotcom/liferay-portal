@@ -34,11 +34,7 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="Role#tearDownCP" />
-
 		<execute macro="Site#tearDownCP" />
-
-		<execute macro="Organization#tearDownCP" />
 	</tear-down>
 
 	<command name="AddGlobalUserSegmentToSiteViaUserSegmentContentDisplayPortlet" priority="5">
@@ -95,6 +91,8 @@
 			<var name="toAll" value="true" />
 			<var name="userSegmentName" value="Male Users" />
 		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
@@ -197,6 +195,8 @@
 			<var name="toAll" value="true" />
 			<var name="userSegmentName" value="Male Users" />
 		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
@@ -757,6 +757,8 @@
 			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Organization Member" />
 		</execute>
+
+		<execute macro="Organization#tearDownCP" />
 	</command>
 
 	<command name="AddUserSegmentUserAttributesOrganizationRoleCP" priority="5">
@@ -799,6 +801,8 @@
 			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Organization Role" />
 		</execute>
+
+		<execute macro="Organization#tearDownCP" />
 	</command>
 
 	<command name="AddUserSegmentUserAttributesRegularRoleCP" priority="5">

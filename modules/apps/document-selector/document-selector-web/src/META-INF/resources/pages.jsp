@@ -27,7 +27,7 @@ boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector")
 %>
 
 <c:if test="<%= showGroupsSelector %>">
-	<liferay-util:include page="/html/portlet/document_selector/group_selector.jsp" servletContext="<%= application %>">
+	<liferay-util:include page="/group_selector.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="tabs1" value="pages" />
 	</liferay-util:include>
 </c:if>

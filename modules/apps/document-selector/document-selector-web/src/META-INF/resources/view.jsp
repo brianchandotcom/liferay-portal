@@ -30,7 +30,7 @@ String[] tabs1Names = DocumentSelectorUtil.getTabs1Names(request);
 
 				<liferay-ui:section>
 					<div>
-						<liferay-util:include page='<%= "/html/portlet/document_selector/" + tabs1Name + ".jsp" %>' servletContext="<%= application %>" />
+						<liferay-util:include page='<%= "/" + tabs1Name + ".jsp" %>' servletContext="<%= application %>" />
 					</div>
 				</liferay-ui:section>
 
@@ -41,6 +41,6 @@ String[] tabs1Names = DocumentSelectorUtil.getTabs1Names(request);
 		</liferay-ui:tabs>
 	</c:when>
 	<c:otherwise>
-		<liferay-util:include page='<%= "/html/portlet/document_selector/" + tabs1Names[0] + ".jsp" %>' servletContext="<%= application %>" />
+		<liferay-util:include page='<%= "/" + tabs1Names[0] + ".jsp" %>' servletContext="<%= application %>" />
 	</c:otherwise>
 </c:choose>

@@ -14,11 +14,7 @@
 
 package com.liferay.documentselector.web.portlet;
 
-import com.liferay.documentselector.web.portlet.action.ActionForm;
-import com.liferay.documentselector.web.portlet.action.ActionForward;
-import com.liferay.documentselector.web.portlet.action.ActionMapping;
 import com.liferay.documentselector.web.util.DocumentSelectorUtil;
-import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -48,10 +44,8 @@ import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
-import com.liferay.portlet.documentlibrary.action.ActionUtil;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -62,9 +56,6 @@ import java.io.InputStream;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -81,7 +72,6 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.use-default-template=false",
 		"com.liferay.portlet.system=true",
-		"javax.portlet.portlet-name=200",
 		"javax.portlet.display-name=Document Selector",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
@@ -94,10 +84,8 @@ import org.osgi.service.component.annotations.Component;
 )
 public class DocumentSelectorPortlet extends MVCPortlet {
 
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
+	public void addFileEntry(
+			ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws Exception {
 
@@ -117,7 +105,7 @@ public class DocumentSelectorPortlet extends MVCPortlet {
 				throw new PortalException(uploadException.getCause());
 			}
 			else {
-				addFileEntry(actionRequest);
+				doAddFileEntryAction(actionRequest);
 			}
 
 			String redirect = PortalUtil.escapeRedirect(
@@ -132,38 +120,7 @@ public class DocumentSelectorPortlet extends MVCPortlet {
 		}
 	}
 
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getFileEntry(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFileEntryException ||
-				e instanceof NoSuchFileVersionException ||
-				e instanceof NoSuchRepositoryEntryException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.document_selector.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		String forward = "portlet.document_selector.add_file_entry";
-
-		return actionMapping.findForward(getForward(renderRequest, forward));
-	}
-
-	protected FileEntry addFileEntry(ActionRequest actionRequest)
+	protected FileEntry doAddFileEntryAction(ActionRequest actionRequest)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -246,6 +203,28 @@ public class DocumentSelectorPortlet extends MVCPortlet {
 		}
 	}
 
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof AntivirusScannerException ||
+			cause instanceof AssetCategoryException ||
+			cause instanceof AssetTagException ||
+			cause instanceof DuplicateFileException ||
+			cause instanceof DuplicateFolderNameException ||
+			cause instanceof FileExtensionException ||
+			cause instanceof FileMimeTypeException ||
+			cause instanceof FileNameException ||
+			cause instanceof FileSizeException ||
+			cause instanceof LiferayFileItemException ||
+			cause instanceof NoSuchFolderException ||
+			cause instanceof SourceFileNameException ||
+			cause instanceof StorageFieldRequiredException) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected void handleUploadException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			Exception e)
@@ -296,11 +275,12 @@ public class DocumentSelectorPortlet extends MVCPortlet {
 
 			SessionErrors.add(actionRequest, e.getClass());
 
-			setForward(actionRequest, "portlet.document_library.error");
+			include("/error.jsp", actionRequest, actionResponse);
 		}
 		else {
 			throw e;
 		}
+
 	}
 
 }

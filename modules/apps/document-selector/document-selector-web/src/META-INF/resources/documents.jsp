@@ -49,7 +49,7 @@ String type = DocumentSelectorUtil.getType(request);
 if (folder != null) {
 	PortletURL breadcrumbURL = renderResponse.createRenderURL();
 
-	breadcrumbURL.setParameter("struts_action", "/document_selector/view");
+	breadcrumbURL.setParameter("mvcPath", "/view.jsp");
 	breadcrumbURL.setParameter("tabs1Names", StringUtil.merge(tabs1Names));
 	breadcrumbURL.setParameter("groupId", String.valueOf(groupId));
 	breadcrumbURL.setParameter("folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
@@ -67,7 +67,7 @@ if (folder != null) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/document_selector/view");
+portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("tabs1Names", StringUtil.merge(tabs1Names));
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("folderId", String.valueOf(folderId));
@@ -78,7 +78,7 @@ portletURL.setParameter("type", type);
 %>
 
 <c:if test="<%= showGroupsSelector %>">
-	<liferay-util:include page="/html/portlet/document_selector/group_selector.jsp" servletContext="<%= application %>">
+	<liferay-util:include page="/group_selector.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="tabs1" value="documents" />
 	</liferay-util:include>
 </c:if>
@@ -131,7 +131,7 @@ portletURL.setParameter("type", type);
 
 					<c:if test="<%= fileEntryTypes.isEmpty() %>">
 						<liferay-portlet:renderURL var="editFileEntryURL">
-							<portlet:param name="struts_action" value="/document_selector/add_file_entry" />
+							<portlet:param name="mvcPath" value="/add_file_entry.jsp" />
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 							<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
@@ -155,7 +155,7 @@ portletURL.setParameter("type", type);
 					%>
 
 						<liferay-portlet:renderURL var="addFileEntryTypeURL">
-							<portlet:param name="struts_action" value="/document_selector/add_file_entry" />
+							<portlet:param name="mvcPath" value="/add_file_entry.jsp" />
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 							<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
@@ -183,7 +183,7 @@ portletURL.setParameter("type", type);
 		</aui:nav>
 
 		<aui:nav-bar-search searchContainer="<%= fileEntrySearchContainer %>">
-			<%@ include file="/html/portlet/document_selector/search.jspf" %>
+			<%@ include file="/search.jspf" %>
 		</aui:nav-bar-search>
 	</aui:nav-bar>
 
@@ -209,7 +209,7 @@ portletURL.setParameter("type", type);
 				modelVar="curFolder"
 			>
 				<portlet:renderURL var="rowURL">
-					<portlet:param name="struts_action" value="/document_selector/view" />
+					<portlet:param name="mvcPath" value="/view.jsp" />
 					<portlet:param name="tabs1Names" value="<%= StringUtil.merge(tabs1Names) %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
@@ -273,7 +273,7 @@ portletURL.setParameter("type", type);
 	<%
 	PortletURL backURL = renderResponse.createRenderURL();
 
-	backURL.setParameter("struts_action", "/document_selector/view");
+	backURL.setParameter("mvcPath", "/view.jsp");
 	backURL.setParameter("tabs1Names", StringUtil.merge(tabs1Names));
 	backURL.setParameter("groupId", String.valueOf(groupId));
 	backURL.setParameter("ckEditorFuncNum", ckEditorFuncNum);
@@ -291,7 +291,7 @@ portletURL.setParameter("type", type);
 	<%
 	PortletURL iteratorURL = renderResponse.createRenderURL();
 
-	iteratorURL.setParameter("struts_action", "/document_selector/view");
+	iteratorURL.setParameter("mvcPath", "/view.jsp");
 	iteratorURL.setParameter("tabs1Names", StringUtil.merge(tabs1Names));
 	iteratorURL.setParameter("groupId", String.valueOf(groupId));
 	iteratorURL.setParameter("folderId", String.valueOf(folderId));

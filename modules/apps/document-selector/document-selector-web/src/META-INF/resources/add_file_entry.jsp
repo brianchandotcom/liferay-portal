@@ -53,8 +53,7 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 	title='<%= LanguageUtil.get(request, "new-document") %>'
 />
 
-<portlet:actionURL var="editFileEntryURL">
-	<portlet:param name="struts_action" value="/document_selector/add_file_entry" />
+<portlet:actionURL var="editFileEntryURL" name="addFileEntry">
 	<portlet:param name="uploadExceptionRedirect" value="<%= currentURL %>" />
 	<portlet:param name="type" value="<%= DocumentSelectorUtil.getType(request) %>" />
 </portlet:actionURL>

@@ -284,6 +284,13 @@ public interface Staging {
 		throws PortalException;
 
 	public void publishPortlet(
+			long userId, ExportImportConfiguration exportImportConfiguration)
+		throws PortalException;
+
+	public void publishPortlet(long userId, long exportImportConfigurationId)
+		throws PortalException;
+
+	public void publishPortlet(
 			long userId, long sourceGroupId, long targetGroupId,
 			long sourcePlid, long targetPlid, String portletId,
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)

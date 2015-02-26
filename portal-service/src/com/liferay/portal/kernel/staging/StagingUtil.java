@@ -450,6 +450,20 @@ public class StagingUtil {
 	}
 
 	public static void publishPortlet(
+			long userId, ExportImportConfiguration exportImportConfiguration)
+		throws PortalException {
+
+		getStaging().publishPortlet(userId, exportImportConfiguration);
+	}
+
+	public static void publishPortlet(
+			long userId, long exportImportConfigurationId)
+		throws PortalException {
+
+		getStaging().publishPortlet(userId, exportImportConfigurationId);
+	}
+
+	public static void publishPortlet(
 			long userId, long sourceGroupId, long targetGroupId,
 			long sourcePlid, long targetPlid, String portletId,
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)

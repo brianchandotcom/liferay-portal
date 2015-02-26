@@ -1285,6 +1285,36 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void publishPortlet(
+			long userId, ExportImportConfiguration exportImportConfiguration)
+		throws PortalException {
+
+		Map<String, Serializable> taskContextMap = new HashMap<>();
+
+		taskContextMap.put(Constants.CMD, Constants.PUBLISH_TO_LIVE);
+		taskContextMap.put(
+			"exportImportConfigurationId",
+			exportImportConfiguration.getExportImportConfigurationId());
+
+		BackgroundTaskLocalServiceUtil.addBackgroundTask(
+			userId, exportImportConfiguration.getGroupId(),
+			exportImportConfiguration.getName(), null,
+			PortletStagingBackgroundTaskExecutor.class, taskContextMap,
+			new ServiceContext());
+	}
+
+	@Override
+	public void publishPortlet(long userId, long exportImportConfigurationId)
+		throws PortalException {
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				getExportImportConfiguration(exportImportConfigurationId);
+
+		publishPortlet(userId, exportImportConfiguration);
+	}
+
+	@Override
+	public void publishPortlet(
 			long userId, long sourceGroupId, long targetGroupId,
 			long sourcePlid, long targetPlid, String portletId,
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)

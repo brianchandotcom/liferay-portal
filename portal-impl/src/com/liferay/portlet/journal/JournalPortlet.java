@@ -961,37 +961,23 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
+	public void deleteEntries(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		try {
-			ActionUtil.getArticles(renderRequest);
-			ActionUtil.getFolders(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchArticleException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.journal.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		String forward = "portlet.journal.edit_entry";
-
-		return actionMapping.findForward(getForward(renderRequest, forward));
+		doDeleteEntries(actionRequest, actionResponse, false);
 	}
 
-	public void deleteEntries(
-			ActionRequest actionRequest, boolean moveToTrash)
+	public void moveEntriesToTrash(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		doDeleteEntries(actionRequest, actionResponse, true);
+	}
+
+	protected void doDeleteEntries(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			boolean moveToTrash)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(

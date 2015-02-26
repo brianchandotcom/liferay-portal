@@ -35,14 +35,14 @@ public class WikiServiceSettingsProvider {
 		return _wikiServiceSettingsProvider;
 	}
 
-	public WikiGroupServiceConfiguration getWikiGroupServiceConfiguration() {
-		return _wikiGroupServiceConfiguration;
+	public GroupServiceSettingsProvider<WikiGroupServiceSettings>
+		getGroupServiceSettingsProvider() {
+
+		return _groupServiceSettingsProvider;
 	}
 
-	public GroupServiceSettingsProvider<WikiGroupServiceSettings>
-		getWikiGroupServiceSettingsProvider() {
-
-		return _wikiGroupServiceSettingsProvider;
+	public WikiGroupServiceConfiguration getWikiGroupServiceConfiguration() {
+		return _wikiGroupServiceConfiguration;
 	}
 
 	@Activate
@@ -58,11 +58,11 @@ public class WikiServiceSettingsProvider {
 	@Reference(
 		target = "(class.name=com.liferay.wiki.settings.WikiGroupServiceSettings)"
 	)
-	protected void setWikiGroupServiceSettingsProvider(
+	protected void setGroupServiceSettingsProvider(
 		GroupServiceSettingsProvider<WikiGroupServiceSettings>
-			wikiGroupServiceSettingsProvider) {
+			groupServiceSettingsProvider) {
 
-		_wikiGroupServiceSettingsProvider = wikiGroupServiceSettingsProvider;
+		_groupServiceSettingsProvider = groupServiceSettingsProvider;
 	}
 
 	@Reference
@@ -72,23 +72,23 @@ public class WikiServiceSettingsProvider {
 		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 	}
 
-	protected void unsetWikiGroupServiceSettingsProvider(
+	protected void unsetGroupServiceSettingsProvider(
 		GroupServiceSettingsProvider<WikiGroupServiceSettings>
-			wikiGroupServiceSettingsProvider) {
+			groupServiceSettingsProvider) {
 
-		_wikiGroupServiceSettingsProvider = null;
+		_groupServiceSettingsProvider = null;
 	}
 
-	protected void unsetWikiGroupServiceConfiguration
-		(WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+	protected void unsetWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
 
 		_wikiGroupServiceConfiguration = null;
 	}
 
 	private static WikiServiceSettingsProvider _wikiServiceSettingsProvider;
 
-	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 	private GroupServiceSettingsProvider<WikiGroupServiceSettings>
-		_wikiGroupServiceSettingsProvider;
+		_groupServiceSettingsProvider;
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

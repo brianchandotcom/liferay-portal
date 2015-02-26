@@ -76,12 +76,11 @@ public class ActionUtil {
 			WikiWebSettingsProvider.getWikiWebSettingsProvider();
 
 		PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
-			wikiPortletIntanceSettingsProvider =
-				wikiWebSettingsProvider.
-					getWikiPortletInstanceSettingsProvider();
+			portletInstanceSettingsProvider =
+				wikiWebSettingsProvider.getPortletInstanceSettingsProvider();
 
 		WikiPortletInstanceSettings wikiPortletInstanceSettings =
-			wikiPortletIntanceSettingsProvider.getPortletInstanceSettings(
+			portletInstanceSettingsProvider.getPortletInstanceSettings(
 				themeDisplay.getLayout(), portletDisplay.getId());
 
 		String[] visibleNodeNames =

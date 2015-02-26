@@ -822,7 +822,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 				String value = null;
 
 				WikiGroupServiceSettings wikiGroupServiceSettings =
-					_wikiGroupServiceSettingsProvider.getGroupServiceSettings(
+					_groupServiceSettingsProvider.getGroupServiceSettings(
 						page.getGroupId());
 
 				if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
@@ -893,9 +893,9 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	@BeanReference(
-		name = "com.liferay.wiki.settings.WikiGroupServiceSettingsProvider"
+		name = "com.liferay.wiki.settings.provider.WikiGroupServiceSettingsProvider"
 	)
 	private GroupServiceSettingsProvider<WikiGroupServiceSettings>
-		_wikiGroupServiceSettingsProvider;
+		_groupServiceSettingsProvider;
 
 }

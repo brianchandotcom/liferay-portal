@@ -221,7 +221,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Message boards
 
 		WikiGroupServiceSettings wikiGroupServiceSettings =
-			_wikiGroupServiceSettingsProvider.getGroupServiceSettings(
+			_groupServiceSettingsProvider.getGroupServiceSettings(
 				node.getGroupId());
 
 		if (wikiGroupServiceSettings.isPageCommentsEnabled()) {
@@ -249,7 +249,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
 
 		WikiGroupServiceSettings wikiGroupServiceSettings =
-			_wikiGroupServiceSettingsProvider.getGroupServiceSettings(
+			_groupServiceSettingsProvider.getGroupServiceSettings(
 				node.getGroupId());
 
 		String format = wikiGroupServiceSettings.getDefaultFormat();
@@ -2096,7 +2096,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			// Social
 
 			WikiGroupServiceSettings wikiGroupServiceSettings =
-				_wikiGroupServiceSettingsProvider.getGroupServiceSettings(
+				_groupServiceSettingsProvider.getGroupServiceSettings(
 					page.getGroupId());
 
 			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
@@ -3016,7 +3016,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		WikiGroupServiceSettings wikiGroupServiceSettings =
-			_wikiGroupServiceSettingsProvider.getGroupServiceSettings(
+			_groupServiceSettingsProvider.getGroupServiceSettings(
 				page.getGroupId());
 
 		boolean update = false;
@@ -3294,7 +3294,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Social
 
 		WikiGroupServiceSettings wikiGroupServiceSettings =
-			_wikiGroupServiceSettingsProvider.getGroupServiceSettings(
+			_groupServiceSettingsProvider.getGroupServiceSettings(
 				node.getGroupId());
 
 		if (!page.isMinorEdit() ||
@@ -3359,13 +3359,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		validate(nodeId, content, format);
 	}
 
-	@BeanReference(type = WikiGroupServiceConfiguration.class)
-	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
-
 	@BeanReference(
-		name = "com.liferay.wiki.settings.WikiGroupServiceSettingsProvider"
+		name = "com.liferay.wiki.settings.provider.WikiGroupServiceSettingsProvider"
 	)
 	private GroupServiceSettingsProvider<WikiGroupServiceSettings>
-		_wikiGroupServiceSettingsProvider;
+		_groupServiceSettingsProvider;
+
+	@BeanReference(type = WikiGroupServiceConfiguration.class)
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

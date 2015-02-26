@@ -44,9 +44,9 @@ public class BookmarksWebSettingsProvider {
 	}
 
 	public GroupServiceSettingsProvider<BookmarksGroupServiceSettings>
-		getBookmarksGroupServiceSettingsProvider() {
+		getGroupServiceSettingsProvider() {
 
-		return _bookmarksGroupServiceSettingsProvider;
+		return _groupServiceSettingsProvider;
 	}
 
 	@Activate
@@ -70,12 +70,11 @@ public class BookmarksWebSettingsProvider {
 	@Reference(
 		target = "(class.name=com.liferay.bookmarks.settings.BookmarksGroupServiceSettings)"
 	)
-	protected void setBookmarksGroupServiceSettingsProvider(
+	protected void setGroupServiceSettingsProvider(
 		GroupServiceSettingsProvider<BookmarksGroupServiceSettings>
-			bookmarksGroupServiceSettingsProvider) {
+			groupServiceSettingsProvider) {
 
-		_bookmarksGroupServiceSettingsProvider =
-			bookmarksGroupServiceSettingsProvider;
+		_groupServiceSettingsProvider = groupServiceSettingsProvider;
 	}
 
 	protected void unsetBookmarksGroupServiceConfiguration(
@@ -84,11 +83,11 @@ public class BookmarksWebSettingsProvider {
 		_bookmarksGroupServiceConfiguration = null;
 	}
 
-	protected void unsetBookmarksGroupServiceSettingsProvider(
+	protected void unsetGroupServiceSettingsProvider(
 		GroupServiceSettingsProvider<BookmarksGroupServiceSettings>
-			bookmarksGroupServiceSettingsProvider) {
+			groupServiceSettingsProvider) {
 
-		_bookmarksGroupServiceSettingsProvider = null;
+		_groupServiceSettingsProvider = null;
 	}
 
 	private static BookmarksWebSettingsProvider _bookmarksWebSettingsProvider;
@@ -96,6 +95,6 @@ public class BookmarksWebSettingsProvider {
 	private BookmarksGroupServiceConfiguration
 		_bookmarksGroupServiceConfiguration;
 	private GroupServiceSettingsProvider<BookmarksGroupServiceSettings>
-		_bookmarksGroupServiceSettingsProvider;
+		_groupServiceSettingsProvider;
 
 }

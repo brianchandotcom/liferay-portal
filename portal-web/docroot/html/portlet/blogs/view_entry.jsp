@@ -56,11 +56,13 @@ request.setAttribute("view_entry_content.jsp-entry", entry);
 request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
-	title="<%= entry.getTitle() %>"
-/>
+<c:if test="<%= portletId.equals(PortletKeys.BLOGS_ADMIN) %>">
+	<liferay-ui:header
+		backURL="<%= redirect %>"
+		localizeTitle="<%= false %>"
+		title="<%= entry.getTitle() %>"
+	/>
+</c:if>
 
 <portlet:actionURL var="editEntryURL">
 	<portlet:param name="struts_action" value="/blogs/edit_entry" />

@@ -103,13 +103,13 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 								%>
 
 								<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
-									<div class="small-image visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></div>
+									<span class="small-image visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></span>
 								</c:if>
 
-								<div class="entry-content">
+								<span class="entry-content">
 									<h3><%= previousEntry.getTitle() %></h3>
 
-									<p class="entry-content-body visible-lg-block">
+									<span class="entry-content-body visible-lg-block">
 										<c:choose>
 											<c:when test="<%= Validator.isNotNull(previousEntry.getSubtitle()) %>">
 												<%= StringUtil.shorten(previousEntry.getSubtitle(), 100) %>
@@ -118,8 +118,8 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 												<%= StringUtil.shorten(HtmlUtil.stripHtml(previousEntry.getContent()), 100) %>
 											</c:otherwise>
 										</c:choose>
-									</p>
-								</div>
+									</span>
+								</span>
 							</a>
 
 							<liferay-ui:user-display
@@ -155,13 +155,13 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 								%>
 
 								<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
-									<div class="small-image visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></div>
+									<span class="small-image visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></span>
 								</c:if>
 
-								<div class="entry-content">
+								<span class="entry-content">
 									<h3><%= nextEntry.getTitle() %></h3>
 
-									<p class="entry-content-body visible-lg-block">
+									<span class="entry-content-body visible-lg-block">
 										<c:choose>
 											<c:when test="<%= Validator.isNotNull(nextEntry.getSubtitle()) %>">
 												<%= StringUtil.shorten(nextEntry.getSubtitle(), 100) %>
@@ -170,8 +170,8 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 												<%= StringUtil.shorten(HtmlUtil.stripHtml(nextEntry.getContent()), 100) %>
 											</c:otherwise>
 										</c:choose>
-									</p>
-								</div>
+									</span>
+								</span>
 							</a>
 
 							<liferay-ui:user-display

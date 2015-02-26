@@ -258,10 +258,12 @@
 		}
 
 		.entry-content {
+			display: block;
 			overflow: hidden;
 
 			.entry-content-body {
 				color: #555;
+				display: block;
 				font-size: 18px;
 				font-weight: 400;
 				margin-bottom: 0;
@@ -272,6 +274,7 @@
 			background-position: center;
 			background-repeat: no-repeat;
 			background-size: cover;
+			display: block;
 			float: right;
 			height: 140px;
 			margin-left: 60px;

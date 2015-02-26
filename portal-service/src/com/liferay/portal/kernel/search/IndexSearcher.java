@@ -24,6 +24,9 @@ import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
 @MessagingProxy(mode = ProxyMode.SYNC)
 public interface IndexSearcher extends QuerySuggester {
 
+	public String getQueryString(SearchContext searchContext, Query query)
+		throws ParseException;
+
 	public Hits search(SearchContext searchContext, Query query)
 		throws SearchException;
 

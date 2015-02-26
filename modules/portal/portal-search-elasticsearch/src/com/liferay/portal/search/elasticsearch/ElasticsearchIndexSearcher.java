@@ -84,6 +84,15 @@ import org.osgi.service.component.annotations.Reference;
 public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	@Override
+	public String getQueryString(SearchContext searchContext, Query query)
+		throws ParseException {
+
+		QueryBuilder queryBuilder = _queryTranslator.translate(query);
+
+		return queryBuilder.toString();
+	}
+
+	@Override
 	public Hits search(SearchContext searchContext, Query query)
 		throws SearchException {
 

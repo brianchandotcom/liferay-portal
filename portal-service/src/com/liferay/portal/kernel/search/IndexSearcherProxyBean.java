@@ -47,6 +47,13 @@ public class IndexSearcherProxyBean
 	}
 
 	@Override
+	public String getQueryString(SearchContext searchContext, Query query)
+		throws ParseException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Hits search(SearchContext searchContext, Query query) {
 		throw new UnsupportedOperationException();
 	}

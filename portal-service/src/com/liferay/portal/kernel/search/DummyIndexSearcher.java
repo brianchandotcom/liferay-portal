@@ -27,6 +27,13 @@ import java.util.Map;
 public class DummyIndexSearcher implements IndexSearcher {
 
 	@Override
+	public String getQueryString(SearchContext searchContext, Query query)
+		throws ParseException {
+
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public Hits search(SearchContext searchContext, Query query) {
 		return _getHits();
 	}

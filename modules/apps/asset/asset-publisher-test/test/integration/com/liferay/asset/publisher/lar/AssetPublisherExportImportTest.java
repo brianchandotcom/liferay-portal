@@ -328,12 +328,12 @@ public class AssetPublisherExportImportTest
 
 	@Test
 	public void testOneDLFileEntryType() throws Exception {
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			group.getGroupId(), DLFileEntryType.class.getName());
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
-
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			group.getGroupId(), DLFileEntryType.class.getName());
 
 		DLFileEntryType dlFileEntryType = addDLFileEntryType(
 			group.getGroupId(), ddmStructure.getStructureId(), serviceContext);
@@ -451,12 +451,12 @@ public class AssetPublisherExportImportTest
 
 	@Test
 	public void testSeveralDLFileEntryTypes() throws Exception {
+		DDMStructure ddmStructure1 = DDMStructureTestUtil.addStructure(
+			group.getGroupId(), DLFileEntryType.class.getName());
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
-
-		DDMStructure ddmStructure1 = DDMStructureTestUtil.addStructure(
-			group.getGroupId(), DLFileEntryType.class.getName());
 
 		DLFileEntryType dlFileEntryType1 = addDLFileEntryType(
 			group.getGroupId(), ddmStructure1.getStructureId(), serviceContext);

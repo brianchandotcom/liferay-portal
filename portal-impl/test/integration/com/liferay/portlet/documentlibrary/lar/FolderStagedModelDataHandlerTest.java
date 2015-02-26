@@ -192,13 +192,13 @@ public class FolderStagedModelDataHandlerTest
 
 		DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				folder.getGroupId(), TestPropsValues.getUserId());
-
 		List<Long> dlFileEntryTypeIds = new ArrayList<>();
 
 		dlFileEntryTypeIds.add(dlFileEntryType.getFileEntryTypeId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				folder.getGroupId(), TestPropsValues.getUserId());
 
 		DLFileEntryTypeLocalServiceUtil.updateFolderFileEntryTypes(
 			dlFolder, dlFileEntryTypeIds, dlFileEntryType.getFileEntryTypeId(),

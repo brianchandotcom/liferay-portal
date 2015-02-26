@@ -172,7 +172,9 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 					try {
 						DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), 0);
 
-						fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
+						DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+
+						fields = DDMFormValuesToFieldsConverterUtil.convert(ddmStructure, ddmFormValues);
 					}
 					catch (Exception e) {
 					}

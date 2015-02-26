@@ -592,6 +592,17 @@ public class LiferaySeleniumHelper {
 		return EmailCommands.getEmailSubject(GetterUtil.getInteger(index));
 	}
 
+	public static ImageTarget getImageTarget(
+			LiferaySelenium liferaySelenium, String image)
+		throws Exception {
+
+		File file = new File(
+			getPortalRootDirName() + liferaySelenium.getSikuliImagesDirName() +
+				image);
+
+		return new ImageTarget(file);
+	}
+
 	public static String getNumberDecrement(String value) {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) - 1);
 	}
@@ -1132,13 +1143,7 @@ public class LiferaySeleniumHelper {
 
 		ScreenRegion screenRegion = new DesktopScreenRegion();
 
-		liferaySelenium.pause("1000");
-
-		File file = new File(
-			getPortalRootDirName() + liferaySelenium.getSikuliImagesDirName() +
-				image);
-
-		ImageTarget imageTarget = new ImageTarget(file);
+		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
 
 		if (screenRegion.wait(imageTarget, 5000) != null) {
 			throw new Exception("Element is present");
@@ -1151,13 +1156,7 @@ public class LiferaySeleniumHelper {
 
 		ScreenRegion screenRegion = new DesktopScreenRegion();
 
-		liferaySelenium.pause("1000");
-
-		File file = new File(
-			getPortalRootDirName() + liferaySelenium.getSikuliImagesDirName() +
-				image);
-
-		ImageTarget imageTarget = new ImageTarget(file);
+		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
 
 		screenRegion = screenRegion.wait(imageTarget, 5000);
 
@@ -1180,7 +1179,15 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		ScreenRegion screenRegion = new DesktopScreenRegion();
+
+		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
+
+		screenRegion = screenRegion.find(imageTarget);
+
+		Mouse mouse = new DesktopMouse();
+
+		mouse.click(screenRegion.getCenter());
 	}
 
 	public static void sikuliDragAndDrop(
@@ -1214,7 +1221,15 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		ScreenRegion screenRegion = new DesktopScreenRegion();
+
+		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
+
+		screenRegion = screenRegion.find(imageTarget);
+
+		Mouse mouse = new DesktopMouse();
+
+		mouse.move(screenRegion.getCenter());
 	}
 
 	public static void sikuliRightMouseDown(LiferaySelenium liferaySelenium)

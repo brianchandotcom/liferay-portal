@@ -40,9 +40,9 @@ public class WikiServiceSettingsProvider {
 	}
 
 	public GroupServiceSettingsProvider<WikiGroupServiceSettings>
-		getWikiGroupServiceSettingsProvider() {
+		getGroupServiceSettingsProvider() {
 
-		return _wikiGroupServiceSettingsProvider;
+		return _groupServiceSettingsProvider;
 	}
 
 	@Activate
@@ -58,11 +58,11 @@ public class WikiServiceSettingsProvider {
 	@Reference(
 		target = "(class.name=com.liferay.wiki.settings.WikiGroupServiceSettings)"
 	)
-	protected void setWikiGroupServiceSettingsProvider(
+	protected void setGroupServiceSettingsProvider(
 		GroupServiceSettingsProvider<WikiGroupServiceSettings>
-			wikiGroupServiceSettingsProvider) {
+			groupServiceSettingsProvider) {
 
-		_wikiGroupServiceSettingsProvider = wikiGroupServiceSettingsProvider;
+		_groupServiceSettingsProvider = groupServiceSettingsProvider;
 	}
 
 	@Reference
@@ -72,11 +72,11 @@ public class WikiServiceSettingsProvider {
 		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 	}
 
-	protected void unsetWikiGroupServiceSettingsProvider(
+	protected void unsetGroupServiceSettingsProvider(
 		GroupServiceSettingsProvider<WikiGroupServiceSettings>
-			wikiGroupServiceSettingsProvider) {
+			groupServiceSettingsProvider) {
 
-		_wikiGroupServiceSettingsProvider = null;
+		_groupServiceSettingsProvider = null;
 	}
 
 	protected void unsetWikiGroupServiceConfiguration
@@ -89,6 +89,6 @@ public class WikiServiceSettingsProvider {
 
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 	private GroupServiceSettingsProvider<WikiGroupServiceSettings>
-		_wikiGroupServiceSettingsProvider;
+		_groupServiceSettingsProvider;
 
 }

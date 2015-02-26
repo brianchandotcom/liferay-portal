@@ -19,9 +19,9 @@
 <%
 BookmarksWebSettingsProvider bookmarksWebSettingsProvider = BookmarksWebSettingsProvider.getBookmarksWebSettingsProvider();
 
-GroupServiceSettingsProvider<BookmarksGroupServiceSettings> bookmarksGroupServiceSettingsProvider = bookmarksWebSettingsProvider.getBookmarksGroupServiceSettingsProvider();
+GroupServiceSettingsProvider<BookmarksGroupServiceSettings> groupServiceSettingsProvider = bookmarksWebSettingsProvider.getGroupServiceSettingsProvider();
 
-BookmarksGroupServiceSettings bookmarksGroupServiceSettings = bookmarksGroupServiceSettingsProvider.getGroupServiceSettings(scopeGroupId);
+BookmarksGroupServiceSettings bookmarksGroupServiceSettings = groupServiceSettingsProvider.getGroupServiceSettings(scopeGroupId);
 
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 

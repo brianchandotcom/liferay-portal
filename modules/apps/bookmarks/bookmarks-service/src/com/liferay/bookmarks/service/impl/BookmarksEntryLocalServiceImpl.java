@@ -713,7 +713,7 @@ public class BookmarksEntryLocalServiceImpl
 		}
 
 		BookmarksGroupServiceSettings bookmarksGroupServiceSettings =
-			_bookmarksGroupServiceSettingsProvider.getGroupServiceSettings(
+			_groupServiceSettingsProvider.getGroupServiceSettings(
 				entry.getGroupId());
 
 		if ((serviceContext.isCommandAdd() &&
@@ -828,9 +828,9 @@ public class BookmarksEntryLocalServiceImpl
 		BookmarksEntryLocalServiceImpl.class);
 
 	@BeanReference(
-		name = "com.liferay.bookmarks.settings.BookmarksGroupServiceSettingsProvider"
+		name = "com.liferay.bookmarks.settings.provider.BookmarksGroupServiceSettingsProvider"
 	)
 	private GroupServiceSettingsProvider<BookmarksGroupServiceSettings>
-		_bookmarksGroupServiceSettingsProvider;
+		_groupServiceSettingsProvider;
 
 }

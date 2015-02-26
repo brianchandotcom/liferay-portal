@@ -2,5 +2,5 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 	<osgi:reference id="com.liferay.wiki.configuration.WikiGroupServiceConfiguration" availability="mandatory" interface="com.liferay.wiki.configuration.WikiGroupServiceConfiguration" />
-	<osgi:reference id="com.liferay.wiki.settings.WikiGroupServiceSettingsProvider" availability="mandatory" filter="(class.name=com.liferay.wiki.settings.WikiGroupServiceSettings)" interface="com.liferay.portal.kernel.settings.GroupServiceSettingsProvider" />
+	<osgi:reference id="com.liferay.wiki.settings.provider.WikiGroupServiceSettingsProvider" availability="mandatory" filter="(class.name=com.liferay.wiki.settings.WikiGroupServiceSettings)" interface="com.liferay.portal.kernel.settings.GroupServiceSettingsProvider" />
 </beans>

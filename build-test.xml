@@ -1197,6 +1197,8 @@
 						</then>
 					</if>
 
+					<delete dir="${liferay.home}/osgi/state" />
+
 					<if>
 						<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />
 						<then>

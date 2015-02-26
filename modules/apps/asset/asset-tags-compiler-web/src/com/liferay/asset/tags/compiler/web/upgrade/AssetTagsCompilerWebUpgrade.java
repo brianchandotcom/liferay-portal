@@ -52,7 +52,9 @@ public class AssetTagsCompilerWebUpgrade {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {"103", AssetTagsCompilerPortletKeys.ASSET_TAGS_COMPILER}
+					new String[] {
+						"103", AssetTagsCompilerPortletKeys.ASSET_TAGS_COMPILER
+					}
 				};
 			}
 
@@ -60,8 +62,8 @@ public class AssetTagsCompilerWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.asset.tags.compiler.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1,
-			0, false);
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

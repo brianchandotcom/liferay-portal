@@ -45,8 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.info.title=Tags Compiler",
 		"javax.portlet.supported-public-render-parameter=tags",
 		"javax.portlet.supports.mime-type=text/html"
-
-		},
+	},
 	service = Portlet.class
 )
 public class AssetTagsCompilerPortlet extends MVCPortlet {

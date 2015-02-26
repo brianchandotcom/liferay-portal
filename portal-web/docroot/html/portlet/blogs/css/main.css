@@ -235,19 +235,24 @@
 		padding: 60px 0;
 		width: 100%;
 
+		a:hover {
+			text-decoration: none;
+
+			h3 {
+				text-decoration: underline;
+			}
+		}
+
 		h2 {
 			@include ellipsis;
 		}
 
 		h3 {
+			color: #2B4259;
 			font-size: 20px;
+			font-weight: bold;
 			margin-bottom: 16px;
 			margin-top: 0;
-
-			a {
-				color: #2B4259;
-				font-weight: bold;
-			}
 
 			@include ellipsis;
 		}
@@ -256,6 +261,7 @@
 			overflow: hidden;
 
 			.entry-content-body {
+				color: #555;
 				font-size: 18px;
 				font-weight: 400;
 				margin-bottom: 0;
@@ -275,6 +281,7 @@
 		.taglib-user-display {
 			display: block;
 			margin-top: 28px;
+			overflow: hidden;
 
 			@include respond-to(phone, tablet) {
 				margin-top: 0;

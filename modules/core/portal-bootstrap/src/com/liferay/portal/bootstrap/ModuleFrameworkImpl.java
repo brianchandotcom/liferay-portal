@@ -317,13 +317,13 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		_framework.init();
 
-		_framework.start();
-
 		RegistryUtil.setRegistry(
 			new RegistryImpl(_framework.getBundleContext()));
 
 		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(
 			new ServiceTrackerMapFactoryImpl(_framework.getBundleContext()));
+
+		_framework.start();
 
 		_setupInitialBundles();
 	}

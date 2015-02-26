@@ -2995,10 +2995,10 @@ module.framework.properties.osgi.console=11312</echo>
 
 osb.lcs.gateway.web.host.name=${osb.lcs.gateway.web.host.name}
 osb.lcs.gateway.web.host.port=${osb.lcs.gateway.web.host.port}
- 
+
 osb.lcs.portlet.host.name=${osb.lcs.portlet.host.name}
 osb.lcs.portlet.host.port=${osb.lcs.portlet.host.port}
- 
+
 osb.lcs.portlet.oauth.consumer.key=${osb.lcs.portlet.oauth.consumer.key}
 osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</echo>
 

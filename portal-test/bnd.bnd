@@ -14,6 +14,7 @@ Export-Package:\
 	junit.*,\
 	org.hamcrest.*,\
 	org.junit.*,\
+	org.junit.runner.*,\
 	org.springframework.mock.web.portlet
 Import-Package: *;resolution:=optional
 Include-Resource:\

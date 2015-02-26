@@ -263,7 +263,7 @@ public class ClusterExecutorImpl
 	}
 
 	@Override
-	public void portalLocalInetSockAddressConfigured(
+	public void portalLocalInetSocketAddressConfigured(
 		InetSocketAddress inetSocketAddress, boolean secure) {
 
 		if (!isEnabled() || (_localClusterNode.getPortalProtocol() != null)) {

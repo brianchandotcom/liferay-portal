@@ -21,7 +21,7 @@ import java.net.InetSocketAddress;
  */
 public interface PortalInetSocketAddressEventListener {
 
-	public void portalLocalInetSockAddressConfigured(
+	public void portalLocalInetSocketAddressConfigured(
 		InetSocketAddress localInetSocketAddress, boolean secure);
 
 	public void portalServerInetSocketAddressConfigured(

@@ -14,8 +14,14 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.test.rule.LogAssertionTestRule;
+
 import java.util.Arrays;
 
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -25,10 +31,56 @@ public class InitUtilTest {
 
 	@Test
 	public void testBaseSeleniumTestCaseSpringConfigs() {
-		InitUtil.initWithSpring(
-			Arrays.asList(
-				"META-INF/management-spring.xml", "META-INF/util-spring.xml"),
-			true);
+		String log4jConfigureOnStartup = SystemProperties.get(
+			_LOG4J_CONFIGURE_ON_STARTUP);
+
+		SystemProperties.set(_LOG4J_CONFIGURE_ON_STARTUP, StringPool.FALSE);
+
+		String resourceActionsReadPortletResources = SystemProperties.get(
+			_RESOURCE_ACTIONS_READ_PORTLET_RESOURCES);
+
+		SystemProperties.set(
+			_RESOURCE_ACTIONS_READ_PORTLET_RESOURCES, StringPool.FALSE);
+
+		try {
+			InitUtil.initWithSpring(
+				Arrays.asList(
+					"META-INF/management-spring.xml",
+					"META-INF/util-spring.xml"),
+				true);
+		}
+		finally {
+			if (resourceActionsReadPortletResources == null) {
+				SystemProperties.clear(
+					_RESOURCE_ACTIONS_READ_PORTLET_RESOURCES);
+			}
+			else {
+				SystemProperties.set(
+					_RESOURCE_ACTIONS_READ_PORTLET_RESOURCES,
+					resourceActionsReadPortletResources);
+			}
+
+			if (log4jConfigureOnStartup == null) {
+				SystemProperties.clear(_LOG4J_CONFIGURE_ON_STARTUP);
+			}
+			else {
+				SystemProperties.set(
+					_LOG4J_CONFIGURE_ON_STARTUP, log4jConfigureOnStartup);
+			}
+
+			InitUtil.stopModuleFramework();
+		}
 	}
+
+	@Rule
+	public LogAssertionTestRule logAssertionTestRule =
+		LogAssertionTestRule.INSTANCE;
+
+	private static final String _LOG4J_CONFIGURE_ON_STARTUP =
+		"log4j.configure.on.startup";
+
+	private static final String _RESOURCE_ACTIONS_READ_PORTLET_RESOURCES =
+		PropsFiles.PORTAL + StringPool.COLON +
+			PropsKeys.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES;
 
 }

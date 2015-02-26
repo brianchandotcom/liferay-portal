@@ -17,8 +17,6 @@ package com.liferay.portal.cluster;
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.cluster.Address;
-import com.liferay.portal.kernel.cluster.ClusterException;
-import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterMessageType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
@@ -27,7 +25,6 @@ import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
-import com.liferay.portal.kernel.util.MethodHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -171,42 +168,18 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			clusterRequest.getClusterMessageType();
 
 		if (clusterMessageType == ClusterMessageType.EXECUTE) {
-			MethodHandler methodHandler = clusterRequest.getMethodHandler();
-
-			Object returnValue = null;
-			Exception exception = null;
-
-			if (methodHandler != null) {
-				try {
-					ClusterInvokeThreadLocal.setEnabled(false);
-
-					returnValue = methodHandler.invoke();
-				}
-				catch (Exception e) {
-					exception = e;
-
-					_log.error("Unable to invoke method " + methodHandler, e);
-				}
-				finally {
-					ClusterInvokeThreadLocal.setEnabled(true);
-				}
-			}
-			else {
-				exception = new ClusterException(
-					"Payload is not of type " + MethodHandler.class.getName());
-			}
+			ClusterNodeResponse clusterNodeResponse =
+				_clusterExecutorImpl.executeClusterRequest(clusterRequest);
 
 			if (!clusterRequest.isFireAndForget()) {
-				responsePayload =
-					_clusterExecutorImpl.generateClusterNodeResponse(
-						clusterRequest, returnValue, exception);
+				responsePayload = clusterNodeResponse;
 			}
 		}
 		else {
 			_clusterExecutorImpl.memberJoined(
 				sourceAddress, clusterRequest.getOriginatingClusterNode());
 
-			if (clusterMessageType.equals(ClusterMessageType.NOTIFY)) {
+			if (clusterMessageType == ClusterMessageType.NOTIFY) {
 				responsePayload = ClusterRequest.createClusterRequest(
 					ClusterMessageType.UPDATE,
 					_clusterExecutorImpl.getLocalClusterNode());

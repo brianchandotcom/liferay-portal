@@ -323,7 +323,7 @@ public abstract class Watcher implements Runnable {
 
 			fireWatchEventListener(eventType, filePath);
 
-			if (Files.isDirectory(filePath)) {
+			if (OSDetector.isLinux() && Files.isDirectory(filePath)) {
 				walkFileTree(filePath);
 			}
 		}

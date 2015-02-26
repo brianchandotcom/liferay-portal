@@ -90,15 +90,12 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 
 		Where<SyncFile, Long> where = queryBuilder.where();
 
-		parentFilePathName = StringUtils.replace(
-			parentFilePathName, "\\", "\\\\");
-
 		FileSystem fileSystem = FileSystems.getDefault();
 
-		where.like(
-			"filePathName",
-			new SelectArg(
-				parentFilePathName + fileSystem.getSeparator() + "%"));
+		parentFilePathName = StringUtils.replace(
+			parentFilePathName + fileSystem.getSeparator(), "\\", "\\\\");
+
+		where.like("filePathName", new SelectArg(parentFilePathName + "%"));
 
 		return query(queryBuilder.prepare());
 	}

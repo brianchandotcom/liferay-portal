@@ -381,7 +381,7 @@ public class FileUtil {
 				modifiedTime = modifiedTime / 1000 * 1000;
 			}
 
-			if ((fileTime.toMillis() == modifiedTime) &&
+			if ((fileTime.toMillis() <= modifiedTime) &&
 				(getFileKey(filePath) == syncFile.getSyncFileId())) {
 
 				return false;
@@ -479,6 +479,10 @@ public class FileUtil {
 	}
 
 	public static void writeFileKey(Path filePath, String fileKey) {
+		if (!Files.exists(filePath)) {
+			return;
+		}
+
 		if (OSDetector.isApple()) {
 			Xattrj xattrj = getXattrj();
 

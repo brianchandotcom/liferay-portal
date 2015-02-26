@@ -98,6 +98,8 @@ public class DownloadFileHandler extends BaseHandler {
 
 	@Override
 	public boolean handlePortalException(String exception) throws Exception {
+		SyncFile syncFile = getLocalSyncFile();
+
 		if (exception.equals(
 				"com.liferay.portlet.documentlibrary." +
 					"NoSuchFileVersionException") &&
@@ -107,8 +109,20 @@ public class DownloadFileHandler extends BaseHandler {
 				_logger.debug("Handling exception {}", exception);
 			}
 
-			FileEventUtil.downloadFile(
-				getSyncAccountId(), (SyncFile)getParameterValue("syncFile"));
+			FileEventUtil.downloadFile(getSyncAccountId(), syncFile);
+
+			return true;
+		}
+
+		if (exception.equals(
+				"com.liferay.portlet.documentlibrary." +
+					"NoSuchFileEntryException")) {
+
+			if (_logger.isDebugEnabled()) {
+				_logger.debug("Handling exception {}", exception);
+			}
+
+			SyncFileService.deleteSyncFile(syncFile, false);
 
 			return true;
 		}

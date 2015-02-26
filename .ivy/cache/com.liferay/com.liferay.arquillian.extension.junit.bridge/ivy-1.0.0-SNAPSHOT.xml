@@ -4,7 +4,7 @@
 		module="com.liferay.arquillian.extension.junit.bridge"
 		revision="1.0.0-SNAPSHOT"
 		status="integration"
-		publication="20150210105314"
+		publication="20150226180639"
 	>
 		<license name="LGPL 2.1" url="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt" />
 		<description homepage="">
@@ -29,10 +29,7 @@
 	</publications>
 	<dependencies>
 		<dependency org="com.liferay" name="aQute.bnd" rev="2.3.0" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
-		<dependency org="org.jboss.arquillian.container" name="arquillian-container-osgi" rev="2.1.0.CR18" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
-		<dependency org="org.jboss.arquillian.container" name="arquillian-container-test-spi" rev="1.1.6.Final" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
 		<dependency org="org.jboss.arquillian.junit" name="arquillian-junit-container" rev="1.1.6.Final" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
-		<dependency org="org.jboss.arquillian.protocol" name="arquillian-protocol-jmx" rev="1.1.6.Final" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
 		<dependency org="org.jboss.osgi.metadata" name="jbosgi-metadata" rev="4.0.0.CR1" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
 		<dependency org="junit" name="junit" rev="4.12" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
 		<dependency org="org.osgi" name="org.osgi.enterprise" rev="5.0.0" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>

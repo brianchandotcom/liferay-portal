@@ -138,7 +138,12 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 
 <aui:script>
 	function <portlet:namespace />addSearchProvider() {
-		window.external.AddSearchProvider('<%= themeDisplay.getPortalURL() %><%= PortalUtil.getPathMain() %>/search/open_search_description.xml?p_l_id=<%= themeDisplay.getPlid() %>&groupId=<%= groupId %>');
+		<portlet:resourceURL var="openSearchDescriptionXMLURL">
+			<portlet:param name="mvcPath" value="/open_search_description.jsp" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		</portlet:resourceURL>
+
+		window.external.AddSearchProvider('<%= openSearchDescriptionXMLURL.toString() %>');
 	}
 
 	function <portlet:namespace />clearSearch() {

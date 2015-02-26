@@ -89,6 +89,10 @@
 		<display-name>Web Content</display-name>
 		<portlet-class>com.liferay.portlet.journal.JournalPortlet</portlet-class>
 		<init-param>
+			<name>action.package.prefix</name>
+			<value>com.liferay.portlet.journal.action</value>
+		</init-param>
+		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/journal/configuration.jsp</value>
 		</init-param>

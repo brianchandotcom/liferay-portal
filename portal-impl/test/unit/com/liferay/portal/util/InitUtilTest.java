@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -41,6 +42,10 @@ public class InitUtilTest {
 
 		SystemProperties.set(
 			_RESOURCE_ACTIONS_READ_PORTLET_RESOURCES, StringPool.FALSE);
+
+		File file = new FileImpl();
+
+		file.deltree(PropsValues.MODULE_FRAMEWORK_STATE_DIR);
 
 		try {
 			InitUtil.initWithSpring(

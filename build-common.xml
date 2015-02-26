@@ -1300,6 +1300,13 @@ rerun your task.
 			<if>
 				<available file="test/${current.test.dir}" type="dir" />
 				<then>
+					<if>
+						<equals arg1="@{test.type}" arg2="integration" />
+						<then>
+							<delete dir="${liferay.home}/osgi/state" />
+						</then>
+					</if>
+
 					<junit-cmd
 						forkmode="@{junit.forkmode}"
 						test.type="@{test.type}"

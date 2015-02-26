@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.spi.query;
+package com.liferay.portal.search.elasticsearch.query;
 
-import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.search.TermRangeQuery;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-public interface TermQueryTranslator {
+public interface TermRangeQueryTranslator {
 
-	public QueryBuilder translate(TermQuery termQuery);
+	public QueryBuilder translate(TermRangeQuery termRangeQuery);
 
 }

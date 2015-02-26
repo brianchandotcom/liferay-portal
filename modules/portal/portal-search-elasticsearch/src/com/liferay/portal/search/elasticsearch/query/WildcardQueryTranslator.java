@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.spi.query;
+package com.liferay.portal.search.elasticsearch.query;
 
 import com.liferay.portal.kernel.search.WildcardQuery;
 

@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.spi.query;
+package com.liferay.portal.search.elasticsearch.index;
 
-import com.liferay.portal.kernel.search.TermRangeQuery;
-
-import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.client.AdminClient;
 
 /**
- * @author Miguel Angelo Caldas Gallindo
+ * @author Michael C. Han
  */
-public interface TermRangeQueryTranslator {
+public interface IndexFactory {
 
-	public QueryBuilder translate(TermRangeQuery termRangeQuery);
+	public void createIndices(AdminClient adminClient, long companyId)
+		throws Exception;
+
+	public void deleteIndices(AdminClient adminClient, long companyId)
+		throws Exception;
 
 }

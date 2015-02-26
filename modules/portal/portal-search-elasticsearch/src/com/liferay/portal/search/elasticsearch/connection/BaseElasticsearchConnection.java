@@ -16,8 +16,7 @@ package com.liferay.portal.search.elasticsearch.connection;
 
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch.spi.connection.ElasticsearchConnection;
-import com.liferay.portal.search.elasticsearch.spi.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 
 import java.util.concurrent.Future;
 

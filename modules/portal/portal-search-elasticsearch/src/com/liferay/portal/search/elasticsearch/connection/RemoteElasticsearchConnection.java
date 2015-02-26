@@ -20,8 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch.spi.connection.ElasticsearchConnection;
-import com.liferay.portal.search.elasticsearch.spi.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.registry.util.StringPlus;
 
 import java.net.InetAddress;

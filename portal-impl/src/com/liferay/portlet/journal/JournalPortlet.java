@@ -822,7 +822,7 @@ public class JournalPortlet extends MVCPortlet {
 			getForward(renderRequest, "portlet.journal.edit_folder"));
 	}
 
-	protected void deleteFolders(
+	public void deleteFolders(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
@@ -859,7 +859,7 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void subscribeFolder(ActionRequest actionRequest)
+	public void subscribeFolder(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -871,7 +871,7 @@ public class JournalPortlet extends MVCPortlet {
 			themeDisplay.getScopeGroupId(), folderId);
 	}
 
-	protected void unsubscribeFolder(ActionRequest actionRequest)
+	public void unsubscribeFolder(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -883,16 +883,16 @@ public class JournalPortlet extends MVCPortlet {
 			themeDisplay.getScopeGroupId(), folderId);
 	}
 
-	protected void updateFolder(ActionRequest actionRequest) throws Exception {
+	public void updateFolder(ActionRequest actionRequest) throws Exception {
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
 		long parentFolderId = ParamUtil.getLong(
-			actionRequest, "parentFolderId");
+				actionRequest, "parentFolderId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
 		boolean mergeWithParentFolder = ParamUtil.getBoolean(
-			actionRequest, "mergeWithParentFolder");
+				actionRequest, "mergeWithParentFolder");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalFolder.class.getName(), actionRequest);
@@ -922,15 +922,15 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void updateWorkflowDefinitions(ActionRequest actionRequest)
+	public void updateWorkflowDefinitions(ActionRequest actionRequest)
 		throws Exception {
 
 		long[] ddmStructureIds = StringUtil.split(
-			ParamUtil.getString(
-				actionRequest, "ddmStructuresSearchContainerPrimaryKeys"),
-			0L);
+				ParamUtil.getString(
+						actionRequest, "ddmStructuresSearchContainerPrimaryKeys"),
+				0L);
 		int restrinctionType = ParamUtil.getInteger(
-			actionRequest, "restrictionType");
+				actionRequest, "restrictionType");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalFolder.class.getName(), actionRequest);

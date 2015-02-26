@@ -444,7 +444,7 @@ public class AssetPublisherDisplayContext {
 
 	public long[] getReferencedEntitiesGroupIds() throws PortalException {
 
-		// Referenced entites are asset subtypes, tags or categories that
+		// Referenced entities are asset subtypes, tags or categories that
 		// are used to filter assets and can belong to a different scope of
 		// the asset they are associated to
 

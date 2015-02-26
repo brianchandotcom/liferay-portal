@@ -44,11 +44,11 @@ public class FutureClusterResponsesTest {
 		futureClusterResponses.addClusterNodeResponse(
 			ClusterNodeResponse.createResultClusterNodeResponse(
 				new ClusterNode("1.2.3.4", InetAddress.getLocalHost()), null,
-				null, null));
+				null));
 		futureClusterResponses.addClusterNodeResponse(
 			ClusterNodeResponse.createResultClusterNodeResponse(
 				new ClusterNode("1.2.3.5", InetAddress.getLocalHost()), null,
-				null, null));
+				null));
 
 		try {
 			futureClusterResponses.get(500, TimeUnit.MILLISECONDS);
@@ -76,15 +76,15 @@ public class FutureClusterResponsesTest {
 		futureClusterResponses.addClusterNodeResponse(
 			ClusterNodeResponse.createResultClusterNodeResponse(
 				new ClusterNode("1.2.3.4", InetAddress.getLocalHost()), null,
-				null, null));
+				null));
 		futureClusterResponses.addClusterNodeResponse(
 			ClusterNodeResponse.createResultClusterNodeResponse(
 				new ClusterNode("1.2.3.5", InetAddress.getLocalHost()), null,
-				null, null));
+				null));
 		futureClusterResponses.addClusterNodeResponse(
 			ClusterNodeResponse.createResultClusterNodeResponse(
 				new ClusterNode("1.2.3.6", InetAddress.getLocalHost()), null,
-				null, null));
+				null));
 
 		try {
 			futureClusterResponses.get(500, TimeUnit.MILLISECONDS);
@@ -129,7 +129,7 @@ public class FutureClusterResponsesTest {
 
 		futureClusterResponses.addClusterNodeResponse(
 			ClusterNodeResponse.createResultClusterNodeResponse(
-				new ClusterNode("test", InetAddress.getLocalHost()), null, null,
+				new ClusterNode("test", InetAddress.getLocalHost()), null,
 				null));
 
 		try {

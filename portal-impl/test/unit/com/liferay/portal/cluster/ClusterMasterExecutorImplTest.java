@@ -17,7 +17,6 @@ package com.liferay.portal.cluster;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
-import com.liferay.portal.kernel.cluster.ClusterMessageType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -656,7 +655,6 @@ public class ClusterMasterExecutorImplTest {
 					futureClusterResponses.addClusterNodeResponse(
 						ClusterNodeResponse.createResultClusterNodeResponse(
 							_clusterNodes.get(clusterNodeId),
-							ClusterMessageType.EXECUTE,
 							clusterRequest.getUuid(), methodHandler.invoke()));
 				}
 				catch (Exception e) {

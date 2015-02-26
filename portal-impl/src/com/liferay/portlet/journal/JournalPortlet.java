@@ -883,6 +883,23 @@ public class JournalPortlet extends MVCPortlet {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
+	protected void sendEditEntryRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String redirect = PortalUtil.escapeRedirect(
+			ParamUtil.getString(actionRequest, "redirect"));
+
+		WindowState windowState = actionRequest.getWindowState();
+
+		if (!windowState.equals(LiferayWindowState.POP_UP)) {
+			sendRedirect(actionRequest, actionResponse);
+		}
+		else if (Validator.isNotNull(redirect)) {
+			actionResponse.sendRedirect(redirect);
+		}
+	}
+
 	protected void updateContentSearch(
 			ActionRequest actionRequest, String portletResource,
 			String articleId)
@@ -899,67 +916,6 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalPortlet.class);
-
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.DELETE)) {
-				deleteEntries(actionRequest, false);
-			}
-			else if (cmd.equals(Constants.EXPIRE)) {
-				expireEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.MOVE)) {
-				moveEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteEntries(actionRequest, true);
-			}
-
-			String redirect = PortalUtil.escapeRedirect(
-				ParamUtil.getString(actionRequest, "redirect"));
-
-			WindowState windowState = actionRequest.getWindowState();
-
-			if (!windowState.equals(LiferayWindowState.POP_UP)) {
-				sendRedirect(actionRequest, actionResponse);
-			}
-			else if (Validator.isNotNull(redirect)) {
-				actionResponse.sendRedirect(redirect);
-			}
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchArticleException ||
-				e instanceof NoSuchFolderException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.journal.error");
-			}
-			else if (e instanceof DuplicateArticleIdException ||
-					 e instanceof DuplicateFolderNameException ||
-					 e instanceof InvalidDDMStructureException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException) {
-
-				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
-			else {
-				throw e;
-			}
-		}
-	}
 
 	public void deleteEntries(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -1023,9 +979,14 @@ public class JournalPortlet extends MVCPortlet {
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
+
+		sendEditEntryRedirect(actionRequest, actionResponse);
 	}
 
-	public void expireEntries(ActionRequest actionRequest) throws Exception {
+	public void expireEntries(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -1047,9 +1008,14 @@ public class JournalPortlet extends MVCPortlet {
 			ActionUtil.expireArticle(
 				actionRequest, HtmlUtil.unescape(expireArticleId));
 		}
+
+		sendEditEntryRedirect(actionRequest, actionResponse);
 	}
 
-	public void moveEntries(ActionRequest actionRequest) throws Exception {
+	public void moveEntries(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
 
 		long[] folderIds = StringUtil.split(
@@ -1085,6 +1051,8 @@ public class JournalPortlet extends MVCPortlet {
 		if (!invalidArticleIds.isEmpty()) {
 			throw new InvalidDDMStructureException();
 		}
+
+		sendEditEntryRedirect(actionRequest, actionResponse);
 	}
 
 }

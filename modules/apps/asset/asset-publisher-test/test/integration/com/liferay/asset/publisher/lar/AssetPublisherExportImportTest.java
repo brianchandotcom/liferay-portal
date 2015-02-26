@@ -43,7 +43,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -83,7 +82,7 @@ public class AssetPublisherExportImportTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override

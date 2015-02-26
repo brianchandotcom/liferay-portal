@@ -24,29 +24,21 @@ import java.io.Serializable;
 public class ClusterNodeResponse implements Serializable {
 
 	public static ClusterNodeResponse createExceptionClusterNodeResponse(
-		ClusterNode clusterNode, ClusterMessageType clusterMessageType,
-		String uuid, Exception exception) {
+		ClusterNode clusterNode, String uuid, Exception exception) {
 
-		return new ClusterNodeResponse(
-			clusterNode, clusterMessageType, uuid, null, exception);
+		return new ClusterNodeResponse(clusterNode, uuid, null, exception);
 	}
 
 	public static ClusterNodeResponse createResultClusterNodeResponse(
-		ClusterNode clusterNode, ClusterMessageType clusterMessageType,
-		String uuid, Object result) {
+		ClusterNode clusterNode, String uuid, Object result) {
 
 		if ((result != null) && !(result instanceof Serializable)) {
 			return new ClusterNodeResponse(
-				clusterNode, clusterMessageType, uuid, null,
+				clusterNode, uuid, null,
 				new ClusterException("Return value is not serializable"));
 		}
 
-		return new ClusterNodeResponse(
-			clusterNode, clusterMessageType, uuid, result, null);
-	}
-
-	public ClusterMessageType getClusterMessageType() {
-		return _clusterMessageType;
+		return new ClusterNodeResponse(clusterNode, uuid, result, null);
 	}
 
 	public ClusterNode getClusterNode() {
@@ -80,18 +72,12 @@ public class ClusterNodeResponse implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
-		sb.append("{clusterMessageType=");
-		sb.append(_clusterMessageType);
+		sb.append("{clusterNode=");
+		sb.append(_clusterNode);
 
-		if (_clusterMessageType.equals(ClusterMessageType.NOTIFY) ||
-			_clusterMessageType.equals(ClusterMessageType.UPDATE)) {
-
-			sb.append(", clusterNode=");
-			sb.append(_clusterNode);
-		}
-		else if (hasException()) {
+		if (hasException()) {
 			sb.append(", exception=");
 			sb.append(_exception);
 		}
@@ -108,17 +94,15 @@ public class ClusterNodeResponse implements Serializable {
 	}
 
 	private ClusterNodeResponse(
-		ClusterNode clusterNode, ClusterMessageType clusterMessageType,
-		String uuid, Object result, Exception exception) {
+		ClusterNode clusterNode, String uuid, Object result,
+		Exception exception) {
 
 		_clusterNode = clusterNode;
-		_clusterMessageType = clusterMessageType;
 		_uuid = uuid;
 		_result = result;
 		_exception = exception;
 	}
 
-	private final ClusterMessageType _clusterMessageType;
 	private final ClusterNode _clusterNode;
 	private final Exception _exception;
 	private final Object _result;

@@ -330,13 +330,11 @@ public class ClusterExecutorImpl
 
 		if (exception != null) {
 			return ClusterNodeResponse.createExceptionClusterNodeResponse(
-				getLocalClusterNode(), clusterRequest.getClusterMessageType(),
-				clusterRequest.getUuid(), exception);
+				getLocalClusterNode(), clusterRequest.getUuid(), exception);
 		}
 
 		return ClusterNodeResponse.createResultClusterNodeResponse(
-			getLocalClusterNode(), clusterRequest.getClusterMessageType(),
-			clusterRequest.getUuid(), returnValue);
+			getLocalClusterNode(), clusterRequest.getUuid(), returnValue);
 	}
 
 	protected JChannel getControlChannel() {

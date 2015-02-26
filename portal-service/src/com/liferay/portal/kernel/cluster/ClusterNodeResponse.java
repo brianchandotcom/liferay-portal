@@ -97,6 +97,10 @@ public class ClusterNodeResponse implements Serializable {
 		ClusterNode clusterNode, String uuid, Object result,
 		Exception exception) {
 
+		if (clusterNode == null) {
+			throw new NullPointerException("ClusterNode is null");
+		}
+
 		_clusterNode = clusterNode;
 		_uuid = uuid;
 		_result = result;

@@ -14,9 +14,11 @@
 
 package com.liferay.wiki.web.settings;
 
-import com.liferay.portal.kernel.settings.SettingsProvider;
-import com.liferay.wiki.configuration.WikiConfiguration;
-import com.liferay.wiki.settings.WikiSettings;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsProvider;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
+import com.liferay.wiki.settings.WikiGroupServiceSettings;
+import com.liferay.wiki.settings.WikiPortletInstanceSettings;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -35,12 +37,20 @@ public class WikiWebSettingsProvider {
 		return _wikiWebSettingsProvider;
 	}
 
-	public WikiConfiguration getWikiConfiguration() {
-		return _wikiConfiguration;
+	public GroupServiceSettingsProvider<WikiGroupServiceSettings>
+		getGroupServiceSettingsProvider() {
+
+		return _groupServiceSettingsProvider;
 	}
 
-	public SettingsProvider<WikiSettings> getWikiSettingsProvider() {
-		return _settingsProvider;
+	public PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
+		getPortletInstanceSettingsProvider() {
+
+		return _portletInstanceSettingsProvider;
+	}
+
+	public WikiGroupServiceConfiguration getWikiGroupServiceConfiguration() {
+		return _wikiGroupServiceConfiguration;
 	}
 
 	@Activate
@@ -54,32 +64,58 @@ public class WikiWebSettingsProvider {
 	}
 
 	@Reference(
-		target = "(class.name=com.liferay.wiki.settings.WikiSettings)"
+		target = "(class.name=com.liferay.wiki.settings.WikiGroupServiceSettings)"
 	)
-	protected void setSettingsProvider(
-		SettingsProvider<WikiSettings> settingsProvider) {
+	protected void setGroupServiceSettingsProvider(
+		GroupServiceSettingsProvider<WikiGroupServiceSettings>
+			groupServiceSettingsProvider) {
 
-		_settingsProvider = settingsProvider;
+		_groupServiceSettingsProvider = groupServiceSettingsProvider;
+	}
+
+	@Reference(
+		target = "(class.name=com.liferay.wiki.settings.WikiPortletInstanceSettings)"
+	)
+	protected void setPortletInstanceSettingsProvider(
+		PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
+			portletInstanceSettingsProvider) {
+
+		_portletInstanceSettingsProvider = portletInstanceSettingsProvider;
 	}
 
 	@Reference
-	protected void setWikiConfiguration(WikiConfiguration wikiConfiguration) {
-		_wikiConfiguration = wikiConfiguration;
+	protected void setWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 	}
 
-	protected void unsetSettingsProvider(
-		SettingsProvider<WikiSettings> settingsProvider) {
+	protected void unsetGroupServiceSettingsProvider(
+		GroupServiceSettingsProvider<WikiGroupServiceSettings>
+			groupServiceSettingsProvider) {
 
-		_settingsProvider = null;
+		_groupServiceSettingsProvider = null;
 	}
 
-	protected void unsetWikiConfiguration(WikiConfiguration wikiConfiguration) {
-		_wikiConfiguration = null;
+	protected void unsetPortletIntanceSettingsProvider(
+		PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
+			portletIntanceSettingsProvider) {
+
+		_portletInstanceSettingsProvider = null;
+	}
+
+	protected void unsetWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = null;
 	}
 
 	private static WikiWebSettingsProvider _wikiWebSettingsProvider;
 
-	private SettingsProvider<WikiSettings> _settingsProvider;
-	private WikiConfiguration _wikiConfiguration;
+	private GroupServiceSettingsProvider<WikiGroupServiceSettings>
+		_groupServiceSettingsProvider;
+	private PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
+		_portletInstanceSettingsProvider;
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

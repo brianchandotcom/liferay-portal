@@ -222,7 +222,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						</aui:fieldset>
 					</div>
 
-					<c:if test="<%= (entry != null) && blogsSettings.isEmailEntryUpdatedEnabled() %>">
+					<c:if test="<%= (entry != null) && blogsGroupServiceSettings.isEmailEntryUpdatedEnabled() %>">
 						<div class="email-entry-updated-wrapper">
 							<h3><liferay-ui:message key="email-notifications" /></h3>
 
@@ -420,7 +420,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		</c:if>
 	}
 
-	<c:if test="<%= (entry != null) && blogsSettings.isEmailEntryUpdatedEnabled() %>">
+	<c:if test="<%= (entry != null) && blogsGroupServiceSettings.isEmailEntryUpdatedEnabled() %>">
 		Liferay.Util.toggleBoxes('<portlet:namespace />sendEmailEntryUpdated', '<portlet:namespace />emailEntryUpdatedCommentWrapper');
 	</c:if>
 </aui:script>

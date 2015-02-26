@@ -20,7 +20,7 @@
 page import="com.liferay.portlet.messageboards.BannedUserException" %><%@
 page import="com.liferay.portlet.messageboards.CategoryNameException" %><%@
 page import="com.liferay.portlet.messageboards.LockedThreadException" %><%@
-page import="com.liferay.portlet.messageboards.MBSettings" %><%@
+page import="com.liferay.portlet.messageboards.MBGroupServiceSettings" %><%@
 page import="com.liferay.portlet.messageboards.MailingListEmailAddressException" %><%@
 page import="com.liferay.portlet.messageboards.MailingListInServerNameException" %><%@
 page import="com.liferay.portlet.messageboards.MailingListInUserNameException" %><%@
@@ -75,22 +75,22 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
-MBSettings mbSettings = MBSettings.getInstance(themeDisplay.getSiteGroupId());
+MBGroupServiceSettings mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSiteGroupId());
 
-String[] priorities = mbSettings.getPriorities(currentLanguageId);
+String[] priorities = mbGroupServiceSettings.getPriorities(currentLanguageId);
 
-boolean allowAnonymousPosting = mbSettings.isAllowAnonymousPosting();
-boolean enableFlags = mbSettings.isEnableFlags();
-boolean enableRatings = mbSettings.isEnableRatings();
-String messageFormat = mbSettings.getMessageFormat();
-String recentPostsDateOffset = mbSettings.getRecentPostsDateOffset();
-boolean subscribeByDefault = mbSettings.isSubscribeByDefault();
-boolean threadAsQuestionByDefault = mbSettings.isThreadAsQuestionByDefault();
+boolean allowAnonymousPosting = mbGroupServiceSettings.isAllowAnonymousPosting();
+boolean enableFlags = mbGroupServiceSettings.isEnableFlags();
+boolean enableRatings = mbGroupServiceSettings.isEnableRatings();
+String messageFormat = mbGroupServiceSettings.getMessageFormat();
+String recentPostsDateOffset = mbGroupServiceSettings.getRecentPostsDateOffset();
+boolean subscribeByDefault = mbGroupServiceSettings.isSubscribeByDefault();
+boolean threadAsQuestionByDefault = mbGroupServiceSettings.isThreadAsQuestionByDefault();
 
-boolean enableRSS = mbSettings.isEnableRSS();
-int rssDelta = mbSettings.getRSSDelta();
-String rssDisplayStyle = mbSettings.getRSSDisplayStyle();
-String rssFeedType = mbSettings.getRSSFeedType();
+boolean enableRSS = mbGroupServiceSettings.isEnableRSS();
+int rssDelta = mbGroupServiceSettings.getRSSDelta();
+String rssDisplayStyle = mbGroupServiceSettings.getRSSDisplayStyle();
+String rssFeedType = mbGroupServiceSettings.getRSSFeedType();
 
 ResourceURL rssURL = liferayPortletResponse.createResourceURL();
 

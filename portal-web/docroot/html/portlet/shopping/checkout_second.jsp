@@ -24,7 +24,7 @@ Map<ShoppingCartItem, Integer> items = cart.getItems();
 ShoppingCoupon coupon = cart.getCoupon();
 
 int altShipping = cart.getAltShipping();
-String altShippingName = shoppingSettings.getAlternativeShippingName(altShipping);
+String altShippingName = shoppingGroupServiceSettings.getAlternativeShippingName(altShipping);
 
 ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserId(), themeDisplay.getScopeGroupId());
 %>
@@ -86,7 +86,7 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 		</div>
 	</div>
 
-	<c:if test="<%= !shoppingSettings.usePayPal() %>">
+	<c:if test="<%= !shoppingGroupServiceSettings.usePayPal() %>">
 		<div class="well">
 			<h4><liferay-ui:message key="credit-card" /></h4>
 
@@ -315,7 +315,7 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 	</div>
 
 	<aui:button-row>
-		<aui:button type="submit" value='<%= shoppingSettings.usePayPal() ? "continue" : "finished" %>' />
+		<aui:button type="submit" value='<%= shoppingGroupServiceSettings.usePayPal() ? "continue" : "finished" %>' />
 
 		<portlet:actionURL var="checkoutURL">
 			<portlet:param name="struts_action" value="/shopping/checkout" />

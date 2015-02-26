@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
+import com.liferay.portal.kernel.settings.PortletInstanceSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
@@ -39,7 +40,7 @@ import java.util.Map;
 		PortletKeys.DOCUMENT_LIBRARY_DISPLAY, PortletKeys.MEDIA_GALLERY_DISPLAY
 	}
 )
-public class DLPortletInstanceSettings {
+public class DLPortletInstanceSettings implements PortletInstanceSettings {
 
 	public static DLPortletInstanceSettings getInstance(
 			Layout layout, String portletId)

@@ -105,7 +105,7 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 	public void testEmailEntryUpdatedSentWithEmailEntryUpdatedComment()
 		throws Exception {
 
-		setUpBlogsSettings();
+		setUpBlogsGroupServiceSettings();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -143,7 +143,7 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 	public void testEmailEntryUpdatedSentWithEmptyEmailEntryUpdatedComment()
 		throws Exception {
 
-		setUpBlogsSettings();
+		setUpBlogsGroupServiceSettings();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -175,7 +175,7 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 		Assert.assertEquals(message.getBody(), StringPool.NEW_LINE);
 	}
 
-	protected void setUpBlogsSettings() throws Exception {
+	protected void setUpBlogsGroupServiceSettings() throws Exception {
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			_group.getGroupId(), BlogsConstants.SERVICE_NAME);
 

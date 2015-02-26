@@ -36,7 +36,7 @@
 		<icon>/html/icons/bookmarks.png</icon>
 		<struts-path>bookmarks_admin</struts-path>
 		<parent-struts-path>bookmarks</parent-struts-path>
-		<configuration-action-class>com.liferay.bookmarks.web.portlet.action.BookmarksSettingsConfigurationAction</configuration-action-class>
+		<configuration-action-class>com.liferay.bookmarks.web.portlet.action.BookmarksGroupServiceSettingsConfigurationAction</configuration-action-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
 		<control-panel-entry-weight>9.0</control-panel-entry-weight>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>

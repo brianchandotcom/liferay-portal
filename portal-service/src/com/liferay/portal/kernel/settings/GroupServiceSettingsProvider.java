@@ -12,23 +12,21 @@
  * details.
  */
 
-package com.liferay.wiki.upgrade.v1_0_0;
+package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.settings.WikiGroupServiceSettings;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Map;
 
 /**
  * @author Iván Zaera
  */
-public class UpgradePortletSettings
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings {
+public interface GroupServiceSettingsProvider<T extends GroupServiceSettings> {
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		upgradeDisplayPortlet(
-			WikiPortletKeys.WIKI_DISPLAY, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-			WikiGroupServiceSettings.class);
-	}
+	public T getGroupServiceSettings(long groupId) throws PortalException;
+
+	public T getGroupServiceSettings(
+			long groupId, Map<String, String[]> parameterMap)
+		throws PortalException;
 
 }

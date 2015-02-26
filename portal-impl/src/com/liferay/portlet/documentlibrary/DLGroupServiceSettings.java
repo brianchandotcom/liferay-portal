@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
+import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
@@ -30,16 +31,18 @@ import java.util.Map;
  * @author Adolfo Pérez
  */
 @Settings.Config(settingsIds = DLConstants.SERVICE_NAME)
-public class DLSettings {
+public class DLGroupServiceSettings implements GroupServiceSettings {
 
-	public static DLSettings getInstance(long groupId) throws PortalException {
+	public static DLGroupServiceSettings getInstance(long groupId)
+		throws PortalException {
+
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			groupId, DLConstants.SERVICE_NAME);
 
-		return new DLSettings(settings);
+		return new DLGroupServiceSettings(settings);
 	}
 
-	public static DLSettings getInstance(
+	public static DLGroupServiceSettings getInstance(
 			long groupId, Map<String, String[]> parameterMap)
 		throws PortalException {
 
@@ -49,10 +52,10 @@ public class DLSettings {
 		Settings parameterMapSettings = new ParameterMapSettings(
 			parameterMap, settings);
 
-		return new DLSettings(parameterMapSettings);
+		return new DLGroupServiceSettings(parameterMapSettings);
 	}
 
-	public DLSettings(Settings settings) {
+	public DLGroupServiceSettings(Settings settings) {
 		_typedSettings = new TypedSettings(settings);
 	}
 
@@ -180,7 +183,7 @@ public class DLSettings {
 
 	static {
 		SettingsFactoryUtil.registerSettingsMetadata(
-			DLSettings.class, null, _getFallbackKeys());
+			DLGroupServiceSettings.class, null, _getFallbackKeys());
 	}
 
 	private final TypedSettings _typedSettings;

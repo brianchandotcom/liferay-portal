@@ -52,7 +52,7 @@ import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
-import com.liferay.portlet.documentlibrary.DLSettings;
+import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -1840,14 +1840,14 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
-		DLSettings dlSettings = DLSettings.getInstance(
-			fileVersion.getGroupId());
+		DLGroupServiceSettings dlGroupServiceSettings =
+			DLGroupServiceSettings.getInstance(fileVersion.getGroupId());
 
 		if (serviceContext.isCommandAdd() &&
-			dlSettings.isEmailFileEntryAddedEnabled()) {
+			dlGroupServiceSettings.isEmailFileEntryAddedEnabled()) {
 		}
 		else if (serviceContext.isCommandUpdate() &&
-				 dlSettings.isEmailFileEntryUpdatedEnabled()) {
+				 dlGroupServiceSettings.isEmailFileEntryUpdatedEnabled()) {
 		}
 		else {
 			return;
@@ -1855,19 +1855,23 @@ public class DLAppHelperLocalServiceImpl
 
 		String entryTitle = fileVersion.getTitle();
 
-		String fromName = dlSettings.getEmailFromName();
-		String fromAddress = dlSettings.getEmailFromAddress();
+		String fromName = dlGroupServiceSettings.getEmailFromName();
+		String fromAddress = dlGroupServiceSettings.getEmailFromAddress();
 
 		Map<Locale, String> localizedSubjectMap = null;
 		Map<Locale, String> localizedBodyMap = null;
 
 		if (serviceContext.isCommandUpdate()) {
-			localizedSubjectMap = dlSettings.getEmailFileEntryUpdatedSubject();
-			localizedBodyMap = dlSettings.getEmailFileEntryUpdatedBody();
+			localizedSubjectMap =
+				dlGroupServiceSettings.getEmailFileEntryUpdatedSubject();
+			localizedBodyMap =
+				dlGroupServiceSettings.getEmailFileEntryUpdatedBody();
 		}
 		else {
-			localizedSubjectMap = dlSettings.getEmailFileEntryAddedSubject();
-			localizedBodyMap = dlSettings.getEmailFileEntryAddedBody();
+			localizedSubjectMap =
+				dlGroupServiceSettings.getEmailFileEntryAddedSubject();
+			localizedBodyMap =
+				dlGroupServiceSettings.getEmailFileEntryAddedBody();
 		}
 
 		FileEntry fileEntry = fileVersion.getFileEntry();

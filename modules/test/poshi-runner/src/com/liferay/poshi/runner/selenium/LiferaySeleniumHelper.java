@@ -600,9 +600,7 @@ public class LiferaySeleniumHelper {
 			getPortalRootDirName() + liferaySelenium.getSikuliImagesDirName() +
 				image);
 
-		ImageTarget imageTarget = new ImageTarget(file);
-
-		return imageTarget;
+		return new ImageTarget(file);
 	}
 
 	public static String getNumberDecrement(String value) {

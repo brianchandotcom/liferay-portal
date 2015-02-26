@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.search.elasticsearch.spi.facet.FacetProcessor;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 

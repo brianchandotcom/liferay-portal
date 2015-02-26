@@ -12,18 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.spi.document;
+package com.liferay.portal.search.elasticsearch.connection;
 
-import com.liferay.portal.kernel.search.Document;
-
-import java.io.IOException;
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
+import org.elasticsearch.client.Client;
 
 /**
  * @author Michael C. Han
  */
-public interface ElasticsearchDocumentFactory {
+public interface ElasticsearchConnection {
 
-	public String getElasticsearchDocument(Document document)
-		throws IOException;
+	public static final String CLUSTER_NAME = "LiferayElasticSearch";
+
+	public void close();
+
+	public Client getClient();
+
+	public ClusterHealthResponse getClusterHealthResponse(
+		long timeout, int nodesCount);
+
+	public void initialize();
 
 }

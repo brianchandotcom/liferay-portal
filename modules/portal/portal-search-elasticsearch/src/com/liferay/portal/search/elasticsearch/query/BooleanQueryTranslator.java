@@ -12,25 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.spi.connection;
+package com.liferay.portal.search.elasticsearch.query;
 
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.client.Client;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.QueryVisitor;
+
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
- * @author Michael C. Han
+ * @author Miguel Angelo Caldas Gallindo
  */
-public interface ElasticsearchConnection {
+public interface BooleanQueryTranslator {
 
-	public static final String CLUSTER_NAME = "LiferayElasticSearch";
-
-	public void close();
-
-	public Client getClient();
-
-	public ClusterHealthResponse getClusterHealthResponse(
-		long timeout, int nodesCount);
-
-	public void initialize();
+	public QueryBuilder translate(
+		BooleanQuery booleanQuery, QueryVisitor<QueryBuilder> queryVisitor);
 
 }

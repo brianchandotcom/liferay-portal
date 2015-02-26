@@ -12,19 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.spi.index;
+package com.liferay.portal.search.elasticsearch.document;
 
-import org.elasticsearch.client.AdminClient;
+import com.liferay.portal.kernel.search.Document;
+
+import java.io.IOException;
 
 /**
  * @author Michael C. Han
  */
-public interface IndexFactory {
+public interface ElasticsearchDocumentFactory {
 
-	public void createIndices(AdminClient adminClient, long companyId)
-		throws Exception;
-
-	public void deleteIndices(AdminClient adminClient, long companyId)
-		throws Exception;
+	public String getElasticsearchDocument(Document document)
+		throws IOException;
 
 }

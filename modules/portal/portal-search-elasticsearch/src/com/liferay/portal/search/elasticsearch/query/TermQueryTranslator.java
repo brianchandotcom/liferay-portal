@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.spi.facet;
+package com.liferay.portal.search.elasticsearch.query;
 
-import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.TermQuery;
+
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
- * @author Michael C. Han
+ * @author Miguel Angelo Caldas Gallindo
  */
-public interface FacetProcessor<T> {
+public interface TermQueryTranslator {
 
-	public void processFacet(T searchRequestBuilder, Facet facet);
+	public QueryBuilder translate(TermQuery termQuery);
 
 }

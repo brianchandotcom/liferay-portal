@@ -2,24 +2,21 @@ Liferay.provide(
 	window,
 	'${namespace}openDocument',
 	function(webDavURL) {
-		var A = AUI();
-
 		Liferay.Util.openDocument(
 			webDavURL,
 			null,
 			function(exception) {
-				var errorMessage = A.Lang.sub(
+				var errorMessage = AUI._.sub(
 					'${errorMessage}',
 					[exception.message]
 				);
 
-				var openMSOfficeError = A.one('#${namespace}openMSOfficeError');
+				var openMSOfficeError = AUI.$('#${namespace}openMSOfficeError');
 
 				openMSOfficeError.html(errorMessage);
 
-				openMSOfficeError.show();
+				openMSOfficeError.removeClass('hide');
 			}
 		);
-	},
-	['aui-base']
+	}
 );

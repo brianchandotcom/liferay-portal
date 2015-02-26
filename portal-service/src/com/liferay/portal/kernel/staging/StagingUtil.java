@@ -97,6 +97,11 @@ public class StagingUtil {
 		getStaging().copyFromLive(PortletRequest, portlet);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #publishPortlet(long, long,
+	 *             long, long, long, String, Map, Date, Date)}
+	 */
+	@Deprecated
 	public static void copyPortlet(
 			PortletRequest PortletRequest, long sourceGroupId,
 			long targetGroupId, long sourcePlid, long targetPlid,

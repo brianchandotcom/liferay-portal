@@ -262,6 +262,11 @@ public class StagingImpl implements Staging {
 			portlet.getPortletId());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #publishPortlet(long, long,
+	 *             long, long, long, String, Map, Date, Date)}
+	 */
+	@Deprecated
 	@Override
 	public void copyPortlet(
 			PortletRequest portletRequest, long sourceGroupId,
@@ -280,37 +285,10 @@ public class StagingImpl implements Staging {
 			portletRequest, sourceGroupId, false, sourcePlid, portletId,
 			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
 
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				themeDisplay.getUserId(), sourceGroupId, sourcePlid,
-				targetGroupId, targetPlid, portletId, parameterMap,
-				Constants.PUBLISH_TO_LIVE, dateRange.getStartDate(),
-				dateRange.getEndDate(), themeDisplay.getLocale(),
-				themeDisplay.getTimeZone());
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					themeDisplay.getUserId(), sourceGroupId, portletId,
-					StringPool.BLANK,
-					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
-					serviceContext);
-
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
-		taskContextMap.put(Constants.CMD, Constants.PUBLISH_TO_LIVE);
-		taskContextMap.put(
-			"exportImportConfigurationId",
-			exportImportConfiguration.getExportImportConfigurationId());
-
-		BackgroundTaskLocalServiceUtil.addBackgroundTask(
-			themeDisplay.getUserId(), exportImportConfiguration.getGroupId(),
-			exportImportConfiguration.getName(), null,
-			PortletStagingBackgroundTaskExecutor.class, taskContextMap,
-			serviceContext);
+		publishPortlet(
+			themeDisplay.getUserId(), sourceGroupId, targetGroupId, sourcePlid,
+			targetPlid, portletId, parameterMap, dateRange.getStartDate(),
+			dateRange.getEndDate());
 	}
 
 	@Override

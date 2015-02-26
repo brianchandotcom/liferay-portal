@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
-import com.liferay.portal.kernel.cluster.ClusterMessageType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -796,15 +795,13 @@ public class LuceneHelperImplTest {
 				try {
 					futureClusterResponses.addClusterNodeResponse(
 						ClusterNodeResponse.createResultClusterNodeResponse(
-							clusterNode, ClusterMessageType.EXECUTE,
-							clusterRequest.getUuid(),
+							clusterNode, clusterRequest.getUuid(),
 							_invoke(clusterRequest.getMethodHandler())));
 				}
 				catch (Exception e) {
 					futureClusterResponses.addClusterNodeResponse(
 						ClusterNodeResponse.createExceptionClusterNodeResponse(
-							clusterNode, ClusterMessageType.EXECUTE,
-							clusterRequest.getUuid(), e));
+							clusterNode, clusterRequest.getUuid(), e));
 				}
 			}
 

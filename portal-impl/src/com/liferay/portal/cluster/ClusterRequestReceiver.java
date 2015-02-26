@@ -17,8 +17,6 @@ package com.liferay.portal.cluster;
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.cluster.Address;
-import com.liferay.portal.kernel.cluster.ClusterException;
-import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterMessageType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
@@ -27,7 +25,6 @@ import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
-import com.liferay.portal.kernel.util.MethodHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -162,92 +159,51 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		return newAddresses;
 	}
 
-	protected void handleResponse(
-		Address address, ClusterRequest clusterRequest, Object returnValue,
-		Exception exception) {
+	protected void processClusterRequest(
+		ClusterRequest clusterRequest, Address sourceAddress) {
 
-		ClusterNodeResponse clusterNodeResponse =
-			_clusterExecutorImpl.generateClusterNodeResponse(
-				clusterRequest, returnValue, exception);
+		Object responsePayload = null;
+
+		ClusterMessageType clusterMessageType =
+			clusterRequest.getClusterMessageType();
+
+		if (clusterMessageType == ClusterMessageType.EXECUTE) {
+			ClusterNodeResponse clusterNodeResponse =
+				_clusterExecutorImpl.executeClusterRequest(clusterRequest);
+
+			if (!clusterRequest.isFireAndForget()) {
+				responsePayload = clusterNodeResponse;
+			}
+		}
+		else {
+			_clusterExecutorImpl.memberJoined(
+				sourceAddress, clusterRequest.getOriginatingClusterNode());
+
+			if (clusterMessageType == ClusterMessageType.NOTIFY) {
+				responsePayload = ClusterRequest.createClusterRequest(
+					ClusterMessageType.UPDATE,
+					_clusterExecutorImpl.getLocalClusterNode());
+			}
+		}
+
+		if (responsePayload == null) {
+			return;
+		}
 
 		Channel channel = _clusterExecutorImpl.getControlChannel();
 
 		try {
 			channel.send(
-				(org.jgroups.Address)address.getRealAddress(),
-				clusterNodeResponse);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to send response message " + clusterNodeResponse, e);
+				(org.jgroups.Address)sourceAddress.getRealAddress(),
+				responsePayload);
 		}
 		catch (Throwable t) {
-			_log.error(t, t);
-		}
-	}
-
-	protected void processClusterRequest(
-		ClusterRequest clusterRequest, Address sourceAddress) {
-
-		ClusterMessageType clusterMessageType =
-			clusterRequest.getClusterMessageType();
-
-		if (clusterMessageType.equals(ClusterMessageType.NOTIFY) ||
-			clusterMessageType.equals(ClusterMessageType.UPDATE)) {
-
-			_clusterExecutorImpl.memberJoined(
-				sourceAddress, clusterRequest.getOriginatingClusterNode());
-
-			if (clusterMessageType.equals(ClusterMessageType.NOTIFY)) {
-				handleResponse(sourceAddress, clusterRequest, null, null);
-			}
-
-			return;
-		}
-
-		MethodHandler methodHandler = clusterRequest.getMethodHandler();
-
-		Object returnValue = null;
-		Exception exception = null;
-
-		if (methodHandler != null) {
-			try {
-				ClusterInvokeThreadLocal.setEnabled(false);
-
-				returnValue = methodHandler.invoke();
-			}
-			catch (Exception e) {
-				exception = e;
-
-				_log.error("Unable to invoke method " + methodHandler, e);
-			}
-			finally {
-				ClusterInvokeThreadLocal.setEnabled(true);
-			}
-		}
-		else {
-			exception = new ClusterException(
-				"Payload is not of type " + MethodHandler.class.getName());
-		}
-
-		if (!clusterRequest.isFireAndForget()) {
-			handleResponse(
-				sourceAddress, clusterRequest, returnValue, exception);
+			_log.error("Unable to send message " + responsePayload, t);
 		}
 	}
 
 	protected void processClusterResponse(
 		ClusterNodeResponse clusterNodeResponse, Address sourceAddress) {
-
-		ClusterMessageType clusterMessageType =
-			clusterNodeResponse.getClusterMessageType();
-
-		if (clusterMessageType.equals(ClusterMessageType.NOTIFY)) {
-			_clusterExecutorImpl.memberJoined(
-				sourceAddress, clusterNodeResponse.getClusterNode());
-
-			return;
-		}
 
 		String uuid = clusterNodeResponse.getUuid();
 

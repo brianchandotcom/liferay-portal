@@ -238,6 +238,10 @@
 		&.depth-0 {
 			border-top-color: #B0B4BB;
 		}
+
+		.lfr-discussion-form-edit .alloy-editor-placeholder {
+			border-left-color: #DBDDE1;
+		}
 	}
 
 	.lfr-discussion-details {
@@ -272,9 +276,5 @@
 	.lfr-discussion-form-container .lfr-discussion-form {
 		background: #DDD;
 		border-radius: 4px;
-	}
-
-	.lfr-discussion-form-edit .alloy-editor-placeholder {
-		border-left-color: #DBDDE1;
 	}
 }

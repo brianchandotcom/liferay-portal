@@ -8287,7 +8287,7 @@ public class PortalImpl implements Portal {
 
 			if (local) {
 				portalInetSocketAddressEventListener.
-					portalLocalInetSockAddressConfigured(
+					portalLocalInetSocketAddressConfigured(
 						inetSocketAddress, secure);
 			}
 			else {

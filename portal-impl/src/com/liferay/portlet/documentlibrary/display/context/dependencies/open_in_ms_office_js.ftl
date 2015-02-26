@@ -1,22 +1,18 @@
-Liferay.provide(
-	window,
-	'${namespace}openDocument',
-	function(webDavURL) {
-		Liferay.Util.openDocument(
-			webDavURL,
-			null,
-			function(exception) {
-				var errorMessage = AUI._.sub(
-					'${errorMessage}',
-					[exception.message]
-				);
+function ${namespace}openDocument(webDavURL) {
+	Liferay.Util.openDocument(
+		webDavURL,
+		null,
+		function(exception) {
+			var errorMessage = AUI._.sub(
+				'${errorMessage}',
+				[exception.message]
+			);
 
-				var openMSOfficeError = AUI.$('#${namespace}openMSOfficeError');
+			var openMSOfficeError = AUI.$('#${namespace}openMSOfficeError');
 
-				openMSOfficeError.html(errorMessage);
+			openMSOfficeError.html(errorMessage);
 
-				openMSOfficeError.removeClass('hide');
-			}
-		);
-	}
-);
+			openMSOfficeError.removeClass('hide');
+		}
+	);
+}

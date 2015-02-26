@@ -38,20 +38,17 @@
 		window,
 		'${portletNamespace}${namespacedFieldName}ToggleImage',
 		function() {
-			var A = AUI();
-
 			var toggleText = '${languageUtil.get(locale, "show")}';
 
-			var containerNode = A.one('#${portletNamespace}${namespacedFieldName}Container');
+			var containerNode = AUI.$('#${portletNamespace}${namespacedFieldName}Container');
 
-			if (containerNode.test(':hidden')) {
+			if (containerNode.is(':hidden')) {
 				toggleText = '${languageUtil.get(locale, "hide")}';
 			}
 
-			A.one('#${portletNamespace}${namespacedFieldName}ToggleImage').setContent(toggleText);
+			AUI.$('#${portletNamespace}${namespacedFieldName}ToggleImage').html(toggleText);
 
-			containerNode.toggle();
-		},
-		['aui-base']
+			containerNode.toggleClass('hide');
+		}
 	);
 </@>

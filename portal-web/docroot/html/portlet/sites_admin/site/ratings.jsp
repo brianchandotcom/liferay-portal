@@ -39,7 +39,7 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 
 <h3><liferay-ui:message key="ratings" /></h3>
 
-<p><liferay-ui:message key="select-the-ratings-type-for-the-following-portlets" /></p>
+<p><liferay-ui:message key="select-the-ratings-type-for-the-following-applications" /></p>
 
 <aui:fieldset id="ratingsSettingsContainer">
 
@@ -105,7 +105,7 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 	form.on(
 		'submit',
 		function(event) {
-			if (ratingsTypeChanged && !confirm('<%= UnicodeLanguageUtil.get(request, "the-previous-ratings-values-will-be-adapted-to-match-the-new-ratings-type") %>')) {
+			if (ratingsTypeChanged && !confirm('<%= UnicodeLanguageUtil.get(request, "if-there-is-existing-ratings-data-those-values-will-be-adapted-to-match-the-new-ratings-type-although-this-may-not-be-accurate") %>')) {
 				event.preventDefault();
 
 				event.stopImmediatePropagation();

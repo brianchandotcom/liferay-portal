@@ -21,10 +21,6 @@ import com.liferay.portal.kernel.search.QueryVisitor;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
-import com.liferay.portal.search.elasticsearch.spi.query.BooleanQueryTranslator;
-import com.liferay.portal.search.elasticsearch.spi.query.TermQueryTranslator;
-import com.liferay.portal.search.elasticsearch.spi.query.TermRangeQueryTranslator;
-import com.liferay.portal.search.elasticsearch.spi.query.WildcardQueryTranslator;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;

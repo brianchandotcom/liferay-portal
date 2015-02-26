@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch.connection;
 
-import com.liferay.portal.search.elasticsearch.spi.connection.ElasticsearchConnection;
-
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;

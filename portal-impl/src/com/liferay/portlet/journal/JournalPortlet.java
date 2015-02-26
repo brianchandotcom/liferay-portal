@@ -990,7 +990,7 @@ public class JournalPortlet extends MVCPortlet {
 		return actionMapping.findForward(getForward(renderRequest, forward));
 	}
 
-	protected void deleteEntries(
+	public void deleteEntries(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
@@ -1039,7 +1039,7 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void expireEntries(ActionRequest actionRequest) throws Exception {
+	public void expireEntries(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -1063,7 +1063,7 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void moveEntries(ActionRequest actionRequest) throws Exception {
+	public void moveEntries(ActionRequest actionRequest) throws Exception {
 		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
 
 		long[] folderIds = StringUtil.split(

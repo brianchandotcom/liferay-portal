@@ -900,4 +900,205 @@ public class JournalPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalPortlet.class);
 
+	@Override
+	public void processAction(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.DELETE)) {
+				deleteEntries(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.EXPIRE)) {
+				expireEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.MOVE)) {
+				moveEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteEntries(actionRequest, true);
+			}
+
+			String redirect = PortalUtil.escapeRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
+
+			WindowState windowState = actionRequest.getWindowState();
+
+			if (!windowState.equals(LiferayWindowState.POP_UP)) {
+				sendRedirect(actionRequest, actionResponse);
+			}
+			else if (Validator.isNotNull(redirect)) {
+				actionResponse.sendRedirect(redirect);
+			}
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchArticleException ||
+				e instanceof NoSuchFolderException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				setForward(actionRequest, "portlet.journal.error");
+			}
+			else if (e instanceof DuplicateArticleIdException ||
+					 e instanceof DuplicateFolderNameException ||
+					 e instanceof InvalidDDMStructureException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else if (e instanceof AssetCategoryException ||
+					 e instanceof AssetTagException) {
+
+				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else {
+				throw e;
+			}
+		}
+	}
+
+	@Override
+	public ActionForward render(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		try {
+			ActionUtil.getArticles(renderRequest);
+			ActionUtil.getFolders(renderRequest);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchArticleException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return actionMapping.findForward("portlet.journal.error");
+			}
+			else {
+				throw e;
+			}
+		}
+
+		String forward = "portlet.journal.edit_entry";
+
+		return actionMapping.findForward(getForward(renderRequest, forward));
+	}
+
+	protected void deleteEntries(
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		long[] deleteFolderIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "folderIds"), 0L);
+
+		for (long deleteFolderId : deleteFolderIds) {
+			if (moveToTrash) {
+				JournalFolder folder =
+					JournalFolderServiceUtil.moveFolderToTrash(deleteFolderId);
+
+				trashedModels.add(folder);
+			}
+			else {
+				JournalFolderServiceUtil.deleteFolder(deleteFolderId);
+			}
+		}
+
+		String[] deleteArticleIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "articleIds"));
+
+		for (String deleteArticleId : deleteArticleIds) {
+			if (moveToTrash) {
+				JournalArticle article =
+					JournalArticleServiceUtil.moveArticleToTrash(
+						themeDisplay.getScopeGroupId(),
+						HtmlUtil.unescape(deleteArticleId));
+
+				trashedModels.add(article);
+			}
+			else {
+				ActionUtil.deleteArticle(
+					actionRequest, HtmlUtil.unescape(deleteArticleId));
+			}
+		}
+
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
+
+			hideDefaultSuccessMessage(actionRequest);
+		}
+	}
+
+	protected void expireEntries(ActionRequest actionRequest) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] expireFolderIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "folderIds"), 0L);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			JournalArticle.class.getName(), actionRequest);
+
+		for (long expireFolderId : expireFolderIds) {
+			ActionUtil.expireFolder(
+				themeDisplay.getScopeGroupId(), expireFolderId, serviceContext);
+		}
+
+		String[] expireArticleIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "articleIds"));
+
+		for (String expireArticleId : expireArticleIds) {
+			ActionUtil.expireArticle(
+				actionRequest, HtmlUtil.unescape(expireArticleId));
+		}
+	}
+
+	protected void moveEntries(ActionRequest actionRequest) throws Exception {
+		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
+
+		long[] folderIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "folderIds"), 0L);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			JournalArticle.class.getName(), actionRequest);
+
+		for (long folderId : folderIds) {
+			JournalFolderServiceUtil.moveFolder(
+				folderId, newFolderId, serviceContext);
+		}
+
+		List<String> invalidArticleIds = new ArrayList<>();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String[] articleIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "articleIds"));
+
+		for (String articleId : articleIds) {
+			try {
+				JournalArticleServiceUtil.moveArticle(
+					themeDisplay.getScopeGroupId(),
+					HtmlUtil.unescape(articleId), newFolderId, serviceContext);
+			}
+			catch (InvalidDDMStructureException idse) {
+				invalidArticleIds.add(articleId);
+			}
+		}
+
+		if (!invalidArticleIds.isEmpty()) {
+			throw new InvalidDDMStructureException();
+		}
+	}
+
 }

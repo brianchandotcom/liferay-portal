@@ -1306,6 +1306,45 @@ public class StagingImpl implements Staging {
 	}
 
 	@Override
+	public void publishPortlet(
+			long userId, long sourceGroupId, long targetGroupId,
+			long sourcePlid, long targetPlid, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException {
+
+		User user = UserLocalServiceUtil.getUser(userId);
+
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+				userId, sourceGroupId, sourcePlid, targetGroupId, targetPlid,
+				portletId, parameterMap, Constants.PUBLISH_TO_LIVE, startDate,
+				endDate, user.getLocale(), user.getTimeZone());
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					userId, sourceGroupId, portletId, StringPool.BLANK,
+					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
+					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					serviceContext);
+
+		Map<String, Serializable> taskContextMap = new HashMap<>();
+
+		taskContextMap.put(Constants.CMD, Constants.PUBLISH_TO_LIVE);
+		taskContextMap.put(
+			"exportImportConfigurationId",
+			exportImportConfiguration.getExportImportConfigurationId());
+
+		BackgroundTaskLocalServiceUtil.addBackgroundTask(
+			userId, exportImportConfiguration.getGroupId(),
+			exportImportConfiguration.getName(), null,
+			PortletStagingBackgroundTaskExecutor.class, taskContextMap,
+			serviceContext);
+	}
+
+	@Override
 	public void publishToLive(PortletRequest portletRequest)
 		throws PortalException {
 

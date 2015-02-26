@@ -278,6 +278,12 @@ public interface Staging {
 			Date startDate, Date endDate)
 		throws PortalException;
 
+	public void publishPortlet(
+			long userId, long sourceGroupId, long targetGroupId,
+			long sourcePlid, long targetPlid, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException;
+
 	public void publishToLive(PortletRequest PortletRequest)
 		throws PortalException;
 

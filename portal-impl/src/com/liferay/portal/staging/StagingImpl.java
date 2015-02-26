@@ -42,8 +42,8 @@ import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
-import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -133,7 +133,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1019,160 +1018,29 @@ public class StagingImpl implements Staging {
 		return stagingGroup;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             ExportImportConfigurationParameterMapFactory#buildParameterMap(
+	 *             )}
+	 */
+	@Deprecated
 	@Override
 	public Map<String, String[]> getStagingParameters() {
-		Map<String, String[]> parameterMap = new LinkedHashMap<>();
-
-		parameterMap.put(
-			PortletDataHandlerKeys.DATA_STRATEGY,
-			new String[] {
-				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE});
-		parameterMap.put(
-			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.DELETE_PORTLET_DATA,
-			new String[] {Boolean.FALSE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
-			new String[] {Boolean.FALSE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
-			new String[] {Boolean.FALSE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.LOGO,
-			new String[] {Boolean.FALSE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PERMISSIONS,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.THEME_REFERENCE,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.USER_ID_STRATEGY,
-			new String[] {UserIdStrategy.CURRENT_USER_ID});
-
-		return parameterMap;
+		return ExportImportConfigurationParameterMapFactory.buildParameterMap();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             ExportImportConfigurationParameterMapFactory#buildParameterMap(
+	 *             PortletRequest)}
+	 */
+	@Deprecated
 	@Override
 	public Map<String, String[]> getStagingParameters(
 		PortletRequest portletRequest) {
 
-		Map<String, String[]> parameterMap = new LinkedHashMap<>(
-			portletRequest.getParameterMap());
-
-		if (!parameterMap.containsKey(PortletDataHandlerKeys.DATA_STRATEGY)) {
-			parameterMap.put(
-				PortletDataHandlerKeys.DATA_STRATEGY,
-				new String[] {
-					PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE});
-		}
-
-		/*if (!parameterMap.containsKey(
-				PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS)) {
-
-			parameterMap.put(
-				PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
-				new String[] {Boolean.TRUE.toString()});
-		}*/
-
-		if (!parameterMap.containsKey(
-				PortletDataHandlerKeys.DELETE_PORTLET_DATA)) {
-
-			parameterMap.put(
-				PortletDataHandlerKeys.DELETE_PORTLET_DATA,
-				new String[] {Boolean.FALSE.toString()});
-		}
-
-		if (!parameterMap.containsKey(
-				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED)) {
-
-			parameterMap.put(
-				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
-				new String[] {Boolean.FALSE.toString()});
-		}
-
-		if (!parameterMap.containsKey(
-				PortletDataHandlerKeys.LAYOUT_SET_SETTINGS)) {
-
-			parameterMap.put(
-				PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
-				new String[] {Boolean.FALSE.toString()});
-		}
-
-		if (!parameterMap.containsKey(PortletDataHandlerKeys.LOGO)) {
-			parameterMap.put(
-				PortletDataHandlerKeys.LOGO,
-				new String[] {Boolean.FALSE.toString()});
-		}
-
-		if (!parameterMap.containsKey(
-				PortletDataHandlerKeys.PORTLET_CONFIGURATION)) {
-
-			parameterMap.put(
-				PortletDataHandlerKeys.PORTLET_CONFIGURATION,
-				new String[] {Boolean.TRUE.toString()});
-		}
-
-		if (!parameterMap.containsKey(PortletDataHandlerKeys.PORTLET_DATA)) {
-			parameterMap.put(
-				PortletDataHandlerKeys.PORTLET_DATA,
-				new String[] {Boolean.FALSE.toString()});
-		}
-
-		if (!parameterMap.containsKey(
-				PortletDataHandlerKeys.PORTLET_DATA_ALL)) {
-
-			parameterMap.put(
-				PortletDataHandlerKeys.PORTLET_DATA_ALL,
-				new String[] {Boolean.FALSE.toString()});
-		}
-
-		if (!parameterMap.containsKey(PortletDataHandlerKeys.THEME_REFERENCE)) {
-			parameterMap.put(
-				PortletDataHandlerKeys.THEME_REFERENCE,
-				new String[] {Boolean.FALSE.toString()});
-		}
-
-		if (!parameterMap.containsKey(
-				PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE)) {
-
-			parameterMap.put(
-				PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
-				new String[] {Boolean.TRUE.toString()});
-		}
-
-		if (!parameterMap.containsKey(
-				PortletDataHandlerKeys.USER_ID_STRATEGY)) {
-
-			parameterMap.put(
-				PortletDataHandlerKeys.USER_ID_STRATEGY,
-				new String[] {UserIdStrategy.CURRENT_USER_ID});
-		}
-
-		return parameterMap;
+		return ExportImportConfigurationParameterMapFactory.buildParameterMap(
+			portletRequest);
 	}
 
 	@Override

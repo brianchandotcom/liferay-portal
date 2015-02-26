@@ -331,10 +331,22 @@ public class StagingUtil {
 		return getStaging().getStagingGroup(groupId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
+	 *             )}
+	 */
+	@Deprecated
 	public static Map<String, String[]> getStagingParameters() {
 		return getStaging().getStagingParameters();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
+	 *             PortletRequest)}
+	 */
+	@Deprecated
 	public static Map<String, String[]> getStagingParameters(
 		PortletRequest PortletRequest) {
 

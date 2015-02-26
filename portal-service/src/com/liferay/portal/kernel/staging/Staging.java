@@ -212,8 +212,20 @@ public interface Staging {
 
 	public Group getStagingGroup(long groupId);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
+	 *             )}
+	 */
+	@Deprecated
 	public Map<String, String[]> getStagingParameters();
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
+	 *             PortletRequest)}
+	 */
+	@Deprecated
 	public Map<String, String[]> getStagingParameters(
 		PortletRequest PortletRequest);
 

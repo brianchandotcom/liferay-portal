@@ -18,10 +18,7 @@
 
 	<dependencies defaultconf="default">
 		<dependency name="aQute.bnd" org="com.liferay" rev="2.3.0" />
-		<dependency name="arquillian-container-osgi" org="org.jboss.arquillian.container" rev="2.1.0.CR18" />
-		<dependency name="arquillian-container-test-spi" org="org.jboss.arquillian.container" rev="1.1.6.Final" />
 		<dependency name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.6.Final" />
-		<dependency name="arquillian-protocol-jmx" org="org.jboss.arquillian.protocol" rev="1.1.6.Final" />
 		<dependency name="jbosgi-metadata" org="org.jboss.osgi.metadata" rev="4.0.0.CR1" />
 		<dependency name="junit" org="junit" rev="4.12" />
 		<dependency name="org.osgi.enterprise" org="org.osgi" rev="5.0.0" />

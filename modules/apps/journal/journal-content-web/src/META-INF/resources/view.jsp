@@ -91,11 +91,11 @@ journalContentDisplayContext.incrementViewCounter();
 											for (String extension : journalContentDisplayContext.getExtensions()) {
 											%>
 
-												<portlet:actionURL name="exportArticle" var="exportArticleURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+												<portlet:resourceURL var="exportArticleURL">
 													<portlet:param name="groupId" value="<%= String.valueOf(articleDisplay.getGroupId()) %>" />
 													<portlet:param name="articleId" value="<%= articleDisplay.getArticleId() %>" />
 													<portlet:param name="targetExtension" value="<%= extension %>" />
-												</portlet:actionURL>
+												</portlet:resourceURL>
 
 												<liferay-ui:icon
 													iconCssClass="<%= DLUtil.getFileIconCssClass(extension) %>"

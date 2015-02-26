@@ -170,19 +170,7 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		ClusterMessageType clusterMessageType =
 			clusterRequest.getClusterMessageType();
 
-		if (clusterMessageType.equals(ClusterMessageType.NOTIFY) ||
-			clusterMessageType.equals(ClusterMessageType.UPDATE)) {
-
-			_clusterExecutorImpl.memberJoined(
-				sourceAddress, clusterRequest.getOriginatingClusterNode());
-
-			if (clusterMessageType.equals(ClusterMessageType.NOTIFY)) {
-				responsePayload = ClusterRequest.createClusterRequest(
-					ClusterMessageType.UPDATE,
-					_clusterExecutorImpl.getLocalClusterNode());
-			}
-		}
-		else {
+		if (clusterMessageType == ClusterMessageType.EXECUTE) {
 			MethodHandler methodHandler = clusterRequest.getMethodHandler();
 
 			Object returnValue = null;
@@ -212,6 +200,16 @@ public class ClusterRequestReceiver extends BaseReceiver {
 				responsePayload =
 					_clusterExecutorImpl.generateClusterNodeResponse(
 						clusterRequest, returnValue, exception);
+			}
+		}
+		else {
+			_clusterExecutorImpl.memberJoined(
+				sourceAddress, clusterRequest.getOriginatingClusterNode());
+
+			if (clusterMessageType.equals(ClusterMessageType.NOTIFY)) {
+				responsePayload = ClusterRequest.createClusterRequest(
+					ClusterMessageType.UPDATE,
+					_clusterExecutorImpl.getLocalClusterNode());
 			}
 		}
 

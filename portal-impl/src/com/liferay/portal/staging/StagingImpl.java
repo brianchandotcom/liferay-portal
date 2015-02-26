@@ -233,8 +233,9 @@ public class StagingImpl implements Staging {
 
 		long liveGroupId = stagingGroup.getLiveGroupId();
 
-		Map<String, String[]> parameterMap = getStagingParameters(
-			portletRequest);
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+				portletRequest);
 
 		publishLayouts(
 			portletRequest, liveGroupId, stagingGroupId, parameterMap, false);
@@ -271,8 +272,9 @@ public class StagingImpl implements Staging {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, String[]> parameterMap = getStagingParameters(
-			portletRequest);
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+				portletRequest);
 
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			portletRequest, sourceGroupId, false, sourcePlid, portletId,
@@ -1180,7 +1182,8 @@ public class StagingImpl implements Staging {
 			long userId, long plid, long liveGroupId, boolean includeChildren)
 		throws PortalException {
 
-		Map<String, String[]> parameterMap = getStagingParameters();
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap();
 
 		parameterMap.put(
 			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
@@ -1310,8 +1313,9 @@ public class StagingImpl implements Staging {
 
 		Group liveGroup = getLiveGroup(groupId);
 
-		Map<String, String[]> parameterMap = getStagingParameters(
-			portletRequest);
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+				portletRequest);
 
 		if (liveGroup.isStaged()) {
 			if (liveGroup.isStagedRemotely()) {
@@ -1390,8 +1394,9 @@ public class StagingImpl implements Staging {
 
 		long liveGroupId = stagingGroup.getLiveGroupId();
 
-		Map<String, String[]> parameterMap = getStagingParameters(
-			portletRequest);
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+				portletRequest);
 
 		publishLayouts(
 			portletRequest, liveGroupId, stagingGroupId, parameterMap, true);
@@ -1408,8 +1413,9 @@ public class StagingImpl implements Staging {
 
 		long liveGroupId = stagingGroup.getLiveGroupId();
 
-		Map<String, String[]> parameterMap = getStagingParameters(
-			portletRequest);
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+				portletRequest);
 
 		publishLayouts(
 			portletRequest, stagingGroupId, liveGroupId, parameterMap, true);
@@ -2076,8 +2082,9 @@ public class StagingImpl implements Staging {
 			layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(portletRequest);
 		}
 
-		Map<String, String[]> parameterMap = getStagingParameters(
-			portletRequest);
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+				portletRequest);
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 

@@ -30,7 +30,7 @@ long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 			<aui:button data-title='<%= LanguageUtil.get(request, "in-order-to-preview-your-changes,-the-web-content-is-saved-as-a-draft") %>' icon="icon-search" name="basicPreviewButton" value="basic-preview" />
 		</c:if>
 
-		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">
+		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
 			<aui:button icon="icon-lock" name="articlePermissionsButton" value="permissions" />
 		</c:if>
 

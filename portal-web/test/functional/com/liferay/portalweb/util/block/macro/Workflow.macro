@@ -640,6 +640,20 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="viewCompletedTasksTaskNotPresentCP">
+		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
+
+		<execute function="AssertClick" locator1="CPMyworkflowtasks#NAVIGATION_COMPLETED" value1="Completed" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertElementNotPresent" locator1="CPMyworkflowtasks#COMPLETED_TABLE_TASK" />
+		<execute function="AssertElementNotPresent" locator1="CPMyworkflowtasks#COMPLETED_TABLE_ASSET_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="CPMyworkflowtasks#COMPLETED_TABLE_ASSET_TYPE" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
 	<command name="viewDefaultMySubmissionsCP">
 		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
 

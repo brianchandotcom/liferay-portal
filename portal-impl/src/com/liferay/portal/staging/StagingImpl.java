@@ -269,7 +269,8 @@ public class StagingImpl implements Staging {
 			String portletId)
 		throws PortalException {
 
-		long userId = PortalUtil.getUserId(portletRequest);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		Map<String, String[]> parameterMap = getStagingParameters(
 			portletRequest);
@@ -278,22 +279,21 @@ public class StagingImpl implements Staging {
 			portletRequest, sourceGroupId, false, sourcePlid, portletId,
 			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				userId, sourceGroupId, sourcePlid, targetGroupId, targetPlid,
-				portletId, parameterMap, Constants.PUBLISH_TO_LIVE,
-				dateRange.getStartDate(), dateRange.getEndDate(),
-				themeDisplay.getLocale(), themeDisplay.getTimeZone());
+				themeDisplay.getUserId(), sourceGroupId, sourcePlid,
+				targetGroupId, targetPlid, portletId, parameterMap,
+				Constants.PUBLISH_TO_LIVE, dateRange.getStartDate(),
+				dateRange.getEndDate(), themeDisplay.getLocale(),
+				themeDisplay.getTimeZone());
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
 				addExportImportConfiguration(
-					userId, sourceGroupId, portletId, StringPool.BLANK,
+					themeDisplay.getUserId(), sourceGroupId, portletId,
+					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
 					settingsMap, WorkflowConstants.STATUS_DRAFT,
 					serviceContext);
@@ -306,7 +306,7 @@ public class StagingImpl implements Staging {
 			exportImportConfiguration.getExportImportConfigurationId());
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTask(
-			userId, exportImportConfiguration.getGroupId(),
+			themeDisplay.getUserId(), exportImportConfiguration.getGroupId(),
 			exportImportConfiguration.getName(), null,
 			PortletStagingBackgroundTaskExecutor.class, taskContextMap,
 			serviceContext);

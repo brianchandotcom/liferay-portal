@@ -198,6 +198,7 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setLocale(LocaleUtil.getDefault());
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		when(
 			portletRequest.getAttribute(WebKeys.THEME_DISPLAY)

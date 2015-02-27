@@ -2,6 +2,7 @@ Bundle-Name: Liferay Asset Publisher Web
 Bundle-SymbolicName: com.liferay.asset.publisher.web
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.asset.publisher.web.constants.*,\
 	com.liferay.asset.publisher.web.util
 Import-Package: \
 	com.liferay.portlet.documentlibrary.util,\

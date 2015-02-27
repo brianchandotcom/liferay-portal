@@ -278,6 +278,14 @@ public class SyncAccountService {
 
 		update(syncAccount);
 
+		// Sync file
+
+		SyncFile syncFile = SyncFileService.fetchSyncFile(sourceFilePathName);
+
+		syncFile.setFilePathName(targetFilePathName);
+
+		SyncFileService.update(syncFile);
+
 		// Sync files
 
 		SyncFileService.renameSyncFiles(sourceFilePathName, targetFilePathName);

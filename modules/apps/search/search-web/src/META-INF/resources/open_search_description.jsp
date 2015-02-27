@@ -19,12 +19,18 @@
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
 
-PortletURLImpl searchURL = new PortletURLImpl(request, PortletKeys.SEARCH, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+PortletURLImpl searchURL = new PortletURLImpl(request, SearchPortletKeys.SEARCH, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 searchURL.setEscapeXml(true);
 
 searchURL.setParameter("mvcPath", "/search.jsp");
 searchURL.setParameter("groupId", String.valueOf(groupId));
+
+PortletURLImpl openSearchResourceURL = new PortletURLImpl(request, SearchPortletKeys.SEARCH, themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
+
+openSearchResourceURL.setParameter(Constants.CMD, "getOpenSearchXML");
+
+openSearchResourceURL.setEscapeXml(true);
 
 response.setContentType(ContentTypes.TEXT_XML_UTF8);
 %>
@@ -33,6 +39,6 @@ response.setContentType(ContentTypes.TEXT_XML_UTF8);
 	<ShortName><%= LanguageUtil.format(request, "x-search", HtmlUtil.escape(company.getName()), false) %></ShortName>
 	<Description><%= LanguageUtil.format(request, "x-search-provider", HtmlUtil.escape(company.getName()), false) %></Description>
 	<Url template="<%= searchURL.toString() %>&amp;keywords={searchTerms}" type="text/html" />
-	<Url template="<%= themeDisplay.getPortalURL() %><%= PortalUtil.getPathMain() %>/search/open_search?keywords={searchTerms}&amp;p={startPage?}&amp;c={count?}&amp;format=atom" type="application/atom+xml" />
-	<Url template="<%= themeDisplay.getPortalURL() %><%= PortalUtil.getPathMain() %>/search/open_search?keywords={searchTerms}&amp;p={startPage?}&amp;c={count?}&amp;format=rss" type="application/rss+xml" />
+	<Url template="<%= openSearchResourceURL.toString() %>&amp;keywords={searchTerms}&amp;p={startPage?}&amp;c={count?}&amp;format=atom" type="application/atom+xml" />
+	<Url template="<%= openSearchResourceURL.toString() %>&amp;keywords={searchTerms}&amp;p={startPage?}&amp;c={count?}&amp;format=rss" type="application/rss+xml" />
 </OpenSearchDescription>

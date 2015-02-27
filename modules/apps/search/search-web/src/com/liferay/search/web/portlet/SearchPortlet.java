@@ -15,9 +15,31 @@
 package com.liferay.search.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.search.OpenSearch;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.PortalOpenSearchImpl;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortletURLImpl;
+import com.liferay.search.web.constants.SearchPortletKeys;
 import com.liferay.search.web.upgrade.SearchWebUpgrade;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,6 +71,58 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class SearchPortlet extends MVCPortlet {
+
+	@Override
+	public void serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
+
+		if (cmd.equals("getOpenSearchXML")) {
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				resourceRequest);
+
+			HttpServletResponse response = PortalUtil.getHttpServletResponse(
+				resourceResponse);
+
+			try {
+				ServletResponseUtil.sendFile(
+					request, response, null, getXML(request),
+					ContentTypes.TEXT_XML_UTF8);
+			}
+			catch (Exception e) {
+				try {
+					PortalUtil.sendError(e, request, response);
+				}
+				catch (ServletException se) {
+				}
+			}
+		}
+		else {
+			super.serveResource(resourceRequest, resourceResponse);
+		}
+	}
+
+	protected byte[] getXML(HttpServletRequest request) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURLImpl openSearchResourceURL = new PortletURLImpl(
+			request, SearchPortletKeys.SEARCH, themeDisplay.getPlid(),
+			PortletRequest.RESOURCE_PHASE);
+
+		openSearchResourceURL.setParameter(Constants.CMD, "getOpenSearchXML");
+
+		OpenSearch search = new PortalOpenSearchImpl();
+
+		String xml = search.search(
+			request,
+			openSearchResourceURL.toString() + StringPool.QUESTION +
+				request.getQueryString());
+
+		return xml.getBytes();
+	}
 
 	@Reference(unbind = "-")
 	protected void setSearchWebUpgrade(SearchWebUpgrade searchWebUpgrade) {

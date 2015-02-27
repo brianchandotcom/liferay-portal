@@ -96,6 +96,7 @@ public class OpenSearchUtil {
 		searchURL = HttpUtil.addParameter(searchURL, "format", "atom");
 
 		link.addAttribute("href", searchURL);
+
 		link.addAttribute("type", "application/atom+xml");
 	}
 

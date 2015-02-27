@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -39,7 +40,6 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -59,11 +59,11 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 	public BaseOpenSearchImpl(
 		String openSearchURL, String openSearchDescriptionURL) {
 
-		_enabled = GetterUtil.getBoolean(
-			PropsUtil.get(getClass().getName()), true);
-
 		_openSearchURL = openSearchURL;
 		_openSearchDescriptionURL = openSearchDescriptionURL;
+
+		_enabled = GetterUtil.getBoolean(
+			PropsUtil.get(ClassUtil.getClassName(this)), true);
 	}
 
 	@Override

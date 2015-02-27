@@ -91,17 +91,15 @@ public abstract class BaseTestCase {
 
 		SyncAccountService.update(syncAccount);
 
-		PowerMockito.mockStatic(SyncEngine.class);
-
-		Mockito.when(
-			SyncEngine.isRunning()
-		).thenReturn(
+		PowerMockito.stub(
+			PowerMockito.method(SyncEngine.class, "isRunning")
+		).toReturn(
 			true
 		);
 
-		Mockito.when(
-			SyncEngine.getExecutorService()
-		).thenReturn(
+		PowerMockito.stub(
+			PowerMockito.method(SyncEngine.class, "getExecutorService")
+		).toReturn(
 			Executors.newCachedThreadPool()
 		);
 	}

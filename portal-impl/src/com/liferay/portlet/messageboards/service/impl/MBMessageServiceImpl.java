@@ -58,6 +58,7 @@ import com.sun.syndication.feed.synd.SyndLink;
 import com.sun.syndication.feed.synd.SyndLinkImpl;
 import com.sun.syndication.io.FeedException;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -163,6 +164,36 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			false, serviceContext);
 	}
 
+	public MBMessage addMessage(
+			long categoryId, String subject, String body, String fileName,
+			File file, boolean indexingEnabled, ServiceContext serviceContext)
+		throws PortalException {
+
+		MBCategory category = null;
+		long groupId = 0;
+
+		if (categoryId > 0) {
+			category = mbCategoryPersistence.findByPrimaryKey(categoryId);
+			groupId = category.getGroupId();
+		}
+		else {
+			groupId = serviceContext.getScopeGroupId();
+		}
+
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			Collections.emptyList();
+
+		MBMessage message = addMessage(
+			groupId, categoryId, subject, body,
+			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
+			false, serviceContext);
+
+		addMessageAttachment(
+			message.getMessageId(), fileName, file, indexingEnabled);
+
+		return message;
+	}
+
 	@Override
 	public MBMessage addMessage(
 			long parentMessageId, String subject, String body, String format,
@@ -215,6 +246,26 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			parentMessage.getCategoryId(), parentMessage.getThreadId(),
 			parentMessageId, subject, body, format, inputStreamOVPs, anonymous,
 			priority, allowPingbacks, serviceContext);
+	}
+
+	public void addMessageAttachment(
+			long messageId, String fileName, File file, boolean indexingEnabled)
+		throws PortalException {
+
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
+
+		if (lockLocalService.isLocked(
+				MBThread.class.getName(), message.getThreadId())) {
+
+			throw new LockedThreadException();
+		}
+
+		MBCategoryPermission.check(
+			getPermissionChecker(), message.getGroupId(),
+			message.getCategoryId(), ActionKeys.ADD_FILE);
+
+		mbMessageLocalService.addMessageAttachment(
+			messageId, fileName, file, indexingEnabled);
 	}
 
 	@Override

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.sso.token.events;
+package com.liferay.portal.sso.token.internal.events;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
@@ -24,8 +24,10 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.sso.token.configuration.TokenConfiguration;
-import com.liferay.portal.sso.token.constants.TokenPropsKeys;
+import com.liferay.portal.sso.token.events.LogoutProcessor;
+import com.liferay.portal.sso.token.events.LogoutProcessorType;
+import com.liferay.portal.sso.token.internal.configuration.TokenConfiguration;
+import com.liferay.portal.sso.token.internal.constants.TokenPropsKeys;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Map;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.sso.token.configuration;
+package com.liferay.portal.sso.token.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 

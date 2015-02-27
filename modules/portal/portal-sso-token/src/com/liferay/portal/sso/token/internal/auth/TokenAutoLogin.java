@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.sso.token.auth;
+package com.liferay.portal.sso.token.internal.auth;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
@@ -29,8 +29,10 @@ import com.liferay.portal.security.auth.AutoLogin;
 import com.liferay.portal.security.auth.BaseAutoLogin;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.sso.token.configuration.TokenConfiguration;
-import com.liferay.portal.sso.token.constants.TokenPropsKeys;
+import com.liferay.portal.sso.token.auth.TokenLocation;
+import com.liferay.portal.sso.token.auth.TokenRetriever;
+import com.liferay.portal.sso.token.internal.configuration.TokenConfiguration;
+import com.liferay.portal.sso.token.internal.constants.TokenPropsKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 

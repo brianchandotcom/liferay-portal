@@ -12,15 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.sso.token.events;
+package com.liferay.portal.sso.token.internal.events;
 
-import com.liferay.portal.kernel.util.CookieKeys;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.sso.token.events.LogoutProcessor;
+import com.liferay.portal.sso.token.events.LogoutProcessorType;
 
-import javax.servlet.http.Cookie;
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,31 +31,35 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(immediate = true, service = LogoutProcessor.class)
-public class CookieLogoutProcessor implements LogoutProcessor {
+public class RedirectLogoutProcessor implements LogoutProcessor {
 
 	@Override
 	public LogoutProcessorType getLogoutProcessorType() {
-		return LogoutProcessorType.COOKIE;
+		return LogoutProcessorType.REDIRECT;
 	}
 
 	@Override
 	public void logout(
-		HttpServletRequest request, HttpServletResponse response,
-		String... parameters) {
+			HttpServletRequest request, HttpServletResponse response,
+			String... parameters)
+		throws IOException {
 
-		String domain = CookieKeys.getDomain(request);
+		if (ArrayUtil.isEmpty(parameters)) {
+			return;
+		}
 
-		for (String parameter : parameters) {
-			Cookie cookie = new Cookie(parameter, StringPool.BLANK);
+		String redirectURL = parameters[1];
 
-			if (Validator.isNotNull(domain)) {
-				cookie.setDomain(domain);
+		String pathInfo = request.getPathInfo();
+
+		if (pathInfo.contains("/portal/logout")) {
+			HttpSession session = request.getSession();
+
+			session.invalidate();
+
+			if (Validator.isNotNull(redirectURL)) {
+				response.sendRedirect(redirectURL);
 			}
-
-			cookie.setMaxAge(0);
-			cookie.setPath(StringPool.SLASH);
-
-			CookieKeys.addCookie(request, response, cookie);
 		}
 	}
 

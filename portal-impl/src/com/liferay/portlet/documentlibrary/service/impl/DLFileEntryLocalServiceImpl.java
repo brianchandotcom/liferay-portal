@@ -818,6 +818,9 @@ public class DLFileEntryLocalServiceImpl
 				}
 			}
 
+			dlFileEntryMetadataLocalService.deleteFileVersionFileEntryMetadata(
+				dlFileVersion.getFileVersionId());
+
 			dlFileVersionPersistence.remove(dlFileVersion);
 
 			expandoRowLocalService.deleteRows(dlFileVersion.getFileVersionId());

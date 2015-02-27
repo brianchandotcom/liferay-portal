@@ -75,11 +75,12 @@ public class WikiPageAssetRenderer
 			WikiServiceSettingsProvider.getWikiServiceSettingsProvider();
 
 		GroupServiceSettingsProvider<WikiGroupServiceSettings>
-			groupServiceSettingsProvider =
-				wikiServiceSettingsProvider.getGroupServiceSettingsProvider();
+			wikiGroupServiceSettingsProvider =
+				wikiServiceSettingsProvider.
+					getWikiGroupServiceSettingsProvider();
 
 		_wikiGroupServiceSettings =
-			groupServiceSettingsProvider.getGroupServiceSettings(
+			wikiGroupServiceSettingsProvider.getGroupServiceSettings(
 				page.getGroupId());
 	}
 

@@ -55,19 +55,21 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 					WikiWebSettingsProvider.getWikiWebSettingsProvider();
 
 				GroupServiceSettingsProvider<WikiGroupServiceSettings>
-					groupServiceSettingsProvider =
+					wikiGroupServiceSettingsProvider =
 						wikiWebSettingsProvider.
-							getGroupServiceSettingsProvider();
+							getWikiGroupServiceSettingsProvider();
 
 				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 					_wikiGroupServiceSettings =
-						groupServiceSettingsProvider.getGroupServiceSettings(
-							getSiteGroupId(), getRequest().getParameterMap());
+						wikiGroupServiceSettingsProvider.
+							getGroupServiceSettings(
+								getSiteGroupId(),
+								getRequest().getParameterMap());
 				}
 				else {
 					_wikiGroupServiceSettings =
-						groupServiceSettingsProvider.getGroupServiceSettings(
-							getSiteGroupId());
+						wikiGroupServiceSettingsProvider.
+							getGroupServiceSettings(getSiteGroupId());
 				}
 			}
 
@@ -97,20 +99,20 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 					WikiWebSettingsProvider.getWikiWebSettingsProvider();
 
 				PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
-					portletInstanceSettingsProvider =
+					wikiPortletIntanceSettingsProvider =
 						wikiWebSettingsProvider.
-							getPortletInstanceSettingsProvider();
+							getWikiPortletInstanceSettingsProvider();
 
 				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 					_wikiPortletInstanceSettings =
-						portletInstanceSettingsProvider.
+						wikiPortletIntanceSettingsProvider.
 							getPortletInstanceSettings(
 								getLayout(), getResourcePortletId(),
 								getRequest().getParameterMap());
 				}
 				else {
 					_wikiPortletInstanceSettings =
-						portletInstanceSettingsProvider.
+						wikiPortletIntanceSettingsProvider.
 							getPortletInstanceSettings(
 								getLayout(), getPortletId());
 				}

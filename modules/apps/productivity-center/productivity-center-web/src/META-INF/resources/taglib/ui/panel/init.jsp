@@ -14,6 +14,4 @@
  */
 --%>
 
-<%@ include file="init.jsp" %>
-
-<productivity-center-ui:panel servletContext="<%= application %>" />
+<%@ page import="com.liferay.productivity.center.panel.model.PanelCategory" %>

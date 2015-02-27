@@ -35,7 +35,6 @@ import org.apache.cxf.bus.CXFBusFactory;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 import org.apache.cxf.jaxws.support.JaxWsEndpointImpl;
-import org.apache.cxf.jaxws22.spi.ProviderImpl;
 import org.apache.cxf.transport.servlet.CXFNonSpringServlet;
 
 import org.osgi.framework.Bundle;
@@ -171,7 +170,7 @@ public class LiferaySoapServiceTracker {
 	private final String _contextPath;
 	private CXFNonSpringServlet _cxfServlet;
 	private final ExtensionManager _extensionManager;
-	private ServiceRegistration<Provider> _providerServiceRegistration;
+	private final ServiceRegistration<Provider> _providerServiceRegistration;
 	private ServiceTracker<Object, ServerTrackingInformation>
 		_serverServiceTracker;
 	private ServiceRegistration<ServletContextHelper>

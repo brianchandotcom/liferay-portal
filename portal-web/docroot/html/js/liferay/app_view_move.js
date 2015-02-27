@@ -22,6 +22,8 @@ AUI.add(
 
 		var STR_DELETE = 'delete';
 
+		var STR_DELETE_ENTRIES = 'deleteEntries';
+
 		var STR_DISPLAY_STYLE = 'displayStyleCSSClass';
 
 		var STR_DOT = '.';
@@ -31,6 +33,10 @@ AUI.add(
 		var STR_FORM = 'form';
 
 		var STR_MOVE = 'move';
+
+		var STR_MOVE_ENTRIES = 'moveEntries';
+
+		var STR_MOVE_ENTRIES_TO_TRASH = 'moveEntriesToTrash';
 
 		var STR_MOVE_ENTRY_URL = 'moveEntryRenderUrl';
 
@@ -149,7 +155,7 @@ AUI.add(
 
 						var url = instance.get('editEntryUrl');
 
-						if (action === STR_MOVE) {
+						if (action === STR_MOVE || action === STR_MOVE_ENTRIES) {
 							url = instance.get(STR_MOVE_ENTRY_URL);
 						}
 
@@ -401,13 +407,19 @@ AUI.add(
 
 						var redirectUrl = location.href;
 
-						if ((action === STR_DELETE || action == STR_MOVE_TO_TRASH) && !History.HTML5 && location.hash) {
+						if ((action === STR_DELETE || action === STR_DELETE_ENTRIES || action === STR_MOVE_TO_TRASH) || action === STR_MOVE_ENTRIES_TO_TRASH && !History.HTML5 && location.hash) {
 							redirectUrl = instance._updateFolderIdRedirectUrl(redirectUrl);
 						}
 
 						form.attr('method', instance.get(STR_FORM).method);
 
-						form.get(instance.ns('cmd')).val(action);
+						if (form.get(instance.ns('javax-portlet-action'))) {
+							form.get(instance.ns('javax-portlet-action')).val(action);
+						}
+						else {
+							form.get(instance.ns('cmd')).val(action);
+						}
+
 						form.get(instance.ns('redirect')).val(redirectUrl);
 
 						var allRowIds = instance.get('allRowIds');

@@ -8,23 +8,31 @@ Import-Package:\
 	com.liferay.portal.kernel.io.unsync,\
 	com.liferay.portal.kernel.log,\
 	com.liferay.portal.kernel.servlet,\
+	com.liferay.portal.kernel.servlet.taglib,\
+	com.liferay.portal.kernel.staging,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.model,\
 	com.liferay.portal.servlet.jsp.compiler,\
+	com.liferay.portal.theme,\
 	com.liferay.portal.util,\
+	com.liferay.productivity.center.panel.model,\
+	com.liferay.taglib,\
 	javax.servlet,\
 	javax.servlet.http,\
 	javax.servlet.jsp,\
+	javax.servlet.jsp.tagext,\
 	org.osgi.framework,\
 	org.osgi.service.http.context,\
 	org.osgi.service.http.whiteboard
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
-	@../../../../util-taglib/util-taglib.jar!/com/liferay/taglib/servlet/**
+	@../../../../util-taglib/util-taglib.jar!/com/liferay/taglib/servlet/**,\
+	@../../../../util-taglib/util-taglib.jar!/com/liferay/taglib/util/**
 Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/portlet))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/theme))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))"
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))"\,
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui/panel))"

@@ -16,4 +16,6 @@
 
 <%@ include file="init.jsp" %>
 
-<productivity-center-ui:panel servletContext="<%= application %>" />
+<%
+PanelCategory panelCategory = (PanelCategory)request.getAttribute("productivity-center-ui:panel:panelCategory");
+%>

@@ -14,6 +14,4 @@
  */
 --%>
 
-<%@ include file="init.jsp" %>
-
-<productivity-center-ui:panel servletContext="<%= application %>" />
+<%@ taglib uri="http://liferay.com/tld/productivity-center/ui" prefix="productivity-center-ui" %>

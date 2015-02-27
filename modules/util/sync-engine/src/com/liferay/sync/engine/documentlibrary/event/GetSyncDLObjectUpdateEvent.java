@@ -62,7 +62,7 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 		syncSite = SyncSiteService.fetchSyncSite(
 			syncSite.getGroupId(), syncSite.getSyncAccountId());
 
-		if (syncSite.getRemoteSyncTime() == 0) {
+		if (syncSite.getRemoteSyncTime() == -1) {
 			String filePathName = syncSite.getFilePathName();
 
 			SyncFile syncFile = SyncFileService.fetchSyncFile(filePathName);

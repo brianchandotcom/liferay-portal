@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -203,9 +204,11 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 				for (SyncFile syncFile : syncFiles) {
 					String filePathName = syncFile.getFilePathName();
 
-					filePathName = filePathName.replace(
-						sourceFilePathName + fileSystem.getSeparator(),
-						targetFilePathName + fileSystem.getSeparator());
+					filePathName = filePathName.replaceFirst(
+						Pattern.quote(
+							sourceFilePathName + fileSystem.getSeparator()),
+						Pattern.quote(
+							targetFilePathName + fileSystem.getSeparator()));
 
 					syncFile.setFilePathName(filePathName);
 

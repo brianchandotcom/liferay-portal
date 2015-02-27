@@ -191,7 +191,7 @@ public class SyncFileService {
 
 			// Sync files
 
-			if (!syncFile.isFolder() || (syncFile.getTypePK() == 0)) {
+			if (!syncFile.isFolder()) {
 				return;
 			}
 
@@ -492,6 +492,20 @@ public class SyncFileService {
 		return syncFile;
 	}
 
+	public static void renameSyncFiles(
+		String sourceFilePathName, String targetFilePathName) {
+
+		try {
+			_syncFilePersistence.renameByFilePathName(
+				sourceFilePathName, targetFilePathName);
+		}
+		catch (SQLException sqle) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(sqle.getMessage(), sqle);
+			}
+		}
+	}
+
 	public static SyncFile resyncFolder(SyncFile syncFile) throws Exception {
 		setStatuses(syncFile, SyncFile.STATE_SYNCED, SyncFile.UI_EVENT_NONE);
 
@@ -637,20 +651,8 @@ public class SyncFileService {
 
 		// Sync files
 
-		if (syncFile.isFile() || (syncFile.getTypePK() == 0)) {
-			return syncFile;
-		}
-
-		try {
-			_syncFilePersistence.renameByFilePathName(
-				sourceFilePathName, targetFilePathName);
-		}
-		catch (SQLException sqle) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug(sqle.getMessage(), sqle);
-			}
-
-			return null;
+		if (syncFile.isFolder()) {
+			renameSyncFiles(sourceFilePathName, targetFilePathName);
 		}
 
 		return syncFile;

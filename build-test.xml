@@ -626,6 +626,8 @@
 
 	<macrodef name="prepare-additional-bundles">
 		<sequential>
+			<get-testcase-property property.name="app.server.bundles.size" />
+
 			<if>
 				<isset property="app.server.bundles.size" />
 				<then>
@@ -691,6 +693,8 @@
 					<var name="app.server.bundle.index" unset="true" />
 				</then>
 			</if>
+
+			<get-testcase-property property.name="databases.size" />
 
 			<if>
 				<isset property="databases.size" />
@@ -903,6 +907,8 @@
 				token="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;"
 				value="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;0&quot;&gt;"
 			/>
+
+			<get-testcase-property property.name="app.server.bundles.size" />
 
 			<if>
 				<isset property="app.server.bundles.size" />
@@ -1329,6 +1335,8 @@
 	</macrodef>
 
 	<target name="build-sql-file">
+		<get-testcase-property property.name="portal.version" />
+
 		<if>
 			<isset property="portal.version" />
 			<then>
@@ -1378,6 +1386,8 @@
 				<equals arg1="${database.type}" arg2="hsql" />
 			</not>
 			<then>
+				<get-testcase-property property.name="databases.size" />
+
 				<if>
 					<and>
 						<isset property="databases.size" />
@@ -4627,12 +4637,16 @@ if (ppstate.equals("normal")) {
 
 		<antcall target="check-inet-address" />
 
+		<get-testcase-property property.name="database.jndi.enabled" />
+
 		<if>
 			<equals arg1="${database.jndi.enabled}" arg2="true" />
 			<then>
 				<prepare-database-jndi />
 			</then>
 		</if>
+
+		<get-testcase-property property.name="mobile.device.enabled" />
 
 		<if>
 			<equals arg1="${mobile.device.enabled}" arg2="true" />
@@ -4644,6 +4658,8 @@ if (ppstate.equals("normal")) {
 				<antcall target="start-appium" />
 			</then>
 		</if>
+
+		<get-testcase-property property.name="web.xml.timeout" />
 
 		<if>
 			<isset property="web.xml.timeout" />
@@ -4657,6 +4673,8 @@ if (ppstate.equals("normal")) {
 		</if>
 
 		<antcall target="clean-up-java-processes" inheritAll="false" />
+
+		<get-testcase-property property.name="portal.version" />
 
 		<if>
 			<isset property="portal.version" />
@@ -4690,6 +4708,8 @@ if (ppstate.equals("normal")) {
 			</then>
 		</if>
 
+		<get-testcase-property property.name="solr.enabled" />
+
 		<if>
 			<equals arg1="${solr.enabled}" arg2="true" />
 			<then>
@@ -4703,6 +4723,8 @@ if (ppstate.equals("normal")) {
 
 		<antcall target="deploy-extra-apps" />
 
+		<get-testcase-property property.name="app.server.bundles.size" />
+
 		<if>
 			<isset property="app.server.bundles.size" />
 			<then>
@@ -4710,12 +4732,16 @@ if (ppstate.equals("normal")) {
 			</then>
 		</if>
 
+		<get-testcase-property property.name="cluster.enabled" />
+
 		<if>
 			<equals arg1="${cluster.enabled}" arg2="true" />
 			<then>
 				<prepare-test-cluster-properties />
 			</then>
 		</if>
+
+		<get-testcase-property property.name="hook.plugins.includes" />
 
 		<if>
 			<and>
@@ -4748,6 +4774,8 @@ if (ppstate.equals("normal")) {
 		<antcall target="copy-sikuli-temp-files" />
 
 		<start-app-server />
+
+		<get-testcase-property property.name="app.server.bundles.size" />
 
 		<if>
 			<isset property="app.server.bundles.size" />
@@ -4849,6 +4877,8 @@ if (ppstate.equals("normal")) {
 
 		<antcall target="run-selenium-test" />
 
+		<get-testcase-property property.name="sharepoint.enabled" />
+
 		<if>
 			<equals arg1="${sharepoint.enabled}" arg2="true" />
 			<then>
@@ -4874,6 +4904,8 @@ if (ppstate.equals("normal")) {
 
 		<stop-app-server />
 
+		<get-testcase-property property.name="app.server.bundles.size" />
+
 		<if>
 			<isset property="app.server.bundles.size" />
 			<then>
@@ -4896,6 +4928,8 @@ if (ppstate.equals("normal")) {
 				<var name="app.server.bundle.index" unset="true" />
 			</then>
 		</if>
+
+		<get-testcase-property property.name="mobile.device.enabled" />
 
 		<if>
 			<equals arg1="${mobile.device.enabled}" arg2="true" />

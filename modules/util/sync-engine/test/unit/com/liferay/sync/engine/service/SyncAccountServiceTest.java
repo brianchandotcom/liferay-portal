@@ -21,6 +21,9 @@ import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.test.SyncFileTestUtil;
 import com.liferay.sync.engine.util.test.SyncSiteTestUtil;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -68,6 +71,8 @@ public class SyncAccountServiceTest extends BaseTestCase {
 			FileUtil.getFilePathName(
 				targetFilePathName, "test-site", "test.txt"),
 			syncFile.getFilePathName());
+
+		Files.deleteIfExists(Paths.get(targetFilePathName));
 	}
 
 }

@@ -17,7 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(renderRequest, "redirect");
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
 
 long tagId = ParamUtil.getLong(request, "tagId");
 
@@ -25,6 +31,7 @@ AssetTag tag = AssetTagLocalServiceUtil.fetchAssetTag(tagId);
 %>
 
 <liferay-ui:header
+	backURL="<%= redirect %>"
 	title='<%= (tag != null) ? tag.getName() : "add-tag" %>'
 />
 

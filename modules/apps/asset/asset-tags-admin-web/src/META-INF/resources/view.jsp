@@ -28,7 +28,6 @@
 				<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG) %>">
 					<portlet:renderURL var="editTagURL">
 						<portlet:param name="mvcPath" value="/edit_tag.jsp" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
 					<aui:nav-item href="<%= editTagURL %>" iconCssClass="icon-plus" label="add-tag" />
@@ -133,10 +132,12 @@
 			if (form.fm('rowIds').filter(':checked').length > 1) {
 				<portlet:renderURL var="mergeURL">
 					<portlet:param name="mvcPath" value="/merge_tag.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="mergeTagIds" value="{MERGE_TAGS_IDS}" />
 				</portlet:renderURL>
 
-				location.href = '<%= mergeURL %>' + '&<portlet:namespace />mergeTagIds=' + Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+				var mergeURL = '<%= mergeURL %>';
+
+				location.href = mergeURL.replace(escape('{MERGE_TAGS_IDS}'), Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 			}
 			else {
 				alert('<liferay-ui:message arguments="<%= 2 %>" key="please-choose-at-least-x-tags" />');

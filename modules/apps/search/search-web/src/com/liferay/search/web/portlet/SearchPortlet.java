@@ -114,7 +114,20 @@ public class SearchPortlet extends MVCPortlet {
 
 		openSearchResourceURL.setParameter(Constants.CMD, "getOpenSearchXML");
 
-		OpenSearch search = new PortalOpenSearchImpl();
+		long groupId = ParamUtil.getLong(request, "groupId");
+
+		PortletURLImpl openSearchDescriptionXMLURL = new PortletURLImpl(
+			request, SearchPortletKeys.SEARCH, themeDisplay.getPlid(),
+			PortletRequest.RESOURCE_PHASE);
+
+		openSearchDescriptionXMLURL.setParameter(
+			"mvcPath", "/open_search_description.jsp");
+		openSearchDescriptionXMLURL.setParameter(
+			"groupId", String.valueOf(groupId));
+
+		OpenSearch search = new PortalOpenSearchImpl(
+			openSearchResourceURL.toString(),
+			openSearchDescriptionXMLURL.toString());
 
 		String xml = search.search(
 			request,

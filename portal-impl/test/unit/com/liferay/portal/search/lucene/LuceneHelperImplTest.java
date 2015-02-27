@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
-import com.liferay.portal.kernel.cluster.ClusterResponseCallback;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -67,8 +66,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -740,21 +737,6 @@ public class LuceneHelperImplTest {
 
 	}
 
-	private class MockBlockingQueue<E> extends LinkedBlockingQueue<E> {
-
-		public MockBlockingQueue(BlockingQueue<E> blockingQueue) {
-			_blockingQueue = blockingQueue;
-		}
-
-		@Override
-		public E poll(long timeout, TimeUnit unit) throws InterruptedException {
-			return _blockingQueue.poll(1000, TimeUnit.MILLISECONDS);
-		}
-
-		private final BlockingQueue<E> _blockingQueue;
-
-	}
-
 	private class MockClusterExecutor implements ClusterExecutor {
 
 		@Override
@@ -803,30 +785,6 @@ public class LuceneHelperImplTest {
 						ClusterNodeResponse.createExceptionClusterNodeResponse(
 							clusterNode, clusterRequest.getUuid(), e));
 				}
-			}
-
-			return futureClusterResponses;
-		}
-
-		@Override
-		public FutureClusterResponses execute(
-			ClusterRequest clusterRequest,
-			ClusterResponseCallback clusterResponseCallback) {
-
-			FutureClusterResponses futureClusterResponses = execute(
-				clusterRequest);
-
-			try {
-				BlockingQueue<ClusterNodeResponse> blockingQueue =
-					futureClusterResponses.get().getClusterResponses();
-
-				MockBlockingQueue<ClusterNodeResponse> mockBlockingQueue =
-					new MockBlockingQueue<>(blockingQueue);
-
-				clusterResponseCallback.callback(mockBlockingQueue);
-			}
-			catch (InterruptedException ie) {
-				throw new RuntimeException(ie);
 			}
 
 			return futureClusterResponses;

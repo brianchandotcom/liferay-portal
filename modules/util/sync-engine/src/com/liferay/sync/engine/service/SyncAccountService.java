@@ -27,6 +27,8 @@ import com.liferay.sync.engine.util.OSDetector;
 
 import java.io.IOException;
 
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -40,6 +42,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +66,7 @@ public class SyncAccountService {
 				syncAccountId);
 
 			for (SyncSite syncSite : syncSites) {
-				syncSite.setRemoteSyncTime(0);
+				syncSite.setRemoteSyncTime(-1);
 
 				SyncSiteService.update(syncSite);
 			}
@@ -121,6 +124,7 @@ public class SyncAccountService {
 					FileUtil.getFilePathName(
 						syncAccount.getFilePathName(), syncSiteName));
 
+				syncSite.setRemoteSyncTime(-1);
 				syncSite.setSyncAccountId(syncAccount.getSyncAccountId());
 
 				SyncSiteService.update(syncSite);
@@ -276,28 +280,21 @@ public class SyncAccountService {
 
 		// Sync files
 
-		List<SyncFile> syncFiles = SyncFileService.findSyncFiles(syncAccountId);
-
-		for (SyncFile syncFile : syncFiles) {
-			String syncFileFilePathName = syncFile.getFilePathName();
-
-			syncFileFilePathName = syncFileFilePathName.replace(
-				sourceFilePathName, targetFilePathName);
-
-			syncFile.setFilePathName(syncFileFilePathName);
-
-			SyncFileService.update(syncFile);
-		}
+		SyncFileService.renameSyncFiles(sourceFilePathName, targetFilePathName);
 
 		// Sync sites
+
+		FileSystem fileSystem = FileSystems.getDefault();
 
 		List<SyncSite> syncSites = SyncSiteService.findSyncSites(syncAccountId);
 
 		for (SyncSite syncSite : syncSites) {
 			String syncSiteFilePathName = syncSite.getFilePathName();
 
-			syncSiteFilePathName = syncSiteFilePathName.replace(
-				sourceFilePathName, targetFilePathName);
+			syncSiteFilePathName = StringUtils.replaceOnce(
+				syncSiteFilePathName,
+				sourceFilePathName + fileSystem.getSeparator(),
+				targetFilePathName + fileSystem.getSeparator());
 
 			syncSite.setFilePathName(syncSiteFilePathName);
 

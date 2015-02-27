@@ -64,6 +64,7 @@ public class GetUserSitesGroupsHandler extends BaseJSONHandler {
 					FileUtil.getFilePathName(
 						syncAccount.getFilePathName(), name));
 
+				remoteSyncSite.setRemoteSyncTime(-1);
 				remoteSyncSite.setSyncAccountId(getSyncAccountId());
 
 				SyncSiteService.update(remoteSyncSite);

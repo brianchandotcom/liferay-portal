@@ -133,15 +133,12 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 
 		Where<SyncFile, Long> where = queryBuilder.where();
 
-		parentFilePathName = StringUtils.replace(
-			parentFilePathName, "\\", "\\\\");
-
 		FileSystem fileSystem = FileSystems.getDefault();
 
-		where.like(
-			"filePathName",
-			new SelectArg(
-				parentFilePathName + fileSystem.getSeparator() + "%"));
+		parentFilePathName = StringUtils.replace(
+			parentFilePathName + fileSystem.getSeparator(), "\\", "\\\\");
+
+		where.like("filePathName", new SelectArg(parentFilePathName + "%"));
 		where.lt("localSyncTime", localSyncTime);
 		where.or(
 			where.eq("state", SyncFile.STATE_SYNCED),
@@ -203,7 +200,8 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 				for (SyncFile syncFile : syncFiles) {
 					String filePathName = syncFile.getFilePathName();
 
-					filePathName = filePathName.replace(
+					filePathName = StringUtils.replaceOnce(
+						filePathName,
 						sourceFilePathName + fileSystem.getSeparator(),
 						targetFilePathName + fileSystem.getSeparator());
 

@@ -1334,7 +1334,7 @@ public class StagingImpl implements Staging {
 			ExportImportConfigurationLocalServiceUtil.
 				addExportImportConfiguration(
 					userId, sourceGroupId, portletId, StringPool.BLANK,
-					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
+					ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET,
 					settingsMap, WorkflowConstants.STATUS_DRAFT,
 					serviceContext);
 

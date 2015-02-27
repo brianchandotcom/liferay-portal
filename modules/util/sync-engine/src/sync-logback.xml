@@ -11,7 +11,7 @@
 
 	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="FILE">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${user.home}/.liferay-sync-2/logs/liferay-sync-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${user.home}/.liferay-sync-3/logs/liferay-sync-%d{yyyy-MM-dd}.log</fileNamePattern>
 
 			<maxHistory>9</maxHistory>
 		</rollingPolicy>

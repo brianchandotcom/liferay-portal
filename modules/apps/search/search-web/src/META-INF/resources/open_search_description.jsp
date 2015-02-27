@@ -28,9 +28,8 @@ searchURL.setParameter("groupId", String.valueOf(groupId));
 
 PortletURLImpl openSearchResourceURL = new PortletURLImpl(request, SearchPortletKeys.SEARCH, themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
 
-openSearchResourceURL.setParameter(Constants.CMD, "getOpenSearchXML");
-
 openSearchResourceURL.setEscapeXml(true);
+openSearchResourceURL.setParameter(Constants.CMD, "getOpenSearchXML");
 
 response.setContentType(ContentTypes.TEXT_XML_UTF8);
 %>

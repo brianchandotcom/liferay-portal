@@ -127,13 +127,13 @@ page import="javax.portlet.WindowState" %>
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();
 
-PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
-SearchDisplayContext searchDisplayContext = new SearchDisplayContext(request, portletPreferences);
-
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
 String currentURL = currentURLObj.toString();
+
+PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+SearchDisplayContext searchDisplayContext = new SearchDisplayContext(request, portletPreferences);
 %>
 
 <%@ include file="/init-ext.jsp" %>

@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.sso.token.events;
+package com.liferay.portal.sso.token.events.internal;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.sso.token.events.LogoutProcessor;
+import com.liferay.portal.sso.token.events.LogoutProcessorType;
 
 import java.io.IOException;
 

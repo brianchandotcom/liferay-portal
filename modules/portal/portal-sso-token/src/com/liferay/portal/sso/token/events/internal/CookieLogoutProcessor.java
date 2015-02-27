@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.sso.token.events;
+package com.liferay.portal.sso.token.events.internal;
 
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.sso.token.events.LogoutProcessor;
+import com.liferay.portal.sso.token.events.LogoutProcessorType;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

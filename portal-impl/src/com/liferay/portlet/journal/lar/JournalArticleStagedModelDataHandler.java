@@ -274,7 +274,7 @@ public class JournalArticleStagedModelDataHandler
 		PortletDataContext portletDataContext, JournalArticle article) {
 
 		if (article.getClassNameId() ==
-			PortalUtil.getClassNameId(DDMStructure.class)) {
+				PortalUtil.getClassNameId(DDMStructure.class)) {
 
 			return false;
 		}
@@ -313,13 +313,12 @@ public class JournalArticleStagedModelDataHandler
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 
 		if (article.getClassNameId() !=
-			PortalUtil.getClassNameId(DDMStructure.class)) {
+				PortalUtil.getClassNameId(DDMStructure.class)) {
 
-			DDMTemplate ddmTemplate =
-				DDMTemplateLocalServiceUtil.getTemplate(
-					article.getGroupId(),
-					PortalUtil.getClassNameId(DDMStructure.class),
-					article.getDDMTemplateKey(), true);
+			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
+				article.getGroupId(),
+				PortalUtil.getClassNameId(DDMStructure.class),
+				article.getDDMTemplateKey(), true);
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, article, ddmTemplate,

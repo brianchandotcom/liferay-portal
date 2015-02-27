@@ -287,7 +287,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 					"class-name");
 
 				if (classNameAttribute.getValue().equals(
-					DDMStructure.class.getName())) {
+						DDMStructure.class.getName())) {
 
 					StagedModelDataHandlerUtil.importStagedModel(
 						portletDataContext, articleElement);

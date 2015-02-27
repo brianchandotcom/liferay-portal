@@ -60,6 +60,7 @@ import org.dom4j.io.SAXReader;
 
 import org.sikuli.api.DesktopScreenRegion;
 import org.sikuli.api.ImageTarget;
+import org.sikuli.api.Location;
 import org.sikuli.api.ScreenRegion;
 import org.sikuli.api.robot.Mouse;
 import org.sikuli.api.robot.desktop.DesktopMouse;
@@ -1194,7 +1195,36 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image, String coordString)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		ScreenRegion screenRegion = new DesktopScreenRegion();
+
+		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
+
+		screenRegion = screenRegion.find(imageTarget);
+
+		Mouse mouse = new DesktopMouse();
+
+		mouse.move(screenRegion.getCenter());
+
+		Robot robot = new Robot();
+
+		robot.delay(1000);
+
+		mouse.press();
+
+		robot.delay(2000);
+
+		String[] coords = coordString.split(",");
+
+		Location location = screenRegion.getCenter();
+
+		int x = location.getX() + GetterUtil.getInteger(coords[0]);
+		int y = location.getY() + GetterUtil.getInteger(coords[1]);
+
+		robot.mouseMove(x, y);
+
+		robot.delay(1000);
+
+		mouse.release();
 	}
 
 	public static void sikuliLeftMouseDown(LiferaySelenium liferaySelenium)

@@ -1338,18 +1338,7 @@ public class StagingImpl implements Staging {
 					settingsMap, WorkflowConstants.STATUS_DRAFT,
 					serviceContext);
 
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
-		taskContextMap.put(Constants.CMD, Constants.PUBLISH_TO_LIVE);
-		taskContextMap.put(
-			"exportImportConfigurationId",
-			exportImportConfiguration.getExportImportConfigurationId());
-
-		BackgroundTaskLocalServiceUtil.addBackgroundTask(
-			userId, exportImportConfiguration.getGroupId(),
-			exportImportConfiguration.getName(), null,
-			PortletStagingBackgroundTaskExecutor.class, taskContextMap,
-			serviceContext);
+		publishPortlet(userId, exportImportConfiguration);
 	}
 
 	@Override

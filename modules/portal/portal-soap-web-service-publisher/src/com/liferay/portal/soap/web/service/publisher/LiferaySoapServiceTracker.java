@@ -52,6 +52,8 @@ public class LiferaySoapServiceTracker {
 	protected void start() {
 		Bus bus = _createBus();
 
+		BusFactory.setDefaultBus(bus);
+		
 		_registerCXFServlet(bus, _contextPath);
 	}
 

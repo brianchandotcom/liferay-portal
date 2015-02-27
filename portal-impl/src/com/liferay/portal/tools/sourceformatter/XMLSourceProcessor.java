@@ -25,14 +25,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.tools.ComparableRoute;
 import com.liferay.util.ContentUtil;
 
 import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -209,7 +207,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent = formatDDLStructuresXML(newContent);
 		}
 		else if (fileName.endsWith("routes.xml")) {
-			newContent = formatFriendlyURLRoutesXML(absolutePath, newContent);
+			newContent = formatFriendlyURLRoutesXML(newContent);
 		}
 		else if (fileName.endsWith("/liferay-portlet.xml") ||
 				 (portalSource &&
@@ -483,8 +481,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			"**\\*.xml"
 		};
 
-		_friendlyUrlRoutesSortExclusionFiles = getPropertyList(
-			"friendly.url.routes.sort.excludes.files");
 		_numericalPortletNameElementExclusionFiles = getPropertyList(
 			"numerical.portlet.name.element.excludes.files");
 		_xmlExclusionFiles = getPropertyList("xml.excludes.files");
@@ -581,71 +577,16 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return document.formattedString();
 	}
 
-	protected String formatFriendlyURLRoutesXML(
-			String absolutePath, String content)
-		throws Exception {
+	protected String formatFriendlyURLRoutesXML(String content) {
+		int pos = content.indexOf("<routes>\n");
 
-		if (isExcludedFile(
-				_friendlyUrlRoutesSortExclusionFiles, absolutePath)) {
-
+		if (pos == -1) {
 			return content;
 		}
 
-		Document document = saxReader.read(content);
-
-		Element rootElement = document.getRootElement();
-
-		List<ComparableRoute> comparableRoutes =
-			new ArrayList<ComparableRoute>();
-
-		for (Element routeElement : rootElement.elements("route")) {
-			String pattern = routeElement.elementText("pattern");
-
-			ComparableRoute comparableRoute = new ComparableRoute(pattern);
-
-			for (Element generatedParameterElement :
-					routeElement.elements("generated-parameter")) {
-
-				String name = generatedParameterElement.attributeValue("name");
-				String value = generatedParameterElement.getText();
-
-				comparableRoute.addGeneratedParameter(name, value);
-			}
-
-			for (Element ignoredParameterElement :
-					routeElement.elements("ignored-parameter")) {
-
-				String name = ignoredParameterElement.attributeValue("name");
-
-				comparableRoute.addIgnoredParameter(name);
-			}
-
-			for (Element implicitParameterElement :
-					routeElement.elements("implicit-parameter")) {
-
-				String name = implicitParameterElement.attributeValue("name");
-				String value = implicitParameterElement.getText();
-
-				comparableRoute.addImplicitParameter(name, value);
-			}
-
-			for (Element overriddenParameterElement :
-					routeElement.elements("overridden-parameter")) {
-
-				String name = overriddenParameterElement.attributeValue("name");
-				String value = overriddenParameterElement.getText();
-
-				comparableRoute.addOverriddenParameter(name, value);
-			}
-
-			comparableRoutes.add(comparableRoute);
-		}
-
-		Collections.sort(comparableRoutes);
+		StringBundler sb = new StringBundler(9);
 
 		String mainReleaseVersion = getMainReleaseVersion();
-
-		StringBundler sb = new StringBundler();
 
 		sb.append("<?xml version=\"1.0\"?>\n");
 		sb.append("<!DOCTYPE routes PUBLIC \"-//Liferay//DTD Friendly URL ");
@@ -656,66 +597,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		sb.append(
 			StringUtil.replace(
 				mainReleaseVersion, StringPool.PERIOD, StringPool.UNDERLINE));
-		sb.append(".dtd\">\n\n<routes>\n");
-
-		for (ComparableRoute comparableRoute : comparableRoutes) {
-			sb.append("\t<route>\n");
-			sb.append("\t\t<pattern>");
-			sb.append(comparableRoute.getPattern());
-			sb.append("</pattern>\n");
-
-			Map<String, String> generatedParameters =
-				comparableRoute.getGeneratedParameters();
-
-			for (Map.Entry<String, String> entry :
-					generatedParameters.entrySet()) {
-
-				sb.append("\t\t<generated-parameter name=\"");
-				sb.append(entry.getKey());
-				sb.append("\">");
-				sb.append(entry.getValue());
-				sb.append("</generated-parameter>\n");
-			}
-
-			Set<String> ignoredParameters =
-				comparableRoute.getIgnoredParameters();
-
-			for (String entry : ignoredParameters) {
-				sb.append("\t\t<ignored-parameter name=\"");
-				sb.append(entry);
-				sb.append("\" />\n");
-			}
-
-			Map<String, String> implicitParameters =
-				comparableRoute.getImplicitParameters();
-
-			for (Map.Entry<String, String> entry :
-					implicitParameters.entrySet()) {
-
-				sb.append("\t\t<implicit-parameter name=\"");
-				sb.append(entry.getKey());
-				sb.append("\">");
-				sb.append(entry.getValue());
-				sb.append("</implicit-parameter>\n");
-			}
-
-			Map<String, String> overriddenParameters =
-				comparableRoute.getOverriddenParameters();
-
-			for (Map.Entry<String, String> entry :
-					overriddenParameters.entrySet()) {
-
-				sb.append("\t\t<overridden-parameter name=\"");
-				sb.append(entry.getKey());
-				sb.append("\">");
-				sb.append(entry.getValue());
-				sb.append("</overridden-parameter>\n");
-			}
-
-			sb.append("\t</route>\n");
-		}
-
-		sb.append("</routes>");
+		sb.append(".dtd\">\n\n");
+		sb.append(content.substring(pos));
 
 		return sb.toString();
 	}
@@ -1201,7 +1084,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"[\t ]-->\n[\t<]");
 
 	private List<String> _columnNames;
-	private List<String> _friendlyUrlRoutesSortExclusionFiles;
 	private List<String> _numericalPortletNameElementExclusionFiles;
 	private Pattern _poshiClosingTagPattern = Pattern.compile("</[^>/]*>");
 	private Pattern _poshiCommandsPattern = Pattern.compile(

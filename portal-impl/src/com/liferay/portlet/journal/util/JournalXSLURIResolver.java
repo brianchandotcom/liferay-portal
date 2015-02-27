@@ -142,7 +142,7 @@ public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 	}
 
 	private static final String _PATH_GET_TEMPLATE =
-		"/c/journal/get_template?template_id=";
+		"/c/dynamic_data_mapping/get_template?template_id=";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalXSLURIResolver.class);

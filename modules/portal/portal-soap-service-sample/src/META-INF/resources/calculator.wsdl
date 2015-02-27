@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://sample.service.soap.portal.liferay.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="CalculatorImplService" targetNamespace="http://sample.service.soap.portal.liferay.com/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://sample.service.soap.portal.liferay.com/" elementFormDefault="unqualified" targetNamespace="http://sample.service.soap.portal.liferay.com/" version="1.0">
+
+  <xs:element name="calculate" type="tns:calculate"/>
+
+  <xs:element name="calculateResponse" type="tns:calculateResponse"/>
+
+  <xs:element name="complicatedThing" type="tns:complicatedThing"/>
+
+  <xs:element name="getComplicatedThing" type="tns:getComplicatedThing"/>
+
+  <xs:element name="getComplicatedThingResponse" type="tns:getComplicatedThingResponse"/>
+
+  <xs:complexType name="calculate">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+      <xs:element name="arg1" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="calculateResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getComplicatedThing">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getComplicatedThingResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:complicatedThing"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="complicatedThing">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="something" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getComplicatedThing">
+    <wsdl:part element="tns:getComplicatedThing" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="calculate">
+    <wsdl:part element="tns:calculate" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComplicatedThingResponse">
+    <wsdl:part element="tns:getComplicatedThingResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="calculateResponse">
+    <wsdl:part element="tns:calculateResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Calculator">
+    <wsdl:operation name="calculate">
+      <wsdl:input message="tns:calculate" name="calculate">
+    </wsdl:input>
+      <wsdl:output message="tns:calculateResponse" name="calculateResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getComplicatedThing">
+      <wsdl:input message="tns:getComplicatedThing" name="getComplicatedThing">
+    </wsdl:input>
+      <wsdl:output message="tns:getComplicatedThingResponse" name="getComplicatedThingResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CalculatorImplServiceSoapBinding" type="tns:Calculator">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="calculate">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="calculate">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="calculateResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getComplicatedThing">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getComplicatedThing">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getComplicatedThingResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CalculatorImplService">
+    <wsdl:port binding="tns:CalculatorImplServiceSoapBinding" name="CalculatorImplPort">
+      <soap:address location="http://localhost:8080/o/soap/app1/calculator"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

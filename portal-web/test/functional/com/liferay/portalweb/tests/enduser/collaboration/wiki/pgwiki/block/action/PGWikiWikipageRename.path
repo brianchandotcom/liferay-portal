@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>CHANGE_PARENT_NEW_PARENT_SELECT</td>
-	<td>//select[@name='_36_newParentTitle']</td>
+	<td>//select[@name='_36_WAR_wikiweb_newParentTitle']</td>
 	<td></td>
 </tr>
 <tr>

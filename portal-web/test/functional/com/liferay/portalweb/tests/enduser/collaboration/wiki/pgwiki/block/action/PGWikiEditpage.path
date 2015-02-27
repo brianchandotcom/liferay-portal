@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>FORMAT_DROPDOWN</td>
-	<td>//select[@id='_36_format']</td>
+	<td>//select[@id='_36_WAR_wikiweb_format']</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//button[@id='_36_publishButton' and contains(.,'Publish')]</td>
+	<td>//button[@id='_36_WAR_wikiweb_publishButton' and contains(.,'Publish')]</td>
 	<td></td>
 </tr>
 <tr>

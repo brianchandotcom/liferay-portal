@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//button[@id='_154_publishButton' and contains(.,'Publish')]</td>
+	<td>//button[@id='_154_WAR_wikiweb_publishButton' and contains(.,'Publish')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
-	<td>//form[@id='_154_undoForm']</td>
+	<td>//form[@id='_154_WAR_wikiweb_undoForm']</td>
 	<td></td>
 </tr>
 <tr>

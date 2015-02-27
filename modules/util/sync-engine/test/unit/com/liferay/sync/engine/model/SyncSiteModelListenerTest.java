@@ -26,6 +26,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Shinn Lok
  */
@@ -52,12 +55,18 @@ public class SyncSiteModelListenerTest extends BaseTestCase {
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		SyncSiteService.unregisterModelListener(_syncSiteModelListener);
+		try {
+			SyncSiteService.unregisterModelListener(_syncSiteModelListener);
 
-		_syncSite = SyncSiteService.fetchSyncSite(_syncSite.getSyncSiteId());
+			_syncSite = SyncSiteService.fetchSyncSite(
+				_syncSite.getSyncSiteId());
 
-		if (_syncSite != null) {
-			SyncSiteService.deleteSyncSite(_syncSite.getSyncSiteId());
+			if (_syncSite != null) {
+				SyncSiteService.deleteSyncSite(_syncSite.getSyncSiteId());
+			}
+		}
+		catch (Exception e) {
+			_logger.error(e.getMessage(), e);
 		}
 
 		super.tearDown();
@@ -94,6 +103,9 @@ public class SyncSiteModelListenerTest extends BaseTestCase {
 
 		Assert.assertEquals(0, activeSyncSiteIds.size());
 	}
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		SyncSiteModelListenerTest.class);
 
 	private SyncSite _syncSite;
 	private SyncSiteModelListener _syncSiteModelListener;

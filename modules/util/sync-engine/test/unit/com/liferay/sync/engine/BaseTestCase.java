@@ -91,40 +91,44 @@ public abstract class BaseTestCase {
 
 		SyncAccountService.update(syncAccount);
 
-		PowerMockito.mockStatic(SyncEngine.class);
-
-		Mockito.when(
-			SyncEngine.isRunning()
-		).thenReturn(
+		PowerMockito.stub(
+			PowerMockito.method(SyncEngine.class, "isRunning")
+		).toReturn(
 			true
 		);
 
-		Mockito.when(
-			SyncEngine.getExecutorService()
-		).thenReturn(
+		PowerMockito.stub(
+			PowerMockito.method(SyncEngine.class, "getExecutorService")
+		).toReturn(
 			Executors.newCachedThreadPool()
 		);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		Path filePath = Paths.get(filePathName);
+		try {
+			Path filePath = Paths.get(filePathName);
 
-		FileUtils.deleteDirectory(filePath.toFile());
+			FileUtils.deleteDirectory(filePath.toFile());
 
-		syncAccount = SyncAccountService.fetchSyncAccount(
-			syncAccount.getSyncAccountId());
-
-		if (syncAccount != null) {
-			SyncAccountService.deleteSyncAccount(
+			syncAccount = SyncAccountService.fetchSyncAccount(
 				syncAccount.getSyncAccountId());
+
+			if (syncAccount != null) {
+				SyncAccountService.deleteSyncAccount(
+					syncAccount.getSyncAccountId());
+			}
 		}
+		catch (Exception e) {
+			_logger.error(e.getMessage(), e);
+		}
+		finally {
+			Path databaseFilePath = FileUtil.getFilePath(
+				PropsValues.SYNC_CONFIGURATION_DIRECTORY,
+				PropsValues.SYNC_DATABASE_NAME + ".h2.db");
 
-		Path databaseFilePath = FileUtil.getFilePath(
-			PropsValues.SYNC_CONFIGURATION_DIRECTORY,
-			PropsValues.SYNC_DATABASE_NAME + ".h2.db");
-
-		Files.deleteIfExists(databaseFilePath);
+			Files.deleteIfExists(databaseFilePath);
+		}
 	}
 
 	protected final InputStream getInputStream(String fileName) {

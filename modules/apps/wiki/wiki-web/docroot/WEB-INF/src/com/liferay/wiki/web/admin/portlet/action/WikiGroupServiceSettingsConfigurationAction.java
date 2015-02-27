@@ -23,7 +23,7 @@ import javax.portlet.PortletConfig;
 /**
  * @author Iván Zaera
  */
-public class WikiSettingsConfigurationAction
+public class WikiGroupServiceSettingsConfigurationAction
 	extends SettingsConfigurationAction {
 
 	@Override

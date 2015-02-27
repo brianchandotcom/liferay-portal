@@ -71,7 +71,7 @@ import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.messageboards.MBSettings;
+import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
@@ -233,10 +233,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subject = ModelHintsUtil.trimString(
 			MBMessage.class.getName(), "subject", subject);
 
-		MBSettings mbSettings = MBSettings.getInstance(groupId);
+		MBGroupServiceSettings mbGroupServiceSettings =
+			MBGroupServiceSettings.getInstance(groupId);
 
-		if (mbSettings != null) {
-			if (!mbSettings.isAllowAnonymousPosting()) {
+		if (mbGroupServiceSettings != null) {
+			if (!mbGroupServiceSettings.isAllowAnonymousPosting()) {
 				if (anonymous || user.isDefaultUser()) {
 					throw new PrincipalException();
 				}
@@ -2061,13 +2062,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return;
 		}
 
-		MBSettings mbSettings = MBSettings.getInstance(message.getGroupId());
+		MBGroupServiceSettings mbGroupServiceSettings =
+			MBGroupServiceSettings.getInstance(message.getGroupId());
 
 		if (serviceContext.isCommandAdd() &&
-			mbSettings.isEmailMessageAddedEnabled()) {
+			mbGroupServiceSettings.isEmailMessageAddedEnabled()) {
 		}
 		else if (serviceContext.isCommandUpdate() &&
-				 mbSettings.isEmailMessageUpdatedEnabled()) {
+				 mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) {
 		}
 		else {
 			return;
@@ -2112,8 +2114,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		String entryTitle = message.getSubject();
 
-		String fromName = mbSettings.getEmailFromName();
-		String fromAddress = mbSettings.getEmailFromAddress();
+		String fromName = mbGroupServiceSettings.getEmailFromName();
+		String fromAddress = mbGroupServiceSettings.getEmailFromAddress();
 
 		String replyToAddress = StringPool.BLANK;
 
@@ -2128,16 +2130,18 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (serviceContext.isCommandUpdate()) {
 			subjectLocalizedValuesMap =
-				mbSettings.getEmailMessageUpdatedSubject();
-			bodyLocalizedValuesMap = mbSettings.getEmailMessageUpdatedBody();
+				mbGroupServiceSettings.getEmailMessageUpdatedSubject();
+			bodyLocalizedValuesMap =
+				mbGroupServiceSettings.getEmailMessageUpdatedBody();
 		}
 		else {
 			subjectLocalizedValuesMap =
-				mbSettings.getEmailMessageAddedSubject();
-			bodyLocalizedValuesMap = mbSettings.getEmailMessageAddedBody();
+				mbGroupServiceSettings.getEmailMessageAddedSubject();
+			bodyLocalizedValuesMap =
+				mbGroupServiceSettings.getEmailMessageAddedBody();
 		}
 
-		boolean htmlFormat = mbSettings.isEmailHtmlFormat();
+		boolean htmlFormat = mbGroupServiceSettings.isEmailHtmlFormat();
 
 		String messageBody = message.getBody();
 

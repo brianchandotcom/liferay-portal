@@ -32,7 +32,7 @@ String title = BeanParamUtil.getString(wikiPage, request, "title");
 boolean editTitle = ParamUtil.getBoolean(request, "editTitle");
 
 String content = BeanParamUtil.getString(wikiPage, request, "content");
-String selectedFormat = BeanParamUtil.getString(wikiPage, request, "format", wikiSettings.getDefaultFormat());
+String selectedFormat = BeanParamUtil.getString(wikiPage, request, "format", wikiGroupServiceSettings.getDefaultFormat());
 String parentTitle = BeanParamUtil.getString(wikiPage, request, "parentTitle");
 
 boolean preview = ParamUtil.getBoolean(request, "preview");
@@ -523,7 +523,7 @@ if (Validator.isNull(redirect)) {
 
 		<portlet:renderURL var="nodeURL">
 			<portlet:param name="struts_action" value="/wiki/view" />
-			<portlet:param name="title" value="<%= wikiConfiguration.frontPageName() %>" />
+			<portlet:param name="title" value="<%= wikiGroupServiceConfiguration.frontPageName() %>" />
 			<portlet:param name="tag" value="<%= StringPool.BLANK %>" />
 		</portlet:renderURL>
 

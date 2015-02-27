@@ -69,7 +69,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.messageboards.MBSettings;
+import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -720,11 +720,11 @@ public class MBUtil {
 	}
 
 	public static String[] getThreadPriority(
-			MBSettings mbSettings, String languageId, double value,
-			ThemeDisplay themeDisplay)
+			MBGroupServiceSettings mbGroupServiceSettings, String languageId,
+			double value, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		String[] priorities = mbSettings.getPriorities(languageId);
+		String[] priorities = mbGroupServiceSettings.getPriorities(languageId);
 
 		String[] priorityPair = _findThreadPriority(
 			value, themeDisplay, priorities);
@@ -733,7 +733,8 @@ public class MBUtil {
 			String defaultLanguageId = LocaleUtil.toLanguageId(
 				LocaleUtil.getSiteDefault());
 
-			priorities = mbSettings.getPriorities(defaultLanguageId);
+			priorities = mbGroupServiceSettings.getPriorities(
+				defaultLanguageId);
 
 			priorityPair = _findThreadPriority(value, themeDisplay, priorities);
 		}
@@ -768,12 +769,13 @@ public class MBUtil {
 	}
 
 	public static String getUserRank(
-			MBSettings mbSettings, String languageId, int posts)
+			MBGroupServiceSettings mbGroupServiceSettings, String languageId,
+			int posts)
 		throws Exception {
 
 		String rank = StringPool.BLANK;
 
-		String[] ranks = mbSettings.getRanks(languageId);
+		String[] ranks = mbGroupServiceSettings.getRanks(languageId);
 
 		for (int i = 0; i < ranks.length; i++) {
 			String[] kvp = StringUtil.split(ranks[i], CharPool.EQUAL);
@@ -793,7 +795,8 @@ public class MBUtil {
 	}
 
 	public static String[] getUserRank(
-			MBSettings mbSettings, String languageId, MBStatsUser statsUser)
+			MBGroupServiceSettings mbGroupServiceSettings, String languageId,
+			MBStatsUser statsUser)
 		throws Exception {
 
 		String[] rank = {StringPool.BLANK, StringPool.BLANK};
@@ -804,7 +807,7 @@ public class MBUtil {
 
 		long companyId = group.getCompanyId();
 
-		String[] ranks = mbSettings.getRanks(languageId);
+		String[] ranks = mbGroupServiceSettings.getRanks(languageId);
 
 		for (int i = 0; i < ranks.length; i++) {
 			String[] kvp = StringUtil.split(ranks[i], CharPool.EQUAL);

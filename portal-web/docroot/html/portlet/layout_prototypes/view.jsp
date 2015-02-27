@@ -96,14 +96,15 @@ portletURL.setParameter("struts_action", "/layout_prototypes/view");
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="aui-base,liferay-util-window">
-	A.getBody().delegate(
+<aui:script sandbox="<%= true %>">
+	$('body').on(
 		'click',
+		'.layout-prototype-action a',
 		function(event) {
 			event.preventDefault();
 
-			var link = event.currentTarget;
-			var title = link.get('text');
+			var link = $(event.currentTarget);
+			var title = link.text();
 
 			Liferay.Util.openWindow(
 				{
@@ -112,7 +113,6 @@ portletURL.setParameter("struts_action", "/layout_prototypes/view");
 					uri: link.attr('href')
 				}
 			);
-		},
-		'.layout-prototype-action a'
+		}
 	);
 </aui:script>

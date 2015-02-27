@@ -102,6 +102,7 @@ journalContentDisplayContext.incrementViewCounter();
 													label="<%= true %>"
 													message='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", HtmlUtil.escape(articleDisplay.getTitle()), StringUtil.toUpperCase(HtmlUtil.escape(extension))}) %>'
 													method="get"
+													target="_blank"
 													url="<%= exportArticleURL %>"
 												/>
 

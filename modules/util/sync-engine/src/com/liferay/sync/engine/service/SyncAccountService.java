@@ -350,11 +350,20 @@ public class SyncAccountService {
 		SyncAccountService.update(syncAccount);
 
 		if (moveFile) {
-			Files.createDirectories(filePath);
+			try {
+				Files.createDirectories(filePath);
 
-			Files.move(
-				Paths.get(syncAccount.getFilePathName()), filePath,
-				StandardCopyOption.REPLACE_EXISTING);
+				Files.move(
+					Paths.get(syncAccount.getFilePathName()), filePath,
+					StandardCopyOption.REPLACE_EXISTING);
+			}
+			catch (Exception e) {
+				syncAccount.setActive(true);
+
+				SyncAccountService.update(syncAccount);
+
+				throw e;
+			}
 		}
 
 		syncAccount = setFilePathName(syncAccountId, filePath.toString());

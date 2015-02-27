@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.sso.opensso;
+package com.liferay.portal.sso.opensso;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.sso.OpenSSO;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,52 +41,16 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
- * <p>
- * See https://issues.liferay.com/browse/LEP-5943.
- * </p>
- *
- * @author Prashant Dighe
- * @author Brian Wing Shun Chan
- * @author Wesley Gong
+ * @author Michael C. Han
  */
-public class OpenSSOUtil {
 
-	public static Map<String, String> getAttributes(
-		HttpServletRequest request, String serviceUrl) {
+@Component(immediate = true, service = OpenSSO.class)
+public class OpenSSOImpl implements OpenSSO {
 
-		return _instance._getAttributes(request, serviceUrl);
-	}
-
-	public static String getSubjectId(
-		HttpServletRequest request, String serviceUrl) {
-
-		return _instance._getSubjectId(request, serviceUrl);
-	}
-
-	public static boolean isAuthenticated(
-			HttpServletRequest request, String serviceUrl)
-		throws IOException {
-
-		return _instance._isAuthenticated(request, serviceUrl);
-	}
-
-	public static boolean isValidServiceUrl(String serviceUrl) {
-		return _instance._isValidServiceUrl(serviceUrl);
-	}
-
-	public static boolean isValidUrl(String url) {
-		return _instance._isValidUrl(url);
-	}
-
-	public static boolean isValidUrls(String[] urls) {
-		return _instance._isValidUrls(urls);
-	}
-
-	private OpenSSOUtil() {
-	}
-
-	private Map<String, String> _getAttributes(
+	public Map<String, String> getAttributes(
 		HttpServletRequest request, String serviceUrl) {
 
 		Map<String, String> nameValues = new HashMap<>();
@@ -103,9 +68,9 @@ public class OpenSSOUtil {
 			httpURLConnection.setRequestProperty(
 				"Content-type", "application/x-www-form-urlencoded");
 
-			String[] cookieNames = _getCookieNames(serviceUrl);
+			String[] cookieNames = getCookieNames(serviceUrl);
 
-			_setCookieProperty(request, httpURLConnection, cookieNames);
+			setCookieProperty(request, httpURLConnection, cookieNames);
 
 			OutputStreamWriter osw = new OutputStreamWriter(
 				httpURLConnection.getOutputStream());
@@ -164,7 +129,7 @@ public class OpenSSOUtil {
 		return nameValues;
 	}
 
-	private String[] _getCookieNames(String serviceUrl) {
+	public String[] getCookieNames(String serviceUrl) {
 		String[] cookieNames = _cookieNamesMap.get(serviceUrl);
 
 		if (cookieNames != null) {
@@ -259,15 +224,13 @@ public class OpenSSOUtil {
 		return cookieNames;
 	}
 
-	private String _getSubjectId(
-		HttpServletRequest request, String serviceUrl) {
-
-		String cookieName = _getCookieNames(serviceUrl)[0];
+	public String getSubjectId(HttpServletRequest request, String serviceUrl) {
+		String cookieName = getCookieNames(serviceUrl)[0];
 
 		return CookieKeys.getCookie(request, cookieName);
 	}
 
-	private boolean _isAuthenticated(
+	public boolean isAuthenticated(
 			HttpServletRequest request, String serviceUrl)
 		throws IOException {
 
@@ -275,7 +238,7 @@ public class OpenSSOUtil {
 
 		boolean hasCookieNames = false;
 
-		String[] cookieNames = _getCookieNames(serviceUrl);
+		String[] cookieNames = getCookieNames(serviceUrl);
 
 		for (String cookieName : cookieNames) {
 			if (CookieKeys.getCookie(request, cookieName) != null) {
@@ -306,7 +269,7 @@ public class OpenSSOUtil {
 		httpURLConnection.setRequestProperty(
 			"Content-type", "application/x-www-form-urlencoded");
 
-		_setCookieProperty(request, httpURLConnection, cookieNames);
+		setCookieProperty(request, httpURLConnection, cookieNames);
 
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
 			httpURLConnection.getOutputStream());
@@ -331,12 +294,12 @@ public class OpenSSOUtil {
 		return authenticated;
 	}
 
-	private boolean _isValidServiceUrl(String serviceUrl) {
+	public boolean isValidServiceUrl(String serviceUrl) {
 		if (Validator.isNull(serviceUrl)) {
 			return false;
 		}
 
-		String[] cookieNames = _instance._getCookieNames(serviceUrl);
+		String[] cookieNames = getCookieNames(serviceUrl);
 
 		if (cookieNames.length == 0) {
 			return false;
@@ -345,7 +308,7 @@ public class OpenSSOUtil {
 		return true;
 	}
 
-	private boolean _isValidUrl(String url) {
+	public boolean isValidUrl(String url) {
 		if (Validator.isNull(url)) {
 			return false;
 		}
@@ -388,9 +351,9 @@ public class OpenSSOUtil {
 		return true;
 	}
 
-	private boolean _isValidUrls(String[] urls) {
+	public boolean isValidUrls(String[] urls) {
 		for (String url : urls) {
-			if (!_isValidUrl(url)) {
+			if (!isValidUrl(url)) {
 				return false;
 			}
 		}
@@ -398,7 +361,7 @@ public class OpenSSOUtil {
 		return true;
 	}
 
-	private void _setCookieProperty(
+	public void setCookieProperty(
 		HttpServletRequest request, HttpURLConnection urlc,
 		String[] cookieNames) {
 
@@ -432,9 +395,7 @@ public class OpenSSOUtil {
 
 	private static final String _VALIDATE_TOKEN = "/identity/isTokenValid";
 
-	private static final Log _log = LogFactoryUtil.getLog(OpenSSOUtil.class);
-
-	private static final OpenSSOUtil _instance = new OpenSSOUtil();
+	private static final Log _log = LogFactoryUtil.getLog(OpenSSOImpl.class);
 
 	private final Map<String, String[]> _cookieNamesMap =
 		new ConcurrentHashMap<>();

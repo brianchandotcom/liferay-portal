@@ -424,10 +424,10 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.sso.cas"
 		},
 		new String[] {
-			"login.url", "login.url", "com.liferay.portal.sso.cas"
+			"cas.login.url", "login.url", "com.liferay.portal.sso.cas"
 		},
 		new String[] {
-			"logout.on.session.expiration", "logout.on.session.expiration",
+			"cas.logout.on.session.expiration", "logout.on.session.expiration",
 			"com.liferay.portal.sso.cas"
 		},
 		new String[] {
@@ -645,6 +645,47 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"ntlm.auth.service.password", "service.password",
 			"com.liferay.portal.sso.ntlm"
+		},
+
+		// OpenSSO
+
+		new String[] {
+			"open.sso.auth.enabled", "enabled", "com.liferay.portal.sso.opensso"
+		},
+		new String[] {
+			"open.sso.email.address.attr", "email.address.attr",
+			"com.liferay.portal.sso.opensso"
+		},
+		new String[] {
+			"open.sso.first.name.attr", "first.name.attr",
+			"com.liferay.portal.sso.opensso"
+		},
+		new String[] {
+			"open.sso.last.name.attr", "last.name.attr",
+			"com.liferay.portal.sso.opensso"
+		},
+		new String[] {
+			"open.sso.import.from.ldap", "import.from.ldap",
+			"com.liferay.portal.sso.opensso"
+		},
+		new String[] {
+			"login.url", "login.url", "com.liferay.portal.sso.opensso"
+		},
+		new String[] {
+			"open.sso.logout.on.session.expiration",
+			"logout.on.session.expiration", "com.liferay.portal.sso.opensso"
+		},
+		new String[] {
+			"open.sso.logout.url", "logout.url",
+			"com.liferay.portal.sso.opensso"
+		},
+		new String[] {
+			"open.sso.screen.name.attr", "screen.name.attr",
+			"com.liferay.portal.sso.opensso"
+		},
+		new String[] {
+			"open.sso.service.url", "service.url",
+			"com.liferay.portal.sso.opensso"
 		},
 
 		// Polls

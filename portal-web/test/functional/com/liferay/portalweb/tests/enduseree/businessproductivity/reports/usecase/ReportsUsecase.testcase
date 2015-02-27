@@ -113,11 +113,11 @@
 		<description message="This is a use case for LPS-51009." />
 
 		<var name="emailAddress1" property-value="email.address.1" />
-		<var name="emailAddress2" property-value="email.address.2" />
-		<var name="emailAddress3" property-value="email.address.3" />
+		<var name="emailAddress4" property-value="email.address.4" />
+		<var name="emailAddress5" property-value="email.address.5" />
 		<var name="emailPassword1" property-value="email.password.1" />
-		<var name="emailPassword2" property-value="email.password.2" />
-		<var name="emailPassword3" property-value="email.password.3" />
+		<var name="emailPassword4" property-value="email.password.4" />
+		<var name="emailPassword5" property-value="email.password.5" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
@@ -177,8 +177,8 @@ Thanks,<br/>
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="${emailAddress3}" />
-			<var name="emailRecipientAddress" value="${emailAddress2}" />
+			<var name="emailNotificationsAddress" value="${emailAddress5}" />
+			<var name="emailRecipientAddress" value="${emailAddress4}" />
 			<var name="reportFormat" value="pdf" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
 		</execute>
@@ -186,8 +186,8 @@ Thanks,<br/>
 		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
-			<var name="userEmailAddress" value="${emailAddress3}" />
-			<var name="userPassword" value="${emailPassword3}" />
+			<var name="userEmailAddress" value="${emailAddress5}" />
+			<var name="userPassword" value="${emailPassword5}" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -203,13 +203,13 @@ Thanks,<br/>
 		</execute>
 
 		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" value="${emailAddress3}" />
-			<var name="userPassword" value="${emailPassword3}" />
+			<var name="userEmailAddress" value="${emailAddress5}" />
+			<var name="userPassword" value="${emailPassword5}" />
 		</execute>
 
 		<execute macro="Gmail#logoutAndLogin">
-			<var name="userEmailAddress" value="${emailAddress2}" />
-			<var name="userPassword" value="${emailPassword2}" />
+			<var name="userEmailAddress" value="${emailAddress4}" />
+			<var name="userPassword" value="${emailPassword4}" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -220,14 +220,14 @@ Thanks,<br/>
 			<var name="gmailMailTableMessageTitle" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
 			<var name="gmailMessageBody" value="Please review the attached report from your friends in QA!" />
 			<var name="gmailMessageBodyClosing" value="Thank You, Liferay QA ${emailAddress1}" />
-			<var name="gmailMessageBodyGreeting" value="Dear ${emailAddress2}," />
+			<var name="gmailMessageBodyGreeting" value="Dear ${emailAddress4}," />
 			<var name="gmailMessageTitle" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
 			<var name="gmailMesssageAttachment" value="reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
 		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" value="${emailAddress2}" />
-			<var name="userPassword" value="${emailPassword2}" />
+			<var name="userEmailAddress" value="${emailAddress4}" />
+			<var name="userPassword" value="${emailPassword4}" />
 		</execute>
 
 		<execute function="Open" locator1="http://localhost:8080" />

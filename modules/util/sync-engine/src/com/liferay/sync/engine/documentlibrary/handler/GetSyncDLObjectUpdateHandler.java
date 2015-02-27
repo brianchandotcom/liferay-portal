@@ -28,6 +28,7 @@ import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
+import com.liferay.sync.engine.util.OSDetector;
 import com.liferay.sync.engine.util.SyncEngineUtil;
 
 import java.io.IOException;
@@ -44,6 +45,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.io.FileUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -144,6 +147,18 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		Path sourceFilePath = Paths.get(sourceSyncFile.getFilePathName());
 
 		if (Files.notExists(sourceFilePath)) {
+			return;
+		}
+
+		if (sourceSyncFile.isFile()) {
+			Files.deleteIfExists(sourceFilePath);
+
+			return;
+		}
+
+		if (!OSDetector.isLinux()) {
+			FileUtils.deleteDirectory(sourceFilePath.toFile());
+
 			return;
 		}
 

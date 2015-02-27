@@ -53,6 +53,10 @@ public class SyncAccountServiceTest extends BaseTestCase {
 		SyncAccountService.setFilePathName(
 			syncAccount.getSyncAccountId(), targetFilePathName);
 
+		Assert.assertNull(SyncFileService.fetchSyncFile(filePathName));
+
+		Assert.assertNotNull(SyncFileService.fetchSyncFile(targetFilePathName));
+
 		syncSite = SyncSiteService.fetchSyncSite(syncSite.getSyncSiteId());
 
 		Assert.assertEquals(

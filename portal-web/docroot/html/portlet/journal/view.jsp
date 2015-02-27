@@ -70,12 +70,11 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			<%
 			PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-			portletURL.setParameter("mvcPath", "/html/portlet/journal/edit_article.jsp");
 			portletURL.setParameter("folderId", String.valueOf(folderId));
 			%>
 
 			<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
-				<aui:input name="<%= Constants.CMD %>" type="hidden" />
+				<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
 				<aui:input name="folderIds" type="hidden" />
@@ -123,7 +122,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			displayStyle: '<%= HtmlUtil.escapeJS(journalDisplayContext.getDisplayStyle()) %>',
 			move: {
 				allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',
-				editEntryUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_entry" /></portlet:actionURL>',
+				editEntryUrl: '<portlet:actionURL />',
 				folderIdHashRegEx: /#.*&?<portlet:namespace />folderId=([\d]+)/i,
 				folderIdRegEx: /&?<portlet:namespace />folderId=([\d]+)/i,
 				form: {

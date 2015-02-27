@@ -43,7 +43,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">
 
 				<%
-				String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'expireEntrires'}); void(0);";
+				String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'expireEntries'}); void(0);";
 				%>
 
 				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-time" label="expire" />
@@ -117,7 +117,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			Liferay.fire(
 				'<%= renderResponse.getNamespace() %>editEntry',
 				{
-					action: '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "moveArticlesToTrash" : "deleteArticles" %>'
+					action: '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "moveEntriesToTrash" : "deleteEntries" %>'
 				}
 			);
 		}

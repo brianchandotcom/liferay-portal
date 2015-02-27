@@ -32,7 +32,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.AutoLogin;
 import com.liferay.portal.security.auth.BaseAutoLogin;
 import com.liferay.portal.security.auth.ScreenNameGenerator;
-import com.liferay.portal.security.auth.ScreenNameGeneratorFactory;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.security.sso.OpenSSO;
 import com.liferay.portal.service.ServiceContext;
@@ -164,10 +163,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 				companyId, emailAddress);
 
 			if (user != null) {
-				ScreenNameGenerator screenNameGenerator =
-					ScreenNameGeneratorFactory.getInstance();
-
-				screenName = screenNameGenerator.generate(
+				screenName = _screenNameGenerator.generate(
 					companyId, user.getUserId(), emailAddress);
 			}
 		}
@@ -257,10 +253,18 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		_openSSO = openSSO;
 	}
 
+	@Reference
+	protected void setScreenNameGenerator(
+		ScreenNameGenerator screenNameGenerator) {
+
+		_screenNameGenerator = screenNameGenerator;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenSSOAutoLogin.class);
 
 	private OpenSSO _openSSO;
 	private volatile OpenSSOConfiguration _openSSOConfiguration;
+	private ScreenNameGenerator _screenNameGenerator;
 
 }

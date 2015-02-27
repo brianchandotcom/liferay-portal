@@ -19,6 +19,7 @@ import com.liferay.journal.content.web.upgrade.JournalContentWebUpgrade;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -156,9 +157,14 @@ public class JournalContentPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		ExportArticleUtil.sendFile(resourceRequest, resourceResponse);
+		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 
-		super.serveResource(resourceRequest, resourceResponse);
+		if (cmd.equals(Constants.EXPORT)) {
+			ExportArticleUtil.sendFile(resourceRequest, resourceResponse);
+		}
+		else {
+			super.serveResource(resourceRequest, resourceResponse);
+		}
 	}
 
 	@Activate

@@ -3,6 +3,43 @@
 <project name="portal-test-solr" basedir="." xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-common.xml" />
 
+	<property file="${project.dir}/test.properties" />
+
+	<macrodef name="prepare-solr">
+		<sequential>
+			<copy overwrite="true" todir="${app.server.parent.dir}/solr-${solr.version}/example/solr/collection1/conf">
+				<fileset dir="${lp.plugins.dir}/webs/solr4-web/docroot/WEB-INF/conf/">
+					<include name="schema.xml" />
+					<include name="solrconfig.xml" />
+				</fileset>
+			</copy>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="unzip-solr">
+		<sequential>
+			<delete dir="${app.server.parent.dir}/solr-${solr.version}" />
+
+			<if>
+				<not>
+					<available file="${app.server.parent.dir}/${solr.zip.name}" />
+				</not>
+				<then>
+					<get
+						dest="${app.server.parent.dir}/${solr.zip.name}"
+						src="${solr.zip.url}"
+						verbose="true"
+					/>
+				</then>
+			</if>
+
+			<unzip
+				dest="${app.server.parent.dir}"
+				src="${app.server.parent.dir}/${solr.zip.name}"
+			/>
+		</sequential>
+	</macrodef>
+
 	<target name="prepare-solr-web-properties">
 		<if>
 			<available file="${lp.plugins.dir}/shared/solr4-shared/src/solr.properties" />
@@ -17,5 +54,23 @@
 				/>
 			</else>
 		</if>
+	</target>
+
+	<target name="start-solr">
+		<unzip-solr />
+
+		<prepare-solr />
+
+		<parallel>
+			<daemons>
+				<exec
+					dir="${app.server.parent.dir}/solr-${solr.version}/example"
+					executable="java"
+					failonerror="true"
+				>
+					<arg line="-jar start.jar" />
+				</exec>
+			</daemons>
+		</parallel>
 	</target>
 </project>

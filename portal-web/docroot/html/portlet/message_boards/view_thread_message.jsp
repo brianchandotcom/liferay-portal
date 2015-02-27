@@ -49,7 +49,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(scopeGroupId, message.getUserId());
 
 						int posts = statsUser.getMessageCount();
-						String[] ranks = MBUtil.getUserRank(mbSettings, themeDisplay.getLanguageId(), statsUser);
+						String[] ranks = MBUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
 						%>
 
 						<c:if test="<%= Validator.isNotNull(ranks[1]) %>">

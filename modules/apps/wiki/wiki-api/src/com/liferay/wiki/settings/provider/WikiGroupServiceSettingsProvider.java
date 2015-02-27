@@ -15,13 +15,13 @@
 package com.liferay.wiki.settings.provider;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsProvider;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.settings.SettingsProvider;
-import com.liferay.wiki.configuration.WikiConfiguration;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
-import com.liferay.wiki.settings.WikiSettings;
+import com.liferay.wiki.settings.WikiGroupServiceSettings;
 
 import java.util.Map;
 
@@ -35,38 +35,40 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"class.name=com.liferay.wiki.settings.WikiSettings"
+		"class.name=com.liferay.wiki.settings.WikiGroupServiceSettings"
 	},
-	service = SettingsProvider.class
+	service = GroupServiceSettingsProvider.class
 )
-public class WikiSettingsProvider implements SettingsProvider<WikiSettings> {
+public class WikiGroupServiceSettingsProvider
+	implements GroupServiceSettingsProvider<WikiGroupServiceSettings> {
 
 	@Override
-	public WikiSettings getGroupServiceSettings(long groupId)
+	public WikiGroupServiceSettings getGroupServiceSettings(long groupId)
 		throws PortalException {
 
 		Settings settings = _settingsFactory.getGroupServiceSettings(
 			groupId, WikiConstants.SERVICE_NAME);
 
-		return new WikiSettings(settings);
+		return new WikiGroupServiceSettings(settings);
 	}
 
 	@Override
-	public WikiSettings getGroupServiceSettings(
+	public WikiGroupServiceSettings getGroupServiceSettings(
 			long groupId, Map<String, String[]> parameterMap)
 		throws PortalException {
 
 		Settings settings = _settingsFactory.getGroupServiceSettings(
 			groupId, WikiConstants.SERVICE_NAME);
 
-		return new WikiSettings(
+		return new WikiGroupServiceSettings(
 			new ParameterMapSettings(parameterMap, settings));
 	}
 
 	@Activate
 	protected void activate() {
 		_settingsFactory.registerSettingsMetadata(
-			WikiSettings.class, _wikiConfiguration, null);
+			WikiGroupServiceSettings.class, _wikiGroupServiceConfiguration,
+			null);
 	}
 
 	@Reference(unbind = "-")
@@ -75,11 +77,13 @@ public class WikiSettingsProvider implements SettingsProvider<WikiSettings> {
 	}
 
 	@Reference(unbind = "-")
-	protected void setWikiConfiguration(WikiConfiguration wikiConfiguration) {
-		_wikiConfiguration = wikiConfiguration;
+	protected void setWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 	}
 
 	private SettingsFactory _settingsFactory;
-	private WikiConfiguration _wikiConfiguration;
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

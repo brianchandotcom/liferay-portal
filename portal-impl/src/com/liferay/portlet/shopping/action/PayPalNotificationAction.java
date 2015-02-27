@@ -24,7 +24,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.shopping.NoSuchOrderException;
-import com.liferay.portlet.shopping.ShoppingSettings;
+import com.liferay.portlet.shopping.ShoppingGroupServiceSettings;
 import com.liferay.portlet.shopping.model.ShoppingOrder;
 import com.liferay.portlet.shopping.service.ShoppingOrderLocalServiceUtil;
 import com.liferay.portlet.shopping.util.ShoppingUtil;
@@ -153,14 +153,15 @@ public class PayPalNotificationAction extends Action {
 
 		ShoppingOrder order = ShoppingOrderLocalServiceUtil.getOrder(ppInvoice);
 
-		ShoppingSettings shoppingSettings = ShoppingSettings.getInstance(
-			order.getGroupId());
+		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
+			ShoppingGroupServiceSettings.getInstance(order.getGroupId());
 
 		// Receiver email address
 
 		String ppReceiverEmail = ParamUtil.getString(request, "receiver_email");
 
-		String payPalEmailAddress = shoppingSettings.getPayPalEmailAddress();
+		String payPalEmailAddress =
+			shoppingGroupServiceSettings.getPayPalEmailAddress();
 
 		if (!payPalEmailAddress.equals(ppReceiverEmail)) {
 			return false;
@@ -180,7 +181,7 @@ public class PayPalNotificationAction extends Action {
 
 		String ppCurrency = ParamUtil.getString(request, "mc_currency");
 
-		String currencyId = shoppingSettings.getCurrencyId();
+		String currencyId = shoppingGroupServiceSettings.getCurrencyId();
 
 		if (!currencyId.equals(ppCurrency)) {
 			return false;

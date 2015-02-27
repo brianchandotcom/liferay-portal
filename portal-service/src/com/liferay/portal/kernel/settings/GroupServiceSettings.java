@@ -12,23 +12,10 @@
  * details.
  */
 
-package com.liferay.wiki.upgrade.v1_0_0;
-
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.settings.WikiGroupServiceSettings;
+package com.liferay.portal.kernel.settings;
 
 /**
  * @author Iván Zaera
  */
-public class UpgradePortletSettings
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings {
-
-	@Override
-	protected void doUpgrade() throws Exception {
-		upgradeDisplayPortlet(
-			WikiPortletKeys.WIKI_DISPLAY, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-			WikiGroupServiceSettings.class);
-	}
-
+public interface GroupServiceSettings {
 }

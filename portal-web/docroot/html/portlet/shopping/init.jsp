@@ -66,7 +66,7 @@ page import="com.liferay.portlet.shopping.ShippingPhoneException" %><%@
 page import="com.liferay.portlet.shopping.ShippingStateException" %><%@
 page import="com.liferay.portlet.shopping.ShippingStreetException" %><%@
 page import="com.liferay.portlet.shopping.ShippingZipException" %><%@
-page import="com.liferay.portlet.shopping.ShoppingSettings" %><%@
+page import="com.liferay.portlet.shopping.ShoppingGroupServiceSettings" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingCart" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingCartItem" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingCategory" %><%@
@@ -105,9 +105,9 @@ page import="com.liferay.portlet.shopping.util.ShoppingUtil" %>
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-ShoppingSettings shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId());
+ShoppingGroupServiceSettings shoppingGroupServiceSettings = ShoppingGroupServiceSettings.getInstance(themeDisplay.getSiteGroupId());
 
-Currency currency = Currency.getInstance(shoppingSettings.getCurrencyId());
+Currency currency = Currency.getInstance(shoppingGroupServiceSettings.getCurrencyId());
 
 NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
 

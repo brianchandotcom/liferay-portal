@@ -12,23 +12,20 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.portlet.action;
+package com.liferay.wiki.web.wiki.portlet.action;
 
-import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
 /**
- * @author Sergio González
+ * @author Bruno Farache
  */
-public class BookmarksSettingsConfigurationAction
+public class WikiGroupServiceSettingsConfigurationAction
 	extends SettingsConfigurationAction {
 
 	@Override
@@ -37,27 +34,16 @@ public class BookmarksSettingsConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
-		validateEmail(actionRequest, "emailMessageAdded");
-		validateEmail(actionRequest, "emailMessageUpdated");
-		validateEmailFrom(actionRequest);
-		validateRootFolder(actionRequest);
+		validateDisplaySettings(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	protected void validateRootFolder(ActionRequest actionRequest)
-		throws Exception {
+	protected void validateDisplaySettings(ActionRequest actionRequest) {
+		String visibleNodes = getParameter(actionRequest, "visibleNodes");
 
-		long rootFolderId = GetterUtil.getLong(
-			getParameter(actionRequest, "rootFolderId"));
-
-		if (rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			try {
-				BookmarksFolderLocalServiceUtil.getFolder(rootFolderId);
-			}
-			catch (NoSuchFolderException nsfe) {
-				SessionErrors.add(actionRequest, "rootFolderIdInvalid");
-			}
+		if (Validator.isNull(visibleNodes)) {
+			SessionErrors.add(actionRequest, "visibleNodesCount");
 		}
 	}
 

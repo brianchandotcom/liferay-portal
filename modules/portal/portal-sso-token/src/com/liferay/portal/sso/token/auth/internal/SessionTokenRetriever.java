@@ -12,9 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.sso.token.auth;
+package com.liferay.portal.sso.token.auth.internal;
+
+import com.liferay.portal.sso.token.auth.TokenLocation;
+import com.liferay.portal.sso.token.auth.TokenRetriever;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -22,18 +26,20 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(immediate = true, service = TokenRetriever.class)
-public class RequestHeaderTokenRetriever implements TokenRetriever {
+public class SessionTokenRetriever implements TokenRetriever {
 
 	@Override
 	public String getLoginToken(
 		HttpServletRequest request, String userTokenName) {
 
-		return request.getHeader(userTokenName);
+		HttpSession httpSession = request.getSession();
+
+		return (String)httpSession.getAttribute(userTokenName);
 	}
 
 	@Override
 	public TokenLocation getTokenLocation() {
-		return TokenLocation.REQUEST_HEADER;
+		return TokenLocation.SESSION;
 	}
 
 }

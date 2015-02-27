@@ -92,6 +92,7 @@ journalContentDisplayContext.incrementViewCounter();
 											%>
 
 												<portlet:resourceURL var="exportArticleURL">
+													<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 													<portlet:param name="groupId" value="<%= String.valueOf(articleDisplay.getGroupId()) %>" />
 													<portlet:param name="articleId" value="<%= articleDisplay.getArticleId() %>" />
 													<portlet:param name="targetExtension" value="<%= extension %>" />

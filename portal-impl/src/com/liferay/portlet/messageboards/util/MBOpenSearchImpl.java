@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.messageboards.model.MBMessage;
 
 /**
@@ -25,8 +26,6 @@ import com.liferay.portlet.messageboards.model.MBMessage;
  */
 @OSGiBeanProperties
 public class MBOpenSearchImpl extends HitsOpenSearchImpl {
-
-	public static final String SEARCH_PATH = "/c/message_boards/open_search";
 
 	public static final String TITLE = "Liferay Message Boards Search: ";
 
@@ -42,7 +41,7 @@ public class MBOpenSearchImpl extends HitsOpenSearchImpl {
 
 	@Override
 	public String getSearchPath() {
-		return SEARCH_PATH;
+		return StringPool.BLANK;
 	}
 
 	@Override

@@ -49,7 +49,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 
-	public static final String SEARCH_PATH = "/c/search/open_search";
+	public PortalOpenSearchImpl(
+		String openSearchURL, String openSearchDescriptionURL) {
+
+		super(openSearchURL, openSearchDescriptionURL);
+	}
 
 	@Override
 	public String search(
@@ -73,7 +77,7 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 
 			Object[] values = addSearchResults(
 				queryTerms, keywords, startPage, itemsPerPage, total, start,
-				"Liferay Portal Search: " + keywords, SEARCH_PATH, format,
+				"Liferay Portal Search: " + keywords, StringPool.BLANK, format,
 				themeDisplay);
 
 			com.liferay.portal.kernel.xml.Document doc =

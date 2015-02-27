@@ -30,6 +30,7 @@
 		<dirset dir="apps/productivity-center" includes="*" />
 		<dirset dir="apps/quick-note" includes="*" />
 		<dirset dir="apps/rss" includes="*" />
+		<dirset dir="apps/search" includes="*" />
 		<dirset dir="apps/site" includes="*" />
 		<dirset dir="apps/social" includes="*" />
 		<dirset dir="apps/translator" includes="*" />

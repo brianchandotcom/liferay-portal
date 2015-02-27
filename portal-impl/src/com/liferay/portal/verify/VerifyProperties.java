@@ -661,6 +661,13 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.rss.web"
 		},
 
+		// Search
+
+		new String[] {
+			"search.facet.configuration", "facet.configuration",
+			"com.liferay.search.web"
+		},
+
 		// Site Map
 
 		new String[] {

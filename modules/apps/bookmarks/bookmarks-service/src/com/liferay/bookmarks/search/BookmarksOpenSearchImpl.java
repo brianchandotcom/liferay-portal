@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.OpenSearch;
+import com.liferay.portal.kernel.util.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,8 +30,6 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, service = OpenSearch.class
 )
 public class BookmarksOpenSearchImpl extends HitsOpenSearchImpl {
-
-	public static final String SEARCH_PATH = "/c/bookmarks/open_search";
 
 	public static final String TITLE = "Liferay Bookmarks Search: ";
 
@@ -46,7 +45,7 @@ public class BookmarksOpenSearchImpl extends HitsOpenSearchImpl {
 
 	@Override
 	public String getSearchPath() {
-		return SEARCH_PATH;
+		return StringPool.BLANK;
 	}
 
 	@Override

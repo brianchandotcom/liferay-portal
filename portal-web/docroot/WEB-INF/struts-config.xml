@@ -1497,20 +1497,6 @@
 
 		<action path="/roles_admin/view_users" forward="portlet.users_admin.view" />
 
-		<!-- Search -->
-
-		<action path="/search/edit_content_redirect" forward="portlet.search.edit_content_redirect" />
-
-		<action path="/search/open_search" type="com.liferay.portlet.search.action.OpenSearchAction" />
-
-		<action path="/search/open_search_description.xml" forward="/portlet/search/open_search_description.jsp" />
-
-		<action path="/search/search" forward="portlet.search.search" />
-
-		<action path="/search/view" forward="portlet.search.view" />
-
-		<action path="/search/view_content" forward="portlet.search.view_content" />
-
 		<!-- Shopping -->
 
 		<action path="/shopping/cart" type="com.liferay.portlet.shopping.action.CartAction">

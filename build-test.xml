@@ -822,9 +822,17 @@
 
 					<property name="app.server.dir" refid="app.server.dir" />
 
-					<loadresource property="patching.tool.version">
-						<url url="${test.fix.pack.base.url}/patching-tool/LATEST.txt" />
-					</loadresource>
+					<mirrors-get
+						dest="${basedir}"
+						src="${test.fix.pack.base.url}/patching-tool/LATEST.txt"
+					/>
+
+					<loadfile
+						property="patching.tool.version"
+						srcFile="LATEST.txt"
+					/>
+
+					<delete file="${basedir}/LATEST.txt" />
 
 					<property name="test.build.patching.tool.zip.url" value="${test.fix.pack.base.url}/patching-tool/patching-tool-${patching.tool.version}.zip" />
 

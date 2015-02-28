@@ -17,7 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="aQute.bnd" org="com.liferay" rev="2.3.0.20140225-161137" />
-		<dependency conf="provided->default" name="ant" org="org.apache.ant" rev="1.9.3" />
+		<dependency name="ant" org="org.apache.ant" rev="1.9.3" transitive="false" />
+		<dependency name="biz.aQute.bnd" org="biz.aQute.bnd" rev="2.4.1" />
 	</dependencies>
 </ivy-module>

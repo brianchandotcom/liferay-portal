@@ -99,6 +99,7 @@ Group group = layoutSetPrototype.getGroup();
 			message="export"
 			method="get"
 			url="<%= exportPagesURL %>"
+			useDialog="<%= true %>"
 		/>
 
 		<portlet:renderURL var="importPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -114,6 +115,7 @@ Group group = layoutSetPrototype.getGroup();
 			message="import"
 			method="get"
 			url="<%= importPagesURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 

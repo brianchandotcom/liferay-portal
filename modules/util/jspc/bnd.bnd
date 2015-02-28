@@ -1,0 +1,4 @@
+Bundle-Name: Liferay JSPC
+Bundle-SymbolicName: com.liferay.jspc
+Bundle-Version: 1.0.0
+Include-Resource: classes

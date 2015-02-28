@@ -116,11 +116,25 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 
 			<%
 			boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
+
+			boolean hasUpdateSitePermission = false;
+
+			if (userGroupGroup != null) {
+				hasUpdateSitePermission = GroupPermissionUtil.contains(permissionChecker, userGroupGroup, ActionKeys.UPDATE);
+			}
+			else {
+				for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
+					if (GroupPermissionUtil.contains(permissionChecker, layoutSetPrototype.getGroup(), ActionKeys.UPDATE)) {
+						hasUpdateSitePermission = true;
+					}
+				}
+			}
+
 			%>
 
 			<c:choose>
 				<c:when test="<%= ((userGroupGroup == null) || ((publicLayoutSetPrototype == null) && (userGroupGroup.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
-					<aui:select label="public-pages" name="publicLayoutSetPrototypeId">
+					<aui:select label="public-pages" name="publicLayoutSetPrototypeId" disabled="<%= !hasUpdateSitePermission %>">
 						<aui:option label="none" selected="<%= true %>" value="" />
 
 						<%
@@ -190,7 +204,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 
 			<c:choose>
 				<c:when test="<%= ((userGroup == null) || ((privateLayoutSetPrototype == null) && (userGroupGroup.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
-					<aui:select label="private-pages" name="privateLayoutSetPrototypeId">
+					<aui:select label="private-pages" name="privateLayoutSetPrototypeId" disabled="<%= !hasUpdateSitePermission %>">
 						<aui:option label="none" selected="<%= true %>" value="" />
 
 						<%

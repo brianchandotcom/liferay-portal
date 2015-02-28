@@ -578,7 +578,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 								}
 							);
 						}
-						catch (error) {
+						catch (e) {
 						}
 
 						Liferay.detach('destroyPortlet', destroyInstance);
@@ -684,11 +684,11 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 									currentDialog.hide();
 								}
 
-								ckEditorContent = ckeditorInstance.getData()
+								ckEditorContent = ckeditorInstance.getData();
 
 								window['<%= name %>'].dispose();
 
-								window['<%= name %>'].create()
+								window['<%= name %>'].create();
 
 								initialEditor = CKEDITOR.instances['<%= name %>'].id;
 							}

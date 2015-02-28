@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 
 <project name="portal-test-solr" basedir="." xmlns:antelope="antlib:ise.antelope.tasks">
-	<import file="build-common.xml" />
-
-	<property file="${project.dir}/test.properties" />
+	<import file="build-test.xml" />
 
 	<macrodef name="prepare-solr">
 		<sequential>

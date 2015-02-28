@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -124,6 +125,8 @@ public class SocketTest {
 		catch (SecurityException se) {
 			Assert.fail();
 		}
+		catch (SocketException se) {
+		}
 	}
 
 	@Test
@@ -148,6 +151,8 @@ public class SocketTest {
 		catch (SecurityException se) {
 			Assert.fail();
 		}
+		catch (SocketException se) {
+		}
 	}
 
 	@Test
@@ -160,6 +165,8 @@ public class SocketTest {
 		}
 		catch (SecurityException se) {
 			Assert.fail();
+		}
+		catch (SocketException se) {
 		}
 	}
 
@@ -187,6 +194,8 @@ public class SocketTest {
 		}
 		catch (SecurityException se) {
 			Assert.fail();
+		}
+		catch (SocketException se) {
 		}
 	}
 

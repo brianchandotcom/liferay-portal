@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessConfig.Builder;
+import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.local.LocalProcessExecutor;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
@@ -25,6 +26,8 @@ import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -33,10 +36,20 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.Proxy.Type;
+import java.net.ProxySelector;
+import java.net.SocketAddress;
+import java.net.URI;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.Future;
 
 import org.junit.Test;
@@ -183,6 +196,53 @@ public class PACLAggregateTest {
 
 	private static final String _JVM_XMX = "-Xmx1024m";
 
+	private static class DummySocksProxySelector extends ProxySelector {
+
+		@Override
+		public void connectFailed(
+			URI uri, SocketAddress socketAddress, IOException ioe) {
+		}
+
+		@Override
+		public List<Proxy> select(URI uri) {
+			if (_socketAddresses.contains(
+					uri.getHost() + StringPool.COLON + uri.getPort())) {
+
+				return Collections.singletonList(
+					new Proxy(Type.SOCKS, new InetSocketAddress(0)));
+			}
+
+			return Collections.singletonList(Proxy.NO_PROXY);
+		}
+
+		private DummySocksProxySelector() throws ProcessException {
+			Properties properties = new Properties();
+
+			try {
+				properties.load(
+					PACLTestsProcessCallable.class.getResourceAsStream(
+						"test/dependencies/WEB-INF/liferay-plugin-package." +
+							"properties"));
+			}
+			catch (IOException ioe) {
+				throw new ProcessException(ioe);
+			}
+
+			for (String socketAddress :
+					StringUtil.split(
+						properties.getProperty(
+							"security-manager-sockets-connect"))) {
+
+				if (!socketAddress.startsWith("localhost")) {
+					_socketAddresses.add(socketAddress);
+				}
+			}
+		}
+
+		private final Set<String> _socketAddresses = new HashSet<>();
+
+	}
+
 	private static class NoticeBridgeRunListener
 		extends RunListener implements Serializable {
 
@@ -256,7 +316,9 @@ public class PACLAggregateTest {
 		implements ProcessCallable<Result> {
 
 		@Override
-		public Result call() {
+		public Result call() throws ProcessException {
+			ProxySelector.setDefault(new DummySocksProxySelector());
+
 			try {
 				JUnitCore junitCore = new JUnitCore();
 

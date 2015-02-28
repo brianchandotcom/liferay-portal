@@ -207,11 +207,8 @@
 		<var name="key_gmailAssetType" value="${gmailAssetType}" />
 
 		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME" value1="${emailFromUserName}" />
-
 		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE_${number}" value1="${gmailMessageTitle}" />
-
 		<execute action="Gmail#pause" locator1="3000" />
-
 		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_TITLE" value1="${gmailMessageTitleInside}" />
 
 		<if>
@@ -236,7 +233,6 @@
 				<var name="key_pageName" value="${pageName} - Liferay" />
 
 				<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_KB_URL" value1="Article Link" />
-
 				<execute action="Gmail#pause" locator1="3000" />
 
 				<execute action="PGKnowledgebasedisplay#selectWindow" locator-key1="PAGE_TITLE" />

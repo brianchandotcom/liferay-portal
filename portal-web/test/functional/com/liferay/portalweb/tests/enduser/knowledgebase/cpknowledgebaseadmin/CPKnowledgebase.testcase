@@ -248,7 +248,7 @@
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
-		<execute macro="KBFolder#viewFolderTable">
+		<execute macro="KBFolder#viewFolderTableCP">
 			<var name="kbFolderName" value="KB Folder 1" />
 		</execute>
 
@@ -349,7 +349,7 @@
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
-		<execute macro="KBFolder#viewFolderTable">
+		<execute macro="KBFolder#viewFolderTableCP">
 			<var name="kbFolderName" value="KB Folder 1" />
 		</execute>
 
@@ -415,7 +415,7 @@
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
-		<execute macro="KBFolder#viewFolderTable">
+		<execute macro="KBFolder#viewFolderTableCP">
 			<var name="kbFolderName" value="KB Folder 1" />
 		</execute>
 
@@ -425,7 +425,7 @@
 			<var name="kbFolderName" value="KB Folder 1" />
 		</execute>
 
-		<execute macro="KBFolder#viewFolderTable">
+		<execute macro="KBFolder#viewFolderTableCP">
 			<var name="kbFolderName" value="KB Folder 1 Edited" />
 		</execute>
 	</command>

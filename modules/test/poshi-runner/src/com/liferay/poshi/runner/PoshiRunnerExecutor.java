@@ -144,7 +144,12 @@ public class PoshiRunnerExecutor {
 					runMacroElement(childElement);
 				}
 				else if (childElement.attributeValue("selenium") != null) {
-					runSeleniumElement(childElement);
+					try {
+						runSeleniumElement(childElement);
+					}
+					catch (Exception e) {
+						throw new PoshiRunnerException(e);
+					}
 				}
 			}
 			else if (childElementName.equals("if")) {
@@ -154,11 +159,12 @@ public class PoshiRunnerExecutor {
 				String message = childElement.attributeValue("message");
 
 				if (message != null) {
-					throw new Exception(
+					throw new PoshiRunnerException(
+						"BUILD FAILED: " +
 						PoshiRunnerVariablesUtil.replaceCommandVars(message));
 				}
 
-				throw new Exception();
+				throw new PoshiRunnerException();
 			}
 			else if (childElementName.equals("for")) {
 				runForElement(childElement);
@@ -537,8 +543,18 @@ public class PoshiRunnerExecutor {
 		String varValue = element.attributeValue("value");
 
 		if (varValue == null) {
-			if (element.attributeValue("method") != null) {
-				varValue = PoshiRunnerGetterUtil.getVarMethodValue(element);
+			String method = element.attributeValue("method");
+
+			if (method != null) {
+				try {
+					varValue = PoshiRunnerGetterUtil.getVarMethodValue(element);
+				}
+				catch (Exception e) {
+					String message =
+						"BUILD FAILED: " + "No such method \"" + method + "\"";
+
+					throw new PoshiRunnerException(message, e);
+				}
 			}
 			else {
 				varValue = element.elementText("var");

@@ -23,9 +23,11 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -1206,6 +1208,37 @@ public class ThreadPoolExecutorTest {
 		Assert.assertTrue(threadPoolExecutor.isShutdown());
 		Assert.assertTrue(
 			threadPoolExecutor.awaitTermination(1, TimeUnit.SECONDS));
+	}
+
+	@Test
+	public void testTerminationFuture() throws InterruptedException {
+		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+			1, 1, TestUtil.KEEPALIVE_TIME, TimeUnit.MILLISECONDS, true, 1);
+
+		NoticeableFuture<Void> terminationFutute =
+			threadPoolExecutor.terminationFuture();
+
+		Assert.assertFalse(terminationFutute.isDone());
+		Assert.assertFalse(terminationFutute.cancel(true));
+
+		final AtomicBoolean marker = new AtomicBoolean();
+
+		terminationFutute.addFutureListener(
+			new FutureListener<Void>() {
+
+				@Override
+				public void complete(Future<Void> future) {
+					marker.set(true);
+				}
+
+			});
+
+		threadPoolExecutor.shutdown();
+
+		Assert.assertTrue(
+			threadPoolExecutor.awaitTermination(1, TimeUnit.SECONDS));
+		Assert.assertTrue(terminationFutute.isDone());
+		Assert.assertTrue(marker.get());
 	}
 
 }

@@ -106,7 +106,9 @@ public class DownloadFileHandler extends BaseHandler {
 			(Boolean)getParameterValue("patch")) {
 
 			if (_logger.isDebugEnabled()) {
-				_logger.debug("Handling exception {}", exception);
+				_logger.debug(
+					"Handling exception {} file path {}", exception,
+					syncFile.getFilePathName());
 			}
 
 			FileEventUtil.downloadFile(getSyncAccountId(), syncFile);
@@ -119,7 +121,9 @@ public class DownloadFileHandler extends BaseHandler {
 					"NoSuchFileEntryException")) {
 
 			if (_logger.isDebugEnabled()) {
-				_logger.debug("Handling exception {}", exception);
+				_logger.debug(
+					"Handling exception {} file path {}", exception,
+					syncFile.getFilePathName());
 			}
 
 			SyncFileService.deleteSyncFile(syncFile, false);

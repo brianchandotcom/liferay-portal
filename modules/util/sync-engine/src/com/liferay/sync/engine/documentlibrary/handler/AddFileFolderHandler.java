@@ -17,13 +17,9 @@ package com.liferay.sync.engine.documentlibrary.handler;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.sync.engine.documentlibrary.event.AddFileEntryEvent;
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncFileService;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Shinn Lok
@@ -32,26 +28,6 @@ public class AddFileFolderHandler extends BaseJSONHandler {
 
 	public AddFileFolderHandler(Event event) {
 		super(event);
-	}
-
-	@Override
-	public boolean handlePortalException(String exception) throws Exception {
-		if (exception.equals(
-				"com.liferay.sync.SyncDLObjectChecksumException")) {
-
-			if (_logger.isDebugEnabled()) {
-				_logger.debug("Handling exception {}", exception);
-			}
-
-			AddFileEntryEvent addFileEntryEvent = new AddFileEntryEvent(
-				getSyncAccountId(), getParameters());
-
-			addFileEntryEvent.run();
-
-			return true;
-		}
-
-		return super.handlePortalException(exception);
 	}
 
 	@Override
@@ -84,8 +60,5 @@ public class AddFileFolderHandler extends BaseJSONHandler {
 
 		SyncFileService.update(localSyncFile);
 	}
-
-	private static final Logger _logger = LoggerFactory.getLogger(
-		AddFileFolderHandler.class);
 
 }

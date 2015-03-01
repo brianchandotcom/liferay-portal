@@ -93,6 +93,13 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			SyncSite syncSite = SyncSiteService.fetchSyncSite(
 				(Long)getParameterValue("repositoryId"), getSyncAccountId());
 
+			if ((syncSite == null) ||
+				((Long)getParameterValue("lastAccessTime")
+					!= syncSite.getRemoteSyncTime())) {
+
+				return;
+			}
+
 			syncSite.setRemoteSyncTime(syncDLObjectUpdate.getLastAccessTime());
 
 			SyncSiteService.update(syncSite);

@@ -121,7 +121,9 @@ public class BatchDownloadEvent {
 			_closed = true;
 		}
 		catch (Exception e) {
-			_logger.debug(e.getMessage(), e);
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(e.getMessage(), e);
+			}
 		}
 	}
 

@@ -44,7 +44,9 @@ public class BatchEventManager {
 				return batchDownloadEvent;
 			}
 			catch (Exception e) {
-				_logger.debug(e.getMessage(), e);
+				if (_logger.isDebugEnabled()) {
+					_logger.debug(e.getMessage(), e);
+				}
 
 				return null;
 			}
@@ -67,7 +69,9 @@ public class BatchEventManager {
 				return batchEvent;
 			}
 			catch (Exception e) {
-				_logger.debug(e.getMessage(), e);
+				if (_logger.isDebugEnabled()) {
+					_logger.debug(e.getMessage(), e);
+				}
 
 				return null;
 			}

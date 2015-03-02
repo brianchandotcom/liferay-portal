@@ -28,10 +28,6 @@ public interface ClusterExecutor {
 
 	public FutureClusterResponses execute(ClusterRequest clusterRequest);
 
-	public FutureClusterResponses execute(
-		ClusterRequest clusterRequest,
-		ClusterResponseCallback clusterResponseCallback);
-
 	public List<ClusterEventListener> getClusterEventListeners();
 
 	public List<ClusterNode> getClusterNodes();

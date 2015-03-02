@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterEventType;
 import com.liferay.portal.kernel.cluster.ClusterMessageType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
-import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
@@ -45,7 +44,6 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
@@ -550,45 +548,6 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			Assert.assertEquals(0, clusterNodeResponses.size());
 			Assert.assertNotEquals(TestBean.TIMESTAMP, timestamp);
-		}
-		finally {
-			clusterExecutorImpl.destroy();
-		}
-	}
-
-	@AdviseWith(
-		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class
-		}
-	)
-	@Test
-	public void testExecuteWithCallBack() throws Exception {
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
-
-		try {
-			String timestamp = String.valueOf(System.currentTimeMillis());
-
-			MethodHandler methodHandler = new MethodHandler(
-				testMethod1MethodKey, timestamp);
-
-			ClusterNode clusterNode = clusterExecutorImpl.getLocalClusterNode();
-
-			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
-				methodHandler, clusterNode.getClusterNodeId());
-
-			MockClusterResponseCallback mockClusterResponseCallback =
-				new MockClusterResponseCallback();
-
-			FutureClusterResponses futureClusterResponses =
-				clusterExecutorImpl.execute(
-					clusterRequest, mockClusterResponseCallback);
-
-			BlockingQueue<ClusterNodeResponse> blockingQueue =
-				mockClusterResponseCallback.waitMessage();
-
-			Assert.assertSame(
-				futureClusterResponses.getPartialResults(), blockingQueue);
 		}
 		finally {
 			clusterExecutorImpl.destroy();

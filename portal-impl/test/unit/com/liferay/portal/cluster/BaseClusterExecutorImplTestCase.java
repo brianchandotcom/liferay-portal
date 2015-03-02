@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.cluster.ClusterEventType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
-import com.liferay.portal.kernel.cluster.ClusterResponseCallback;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
@@ -39,7 +38,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Exchanger;
 import java.util.concurrent.ExecutionException;
@@ -392,35 +390,6 @@ public abstract class BaseClusterExecutorImplTestCase
 			new Exchanger<>();
 		private final Exchanger<ClusterEvent> _joinMessageExchanger =
 			new Exchanger<>();
-
-	}
-
-	protected class MockClusterResponseCallback
-		implements ClusterResponseCallback {
-
-		@Override
-		public void callback(BlockingQueue<ClusterNodeResponse> blockingQueue) {
-			try {
-				_messageExchanger.exchange(blockingQueue);
-			}
-			catch (Exception e) {
-			}
-		}
-
-		public BlockingQueue<ClusterNodeResponse> waitMessage()
-			throws Exception {
-
-			try {
-				return _messageExchanger.exchange(
-					null, 1000, TimeUnit.MILLISECONDS);
-			}
-			catch (TimeoutException te) {
-				return null;
-			}
-		}
-
-		private final Exchanger<BlockingQueue<ClusterNodeResponse>>
-			_messageExchanger = new Exchanger<>();
 
 	}
 

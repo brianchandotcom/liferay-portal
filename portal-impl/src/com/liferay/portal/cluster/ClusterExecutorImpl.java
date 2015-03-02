@@ -24,11 +24,9 @@ import com.liferay.portal.kernel.cluster.ClusterMessageType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
-import com.liferay.portal.kernel.cluster.ClusterResponseCallback;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.memory.FinalizeManager;
@@ -58,10 +56,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutorService;
 
 import org.jgroups.JChannel;
 
@@ -73,9 +69,6 @@ import org.jgroups.JChannel;
 public class ClusterExecutorImpl
 	extends ClusterBase
 	implements ClusterExecutor, PortalInetSocketAddressEventListener {
-
-	public static final String CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL =
-		"CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL";
 
 	@Override
 	public void addClusterEventListener(
@@ -93,9 +86,6 @@ public class ClusterExecutorImpl
 		if (!isEnabled()) {
 			return;
 		}
-
-		PortalExecutorManagerUtil.shutdown(
-			CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL, true);
 
 		_controlJChannel.setReceiver(null);
 
@@ -174,22 +164,6 @@ public class ClusterExecutorImpl
 	}
 
 	@Override
-	public FutureClusterResponses execute(
-		ClusterRequest clusterRequest,
-		ClusterResponseCallback clusterResponseCallback) {
-
-		FutureClusterResponses futureClusterResponses = execute(clusterRequest);
-
-		ClusterResponseCallbackJob clusterResponseCallbackJob =
-			new ClusterResponseCallbackJob(
-				clusterResponseCallback, futureClusterResponses);
-
-		_executorService.execute(clusterResponseCallbackJob);
-
-		return futureClusterResponses;
-	}
-
-	@Override
 	public List<ClusterEventListener> getClusterEventListeners() {
 		if (!isEnabled()) {
 			return Collections.emptyList();
@@ -221,9 +195,6 @@ public class ClusterExecutorImpl
 		if (!isEnabled()) {
 			return;
 		}
-
-		_executorService = PortalExecutorManagerUtil.getPortalExecutor(
-			CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL);
 
 		PortalUtil.addPortalInetSocketAddressEventListener(this);
 
@@ -531,36 +502,12 @@ public class ClusterExecutorImpl
 	private final Map<String, Address> _clusterNodeAddresses =
 		new ConcurrentHashMap<>();
 	private JChannel _controlJChannel;
-	private ExecutorService _executorService;
-	private Map<String, FutureClusterResponses> _futureClusterResponses =
+	private final Map<String, FutureClusterResponses> _futureClusterResponses =
 		new ConcurrentReferenceValueHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private final Map<Address, ClusterNode> _liveInstances =
 		new ConcurrentHashMap<>();
 	private Address _localAddress;
 	private ClusterNode _localClusterNode;
-
-	private class ClusterResponseCallbackJob implements Runnable {
-
-		public ClusterResponseCallbackJob(
-			ClusterResponseCallback clusterResponseCallback,
-			FutureClusterResponses futureClusterResponses) {
-
-			_clusterResponseCallback = clusterResponseCallback;
-			_futureClusterResponses = futureClusterResponses;
-		}
-
-		@Override
-		public void run() {
-			BlockingQueue<ClusterNodeResponse> blockingQueue =
-				_futureClusterResponses.getPartialResults();
-
-			_clusterResponseCallback.callback(blockingQueue);
-		}
-
-		private final ClusterResponseCallback _clusterResponseCallback;
-		private final FutureClusterResponses _futureClusterResponses;
-
-	}
 
 }

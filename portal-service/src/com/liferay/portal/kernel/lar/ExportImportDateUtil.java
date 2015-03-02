@@ -146,13 +146,15 @@ public class ExportImportDateUtil {
 		boolean privateLayout = MapUtil.getBoolean(
 			settingsMap, "privateLayout");
 		Locale locale = (Locale)settingsMap.get("locale");
+		long plid = MapUtil.getLong(settingsMap, "sourcePlid");
+		String portletId = (String)settingsMap.get("portletId");
 		TimeZone timeZone = (TimeZone)settingsMap.get("timezone");
 
 		return getDateRange(
 			range, rangeLast, startDateAmPm, startDateYear, startDateMonth,
 			startDateDay, startDateHour, startDateMinute, endDateAmPm,
 			endDateYear, endDateMonth, endDateDay, endDateHour, endDateMinute,
-			null, groupId, 0, privateLayout, locale, timeZone);
+			portletId, groupId, plid, privateLayout, locale, timeZone);
 	}
 
 	public static DateRange getDateRange(

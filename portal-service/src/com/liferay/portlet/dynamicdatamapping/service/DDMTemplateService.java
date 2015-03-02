@@ -55,8 +55,8 @@ public interface DDMTemplateService extends BaseService {
 	* @param classNameId the primary key of the class name for template's
 	related model
 	* @param classPK the primary key of the template's related entity
-	* @param sourceClassNameId the primary key of the class name for
-	template's source model
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param nameMap the template's locales and localized names
 	* @param descriptionMap the template's locales and localized descriptions
 	* @param type the template's type. For more information, see {@link
@@ -76,7 +76,7 @@ public interface DDMTemplateService extends BaseService {
 	template or if a portal exception occurred
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
-		long groupId, long classNameId, long classPK, long sourceClassNameId,
+		long groupId, long classNameId, long classPK, long resourceClassNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
@@ -91,8 +91,8 @@ public interface DDMTemplateService extends BaseService {
 	* @param classNameId the primary key of the class name for template's
 	related model
 	* @param classPK the primary key of the template's related entity
-	* @param sourceClassNameId the primary key of the class name for
-	template's source model
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param templateKey the unique string identifying the template
 	(optionally <code>null</code>)
 	* @param nameMap the template's locales and localized names
@@ -120,7 +120,7 @@ public interface DDMTemplateService extends BaseService {
 	template or if a portal exception occurred
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
-		long groupId, long classNameId, long classPK, long sourceClassNameId,
+		long groupId, long classNameId, long classPK, long resourceClassNameId,
 		java.lang.String templateKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -168,8 +168,8 @@ public interface DDMTemplateService extends BaseService {
 	* @param classNameId the primary key of the class name for template's
 	related model
 	* @param oldClassPK the primary key of the old template's related entity
-	* @param sourceClassNameId the primary key of the class name for
-	template's source model
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param newClassPK the primary key of the new template's related entity
 	* @param type the template's type. For more information, see {@link
 	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
@@ -182,7 +182,7 @@ public interface DDMTemplateService extends BaseService {
 	template or if a portal exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> copyTemplates(
-		long classNameId, long oldClassPK, long sourceClassNameId,
+		long classNameId, long oldClassPK, long resourceClassNameId,
 		long newClassPK, java.lang.String type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;

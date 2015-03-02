@@ -26,7 +26,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
-long sourceClassNameId = ParamUtil.getLong(request, "sourceClassNameId");
+long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 %>
 
 <aui:nav-bar>
@@ -52,7 +52,7 @@ long sourceClassNameId = ParamUtil.getLong(request, "sourceClassNameId");
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 						<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-						<portlet:param name="sourceClassNameId" value="<%= String.valueOf(sourceClassNameId) %>" />
+						<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
 						<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "getAvailableFields" %>' />
 					</portlet:renderURL>
 
@@ -73,7 +73,7 @@ long sourceClassNameId = ParamUtil.getLong(request, "sourceClassNameId");
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 						<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-						<portlet:param name="sourceClassNameId" value="<%= String.valueOf(sourceClassNameId) %>" />
+						<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
 						<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
 					</portlet:renderURL>
 
@@ -122,7 +122,7 @@ long sourceClassNameId = ParamUtil.getLong(request, "sourceClassNameId");
 						for (TemplateHandler templateHandler : templateHandlers) {
 							addPortletDisplayTemplateURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(templateHandler.getClassName())));
 							addPortletDisplayTemplateURL.setParameter("classPK", String.valueOf(0));
-							addPortletDisplayTemplateURL.setParameter("sourceClassNameId", String.valueOf(PortalUtil.getClassNameId(templateHandler.getClassName())));
+							addPortletDisplayTemplateURL.setParameter("resourceClassNameId", String.valueOf(PortalUtil.getClassNameId(templateHandler.getClassName())));
 						%>
 
 							<aui:nav-item

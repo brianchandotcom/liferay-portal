@@ -88,8 +88,8 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", sourceClassNameId=");
-		sb.append(sourceClassNameId);
+		sb.append(", resourceClassNameId=");
+		sb.append(resourceClassNameId);
 		sb.append(", templateKey=");
 		sb.append(templateKey);
 		sb.append(", version=");
@@ -158,7 +158,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 
 		ddmTemplateImpl.setClassNameId(classNameId);
 		ddmTemplateImpl.setClassPK(classPK);
-		ddmTemplateImpl.setSourceClassNameId(sourceClassNameId);
+		ddmTemplateImpl.setResourceClassNameId(resourceClassNameId);
 
 		if (templateKey == null) {
 			ddmTemplateImpl.setTemplateKey(StringPool.BLANK);
@@ -244,7 +244,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		modifiedDate = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
-		sourceClassNameId = objectInput.readLong();
+		resourceClassNameId = objectInput.readLong();
 		templateKey = objectInput.readUTF();
 		version = objectInput.readUTF();
 		name = objectInput.readUTF();
@@ -285,7 +285,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
-		objectOutput.writeLong(sourceClassNameId);
+		objectOutput.writeLong(resourceClassNameId);
 
 		if (templateKey == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -365,7 +365,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-	public long sourceClassNameId;
+	public long resourceClassNameId;
 	public String templateKey;
 	public String version;
 	public String name;

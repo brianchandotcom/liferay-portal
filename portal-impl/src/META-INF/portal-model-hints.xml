@@ -1814,7 +1814,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="sourceClassNameId" type="long" />
+		<field name="resourceClassNameId" type="long" />
 		<field name="templateKey" type="String">
 			<hint name="upper-case">true</hint>
 			<hint name="auto-escape">false</hint>

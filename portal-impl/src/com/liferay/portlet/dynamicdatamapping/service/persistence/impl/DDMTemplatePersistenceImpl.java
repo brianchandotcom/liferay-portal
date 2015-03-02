@@ -12111,7 +12111,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		ddmTemplateImpl.setModifiedDate(ddmTemplate.getModifiedDate());
 		ddmTemplateImpl.setClassNameId(ddmTemplate.getClassNameId());
 		ddmTemplateImpl.setClassPK(ddmTemplate.getClassPK());
-		ddmTemplateImpl.setSourceClassNameId(ddmTemplate.getSourceClassNameId());
+		ddmTemplateImpl.setResourceClassNameId(ddmTemplate.getResourceClassNameId());
 		ddmTemplateImpl.setTemplateKey(ddmTemplate.getTemplateKey());
 		ddmTemplateImpl.setVersion(ddmTemplate.getVersion());
 		ddmTemplateImpl.setName(ddmTemplate.getName());

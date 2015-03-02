@@ -2588,7 +2588,7 @@ public class DataFactory {
 		ddmTemplateModel.setClassNameId(
 			_classNameModelsMap.get(DDMStructure.class.getName()));
 		ddmTemplateModel.setClassPK(structureId);
-		ddmTemplateModel.setSourceClassNameId(structureId);
+		ddmTemplateModel.setResourceClassNameId(structureId);
 		ddmTemplateModel.setTemplateKey(String.valueOf(_counter.get()));
 		ddmTemplateModel.setVersion(DDMTemplateConstants.VERSION_DEFAULT);
 

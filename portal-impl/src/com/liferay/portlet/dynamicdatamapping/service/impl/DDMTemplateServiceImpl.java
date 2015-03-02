@@ -52,8 +52,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  classNameId the primary key of the class name for template's
 	 *         related model
 	 * @param  classPK the primary key of the template's related entity
-	 * @param  sourceClassNameId the primary key of the class name for
-	 *         template's source model
+	 * @param  resourceClassNameId the primary key of the class name for
+	 *         template's resource model
 	 * @param  nameMap the template's locales and localized names
 	 * @param  descriptionMap the template's locales and localized descriptions
 	 * @param  type the template's type. For more information, see {@link
@@ -75,22 +75,22 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	@Override
 	public DDMTemplate addTemplate(
 			long groupId, long classNameId, long classPK,
-			long sourceClassNameId, Map<Locale, String> nameMap,
+			long resourceClassNameId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type, String mode,
 			String language, String script, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(sourceClassNameId);
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(resourceClassNameId);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmDisplay.getResourceName(sourceClassNameId),
+			ddmDisplay.getResourceName(resourceClassNameId),
 			ddmDisplay.getAddTemplateActionId());
 
 		return ddmTemplateLocalService.addTemplate(
-			getUserId(), groupId, classNameId, classPK, sourceClassNameId, null,
-			nameMap, descriptionMap, type, mode, language, script, false, false,
-			null, null, serviceContext);
+			getUserId(), groupId, classNameId, classPK, resourceClassNameId,
+			null, nameMap, descriptionMap, type, mode, language, script, false,
+			false, null, null, serviceContext);
 	}
 
 	/**
@@ -100,8 +100,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  classNameId the primary key of the class name for template's
 	 *         related model
 	 * @param  classPK the primary key of the template's related entity
-	 * @param  sourceClassNameId the primary key of the class name for
-	 *         template's source model
+	 * @param  resourceClassNameId the primary key of the class name for
+	 *         template's resource model
 	 * @param  templateKey the unique string identifying the template
 	 *         (optionally <code>null</code>)
 	 * @param  nameMap the template's locales and localized names
@@ -131,22 +131,22 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	@Override
 	public DDMTemplate addTemplate(
 			long groupId, long classNameId, long classPK,
-			long sourceClassNameId, String templateKey,
+			long resourceClassNameId, String templateKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String type, String mode, String language, String script,
 			boolean cacheable, boolean smallImage, String smallImageURL,
 			File smallImageFile, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(sourceClassNameId);
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(resourceClassNameId);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmDisplay.getResourceName(sourceClassNameId),
+			ddmDisplay.getResourceName(resourceClassNameId),
 			ddmDisplay.getAddTemplateActionId());
 
 		return ddmTemplateLocalService.addTemplate(
-			getUserId(), groupId, classNameId, classPK, sourceClassNameId,
+			getUserId(), groupId, classNameId, classPK, resourceClassNameId,
 			templateKey, nameMap, descriptionMap, type, mode, language, script,
 			cacheable, smallImage, smallImageURL, smallImageFile,
 			serviceContext);
@@ -179,11 +179,11 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			templateId);
 
 		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(
-			template.getSourceClassNameId());
+			template.getResourceClassNameId());
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmDisplay.getResourceName(template.getSourceClassNameId()),
+			ddmDisplay.getResourceName(template.getResourceClassNameId()),
 			ddmDisplay.getAddTemplateActionId());
 
 		return ddmTemplateLocalService.copyTemplate(
@@ -199,11 +199,11 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			templateId);
 
 		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(
-			template.getSourceClassNameId());
+			template.getResourceClassNameId());
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmDisplay.getResourceName(template.getSourceClassNameId()),
+			ddmDisplay.getResourceName(template.getResourceClassNameId()),
 			ddmDisplay.getAddTemplateActionId());
 
 		return ddmTemplateLocalService.copyTemplate(
@@ -218,8 +218,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  classNameId the primary key of the class name for template's
 	 *         related model
 	 * @param  oldClassPK the primary key of the old template's related entity
-	 * @param  sourceClassNameId the primary key of the class name for
-	 *         template's source model
+	 * @param  resourceClassNameId the primary key of the class name for
+	 *         template's resource model
 	 * @param  newClassPK the primary key of the new template's related entity
 	 * @param  type the template's type. For more information, see {@link
 	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
@@ -233,15 +233,15 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public List<DDMTemplate> copyTemplates(
-			long classNameId, long oldClassPK, long sourceClassNameId,
+			long classNameId, long oldClassPK, long resourceClassNameId,
 			long newClassPK, String type, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(sourceClassNameId);
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(resourceClassNameId);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmDisplay.getResourceName(sourceClassNameId),
+			ddmDisplay.getResourceName(resourceClassNameId),
 			ddmDisplay.getAddTemplateActionId());
 
 		return ddmTemplateLocalService.copyTemplates(

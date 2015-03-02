@@ -524,7 +524,7 @@ create table DDMTemplate (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	sourceClassNameId LONG,
+	resourceClassNameId LONG,
 	templateKey VARCHAR(75) null,
 	version VARCHAR(75) null,
 	name STRING null,

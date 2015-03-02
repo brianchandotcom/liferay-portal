@@ -256,18 +256,18 @@ public interface DDMTemplateModel extends AttachedModel, BaseModel<DDMTemplate>,
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the source class name ID of this d d m template.
+	 * Returns the resource class name ID of this d d m template.
 	 *
-	 * @return the source class name ID of this d d m template
+	 * @return the resource class name ID of this d d m template
 	 */
-	public long getSourceClassNameId();
+	public long getResourceClassNameId();
 
 	/**
-	 * Sets the source class name ID of this d d m template.
+	 * Sets the resource class name ID of this d d m template.
 	 *
-	 * @param sourceClassNameId the source class name ID of this d d m template
+	 * @param resourceClassNameId the resource class name ID of this d d m template
 	 */
-	public void setSourceClassNameId(long sourceClassNameId);
+	public void setResourceClassNameId(long resourceClassNameId);
 
 	/**
 	 * Returns the template key of this d d m template.

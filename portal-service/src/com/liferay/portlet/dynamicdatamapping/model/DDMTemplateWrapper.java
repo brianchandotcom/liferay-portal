@@ -64,7 +64,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("sourceClassNameId", getSourceClassNameId());
+		attributes.put("resourceClassNameId", getResourceClassNameId());
 		attributes.put("templateKey", getTemplateKey());
 		attributes.put("version", getVersion());
 		attributes.put("name", getName());
@@ -143,10 +143,10 @@ public class DDMTemplateWrapper implements DDMTemplate,
 			setClassPK(classPK);
 		}
 
-		Long sourceClassNameId = (Long)attributes.get("sourceClassNameId");
+		Long resourceClassNameId = (Long)attributes.get("resourceClassNameId");
 
-		if (sourceClassNameId != null) {
-			setSourceClassNameId(sourceClassNameId);
+		if (resourceClassNameId != null) {
+			setResourceClassNameId(resourceClassNameId);
 		}
 
 		String templateKey = (String)attributes.get("templateKey");
@@ -519,6 +519,16 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
+	* Returns the resource class name ID of this d d m template.
+	*
+	* @return the resource class name ID of this d d m template
+	*/
+	@Override
+	public long getResourceClassNameId() {
+		return _ddmTemplate.getResourceClassNameId();
+	}
+
+	/**
 	* Returns the script of this d d m template.
 	*
 	* @return the script of this d d m template
@@ -562,16 +572,6 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	@Override
 	public java.lang.String getSmallImageURL() {
 		return _ddmTemplate.getSmallImageURL();
-	}
-
-	/**
-	* Returns the source class name ID of this d d m template.
-	*
-	* @return the source class name ID of this d d m template
-	*/
-	@Override
-	public long getSourceClassNameId() {
-		return _ddmTemplate.getSourceClassNameId();
 	}
 
 	/**
@@ -1000,6 +1000,16 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
+	* Sets the resource class name ID of this d d m template.
+	*
+	* @param resourceClassNameId the resource class name ID of this d d m template
+	*/
+	@Override
+	public void setResourceClassNameId(long resourceClassNameId) {
+		_ddmTemplate.setResourceClassNameId(resourceClassNameId);
+	}
+
+	/**
 	* Sets the script of this d d m template.
 	*
 	* @param script the script of this d d m template
@@ -1042,16 +1052,6 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	@Override
 	public void setSmallImageURL(java.lang.String smallImageURL) {
 		_ddmTemplate.setSmallImageURL(smallImageURL);
-	}
-
-	/**
-	* Sets the source class name ID of this d d m template.
-	*
-	* @param sourceClassNameId the source class name ID of this d d m template
-	*/
-	@Override
-	public void setSourceClassNameId(long sourceClassNameId) {
-		_ddmTemplate.setSourceClassNameId(sourceClassNameId);
 	}
 
 	/**

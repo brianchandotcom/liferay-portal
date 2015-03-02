@@ -60,6 +60,16 @@
 			<xs:element name="template" type="xs:string" />
 			<xs:element name="template-language" type="template-language-type" />
 			<xs:element name="notification-type" type="notification-transport-type" maxOccurs="unbounded" />
+			<xs:element name="bcc-recipients" minOccurs="0">
+				<xs:complexType>
+					<xs:group ref="recipients-group" />
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="cc-recipients" minOccurs="0">
+				<xs:complexType>
+					<xs:group ref="recipients-group" />
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="recipients" minOccurs="0">
 				<xs:complexType>
 					<xs:group ref="recipients-group" />

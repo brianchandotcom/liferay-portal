@@ -67,6 +67,12 @@
 		<xs:complexContent>
 			<xs:extension base="abstract-notification-complex-type">
 				<xs:sequence>
+					<xs:element name="bcc-recipients" type="recipients-complex-type" minOccurs="0" />
+				</xs:sequence>
+				<xs:sequence>
+					<xs:element name="cc-recipients" type="recipients-complex-type" minOccurs="0" />
+				</xs:sequence>
+				<xs:sequence>
 					<xs:element name="recipients" type="recipients-complex-type" minOccurs="0" />
 				</xs:sequence>
 			</xs:extension>

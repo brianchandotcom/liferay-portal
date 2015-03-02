@@ -40,9 +40,7 @@ public final class PoshiRunnerStackTraceUtil {
 		return _stackTrace.pop();
 	}
 
-	public static void pushFilePath(
-		String className, String classType, String lineNumber) {
-
+	public static void pushFilePath(String className, String classType) {
 		if (className.contains("#")) {
 			className = PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 				className);

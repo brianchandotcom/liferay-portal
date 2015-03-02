@@ -218,7 +218,7 @@
 	</command>
 
 	<command name="RecycleBinEntriesMaxAge" priority="4">
-		<property name="custom.properties" value="trash.entries.max.age=86400$${line.separator}company.settings.form.configuration=general,authentication,users,mail-host-names,email-notifications,content-sharing,recycle-bin" />
+		<property name="custom.properties" value="trash.entries.max.age=86400${line.separator}company.settings.form.configuration=general,authentication,users,mail-host-names,email-notifications,content-sharing,recycle-bin" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />
@@ -473,7 +473,7 @@
 	</command>
 
 	<command name="RecycleBinScheduledCleanup" priority="3">
-		<property name="custom.properties" value="trash.entry.check.interval=1$${line.separator}trash.entries.max.age=1" />
+		<property name="custom.properties" value="trash.entry.check.interval=1${line.separator}trash.entries.max.age=1" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />

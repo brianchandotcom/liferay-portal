@@ -72,7 +72,7 @@
 	</command>
 
 	<command name="UserGroupPrivatePageInheritance" priority="5">
-		<property name="custom.properties" value="layout.user.private.layouts.auto.create=false$${line.separator}user.groups.copy.layouts.to.user.personal.site=true" />
+		<property name="custom.properties" value="layout.user.private.layouts.auto.create=false${line.separator}user.groups.copy.layouts.to.user.personal.site=true" />
 
 		<var name="sitePageName" value="Test User Group Page 1" />
 		<var name="userEmailAddress" value="userea@liferay.com" />

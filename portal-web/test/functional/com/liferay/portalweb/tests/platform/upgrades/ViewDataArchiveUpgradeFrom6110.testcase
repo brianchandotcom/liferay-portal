@@ -1,5 +1,5 @@
 <definition component-name="portal-upgrades" extends="BaseViewDataArchiveUpgrade">
-	<property name="custom.properties" value="dl.store.impl=com.liferay.portlet.documentlibrary.store.DBStore$${line.separator}session.tracker.persistence.enabled=true$${line.separator}live.users.enabled=true" />
+	<property name="custom.properties" value="dl.store.impl=com.liferay.portlet.documentlibrary.store.DBStore${line.separator}session.tracker.persistence.enabled=true${line.separator}live.users.enabled=true" />
 	<property name="data.archive.type" value="data-archive-portal" />
 	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
 	<property name="portal.version" value="6.1.10" />

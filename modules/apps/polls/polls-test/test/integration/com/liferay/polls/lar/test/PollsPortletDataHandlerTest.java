@@ -14,7 +14,7 @@
 
 package com.liferay.polls.lar.test;
 
-import com.liferay.arquillian.bridge.junit.Arquillian;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.polls.lar.PollsPortletDataHandler;
 import com.liferay.polls.model.PollsChoice;
@@ -23,7 +23,6 @@ import com.liferay.polls.util.test.PollsTestUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 

@@ -20,7 +20,7 @@
 		<bnd eclipse="false" exceptions="true" failok="false" inherit="true" output="tmp/system.packages.extra.jar">
 			<bndfiles>
 				<fileset dir="${basedir}">
-					<include name="system.packages.extra.bnd"/>
+					<include name="system.packages.extra.bnd" />
 				</fileset>
 			</bndfiles>
 			<classpath>

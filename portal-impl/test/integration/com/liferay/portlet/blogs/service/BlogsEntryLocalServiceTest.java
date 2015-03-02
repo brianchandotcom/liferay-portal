@@ -517,8 +517,8 @@ public class BlogsEntryLocalServiceTest {
 			userId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), displayCalendar.getTime(), true,
-			true, new String[0], coverImageSelector, smallImageSelector,
-			serviceContext);
+			true, new String[0], coverImageSelector, StringPool.BLANK,
+			smallImageSelector, serviceContext);
 
 		return entry;
 	}

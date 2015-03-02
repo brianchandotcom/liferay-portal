@@ -453,6 +453,46 @@ int messagesCount = messages.size();
 			}
 		</aui:script>
 
+		<aui:script sandbox="<%= true %>">
+			var moreCommentsLink = $('#<%= namespace %>moreComments');
+
+			if (moreCommentsLink) {
+				moreCommentsLink.on(
+					'click',
+					function(event) {
+						var index = $('#<%= namespace %>index');
+						var rootIndexPage = $('#<%= namespace %>rootIndexPage');
+
+						$.ajax(
+							'<%= paginationURL %>',
+							{
+								data: {
+									'<portlet:namespace />className': '<%= className %>',
+									'<portlet:namespace />classPK': <%= classPK %>,
+									'<portlet:namespace />hideControls': '<%= hideControls %>',
+									'<portlet:namespace />index': index.val(),
+									'<portlet:namespace />permissionClassName': '<%= permissionClassName %>',
+									'<portlet:namespace />permissionClassPK': '<%= permissionClassPK %>',
+									'<portlet:namespace />randomNamespace': '<%= randomNamespace %>',
+									'<portlet:namespace />ratingsEnabled': '<%= ratingsEnabled %>',
+									'<portlet:namespace />rootIndexPage': rootIndexPage.val(),
+									'<portlet:namespace />userId': '<%= userId %>'
+								},
+								error: function() {
+									<portlet:namespace />showStatusMessage('danger', '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
+								},
+								success: function(data) {
+									var moreCommentsPage = $('#<%= namespace %>moreCommentsPage');
+
+									moreCommentsPage.append(data);
+								}
+							}
+						);
+					}
+				);
+			}
+		</aui:script>
+
 		<aui:script use="aui-popover,event-outside">
 			var discussionContainer = A.one('#<portlet:namespace />discussionContainer');
 

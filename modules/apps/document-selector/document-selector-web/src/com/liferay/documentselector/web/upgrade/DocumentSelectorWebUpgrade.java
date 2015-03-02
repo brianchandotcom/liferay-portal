@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jose A. Jimenez
  */
-@Component(
-	immediate = true, service = DocumentSelectorWebUpgrade.class
-)
+@Component(immediate = true, service = DocumentSelectorWebUpgrade.class)
 public class DocumentSelectorWebUpgrade {
 
 	@Reference(unbind = "-")

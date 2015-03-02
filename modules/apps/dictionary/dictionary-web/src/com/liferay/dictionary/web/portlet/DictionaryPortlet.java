@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.remoteable=true",
 		"com.liferay.portlet.render-weight=50",
-		"com.liferay.portlet.struts-path=dictionary",
 		"javax.portlet.display-name=Dictionary",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",

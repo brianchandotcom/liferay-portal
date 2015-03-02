@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.remoteable=true",
 		"com.liferay.portlet.render-weight=50",
-		"com.liferay.portlet.struts-path=loan_calculator",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Loan Calculator",
 		"javax.portlet.expiration-cache=0",

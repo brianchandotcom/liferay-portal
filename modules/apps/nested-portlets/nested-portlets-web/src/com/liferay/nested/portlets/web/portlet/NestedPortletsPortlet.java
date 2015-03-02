@@ -73,7 +73,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=1",
 		"com.liferay.portlet.single-page-application=false",
-		"com.liferay.portlet.struts-path=nested_portlets",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Nested Portlets",
 		"javax.portlet.expiration-cache=0",

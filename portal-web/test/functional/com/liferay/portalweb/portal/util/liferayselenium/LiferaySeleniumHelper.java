@@ -1019,6 +1019,15 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
+		// LRQA-13902
+
+		if (line.contains(
+				"Filter mapping with filter name Related Assets " +
+					"Render Parameters Portlet Filter")) {
+
+			return true;
+		}
+
 		// WCM-202
 
 		if (line.contains("No score point assigners available")) {

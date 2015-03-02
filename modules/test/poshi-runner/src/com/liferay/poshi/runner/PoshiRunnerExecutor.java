@@ -161,7 +161,8 @@ public class PoshiRunnerExecutor {
 				if (message != null) {
 					throw new PoshiRunnerException(
 						"BUILD FAILED: " +
-						PoshiRunnerVariablesUtil.replaceCommandVars(message));
+							PoshiRunnerVariablesUtil.replaceCommandVars(
+								message));
 				}
 
 				throw new PoshiRunnerException();

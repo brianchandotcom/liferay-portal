@@ -34,6 +34,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
@@ -65,7 +66,69 @@ public class CommentsSubscriptionTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_contextUser = UserTestUtil.addGroupUser(
+			_group, RoleConstants.SITE_MEMBER);
+
 		_user = UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER);
+	}
+
+	@Test
+	public void testSubscriptionMBDiscussionForAuthorWhenAddingMBMessage()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, _contextUser.getUserId());
+
+		BlogsTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
+
+		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+			_contextUser.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		MBDiscussionLocalServiceUtil.subscribeDiscussion(
+			_contextUser.getUserId(), _group.getGroupId(),
+			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+
+		addDiscussionMessage(
+			_contextUser.getUserId(), serviceContext, blogsEntry);
+
+		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
+	}
+
+	@Test
+	public void testSubscriptionMBDiscussionForAuthorWhenUpdatingMBMessage()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, _contextUser.getUserId());
+
+		BlogsTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
+
+		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+			_contextUser.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		MBMessage mbMessage = addDiscussionMessage(
+			_contextUser.getUserId(), serviceContext, blogsEntry);
+
+		MBDiscussionLocalServiceUtil.subscribeDiscussion(
+			_contextUser.getUserId(), _group.getGroupId(),
+			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+
+		MBTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.UPDATE);
+
+		MBMessageLocalServiceUtil.updateDiscussionMessage(
+			_contextUser.getUserId(), mbMessage.getMessageId(),
+			BlogsEntry.class.getName(), blogsEntry.getEntryId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(50),
+			serviceContext);
+
+		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
 	}
 
 	@Test
@@ -74,20 +137,21 @@ public class CommentsSubscriptionTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group.getGroupId(), _contextUser.getUserId());
 
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			_contextUser.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
 		MBDiscussionLocalServiceUtil.subscribeDiscussion(
-			_user.getUserId(), _group.getGroupId(), BlogsEntry.class.getName(),
-			blogsEntry.getEntryId());
+			_contextUser.getUserId(), _group.getGroupId(),
+			BlogsEntry.class.getName(), blogsEntry.getEntryId());
 
 		MBTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.ADD);
 
-		addDiscussionMessage(serviceContext, blogsEntry);
+		addDiscussionMessage(
+			TestPropsValues.getUserId(), serviceContext, blogsEntry);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
@@ -98,16 +162,17 @@ public class CommentsSubscriptionTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group.getGroupId(), _contextUser.getUserId());
 
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			_contextUser.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
 		MBTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.ADD);
 
-		MBMessage message = addDiscussionMessage(serviceContext, blogsEntry);
+		MBMessage message = addDiscussionMessage(
+			TestPropsValues.getUserId(), serviceContext, blogsEntry);
 
 		MBDiscussionLocalServiceUtil.subscribeDiscussion(
 			_user.getUserId(), _group.getGroupId(), BlogsEntry.class.getName(),
@@ -117,7 +182,7 @@ public class CommentsSubscriptionTest {
 			serviceContext, Constants.UPDATE);
 
 		MBMessageLocalServiceUtil.updateDiscussionMessage(
-			TestPropsValues.getUserId(), message.getMessageId(),
+			_contextUser.getUserId(), message.getMessageId(),
 			BlogsEntry.class.getName(), blogsEntry.getEntryId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(50),
 			serviceContext);
@@ -126,7 +191,7 @@ public class CommentsSubscriptionTest {
 	}
 
 	protected MBMessage addDiscussionMessage(
-			ServiceContext serviceContext, BlogsEntry entry)
+			long userId, ServiceContext serviceContext, BlogsEntry entry)
 		throws Exception {
 
 		MBMessageDisplay messageDisplay =
@@ -141,16 +206,20 @@ public class CommentsSubscriptionTest {
 			serviceContext, Constants.ADD);
 
 		return MBMessageLocalServiceUtil.addDiscussionMessage(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			_group.getGroupId(), BlogsEntry.class.getName(), entry.getEntryId(),
+			userId, RandomTestUtil.randomString(), _group.getGroupId(),
+			BlogsEntry.class.getName(), entry.getEntryId(),
 			thread.getThreadId(), MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 	}
 
 	@DeleteAfterTestRun
+	private User _contextUser;
+
+	@DeleteAfterTestRun
 	private Group _group;
 
+	@DeleteAfterTestRun
 	private User _user;
 
 }

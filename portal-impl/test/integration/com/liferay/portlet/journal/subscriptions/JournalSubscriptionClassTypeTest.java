@@ -120,11 +120,13 @@ public class JournalSubscriptionClassTypeTest
 	}
 
 	@Override
-	protected void updateBaseModel(long baseModelId) throws Exception {
+	protected void updateBaseModel(long userId, long baseModelId)
+		throws Exception {
+
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.getLatestArticle(baseModelId);
 
-		JournalTestUtil.updateArticleWithWorkflow(article, true);
+		JournalTestUtil.updateArticleWithWorkflow(userId, article, true);
 	}
 
 }

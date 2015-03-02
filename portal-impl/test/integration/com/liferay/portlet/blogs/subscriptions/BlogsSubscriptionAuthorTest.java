@@ -26,20 +26,17 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionRootContainerModelTestCase;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
 
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
 
 /**
- * @author Sergio González
- * @author Roberto Díaz
+ * @author José Ángel Jiménez
  */
 @Sync
-public class BlogsSubscriptionRootContainerModelTest
-	extends BaseSubscriptionRootContainerModelTestCase {
+public class BlogsSubscriptionAuthorTest
+	extends BaseSubscriptionAuthorTestCase {
 
 	@ClassRule
 	@Rule
@@ -47,30 +44,6 @@ public class BlogsSubscriptionRootContainerModelTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousMailTestRule.INSTANCE);
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionRootContainerModelWhenAddingBaseModelInContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionRootContainerModelWhenAddingBaseModelInSubcontainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionRootContainerModelWhenUpdatingBaseModelInContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionRootContainerModelWhenUpdatingBaseModelInSubcontainerModel() {
-	}
 
 	@Override
 	protected long addBaseModel(long userId, long containerModelId)
@@ -91,15 +64,16 @@ public class BlogsSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscription(long userId, long containerModelId)
 		throws Exception {
 
-		BlogsEntryLocalServiceUtil.subscribe(
-			user.getUserId(), group.getGroupId());
+		BlogsEntryLocalServiceUtil.subscribe(userId, group.getGroupId());
 	}
 
 	@Override
-	protected void updateBaseModel(long userId, long baseModelId) throws Exception {
+	protected void updateBaseModel(long userId, long baseModelId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), userId);

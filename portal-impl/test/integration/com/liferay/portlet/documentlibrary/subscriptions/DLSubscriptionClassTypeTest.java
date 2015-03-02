@@ -31,7 +31,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -122,18 +121,21 @@ public class DLSubscriptionClassTypeTest
 	}
 
 	@Override
-	protected void updateBaseModel(long baseModelId) throws Exception {
+	protected void updateBaseModel(long userId, long baseModelId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
+				group.getGroupId(), userId);
 
 		DLAppTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.UPDATE);
 
-		DLAppServiceUtil.updateFileEntry(
-			baseModelId, RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			false, RandomTestUtil.randomBytes(), serviceContext);
+		DLAppLocalServiceUtil.updateFileEntry(
+			userId, baseModelId, RandomTestUtil.randomString(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, false,
+			RandomTestUtil.randomBytes(), serviceContext);
 	}
 
 }

@@ -14,8 +14,6 @@
 
 package com.liferay.poshi.runner;
 
-import java.util.Stack;
-
 /**
  * @author Karen Dang
  * @author Michael Hashimoto
@@ -32,14 +30,14 @@ public class PoshiRunnerException extends Exception {
 	}
 
 	public PoshiRunnerException(String msg, Throwable cause) {
-		super(_getStackTraceAsString(msg), cause);
+		super(_getExceptionMessage(msg), cause);
 	}
 
 	public PoshiRunnerException(Throwable cause) {
 		this(null, cause);
 	}
 
-	private static String _getStackTraceAsString(String msg) {
+	private static String _getExceptionMessage(String msg) {
 		StringBuilder sb = new StringBuilder();
 
 		if (msg == null) {
@@ -52,11 +50,7 @@ public class PoshiRunnerException extends Exception {
 
 		sb.append("\n");
 
-		Stack<String> stack = PoshiRunnerStackTraceUtil.getStackTrace();
-
-		while (!stack.isEmpty()) {
-			sb.append(PoshiRunnerStackTraceUtil.popStackTrace());
-		}
+		sb.append(PoshiRunnerStackTraceUtil.getStackTrace());
 
 		return sb.toString();
 	}

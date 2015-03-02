@@ -22,8 +22,14 @@ import java.util.Stack;
  */
 public final class PoshiRunnerStackTraceUtil {
 
-	public static Stack<String> getStackTrace() {
-		return _stackTrace;
+	public static String getStackTrace() {
+		StringBuilder sb = new StringBuilder();
+
+		while (!_stackTrace.isEmpty()) {
+			sb.append(_stackTrace.pop());
+		}
+
+		return sb.toString();
 	}
 
 	public static String popFilePath() {

@@ -18,15 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridg
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
-import java.util.jar.Manifest;
-
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.TestRunner;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.junit.container.JUnitTestRunner;
+import org.jboss.arquillian.junit.event.BeforeRules;
 import org.jboss.osgi.metadata.OSGiManifestBuilder;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -49,45 +45,28 @@ public class JUnitBridgeAuxiliaryArchiveAppender
 		javaArchive.addAsServiceProviderAndClasses(
 			RemoteLoadableExtension.class,
 			LiferayArquillianJUnitBridgeExtension.class);
-		javaArchive.addClass(JUnitBridgeObserver.class);
-		javaArchive.addClass(Arquillian.class);
-
-		javaArchive.addPackage("org.jboss.arquillian.junit.event");
-
-		javaArchive.addPackage(
-			org.jboss.arquillian.junit.Arquillian.class.getPackage().getName());
-
-		javaArchive.addClass(TestRunner.class);
-		javaArchive.addClass(JUnitTestRunner.class);
-
-		javaArchive.addAsServiceProvider(
+		javaArchive.addAsServiceProviderAndClasses(
 			TestRunner.class, JUnitTestRunner.class);
+		javaArchive.addClasses(Arquillian.class, JUnitBridgeObserver.class);
+		javaArchive.addPackages(
+			false, BeforeRules.class.getPackage(),
+			org.jboss.arquillian.junit.Arquillian.class.getPackage());
 
-		final OSGiManifestBuilder builder = OSGiManifestBuilder.newInstance();
+		OSGiManifestBuilder osgiManifestBuilder =
+			OSGiManifestBuilder.newInstance();
 
-		builder.addImportPackages(
+		osgiManifestBuilder.addBundleManifestVersion(1);
+
+		osgiManifestBuilder.addImportPackages(
 			"org.junit.internal", "org.junit.internal.runners",
 			"org.junit.internal.runners.statements",
 			"org.junit.internal.runners.model", "org.junit.runners",
 			"org.junit.runners.model", "org.junit.runner.notification"
 		);
 
-		builder.addBundleManifestVersion(1);
-
-		Manifest manifest = builder.getManifest();
-
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-		try {
-			manifest.write(baos);
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		ByteArrayAsset byteArrayAsset = new ByteArrayAsset(baos.toByteArray());
-
-		javaArchive.add(byteArrayAsset, "/META-INF/MANIFEST.MF");
+		javaArchive.add(
+			new ByteArrayAsset(osgiManifestBuilder.openStream()),
+			"/META-INF/MANIFEST.MF");
 
 		return javaArchive;
 	}

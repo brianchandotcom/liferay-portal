@@ -17,6 +17,6 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="aQute.bnd" org="com.liferay" rev="2.3.0" />
+		<dependency name="biz.aQute.bnd" org="biz.aQute.bnd" rev="2.4.1" />
 	</dependencies>
 </ivy-module>

@@ -11,4 +11,4 @@ Import-Package:\
 	com.liferay.registry.util;version=${@}
 Include-Resource:\
 	classes,\
-	@lib/aQute.bnd.jar!/aQute/lib/filter/Filter.class
+	@lib/biz.aQute.bnd.jar!/aQute/lib/filter/*

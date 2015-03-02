@@ -82,6 +82,7 @@
 					</xs:choice>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="scripted-recipient" type="script-complex-type" minOccurs="0" maxOccurs="unbounded" />
 			<xs:element name="user" type="user-complex-type" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
@@ -95,6 +96,13 @@
 					<xs:element name="auto-create" type="xs:boolean" minOccurs="0" default="true" />
 				</xs:sequence>
 			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="script-complex-type">
+		<xs:sequence>
+			<xs:element name="script" type="xs:string" />
+			<xs:element name="script-language" type="script-language-type" />
+			<xs:element name="script-required-contexts" type="xs:string" minOccurs="0" />
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="task-notification-complex-type">
@@ -319,15 +327,7 @@
 					</xs:choice>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="scripted-assignment">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="script" type="xs:string" />
-						<xs:element name="script-language" type="script-language-type" />
-						<xs:element name="script-required-contexts" type="xs:string" minOccurs="0" />
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+			<xs:element name="scripted-assignment" type="script-complex-type" />
 			<xs:element name="user" type="user-complex-type" />
 		</xs:choice>
 	</xs:group>

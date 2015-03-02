@@ -1405,6 +1405,7 @@
 		</field>
 		<field name="coverImageFileEntryId" type="long" />
 		<field name="coverImageURL" type="String" />
+		<field name="coverImageCaption" type="String" />
 		<field name="smallImage" type="boolean" />
 		<field name="smallImageFileEntryId" type="long" />
 		<field name="smallImageId" type="long" />

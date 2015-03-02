@@ -236,6 +236,7 @@ create table BlogsEntry (
 	trackbacks TEXT null,
 	coverImageFileEntryId LONG,
 	coverImageURL VARCHAR(75) null,
+	coverImageCaption VARCHAR(75) null,
 	smallImage BOOLEAN,
 	smallImageFileEntryId LONG,
 	smallImageId LONG,

@@ -66,7 +66,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -106,6 +106,8 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		sb.append(coverImageFileEntryId);
 		sb.append(", coverImageURL=");
 		sb.append(coverImageURL);
+		sb.append(", coverImageCaption=");
+		sb.append(coverImageCaption);
 		sb.append(", smallImage=");
 		sb.append(smallImage);
 		sb.append(", smallImageFileEntryId=");
@@ -225,6 +227,13 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 			blogsEntryImpl.setCoverImageURL(coverImageURL);
 		}
 
+		if (coverImageCaption == null) {
+			blogsEntryImpl.setCoverImageCaption(StringPool.BLANK);
+		}
+		else {
+			blogsEntryImpl.setCoverImageCaption(coverImageCaption);
+		}
+
 		blogsEntryImpl.setSmallImage(smallImage);
 		blogsEntryImpl.setSmallImageFileEntryId(smallImageFileEntryId);
 		blogsEntryImpl.setSmallImageId(smallImageId);
@@ -279,6 +288,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		trackbacks = objectInput.readUTF();
 		coverImageFileEntryId = objectInput.readLong();
 		coverImageURL = objectInput.readUTF();
+		coverImageCaption = objectInput.readUTF();
 		smallImage = objectInput.readBoolean();
 		smallImageFileEntryId = objectInput.readLong();
 		smallImageId = objectInput.readLong();
@@ -369,6 +379,13 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 			objectOutput.writeUTF(coverImageURL);
 		}
 
+		if (coverImageCaption == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(coverImageCaption);
+		}
+
 		objectOutput.writeBoolean(smallImage);
 		objectOutput.writeLong(smallImageFileEntryId);
 		objectOutput.writeLong(smallImageId);
@@ -412,6 +429,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 	public String trackbacks;
 	public long coverImageFileEntryId;
 	public String coverImageURL;
+	public String coverImageCaption;
 	public boolean smallImage;
 	public long smallImageFileEntryId;
 	public long smallImageId;

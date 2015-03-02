@@ -8,6 +8,8 @@ Export-Package:\
 	!FTL_liferay.ftl,\
 	!VM_global_library.vm,\
 	!VM_liferay.vm,\
+	!aQute.bnd.osgi.eclipse,\
+	!aQute.bnd.osgi.resource,\
 	!aQute.lib.filter,\
 	!com.liferay.portal.asm,\
 	!com.liferay.portal.aspectj,\
@@ -191,6 +193,9 @@ Include-Resource:\
 	@../../../lib/portal/ant.jar,\
 	@../../../lib/portal/asm-debug-all.jar,\
 	@../../../lib/portal/aopalliance.jar,\
+	@../../../lib/portal/bnd.jar!/aQute/bnd/header/*,\
+	@../../../lib/portal/bnd.jar!/aQute/bnd/osgi/*,\
+	@../../../lib/portal/bnd.jar!/aQute/bnd/version/*,\
 	@../../../lib/portal/commons-beanutils.jar,\
 	@../../../lib/portal/commons-codec.jar,\
 	@../../../lib/portal/commons-collections.jar,\

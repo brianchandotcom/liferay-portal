@@ -34,9 +34,12 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marcellus Tavares
  */
+@Component(immediate = true, service = DDMFormValidator.class)
 public class DDMFormValidatorImpl implements DDMFormValidator {
 
 	@Override

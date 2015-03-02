@@ -50,6 +50,8 @@ AUI.add(
 					}
 				},
 
+				AUGMENTS: [Liferay.PortletBase],
+
 				EXTENDS: A.Widget,
 
 				NAME: 'liferayalloyeditor',
@@ -238,6 +240,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['alloy-editor', 'aui-base']
+		requires: ['alloy-editor', 'aui-base', 'liferay-portlet-base']
 	}
 );

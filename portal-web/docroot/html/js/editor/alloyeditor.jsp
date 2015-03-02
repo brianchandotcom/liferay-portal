@@ -165,6 +165,10 @@ String modules = "liferay-alloy-editor";
 if (Validator.isNotNull(data) &&  Validator.isNotNull(data.get("uploadURL"))) {
 	modules += ",liferay-editor-image-uploader";
 }
+
+if (showSource) {
+	modules += ",liferay-alloy-editor-source";
+}
 %>
 
 <aui:script use="<%= modules %>">
@@ -235,11 +239,26 @@ if (Validator.isNotNull(data) &&  Validator.isNotNull(data.get("uploadURL"))) {
 			);
 		</c:if>
 
+		<c:if test="<%= showSource %>">
+			plugins.push(
+				{
+					cfg: {
+						editorFullscreen: '#<%= name %>Fullscreen',
+						editorSource: '#<%= name %>Source',
+						editorSwitch: '#<%= name %>Switch',
+						editorWrapper: '#<%= name %>Wrapper'
+					},
+					fn: A.Plugin.LiferayAlloyEditorSource
+				}
+			);
+		</c:if>
+
 		alloyEditor = new A.LiferayAlloyEditor(
 			{
 				editorConfig:   config,
 				editorOptions:  <%= editorOptions %>,
 				initMethod:     window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'],
+				namespace:      '<%= name %>',
 				onBlurMethod:   window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'],
 				onChangeMethod: window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'],
 				onFocusMethod:  window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'],
@@ -247,137 +266,6 @@ if (Validator.isNotNull(data) &&  Validator.isNotNull(data.get("uploadURL"))) {
 				plugins: plugins
 			}
 		).render();
-
-		<c:if test="<%= showSource %>">
-			var CSS_SHOW_SOURCE = 'show-source';
-
-			var STR_VALUE = 'value';
-
-			var editorWrapper = A.one('#<%= name %>Wrapper');
-			var editorSwitch = A.one('#<%= name %>Switch');
-			var editorFullscreen = A.one('#<%= name %>Fullscreen');
-
-			var editorSwitchContainer = editorSwitch.ancestor();
-
-			var toggleEditorModeUI = function() {
-				editorWrapper.toggleClass(CSS_SHOW_SOURCE);
-				editorSwitchContainer.toggleClass(CSS_SHOW_SOURCE);
-				editorFullscreen.toggleClass('hide');
-
-				editorSwitch.setHTML(editorWrapper.hasClass(CSS_SHOW_SOURCE) ? 'abc' : '&lt;/&gt;');
-			};
-
-			var createSourceEditor = function() {
-				A.use(
-					'liferay-source-editor',
-					function(A) {
-						var sourceEditor = new A.LiferaySourceEditor(
-							{
-								boundingBox: A.one('#<%= name %>Source'),
-								mode: 'html',
-								value: window['<%= name %>'].getHTML()
-							}
-						).render();
-
-						toggleEditorModeUI();
-
-						Liferay.component('<%= name %>Source', sourceEditor);
-					}
-				);
-			};
-
-			var switchMode = function(event) {
-				var editor = Liferay.component('<%= name %>Source');
-
-				if (editorWrapper.hasClass(CSS_SHOW_SOURCE)) {
-					var content = event.content || (editor ? editor.get(STR_VALUE) : '');
-
-					window['<%= name %>'].setHTML(content);
-
-					toggleEditorModeUI();
-				}
-				else if (editor) {
-					var currentContent = event.content || window['<%= name %>'].getHTML();
-
-					if (currentContent !== editor.get(STR_VALUE)) {
-						editor.set(STR_VALUE, currentContent);
-					}
-
-					toggleEditorModeUI();
-				}
-				else {
-					createSourceEditor();
-				}
-			};
-
-			editorSwitch.on('click', switchMode);
-
-			var fullScreenDialog;
-			var fullScreenEditor;
-
-			editorFullscreen.on(
-				'click',
-				function(event) {
-					if (fullScreenDialog) {
-						fullScreenEditor.set('value', window['<%= name %>'].getHTML());
-
-						fullScreenDialog.show();
-					}
-					else {
-						Liferay.Util.openWindow(
-							{
-								dialog: {
-									constrain: true,
-									cssClass: 'lfr-fulscreen-source-editor-dialog',
-									modal: true,
-									'toolbars.footer': [
-										{
-											cssClass: 'btn-primary',
-											label: '<liferay-ui:message key="done" />',
-											on: {
-												click: function(event) {
-													fullScreenDialog.hide();
-													switchMode(
-														{
-															content: fullScreenEditor.get('value')
-														}
-													);
-												}
-											}
-										},
-										{
-											label: '<liferay-ui:message key="cancel" />',
-											on: {
-												click: function(event) {
-													fullScreenDialog.hide();
-												}
-											}
-										}
-									]
-								},
-								title: '<liferay-ui:message key="edit-content" />'
-							},
-							function(dialog) {
-								fullScreenDialog = dialog;
-
-								A.use(
-									'liferay-fullscreen-source-editor',
-									function(A) {
-										fullScreenEditor = new A.LiferayFullScreenSourceEditor(
-											{
-												boundingBox: dialog.getStdModNode(A.WidgetStdMod.BODY).appendChild('<div></div>'),
-												previewCssClass: 'alloy-editor alloy-editor-placeholder',
-												value: window['<%= name %>'].getHTML()
-											}
-										).render();
-									}
-								);
-							}
-						);
-					}
-				}
-			);
-		</c:if>
 	};
 
 	window['<%= name %>'] = {
@@ -397,14 +285,6 @@ if (Validator.isNotNull(data) &&  Validator.isNotNull(data.get("uploadURL"))) {
 			window['<%= name %>'].dispose();
 
 			window['<%= name %>'] = null;
-
-			<c:if test="<%= showSource %>">
-				var sourceEditor = Liferay.component('<%= name %>Source');
-
-				if (sourceEditor) {
-					sourceEditor.destroy();
-				}
-			</c:if>
 		},
 
 		dispose: function() {

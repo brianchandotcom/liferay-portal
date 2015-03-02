@@ -48,7 +48,15 @@
 						path: 'alloyeditor.js',
 						requires: [
 							'alloy-editor',
-							'aui-base'
+							'aui-base',
+							'liferay-portlet-base'
+						]
+					},
+					'liferay-alloy-editor-source': {
+						path: 'alloyeditor_source.js',
+						requires: [
+							'liferay-fullscreen-source-editor',
+							'liferay-source-editor'
 						]
 					},
 					'liferay-app-view-move': {

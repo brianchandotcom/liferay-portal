@@ -32,7 +32,7 @@ long templateId = BeanParamUtil.getLong(template, request, "templateId");
 long groupId = BeanParamUtil.getLong(template, request, "groupId", scopeGroupId);
 long classNameId = BeanParamUtil.getLong(template, request, "classNameId");
 long classPK = BeanParamUtil.getLong(template, request, "classPK");
-long sourceClassNameId = BeanParamUtil.getLong(template, request, "sourceClassNameId");
+long resourceClassNameId = BeanParamUtil.getLong(template, request, "resourceClassNameId");
 
 boolean cacheable = BeanParamUtil.getBoolean(template, request, "cacheable", true);
 boolean smallImage = BeanParamUtil.getBoolean(template, request, "smallImage");
@@ -85,7 +85,7 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= classNameId %>" />
 	<aui:input name="classPK" type="hidden" value="<%= classPK %>" />
-	<aui:input name="sourceClassNameId" type="hidden" value="<%= sourceClassNameId %>" />
+	<aui:input name="resourceClassNameId" type="hidden" value="<%= resourceClassNameId %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />
 	<aui:input name="structureAvailableFields" type="hidden" value="<%= structureAvailableFields %>" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />

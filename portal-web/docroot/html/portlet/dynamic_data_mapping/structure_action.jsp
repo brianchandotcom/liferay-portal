@@ -55,7 +55,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/view_template" />
 			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
-			<portlet:param name="sourceClassNameId" value="<%= String.valueOf(structure.getClassNameId()) %>" />
+			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(structure.getClassNameId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon

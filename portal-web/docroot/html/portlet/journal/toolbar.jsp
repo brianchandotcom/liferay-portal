@@ -160,7 +160,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
 				showAncestorScopes: true,
 				showHeader: false,
-				sourceClassNameId: '<%= PortalUtil.getClassNameId(JournalArticle.class) %>',
+				resourceClassNameId: '<%= PortalUtil.getClassNameId(JournalArticle.class) %>',
 				struts_action: '/dynamic_data_mapping/view_template',
 				title: '<%= UnicodeLanguageUtil.get(request, "templates") %>'
 			}

@@ -1278,7 +1278,7 @@
 
 			ddmURL.setParameter('classNameId', config.classNameId);
 			ddmURL.setParameter('classPK', config.classPK);
-			ddmURL.setParameter('sourceClassNameId', config.sourceClassNameId);
+			ddmURL.setParameter('resourceClassNameId', config.resourceClassNameId);
 			ddmURL.setParameter('eventName', config.eventName);
 			ddmURL.setParameter('groupId', config.groupId);
 			ddmURL.setParameter('mode', config.mode);

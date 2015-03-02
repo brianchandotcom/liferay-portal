@@ -12,7 +12,7 @@
 	</command>-->
 
 	<command name="ViewIncludeAllAPINoMarketplace" priority="5">
-		<property name="custom.properties" value="jsonws.web.service.paths.includes=$${line.separator}jsonws.web.service.paths.excludes=/marketplace-portlet.*/*" />
+		<property name="custom.properties" value="jsonws.web.service.paths.includes=${line.separator}jsonws.web.service.paths.excludes=/marketplace-portlet.*/*" />
 
 		<execute function="Open" locator1="Home#API_JSON_URL" />
 
@@ -24,7 +24,7 @@
 	</command>
 
 	<command name="ViewIncludeOnlyAddressAndUserAndExcludeHighRiskSecurityAPI" priority="5">
-		<property name="custom.properties" value="jsonws.web.service.paths.includes=/address/*,/user/*$${line.separator}jsonws.web.service.paths.excludes=/user/update-password,/user/set-role-users" />
+		<property name="custom.properties" value="jsonws.web.service.paths.includes=/address/*,/user/*${line.separator}jsonws.web.service.paths.excludes=/user/update-password,/user/set-role-users" />
 
 		<execute function="Open" locator1="Home#API_JSON_URL" />
 
@@ -37,7 +37,7 @@
 	</command>
 
 	<command name="ViewIncludeOnlyAddressAndUserAPI" priority="5">
-		<property name="custom.properties" value="jsonws.web.service.paths.includes=/address/*,/user/*$${line.separator}jsonws.web.service.paths.excludes=" />
+		<property name="custom.properties" value="jsonws.web.service.paths.includes=/address/*,/user/*${line.separator}jsonws.web.service.paths.excludes=" />
 
 		<execute function="Open" locator1="Home#API_JSON_URL" />
 

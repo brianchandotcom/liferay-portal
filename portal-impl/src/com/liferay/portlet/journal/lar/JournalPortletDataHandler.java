@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.xml.Attribute;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -205,16 +205,14 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 					portletDataContext, ddmTemplate);
 			}
 
-			ExportActionableDynamicQuery exportActionableDynamicQuery =
-				JournalArticleLocalServiceUtil.getExportActionableDynamicQuery(
-					portletDataContext);
+			// Export structure default values
 
-			exportActionableDynamicQuery.setStagedModelType(
-				new StagedModelType(
-					JournalArticle.class.getName(),
-					DDMStructure.class.getName()));
+			ActionableDynamicQuery
+				ddmStructureDefaultValueActionableDynamicQuery =
+					getDDMStructureDefaultValuesActionableDynamicQuery(
+						portletDataContext);
 
-			exportActionableDynamicQuery.performActions();
+			ddmStructureDefaultValueActionableDynamicQuery.performActions();
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "web-content")) {
@@ -282,12 +280,13 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 					portletDataContext, ddmTemplateElement);
 			}
 
-			for (Element articleElement : articleElements) {
-				Attribute classNameAttribute = articleElement.attribute(
-					"class-name");
+			// Importing DDM Structure default values
 
-				if (classNameAttribute.getValue().equals(
-						DDMStructure.class.getName())) {
+			for (Element articleElement : articleElements) {
+				String className = articleElement.attributeValue("class-name");
+
+				if (Validator.isNotNull(className) &&
+					className.equals(DDMStructure.class.getName())) {
 
 					StagedModelDataHandlerUtil.importStagedModel(
 						portletDataContext, articleElement);
@@ -479,6 +478,21 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 				DDMStructure.class.getName(), JournalArticle.class.getName()));
 
 		return exportActionableDynamicQuery;
+	}
+
+	protected ActionableDynamicQuery
+		getDDMStructureDefaultValuesActionableDynamicQuery(
+			PortletDataContext portletDataContext) {
+
+		ExportActionableDynamicQuery actionableDynamicQuery =
+			JournalArticleLocalServiceUtil.getExportActionableDynamicQuery(
+				portletDataContext);
+
+		actionableDynamicQuery.setStagedModelType(
+			new StagedModelType(
+				JournalArticle.class.getName(), DDMStructure.class.getName()));
+
+		return actionableDynamicQuery;
 	}
 
 	protected ActionableDynamicQuery getDDMTemplateActionableDynamicQuery(

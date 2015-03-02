@@ -1,0 +1,27 @@
+<definition>
+	<command name="viewAdminDashboard">
+		<description message="The Solr Admin Dashboard is accessible only if the Solr server is successfully running." />
+
+		<execute function="Open" locator1="http://localhost:8983/solr" />
+
+		<execute function="AssertElementPresent#assertVisible" locator1="SolrAdminDashboard#LOGO" />
+		<execute function="AssertTextEquals" locator1="SolrAdminDashboard#VERSIONS_SOLR_SPEC" value1="${solrVersion}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#VERSIONS_SOLR_IMPL" value1="${solrVersion}" />
+	</command>
+
+	<command name="viewSolrLogsInConsole">
+		<execute function="Pause" locator1="1000" />
+
+		<var name="searchTerm" value="${searchTerm?lowercase()}" />
+
+		<execute function="AssertConsoleTextPresent" value1="SolrIndexSearcher" />
+		<execute function="AssertConsoleTextPresent" value1="entryClassName:com.liferay.portlet.messageboards.model.MBMessage" />
+		<execute function="AssertConsoleTextPresent" value1="entryClassName:com.liferay.portlet.documentlibrary.model.DLFileEntry" />
+		<execute function="AssertConsoleTextPresent" value1="content:${searchTerm}" />
+		<execute function="AssertConsoleTextPresent" value1="content_en_US:${searchTerm}" />
+		<execute function="AssertConsoleTextPresent" value1="description:${searchTerm}" />
+		<execute function="AssertConsoleTextPresent" value1="description_en_US:${searchTerm}" />
+		<execute function="AssertConsoleTextPresent" value1="title:${searchTerm}" />
+		<execute function="AssertConsoleTextPresent" value1="title_en_US:${searchTerm}" />
+	</command>
+</definition>

@@ -122,7 +122,9 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 		<input name="xml" type="hidden" value="" />
 	</aui:form>
 
-	<portlet:actionURL var="editArticleActionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>" />
+	<portlet:actionURL var="editArticleActionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+		<portlet:param name="mvcPath" value="/html/portlet/journal/edit_article.jsp" />
+	</portlet:actionURL>
 
 	<portlet:renderURL var="editArticleRenderURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 		<portlet:param name="mvcPath" value="/html/portlet/journal/edit_article.jsp" />

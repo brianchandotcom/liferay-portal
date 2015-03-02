@@ -104,7 +104,9 @@ if (feed != null) {
 }
 %>
 
-<portlet:actionURL var="editFeedURL" />
+<portlet:actionURL var="editFeedURL">
+	<portlet:param name="mvcPath" value="/html/portlet/journal/edit_feed.jsp" />
+</portlet:actionURL>
 
 <aui:form action="<%= editFeedURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFeed();" %>'>
 	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="" />

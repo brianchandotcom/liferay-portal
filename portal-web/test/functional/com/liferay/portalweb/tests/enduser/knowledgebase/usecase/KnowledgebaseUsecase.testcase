@@ -414,7 +414,7 @@
 			<var name="searchTerm" value="Knowledge" />
 		</execute>
 
-		<execute macro="Search#viewSearchPG">
+		<execute macro="Search#viewSearchResultPG">
 			<var name="searchAssetSummary" value="Knowledge Base Article Content" />
 			<var name="searchAssetTitle" value="Knowledge Base Article Title" />
 			<var name="searchAssetType" value="Knowledge Base Article" />

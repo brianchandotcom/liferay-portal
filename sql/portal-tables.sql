@@ -234,6 +234,7 @@ create table BlogsEntry (
 	allowPingbacks BOOLEAN,
 	allowTrackbacks BOOLEAN,
 	trackbacks TEXT null,
+	coverImageCaption VARCHAR(75) null,
 	coverImageFileEntryId LONG,
 	coverImageURL VARCHAR(75) null,
 	smallImage BOOLEAN,

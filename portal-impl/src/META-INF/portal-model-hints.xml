@@ -1403,6 +1403,7 @@
 		<field name="trackbacks" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="coverImageCaption" type="String" />
 		<field name="coverImageFileEntryId" type="long" />
 		<field name="coverImageURL" type="String" />
 		<field name="smallImage" type="boolean" />

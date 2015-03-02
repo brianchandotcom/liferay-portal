@@ -71,6 +71,7 @@ public class BlogsEntryServiceSoap {
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -80,7 +81,7 @@ public class BlogsEntryServiceSoap {
 					subtitle, description, content, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, allowPingbacks, allowTrackbacks,
-					trackbacks, coverImageImageSelector,
+					trackbacks, coverImageCaption, coverImageImageSelector,
 					smallImageImageSelector, serviceContext);
 
 			return com.liferay.portlet.blogs.model.BlogsEntrySoap.toSoapModel(returnValue);
@@ -332,6 +333,7 @@ public class BlogsEntryServiceSoap {
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -341,7 +343,7 @@ public class BlogsEntryServiceSoap {
 					title, subtitle, description, content, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, allowPingbacks, allowTrackbacks,
-					trackbacks, coverImageImageSelector,
+					trackbacks, coverImageCaption, coverImageImageSelector,
 					smallImageImageSelector, serviceContext);
 
 			return com.liferay.portlet.blogs.model.BlogsEntrySoap.toSoapModel(returnValue);

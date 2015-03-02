@@ -105,7 +105,7 @@ public class BlogsEntryServiceHttp {
 		java.lang.String content, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		boolean allowPingbacks, boolean allowTrackbacks,
-		java.lang.String[] trackbacks,
+		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -118,7 +118,7 @@ public class BlogsEntryServiceHttp {
 					subtitle, description, content, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, allowPingbacks, allowTrackbacks,
-					trackbacks, coverImageImageSelector,
+					trackbacks, coverImageCaption, coverImageImageSelector,
 					smallImageImageSelector, serviceContext);
 
 			Object returnObj = null;
@@ -772,7 +772,7 @@ public class BlogsEntryServiceHttp {
 		java.lang.String content, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		boolean allowPingbacks, boolean allowTrackbacks,
-		java.lang.String[] trackbacks,
+		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -785,7 +785,7 @@ public class BlogsEntryServiceHttp {
 					title, subtitle, description, content, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, allowPingbacks, allowTrackbacks,
-					trackbacks, coverImageImageSelector,
+					trackbacks, coverImageCaption, coverImageImageSelector,
 					smallImageImageSelector, serviceContext);
 
 			Object returnObj = null;
@@ -823,7 +823,7 @@ public class BlogsEntryServiceHttp {
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, int.class, int.class,
 			int.class, int.class, int.class, boolean.class, boolean.class,
-			java.lang.String[].class,
+			java.lang.String[].class, java.lang.String.class,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
 			com.liferay.portal.service.ServiceContext.class
@@ -906,7 +906,7 @@ public class BlogsEntryServiceHttp {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, int.class, int.class,
 			int.class, int.class, int.class, boolean.class, boolean.class,
-			java.lang.String[].class,
+			java.lang.String[].class, java.lang.String.class,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
 			com.liferay.portal.service.ServiceContext.class

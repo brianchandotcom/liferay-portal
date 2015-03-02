@@ -51,7 +51,8 @@ public interface BlogsEntryService extends BaseService {
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addEntry(String, String,
 	String, String, int, int, int, int, int, boolean, boolean,
-	String[], ImageSelector, ImageSelector, ServiceContext)}
+	String[], String, ImageSelector, ImageSelector,
+	ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portlet.blogs.model.BlogsEntry addEntry(
@@ -71,6 +72,7 @@ public interface BlogsEntryService extends BaseService {
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -180,7 +182,7 @@ public interface BlogsEntryService extends BaseService {
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
 	String, String, String, int, int, int, int, int, boolean,
-	boolean, String[], ImageSelector, ImageSelector,
+	boolean, String[], String, ImageSelector, ImageSelector,
 	ServiceContext)}
 	*/
 	@java.lang.Deprecated
@@ -201,6 +203,7 @@ public interface BlogsEntryService extends BaseService {
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		java.lang.String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
 		com.liferay.portal.service.ServiceContext serviceContext)

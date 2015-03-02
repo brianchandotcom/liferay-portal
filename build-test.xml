@@ -443,49 +443,52 @@
 		<attribute name="property.name" />
 
 		<sequential>
-			<fail message="Please set the property ${test.class}" unless="test.class" />
+			<if>
+				<isset property="test.class" />
+				<then>
+					<property file="${project.dir}/test.generated.properties" />
 
-			<property file="${project.dir}/test.generated.properties" />
+					<var name="property.name" unset="true" />
+					<var name="@{property.name}" unset="true" />
 
-			<var name="property.name" unset="true" />
-			<var name="@{property.name}" unset="true" />
+					<property name="property.name" value="@{property.name}" />
 
-			<property name="property.name" value="@{property.name}" />
+					<get-test-method-name />
+					<get-test-simple-class-name />
 
-			<get-test-method-name />
-			<get-test-simple-class-name />
+					<script classpathref="project.classpath" language="beanshell">
+						<![CDATA[
+							String propertyName = project.getProperty("property.name");
+							String testMethodName = project.getProperty("test.method.name");
+							String testSimpleClassName = project.getProperty("test.simple.class.name");
 
-			<script classpathref="project.classpath" language="beanshell">
-				<![CDATA[
-					String propertyName = project.getProperty("property.name");
-					String testMethodName = project.getProperty("test.method.name");
-					String testSimpleClassName = project.getProperty("test.simple.class.name");
+							StringBuilder sb = new StringBuilder();
 
-					StringBuilder sb = new StringBuilder();
+							sb.append(testSimpleClassName);
+							sb.append(".");
+							sb.append(testMethodName);
+							sb.append(".");
+							sb.append(propertyName);
 
-					sb.append(testSimpleClassName);
-					sb.append(".");
-					sb.append(testMethodName);
-					sb.append(".");
-					sb.append(propertyName);
+							String propertyValue = project.getProperty(sb.toString());
 
-					String propertyValue = project.getProperty(sb.toString());
+							if (propertyValue == null) {
+								sb = new StringBuilder();
 
-					if (propertyValue == null) {
-						sb = new StringBuilder();
+								sb.append(testSimpleClassName);
+								sb.append(".");
+								sb.append("all");
+								sb.append(".");
+								sb.append(propertyName);
 
-						sb.append(testSimpleClassName);
-						sb.append(".");
-						sb.append("all");
-						sb.append(".");
-						sb.append(propertyName);
+								propertyValue = project.getProperty(sb.toString());
+							}
 
-						propertyValue = project.getProperty(sb.toString());
-					}
-
-					project.setProperty(propertyName, propertyValue);
-				]]>
-			</script>
+							project.setProperty(propertyName, propertyValue);
+						]]>
+					</script>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 

@@ -29,7 +29,8 @@ public class ExtensionManager {
 	protected void addExtension(
 		Map<String, Object> properties, Object extension) {
 
-		Class<?> extensionClass = (Class<?>) properties.get("extension.class");
+		Class<?> extensionClass = (Class<?>)properties.get(
+			"soap.extension.class");
 
 		_extensions.put(extensionClass, extension);
 	}

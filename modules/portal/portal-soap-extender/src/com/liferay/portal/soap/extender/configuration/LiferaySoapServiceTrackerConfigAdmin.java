@@ -90,8 +90,8 @@ public class LiferaySoapServiceTrackerConfigAdmin {
 	}
 
 	private String _createExtensionFilter(String extensionName) {
-		return "(&(cxf.extension=true)(extension.name="+ extensionName +
-			")(extension.class=*))";
+		return "(&(soap.cxf.extension=true)(soap.extension.name=" +
+			extensionName + ")(soap.extension.class=*))";
 	}
 
 	private org.apache.felix.dm.Component _component;

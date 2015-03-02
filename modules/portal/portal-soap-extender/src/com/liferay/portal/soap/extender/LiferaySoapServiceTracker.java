@@ -74,7 +74,7 @@ public class LiferaySoapServiceTracker {
 
 		try {
 			Filter servicesFilter = _bundleContext.createFilter(
-				"(&(address=*)(jaxws=true))");
+				"(&(soap.address=*)(jaxws=true))");
 
 			_serverServiceTracker = new ServiceTracker<>(
 				_bundleContext, servicesFilter,
@@ -274,14 +274,14 @@ public class LiferaySoapServiceTracker {
 
 			jaxWsServerFactoryBean.setBus(_bus);
 
-			Object addressObject = serviceReference.getProperty("address");
+			Object addressObject = serviceReference.getProperty("soap.address");
 
 			String address = addressObject.toString();
 
 			jaxWsServerFactoryBean.setAddress(address);
 
 			Object endpointNameObject = serviceReference.getProperty(
-				"endpointName");
+				"soap.endpointName");
 
 			if ((endpointNameObject != null) &&
 				endpointNameObject instanceof QName) {
@@ -292,7 +292,7 @@ public class LiferaySoapServiceTracker {
 			}
 
 			Object serviceClassObject = serviceReference.getProperty(
-				"serviceClass");
+				"soap.serviceClass");
 
 			if ((serviceClassObject != null) &&
 				serviceClassObject instanceof Class<?>) {
@@ -303,7 +303,7 @@ public class LiferaySoapServiceTracker {
 			}
 
 			Object wsdlLocationObject = serviceReference.getProperty(
-				"wsdlLocation");
+				"soap.wsdlLocation");
 
 			if (wsdlLocationObject != null) {
 				jaxWsServerFactoryBean.setWsdlLocation(
@@ -393,8 +393,8 @@ public class LiferaySoapServiceTracker {
 			String address, final Server server) {
 
 			String handlersFilterString =
-				"(&(objectClass=" + Handler.class.getName() + ")(address=" +
-					address + "))";
+				"(&(objectClass=" + Handler.class.getName() +
+					")(soap.address=" + address + "))";
 
 			Filter handlersFilter;
 

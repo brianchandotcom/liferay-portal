@@ -28,7 +28,7 @@ public interface LiferaySoapServiceTrackerConfiguration {
 	)
 	public String contextPath();
 
-	@AD(name = "cxf.extensions", required = false)
+	@AD(name = "soap.cxf.extensions", required = false)
 	public String[] extensions();
 
 }

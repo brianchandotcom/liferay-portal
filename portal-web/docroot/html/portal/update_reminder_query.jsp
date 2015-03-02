@@ -59,30 +59,30 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base">
-	var reminderQueryQuestion = A.one('#reminderQueryQuestion');
-	var customQuestionContainer = A.one('#customQuestionContainer');
+<aui:script sandbox="<%= true %>">
+	var reminderQueryQuestion = $('#reminderQueryQuestion');
+	var customQuestionContainer = $('#customQuestionContainer');
 
-	if (reminderQueryQuestion && customQuestionContainer) {
+	if (reminderQueryQuestion.length && customQuestionContainer.length) {
 		if (reminderQueryQuestion.val() != '<%= UsersAdmin.CUSTOM_QUESTION %>') {
-			customQuestionContainer.hide();
+			customQuestionContainer.addClass('hide');
 		}
 		else {
-			customQuestionContainer.show();
+			customQuestionContainer.removeClass('hide');
 		}
 
 		reminderQueryQuestion.on(
 			'change',
 			function(event) {
-				if (this.val() == '<%= UsersAdmin.CUSTOM_QUESTION %>') {
+				if ($(this).val() == '<%= UsersAdmin.CUSTOM_QUESTION %>') {
 					<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
-						customQuestionContainer.show();
+						customQuestionContainer.removeClass('hide');
 
 						Liferay.Util.focusFormField('#reminderQueryCustomQuestion');
 					</c:if>
 				}
 				else {
-					customQuestionContainer.hide();
+					customQuestionContainer.addClass('hide');
 
 					Liferay.Util.focusFormField('#reminderQueryAnswer');
 				}

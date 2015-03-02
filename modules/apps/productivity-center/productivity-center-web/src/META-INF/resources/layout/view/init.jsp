@@ -14,4 +14,5 @@
  */
 --%>
 
+<%@ taglib prefix="aui" uri="http://liferay.com/tld/aui" %>
 <%@ taglib uri="http://liferay.com/tld/productivity-center/ui" prefix="productivity-center-ui" %>

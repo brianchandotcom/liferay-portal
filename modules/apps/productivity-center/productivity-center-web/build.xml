@@ -4,6 +4,6 @@
 <project>
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 
-	<property name="import.shared" value="productivity-center-api" />
+	<property name="import.shared" value="productivity-center-api,productivity-center-service" />
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
 </project>

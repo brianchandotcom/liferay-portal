@@ -1,6 +1,9 @@
 Bundle-Name: Liferay Portal SSO Token
 Bundle-SymbolicName: com.liferay.portal.sso.token
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.sso.token.events.*;version=${plugin.full.version},\
+	com.liferay.portal.sso.token.security.auth.*;version=${plugin.full.version}
 Include-Resource:\
 	classes,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*

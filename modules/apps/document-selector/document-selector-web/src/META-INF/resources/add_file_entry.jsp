@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_selector/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -53,13 +53,12 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 	title='<%= LanguageUtil.get(request, "new-document") %>'
 />
 
-<portlet:actionURL var="editFileEntryURL">
-	<portlet:param name="struts_action" value="/document_selector/add_file_entry" />
-	<portlet:param name="uploadExceptionRedirect" value="<%= currentURL %>" />
+<portlet:actionURL name="addFileEntry" var="addFileEntryURL">
+	<portlet:param name="mvcPath" value="/add_file_entry.jsp" />
 	<portlet:param name="type" value="<%= DocumentSelectorUtil.getType(request) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editFileEntryURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry();" %>'>
+<aui:form action="<%= addFileEntryURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="uploadProgressId" type="hidden" value="<%= uploadProgressId %>" />
@@ -93,9 +92,13 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 	<liferay-ui:error exception="<%= FileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 	<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
 
+	<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+
 	<liferay-ui:error exception="<%= SourceFileNameException.class %>">
 		<liferay-ui:message key="the-source-file-does-not-have-the-same-extension-as-the-original-file" />
 	</liferay-ui:error>
+
+	<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
 
 	<%
 	long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
@@ -173,7 +176,9 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 					try {
 						DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), 0);
 
-						fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
+						DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+
+						fields = DDMFormValuesToFieldsConverterUtil.convert(ddmStructure, ddmFormValues);
 					}
 					catch (Exception e) {
 					}

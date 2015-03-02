@@ -149,7 +149,7 @@ AUI.add(
 						portletURL.setParameter('eventName', 'selectDocumentLibrary');
 						portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
 						portletURL.setParameter('refererPortletName', '167');
-						portletURL.setParameter('struts_action', '/document_selector/view');
+						portletURL.setParameter('mvcPath', '/view.jsp');
 						portletURL.setParameter('tabs1Names', 'documents');
 						portletURL.setPortletId(Liferay.PortletKeys.DOCUMENT_SELECTOR);
 						portletURL.setWindowState('pop_up');

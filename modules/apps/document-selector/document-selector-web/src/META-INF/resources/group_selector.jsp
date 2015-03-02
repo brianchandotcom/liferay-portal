@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_selector/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1");
@@ -36,7 +36,7 @@ String type = DocumentSelectorUtil.getType(request);
 
 	PortletURL selectGroupURL = renderResponse.createRenderURL();
 
-	selectGroupURL.setParameter("struts_action", "/document_selector/view");
+	selectGroupURL.setParameter("mvcPath", "/view.jsp");
 	selectGroupURL.setParameter("tabs1", tabs1);
 	selectGroupURL.setParameter("tabs1Names", StringUtil.merge(DocumentSelectorUtil.getTabs1Names(request)));
 	selectGroupURL.setParameter("ckEditorFuncNum", ckEditorFuncNum);

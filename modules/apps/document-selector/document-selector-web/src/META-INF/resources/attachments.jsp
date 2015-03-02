@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_selector/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -25,7 +25,7 @@ String attachmentURLPrefix = ParamUtil.getString(request, "attachmentURLPrefix")
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/document_selector/view");
+portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("ckEditorFuncNum", ckEditorFuncNum);
 portletURL.setParameter("eventName", eventName);

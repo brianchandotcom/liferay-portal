@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,6 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.documentselector.web.constants;
+
+/**
+ * @author Jose A. Jimenez
+ */
+public class DocumentSelectorPortletKeys {
+
+	public static final String DOCUMENT_SELECTOR =
+		"com_liferay_documentselector_web_portlet_DocumentSelectorPortlet";
+
+}

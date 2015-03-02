@@ -419,7 +419,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 		<c:if test="<%= allowBrowseDocuments %>">
 			<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/document_selector/view" />
+				<portlet:param name="mvcPath" value="/view.jsp" />
 				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 				<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
 				<portlet:param name="showGroupsSelector" value="true" />

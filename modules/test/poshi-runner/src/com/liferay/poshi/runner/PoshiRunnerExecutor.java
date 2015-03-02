@@ -144,7 +144,12 @@ public class PoshiRunnerExecutor {
 					runMacroElement(childElement);
 				}
 				else if (childElement.attributeValue("selenium") != null) {
-					runSeleniumElement(childElement);
+					try {
+						runSeleniumElement(childElement);
+					}
+					catch (Exception e) {
+						throw new PoshiRunnerException(e);
+					}
 				}
 			}
 			else if (childElementName.equals("if")) {
@@ -154,17 +159,24 @@ public class PoshiRunnerExecutor {
 				String message = childElement.attributeValue("message");
 
 				if (message != null) {
-					throw new Exception(
-						PoshiRunnerVariablesUtil.replaceCommandVars(message));
+					throw new PoshiRunnerException(
+						"BUILD FAILED: " +
+							PoshiRunnerVariablesUtil.replaceCommandVars(
+								message));
 				}
 
-				throw new Exception();
+				throw new PoshiRunnerException();
 			}
 			else if (childElementName.equals("for")) {
 				runForElement(childElement);
 			}
 			else if (childElementName.equals("var")) {
-				runVarElement(childElement);
+				try {
+					runVarElement(childElement);
+				}
+				catch (Exception e) {
+					throw new PoshiRunnerException(e);
+				}
 			}
 			else if (childElementName.equals("while")) {
 				runWhileElement(childElement);

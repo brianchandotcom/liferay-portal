@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>SolrAdminDashboard</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SolrAdminDashboard</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SolrAdminDashboard</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGO</td>
+	<td>//div[@id='header']/a[@id='solr']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VERSIONS-->
+<tr>
+	<td>VERSIONS_SOLR_SPEC</td>
+	<td>//li[contains(@class,'solr_spec_version')]/dl/dd</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSIONS_SOLR_IMPL</td>
+	<td>//li[contains(@class,'solr_impl_version')]/dl/dd</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

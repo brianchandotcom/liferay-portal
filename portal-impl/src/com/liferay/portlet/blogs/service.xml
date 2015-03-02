@@ -34,6 +34,7 @@
 		<column name="trackbacks" type="String" />
 		<column name="coverImageFileEntryId" type="long" />
 		<column name="coverImageURL" type="String" />
+		<column name="coverImageCaption" type="String" />
 		<column name="smallImage" type="boolean" />
 		<column name="smallImageFileEntryId" type="long" />
 		<column name="smallImageId" type="long" />

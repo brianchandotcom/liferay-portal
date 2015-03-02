@@ -22,6 +22,8 @@ JournalArticle article = ActionUtil.getArticle(request);
 long groupId = BeanParamUtil.getLong(article, request, "groupId", scopeGroupId);
 
 Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
 %>
 
 <c:choose>
@@ -34,6 +36,10 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 		<%
 		String layoutUuid = BeanParamUtil.getString(article, request, "layoutUuid");
+
+		if (changeStructure && (article != null)) {
+			layoutUuid = article.getLayoutUuid();
+		}
 
 		Layout selLayout = null;
 
@@ -62,7 +68,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 		<h3><liferay-ui:message key="display-page" /><liferay-ui:icon-help message="default-display-page-help" /></h3>
 
 		<div id="<portlet:namespace />pagesContainer">
-			<aui:input id="pagesContainerInput" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
+			<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
 
 			<div class="display-page-item-container <%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemContainer">
 				<span class="display-page-item">

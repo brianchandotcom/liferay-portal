@@ -27,6 +27,8 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
+boolean changeStructure = GetterUtil.getBoolean(ParamUtil.getString(request, "changeStructure"));
+
 JournalArticle article = ActionUtil.getArticle(request);
 
 long groupId = BeanParamUtil.getLong(article, request, "groupId", scopeGroupId);
@@ -107,6 +109,8 @@ request.setAttribute("edit_article.jsp-structure", ddmStructure);
 request.setAttribute("edit_article.jsp-template", ddmTemplate);
 
 request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
+
+request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 %>
 
 <div class="article-form <%= ((article != null) && !article.isNew()) ? "article-form-edit" : "article-form-add" %>">
@@ -146,6 +150,7 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 		<aui:input name="articleIds" type="hidden" value="<%= articleId + JournalPortlet.VERSION_SEPARATOR + version %>" />
 		<aui:input name="version" type="hidden" value="<%= ((article == null) || article.isNew()) ? version : article.getVersion() %>" />
 		<aui:input name="articleURL" type="hidden" value="<%= editArticleRenderURL %>" />
+		<aui:input name="changeStructure" type="hidden" />
 		<aui:input name="ddmStructureId" type="hidden" />
 		<aui:input name="ddmTemplateId" type="hidden" />
 		<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />

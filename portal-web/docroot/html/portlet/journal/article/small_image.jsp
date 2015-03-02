@@ -20,6 +20,8 @@
 JournalArticle article = ActionUtil.getArticle(request);
 
 boolean smallImage = BeanParamUtil.getBoolean(article, request, "smallImage");
+
+boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
 %>
 
 <liferay-ui:error-marker key="errorSection" value="small_image" />
@@ -62,15 +64,15 @@ boolean smallImage = BeanParamUtil.getBoolean(article, request, "smallImage");
 
 				<aui:col width="<%= (smallImage && (article != null)) ? 50 : 100 %>">
 					<aui:fieldset>
-						<aui:input cssClass="lfr-journal-small-image-type" inlineField="<%= true %>" label="small-image-url" name="smallImageType" type="radio" />
+						<aui:input cssClass="lfr-journal-small-image-type" ignoreRequestValue="<%= changeStructure %>" inlineField="<%= true %>" label="small-image-url" name="smallImageType" type="radio" />
 
-						<aui:input cssClass="lfr-journal-small-image-value" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
+						<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= changeStructure %>" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
 					</aui:fieldset>
 
 					<aui:fieldset>
-						<aui:input cssClass="lfr-journal-small-image-type" inlineField="<%= true %>" label="small-image" name="smallImageType" type="radio" />
+						<aui:input cssClass="lfr-journal-small-image-type" ignoreRequestValue="<%= changeStructure %>" inlineField="<%= true %>" label="small-image" name="smallImageType" type="radio" />
 
-						<aui:input cssClass="lfr-journal-small-image-value" inlineField="<%= true %>" label="" name="smallFile" type="file" />
+						<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= changeStructure %>" inlineField="<%= true %>" label="" name="smallFile" type="file" />
 					</aui:fieldset>
 				</aui:col>
 			</aui:row>

@@ -292,7 +292,8 @@ public class BlogsEntryStagedModelDataHandler
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, allowPingbacks,
 					allowTrackbacks, trackbacks, coverImageImageSelector,
-					smallImageImageSelector, serviceContext);
+					entry.getCoverImageCaption(), smallImageImageSelector,
+					serviceContext);
 			}
 			else {
 				importedEntry = BlogsEntryLocalServiceUtil.updateEntry(
@@ -301,8 +302,8 @@ public class BlogsEntryStagedModelDataHandler
 					entry.getContent(), displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
 					allowPingbacks, allowTrackbacks, trackbacks,
-					coverImageImageSelector, smallImageImageSelector,
-					serviceContext);
+					coverImageImageSelector, entry.getCoverImageCaption(),
+					smallImageImageSelector, serviceContext);
 			}
 		}
 		else {
@@ -311,8 +312,8 @@ public class BlogsEntryStagedModelDataHandler
 				entry.getDescription(), entry.getContent(), displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				coverImageImageSelector, smallImageImageSelector,
-				serviceContext);
+				coverImageImageSelector, entry.getCoverImageCaption(),
+				smallImageImageSelector, serviceContext);
 		}
 
 		portletDataContext.importClassedModel(entry, importedEntry);

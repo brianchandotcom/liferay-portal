@@ -73,7 +73,9 @@ public class PythonExecutor extends BaseScriptingExecutor {
 
 		for (String outputName : outputNames) {
 			outputObjects.put(
-				outputName, interactiveInterpreter.get(outputName));
+				outputName,
+				interactiveInterpreter.get(
+					outputName).__tojava__(Object.class));
 		}
 
 		return outputObjects;

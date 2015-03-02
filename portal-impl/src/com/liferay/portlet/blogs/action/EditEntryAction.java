@@ -491,7 +491,8 @@ public class EditEntryAction extends PortletAction {
 				entry.getDescription(), content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, entry.getAllowPingbacks(),
-				entry.getAllowTrackbacks(), null, null, null, serviceContext);
+				entry.getAllowTrackbacks(), null, null, StringPool.BLANK, null,
+				serviceContext);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -571,6 +572,8 @@ public class EditEntryAction extends PortletAction {
 			coverImageFileEntryId, coverImageURL,
 			coverImageFileEntryCropRegion);
 
+		String coverImageCaption = ParamUtil.getString(
+			actionRequest, "coverImageCaption");
 		long smallImageFileEntryId = ParamUtil.getLong(
 			actionRequest, "smallImageFileEntryId");
 		String smallImageURL = ParamUtil.getString(
@@ -595,8 +598,8 @@ public class EditEntryAction extends PortletAction {
 				title, subtitle, description, content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				coverImageImageSelector, smallImageImageSelector,
-				serviceContext);
+				coverImageImageSelector, coverImageCaption,
+				smallImageImageSelector, serviceContext);
 
 			BlogsEntryAttachmentFileEntryHelper
 				blogsEntryAttachmentFileEntryHelper =
@@ -672,7 +675,7 @@ public class EditEntryAction extends PortletAction {
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, allowPingbacks,
 				allowTrackbacks, trackbacks, coverImageImageSelector,
-				smallImageImageSelector, serviceContext);
+				coverImageCaption, smallImageImageSelector, serviceContext);
 
 			for (FileEntry tempBlogsEntryAttachmentFileEntry :
 					tempBlogsEntryAttachmentFileEntries) {

@@ -63,6 +63,8 @@ public class Field implements Serializable {
 
 	public static final String ASSET_VOCABULARY_IDS = "assetVocabularyIds";
 
+	public static final String CAPTION = "caption";
+
 	public static final String CATEGORY_ID = "categoryId";
 
 	public static final String CLASS_NAME_ID = "classNameId";

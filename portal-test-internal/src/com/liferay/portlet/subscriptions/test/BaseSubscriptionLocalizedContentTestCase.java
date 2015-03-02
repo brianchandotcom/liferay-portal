@@ -74,7 +74,8 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 
 		LocaleThreadLocal.setDefaultLocale(LocaleUtil.GERMANY);
 
-		addBaseModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+		addBaseModel(
+			contextUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		List<MailMessage> messages = MailServiceTestUtil.getMailMessages(
 			"Body", GERMAN_BODY);
@@ -99,11 +100,12 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 
 		LocaleThreadLocal.setDefaultLocale(LocaleUtil.SPAIN);
 
-		long baseModelId = addBaseModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+		long baseModelId = addBaseModel(
+			contextUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
-		updateBaseModel(baseModelId);
+		updateBaseModel(contextUser.getUserId(), baseModelId);
 
 		List<MailMessage> messages = MailServiceTestUtil.getMailMessages(
 			"Body", SPANISH_BODY);

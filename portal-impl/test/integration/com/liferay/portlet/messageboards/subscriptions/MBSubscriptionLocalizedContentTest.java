@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -50,17 +49,19 @@ public class MBSubscriptionLocalizedContentTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(long containerModelId) throws Exception {
+	protected long addBaseModel(long userId, long containerModelId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
+				group.getGroupId(), userId);
 
 		MBTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.ADD);
 
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			group.getGroupId(), containerModelId, RandomTestUtil.randomString(),
+			userId, RandomTestUtil.randomString(), group.getGroupId(),
+			containerModelId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
 		return message.getMessageId();
@@ -95,19 +96,21 @@ public class MBSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected void updateBaseModel(long baseModelId) throws Exception {
+	protected void updateBaseModel(long userId, long baseModelId)
+		throws Exception {
+
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				message.getGroupId(), TestPropsValues.getUserId());
+				message.getGroupId(), userId);
 
 		MBTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.UPDATE);
 
 		MBMessageLocalServiceUtil.updateMessage(
-			TestPropsValues.getUserId(), message.getMessageId(),
-			RandomTestUtil.randomString(), serviceContext);
+			userId, message.getMessageId(), RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 }

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -47,23 +48,35 @@ public class BookmarksSubscriptionRootContainerModelTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(long containerModelId) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+	protected long addBaseModel(long userId, long containerModelId)
+		throws Exception {
 
-		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			containerModelId, true, serviceContext);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), userId);
+
+		BookmarksTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.ADD);
+
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.addEntry(
+			userId, group.getGroupId(), containerModelId,
+			RandomTestUtil.randomString(), "http://www.liferay.com",
+			RandomTestUtil.randomString(), serviceContext);
 
 		return entry.getEntryId();
 	}
 
 	@Override
-	protected long addContainerModel(long containerModelId) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+	protected long addContainerModel(long userId, long containerModelId)
+		throws Exception {
 
-		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			containerModelId, RandomTestUtil.randomString(), serviceContext);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), userId);
+
+		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.addFolder(
+			userId, containerModelId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		return folder.getFolderId();
 	}
@@ -77,11 +90,23 @@ public class BookmarksSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(long baseModelId) throws Exception {
+	protected void updateBaseModel(long userId, long baseModelId)
+		throws Exception {
+
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
 			baseModelId);
 
-		BookmarksTestUtil.updateEntry(entry);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), userId);
+
+		BookmarksTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.UPDATE);
+
+		BookmarksEntryLocalServiceUtil.updateEntry(
+			userId, entry.getEntryId(), entry.getGroupId(), entry.getFolderId(),
+			RandomTestUtil.randomString(), entry.getUrl(),
+			entry.getDescription(), serviceContext);
 	}
 
 }

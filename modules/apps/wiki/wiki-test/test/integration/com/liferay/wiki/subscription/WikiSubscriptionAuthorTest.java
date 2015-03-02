@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionContainerModelTestCase;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
@@ -31,17 +31,13 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.util.test.WikiTestUtil;
 
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
 
 /**
- * @author Sergio González
- * @author Roberto Díaz
+ * @author José Ángel Jiménez
  */
 @Sync
-public class WikiSubscriptionContainerModelTest
-	extends BaseSubscriptionContainerModelTestCase {
+public class WikiSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 
 	@ClassRule
 	@Rule
@@ -49,30 +45,6 @@ public class WikiSubscriptionContainerModelTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousMailTestRule.INSTANCE);
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenAddingBaseModelInRootContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenAddingBaseModelInSubcontainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenUpdatingBaseModelInRootContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenUpdatingBaseModelInSubcontainerModel() {
-	}
 
 	@Override
 	protected long addBaseModel(long userId, long containerModelId)
@@ -97,11 +69,10 @@ public class WikiSubscriptionContainerModelTest
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscription(long userId, long containerModelId)
 		throws Exception {
 
-		WikiNodeLocalServiceUtil.subscribeNode(
-			user.getUserId(), containerModelId);
+		WikiNodeLocalServiceUtil.subscribeNode(userId, containerModelId);
 	}
 
 	@Override

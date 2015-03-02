@@ -56,17 +56,21 @@ public class JournalSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected long addBaseModel(long containerModelId) throws Exception {
+	protected long addBaseModel(long userId, long containerModelId)
+		throws Exception {
+
 		JournalArticle article = JournalTestUtil.addArticle(
-			group.getGroupId(), containerModelId);
+			userId, group.getGroupId(), containerModelId);
 
 		return article.getResourcePrimKey();
 	}
 
 	@Override
-	protected long addContainerModel(long containerModelId) throws Exception {
+	protected long addContainerModel(long userId, long containerModelId)
+		throws Exception {
+
 		JournalFolder folder = JournalTestUtil.addFolder(
-			group.getGroupId(), containerModelId,
+			userId, group.getGroupId(), containerModelId,
 			RandomTestUtil.randomString());
 
 		return folder.getFolderId();
@@ -81,11 +85,13 @@ public class JournalSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(long baseModelId) throws Exception {
+	protected void updateBaseModel(long userId, long baseModelId)
+		throws Exception {
+
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.getLatestArticle(baseModelId);
 
-		JournalTestUtil.updateArticleWithWorkflow(article, true);
+		JournalTestUtil.updateArticleWithWorkflow(userId, article, true);
 	}
 
 }

@@ -51,6 +51,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -146,7 +147,7 @@ public abstract class BaseTestCase {
 		Mockito.when(
 			closeableHttpClient.execute(
 				Mockito.any(HttpHost.class), Mockito.any(HttpRequest.class),
-				Mockito.any(ResponseHandler.class),
+				Matchers.<ResponseHandler<Void>>any(),
 				Mockito.any(HttpContext.class))
 		).thenCallRealMethod();
 

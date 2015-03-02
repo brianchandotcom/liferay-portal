@@ -16,6 +16,7 @@ Import-Package:\
 	com.liferay.portal.theme,\
 	com.liferay.portal.util,\
 	com.liferay.productivity.center.panel.model,\
+	com.liferay.productivity.center.service.panel.model,\
 	com.liferay.taglib,\
 	javax.servlet,\
 	javax.servlet.http,\

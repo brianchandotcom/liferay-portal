@@ -19,3 +19,12 @@
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("productivity-center-ui:panel:panelCategory");
 %>
+
+<liferay-ui:panel-container
+	accordion="<%= true %>"
+	extended="<%= true %>"
+	id="userPersonalPanelMenuAddContentPanelContainer"
+	persistState="<%= true %>"
+>
+	<productivity-center-ui:panel-category panelCategory="<%= panelCategory %>" servletContext="<%= application %>" />
+</liferay-ui:panel-container>

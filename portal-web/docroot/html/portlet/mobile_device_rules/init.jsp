@@ -23,7 +23,6 @@ page import="com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcesso
 page import="com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler" %><%@
 page import="com.liferay.portal.kernel.mobile.device.rulegroup.rule.UnknownRuleHandlerException" %><%@
 page import="com.liferay.portal.mobile.device.rulegroup.rule.impl.SimpleRuleHandler" %><%@
-page import="com.liferay.portal.plugin.PluginPackageUtil" %><%@
 page import="com.liferay.portlet.mobiledevicerules.ActionTypeException" %><%@
 page import="com.liferay.portlet.mobiledevicerules.NoSuchActionException" %><%@
 page import="com.liferay.portlet.mobiledevicerules.NoSuchRuleException" %><%@

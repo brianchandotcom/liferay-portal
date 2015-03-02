@@ -1646,7 +1646,7 @@
 	<portlet>
 		<portlet-name>178</portlet-name>
 		<display-name>Mobile Device Rules</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.mobiledevicerules.MDRPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/mobile_device_rules/</value>

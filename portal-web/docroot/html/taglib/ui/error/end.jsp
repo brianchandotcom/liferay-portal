@@ -31,6 +31,20 @@ String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
 			<%= rowBreak %>
 		</c:if>
 	</c:when>
+	<c:when test='<%= SessionErrors.contains(portletRequest, "warning") %>'>
+		<div class="alert alert-warning">
+			<c:choose>
+				<c:when test="<%= message != null %>">
+					<liferay-ui:message key="<%= message %>" localizeKey="<%= translateMessage %>" />
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:message key='<%= (String)SessionErrors.get(portletRequest, "warning") %>' localizeKey="<%= translateMessage %>" />
+				</c:otherwise>
+			</c:choose>
+		</div>
+
+		<%= rowBreak %>
+	</c:when>
 	<c:when test="<%= key == null %>">
 		<c:if test="<%= !SessionErrors.isEmpty(portletRequest) %>">
 			<div class="alert alert-danger">
@@ -43,16 +57,7 @@ String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
 	<c:otherwise>
 		<c:if test="<%= SessionErrors.contains(portletRequest, key) %>">
 			<div class="alert alert-danger">
-
-			<c:choose>
-				<c:when test="<%= translateMessage %>">
-					<%= LanguageUtil.get(request, message) %>
-				</c:when>
-				<c:otherwise>
-					<%= message %>
-				</c:otherwise>
-			</c:choose>
-
+				<liferay-ui:message key="<%= message %>" localizeKey="<%= translateMessage %>" />
 			</div>
 
 			<%= rowBreak %>

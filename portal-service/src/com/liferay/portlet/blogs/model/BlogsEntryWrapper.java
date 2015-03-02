@@ -72,6 +72,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		attributes.put("trackbacks", getTrackbacks());
 		attributes.put("coverImageFileEntryId", getCoverImageFileEntryId());
 		attributes.put("coverImageURL", getCoverImageURL());
+		attributes.put("coverImageCaption", getCoverImageCaption());
 		attributes.put("smallImage", getSmallImage());
 		attributes.put("smallImageFileEntryId", getSmallImageFileEntryId());
 		attributes.put("smallImageId", getSmallImageId());
@@ -201,6 +202,12 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 			setCoverImageURL(coverImageURL);
 		}
 
+		String coverImageCaption = (String)attributes.get("coverImageCaption");
+
+		if (coverImageCaption != null) {
+			setCoverImageCaption(coverImageCaption);
+		}
+
 		Boolean smallImage = (Boolean)attributes.get("smallImage");
 
 		if (smallImage != null) {
@@ -308,6 +315,16 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public java.lang.String getContent() {
 		return _blogsEntry.getContent();
+	}
+
+	/**
+	* Returns the cover image caption of this blogs entry.
+	*
+	* @return the cover image caption of this blogs entry
+	*/
+	@Override
+	public java.lang.String getCoverImageCaption() {
+		return _blogsEntry.getCoverImageCaption();
 	}
 
 	/**
@@ -855,6 +872,16 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public void setContent(java.lang.String content) {
 		_blogsEntry.setContent(content);
+	}
+
+	/**
+	* Sets the cover image caption of this blogs entry.
+	*
+	* @param coverImageCaption the cover image caption of this blogs entry
+	*/
+	@Override
+	public void setCoverImageCaption(java.lang.String coverImageCaption) {
+		_blogsEntry.setCoverImageCaption(coverImageCaption);
 	}
 
 	/**

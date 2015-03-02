@@ -53,6 +53,7 @@ public class BlogsEntrySoap implements Serializable {
 		soapModel.setTrackbacks(model.getTrackbacks());
 		soapModel.setCoverImageFileEntryId(model.getCoverImageFileEntryId());
 		soapModel.setCoverImageURL(model.getCoverImageURL());
+		soapModel.setCoverImageCaption(model.getCoverImageCaption());
 		soapModel.setSmallImage(model.getSmallImage());
 		soapModel.setSmallImageFileEntryId(model.getSmallImageFileEntryId());
 		soapModel.setSmallImageId(model.getSmallImageId());
@@ -273,6 +274,14 @@ public class BlogsEntrySoap implements Serializable {
 		_coverImageURL = coverImageURL;
 	}
 
+	public String getCoverImageCaption() {
+		return _coverImageCaption;
+	}
+
+	public void setCoverImageCaption(String coverImageCaption) {
+		_coverImageCaption = coverImageCaption;
+	}
+
 	public boolean getSmallImage() {
 		return _smallImage;
 	}
@@ -360,6 +369,7 @@ public class BlogsEntrySoap implements Serializable {
 	private String _trackbacks;
 	private long _coverImageFileEntryId;
 	private String _coverImageURL;
+	private String _coverImageCaption;
 	private boolean _smallImage;
 	private long _smallImageFileEntryId;
 	private long _smallImageId;

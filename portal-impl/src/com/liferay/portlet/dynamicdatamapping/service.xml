@@ -263,7 +263,7 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="sourceClassNameId" type="long" />
+		<column name="resourceClassNameId" type="long" />
 		<column name="templateKey" type="String" />
 		<column name="version" type="String" />
 		<column name="name" type="String" localized="true" />

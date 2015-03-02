@@ -164,16 +164,18 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			false, serviceContext);
 	}
 
+	@Override
 	public MBMessage addMessage(
 			long categoryId, String subject, String body, String fileName,
 			File file, boolean indexingEnabled, ServiceContext serviceContext)
 		throws PortalException {
 
-		MBCategory category = null;
 		long groupId = 0;
 
 		if (categoryId > 0) {
-			category = mbCategoryPersistence.findByPrimaryKey(categoryId);
+			MBCategory category = mbCategoryPersistence.findByPrimaryKey(
+				categoryId);
+
 			groupId = category.getGroupId();
 		}
 		else {
@@ -248,6 +250,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			priority, allowPingbacks, serviceContext);
 	}
 
+	@Override
 	public void addMessageAttachment(
 			long messageId, String fileName, File file, boolean indexingEnabled)
 		throws PortalException {

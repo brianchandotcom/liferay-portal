@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterException;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterMessageType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
@@ -336,6 +337,8 @@ public class ClusterExecutorImpl
 					"Payload is not of type " + MethodHandler.class.getName()));
 		}
 
+		ClusterInvokeThreadLocal.setEnabled(false);
+
 		try {
 			return ClusterNodeResponse.createResultClusterNodeResponse(
 				_localClusterNode, clusterRequest.getUuid(),
@@ -344,6 +347,9 @@ public class ClusterExecutorImpl
 		catch (Exception e) {
 			return ClusterNodeResponse.createExceptionClusterNodeResponse(
 				_localClusterNode, clusterRequest.getUuid(), e);
+		}
+		finally {
+			ClusterInvokeThreadLocal.setEnabled(true);
 		}
 	}
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -87,8 +88,8 @@ public class BlogsActivityInterpreterTest
 		BlogsEntryLocalServiceUtil.updateEntry(
 			_entry.getUserId(), _entry.getEntryId(), _entry.getTitle(),
 			_entry.getSubtitle(), _entry.getDescription(), _entry.getContent(),
-			1, 1, 2012, 12, 00, true, true, new String[0], null, null,
-			serviceContext);
+			1, 1, 2012, 12, 00, true, true, new String[0], null,
+			StringPool.BLANK, null, serviceContext);
 	}
 
 	@Override

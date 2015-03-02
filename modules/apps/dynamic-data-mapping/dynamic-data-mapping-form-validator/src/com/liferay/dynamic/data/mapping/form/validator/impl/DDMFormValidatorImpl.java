@@ -20,13 +20,14 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -82,8 +83,26 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 
 		if (!matcher.matches()) {
 			throw new DDMFormValidationException(
-				"Nonalphanumeric characters were defined for field name " +
+				"Invalid characters were defined for field name " +
 					ddmFormField.getName());
+		}
+	}
+
+	protected void validateDDMFormFieldNames(List<DDMFormField> ddmFormFields)
+		throws DDMFormValidationException {
+
+		Set<String> fieldNames = new HashSet<>();
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			validateDDMFormFieldName(ddmFormField);
+
+			if (fieldNames.contains(ddmFormField.getName())) {
+				throw new DDMFormValidationException(
+					"The field name " + ddmFormField.getName() +
+						" was defined more than once");
+			}
+
+			fieldNames.add(ddmFormField.getName());
 		}
 	}
 
@@ -146,9 +165,9 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			Set<Locale> ddmFormAvailableLocales, Locale ddmFormDefaultLocale)
 		throws DDMFormValidationException {
 
-		for (DDMFormField ddmFormField : ddmFormFields) {
-			validateDDMFormFieldName(ddmFormField);
+		validateDDMFormFieldNames(ddmFormFields);
 
+		for (DDMFormField ddmFormField : ddmFormFields) {
 			validateDDMFormFieldType(ddmFormField);
 
 			validateDDMFormFieldIndexType(ddmFormField);
@@ -177,7 +196,10 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	protected void validateDDMFormFieldType(DDMFormField ddmFormField)
 		throws DDMFormValidationException {
 
-		if (Validator.isNull(ddmFormField.getType())) {
+		Set<String> fieldTypeNames =
+			DDMFormFieldTypeRegistryUtil.getDDMFormFieldTypeNames();
+
+		if (!fieldTypeNames.contains(ddmFormField.getType())) {
 			throw new DDMFormValidationException(
 				"Invalid type set for field " + ddmFormField.getName());
 		}
@@ -218,6 +240,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	private final String[] _ddmFormFieldIndexTypes = new String[] {
 		StringPool.BLANK, "keyword", "text"
 	};
-	private final Pattern _ddmFormFieldNamePattern = Pattern.compile("\\w+");
+	private final Pattern _ddmFormFieldNamePattern = Pattern.compile(
+		"(\\w|_)+");
 
 }

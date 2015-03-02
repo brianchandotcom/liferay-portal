@@ -170,7 +170,12 @@ public class PoshiRunnerExecutor {
 				runForElement(childElement);
 			}
 			else if (childElementName.equals("var")) {
-				runVarElement(childElement);
+				try {
+					runVarElement(childElement);
+				}
+				catch (Exception e) {
+					throw new PoshiRunnerException(e);
+				}
 			}
 			else if (childElementName.equals("while")) {
 				runWhileElement(childElement);
@@ -543,18 +548,8 @@ public class PoshiRunnerExecutor {
 		String varValue = element.attributeValue("value");
 
 		if (varValue == null) {
-			String method = element.attributeValue("method");
-
-			if (method != null) {
-				try {
-					varValue = PoshiRunnerGetterUtil.getVarMethodValue(element);
-				}
-				catch (Exception e) {
-					String message =
-						"BUILD FAILED: " + "No such method \"" + method + "\"";
-
-					throw new PoshiRunnerException(message, e);
-				}
+			if (element.attributeValue("method") != null) {
+				varValue = PoshiRunnerGetterUtil.getVarMethodValue(element);
 			}
 			else {
 				varValue = element.elementText("var");

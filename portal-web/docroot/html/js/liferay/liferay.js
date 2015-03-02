@@ -133,7 +133,6 @@ Liferay = window.Liferay || {};
 				var form = args[1];
 
 				if (isNode(form)) {
-
 					ioConfig.form = form;
 
 					if (ioConfig.form.enctype == 'multipart/form-data') {
@@ -141,7 +140,6 @@ Liferay = window.Liferay || {};
 						ioConfig.processData = false;
 					}
 				}
-
 			},
 
 			parseStringPayload: function(args) {

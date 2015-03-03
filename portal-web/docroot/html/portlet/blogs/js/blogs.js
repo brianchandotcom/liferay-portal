@@ -390,12 +390,11 @@ AUI.add(
 						else {
 							instance.one('#' + constants.CMD).val(instance.get('entry') ? constants.UPDATE : constants.ADD);
 
-							instance.one('#title').val(title);
-							instance.one('#subtitle').val(subtitle);
 							instance.one('#content').val(content);
-							instance.one('#description').val(description);
 							instance.one('#coverImageCaption').val(coverImageCaption);
-
+							instance.one('#description').val(description);
+							instance.one('#subtitle').val(subtitle);
+							instance.one('#title').val(title);
 							instance.one('#workflowAction').val(draft ? constants.ACTION_SAVE_DRAFT : constants.ACTION_PUBLISH);
 
 							submitForm(form);

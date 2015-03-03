@@ -14,6 +14,8 @@
 
 package com.liferay.portal.settings;
 
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,6 +62,17 @@ public class ServiceConfigurationBeanSettingsTest extends PowerMockito {
 			String.valueOf(_serviceConfigurationBean.booleanValue()),
 			_serviceConfigurationBeanSettings.getValue(
 				"booleanValue", "defaultValue"));
+	}
+
+	@Test
+	public void testGetValueWithExistingLocalizedValuesMapValue() {
+		LocalizedValuesMap localizedValuesMap =
+			_serviceConfigurationBean.localizedValuesMap();
+
+		Assert.assertEquals(
+			localizedValuesMap.getDefaultValue(),
+			_serviceConfigurationBeanSettings.getValue(
+				"localizedValuesMap", null));
 	}
 
 	@Test
@@ -121,6 +134,10 @@ public class ServiceConfigurationBeanSettingsTest extends PowerMockito {
 
 		public boolean booleanValue() {
 			return true;
+		}
+
+		public LocalizedValuesMap localizedValuesMap() {
+			return new LocalizedValuesMap("default localized value");
 		}
 
 		public String locationVariableValue() {

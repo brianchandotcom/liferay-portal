@@ -16,6 +16,7 @@ package com.liferay.portal.settings;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.settings.BaseSettings;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 
 import java.lang.reflect.InvocationTargetException;
@@ -45,7 +46,14 @@ public class ServiceConfigurationBeanSettings extends BaseSettings
 			return null;
 		}
 
-		String value = object.toString();
+		String value = null;
+
+		if (object instanceof LocalizedValuesMap) {
+			value = ((LocalizedValuesMap)object).getDefaultValue();
+		}
+		else {
+			value = object.toString();
+		}
 
 		if (_locationVariableResolver.isLocationVariable(value)) {
 			return _locationVariableResolver.resolve(value);

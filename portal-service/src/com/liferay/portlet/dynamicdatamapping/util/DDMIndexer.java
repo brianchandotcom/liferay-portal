@@ -46,6 +46,4 @@ public interface DDMIndexer {
 	public String extractIndexableAttributes(
 		DDMStructure ddmStructure, DDMFormValues ddmFormValues, Locale locale);
 
-	public boolean isSortableFieldName(String fieldName);
-
 }

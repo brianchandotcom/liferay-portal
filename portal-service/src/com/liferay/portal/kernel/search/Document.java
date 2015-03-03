@@ -106,6 +106,10 @@ public interface Document extends Cloneable, Serializable {
 
 	public void addKeyword(String name, String[] values);
 
+	public void addKeywordSortable(String name, Boolean value);
+
+	public void addKeywordSortable(String name, Boolean[] value);
+
 	public void addLocalizedKeyword(String name, Map<Locale, String> values);
 
 	public void addLocalizedKeyword(
@@ -174,6 +178,10 @@ public interface Document extends Cloneable, Serializable {
 	public void addText(String name, String value);
 
 	public void addText(String name, String[] values);
+
+	public void addTextSortable(String name, String value);
+
+	public void addTextSortable(String name, String[] values);
 
 	public void addUID(String portletId, long field1);
 

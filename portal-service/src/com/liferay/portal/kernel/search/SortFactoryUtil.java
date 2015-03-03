@@ -37,6 +37,14 @@ public class SortFactoryUtil {
 	}
 
 	public static Sort getSort(
+		Class<?> clazz, int type, String orderByCol, boolean inferSortField,
+		String orderByType) {
+
+		return getSortFactory().getSort(
+			clazz, type, orderByCol, inferSortField, orderByType);
+	}
+
+	public static Sort getSort(
 		Class<?> clazz, int type, String orderByCol, String orderByType) {
 
 		return getSortFactory().getSort(clazz, type, orderByCol, orderByType);

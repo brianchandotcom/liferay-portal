@@ -29,6 +29,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
 import com.liferay.util.ContentUtil;
 
 import java.util.HashMap;
@@ -95,8 +96,9 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 					templateElement.elementText("cacheable"));
 
 				DDMTemplateLocalServiceUtil.addTemplate(
-					userId, groupId, classNameId, 0, classNameId, templateKey,
-					nameMap, descriptionMap,
+					userId, groupId, classNameId, 0,
+					PortalUtil.getClassNameId(PortletDisplayTemplate.class),
+					templateKey, nameMap, descriptionMap,
 					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null, language,
 					script, cacheable, false, null, null, serviceContext);
 			}

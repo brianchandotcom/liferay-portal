@@ -44,9 +44,9 @@ MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHel
 
 		<liferay-ui:section>
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= wikiGroupServiceSettings.getEmailFromName() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= wikiGroupServiceSettings.emailFromName() %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= wikiGroupServiceSettings.getEmailFromAddress() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= wikiGroupServiceSettings.emailFromAddress() %>" />
 			</aui:fieldset>
 
 			<aui:fieldset cssClass="definition-of-terms">
@@ -83,21 +83,21 @@ MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHel
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= wikiGroupServiceSettings.getEmailPageAddedBodyXml() %>"
+				emailBody="<%= wikiGroupServiceSettings.emailPageAddedBodyXml() %>"
 				emailDefinitionTerms="<%= definitionTerms %>"
-				emailEnabled="<%= wikiGroupServiceSettings.isEmailPageAddedEnabled() %>"
+				emailEnabled="<%= wikiGroupServiceSettings.emailPageAddedEnabled() %>"
 				emailParam="emailPageAdded"
-				emailSubject="<%= wikiGroupServiceSettings.getEmailPageAddedSubjectXml() %>"
+				emailSubject="<%= wikiGroupServiceSettings.emailPageAddedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= wikiGroupServiceSettings.getEmailPageUpdatedBodyXml() %>"
+				emailBody="<%= wikiGroupServiceSettings.emailPageUpdatedBodyXml() %>"
 				emailDefinitionTerms="<%= definitionTerms %>"
-				emailEnabled="<%= wikiGroupServiceSettings.isEmailPageUpdatedEnabled() %>"
+				emailEnabled="<%= wikiGroupServiceSettings.emailPageUpdatedEnabled() %>"
 				emailParam="emailPageUpdated"
-				emailSubject="<%= wikiGroupServiceSettings.getEmailPageUpdatedSubjectXml() %>"
+				emailSubject="<%= wikiGroupServiceSettings.emailPageUpdatedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 	</liferay-ui:tabs>

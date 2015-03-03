@@ -14,21 +14,17 @@
 
 package com.liferay.portal.executor;
 
+import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.executor.PortalExecutorFactory;
 import com.liferay.portal.kernel.executor.PortalExecutorManager;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * @author Shuyang Zhou
@@ -44,25 +40,6 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 	}
 
 	@Override
-	public <T> NoticeableFuture<T> execute(String name, Callable<T> callable) {
-		ThreadPoolExecutor threadPoolExecutor = getPortalExecutor(name);
-
-		return threadPoolExecutor.submit(callable);
-	}
-
-	@Override
-	public <T> T execute(
-			String name, Callable<T> callable, long timeout, TimeUnit timeUnit)
-		throws ExecutionException, InterruptedException, TimeoutException {
-
-		ThreadPoolExecutor threadPoolExecutor = getPortalExecutor(name);
-
-		Future<T> future = threadPoolExecutor.submit(callable);
-
-		return future.get(timeout, timeUnit);
-	}
-
-	@Override
 	public ThreadPoolExecutor getPortalExecutor(String name) {
 		return getPortalExecutor(name, true);
 	}
@@ -74,15 +51,16 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 		ThreadPoolExecutor threadPoolExecutor = _threadPoolExecutors.get(name);
 
 		if ((threadPoolExecutor == null) && createIfAbsent) {
-			synchronized (_threadPoolExecutors) {
-				threadPoolExecutor = _threadPoolExecutors.get(name);
+			threadPoolExecutor = _portalExecutorFactory.createPortalExecutor(
+				name);
 
-				if (threadPoolExecutor == null) {
-					threadPoolExecutor =
-						_portalExecutorFactory.createPortalExecutor(name);
+			ThreadPoolExecutor previousThreadPoolExecutor =
+				registerPortalExecutor(name, threadPoolExecutor);
 
-					_threadPoolExecutors.put(name, threadPoolExecutor);
-				}
+			if (previousThreadPoolExecutor != null) {
+				threadPoolExecutor.shutdown();
+
+				threadPoolExecutor = previousThreadPoolExecutor;
 			}
 		}
 
@@ -93,21 +71,18 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 	public ThreadPoolExecutor registerPortalExecutor(
 		String name, ThreadPoolExecutor threadPoolExecutor) {
 
-		ThreadPoolExecutor oldThreadPoolExecutor = _threadPoolExecutors.get(
-			name);
+		ThreadPoolExecutor previousThreadPoolExecutor =
+			_threadPoolExecutors.putIfAbsent(name, threadPoolExecutor);
 
-		if (oldThreadPoolExecutor == null) {
-			synchronized (_threadPoolExecutors) {
-				oldThreadPoolExecutor = _threadPoolExecutors.get(name);
+		if (previousThreadPoolExecutor == null) {
+			NoticeableFuture<Void> terminationFuture =
+				threadPoolExecutor.terminationNoticeableFuture();
 
-				if (oldThreadPoolExecutor == null) {
-					oldThreadPoolExecutor = _threadPoolExecutors.put(
-						name, threadPoolExecutor);
-				}
-			}
+			terminationFuture.addFutureListener(
+				new UnregisterFutureListener(name));
 		}
 
-		return oldThreadPoolExecutor;
+		return previousThreadPoolExecutor;
 	}
 
 	public void setPortalExecutorFactory(
@@ -120,7 +95,13 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 		Map<String, ThreadPoolExecutor> threadPoolExecutors) {
 
 		if (threadPoolExecutors != null) {
-			_threadPoolExecutors = new ConcurrentHashMap<>(threadPoolExecutors);
+			shutdown(true);
+
+			for (Map.Entry<String, ThreadPoolExecutor> entry :
+					threadPoolExecutors.entrySet()) {
+
+				registerPortalExecutor(entry.getKey(), entry.getValue());
+			}
 		}
 	}
 
@@ -131,10 +112,8 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 
 	@Override
 	public void shutdown(boolean interrupt) {
-		for (Map.Entry<String, ThreadPoolExecutor> entry :
-				_threadPoolExecutors.entrySet()) {
-
-			ThreadPoolExecutor threadPoolExecutor = entry.getValue();
+		for (ThreadPoolExecutor threadPoolExecutor :
+				_threadPoolExecutors.values()) {
 
 			if (interrupt) {
 				threadPoolExecutor.shutdownNow();
@@ -143,41 +122,25 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 				threadPoolExecutor.shutdown();
 			}
 		}
-
-		_threadPoolExecutors.clear();
 	}
 
-	@Override
-	public void shutdown(String name) {
-		shutdown(name, false);
+	protected class UnregisterFutureListener implements FutureListener<Void> {
+
+		@Override
+		public void complete(Future<Void> future) {
+			_threadPoolExecutors.remove(name);
+		}
+
+		protected UnregisterFutureListener(String name) {
+			this.name = name;
+		}
+
+		protected final String name;
+
 	}
-
-	@Override
-	public void shutdown(String name, boolean interrupt) {
-		ThreadPoolExecutor threadPoolExecutor = _threadPoolExecutors.remove(
-			name);
-
-		if (threadPoolExecutor == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("No portal executor found for name " + name);
-			}
-
-			return;
-		}
-
-		if (interrupt) {
-			threadPoolExecutor.shutdownNow();
-		}
-		else {
-			threadPoolExecutor.shutdown();
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortalExecutorManagerImpl.class);
 
 	private PortalExecutorFactory _portalExecutorFactory;
-	private Map<String, ThreadPoolExecutor> _threadPoolExecutors =
-		new ConcurrentHashMap<>();
+	private final ConcurrentMap<String, ThreadPoolExecutor>
+		_threadPoolExecutors = new ConcurrentHashMap<>();
 
 }

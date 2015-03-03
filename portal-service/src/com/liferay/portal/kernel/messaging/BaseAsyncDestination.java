@@ -71,7 +71,15 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 
 	@Override
 	public void close(boolean force) {
-		PortalExecutorManagerUtil.shutdown(getName(), force);
+		ThreadPoolExecutor threadPoolExecutor =
+			PortalExecutorManagerUtil.getPortalExecutor(getName());
+
+		if (force) {
+			threadPoolExecutor.shutdownNow();
+		}
+		else {
+			threadPoolExecutor.shutdown();
+		}
 	}
 
 	@Override

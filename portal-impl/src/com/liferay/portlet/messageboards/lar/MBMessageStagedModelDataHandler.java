@@ -222,6 +222,12 @@ public class MBMessageStagedModelDataHandler
 			PortletDataContext portletDataContext, MBMessage message)
 		throws Exception {
 
+		if (!message.isRoot()) {
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, message, MBMessage.class,
+				message.getParentMessageId());
+		}
+
 		long userId = portletDataContext.getUserId(message.getUserUuid());
 
 		Map<Long, Long> categoryIds =
@@ -230,12 +236,6 @@ public class MBMessageStagedModelDataHandler
 
 		long parentCategoryId = MapUtil.getLong(
 			categoryIds, message.getCategoryId(), message.getCategoryId());
-
-		if (!message.isRoot()) {
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, message, MBMessage.class,
-				message.getParentMessageId());
-		}
 
 		Map<Long, Long> threadIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

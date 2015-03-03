@@ -71,7 +71,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #addEntry(String, String,
 	 *             String, String, int, int, int, int, int, boolean, boolean,
-	 *             String[], ImageSelector, ImageSelector, ServiceContext)}
+	 *             String[], ImageSelector, String, ImageSelector,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -447,7 +448,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
 	 *             String, String, String, int, int, int, int, int, boolean,
-	 *             boolean, String[], ImageSelector, ImageSelector,
+	 *             boolean, String[], ImageSelector, String, ImageSelector,
 	 *             ServiceContext)}
 	 */
 	@Deprecated

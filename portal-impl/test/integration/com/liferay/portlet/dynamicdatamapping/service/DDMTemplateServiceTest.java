@@ -39,6 +39,7 @@ import com.liferay.portlet.journal.util.test.JournalTestUtil;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -56,6 +57,13 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_classNameId = PortalUtil.getClassNameId(AssetEntry.class);
+	}
+
 	@Test
 	public void testAddTemplateWithDuplicateKey() throws Exception {
 		String templateKey = RandomTestUtil.randomString();
@@ -63,12 +71,12 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 		try {
 			addTemplate(
-				_CLASS_NAME_ID, 0, templateKey, "Test Template 1",
+				_classNameId, 0, templateKey, "Test Template 1",
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 				DDMTemplateConstants.TEMPLATE_MODE_CREATE, language,
 				getTestTemplateScript(language));
 			addTemplate(
-				_CLASS_NAME_ID, 0, templateKey, "Test Template 2",
+				_classNameId, 0, templateKey, "Test Template 2",
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 				DDMTemplateConstants.TEMPLATE_MODE_CREATE, language,
 				getTestTemplateScript(language));
@@ -85,7 +93,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 		try {
 			addTemplate(
-				_CLASS_NAME_ID, 0, null, StringPool.BLANK,
+				_classNameId, 0, null, StringPool.BLANK,
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 				DDMTemplateConstants.TEMPLATE_MODE_CREATE, language,
 				getTestTemplateScript(language));
@@ -100,7 +108,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	public void testAddTemplateWithoutScript() throws Exception {
 		try {
 			addTemplate(
-				_CLASS_NAME_ID, 0, null, "Test Template",
+				_classNameId, 0, null, "Test Template",
 				DDMTemplateConstants.TEMPLATE_TYPE_FORM,
 				DDMTemplateConstants.TEMPLATE_MODE_CREATE,
 				TemplateConstants.LANG_TYPE_VM, StringPool.BLANK);
@@ -114,15 +122,15 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testCopyTemplates() throws Exception {
 		int initialCount = DDMTemplateLocalServiceUtil.getTemplatesCount(
-			group.getGroupId(), _CLASS_NAME_ID, 0);
+			group.getGroupId(), _classNameId, 0);
 
 		DDMTemplate template = addDisplayTemplate(
-			_CLASS_NAME_ID, 0, "Test Template");
+			_classNameId, 0, "Test Template");
 
 		copyTemplate(template);
 
 		int count = DDMTemplateLocalServiceUtil.getTemplatesCount(
-			group.getGroupId(), _CLASS_NAME_ID, 0);
+			group.getGroupId(), _classNameId, 0);
 
 		Assert.assertEquals(initialCount + 2, count);
 	}
@@ -130,7 +138,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testDeleteTemplate() throws Exception {
 		DDMTemplate template = addDisplayTemplate(
-			_CLASS_NAME_ID, 0, "Test Template");
+			_classNameId, 0, "Test Template");
 
 		DDMTemplateLocalServiceUtil.deleteTemplate(template.getTemplateId());
 
@@ -167,18 +175,18 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testFetchTemplate() throws Exception {
 		DDMTemplate template = addDisplayTemplate(
-			_CLASS_NAME_ID, 0, "Test Template");
+			_classNameId, 0, "Test Template");
 
 		Assert.assertNotNull(
 			DDMTemplateLocalServiceUtil.fetchTemplate(
-				template.getGroupId(), _CLASS_NAME_ID,
+				template.getGroupId(), _classNameId,
 				template.getTemplateKey()));
 	}
 
 	@Test
 	public void testGetTemplates() throws Exception {
 		DDMTemplate template = addDisplayTemplate(
-			_CLASS_NAME_ID, 0, "Test Template");
+			_classNameId, 0, "Test Template");
 
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(
 			template.getGroupId(), template.getClassNameId());
@@ -189,9 +197,9 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testSearch() throws Exception {
 		DDMTemplate template = addDisplayTemplate(
-			_CLASS_NAME_ID, 0, "Test Template 1");
+			_classNameId, 0, "Test Template 1");
 
-		addDisplayTemplate(_CLASS_NAME_ID, 0, "Test Template 2");
+		addDisplayTemplate(_classNameId, 0, "Test Template 2");
 
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.search(
 			template.getCompanyId(), template.getGroupId(),
@@ -205,9 +213,9 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testSearchByKeywords() throws Exception {
 		DDMTemplate template = addDisplayTemplate(
-			_CLASS_NAME_ID, 0, "Test Template 1");
+			_classNameId, 0, "Test Template 1");
 
-		addDisplayTemplate(_CLASS_NAME_ID, 0, "Test Template 2");
+		addDisplayTemplate(_classNameId, 0, "Test Template 2");
 
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.search(
 			template.getCompanyId(), template.getGroupId(),
@@ -220,14 +228,14 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testSearchCount() throws Exception {
 		int initialCount = DDMTemplateLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), group.getGroupId(), _CLASS_NAME_ID,
-			0, "Test Template", null, null, null, null, false);
+			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
+			"Test Template", null, null, null, null, false);
 
-		addDisplayTemplate(_CLASS_NAME_ID, 0, "Test Template");
+		addDisplayTemplate(_classNameId, 0, "Test Template");
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), group.getGroupId(), _CLASS_NAME_ID,
-			0, "Test Template", null, null, null, null, false);
+			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
+			"Test Template", null, null, null, null, false);
 
 		Assert.assertEquals(initialCount + 1, count);
 	}
@@ -235,14 +243,14 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testSearchCountByKeywords() throws Exception {
 		int initialCount = DDMTemplateLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), group.getGroupId(), _CLASS_NAME_ID,
-			0, null, null, null);
+			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
+			null, null, null);
 
-		addDisplayTemplate(_CLASS_NAME_ID, 0, "Test Template");
+		addDisplayTemplate(_classNameId, 0, "Test Template");
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), group.getGroupId(), _CLASS_NAME_ID,
-			0, null, null, null);
+			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
+			null, null, null);
 
 		Assert.assertEquals(initialCount + 1, count);
 	}
@@ -265,7 +273,6 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private static final long _CLASS_NAME_ID = PortalUtil.getClassNameId(
-		AssetEntry.class);
+	private long _classNameId;
 
 }

@@ -365,6 +365,11 @@
 			<bean class="com.liferay.portal.util.DigesterImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.util.DomainUtil" class="com.liferay.portal.kernel.util.DomainUtil">
+		<property name="domain">
+			<bean class="com.liferay.portal.util.DomainImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" class="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil">
 		<property name="fastDateFormatFactory">
 			<bean class="com.liferay.portal.util.FastDateFormatFactoryImpl" />

@@ -299,7 +299,7 @@ AUI.add(
 										'assetTagNames': instance.one('#assetTagNames').val(),
 										'cmd': constants.ADD,
 										'content': content,
-										'coverImageCaptionEditor': coverImageCaption,
+										'coverImageCaption': coverImageCaption,
 										'displayDateAmPm': instance.one('#displayDateAmPm').val(),
 										'displayDateDay': instance.one('#displayDateDay').val(),
 										'displayDateHour': instance.one('#displayDateHour').val(),

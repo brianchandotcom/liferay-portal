@@ -25,17 +25,17 @@ import java.lang.reflect.Method;
 /**
  * @author Iván Zaera
  */
-public class ServiceConfigurationBeanSettings extends BaseSettings
+public class ConfigurationBeanSettings extends BaseSettings
 	implements Settings {
 
-	public ServiceConfigurationBeanSettings(
+	public ConfigurationBeanSettings(
 		LocationVariableResolver locationVariableResolver,
-		Object serviceConfigurationBean, Settings parentSettings) {
+		Object configurationBean, Settings parentSettings) {
 
 		super(parentSettings);
 
 		_locationVariableResolver = locationVariableResolver;
-		_serviceConfigurationBean = serviceConfigurationBean;
+		_configurationBean = configurationBean;
 	}
 
 	@Override
@@ -74,16 +74,16 @@ public class ServiceConfigurationBeanSettings extends BaseSettings
 	}
 
 	private Object _getProperty(String key) {
-		if (_serviceConfigurationBean == null) {
+		if (_configurationBean == null) {
 			return null;
 		}
 
-		Class<?> clazz = _serviceConfigurationBean.getClass();
+		Class<?> clazz = _configurationBean.getClass();
 
 		try {
 			Method method = clazz.getMethod(key);
 
-			return method.invoke(_serviceConfigurationBean);
+			return method.invoke(_configurationBean);
 		}
 		catch (NoSuchMethodException nsme) {
 			return null;
@@ -96,7 +96,7 @@ public class ServiceConfigurationBeanSettings extends BaseSettings
 		}
 	}
 
+	private final Object _configurationBean;
 	private final LocationVariableResolver _locationVariableResolver;
-	private final Object _serviceConfigurationBean;
 
 }

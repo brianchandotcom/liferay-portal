@@ -49,10 +49,10 @@ public interface SettingsFactory {
 	public SettingsDescriptor getSettingsDescriptor(String settingsId);
 
 	public void registerSettingsDefinition(
-		SettingsDefinition settingsDefinition, Object serviceConfigurationBean);
+		SettingsDefinition settingsDefinition, Object configurationBean);
 
 	public void registerSettingsMetadata(
-		Class<?> settingsClass, Object serviceConfigurationBean,
+		Class<?> settingsClass, Object configurationBean,
 		FallbackKeys fallbackKeys);
 
 	public void unregisterSettingsDefinition(

@@ -25,24 +25,23 @@ import org.powermock.api.mockito.PowerMockito;
 /**
  * @author Iván Zaera
  */
-public class ServiceConfigurationBeanSettingsTest extends PowerMockito {
+public class ConfigurationBeanSettingsTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		_serviceConfigurationBean = new ServiceConfigurationBean();
+		_configurationBean = new ConfigurationBean();
 
 		_mockLocationVariableResolver = mock(LocationVariableResolver.class);
 
-		_serviceConfigurationBeanSettings =
-			new ServiceConfigurationBeanSettings(
-				_mockLocationVariableResolver, _serviceConfigurationBean, null);
+		_configurationBeanSettings = new ConfigurationBeanSettings(
+			_mockLocationVariableResolver, _configurationBean, null);
 	}
 
 	@Test
 	public void testGetValuesWithExistingKey() {
 		Assert.assertArrayEquals(
-			_serviceConfigurationBean.stringArrayValue(),
-			_serviceConfigurationBeanSettings.getValues(
+			_configurationBean.stringArrayValue(),
+			_configurationBeanSettings.getValues(
 				"stringArrayValue", new String[] {"defaultValue"}));
 	}
 
@@ -52,42 +51,39 @@ public class ServiceConfigurationBeanSettingsTest extends PowerMockito {
 
 		Assert.assertArrayEquals(
 			defaultValue,
-			_serviceConfigurationBeanSettings.getValues(
-				"missingKey", defaultValue));
+			_configurationBeanSettings.getValues("missingKey", defaultValue));
 	}
 
 	@Test
 	public void testGetValueWithExistingBooleanValue() {
 		Assert.assertEquals(
-			String.valueOf(_serviceConfigurationBean.booleanValue()),
-			_serviceConfigurationBeanSettings.getValue(
+			String.valueOf(_configurationBean.booleanValue()),
+			_configurationBeanSettings.getValue(
 				"booleanValue", "defaultValue"));
 	}
 
 	@Test
 	public void testGetValueWithExistingLocalizedValuesMapValue() {
 		LocalizedValuesMap localizedValuesMap =
-			_serviceConfigurationBean.localizedValuesMap();
+			_configurationBean.localizedValuesMap();
 
 		Assert.assertEquals(
 			localizedValuesMap.getDefaultValue(),
-			_serviceConfigurationBeanSettings.getValue(
-				"localizedValuesMap", null));
+			_configurationBeanSettings.getValue("localizedValuesMap", null));
 	}
 
 	@Test
 	public void testGetValueWithExistingStringValue() {
 		Assert.assertEquals(
-			_serviceConfigurationBean.stringValue(),
-			_serviceConfigurationBeanSettings.getValue(
-				"stringValue", "defaultValue"));
+			_configurationBean.stringValue(),
+			_configurationBeanSettings.getValue("stringValue", "defaultValue"));
 	}
 
 	@Test
 	public void testGetValueWithLocationVariable() {
 		when(
 			_mockLocationVariableResolver.isLocationVariable(
-				_serviceConfigurationBean.locationVariableValue())
+				_configurationBean.locationVariableValue())
 		).thenReturn(
 			true
 		);
@@ -96,14 +92,14 @@ public class ServiceConfigurationBeanSettingsTest extends PowerMockito {
 
 		when(
 			_mockLocationVariableResolver.resolve(
-				_serviceConfigurationBean.locationVariableValue())
+				_configurationBean.locationVariableValue())
 		).thenReturn(
 			expectedValue
 		);
 
 		Assert.assertEquals(
 			expectedValue,
-			_serviceConfigurationBeanSettings.getValue(
+			_configurationBeanSettings.getValue(
 				"locationVariableValue", "defaultValue"));
 	}
 
@@ -111,26 +107,24 @@ public class ServiceConfigurationBeanSettingsTest extends PowerMockito {
 	public void testGetValueWithMissingKey() {
 		Assert.assertEquals(
 			"defaultValue",
-			_serviceConfigurationBeanSettings.getValue(
-				"missingKey", "defaultValue"));
+			_configurationBeanSettings.getValue("missingKey", "defaultValue"));
 	}
 
 	@Test
-	public void testGetValueWithNullServiceConfigurationBean() {
-		_serviceConfigurationBeanSettings =
-			new ServiceConfigurationBeanSettings(null, null, null);
+	public void testGetValueWithNullConfigurationBean() {
+		_configurationBeanSettings = new ConfigurationBeanSettings(
+			null, null, null);
 
 		Assert.assertEquals(
 			"defaultValue",
-			_serviceConfigurationBeanSettings.getValue(
-				"anyKey", "defaultValue"));
+			_configurationBeanSettings.getValue("anyKey", "defaultValue"));
 	}
 
+	private ConfigurationBean _configurationBean;
+	private ConfigurationBeanSettings _configurationBeanSettings;
 	private LocationVariableResolver _mockLocationVariableResolver;
-	private ServiceConfigurationBean _serviceConfigurationBean;
-	private ServiceConfigurationBeanSettings _serviceConfigurationBeanSettings;
 
-	private static class ServiceConfigurationBean {
+	private static class ConfigurationBean {
 
 		public boolean booleanValue() {
 			return true;

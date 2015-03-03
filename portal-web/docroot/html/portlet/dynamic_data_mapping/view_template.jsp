@@ -31,6 +31,12 @@ if ((classPK > 0) && (structureClassNameId == classNameId)) {
 	structure = DDMStructureServiceUtil.getStructure(classPK);
 }
 
+long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
+
+if (resourceClassNameId == 0) {
+	resourceClassNameId = PortalUtil.getClassNameId(PortletDisplayTemplate.class);
+}
+
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -104,6 +110,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 			<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 			<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+			<liferay-util:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
 		</liferay-util:include>
 
 		<liferay-ui:search-container-results>

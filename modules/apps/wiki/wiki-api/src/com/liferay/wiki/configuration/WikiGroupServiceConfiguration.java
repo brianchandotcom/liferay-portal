@@ -16,6 +16,8 @@ package com.liferay.wiki.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+
 /**
  * @author Iván Zaera
  */
@@ -46,7 +48,7 @@ public interface WikiGroupServiceConfiguration {
 		deflt = "${resource:com/liferay/wiki/configuration/dependencies/email_page_added_body.tmpl}",
 		required = false
 	)
-	public String emailPageAddedBody();
+	public LocalizedValuesMap emailPageAddedBody();
 
 	@Meta.AD(
 		deflt = "true", required = false
@@ -57,13 +59,13 @@ public interface WikiGroupServiceConfiguration {
 		deflt = "${resource:com/liferay/wiki/configuration/dependencies/email_page_added_subject.tmpl}",
 		required = false
 	)
-	public String emailPageAddedSubject();
+	public LocalizedValuesMap emailPageAddedSubject();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/wiki/configuration/dependencies/email_page_updated_body.tmpl}",
 		required = false
 	)
-	public String emailPageUpdatedBody();
+	public LocalizedValuesMap emailPageUpdatedBody();
 
 	@Meta.AD(
 		deflt = "true", required = false
@@ -74,7 +76,7 @@ public interface WikiGroupServiceConfiguration {
 		deflt = "${resource:com/liferay/wiki/configuration/dependencies/email_page_updated_subject.tmpl}",
 		required = false
 	)
-	public String emailPageUpdatedSubject();
+	public LocalizedValuesMap emailPageUpdatedSubject();
 
 	/**
 	 * Set the name of the default page for a wiki node. The name for the

@@ -239,6 +239,12 @@ AUI.add(
 							instance.one('#content').val(contentEditor.getHTML());
 						}
 
+						var coverImageCaptionEditor = window[instance.ns('coverImageCaptionEditor')];
+
+						if (coverImageCaptionEditor) {
+							instance.one('#coverImageCaption').val(coverImageCaptionEditor.getHTML());
+						}
+
 						var descriptionEditor = window[instance.ns('descriptionEditor')];
 
 						if (descriptionEditor) {
@@ -269,7 +275,7 @@ AUI.add(
 						var title = window[instance.ns('titleEditor')].getHTML();
 						var subtitle = window[instance.ns('subtitleEditor')].getHTML();
 						var content = window[instance.ns('contentEditor')].getHTML();
-						var description = window[instance.ns('descriptionEditor')].getHTML();
+						var coverImageCaption = window[instance.ns('coverImageCaptionEditor')].getHTML();
 
 						var form = instance._getPrincipalForm();
 
@@ -293,6 +299,7 @@ AUI.add(
 										'assetTagNames': instance.one('#assetTagNames').val(),
 										'cmd': constants.ADD,
 										'content': content,
+										'coverImageCaptionEditor': coverImageCaption,
 										'displayDateAmPm': instance.one('#displayDateAmPm').val(),
 										'displayDateDay': instance.one('#displayDateDay').val(),
 										'displayDateHour': instance.one('#displayDateHour').val(),
@@ -387,6 +394,7 @@ AUI.add(
 							instance.one('#subtitle').val(subtitle);
 							instance.one('#content').val(content);
 							instance.one('#description').val(description);
+							instance.one('#coverImageCaption').val(coverImageCaption);
 
 							instance.one('#workflowAction').val(draft ? constants.ACTION_SAVE_DRAFT : constants.ACTION_PUBLISH);
 

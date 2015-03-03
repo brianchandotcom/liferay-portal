@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
@@ -777,8 +778,19 @@ public class BookmarksEntryLocalServiceImpl
 		subscriptionSender.setEntryURL(entryURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setLocalizedBodyMap(bodyLocalizedValuesMap);
-		subscriptionSender.setLocalizedSubjectMap(subjectLocalizedValuesMap);
+
+		if (bodyLocalizedValuesMap != null) {
+			subscriptionSender.setLocalizedBodyMap(
+				bodyLocalizedValuesMap.getLocalizationMap(
+					LanguageUtil.getAvailableLocales()));
+		}
+
+		if (subjectLocalizedValuesMap != null) {
+			subscriptionSender.setLocalizedSubjectMap(
+				subjectLocalizedValuesMap.getLocalizationMap(
+					LanguageUtil.getAvailableLocales()));
+		}
+
 		subscriptionSender.setMailId("bookmarks_entry", entry.getEntryId());
 
 		int notificationType =

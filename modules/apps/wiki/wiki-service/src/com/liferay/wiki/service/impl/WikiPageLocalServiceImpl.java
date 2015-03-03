@@ -3112,8 +3112,19 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		subscriptionSender.setEntryURL(pageURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setLocalizedBodyMap(bodyLocalizedValuesMap);
-		subscriptionSender.setLocalizedSubjectMap(subjectLocalizedValuesMap);
+
+		if (bodyLocalizedValuesMap != null) {
+			subscriptionSender.setLocalizedBodyMap(
+				bodyLocalizedValuesMap.getLocalizationMap(
+					LanguageUtil.getAvailableLocales()));
+		}
+
+		if (subjectLocalizedValuesMap != null) {
+			subscriptionSender.setLocalizedSubjectMap(
+				subjectLocalizedValuesMap.getLocalizationMap(
+					LanguageUtil.getAvailableLocales()));
+		}
+
 		subscriptionSender.setMailId(
 			"wiki_page", page.getNodeId(), page.getPageId());
 

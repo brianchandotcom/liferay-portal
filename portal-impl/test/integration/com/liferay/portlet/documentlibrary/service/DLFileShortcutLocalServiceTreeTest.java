@@ -29,7 +29,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,21 +59,22 @@ public class DLFileShortcutLocalServiceTreeTest {
 	public void testFileShortcutTreePathWhenMovingSubfolderWithFileShortcut()
 		throws Exception {
 
-		Folder folderA = DLAppTestUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Folder A");
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
 
-		Folder folderAA = DLAppTestUtil.addFolder(
-			_group.getGroupId(), folderA.getFolderId(), "Folder AA");
+		Folder folderA = DLAppServiceUtil.addFolder(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Folder A", RandomTestUtil.randomString(), serviceContext);
+
+		Folder folderAA = DLAppServiceUtil.addFolder(
+			_group.getGroupId(), folderA.getFolderId(), "Folder AA",
+			RandomTestUtil.randomString(), serviceContext);
 
 		FileEntry fileEntry = addFileEntry(folderA.getFolderId(), "Entry.txt");
 
 		DLFileShortcut dlFileShortcut = addDLFileShortcut(
 			fileEntry, TestPropsValues.getGroupId(), folderAA.getFolderId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
 
 		DLAppLocalServiceUtil.moveFolder(
 			TestPropsValues.getUserId(), folderAA.getFolderId(),
@@ -145,9 +145,13 @@ public class DLFileShortcutLocalServiceTreeTest {
 
 		_dlFileShortcuts.add(dlFileShortcutA);
 
-		_folder = DLAppTestUtil.addFolder(
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		_folder = DLAppServiceUtil.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Folder A");
+			"Folder A", RandomTestUtil.randomString(), serviceContext);
 
 		DLFileShortcut dlFileShortcutAA = addDLFileShortcut(
 			_fileEntry, TestPropsValues.getGroupId(), _folder.getFolderId());

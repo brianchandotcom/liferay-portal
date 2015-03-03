@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.TreeModel;
@@ -25,7 +26,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,24 +52,27 @@ public class DLFolderLocalServiceTreeTest extends BaseLocalServiceTreeTestCase {
 
 		List<Folder> folders = new ArrayList<>();
 
-		Folder folderA = DLAppTestUtil.addFolder(
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		Folder folderA = DLAppServiceUtil.addFolder(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Folder A");
+			"Folder A", RandomTestUtil.randomString(), serviceContext);
 
 		folders.add(folderA);
 
-		Folder folderAA = DLAppTestUtil.addFolder(
-			group.getGroupId(), folderA.getFolderId(), "Folder AA");
+		Folder folderAA = DLAppServiceUtil.addFolder(
+			group.getGroupId(), folderA.getFolderId(), "Folder AA",
+			RandomTestUtil.randomString(), serviceContext);
 
 		folders.add(folderAA);
 
-		Folder folderAAA = DLAppTestUtil.addFolder(
-			group.getGroupId(), folderAA.getFolderId(), "Folder AAA");
+		Folder folderAAA = DLAppServiceUtil.addFolder(
+			group.getGroupId(), folderAA.getFolderId(), "Folder AAA",
+			RandomTestUtil.randomString(), serviceContext);
 
 		folders.add(folderAAA);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		DLAppLocalServiceUtil.moveFolder(
 			TestPropsValues.getUserId(), folderAA.getFolderId(),
@@ -96,8 +99,13 @@ public class DLFolderLocalServiceTreeTest extends BaseLocalServiceTreeTestCase {
 			parentFolderId = folder.getFolderId();
 		}
 
-		Folder folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), parentFolderId);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		Folder folder = DLAppServiceUtil.addFolder(
+			group.getGroupId(), parentFolderId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
 			folder.getFolderId());

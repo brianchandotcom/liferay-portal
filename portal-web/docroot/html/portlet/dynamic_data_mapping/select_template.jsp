@@ -21,6 +21,7 @@ long templateId = ParamUtil.getLong(request, "templateId");
 
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
+long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 
 DDMStructure structure = null;
@@ -38,6 +39,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 	<portlet:param name="struts_action" value="/dynamic_data_mapping/select_template" />
 	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+	<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
 	<portlet:param name="eventName" value="<%= eventName %>" />
 </liferay-portlet:renderURL>
 

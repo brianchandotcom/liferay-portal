@@ -17,7 +17,9 @@
 <%@ include file="/html/taglib/ui/discussion/init.jsp" %>
 
 <%
-boolean hideControls = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:hideControls"));
+String className = (String)request.getAttribute("liferay-ui:discussion:className");
+long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:classPK"));
+boolean hideControls = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:discussion:hideControls"));
 String permissionClassName = (String)request.getAttribute("liferay-ui:discussion:permissionClassName");
 long permissionClassPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:permissionClassPK"));
 boolean ratingsEnabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:ratingsEnabled"));
@@ -31,6 +33,8 @@ String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:ran
 MBMessage rootMessage = (MBMessage)request.getAttribute("liferay-ui:discussion:rootMessage");
 List<RatingsEntry> ratingsEntries = (List<RatingsEntry>)request.getAttribute("liferay-ui:discussion:ratingsEntries");
 List<RatingsStats> ratingsStatsList = (List<RatingsStats>)request.getAttribute("liferay-ui:discussion:ratingsStatsList");
+
+MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(userId, scopeGroupId, className, classPK, WorkflowConstants.STATUS_ANY);
 
 index++;
 
@@ -222,22 +226,24 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							+ randomNamespace + "hideEditor('" + namespace + randomNamespace + "editReplyBody" + index + "','" + namespace + randomNamespace + "editForm" + index + "');" + randomNamespace + "showEl('" + namespace + randomNamespace + "discussionMessage" + index + "')";
 						%>
 
-						<c:choose>
-							<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-								<liferay-ui:icon
-									label="<%= true %>"
-									message="reply"
-									url="<%= taglibPostReplyURL %>"
-								/>
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:icon
-									label="<%= true %>"
-									message="please-sign-in-to-reply"
-									url="<%= themeDisplay.getURLSignIn() %>"
-								/>
-							</c:otherwise>
-						</c:choose>
+						<c:if test="<%= !messageDisplay.isMaxMessageCountReached() %>">
+							<c:choose>
+								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+									<liferay-ui:icon
+										label="<%= true %>"
+										message="reply"
+										url="<%= taglibPostReplyURL %>"
+										/>
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:icon
+										label="<%= true %>"
+										message="please-sign-in-to-reply"
+										url="<%= themeDisplay.getURLSignIn() %>"
+										/>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
 					</c:if>
 
 					<ul class="lfr-discussion-actions">

@@ -44,6 +44,12 @@ int messagesCount = messages.size();
 <section>
 	<div class="hide lfr-message-response" id="<portlet:namespace />discussionStatusMessages"></div>
 
+	<c:if test="<%= messageDisplay.isMaxMessageCountReached() %>">
+		<div class="alert alert-warning">
+			<liferay-ui:message key="max-number-of-comments-has-been-reached" />
+		</div>
+	</c:if>
+
 	<c:if test="<%= (messagesCount > 1) || MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.VIEW) %>">
 		<div class="taglib-discussion" id="<portlet:namespace />discussionContainer">
 			<aui:form action="<%= formAction %>" method="post" name="<%= formName %>">
@@ -70,24 +76,26 @@ int messagesCount = messages.size();
 
 				<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
 					<aui:fieldset cssClass="add-comment" id='<%= randomNamespace + "messageScroll0" %>'>
-						<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
-							<aui:input name="messageId0" type="hidden" value="<%= message.getMessageId() %>" />
-							<aui:input name="parentMessageId0" type="hidden" value="<%= message.getMessageId() %>" />
-						</div>
+						<c:if test="<%= !messageDisplay.isMaxMessageCountReached() %>">
+							<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
+								<aui:input name="messageId0" type="hidden" value="<%= message.getMessageId() %>" />
+								<aui:input name="parentMessageId0" type="hidden" value="<%= message.getMessageId() %>" />
+							</div>
 
-						<%
-						String taglibPostReplyURL = "javascript:" + randomNamespace + "showEl('" + randomNamespace + "postReplyForm0');";
-						%>
+							<%
+							String taglibPostReplyURL = "javascript:" + randomNamespace + "showEl('" + randomNamespace + "postReplyForm0');";
+							%>
 
-						<c:if test="<%= messagesCount == 1 %>">
-							<c:choose>
-								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-									<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="no-comments-yet" /> <a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
-								</c:otherwise>
-							</c:choose>
+							<c:if test="<%= messagesCount == 1 %>">
+								<c:choose>
+									<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+										<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message key="no-comments-yet" /> <a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
 						</c:if>
 
 						<%
@@ -119,20 +127,20 @@ int messagesCount = messages.size();
 							</c:choose>
 						</c:if>
 
-						<aui:input name="emailAddress" type="hidden" />
+						<c:if test="<%= !messageDisplay.isMaxMessageCountReached() %>">
 
-						<c:choose>
-							<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-								<aui:row fluid="<%= true %>">
-									<div class="lfr-discussion-details">
-										<liferay-ui:user-display
-											displayStyle="2"
-											showUserName="<%= false %>"
-											userId="<%= user.getUserId() %>"
-										/>
-									</div>
+							<aui:input name="emailAddress" type="hidden" />
 
-									<div class="lfr-discussion-body">
+							<c:choose>
+								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+									<aui:row fluid="<%= true %>">
+										<div class="lfr-discussion-details">
+											<liferay-ui:user-display
+												displayStyle="2"
+												showUserName="<%= false %>"
+												userId="<%= user.getUserId() %>"
+											/>
+										</div>
 
 										<%
 										Map<String, Object> data = new HashMap<String, Object>();
@@ -153,23 +161,26 @@ int messagesCount = messages.size();
 
 										<liferay-ui:input-editor contents="" data="<%= data %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" showSource="<%= false %>" />
 
-										<aui:input name="postReplyBody0" type="hidden" />
+											<liferay-ui:input-editor contents="" data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
 
-										<aui:button-row>
-											<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
-										</aui:button-row>
-									</div>
-								</aui:row>
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:icon
-									iconCssClass="icon-reply"
-									label="<%= true %>"
-									message="please-sign-in-to-comment"
-									url="<%= themeDisplay.getURLSignIn() %>"
-								/>
-							</c:otherwise>
-						</c:choose>
+											<aui:input name="postReplyBody0" type="hidden" />
+
+												<aui:button-row>
+													<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
+												</aui:button-row>
+										</div>
+									</aui:row>
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:icon
+										iconCssClass="icon-reply"
+										label="<%= true %>"
+										message="please-sign-in-to-comment"
+										url="<%= themeDisplay.getURLSignIn() %>"
+									/>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
 					</aui:fieldset>
 				</c:if>
 

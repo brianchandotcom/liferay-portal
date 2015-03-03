@@ -83,7 +83,7 @@ public class SettingsFactoryUtil {
 	}
 
 	public static void registerSettingsMetadata(
-		Class<?> settingsClass, Object serviceConfigurationBean,
+		Class<?> settingsClass, Object configurationBean,
 		FallbackKeys fallbackKeys) {
 
 		getSettingsFactory().registerSettingsMetadata(

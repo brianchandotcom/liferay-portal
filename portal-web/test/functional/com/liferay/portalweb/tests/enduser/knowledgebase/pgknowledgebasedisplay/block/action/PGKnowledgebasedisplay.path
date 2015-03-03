@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TITLE</td>
+	<td>title=${key_pageName}</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
@@ -171,6 +176,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ARTICLE_NAVIGATION_GRANDCHILD</td>
+	<td>//div[@class='kbarticle-navigation']//a[contains(.,'${key_kbGrandchildArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER-->
+<tr>
+	<td>FOLDER_SELECT_DROPDOWN</td>
+	<td>//select[contains(@id,'rootKBFolderId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_SELECT_OPTION</td>
+	<td>//select[contains(@id,'rootKBFolderId')]/option[contains(.,'${key_kbFolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -276,6 +302,11 @@
 <tr>
 	<td>SUGGESTION_DELETE_BUTTON</td>
 	<td>//tr[contains(.,'${key_kbSuggestionBody}')]/td[2]/div[@class='kb-suggestion-actions']/a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--SUGGESTION_NAVIGATION-->

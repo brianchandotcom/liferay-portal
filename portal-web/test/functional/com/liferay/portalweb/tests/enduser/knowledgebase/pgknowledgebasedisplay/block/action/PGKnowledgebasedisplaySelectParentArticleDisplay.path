@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>PGKnowledgebasedisplaySelectParentArticleDisplay</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGKnowledgebasedisplaySelectParentArticleDisplay</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGKnowledgebasedisplaySelectParentArticleDisplay</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGKnowledgebasedisplaySelectParentArticle</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_PARENT_DISPLAY_IFRAME</td>
+	<td>//iframe[contains(@id,'selectConfigurationKBObject') and contains(@id,'iframe')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

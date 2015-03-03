@@ -14,14 +14,17 @@
 
 package com.liferay.wiki.settings;
 
-import com.liferay.portal.kernel.settings.GroupServiceSettings;
-import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
-
 /**
  * @author Iván Zaera
  */
-public interface WikiGroupServiceSettings
-	extends GroupServiceSettings, WikiGroupServiceConfiguration,
-		WikiGroupServiceSettingsExtra
-{
+public interface WikiGroupServiceSettingsExtra {
+
+	public String emailPageAddedBodyXml();
+
+	public String emailPageAddedSubjectXml();
+
+	public String emailPageUpdatedBodyXml();
+
+	public String emailPageUpdatedSubjectXml();
+
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.pacl.test;
 
+import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
@@ -25,6 +26,7 @@ import com.liferay.portal.test.rule.PACLTestRule;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -413,8 +415,11 @@ public class ThreadTest {
 	@Test
 	public void testPortalExecutor1() throws Exception {
 		try {
-			PortalExecutorManagerUtil.execute(
-				"liferay/hot_deploy",
+			ThreadPoolExecutor threadPoolExecutor =
+				PortalExecutorManagerUtil.getPortalExecutor(
+					"liferay/hot_deploy");
+
+			threadPoolExecutor.submit(
 				new Callable<Void>() {
 
 					@Override
@@ -434,8 +439,11 @@ public class ThreadTest {
 	@Test
 	public void testPortalExecutor2() throws Exception {
 		try {
-			PortalExecutorManagerUtil.execute(
-				"liferay/test_pacl",
+			ThreadPoolExecutor threadPoolExecutor =
+				PortalExecutorManagerUtil.getPortalExecutor(
+					"liferay/test_pacl");
+
+			threadPoolExecutor.submit(
 				new Callable<Void>() {
 
 					@Override
@@ -475,7 +483,11 @@ public class ThreadTest {
 	@Test
 	public void testPortalExecutor5() throws Exception {
 		try {
-			PortalExecutorManagerUtil.shutdown("liferay/hot_deploy");
+			ThreadPoolExecutor threadPoolExecutor =
+				PortalExecutorManagerUtil.getPortalExecutor(
+					"liferay/hot_deploy");
+
+			threadPoolExecutor.shutdown();
 
 			Assert.fail();
 		}
@@ -486,7 +498,13 @@ public class ThreadTest {
 	@Test
 	public void testPortalExecutor6() throws Exception {
 		try {
-			PortalExecutorManagerUtil.shutdown("liferay/test_pacl");
+			ThreadPoolExecutor threadPoolExecutor =
+				PortalExecutorManagerUtil.getPortalExecutor(
+					"liferay/test_pacl");
+
+			threadPoolExecutor.shutdown();
+
+			threadPoolExecutor.awaitTermination(1, TimeUnit.MINUTES);
 
 			PortalExecutorManagerUtil.getPortalExecutor(
 				"liferay/test_pacl", true);

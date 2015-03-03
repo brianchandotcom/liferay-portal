@@ -223,7 +223,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		if (resourceID.equals("getFieldValue")) {
 			getFieldValue(resourceRequest, resourceResponse);
 		}
-		else if (resourceID.equals("rss")) {
+		else if (resourceID.equals("getRSS")) {
 			getRSS(resourceRequest, resourceResponse);
 		}
 		else {

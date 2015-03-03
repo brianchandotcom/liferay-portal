@@ -1691,6 +1691,11 @@
 
 		<!-- Staging Bar -->
 
+		<action path="/staging_bar/confirmation" type="com.liferay.portlet.layoutsadmin.action.ConfirmationExportImportConfigurationAction">
+			<forward name="portlet.layouts_admin.confirmation" path="portlet.layouts_admin.confirmation" />
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+		</action>
+
 		<action path="/staging_bar/edit_layout_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutBranchAction">
 			<forward name="portlet.staging_bar.edit_layout_branch" path="portlet.staging_bar.edit_layout_branch" />
 			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
@@ -1705,7 +1710,17 @@
 			<forward name="portlet.layouts_admin.error" path="portlet.staging_bar.view" />
 		</action>
 
+		<action path="/staging_bar/edit_publish_configuration" type="com.liferay.portlet.layoutsadmin.action.EditPublishConfigurationAction">
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+			<forward name="portlet.layouts_admin.publish_layouts" path="portlet.layouts_admin.publish_layouts" />
+		</action>
+
 		<action path="/staging_bar/merge_layout_set_branch" forward="portlet.staging_bar.merge_layout_set_branch" />
+
+		<action path="/staging_bar/publish_layouts" type="com.liferay.portlet.layoutsadmin.action.PublishLayoutsAction">
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+			<forward name="portlet.layouts_admin.publish_layouts" path="portlet.layouts_admin.publish_layouts" />
+		</action>
 
 		<action path="/staging_bar/view" forward="portlet.staging_bar.view" />
 

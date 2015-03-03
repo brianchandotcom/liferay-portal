@@ -84,28 +84,59 @@
 				</c:otherwise>
 			</c:choose>
 
-			<liferay-util:buffer var="publishLink">
+			<%
+			String linkCssClass = StringPool.BLANK;
+
+			if (!groupType.isControlPanel()) {
+				linkCssClass = "btn btn-success";
+			}
+			%>
+
+			<liferay-util:buffer var="publishLinkForControlPanel">
+				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
+			</liferay-util:buffer>
+
+			<liferay-util:buffer var="publishLinkForLayout">
 
 				<%
-				String linkCssClass = StringPool.BLANK;
-
-				if (!groupType.isControlPanel()) {
-					linkCssClass = "btn btn-success";
-				}
+				UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 				%>
 
-				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
+				<portlet:renderURL var="publishRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="struts_action" value="/staging_bar/publish_layouts" />
+					<portlet:param name="tabs2" value="current-and-previous" />
+					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+					<portlet:param name="quickPublish" value="<%= String.valueOf(true) %>" />
+				</portlet:renderURL>
+
+				<portlet:renderURL var="confirmationURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="struts_action" value="/staging_bar/confirmation" />
+					<portlet:param name="redirect" value="<%= publishRedirectURL %>" />
+					<portlet:param name="backURL" value="<%= currentURL %>" />
+					<portlet:param name="localPublishing" value="<%= String.valueOf(liveGroup.isStaged() && !liveGroup.isStagedRemotely()) %>" />
+					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+					<portlet:param name="remoteAddress" value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>' />
+					<portlet:param name="remotePort" value='<%= liveGroupTypeSettings.getProperty("remotePort") %>' />
+					<portlet:param name="remotePathContext" value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>' />
+					<portlet:param name="remoteGroupId" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
+					<portlet:param name="secureConnection" value='<%= liveGroupTypeSettings.getProperty("secureConnection") %>' />
+					<portlet:param name="sourceGroupId" value="<%= String.valueOf(stagingGroupId) %>" />
+					<portlet:param name="targetGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+				</portlet:renderURL>
+
+				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= confirmationURL.toString() %>" id='<%= layoutSetBranchId + "publishLatestChangesLink" %>' label="publish-latest-changes" />
 			</liferay-util:buffer>
 
 			<c:choose>
 				<c:when test="<%= !onlyActions %>">
 					<li class="publish-link-container">
-						<%= publishLink %>
+						<%= publishLinkForControlPanel %>
 					</li>
 				</c:when>
 				<c:otherwise>
 					<div class="<%= cssClass %> publish-link-container">
-						<%= publishLink %>
+						<%= publishLinkForLayout %>
 					</div>
 				</c:otherwise>
 			</c:choose>
@@ -125,6 +156,30 @@
 								{
 									title: '<%= UnicodeFormatter.toString(publishMessage) %>',
 									url: event.currentTarget.attr('href')
+								}
+							);
+						}
+					);
+				}
+
+				var publishLatestChangesLink = A.one('#<portlet:namespace /><%= layoutSetBranchId + "publishLatestChangesLink" %>');
+
+				if (publishLatestChangesLink) {
+					publishLatestChangesLink.detach('click');
+
+					publishLatestChangesLink.on(
+						'click',
+						function(event) {
+							event.preventDefault();
+
+							Liferay.Util.openWindow(
+								{
+									dialog: {
+										width: 820
+									},
+									id: '<portlet:namespace />publishLatestChangesDialog',
+									title: '<%= UnicodeLanguageUtil.get(request, "publish-latest-changes") %>',
+									uri: event.currentTarget.attr('href')
 								}
 							);
 						}

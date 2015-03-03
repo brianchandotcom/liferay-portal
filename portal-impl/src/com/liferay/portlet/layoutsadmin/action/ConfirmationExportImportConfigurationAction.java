@@ -15,9 +15,15 @@
 package com.liferay.portlet.layoutsadmin.action;
 
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.sites.action.ActionUtil;
 
 import javax.portlet.PortletConfig;
@@ -41,6 +47,13 @@ public class ConfirmationExportImportConfigurationAction extends PortletAction {
 		throws Exception {
 
 		try {
+			long exportImportConfigurationId = ParamUtil.getLong(
+				renderRequest, "exportImportConfigurationId");
+
+			if (exportImportConfigurationId <= 0) {
+				createExportImportConfiguration(renderRequest);
+			}
+
 			ActionUtil.getGroup(renderRequest);
 		}
 		catch (Exception e) {
@@ -58,6 +71,59 @@ public class ConfirmationExportImportConfigurationAction extends PortletAction {
 
 		return actionMapping.findForward(
 			getForward(renderRequest, "portlet.layouts_admin.confirmation"));
+	}
+
+	protected void createExportImportConfiguration(RenderRequest renderRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		boolean localPublishing = ParamUtil.getBoolean(
+			renderRequest, "localPublishing");
+
+		ExportImportConfiguration exportImportConfiguration = null;
+
+		long sourceGroupId = ParamUtil.getLong(renderRequest, "sourceGroupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			renderRequest, "privateLayout");
+
+		if (localPublishing) {
+			long targetGroupId = ParamUtil.getLong(
+				renderRequest, "targetGroupId");
+
+			exportImportConfiguration =
+				ExportImportConfigurationFactory.
+					buildDefaultLocalPublishingExportImportConfiguration(
+						themeDisplay.getUser(), sourceGroupId, targetGroupId,
+						privateLayout);
+
+			renderRequest.setAttribute(
+				"exportImportConfigurationId",
+				exportImportConfiguration.getExportImportConfigurationId());
+		}
+		else {
+			String remoteAddress = ParamUtil.getString(
+				renderRequest, "remoteAddress");
+			int remotePort = ParamUtil.getInteger(renderRequest, "remotePort");
+			String remotePathContext = ParamUtil.getString(
+				renderRequest, "remotePathContext");
+			boolean secureConnection = ParamUtil.getBoolean(
+				renderRequest, "secureConnection");
+			long remoteGroupId = ParamUtil.getLong(
+				renderRequest, "remoteGroupId");
+
+			exportImportConfiguration =
+				ExportImportConfigurationFactory.
+					buildDefaultRemotePublishingExportImportConfiguration(
+						themeDisplay.getUser(), sourceGroupId, privateLayout,
+						remoteAddress, remotePort, remotePathContext,
+						secureConnection, remoteGroupId);
+
+			renderRequest.setAttribute(
+				"exportImportConfigurationId",
+				exportImportConfiguration.getExportImportConfigurationId());
+		}
 	}
 
 }

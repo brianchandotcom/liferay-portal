@@ -59,6 +59,8 @@ import javax.portlet.PortletRequest;
 @ProviderType
 public class ExportImportDateUtil {
 
+	public static final String RANGE = "range";
+
 	public static final String RANGE_ALL = "all";
 
 	public static final String RANGE_DATE_RANGE = "dateRange";

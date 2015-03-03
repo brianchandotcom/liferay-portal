@@ -1,0 +1,114 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.settings.impl;
+
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.settings.TypedSettings;
+import com.liferay.portal.kernel.util.ProxyUtil;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+/**
+* @author Iván Zaera
+*/
+public class SettingsInvocationHandler<S, C> implements InvocationHandler {
+
+	public SettingsInvocationHandler(
+		Class<S> settingsClass, Object settingsExtraImplementation,
+		TypedSettings typedSettings) {
+
+		_settingsClass = settingsClass;
+		_settingsExtraImplementation = settingsExtraImplementation;
+		_typedSettings = typedSettings;
+	}
+
+	@SuppressWarnings("unchecked")
+	public S createProxy() {
+		return (S)ProxyUtil.newProxyInstance(
+			_settingsClass.getClassLoader(), new Class[]{_settingsClass}, this);
+	}
+
+	@Override
+	public Object invoke(Object proxy, Method method, Object[] args)
+		throws InvocationTargetException {
+
+		try {
+			return _invokeSettingsExtra(method, args);
+		}
+		catch (InvocationTargetException ite) {
+			throw ite;
+		}
+		catch (Exception e) {
+		}
+
+		try {
+			return _invokeTypedSettings(method);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private Object _invokeSettingsExtra(Method method, Object[] args)
+		throws IllegalAccessException, InvocationTargetException {
+
+		return method.invoke(_settingsExtraImplementation, args);
+	}
+
+	private Object _invokeTypedSettings(Method method)
+		throws NoSuchMethodException, IllegalAccessException,
+			InvocationTargetException, InstantiationException {
+
+		String name = method.getName();
+		Class<?> returnType = method.getReturnType();
+
+		if (returnType.equals(boolean.class)) {
+			return _typedSettings.getBooleanValue(name);
+		}
+		else if (returnType.equals(double.class)) {
+			return _typedSettings.getDoubleValue(name);
+		}
+		else if (returnType.equals(float.class)) {
+			return _typedSettings.getFloatValue(name);
+		}
+		else if (returnType.equals(int.class)) {
+			return _typedSettings.getIntegerValue(name);
+		}
+		else if (returnType.equals(LocalizedValuesMap.class)) {
+			return _typedSettings.getLocalizedValuesMap(name);
+		}
+		else if (returnType.equals(long.class)) {
+			return _typedSettings.getLongValue(name);
+		}
+		else if (returnType.equals(String.class)) {
+			return _typedSettings.getValue(name);
+		}
+		else if (returnType.equals(String[].class)) {
+			return _typedSettings.getValues(name);
+		}
+
+		Constructor<?> constructor = returnType.getConstructor(String.class);
+
+		return constructor.newInstance(_typedSettings.getValue(name));
+	}
+
+	private final Class<S> _settingsClass;
+	private final Object _settingsExtraImplementation;
+	private final TypedSettings _typedSettings;
+
+}

@@ -74,6 +74,7 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 			message="export"
 			method="get"
 			url="<%= exportURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 
@@ -92,6 +93,7 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 			message="import"
 			method="get"
 			url="<%= importURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 

@@ -1082,26 +1082,6 @@
 		<put name="portlet_content" value="/portlet/roles_admin/view.jsp" />
 	</definition>
 
-	<!-- Search -->
-
-	<definition name="portlet.search" extends="portlet" />
-
-	<definition name="portlet.search.edit_content_redirect" extends="portlet.search">
-		<put name="portlet_content" value="/portlet/search/edit_content_redirect.jsp" />
-	</definition>
-
-	<definition name="portlet.search.search" extends="portlet.search">
-		<put name="portlet_content" value="/portlet/search/search.jsp" />
-	</definition>
-
-	<definition name="portlet.search.view" extends="portlet.search">
-		<put name="portlet_content" value="/portlet/search/view.jsp" />
-	</definition>
-
-	<definition name="portlet.search.view_content" extends="portlet.search">
-		<put name="portlet_content" value="/portlet/search/view_content.jsp" />
-	</definition>
-
 	<!-- Shopping -->
 
 	<definition name="portlet.shopping" extends="portlet" />

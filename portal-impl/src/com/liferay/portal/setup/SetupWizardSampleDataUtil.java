@@ -86,8 +86,6 @@ public class SetupWizardSampleDataUtil {
 			(LayoutTypePortlet)extranetLayout.getLayoutType();
 
 		layoutTypePortlet.addPortletId(
-			0, PortletKeys.SEARCH, "column-1", -1, false);
-		layoutTypePortlet.addPortletId(
 			0, PortletKeys.MESSAGE_BOARDS, "column-2", -1, false);
 
 		LayoutLocalServiceUtil.updateLayout(
@@ -102,8 +100,6 @@ public class SetupWizardSampleDataUtil {
 
 		layoutTypePortlet = (LayoutTypePortlet)intranetLayout.getLayoutType();
 
-		layoutTypePortlet.addPortletId(
-			0, PortletKeys.SEARCH, "column-1", -1, false);
 		layoutTypePortlet.addPortletId(
 			0, PortletKeys.MESSAGE_BOARDS, "column-2", -1, false);
 

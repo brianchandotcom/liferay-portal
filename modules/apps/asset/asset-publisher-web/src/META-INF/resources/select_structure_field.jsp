@@ -71,8 +71,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 			<liferay-ui:search-container-column-text
 				name="field"
 			>
-				<liferay-portlet:resourceURL portletConfiguration="<%= true %>" var="structureFieldURL">
-					<portlet:param name="<%= Constants.CMD %>" value="getFieldValue" />
+				<liferay-portlet:resourceURL id="getFieldValue" portletConfiguration="<%= true %>" var="structureFieldURL">
 					<portlet:param name="portletResource" value="<%= assetPublisherDisplayContext.getPortletResource() %>" />
 					<portlet:param name="structureId" value="<%= String.valueOf(ddmStructureId) %>" />
 					<portlet:param name="name" value="<%= name %>" />

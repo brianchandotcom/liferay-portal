@@ -105,9 +105,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	%>
 
 	<c:if test="<%= enableRSS %>">
-		<liferay-portlet:resourceURL varImpl="rssURL">
-			<portlet:param name="<%= Constants.CMD %>" value="rss" />
-		</liferay-portlet:resourceURL>
+		<liferay-portlet:resourceURL id="getRSS" varImpl="rssURL" />
 
 		<liferay-ui:rss resourceURL="<%= rssURL %>" />
 	</c:if>

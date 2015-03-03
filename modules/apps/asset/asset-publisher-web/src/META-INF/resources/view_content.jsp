@@ -65,10 +65,10 @@ else {
 		%>
 
 		<div>
-			<liferay-util:include page="/html/portlet/asset_publisher/display/full_content.jsp" />
+			<liferay-util:include page="/display/full_content.jsp" servletContext="<%= application %>" />
 		</div>
 
-		<liferay-util:include page="/html/portlet/asset_publisher/asset_html_metadata.jsp" />
+		<liferay-util:include page="/asset_html_metadata.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
 
@@ -76,6 +76,6 @@ else {
 		SessionErrors.add(renderRequest, NoSuchModelException.class.getName());
 		%>
 
-		<liferay-util:include page="/html/portlet/asset_publisher/error.jsp" />
+		<liferay-util:include page="/error.jsp" servletContext="<%= application %>" />
 	</c:otherwise>
 </c:choose>

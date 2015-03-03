@@ -85,7 +85,7 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 
 	protected String[] getValidUrlPrefixes(ThemeDisplay themeDisplay) {
 		String validUrlPrefixes = XSLContentUtil.replaceUrlTokens(
-			themeDisplay, _xslContentConfiguration.getValidUrlPrefixes());
+			themeDisplay, _xslContentConfiguration.validUrlPrefixes());
 
 		return StringUtil.split(validUrlPrefixes);
 	}

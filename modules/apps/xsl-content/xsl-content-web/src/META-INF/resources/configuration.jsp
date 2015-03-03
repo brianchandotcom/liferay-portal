@@ -29,7 +29,7 @@
 	<liferay-ui:error key="transformation" message="an-error-occurred-while-processing-your-xml-and-xsl" />
 
 	<%
-	String validUrlPrefixes = xslContentConfiguration.getValidUrlPrefixes();
+	String validUrlPrefixes = xslContentConfiguration.validUrlPrefixes();
 	%>
 
 	<c:if test="<%= Validator.isNotNull(validUrlPrefixes) %>">

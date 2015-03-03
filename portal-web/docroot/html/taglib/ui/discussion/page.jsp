@@ -39,6 +39,8 @@ MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 MBMessage rootMessage = treeWalker.getRoot();
 List<MBMessage> messages = treeWalker.getMessages();
 int messagesCount = messages.size();
+
+CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDisplayContext();
 %>
 
 <section>
@@ -142,26 +144,9 @@ int messagesCount = messages.size();
 											/>
 										</div>
 
-										<%
-										Map<String, Object> data = new HashMap<String, Object>();
+										<div class="lfr-discussion-body">
 
-										JSONObject editorConfigJSONObject = JSONFactoryUtil.createJSONObject();
-
-										editorConfigJSONObject.put("allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
-										editorConfigJSONObject.put("toolbars", JSONFactoryUtil.createJSONObject());
-
-										data.put("editorConfig", editorConfigJSONObject);
-
-										JSONObject editorOptionsJSONObject = JSONFactoryUtil.createJSONObject();
-
-										editorOptionsJSONObject.put("textMode", Boolean.FALSE);
-
-										data.put("editorOptions", editorOptionsJSONObject);
-										%>
-
-										<liferay-ui:input-editor contents="" data="<%= data %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" showSource="<%= false %>" />
-
-											<liferay-ui:input-editor contents="" data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
+											<liferay-ui:input-editor contents="" data="<%= commentsEditorDisplayContext.getDataTextEditor() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
 
 											<aui:input name="postReplyBody0" type="hidden" />
 

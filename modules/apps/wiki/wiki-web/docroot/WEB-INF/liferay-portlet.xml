@@ -10,7 +10,6 @@
 		<friendly-url-mapper-class>com.liferay.wiki.web.wiki.portlet.route.WikiFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>wiki</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/wiki/web/wiki/portlet/route/wiki-friendly-url-routes.xml</friendly-url-routes>
-		<portlet-data-handler-class>com.liferay.wiki.lar.WikiPortletDataHandler</portlet-data-handler-class>
 		<template-handler>com.liferay.wiki.web.wiki.portlet.template.WikiPortletDisplayTemplateHandler</template-handler>
 		<social-activity-interpreter-class>com.liferay.wiki.social.WikiActivityInterpreter</social-activity-interpreter-class>
 		<user-notification-definitions>com/liferay/wiki/notifications/wiki-user-notification-definitions.xml</user-notification-definitions>
@@ -37,7 +36,6 @@
 		<parent-struts-path>wiki</parent-struts-path>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<portlet-data-handler-class>com.liferay.wiki.lar.WikiDisplayPortletDataHandler</portlet-data-handler-class>
 		<permission-propagator>com.liferay.wiki.web.security.permission.WikiPermissionPropagatorImpl</permission-propagator>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>true</use-default-template>
@@ -56,7 +54,6 @@
 		<parent-struts-path>wiki</parent-struts-path>
 		<configuration-action-class>com.liferay.wiki.web.admin.portlet.action.WikiGroupServiceSettingsConfigurationAction</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<portlet-data-handler-class>com.liferay.wiki.lar.WikiPortletDataHandler</portlet-data-handler-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
 		<control-panel-entry-weight>7.0</control-panel-entry-weight>
 		<permission-propagator>com.liferay.wiki.web.security.permission.WikiPermissionPropagatorImpl</permission-propagator>

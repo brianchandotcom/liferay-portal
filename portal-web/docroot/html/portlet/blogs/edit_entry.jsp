@@ -145,7 +145,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 					<aui:input name="coverImageCaption" type="hidden"/>
 
-					<div class="entry-coverImageCaption">
+					<div class="entry-cover-image-caption">
 
 						<%
 						Map<String, Object> coverImageCaptionEditorData = new HashMap<String, Object>();

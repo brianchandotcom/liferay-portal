@@ -17,10 +17,19 @@ package com.liferay.sync.engine.model;
 import com.liferay.sync.engine.SyncEngine;
 import com.liferay.sync.engine.documentlibrary.util.ServerEventUtil;
 import com.liferay.sync.engine.service.SyncAccountService;
+import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.session.SessionManager;
+import com.liferay.sync.engine.util.FileUtil;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,6 +71,19 @@ public class SyncAccountModelListener implements ModelListener<SyncAccount> {
 			ServerEventUtil.retryServerConnection(
 				syncAccount.getSyncAccountId(), 0);
 		}
+
+		if (originalValues.containsKey("uiEvent")) {
+			if (syncAccount.getUiEvent() ==
+					SyncAccount.UI_EVENT_SYNC_ACCOUNT_FOLDER_MISSING) {
+
+				retryMissingSyncAccountFolder(syncAccount);
+			}
+			else {
+				if (_scheduledFuture != null) {
+					_scheduledFuture.cancel(true);
+				}
+			}
+		}
 	}
 
 	protected void activateSyncAccount(SyncAccount syncAccount) {
@@ -87,7 +109,41 @@ public class SyncAccountModelListener implements ModelListener<SyncAccount> {
 		}
 	}
 
+	protected void retryMissingSyncAccountFolder(
+		final SyncAccount syncAccount) {
+
+		if (_scheduledFuture != null) {
+			_scheduledFuture.cancel(true);
+		}
+
+		Runnable runnable = new Runnable() {
+
+			@Override
+			public void run() {
+				Path filePath = Paths.get(syncAccount.getFilePathName());
+
+				SyncFile syncFile = SyncFileService.fetchSyncFile(
+					syncAccount.getFilePathName());
+
+				if (FileUtil.getFileKey(filePath) == syncFile.getSyncFileId()) {
+					syncAccount.setActive(true);
+					syncAccount.setUiEvent(SyncAccount.UI_EVENT_NONE);
+
+					SyncAccountService.update(syncAccount);
+				}
+			}
+
+		};
+
+		_scheduledFuture = _scheduledExecutorService.scheduleAtFixedRate(
+			runnable, 0, 5, TimeUnit.SECONDS);
+	}
+
 	private static final Logger _logger = LoggerFactory.getLogger(
 		SyncEngine.class);
+
+	private static final ScheduledExecutorService _scheduledExecutorService =
+		Executors.newScheduledThreadPool(5);
+	private static ScheduledFuture _scheduledFuture;
 
 }

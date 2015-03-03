@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-asset-publisher",
 		"com.liferay.portlet.display-category=category.cms",
-		"com.liferay.portlet.friendly-url-mapping=asset_publisher",
+		"com.liferay.portlet.friendly-url-mapping=highest_rated_assets",
 		"com.liferay.portlet.friendly-url-routes=com/liferay/asset/publisher/web/portlet/route/asset-publisher-friendly-url-routes.xml",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/asset_publisher.png",

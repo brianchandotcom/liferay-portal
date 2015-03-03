@@ -28,6 +28,16 @@
 	<liferay-ui:error key="xslUrl" message="please-enter-a-valid-xsl-url" />
 	<liferay-ui:error key="transformation" message="an-error-occurred-while-processing-your-xml-and-xsl" />
 
+	<%
+	String validUrlPrefixes = xslContentConfiguration.validUrlPrefixes();
+	%>
+
+	<c:if test="<%= Validator.isNotNull(validUrlPrefixes) %>">
+		<div class="alert alert-info">
+			<liferay-ui:message arguments="<%= validUrlPrefixes %>" key="urls-must-begin-with-one-of-the-following" />
+		</div>
+	</c:if>
+
 	<aui:fieldset>
 		<aui:input cssClass="lfr-input-text-container" name="preferences--xmlUrl--" type="text" value="<%= xmlUrl %>" />
 

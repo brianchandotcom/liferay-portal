@@ -18,10 +18,8 @@
 
 <%
 try {
-	xmlUrl = StringUtil.replace(xmlUrl,"@portal_url@", themeDisplay.getPortalURL());
-	xslUrl = StringUtil.replace(xslUrl,"@portal_url@", themeDisplay.getPortalURL());
-
-	XSLContentConfiguration xslContentConfiguration = (XSLContentConfiguration)request.getAttribute(XSLContentConfiguration.class.getName());
+	xmlUrl = XSLContentUtil.replaceUrlTokens(themeDisplay, xmlUrl);
+	xslUrl = XSLContentUtil.replaceUrlTokens(themeDisplay, xslUrl);
 
 	String content = XSLContentUtil.transform(xslContentConfiguration, new URL(xmlUrl), new URL(xslUrl));
 %>

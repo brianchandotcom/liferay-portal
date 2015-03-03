@@ -573,11 +573,9 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			// Test 1, method handler is null
 
-			ClusterRequest clusterRequest =
-				ClusterRequest.createMulticastRequest(null);
-
 			ClusterNodeResponse clusterNodeResponse =
-				clusterExecutorImpl.executeClusterRequest(clusterRequest);
+				clusterExecutorImpl.executeClusterRequest(
+					ClusterRequest.createMulticastRequest(null));
 
 			Exception exception = clusterNodeResponse.getException();
 
@@ -589,26 +587,17 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			String timeStamp = String.valueOf(System.currentTimeMillis());
 
-			MethodHandler methodHandler = new MethodHandler(
-				testMethod3MethodKey, timeStamp);
-
-			clusterRequest = ClusterRequest.createMulticastRequest(
-				methodHandler);
-
 			clusterNodeResponse = clusterExecutorImpl.executeClusterRequest(
-				clusterRequest);
+				ClusterRequest.createMulticastRequest(
+					new MethodHandler(testMethod3MethodKey, timeStamp)));
 
 			try {
 				clusterNodeResponse.getResult();
 
 				Assert.fail();
 			}
-			catch (Exception e) {
-				InvocationTargetException invocationTargetException =
-					(InvocationTargetException)e;
-
-				Throwable throwable =
-					invocationTargetException.getTargetException();
+			catch (InvocationTargetException ite) {
+				Throwable throwable = ite.getTargetException();
 
 				Assert.assertEquals(timeStamp, throwable.getMessage());
 			}
@@ -617,31 +606,20 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			timeStamp = String.valueOf(System.currentTimeMillis());
 
-			methodHandler = new MethodHandler(testMethod1MethodKey, timeStamp);
-
-			clusterRequest = ClusterRequest.createMulticastRequest(
-				methodHandler);
-
 			clusterNodeResponse = clusterExecutorImpl.executeClusterRequest(
-				clusterRequest);
+				ClusterRequest.createMulticastRequest(
+					new MethodHandler(testMethod1MethodKey, timeStamp)));
 
-			Assert.assertEquals(
-				timeStamp, (String)clusterNodeResponse.getResult());
+			Assert.assertEquals(timeStamp, clusterNodeResponse.getResult());
 
 			// Test 4, test threadlocal
-
-			MethodKey testMethod5MethodKey = new MethodKey(
-				TestBean.class, "testMethod5");
-
-			methodHandler = new MethodHandler(testMethod5MethodKey);
-
-			clusterRequest = ClusterRequest.createMulticastRequest(
-				methodHandler);
 
 			Assert.assertTrue(ClusterInvokeThreadLocal.isEnabled());
 
 			clusterNodeResponse = clusterExecutorImpl.executeClusterRequest(
-				clusterRequest);
+				ClusterRequest.createMulticastRequest(
+					new MethodHandler(
+						new MethodKey(TestBean.class, "testMethod5"))));
 
 			Assert.assertFalse((Boolean)clusterNodeResponse.getResult());
 			Assert.assertTrue(ClusterInvokeThreadLocal.isEnabled());

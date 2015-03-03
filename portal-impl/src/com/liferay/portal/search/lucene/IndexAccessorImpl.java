@@ -82,7 +82,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 		IndexSearcherManager indexSearcherManager = null;
 
 		try {
-			if (!SPIUtil.isSPI()) {
+			if (!SPIUtil.isSPI() && !SearchEngineUtil.isIndexReadOnly()) {
 				_checkLuceneDir();
 				_initIndexWriter();
 				_initCommitScheduler();
@@ -121,6 +121,14 @@ public class IndexAccessorImpl implements IndexAccessor {
 	public void addDocuments(Collection<Document> documents)
 		throws IOException {
 
+		if (_indexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Index in read only mode");
+			}
+
+			return;
+		}
+
 		try {
 			for (Document document : documents) {
 				_indexWriter.addDocument(document);
@@ -135,7 +143,11 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 	@Override
 	public void close() {
-		if (SPIUtil.isSPI()) {
+		if (_indexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Index in read only mode");
+			}
+
 			return;
 		}
 
@@ -157,7 +169,11 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 	@Override
 	public void delete() {
-		if (SearchEngineUtil.isIndexReadOnly()) {
+		if (_indexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Index in read only mode");
+			}
+
 			return;
 		}
 
@@ -166,7 +182,11 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 	@Override
 	public void deleteDocuments(Term term) throws IOException {
-		if (SearchEngineUtil.isIndexReadOnly()) {
+		if (_indexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Index in read only mode");
+			}
+
 			return;
 		}
 
@@ -182,6 +202,14 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 	@Override
 	public void dumpIndex(OutputStream outputStream) throws IOException {
+		if (_indexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Index in read only mode");
+			}
+
+			return;
+		}
+
 		try {
 			_dumpIndexDeletionPolicy.dump(
 				outputStream, _indexWriter, _commitLock);
@@ -320,7 +348,11 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	private void _checkLuceneDir() {
-		if (SearchEngineUtil.isIndexReadOnly()) {
+		if (_indexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Index in read only mode");
+			}
+
 			return;
 		}
 
@@ -345,6 +377,14 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	private void _deleteAll() {
+		if (_indexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Index in read only mode");
+			}
+
+			return;
+		}
+
 		try {
 			_indexWriter.deleteAll();
 
@@ -380,19 +420,25 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	private void _doCommit() throws IOException {
-		if (_indexWriter != null) {
-			_commitLock.lock();
-
-			try {
-				_indexWriter.commit();
+		if (_indexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Index in read only mode");
 			}
-			finally {
-				_commitLock.unlock();
 
-				_indexSearcherManager.invalidate();
+			return;
+		}
 
-				_invalidate(_companyId);
-			}
+		_commitLock.lock();
+
+		try {
+			_indexWriter.commit();
+		}
+		finally {
+			_commitLock.unlock();
+
+			_indexSearcherManager.invalidate();
+
+			_invalidate(_companyId);
 		}
 
 		_batchCount = 0;
@@ -522,6 +568,14 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	private void _write(Term term, Document document) throws IOException {
+		if (_indexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Index in read only mode");
+			}
+
+			return;
+		}
+
 		try {
 			if (term != null) {
 				_indexWriter.updateDocument(term, document);
@@ -552,7 +606,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 	private Directory _directory;
 	private final DumpIndexDeletionPolicy _dumpIndexDeletionPolicy =
 		new DumpIndexDeletionPolicy();
-	private final IndexSearcherManager _indexSearcherManager;
+	private IndexSearcherManager _indexSearcherManager;
 	private IndexWriter _indexWriter;
 	private final String _path;
 	private ScheduledExecutorService _scheduledExecutorService;

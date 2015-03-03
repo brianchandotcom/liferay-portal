@@ -828,7 +828,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 				if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
 					value = StringUtil.shorten(
 						HtmlUtil.extractText(page.getContent()),
-						wikiGroupServiceSettings.getRSSAbstractLength(),
+						wikiGroupServiceSettings.rssAbstractLength(),
 						StringPool.BLANK);
 				}
 				else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {

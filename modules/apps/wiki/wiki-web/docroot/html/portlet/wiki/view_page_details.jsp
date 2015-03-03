@@ -166,7 +166,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 	</tr>
 </c:if>
 
-<c:if test="<%= (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) || WikiNodePermission.contains(permissionChecker, node, ActionKeys.SUBSCRIBE)) && (wikiGroupServiceSettings.isEmailPageAddedEnabled() || wikiGroupServiceSettings.isEmailPageUpdatedEnabled()) %>">
+<c:if test="<%= (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) || WikiNodePermission.contains(permissionChecker, node, ActionKeys.SUBSCRIBE)) && (wikiGroupServiceSettings.emailPageAddedEnabled() || wikiGroupServiceSettings.emailPageUpdatedEnabled()) %>">
 	<tr>
 		<th class="table-header">
 			<liferay-ui:message key="email-subscription" />

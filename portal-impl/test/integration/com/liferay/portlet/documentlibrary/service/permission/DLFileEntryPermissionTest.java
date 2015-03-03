@@ -29,9 +29,10 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -84,9 +85,23 @@ public class DLFileEntryPermissionTest extends BasePermissionTestCase {
 	protected void doSetUp() throws Exception {
 		_fileEntry = addFileEntry(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		Folder folder = DLAppTestUtil.addFolder(
+		String name = RandomTestUtil.randomString();
+
+		try {
+			DLAppServiceUtil.deleteFolder(
+				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				name);
+		}
+		catch (NoSuchFolderException nsfe) {
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		Folder folder = DLAppServiceUtil.addFolder(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), true);
+			name, RandomTestUtil.randomString(), serviceContext);
 
 		_subfileEntry = addFileEntry(folder.getFolderId());
 	}

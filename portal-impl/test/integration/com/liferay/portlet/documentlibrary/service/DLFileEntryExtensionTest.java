@@ -27,7 +27,6 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -309,10 +308,16 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 		FileEntry tempFileEntry = addFileEntry("Temp.txt", "Temp");
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
 		try {
-			DLAppTestUtil.updateFileEntry(
-				group.getGroupId(), tempFileEntry.getFileEntryId(), _FILE_NAME,
-				_STRIPPED_FILE_NAME);
+			DLAppServiceUtil.updateFileEntry(
+				tempFileEntry.getFileEntryId(), _FILE_NAME,
+				ContentTypes.TEXT_PLAIN, _STRIPPED_FILE_NAME, StringPool.BLANK,
+				StringPool.BLANK, false, RandomTestUtil.randomBytes(),
+				serviceContext);
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
@@ -336,9 +341,11 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		tempFileEntry = addFileEntry("Temp.txt", "");
 
 		try {
-			DLAppTestUtil.updateFileEntry(
-				group.getGroupId(), tempFileEntry.getFileEntryId(), _FILE_NAME,
-				"");
+			DLAppServiceUtil.updateFileEntry(
+				tempFileEntry.getFileEntryId(), _FILE_NAME,
+				ContentTypes.TEXT_PLAIN, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, false, RandomTestUtil.randomBytes(),
+				serviceContext);
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
@@ -362,9 +369,11 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		tempFileEntry = addFileEntry( "Temp", "Temp.txt");
 
 		try {
-			DLAppTestUtil.updateFileEntry(
-				group.getGroupId(), tempFileEntry.getFileEntryId(),
-				_STRIPPED_FILE_NAME, _FILE_NAME);
+			DLAppServiceUtil.updateFileEntry(
+				tempFileEntry.getFileEntryId(), _STRIPPED_FILE_NAME,
+				ContentTypes.TEXT_PLAIN, _FILE_NAME, StringPool.BLANK,
+				StringPool.BLANK, false, RandomTestUtil.randomBytes(),
+				serviceContext);
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
@@ -388,9 +397,10 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		tempFileEntry = addFileEntry("", "Temp.txt");
 
 		try {
-			DLAppTestUtil.updateFileEntry(
-				group.getGroupId(), tempFileEntry.getFileEntryId(), "",
-				_FILE_NAME);
+			DLAppServiceUtil.updateFileEntry(
+				tempFileEntry.getFileEntryId(), StringPool.BLANK,
+				ContentTypes.TEXT_PLAIN, _FILE_NAME, StringPool.BLANK,
+				StringPool.BLANK, false, (byte[])null, serviceContext);
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
@@ -421,10 +431,16 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 		FileEntry tempFileEntry = addFileEntry("Temp", "");
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
 		try {
-			DLAppTestUtil.updateFileEntry(
-				group.getGroupId(), tempFileEntry.getFileEntryId(),
-				_STRIPPED_FILE_NAME, "");
+			DLAppServiceUtil.updateFileEntry(
+				tempFileEntry.getFileEntryId(), _STRIPPED_FILE_NAME,
+				ContentTypes.TEXT_PLAIN, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, false, RandomTestUtil.randomBytes(),
+				serviceContext);
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
@@ -448,9 +464,10 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		tempFileEntry = addFileEntry("", "Temp");
 
 		try {
-			DLAppTestUtil.updateFileEntry(
-				group.getGroupId(), tempFileEntry.getFileEntryId(), "",
-				_STRIPPED_FILE_NAME);
+			DLAppServiceUtil.updateFileEntry(
+				tempFileEntry.getFileEntryId(), StringPool.BLANK,
+				ContentTypes.TEXT_PLAIN, _STRIPPED_FILE_NAME, StringPool.BLANK,
+				StringPool.BLANK, false, (byte[])null, serviceContext);
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}

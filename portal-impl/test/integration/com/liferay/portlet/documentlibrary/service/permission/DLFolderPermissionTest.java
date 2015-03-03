@@ -18,14 +18,18 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -65,13 +69,36 @@ public class DLFolderPermissionTest extends BasePermissionTestCase {
 
 	@Override
 	protected void doSetUp() throws Exception {
-		_folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), true);
+		String name = RandomTestUtil.randomString();
 
-		_subfolder = DLAppTestUtil.addFolder(
-			group.getGroupId(), _folder.getFolderId(),
-			RandomTestUtil.randomString(), true);
+		try {
+			DLAppServiceUtil.deleteFolder(
+				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				name);
+		}
+		catch (NoSuchFolderException nsfe) {
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		_folder = DLAppServiceUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			name, RandomTestUtil.randomString(), serviceContext);
+
+		name = RandomTestUtil.randomString();
+
+		try {
+			DLAppServiceUtil.deleteFolder(
+				group.getGroupId(), _folder.getFolderId(), name);
+		}
+		catch (NoSuchFolderException nsfe) {
+		}
+
+		_subfolder = DLAppServiceUtil.addFolder(
+			group.getGroupId(), _folder.getFolderId(), name,
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	@Override

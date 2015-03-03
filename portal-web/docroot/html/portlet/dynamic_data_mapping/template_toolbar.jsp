@@ -122,7 +122,7 @@ long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 						for (TemplateHandler templateHandler : templateHandlers) {
 							addPortletDisplayTemplateURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(templateHandler.getClassName())));
 							addPortletDisplayTemplateURL.setParameter("classPK", String.valueOf(0));
-							addPortletDisplayTemplateURL.setParameter("resourceClassNameId", String.valueOf(PortalUtil.getClassNameId(templateHandler.getClassName())));
+							addPortletDisplayTemplateURL.setParameter("resourceClassNameId", String.valueOf(resourceClassNameId));
 						%>
 
 							<aui:nav-item

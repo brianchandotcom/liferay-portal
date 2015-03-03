@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.settings.definition.SettingsDefinition;
 import com.liferay.portal.model.Layout;
 
 import java.util.List;
@@ -47,8 +48,14 @@ public interface SettingsFactory {
 
 	public SettingsDescriptor getSettingsDescriptor(String settingsId);
 
+	public void registerSettingsDefinition(
+		SettingsDefinition settingsDefinition, Object serviceConfigurationBean);
+
 	public void registerSettingsMetadata(
 		Class<?> settingsClass, Object serviceConfigurationBean,
 		FallbackKeys fallbackKeys);
+
+	public void unregisterSettingsDefinition(
+		SettingsDefinition settingsDefinition);
 
 }

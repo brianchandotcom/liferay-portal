@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.definition.SettingsDefinition;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.Group;
@@ -203,6 +204,17 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	@Override
+	public void registerSettingsDefinition(
+		SettingsDefinition settingsDefinition,
+		Object serviceConfigurationBean) {
+
+		SettingsDescriptor settingsDescriptor =
+			new SettingsDefinitionSettingsDescriptor(settingsDefinition);
+
+		_register(settingsDescriptor, serviceConfigurationBean, null);
+	}
+
+	@Override
 	public void registerSettingsMetadata(
 		Class<?> settingsClass, Object serviceConfigurationBean,
 		FallbackKeys fallbackKeys) {
@@ -210,22 +222,17 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		SettingsDescriptor settingsDescriptor = new AnnotatedSettingsDescriptor(
 			settingsClass);
 
-		for (String settingsId : settingsDescriptor.getSettingsIds()) {
-			_settingsDescriptors.put(settingsId, settingsDescriptor);
+		_register(settingsDescriptor, serviceConfigurationBean, fallbackKeys);
+	}
 
-			if (fallbackKeys != null) {
-				_fallbackKeysMap.put(settingsId, fallbackKeys);
-			}
+	@Override
+	public void unregisterSettingsDefinition(
+		SettingsDefinition settingsDefinition) {
 
-			if (serviceConfigurationBean != null) {
-				_serviceConfigurationBeans.put(
-					settingsId, serviceConfigurationBean);
-			}
+		SettingsDescriptor settingsDescriptor =
+			new SettingsDefinitionSettingsDescriptor(settingsDefinition);
 
-			_resourceManagers.put(
-				settingsId,
-				new ClassLoaderResourceManager(settingsClass.getClassLoader()));
-		}
+		_unregister(settingsDescriptor);
 	}
 
 	protected Settings applyFallbackKeys(String settingsId, Settings settings) {
@@ -367,6 +374,44 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		settingsId = PortletConstants.getRootPortletId(settingsId);
 
 		return _resourceManagers.get(settingsId);
+	}
+
+	private void _register(
+		SettingsDescriptor settingsDescriptor, Object serviceConfigurationBean,
+		FallbackKeys fallbackKeys) {
+
+		for (String settingsId : settingsDescriptor.getSettingsIds()) {
+			_settingsDescriptors.put(settingsId, settingsDescriptor);
+
+			if (serviceConfigurationBean != null) {
+				_serviceConfigurationBeans.put(
+					settingsId, serviceConfigurationBean);
+			}
+
+			if (fallbackKeys != null) {
+				_fallbackKeysMap.put(settingsId, fallbackKeys);
+			}
+
+			Class<?> settingsClass = settingsDescriptor.getSettingsClass();
+
+			_resourceManagers.put(
+				settingsId,
+				new ClassLoaderResourceManager(settingsClass.getClassLoader()));
+		}
+	}
+
+	private void _unregister(SettingsDescriptor settingsDescriptor) {
+		for (String settingsId : settingsDescriptor.getSettingsIds()) {
+			_fallbackKeysMap.remove(settingsId);
+
+			_portletPropertiesMap.remove(settingsId);
+
+			_resourceManagers.remove(settingsId);
+
+			_serviceConfigurationBeans.remove(settingsId);
+
+			_settingsDescriptors.put(settingsId, settingsDescriptor);
+		}
 	}
 
 	private Object getServiceConfigurationBean(String settingsId) {

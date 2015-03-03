@@ -41,6 +41,7 @@ if (!customAbstract) {
 boolean allowPingbacks = PropsValues.BLOGS_PINGBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowPingbacks", true);
 boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowTrackbacks", true);
 long coverImageFileEntryId = BeanParamUtil.getLong(entry, request, "coverImageFileEntryId");
+String coverImageCaption = BeanParamUtil.getString(entry, request, "coverImageCaption");
 long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFileEntryId");
 
 boolean preview = ParamUtil.getBoolean(request, "preview");
@@ -140,6 +141,39 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 					<div class="lfr-blogs-cover-image-selector">
 						<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_COVER_MAX_SIZE) %>" paramName="coverImageFileEntry" uploadURL="<%= coverImageSelectorURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
+					</div>
+
+					<aui:input name="coverImageCaption" type="hidden"/>
+
+					<div class="entry-coverImageCaption">
+
+						<%
+						Map<String, Object> coverImageCaptionEditorData = new HashMap<String, Object>();
+
+						JSONObject editorCoverImageCaptionJSONObject = JSONFactoryUtil.createJSONObject();
+
+						editorCoverImageCaptionJSONObject.put("allowedContent", "a");
+						editorCoverImageCaptionJSONObject.put("disallowedContent", "br");
+
+						JSONObject editorCoverImageCaptionToolbar = JSONFactoryUtil.createJSONObject();
+
+						JSONArray editorCoverImageCaptionToolbarOptions  = JSONFactoryUtil.createJSONArray("['a']");
+
+						editorCoverImageCaptionToolbar.put("styles", editorCoverImageCaptionToolbarOptions);
+
+						editorCoverImageCaptionJSONObject.put("toolbars", editorCoverImageCaptionToolbar);
+
+						coverImageCaptionEditorData.put("editorConfig", editorCoverImageCaptionJSONObject);
+
+						JSONObject editorCoverImageCaptionOptionsJSONObject = JSONFactoryUtil.createJSONObject();
+
+						editorCoverImageCaptionOptionsJSONObject.put("showSource", Boolean.FALSE);
+						editorCoverImageCaptionOptionsJSONObject.put("textMode", Boolean.TRUE);
+
+						coverImageCaptionEditorData.put("editorOptions", editorCoverImageCaptionOptionsJSONObject);
+						%>
+
+						<liferay-ui:input-editor contents="<%= coverImageCaption %>" data="<%= coverImageCaptionEditorData %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="coverImageCaptionEditor" placeholder="coverImageCaption" />
 					</div>
 
 					<div class="entry-title">

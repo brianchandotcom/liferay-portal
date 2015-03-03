@@ -36,6 +36,7 @@ import com.liferay.portlet.journal.model.JournalArticleDisplay;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.portlet.PortletPreferences;
@@ -52,7 +53,7 @@ public class ExportArticleUtil extends PortletAction {
 
 	public static void sendFile(
 			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws Exception {
+		throws IOException {
 
 		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 		String articleId = ParamUtil.getString(portletRequest, "articleId");

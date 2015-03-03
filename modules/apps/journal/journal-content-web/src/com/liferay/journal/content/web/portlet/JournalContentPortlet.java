@@ -19,6 +19,7 @@ import com.liferay.journal.content.web.upgrade.JournalContentWebUpgrade;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,13 +35,13 @@ import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.IOException;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -151,11 +152,20 @@ public class JournalContentPortlet extends MVCPortlet {
 		super.doView(renderRequest, renderResponse);
 	}
 
-	public void exportArticle(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+	@Override
+	public void serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
 
-		ExportArticleUtil.sendFile(actionRequest, actionResponse);
+		String resourceID = GetterUtil.getString(
+			resourceRequest.getResourceID());
+
+		if (resourceID.equals("exportArticle")) {
+			ExportArticleUtil.sendFile(resourceRequest, resourceResponse);
+		}
+		else {
+			super.serveResource(resourceRequest, resourceResponse);
+		}
 	}
 
 	@Activate

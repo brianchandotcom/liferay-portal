@@ -104,24 +104,3 @@ portletURL.setParameter("struts_action", "/layout_set_prototypes/view");
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script use="aui-base,liferay-util-window">
-	A.getBody().delegate(
-		'click',
-		function(event) {
-			event.preventDefault();
-
-			var link = event.currentTarget;
-			var title = link.get('text');
-
-			Liferay.Util.openWindow(
-				{
-					id: '<portlet:namespace />' + title,
-					title: title,
-					uri: link.attr('href')
-				}
-			);
-		},
-		'.layoutset-prototype-action a'
-	);
-</aui:script>

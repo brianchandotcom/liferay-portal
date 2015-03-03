@@ -140,7 +140,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 				}
 			}
 			else {
-				data = tinyMCE.editors['<%= name %>'].getBody().textContent;
+				data = tinyMCE.editors['<%= name %>'].getBody().innerHTML;
 			}
 
 			return data;

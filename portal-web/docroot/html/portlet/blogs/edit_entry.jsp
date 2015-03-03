@@ -46,6 +46,8 @@ long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFi
 
 boolean preview = ParamUtil.getBoolean(request, "preview");
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
+
+BlogsEntryEditorDisplayContext blogsEntryEditorDisplayContext = new BlogsEntryEditorDisplayContext(liferayPortletResponse);
 %>
 
 <c:if test="<%= showHeader %>">
@@ -111,25 +113,6 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			type="pills"
 		>
 			<div class="<%= (entry != null) ? "entry-status " + WorkflowConstants.getStatusLabel(entry.getStatus()) : StringPool.BLANK %>">
-
-				<%
-				Map<String, Object> data = new HashMap<String, Object>();
-
-				JSONObject editorConfigJSONObject = JSONFactoryUtil.createJSONObject();
-
-				editorConfigJSONObject.put("allowedContent", "p");
-				editorConfigJSONObject.put("disallowedContent", "br");
-				editorConfigJSONObject.put("toolbars", JSONFactoryUtil.createJSONObject());
-
-				data.put("editorConfig", editorConfigJSONObject);
-
-				JSONObject editorOptionsJSONObject = JSONFactoryUtil.createJSONObject();
-
-				editorOptionsJSONObject.put("textMode", Boolean.TRUE);
-
-				data.put("editorOptions", editorOptionsJSONObject);
-				%>
-
 				<liferay-ui:section>
 					<c:if test="<%= entry != null %>">
 						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
@@ -146,60 +129,23 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 					<aui:input name="coverImageCaption" type="hidden" />
 
 					<div class="entry-cover-image-caption">
-
-						<%
-						Map<String, Object> coverImageCaptionEditorData = new HashMap<String, Object>();
-
-						JSONObject editorCoverImageCaptionJSONObject = JSONFactoryUtil.createJSONObject();
-
-						editorCoverImageCaptionJSONObject.put("allowedContent", "a");
-						editorCoverImageCaptionJSONObject.put("disallowedContent", "br");
-
-						JSONObject editorCoverImageCaptionToolbar = JSONFactoryUtil.createJSONObject();
-
-						JSONArray editorCoverImageCaptionToolbarOptions = JSONFactoryUtil.createJSONArray("['a']");
-
-						editorCoverImageCaptionToolbar.put("styles", editorCoverImageCaptionToolbarOptions);
-
-						editorCoverImageCaptionJSONObject.put("toolbars", editorCoverImageCaptionToolbar);
-
-						coverImageCaptionEditorData.put("editorConfig", editorCoverImageCaptionJSONObject);
-
-						JSONObject editorCoverImageCaptionOptionsJSONObject = JSONFactoryUtil.createJSONObject();
-
-						editorCoverImageCaptionOptionsJSONObject.put("showSource", Boolean.FALSE);
-						editorCoverImageCaptionOptionsJSONObject.put("textMode", Boolean.TRUE);
-
-						coverImageCaptionEditorData.put("editorOptions", editorCoverImageCaptionOptionsJSONObject);
-						%>
-
-						<liferay-ui:input-editor contents="<%= coverImageCaption %>" data="<%= coverImageCaptionEditorData %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="coverImageCaptionEditor" placeholder="coverImageCaption" />
+						<liferay-ui:input-editor contents="<%= coverImageCaption %>" data="<%= blogsEntryEditorDisplayContext.getCoverImageCaptionEditorData() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="coverImageCaptionEditor" placeholder="coverImageCaption" />
 					</div>
 
 					<div class="entry-title">
-						<h2><liferay-ui:input-editor contents="<%= title %>" data="<%= data %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h2>
+						<h2><liferay-ui:input-editor contents="<%= title %>" data="<%= blogsEntryEditorDisplayContext.getTextEditorData() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="titleEditor" placeholder="title" /></h2>
 					</div>
 
 					<aui:input name="title" type="hidden" />
 
 					<div class="entry-subtitle">
-						<liferay-ui:input-editor contents="<%= subtitle %>" data="<%= data %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="subtitleEditor" placeholder="subtitle" showSource="<%= false %>" />
+						<liferay-ui:input-editor contents="<%= subtitle %>" data="<%= blogsEntryEditorDisplayContext.getTextEditorData() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="subtitleEditor" placeholder="subtitle" />
 					</div>
 
 					<aui:input name="subtitle" type="hidden" />
 
 					<div class="entry-body">
-						<portlet:actionURL var="uploadEditorImageURL">
-							<portlet:param name="struts_action" value="/blogs/upload_editor_image" />
-						</portlet:actionURL>
-
-						<%
-						Map<String, Object> contentEditorDta = new HashMap<String, Object>();
-
-						data.put("uploadURL", uploadEditorImageURL);
-						%>
-
-						<liferay-ui:input-editor contents="<%= content %>" data="<%= contentEditorDta %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" showSource="<%= true %>" />
+						<liferay-ui:input-editor contents="<%= content %>" data="<%= blogsEntryEditorDisplayContext.getContentEditorData() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" />
 					</div>
 
 					<aui:input name="content" type="hidden" />
@@ -248,7 +194,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 							</div>
 
 							<div class="entry-description">
-								<liferay-ui:input-editor contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' data="<%= data %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="descriptionEditor" onInitMethod="OnDescriptionEditorInit" placeholder="description" showSource="<%= false %>" />
+								<liferay-ui:input-editor contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' data="<%= blogsEntryEditorDisplayContext.getTextEditorData() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="descriptionEditor" onInitMethod="OnDescriptionEditorInit" placeholder="description" />
 							</div>
 
 							<aui:input name="description" type="hidden" />

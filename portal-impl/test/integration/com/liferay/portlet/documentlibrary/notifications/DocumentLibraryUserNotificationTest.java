@@ -103,6 +103,9 @@ public class DocumentLibraryUserNotificationTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
+		DLAppTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.UPDATE);
+
 		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 			(Long)baseModel.getPrimaryKeyObj(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),

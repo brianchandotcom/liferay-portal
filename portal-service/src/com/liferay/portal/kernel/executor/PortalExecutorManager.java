@@ -14,24 +14,12 @@
 
 package com.liferay.portal.kernel.executor;
 
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * @author Shuyang Zhou
  */
 public interface PortalExecutorManager {
-
-	public <T> NoticeableFuture<T> execute(String name, Callable<T> callable);
-
-	public <T> T execute(
-			String name, Callable<T> callable, long timeout, TimeUnit timeUnit)
-		throws ExecutionException, InterruptedException, TimeoutException;
 
 	public ThreadPoolExecutor getPortalExecutor(String name);
 
@@ -44,9 +32,5 @@ public interface PortalExecutorManager {
 	public void shutdown();
 
 	public void shutdown(boolean interrupt);
-
-	public void shutdown(String name);
-
-	public void shutdown(String name, boolean interrupt);
 
 }

@@ -859,6 +859,8 @@ public class DDMTemplateLocalServiceUtil {
 	* @param classNameId the primary key of the class name for the template's
 	related model
 	* @param classPK the primary key of the template's related entity
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
@@ -876,12 +878,13 @@ public class DDMTemplateLocalServiceUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
 		long companyId, long groupId, long classNameId, long classPK,
-		java.lang.String keywords, java.lang.String type,
-		java.lang.String mode, int start, int end,
+		long resourceClassNameId, java.lang.String keywords,
+		java.lang.String type, java.lang.String mode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
 		return getService()
-				   .search(companyId, groupId, classNameId, classPK, keywords,
-			type, mode, start, end, orderByComparator);
+				   .search(companyId, groupId, classNameId, classPK,
+			resourceClassNameId, keywords, type, mode, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -904,6 +907,8 @@ public class DDMTemplateLocalServiceUtil {
 	* @param classNameId the primary key of the class name for the template's
 	related model
 	* @param classPK the primary key of the template's related entity
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param name the name keywords (optionally <code>null</code>)
 	* @param description the description keywords (optionally
 	<code>null</code>)
@@ -927,14 +932,15 @@ public class DDMTemplateLocalServiceUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
 		long companyId, long groupId, long classNameId, long classPK,
-		java.lang.String name, java.lang.String description,
-		java.lang.String type, java.lang.String mode,
-		java.lang.String language, boolean andOperator, int start, int end,
+		long resourceClassNameId, java.lang.String name,
+		java.lang.String description, java.lang.String type,
+		java.lang.String mode, java.lang.String language, boolean andOperator,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
 		return getService()
-				   .search(companyId, groupId, classNameId, classPK, name,
-			description, type, mode, language, andOperator, start, end,
-			orderByComparator);
+				   .search(companyId, groupId, classNameId, classPK,
+			resourceClassNameId, name, description, type, mode, language,
+			andOperator, start, end, orderByComparator);
 	}
 
 	/**
@@ -957,6 +963,8 @@ public class DDMTemplateLocalServiceUtil {
 	* @param classNameIds the primary keys of the entity's instances the
 	templates are related to
 	* @param classPKs the primary keys of the template's related entities
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
@@ -974,12 +982,13 @@ public class DDMTemplateLocalServiceUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
-		java.lang.String keywords, java.lang.String type,
-		java.lang.String mode, int start, int end,
+		long resourceClassNameId, java.lang.String keywords,
+		java.lang.String type, java.lang.String mode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
 		return getService()
 				   .search(companyId, groupIds, classNameIds, classPKs,
-			keywords, type, mode, start, end, orderByComparator);
+			resourceClassNameId, keywords, type, mode, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -1002,6 +1011,8 @@ public class DDMTemplateLocalServiceUtil {
 	* @param classNameIds the primary keys of the entity's instances the
 	templates are related to
 	* @param classPKs the primary keys of the template's related entities
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param name the name keywords (optionally <code>null</code>)
 	* @param description the description keywords (optionally
 	<code>null</code>)
@@ -1025,14 +1036,15 @@ public class DDMTemplateLocalServiceUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
-		java.lang.String name, java.lang.String description,
-		java.lang.String type, java.lang.String mode,
-		java.lang.String language, boolean andOperator, int start, int end,
+		long resourceClassNameId, java.lang.String name,
+		java.lang.String description, java.lang.String type,
+		java.lang.String mode, java.lang.String language, boolean andOperator,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
 		return getService()
-				   .search(companyId, groupIds, classNameIds, classPKs, name,
-			description, type, mode, language, andOperator, start, end,
-			orderByComparator);
+				   .search(companyId, groupIds, classNameIds, classPKs,
+			resourceClassNameId, name, description, type, mode, language,
+			andOperator, start, end, orderByComparator);
 	}
 
 	/**
@@ -1045,6 +1057,8 @@ public class DDMTemplateLocalServiceUtil {
 	* @param classNameId the primary key of the class name for the template's
 	related model
 	* @param classPK the primary key of the template's related entity
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
@@ -1056,11 +1070,11 @@ public class DDMTemplateLocalServiceUtil {
 	* @return the number of matching templates
 	*/
 	public static int searchCount(long companyId, long groupId,
-		long classNameId, long classPK, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode) {
+		long classNameId, long classPK, long resourceClassNameId,
+		java.lang.String keywords, java.lang.String type, java.lang.String mode) {
 		return getService()
 				   .searchCount(companyId, groupId, classNameId, classPK,
-			keywords, type, mode);
+			resourceClassNameId, keywords, type, mode);
 	}
 
 	/**
@@ -1072,6 +1086,8 @@ public class DDMTemplateLocalServiceUtil {
 	* @param classNameId the primary key of the class name for the template's
 	related model
 	* @param classPK the primary key of the template's related entity
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param name the name keywords (optionally <code>null</code>)
 	* @param description the description keywords (optionally
 	<code>null</code>)
@@ -1089,12 +1105,14 @@ public class DDMTemplateLocalServiceUtil {
 	* @return the number of matching templates
 	*/
 	public static int searchCount(long companyId, long groupId,
-		long classNameId, long classPK, java.lang.String name,
-		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator) {
+		long classNameId, long classPK, long resourceClassNameId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, boolean andOperator) {
 		return getService()
-				   .searchCount(companyId, groupId, classNameId, classPK, name,
-			description, type, mode, language, andOperator);
+				   .searchCount(companyId, groupId, classNameId, classPK,
+			resourceClassNameId, name, description, type, mode, language,
+			andOperator);
 	}
 
 	/**
@@ -1107,6 +1125,8 @@ public class DDMTemplateLocalServiceUtil {
 	* @param classNameIds the primary keys of the entity's instance the
 	templates are related to
 	* @param classPKs the primary keys of the template's related entities
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
@@ -1118,11 +1138,11 @@ public class DDMTemplateLocalServiceUtil {
 	* @return the number of matching templates
 	*/
 	public static int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, long[] classPKs, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode) {
+		long[] classNameIds, long[] classPKs, long resourceClassNameId,
+		java.lang.String keywords, java.lang.String type, java.lang.String mode) {
 		return getService()
 				   .searchCount(companyId, groupIds, classNameIds, classPKs,
-			keywords, type, mode);
+			resourceClassNameId, keywords, type, mode);
 	}
 
 	/**
@@ -1134,6 +1154,8 @@ public class DDMTemplateLocalServiceUtil {
 	* @param classNameIds the primary keys of the entity's instance the
 	templates are related to
 	* @param classPKs the primary keys of the template's related entities
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param name the name keywords (optionally <code>null</code>)
 	* @param description the description keywords (optionally
 	<code>null</code>)
@@ -1151,12 +1173,14 @@ public class DDMTemplateLocalServiceUtil {
 	* @return the number of matching templates
 	*/
 	public static int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, long[] classPKs, java.lang.String name,
-		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator) {
+		long[] classNameIds, long[] classPKs, long resourceClassNameId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, boolean andOperator) {
 		return getService()
 				   .searchCount(companyId, groupIds, classNameIds, classPKs,
-			name, description, type, mode, language, andOperator);
+			resourceClassNameId, name, description, type, mode, language,
+			andOperator);
 	}
 
 	/**

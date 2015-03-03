@@ -47,9 +47,11 @@ public class SoapExtenderConfigurationAdmin {
 
 		_component = dependencyManager.createComponent();
 
+		ExtensionManager extensionManager = new ExtensionManager();
+
 		SoapExtender soapExtender = new SoapExtender(
 			componentContext.getBundleContext(),
-			_soapExtenderConfiguration.contextPath());
+			_soapExtenderConfiguration.contextPath(), extensionManager);
 
 		_component.setImplementation(soapExtender);
 
@@ -60,6 +62,8 @@ public class SoapExtenderConfigurationAdmin {
 				ServiceDependency serviceDependency =
 					dependencyManager.createServiceDependency();
 
+				serviceDependency.setCallbacks(
+					extensionManager, "addExtension", "removeExtension");
 				serviceDependency.setService(
 					Object.class, _createExtensionFilter(extension));
 				serviceDependency.setRequired(true);

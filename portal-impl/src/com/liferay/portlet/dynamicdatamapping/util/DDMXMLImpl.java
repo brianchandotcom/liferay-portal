@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -109,6 +110,10 @@ public class DDMXMLImpl implements DDMXML {
 			document = SAXReaderUtil.read(xml);
 		}
 		catch (DocumentException de) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(de.getMessage(), de);
+			}
+
 			return null;
 		}
 
@@ -296,7 +301,7 @@ public class DDMXMLImpl implements DDMXML {
 				_log.debug("Invalid XML content " + e.getMessage(), e);
 			}
 
-			throw new StructureDefinitionException();
+			throw new StructureDefinitionException(e);
 		}
 	}
 
@@ -398,12 +403,20 @@ public class DDMXMLImpl implements DDMXML {
 			String name = StringUtil.toLowerCase(
 				element.attributeValue("name"));
 
+			if (Validator.isNull(name)) {
+				throw new StructureDefinitionException(
+					"Element must have a name attribute " +
+						element.formattedString());
+			}
+
 			if (name.startsWith(DDMStructureConstants.XSD_NAME_RESERVED)) {
-				throw new StructureDefinitionException();
+				throw new StructureDefinitionException(
+					"Element name " + name + " is reserved");
 			}
 
 			if (elementNames.contains(name)) {
-				throw new StructureDuplicateElementException();
+				throw new StructureDuplicateElementException(
+					"Element with name " + name + " already exists");
 			}
 
 			elementNames.add(name);

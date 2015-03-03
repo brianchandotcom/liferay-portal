@@ -412,30 +412,25 @@ public class DDMTemplateLocalServiceImpl
 				Group companyGroup = groupLocalService.getCompanyGroup(
 					template.getCompanyId());
 
+				int count;
+
 				if (template.getGroupId() == companyGroup.getGroupId()) {
-					int count = JournalArticleUtil.countByC_DDMTK(
+					count = JournalArticleUtil.countByC_DDMTK(
 						JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 						template.getTemplateKey());
-
-					if (count > 0) {
-						throw new RequiredTemplateException(
-							"Template " + template.getName() + " cannot be " +
-								"deleted because it is used by " + count +
-									" journal articles");
-					}
 				}
 				else {
-					int count = JournalArticleUtil.countByG_C_DDMTK(
+					count = JournalArticleUtil.countByG_C_DDMTK(
 						template.getGroupId(),
 						JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 						template.getTemplateKey());
+				}
 
-					if (count > 0) {
-						throw new RequiredTemplateException(
-							"Template " + template.getName() + " cannot be " +
-								"deleted because it is used by " + count +
-									" journal articles");
-					}
+				if (count > 0) {
+					throw new RequiredTemplateException(
+						"Template " + template.getName() + " cannot be " +
+							"deleted because it is used by " + count +
+								" journal articles");
 				}
 			}
 		}
@@ -1548,31 +1543,28 @@ public class DDMTemplateLocalServiceImpl
 
 		String smallImageName = smallImageFile.getName();
 
-		if (smallImageName != null) {
-			boolean validSmallImageExtension = false;
+		boolean validSmallImageExtension = false;
 
-			for (int i = 0; i < imageExtensions.length; i++) {
-				if (StringPool.STAR.equals(imageExtensions[i]) ||
-					StringUtil.endsWith(
-						smallImageName, imageExtensions[i])) {
+		for (String imageExtension : imageExtensions) {
+			if (StringPool.STAR.equals(imageExtension) ||
+				StringUtil.endsWith(
+					smallImageName, imageExtension)) {
 
-					validSmallImageExtension = true;
+				validSmallImageExtension = true;
 
-					break;
-				}
+				break;
 			}
+		}
 
-			if (!validSmallImageExtension) {
-				throw new TemplateSmallImageNameException(smallImageName);
-			}
+		if (!validSmallImageExtension) {
+			throw new TemplateSmallImageNameException(smallImageName);
 		}
 
 		long smallImageMaxSize = PrefsPropsUtil.getLong(
 			PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE);
 
 		if ((smallImageMaxSize > 0) &&
-			((smallImageBytes == null) ||
-			 (smallImageBytes.length > smallImageMaxSize))) {
+			(smallImageBytes.length > smallImageMaxSize)) {
 
 			throw new TemplateSmallImageSizeException(
 				"Size of Image " + smallImageName + " exceeds maximum. " +

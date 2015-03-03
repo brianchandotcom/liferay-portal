@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PortalUtil;
@@ -81,7 +83,9 @@ public class MBGroupServiceSettings implements GroupServiceSettings {
 	public String getEmailMessageAddedBodyXml() {
 		LocalizedValuesMap emailMessageBodyMap = getEmailMessageAddedBody();
 
-		return emailMessageBodyMap.getLocalizationXml();
+		return emailMessageBodyMap.getLocalizationXml(
+			"emailMessageBody", LocaleUtil.getSiteDefault(),
+			LanguageUtil.getAvailableLocales());
 	}
 
 	public LocalizedValuesMap getEmailMessageAddedSubject() {
@@ -92,7 +96,9 @@ public class MBGroupServiceSettings implements GroupServiceSettings {
 		LocalizedValuesMap emailMessageAddedSubjectMap =
 			getEmailMessageAddedSubject();
 
-		return emailMessageAddedSubjectMap.getLocalizationXml();
+		return emailMessageAddedSubjectMap.getLocalizationXml(
+			"emailMessageAddedSubject", LocaleUtil.getSiteDefault(),
+			LanguageUtil.getAvailableLocales());
 	}
 
 	public LocalizedValuesMap getEmailMessageUpdatedBody() {
@@ -103,7 +109,9 @@ public class MBGroupServiceSettings implements GroupServiceSettings {
 		LocalizedValuesMap emailMessageUpdatedBodyMap =
 			getEmailMessageUpdatedBody();
 
-		return emailMessageUpdatedBodyMap.getLocalizationXml();
+		return emailMessageUpdatedBodyMap.getLocalizationXml(
+			"emailMessageUpdatedBody", LocaleUtil.getSiteDefault(),
+			LanguageUtil.getAvailableLocales());
 	}
 
 	public LocalizedValuesMap getEmailMessageUpdatedSubject() {
@@ -115,7 +123,9 @@ public class MBGroupServiceSettings implements GroupServiceSettings {
 		LocalizedValuesMap emailMessageUpdatedSubjectMap =
 			getEmailMessageUpdatedSubject();
 
-		return emailMessageUpdatedSubjectMap.getLocalizationXml();
+		return emailMessageUpdatedSubjectMap.getLocalizationXml(
+			"emailMessageUpdatedSubject", LocaleUtil.getSiteDefault(),
+			LanguageUtil.getAvailableLocales());
 	}
 
 	public String getMessageFormat() {

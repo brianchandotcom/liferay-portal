@@ -14,10 +14,12 @@
 
 package com.liferay.wiki.settings;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.wiki.constants.WikiConstants;
 
 /**
@@ -50,7 +52,9 @@ public class WikiGroupServiceSettings implements GroupServiceSettings {
 	public String getEmailPageAddedBodyXml() {
 		LocalizedValuesMap emailPageAddedBodyMap = getEmailPageAddedBody();
 
-		return emailPageAddedBodyMap.getLocalizationXml();
+		return emailPageAddedBodyMap.getLocalizationXml(
+			"emailPageAddedBody", LocaleUtil.getSiteDefault(),
+			LanguageUtil.getAvailableLocales());
 	}
 
 	public LocalizedValuesMap getEmailPageAddedSubject() {
@@ -62,7 +66,9 @@ public class WikiGroupServiceSettings implements GroupServiceSettings {
 		LocalizedValuesMap emailPageAddedSubjectMap =
 			getEmailPageAddedSubject();
 
-		return emailPageAddedSubjectMap.getLocalizationXml();
+		return emailPageAddedSubjectMap.getLocalizationXml(
+			"emailPageAddedSubject", LocaleUtil.getSiteDefault(),
+			LanguageUtil.getAvailableLocales());
 	}
 
 	public LocalizedValuesMap getEmailPageUpdatedBody() {
@@ -73,7 +79,9 @@ public class WikiGroupServiceSettings implements GroupServiceSettings {
 	public String getEmailPageUpdatedBodyXml() {
 		LocalizedValuesMap emailPageUpdatedBodyMap = getEmailPageUpdatedBody();
 
-		return emailPageUpdatedBodyMap.getLocalizationXml();
+		return emailPageUpdatedBodyMap.getLocalizationXml(
+			"emailPageUpdatedBody", LocaleUtil.getSiteDefault(),
+			LanguageUtil.getAvailableLocales());
 	}
 
 	public LocalizedValuesMap getEmailPageUpdatedSubject() {
@@ -85,7 +93,9 @@ public class WikiGroupServiceSettings implements GroupServiceSettings {
 		LocalizedValuesMap emailPageUpdatedSubjectMap =
 			getEmailPageUpdatedSubject();
 
-		return emailPageUpdatedSubjectMap.getLocalizationXml();
+		return emailPageUpdatedSubjectMap.getLocalizationXml(
+			"emailPageUpdatedSubject", LocaleUtil.getSiteDefault(),
+			LanguageUtil.getAvailableLocales());
 	}
 
 	@Settings.Property(name = "rssAbstractLength")

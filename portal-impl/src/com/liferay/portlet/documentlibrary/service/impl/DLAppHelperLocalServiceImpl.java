@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -1852,21 +1853,29 @@ public class DLAppHelperLocalServiceImpl
 		String fromName = dlGroupServiceSettings.getEmailFromName();
 		String fromAddress = dlGroupServiceSettings.getEmailFromAddress();
 
-		Map<Locale, String> localizedSubjectMap = null;
-		Map<Locale, String> localizedBodyMap = null;
+		LocalizedValuesMap subjectLocalizedValuesMap = null;
+		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (serviceContext.isCommandUpdate()) {
-			localizedSubjectMap =
+			subjectLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryUpdatedSubject();
-			localizedBodyMap =
+			bodyLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryUpdatedBody();
 		}
 		else {
-			localizedSubjectMap =
+			subjectLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryAddedSubject();
-			localizedBodyMap =
+			bodyLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryAddedBody();
 		}
+
+		Map<Locale, String> localizedSubjectMap =
+			subjectLocalizedValuesMap.getLocalizationMap(
+				LanguageUtil.getAvailableLocales());
+
+		Map<Locale, String> localizedBodyMap =
+			bodyLocalizedValuesMap.getLocalizationMap(
+				LanguageUtil.getAvailableLocales());
 
 		FileEntry fileEntry = fileVersion.getFileEntry();
 

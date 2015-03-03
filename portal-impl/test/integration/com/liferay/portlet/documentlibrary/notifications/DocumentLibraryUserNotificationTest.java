@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -98,9 +99,15 @@ public class DocumentLibraryUserNotificationTest
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		FileEntry fileEntry = DLAppTestUtil.updateFileEntryWithWorkflow(
-			group.getGroupId(), (Long)baseModel.getPrimaryKeyObj(), false,
-			true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
+			(Long)baseModel.getPrimaryKeyObj(), RandomTestUtil.randomString(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, false,
+			RandomTestUtil.randomBytes(), serviceContext);
 
 		return (BaseModel<?>)fileEntry.getModel();
 	}

@@ -36,7 +36,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -170,8 +169,14 @@ public class DLDirectoryNameAndFileNameTest {
 		String name =
 			StringUtil.randomString(20) + PropsValues.DL_CHAR_BLACKLIST[0];
 
-		DLAppTestUtil.updateFileEntry(
-			_group.getGroupId(), fileEntry.getFileEntryId(), name, name);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		DLAppServiceUtil.updateFileEntry(
+			fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
+			StringPool.BLANK, StringPool.BLANK, false,
+			RandomTestUtil.randomBytes(), serviceContext);
 	}
 
 	@Test(expected = FolderNameException.class)

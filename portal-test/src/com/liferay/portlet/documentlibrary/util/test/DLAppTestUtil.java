@@ -16,9 +16,7 @@ package com.liferay.portlet.documentlibrary.util.test;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,7 +26,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 
 import java.io.Serializable;
@@ -96,125 +93,6 @@ public abstract class DLAppTestUtil {
 		}
 
 		serviceContext.setLayoutFullURL("http://localhost");
-	}
-
-	public static FileEntry updateFileEntry(
-			long groupId, long fileEntryId, boolean majorVersion)
-		throws Exception {
-
-		return updateFileEntry(
-			groupId, fileEntryId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), majorVersion, true, true);
-	}
-
-	public static FileEntry updateFileEntry(
-			long groupId, long fileEntryId, String sourceFileName, String title)
-		throws Exception {
-
-		return updateFileEntry(
-			groupId, fileEntryId, sourceFileName, title, false, false, false);
-	}
-
-	public static FileEntry updateFileEntry(
-			long groupId, long fileEntryId, String sourceFileName, String title,
-			boolean majorVersion, boolean workflowEnabled, boolean approved)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		serviceContext.setCommand(Constants.UPDATE);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return updateFileEntry(
-			groupId, fileEntryId, sourceFileName, ContentTypes.TEXT_PLAIN,
-			title, majorVersion, workflowEnabled, approved, serviceContext);
-	}
-
-	public static FileEntry updateFileEntry(
-			long groupId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, boolean majorVersion,
-			boolean workflowEnabled, boolean approved,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		String description = StringPool.BLANK;
-		String changeLog = StringPool.BLANK;
-
-		byte[] bytes = null;
-
-		if (Validator.isNotNull(sourceFileName)) {
-			String newContent = _CONTENT + "\n" + System.currentTimeMillis();
-
-			bytes = newContent.getBytes();
-		}
-
-		serviceContext = (ServiceContext)serviceContext.clone();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(groupId);
-
-		if (workflowEnabled && !approved) {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-		}
-		else {
-			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-		}
-
-		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
-			fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, bytes, serviceContext);
-
-		if (workflowEnabled && approved) {
-			updateStatus(fileEntry, serviceContext);
-		}
-
-		return fileEntry;
-	}
-
-	public static FileEntry updateFileEntry(
-			long groupId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, boolean majorVersion,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		String description = StringPool.BLANK;
-		String changeLog = StringPool.BLANK;
-
-		byte[] bytes = null;
-
-		if (Validator.isNotNull(sourceFileName)) {
-			String newContent = _CONTENT + "\n" + System.currentTimeMillis();
-
-			bytes = newContent.getBytes();
-		}
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(groupId);
-
-		return DLAppServiceUtil.updateFileEntry(
-			fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, bytes, serviceContext);
-	}
-
-	public static FileEntry updateFileEntryWithWorkflow(
-			long groupId, long fileEntryId, boolean majorVersion,
-			boolean approved)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		serviceContext.setCommand(Constants.UPDATE);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return updateFileEntry(
-			groupId, fileEntryId, RandomTestUtil.randomString(),
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			majorVersion, true, approved, serviceContext);
 	}
 
 	protected static FileEntry updateStatus(

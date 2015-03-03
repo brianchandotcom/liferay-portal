@@ -104,9 +104,10 @@ public class FileEntryStagedModelDataHandlerTest
 
 		String title = RandomTestUtil.randomString() + ".awesome";
 
-		DLAppTestUtil.updateFileEntry(
-			stagingGroup.getGroupId(), fileEntry.getFileEntryId(),
-			StringPool.BLANK, title);
+		DLAppServiceUtil.updateFileEntry(
+			fileEntry.getFileEntryId(), StringPool.BLANK,
+			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
+			false, (byte[])null, serviceContext);
 
 		exportImportStagedModel(fileEntry);
 

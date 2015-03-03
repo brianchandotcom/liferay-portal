@@ -66,7 +66,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -1550,8 +1549,14 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			boolean majorVersion)
 		throws Exception {
 
-		return DLAppTestUtil.updateFileEntry(
-			groupId, fileEntryId, fileName, fileName, majorVersion, true, true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId());
+
+		return DLAppServiceUtil.updateFileEntry(
+			fileEntryId, fileName, ContentTypes.TEXT_PLAIN, fileName,
+			StringPool.BLANK, StringPool.BLANK, majorVersion,
+			RandomTestUtil.randomBytes(), serviceContext);
 	}
 
 	private static final String _FILE_NAME = "Title.txt";

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -90,8 +91,14 @@ public class DLSubscriptionRootContainerModelTest
 
 	@Override
 	protected void updateBaseModel(long baseModelId) throws Exception {
-		DLAppTestUtil.updateFileEntryWithWorkflow(
-			group.getGroupId(), baseModelId, false, true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		DLAppServiceUtil.updateFileEntry(
+			baseModelId, RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			false, RandomTestUtil.randomBytes(), serviceContext);
 	}
 
 }

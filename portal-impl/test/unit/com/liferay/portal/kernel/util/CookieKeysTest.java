@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.util.DomainImpl;
 import com.liferay.portal.util.PropsImpl;
 
 import java.lang.reflect.Field;
@@ -36,6 +37,10 @@ public class CookieKeysTest {
 
 	@Test
 	public void testDomain1() throws Exception {
+		DomainUtil domainUtil = new DomainUtil();
+
+		domainUtil.setDomain(new DomainImpl());
+
 		String domain = CookieKeys.getDomain("www.liferay.com");
 
 		Assert.assertEquals(".liferay.com", domain);
@@ -47,6 +52,10 @@ public class CookieKeysTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setServerName("www.liferay.com");
+
+		DomainUtil domainUtil = new DomainUtil();
+
+		domainUtil.setDomain(new DomainImpl());
 
 		String domain = CookieKeys.getDomain(mockHttpServletRequest);
 
@@ -91,6 +100,10 @@ public class CookieKeysTest {
 
 		try {
 			field.set(null, Boolean.FALSE);
+
+			DomainUtil domainUtil = new DomainUtil();
+
+			domainUtil.setDomain(new DomainImpl());
 
 			String domain = CookieKeys.getDomain(mockHttpServletRequest);
 

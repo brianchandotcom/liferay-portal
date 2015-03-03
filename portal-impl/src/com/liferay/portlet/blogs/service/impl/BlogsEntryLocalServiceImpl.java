@@ -324,11 +324,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		entry.setCoverImageFileEntryId(coverImageFileEntryId);
 		entry.setCoverImageURL(coverImageURL);
-
-		if (Validator.isNotNull(coverImageURL)) {
-			entry.setCoverImageCaption(coverImageCaption);
-		}
-
+		entry.setCoverImageCaption(coverImageCaption);
 		entry.setSmallImage(smallImage);
 		entry.setSmallImageFileEntryId(smallImageFileEntryId);
 		entry.setSmallImageURL(smallImageURL);
@@ -1348,11 +1344,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		entry.setCoverImageFileEntryId(coverImageFileEntryId);
 		entry.setCoverImageURL(coverImageURL);
-
-		if (Validator.isNotNull(coverImageURL)) {
-			entry.setCoverImageCaption(coverImageCaption);
-		}
-
+		entry.setCoverImageCaption(coverImageCaption);
 		entry.setSmallImage(smallImage);
 		entry.setSmallImageFileEntryId(smallImageFileEntryId);
 		entry.setSmallImageURL(smallImageURL);

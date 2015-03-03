@@ -320,6 +320,10 @@
 		</if>
 	</command>
 
+	<command name="viewCampaignNotPresentCP">
+		<execute function="AssertTextNotPresent" locator1="CPContenttargeting#CAMPAIGN_TABLE_NAME" value1="${campaignName}" />
+	</command>
+
 	<command name="viewContentReportCP">
 		<var name="key_contentTitle" value="${contentTitle}" />
 

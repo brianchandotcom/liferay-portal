@@ -312,6 +312,23 @@
 		<execute function="AssertTextEquals" locator1="CPContenttargetingAddusersegment#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="viewCP">
+		<execute function="Click" locator1="CPContenttargeting#NAVIGATION_USER_SEGMENTS" />
+
+		<var name="key_userSegmentName" value="${userSegmentName}" />
+
+		<execute function="AssertTextEquals" locator1="CPContenttargeting#USER_SEGMENT_TABLE_NAME" value1="${userSegmentName}" />
+		<execute function="AssertTextEquals" locator1="CPContenttargeting#USER_SEGMENT_TABLE_DESCRIPTION" value1="${userSegmentDescription}" />
+	</command>
+
+	<command name="viewNotPresentCP">
+		<execute function="Click" locator1="CPContenttargeting#NAVIGATION_USER_SEGMENTS" />
+
+		<var name="key_userSegmentName" value="${userSegmentName}" />
+
+		<execute function="AssertTextNotPresent" locator1="CPContenttargeting#USER_SEGMENT_TABLE_NAME" value1="${userSegmentName}" />
+	</command>
+
 	<command name="viewReport">
 		<var name="key_userSegmentName" value="${userSegmentName}" />
 

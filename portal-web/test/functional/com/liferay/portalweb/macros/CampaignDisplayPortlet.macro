@@ -16,12 +16,12 @@
 
 		<var name="key_contentTitle" value="${contentTitle}" />
 
-		<execute function="Click" locator1="PGCampaigncontentdisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" />
+		<execute function="ClickNoError" locator1="PGCampaigncontentdisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="SelectFrame" locator1="PGCampaigncontentdisplay#CAMPAIGN_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 
-		<execute function="Click" locator1="PGCampaigncontentdisplay#RULE_PANEL_ADD_ROW_BUTTON" />
+		<execute function="ClickNoError" locator1="PGCampaigncontentdisplay#RULE_PANEL_ADD_ROW_BUTTON" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -29,7 +29,7 @@
 	<command name="configureOtherwiseRule">
 		<execute function="SelectFrame" locator1="PGCampaigncontentdisplay#CAMPAIGN_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 
-		<execute function="Click" locator1="PGCampaigncontentdisplay#OTHERWISE_PANEL" />
+		<execute function="ClickNoError" locator1="PGCampaigncontentdisplay#OTHERWISE_PANEL" />
 		<execute function="Click" locator1="PGCampaigncontentdisplay#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
 		<execute function="Click" locator1="PGCampaigncontentdisplay#OTHERWISE_PANEL_SELECT_CONTENT_BUTTON" />
 
@@ -41,14 +41,14 @@
 
 		<var name="key_contentTitle" value="${contentTitle}" />
 
-		<execute function="Click" locator1="PGCampaigncontentdisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" />
+		<execute function="ClickNoError" locator1="PGCampaigncontentdisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="savePG">
 		<execute function="SelectFrame" locator1="PGCampaigncontentdisplay#CAMPAIGN_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 
-		<execute function="Click" locator1="PGCampaigncontentdisplay#SAVE_BUTTON" />
+		<execute function="ClickNoError" locator1="PGCampaigncontentdisplay#SAVE_BUTTON" />
 		<execute function="AssertTextEquals" locator1="PGCampaigncontentdisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute function="SelectFrame" value1="relative=top" />

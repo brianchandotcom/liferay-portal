@@ -94,7 +94,7 @@
 		<execute macro="WebContent#viewAudioViaWCD" />
 	</command>
 
-	<command known-issues="LIFERAYQA-12835" name="AddContentWithTitleAndAllFieldsNull" priority="5">
+	<command name="AddContentWithTitleAndAllFieldsNull" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

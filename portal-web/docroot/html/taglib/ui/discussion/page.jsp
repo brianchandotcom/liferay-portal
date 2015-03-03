@@ -146,7 +146,7 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 
 										<div class="lfr-discussion-body">
 
-											<liferay-ui:input-editor contents="" data="<%= commentsEditorDisplayContext.getDataTextEditor() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
+											<liferay-ui:input-editor contents="" data="<%= commentsEditorDisplayContext.getTextEditorData() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
 
 											<aui:input name="postReplyBody0" type="hidden" />
 

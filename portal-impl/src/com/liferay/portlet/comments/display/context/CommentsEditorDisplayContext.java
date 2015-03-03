@@ -27,27 +27,30 @@ import java.util.Map;
 public class CommentsEditorDisplayContext {
 
 	public CommentsEditorDisplayContext() {
-		_populateDataTextEditor();
+		_populateTextEditorData();
 	}
 
-	public Map<String, Object> getDataTextEditor() {
-		return _dataTextEditor;
+	public Map<String, Object> getTextEditorData() {
+		return _textEditorData;
 	}
 
-	private void _populateDataTextEditor() {
+	private void _populateTextEditorData() {
 		JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
+
 		editorConfig.put(
 			"allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
 		editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
 
+		_textEditorData.put("editorConfig", editorConfig);
+
 		JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
+
 		editorOptions.put("textMode", Boolean.FALSE);
 		editorOptions.put("showSource", Boolean.FALSE);
 
-		_dataTextEditor.put("editorConfig", editorConfig);
-		_dataTextEditor.put("editorOptions", editorOptions);
+		_textEditorData.put("editorOptions", editorOptions);
 	}
 
-	private final Map<String, Object> _dataTextEditor = new HashMap<>();
+	private final Map<String, Object> _textEditorData = new HashMap<>();
 
 }

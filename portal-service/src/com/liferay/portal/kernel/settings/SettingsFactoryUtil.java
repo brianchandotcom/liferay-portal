@@ -72,9 +72,7 @@ public class SettingsFactoryUtil {
 		return getSettingsFactory().getServerSettings(settingsId);
 	}
 
-	public static SettingsDescriptor<?> getSettingsDescriptor(
-		String settingsId) {
-
+	public static SettingsDescriptor getSettingsDescriptor(String settingsId) {
 		return getSettingsFactory().getSettingsDescriptor(settingsId);
 	}
 

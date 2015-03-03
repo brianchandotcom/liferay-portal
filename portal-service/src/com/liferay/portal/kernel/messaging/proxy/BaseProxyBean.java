@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationSynchronousMessageSender;
 
-import java.util.Map;
-
 /**
  * @author Micha Kiener
  * @author Michael C. Han
@@ -67,13 +65,7 @@ public abstract class BaseProxyBean {
 
 		message.setPayload(proxyRequest);
 
-		Map<String, Object> values = MessageValuesThreadLocal.getValues();
-
-		if (!values.isEmpty()) {
-			for (String key : values.keySet()) {
-				message.put(key, values.get(key));
-			}
-		}
+		MessageValuesThreadLocal.populateMessageFromThreadLocals(message);
 
 		if (proxyRequest.isLocal()) {
 			message.put(MessagingProxy.LOCAL_MESSAGE, Boolean.TRUE);

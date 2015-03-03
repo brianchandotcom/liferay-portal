@@ -38,6 +38,9 @@ import org.apache.lucene.util.Version;
  */
 public interface LuceneHelper {
 
+	public static final String SKIP_LOAD_INDEX_FROM_CLUSTER =
+		"SKIP_LOAD_INDEX_FROM_CLUSTER";
+
 	public void addDocument(long companyId, Document document)
 		throws IOException;
 

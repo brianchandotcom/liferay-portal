@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.messaging.proxy;
 
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,20 +32,42 @@ public class MessageValuesThreadLocal {
 			return null;
 		}
 
-		return messageValues.get(key);
+		return messageValues.get(_THREAD_LOCAL_KEY_PREFIX.concat(key));
 	}
 
-	public static Map<String, Object> getValues() {
+	public static void populateMessageFromThreadLocals(Message message) {
 		Map<String, Object> messageValues = _messageValuesThreadLocal.get();
 
 		if (messageValues == null) {
-			return Collections.emptyMap();
+			return;
 		}
 
-		return messageValues;
+		for (Map.Entry<String, Object> entry : messageValues.entrySet()) {
+			message.put(entry.getKey(), entry.getValue());
+		}
+	}
+
+	public static void populateThreadLocalsFromMessage(Message message) {
+		Map<String, Object> values = message.getValues();
+
+		if (values == null) {
+			return;
+		}
+
+		for (Map.Entry<String, Object> entry : values.entrySet()) {
+			String key = entry.getKey();
+
+			if (key.startsWith(_THREAD_LOCAL_KEY_PREFIX)) {
+				doSetValue(key, entry.getValue());
+			}
+		}
 	}
 
 	public static void setValue(String key, Object value) {
+		doSetValue(_THREAD_LOCAL_KEY_PREFIX.concat(key), value);
+	}
+
+	protected static void doSetValue(String key, Object value) {
 		Map<String, Object> messageValues = _messageValuesThreadLocal.get();
 
 		if (messageValues == null) {
@@ -56,6 +78,9 @@ public class MessageValuesThreadLocal {
 
 		messageValues.put(key, value);
 	}
+
+	private static final String _THREAD_LOCAL_KEY_PREFIX =
+		"_THREAD_LOCAL_KEY_PREFIX#";
 
 	private static final ThreadLocal<Map<String, Object>>
 		_messageValuesThreadLocal =

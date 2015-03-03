@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.cluster.messaging;
 
 import com.liferay.portal.kernel.cluster.Address;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterLinkUtil;
 import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.log.Log;
@@ -33,7 +34,7 @@ public class ClusterBridgeMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		if (ClusterLinkUtil.isForwardMessage(message)) {
+		if (!ClusterInvokeThreadLocal.isEnabled()) {
 			return;
 		}
 

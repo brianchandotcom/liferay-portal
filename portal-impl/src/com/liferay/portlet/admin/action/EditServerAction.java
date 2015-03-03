@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
-import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
@@ -76,6 +75,7 @@ import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.search.SearchEngineInitializer;
+import com.liferay.portal.search.lucene.LuceneHelper;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
 import com.liferay.portal.search.lucene.cluster.LuceneClusterUtil;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -381,7 +381,7 @@ public class EditServerAction extends PortletAction {
 
 		if (LuceneHelperUtil.isLoadIndexFromClusterEnabled()) {
 			MessageValuesThreadLocal.setValue(
-				ClusterLink.CLUSTER_FORWARD_MESSAGE, true);
+				LuceneHelper.SKIP_LOAD_INDEX_FROM_CLUSTER, true);
 		}
 
 		Set<String> usedSearchEngineIds = new HashSet<>();

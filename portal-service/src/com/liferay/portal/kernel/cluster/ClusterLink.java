@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.messaging.Message;
  */
 public interface ClusterLink {
 
-	public static final String CLUSTER_FORWARD_MESSAGE =
-		"CLUSTER_FORWARD_MESSAGE";
-
 	public static final int MAX_CHANNEL_COUNT = Priority.values().length;
 
 	public void initialize();

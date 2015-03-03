@@ -46,6 +46,9 @@ public class ProxyMessageListener implements MessageListener {
 						ProxyRequest.class.getName());
 			}
 			else {
+				MessageValuesThreadLocal.populateThreadLocalsFromMessage(
+					message);
+
 				ProxyRequest proxyRequest = (ProxyRequest)payload;
 
 				Object result = proxyRequest.execute(_manager);

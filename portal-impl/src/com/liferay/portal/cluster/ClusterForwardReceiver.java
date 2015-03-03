@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cluster;
 
-import com.liferay.portal.kernel.cluster.ClusterLinkUtil;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
@@ -50,9 +50,14 @@ public class ClusterForwardReceiver extends BaseReceiver {
 							destinationName);
 				}
 
-				ClusterLinkUtil.setForwardMessage(message);
+				ClusterInvokeThreadLocal.setEnabled(false);
 
-				MessageBusUtil.sendMessage(destinationName, message);
+				try {
+					MessageBusUtil.sendMessage(destinationName, message);
+				}
+				finally {
+					ClusterInvokeThreadLocal.setEnabled(true);
+				}
 			}
 			else {
 				if (_log.isErrorEnabled()) {

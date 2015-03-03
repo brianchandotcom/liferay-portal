@@ -17,25 +17,21 @@ package com.liferay.search.web.portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.PortalOpenSearchImpl;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.PortletURLImpl;
-import com.liferay.search.web.constants.SearchPortletKeys;
 import com.liferay.search.web.upgrade.SearchWebUpgrade;
 
 import java.io.IOException;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -77,9 +73,10 @@ public class SearchPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
+		String resourceID = GetterUtil.getString(
+			resourceRequest.getResourceID());
 
-		if (cmd.equals("getOpenSearchXML")) {
+		if (resourceID.equals("getOpenSearchXML")) {
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				resourceRequest);
 
@@ -87,9 +84,10 @@ public class SearchPortlet extends MVCPortlet {
 				resourceResponse);
 
 			try {
+				byte[] xml = getXML(resourceRequest, resourceResponse);
+
 				ServletResponseUtil.sendFile(
-					request, response, null, getXML(request),
-					ContentTypes.TEXT_XML_UTF8);
+					request, response, null, xml, ContentTypes.TEXT_XML_UTF8);
 			}
 			catch (Exception e) {
 				try {
@@ -104,21 +102,19 @@ public class SearchPortlet extends MVCPortlet {
 		}
 	}
 
-	protected byte[] getXML(HttpServletRequest request) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected byte[] getXML(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
 
-		PortletURLImpl openSearchResourceURL = new PortletURLImpl(
-			request, SearchPortletKeys.SEARCH, themeDisplay.getPlid(),
-			PortletRequest.RESOURCE_PHASE);
+		ResourceURL openSearchResourceURL =
+			resourceResponse.createResourceURL();
 
-		openSearchResourceURL.setParameter(Constants.CMD, "getOpenSearchXML");
+		openSearchResourceURL.setResourceID("getOpenSearchXML");
 
-		long groupId = ParamUtil.getLong(request, "groupId");
+		long groupId = ParamUtil.getLong(resourceRequest, "groupId");
 
-		PortletURLImpl openSearchDescriptionXMLURL = new PortletURLImpl(
-			request, SearchPortletKeys.SEARCH, themeDisplay.getPlid(),
-			PortletRequest.RESOURCE_PHASE);
+		ResourceURL openSearchDescriptionXMLURL =
+			resourceResponse.createResourceURL();
 
 		openSearchDescriptionXMLURL.setParameter(
 			"mvcPath", "/open_search_description.jsp");
@@ -128,6 +124,9 @@ public class SearchPortlet extends MVCPortlet {
 		OpenSearch openSearch = new PortalOpenSearchImpl(
 			openSearchResourceURL.toString(),
 			openSearchDescriptionXMLURL.toString());
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			resourceRequest);
 
 		String xml = openSearch.search(
 			request,

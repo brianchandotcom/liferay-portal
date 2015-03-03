@@ -25,16 +25,19 @@ import java.util.Set;
 /**
  * @author Raymond Augé
  */
-public class UnmodifiableDictionaryMap <K, V> implements Map<K, V> {
+public class UnmodifiableCaseInsensitiveDictionaryMap<V>
+	implements Map<String, V> {
 
-	public UnmodifiableDictionaryMap(Dictionary<K, V> dictionary) {
-		Map<K, V> map = new HashMap<>();
+	public UnmodifiableCaseInsensitiveDictionaryMap(
+		Dictionary<String, V> dictionary) {
+
+		Map<String, V> map = new HashMap<>();
 
 		if (dictionary != null) {
-			for (Enumeration<K> enumeration = dictionary.keys();
+			for (Enumeration<String> enumeration = dictionary.keys();
 					enumeration.hasMoreElements();) {
 
-				K key = enumeration.nextElement();
+				String key = enumeration.nextElement();
 
 				map.put(key, dictionary.get(key));
 			}
@@ -59,13 +62,25 @@ public class UnmodifiableDictionaryMap <K, V> implements Map<K, V> {
 	}
 
 	@Override
-	public Set<Map.Entry<K, V>> entrySet() {
+	public Set<Map.Entry<String, V>> entrySet() {
 		return _map.entrySet();
 	}
 
 	@Override
 	public V get(Object key) {
-		return _map.get(key);
+		if (!(key instanceof String)) {
+			return null;
+		}
+
+		String keyString = (String)key;
+
+		V value = _map.get(keyString);
+
+		if (value == null) {
+			value = _map.get(keyString.toLowerCase());
+		}
+
+		return value;
 	}
 
 	@Override
@@ -74,17 +89,17 @@ public class UnmodifiableDictionaryMap <K, V> implements Map<K, V> {
 	}
 
 	@Override
-	public Set<K> keySet() {
+	public Set<String> keySet() {
 		return _map.keySet();
 	}
 
 	@Override
-	public V put(K key, V value) {
+	public V put(String key, V value) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void putAll(Map<? extends K, ? extends V> m) {
+	public void putAll(Map<? extends String, ? extends V> m) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -103,6 +118,6 @@ public class UnmodifiableDictionaryMap <K, V> implements Map<K, V> {
 		return _map.values();
 	}
 
-	private final Map<K, V> _map;
+	private final Map<String, V> _map;
 
 }

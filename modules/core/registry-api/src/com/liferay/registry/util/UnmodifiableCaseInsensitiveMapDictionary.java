@@ -22,9 +22,10 @@ import java.util.Map;
 /**
  * @author Raymond Augé
  */
-public class UnmodifiableMapDictionary <K, V> extends Dictionary<K, V> {
+public class UnmodifiableCaseInsensitiveMapDictionary<V>
+	extends Dictionary<String, V> {
 
-	public UnmodifiableMapDictionary(Map<K, V> map) {
+	public UnmodifiableCaseInsensitiveMapDictionary(Map<String, V> map) {
 		if (map == null) {
 			_map = Collections.emptyMap();
 		}
@@ -43,7 +44,19 @@ public class UnmodifiableMapDictionary <K, V> extends Dictionary<K, V> {
 
 	@Override
 	public V get(Object key) {
-		return _map.get(key);
+		if (!(key instanceof String)) {
+			return null;
+		}
+
+		String keyString = (String)key;
+
+		V value = _map.get(keyString);
+
+		if (value == null) {
+			value = _map.get(keyString.toLowerCase());
+		}
+
+		return value;
 	}
 
 	@Override
@@ -52,12 +65,12 @@ public class UnmodifiableMapDictionary <K, V> extends Dictionary<K, V> {
 	}
 
 	@Override
-	public Enumeration<K> keys() {
+	public Enumeration<String> keys() {
 		return _keys;
 	}
 
 	@Override
-	public V put(K key, V value) {
+	public V put(String key, V value) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -72,7 +85,7 @@ public class UnmodifiableMapDictionary <K, V> extends Dictionary<K, V> {
 	}
 
 	private final Enumeration<V> _elements;
-	private final Enumeration<K> _keys;
-	private final Map<K, V> _map;
+	private final Enumeration<String> _keys;
+	private final Map<String, V> _map;
 
 }

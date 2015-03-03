@@ -1,0 +1,6 @@
+Bundle-SymbolicName: required-dependencies
+Bundle-Version: 1.0.0
+
+-fixupmessages:\
+	"The JAR is empty: ...";is:=ignore,\
+	"While setting properties ...";is:=ignore

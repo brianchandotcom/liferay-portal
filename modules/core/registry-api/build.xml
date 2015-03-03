@@ -4,7 +4,7 @@
 <project>
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
-	<path id="plugin.classpath" path="lib/aQute.bnd.jar" />
+	<path id="plugin.classpath" path="lib/biz.aQute.bnd.jar" />
 
 	<property name="auto.deploy.dir" value="${app.server.lib.global.dir}" />
 </project>

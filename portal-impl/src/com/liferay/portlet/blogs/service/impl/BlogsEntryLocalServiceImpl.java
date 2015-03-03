@@ -357,7 +357,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
-	//@Override
+	@Override
 	public BlogsEntry addEntry(
 			long userId, String title, String subtitle, String description,
 			String content, int displayDateMonth, int displayDateDay,

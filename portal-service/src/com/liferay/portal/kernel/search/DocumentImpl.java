@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,6 +43,7 @@ import java.text.ParseException;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -82,10 +82,6 @@ public class DocumentImpl implements Document {
 		String fieldName = sort.getFieldName();
 
 		if (DocumentImpl.isSortableFieldName(fieldName)) {
-			return fieldName;
-		}
-
-		if (DDMIndexerUtil.isSortableFieldName(fieldName)) {
 			return fieldName;
 		}
 
@@ -139,12 +135,7 @@ public class DocumentImpl implements Document {
 			datesTime[i] = String.valueOf(values[i].getTime());
 		}
 
-		String sortableFieldName = getSortableFieldName(name);
-
-		Field field = createField(sortableFieldName, datesTime);
-
-		field.setNumeric(true);
-		field.setNumericClass(Long.class);
+		createSortableNumericField(name, datesTime, Long.class);
 
 		addKeyword(name, dates);
 	}
@@ -352,17 +343,9 @@ public class DocumentImpl implements Document {
 
 	@Override
 	public void addKeyword(String name, String value, boolean lowerCase) {
-		if (lowerCase && Validator.isNotNull(value)) {
-			value = StringUtil.toLowerCase(value);
-		}
+		createKeywordField(name, value, lowerCase);
 
-		Field field = createField(name, value);
-
-		for (String fieldName : Field.UNSCORED_FIELD_NAMES) {
-			if (StringUtil.equalsIgnoreCase(name, fieldName)) {
-				field.setBoost(0);
-			}
-		}
+		createSortableKeywordField(name, value);
 	}
 
 	@Override
@@ -372,6 +355,28 @@ public class DocumentImpl implements Document {
 		}
 
 		createField(name, values);
+	}
+
+	@Override
+	public void addKeywordSortable(String name, Boolean value) {
+		String valueString = String.valueOf(value);
+
+		createKeywordField(name, valueString, false);
+
+		createSortableTextField(name, valueString);
+	}
+
+	@Override
+	public void addKeywordSortable(String name, Boolean[] values) {
+		if (values == null) {
+			return;
+		}
+
+		String[] valuesString = ArrayUtil.toStringArray(values);
+
+		createField(name, valuesString);
+
+		createSortableTextField(name, valuesString);
 	}
 
 	@Override
@@ -579,12 +584,7 @@ public class DocumentImpl implements Document {
 			return;
 		}
 
-		String sortableFieldName = getSortableFieldName(name);
-
-		Field field = createField(sortableFieldName, values);
-
-		field.setNumeric(true);
-		field.setNumericClass(clazz);
+		createSortableNumericField(name, values, clazz);
 
 		addKeyword(name, values);
 	}
@@ -599,16 +599,7 @@ public class DocumentImpl implements Document {
 
 		field.setTokenized(true);
 
-		if (_sortableTextFields.contains(name)) {
-			String truncatedValue = value;
-
-			if (value.length() > _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH) {
-				truncatedValue = value.substring(
-					0, _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH);
-			}
-
-			addKeyword(getSortableFieldName(name), truncatedValue, true);
-		}
+		createSortableKeywordField(name, value);
 	}
 
 	@Override
@@ -620,6 +611,34 @@ public class DocumentImpl implements Document {
 		Field field = createField(name, values);
 
 		field.setTokenized(true);
+
+		createSortableKeywordField(name, values);
+	}
+
+	@Override
+	public void addTextSortable(String name, String value) {
+		if (Validator.isNull(value)) {
+			return;
+		}
+
+		Field field = createField(name, value);
+
+		field.setTokenized(true);
+
+		createSortableTextField(name, value);
+	}
+
+	@Override
+	public void addTextSortable(String name, String[] values) {
+		if (values == null) {
+			return;
+		}
+
+		Field field = createField(name, values);
+
+		field.setTokenized(true);
+
+		createSortableTextField(name, values);
 	}
 
 	@Override
@@ -876,6 +895,70 @@ public class DocumentImpl implements Document {
 
 	protected Field createField(String name, String... values) {
 		return createField(name, false, values);
+	}
+
+	protected void createKeywordField(
+		String name, String value, boolean lowerCase) {
+
+		if (lowerCase && Validator.isNotNull(value)) {
+			value = StringUtil.toLowerCase(value);
+		}
+
+		Field field = createField(name, value);
+
+		for (String fieldName : Field.UNSCORED_FIELD_NAMES) {
+			if (StringUtil.equalsIgnoreCase(name, fieldName)) {
+				field.setBoost(0);
+			}
+		}
+	}
+
+	protected void createSortableKeywordField(String name, String value) {
+		if (isDocumentSortableTextField(name)) {
+			createSortableTextField(name, value);
+		}
+	}
+
+	protected void createSortableKeywordField(String name, String[] values) {
+		if (isDocumentSortableTextField(name)) {
+			createSortableTextField(name, values);
+		}
+	}
+
+	protected void createSortableNumericField(
+		String name, String[] values, Class<? extends Number> clazz) {
+
+		if (values.length == 0) {
+			return;
+		}
+
+		String min = Collections.min(Arrays.asList(values));
+
+		String sortableFieldName = getSortableFieldName(name);
+
+		Field field = createField(sortableFieldName, min);
+
+		field.setNumeric(true);
+		field.setNumericClass(clazz);
+	}
+
+	protected void createSortableTextField(String name, String value) {
+		String truncatedValue = value;
+
+		if (value.length() > _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH) {
+			truncatedValue = value.substring(
+				0, _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH);
+		}
+
+		createKeywordField(getSortableFieldName(name), truncatedValue, true);
+	}
+
+	protected void createSortableTextField(String name, String[] values) {
+		if (values.length == 0) {
+			return;
+		}
+
+		createSortableTextField(name, Collections.min(Arrays.asList(values)));
 	}
 
 	protected Field doGetField(String name, boolean createIfNew) {

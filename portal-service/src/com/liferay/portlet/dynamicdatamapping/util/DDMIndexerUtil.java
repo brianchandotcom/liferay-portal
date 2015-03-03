@@ -56,10 +56,6 @@ public class DDMIndexerUtil {
 		return _ddmIndexer;
 	}
 
-	public static boolean isSortableFieldName(String fieldName) {
-		return getDDMIndexer().isSortableFieldName(fieldName);
-	}
-
 	public void setDDMIndexer(DDMIndexer ddmIndexer) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

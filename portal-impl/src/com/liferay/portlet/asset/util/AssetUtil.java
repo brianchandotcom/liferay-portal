@@ -818,32 +818,25 @@ public class AssetUtil {
 		return assetSearcher;
 	}
 
-	protected static Sort getSort(
-			String orderByType, String sortField, Locale locale)
-		throws Exception {
+	protected static String getDDMFieldType(String sortField)
+		throws PortalException {
 
-		if (Validator.isNull(orderByType)) {
-			orderByType = "asc";
-		}
+		String[] sortFields = sortField.split(DDMIndexer.DDM_FIELD_SEPARATOR);
 
-		int sortType = getSortType(sortField);
+		long ddmStructureId = GetterUtil.getLong(sortFields[1]);
+		String fieldName = sortFields[2];
 
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStructureId);
+
+		return ddmStructure.getFieldType(fieldName);
+	}
+
+	protected static String getOrderByCol(String sortField, Locale locale) {
 		if (sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
-			String[] sortFields = sortField.split(
-				DDMIndexer.DDM_FIELD_SEPARATOR);
-
-			long ddmStructureId = GetterUtil.getLong(sortFields[1]);
-			String fieldName = sortFields[2];
-
-			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.getStructure(ddmStructureId);
-
-			String fieldType = ddmStructure.getFieldType(fieldName);
-
-			sortType = getSortType(fieldType);
-
-			sortField = sortField.concat(StringPool.UNDERLINE).concat(
-				LocaleUtil.toLanguageId(locale));
+			sortField = DocumentImpl.getSortableFieldName(
+				sortField.concat(StringPool.UNDERLINE).concat(
+					LocaleUtil.toLanguageId(locale)));
 		}
 		else if (sortField.equals("modifiedDate")) {
 			sortField = Field.MODIFIED_DATE;
@@ -853,8 +846,17 @@ public class AssetUtil {
 				"localized_title_".concat(LocaleUtil.toLanguageId(locale)));
 		}
 
+		return sortField;
+	}
+
+	protected static Sort getSort(
+			String orderByType, String sortField, Locale locale)
+		throws Exception {
+
 		return SortFactoryUtil.getSort(
-			AssetEntry.class, sortType, sortField, orderByType);
+			AssetEntry.class, getType(sortField),
+			getOrderByCol(sortField, locale), isSortFieldInferred(sortField),
+			orderByType);
 	}
 
 	protected static Sort[] getSorts(
@@ -895,6 +897,22 @@ public class AssetUtil {
 		}
 
 		return sortType;
+	}
+
+	protected static int getType(String sortField) throws PortalException {
+		if (sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
+			sortField = getDDMFieldType(sortField);
+		}
+
+		return getSortType(sortField);
+	}
+
+	protected static boolean isSortFieldInferred(String sortField) {
+		if (sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AssetUtil.class);

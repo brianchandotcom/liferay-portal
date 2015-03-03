@@ -84,10 +84,10 @@ public class DDMIndexerImpl implements DDMIndexer {
 						document.addNumber(name, (BigDecimal[])value);
 					}
 					else if (value instanceof Boolean) {
-						document.addKeyword(name, (Boolean)value);
+						document.addKeywordSortable(name, (Boolean)value);
 					}
 					else if (value instanceof Boolean[]) {
-						document.addKeyword(name, (Boolean[])value);
+						document.addKeywordSortable(name, (Boolean[])value);
 					}
 					else if (value instanceof Date) {
 						document.addDate(name, (Date)value);
@@ -130,7 +130,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 							document.addKeyword(name, valuesString);
 						}
 						else {
-							document.addText(name, valuesString);
+							document.addTextSortable(name, valuesString);
 						}
 					}
 					else {
@@ -163,7 +163,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 								document.addKeyword(name, valueString);
 							}
 							else {
-								document.addText(name, valueString);
+								document.addTextSortable(name, valueString);
 							}
 						}
 					}
@@ -282,11 +282,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 		}
 
 		return sb.toString();
-	}
-
-	@Override
-	public boolean isSortableFieldName(String fieldName) {
-		return fieldName.startsWith(DDMIndexer.DDM_FIELD_PREFIX);
 	}
 
 	protected Fields toFields(

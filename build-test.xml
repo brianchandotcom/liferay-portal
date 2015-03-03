@@ -4478,7 +4478,7 @@ if (ppstate.equals("normal")) {
 					replace="http://\1-\2/\2"
 				/>
 
-				<mirrors-get dest="${testray.logs.dir}/console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
+				<get dest="${testray.logs.dir}/console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
 			</then>
 		</if>
 	</target>

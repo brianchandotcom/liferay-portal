@@ -360,19 +360,6 @@ public class FileUtil {
 		}
 
 		try {
-			if ((syncFile.getSize() > 0) &&
-				(syncFile.getSize() != Files.size(filePath))) {
-
-				return true;
-			}
-		}
-		catch (IOException ioe) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug(ioe.getMessage(), ioe);
-			}
-		}
-
-		try {
 			FileTime fileTime = Files.getLastModifiedTime(filePath);
 
 			long modifiedTime = syncFile.getModifiedTime();
@@ -385,6 +372,19 @@ public class FileUtil {
 				(getFileKey(filePath) == syncFile.getSyncFileId())) {
 
 				return false;
+			}
+		}
+		catch (IOException ioe) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(ioe.getMessage(), ioe);
+			}
+		}
+
+		try {
+			if ((syncFile.getSize() > 0) &&
+				(syncFile.getSize() != Files.size(filePath))) {
+
+				return true;
 			}
 		}
 		catch (IOException ioe) {

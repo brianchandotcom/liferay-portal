@@ -143,7 +143,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_COVER_MAX_SIZE) %>" paramName="coverImageFileEntry" uploadURL="<%= coverImageSelectorURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
 					</div>
 
-					<aui:input name="coverImageCaption" type="hidden"/>
+					<aui:input name="coverImageCaption" type="hidden" />
 
 					<div class="entry-cover-image-caption">
 
@@ -157,7 +157,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 						JSONObject editorCoverImageCaptionToolbar = JSONFactoryUtil.createJSONObject();
 
-						JSONArray editorCoverImageCaptionToolbarOptions  = JSONFactoryUtil.createJSONArray("['a']");
+						JSONArray editorCoverImageCaptionToolbarOptions = JSONFactoryUtil.createJSONArray("['a']");
 
 						editorCoverImageCaptionToolbar.put("styles", editorCoverImageCaptionToolbarOptions);
 

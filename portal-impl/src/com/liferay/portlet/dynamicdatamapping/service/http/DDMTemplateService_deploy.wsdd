@@ -19,7 +19,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="sourceClassNameId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="resourceClassNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="nameMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="nameMapValues" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="descriptionMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
@@ -45,7 +45,7 @@
 		<operation xmlns:operNS="urn:http.service.dynamicdatamapping.portlet.liferay.com" xmlns:rtns="urn:http.service.dynamicdatamapping.portlet.liferay.com" xmlns:tns2="http://model.dynamicdatamapping.portlet.liferay.com" name="copyTemplates" qname="operNS:copyTemplates" returnQName="copyTemplatesReturn" returnType="rtns:ArrayOf_tns3_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="oldClassPK" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="sourceClassNameId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="resourceClassNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="newClassPK" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
@@ -120,6 +120,7 @@
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="classNameIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="classPKs" type="tns:ArrayOf_xsd_long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="resourceClassNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="keywords" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="mode" type="tns:string"></parameter>
@@ -129,6 +130,7 @@
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="classNameIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="classPKs" type="tns:ArrayOf_xsd_long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="resourceClassNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
@@ -141,6 +143,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="resourceClassNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="keywords" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="mode" type="tns:string"></parameter>
@@ -150,6 +153,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="resourceClassNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
@@ -162,6 +166,7 @@
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="classNameIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="classPKs" type="tns:ArrayOf_xsd_long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="resourceClassNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="keywords" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="mode" type="tns:string"></parameter>
@@ -174,6 +179,7 @@
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="classNameIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="classPKs" type="tns:ArrayOf_xsd_long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="resourceClassNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
@@ -189,6 +195,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="resourceClassNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="keywords" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="mode" type="tns:string"></parameter>
@@ -201,6 +208,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="resourceClassNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>

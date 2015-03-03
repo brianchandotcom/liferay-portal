@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet.filters.audit;
 
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.TryFilter;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
@@ -38,7 +39,7 @@ public class AuditFilter extends BasePortalFilter implements TryFilter {
 			AuditRequestThreadLocal.getAuditThreadLocal();
 
 		auditRequestThreadLocal.setClientHost(request.getRemoteHost());
-		auditRequestThreadLocal.setClientIP(request.getRemoteAddr());
+		auditRequestThreadLocal.setClientIP(getRemoteAddr(request));
 		auditRequestThreadLocal.setQueryString(request.getQueryString());
 
 		HttpSession session = request.getSession();
@@ -56,6 +57,16 @@ public class AuditFilter extends BasePortalFilter implements TryFilter {
 		auditRequestThreadLocal.setSessionID(session.getId());
 
 		return null;
+	}
+
+	protected String getRemoteAddr(HttpServletRequest request) {
+		String remoteAddr = request.getHeader(HttpHeaders.X_FORWARDED_FOR);
+
+		if (remoteAddr != null) {
+			return remoteAddr;
+		}
+
+		return request.getRemoteAddr();
 	}
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
@@ -53,6 +55,24 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 		_previousThread = previousThread;
 		_nextThread = nextThread;
 		_threadView = threadView;
+
+		boolean maxMessageCountReached = false;
+
+		if (message.isDiscussion()) {
+			int discussionMessagesCount =
+				messageLocalService.getDiscussionMessagesCount(
+					message.getClassName(), message.getClassPK(),
+					WorkflowConstants.STATUS_APPROVED);
+
+			if ((PropsValues.DISCUSSION_COMMENTS_MAX_NUMBER > 0) &&
+				(discussionMessagesCount >=
+					PropsValues.DISCUSSION_COMMENTS_MAX_NUMBER)) {
+
+				maxMessageCountReached = true;
+			}
+		}
+
+		_maxMessageCountReached = maxMessageCountReached;
 	}
 
 	@Override
@@ -95,7 +115,13 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 		return _treeWalker;
 	}
 
+	@Override
+	public boolean isMaxMessageCountReached() {
+		return _maxMessageCountReached;
+	}
+
 	private final MBCategory _category;
+	private final boolean _maxMessageCountReached;
 	private final MBMessage _message;
 	private final MBThread _nextThread;
 	private final MBMessage _parentMessage;

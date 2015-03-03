@@ -167,7 +167,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String body, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (isMaxDiscussionMessageCountReached(className, classPK)) {
+		if (isMaxDiscussionMessagesCountReached(className, classPK)) {
 			throw new DiscussionMessageNumberException();
 		}
 
@@ -1371,25 +1371,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
-	public boolean isMaxDiscussionMessageCountReached(
-		String className, long classPK) {
-
-		boolean maxDiscussionMessageCountReached = false;
-
-		int discussionMessagesCount = getDiscussionMessagesCount(
-			className, classPK, WorkflowConstants.STATUS_APPROVED);
-
-		if ((PropsValues.DISCUSSION_COMMENTS_MAX_NUMBER > 0) &&
-			(discussionMessagesCount >=
-				PropsValues.DISCUSSION_COMMENTS_MAX_NUMBER)) {
-
-			maxDiscussionMessageCountReached = true;
-		}
-
-		return maxDiscussionMessageCountReached;
-	}
-
-	@Override
 	public long moveMessageAttachmentToTrash(
 			long userId, long messageId, String fileName)
 		throws PortalException {
@@ -2002,6 +1983,22 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		return subject;
+	}
+
+	protected boolean isMaxDiscussionMessagesCountReached(
+		String className, long classPK) {
+
+		int discussionMessagesCount = getDiscussionMessagesCount(
+			className, classPK, WorkflowConstants.STATUS_APPROVED);
+
+		if ((PropsValues.DISCUSSION_COMMENTS_MAX_NUMBER > 0) &&
+			(discussionMessagesCount >=
+				PropsValues.DISCUSSION_COMMENTS_MAX_NUMBER)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void notifyDiscussionSubscribers(

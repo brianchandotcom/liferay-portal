@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>GENERATE_BUTTON</td>
-	<td>//button[@class='btn btn-primary' and contains(.,'Generate')]</td>
+	<td>//button[contains(.,'Generate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>
-	<td>//button[@class='btn btn-cancel' and contains(.,'Cancel')]</td>
+	<td>//button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>

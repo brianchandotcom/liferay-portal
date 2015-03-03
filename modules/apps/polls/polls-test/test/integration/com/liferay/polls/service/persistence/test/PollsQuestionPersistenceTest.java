@@ -14,7 +14,7 @@
 
 package com.liferay.polls.service.persistence.test;
 
-import com.liferay.arquillian.bridge.junit.Arquillian;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.polls.exception.NoSuchQuestionException;
 import com.liferay.polls.model.PollsQuestion;

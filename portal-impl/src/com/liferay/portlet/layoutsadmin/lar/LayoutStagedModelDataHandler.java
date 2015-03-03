@@ -417,12 +417,27 @@ public class LayoutStagedModelDataHandler
 				SitesUtil.addMergeFailFriendlyURLLayout(
 					mergeFailFriendlyURLLayout);
 
+				if (!_log.isWarnEnabled()) {
+					return;
+				}
+
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("Layout with layout id ");
+				sb.append(layout.getLayoutId());
+				sb.append(" cannot be propagated because the friendlyURL ");
+				sb.append("conflicts with the friendlyURL of layout with ");
+				sb.append("layout id ");
+				sb.append(mergeFailFriendlyURLLayout.getLayoutId());
+
+				_log.warn(sb.toString());
+
 				return;
 			}
 		}
 		else {
 
-			// The default behaviour of import mode is
+			// The default behavior of import mode is
 			// PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID
 
 			existingLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(

@@ -361,6 +361,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		);
 	</c:if>
 
+	var ckEditorContent;
 	var currentToolbarSet;
 
 	var initialToolbarSet = '<%= TextFormatter.format(HtmlUtil.escapeJS(toolbarSet), TextFormatter.M) %>';
@@ -386,17 +387,23 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 		function initData() {
 			<c:if test="<%= Validator.isNotNull(initMethod) && !(inlineEdit && Validator.isNotNull(inlineEditSaveURL)) %>">
-				ckEditor.setData(
+				if (!ckEditorContent) {
 					<c:choose>
 						<c:when test="<%= (contents != null) %>">
-							'<%= UnicodeFormatter.toString(contents) %>',
+							ckEditorContent = '<%= UnicodeFormatter.toString(contents) %>';
 						</c:when>
 						<c:otherwise>
-							window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'](),
+							ckEditorContent = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
 						</c:otherwise>
 					</c:choose>
+				}
+
+				ckEditor.setData(
+					ckEditorContent,
 					function() {
 						ckEditor.resetDirty();
+
+						ckEditorContent = '';
 					}
 				);
 			</c:if>
@@ -458,9 +465,9 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			{
 				customConfig: '<%= PortalUtil.getPathContext() %>/html/js/editor/ckeditor/<%= HtmlUtil.escapeJS(ckEditorConfigFileName) %>?p_p_id=<%= HttpUtil.encodeURL(portletId) %>&p_main_path=<%= HttpUtil.encodeURL(mainPath) %>&contentsLanguageId=<%= HttpUtil.encodeURL(contentsLanguageId) %>&colorSchemeCssClass=<%= HttpUtil.encodeURL(themeDisplay.getColorScheme().getCssClass()) %>&cssClasses=<%= HttpUtil.encodeURL(cssClasses) %>&cssPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>&doAsGroupId=<%= HttpUtil.encodeURL(String.valueOf(doAsGroupId)) %>&doAsUserId=<%= HttpUtil.encodeURL(doAsUserId) %>&imagesPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeImages()) %>&inlineEdit=<%= inlineEdit %><%= configParams %>&languageId=<%= HttpUtil.encodeURL(LocaleUtil.toLanguageId(locale)) %>&name=<%= name %>&resizable=<%= resizable %>&showSource=<%= showSource %>',
 				filebrowserBrowseUrl: filebrowserBrowseUrl,
-				filebrowserImageBrowseUrl: filebrowserImageBrowseUrl,
-				filebrowserImageBrowseLinkUrl: filebrowserImageBrowseLinkUrl,
 				filebrowserFlashBrowseUrl: filebrowserFlashBrowseUrl,
+				filebrowserImageBrowseLinkUrl: filebrowserImageBrowseLinkUrl,
+				filebrowserImageBrowseUrl: filebrowserImageBrowseUrl,
 				filebrowserUploadUrl: null,
 				toolbar: currentToolbarSet
 			}
@@ -571,7 +578,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 								}
 							);
 						}
-						catch (error) {
+						catch (e) {
 						}
 
 						Liferay.detach('destroyPortlet', destroyInstance);
@@ -658,6 +665,8 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 	</c:if>
 
 	<c:if test="<%= !(inlineEdit && Validator.isNotNull(inlineEditSaveURL)) %>">
+		var initialEditor = CKEDITOR.instances['<%= name %>'].id;
+
 		A.getWin().on(
 			'resize',
 			A.debounce(
@@ -666,15 +675,23 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 						var ckeditorInstance = CKEDITOR.instances['<%= name %>'];
 
 						if (ckeditorInstance) {
-							var currentDialog = CKEDITOR.dialog.getCurrent();
+							var currentEditor = ckeditorInstance.id;
 
-							if (currentDialog) {
-								currentDialog.hide();
+							if (currentEditor === initialEditor) {
+								var currentDialog = CKEDITOR.dialog.getCurrent();
+
+								if (currentDialog) {
+									currentDialog.hide();
+								}
+
+								ckEditorContent = ckeditorInstance.getData();
+
+								window['<%= name %>'].dispose();
+
+								window['<%= name %>'].create();
+
+								initialEditor = CKEDITOR.instances['<%= name %>'].id;
 							}
-
-							window['<%= name %>'].dispose();
-
-							window['<%= name %>'].create();
 						}
 					}
 				},

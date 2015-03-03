@@ -841,6 +841,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			List<SearchResult> searchResults)
 		throws Exception {
 
+		LDAPUtil.validateFilter(filter);
+
 		SearchControls searchControls = new SearchControls(
 			SearchControls.SUBTREE_SCOPE, maxResults, 0, attributeIds, false,
 			false);

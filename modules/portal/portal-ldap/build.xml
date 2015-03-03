@@ -5,4 +5,49 @@
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
+
+	<target name="build-ldapfilter-parser">
+		<delete>
+			<fileset
+				dir="src/com/liferay/portal/ldap/validator/parser"
+				includes="*.*"
+			/>
+		</delete>
+		<path id="antlr.classpath">
+			<fileset dir="../../../lib/portal" includes="antlr2.jar,antlr3.jar,antlr3-runtime.jar,stringtemplate.jar" />
+		</path>
+
+		<java
+			classname="org.antlr.Tool"
+			classpathref="antlr.classpath"
+			dir="src/com/liferay/portal/ldap/validator/grammar"
+			fork="true"
+			maxmemory="1024m"
+			newenvironment="true"
+		>
+			<arg value="-o" />
+			<arg value="../parser" />
+			<arg value="LDAPFilter.g" />
+		</java>
+
+		<replace file="src/com/liferay/portal/ldap/validator/parser/LDAPFilterLexer.java">
+			<replacetoken>public class LDAPFilterLexer</replacetoken>
+			<replacevalue><![CDATA[@SuppressWarnings("all")
+public class LDAPFilterLexer]]></replacevalue>
+		</replace>
+
+		<replace file="src/com/liferay/portal/ldap/validator/parser/LDAPFilterParser.java">
+			<replacetoken>public class LDAPFilterParser</replacetoken>
+			<replacevalue><![CDATA[@SuppressWarnings("all")
+public class LDAPFilterParser]]></replacevalue>
+		</replace>
+
+		<fixcrlf
+			includes="*.java"
+			javafiles="yes"
+			srcdir="src/com/liferay/portal/ldap/validator/parser"
+			tab="add"
+		/>
+	</target>
+
 </project>

@@ -1060,3 +1060,33 @@ With the new change developers don't need to extend any particular class to
 create their own DLProcessor.
 
 ---------------------------------------
+
+### DDM Template search operation need to pass resourceClassNameId parameter
+- **Date:** 2015-Mar-03
+- **JIRA Ticket:** LPS-52990
+
+#### What changed?
+
+DDM Template `search` and `searchCount` operations have a new parameter called
+resourceClassNameid
+
+#### Who is affected?
+
+All developers who have direct calls to DDMTemplateService or 
+DDMTemplateLocalService
+
+#### How should I update my code?
+
+You need to add the resourceClassNameId parameter to your calls. The 
+resourceClassNameId represents the resource that owns the permission for the
+DDMTemplate. For example, if the template is a WCM Template resourceClassNameId 
+points to JournalArticle classNameId, if it's a DDL Template it points to
+DDLRecordSet classNameId, if it's a ADT template it points to 
+PortletDisplayTemplate classNameId
+
+#### Why was this change made?
+
+This change was made in order to implement model resource permissions to 
+DDM Templates, such as VIEW, DELETE, PERMISSIONS, UPDATE.
+
+---------------------------------------

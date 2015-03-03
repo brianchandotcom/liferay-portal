@@ -189,7 +189,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 										<span class="asset-subtypefields hide" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>Options">
 											<liferay-portlet:renderURL portletName="<%= AssetPublisherPortletKeys.ASSET_PUBLISHER %>" var="selectStructureFieldURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-												<portlet:param name="mvcPath" value="/html/portlet/asset_publisher/select_structure_field.jsp" />
+												<portlet:param name="mvcPath" value="/select_structure_field.jsp" />
 												<portlet:param name="portletResource" value="<%= assetPublisherDisplayContext.getPortletResource() %>" />
 												<portlet:param name="className" value="<%= assetRendererFactory.getClassName() %>" />
 												<portlet:param name="classTypeId" value="<%= String.valueOf(classType.getClassTypeId()) %>" />

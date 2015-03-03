@@ -22,6 +22,14 @@ String backURL = ParamUtil.getString(request, "backURL");
 
 long exportImportConfigurationId = ParamUtil.getLong(request, "exportImportConfigurationId");
 
+boolean publishOnLayout = false;
+
+if (exportImportConfigurationId <= 0) {
+	exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("exportImportConfigurationId"));
+
+	publishOnLayout = true;
+}
+
 ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 
 String cmd = Constants.EXPORT;
@@ -33,7 +41,7 @@ if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TY
 }
 else if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE) {
 	cmd = Constants.PUBLISH_TO_REMOTE;
-	submitLanguageKey = "publish-to-remote";
+	submitLanguageKey = "publish-to-remote-live";
 }
 
 Map<String, Serializable> settingsMap = exportImportConfiguration.getSettingsMap();
@@ -42,10 +50,12 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 long[] layoutIds = GetterUtil.getLongValues(settingsMap.get("layoutIds"));
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	title="<%= exportImportConfiguration.getName() %>"
-/>
+<c:if test="<%= !publishOnLayout %>">
+	<liferay-ui:header
+		backURL="<%= backURL %>"
+		title="<%= exportImportConfiguration.getName() %>"
+	/>
+</c:if>
 
 <div id="confirmationSection">
 	<span class="selected-labels" id="<portlet:namespace />exportImportConfigurationDescription">
@@ -84,7 +94,7 @@ long[] layoutIds = GetterUtil.getLongValues(settingsMap.get("layoutIds"));
 							<%
 							StringBundler sb = new StringBundler();
 
-							if (ArrayUtil.isEmpty(layoutIds)) {
+							if (!ArrayUtil.isEmpty(layoutIds)) {
 								sb.append(LanguageUtil.get(locale, "selected-pages"));
 							}
 							else {

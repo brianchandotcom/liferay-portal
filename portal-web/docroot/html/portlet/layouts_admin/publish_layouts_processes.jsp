@@ -24,6 +24,7 @@ long liveGroupId = ParamUtil.getLong(request, "liveGroupId");
 long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName");
 boolean localPublishing = ParamUtil.getBoolean(request, "localPublishing");
+boolean quickPublish = ParamUtil.getBoolean(request, "quickPublish");
 
 PortletURL renderURL = liferayPortletResponse.createRenderURL();
 
@@ -135,38 +136,40 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 			value="<%= backgroundTask.getCompletionDate() %>"
 		/>
 
-		<liferay-ui:search-container-column-text>
-			<c:if test="<%= !backgroundTask.isInProgress() %>">
-				<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-					<c:if test="<%= backgroundTask.getGroupId() != liveGroupId %>">
-						<portlet:actionURL var="relaunchURL">
-							<portlet:param name="struts_action" value="/layouts_admin/edit_publish_configuration" />
-							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
+		<c:if test="<%= !quickPublish %>">
+			<liferay-ui:search-container-column-text>
+				<c:if test="<%= !backgroundTask.isInProgress() %>">
+					<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+						<c:if test="<%= backgroundTask.getGroupId() != liveGroupId %>">
+							<portlet:actionURL var="relaunchURL">
+								<portlet:param name="struts_action" value="/layouts_admin/edit_publish_configuration" />
+								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
+								<portlet:param name="redirect" value="<%= renderURL.toString() %>" />
+								<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+							</portlet:actionURL>
+
+							<liferay-ui:icon iconCssClass="icon-repeat" message="relaunch" url="<%= relaunchURL %>" />
+						</c:if>
+
+						<portlet:actionURL var="deleteBackgroundTaskURL">
+							<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
 							<portlet:param name="redirect" value="<%= renderURL.toString() %>" />
 							<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 						</portlet:actionURL>
 
-						<liferay-ui:icon iconCssClass="icon-repeat" message="relaunch" url="<%= relaunchURL %>" />
-					</c:if>
+						<%
+						Date completionDate = backgroundTask.getCompletionDate();
+						%>
 
-					<portlet:actionURL var="deleteBackgroundTaskURL">
-						<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
-						<portlet:param name="redirect" value="<%= renderURL.toString() %>" />
-						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-					</portlet:actionURL>
-
-					<%
-					Date completionDate = backgroundTask.getCompletionDate();
-					%>
-
-					<liferay-ui:icon-delete
-						label="<%= true %>"
-						message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
-						url="<%= deleteBackgroundTaskURL %>"
-					/>
-				</liferay-ui:icon-menu>
-			</c:if>
-		</liferay-ui:search-container-column-text>
+						<liferay-ui:icon-delete
+							label="<%= true %>"
+							message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
+							url="<%= deleteBackgroundTaskURL %>"
+						/>
+					</liferay-ui:icon-menu>
+				</c:if>
+			</liferay-ui:search-container-column-text>
+		</c:if>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />

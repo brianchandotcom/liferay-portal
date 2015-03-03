@@ -95,6 +95,9 @@ public class DLSubscriptionContainerModelTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
+		DLAppTestUtil.populateNotificationsServiceContext(
+			serviceContext, Constants.UPDATE);
+
 		DLAppServiceUtil.updateFileEntry(
 			baseModelId, RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,

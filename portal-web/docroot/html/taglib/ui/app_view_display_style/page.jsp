@@ -72,7 +72,7 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 	</span>
 
 	<c:if test="<%= displayStyleURL == null %>">
-		<aui:script use="aui-base">
+		<aui:script sandbox="<%= true %>">
 			function changeDisplayStyle(displayStyle) {
 				var config = {};
 
@@ -102,29 +102,25 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 				);
 			}
 
-			var displayStyleButtonsMenu = A.one('#<portlet:namespace />displayStyleButtons .dropdown-menu');
+			$('#<portlet:namespace />displayStyleButtons .dropdown-menu').on(
+				'click',
+				'li > a',
+				function(event) {
+					var displayStyle = $(event.currentTarget).data('displaystyle');
 
-			if (displayStyleButtonsMenu) {
-				displayStyleButtonsMenu.delegate(
-					'click',
-					function(event) {
-						var displayStyle = event.currentTarget.attr('data-displayStyle');
-
-						if (<%= requestParams != null %>) {
-							changeDisplayStyle(displayStyle);
-						}
-						else if (<%= eventName != null %>) {
-							Liferay.fire(
-								'<%= eventName %>',
-								{
-									displayStyle: displayStyle
-								}
-							);
-						}
-					},
-					'li > a'
-				);
-			}
+					if (<%= requestParams != null %>) {
+						changeDisplayStyle(displayStyle);
+					}
+					else if (<%= eventName != null %>) {
+						Liferay.fire(
+							'<%= eventName %>',
+							{
+								displayStyle: displayStyle
+							}
+						);
+					}
+				}
+			);
 		</aui:script>
 	</c:if>
 </c:if>

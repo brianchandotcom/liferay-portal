@@ -87,7 +87,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 		},
 
 		create: function() {
-			if (! window['<%= name %>'].instanceReady) {
+			if (!window['<%= name %>'].instanceReady) {
 				var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
 
 				var editorContainer = A.one('#<%= name %>Container');
@@ -141,7 +141,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 				}
 			}
 			else {
-				data = tinyMCE.editors['<%= name %>'].getBody().textContent;
+				data = tinyMCE.editors['<%= name %>'].getBody().innerHTML;
 			}
 
 			return data;

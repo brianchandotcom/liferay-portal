@@ -413,20 +413,28 @@ public class DDMTemplateLocalServiceImpl
 					template.getCompanyId());
 
 				if (template.getGroupId() == companyGroup.getGroupId()) {
-					if (JournalArticleUtil.countByC_DDMTK(
-							JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-							template.getTemplateKey()) > 0) {
+					int count = JournalArticleUtil.countByC_DDMTK(
+						JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+						template.getTemplateKey());
 
-						throw new RequiredTemplateException();
+					if (count > 0) {
+						throw new RequiredTemplateException(
+							"Template " + template.getName() + " cannot be " +
+								"deleted because it is used by " + count +
+									" journal articles");
 					}
 				}
 				else {
-					if (JournalArticleUtil.countByG_C_DDMTK(
-							template.getGroupId(),
-							JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-							template.getTemplateKey()) > 0) {
+					int count = JournalArticleUtil.countByG_C_DDMTK(
+						template.getGroupId(),
+						JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+						template.getTemplateKey());
 
-						throw new RequiredTemplateException();
+					if (count > 0) {
+						throw new RequiredTemplateException(
+							"Template " + template.getName() + " cannot be " +
+								"deleted because it is used by " + count +
+									" journal articles");
 					}
 				}
 			}
@@ -1429,14 +1437,13 @@ public class DDMTemplateLocalServiceImpl
 
 			try {
 				script = DDMXMLUtil.validateXML(script);
-				script = DDMXMLUtil.formatXML(script);
 			}
-			catch (Exception e) {
-				throw new TemplateScriptException();
+			catch (PortalException pe) {
+				throw new TemplateScriptException(pe);
 			}
 		}
 
-		return script;
+		return DDMXMLUtil.formatXML(script);
 	}
 
 	protected String getNextVersion(String version, boolean majorVersion) {
@@ -1504,7 +1511,8 @@ public class DDMTemplateLocalServiceImpl
 			groupId, classNameId, templateKey);
 
 		if (template != null) {
-			throw new TemplateDuplicateTemplateKeyException();
+			throw new TemplateDuplicateTemplateKeyException(
+				"Template already exists with template key " + templateKey);
 		}
 
 		validate(
@@ -1518,7 +1526,7 @@ public class DDMTemplateLocalServiceImpl
 		validateName(nameMap);
 
 		if (Validator.isNull(script)) {
-			throw new TemplateScriptException();
+			throw new TemplateScriptException("Script is null");
 		}
 	}
 
@@ -1566,7 +1574,9 @@ public class DDMTemplateLocalServiceImpl
 			((smallImageBytes == null) ||
 			 (smallImageBytes.length > smallImageMaxSize))) {
 
-			throw new TemplateSmallImageSizeException();
+			throw new TemplateSmallImageSizeException(
+				"Size of Image " + smallImageName + " exceeds maximum. " +
+					smallImageBytes.length + " > " + smallImageMaxSize);
 		}
 	}
 
@@ -1576,7 +1586,7 @@ public class DDMTemplateLocalServiceImpl
 		String name = nameMap.get(LocaleUtil.getSiteDefault());
 
 		if (Validator.isNull(name)) {
-			throw new TemplateNameException();
+			throw new TemplateNameException("Name is null");
 		}
 	}
 

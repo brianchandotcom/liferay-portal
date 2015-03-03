@@ -14,88 +14,176 @@
 
 package com.liferay.ant.bnd;
 
-import aQute.bnd.build.ProjectBuilder;
 import aQute.bnd.differ.Baseline;
 import aQute.bnd.differ.Baseline.BundleInfo;
 import aQute.bnd.differ.Baseline.Info;
 import aQute.bnd.differ.DiffPluginImpl;
-import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Jar;
-import aQute.bnd.osgi.Resource;
 import aQute.bnd.service.diff.Delta;
 import aQute.bnd.service.diff.Diff;
 import aQute.bnd.version.Version;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
-import org.apache.tools.ant.types.Path;
 
 /**
  * @author Raymond Augé
  */
 public class BaselineJarTask extends BaseBndTask {
 
-	@Override
-	public void addClasspath(Path classpath) {
-		_classpath = classpath;
+	public void setBndFile(File bndFile) {
+		_bndFile = bndFile;
 	}
 
-	public void setFile(File file) {
-		_file = file;
+	public void setNewerJar(File newerJar) {
+		_newerJar = newerJar;
 	}
 
-	public void setOutputPath(File outputPath) {
-		_outputPath = outputPath;
-	}
-
-	public void setSourcePath(File sourcePath) {
-		_sourcePath = sourcePath;
+	public void setOldJar(File olderJar) {
+		_olderJar = olderJar;
 	}
 
 	@Override
 	public void trace(String format, Object... args) {
 	}
 
-	protected void doBaselineJar(
-			Jar jar, File outputFile, aQute.bnd.build.Project bndProject)
-		throws Exception {
+	@Override
+	protected void doBeforeExecute() throws BuildException {
+		super.doBeforeExecute();
 
+		File bndRootFile = getBndRootFile();
+
+		File rootDir = bndRootFile.getParentFile();
+
+		if ((_bndFile == null) || !_bndFile.exists() || _bndFile.isDirectory()) {
+			if (_bndFile != null) {
+				log(
+					"File is either missing or is a directory " +
+						_bndFile.getAbsolutePath(),
+					Project.MSG_ERR);
+			}
+
+			throw new BuildException("file is invalid");
+		}
+
+		if (_newerJar == null) {
+			throw new BuildException("outputPath is invalid");
+		}
+
+		_reportLevel = project.getProperty("baseline.jar.report.level");
+
+		if (_reportLevel == null) {
+			_reportLevel = "";
+		}
+
+		_reportLevelIsDiff = _reportLevel.equals("diff");
+		_reportLevelIsOff = _reportLevel.equals("off");
+		_reportLevelIsPersist = _reportLevel.equals("persist");
+		_reportLevelIsStandard = _reportLevel.equals("standard");
+
+		if (_reportLevelIsPersist) {
+			_reportLevelIsDiff = true;
+
+			File baselineReportsDir = new File(
+				rootDir, getBaselineResportsDirName());
+
+			if (!baselineReportsDir.exists() && !baselineReportsDir.mkdir()) {
+				throw new BuildException(
+					"Unable tocreate " + baselineReportsDir.getName());
+			}
+
+			_logFile = new File(
+				baselineReportsDir, _newerJar.getName() + ".log");
+
+			if (_logFile.exists()) {
+				_logFile.delete();
+			}
+		}
+
+		_reportOnlyDirtyPackages = Boolean.parseBoolean(
+			project.getProperty("baseline.jar.report.only.dirty.packages"));
+	}
+
+	protected void doDiff(Diff diff, StringBuffer sb) {
+		String type = String.valueOf(diff.getType());
+
+		String output = String.format(
+			"%s%-3s %-10s %s", sb, getShortDelta(diff.getDelta()),
+			type.toLowerCase(), diff.getName());
+
+		log(output, Project.MSG_WARN);
+
+		if (_printWriter != null) {
+			_printWriter.println(output);
+		}
+
+		sb.append("\t");
+
+		for (Diff curDiff : diff.getChildren()) {
+			if (curDiff.getDelta() == Delta.UNCHANGED) {
+				continue;
+			}
+
+			doDiff(curDiff, sb);
+		}
+
+		sb.deleteCharAt(sb.length() - 1);
+	}
+
+	@Override
+	protected void doExecute() throws Exception {
 		if (_reportLevelIsOff) {
 			return;
 		}
 
-		ProjectBuilder projectBuilder = new ProjectBuilder(bndProject);
+		BaselineProcessor baselineProcessor = new BaselineProcessor();
 
-		projectBuilder.setClasspath(
-			_classpathFiles.toArray(new File[_classpathFiles.size()]));
-		projectBuilder.setPedantic(isPedantic());
-		projectBuilder.setProperties(_file);
-		projectBuilder.setSourcepath(new File[] {_sourcePath});
+		Properties properties = baselineProcessor.getProperties();
+		properties.putAll(project.getProperties());
+		properties.putAll(getFileProperties());
 
-		Jar baselineJar = projectBuilder.getBaselineJar();
+		Jar newerJar = new Jar(_newerJar);
+
+		Jar olderJar = null;
+
+		if (_olderJar != null) {
+			if (!_olderJar.exists() || _olderJar.isDirectory() ||
+				!_olderJar.canRead()) {
+
+				baselineProcessor.warning(
+					"Baseline file %s is invalid. Check if it exists, " +
+						"is reablable, and not a directory.",
+					_olderJar);
+			}
+			else {
+				olderJar = new Jar(_olderJar);
+			}
+		}
+		else {
+			olderJar = baselineProcessor.getBaselineJar();
+		}
 
 		try {
-			if (baselineJar == null) {
-				bndProject.deploy(outputFile);
-
+			if (olderJar == null) {
 				return;
 			}
 
-			Baseline baseline = new Baseline(this, _diffPluginImpl);
+			Baseline baseline = new Baseline(
+				baselineProcessor, new DiffPluginImpl());
 
-			Set<Info> infos = baseline.baseline(jar, baselineJar, null);
+			Set<Info> infos = baseline.baseline(newerJar, olderJar, null);
 
 			if (infos.isEmpty()) {
 				return;
@@ -162,7 +250,7 @@ public class BaselineJarTask extends BaseBndTask {
 				generatePackageInfo(info, warnings);
 
 				if (((_reportLevelIsStandard || _reportOnlyDirtyPackages) &&
-					 warnings.equals("-")) ||
+					warnings.equals("-")) ||
 					(_reportOnlyDirtyPackages && (delta == Delta.REMOVED))) {
 
 					continue;
@@ -176,193 +264,19 @@ public class BaselineJarTask extends BaseBndTask {
 			}
 		}
 		finally {
-			if (baselineJar != null) {
-				baselineJar.close();
+			report(baselineProcessor);
+
+			baselineProcessor.close();
+			newerJar.close();
+
+			if (olderJar != null) {
+				olderJar.close();
 			}
 
 			if (_printWriter != null) {
 				_printWriter.close();
 			}
-
-			projectBuilder.close();
 		}
-	}
-
-	@Override
-	protected void doBeforeExecute() throws Exception {
-		super.doBeforeExecute();
-
-		File bndRootFile = getBndRootFile();
-
-		File rootDir = bndRootFile.getParentFile();
-
-		if (_classpath == null) {
-			throw new BuildException("classpath is null");
-		}
-
-		if ((_file == null) || !_file.exists() || _file.isDirectory()) {
-			if (_file != null) {
-				project.log(
-					"File is either missing or is a directory " +
-						_file.getAbsolutePath(),
-					Project.MSG_ERR);
-			}
-
-			throw new BuildException("file is invalid");
-		}
-
-		if (_outputPath == null) {
-			throw new BuildException("outputPath is invalid");
-		}
-
-		_reportLevel = project.getProperty("baseline.jar.report.level");
-
-		if (_reportLevel == null) {
-			_reportLevel = "";
-		}
-
-		_reportLevelIsDiff = _reportLevel.equals("diff");
-		_reportLevelIsOff = _reportLevel.equals("off");
-		_reportLevelIsPersist = _reportLevel.equals("persist");
-		_reportLevelIsStandard = _reportLevel.equals("standard");
-
-		if (_reportLevelIsPersist) {
-			_reportLevelIsDiff = true;
-
-			File baselineReportsDir = new File(
-				rootDir, getBaselineResportsDirName());
-
-			if (!baselineReportsDir.exists() && !baselineReportsDir.mkdir()) {
-				throw new BuildException(
-					"Unable tocreate " + baselineReportsDir.getName());
-			}
-
-			_logFile = new File(
-				baselineReportsDir, _outputPath.getName() + ".log");
-
-			if (_logFile.exists()) {
-				_logFile.delete();
-			}
-		}
-
-		_reportOnlyDirtyPackages = Boolean.parseBoolean(
-			project.getProperty("baseline.jar.report.only.dirty.packages"));
-
-		if ((_sourcePath == null) || !_sourcePath.exists() ||
-			!_sourcePath.isDirectory()) {
-
-			if (_sourcePath != null) {
-				project.log(
-					"sourcePath is either missing or is not a directory " +
-						_sourcePath.getAbsolutePath(),
-					Project.MSG_ERR);
-			}
-
-			throw new BuildException("sourcePath is not set correctly");
-		}
-
-		for (String fileName : _classpath.list()) {
-			_classpathFiles.add(new File(fileName.replace('\\', '/')));
-		}
-	}
-
-	protected void doDiff(Diff diff, StringBuffer sb) {
-		String type = String.valueOf(diff.getType());
-
-		String output = String.format(
-			"%s%-3s %-10s %s", sb, getShortDelta(diff.getDelta()),
-			type.toLowerCase(), diff.getName());
-
-		project.log(output, Project.MSG_WARN);
-
-		if (_printWriter != null) {
-			_printWriter.println(output);
-		}
-
-		sb.append("\t");
-
-		for (Diff curDiff : diff.getChildren()) {
-			if (curDiff.getDelta() == Delta.UNCHANGED) {
-				continue;
-			}
-
-			doDiff(curDiff, sb);
-		}
-
-		sb.deleteCharAt(sb.length() - 1);
-	}
-
-	@Override
-	protected void doExecute() throws Exception {
-		aQute.bnd.build.Project bndProject = getBndProject();
-
-		Builder builder = new Builder(bndProject);
-
-		builder.setClasspath(
-			_classpathFiles.toArray(new File[_classpathFiles.size()]));
-		builder.setPedantic(isPedantic());
-		builder.setProperties(_file);
-		builder.setSourcepath(new File[] {_sourcePath});
-
-		Jar[] jars = builder.builds();
-
-		// Report both task failures and BND build failures
-
-		boolean taskFailed = report();
-		boolean bndFailed = report(builder);
-
-		// Fail this build if failure is not acceptable and either the task
-		// failed or the BND build failed
-
-		if (taskFailed || bndFailed) {
-			throw new BuildException(
-				"BND failed",
-				new org.apache.tools.ant.Location(_file.getAbsolutePath()));
-		}
-
-		for (Jar jar : jars) {
-			String bsn = jar.getName();
-
-			File outputFile = _outputPath;
-
-			if (_outputPath.isDirectory()) {
-				String path = builder.getProperty("-output");
-
-				if (path != null) {
-					outputFile = getFile(_outputPath, path);
-				}
-				else {
-					outputFile = getFile(_outputPath, bsn + ".jar");
-				}
-			}
-
-			if (!outputFile.exists() ||
-				(outputFile.lastModified() <= jar.lastModified())) {
-
-				jar.write(outputFile);
-
-				Map<String, Resource> resources = jar.getResources();
-
-				log(
-					jar.getName() + " (" + outputFile.getName() + ") " +
-						resources.size());
-
-				doBaselineJar(jar, outputFile, bndProject);
-			}
-			else {
-				Map<String, Resource> resources = jar.getResources();
-
-				log(
-					jar.getName() + " (" + outputFile.getName() + ") " +
-						resources.size() + " (not modified)");
-			}
-
-			report();
-
-			jar.close();
-		}
-
-		builder.close();
 	}
 
 	protected void doHeader(BundleInfo bundleInfo) {
@@ -370,14 +284,13 @@ public class BaselineJarTask extends BaseBndTask {
 			return;
 		}
 
-		project.log(
-			"[Baseline Report] Mode: " + _reportLevel, Project.MSG_WARN);
+		log("[Baseline Report] Mode: " + _reportLevel, Project.MSG_WARN);
 
 		String output =
 			"[Baseline Warning] Bundle Version Change Recommended: " +
 				bundleInfo.suggestedVersion;
 
-		project.log(output, Project.MSG_WARN);
+		log(output, Project.MSG_WARN);
 
 		persistLog(output);
 	}
@@ -479,6 +392,16 @@ public class BaselineJarTask extends BaseBndTask {
 		return _baselineResportsDirName;
 	}
 
+	private Map<? extends Object, ? extends Object> getFileProperties()
+		throws Exception {
+
+		Properties fileProperties = new Properties();
+
+		fileProperties.load(new FileInputStream(_bndFile));
+
+		return fileProperties;
+	}
+
 	protected String getShortDelta(Delta delta) {
 		if (delta == Delta.ADDED) {
 			return "+";
@@ -531,7 +454,7 @@ public class BaselineJarTask extends BaseBndTask {
 			"%s %-50s %-10s %-10s %-10s %-10s %-10s", string1, string2, string3,
 			string4, string5, string6, string7);
 
-		project.log(output, Project.MSG_WARN);
+		log(output, Project.MSG_WARN);
 
 		persistLog(output);
 	}
@@ -539,13 +462,11 @@ public class BaselineJarTask extends BaseBndTask {
 	private static final String _BASELINE_REPORTS_DIR = "baseline-reports";
 
 	private String _baselineResportsDirName;
-	private Path _classpath;
-	private final List<File> _classpathFiles = new ArrayList<File>();
-	private final DiffPluginImpl _diffPluginImpl = new DiffPluginImpl();
-	private File _file;
+	private File _bndFile;
 	private boolean _headerPrinted;
 	private File _logFile;
-	private File _outputPath;
+	private File _newerJar;
+	private File _olderJar;
 	private PrintWriter _printWriter;
 	private String _reportLevel;
 	private boolean _reportLevelIsDiff;
@@ -553,6 +474,5 @@ public class BaselineJarTask extends BaseBndTask {
 	private boolean _reportLevelIsPersist;
 	private boolean _reportLevelIsStandard;
 	private boolean _reportOnlyDirtyPackages;
-	private File _sourcePath;
 
 }

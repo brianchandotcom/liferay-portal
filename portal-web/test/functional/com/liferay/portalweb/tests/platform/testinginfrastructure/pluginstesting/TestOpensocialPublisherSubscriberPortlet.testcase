@@ -1,0 +1,38 @@
+<definition component-name="portal-test-plugins">
+	<property name="testray.main.component.name" value="Test Plugins" />
+	<property name="portlet.plugins.includes" value="test-opensocial-pubsub-portlet" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ViewPublisherSubscriber" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Publisher Subscriber Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Publisher Portlet" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Publisher Subscriber Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Subscriber Portlet" />
+		</execute>
+
+		<execute function="Click" locator1="PGTestSubscriberPortlet#SUBSCRIBER_PORTLET_SUBSCRIBE_BUTTON" />
+		<execute function="Click" locator1="PGTestPublisherPortlet#PUBLISHER_PORTLET_PUBLISH_BUTTON" />
+
+	<!--<var name="randomNumber" path="PGTestPublisherPortlet" locator="PUBLISHER_PORTLET_MESSAGE" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGTestPublisherPortlet#PUBLISHER_PORTLET_MESSAGE" value1="${randomNumber}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGTestSubscriberPortlet#SUBSCRIBER_PORTLET_MESSAGE" value1="${randomNumber}"/>-->
+	</command>
+</definition>

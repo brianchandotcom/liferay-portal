@@ -1,0 +1,62 @@
+<definition component-name="portal-test-plugins">
+	<property name="testray.main.component.name" value="Test Plugins" />
+	<property name="portlet.plugins.includes" value="test-dependency-able-portlet,test-dependency-baker-portlet,test-dependency-charlie-portlet,test-dependency-dog-portlet,test-dependency-easy-portlet,test-dependency-fox-portlet" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ViewDependencyAbleFox" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Dependency Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Test Dependency Able" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Dependency Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Test Dependency Baker" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Dependency Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Test Dependency Charlie" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Dependency Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Test Dependency Dog" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Dependency Page" />
+		</execute>
+
+		<execute macro="Portlet#viewCannotAddPG">
+			<var name="portletName" value="Test Dependency Easy" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Dependency Page" />
+		</execute>
+
+		<execute macro="Portlet#viewCannotAddPG">
+			<var name="portletName" value="Test Dependency Fox" />
+		</execute>
+	</command>
+</definition>

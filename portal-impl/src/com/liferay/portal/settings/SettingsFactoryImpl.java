@@ -196,7 +196,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	@Override
-	public SettingsDescriptor<?> getSettingsDescriptor(String settingsId) {
+	public SettingsDescriptor getSettingsDescriptor(String settingsId) {
 		settingsId = PortletConstants.getRootPortletId(settingsId);
 
 		return _settingsDescriptors.get(settingsId);
@@ -207,7 +207,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		Class<?> settingsClass, Object serviceConfigurationBean,
 		FallbackKeys fallbackKeys) {
 
-		SettingsDescriptor<?> settingsDescriptor = new SettingsDescriptor<>(
+		SettingsDescriptor settingsDescriptor = new AnnotatedSettingsDescriptor(
 			settingsClass);
 
 		for (String settingsId : settingsDescriptor.getSettingsIds()) {
@@ -391,7 +391,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		new ConcurrentHashMap<>();
 	private final ConcurrentMap<String, Object> _serviceConfigurationBeans =
 		new ConcurrentHashMap<>();
-	private final Map<String, SettingsDescriptor<?>> _settingsDescriptors =
+	private final Map<String, SettingsDescriptor> _settingsDescriptors =
 		new ConcurrentHashMap<>();
 
 }

@@ -45,7 +45,7 @@ public interface SettingsFactory {
 
 	public Settings getServerSettings(String settingsId);
 
-	public SettingsDescriptor<?> getSettingsDescriptor(String settingsId);
+	public SettingsDescriptor getSettingsDescriptor(String settingsId);
 
 	public void registerSettingsMetadata(
 		Class<?> settingsClass, Object serviceConfigurationBean,

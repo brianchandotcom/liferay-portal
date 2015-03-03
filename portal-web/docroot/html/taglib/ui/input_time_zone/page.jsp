@@ -47,7 +47,13 @@ numberFormat.setMinimumIntegerDigits(2);
 	for (TimeZone curTimeZone : timeZones) {
 		String offset = StringPool.BLANK;
 
-		int totalOffset = curTimeZone.getRawOffset() + curTimeZone.getDSTSavings();
+		boolean isDST = curTimeZone.inDaylightTime(new Date());
+
+		int totalOffset = curTimeZone.getRawOffset();
+
+		if (isDST) {
+			totalOffset = totalOffset + curTimeZone.getDSTSavings();
+		}
 
 		if (totalOffset > 0) {
 			offset = "+";

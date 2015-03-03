@@ -64,12 +64,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 	var customQuestionContainer = $('#customQuestionContainer');
 
 	if (reminderQueryQuestion.length && customQuestionContainer.length) {
-		if (reminderQueryQuestion.val() != '<%= UsersAdmin.CUSTOM_QUESTION %>') {
-			customQuestionContainer.addClass('hide');
-		}
-		else {
-			customQuestionContainer.removeClass('hide');
-		}
+		customQuestionContainer.toggleClass('hide', reminderQueryQuestion.val() != '<%= UsersAdmin.CUSTOM_QUESTION %>');
 
 		reminderQueryQuestion.on(
 			'change',

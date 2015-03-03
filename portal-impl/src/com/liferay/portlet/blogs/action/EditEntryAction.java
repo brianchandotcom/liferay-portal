@@ -574,6 +574,7 @@ public class EditEntryAction extends PortletAction {
 
 		String coverImageCaption = ParamUtil.getString(
 			actionRequest, "coverImageCaption");
+
 		long smallImageFileEntryId = ParamUtil.getLong(
 			actionRequest, "smallImageFileEntryId");
 		String smallImageURL = ParamUtil.getString(

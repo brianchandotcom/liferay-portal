@@ -73,9 +73,13 @@ public class DLDirectoryNameAndFileNameTest {
 		String name =
 			StringUtil.randomString(20) + PropsValues.DL_CHAR_BLACKLIST[0];
 
-		DLAppTestUtil.addFolder(
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		DLAppServiceUtil.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			name);
+			name, RandomTestUtil.randomString(), serviceContext);
 	}
 
 	@Test
@@ -172,8 +176,14 @@ public class DLDirectoryNameAndFileNameTest {
 
 	@Test(expected = FolderNameException.class)
 	public void testUpdateFolder() throws Exception {
-		Folder folder = DLAppTestUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Folder folder = DLAppServiceUtil.addFolder(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 
 		String name =
 			StringUtil.randomString(20) + PropsValues.DL_CHAR_BLACKLIST[0];

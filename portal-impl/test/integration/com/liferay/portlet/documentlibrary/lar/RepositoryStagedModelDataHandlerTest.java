@@ -35,7 +35,7 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -69,13 +69,14 @@ public class RepositoryStagedModelDataHandlerTest
 		long classNameId = PortalUtil.getClassNameId(
 			LiferayRepository.class.getName());
 
-		Folder mountFolder = DLAppTestUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString());
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
+
+		Folder mountFolder = DLAppServiceUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 
 		_repository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), group.getGroupId(), classNameId,

@@ -120,12 +120,17 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	public void testDeleteAllFolders() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		Folder parentFolder = DLAppTestUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"parent");
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
-		Folder childFolder = DLAppTestUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(), "child");
+		Folder parentFolder = DLAppServiceUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"parent", RandomTestUtil.randomString(), serviceContext);
+
+		Folder childFolder = DLAppServiceUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(), "child",
+			RandomTestUtil.randomString(), serviceContext);
 
 		DLAppServiceUtil.moveFolderToTrash(childFolder.getFolderId());
 
@@ -152,14 +157,15 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			PortletKeys.BACKGROUND_TASK, new UnicodeProperties(), true,
 			ServiceContextTestUtil.getServiceContext());
 
-		Folder folder = DLAppTestUtil.addFolder(
-			stagingGroup.getGroupId(), repository.getRepositoryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString());
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				stagingGroup.getGroupId(), TestPropsValues.getUserId());
+
+		Folder folder = DLAppServiceUtil.addFolder(
+			repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 
 		DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), repository.getRepositoryId(),
@@ -170,19 +176,21 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected void addStagedModels() throws Exception {
-		Folder folder = DLAppTestUtil.addFolder(
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId());
+
+		Folder folder = DLAppServiceUtil.addFolder(
 			stagingGroup.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			stagingGroup.getGroupId(), DLFileEntryType.class.getName());
 
 		portletDataContext.isPathProcessed(
 			ExportImportPathUtil.getModelPath(ddmStructure));
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				stagingGroup.getGroupId(), TestPropsValues.getUserId());
 
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(

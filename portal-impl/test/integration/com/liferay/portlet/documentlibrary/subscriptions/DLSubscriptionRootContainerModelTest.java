@@ -28,6 +28,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.subscriptions.test.BaseSubscriptionRootContainerModelTestCase;
 
@@ -68,8 +69,13 @@ public class DLSubscriptionRootContainerModelTest
 
 	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
-		Folder folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), containerModelId);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		Folder folder = DLAppServiceUtil.addFolder(
+			group.getGroupId(), containerModelId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		return folder.getFolderId();
 	}

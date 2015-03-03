@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.util.test;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -72,79 +70,6 @@ public abstract class DLAppTestUtil {
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
-	}
-
-	public static Folder addFolder(long groupId, long parentFolderId)
-		throws Exception {
-
-		return addFolder(
-			groupId, parentFolderId, RandomTestUtil.randomString(), false);
-	}
-
-	public static Folder addFolder(
-			long groupId, long repositoryId, long parentFolderId, String name)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return addFolder(
-			repositoryId, parentFolderId, name, false, serviceContext);
-	}
-
-	public static Folder addFolder(
-			long groupId, long parentFolderId, String name)
-		throws Exception {
-
-		return addFolder(groupId, parentFolderId, name, false);
-	}
-
-	public static Folder addFolder(
-			long groupId, long parentFolderId, String name,
-			boolean deleteExisting)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return addFolder(parentFolderId, name, deleteExisting, serviceContext);
-	}
-
-	public static Folder addFolder(
-			long repositoryId, long parentFolderId, String name,
-			boolean deleteExisting, ServiceContext serviceContext)
-		throws Exception {
-
-		String description = StringPool.BLANK;
-
-		if (deleteExisting) {
-			try {
-				DLAppServiceUtil.deleteFolder(
-					serviceContext.getScopeGroupId(), parentFolderId, name);
-			}
-			catch (NoSuchFolderException nsfe) {
-			}
-		}
-
-		return DLAppServiceUtil.addFolder(
-			repositoryId, parentFolderId, name, description, serviceContext);
-	}
-
-	public static Folder addFolder(
-			long parentFolderId, String name, boolean deleteExisting,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return addFolder(
-			serviceContext.getScopeGroupId(), parentFolderId, name,
-			deleteExisting, serviceContext);
-	}
-
-	public static Folder addFolder(
-			long parentFolderId, String name, ServiceContext serviceContext)
-		throws Exception {
-
-		return addFolder(parentFolderId, name, false, serviceContext);
 	}
 
 	public static void populateNotificationsServiceContext(

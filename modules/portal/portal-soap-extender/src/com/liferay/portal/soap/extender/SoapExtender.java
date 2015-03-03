@@ -14,6 +14,8 @@
 
 package com.liferay.portal.soap.extender;
 
+import com.liferay.portal.soap.extender.configuration.ExtensionManager;
+
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -54,16 +56,20 @@ import org.slf4j.LoggerFactory;
  */
 public class SoapExtender {
 
-	public SoapExtender(BundleContext bundleContext, String contextPath) {
+	public SoapExtender(
+		BundleContext bundleContext, String contextPath,
+		ExtensionManager extensionManager) {
+
 		_bundleContext = bundleContext;
 		_contextPath = contextPath;
+		_extensionManager = extensionManager;
 	}
 
 	protected Bus createBus() {
 		CXFBusFactory cxfBusFactory = (CXFBusFactory)CXFBusFactory.newInstance(
 			CXFBusFactory.class.getName());
 
-		return cxfBusFactory.createBus(_extensions);
+		return cxfBusFactory.createBus(_extensionManager.getExtensions());
 	}
 
 	protected void registerCXFServlet(Bus bus, String contextPath) {
@@ -163,7 +169,7 @@ public class SoapExtender {
 
 	private final BundleContext _bundleContext;
 	private final String _contextPath;
-	private final Map<Class<?>, Object> _extensions = new HashMap<>();
+	private final ExtensionManager _extensionManager;
 	private ServiceTracker<Object, ServerTrackingInformation>
 		_serverServiceTracker;
 	private ServiceRegistration<ServletContextHelper>

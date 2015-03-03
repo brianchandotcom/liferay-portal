@@ -34,24 +34,17 @@
 </@>
 
 <@aui.script>
-	Liferay.provide(
-		window,
-		'${portletNamespace}${namespacedFieldName}ToggleImage',
-		function() {
-			var A = AUI();
+	function ${portletNamespace}${namespacedFieldName}ToggleImage() {
+		var toggleText = '${languageUtil.get(locale, "show")}';
 
-			var toggleText = '${languageUtil.get(locale, "show")}';
+		var containerNode = AUI.$('#${portletNamespace}${namespacedFieldName}Container');
 
-			var containerNode = A.one('#${portletNamespace}${namespacedFieldName}Container');
+		if (containerNode.hasClass('hide')) {
+			toggleText = '${languageUtil.get(locale, "hide")}';
+		}
 
-			if (containerNode.test(':hidden')) {
-				toggleText = '${languageUtil.get(locale, "hide")}';
-			}
+		AUI.$('#${portletNamespace}${namespacedFieldName}ToggleImage').html(toggleText);
 
-			A.one('#${portletNamespace}${namespacedFieldName}ToggleImage').setContent(toggleText);
-
-			containerNode.toggle();
-		},
-		['aui-base']
-	);
+		containerNode.toggleClass('hide');
+	}
 </@>

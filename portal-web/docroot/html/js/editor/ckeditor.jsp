@@ -465,9 +465,9 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			{
 				customConfig: '<%= PortalUtil.getPathContext() %>/html/js/editor/ckeditor/<%= HtmlUtil.escapeJS(ckEditorConfigFileName) %>?p_p_id=<%= HttpUtil.encodeURL(portletId) %>&p_main_path=<%= HttpUtil.encodeURL(mainPath) %>&contentsLanguageId=<%= HttpUtil.encodeURL(contentsLanguageId) %>&colorSchemeCssClass=<%= HttpUtil.encodeURL(themeDisplay.getColorScheme().getCssClass()) %>&cssClasses=<%= HttpUtil.encodeURL(cssClasses) %>&cssPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>&doAsGroupId=<%= HttpUtil.encodeURL(String.valueOf(doAsGroupId)) %>&doAsUserId=<%= HttpUtil.encodeURL(doAsUserId) %>&imagesPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeImages()) %>&inlineEdit=<%= inlineEdit %><%= configParams %>&languageId=<%= HttpUtil.encodeURL(LocaleUtil.toLanguageId(locale)) %>&name=<%= name %>&resizable=<%= resizable %>&showSource=<%= showSource %>',
 				filebrowserBrowseUrl: filebrowserBrowseUrl,
-				filebrowserImageBrowseUrl: filebrowserImageBrowseUrl,
-				filebrowserImageBrowseLinkUrl: filebrowserImageBrowseLinkUrl,
 				filebrowserFlashBrowseUrl: filebrowserFlashBrowseUrl,
+				filebrowserImageBrowseLinkUrl: filebrowserImageBrowseLinkUrl,
+				filebrowserImageBrowseUrl: filebrowserImageBrowseUrl,
 				filebrowserUploadUrl: null,
 				toolbar: currentToolbarSet
 			}

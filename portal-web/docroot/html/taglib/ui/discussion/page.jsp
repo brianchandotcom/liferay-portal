@@ -143,13 +143,12 @@ int messagesCount = messages.size();
 
 										JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
 										editorOptions.put("textMode", Boolean.FALSE);
-										editorOptions.put("showSource", Boolean.FALSE);
 
 										dataTextEditor.put("editorConfig", editorConfig);
 										dataTextEditor.put("editorOptions", editorOptions);
 										%>
 
-										<liferay-ui:input-editor contents="" data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
+										<liferay-ui:input-editor contents="" data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" showSource="<%= false %>" />
 
 										<aui:input name="postReplyBody0" type="hidden" />
 

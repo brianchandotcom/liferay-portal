@@ -67,10 +67,6 @@ String placeholder = GetterUtil.getString((String)request.getAttribute("liferay-
 
 boolean showSource = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:showSource"));
 
-if (Validator.isNotNull(editorOptions) && !editorOptions.getBoolean("showSource")) {
-	showSource = false;
-}
-
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
 %>
 

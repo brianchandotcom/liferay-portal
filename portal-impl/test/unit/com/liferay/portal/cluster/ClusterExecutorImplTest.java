@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterEventType;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterMessageType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
+import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -38,6 +41,8 @@ import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.uuid.PortalUUIDImpl;
+
+import java.lang.reflect.InvocationTargetException;
 
 import java.net.InetAddress;
 
@@ -548,6 +553,98 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			Assert.assertEquals(0, clusterNodeResponses.size());
 			Assert.assertNotEquals(TestBean.TIMESTAMP, timestamp);
+		}
+		finally {
+			clusterExecutorImpl.destroy();
+		}
+	}
+
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
+	@Test
+	public void testExecuteClusterRequest() throws Exception {
+		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+
+		try {
+
+			// Test 1, method handler is null
+
+			ClusterRequest clusterRequest =
+				ClusterRequest.createMulticastRequest(null);
+
+			ClusterNodeResponse clusterNodeResponse =
+				clusterExecutorImpl.executeClusterRequest(clusterRequest);
+
+			Exception exception = clusterNodeResponse.getException();
+
+			Assert.assertEquals(
+				"Payload is not of type " + MethodHandler.class.getName(),
+				exception.getMessage());
+
+			// Test 2, invoke with exception
+
+			String timeStamp = String.valueOf(System.currentTimeMillis());
+
+			MethodHandler methodHandler = new MethodHandler(
+				testMethod3MethodKey, timeStamp);
+
+			clusterRequest = ClusterRequest.createMulticastRequest(
+				methodHandler);
+
+			clusterNodeResponse = clusterExecutorImpl.executeClusterRequest(
+				clusterRequest);
+
+			try {
+				clusterNodeResponse.getResult();
+
+				Assert.fail();
+			}
+			catch (Exception e) {
+				InvocationTargetException invocationTargetException =
+					(InvocationTargetException)e;
+
+				Throwable throwable =
+					invocationTargetException.getTargetException();
+
+				Assert.assertEquals(timeStamp, throwable.getMessage());
+			}
+
+			// Test 3, invoke without exception
+
+			timeStamp = String.valueOf(System.currentTimeMillis());
+
+			methodHandler = new MethodHandler(testMethod1MethodKey, timeStamp);
+
+			clusterRequest = ClusterRequest.createMulticastRequest(
+				methodHandler);
+
+			clusterNodeResponse = clusterExecutorImpl.executeClusterRequest(
+				clusterRequest);
+
+			Assert.assertEquals(
+				timeStamp, (String)clusterNodeResponse.getResult());
+
+			// Test 4, test threadlocal
+
+			MethodKey testMethod5MethodKey = new MethodKey(
+				TestBean.class, "testMethod5");
+
+			methodHandler = new MethodHandler(testMethod5MethodKey);
+
+			clusterRequest = ClusterRequest.createMulticastRequest(
+				methodHandler);
+
+			Assert.assertTrue(ClusterInvokeThreadLocal.isEnabled());
+
+			clusterNodeResponse = clusterExecutorImpl.executeClusterRequest(
+				clusterRequest);
+
+			Assert.assertFalse((Boolean)clusterNodeResponse.getResult());
+			Assert.assertTrue(ClusterInvokeThreadLocal.isEnabled());
 		}
 		finally {
 			clusterExecutorImpl.destroy();

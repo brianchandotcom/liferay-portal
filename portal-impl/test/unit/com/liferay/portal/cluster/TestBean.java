@@ -17,6 +17,7 @@ package com.liferay.portal.cluster;
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 
 /**
@@ -68,6 +69,10 @@ public class TestBean {
 		}
 
 		return null;
+	}
+
+	public static boolean testMethod5() {
+		return ClusterInvokeThreadLocal.isEnabled();
 	}
 
 	private static final String _THREAD_LOCAL_CACHE_KEY  =

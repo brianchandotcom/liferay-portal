@@ -30,7 +30,6 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,17 +60,19 @@ public class DLFileVersionLocalServiceTreeTest {
 	public void testFileVersionTreePathWhenMovingSubfolderWithFileVersion()
 		throws Exception {
 
-		Folder folderA = DLAppTestUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Folder A");
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
 
-		Folder folderAA = DLAppTestUtil.addFolder(
-			_group.getGroupId(), folderA.getFolderId(), "Folder AA");
+		Folder folderA = DLAppServiceUtil.addFolder(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Folder A", RandomTestUtil.randomString(), serviceContext);
+
+		Folder folderAA = DLAppServiceUtil.addFolder(
+			_group.getGroupId(), folderA.getFolderId(), "Folder AA",
+			RandomTestUtil.randomString(), serviceContext);
 
 		FileEntry fileEntry = addFileEntry(folderAA.getFolderId(), "Entry.txt");
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		DLAppLocalServiceUtil.moveFolder(
 			TestPropsValues.getUserId(), folderAA.getFolderId(),
@@ -134,9 +135,13 @@ public class DLFileVersionLocalServiceTreeTest {
 
 		_fileEntries.add(fileEntryA);
 
-		_folder = DLAppTestUtil.addFolder(
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		_folder = DLAppServiceUtil.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Folder A");
+			"Folder A", RandomTestUtil.randomString(), serviceContext);
 
 		FileEntry fileEntryAA = addFileEntry(
 			_folder.getFolderId(), "Entry AA.txt");

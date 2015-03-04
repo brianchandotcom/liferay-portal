@@ -27,6 +27,7 @@ import java.util.Set;
 import org.python.core.CompileMode;
 import org.python.core.Py;
 import org.python.core.PyCode;
+import org.python.core.PyObject;
 import org.python.core.PySystemState;
 import org.python.util.InteractiveInterpreter;
 
@@ -72,10 +73,9 @@ public class PythonExecutor extends BaseScriptingExecutor {
 		Map<String, Object> outputObjects = new HashMap<>();
 
 		for (String outputName : outputNames) {
-			outputObjects.put(
-				outputName,
-				interactiveInterpreter.get(
-					outputName).__tojava__(Object.class));
+			PyObject pyObject = interactiveInterpreter.get(outputName);
+
+			outputObjects.put(outputName, pyObject.__tojava__(Object.class));
 		}
 
 		return outputObjects;

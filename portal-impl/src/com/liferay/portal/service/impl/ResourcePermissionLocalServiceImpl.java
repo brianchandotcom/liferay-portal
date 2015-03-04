@@ -547,6 +547,40 @@ public class ResourcePermissionLocalServiceImpl
 		return resourcePermissionFinder.findByR_S(roleId, scopes, start, end);
 	}
 
+	@Override
+	public List<Role> getRoles(
+			long companyId, String name, int scope, String primKey,
+			String actionId)
+		throws PortalException {
+
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionPersistence.findByC_N_S_P(
+				companyId, name, scope, primKey);
+
+		if (resourcePermissions.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		ResourceAction resourceAction =
+			resourceActionLocalService.getResourceAction(name, actionId);
+
+		Set<Long> rolesIds = new HashSet<>();
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			if (resourcePermission.hasAction(resourceAction)) {
+				rolesIds.add(resourcePermission.getRoleId());
+			}
+		}
+
+		List<Role> roles = new ArrayList<>(rolesIds.size());
+
+		for (long roleId : rolesIds) {
+			roles.add(roleLocalService.getRole(roleId));
+		}
+
+		return roles;
+	}
+
 	/**
 	 * Returns all the resource permissions where scope = any &#63;.
 	 *
@@ -793,6 +827,11 @@ public class ResourcePermissionLocalServiceImpl
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getRoles(long, String, int, String, String}
+	 */
+	@Deprecated
 	@Override
 	public boolean[] hasResourcePermissions(
 			long companyId, String name, int scope, String primKey,

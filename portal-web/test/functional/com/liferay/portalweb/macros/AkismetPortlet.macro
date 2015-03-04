@@ -1,5 +1,5 @@
 <definition>
-	<command name="configure">
+	<command name="configure" >
 		<if>
 			<equals arg1="${enableSpamModerationFor}" arg2="Message Boards" />
 			<then>

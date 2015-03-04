@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -386,47 +384,6 @@ public abstract class BaseClusterExecutorImplTestCase
 			new Exchanger<>();
 		private final Exchanger<ClusterEvent> _joinMessageExchanger =
 			new Exchanger<>();
-
-	}
-
-	protected class MockPortalExecutorManager implements PortalExecutorManager {
-
-		@Override
-		public ThreadPoolExecutor getPortalExecutor(String name) {
-			return _threadPoolExecutor;
-		}
-
-		@Override
-		public ThreadPoolExecutor getPortalExecutor(
-			String name, boolean createIfAbsent) {
-
-			return _threadPoolExecutor;
-		}
-
-		@Override
-		public ThreadPoolExecutor registerPortalExecutor(
-			String name, ThreadPoolExecutor threadPoolExecutor) {
-
-			return _threadPoolExecutor;
-		}
-
-		@Override
-		public void shutdown() {
-			shutdown(false);
-		}
-
-		@Override
-		public void shutdown(boolean interrupt) {
-			if (interrupt) {
-				_threadPoolExecutor.shutdownNow();
-			}
-			else {
-				_threadPoolExecutor.shutdown();
-			}
-		}
-
-		private final ThreadPoolExecutor _threadPoolExecutor =
-			new ThreadPoolExecutor(10, 10);
 
 	}
 

@@ -16,6 +16,7 @@ package com.liferay.portal.cluster;
 
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.Priority;
+import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
@@ -496,6 +497,12 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	}
 
 	protected ClusterLinkImpl getClusterLinkImpl() {
+		PortalExecutorManagerUtil portalExecutorManagerUtil =
+			new PortalExecutorManagerUtil();
+
+		portalExecutorManagerUtil.setPortalExecutorManager(
+			new MockPortalExecutorManager());
+
 		ClusterLinkImpl clusterLinkImpl = new ClusterLinkImpl();
 
 		clusterLinkImpl.afterPropertiesSet();

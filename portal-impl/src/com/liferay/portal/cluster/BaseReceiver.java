@@ -17,27 +17,39 @@ package com.liferay.portal.cluster;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.RejectedExecutionException;
 
-import org.jgroups.Address;
 import org.jgroups.Message;
-import org.jgroups.Receiver;
+import org.jgroups.ReceiverAdapter;
 import org.jgroups.View;
 
 /**
  * @author Tina Tian
  */
-public abstract class BaseReceiver implements Receiver {
+public abstract class BaseReceiver extends ReceiverAdapter {
 
-	@Override
-	public void block() {
-	}
+	public BaseReceiver(ExecutorService executorService) {
+		if (executorService == null) {
+			throw new NullPointerException("Executor service is null");
+		}
 
-	@Override
-	public void getState(OutputStream outputStream) {
+		_executorService = executorService;
+
+		boolean hasDoViewAccepted = false;
+
+		Class<?> clazz = getClass();
+
+		try {
+			clazz.getDeclaredMethod("doViewAccepted", View.class, View.class);
+
+			hasDoViewAccepted = true;
+		}
+		catch (ReflectiveOperationException roe) {
+		}
+
+		_hasDoViewAccepted = hasDoViewAccepted;
 	}
 
 	public View getView() {
@@ -52,26 +64,17 @@ public abstract class BaseReceiver implements Receiver {
 	public void receive(Message message) {
 		try {
 			_countDownLatch.await();
+
+			_executorService.execute(new MessageCallBackJob(message));
 		}
 		catch (InterruptedException ie) {
 			_log.error(
 				"Latch opened prematurely by interruption. Dependence may " +
 					"not be ready.");
 		}
-
-		doReceive(message);
-	}
-
-	@Override
-	public void setState(InputStream inputStream) {
-	}
-
-	@Override
-	public void suspect(Address address) {
-	}
-
-	@Override
-	public void unblock() {
+		catch (RejectedExecutionException ree) {
+			_log.error("Unable to handle received message " + message, ree);
+		}
 	}
 
 	@Override
@@ -86,20 +89,29 @@ public abstract class BaseReceiver implements Receiver {
 			return;
 		}
 
+		if (!_hasDoViewAccepted) {
+			return;
+		}
+
+		View oldView = _view;
+
 		try {
 			_countDownLatch.await();
+
+			_view = view;
+
+			_executorService.execute(new ViewCallBackJob(oldView, view));
 		}
 		catch (InterruptedException ie) {
 			_log.error(
 				"Latch opened prematurely by interruption. Dependence may " +
 					"not be ready.");
 		}
-
-		View oldView = _view;
-
-		_view = view;
-
-		doViewAccepted(oldView, view);
+		catch (RejectedExecutionException ree) {
+			_log.error(
+				"Unable to handle view update from " + oldView + " to " + view,
+				ree);
+		}
 	}
 
 	protected abstract void doReceive(Message message);
@@ -110,6 +122,40 @@ public abstract class BaseReceiver implements Receiver {
 	private static final Log _log = LogFactoryUtil.getLog(BaseReceiver.class);
 
 	private final CountDownLatch _countDownLatch = new CountDownLatch(1);
+	private final ExecutorService _executorService;
+	private final boolean _hasDoViewAccepted;
 	private volatile View _view;
+
+	private class MessageCallBackJob implements Runnable {
+
+		@Override
+		public void run() {
+			doReceive(_message);
+		}
+
+		private MessageCallBackJob(Message message) {
+			_message = message;
+		}
+
+		private final Message _message;
+
+	}
+
+	private class ViewCallBackJob implements Runnable {
+
+		@Override
+		public void run() {
+			doViewAccepted(_oldView, _newView);
+		}
+
+		private ViewCallBackJob(View oldView, View newView) {
+			_oldView = oldView;
+			_newView = newView;
+		}
+
+		private final View _newView;
+		private final View _oldView;
+
+	}
 
 }

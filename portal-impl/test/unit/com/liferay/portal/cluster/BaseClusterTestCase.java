@@ -14,6 +14,8 @@
 
 package com.liferay.portal.cluster;
 
+import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
+import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 
@@ -248,6 +250,47 @@ public class BaseClusterTestCase {
 		@Override
 		public void writeTo(DataOutput dataOutput) throws Exception {
 		}
+
+	}
+
+	protected class MockPortalExecutorManager implements PortalExecutorManager {
+
+		@Override
+		public ThreadPoolExecutor getPortalExecutor(String name) {
+			return _threadPoolExecutor;
+		}
+
+		@Override
+		public ThreadPoolExecutor getPortalExecutor(
+			String name, boolean createIfAbsent) {
+
+			return _threadPoolExecutor;
+		}
+
+		@Override
+		public ThreadPoolExecutor registerPortalExecutor(
+			String name, ThreadPoolExecutor threadPoolExecutor) {
+
+			return _threadPoolExecutor;
+		}
+
+		@Override
+		public void shutdown() {
+			shutdown(false);
+		}
+
+		@Override
+		public void shutdown(boolean interrupt) {
+			if (interrupt) {
+				_threadPoolExecutor.shutdownNow();
+			}
+			else {
+				_threadPoolExecutor.shutdown();
+			}
+		}
+
+		private final ThreadPoolExecutor _threadPoolExecutor =
+			new ThreadPoolExecutor(10, 10);
 
 	}
 

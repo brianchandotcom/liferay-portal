@@ -154,6 +154,12 @@
 					</classpath>
 					<property name="-sourcepath" value="." />
 				</bnd>
+
+				<baseline-jar
+					bndFile="bnd.bnd"
+					bndRootFile="${project.dir}/common.bnd"
+					newerJar="${jar.file}.jar"
+				/>
 			</then>
 			<else>
 				<antcall target="manifest" />
@@ -267,7 +273,9 @@
 		<if>
 			<available file="bnd.bnd" />
 			<then>
-				<release-to-repo-macro
+				<bndexpand propertyfile="${project.dir}/common.bnd" />
+
+				<release-to-repo
 					bndRootFile="${project.dir}/common.bnd"
 					file="${jar.file}.jar"
 				/>

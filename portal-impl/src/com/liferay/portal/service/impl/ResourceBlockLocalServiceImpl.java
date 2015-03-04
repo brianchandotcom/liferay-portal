@@ -354,6 +354,37 @@ public class ResourceBlockLocalServiceImpl
 	}
 
 	@Override
+	public boolean[] hasIndividualPermissions(
+			String name, long primKey, long[] roleIds, String actionId)
+		throws PortalException {
+
+		boolean[] hasResourcePermissions = new boolean[roleIds.length];
+
+		if (roleIds.length == 0) {
+			return hasResourcePermissions;
+		}
+
+		ResourceBlock resourceBlock = getResourceBlock(name, primKey);
+
+		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer =
+			resourceBlockPermissionLocalService.
+				getResourceBlockPermissionsContainer(
+					resourceBlock.getResourceBlockId());
+
+		long actionIdLong = getActionId(name, actionId);
+
+		for (int i = 0; i < roleIds.length; i++) {
+			long actionIds = resourceBlockPermissionsContainer.getActionIds(
+				roleIds[i]);
+
+			hasResourcePermissions[i] =
+				((actionIds & actionIdLong) == actionIdLong);
+		}
+
+		return hasResourcePermissions;
+	}
+
+	@Override
 	public boolean hasPermission(
 			String name, long primKey, String actionId,
 			ResourceBlockIdsBag resourceBlockIdsBag)

@@ -378,6 +378,13 @@ public class ResourceBlockLocalServiceUtil {
 		return getService().getResourceBlocksCount();
 	}
 
+	public static boolean[] hasIndividualPermissions(java.lang.String name,
+		long primKey, long[] roleIds, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .hasIndividualPermissions(name, primKey, roleIds, actionId);
+	}
+
 	public static boolean hasPermission(java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,
 		java.lang.String actionId,

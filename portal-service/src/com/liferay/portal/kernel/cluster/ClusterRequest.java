@@ -37,7 +37,7 @@ public class ClusterRequest implements Serializable {
 
 		clusterRequest.setClusterMessageType(clusterMessageType);
 		clusterRequest.setMulticast(true);
-		clusterRequest.setOriginatingClusterNode(originatingClusterNode);
+		clusterRequest.setPayload(originatingClusterNode);
 		clusterRequest.setSkipLocal(true);
 		clusterRequest.setUuid(PortalUUIDUtil.generate());
 
@@ -56,7 +56,7 @@ public class ClusterRequest implements Serializable {
 		ClusterRequest clusterRequest = new ClusterRequest();
 
 		clusterRequest.setClusterMessageType(ClusterMessageType.EXECUTE);
-		clusterRequest.setMethodHandler(methodHandler);
+		clusterRequest.setPayload(methodHandler);
 		clusterRequest.setMulticast(true);
 		clusterRequest.setSkipLocal(skipLocal);
 		clusterRequest.setUuid(PortalUUIDUtil.generate());
@@ -71,7 +71,7 @@ public class ClusterRequest implements Serializable {
 
 		clusterRequest.addTargetClusterNodeIds(targetClusterNodeIds);
 		clusterRequest.setClusterMessageType(ClusterMessageType.EXECUTE);
-		clusterRequest.setMethodHandler(methodHandler);
+		clusterRequest.setPayload(methodHandler);
 		clusterRequest.setMulticast(false);
 		clusterRequest.setSkipLocal(false);
 		clusterRequest.setUuid(PortalUUIDUtil.generate());
@@ -93,12 +93,8 @@ public class ClusterRequest implements Serializable {
 		return _clusterMessageType;
 	}
 
-	public MethodHandler getMethodHandler() {
-		return _methodHandler;
-	}
-
-	public ClusterNode getOriginatingClusterNode() {
-		return _originatingClusterNode;
+	public Serializable getPayload() {
+		return _payload;
 	}
 
 	public Collection<String> getTargetClusterNodeIds() {
@@ -129,16 +125,12 @@ public class ClusterRequest implements Serializable {
 		_fireAndForget = fireAndForget;
 	}
 
-	public void setMethodHandler(MethodHandler methodHandler) {
-		_methodHandler = methodHandler;
-	}
-
 	public void setMulticast(boolean multicast) {
 		_multicast = multicast;
 	}
 
-	public void setOriginatingClusterNode(ClusterNode originatingClusterNode) {
-		_originatingClusterNode = originatingClusterNode;
+	public void setPayload(Serializable payload) {
+		_payload = payload;
 	}
 
 	public void setSkipLocal(boolean skipLocal) {
@@ -155,28 +147,10 @@ public class ClusterRequest implements Serializable {
 
 		sb.append("{clusterMessageType=");
 		sb.append(_clusterMessageType);
-
-		boolean clusterMessageTypeNotifyOrUpdate = false;
-
-		if (_clusterMessageType.equals(ClusterMessageType.NOTIFY) ||
-			_clusterMessageType.equals(ClusterMessageType.UPDATE)) {
-
-			clusterMessageTypeNotifyOrUpdate = true;
-		}
-
-		if (!clusterMessageTypeNotifyOrUpdate) {
-			sb.append(", methodHandler=");
-			sb.append(_methodHandler);
-		}
-
 		sb.append(", multicast=");
 		sb.append(_multicast);
-
-		if (clusterMessageTypeNotifyOrUpdate) {
-			sb.append(", originatingClusterNode=");
-			sb.append(_originatingClusterNode);
-		}
-
+		sb.append(", payload=");
+		sb.append(_payload);
 		sb.append(", skipLocal=");
 		sb.append(_skipLocal);
 		sb.append(", uuid=");
@@ -191,9 +165,8 @@ public class ClusterRequest implements Serializable {
 
 	private ClusterMessageType _clusterMessageType;
 	private boolean _fireAndForget;
-	private MethodHandler _methodHandler;
 	private boolean _multicast;
-	private ClusterNode _originatingClusterNode;
+	private Serializable _payload;
 	private boolean _skipLocal;
 	private Set<String> _targetClusterNodeIds;
 	private String _uuid;

@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -164,25 +166,26 @@ public class ClusterRequestReceiver extends BaseReceiver {
 
 		Object responsePayload = null;
 
-		ClusterMessageType clusterMessageType =
-			clusterRequest.getClusterMessageType();
+		Serializable requestPayload = clusterRequest.getPayload();
 
-		if (clusterMessageType == ClusterMessageType.EXECUTE) {
+		if (requestPayload instanceof ClusterNode) {
+			_clusterExecutorImpl.memberJoined(
+				sourceAddress, (ClusterNode)requestPayload);
+
+			if (clusterRequest.getClusterMessageType() ==
+					ClusterMessageType.NOTIFY) {
+
+				responsePayload = ClusterRequest.createClusterRequest(
+					ClusterMessageType.UPDATE,
+					_clusterExecutorImpl.getLocalClusterNode());
+			}
+		}
+		else {
 			ClusterNodeResponse clusterNodeResponse =
 				_clusterExecutorImpl.executeClusterRequest(clusterRequest);
 
 			if (!clusterRequest.isFireAndForget()) {
 				responsePayload = clusterNodeResponse;
-			}
-		}
-		else {
-			_clusterExecutorImpl.memberJoined(
-				sourceAddress, clusterRequest.getOriginatingClusterNode());
-
-			if (clusterMessageType == ClusterMessageType.NOTIFY) {
-				responsePayload = ClusterRequest.createClusterRequest(
-					ClusterMessageType.UPDATE,
-					_clusterExecutorImpl.getLocalClusterNode());
 			}
 		}
 

@@ -44,6 +44,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.Serializable;
+
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -299,14 +301,16 @@ public class ClusterExecutorImpl
 	protected ClusterNodeResponse executeClusterRequest(
 		ClusterRequest clusterRequest) {
 
-		MethodHandler methodHandler = clusterRequest.getMethodHandler();
+		Serializable payload = clusterRequest.getPayload();
 
-		if (methodHandler == null) {
+		if (!(payload instanceof MethodHandler)) {
 			return ClusterNodeResponse.createExceptionClusterNodeResponse(
 				_localClusterNode, clusterRequest.getUuid(),
 				new ClusterException(
 					"Payload is not of type " + MethodHandler.class.getName()));
 		}
+
+		MethodHandler methodHandler = (MethodHandler)payload;
 
 		ClusterInvokeThreadLocal.setEnabled(false);
 

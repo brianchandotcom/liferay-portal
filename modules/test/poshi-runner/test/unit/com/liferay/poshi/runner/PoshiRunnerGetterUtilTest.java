@@ -28,6 +28,52 @@ import org.junit.Test;
 public class PoshiRunnerGetterUtilTest extends TestCase {
 
 	@Test
+	public void testGetClassNameFromClassCommandName() {
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				"PortalSmoke#Smoke");
+
+		Assert.assertEquals(
+			"getClassNameFromClassCommandName is broken", "PortalSmoke",
+			className);
+	}
+
+	@Test
+	public void testGetClassNameFromFilePath() {
+		String className = PoshiRunnerGetterUtil.getClassNameFromFilePath(
+			"/com/liferay/poshi/runner/dependencies/Test.testcase");
+
+		Assert.assertEquals(
+			"getClassNameFromFilePath is broken", "Test", className);
+	}
+
+	@Test
+	public void testGetClassTypeFromFilePath() {
+		String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
+			"/com/liferay/poshi/runner/dependencies/Test.testcase");
+
+		Assert.assertEquals(
+			"getClassTypeFromFilePath is broken", "testcase", classType);
+	}
+
+	@Test
+	public void testGetCommandNameFromClassCommandName() {
+		String commandName =
+			PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
+				"MathUtil#add(1,2)");
+
+		Assert.assertEquals(
+			"getCommandNameFromClassCommandName is broken", "add", commandName);
+
+		commandName = PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
+			"Page#addPG");
+
+		Assert.assertEquals(
+			"getCommandNameFromClassCommandName is broken", "addPG",
+			commandName);
+	}
+
+	@Test
 	public void testGetRootElementFromFilePath() throws Exception {
 		Element rootElement = PoshiRunnerGetterUtil.getRootElementFromFilePath(
 			"test/unit/com/liferay/poshi/runner/dependencies/Test.testcase");
@@ -35,6 +81,20 @@ public class PoshiRunnerGetterUtilTest extends TestCase {
 		Assert.assertEquals(
 			"getRootElementFromFilePath is broken", "definition",
 			rootElement.getName());
+	}
+
+	@Test
+	public void testGetVarMethodValue() throws Exception {
+		String value = PoshiRunnerGetterUtil.getVarMethodValue(
+			"MathUtil#sum(1,2)");
+
+		Assert.assertEquals(
+			"getVarMethodValue (MathUtil) is broken", "3", value);
+
+		value = PoshiRunnerGetterUtil.getVarMethodValue(
+			"StringUtil#endsWith(The fox jumped over the dog, dog)");
+
+		Assert.assertEquals("getVarMethodValue is broken", "true", value);
 	}
 
 }

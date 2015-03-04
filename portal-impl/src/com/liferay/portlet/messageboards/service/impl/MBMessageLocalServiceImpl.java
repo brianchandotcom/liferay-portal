@@ -475,8 +475,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			serviceContext);
 	}
 
-	public void addMessageAttachment(
-			long messageId, String fileName, File file, boolean indexingEnabled)
+	public void addMessageAttachment(long messageId, String fileName, File file)
 		throws PortalException {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
@@ -489,7 +488,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.getGroupId(), message.getUserId(),
 			MBMessage.class.getName(), message.getMessageId(),
 			PortletKeys.MESSAGE_BOARDS, folder.getFolderId(), file, fileName,
-			mimeType, indexingEnabled);
+			mimeType, true);
 	}
 
 	@Override

@@ -66,7 +66,7 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#add">
+		<execute macro="KBArticleSuggestion#addPG">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
 		</execute>
@@ -133,7 +133,7 @@
 		</execute>
 
 		<for list="${kbSuggestionCounterList}" param="suggestionCount" >
-			<execute macro="KBArticleSuggestion#add">
+			<execute macro="KBArticleSuggestion#addPG">
 				<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
 				<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion${suggestionCount}" />
 			</execute>
@@ -174,7 +174,7 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#cancelSuggestion">
+		<execute macro="KBArticleSuggestion#cancelSuggestionPG">
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
@@ -461,7 +461,7 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#add">
+		<execute macro="KBArticleSuggestion#addPG">
 			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
 			<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion" />
 		</execute>
@@ -923,7 +923,7 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#add">
+		<execute macro="KBArticleSuggestion#addPG">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
 		</execute>
@@ -936,7 +936,7 @@
 			<var name="userName" value="Test Test" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#viewNoDuplicateSuggestion">
+		<execute macro="KBArticleSuggestion#viewNoDuplicatePG">
 			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
 			<var name="kbThereAreSuggestionsLink" value="There is one suggestion. (1 Pending)" />
 			<var name="status" value="New" />

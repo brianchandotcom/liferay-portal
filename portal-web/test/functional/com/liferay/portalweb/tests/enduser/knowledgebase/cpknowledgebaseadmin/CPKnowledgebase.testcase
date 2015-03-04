@@ -154,7 +154,7 @@
 		</execute>
 
 		<execute macro="KBArticle#addCP">
-			<var name="kbArticleAttachment" value="document_1.txt" />
+			<var name="kbArticleAttachment" value="Document_1.txt" />
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>

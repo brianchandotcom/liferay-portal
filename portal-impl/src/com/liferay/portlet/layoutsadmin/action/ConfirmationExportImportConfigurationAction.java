@@ -79,14 +79,14 @@ public class ConfirmationExportImportConfigurationAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		boolean localPublishing = ParamUtil.getBoolean(
-			renderRequest, "localPublishing");
-
 		ExportImportConfiguration exportImportConfiguration = null;
 
 		long sourceGroupId = ParamUtil.getLong(renderRequest, "sourceGroupId");
 		boolean privateLayout = ParamUtil.getBoolean(
 			renderRequest, "privateLayout");
+
+		boolean localPublishing = ParamUtil.getBoolean(
+			renderRequest, "localPublishing");
 
 		if (localPublishing) {
 			long targetGroupId = ParamUtil.getLong(
@@ -97,10 +97,6 @@ public class ConfirmationExportImportConfigurationAction extends PortletAction {
 					buildDefaultLocalPublishingExportImportConfiguration(
 						themeDisplay.getUser(), sourceGroupId, targetGroupId,
 						privateLayout);
-
-			renderRequest.setAttribute(
-				"exportImportConfigurationId",
-				exportImportConfiguration.getExportImportConfigurationId());
 		}
 		else {
 			String remoteAddress = ParamUtil.getString(
@@ -119,11 +115,11 @@ public class ConfirmationExportImportConfigurationAction extends PortletAction {
 						themeDisplay.getUser(), sourceGroupId, privateLayout,
 						remoteAddress, remotePort, remotePathContext,
 						secureConnection, remoteGroupId);
-
-			renderRequest.setAttribute(
-				"exportImportConfigurationId",
-				exportImportConfiguration.getExportImportConfigurationId());
 		}
+
+		renderRequest.setAttribute(
+			"exportImportConfigurationId",
+			exportImportConfiguration.getExportImportConfigurationId());
 	}
 
 }

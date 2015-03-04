@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.lar.exportimportconfiguration;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -45,8 +46,9 @@ public class ExportImportConfigurationFactory {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				user.getUserId(), sourceGroupId, targetGroupId, privateLayout,
-				null, parameterMap, null, null, user.getLocale(),
-				user.getTimeZone());
+				ExportImportHelperUtil.getAllLayoutIds(
+					sourceGroupId, privateLayout),
+				parameterMap, null, null, user.getLocale(), user.getTimeZone());
 
 		return ExportImportConfigurationLocalServiceUtil.
 			addExportImportConfiguration(
@@ -68,7 +70,9 @@ public class ExportImportConfigurationFactory {
 
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				user.getUserId(), sourceGroupId, privateLayout, null,
+				user.getUserId(), sourceGroupId, privateLayout,
+				ExportImportHelperUtil.getAllLayoutIdsMap(
+					sourceGroupId, privateLayout),
 				parameterMap, remoteAddress, remotePort, remotePathContext,
 				secureConnection, remoteGroupId, privateLayout, null, null,
 				user.getLocale(), user.getTimeZone());

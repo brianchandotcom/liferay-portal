@@ -92,11 +92,11 @@
 			}
 			%>
 
-			<liferay-util:buffer var="publishLinkForControlPanel">
+			<liferay-util:buffer var="publishOnControlPanelLink">
 				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
 			</liferay-util:buffer>
 
-			<liferay-util:buffer var="publishLinkForLayout">
+			<liferay-util:buffer var="publishOnLayoutLink">
 
 				<%
 				UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
@@ -131,12 +131,12 @@
 			<c:choose>
 				<c:when test="<%= !onlyActions %>">
 					<li class="publish-link-container">
-						<%= publishLinkForControlPanel %>
+						<%= publishOnControlPanelLink %>
 					</li>
 				</c:when>
 				<c:otherwise>
 					<div class="<%= cssClass %> publish-link-container">
-						<%= publishLinkForLayout %>
+						<%= publishOnLayoutLink %>
 					</div>
 				</c:otherwise>
 			</c:choose>

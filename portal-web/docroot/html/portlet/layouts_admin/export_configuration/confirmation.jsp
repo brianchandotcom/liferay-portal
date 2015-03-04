@@ -94,11 +94,19 @@ long[] layoutIds = GetterUtil.getLongValues(settingsMap.get("layoutIds"));
 							<%
 							StringBundler sb = new StringBundler();
 
-							if (!ArrayUtil.isEmpty(layoutIds)) {
+							long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
+							boolean privateLayout = MapUtil.getBoolean(settingsMap, "privateLayout");
+
+							long[] allLayoutIds = ExportImportHelperUtil.getAllLayoutIds(sourceGroupId, privateLayout);
+
+							if (ArrayUtil.containsAll(layoutIds, allLayoutIds)) {
+								sb.append(LanguageUtil.get(locale, "all-pages"));
+							}
+							else if (ArrayUtil.isNotEmpty(layoutIds)) {
 								sb.append(LanguageUtil.get(locale, "selected-pages"));
 							}
 							else {
-								sb.append(LanguageUtil.get(locale, "all-pages"));
+								sb.append(LanguageUtil.get(locale, "no-pages"));
 							}
 
 							if (MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS)) {

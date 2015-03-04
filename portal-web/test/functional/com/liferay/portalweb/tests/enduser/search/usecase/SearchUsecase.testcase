@@ -426,7 +426,7 @@
 			<var name="searchTerm" value="Liferay Alert" />
 		</execute>
 
-		<execute macro="Search#viewSearchPG">
+		<execute macro="Search#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Thread Subject" />
 			<var name="searchAssetType" value="Message Boards Message" />
 			<var name="searchAssetSummary"><![CDATA[<script>alert("Liferay Alert")</script>]]></var>

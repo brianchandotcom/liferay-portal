@@ -1,0 +1,106 @@
+<definition component-name="portal-search">
+	<property name="solr.enabled" value="true" />
+	<property name="testray.main.component.name" value="Search" />
+	<property name="web.plugins.includes" value="solr4-web" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Solr Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Solr Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Search" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="MessageboardsThread#tearDownCP" />
+
+		<execute macro="DMDocument#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="SolrSmokeTest" priority="5">
+		<description message="This smoke test is to ensure that Solr is successfully deployed and running within Liferay. By default, the Lucene search engine is invoked when any search is performed in portal. This test will assert two things. First, that the Solr server is running by hitting the Solr Admin Dashboard. Second, that Liferay is using Solr by asserting the Solr logs in the console output when a search is performed in the Search portlet." />
+
+		<execute macro="Solr#viewAdminDashboard">
+			<var name="solrVersion" value="4.10.3" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addCP">
+			<var name="threadBody" value="Orange" />
+			<var name="threadSubject" value="Apple" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="Orange" />
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Apple" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#executeServerResourcesActions">
+			<var name="actionsDescription" value="Reindex all search indexes." />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Solr Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Apple" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle1" value="Apple" />
+			<var name="searchAssetTitle2" value="Apple" />
+			<var name="searchAssetType1" value="Document" />
+			<var name="searchAssetType2" value="Message Boards Message" />
+		</execute>
+
+		<!-- Verify Liferay is using Solr search engine by asserting the Solr log information (essentially a query string) in the console output -->
+
+		<execute macro="Solr#viewSolrLogsInConsole">
+			<var name="searchTerm" value="Apple" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Solr Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Orange" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle1" value="Apple" />
+			<var name="searchAssetTitle2" value="Apple" />
+			<var name="searchAssetType1" value="Document" />
+			<var name="searchAssetType2" value="Message Boards Message" />
+		</execute>
+
+		<!-- Verify Liferay is using Solr search engine by asserting the Solr log information (essentially a query string) in the console output -->
+
+		<execute macro="Solr#viewSolrLogsInConsole">
+			<var name="searchTerm" value="Orange" />
+		</execute>
+	</command>
+</definition>

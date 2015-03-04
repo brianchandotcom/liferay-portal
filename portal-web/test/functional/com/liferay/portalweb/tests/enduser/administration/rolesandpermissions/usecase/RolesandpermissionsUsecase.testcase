@@ -682,7 +682,7 @@
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 
-		<execute macro="Search#viewSearchPG">
+		<execute macro="Search#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchAssetType" value="Document" />
 		</execute>
@@ -740,7 +740,7 @@
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 
-		<execute macro="Search#viewSearchPG">
+		<execute macro="Search#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchAssetType" value="Document" />
 		</execute>
@@ -1276,7 +1276,7 @@
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 
-		<execute macro="Search#viewSearchPG">
+		<execute macro="Search#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchAssetType" value="Document" />
 		</execute>
@@ -1330,7 +1330,7 @@
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 
-		<execute macro="Search#viewSearchPG">
+		<execute macro="Search#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchAssetType" value="Document" />
 		</execute>

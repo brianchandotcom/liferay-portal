@@ -36,6 +36,20 @@ public abstract class BaseReceiver extends ReceiverAdapter {
 		}
 
 		_executorService = executorService;
+
+		boolean hasDoViewAccepted = false;
+
+		Class<?> clazz = getClass();
+
+		try {
+			clazz.getDeclaredMethod("doViewAccepted", View.class, View.class);
+
+			hasDoViewAccepted = true;
+		}
+		catch (ReflectiveOperationException roe) {
+		}
+
+		_hasDoViewAccepted = hasDoViewAccepted;
 	}
 
 	public View getView() {
@@ -75,6 +89,10 @@ public abstract class BaseReceiver extends ReceiverAdapter {
 			return;
 		}
 
+		if (!_hasDoViewAccepted) {
+			return;
+		}
+
 		View oldView = _view;
 
 		try {
@@ -105,6 +123,7 @@ public abstract class BaseReceiver extends ReceiverAdapter {
 
 	private final CountDownLatch _countDownLatch = new CountDownLatch(1);
 	private final ExecutorService _executorService;
+	private final boolean _hasDoViewAccepted;
 	private volatile View _view;
 
 	private class MessageCallBackJob implements Runnable {

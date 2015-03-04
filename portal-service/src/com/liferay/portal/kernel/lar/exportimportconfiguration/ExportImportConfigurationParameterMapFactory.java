@@ -144,132 +144,201 @@ public class ExportImportConfigurationParameterMapFactory {
 
 		Map<String, String[]> parameterMap = new LinkedHashMap<>();
 
-		if (Validator.isNull(dataStrategy)) {
-			dataStrategy =
-				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE;
+		// Data strategy
+
+		String dataStrategyParameter =
+			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE;
+
+		if (Validator.isNotNull(dataStrategy)) {
+			parameterMap.put(
+				PortletDataHandlerKeys.DATA_STRATEGY,
+				new String[] {dataStrategyParameter});
 		}
 
-		parameterMap.put(
-			PortletDataHandlerKeys.DATA_STRATEGY, new String[] {dataStrategy});
+		// Delete missing layouts
 
-		if (deleteMissingLayouts == null) {
-			deleteMissingLayouts = Boolean.TRUE;
+		boolean deleteMissingLayoutsParameter = true;
+
+		if (deleteMissingLayouts != null) {
+			deleteMissingLayoutsParameter = deleteMissingLayouts.booleanValue();
 		}
 
 		parameterMap.put(
 			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
-			new String[] {deleteMissingLayouts.toString()});
+			new String[] {String.valueOf(deleteMissingLayoutsParameter)});
 
-		if (deletePortletData == null) {
-			deletePortletData = Boolean.FALSE;
+		// Delete portlet data
+
+		boolean deletePortletDataParameter = false;
+
+		if (deletePortletData != null) {
+			deletePortletDataParameter = deletePortletData.booleanValue();
 		}
 
 		parameterMap.put(
 			PortletDataHandlerKeys.DELETE_PORTLET_DATA,
-			new String[] {deletePortletData.toString()});
+			new String[] {String.valueOf(deletePortletDataParameter)});
 
-		if (ignoreLastPublishDate == null) {
-			ignoreLastPublishDate = Boolean.TRUE;
+		// Ignore last publish date
+
+		boolean ignoreLastPublishDateParameter = true;
+
+		if (ignoreLastPublishDate != null) {
+			ignoreLastPublishDateParameter =
+				ignoreLastPublishDate.booleanValue();
 		}
 
 		parameterMap.put(
 			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
-			new String[] {ignoreLastPublishDate.toString()});
+			new String[] {String.valueOf(ignoreLastPublishDateParameter)});
 
-		if (layoutSetPrototypeLinkEnabled == null) {
-			layoutSetPrototypeLinkEnabled = Boolean.FALSE;
+		// Layout set prototype link enabled
+
+		boolean layoutSetPrototypeLinkEnabledParameter = false;
+
+		if (layoutSetPrototypeLinkEnabled != null) {
+			layoutSetPrototypeLinkEnabledParameter =
+				layoutSetPrototypeLinkEnabled.booleanValue();
 		}
 
 		parameterMap.put(
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
-			new String[] {layoutSetPrototypeLinkEnabled.toString()});
+			new String[] {
+				String.valueOf(layoutSetPrototypeLinkEnabledParameter)});
 
-		if (layoutSetSettings == null) {
-			layoutSetSettings = Boolean.FALSE;
+		// Layout set settings
+
+		boolean layoutSetSettingsParameter = false;
+
+		if (layoutSetSettings != null) {
+			layoutSetSettingsParameter = layoutSetSettings.booleanValue();
 		}
 
 		parameterMap.put(
 			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
-			new String[] {layoutSetSettings.toString()});
+			new String[] {String.valueOf(layoutSetSettingsParameter)});
 
-		if (logo == null) {
-			logo = Boolean.FALSE;
+		// Logo
+
+		boolean logoParameter = false;
+
+		if (logo != null) {
+			logoParameter = logo.booleanValue();
 		}
 
 		parameterMap.put(
-			PortletDataHandlerKeys.LOGO, new String[] {logo.toString()});
+			PortletDataHandlerKeys.LOGO,
+			new String[] {String.valueOf(logoParameter)});
 
-		if (permissions == null) {
-			permissions = Boolean.TRUE;
+		// Permissions
+
+		boolean permissionsParameter = true;
+
+		if (permissions != null) {
+			permissionsParameter = permissions.booleanValue();
 		}
 
 		parameterMap.put(
 			PortletDataHandlerKeys.PERMISSIONS,
-			new String[] {permissions.toString()});
+			new String[] {String.valueOf(permissionsParameter)});
 
-		if (portletConfiguration == null) {
-			portletConfiguration = Boolean.TRUE;
+		// Portlet configuration
+
+		boolean portletConfigurationParameter = true;
+
+		if (portletConfiguration != null) {
+			portletConfigurationParameter = portletConfiguration.booleanValue();
 		}
 
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
-			new String[] {portletConfiguration.toString()});
+			new String[] {String.valueOf(portletConfigurationParameter)});
 
-		if (portletConfigurationAll == null) {
-			portletConfigurationAll = Boolean.TRUE;
+		// Portlet configuration all
+
+		boolean portletConfigurationAllParameter = true;
+
+		if (portletConfigurationAll != null) {
+			portletConfigurationAllParameter =
+				portletConfigurationAll.booleanValue();
 		}
 
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-			new String[] {portletConfigurationAll.toString()});
+			new String[] {String.valueOf(portletConfigurationAllParameter)});
 
-		if (portletData == null) {
-			portletData = Boolean.FALSE;
+		// Portlet data
+
+		boolean portletDataParameter = false;
+
+		if (portletData != null) {
+			portletDataParameter = portletData.booleanValue();
 		}
 
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {portletData.toString()});
+			new String[] {String.valueOf(portletDataParameter)});
 
-		if (portletDataAll == null) {
-			portletDataAll = Boolean.FALSE;
+		// Portlet data all
+
+		boolean portletDataAllParameter = false;
+
+		if (portletDataAll != null) {
+			portletDataAllParameter = portletDataAll.booleanValue();
 		}
 
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			new String[] {portletDataAll.toString()});
+			new String[] {String.valueOf(portletDataAllParameter)});
 
-		if (portletSetupAll == null) {
-			portletSetupAll = Boolean.TRUE;
+		// Portlet setup all
+
+		boolean portletSetupAllParameter = true;
+
+		if (portletSetupAll != null) {
+			portletSetupAllParameter = portletSetupAll.booleanValue();
 		}
 
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
-			new String[] {portletSetupAll.toString()});
+			new String[] {String.valueOf(portletSetupAllParameter)});
 
-		if (themeReference == null) {
-			themeReference = Boolean.FALSE;
+		// Theme reference
+
+		boolean themeReferenceParameter = false;
+
+		if (themeReference != null) {
+			themeReferenceParameter = themeReference.booleanValue();
 		}
 
 		parameterMap.put(
 			PortletDataHandlerKeys.THEME_REFERENCE,
-			new String[] {themeReference.toString()});
+			new String[] {String.valueOf(themeReferenceParameter)});
 
-		if (updateLastPublishDate == null) {
-			updateLastPublishDate = Boolean.TRUE;
+		// Update last publish date
+
+		boolean updateLastPublishDateParameter = true;
+
+		if (updateLastPublishDate != null) {
+			updateLastPublishDateParameter =
+				updateLastPublishDate.booleanValue();
 		}
 
 		parameterMap.put(
 			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
-			new String[] {updateLastPublishDate.toString()});
+			new String[] {String.valueOf(updateLastPublishDateParameter)});
 
-		if (Validator.isNull(userIdStrategy)) {
-			userIdStrategy = UserIdStrategy.CURRENT_USER_ID;
+		// User id strategy
+
+		String userIdStrategyParameter = UserIdStrategy.CURRENT_USER_ID;
+
+		if (Validator.isNotNull(userIdStrategy)) {
+			userIdStrategyParameter = userIdStrategy;
 		}
 
 		parameterMap.put(
 			PortletDataHandlerKeys.USER_ID_STRATEGY,
-			new String[] {userIdStrategy});
+			new String[] {userIdStrategyParameter});
 
 		return parameterMap;
 	}

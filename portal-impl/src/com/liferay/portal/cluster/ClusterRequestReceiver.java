@@ -172,8 +172,8 @@ public class ClusterRequestReceiver extends BaseReceiver {
 				sourceAddress, (ClusterNode)requestPayload);
 
 			if (newMember) {
-				responsePayload = ClusterRequest.createClusterRequest(
-					_clusterExecutorImpl.getLocalClusterNode());
+				responsePayload = ClusterRequest.createMulticastRequest(
+					_clusterExecutorImpl.getLocalClusterNode(), true);
 			}
 		}
 		else {

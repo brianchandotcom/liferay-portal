@@ -14,13 +14,12 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
-import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,68 +28,34 @@ import java.util.Set;
  */
 public class ClusterRequest implements Serializable {
 
-	public static ClusterRequest createClusterRequest(
-		ClusterNode originatingClusterNode) {
-
-		ClusterRequest clusterRequest = new ClusterRequest();
-
-		clusterRequest.setMulticast(true);
-		clusterRequest.setPayload(originatingClusterNode);
-		clusterRequest.setSkipLocal(true);
-		clusterRequest.setUuid(PortalUUIDUtil.generate());
-
-		return clusterRequest;
+	public static ClusterRequest createMulticastRequest(Serializable payload) {
+		return createMulticastRequest(payload, false);
 	}
 
 	public static ClusterRequest createMulticastRequest(
-		MethodHandler methodHandler) {
+		Serializable payload, boolean skipLocal) {
 
-		return createMulticastRequest(methodHandler, false);
-	}
-
-	public static ClusterRequest createMulticastRequest(
-		MethodHandler methodHandler, boolean skipLocal) {
-
-		ClusterRequest clusterRequest = new ClusterRequest();
-
-		clusterRequest.setPayload(methodHandler);
-		clusterRequest.setMulticast(true);
-		clusterRequest.setSkipLocal(skipLocal);
-		clusterRequest.setUuid(PortalUUIDUtil.generate());
-
-		return clusterRequest;
+		return new ClusterRequest(payload, skipLocal, true);
 	}
 
 	public static ClusterRequest createUnicastRequest(
-		MethodHandler methodHandler, String... targetClusterNodeIds) {
+		Serializable payload, String... targetClusterNodeIds) {
 
-		ClusterRequest clusterRequest = new ClusterRequest();
+		if ((targetClusterNodeIds == null) ||
+			(targetClusterNodeIds.length == 0)) {
 
-		clusterRequest.addTargetClusterNodeIds(targetClusterNodeIds);
-		clusterRequest.setPayload(methodHandler);
-		clusterRequest.setMulticast(false);
-		clusterRequest.setSkipLocal(false);
-		clusterRequest.setUuid(PortalUUIDUtil.generate());
-
-		return clusterRequest;
-	}
-
-	public void addTargetClusterNodeIds(String... targetClusterNodeIds) {
-		if (_targetClusterNodeIds == null) {
-			_targetClusterNodeIds = new HashSet<>(targetClusterNodeIds.length);
+			throw new NullPointerException("targetClusterNodeIds is null");
 		}
 
-		for (String targetClusterNodeId : targetClusterNodeIds) {
-			_targetClusterNodeIds.add(targetClusterNodeId);
-		}
+		return new ClusterRequest(payload, false, false, targetClusterNodeIds);
 	}
 
 	public Serializable getPayload() {
 		return _payload;
 	}
 
-	public Collection<String> getTargetClusterNodeIds() {
-		return _targetClusterNodeIds;
+	public Set<String> getTargetClusterNodeIds() {
+		return Collections.unmodifiableSet(_targetClusterNodeIds);
 	}
 
 	public String getUuid() {
@@ -113,25 +78,9 @@ public class ClusterRequest implements Serializable {
 		_fireAndForget = fireAndForget;
 	}
 
-	public void setMulticast(boolean multicast) {
-		_multicast = multicast;
-	}
-
-	public void setPayload(Serializable payload) {
-		_payload = payload;
-	}
-
-	public void setSkipLocal(boolean skipLocal) {
-		_skipLocal = skipLocal;
-	}
-
-	public void setUuid(String uuid) {
-		_uuid = uuid;
-	}
-
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{multicast=");
 		sb.append(_multicast);
@@ -139,6 +88,12 @@ public class ClusterRequest implements Serializable {
 		sb.append(_payload);
 		sb.append(", skipLocal=");
 		sb.append(_skipLocal);
+
+		if (!_multicast) {
+			sb.append(", _targetClusterNodeIds=");
+			sb.append(_targetClusterNodeIds);
+		}
+
 		sb.append(", uuid=");
 		sb.append(_uuid);
 		sb.append("}");
@@ -146,14 +101,30 @@ public class ClusterRequest implements Serializable {
 		return sb.toString();
 	}
 
-	private ClusterRequest() {
+	private ClusterRequest(
+		Serializable payload, boolean skipLocal, boolean multicast,
+		String... targetClusterNodeIds) {
+
+		if (payload == null) {
+			throw new NullPointerException("payload is null");
+		}
+
+		_payload = payload;
+		_skipLocal = skipLocal;
+		_multicast = multicast;
+
+		_uuid = PortalUUIDUtil.generate();
+
+		for (String targetClusterNodeId : targetClusterNodeIds) {
+			_targetClusterNodeIds.add(targetClusterNodeId);
+		}
 	}
 
 	private boolean _fireAndForget;
-	private boolean _multicast;
-	private Serializable _payload;
-	private boolean _skipLocal;
-	private Set<String> _targetClusterNodeIds;
-	private String _uuid;
+	private final boolean _multicast;
+	private final Serializable _payload;
+	private final boolean _skipLocal;
+	private final Set<String> _targetClusterNodeIds = new HashSet<>();
+	private final String _uuid;
 
 }

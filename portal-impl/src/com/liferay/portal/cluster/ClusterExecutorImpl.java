@@ -261,8 +261,8 @@ public class ClusterExecutorImpl
 
 			memberJoined(_localAddress, _localClusterNode);
 
-			ClusterRequest clusterRequest = ClusterRequest.createClusterRequest(
-				_localClusterNode);
+			ClusterRequest clusterRequest =
+				ClusterRequest.createMulticastRequest(_localClusterNode, true);
 
 			_controlJChannel.send(null, clusterRequest);
 		}
@@ -487,8 +487,8 @@ public class ClusterExecutorImpl
 	}
 
 	protected void sendNotifyRequest() {
-		ClusterRequest clusterRequest = ClusterRequest.createClusterRequest(
-			_localClusterNode);
+		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
+			_localClusterNode, true);
 
 		try {
 			_controlJChannel.send(null, clusterRequest);

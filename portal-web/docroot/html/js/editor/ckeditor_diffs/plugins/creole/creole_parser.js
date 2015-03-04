@@ -227,7 +227,7 @@ Parse.Simple.Creole = function(options) {
         tr: { tag: 'tr', capture: 2, regex: /(^|\n)(\|.*?)\|?[ \t]*(\n|$)/ },
         th: { tag: 'th', regex: /\|+=([^|]*)/, capture: 1 },
         td: { tag: 'td', capture: 1,
-            regex: '\\|+([^|~\\[{]*((~(.|(?=\\n)|$)|' +
+            regex: '\\|([^|~\\[{]*((~(.|(?=\\n)|$)|' +
                    '(?:\\[\\[' + rx.link + '(\\|' + rx.linkText + ')?\\]\\][^|~\\[{]*)*' +
                    (options && options.strict ? '' : '|' + rx.img) +
                    '|[\\[{])[^|~]*)*)' },

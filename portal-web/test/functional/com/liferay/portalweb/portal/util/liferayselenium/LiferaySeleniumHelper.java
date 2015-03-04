@@ -1019,7 +1019,7 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
-		// LRQA-13902
+		// LPS-53839
 
 		if (line.contains(
 				"Filter mapping with filter name Related Assets " +

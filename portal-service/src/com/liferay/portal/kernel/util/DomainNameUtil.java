@@ -14,11 +14,29 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Yuxing Wu
  */
-public interface Domain {
+public class DomainNameUtil {
 
-	public String getDomain(String host);
+	public static String getCookieDomain(String domain) {
+		return getDomainName().getCookieDomain(domain);
+	}
+
+	public static DomainName getDomainName() {
+		PortalRuntimePermission.checkGetBeanProperty(DomainNameUtil.class);
+
+		return _domainName;
+	}
+
+	public void setDomainName(DomainName domainName) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
+		_domainName = domainName;
+	}
+
+	private static DomainName _domainName;
 
 }

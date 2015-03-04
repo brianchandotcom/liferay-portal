@@ -17,49 +17,47 @@ package com.liferay.portal.util;
 import com.google.common.net.InternetDomainName;
 
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.Domain;
+import com.liferay.portal.kernel.util.DomainName;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Yuxing Wu
  */
-public class DomainImpl implements Domain {
+public class DomainNameImpl implements DomainName {
 
 	@Override
-	public String getDomain(String host) {
+	public String getCookieDomain(String domain) {
 
 		// See LEP-4602 and LEP-4645.
 
-		if (host == null) {
+		if (domain == null) {
 			return null;
 		}
 
 		// See LEP-5595.
 
-		if (Validator.isIPAddress(host)) {
-			return host;
+		if (Validator.isIPAddress(domain)) {
+			return domain;
 		}
 
-		InternetDomainName internetDomainName = InternetDomainName.from(host);
+		InternetDomainName internetDomainName = InternetDomainName.from(domain);
 
 		if (internetDomainName.isPublicSuffix()) {
 			return null;
 		}
 
 		if (internetDomainName.isTopPrivateDomain()) {
-			String domain = internetDomainName.toString();
-
-			return StringPool.PERIOD + domain;
+			return StringPool.PERIOD + internetDomainName.toString();
 		}
 
-		int x = host.indexOf(CharPool.PERIOD);
+		int x = domain.indexOf(CharPool.PERIOD);
 
 		if (x <= 0) {
 			return null;
 		}
 
-		return host.substring(x);
+		return domain.substring(x);
 	}
 
 }

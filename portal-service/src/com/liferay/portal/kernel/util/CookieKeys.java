@@ -163,7 +163,7 @@ public class CookieKeys {
 	}
 
 	public static String getDomain(String host) {
-		return DomainUtil.getDomain(host);
+		return DomainNameUtil.getCookieDomain(host);
 	}
 
 	public static boolean hasSessionId(HttpServletRequest request) {

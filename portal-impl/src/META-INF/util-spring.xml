@@ -365,9 +365,9 @@
 			<bean class="com.liferay.portal.util.DigesterImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.util.DomainUtil" class="com.liferay.portal.kernel.util.DomainUtil">
-		<property name="domain">
-			<bean class="com.liferay.portal.util.DomainImpl" />
+	<bean id="com.liferay.portal.kernel.util.DomainNameUtil" class="com.liferay.portal.kernel.util.DomainNameUtil">
+		<property name="domainName">
+			<bean class="com.liferay.portal.util.DomainNameImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" class="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil">

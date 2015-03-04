@@ -57,6 +57,7 @@ public class UserImporterUtilTest {
 		try {
 			User user = UserImporterUtil.importUser(
 				1, "test@liferay-test.com", "test");
+
 			Assert.assertTrue(user.getCompanyId() == 1);
 		}
 		catch (Exception e) {
@@ -73,6 +74,7 @@ public class UserImporterUtilTest {
 		try {
 			User user = UserImporterUtil.importUser(
 				2, 2, "test@liferay-test.com", "test");
+
 			Assert.assertTrue(user.getCompanyId() == 2);
 		}
 		catch (Exception e) {
@@ -88,6 +90,7 @@ public class UserImporterUtilTest {
 
 		try {
 			User user = UserImporterUtil.importUserByScreenName(3, "test");
+
 			Assert.assertTrue(user.getCompanyId() == 3);
 		}
 		catch (Exception e) {

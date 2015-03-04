@@ -86,7 +86,9 @@ public class TestUserImporter implements UserImporter {
 
 	private User _getTestUser(long companyId) {
 		User user = new UserImpl();
+
 		user.setCompanyId(companyId);
+
 		return user;
 	}
 

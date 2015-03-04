@@ -34,12 +34,12 @@ public class TestBBCodeTranslator implements BBCodeTranslator {
 
 	@Override
 	public String[] getEmoticonDescriptions() {
-		return new String [] {"1", "2", "3"};
+		return new String[] {"1", "2", "3"};
 	}
 
 	@Override
 	public String[] getEmoticonFiles() {
-		return new String [] {"1", "2"};
+		return new String[] {"1", "2"};
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class TestBBCodeTranslator implements BBCodeTranslator {
 
 	@Override
 	public String[] getEmoticonSymbols() {
-		return new String [] {"1", "2", "3", "4"};
+		return new String[] {"1", "2", "3", "4"};
 	}
 
 	@Override

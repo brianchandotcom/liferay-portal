@@ -896,6 +896,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			int status)
 		throws PortalException {
 
+		return getDiscussionMessageDisplay(
+			userId, groupId, className, classPK, status,
+			new MessageThreadComparator());
+	}
+
+	@Override
+	public MBMessageDisplay getDiscussionMessageDisplay(
+			long userId, long groupId, String className, long classPK,
+			int status, Comparator<MBMessage> comparator)
+		throws PortalException {
+
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		MBMessage message = null;
@@ -943,7 +954,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		return getMessageDisplay(
 			userId, message, status, MBThreadConstants.THREAD_VIEW_COMBINATION,
-			false);
+			false, comparator);
 	}
 
 	/**
@@ -1104,6 +1115,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			boolean includePrevAndNext)
 		throws PortalException {
 
+		return getMessageDisplay(
+			userId, message, status, threadView, includePrevAndNext,
+			new MessageThreadComparator());
+	}
+
+	@Override
+	public MBMessageDisplay getMessageDisplay(
+			long userId, MBMessage message, int status, String threadView,
+			boolean includePrevAndNext, Comparator<MBMessage> comparator)
+		throws PortalException {
+
 		MBCategory category = null;
 
 		if ((message.getCategoryId() !=
@@ -1149,7 +1171,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBThread nextThread = null;
 
 		if (message.isApproved() && includePrevAndNext) {
-			ThreadLastPostDateComparator comparator =
+			ThreadLastPostDateComparator threadLastPostDateComparator =
 				new ThreadLastPostDateComparator(false);
 
 			MBThread[] prevAndNextThreads = null;
@@ -1159,13 +1181,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					mbThreadPersistence.filterFindByG_C_NotS_PrevAndNext(
 						message.getThreadId(), message.getGroupId(),
 						message.getCategoryId(),
-						WorkflowConstants.STATUS_IN_TRASH, comparator);
+						WorkflowConstants.STATUS_IN_TRASH,
+						threadLastPostDateComparator);
 			}
 			else {
 				prevAndNextThreads =
 					mbThreadPersistence.filterFindByG_C_S_PrevAndNext(
 						message.getThreadId(), message.getGroupId(),
-						message.getCategoryId(), status, comparator);
+						message.getCategoryId(), status,
+						threadLastPostDateComparator);
 			}
 
 			previousThread = prevAndNextThreads[0];
@@ -1174,7 +1198,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		return new MBMessageDisplayImpl(
 			message, parentMessage, category, thread, previousThread,
-			nextThread, status, threadView, this);
+			nextThread, status, threadView, this, comparator);
 	}
 
 	@Override

@@ -146,7 +146,7 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 
 										<div class="lfr-discussion-body">
 
-											<liferay-ui:input-editor contents="" data="<%= commentsEditorDisplayContext.getTextEditorData() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
+											<liferay-ui:input-editor contents="" data="<%= commentsEditorDisplayContext.getMainEditorData() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
 
 											<aui:input name="postReplyBody0" type="hidden" />
 
@@ -205,6 +205,7 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 
 							message = (MBMessage)messages.get(j);
 
+							request.setAttribute(WebKeys.COMMENTS_EDITOR_DISPLAY_CONTEXT, commentsEditorDisplayContext);
 							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
 							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, message);
 

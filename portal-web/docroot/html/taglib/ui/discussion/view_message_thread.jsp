@@ -25,6 +25,7 @@ long permissionClassPK = GetterUtil.getLong((String)request.getAttribute("lifera
 boolean ratingsEnabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:ratingsEnabled"));
 long userId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:userId"));
 
+CommentsEditorDisplayContext commentsEditorDisplayContext = (CommentsEditorDisplayContext)request.getAttribute(WebKeys.COMMENTS_EDITOR_DISPLAY_CONTEXT);
 MBTreeWalker treeWalker = (MBTreeWalker)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER);
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE);
 
@@ -149,27 +150,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					<%= msgBody %>
 				</div>
 
-				<%
-				Map<String, Object> data = new HashMap<String, Object>();
-
-				JSONObject editorConfigJSONObject = JSONFactoryUtil.createJSONObject();
-
-				editorConfigJSONObject.put("allowedContent", "p strong em u");
-				editorConfigJSONObject.put("toolbars", JSONFactoryUtil.createJSONObject());
-
-				data.put("editorConfig", editorConfigJSONObject);
-
-				JSONObject editorOptionsJSONObject = JSONFactoryUtil.createJSONObject();
-
-				editorOptionsJSONObject.put("showSource", Boolean.FALSE);
-				editorOptionsJSONObject.put("textMode", Boolean.FALSE);
-
-				data.put("editorOptions", editorOptionsJSONObject);
-				%>
-
 				<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
 					<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
-						<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= message.getBody() %>" data="<%= data %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "editReplyBody" + index %>' />
+						<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= message.getBody() %>" data="<%= commentsEditorDisplayContext.getReplyEditorData() %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "editReplyBody" + index %>' />
 
 						<aui:input name='<%= "editReplyBody" + index %>' type="hidden" value="<%= message.getBody() %>" />
 
@@ -297,7 +280,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				</div>
 
 				<div class="lfr-discussion-body">
-					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" data="<%= data %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody" + index %>' onChangeMethod='<%= randomNamespace + index + "OnChange" %>' placeholder="type-your-comment-here" />
+					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" data="<%= commentsEditorDisplayContext.getReplyEditorData() %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody" + index %>' onChangeMethod='<%= randomNamespace + index + "OnChange" %>' placeholder="type-your-comment-here" />
 
 					<aui:input name='<%= "postReplyBody" + index %>' type="hidden" />
 

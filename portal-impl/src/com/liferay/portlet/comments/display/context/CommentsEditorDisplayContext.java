@@ -27,30 +27,52 @@ import java.util.Map;
 public class CommentsEditorDisplayContext {
 
 	public CommentsEditorDisplayContext() {
-		_populateTextEditorData();
+		_populateMainEditorData();
+		_populateReplyEditorData();
 	}
 
-	public Map<String, Object> getTextEditorData() {
-		return _textEditorData;
+	public Map<String, Object> getMainEditorData() {
+		return _mainEditorData;
 	}
 
-	private void _populateTextEditorData() {
+	public Map<String, Object> getReplyEditorData() {
+		return _replyEditorData;
+	}
+
+	private void _populateMainEditorData() {
 		JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
 
 		editorConfig.put(
 			"allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
 		editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
 
-		_textEditorData.put("editorConfig", editorConfig);
+		_mainEditorData.put("editorConfig", editorConfig);
 
 		JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
 
 		editorOptions.put("textMode", Boolean.FALSE);
 		editorOptions.put("showSource", Boolean.FALSE);
 
-		_textEditorData.put("editorOptions", editorOptions);
+		_mainEditorData.put("editorOptions", editorOptions);
 	}
 
-	private final Map<String, Object> _textEditorData = new HashMap<>();
+	private void _populateReplyEditorData() {
+		JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
+
+		editorConfig.put("allowedContent", "p strong em u");
+		editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
+
+		_replyEditorData.put("editorConfig", editorConfig);
+
+		JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
+
+		editorOptions.put("textMode", Boolean.FALSE);
+		editorOptions.put("showSource", Boolean.FALSE);
+
+		_replyEditorData.put("editorOptions", editorOptions);
+	}
+
+	private final Map<String, Object> _mainEditorData = new HashMap<>();
+	private final Map<String, Object> _replyEditorData = new HashMap<>();
 
 }

@@ -190,7 +190,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			throw new PrincipalException();
 		}
 
-		if (portlet.isUndeployedPortlet()) {
+		if (portlet.isSystem() || portlet.isUndeployedPortlet()) {
 			return;
 		}
 

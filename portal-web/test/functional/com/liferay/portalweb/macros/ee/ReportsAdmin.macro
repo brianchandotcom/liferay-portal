@@ -18,6 +18,14 @@
 		<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT" value1="Add Report" />
 
 		<execute function="Select" locator1="CPReportsadminAddreportentry#REPORT_FORMAT_SELECT" value1="${reportFormat}" />
+
+		<if>
+			<isset var="reportName" />
+			<then>
+				<execute function="Type" locator1="CPReportsadminAddreportentry#REPORT_NAME_FIELD" value1="${reportName}" />
+			</then>
+		</if>
+
 		<execute function="Type" locator1="CPReportsadminAddreportentry#EMAIL_NOTIFICATIONS_FIELD" value1="${emailNotificationsAddress}" />
 		<execute function="Type" locator1="CPReportsadminAddreportentry#EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
 		<execute function="AssertClick" locator1="CPReportsadminAddreportentry#GENERATE_BUTTON" value1="Generate" />

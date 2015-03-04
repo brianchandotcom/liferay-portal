@@ -35,6 +35,8 @@ public interface DDM {
 
 	public DDMDisplay getDDMDisplay(long classNameId) throws PortalException;
 
+	public DDMPermissionHandler getDDMPermissionHandler(long classNameId);
+
 	public DDMFormLayout getDefaultDDMFormLayout(DDMForm ddmForm);
 
 	public Serializable getDisplayFieldValue(

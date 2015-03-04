@@ -26,9 +26,6 @@ import com.liferay.portal.util.PortletKeys;
  */
 public class DDMPermission {
 
-	public static final String RESOURCE_NAME =
-		"com.liferay.portlet.dynamicdatamapping";
-
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String name,
 			String actionId)
@@ -47,13 +44,12 @@ public class DDMPermission {
 
 		if (actionId.equals(ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
 			hasPermission = StagingPermissionUtil.hasPermission(
-				permissionChecker, groupId, RESOURCE_NAME, groupId,
+				permissionChecker, groupId, name, groupId,
 				PortletKeys.PORTLET_DISPLAY_TEMPLATES, actionId);
 		}
 		else {
 			hasPermission = StagingPermissionUtil.hasPermission(
-				permissionChecker, groupId, RESOURCE_NAME, groupId, name,
-				actionId);
+				permissionChecker, groupId, name, groupId, name, actionId);
 		}
 
 		if (hasPermission != null) {

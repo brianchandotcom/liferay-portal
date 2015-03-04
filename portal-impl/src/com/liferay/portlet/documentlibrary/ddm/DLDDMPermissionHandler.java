@@ -14,21 +14,17 @@
 
 package com.liferay.portlet.documentlibrary.ddm;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
-import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
+import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
 
-import java.util.Locale;
-
 /**
- * @author Eduardo Garcia
+ * @author Marcellus Tavares
  */
-public class DLDDMDisplay extends BaseDDMDisplay {
+public class DLDDMPermissionHandler implements DDMPermissionHandler {
 
 	public static final long[] RESOURCE_CLASS_NAME_IDS = new long[] {
 		PortalUtil.getClassNameId(DLFileEntryMetadata.class),
@@ -36,31 +32,23 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 	};
 
 	@Override
-	public DDMPermissionHandler getDDMPermissionHandler() {
-		return _ddmPermissionHandler;
+	public String getAddStructureActionId() {
+		return ActionKeys.ADD_STRUCTURE;
 	}
 
 	@Override
-	public String getPortletId() {
-		return PortletKeys.DOCUMENT_LIBRARY;
+	public String getAddTemplateActionId() {
+		return ActionKeys.ADD_TEMPLATE;
 	}
 
 	@Override
-	public String getStorageType() {
-		return StorageType.JSON.toString();
+	public long[] getResourceClassNameIds() {
+		return RESOURCE_CLASS_NAME_IDS;
 	}
 
 	@Override
-	public String getStructureName(Locale locale) {
-		return LanguageUtil.get(locale, "metadata-set");
+	public String getResourceName(long classNameId) {
+		return DLPermission.RESOURCE_NAME;
 	}
-
-	@Override
-	public String getStructureType() {
-		return DLFileEntryMetadata.class.getName();
-	}
-
-	private final DDMPermissionHandler _ddmPermissionHandler =
-		new DLDDMPermissionHandler();
 
 }

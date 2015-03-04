@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.authenticator.ldap;
 
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.PasswordExpiredException;
@@ -23,20 +23,21 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.AuthException;
+import com.liferay.portal.security.auth.Authenticator;
 import com.liferay.portal.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.security.ldap.LDAPUserImporterUtil;
 import com.liferay.portal.security.ldap.PortalLDAPUtil;
 import com.liferay.portal.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.admin.util.OmniadminUtil;
 
 import java.util.HashMap;
 import java.util.Hashtable;

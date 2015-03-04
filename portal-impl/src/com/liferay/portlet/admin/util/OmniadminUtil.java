@@ -14,15 +14,10 @@
 
 package com.liferay.portlet.admin.util;
 
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * Provides utility methods for determining if a user is a universal
@@ -41,58 +36,27 @@ import com.liferay.portal.util.PropsValues;
 public class OmniadminUtil {
 
 	public static boolean isOmniadmin(long userId) {
-		try {
-			User user = UserLocalServiceUtil.fetchUser(userId);
-
-			if (user == null) {
-				return false;
-			}
-
-			return isOmniadmin(user);
-		}
-		catch (SystemException se) {
-			return false;
-		}
+		return getInstance().isOmniadmin(userId);
 	}
 
 	public static boolean isOmniadmin(User user) {
-		long userId = user.getUserId();
-
-		if (userId <= 0) {
-			return false;
-		}
-
-		try {
-			if (PropsValues.OMNIADMIN_USERS.length > 0) {
-				for (int i = 0; i < PropsValues.OMNIADMIN_USERS.length; i++) {
-					if (PropsValues.OMNIADMIN_USERS[i] == userId) {
-						if (user.getCompanyId() !=
-								PortalInstances.getDefaultCompanyId()) {
-
-							return false;
-						}
-
-						return true;
-					}
-				}
-
-				return false;
-			}
-
-			if (user.getCompanyId() != PortalInstances.getDefaultCompanyId()) {
-				return false;
-			}
-
-			return RoleLocalServiceUtil.hasUserRole(
-				userId, user.getCompanyId(), RoleConstants.ADMINISTRATOR, true);
-		}
-		catch (Exception e) {
-			_log.error(e);
-
-			return false;
-		}
+		return getInstance().isOmniadmin(user);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(OmniadminUtil.class);
+	private static Omniadmin getInstance() {
+		return _instance._serviceTracker.getService();
+	}
+
+	private OmniadminUtil() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(Omniadmin.class);
+
+		_serviceTracker.open();
+	}
+
+	private static final OmniadminUtil _instance = new OmniadminUtil();
+
+	private final ServiceTracker<?, Omniadmin> _serviceTracker;
 
 }

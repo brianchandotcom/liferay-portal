@@ -17,40 +17,20 @@
 <%@ include file="init.jsp" %>
 
 <%
-String portletId = (String)request.getAttribute("productivity-center-ui:panel-content:portletId");
-
-Portlet portlet = null;
-
-if (Validator.isNotNull(portletId)) {
-	portlet = PortletLocalServiceUtil.getPortletById(themeDisplay.getCompanyId(), portletId);
-}
-
-if (portlet != null) {
-	String layoutTemplateId = "max";
-
-	if (themeDisplay.isStatePopUp()) {
-		layoutTemplateId = "pop_up";
-	}
-
-	String velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + layoutTemplateId;
-
-	String content = LayoutTemplateLocalServiceUtil.getContent(layoutTemplateId, true, theme.getThemeId());
-
-	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(content)) {
-		StringBundler sb = RuntimePageUtil.getProcessedTemplate(request, response, portletId, new StringTemplateResource(velocityTemplateId, content));
-
-		if (sb != null) {
-			sb.writeTo(pageContext.getOut());
-		}
-	}
-}
-else {
+PanelAppContentHelper panelAppContentHelper = new PanelAppContentHelper(request, response);
 %>
 
-<div class="portlet-msg-info">
-	<liferay-ui:message key="please-select-a-tool-from-the-left-menu" />
-</div>
+<c:choose>
+	<c:when test="<%= panelAppContentHelper.isValidPortletSelected() %>">
 
-<%
-}
-%>
+		<%
+		panelAppContentHelper.writeContent(pageContext.getOut());
+		%>
+
+	</c:when>
+	<c:otherwise>
+		<div class="portlet-msg-info">
+			<liferay-ui:message key="please-select-a-tool-from-the-left-menu" />
+		</div>
+	</c:otherwise>
+</c:choose>

@@ -14,23 +14,10 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.kernel.util.Validator" %>
-<%@ page import="com.liferay.portal.model.LayoutTemplateConstants" %>
-<%@ page import="com.liferay.portal.service.LayoutTemplateLocalServiceUtil" %>
-<%@ page import="javax.portlet.PortletURL" %>
-<%@ page import="com.liferay.portlet.PortletURLImpl" %>
-<%@ page import="javax.portlet.PortletRequest" %>
-<%@ page import="javax.portlet.PortletMode" %>
-<%@ page import="javax.portlet.WindowState" %>
-<%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
-<%@ page import="com.liferay.portal.kernel.template.StringTemplateResource" %>
-<%@ page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.StringBundler" %>
-<%@ page import="com.liferay.portal.service.PortletLocalServiceUtil" %>
-<%@ page import="com.liferay.portal.model.Portlet" %>
-<%@ page import="com.liferay.portlet.PortletURLFactoryUtil" %>
+<%@ page import="com.liferay.productivity.center.display.context.logic.PanelAppContentHelper" %>
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <liferay-theme:defineObjects />

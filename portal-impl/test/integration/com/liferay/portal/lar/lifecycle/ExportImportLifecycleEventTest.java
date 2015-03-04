@@ -82,6 +82,9 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 			new MockExportImportLifecycleListener());
 
 		_firedExportImportLifecycleEventsMap = new HashMap<>();
+
+		_parameterMap =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap();
 	}
 
 	@Test
@@ -90,9 +93,7 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 		try {
 			layoutExporter.exportLayoutsAsFile(
-				0, false, new long[0],
-				ExportImportConfigurationParameterMapFactory.
-					buildParameterMap(), new Date(), new Date());
+				0, false, new long[0], _parameterMap, new Date(), new Date());
 		}
 		catch (Throwable t) {
 			if (_log.isInfoEnabled()) {
@@ -111,9 +112,7 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 		try {
 			layoutImporter.importLayouts(
-				TestPropsValues.getUserId(), 0, false,
-				ExportImportConfigurationParameterMapFactory.
-					buildParameterMap(), null);
+				TestPropsValues.getUserId(), 0, false, _parameterMap, null);
 		}
 		catch (Throwable t) {
 			if (_log.isInfoEnabled()) {
@@ -131,9 +130,8 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 		try {
 			StagingUtil.publishLayouts(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.nextInt(), false, new long[0],
-				ExportImportConfigurationParameterMapFactory.
-					buildParameterMap(), new Date(), new Date());
+				RandomTestUtil.nextInt(), false, new long[0], _parameterMap,
+				new Date(), new Date());
 		}
 		catch (Throwable t) {
 			if (_log.isInfoEnabled()) {
@@ -154,8 +152,7 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 		try {
 			portletExporter.exportPortletInfoAsFile(
 				RandomTestUtil.nextLong(), _group.getGroupId(),
-				StringPool.BLANK, ExportImportConfigurationParameterMapFactory.
-					buildParameterMap(), new Date(), new Date());
+				StringPool.BLANK, _parameterMap, new Date(), new Date());
 		}
 		catch (Throwable t) {
 			if (_log.isInfoEnabled()) {
@@ -175,8 +172,7 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 		try {
 			portletImporter.importPortletInfo(
 				TestPropsValues.getUserId(), 0, 0, StringPool.BLANK,
-				ExportImportConfigurationParameterMapFactory.
-					buildParameterMap(), null);
+				_parameterMap, null);
 		}
 		catch (Throwable t) {
 			if (_log.isInfoEnabled()) {
@@ -247,8 +243,7 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_liveGroup.getGroupId(), false, (long[])null,
-			ExportImportConfigurationParameterMapFactory.buildParameterMap(),
+			_liveGroup.getGroupId(), false, (long[])null, _parameterMap,
 			startDate, endDate);
 
 		Assert.assertTrue(
@@ -312,6 +307,8 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 	@DeleteAfterTestRun
 	private Group _liveGroup;
+
+	private Map<String, String[]> _parameterMap;
 
 	private class MockExportImportLifecycleListener
 		implements ExportImportLifecycleListener {

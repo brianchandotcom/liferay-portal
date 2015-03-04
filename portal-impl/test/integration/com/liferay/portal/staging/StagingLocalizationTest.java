@@ -42,6 +42,7 @@ import java.io.File;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -115,9 +116,11 @@ public class StagingLocalizationTest {
 			_sourceGroup.getGroupId(), "Title", "content",
 			LocaleUtil.fromLanguageId(defaultContentLanguageId));
 
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap();
+
 		File file = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			_sourceGroup.getGroupId(), false, null,
-			ExportImportConfigurationParameterMapFactory.buildParameterMap(),
+			_sourceGroup.getGroupId(), false, null, parameterMap,
 			new Date(System.currentTimeMillis() - Time.MINUTE), new Date());
 
 		CompanyTestUtil.resetCompanyLocales(
@@ -125,8 +128,7 @@ public class StagingLocalizationTest {
 
 		LayoutLocalServiceUtil.importLayouts(
 			TestPropsValues.getUserId(), _targetGroup.getGroupId(), false,
-			ExportImportConfigurationParameterMapFactory.buildParameterMap(),
-			file);
+			parameterMap, file);
 
 		JournalArticleResource articleResource =
 			JournalArticleResourceLocalServiceUtil.

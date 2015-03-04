@@ -59,6 +59,8 @@ import com.sun.syndication.feed.synd.SyndLinkImpl;
 import com.sun.syndication.io.FeedException;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -116,6 +118,30 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	@Override
 	public MBMessage addMessage(
 			long groupId, long categoryId, String subject, String body,
+			String fileName, File file, ServiceContext serviceContext)
+		throws FileNotFoundException, PortalException {
+
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			new ArrayList<>(1);
+
+		InputStream inputStream = new FileInputStream(file);
+
+		ObjectValuePair<String, InputStream> inputStreamOVP =
+			new ObjectValuePair<>(fileName, inputStream);
+
+		inputStreamOVPs.add(inputStreamOVP);
+
+		MBMessage message = addMessage(
+			groupId, categoryId, subject, body,
+			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false,
+			MBThreadConstants.PRIORITY_NOT_GIVEN, false, serviceContext);
+
+		return message;
+	}
+
+	@Override
+	public MBMessage addMessage(
+			long groupId, long categoryId, String subject, String body,
 			String format,
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
 			boolean anonymous, double priority, boolean allowPingbacks,
@@ -162,25 +188,6 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			category.getGroupId(), categoryId, subject, body,
 			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
 			false, serviceContext);
-	}
-
-	@Override
-	public MBMessage addMessage(
-			long groupId, long categoryId, String subject, String body,
-			String fileName, File file, ServiceContext serviceContext)
-		throws PortalException {
-
-		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			Collections.emptyList();
-
-		MBMessage message = addMessage(
-			groupId, categoryId, subject, body,
-			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
-			false, serviceContext);
-
-		addMessageAttachment(message.getMessageId(), fileName, file);
-
-		return message;
 	}
 
 	@Override
@@ -235,25 +242,6 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			parentMessage.getCategoryId(), parentMessage.getThreadId(),
 			parentMessageId, subject, body, format, inputStreamOVPs, anonymous,
 			priority, allowPingbacks, serviceContext);
-	}
-
-	@Override
-	public void addMessageAttachment(long messageId, String fileName, File file)
-		throws PortalException {
-
-		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
-
-		if (lockLocalService.isLocked(
-				MBThread.class.getName(), message.getThreadId())) {
-
-			throw new LockedThreadException();
-		}
-
-		MBCategoryPermission.check(
-			getPermissionChecker(), message.getGroupId(),
-			message.getCategoryId(), ActionKeys.ADD_FILE);
-
-		mbMessageLocalService.addMessageAttachment(messageId, fileName, file);
 	}
 
 	@Override

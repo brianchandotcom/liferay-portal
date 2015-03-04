@@ -30,7 +30,7 @@ import ${packagePath}.service.persistence.${entity.name}Util;
 
 import ${beanLocatorUtil};
 
-import com.liferay.arquillian.bridge.junit.Arquillian;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

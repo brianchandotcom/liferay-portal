@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.arquillian.bridge.junit;
+package com.liferay.arquillian.extension.junit.bridge.junit;
 
 import java.lang.annotation.Annotation;
 

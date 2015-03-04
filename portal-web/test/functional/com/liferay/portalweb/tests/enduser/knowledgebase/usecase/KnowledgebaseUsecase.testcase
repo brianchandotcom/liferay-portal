@@ -146,13 +146,11 @@
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ADD_BUTTON" value1="Add" />
-		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ADD_ARTICLE_BUTTON" value1="Add Article" />
-
-		<execute function="Type" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD" value1="KB Admin Article" />
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" value1="This is an article created from the KB Admin." />
-		<execute function="Select" locator1="CPKnowledgebaseadminAddarticle#SECTIONS_SELECT" value1="Portlets" />
-		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#PUBLISH_BUTTON" value1="Publish" />
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="This is an article created from the KB Admin." />
+			<var name="kbArticleSection" value="Portlets" />
+			<var name="kbArticleTitle" value="KB Admin Article" />
+		</execute>
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
@@ -1189,7 +1187,7 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#add">
+		<execute macro="KBArticleSuggestion#addPG">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
 		</execute>
@@ -1392,7 +1390,7 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#add">
+		<execute macro="KBArticleSuggestion#addPG">
 			<var name="kbArticleTitle" value="${kbArticleTitle}" />
 			<var name="kbSuggestionBody" value="${kbSuggestionBody}" />
 		</execute>

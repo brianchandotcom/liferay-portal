@@ -265,6 +265,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUGGESTION_CONTENT_DUPLICATE</td>
+	<td>xpath=(//div[@class='kb-article-comment']//div[contains(.,'${kbSuggestionBody}')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUGGESTION_SUBMIT_BUTTON</td>
 	<td>//button[contains(.,'Submit')]</td>
 	<td></td>

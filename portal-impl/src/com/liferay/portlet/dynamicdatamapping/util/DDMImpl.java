@@ -113,8 +113,12 @@ public class DDMImpl implements DDM {
 		List<DDMDisplay> ddmDisplays = DDMDisplayRegistryUtil.getDDMDisplays();
 
 		for (DDMDisplay ddmDisplay : ddmDisplays) {
+			DDMPermissionHandler ddmPermissionHandler =
+				ddmDisplay.getDDMPermissionHandler();
+
 			if (ArrayUtil.contains(
-					ddmDisplay.getResourceClassNameIds(), classNameId)) {
+					ddmPermissionHandler.getResourceClassNameIds(),
+					classNameId)) {
 
 				return ddmDisplay;
 			}
@@ -123,6 +127,13 @@ public class DDMImpl implements DDM {
 		throw new IllegalArgumentException(
 			"No DDM display registered for " +
 				PortalUtil.getClassName(classNameId));
+	}
+
+	@Override
+	public DDMPermissionHandler getDDMPermissionHandler(long classNameId) {
+		DDMDisplay ddmDisplay = getDDMDisplay(classNameId);
+
+		return ddmDisplay.getDDMPermissionHandler();
 	}
 
 	@Override

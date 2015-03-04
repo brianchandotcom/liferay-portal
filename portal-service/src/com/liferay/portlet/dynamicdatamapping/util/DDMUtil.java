@@ -46,6 +46,12 @@ public class DDMUtil {
 		return getDDM().getDDMDisplay(classNameId);
 	}
 
+	public static DDMPermissionHandler getDDMPermissionHandler(long classNameId)
+		throws PortalException {
+
+		return getDDM().getDDMPermissionHandler(classNameId);
+	}
+
 	public static DDMFormLayout getDefaultDDMFormLayout(DDMForm ddmForm) {
 		return getDDM().getDefaultDDMFormLayout(ddmForm);
 	}

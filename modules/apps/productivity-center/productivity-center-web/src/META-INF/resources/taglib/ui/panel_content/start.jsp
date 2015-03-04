@@ -26,41 +26,22 @@ if (Validator.isNotNull(portletId)) {
 }
 
 if (portlet != null) {
-	String velocityTemplateId = null;
-
-	String content = null;
+	String layoutTemplateId = "max";
 
 	if (themeDisplay.isStatePopUp()) {
-		velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "pop_up";
-
-		content = LayoutTemplateLocalServiceUtil.getContent("pop_up", true, theme.getThemeId());
-	}
-	else if (layoutTypePortlet.hasStateMax()) {
-		PortletURL portletURL = PortletURLFactoryUtil.create(request, portletId, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-		portletURL.setPortletMode(PortletMode.VIEW);
-		portletURL.setWindowState(WindowState.MAXIMIZED);
-
-		portletId = StringUtil.split(layoutTypePortlet.getStateMax())[0];
-
-		velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "max";
-
-		content = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
-	}
-	else {
-		velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "max";
-
-		content = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
+		layoutTemplateId = "pop_up";
 	}
 
-	StringBundler sb = null;
+	String velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + layoutTemplateId;
+
+	String content = LayoutTemplateLocalServiceUtil.getContent(layoutTemplateId, true, theme.getThemeId());
 
 	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(content)) {
-		sb = RuntimePageUtil.getProcessedTemplate(request, response, portletId, new StringTemplateResource(velocityTemplateId, content));
-	}
+		StringBundler sb = RuntimePageUtil.getProcessedTemplate(request, response, portletId, new StringTemplateResource(velocityTemplateId, content));
 
-	if (sb != null) {
-		sb.writeTo(pageContext.getOut());
+		if (sb != null) {
+			sb.writeTo(pageContext.getOut());
+		}
 	}
 }
 else {

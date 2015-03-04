@@ -113,15 +113,7 @@ long[] selectedLayoutIds = null;
 String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
 
 if (openNodes == null) {
-	List<Layout> stagingGroupLayouts = LayoutLocalServiceUtil.getLayouts(stagingGroupId, privateLayout);
-
-	selectedLayoutIds = new long[stagingGroupLayouts.size()];
-
-	for (int i = 0; i < stagingGroupLayouts.size(); i++) {
-		Layout stagingGroupLayout = stagingGroupLayouts.get(i);
-
-		selectedLayoutIds[i] = stagingGroupLayout.getLayoutId();
-	}
+	selectedLayoutIds = ExportImportHelperUtil.getAllLayoutIds(stagingGroupId, privateLayout);
 }
 else {
 	selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));

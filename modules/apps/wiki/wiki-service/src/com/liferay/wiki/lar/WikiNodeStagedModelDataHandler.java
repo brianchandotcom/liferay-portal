@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -31,9 +32,12 @@ import com.liferay.wiki.service.settings.WikiServiceSettingsProvider;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Zsolt Berentey
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class WikiNodeStagedModelDataHandler
 	extends BaseStagedModelDataHandler<WikiNode> {
 

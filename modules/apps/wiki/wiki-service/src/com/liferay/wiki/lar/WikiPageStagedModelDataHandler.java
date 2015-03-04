@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.log.Log;
@@ -44,9 +45,12 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Zsolt Berentey
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class WikiPageStagedModelDataHandler
 	extends BaseStagedModelDataHandler<WikiPage> {
 

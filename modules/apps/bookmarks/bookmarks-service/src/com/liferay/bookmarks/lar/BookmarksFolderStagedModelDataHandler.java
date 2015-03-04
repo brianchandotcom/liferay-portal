@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -33,10 +34,13 @@ import com.liferay.portal.service.ServiceContext;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mate Thurzo
  * @author Daniel Kocsis
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class BookmarksFolderStagedModelDataHandler
 	extends BaseStagedModelDataHandler<BookmarksFolder> {
 

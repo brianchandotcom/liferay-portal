@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.RejectedExecutionException;
 
 import org.jgroups.Message;
 import org.jgroups.ReceiverAdapter;
@@ -50,18 +51,15 @@ public abstract class BaseReceiver extends ReceiverAdapter {
 		try {
 			_countDownLatch.await();
 
-			if (_executorService.isShutdown()) {
-				_log.error("Executor server is already closed");
-
-				return;
-			}
-
-			_executorService.execute(new MessageCallBackJob(this, message));
+			_executorService.execute(new MessageCallBackJob(message));
 		}
 		catch (InterruptedException ie) {
 			_log.error(
 				"Latch opened prematurely by interruption. Dependence may " +
 					"not be ready.");
+		}
+		catch (RejectedExecutionException ree) {
+			_log.error("Unable to handle received message " + message, ree);
 		}
 	}
 
@@ -77,25 +75,24 @@ public abstract class BaseReceiver extends ReceiverAdapter {
 			return;
 		}
 
+		View oldView = _view;
+
 		try {
 			_countDownLatch.await();
 
-			if (_executorService.isShutdown()) {
-				_log.error("Executor server is already closed");
-
-				return;
-			}
-
-			View oldView = _view;
-
 			_view = view;
 
-			_executorService.execute(new ViewCallBackJob(this, oldView, view));
+			_executorService.execute(new ViewCallBackJob(oldView, view));
 		}
 		catch (InterruptedException ie) {
 			_log.error(
 				"Latch opened prematurely by interruption. Dependence may " +
 					"not be ready.");
+		}
+		catch (RejectedExecutionException ree) {
+			_log.error(
+				"Unable to handle view update from " + oldView + " to " + view,
+				ree);
 		}
 	}
 
@@ -112,37 +109,31 @@ public abstract class BaseReceiver extends ReceiverAdapter {
 
 	private class MessageCallBackJob implements Runnable {
 
-		public MessageCallBackJob(BaseReceiver baseReceiver, Message message) {
-			_baseReceiver = baseReceiver;
+		@Override
+		public void run() {
+			doReceive(_message);
+		}
+
+		private MessageCallBackJob(Message message) {
 			_message = message;
 		}
 
-		@Override
-		public void run() {
-			_baseReceiver.doReceive(_message);
-		}
-
-		private final BaseReceiver _baseReceiver;
 		private final Message _message;
 
 	}
 
 	private class ViewCallBackJob implements Runnable {
 
-		public ViewCallBackJob(
-			BaseReceiver baseReceiver, View oldView, View newView) {
+		@Override
+		public void run() {
+			doViewAccepted(_oldView, _newView);
+		}
 
-			_baseReceiver = baseReceiver;
+		private ViewCallBackJob(View oldView, View newView) {
 			_oldView = oldView;
 			_newView = newView;
 		}
 
-		@Override
-		public void run() {
-			_baseReceiver.doViewAccepted(_oldView, _newView);
-		}
-
-		private final BaseReceiver _baseReceiver;
 		private final View _newView;
 		private final View _oldView;
 

@@ -240,6 +240,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['alloy-editor', 'aui-base', 'liferay-portlet-base']
+		requires: ['alloy-editor', 'liferay-portlet-base']
 	}
 );

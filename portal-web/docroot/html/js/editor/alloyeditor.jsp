@@ -158,7 +158,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 <%
 String modules = "liferay-alloy-editor";
 
-if (Validator.isNotNull(data) &&  Validator.isNotNull(data.get("uploadURL"))) {
+if (Validator.isNotNull(data) && Validator.isNotNull(data.get("uploadURL"))) {
 	modules += ",liferay-editor-image-uploader";
 }
 
@@ -168,6 +168,7 @@ if (showSource) {
 %>
 
 <aui:script use="<%= modules %>">
+
 	<%
 	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
 
@@ -224,7 +225,7 @@ if (showSource) {
 
 		var plugins = [];
 
-		<c:if test='<%= Validator.isNotNull(data) &&  Validator.isNotNull(data.get("uploadURL")) %>'>
+		<c:if test='<%= Validator.isNotNull(data) && Validator.isNotNull(data.get("uploadURL")) %>'>
 			plugins.push(
 				{
 					cfg: {
@@ -236,29 +237,19 @@ if (showSource) {
 		</c:if>
 
 		<c:if test="<%= showSource %>">
-			plugins.push(
-				{
-					cfg: {
-						editorFullscreen: '#<%= name %>Fullscreen',
-						editorSource: '#<%= name %>Source',
-						editorSwitch: '#<%= name %>Switch',
-						editorWrapper: '#<%= name %>Wrapper'
-					},
-					fn: A.Plugin.LiferayAlloyEditorSource
-				}
-			);
+			plugins.push(A.Plugin.LiferayAlloyEditorSource);
 		</c:if>
 
 		alloyEditor = new A.LiferayAlloyEditor(
 			{
-				editorConfig:   config,
-				editorOptions:  <%= editorOptions %>,
-				initMethod:     window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'],
-				namespace:      '<%= name %>',
-				onBlurMethod:   window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'],
+				editorConfig: config,
+				editorOptions: <%= editorOptions %>,
+				initMethod: window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'],
+				namespace: '<%= name %>',
+				onBlurMethod: window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'],
 				onChangeMethod: window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'],
-				onFocusMethod:  window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'],
-				onInitMethod:   window['<%= HtmlUtil.escapeJS(onInitMethod) %>'],
+				onFocusMethod: window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'],
+				onInitMethod: window['<%= HtmlUtil.escapeJS(onInitMethod) %>'],
 				plugins: plugins
 			}
 		).render();

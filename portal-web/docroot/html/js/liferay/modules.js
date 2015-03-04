@@ -48,7 +48,6 @@
 						path: 'alloyeditor.js',
 						requires: [
 							'alloy-editor',
-							'aui-base',
 							'liferay-portlet-base'
 						]
 					},

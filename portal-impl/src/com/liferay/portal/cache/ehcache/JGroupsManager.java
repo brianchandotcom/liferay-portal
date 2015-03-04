@@ -15,6 +15,7 @@
 package com.liferay.portal.cache.ehcache;
 
 import com.liferay.portal.cluster.BaseReceiver;
+import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -24,6 +25,7 @@ import java.rmi.RemoteException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheException;
@@ -48,18 +50,23 @@ import org.jgroups.View;
  */
 public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 
+	public static final String JGROUPS_MANAGER_CALLBACK_THREAD_POOL =
+		"JGROUPS_MANAGER_CALLBACK_THREAD_POOL";
+
 	public JGroupsManager(
 		CacheManager cacheManager, String clusterName,
 		String channelProperties) {
 
 		_cacheManager = cacheManager;
+		_executorService = PortalExecutorManagerUtil.getPortalExecutor(
+			JGROUPS_MANAGER_CALLBACK_THREAD_POOL);
 
 		JChannel jChannel = null;
 
 		try {
 			jChannel = new JChannel(channelProperties);
 
-			jChannel.setReceiver(new EhcacheJGroupsReceiver());
+			jChannel.setReceiver(new EhcacheJGroupsReceiver(_executorService));
 
 			jChannel.connect(clusterName);
 
@@ -85,8 +92,12 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 	@Override
 	public void dispose() throws CacheException {
 		if (_jChannel != null) {
+			_jChannel.setReceiver(null);
+
 			_jChannel.close();
 		}
+
+		_executorService.shutdownNow();
 	}
 
 	public Address getBusLocalAddress() {
@@ -279,9 +290,14 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 	private static final Log _log = LogFactoryUtil.getLog(JGroupsManager.class);
 
 	private final CacheManager _cacheManager;
+	private final ExecutorService _executorService;
 	private final JChannel _jChannel;
 
 	private class EhcacheJGroupsReceiver extends BaseReceiver {
+
+		public EhcacheJGroupsReceiver(ExecutorService executorService) {
+			super(executorService);
+		}
 
 		@Override
 		protected void doReceive(Message message) {

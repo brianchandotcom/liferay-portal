@@ -17,6 +17,7 @@ package com.liferay.portal.cluster;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.Priority;
+import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
 
 import org.jgroups.JChannel;
 
@@ -37,6 +39,9 @@ import org.jgroups.JChannel;
 @DoPrivileged
 public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 
+	public static final String CLUSTER_LINK_CALLBACK_THREAD_POOL =
+		"CLUSTER_LINK_CALLBACK_THREAD_POOL";
+
 	@Override
 	public void destroy() {
 		if (!isEnabled()) {
@@ -44,8 +49,12 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		}
 
 		for (JChannel jChannel : _transportJChannels) {
+			jChannel.setReceiver(null);
+
 			jChannel.close();
 		}
+
+		_executorService.shutdownNow();
 	}
 
 	@Override
@@ -53,6 +62,9 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		if (!isEnabled()) {
 			return;
 		}
+
+		_executorService = PortalExecutorManagerUtil.getPortalExecutor(
+			CLUSTER_LINK_CALLBACK_THREAD_POOL);
 
 		try {
 			initChannels();
@@ -150,7 +162,9 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 			String value = transportProperties.getProperty(customName);
 
 			JChannel jChannel = createJChannel(
-				value, new ClusterForwardReceiver(_localTransportAddresses),
+				value,
+				new ClusterForwardReceiver(
+					_executorService, _localTransportAddresses),
 				_LIFERAY_TRANSPORT_CHANNEL + i);
 
 			_localTransportAddresses.add(jChannel.getAddress());
@@ -165,6 +179,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		ClusterLinkImpl.class);
 
 	private int _channelCount;
+	private ExecutorService _executorService;
 	private List<org.jgroups.Address> _localTransportAddresses;
 	private List<JChannel> _transportJChannels;
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.memory.FinalizeManager;
@@ -59,6 +60,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
 
 import org.jgroups.JChannel;
 
@@ -70,6 +72,9 @@ import org.jgroups.JChannel;
 public class ClusterExecutorImpl
 	extends ClusterBase
 	implements ClusterExecutor, PortalInetSocketAddressEventListener {
+
+	public static final String CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL =
+		"CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL";
 
 	@Override
 	public void addClusterEventListener(
@@ -91,6 +96,8 @@ public class ClusterExecutorImpl
 		_controlJChannel.setReceiver(null);
 
 		_controlJChannel.close();
+
+		_executorService.shutdownNow();
 
 		_clusterEventListeners.clear();
 		_clusterNodeAddresses.clear();
@@ -196,6 +203,9 @@ public class ClusterExecutorImpl
 		if (!isEnabled()) {
 			return;
 		}
+
+		_executorService = PortalExecutorManagerUtil.getPortalExecutor(
+			CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL);
 
 		PortalUtil.addPortalInetSocketAddressEventListener(this);
 
@@ -349,7 +359,7 @@ public class ClusterExecutorImpl
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
 
 		ClusterRequestReceiver clusterRequestReceiver =
-			new ClusterRequestReceiver(this);
+			new ClusterRequestReceiver(this, _executorService);
 
 		_controlJChannel = createJChannel(
 			controlProperty, clusterRequestReceiver, _DEFAULT_CLUSTER_NAME);
@@ -509,6 +519,7 @@ public class ClusterExecutorImpl
 	private final Map<String, Address> _clusterNodeAddresses =
 		new ConcurrentHashMap<>();
 	private JChannel _controlJChannel;
+	private ExecutorService _executorService;
 	private final Map<String, FutureClusterResponses> _futureClusterResponses =
 		new ConcurrentReferenceValueHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);

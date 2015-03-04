@@ -19,7 +19,6 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	@lib/velocity.jar,\
-	@lib/velocity-tools.jar,\
-	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+	@lib/velocity-tools.jar
 
 -metatype: *

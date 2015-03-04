@@ -54,7 +54,6 @@ Include-Resource:\
 	lib/=lib/stax2-api.jar,\
 	lib/=lib/woodstox-core-asl.jar,\
 	lib/=lib/wsdl4j.jar,\
-	lib/=lib/xmlschema-core.jar,\
-	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+	lib/=lib/xmlschema-core.jar
 
 -metatype: *

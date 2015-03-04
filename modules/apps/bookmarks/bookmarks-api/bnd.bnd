@@ -4,10 +4,8 @@ Bundle-Version: 1.0.0
 Export-Package: \
 	com.liferay.bookmarks.*,\
 	!com.liferay.bookmarks.configuration.dependencies,\
-    !com.liferay.bookmarks.configuration.impl,\
-    !com.liferay.bookmarks.settings.provider
-Include-Resource:\
-	classes,\
-	@../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+	!com.liferay.bookmarks.configuration.impl,\
+	!com.liferay.bookmarks.settings.provider
+Include-Resource: classes
 
 -metatype: *

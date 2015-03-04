@@ -778,7 +778,8 @@ public class LuceneHelperImplTest {
 					futureClusterResponses.addClusterNodeResponse(
 						ClusterNodeResponse.createResultClusterNodeResponse(
 							clusterNode, clusterRequest.getUuid(),
-							_invoke(clusterRequest.getMethodHandler())));
+							_invoke(
+								(MethodHandler)clusterRequest.getPayload())));
 				}
 				catch (Exception e) {
 					futureClusterResponses.addClusterNodeResponse(

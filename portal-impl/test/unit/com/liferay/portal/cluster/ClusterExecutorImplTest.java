@@ -152,6 +152,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			// Test 1, disconnect network
 
 			updateView(clusterExecutorImpl1);
+			updateView(clusterExecutorImpl2);
 
 			clusterEvent = mockClusterEventListener.waitDepartMessage();
 
@@ -257,7 +258,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			// Test 4, execute multicast request
 
 			ClusterRequest clusterRequest =
-				ClusterRequest.createMulticastRequest(null);
+				ClusterRequest.createMulticastRequest(StringPool.BLANK);
 
 			try {
 				clusterExecutorImpl.execute(clusterRequest);
@@ -274,7 +275,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			String clusterNodeId = PortalUUIDUtil.generate();
 
 			clusterRequest = ClusterRequest.createUnicastRequest(
-				null, clusterNodeId);
+				StringPool.BLANK, clusterNodeId);
 
 			try {
 				clusterExecutorImpl.memberJoined(
@@ -433,7 +434,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			// Test 4, execute when method handler is null
 
 			clusterRequest = ClusterRequest.createUnicastRequest(
-				null, clusterNodeId);
+				StringPool.BLANK, clusterNodeId);
 
 			futureClusterResponses = clusterExecutorImpl.execute(
 				clusterRequest);
@@ -521,17 +522,20 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			String clusterNodeId = clusterNode.getClusterNodeId();
 
-			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
-				methodHandler, clusterNodeId);
-
-			clusterRequest.setSkipLocal(false);
+			ClusterRequest clusterRequest =
+				ClusterRequest.createMulticastRequest(methodHandler, false);
 
 			FutureClusterResponses futureClusterResponses =
 				clusterExecutorImpl.execute(clusterRequest);
 
-			assertFutureClusterResponsesWithoutException(
-				futureClusterResponses.get(), clusterRequest.getUuid(),
-				timestamp, Collections.singletonList(clusterNodeId));
+			ClusterNodeResponses clusterNodeResponses =
+				futureClusterResponses.get();
+
+			ClusterNodeResponse clusterNodeResponse =
+				clusterNodeResponses.getClusterResponse(clusterNodeId);
+
+			Assert.assertNotNull(clusterNodeResponse);
+			Assert.assertEquals(timestamp, clusterNodeResponse.getResult());
 
 			// Test 2, execute with skip local enabled
 
@@ -539,18 +543,18 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			methodHandler = new MethodHandler(testMethod1MethodKey, timestamp);
 
-			clusterRequest = ClusterRequest.createUnicastRequest(
-				methodHandler, clusterNodeId);
-
-			clusterRequest.setSkipLocal(true);
+			clusterRequest = ClusterRequest.createMulticastRequest(
+				methodHandler, true);
 
 			futureClusterResponses = clusterExecutorImpl.execute(
 				clusterRequest);
 
-			ClusterNodeResponses clusterNodeResponses =
-				futureClusterResponses.get();
+			clusterNodeResponses = futureClusterResponses.get();
 
-			Assert.assertEquals(0, clusterNodeResponses.size());
+			clusterNodeResponse = clusterNodeResponses.getClusterResponse(
+				clusterNodeId);
+
+			Assert.assertNull(clusterNodeResponse);
 			Assert.assertNotEquals(TestBean.TIMESTAMP, timestamp);
 		}
 		finally {
@@ -570,11 +574,11 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 		try {
 
-			// Test 1, method handler is null
+			// Test 1, payload is not method handler
 
 			ClusterNodeResponse clusterNodeResponse =
 				clusterExecutorImpl.executeClusterRequest(
-					ClusterRequest.createMulticastRequest(null));
+					ClusterRequest.createMulticastRequest(StringPool.BLANK));
 
 			Exception exception = clusterNodeResponse.getException();
 
@@ -783,7 +787,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			Assert.assertNull(
 				clusterExecutorImpl.execute(
-					ClusterRequest.createMulticastRequest(null)));
+					ClusterRequest.createMulticastRequest(StringPool.BLANK)));
 		}
 		finally {
 			clusterExecutorImpl.destroy();

@@ -785,7 +785,7 @@ public class MPIHelperUtilTest {
 
 			Assert.assertEquals(
 				"Not registering SPI " + mockSPI1 +
-					" with unknown SPI provider " +  mockSPI1.spiProviderName,
+					" with unknown SPI provider " + mockSPI1.spiProviderName,
 				logRecord.getMessage());
 
 			// No such SPI provider, without log

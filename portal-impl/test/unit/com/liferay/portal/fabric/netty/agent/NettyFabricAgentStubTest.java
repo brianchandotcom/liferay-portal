@@ -269,7 +269,7 @@ public class NettyFabricAgentStubTest {
 
 			Builder builder = new Builder();
 
-			FabricWorker<String> fabricWorker =  nettyFabricAgentStub.execute(
+			FabricWorker<String> fabricWorker = nettyFabricAgentStub.execute(
 				builder.build(),
 				new ReturnProcessCallable<String>("Test result"));
 
@@ -313,7 +313,7 @@ public class NettyFabricAgentStubTest {
 
 			Builder builder = new Builder();
 
-			FabricWorker<String> fabricWorker =  nettyFabricAgentStub.execute(
+			FabricWorker<String> fabricWorker = nettyFabricAgentStub.execute(
 				builder.build(),
 				new ReturnProcessCallable<String>("Test result"));
 
@@ -359,7 +359,7 @@ public class NettyFabricAgentStubTest {
 
 			Builder builder = new Builder();
 
-			FabricWorker<String> fabricWorker =  nettyFabricAgentStub.execute(
+			FabricWorker<String> fabricWorker = nettyFabricAgentStub.execute(
 				builder.build(),
 				new ReturnProcessCallable<String>("Test result"));
 
@@ -397,7 +397,7 @@ public class NettyFabricAgentStubTest {
 
 		Builder builder = new Builder();
 
-		FabricWorker<String> fabricWorker =  nettyFabricAgentStub.execute(
+		FabricWorker<String> fabricWorker = nettyFabricAgentStub.execute(
 			builder.build(), new ReturnProcessCallable<String>("Test result"));
 
 		NoticeableFuture<String> noticeableFuture =
@@ -428,7 +428,7 @@ public class NettyFabricAgentStubTest {
 
 		Builder builder = new Builder();
 
-		FabricWorker<String> fabricWorker =  nettyFabricAgentStub.execute(
+		FabricWorker<String> fabricWorker = nettyFabricAgentStub.execute(
 			builder.build(), new ReturnProcessCallable<String>("Test result"));
 
 		NoticeableFuture<String> noticeableFuture =

@@ -377,7 +377,7 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 		Set<Locale> availableLocales = DDMFormTestUtil.createAvailableLocales(
 			currentLocale);
 
-		DDMForm ddmForm =  DDMFormTestUtil.createDDMForm(
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			availableLocales, currentLocale);
 
 		DDMFormField ddmFormField = new DDMFormField("date_an", "ddm-date");

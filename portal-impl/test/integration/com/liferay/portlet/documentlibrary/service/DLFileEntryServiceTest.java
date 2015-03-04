@@ -310,7 +310,7 @@ public class DLFileEntryServiceTest {
 
 		String fileEntryTitle = RandomTestUtil.randomString();
 
-		return  DLFileEntryLocalServiceUtil.addFileEntry(
+		return DLFileEntryLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), folderId, sourceFileName, null, fileEntryTitle,
 			RandomTestUtil.randomString(), StringPool.BLANK,

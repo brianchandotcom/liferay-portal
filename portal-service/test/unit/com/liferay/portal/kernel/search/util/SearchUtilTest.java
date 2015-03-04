@@ -39,7 +39,7 @@ public class SearchUtilTest {
 		Assert.assertEquals(
 			sb.toString(),
 			SearchUtil.highlight(
-				"Hello World Liferay", new String[] {"Hello","Liferay"}));
+				"Hello World Liferay", new String[] {"Hello", "Liferay"}));
 	}
 
 }

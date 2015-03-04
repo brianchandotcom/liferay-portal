@@ -159,7 +159,7 @@ public class JournalIndexerTest {
 			"Apple Architectural Tablet", true);
 
 		Assert.assertEquals(
-			initialSearchCount  + 2,
+			initialSearchCount + 2,
 			searchCount(_group.getGroupId(), searchContext));
 
 		content = DDMStructureTestUtil.getSampleStructuredContent(
@@ -208,7 +208,7 @@ public class JournalIndexerTest {
 			_group.getGroupId(), folder.getFolderId(), "title", content, true);
 
 		Assert.assertEquals(
-			initialSearchCount  + 1,
+			initialSearchCount + 1,
 			searchCount(
 				_group.getGroupId(), false, WorkflowConstants.STATUS_ANY,
 				searchContext));

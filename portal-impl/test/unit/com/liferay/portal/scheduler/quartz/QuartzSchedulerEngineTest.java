@@ -234,7 +234,7 @@ public class QuartzSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, startDate,
 			"0/1 * * * * ?");
 
-		org.quartz.Trigger trigger1 =  _quartzSchedulerEngine.getQuartzTrigger(
+		org.quartz.Trigger trigger1 = _quartzSchedulerEngine.getQuartzTrigger(
 			cronTrigger1, StorageType.MEMORY);
 		org.quartz.Trigger trigger2 = _quartzSchedulerEngine.getQuartzTrigger(
 			cronTrigger2, StorageType.MEMORY);

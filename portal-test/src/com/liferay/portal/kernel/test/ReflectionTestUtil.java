@@ -50,7 +50,7 @@ public class ReflectionTestUtil {
 				return bridgeMethod;
 			}
 
-			clazz =  clazz.getSuperclass();
+			clazz = clazz.getSuperclass();
 		}
 
 		return ReflectionUtil.throwException(

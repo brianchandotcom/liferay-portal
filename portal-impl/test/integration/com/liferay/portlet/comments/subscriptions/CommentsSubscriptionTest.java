@@ -135,7 +135,7 @@ public class CommentsSubscriptionTest {
 				BlogsEntry.class.getName(), entry.getEntryId(),
 				WorkflowConstants.STATUS_APPROVED);
 
-		MBThread thread =  messageDisplay.getThread();
+		MBThread thread = messageDisplay.getThread();
 
 		MBTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.ADD);

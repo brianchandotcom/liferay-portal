@@ -948,7 +948,7 @@ public class MBUtil {
 			defaultGroupRole.getRoleId());
 
 		if (defaultGroupActionIds == null) {
-			serviceContext.setGroupPermissions(new String[]{});
+			serviceContext.setGroupPermissions(new String[] {});
 		}
 		else {
 			serviceContext.setGroupPermissions(
@@ -960,7 +960,7 @@ public class MBUtil {
 			guestRole.getRoleId());
 
 		if (guestActionIds == null) {
-			serviceContext.setGuestPermissions(new String[]{});
+			serviceContext.setGuestPermissions(new String[] {});
 		}
 		else {
 			serviceContext.setGuestPermissions(

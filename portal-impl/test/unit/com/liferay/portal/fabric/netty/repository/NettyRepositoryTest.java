@@ -145,7 +145,7 @@ public class NettyRepositoryTest {
 		Path tempFilePath = FileServerTestUtil.createFileWithData(
 			Paths.get("tempFile"));
 
-		Map<Path, Path> pathMap =  _nettyRepository.pathMap;
+		Map<Path, Path> pathMap = _nettyRepository.pathMap;
 
 		FileServerTestUtil.createFileWithData(tempFilePath);
 
@@ -198,7 +198,7 @@ public class NettyRepositoryTest {
 		Path tempFilePath = FileServerTestUtil.createFileWithData(
 			Paths.get("tempFile"));
 
-		Map<Path, Path> pathMap =  _nettyRepository.pathMap;
+		Map<Path, Path> pathMap = _nettyRepository.pathMap;
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
@@ -412,7 +412,7 @@ public class NettyRepositoryTest {
 		Path remoteFilePath = Paths.get("remoteFile");
 		Path cachedLocalFilePath = Paths.get("cacheLocalFile");
 
-		Map<Path, Path> pathMap =  _nettyRepository.pathMap;
+		Map<Path, Path> pathMap = _nettyRepository.pathMap;
 
 		pathMap.put(remoteFilePath, cachedLocalFilePath);
 

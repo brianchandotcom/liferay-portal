@@ -233,7 +233,7 @@ public class DLCheckInCheckOutTest {
 
 		FileEntry fileEntry = updateFileEntry(_fileEntry.getFileEntryId());
 
-		Assert.assertEquals("1.0" , fileEntry.getVersion());
+		Assert.assertEquals("1.0", fileEntry.getVersion());
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 

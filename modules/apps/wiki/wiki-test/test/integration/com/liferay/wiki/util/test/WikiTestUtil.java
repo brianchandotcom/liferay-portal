@@ -167,7 +167,7 @@ public class WikiTestUtil {
 			RandomTestUtil.randomString(), initialParentPage.getTitle(), true,
 			serviceContext);
 
-		WikiPage finalParentPage =  WikiTestUtil.addPage(
+		WikiPage finalParentPage = WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), groupId, nodeId,
 			RandomTestUtil.randomString(), true);
 
@@ -177,9 +177,9 @@ public class WikiTestUtil {
 
 		childPage = WikiPageLocalServiceUtil.getPage(
 			nodeId, childPage.getTitle());
-		initialParentPage =  WikiPageLocalServiceUtil.getPageByPageId(
+		initialParentPage = WikiPageLocalServiceUtil.getPageByPageId(
 			initialParentPage.getPageId());
-		finalParentPage =  WikiPageLocalServiceUtil.getPageByPageId(
+		finalParentPage = WikiPageLocalServiceUtil.getPageByPageId(
 			finalParentPage.getPageId());
 
 		return new WikiPage[] {childPage, finalParentPage, initialParentPage};
@@ -209,7 +209,7 @@ public class WikiTestUtil {
 		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
 			nodeId, "TestPage");
 
-		return new WikiPage[]{page, childPage, redirectPage};
+		return new WikiPage[] {page, childPage, redirectPage};
 	}
 
 	public static WikiPage[] addRenamedParentPageWithChildPageAndGrandchildPage(

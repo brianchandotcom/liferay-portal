@@ -267,7 +267,7 @@ public class PoshiRunnerExecutor {
 				String expected = null;
 
 				String[] arguments =
-					new String[]{"locator", "locator-key", "value"};
+					new String[] {"locator", "locator-key", "value"};
 
 				for (int i = 0; i < locatorCount; i++) {
 					for (String argument : arguments) {

@@ -100,7 +100,7 @@ public class ChannelImpl extends BaseChannelImpl {
 		}
 		catch (Exception e) {
 			throw new ChannelException(
-				"Unable to confirm delivery for user " + getUserId() , e);
+				"Unable to confirm delivery for user " + getUserId(), e);
 		}
 		finally {
 			_reentrantLock.unlock();
@@ -141,7 +141,7 @@ public class ChannelImpl extends BaseChannelImpl {
 		}
 		catch (Exception e) {
 			throw new ChannelException(
-				"Unable to confirm delivery for " + notificationEventUuid , e);
+				"Unable to confirm delivery for " + notificationEventUuid, e);
 		}
 		finally {
 			_reentrantLock.unlock();
@@ -165,7 +165,7 @@ public class ChannelImpl extends BaseChannelImpl {
 		}
 		catch (Exception e) {
 			throw new ChannelException(
-				"Unable to delete event " + notificationEventUuid , e);
+				"Unable to delete event " + notificationEventUuid, e);
 		}
 		finally {
 			_reentrantLock.unlock();
@@ -192,7 +192,7 @@ public class ChannelImpl extends BaseChannelImpl {
 		}
 		catch (Exception e) {
 			throw new ChannelException(
-				"Unable to delete events for user " + getUserId() , e);
+				"Unable to delete events for user " + getUserId(), e);
 		}
 		finally {
 			_reentrantLock.unlock();

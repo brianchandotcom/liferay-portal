@@ -52,7 +52,7 @@ public class TestFullNameGenerator implements FullNameGenerator {
 
 	@Override
 	public String[] splitFullName(String fullName) {
-		return new String [] {"firstName", "middleName", "lastName"};
+		return new String[] {"firstName", "middleName", "lastName"};
 	}
 
 }

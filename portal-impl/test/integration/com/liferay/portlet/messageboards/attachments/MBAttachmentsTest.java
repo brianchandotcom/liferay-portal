@@ -323,7 +323,7 @@ public class MBAttachmentsTest {
 
 		_message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			_category.getGroupId(),  _category.getCategoryId(),
+			_category.getGroupId(), _category.getCategoryId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 	}

@@ -209,7 +209,7 @@ public class BaseHandler implements Handler<Void> {
 		SyncSite syncSite = (SyncSite)getParameterValue("syncSite");
 
 		if (syncSite == null) {
-			SyncFile syncFile = (SyncFile) getParameterValue("syncFile");
+			SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
 
 			syncSite = SyncSiteService.fetchSyncSite(
 				syncFile.getRepositoryId(), getSyncAccountId());

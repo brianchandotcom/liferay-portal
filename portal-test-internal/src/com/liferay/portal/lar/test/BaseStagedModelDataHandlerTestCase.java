@@ -169,7 +169,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 				user.getUserId(), stagingGroup.getGroupId(), className, classPK,
 				WorkflowConstants.STATUS_APPROVED);
 
-		MBThread thread =  messageDisplay.getThread();
+		MBThread thread = messageDisplay.getThread();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

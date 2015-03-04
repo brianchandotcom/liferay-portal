@@ -64,7 +64,7 @@ public class PortalBeanLocatorUtilTest extends PowerMockito {
 
 		PortalBeanLocatorUtil.setBeanLocator(_beanLocator);
 
-		String bean = (String) PortalBeanLocatorUtil.locate("existingBean");
+		String bean = (String)PortalBeanLocatorUtil.locate("existingBean");
 
 		Assert.assertNotNull(bean);
 		Assert.assertEquals("existingBean", bean);
@@ -82,7 +82,7 @@ public class PortalBeanLocatorUtilTest extends PowerMockito {
 
 		PortalBeanLocatorUtil.setBeanLocator(_beanLocator);
 
-		String bean = (String) PortalBeanLocatorUtil.locate("nonExistingBean");
+		String bean = (String)PortalBeanLocatorUtil.locate("nonExistingBean");
 
 		Assert.assertNull(bean);
 

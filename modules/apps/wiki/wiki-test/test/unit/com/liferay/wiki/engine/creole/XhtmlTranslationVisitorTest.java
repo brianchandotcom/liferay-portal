@@ -572,7 +572,7 @@ public class XhtmlTranslationVisitorTest {
 	@Test
 	public void testParseOnlySpacesContentInImageTag() {
 		Assert.assertEquals(
-			"<p><img src=\"L1\" alt=\"A1\"/><img src=\"L2\" alt=\"A2\"/>"  +
+			"<p><img src=\"L1\" alt=\"A1\"/><img src=\"L2\" alt=\"A2\"/>" +
 				"<img src=\"L3\" alt=\"A3\"/><img src=\"L4\" alt=\"A4\"/>" +
 					"<img src=\"L5\" alt=\"A5\"/> </p>",
 			translate("image-5.creole"));

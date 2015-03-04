@@ -122,7 +122,7 @@ public class AssetVocabularyImplTest {
 
 		Assert.assertFalse(
 			vocabulary.isMissingRequiredCategory(
-				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK, new long[]{1}));
+				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK, new long[] {1}));
 
 		vocabulary = AssetTestUtil.addVocabulary(
 			_group.getGroupId(), 1, AssetCategoryConstants.ALL_CLASS_TYPE_PK,
@@ -130,7 +130,7 @@ public class AssetVocabularyImplTest {
 
 		Assert.assertTrue(
 			vocabulary.isMissingRequiredCategory(
-				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK, new long[]{1}));
+				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK, new long[] {1}));
 		Assert.assertFalse(
 			vocabulary.isMissingRequiredCategory(
 				2, AssetCategoryConstants.ALL_CLASS_TYPE_PK, new long[0]));
@@ -140,11 +140,11 @@ public class AssetVocabularyImplTest {
 
 		Assert.assertTrue(
 			vocabulary.isMissingRequiredCategory(
-				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK, new long[]{1}));
+				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK, new long[] {1}));
 		Assert.assertFalse(
 			vocabulary.isMissingRequiredCategory(
 				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK,
-				new long[]{category.getCategoryId()}));
+				new long[] {category.getCategoryId()}));
 	}
 
 	@Test

@@ -131,7 +131,7 @@ public class ValidatorTest extends PowerMockito {
 	@Test
 	public void testIsInvalidFilePath() throws Exception {
 		String[] invalidFilePaths = {
-			null, "", "..", "./..", "../a", "/../a", "\u0000","a\u0000/../a"
+			null, "", "..", "./..", "../a", "/../a", "\u0000", "a\u0000/../a"
 		};
 
 		testValidFilePaths(invalidFilePaths, false, false);
@@ -378,7 +378,7 @@ public class ValidatorTest extends PowerMockito {
 	@Test
 	public void testIsNullInvalid() throws Exception {
 		String[] notNullStrings = {
-			"a", "anull", "nulla", " anull", " nulla ","  null  a"
+			"a", "anull", "nulla", " anull", " nulla ", "  null  a"
 		};
 
 		testIsNull(notNullStrings, false);

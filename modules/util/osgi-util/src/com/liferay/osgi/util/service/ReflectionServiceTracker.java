@@ -282,7 +282,7 @@ public class ReflectionServiceTracker implements Closeable {
 		public void reset()
 			throws IllegalAccessException, InvocationTargetException {
 
-			_method.invoke(_target, new Object[]{null});
+			_method.invoke(_target, new Object[] {null});
 		}
 
 		private InjectionPoint(Object target, Method method) {

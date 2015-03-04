@@ -58,7 +58,7 @@ public class MulticastServerTool {
 
 			String msg =
 				InetAddress.getLocalHost().getHostName() + ":" + port +
-					" heartbeat " ;
+					" heartbeat ";
 
 			int i = 0;
 

@@ -43,7 +43,7 @@ public class DerbyDB extends BaseDB {
 		template = reword(template );
 		//template = _removeLongInserts(derby);
 		template = removeNull(template);
-		template = StringUtil.replace(template , "\\'", "''");
+		template = StringUtil.replace(template, "\\'", "''");
 
 		return template;
 	}

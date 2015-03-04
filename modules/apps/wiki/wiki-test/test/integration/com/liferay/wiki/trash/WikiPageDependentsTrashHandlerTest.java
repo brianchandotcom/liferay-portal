@@ -312,7 +312,7 @@ public class WikiPageDependentsTrashHandlerTest {
 		WikiPage parentPage = relatedPages.getParentPage();
 		WikiPage page = relatedPages.getPage();
 
-		WikiPage newParentPage =  WikiTestUtil.addPage(
+		WikiPage newParentPage = WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
 			RandomTestUtil.randomString(), true);
 

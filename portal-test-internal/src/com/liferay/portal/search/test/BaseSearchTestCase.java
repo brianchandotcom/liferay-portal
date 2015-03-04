@@ -967,7 +967,7 @@ public abstract class BaseSearchTestCase {
 			group, serviceContext);
 
 		baseModel = addBaseModelWithDDMStructure(
-			parentBaseModel,  getSearchKeywords(), serviceContext);
+			parentBaseModel, getSearchKeywords(), serviceContext);
 
 		Assert.assertEquals(
 			initialBaseModelsSearchCount + 1,
@@ -1016,7 +1016,7 @@ public abstract class BaseSearchTestCase {
 
 			searchContext.setUserId(user.getUserId());
 
-			int baseModelsCount =  initialBaseModelsSearchCount;
+			int baseModelsCount = initialBaseModelsSearchCount;
 
 			if (addBaseModelPermission && !isCheckBaseModelPermission()) {
 				baseModelsCount++;

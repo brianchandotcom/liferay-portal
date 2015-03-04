@@ -37,7 +37,7 @@ public class ServiceTrackerMapFactory {
 		throws InvalidSyntaxException {
 
 		return new ServiceTrackerMapImpl<>(
-			bundleContext, clazz,"(" + propertyKey + "=*)",
+			bundleContext, clazz, "(" + propertyKey + "=*)",
 			new PropertyServiceReferenceMapper<String, S>(propertyKey),
 			new DefaultServiceTrackerCustomizer<S>(bundleContext),
 			new MultiValueServiceTrackerBucketFactory<S, S>());

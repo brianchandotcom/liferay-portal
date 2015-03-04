@@ -237,8 +237,8 @@ public class EditUserAction extends PortletAction {
 				(UserLocalServiceUtil.fetchUserById(
 					scopeGroup.getClassPK()) == null)) {
 
-				redirect = HttpUtil.setParameter(redirect, "doAsGroupId" , 0);
-				redirect = HttpUtil.setParameter(redirect, "refererPlid" , 0);
+				redirect = HttpUtil.setParameter(redirect, "doAsGroupId", 0);
+				redirect = HttpUtil.setParameter(redirect, "refererPlid", 0);
 			}
 
 			sendRedirect(actionRequest, actionResponse, redirect);

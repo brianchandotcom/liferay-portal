@@ -338,7 +338,7 @@ public class DDLExporterTest {
 		_fieldValues.put(DDMFormFieldType.NUMBER, "3");
 		_fieldValues.put(DDMFormFieldType.RADIO, createListDDMFormFieldValue());
 		_fieldValues.put(
-			DDMFormFieldType.SELECT,  createListDDMFormFieldValue());
+			DDMFormFieldType.SELECT, createListDDMFormFieldValue());
 		_fieldValues.put(DDMFormFieldType.TEXT, "Text content");
 		_fieldValues.put(DDMFormFieldType.TEXT_AREA, "Text Area content");
 		_fieldValues.put(DDMFormFieldType.TEXT_HTML, "Text HTML content");

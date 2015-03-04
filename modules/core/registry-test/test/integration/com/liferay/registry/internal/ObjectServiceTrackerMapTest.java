@@ -322,7 +322,7 @@ public class ObjectServiceTrackerMapTest {
 								serviceReference);
 
 							String targetProperty =
-								(String) serviceReference.getProperty("target");
+								(String)serviceReference.getProperty("target");
 
 							emitter.emit(
 								targetProperty + "-" + service.getKey());

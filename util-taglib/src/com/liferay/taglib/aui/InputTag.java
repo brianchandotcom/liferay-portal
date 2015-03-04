@@ -249,7 +249,7 @@ public class InputTag extends BaseInputTag {
 
 		String forLabel = id;
 
-		if (Validator.equals(type,"assetTags")) {
+		if (Validator.equals(type, "assetTags")) {
 			forLabel = forLabel.concat("assetTagNames");
 		}
 

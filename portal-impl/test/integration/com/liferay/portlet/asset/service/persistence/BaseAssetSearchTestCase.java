@@ -575,7 +575,7 @@ public abstract class BaseAssetSearchTestCase {
 	public void testClassName1() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				_group1.getGroupId(), new String[]{getBaseModelClassName()});
+				_group1.getGroupId(), new String[] {getBaseModelClassName()});
 
 		testClassNames(assetEntryQuery, 1);
 	}
@@ -599,7 +599,7 @@ public abstract class BaseAssetSearchTestCase {
 	public void testClassTypeIds1() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				_group1.getGroupId(), new String[]{getBaseModelClassName()});
+				_group1.getGroupId(), new String[] {getBaseModelClassName()});
 
 		testClassTypeIds(assetEntryQuery, true);
 	}
@@ -608,7 +608,7 @@ public abstract class BaseAssetSearchTestCase {
 	public void testClassTypeIds2() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				_group1.getGroupId(), new String[]{getBaseModelClassName()});
+				_group1.getGroupId(), new String[] {getBaseModelClassName()});
 
 		testClassTypeIds(assetEntryQuery, false);
 	}
@@ -903,7 +903,7 @@ public abstract class BaseAssetSearchTestCase {
 	public void testOrderByCreateDateAsc() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				_group1.getGroupId(), new String[]{getBaseModelClassName()});
+				_group1.getGroupId(), new String[] {getBaseModelClassName()});
 
 		String[] titles = {
 			"open", "liferay", "social", "osgi", "content", "life"
@@ -916,7 +916,7 @@ public abstract class BaseAssetSearchTestCase {
 	public void testOrderByCreateDateDesc() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				_group1.getGroupId(), new String[]{getBaseModelClassName()});
+				_group1.getGroupId(), new String[] {getBaseModelClassName()});
 
 		String[] titles = {
 			"open", "liferay", "social", "osgi", "content", "life"
@@ -933,7 +933,7 @@ public abstract class BaseAssetSearchTestCase {
 	public void testOrderByExpirationDateAsc() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				_group1.getGroupId(), new String[]{getBaseModelClassName()});
+				_group1.getGroupId(), new String[] {getBaseModelClassName()});
 
 		Date[] expirationDates = generateRandomDates(new Date(), 6);
 
@@ -944,7 +944,7 @@ public abstract class BaseAssetSearchTestCase {
 	public void testOrderByExpirationDateDesc() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				_group1.getGroupId(), new String[]{getBaseModelClassName()});
+				_group1.getGroupId(), new String[] {getBaseModelClassName()});
 
 		Date[] expirationDates = generateRandomDates(new Date(), 6);
 
@@ -955,7 +955,7 @@ public abstract class BaseAssetSearchTestCase {
 	public void testOrderByTitleAsc() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				_group1.getGroupId(), new String[]{getBaseModelClassName()});
+				_group1.getGroupId(), new String[] {getBaseModelClassName()});
 
 		String[] defaultTitles = {
 			"open", "liferay", "content", "social", "osgi", "life"
@@ -1011,7 +1011,7 @@ public abstract class BaseAssetSearchTestCase {
 	public void testOrderByTitleDesc() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				_group1.getGroupId(), new String[]{getBaseModelClassName()});
+				_group1.getGroupId(), new String[] {getBaseModelClassName()});
 
 		String[] defaultTitles = {
 			"open", "liferay", "content", "social", "osgi", "life"
@@ -1067,7 +1067,7 @@ public abstract class BaseAssetSearchTestCase {
 	public void testPaginationTypeNone() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				_group1.getGroupId(), new String[]{getBaseModelClassName()});
+				_group1.getGroupId(), new String[] {getBaseModelClassName()});
 
 		assetEntryQuery.setPaginationType("none");
 
@@ -1078,7 +1078,7 @@ public abstract class BaseAssetSearchTestCase {
 	public void testPaginationTypeRegular() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				_group1.getGroupId(), new String[]{getBaseModelClassName()});
+				_group1.getGroupId(), new String[] {getBaseModelClassName()});
 
 		assetEntryQuery.setPaginationType("regular");
 
@@ -1089,7 +1089,7 @@ public abstract class BaseAssetSearchTestCase {
 	public void testPaginationTypeSimple() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				_group1.getGroupId(), new String[]{getBaseModelClassName()});
+				_group1.getGroupId(), new String[] {getBaseModelClassName()});
 
 		assetEntryQuery.setPaginationType("simple");
 

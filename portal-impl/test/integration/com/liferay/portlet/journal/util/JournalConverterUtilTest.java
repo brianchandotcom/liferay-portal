@@ -330,7 +330,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		FileEntry fileEntry =  DLAppLocalServiceUtil.addFileEntry(
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1.txt",
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
@@ -519,7 +519,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		assertEquals(
 			expectedDDMFormField.getLabel(), actualDDMFormField.getLabel());
 		Assert.assertEquals(
-			expectedDDMFormField.getName(),  actualDDMFormField.getName());
+			expectedDDMFormField.getName(), actualDDMFormField.getName());
 		assertEquals(
 			expectedDDMFormField.getStyle(), actualDDMFormField.getStyle());
 		assertEquals(
@@ -717,7 +717,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 	}
 
 	protected Field getMultiListField(long ddmStructureId) {
-		Field field =  new Field();
+		Field field = new Field();
 
 		field.setDDMStructureId(ddmStructureId);
 		field.setName("multi-list");

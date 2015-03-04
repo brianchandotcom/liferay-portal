@@ -1528,9 +1528,9 @@ public class SeleniumBuilderFileUtil {
 
 		String locator = locatorElement.getText();
 
-		locator = locator.replace("${","");
-		locator = locator.replace("}","");
-		locator = locator.replace("/-/","/");
+		locator = locator.replace("${", "");
+		locator = locator.replace("}", "");
+		locator = locator.replace("/-/", "/");
 
 		if (locator.endsWith("/")) {
 			locator = locator.substring(0, locator.length() - 1);
@@ -1947,11 +1947,11 @@ public class SeleniumBuilderFileUtil {
 		}
 		else if (attributeMap.containsKey("locator-key")) {
 			throwValidationException(
-				1004, fileName, element, new String [] {"path"});
+				1004, fileName, element, new String[] {"path"});
 		}
 		else if (attributeMap.containsKey("path")) {
 			throwValidationException(
-				1004, fileName, element, new String [] {"locator-key"});
+				1004, fileName, element, new String[] {"locator-key"});
 		}
 
 		String varText = element.getText();
@@ -1993,7 +1993,7 @@ public class SeleniumBuilderFileUtil {
 				!attributeMap.containsKey("pattern")) {
 
 				throwValidationException(
-					1004, fileName, element, new String [] {"value"});
+					1004, fileName, element, new String[] {"value"});
 			}
 		}
 		else {

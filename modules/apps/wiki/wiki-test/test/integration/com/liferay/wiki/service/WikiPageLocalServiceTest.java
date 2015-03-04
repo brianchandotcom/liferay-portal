@@ -272,7 +272,7 @@ public class WikiPageLocalServiceTest {
 
 		WikiPageLocalServiceUtil.renamePage(
 			TestPropsValues.getUserId(), _node.getNodeId(),
-			"DuplicatedTitlePage", "RenamedPage",  serviceContext);
+			"DuplicatedTitlePage", "RenamedPage", serviceContext);
 
 		WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _group.getGroupId(),
@@ -316,7 +316,7 @@ public class WikiPageLocalServiceTest {
 
 		WikiPageLocalServiceUtil.renamePage(
 			TestPropsValues.getUserId(), _node.getNodeId(), "InitialTitlePage",
-			"RenamedPage",  serviceContext);
+			"RenamedPage", serviceContext);
 
 		try {
 			WikiPageLocalServiceUtil.changeNode(

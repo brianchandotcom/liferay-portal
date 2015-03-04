@@ -121,7 +121,7 @@ public class ExportImportConfigurationHelper {
 
 			parameterMap.put(
 				PortletDataHandlerKeys.PERFORM_DIRECT_BINARY_IMPORT,
-				new String[]{Boolean.TRUE.toString()});
+				new String[] {Boolean.TRUE.toString()});
 		}
 
 		return ExportImportConfigurationLocalServiceUtil.

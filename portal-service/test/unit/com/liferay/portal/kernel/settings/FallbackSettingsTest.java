@@ -95,7 +95,7 @@ public class FallbackSettingsTest extends PowerMockito {
 	protected void verifyGetValue(String... keys) {
 		InOrder inOrder = Mockito.inOrder(_settings);
 
-		for (String key :  keys) {
+		for (String key : keys) {
 			inOrder.verify(_settings);
 
 			_settings.getValue(key, null);
@@ -105,7 +105,7 @@ public class FallbackSettingsTest extends PowerMockito {
 	protected void verifyGetValues(String... keys) {
 		InOrder inOrder = Mockito.inOrder(_settings);
 
-		for (String key :  keys) {
+		for (String key : keys) {
 			inOrder.verify(_settings);
 
 			_settings.getValues(key, null);

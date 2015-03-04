@@ -421,7 +421,7 @@ public class SocialRelationLocalServiceTest {
 
 		users = UserLocalServiceUtil.getSocialUsers(
 			dlc1User.getUserId(), SocialRelationConstants.TYPE_BI_COWORKER,
-			StringPool.EQUAL,  QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			StringPool.EQUAL, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new UserScreenNameComparator(true));
 
 		Assert.assertEquals(1, users.size());

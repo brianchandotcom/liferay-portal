@@ -107,7 +107,7 @@ public class JournalTransformerTest {
 		Element element = (Element)document.selectSingleNode(
 			"//dynamic-content");
 
-		element.setText("[@" + _article.getArticleId()  + ";name@]");
+		element.setText("[@" + _article.getArticleId() + ";name@]");
 
 		content = JournalUtil.transform(
 			null, tokens, Constants.VIEW, "en_US", document, null, xsl,

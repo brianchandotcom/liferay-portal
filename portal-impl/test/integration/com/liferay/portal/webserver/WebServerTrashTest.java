@@ -108,7 +108,7 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
 			serviceContext);
 
-		MockHttpServletResponse mockHttpServletResponse =  testRequestFile(
+		MockHttpServletResponse mockHttpServletResponse = testRequestFile(
 			fileEntry, _user, false);
 
 		Assert.assertEquals(

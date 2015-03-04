@@ -123,7 +123,7 @@ public class SetupWizardUtil {
 		// Data sources
 
 		jdbcProperties = PropertiesUtil.getProperties(
-			jdbcProperties,"jdbc.default.",true);
+			jdbcProperties, "jdbc.default.", true);
 
 		DataSourceSwapper.swapCounterDataSource(jdbcProperties);
 		DataSourceSwapper.swapLiferayDataSource(jdbcProperties);

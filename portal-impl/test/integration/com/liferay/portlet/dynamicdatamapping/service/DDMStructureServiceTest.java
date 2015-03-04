@@ -272,7 +272,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testSearchByDescription() throws Exception {
-		addStructure(_CLASS_NAME_ID, StringUtil.randomString(),  "Contact");
+		addStructure(_CLASS_NAME_ID, StringUtil.randomString(), "Contact");
 		addStructure(_CLASS_NAME_ID, StringUtil.randomString(), "Event");
 
 		List<DDMStructure> structures = DDMStructureLocalServiceUtil.search(
@@ -318,7 +318,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testSearchByNameAndDescription() throws Exception {
-		addStructure(_CLASS_NAME_ID, "Contact",  "Contact");
+		addStructure(_CLASS_NAME_ID, "Contact", "Contact");
 		addStructure(_CLASS_NAME_ID, "Event", "Event");
 
 		List<DDMStructure> structures = DDMStructureLocalServiceUtil.search(
@@ -332,7 +332,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testSearchByNameOrDescription() throws Exception {
-		addStructure(_CLASS_NAME_ID, "Contact",  "Contact");
+		addStructure(_CLASS_NAME_ID, "Contact", "Contact");
 		addStructure(_CLASS_NAME_ID, "Event", "Event");
 
 		List<DDMStructure> structures = DDMStructureLocalServiceUtil.search(

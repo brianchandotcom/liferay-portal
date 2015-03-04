@@ -50,16 +50,13 @@ import org.jgroups.View;
  */
 public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 
-	public static final String JGROUPS_MANAGER_CALLBACK_THREAD_POOL =
-		"JGROUPS_MANAGER_CALLBACK_THREAD_POOL";
-
 	public JGroupsManager(
 		CacheManager cacheManager, String clusterName,
 		String channelProperties) {
 
 		_cacheManager = cacheManager;
 		_executorService = PortalExecutorManagerUtil.getPortalExecutor(
-			JGROUPS_MANAGER_CALLBACK_THREAD_POOL);
+			JGroupsManager.class.getName());
 
 		JChannel jChannel = null;
 
@@ -295,10 +292,6 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 
 	private class EhcacheJGroupsReceiver extends BaseReceiver {
 
-		public EhcacheJGroupsReceiver(ExecutorService executorService) {
-			super(executorService);
-		}
-
 		@Override
 		protected void doReceive(Message message) {
 			Object object = message.getObject();
@@ -321,6 +314,10 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 							object.getClass().getName());
 				}
 			}
+		}
+
+		private EhcacheJGroupsReceiver(ExecutorService executorService) {
+			super(executorService);
 		}
 
 	}

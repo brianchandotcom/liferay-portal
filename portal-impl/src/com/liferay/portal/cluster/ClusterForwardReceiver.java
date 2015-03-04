@@ -36,6 +36,7 @@ public class ClusterForwardReceiver extends BaseReceiver {
 		List<Address> localTransportAddresses) {
 
 		super(executorService);
+
 		_localTransportAddresses = localTransportAddresses;
 	}
 

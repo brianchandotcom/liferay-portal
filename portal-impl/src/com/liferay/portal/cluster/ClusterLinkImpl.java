@@ -39,9 +39,6 @@ import org.jgroups.JChannel;
 @DoPrivileged
 public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 
-	public static final String CLUSTER_LINK_CALLBACK_THREAD_POOL =
-		"CLUSTER_LINK_CALLBACK_THREAD_POOL";
-
 	@Override
 	public void destroy() {
 		if (!isEnabled()) {
@@ -64,7 +61,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		}
 
 		_executorService = PortalExecutorManagerUtil.getPortalExecutor(
-			CLUSTER_LINK_CALLBACK_THREAD_POOL);
+			ClusterLinkImpl.class.getName());
 
 		try {
 			initChannels();

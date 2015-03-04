@@ -73,9 +73,6 @@ public class ClusterExecutorImpl
 	extends ClusterBase
 	implements ClusterExecutor, PortalInetSocketAddressEventListener {
 
-	public static final String CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL =
-		"CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL";
-
 	@Override
 	public void addClusterEventListener(
 		ClusterEventListener clusterEventListener) {
@@ -205,7 +202,7 @@ public class ClusterExecutorImpl
 		}
 
 		_executorService = PortalExecutorManagerUtil.getPortalExecutor(
-			CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL);
+			ClusterExecutorImpl.class.getName());
 
 		PortalUtil.addPortalInetSocketAddressEventListener(this);
 

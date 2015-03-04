@@ -82,7 +82,7 @@ public class MVCCPortalCacheTest {
 				_PORTAL_CACHE_NAME, 16));
 
 		Serializable key = _KEY_1;
-		Object value = new MockMVCCModel(_VERSION_1);
+		MVCCModel value = new MockMVCCModel(_VERSION_1);
 
 		mvccPortalCache.put(key, value);
 		mvccPortalCache.put(key, value, 10);

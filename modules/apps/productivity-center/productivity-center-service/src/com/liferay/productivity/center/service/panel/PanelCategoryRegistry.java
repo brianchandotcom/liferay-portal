@@ -14,6 +14,7 @@
 
 package com.liferay.productivity.center.service.panel;
 
+import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.productivity.center.panel.PanelCategory;
@@ -24,6 +25,7 @@ import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -47,8 +49,20 @@ public class PanelCategoryRegistry {
 		return panelCategories;
 	}
 
+	public PanelCategory getPanelCategory(String panelCategoryKey) {
+		PanelCategory panelCategory =
+			_panelCategoryServiceTrackerMap.getService(panelCategoryKey);
+
+		if (panelCategory == null) {
+			throw new IllegalArgumentException(
+				"No panel category found with key " + panelCategoryKey);
+		}
+
+		return panelCategory;
+	}
+
 	@Activate
-	protected void activate(BundleContext bundleContext)
+	protected void activate(final BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
@@ -56,13 +70,41 @@ public class PanelCategoryRegistry {
 			PanelEntryServiceReferenceMapper.<PanelCategory>create());
 
 		_serviceTrackerMap.open();
+
+		_panelCategoryServiceTrackerMap =
+			ServiceTrackerMapFactory.singleValueMap(
+				bundleContext, PanelCategory.class, null,
+				new ServiceReferenceMapper<String, PanelCategory>() {
+
+					@Override
+					public void map(
+						ServiceReference<PanelCategory> serviceReference,
+						Emitter<String> emitter) {
+
+						PanelCategory panelCategory = bundleContext.getService(
+							serviceReference);
+
+						try {
+							emitter.emit(panelCategory.getKey());
+						}
+						finally {
+							bundleContext.ungetService(serviceReference);
+						}
+					}
+
+				});
+
+		_panelCategoryServiceTrackerMap.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
+		_panelCategoryServiceTrackerMap.close();
 	}
 
+	private ServiceTrackerMap<String, PanelCategory>
+		_panelCategoryServiceTrackerMap;
 	private ServiceTrackerMap<String, List<PanelCategory>> _serviceTrackerMap;
 
 }

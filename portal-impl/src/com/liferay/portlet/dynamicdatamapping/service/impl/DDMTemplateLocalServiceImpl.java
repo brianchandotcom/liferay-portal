@@ -1436,9 +1436,11 @@ public class DDMTemplateLocalServiceImpl
 			catch (PortalException pe) {
 				throw new TemplateScriptException(pe);
 			}
+
+			script = DDMXMLUtil.formatXML(script);
 		}
 
-		return DDMXMLUtil.formatXML(script);
+		return script;
 	}
 
 	protected String getNextVersion(String version, boolean majorVersion) {

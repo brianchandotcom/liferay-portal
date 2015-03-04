@@ -18,7 +18,7 @@ import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.productivity.center.panel.PanelCategory;
-import com.liferay.productivity.center.service.util.PanelEntryServiceReferenceMapper;
+import com.liferay.productivity.center.service.util.ParentPanelCategoryServiceReferenceMapper;
 
 import java.util.Collections;
 import java.util.List;
@@ -37,10 +37,11 @@ import org.osgi.service.component.annotations.Deactivate;
 public class PanelCategoryRegistry {
 
 	public Iterable<PanelCategory> getPanelCategories(
-		PanelCategory panelCategory) {
+		PanelCategory parentPanelCategory) {
 
-		Iterable<PanelCategory> panelCategories = _serviceTrackerMap.getService(
-			panelCategory.getKey());
+		Iterable<PanelCategory> panelCategories =
+			_childPanelCategoryServiceTrackerMap.getService(
+				parentPanelCategory.getKey());
 
 		if (panelCategories == null) {
 			return Collections.emptyList();
@@ -65,11 +66,12 @@ public class PanelCategoryRegistry {
 	protected void activate(final BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
-			bundleContext, PanelCategory.class, "(panel.category=*)",
-			PanelEntryServiceReferenceMapper.<PanelCategory>create());
+		_childPanelCategoryServiceTrackerMap =
+			ServiceTrackerMapFactory.multiValueMap(
+				bundleContext, PanelCategory.class, "(panel.category=*)",
+			ParentPanelCategoryServiceReferenceMapper.<PanelCategory>create());
 
-		_serviceTrackerMap.open();
+		_childPanelCategoryServiceTrackerMap.open();
 
 		_panelCategoryServiceTrackerMap =
 			ServiceTrackerMapFactory.singleValueMap(
@@ -99,12 +101,13 @@ public class PanelCategoryRegistry {
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
+		_childPanelCategoryServiceTrackerMap.close();
 		_panelCategoryServiceTrackerMap.close();
 	}
 
+	private ServiceTrackerMap<String, List<PanelCategory>>
+		_childPanelCategoryServiceTrackerMap;
 	private ServiceTrackerMap<String, PanelCategory>
 		_panelCategoryServiceTrackerMap;
-	private ServiceTrackerMap<String, List<PanelCategory>> _serviceTrackerMap;
 
 }

@@ -18,7 +18,7 @@ import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.productivity.center.panel.PanelApp;
 import com.liferay.productivity.center.panel.PanelCategory;
-import com.liferay.productivity.center.service.util.PanelEntryServiceReferenceMapper;
+import com.liferay.productivity.center.service.util.ParentPanelCategoryServiceReferenceMapper;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,9 +35,9 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true, service = PanelAppRegistry.class)
 public class PanelAppRegistry {
 
-	public Iterable<PanelApp> getPanelApps(PanelCategory panelCategory) {
+	public Iterable<PanelApp> getPanelApps(PanelCategory parentPanelCategory) {
 		Iterable<PanelApp> panelItems = _serviceTrackerMap.getService(
-			panelCategory.getKey());
+			parentPanelCategory.getKey());
 
 		if (panelItems == null) {
 			return Collections.emptyList();
@@ -52,7 +52,7 @@ public class PanelAppRegistry {
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
 			bundleContext, PanelApp.class, "(panel.category=*)",
-			PanelEntryServiceReferenceMapper.<PanelApp>create());
+			ParentPanelCategoryServiceReferenceMapper.<PanelApp>create());
 
 		_serviceTrackerMap.open();
 	}

@@ -1446,47 +1446,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
 					!trimmedLine.startsWith(StringPool.STAR)) {
 
-					String strippedQuotesLine = stripQuotes(
-						trimmedLine, CharPool.QUOTE);
-
-					for (int x = 0;;) {
-						x = strippedQuotesLine.indexOf(StringPool.EQUAL, x + 1);
-
-						if (x == -1) {
-							break;
-						}
-
-						char c = strippedQuotesLine.charAt(x - 1);
-
-						if (Character.isLetterOrDigit(c)) {
-							line = StringUtil.replace(line, c + "=", c + " =");
-
-							break;
-						}
-
-						if (x == (strippedQuotesLine.length() - 1)) {
-							break;
-						}
-
-						c = strippedQuotesLine.charAt(x + 1);
-
-						if (Character.isLetterOrDigit(c)) {
-							line = StringUtil.replace(line, "=" + c, "= " + c);
-
-							break;
-						}
-					}
-
-					if (!line.contains(StringPool.DOUBLE_SLASH)) {
-						while (trimmedLine.contains(StringPool.TAB)) {
-							line = StringUtil.replaceLast(
-								line, StringPool.TAB, StringPool.SPACE);
-
-							trimmedLine = StringUtil.replaceLast(
-								trimmedLine, StringPool.TAB, StringPool.SPACE);
-						}
-					}
-
 					if (line.contains(StringPool.TAB + StringPool.SPACE) &&
 						!previousLine.endsWith("&&") &&
 						!previousLine.endsWith("||") &&
@@ -1505,97 +1464,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							StringPool.TAB);
 					}
 
-					if (line.contains(StringPool.SPACE + StringPool.TAB)) {
-						line = StringUtil.replace(
-							line, StringPool.SPACE + StringPool.TAB,
-							StringPool.TAB);
-					}
+					String strippedQuotesLine = stripQuotes(
+						trimmedLine, CharPool.QUOTE);
 
-					while (trimmedLine.contains(StringPool.DOUBLE_SPACE) &&
-						   !trimmedLine.contains(
-							   StringPool.QUOTE + StringPool.DOUBLE_SPACE) &&
-						   !fileName.contains("Test")) {
-
-						line = StringUtil.replaceLast(
-							line, StringPool.DOUBLE_SPACE, StringPool.SPACE);
-
-						trimmedLine = StringUtil.replaceLast(
-							trimmedLine, StringPool.DOUBLE_SPACE,
-							StringPool.SPACE);
-					}
-
-					if (!line.contains(StringPool.AT) &&
-						!line.contains(StringPool.DOUBLE_SLASH) &&
-						!line.contains(StringPool.QUOTE)) {
-
-						int pos = line.indexOf(") ");
-
-						if (pos != -1) {
-							String linePart = line.substring(pos + 2);
-
-							if (Character.isLetter(linePart.charAt(0)) &&
-								!linePart.startsWith("default") &&
-								!linePart.startsWith("instanceof") &&
-								!linePart.startsWith("throws")) {
-
-								line = StringUtil.replaceLast(
-									line, StringPool.SPACE + linePart,
-									linePart);
-							}
-						}
-
-						if ((trimmedLine.startsWith("private ") ||
-							 trimmedLine.startsWith("protected ") ||
-							 trimmedLine.startsWith("public ")) &&
-							!line.contains(StringPool.EQUAL) &&
-							line.contains(" (")) {
-
-							line = StringUtil.replace(line, " (", "(");
-						}
-
-						if (line.contains(" [")) {
-							line = StringUtil.replace(line, " [", "[");
-						}
-
-						for (int x = -1;;) {
-							int posComma = line.indexOf(
-								StringPool.COMMA, x + 1);
-							int posSemicolon = line.indexOf(
-								StringPool.SEMICOLON, x + 1);
-
-							if ((posComma == -1) && (posSemicolon == -1)) {
-								break;
-							}
-
-							x = Math.min(posComma, posSemicolon);
-
-							if (x == -1) {
-								x = Math.max(posComma, posSemicolon);
-							}
-
-							if (line.length() > (x + 1)) {
-								char nextChar = line.charAt(x + 1);
-
-								if ((nextChar != CharPool.APOSTROPHE) &&
-									(nextChar != CharPool.CLOSE_PARENTHESIS) &&
-									(nextChar != CharPool.SPACE) &&
-									(nextChar != CharPool.STAR)) {
-
-									line = StringUtil.insert(
-										line, StringPool.SPACE, x + 1);
-								}
-							}
-
-							if (x > 0) {
-								char previousChar = line.charAt(x - 1);
-
-								if (previousChar == CharPool.SPACE) {
-									line = line.substring(0, x - 1).concat(
-										line.substring(x));
-								}
-							}
-						}
-					}
+					line = formatWhitespace(
+						line, fileName, trimmedLine, strippedQuotesLine);
 
 					if ((line.contains(" && ") || line.contains(" || ")) &&
 						line.endsWith(StringPool.OPEN_PARENTHESIS)) {
@@ -1978,6 +1851,143 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return newContent;
+	}
+
+	protected String formatWhitespace(
+		String line, String fileName, String trimmedLine,
+		String strippedQuotesLine) {
+
+		for (int x = 0;;) {
+			x = strippedQuotesLine.indexOf(StringPool.EQUAL, x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			char c = strippedQuotesLine.charAt(x - 1);
+
+			if (Character.isLetterOrDigit(c)) {
+				line = StringUtil.replace(line, c + "=", c + " =");
+
+				break;
+			}
+
+			if (x == (strippedQuotesLine.length() - 1)) {
+				break;
+			}
+
+			c = strippedQuotesLine.charAt(x + 1);
+
+			if (Character.isLetterOrDigit(c)) {
+				line = StringUtil.replace(line, "=" + c, "= " + c);
+
+				break;
+			}
+		}
+
+		if (!line.contains(StringPool.DOUBLE_SLASH)) {
+			while (trimmedLine.contains(StringPool.TAB)) {
+				line = StringUtil.replaceLast(
+					line, StringPool.TAB, StringPool.SPACE);
+
+				trimmedLine = StringUtil.replaceLast(
+					trimmedLine, StringPool.TAB, StringPool.SPACE);
+			}
+		}
+
+		if (line.contains(StringPool.SPACE + StringPool.TAB)) {
+			line = StringUtil.replace(
+				line, StringPool.SPACE + StringPool.TAB,
+				StringPool.TAB);
+		}
+
+		while (trimmedLine.contains(StringPool.DOUBLE_SPACE) &&
+			   !trimmedLine.contains(
+				   StringPool.QUOTE + StringPool.DOUBLE_SPACE) &&
+			   !fileName.contains("Test")) {
+
+			line = StringUtil.replaceLast(
+				line, StringPool.DOUBLE_SPACE, StringPool.SPACE);
+
+			trimmedLine = StringUtil.replaceLast(
+				trimmedLine, StringPool.DOUBLE_SPACE,
+				StringPool.SPACE);
+		}
+
+		if (!line.contains(StringPool.AT) &&
+			!line.contains(StringPool.DOUBLE_SLASH) &&
+			!line.contains(StringPool.QUOTE)) {
+
+			int pos = line.indexOf(") ");
+
+			if (pos != -1) {
+				String linePart = line.substring(pos + 2);
+
+				if (Character.isLetter(linePart.charAt(0)) &&
+					!linePart.startsWith("default") &&
+					!linePart.startsWith("instanceof") &&
+					!linePart.startsWith("throws")) {
+
+					line = StringUtil.replaceLast(
+						line, StringPool.SPACE + linePart,
+						linePart);
+				}
+			}
+
+			if ((trimmedLine.startsWith("private ") ||
+				 trimmedLine.startsWith("protected ") ||
+				 trimmedLine.startsWith("public ")) &&
+				!line.contains(StringPool.EQUAL) &&
+				line.contains(" (")) {
+
+				line = StringUtil.replace(line, " (", "(");
+			}
+
+			if (line.contains(" [")) {
+				line = StringUtil.replace(line, " [", "[");
+			}
+
+			for (int x = -1;;) {
+				int posComma = line.indexOf(
+					StringPool.COMMA, x + 1);
+				int posSemicolon = line.indexOf(
+					StringPool.SEMICOLON, x + 1);
+
+				if ((posComma == -1) && (posSemicolon == -1)) {
+					break;
+				}
+
+				x = Math.min(posComma, posSemicolon);
+
+				if (x == -1) {
+					x = Math.max(posComma, posSemicolon);
+				}
+
+				if (line.length() > (x + 1)) {
+					char nextChar = line.charAt(x + 1);
+
+					if ((nextChar != CharPool.APOSTROPHE) &&
+						(nextChar != CharPool.CLOSE_PARENTHESIS) &&
+						(nextChar != CharPool.SPACE) &&
+						(nextChar != CharPool.STAR)) {
+
+						line = StringUtil.insert(
+							line, StringPool.SPACE, x + 1);
+					}
+				}
+
+				if (x > 0) {
+					char previousChar = line.charAt(x - 1);
+
+					if (previousChar == CharPool.SPACE) {
+						line = line.substring(0, x - 1).concat(
+							line.substring(x));
+					}
+				}
+			}
+		}
+
+		return line;
 	}
 
 	protected String getCombinedLinesContent(

@@ -254,7 +254,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		if (ownerResourceBlockIds.size() <
 				PropsValues.
-					PERMISSIONS_INLINE_SQL_RESOURCE_BLOCK_QUERY_THRESHHOLD) {
+					PERMISSIONS_INLINE_SQL_RESOURCE_BLOCK_QUERY_THRESHOLD) {
 
 			return StringUtil.merge(ownerResourceBlockIds);
 		}
@@ -379,7 +379,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		if (userResourceBlockIds.size() <
 				PropsValues.
-					PERMISSIONS_INLINE_SQL_RESOURCE_BLOCK_QUERY_THRESHHOLD) {
+					PERMISSIONS_INLINE_SQL_RESOURCE_BLOCK_QUERY_THRESHOLD) {
 
 			return StringUtil.merge(userResourceBlockIds);
 		}

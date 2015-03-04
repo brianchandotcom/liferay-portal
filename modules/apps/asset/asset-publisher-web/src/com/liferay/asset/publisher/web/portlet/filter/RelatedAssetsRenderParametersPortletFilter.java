@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.relatedassets.filter;
+package com.liferay.asset.publisher.web.portlet.filter;
 
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -29,15 +30,25 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.FilterConfig;
+import javax.portlet.filter.PortletFilter;
 import javax.portlet.filter.RenderFilter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Minhchau Dang
  * @author Preston Crary
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + AssetPublisherPortletKeys.RELATED_ASSETS
+	},
+	service = PortletFilter.class
+)
 public class RelatedAssetsRenderParametersPortletFilter
 	implements RenderFilter {
 

@@ -2270,15 +2270,6 @@
 	<user-attribute>
 		<name>user.business-info.online.uri</name>
 	</user-attribute>
-	<filter>
-		<filter-name>Related Assets Render Parameters Portlet Filter</filter-name>
-		<filter-class>com.liferay.portlet.relatedassets.filter.RelatedAssetsRenderParametersPortletFilter</filter-class>
-		<lifecycle>RENDER_PHASE</lifecycle>
-	</filter>
-	<filter-mapping>
-		<filter-name>Related Assets Render Parameters Portlet Filter</filter-name>
-		<portlet-name>175</portlet-name>
-	</filter-mapping>
 	<public-render-parameter>
 		<identifier>categoryId</identifier>
 		<qname xmlns:x="http://www.liferay.com/public-render-parameters">x:categoryId</qname>

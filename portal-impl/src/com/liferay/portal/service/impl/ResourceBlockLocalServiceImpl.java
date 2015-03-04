@@ -374,11 +374,9 @@ public class ResourceBlockLocalServiceImpl
 		long actionIdLong = getActionId(name, actionId);
 
 		for (int i = 0; i < roleIds.length; i++) {
-			long actionIds = resourceBlockPermissionsContainer.getActionIds(
-				roleIds[i]);
-
 			hasResourcePermissions[i] =
-				((actionIds & actionIdLong) == actionIdLong);
+				resourceBlockPermissionsContainer.hasPermission(
+					roleIds[i], actionIdLong);
 		}
 
 		return hasResourcePermissions;

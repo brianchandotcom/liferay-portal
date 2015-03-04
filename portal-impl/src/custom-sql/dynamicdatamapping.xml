@@ -61,7 +61,7 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.countByC_G_C_C_N_D_T_M_L">
+	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.countByC_G_C_C_R_N_D_T_M_L">
 		<![CDATA[
 			SELECT
 				COUNT(DDMTemplate.templateId) AS COUNT_VALUE
@@ -72,6 +72,7 @@
 				[$GROUP_ID$]
 				[$CLASSNAME_ID$]
 				[$CLASS_PK$]
+				(resourceClassNameId = ?) AND
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -105,7 +106,7 @@
 				DDMTemplate.templateId DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByC_G_C_C_N_D_T_M_L">
+	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByC_G_C_C_R_N_D_T_M_L">
 		<![CDATA[
 			SELECT
 				{DDMTemplate.*}
@@ -116,6 +117,7 @@
 				[$GROUP_ID$]
 				[$CLASSNAME_ID$]
 				[$CLASS_PK$]
+				(resourceClassNameId = ?) AND
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

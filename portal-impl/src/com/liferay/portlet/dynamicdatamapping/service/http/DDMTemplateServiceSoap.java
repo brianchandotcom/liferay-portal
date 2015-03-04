@@ -586,6 +586,8 @@ public class DDMTemplateServiceSoap {
 	* @param classNameId the primary key of the class name for template's
 	related model
 	* @param classPK the primary key of the template's related entity
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
@@ -603,14 +605,15 @@ public class DDMTemplateServiceSoap {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] search(
 		long companyId, long groupId, long classNameId, long classPK,
-		java.lang.String keywords, java.lang.String type,
-		java.lang.String mode, int start, int end,
+		long resourceClassNameId, java.lang.String keywords,
+		java.lang.String type, java.lang.String mode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
 				DDMTemplateServiceUtil.search(companyId, groupId, classNameId,
-					classPK, keywords, type, mode, start, end, orderByComparator);
+					classPK, resourceClassNameId, keywords, type, mode, start,
+					end, orderByComparator);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}
@@ -641,6 +644,8 @@ public class DDMTemplateServiceSoap {
 	* @param classNameId the primary key of the class name for template's
 	related model
 	* @param classPK the primary key of the template's related entity
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param name the name keywords (optionally <code>null</code>)
 	* @param description the description keywords (optionally
 	<code>null</code>)
@@ -664,16 +669,17 @@ public class DDMTemplateServiceSoap {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] search(
 		long companyId, long groupId, long classNameId, long classPK,
-		java.lang.String name, java.lang.String description,
-		java.lang.String type, java.lang.String mode,
-		java.lang.String language, boolean andOperator, int start, int end,
+		long resourceClassNameId, java.lang.String name,
+		java.lang.String description, java.lang.String type,
+		java.lang.String mode, java.lang.String language, boolean andOperator,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
 				DDMTemplateServiceUtil.search(companyId, groupId, classNameId,
-					classPK, name, description, type, mode, language,
-					andOperator, start, end, orderByComparator);
+					classPK, resourceClassNameId, name, description, type,
+					mode, language, andOperator, start, end, orderByComparator);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}
@@ -704,6 +710,8 @@ public class DDMTemplateServiceSoap {
 	* @param classNameIds the primary keys of the entity's instances the
 	templates are related to
 	* @param classPKs the primary keys of the template's related entities
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
@@ -721,15 +729,15 @@ public class DDMTemplateServiceSoap {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] search(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
-		java.lang.String keywords, java.lang.String type,
-		java.lang.String mode, int start, int end,
+		long resourceClassNameId, java.lang.String keywords,
+		java.lang.String type, java.lang.String mode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
 				DDMTemplateServiceUtil.search(companyId, groupIds,
-					classNameIds, classPKs, keywords, type, mode, start, end,
-					orderByComparator);
+					classNameIds, classPKs, resourceClassNameId, keywords,
+					type, mode, start, end, orderByComparator);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}
@@ -760,6 +768,8 @@ public class DDMTemplateServiceSoap {
 	* @param classNameIds the primary keys of the entity's instances the
 	templates are related to
 	* @param classPKs the primary keys of the template's related entities
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param name the name keywords (optionally <code>null</code>)
 	* @param description the description keywords (optionally
 	<code>null</code>)
@@ -783,16 +793,18 @@ public class DDMTemplateServiceSoap {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] search(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
-		java.lang.String name, java.lang.String description,
-		java.lang.String type, java.lang.String mode,
-		java.lang.String language, boolean andOperator, int start, int end,
+		long resourceClassNameId, java.lang.String name,
+		java.lang.String description, java.lang.String type,
+		java.lang.String mode, java.lang.String language, boolean andOperator,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
 				DDMTemplateServiceUtil.search(companyId, groupIds,
-					classNameIds, classPKs, name, description, type, mode,
-					language, andOperator, start, end, orderByComparator);
+					classNameIds, classPKs, resourceClassNameId, name,
+					description, type, mode, language, andOperator, start, end,
+					orderByComparator);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}
@@ -813,6 +825,8 @@ public class DDMTemplateServiceSoap {
 	* @param classNameId the primary key of the class name for template's
 	related model
 	* @param classPK the primary key of the template's related entity
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
@@ -824,11 +838,13 @@ public class DDMTemplateServiceSoap {
 	* @return the number of matching templates
 	*/
 	public static int searchCount(long companyId, long groupId,
-		long classNameId, long classPK, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode) throws RemoteException {
+		long classNameId, long classPK, long resourceClassNameId,
+		java.lang.String keywords, java.lang.String type, java.lang.String mode)
+		throws RemoteException {
 		try {
 			int returnValue = DDMTemplateServiceUtil.searchCount(companyId,
-					groupId, classNameId, classPK, keywords, type, mode);
+					groupId, classNameId, classPK, resourceClassNameId,
+					keywords, type, mode);
 
 			return returnValue;
 		}
@@ -848,6 +864,8 @@ public class DDMTemplateServiceSoap {
 	* @param classNameId the primary key of the class name for template's
 	related model
 	* @param classPK the primary key of the template's related entity
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param name the name keywords (optionally <code>null</code>)
 	* @param description the description keywords (optionally
 	<code>null</code>)
@@ -865,14 +883,15 @@ public class DDMTemplateServiceSoap {
 	* @return the number of matching templates
 	*/
 	public static int searchCount(long companyId, long groupId,
-		long classNameId, long classPK, java.lang.String name,
-		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator)
+		long classNameId, long classPK, long resourceClassNameId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, boolean andOperator)
 		throws RemoteException {
 		try {
 			int returnValue = DDMTemplateServiceUtil.searchCount(companyId,
-					groupId, classNameId, classPK, name, description, type,
-					mode, language, andOperator);
+					groupId, classNameId, classPK, resourceClassNameId, name,
+					description, type, mode, language, andOperator);
 
 			return returnValue;
 		}
@@ -893,6 +912,8 @@ public class DDMTemplateServiceSoap {
 	* @param classNameIds the primary keys of the entity's instances the
 	templates are related to
 	* @param classPKs the primary keys of the template's related entities
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
@@ -904,11 +925,13 @@ public class DDMTemplateServiceSoap {
 	* @return the number of matching templates
 	*/
 	public static int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, long[] classPKs, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode) throws RemoteException {
+		long[] classNameIds, long[] classPKs, long resourceClassNameId,
+		java.lang.String keywords, java.lang.String type, java.lang.String mode)
+		throws RemoteException {
 		try {
 			int returnValue = DDMTemplateServiceUtil.searchCount(companyId,
-					groupIds, classNameIds, classPKs, keywords, type, mode);
+					groupIds, classNameIds, classPKs, resourceClassNameId,
+					keywords, type, mode);
 
 			return returnValue;
 		}
@@ -928,6 +951,8 @@ public class DDMTemplateServiceSoap {
 	* @param classNameIds the primary keys of the entity's instances the
 	templates are related to
 	* @param classPKs the primary keys of the template's related entities
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param name the name keywords (optionally <code>null</code>)
 	* @param description the description keywords (optionally
 	<code>null</code>)
@@ -945,14 +970,15 @@ public class DDMTemplateServiceSoap {
 	* @return the number of matching templates
 	*/
 	public static int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, long[] classPKs, java.lang.String name,
-		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator)
+		long[] classNameIds, long[] classPKs, long resourceClassNameId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, boolean andOperator)
 		throws RemoteException {
 		try {
 			int returnValue = DDMTemplateServiceUtil.searchCount(companyId,
-					groupIds, classNameIds, classPKs, name, description, type,
-					mode, language, andOperator);
+					groupIds, classNameIds, classPKs, resourceClassNameId,
+					name, description, type, mode, language, andOperator);
 
 			return returnValue;
 		}

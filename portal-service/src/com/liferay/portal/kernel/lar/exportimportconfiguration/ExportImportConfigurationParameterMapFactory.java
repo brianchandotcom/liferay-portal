@@ -231,7 +231,7 @@ public class ExportImportConfigurationParameterMapFactory {
 			PortletDataHandlerKeys.PORTLET_DATA,
 			new String[] {portletData.toString()});
 
-		if (portletDataAll) {
+		if (portletDataAll == null) {
 			portletDataAll = Boolean.FALSE;
 		}
 
@@ -255,7 +255,7 @@ public class ExportImportConfigurationParameterMapFactory {
 			PortletDataHandlerKeys.THEME_REFERENCE,
 			new String[] {themeReference.toString()});
 
-		if (updateLastPublishDate) {
+		if (updateLastPublishDate == null) {
 			updateLastPublishDate = Boolean.TRUE;
 		}
 

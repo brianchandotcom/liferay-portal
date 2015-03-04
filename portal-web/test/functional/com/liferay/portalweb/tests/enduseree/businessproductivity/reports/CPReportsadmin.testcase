@@ -33,7 +33,7 @@
 
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute function="Click" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT" value1="Add Report" />
 
 		<execute function="Select" locator1="CPReportsadminAddreportentry#REPORT_FORMAT_SELECT" value1="csv" />

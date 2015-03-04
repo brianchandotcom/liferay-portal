@@ -14,7 +14,7 @@
 	<command name="addReportEntry">
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute function="Click" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT" value1="Add Report" />
 
 		<execute function="Select" locator1="CPReportsadminAddreportentry#REPORT_FORMAT_SELECT" value1="${reportFormat}" />
@@ -29,7 +29,7 @@
 	<command name="addScheduleEntry">
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute function="Click" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_MENULIST_ADD_SCHEDULE" value1="Add Schedule" />
 
 		<var method="selenium#getValue(//span[@class='lfr-input-time ']/input)" name="time" />
@@ -126,7 +126,7 @@
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
 		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
-		<execute function="AssertClick" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_ACTIONS" value1="Actions" />
+		<execute function="Click" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_ACTIONS" />
 		<execute function="AssertClickNoError" locator1="CPReportsadminViewreportentry#ENTRY_FILE_MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" locator1="CPReportsadminViewreportentry#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -137,7 +137,7 @@
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
 		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
-		<execute function="AssertClick" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_ACTIONS" value1="Actions" />
+		<execute function="Click" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="CPReportsadminViewreportentry#ENTRY_FILE_MENULIST_DELIVER_REPORT" value1="Deliver Report" />
 
 		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentryDeliverreport#REPORT_NAME" value1="Report Name ${reportsFileName}" />
@@ -151,7 +151,7 @@
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
 		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
-		<execute function="AssertClick" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_ACTIONS" value1="Actions" />
+		<execute function="Click" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="CPReportsadminViewreportentry#ENTRY_FILE_MENULIST_DOWNLOAD" value1="Download" />
 		<execute function="Pause" locator1="2000" />
 
@@ -248,7 +248,7 @@ Sincerely,<br />
 		<while>
 			<condition function="IsElementPresent" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS_1" />
 			<then>
-				<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+				<execute function="Click" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS_1" />
 				<execute function="AssertClickNoError" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_MENULIST_DELETE" value1="Delete" />
 				<execute function="Confirm" locator1="CPReportsadmin#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="CPReportsadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -266,7 +266,7 @@ Sincerely,<br />
 		<while>
 			<condition function="IsElementPresent" locator1="CPReportsadmin#REPORTS_ENTRY_TABLE_ACTIONS_1" />
 			<then>
-				<execute function="AssertClick" locator1="CPReportsadmin#REPORTS_ENTRY_TABLE_ACTIONS_1" value1="Actions" />
+				<execute function="Click" locator1="CPReportsadmin#REPORTS_ENTRY_TABLE_ACTIONS_1" />
 				<execute function="AssertClickNoError" locator1="CPReportsadmin#REPORTS_ENTRY_MENULIST_DELETE" value1="Delete" />
 				<execute function="Confirm" locator1="CPReportsadmin#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="CPReportsadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -286,7 +286,7 @@ Sincerely,<br />
 		<while>
 			<condition function="IsElementPresent" locator1="CPReportsadmin#SOURCES_SOURCE_TABLE_ACTIONS_1" />
 			<then>
-				<execute function="AssertClick" locator1="CPReportsadmin#SOURCES_SOURCE_TABLE_ACTIONS_1" value1="Actions" />
+				<execute function="Click" locator1="CPReportsadmin#SOURCES_SOURCE_TABLE_ACTIONS_1" />
 				<execute function="AssertClickNoError" locator1="CPReportsadmin#SOURCES_SOURCE_MENULIST_DELETE" value1="Delete" />
 				<execute function="Confirm" locator1="CPReportsadmin#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="CPReportsadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />

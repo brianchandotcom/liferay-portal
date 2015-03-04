@@ -14,6 +14,7 @@
 
 package com.liferay.bookmarks.lar;
 
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
@@ -41,6 +43,12 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jorge Ferrer
  * @author Bruno Farache
@@ -49,11 +57,20 @@ import javax.portlet.PortletPreferences;
  * @author Mate Thurzo
  * @author Daniel Kocsis
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
+		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN
+	},
+	service = PortletDataHandler.class
+)
 public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "bookmarks";
 
-	public BookmarksPortletDataHandler() {
+	@Activate
+	protected void activate() {
 		setDataPortletPreferences("rootFolderId");
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(BookmarksEntry.class),
@@ -238,6 +255,10 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		return portletPreferences;
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 }

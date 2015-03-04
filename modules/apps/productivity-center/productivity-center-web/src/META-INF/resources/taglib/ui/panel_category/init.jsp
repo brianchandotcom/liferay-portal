@@ -16,8 +16,8 @@
 
 
 <%@ page import="com.liferay.productivity.center.panel.model.PanelApp" %><%@
-page import="com.liferay.productivity.center.service.panel.model.PanelAppRegistry" %><%@
-page import="com.liferay.productivity.center.panel.model.PanelCategory" %>
+page import="com.liferay.productivity.center.panel.model.PanelCategory" %><%@
+page import="com.liferay.productivity.center.service.panel.model.PanelAppRegistry" %>
 
 <%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 <%@ taglib uri="http://liferay.com/tld/productivity-center/ui" prefix="productivity-center-ui" %>

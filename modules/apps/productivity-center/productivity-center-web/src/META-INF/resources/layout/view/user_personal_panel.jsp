@@ -1,4 +1,3 @@
-<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -27,7 +26,7 @@ String portletId = ParamUtil.getString(request, "p_p_id");
 			<productivity-center-ui:panel servletContext="<%= application %>" />
 		</aui:col>
 		<aui:col width="75">
-			<productivity-center-ui:panel-content portletId="<%= portletId %>" servletContext="<%= application %>"/>
+			<productivity-center-ui:panel-content portletId="<%= portletId %>" servletContext="<%= application %>" />
 		</aui:col>
 	</aui:row>
 </aui:container>

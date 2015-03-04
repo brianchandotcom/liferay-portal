@@ -17,7 +17,6 @@ package com.liferay.portal.cluster;
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.cluster.Address;
-import com.liferay.portal.kernel.cluster.ClusterMessageType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -174,7 +173,6 @@ public class ClusterRequestReceiver extends BaseReceiver {
 
 			if (newMember) {
 				responsePayload = ClusterRequest.createClusterRequest(
-					ClusterMessageType.UPDATE,
 					_clusterExecutorImpl.getLocalClusterNode());
 			}
 		}

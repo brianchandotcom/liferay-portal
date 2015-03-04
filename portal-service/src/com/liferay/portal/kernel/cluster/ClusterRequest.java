@@ -30,12 +30,10 @@ import java.util.Set;
 public class ClusterRequest implements Serializable {
 
 	public static ClusterRequest createClusterRequest(
-		ClusterMessageType clusterMessageType,
 		ClusterNode originatingClusterNode) {
 
 		ClusterRequest clusterRequest = new ClusterRequest();
 
-		clusterRequest.setClusterMessageType(clusterMessageType);
 		clusterRequest.setMulticast(true);
 		clusterRequest.setPayload(originatingClusterNode);
 		clusterRequest.setSkipLocal(true);
@@ -55,7 +53,6 @@ public class ClusterRequest implements Serializable {
 
 		ClusterRequest clusterRequest = new ClusterRequest();
 
-		clusterRequest.setClusterMessageType(ClusterMessageType.EXECUTE);
 		clusterRequest.setPayload(methodHandler);
 		clusterRequest.setMulticast(true);
 		clusterRequest.setSkipLocal(skipLocal);
@@ -70,7 +67,6 @@ public class ClusterRequest implements Serializable {
 		ClusterRequest clusterRequest = new ClusterRequest();
 
 		clusterRequest.addTargetClusterNodeIds(targetClusterNodeIds);
-		clusterRequest.setClusterMessageType(ClusterMessageType.EXECUTE);
 		clusterRequest.setPayload(methodHandler);
 		clusterRequest.setMulticast(false);
 		clusterRequest.setSkipLocal(false);
@@ -87,10 +83,6 @@ public class ClusterRequest implements Serializable {
 		for (String targetClusterNodeId : targetClusterNodeIds) {
 			_targetClusterNodeIds.add(targetClusterNodeId);
 		}
-	}
-
-	public ClusterMessageType getClusterMessageType() {
-		return _clusterMessageType;
 	}
 
 	public Serializable getPayload() {
@@ -117,10 +109,6 @@ public class ClusterRequest implements Serializable {
 		return _skipLocal;
 	}
 
-	public void setClusterMessageType(ClusterMessageType clusterMessageType) {
-		_clusterMessageType = clusterMessageType;
-	}
-
 	public void setFireAndForget(boolean fireAndForget) {
 		_fireAndForget = fireAndForget;
 	}
@@ -143,11 +131,9 @@ public class ClusterRequest implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(9);
 
-		sb.append("{clusterMessageType=");
-		sb.append(_clusterMessageType);
-		sb.append(", multicast=");
+		sb.append("{multicast=");
 		sb.append(_multicast);
 		sb.append(", payload=");
 		sb.append(_payload);
@@ -163,7 +149,6 @@ public class ClusterRequest implements Serializable {
 	private ClusterRequest() {
 	}
 
-	private ClusterMessageType _clusterMessageType;
 	private boolean _fireAndForget;
 	private boolean _multicast;
 	private Serializable _payload;

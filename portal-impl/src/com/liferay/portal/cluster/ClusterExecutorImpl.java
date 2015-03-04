@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterException;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
-import com.liferay.portal.kernel.cluster.ClusterMessageType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -263,7 +262,7 @@ public class ClusterExecutorImpl
 			memberJoined(_localAddress, _localClusterNode);
 
 			ClusterRequest clusterRequest = ClusterRequest.createClusterRequest(
-				ClusterMessageType.UPDATE, _localClusterNode);
+				_localClusterNode);
 
 			_controlJChannel.send(null, clusterRequest);
 		}
@@ -489,7 +488,7 @@ public class ClusterExecutorImpl
 
 	protected void sendNotifyRequest() {
 		ClusterRequest clusterRequest = ClusterRequest.createClusterRequest(
-			ClusterMessageType.NOTIFY, _localClusterNode);
+			_localClusterNode);
 
 		try {
 			_controlJChannel.send(null, clusterRequest);

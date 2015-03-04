@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterEventType;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
-import com.liferay.portal.kernel.cluster.ClusterMessageType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
@@ -472,8 +471,8 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			ClusterRequest clusterRequest = (ClusterRequest)object;
 
 			Assert.assertEquals(
-				ClusterMessageType.NOTIFY,
-				clusterRequest.getClusterMessageType());
+				clusterExecutorImpl.getLocalClusterNode(),
+				clusterRequest.getPayload());
 
 			// Test 2, execute
 

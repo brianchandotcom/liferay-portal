@@ -56,7 +56,7 @@ public class DomainNameImplTest {
 		Assert.assertNull(_domainNameImpl.getCookieDomain("localhost"));
 
 		Assert.assertEquals(
-			".test", _domainNameImpl.getCookieDomain("liferay.test"));
+			".liferay.test", _domainNameImpl.getCookieDomain("liferay.test"));
 
 		Assert.assertEquals(
 			".liferay.test",

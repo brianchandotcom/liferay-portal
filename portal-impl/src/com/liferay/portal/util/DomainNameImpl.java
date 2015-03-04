@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Yuxing Wu
+ * @author Samuel Kong
  */
 public class DomainNameImpl implements DomainName {
 
@@ -55,6 +56,12 @@ public class DomainNameImpl implements DomainName {
 
 		if (x <= 0) {
 			return null;
+		}
+
+		int y = domain.indexOf(CharPool.PERIOD, x + 1);
+
+		if (y <= 0) {
+			return StringPool.PERIOD + domain;
 		}
 
 		return domain.substring(x);

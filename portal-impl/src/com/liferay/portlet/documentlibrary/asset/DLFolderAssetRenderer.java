@@ -99,7 +99,7 @@ public class DLFolderAssetRenderer
 
 			int count = DLAppServiceUtil.getFoldersFileEntriesCount(
 				_folder.getRepositoryId(),
-				ListUtil.fromArray(new Long[]{_folder.getFolderId()}),
+				ListUtil.fromArray(new Long[] {_folder.getFolderId()}),
 				WorkflowConstants.STATUS_APPROVED);
 
 			if (count > 0) {

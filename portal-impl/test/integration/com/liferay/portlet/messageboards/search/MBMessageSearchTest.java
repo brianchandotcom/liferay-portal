@@ -199,7 +199,7 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		MBMessage message =  MBMessageLocalServiceUtil.getMessage(primaryKey);
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(primaryKey);
 
 		MBThreadServiceUtil.moveThreadToTrash(message.getThreadId());
 	}
@@ -215,7 +215,7 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 	protected long searchGroupEntriesCount(long groupId, long creatorUserId)
 		throws Exception {
 
-		Hits hits =  MBThreadServiceUtil.search(
+		Hits hits = MBThreadServiceUtil.search(
 			groupId, creatorUserId, WorkflowConstants.STATUS_APPROVED,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 

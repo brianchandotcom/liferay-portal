@@ -258,7 +258,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
 				PortletKeys.JOURNAL,
-			new String[]{Boolean.TRUE.toString()});
+			new String[] {Boolean.TRUE.toString()});
 
 		return parameterMap;
 	}

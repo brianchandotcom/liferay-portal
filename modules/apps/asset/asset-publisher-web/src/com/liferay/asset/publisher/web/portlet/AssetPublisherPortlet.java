@@ -151,7 +151,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			jsonObject.put("displayValue", String.valueOf(displayValue));
 
 			if (fieldValue instanceof Boolean) {
-				jsonObject.put("value", (Boolean) fieldValue);
+				jsonObject.put("value", (Boolean)fieldValue);
 			}
 			else if (fieldValue instanceof Date) {
 				DateFormat dateFormat =

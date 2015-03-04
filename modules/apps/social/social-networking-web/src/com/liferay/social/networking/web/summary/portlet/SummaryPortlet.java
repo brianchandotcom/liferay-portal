@@ -241,7 +241,7 @@ public class SummaryPortlet extends MVCPortlet {
 
 		_userLocalService.unsetGroupUsers(
 			themeDisplay.getScopeGroupId(),
-			new long[]{themeDisplay.getUserId()}, serviceContext);
+			new long[] {themeDisplay.getUserId()}, serviceContext);
 	}
 
 	public void leaveOrganization(
@@ -255,7 +255,7 @@ public class SummaryPortlet extends MVCPortlet {
 			themeDisplay.getScopeGroupId());
 
 		_userLocalService.unsetOrganizationUsers(
-			group.getClassPK(), new long[]{themeDisplay.getUserId()});
+			group.getClassPK(), new long[] {themeDisplay.getUserId()});
 	}
 
 	public void updateSummary(

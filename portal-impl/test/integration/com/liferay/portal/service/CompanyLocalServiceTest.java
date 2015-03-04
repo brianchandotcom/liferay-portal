@@ -494,7 +494,7 @@ public class CompanyLocalServiceTest {
 	@Test
 	public void testUpdateInvalidVirtualHostNames() throws Exception {
 		testUpdateVirtualHostNames(
-			new String[] {StringPool.BLANK, "localhost", ".abc",}, true);
+			new String[] {StringPool.BLANK, "localhost", ".abc", }, true);
 	}
 
 	@Test

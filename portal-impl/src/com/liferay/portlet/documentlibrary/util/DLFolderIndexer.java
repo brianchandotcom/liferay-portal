@@ -68,7 +68,7 @@ public class DLFolderIndexer extends BaseIndexer implements FolderIndexer {
 
 	@Override
 	public String[] getFolderClassNames() {
-		return new String[]{CLASS_NAME};
+		return new String[] {CLASS_NAME};
 	}
 
 	@Override

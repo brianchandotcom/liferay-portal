@@ -76,7 +76,7 @@ public class StartupAction extends SimpleAction {
 			for (Company company : companys) {
 				CompanyThreadLocal.setCompanyId(company.getCompanyId());
 
-				run(new String[]{String.valueOf(company.getCompanyId())});
+				run(new String[] {String.valueOf(company.getCompanyId())});
 			}
 		}
 		finally {

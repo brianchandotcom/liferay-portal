@@ -2860,7 +2860,7 @@ public class ServiceBuilder {
 
 		context.put("entity", entity);
 		context.put("methods", methods);
-		context.put("sessionTypeName",_getSessionTypeName(sessionType));
+		context.put("sessionTypeName", _getSessionTypeName(sessionType));
 		context.put("referenceList", _mergeReferenceList(entity));
 
 		context = _putDeprecatedKeys(context, javaClass);

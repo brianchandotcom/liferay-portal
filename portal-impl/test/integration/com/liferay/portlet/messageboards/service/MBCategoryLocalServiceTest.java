@@ -261,7 +261,7 @@ public class MBCategoryLocalServiceTest {
 
 		List<MBCategory> initialCategories =
 			MBCategoryLocalServiceUtil.getCategories(
-				_group.getGroupId(),  WorkflowConstants.STATUS_APPROVED);
+				_group.getGroupId(), WorkflowConstants.STATUS_APPROVED);
 
 		List<MBCategory> expectedCategories = new ArrayList<>();
 

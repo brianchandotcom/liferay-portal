@@ -180,28 +180,28 @@ public class QueryUtilTest {
 	@Test
 	public void testUnionSQL1() throws Exception {
 		testUnionSQL(
-			"ASC",  _SIZE / 2, _SIZE + (_SIZE / 2), _SIZE, "id", "value");
+			"ASC", _SIZE / 2, _SIZE + (_SIZE / 2), _SIZE, "id", "value");
 	}
 
 	@Test
 	public void testUnionSQL2() throws Exception {
 		testUnionSQL(
-			"DESC",  _SIZE / 2, _SIZE + (_SIZE / 2), _SIZE, "value", "id");
+			"DESC", _SIZE / 2, _SIZE + (_SIZE / 2), _SIZE, "value", "id");
 	}
 
 	@Test
 	public void testUnionSQL3() throws Exception {
-		testUnionSQL("ASC",  0, _SIZE, _SIZE, "id", "id");
+		testUnionSQL("ASC", 0, _SIZE, _SIZE, "id", "id");
 	}
 
 	@Test
 	public void testUnionSQL4() throws Exception {
-		testUnionSQL("DESC",  0, _SIZE, _SIZE, "value", "value");
+		testUnionSQL("DESC", 0, _SIZE, _SIZE, "value", "value");
 	}
 
 	@Test
 	public void testUnionSQL5() throws Exception {
-		testUnionSQL("ASC",  _SIZE, _SIZE * 2, _SIZE, "value", "value");
+		testUnionSQL("ASC", _SIZE, _SIZE * 2, _SIZE, "value", "value");
 	}
 
 	@Test
@@ -244,7 +244,7 @@ public class QueryUtilTest {
 				Object[] lastRow = result.get(result.size() - 1);
 
 				Number firstId = (Number)firstRow[0];
-				Number lastId  =  (Number)lastRow[0];
+				Number lastId = (Number)lastRow[0];
 
 				Assert.assertEquals(expectedFirstValue, firstId.intValue());
 				Assert.assertEquals(expectedLastValue, lastId.intValue());

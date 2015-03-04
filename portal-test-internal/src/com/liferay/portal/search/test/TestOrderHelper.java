@@ -162,7 +162,7 @@ public abstract class TestOrderHelper {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
 				_group.getGroupId(),
-				new String[]{getSearchableAssetEntryClassName()});
+				new String[] {getSearchableAssetEntryClassName()});
 
 		String orderByCol1 = DDMIndexerUtil.encodeName(
 			ddmStructure.getStructureId(), "name");

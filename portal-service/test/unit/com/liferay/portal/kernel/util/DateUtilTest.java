@@ -92,37 +92,37 @@ public class DateUtilTest extends PowerMockito {
 
 	@Test
 	public void testGetISOFormatAny() {
-		_testGetISOFormat(Mockito.anyString(),"yyyyMMddHHmmssz");
+		_testGetISOFormat(Mockito.anyString(), "yyyyMMddHHmmssz");
 	}
 
 	@Test
 	public void testGetISOFormatLength8() {
-		_testGetISOFormat("01234567","yyyyMMdd");
+		_testGetISOFormat("01234567", "yyyyMMdd");
 	}
 
 	@Test
 	public void testGetISOFormatLength12() {
-		_testGetISOFormat("012345678901","yyyyMMddHHmm");
+		_testGetISOFormat("012345678901", "yyyyMMddHHmm");
 	}
 
 	@Test
 	public void testGetISOFormatLength13() {
-		_testGetISOFormat("0123456789012","yyyyMMdd'T'HHmm");
+		_testGetISOFormat("0123456789012", "yyyyMMdd'T'HHmm");
 	}
 
 	@Test
 	public void testGetISOFormatLength14() {
-		_testGetISOFormat("01234567890123","yyyyMMddHHmmss");
+		_testGetISOFormat("01234567890123", "yyyyMMddHHmmss");
 	}
 
 	@Test
 	public void testGetISOFormatLength15() {
-		_testGetISOFormat("012345678901234","yyyyMMdd'T'HHmmss");
+		_testGetISOFormat("012345678901234", "yyyyMMdd'T'HHmmss");
 	}
 
 	@Test
 	public void testGetISOFormatT() {
-		_testGetISOFormat("01234567T9012345","yyyyMMdd'T'HHmmssz");
+		_testGetISOFormat("01234567T9012345", "yyyyMMdd'T'HHmmssz");
 	}
 
 	@Test

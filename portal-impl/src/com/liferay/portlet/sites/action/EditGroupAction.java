@@ -838,7 +838,7 @@ public class EditGroupAction extends PortletAction {
 
 	private final TransactionAttribute _transactionAttribute =
 		TransactionAttributeBuilder.build(
-			Propagation.REQUIRED, new Class<?>[]{Exception.class});
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	private class GroupCallable implements Callable<Group> {
 

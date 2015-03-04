@@ -112,7 +112,7 @@ public class ImageToolImplTest {
 
 		ImageBag imageBag = ImageToolUtil.read(file);
 
-		RenderedImage image =  imageBag.getRenderedImage();
+		RenderedImage image = imageBag.getRenderedImage();
 
 		testCrop(
 			image, image.getHeight() / 2, image.getWidth() / 2,

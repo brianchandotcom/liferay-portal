@@ -59,7 +59,7 @@ public class DeserializerTest {
 
 	@Before
 	public void setUp() {
-		Class<?> clazz =  getClass();
+		Class<?> clazz = getClass();
 
 		PortalClassLoaderUtil.setClassLoader(clazz.getClassLoader());
 	}

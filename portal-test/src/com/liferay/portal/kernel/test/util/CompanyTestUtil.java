@@ -43,7 +43,7 @@ public class CompanyTestUtil {
 	}
 
 	public static Company addCompany(String name) throws Exception {
-		String virtualHostname = name + "." +  RandomTestUtil.randomString(3);
+		String virtualHostname = name + "." + RandomTestUtil.randomString(3);
 		String shardDefaultName = GetterUtil.getString(
 			PropsUtil.get(PropsKeys.SHARD_DEFAULT_NAME));
 

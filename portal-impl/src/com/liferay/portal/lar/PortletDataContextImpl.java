@@ -888,7 +888,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 				(StagedGroupedModel)classedModel;
 
 			element.addAttribute(
-				"group-id",String.valueOf(stagedGroupedModel.getGroupId()));
+				"group-id", String.valueOf(stagedGroupedModel.getGroupId()));
 			element.addAttribute("uuid", stagedGroupedModel.getUuid());
 		}
 		else if (classedModel instanceof StagedModel) {

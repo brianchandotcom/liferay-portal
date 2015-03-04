@@ -188,7 +188,7 @@ public class PoshiRunnerGetterUtil {
 					}
 					else {
 						Object returnObject = method.invoke(
-							null, new Object[]{integers});
+							null, new Object[] {integers});
 
 						return returnObject.toString();
 					}

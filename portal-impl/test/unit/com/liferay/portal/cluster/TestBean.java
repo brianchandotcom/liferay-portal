@@ -75,7 +75,7 @@ public class TestBean {
 		return ClusterInvokeThreadLocal.isEnabled();
 	}
 
-	private static final String _THREAD_LOCAL_CACHE_KEY  =
+	private static final String _THREAD_LOCAL_CACHE_KEY =
 		"thread_local_cache_key";
 
 	private static final ThreadLocal<String> _testThreadLocal =

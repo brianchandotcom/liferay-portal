@@ -78,7 +78,7 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 				BlogsEntry.class.getName(), _entry.getEntryId(),
 				WorkflowConstants.STATUS_APPROVED);
 
-		MBThread thread =  messageDisplay.getThread();
+		MBThread thread = messageDisplay.getThread();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

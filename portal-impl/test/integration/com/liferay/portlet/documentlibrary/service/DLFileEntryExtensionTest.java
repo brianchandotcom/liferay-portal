@@ -454,7 +454,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		// "" / "Test"
 
 		try {
-			addFileEntry("",_STRIPPED_FILE_NAME);
+			addFileEntry("", _STRIPPED_FILE_NAME);
 
 			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}

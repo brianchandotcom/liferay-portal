@@ -284,7 +284,7 @@ public class ConcurrentMapperHashMapTest {
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);
 
 		Assert.assertEquals(1, keySet.size());
-		Assert.assertEquals(SetUtil.fromArray(new Key[]{_testKey}), keySet);
+		Assert.assertEquals(SetUtil.fromArray(new Key[] {_testKey}), keySet);
 
 		_assertEventQueue(Event.UNMAP_KEY_FOR_QUERY);
 
@@ -905,7 +905,7 @@ public class ConcurrentMapperHashMapTest {
 		_eventQueue.clear();
 	}
 
-	private static final Queue<Event> _eventQueue =  new LinkedList<Event>();
+	private static final Queue<Event> _eventQueue = new LinkedList<>();
 
 	private final ConcurrentMap<Key, Value> _concurrentMap =
 		new ConcurrentTypeReferenceHashMap();

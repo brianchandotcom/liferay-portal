@@ -615,8 +615,8 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		map.put("/foo/complex", params);
 
-		params.put("longs", new long[] {1,2,3});
-		params.put("ints", new int[] {1,2});
+		params.put("longs", new long[] {1, 2, 3});
+		params.put("ints", new int[] {1, 2});
 
 		Map<String, Integer> map2 = new HashMap<>(1);
 		map2.put("key", Integer.valueOf(122));
@@ -893,8 +893,8 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		map.put("/foo/hey", params);
 
 		params.put("calendar", "1330419334285");
-		params.put("userIds", new long[] {1,2,3});
-		params.put("locales", new String[] {"en","fr"});
+		params.put("userIds", new long[] {1, 2, 3});
+		params.put("locales", new String[] {"en", "fr"});
 		params.put("ids", new long[] {173, -7, 7});
 
 		String json = toJSON(map, "*.userIds", "*.locales", "*.ids");

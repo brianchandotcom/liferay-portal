@@ -58,7 +58,7 @@ public class AssetCategoryUtil {
 			return;
 		}
 
-		portletURL.setParameter("mvcPath","/view_categories.jsp");
+		portletURL.setParameter("mvcPath", "/view_categories.jsp");
 		portletURL.setParameter(
 			"vocabularyId", String.valueOf(vocabulary.getVocabularyId()));
 

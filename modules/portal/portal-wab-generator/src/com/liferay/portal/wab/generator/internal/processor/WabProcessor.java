@@ -523,7 +523,7 @@ public class WabProcessor {
 		processXMLDependencies(
 			"WEB-INF/web.xml",
 			new String[] {
-				"x:filter-class", "x:listener-class","x:servlet-class"
+				"x:filter-class", "x:listener-class", "x:servlet-class"
 			},
 			"x", "http://java.sun.com/xml/ns/j2ee");
 	}

@@ -462,7 +462,7 @@ public class GroupServiceTest {
 	public void testGroupIsGlobalScopeLabel() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Group group  = addGroup(false, false, false);
+		Group group = addGroup(false, false, false);
 
 		Company company = CompanyLocalServiceUtil.getCompany(
 			group.getCompanyId());

@@ -85,7 +85,7 @@ public class PayPalNotificationAction extends Action {
 
 			urlc.setDoOutput(true);
 			urlc.setRequestProperty(
-				"Content-Type","application/x-www-form-urlencoded");
+				"Content-Type", "application/x-www-form-urlencoded");
 
 			try (PrintWriter pw = UnsyncPrintWriterPool.borrow(
 					urlc.getOutputStream())) {

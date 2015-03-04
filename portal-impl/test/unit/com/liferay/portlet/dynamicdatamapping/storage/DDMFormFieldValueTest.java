@@ -32,7 +32,7 @@ public class DDMFormFieldValueTest extends BaseDDMTestCase {
 		DDMFormFieldValue ddmFormFieldValue1 = createDDMFormFieldValue(
 			StringUtil.randomString(), "Test", new UnlocalizedValue("Value"));
 
-		DDMFormFieldValue ddmFormFieldValue2 =  createDDMFormFieldValue(
+		DDMFormFieldValue ddmFormFieldValue2 = createDDMFormFieldValue(
 			StringUtil.randomString(), "Test", new UnlocalizedValue("Value"));
 
 		Assert.assertFalse(ddmFormFieldValue1.equals(ddmFormFieldValue2));

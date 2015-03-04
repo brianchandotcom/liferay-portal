@@ -462,7 +462,7 @@ public class AssetVocabularyLocalServiceImpl
 		searchContext.setAttribute(Field.TITLE, title);
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
-		searchContext.setGroupIds(new long[]{groupId});
+		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setKeywords(title);
 		searchContext.setStart(start);
 

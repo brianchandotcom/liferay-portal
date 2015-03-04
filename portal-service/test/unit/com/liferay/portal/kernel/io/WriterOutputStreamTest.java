@@ -266,7 +266,7 @@ public class WriterOutputStreamTest {
 		charsetDecoder.onMalformedInput(CodingErrorAction.REPORT);
 
 		try {
-			writerOutputStream.write(new byte[]{-1, -2, -3, -4});
+			writerOutputStream.write(new byte[] {-1, -2, -3, -4});
 
 			Assert.fail();
 		}
@@ -365,7 +365,7 @@ public class WriterOutputStreamTest {
 		writerOutputStream = new WriterOutputStream(
 			unsyncStringWriter, "US-ASCII", autoFlush);
 
-		writerOutputStream.write(new byte[]{(byte)'a', (byte)'b', (byte)'c'});
+		writerOutputStream.write(new byte[] {(byte)'a', (byte)'b', (byte)'c'});
 
 		Assert.assertFalse(flushed.get());
 

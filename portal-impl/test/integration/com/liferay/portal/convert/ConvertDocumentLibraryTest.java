@@ -99,7 +99,7 @@ public class ConvertDocumentLibraryTest {
 			ConvertDocumentLibrary.class.getName());
 
 		_convertProcess.setParameterValues(
-			new String[]{DBStore.class.getName(), Boolean.TRUE.toString()});
+			new String[] {DBStore.class.getName(), Boolean.TRUE.toString()});
 	}
 
 	@After

@@ -86,7 +86,7 @@ public class PollsVoteStagedModelDataHandlerTest
 		PollsQuestion question =
 			(PollsQuestion)questionDependentStagedModels.get(0);
 
-		List<StagedModel>  choiceDependentStagedModels =
+		List<StagedModel> choiceDependentStagedModels =
 			dependentStagedModelsMap.get(PollsChoice.class.getSimpleName());
 
 		PollsChoice choice = (PollsChoice)choiceDependentStagedModels.get(0);

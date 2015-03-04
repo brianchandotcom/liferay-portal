@@ -226,7 +226,7 @@ public class ReaderInputStreamTest {
 	}
 
 	@Test
-	public void testSkip1()  throws IOException {
+	public void testSkip1() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
 		int skipLength = 3;
@@ -254,7 +254,7 @@ public class ReaderInputStreamTest {
 	}
 
 	@Test
-	public void testSkip2()  throws IOException {
+	public void testSkip2() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
 		try (ReaderInputStream readerInputStream = new ReaderInputStream(
@@ -273,7 +273,7 @@ public class ReaderInputStreamTest {
 	}
 
 	@Test
-	public void testSkip3()  throws IOException {
+	public void testSkip3() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
 		try (ReaderInputStream readerInputStream = new ReaderInputStream(

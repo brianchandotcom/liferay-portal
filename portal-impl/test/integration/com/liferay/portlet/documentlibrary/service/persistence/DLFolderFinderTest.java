@@ -92,7 +92,7 @@ public class DLFolderFinderTest {
 			serviceContext);
 
 		addFileEntry(
-			_group.getGroupId(), _folder.getFolderId(),"FE2.pdf",
+			_group.getGroupId(), _folder.getFolderId(), "FE2.pdf",
 			ContentTypes.APPLICATION_PDF);
 
 		fileEntry = addFileEntry(

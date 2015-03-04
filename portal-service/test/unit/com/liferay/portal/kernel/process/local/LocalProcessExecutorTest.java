@@ -2422,7 +2422,7 @@ public class LocalProcessExecutorTest {
 
 							break;
 
-						case  _CODE_INTERRUPT :
+						case _CODE_INTERRUPT :
 							Thread heartbeatThread = _getHeartbeatThread(false);
 
 							heartbeatThread.interrupt();

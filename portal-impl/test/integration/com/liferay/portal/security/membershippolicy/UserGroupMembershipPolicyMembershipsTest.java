@@ -183,7 +183,7 @@ public class UserGroupMembershipPolicyMembershipsTest
 
 		User user = UserLocalServiceUtil.getUser(userIds[0]);
 
-		List<UserGroup> userGroups =  user.getUserGroups();
+		List<UserGroup> userGroups = user.getUserGroups();
 
 		Assert.assertEquals(0, userGroups.size());
 

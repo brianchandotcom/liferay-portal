@@ -48,7 +48,7 @@ public class ThemeDeployerTest extends BaseDeployerTestCase {
 
 		validateLiferayPluginPackageXMLFile(xmlFile);
 
-		xmlFile = new File(getWebInfDir(),"liferay-look-and-feel.xml");
+		xmlFile = new File(getWebInfDir(), "liferay-look-and-feel.xml");
 
 		validateLiferayLookAndFeelXMLFile(xmlFile);
 	}

@@ -16,6 +16,8 @@ package com.liferay.ant.bnd;
 
 import java.io.File;
 
+import java.util.Properties;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 
@@ -33,12 +35,12 @@ public class ReleaseToRepoTask extends BaseBndTask {
 	}
 
 	@Override
-	protected void doBeforeExecute() throws Exception {
+	protected void doBeforeExecute() throws BuildException {
 		super.doBeforeExecute();
 
 		if ((_file == null) || !_file.exists() || _file.isDirectory()) {
 			if (_file != null) {
-				project.log(
+				log(
 					"File is either missing or is a directory " +
 						_file.getAbsolutePath(),
 					Project.MSG_ERR);
@@ -50,35 +52,25 @@ public class ReleaseToRepoTask extends BaseBndTask {
 
 	@Override
 	protected void doExecute() throws Exception {
-		aQute.bnd.build.Project bndProject = getBndProject();
+		BaselineProcessor processor = new BaselineProcessor();
+
+		Properties properties = processor.getProperties();
+		properties.putAll(project.getProperties());
 
 		try {
-			if (_file.isFile() && _file.getName().endsWith(".jar")) {
-				if (_deployRepo != null) {
-					bndProject.deploy(_deployRepo, _file);
-				}
-				else {
-					bndProject.deploy(_file);
-				}
+			Deployer deployer = new Deployer(processor);
+
+			if (_deployRepo != null) {
+				deployer.deploy(_deployRepo, _file);
 			}
 			else {
-				project.log(
-					"Not a JAR file " + _file.getAbsolutePath(),
-					Project.MSG_ERR);
+				deployer.deploy(_file);
 			}
 		}
-		catch (Exception e) {
-			throw new BuildException(
-				e.getMessage(), e,
-				new org.apache.tools.ant.Location(_file.getAbsolutePath()));
-		}
+		finally {
+			report(processor);
 
-		report(bndProject);
-
-		if (bndProject.getErrors().size() > 0) {
-			throw new BuildException(
-				"Unable to deploy",
-				new org.apache.tools.ant.Location(_file.getAbsolutePath()));
+			processor.close();
 		}
 	}
 

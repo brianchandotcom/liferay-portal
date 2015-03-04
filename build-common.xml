@@ -74,6 +74,8 @@
 	<taskdef classpathref="lib.classpath" resource="tasks.properties" />
 
 	<taskdef classname="com.liferay.ant.bnd.BaselineJarTask" classpathref="lib.classpath" name="baseline-jar" />
+	<taskdef classname="com.liferay.ant.bnd.ReleaseToRepoTask" classpathref="lib.classpath" name="release-to-repo" />
+
 	<taskdef classname="com.tonicsystems.jarjar.JarJarTask" classpath="${project.dir}/lib/development/jarjar.jar" name="jarjar" />
 	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="${project.dir}/lib/development/xmltask.jar" name="xmltask" />
 
@@ -931,40 +933,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				analyze="@{analyze}"
 				classpathref="project.classpath"
 				projectDirPropertyName="project.dir"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="release-to-repo-macro">
-		<attribute name="bndRootFile" />
-		<attribute name="file" />
-
-		<sequential>
-			<trycatch>
-				<try>
-					<taskdef
-						classname="com.liferay.util.ant.bnd.ReleaseToRepoTask"
-						classpathref="project.classpath"
-						name="release-to-repo"
-					/>
-				</try>
-				<catch>
-					<ant antfile="${project.dir}/portal-service/build.xml" target="compile" inheritAll="false" />
-					<ant antfile="${project.dir}/util-java/build.xml" target="compile" inheritAll="false" />
-
-					<taskdef
-						classname="com.liferay.util.ant.bnd.ReleaseToRepoTask"
-						classpathref="project.classpath"
-						name="release-to-repo"
-					/>
-				</catch>
-			</trycatch>
-
-			<bndexpand propertyfile="@{bndRootFile}" />
-
-			<release-to-repo
-				bndRootFile="@{bndRootFile}"
-				file="@{file}"
 			/>
 		</sequential>
 	</macrodef>

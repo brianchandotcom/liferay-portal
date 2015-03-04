@@ -14,14 +14,9 @@
 
 package com.liferay.ant.bnd;
 
-import aQute.bnd.ant.BndTask;
-import aQute.bnd.build.Workspace;
-import aQute.bnd.service.IndexProvider;
+import aQute.bnd.ant.BaseTask;
 
 import java.io.File;
-
-import java.util.Properties;
-import java.util.Set;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -29,7 +24,7 @@ import org.apache.tools.ant.Project;
 /**
  * @author Raymond Augé
  */
-public abstract class BaseBndTask extends BndTask {
+public abstract class BaseBndTask extends BaseTask {
 
 	@Override
 	public void execute() throws BuildException {
@@ -39,48 +34,12 @@ public abstract class BaseBndTask extends BndTask {
 			doBeforeExecute();
 			doExecute();
 		}
+		catch (BuildException be) {
+			throw be;
+		}
 		catch (Exception e) {
-			if (e instanceof BuildException) {
-				throw (BuildException)e;
-			}
-
 			throw new BuildException(e);
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public aQute.bnd.build.Project getBndProject() throws Exception {
-		File bndRootFile = getBndRootFile();
-
-		Workspace workspace = Workspace.getWorkspace(
-			bndRootFile.getParentFile(), getBndDirName());
-
-		workspace.setProperties(bndRootFile);
-
-		aQute.bnd.build.Project bndProject = new aQute.bnd.build.Project(
-			workspace, bndRootFile.getParentFile());
-
-		bndProject.setFileMustExist(true);
-		bndProject.setProperties(bndRootFile);
-
-		Properties properties = new Properties();
-
-		properties.putAll(project.getProperties());
-		properties.putAll(bndProject.getProperties());
-
-		bndProject.setProperties(properties);
-
-		Set<Object> plugins = workspace.getPlugins();
-
-		for (Object plugin : plugins) {
-			if (plugin instanceof IndexProvider) {
-				IndexProvider indexProvider = (IndexProvider)plugin;
-
-				indexProvider.getIndexLocations();
-			}
-		}
-
-		return bndProject;
 	}
 
 	public File getBndRootFile() {
@@ -91,65 +50,27 @@ public abstract class BaseBndTask extends BndTask {
 		_bndRootFile = bndRootFile;
 	}
 
-	protected void doBeforeExecute() throws Exception {
+	protected void doBeforeExecute() throws BuildException {
 		if ((_bndRootFile == null) || !_bndRootFile.exists() ||
 			_bndRootFile.isDirectory()) {
 
 			if (_bndRootFile != null) {
-				project.log(
+				log(
 					"bndRootFile is either missing or is a directory " +
 						_bndRootFile.getAbsolutePath(),
 					Project.MSG_ERR);
 			}
 
-			throw new Exception("bndRootFile is invalid");
+			throw new BuildException("bndRootFile is invalid");
 		}
 
 		_bndRootFile = _bndRootFile.getAbsoluteFile();
-
-		File rootDir = _bndRootFile.getParentFile();
-
-		_bndDir = new File(rootDir, getBndDirName());
-
-		if (!rootDir.canWrite()) {
-			return;
-		}
-
-		if (!_bndDir.exists() && !_bndDir.mkdir()) {
-			return;
-		}
-
-		File buildFile = new File(_bndDir, "build.bnd");
-
-		if (buildFile.exists() || !_bndDir.canWrite()) {
-			return;
-		}
-
-		buildFile.createNewFile();
 	}
 
 	protected abstract void doExecute() throws Exception;
 
-	protected String getBndDirName() {
-		if (_bndDirName != null) {
-			return _bndDirName;
-		}
-
-		_bndDirName = project.getProperty("baseline.jar.bnddir.name");
-
-		if (_bndDirName == null) {
-			_bndDirName = _BND_DIR;
-		}
-
-		return _bndDirName;
-	}
-
 	protected Project project;
 
-	private static final String _BND_DIR = ".bnd";
-
-	private File _bndDir;
-	private String _bndDirName;
 	private File _bndRootFile;
 
 }

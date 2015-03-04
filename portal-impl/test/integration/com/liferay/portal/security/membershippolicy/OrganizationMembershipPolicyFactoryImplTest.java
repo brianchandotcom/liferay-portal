@@ -39,10 +39,10 @@ public class OrganizationMembershipPolicyFactoryImplTest {
 				"bundle.organizationmembershippolicyfactoryimpl"));
 
 	@Test
-	public void testIsMembershipAllowed() {
+	public void testGetOrganizationMembershipPolicy() {
 		OrganizationMembershipPolicy organizationMembershipPolicy =
-			OrganizationMembershipPolicyFactoryUtil
-				.getOrganizationMembershipPolicy();
+			OrganizationMembershipPolicyFactoryUtil.
+				getOrganizationMembershipPolicy();
 
 		Assert.assertEquals(
 			TestOrganizationMembershipPolicy.class.getName(),

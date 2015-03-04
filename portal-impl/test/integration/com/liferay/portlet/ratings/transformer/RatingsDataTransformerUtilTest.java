@@ -22,6 +22,8 @@ import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.portal.util.test.AtomicStateUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 
+import javax.portlet.PortletPreferences;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -56,52 +58,55 @@ public class RatingsDataTransformerUtilTest {
 		_atomicStateUtil.resetState();
 
 		try {
-			PortletPreferencesImpl ppi = new PortletPreferencesImpl();
-			UnicodeProperties uprops = new UnicodeProperties();
+			PortletPreferences portletPreferences =
+				new PortletPreferencesImpl();
 
-			ppi.setValue(
+			UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+			portletPreferences.setValue(
 				"com.liferay.portlet.messageboards.model.MBDiscussion" +
 				"_RatingsType", "like");
-			ppi.setValue(
+			portletPreferences.setValue(
 				"com.liferay.portlet.journal.model.JournalArticle_RatingsType",
 				"like");
-			ppi.setValue(
+			portletPreferences.setValue(
 				"com.liferay.portlet.messageboards.model.MBMessage_RatingsType",
 				"like");
-			ppi.setValue(
+			portletPreferences.setValue(
 				"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
 				"_RatingsType", "like");
-			ppi.setValue(
+			portletPreferences.setValue(
 				"com.liferay.bookmarks.model.BookmarksEntry_RatingsType",
 				"like");
-			ppi.setValue("com.liferay.wiki.model.WikiPage_RatingsType", "like");
-			ppi.setValue(
+			portletPreferences.setValue(
+				"com.liferay.wiki.model.WikiPage_RatingsType", "like");
+			portletPreferences.setValue(
 				"com.liferay.portlet.blogs.model.BlogsEntry_RatingsType",
 				"like");
 
-			uprops.setProperty(
+			unicodeProperties.setProperty(
 				"com.liferay.portlet.blogs.model.BlogsEntry_RatingsType",
 				"stars");
-			uprops.setProperty(
+			unicodeProperties.setProperty(
 				"com.liferay.portlet.messageboards.model.MBDiscussion" +
 				"_RatingsType", "stars");
-			uprops.setProperty(
+			unicodeProperties.setProperty(
 				"com.liferay.portlet.journal.model.JournalArticle_RatingsType",
 				"stars");
-			uprops.setProperty(
+			unicodeProperties.setProperty(
 				"com.liferay.portlet.messageboards.model.MBMessage_RatingsType",
 				"stars");
-			uprops.setProperty(
+			unicodeProperties.setProperty(
 				"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
 				"_RatingsType", "stars");
-			uprops.setProperty(
+			unicodeProperties.setProperty(
 				"com.liferay.bookmarks.model.BookmarksEntry_RatingsType",
 				"stars");
-			uprops.setProperty(
+			unicodeProperties.setProperty(
 				"com.liferay.wiki.model.WikiPage_RatingsType", "stars");
 
 			RatingsDataTransformerUtil.transformCompanyRatingsData(
-				1, ppi, uprops);
+				1, portletPreferences, unicodeProperties);
 		}
 		catch (Exception e) {
 			Assert.fail();
@@ -115,53 +120,53 @@ public class RatingsDataTransformerUtilTest {
 		_atomicStateUtil.resetState();
 
 		try {
-			UnicodeProperties ppi = new UnicodeProperties();
-			UnicodeProperties uprops = new UnicodeProperties();
+			UnicodeProperties unicodePreferences = new UnicodeProperties();
+			UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-			ppi.setProperty(
+			unicodePreferences.setProperty(
 				"com.liferay.portlet.messageboards.model.MBDiscussion" +
 				"_RatingsType", "like");
-			ppi.setProperty(
+			unicodePreferences.setProperty(
 				"com.liferay.portlet.journal.model.JournalArticle_RatingsType",
 				"like");
-			ppi.setProperty(
+			unicodePreferences.setProperty(
 				"com.liferay.portlet.messageboards.model.MBMessage_RatingsType",
 				"like");
-			ppi.setProperty(
+			unicodePreferences.setProperty(
 				"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
 				"_RatingsType", "like");
-			ppi.setProperty(
+			unicodePreferences.setProperty(
 				"com.liferay.bookmarks.model.BookmarksEntry_RatingsType",
 				"like");
-			ppi.setProperty(
+			unicodePreferences.setProperty(
 				"com.liferay.wiki.model.WikiPage_RatingsType", "like");
-			ppi.setProperty(
+			unicodePreferences.setProperty(
 				"com.liferay.portlet.blogs.model.BlogsEntry_RatingsType",
 				"like");
 
-			uprops.setProperty(
+			unicodeProperties.setProperty(
 				"com.liferay.portlet.blogs.model.BlogsEntry_RatingsType",
 				"stars");
-			uprops.setProperty(
+			unicodeProperties.setProperty(
 				"com.liferay.portlet.messageboards.model.MBDiscussion" +
 				"_RatingsType", "stars");
-			uprops.setProperty(
+			unicodeProperties.setProperty(
 				"com.liferay.portlet.journal.model.JournalArticle_RatingsType",
 				"stars");
-			uprops.setProperty(
+			unicodeProperties.setProperty(
 				"com.liferay.portlet.messageboards.model.MBMessage_RatingsType",
 				"stars");
-			uprops.setProperty(
+			unicodeProperties.setProperty(
 				"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
 				"_RatingsType", "stars");
-			uprops.setProperty(
+			unicodeProperties.setProperty(
 				"com.liferay.bookmarks.model.BookmarksEntry_RatingsType",
 				"stars");
-			uprops.setProperty(
+			unicodeProperties.setProperty(
 				"com.liferay.wiki.model.WikiPage_RatingsType", "stars");
 
 			RatingsDataTransformerUtil.transformGroupRatingsData(
-				1, ppi, uprops);
+				1, unicodePreferences, unicodeProperties);
 		}
 		catch (Exception e) {
 			Assert.fail();

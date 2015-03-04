@@ -413,19 +413,23 @@ public class ClusterExecutorImpl
 		_localClusterNode = clusterNode;
 	}
 
-	protected void memberJoined(Address joinAddress, ClusterNode clusterNode) {
+	protected boolean memberJoined(
+		Address joinAddress, ClusterNode clusterNode) {
+
 		_liveInstances.put(joinAddress, clusterNode);
 
 		Address previousAddress = _clusterNodeAddresses.put(
 			clusterNode.getClusterNodeId(), joinAddress);
 
-		if (previousAddress == null) {
-			ClusterEvent clusterEvent = ClusterEvent.join(clusterNode);
-
-			// PLACEHOLDER
-
-			fireClusterEvent(clusterEvent);
+		if (previousAddress != null) {
+			return false;
 		}
+
+		ClusterEvent clusterEvent = ClusterEvent.join(clusterNode);
+
+		fireClusterEvent(clusterEvent);
+
+		return true;
 	}
 
 	protected void memberRemoved(List<Address> departAddresses) {

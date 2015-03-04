@@ -169,12 +169,10 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		Serializable requestPayload = clusterRequest.getPayload();
 
 		if (requestPayload instanceof ClusterNode) {
-			_clusterExecutorImpl.memberJoined(
+			boolean newMember = _clusterExecutorImpl.memberJoined(
 				sourceAddress, (ClusterNode)requestPayload);
 
-			if (clusterRequest.getClusterMessageType() ==
-					ClusterMessageType.NOTIFY) {
-
+			if (newMember) {
 				responsePayload = ClusterRequest.createClusterRequest(
 					ClusterMessageType.UPDATE,
 					_clusterExecutorImpl.getLocalClusterNode());

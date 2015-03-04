@@ -522,7 +522,7 @@
 				<antelope:replace regex="," replacement="_" />
 			</antelope:stringutil>
 
-			<property name="testray.logs.dir" value="${jenkins.testray.results.dir}/logs/${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
+			<property name="testray.logs.dir" value="${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
 
 			<property name="testray.logs.console" value="${testray.logs.dir}/console.txt" />
 			<property name="testray.logs.report" value="${testray.logs.dir}/report.html" />

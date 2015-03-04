@@ -10,7 +10,9 @@ Import-Package:\
 	com.liferay.portal.kernel.servlet,\
 	com.liferay.portal.kernel.servlet.taglib,\
 	com.liferay.portal.kernel.staging,\
+	com.liferay.portal.kernel.template,\
 	com.liferay.portal.kernel.util,\
+	com.liferay.portal.layoutconfiguration.util,\
 	com.liferay.portal.model,\
 	com.liferay.portal.servlet.jsp.compiler,\
 	com.liferay.portal.theme,\

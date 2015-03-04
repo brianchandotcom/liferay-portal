@@ -60,4 +60,19 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+		<name>panel-content</name>
+		<tag-class>com.liferay.productivity.center.taglib.ui.PanelContentTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>portletId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>servletContext</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

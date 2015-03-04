@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root>
+	<template>
+		<template-key>asset-tags-navigation-color-by-popularity-ftl</template-key>
+		<name>portlet-display-template-name-color-by-popularity</name>
+		<description>portlet-display-template-description-color-by-popularity</description>
+		<language>ftl</language>
+		<script-file>com/liferay/asset/tags/navigation/web/portlet/template/dependencies/portlet_display_template_color_by_popularity.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+</root>

@@ -1241,7 +1241,7 @@
 
 		<execute function="Select" locator1="CPUsersandorganizationsAdduser#DETAILS_GENDER_FIELD" value1="${userGender}" />
 
-		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClickNoError" locator1="CPUsersandorganizationsUser#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 

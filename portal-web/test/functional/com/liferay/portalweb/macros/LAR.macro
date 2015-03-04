@@ -11,6 +11,10 @@
 		<execute macro="LAR#configureExportSiteOptionsCmd" />
 	</command>
 
+	<command name="configureExportSiteOptions">
+		<execute macro="LAR#configureExportSiteOptionsCmd" />
+	</command>
+
 	<command name="configureExportSiteOptionsCmd">
 		<if>
 			<equals arg1="${exportPermissions}" arg2="true" />
@@ -214,6 +218,14 @@
 		<execute function="DownloadTempFile" />
 	</command>
 
+	<command name="exportSiteCP">
+		<execute macro="LAR#gotoExportSiteCmd" />
+
+		<execute macro="LAR#exportSiteCmd">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
+	</command>
+
 	<command name="exportUserGroups">
 		<execute macro="LAR#gotoExportImportCmd" />
 
@@ -226,8 +238,12 @@
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Export / Import" />
 		</execute>
+	</command>
 
-		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IFRAME" />
+	<command name="gotoExportSite">
+		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_EXPORT" value1="Export" />
+
+		<execute function="Pause" locator1="5000" />
 	</command>
 
 	<command name="gotoExportSiteCmd">
@@ -260,6 +276,8 @@
 		<execute macro="LAR#selectImportFileCmd">
 			<var name="larFileName" value="${larFileName}" />
 		</execute>
+
+		<execute macro="LAR#importSiteCmd" />
 	</command>
 
 	<command name="importPortlet">
@@ -295,7 +313,10 @@
 
 		<if>
 			<not>
-				<isset var="importValidationMissingItem" />
+				<or>
+					<isset var="importValidationMissingItem" />
+					<isset var="importFail" />
+				</or>
 			</not>
 			<then>
 				<execute macro="LAR#importSiteCmd">
@@ -393,6 +414,121 @@
 				<execute function="AssertTextEquals" locator1="CPSitepagesImport#FILE_NAME" value1="${larFileName}" />
 			</else>
 		</if>
+
+		<if>
+			<equals arg1="importFail" arg2="true" />
+			<then>
+				<execute function="AssertTextEquals" locator1="BasePortletImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Failed" />
+				<execute function="SelectFrame" value1="relative=top" />
+			</then>
+		</if>
+	</command>
+
+	<command name="setupContentTargeting" >
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignEndDate" value="1/1/2099" />
+			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPriorityField" value="3" />
+			<var name="campaignStartDate" value="1/1/2015" />
+			<var name="campaignStartTime" value="12:00 AM" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContent#addWithCategoryCP">
+			<var name="categoryName" value="User Segment Name" />
+			<var name="vocabularyName" value="User Segment" />
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="User Segment Content Display" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
+			<var name="belongs" value="true" />
+			<var name="contentTitle" value="Web Content Title" />
+			<var name="contentType" value="Web Content Article" />
+			<var name="rowNumber" value="1" />
+			<var name="toAll" value="true" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Campaign Content Display" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="CampaignDisplayPortlet#configureCampaignRule">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="contentTitle" value="Web Content Title" />
+			<var name="contentType" value="Web Content Article" />
+			<var name="rowNumber" value="1" />
+		</execute>
+
+		<execute macro="CampaignDisplayPortlet#savePG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="User Segment Content List" />
+		</execute>
+
+		<execute function="Refresh" />
 	</command>
 
 	<command name="viewExportTemplateCP">
@@ -400,17 +536,5 @@
 
 		<execute function="AssertTextEquals" locator1="CPSitepagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
 		<execute function="AssertTextEquals" locator1="CPSitepagesExport#EXPORT_TEMPLATES_TABLE_DESCRIPTION" value1="${exportTemplateDescription}" />
-	</command>
-
-	<command name="viewSitePagesExportApplications">
-		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_EXPORT" value1="Export" />
-
-		<execute function="Click" locator1="CPSitepagesExport#APPLICATION_CHOOSE_APPLICATIONS_RADIO" />
-
-		<for list="${applicationList}" param="applicationName">
-			<var name="key_applicationName" value="${applicationName}" />
-
-			<execute function="AssertTextEquals" locator1="CPSitepagesExport#APPLICATION_NAME" value1="${applicationName}" />
-		</for>
 	</command>
 </definition>

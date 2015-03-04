@@ -1,0 +1,7 @@
+<definition default="mouseOverNoError">
+	<command name="mouseOverNoError">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+	</command>
+</definition>

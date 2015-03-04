@@ -47,6 +47,7 @@ page import="com.liferay.portlet.journal.FeedTargetPortletIdException" %><%@
 page import="com.liferay.portlet.journal.FolderNameException" %><%@
 page import="com.liferay.portlet.journal.InvalidDDMStructureException" %><%@
 page import="com.liferay.portlet.journal.NoSuchFolderException" %><%@
+page import="com.liferay.portlet.journal.action.ActionUtil" %><%@
 page import="com.liferay.portlet.journal.asset.JournalArticleAssetRenderer" %><%@
 page import="com.liferay.portlet.journal.context.JournalDisplayContext" %><%@
 page import="com.liferay.portlet.journal.model.JournalArticleResource" %><%@

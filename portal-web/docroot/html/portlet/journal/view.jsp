@@ -20,7 +20,7 @@
 String navigation = ParamUtil.getString(request, "navigation");
 String browseBy = ParamUtil.getString(request, "browseBy");
 
-JournalFolder folder = (JournalFolder)request.getAttribute(WebKeys.JOURNAL_FOLDER);
+JournalFolder folder = ActionUtil.getFolder(request);
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 

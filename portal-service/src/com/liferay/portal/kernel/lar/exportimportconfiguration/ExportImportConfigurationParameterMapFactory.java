@@ -168,6 +168,14 @@ public class ExportImportConfigurationParameterMapFactory {
 			PortletDataHandlerKeys.DELETE_PORTLET_DATA,
 			new String[] {deletePortletData.toString()});
 
+		if (ignoreLastPublishDate == null) {
+			ignoreLastPublishDate = Boolean.TRUE;
+		}
+
+		parameterMap.put(
+			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
+			new String[] {ignoreLastPublishDate.toString()});
+
 		if (layoutSetPrototypeLinkEnabled == null) {
 			layoutSetPrototypeLinkEnabled = Boolean.FALSE;
 		}
@@ -191,6 +199,14 @@ public class ExportImportConfigurationParameterMapFactory {
 		parameterMap.put(
 			PortletDataHandlerKeys.LOGO, new String[] {logo.toString()});
 
+		if (permissions == null) {
+			permissions = Boolean.TRUE;
+		}
+
+		parameterMap.put(
+			PortletDataHandlerKeys.PERMISSIONS,
+			new String[] {permissions.toString()});
+
 		if (portletConfiguration == null) {
 			portletConfiguration = Boolean.TRUE;
 		}
@@ -198,6 +214,14 @@ public class ExportImportConfigurationParameterMapFactory {
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
 			new String[] {portletConfiguration.toString()});
+
+		if (portletConfigurationAll == null) {
+			portletConfigurationAll = Boolean.TRUE;
+		}
+
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
+			new String[] {portletConfigurationAll.toString()});
 
 		if (portletData == null) {
 			portletData = Boolean.FALSE;
@@ -214,6 +238,14 @@ public class ExportImportConfigurationParameterMapFactory {
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA_ALL,
 			new String[] {portletDataAll.toString()});
+
+		if (portletSetupAll == null) {
+			portletSetupAll = Boolean.TRUE;
+		}
+
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
+			new String[] {portletSetupAll.toString()});
 
 		if (themeReference == null) {
 			themeReference = Boolean.FALSE;

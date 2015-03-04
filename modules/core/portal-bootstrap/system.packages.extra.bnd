@@ -194,6 +194,7 @@ Include-Resource:\
 	@../../../lib/portal/ant.jar,\
 	@../../../lib/portal/asm-debug-all.jar,\
 	@../../../lib/portal/aopalliance.jar,\
+	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/header/*,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/osgi/*,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/version/*,\

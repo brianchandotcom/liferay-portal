@@ -131,7 +131,7 @@ public class ClusterRequestReceiverTest
 			// Test 5, method handler is null
 
 			clusterRequest = ClusterRequest.createUnicastRequest(
-				null, clusterNodeId);
+				StringPool.BLANK, clusterNodeId);
 
 			futureClusterResponses = clusterExecutorImpl1.execute(
 				clusterRequest);

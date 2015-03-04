@@ -345,7 +345,8 @@ public class ClusterMasterExecutorImplTest {
 		// Test 2, execute with exception
 
 		try {
-			clusterMasterExecutorImpl.executeOnMaster(null);
+			clusterMasterExecutorImpl.executeOnMaster(
+				new MethodHandler(new MethodKey()));
 
 			Assert.fail();
 		}
@@ -648,7 +649,8 @@ public class ClusterMasterExecutorImplTest {
 				new FutureClusterResponses(clusterNodeIds);
 
 			for (String clusterNodeId : clusterNodeIds) {
-				MethodHandler methodHandler = clusterRequest.getMethodHandler();
+				MethodHandler methodHandler =
+					(MethodHandler)clusterRequest.getPayload();
 
 				try {
 					futureClusterResponses.addClusterNodeResponse(

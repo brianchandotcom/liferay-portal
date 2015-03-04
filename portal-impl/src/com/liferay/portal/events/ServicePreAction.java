@@ -1246,6 +1246,10 @@ public class ServicePreAction extends Action {
 
 				myAccountURL.setWindowState(WindowState.MAXIMIZED);
 
+				if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
+					myAccountURL.setParameter("saveLastPath", StringPool.FALSE);
+				}
+
 				themeDisplay.setURLMyAccount(myAccountURL);
 			}
 		}

@@ -17,28 +17,16 @@ package com.liferay.portal.cluster;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import java.util.concurrent.CountDownLatch;
 
-import org.jgroups.Address;
 import org.jgroups.Message;
-import org.jgroups.Receiver;
+import org.jgroups.ReceiverAdapter;
 import org.jgroups.View;
 
 /**
  * @author Tina Tian
  */
-public abstract class BaseReceiver implements Receiver {
-
-	@Override
-	public void block() {
-	}
-
-	@Override
-	public void getState(OutputStream outputStream) {
-	}
+public abstract class BaseReceiver extends ReceiverAdapter {
 
 	public View getView() {
 		return _view;
@@ -60,18 +48,6 @@ public abstract class BaseReceiver implements Receiver {
 		}
 
 		doReceive(message);
-	}
-
-	@Override
-	public void setState(InputStream inputStream) {
-	}
-
-	@Override
-	public void suspect(Address address) {
-	}
-
-	@Override
-	public void unblock() {
 	}
 
 	@Override

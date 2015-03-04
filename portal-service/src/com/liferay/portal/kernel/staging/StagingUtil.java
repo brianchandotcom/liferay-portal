@@ -97,6 +97,11 @@ public class StagingUtil {
 		getStaging().copyFromLive(PortletRequest, portlet);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #publishPortlet(long, long,
+	 *             long, long, long, String, Map, Date, Date)}
+	 */
+	@Deprecated
 	public static void copyPortlet(
 			PortletRequest PortletRequest, long sourceGroupId,
 			long targetGroupId, long sourcePlid, long targetPlid,
@@ -331,10 +336,22 @@ public class StagingUtil {
 		return getStaging().getStagingGroup(groupId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
+	 *             )}
+	 */
+	@Deprecated
 	public static Map<String, String[]> getStagingParameters() {
 		return getStaging().getStagingParameters();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
+	 *             PortletRequest)}
+	 */
+	@Deprecated
 	public static Map<String, String[]> getStagingParameters(
 		PortletRequest PortletRequest) {
 
@@ -430,6 +447,31 @@ public class StagingUtil {
 		getStaging().publishLayouts(
 			userId, sourceGroupId, targetGroupId, privateLayout, parameterMap,
 			startDate, endDate);
+	}
+
+	public static void publishPortlet(
+			long userId, ExportImportConfiguration exportImportConfiguration)
+		throws PortalException {
+
+		getStaging().publishPortlet(userId, exportImportConfiguration);
+	}
+
+	public static void publishPortlet(
+			long userId, long exportImportConfigurationId)
+		throws PortalException {
+
+		getStaging().publishPortlet(userId, exportImportConfigurationId);
+	}
+
+	public static void publishPortlet(
+			long userId, long sourceGroupId, long targetGroupId,
+			long sourcePlid, long targetPlid, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException {
+
+		getStaging().publishPortlet(
+			userId, sourceGroupId, targetGroupId, sourcePlid, targetPlid,
+			portletId, parameterMap, startDate, endDate);
 	}
 
 	public static void publishToLive(PortletRequest PortletRequest)

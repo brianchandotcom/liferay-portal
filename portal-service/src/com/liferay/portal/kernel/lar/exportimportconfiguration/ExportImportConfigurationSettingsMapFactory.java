@@ -159,8 +159,9 @@ public class ExportImportConfigurationSettingsMapFactory {
 
 		Group liveGroup = stagingGroup.getLiveGroup();
 
-		Map<String, String[]> parameterMap = StagingUtil.getStagingParameters(
-			portletRequest);
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+				portletRequest);
 
 		if (liveGroup != null) {
 			long[] layoutIds = ExportImportHelperUtil.getLayoutIds(

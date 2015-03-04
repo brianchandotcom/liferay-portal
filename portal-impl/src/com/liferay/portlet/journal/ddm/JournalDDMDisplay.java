@@ -29,8 +29,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
+import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.permission.JournalPermission;
 
 import java.util.Set;
 
@@ -42,13 +42,14 @@ import javax.portlet.PortletURL;
  */
 public class JournalDDMDisplay extends BaseDDMDisplay {
 
-	public static final long[] RESOURCE_CLASS_NAME_IDS = new long[] {
-		PortalUtil.getClassNameId(JournalArticle.class)
-	};
-
 	@Override
 	public String getAvailableFields() {
 		return "Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE";
+	}
+
+	@Override
+	public DDMPermissionHandler getDDMPermissionHandler() {
+		return _ddmPermissionHandler;
 	}
 
 	@Override
@@ -100,21 +101,6 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	@Override
 	public String getPortletId() {
 		return PortletKeys.JOURNAL;
-	}
-
-	@Override
-	public long[] getResourceClassNameIds() {
-		return RESOURCE_CLASS_NAME_IDS;
-	}
-
-	@Override
-	public String getResourceName() {
-		return JournalPermission.RESOURCE_NAME;
-	}
-
-	@Override
-	public String getResourceName(long classNameId) {
-		return JournalPermission.RESOURCE_NAME;
 	}
 
 	@Override
@@ -175,5 +161,8 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		});
 	private static final Set<String> _viewTemplateExcludedColumnNames =
 		SetUtil.fromArray(new String[] {"mode"});
+
+	private final DDMPermissionHandler _ddmPermissionHandler =
+		new JournalDDMPermissionHandler();
 
 }

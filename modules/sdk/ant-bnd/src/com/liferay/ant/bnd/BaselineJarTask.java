@@ -67,7 +67,9 @@ public class BaselineJarTask extends BaseBndTask {
 
 		File rootDir = bndRootFile.getParentFile();
 
-		if ((_bndFile == null) || !_bndFile.exists() || _bndFile.isDirectory()) {
+		if ((_bndFile == null) || !_bndFile.exists() ||
+			_bndFile.isDirectory()) {
+
 			if (_bndFile != null) {
 				log(
 					"File is either missing or is a directory " +
@@ -250,7 +252,7 @@ public class BaselineJarTask extends BaseBndTask {
 				generatePackageInfo(info, warnings);
 
 				if (((_reportLevelIsStandard || _reportOnlyDirtyPackages) &&
-					warnings.equals("-")) ||
+					 warnings.equals("-")) ||
 					(_reportOnlyDirtyPackages && (delta == Delta.REMOVED))) {
 
 					continue;
@@ -392,16 +394,6 @@ public class BaselineJarTask extends BaseBndTask {
 		return _baselineResportsDirName;
 	}
 
-	private Map<? extends Object, ? extends Object> getFileProperties()
-		throws Exception {
-
-		Properties fileProperties = new Properties();
-
-		fileProperties.load(new FileInputStream(_bndFile));
-
-		return fileProperties;
-	}
-
 	protected String getShortDelta(Delta delta) {
 		if (delta == Delta.ADDED) {
 			return "+";
@@ -457,6 +449,16 @@ public class BaselineJarTask extends BaseBndTask {
 		log(output, Project.MSG_WARN);
 
 		persistLog(output);
+	}
+
+	private Map<? extends Object, ? extends Object> getFileProperties()
+		throws Exception {
+
+		Properties fileProperties = new Properties();
+
+		fileProperties.load(new FileInputStream(_bndFile));
+
+		return fileProperties;
 	}
 
 	private static final String _BASELINE_REPORTS_DIR = "baseline-reports";

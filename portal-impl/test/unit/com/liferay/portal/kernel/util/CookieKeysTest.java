@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.util.DomainNameImpl;
 import com.liferay.portal.util.PropsImpl;
 
 import java.lang.reflect.Field;
@@ -32,6 +33,10 @@ public class CookieKeysTest {
 	@Before
 	public void setUp() {
 		PropsUtil.setProps(new PropsImpl());
+
+		DomainNameUtil domainNameUtil = new DomainNameUtil();
+
+		domainNameUtil.setDomainName(new DomainNameImpl());
 	}
 
 	@Test

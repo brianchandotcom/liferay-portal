@@ -163,43 +163,7 @@ public class CookieKeys {
 	}
 
 	public static String getDomain(String host) {
-
-		// See LEP-4602 and LEP-4645.
-
-		if (host == null) {
-			return null;
-		}
-
-		// See LEP-5595.
-
-		if (Validator.isIPAddress(host)) {
-			return host;
-		}
-
-		int x = host.lastIndexOf(CharPool.PERIOD);
-
-		if (x <= 0) {
-			return null;
-		}
-
-		int y = host.lastIndexOf(CharPool.PERIOD, x - 1);
-
-		if (y <= 0) {
-			return StringPool.PERIOD + host;
-		}
-
-		int z = host.lastIndexOf(CharPool.PERIOD, y - 1);
-
-		String domain = null;
-
-		if (z <= 0) {
-			domain = host.substring(y);
-		}
-		else {
-			domain = host.substring(z);
-		}
-
-		return domain;
+		return DomainNameUtil.getCookieDomain(host);
 	}
 
 	public static boolean hasSessionId(HttpServletRequest request) {

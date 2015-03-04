@@ -125,6 +125,9 @@ public class PoshiRunnerExecutor {
 		for (Element childElement : childElements) {
 			String childElementName = childElement.getName();
 
+			PoshiRunnerStackTraceUtil.pushStackTrace(
+				childElement.attributeValue("line-number"));
+
 			if (childElementName.equals("echo") ||
 				childElementName.equals("description")) {
 
@@ -181,6 +184,8 @@ public class PoshiRunnerExecutor {
 			else if (childElementName.equals("while")) {
 				runWhileElement(childElement);
 			}
+
+			PoshiRunnerStackTraceUtil.popStackTrace();
 		}
 	}
 
@@ -236,12 +241,18 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerVariablesUtil.pushCommandMap();
 
+		PoshiRunnerStackTraceUtil.pushFilePath(
+			actionClassCommandName, "action",
+			executeElement.attributeValue("line-number"));
+
 		List<Element> caseElements = PoshiRunnerContext.getActionCaseElements(
 			actionClassCommandName);
 
 		runCaseElements(caseElements, locatorCount);
 
 		PoshiRunnerVariablesUtil.popCommandMap();
+
+		PoshiRunnerStackTraceUtil.popFilePath();
 	}
 
 	public static void runCaseElements(
@@ -389,12 +400,18 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerVariablesUtil.pushCommandMap();
 
+		PoshiRunnerStackTraceUtil.pushFilePath(
+			classCommandName, "function",
+			executeElement.attributeValue("line-number"));
+
 		Element commandElement = PoshiRunnerContext.getFunctionCommandElement(
 			classCommandName);
 
 		parseElement(commandElement);
 
 		PoshiRunnerVariablesUtil.popCommandMap();
+
+		PoshiRunnerStackTraceUtil.popFilePath();
 	}
 
 	public static void runIfElement(Element element) throws Exception {
@@ -467,12 +484,18 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerVariablesUtil.pushCommandMap();
 
+		PoshiRunnerStackTraceUtil.pushFilePath(
+			classCommandName, "macro",
+			executeElement.attributeValue("line-number"));
+
 		Element commandElement = PoshiRunnerContext.getMacroCommandElement(
 			classCommandName);
 
 		parseElement(commandElement);
 
 		PoshiRunnerVariablesUtil.popCommandMap();
+
+		PoshiRunnerStackTraceUtil.popFilePath();
 	}
 
 	public static void runSeleniumElement(Element executeElement)

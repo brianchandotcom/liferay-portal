@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -50,16 +49,6 @@ import javax.portlet.PortletURL;
  */
 @ProviderType
 public abstract class BaseDDMDisplay implements DDMDisplay {
-
-	@Override
-	public String getAddStructureActionId() {
-		return ActionKeys.ADD_STRUCTURE;
-	}
-
-	@Override
-	public String getAddTemplateActionId() {
-		return ActionKeys.ADD_TEMPLATE;
-	}
 
 	@Override
 	public String getAvailableFields() {

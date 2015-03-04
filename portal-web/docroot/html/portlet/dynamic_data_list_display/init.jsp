@@ -29,7 +29,8 @@ page import="com.liferay.portlet.dynamicdatalists.util.DDLUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplay" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil" %>
+page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler" %>
 
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");
@@ -43,6 +44,10 @@ boolean editable = GetterUtil.getBoolean(portletPreferences.getValue("editable",
 boolean spreadsheet = GetterUtil.getBoolean(portletPreferences.getValue("spreadsheet", Boolean.FALSE.toString()));
 
 DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(PortletKeys.DYNAMIC_DATA_LISTS);
+
+long scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
+
+DDMPermissionHandler ddmPermissionHandler = ddmDisplay.getDDMPermissionHandler();
 %>
 
 <%@ include file="/html/portlet/dynamic_data_list_display/init-ext.jsp" %>

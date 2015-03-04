@@ -26,7 +26,7 @@ long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
-		<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMPermission.contains(permissionChecker, groupId, ddmDisplay.getResourceName(), ddmDisplay.getAddStructureActionId()) %>">
+		<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMPermission.contains(permissionChecker, groupId, ddmPermissionHandler.getResourceName(scopeClassNameId), ddmPermissionHandler.getAddStructureActionId()) %>">
 			<portlet:renderURL var="viewStructuresURL">
 				<portlet:param name="struts_action" value="/dynamic_data_mapping/view" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />

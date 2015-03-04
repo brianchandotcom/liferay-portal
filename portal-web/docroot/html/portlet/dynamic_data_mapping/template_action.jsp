@@ -55,7 +55,7 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmDisplay.getResourceName(template.getClassNameId()), ddmDisplay.getAddTemplateActionId()) %>">
+	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmPermissionHandler.getResourceName(template.getClassNameId()), ddmPermissionHandler.getAddTemplateActionId()) %>">
 		<portlet:renderURL var="copyURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="closeRedirect" value="<%= HttpUtil.encodeURL(currentURL) %>" />
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/copy_template" />

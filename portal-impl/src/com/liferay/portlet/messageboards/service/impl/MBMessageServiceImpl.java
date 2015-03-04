@@ -166,21 +166,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	@Override
 	public MBMessage addMessage(
-			long categoryId, String subject, String body, String fileName,
-			File file, boolean indexingEnabled, ServiceContext serviceContext)
+			long groupId, long categoryId, String subject, String body,
+			String fileName, File file, ServiceContext serviceContext)
 		throws PortalException {
-
-		long groupId = 0;
-
-		if (categoryId > 0) {
-			MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-				categoryId);
-
-			groupId = category.getGroupId();
-		}
-		else {
-			groupId = serviceContext.getScopeGroupId();
-		}
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
@@ -190,8 +178,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
 			false, serviceContext);
 
-		addMessageAttachment(
-			message.getMessageId(), fileName, file, indexingEnabled);
+		addMessageAttachment(message.getMessageId(), fileName, file);
 
 		return message;
 	}
@@ -251,8 +238,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	@Override
-	public void addMessageAttachment(
-			long messageId, String fileName, File file, boolean indexingEnabled)
+	public void addMessageAttachment(long messageId, String fileName, File file)
 		throws PortalException {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
@@ -267,8 +253,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			getPermissionChecker(), message.getGroupId(),
 			message.getCategoryId(), ActionKeys.ADD_FILE);
 
-		mbMessageLocalService.addMessageAttachment(
-			messageId, fileName, file, indexingEnabled);
+		mbMessageLocalService.addMessageAttachment(messageId, fileName, file);
 	}
 
 	@Override

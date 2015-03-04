@@ -1032,6 +1032,9 @@
 			liferay.home=${liferay.home}
 			lp.portal.project.dir=${project.dir}
 			module.framework.base.dir=${liferay.home}/osgi
+			-baselinerepo=${-baselinerepo}
+			-plugin=${-plugin}
+			-releaserepo=${-releaserepo}
 		</echo>
 
 		<copy file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties" tofile="${project.dir}/tools/sdk/build.${env.HOST}.properties" />

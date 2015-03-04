@@ -20,5 +20,3 @@ Include-Resource:\
 	classes,\
 	@lib/velocity.jar,\
 	@lib/velocity-tools.jar
-
--metatype: *

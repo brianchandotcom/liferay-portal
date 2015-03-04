@@ -5,5 +5,3 @@ Export-Package:\
 	com.liferay.portal.sso.token.events.*;version=${plugin.full.version},\
 	com.liferay.portal.sso.token.security.auth.*;version=${plugin.full.version}
 Include-Resource: classes
-
--metatype: *

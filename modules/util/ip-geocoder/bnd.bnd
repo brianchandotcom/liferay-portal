@@ -5,5 +5,3 @@ Export-Package: com.liferay.ip.geocoder
 Private-Package: com.liferay.ip.geocoder.internal
 
 Include-Resource: classes
-
--metatype: *

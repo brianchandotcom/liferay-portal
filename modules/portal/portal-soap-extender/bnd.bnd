@@ -55,5 +55,3 @@ Include-Resource:\
 	lib/=lib/woodstox-core-asl.jar,\
 	lib/=lib/wsdl4j.jar,\
 	lib/=lib/xmlschema-core.jar
-
--metatype: *

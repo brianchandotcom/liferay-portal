@@ -7,5 +7,3 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	@lib/jcifs.jar
-
--metatype: *

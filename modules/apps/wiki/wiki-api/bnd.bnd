@@ -7,5 +7,3 @@ Export-Package:\
 	!com.liferay.wiki.configuration.impl,\
 	!com.liferay.wiki.settings.provider
 Include-Resource: classes
-
--metatype: *

@@ -7,5 +7,3 @@ Export-Package: \
 	!com.liferay.bookmarks.configuration.impl,\
 	!com.liferay.bookmarks.settings.provider
 Include-Resource: classes
-
--metatype: *

@@ -9,5 +9,3 @@ Include-Resource:\
 	classes,\
 	@lib/cas-client-core.jar,\
 	@lib/opensaml.jar
-
--metatype: *

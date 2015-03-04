@@ -19,9 +19,9 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
-import com.liferay.portlet.dynamicdatalists.service.permission.DDLPermission;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
+import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
 
 import java.util.Locale;
 
@@ -35,23 +35,13 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 	};
 
 	@Override
+	public DDMPermissionHandler getDDMPermissionHandler() {
+		return _ddmPermissionHandler;
+	}
+
+	@Override
 	public String getPortletId() {
 		return PortletKeys.DYNAMIC_DATA_LISTS;
-	}
-
-	@Override
-	public long[] getResourceClassNameIds() {
-		return RESOURCE_CLASS_NAME_IDS;
-	}
-
-	@Override
-	public String getResourceName() {
-		return DDLPermission.RESOURCE_NAME;
-	}
-
-	@Override
-	public String getResourceName(long classNameId) {
-		return DDLPermission.RESOURCE_NAME;
 	}
 
 	@Override
@@ -75,5 +65,8 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 
 		return PortalUtil.getClassNameId(DDLRecordSet.class);
 	}
+
+	private final DDMPermissionHandler _ddmPermissionHandler =
+		new DDLDDMPermissionHandler();
 
 }

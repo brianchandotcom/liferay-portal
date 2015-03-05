@@ -87,16 +87,6 @@ public class BlogsEntryEditorDisplayContext {
 
 		_coverImageCaptionEditorData.put(
 			"editorConfig", editorCoverImageCaptionJSONObject);
-
-		JSONObject editorCoverImageCaptionOptionsJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		editorCoverImageCaptionOptionsJSONObject.put(
-			"showSource", Boolean.FALSE);
-		editorCoverImageCaptionOptionsJSONObject.put("textMode", Boolean.TRUE);
-
-		_coverImageCaptionEditorData.put(
-			"editorOptions", editorCoverImageCaptionOptionsJSONObject);
 	}
 
 	protected Map<String, Object> populateTextEditorData() {

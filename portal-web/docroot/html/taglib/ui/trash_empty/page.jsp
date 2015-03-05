@@ -44,17 +44,13 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-ui:trash-
 	</div>
 </c:if>
 
-<aui:script use="aui-base">
-	var emptyLink = A.one('#<%= namespace %>empty');
-
-	if (emptyLink) {
-		emptyLink.on(
-			'click',
-			function(event) {
-				if (confirm('<%= UnicodeLanguageUtil.get(request, confirmMessage) %>')) {
-					submitForm(document.<portlet:namespace />emptyForm);
-				}
+<aui:script>
+	AUI.$('#<%= namespace %>empty').on(
+		'click',
+		function(event) {
+			if (confirm('<%= UnicodeLanguageUtil.get(request, confirmMessage) %>')) {
+				submitForm(document.<portlet:namespace />emptyForm);
 			}
-		);
-	}
+		}
+	);
 </aui:script>

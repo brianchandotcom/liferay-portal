@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="osgi-service-tracker-map,registry-impl,jaxws-bridge" />
+	<property name="import.shared" value="osgi-service-tracker-map,registry-impl,jaxws-osgi-bridge" />
 	<property name="osgi.ide.dependencies" value="spring-beans.jar,spring-context.jar,spring-core.jar" />
 	<property name="osgi.runtime.dependencies" value="org.eclipse.osgi.jar,registry-impl.jar,com.liferay.osgi.servicetrackermap.jar" />
 

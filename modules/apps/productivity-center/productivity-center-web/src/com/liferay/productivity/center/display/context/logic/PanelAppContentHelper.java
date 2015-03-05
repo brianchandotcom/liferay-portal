@@ -69,7 +69,9 @@ public class PanelAppContentHelper {
 		String content = LayoutTemplateLocalServiceUtil.getContent(
 			layoutTemplateId, true, theme.getThemeId());
 
-		if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(content)) {
+		if (Validator.isNotNull(velocityTemplateId) &&
+			Validator.isNotNull(content)) {
+
 			StringBundler sb = RuntimePageUtil.getProcessedTemplate(
 				_request, _response, getPortletId(),
 				new StringTemplateResource(velocityTemplateId, content));
@@ -91,7 +93,7 @@ public class PanelAppContentHelper {
 	}
 
 	protected Portlet getPortlet() {
-		if (_portlet == null && Validator.isNotNull(getPortletId())) {
+		if ((_portlet == null) && Validator.isNotNull(getPortletId())) {
 			_portlet = PortletLocalServiceUtil.getPortletById(
 				getCompanyId(), getPortletId());
 		}

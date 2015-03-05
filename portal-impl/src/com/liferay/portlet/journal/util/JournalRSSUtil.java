@@ -344,37 +344,48 @@ public class JournalRSSUtil {
 		return image;
 	}
 
-	protected static Object[] getImageProperties(String url) {
-		String type = null;
-		long size = 0;
+	public static byte[] getRSS(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
 
-		Image image = getImage(url);
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		if (image != null) {
-			type = image.getType();
-			size = image.getSize();
+		JournalFeed feed = null;
+
+		long id = ParamUtil.getLong(resourceRequest, "id");
+
+		long groupId = ParamUtil.getLong(resourceRequest, "groupId");
+		String feedId = ParamUtil.getString(resourceRequest, "feedId");
+
+		if (id > 0) {
+			feed = JournalFeedLocalServiceUtil.getFeed(id);
 		}
 		else {
-			FileEntry fileEntry = getFileEntry(url);
+			feed = JournalFeedLocalServiceUtil.getFeed(groupId, feedId);
+		}
 
-			Set<String> imageMimeTypes = ImageProcessorUtil.getImageMimeTypes();
+		String languageId = LanguageUtil.getLanguageId(resourceRequest);
 
-			if ((fileEntry != null) &&
-				imageMimeTypes.contains(fileEntry.getMimeType())) {
+		long plid = PortalUtil.getPlidFromFriendlyURL(
+			themeDisplay.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
 
-				type = fileEntry.getExtension();
-				size = fileEntry.getSize();
+		Layout layout = themeDisplay.getLayout();
+
+		if (plid > 0) {
+			try {
+				layout = LayoutLocalServiceUtil.getLayout(plid);
+			}
+			catch (NoSuchLayoutException nsle) {
 			}
 		}
 
-		if (Validator.isNotNull(type)) {
-			return new Object[] {type, size};
-		}
+		String rss = exportToRSS(
+			resourceRequest, resourceResponse, feed, languageId, layout,
+			themeDisplay);
 
-		return null;
+		return rss.getBytes(StringPool.UTF8);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(JournalRSSUtil.class);
 
 	protected static String exportToRSS(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
@@ -390,7 +401,8 @@ public class JournalRSSUtil {
 
 		syndFeed.setEntries(syndEntries);
 
-		List<JournalArticle> articles = com.liferay.portlet.journal.util.JournalRSSUtil.getArticles(feed);
+		List<JournalArticle> articles =
+			com.liferay.portlet.journal.util.JournalRSSUtil.getArticles(feed);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Syndicating " + articles.size() + " articles");
@@ -511,47 +523,34 @@ public class JournalRSSUtil {
 		return entryURL.toString();
 	}
 
-	public static byte[] getRSS(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
+	protected static Object[] getImageProperties(String url) {
+		String type = null;
+		long size = 0;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Image image = getImage(url);
 
-		JournalFeed feed = null;
-
-		long id = ParamUtil.getLong(resourceRequest, "id");
-
-		long groupId = ParamUtil.getLong(resourceRequest, "groupId");
-		String feedId = ParamUtil.getString(resourceRequest, "feedId");
-
-		if (id > 0) {
-			feed = JournalFeedLocalServiceUtil.getFeed(id);
+		if (image != null) {
+			type = image.getType();
+			size = image.getSize();
 		}
 		else {
-			feed = JournalFeedLocalServiceUtil.getFeed(groupId, feedId);
-		}
+			FileEntry fileEntry = getFileEntry(url);
 
-		String languageId = LanguageUtil.getLanguageId(resourceRequest);
+			Set<String> imageMimeTypes = ImageProcessorUtil.getImageMimeTypes();
 
-		long plid = PortalUtil.getPlidFromFriendlyURL(
-			themeDisplay.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
+			if ((fileEntry != null) &&
+				imageMimeTypes.contains(fileEntry.getMimeType())) {
 
-		Layout layout = themeDisplay.getLayout();
-
-		if (plid > 0) {
-			try {
-				layout = LayoutLocalServiceUtil.getLayout(plid);
-			}
-			catch (NoSuchLayoutException nsle) {
+				type = fileEntry.getExtension();
+				size = fileEntry.getSize();
 			}
 		}
 
-		String rss = exportToRSS(
-			resourceRequest, resourceResponse, feed, languageId, layout,
-			themeDisplay);
+		if (Validator.isNotNull(type)) {
+			return new Object[] {type, size};
+		}
 
-		return rss.getBytes(StringPool.UTF8);
+		return null;
 	}
 
 	protected static String processContent(
@@ -652,19 +651,23 @@ public class JournalRSSUtil {
 			}
 		);
 
-		List<SyndEnclosure> syndEnclosures = com.liferay.portlet.journal.util.JournalRSSUtil.getDLEnclosures(
+		List<SyndEnclosure> syndEnclosures =
+			com.liferay.portlet.journal.util.JournalRSSUtil.getDLEnclosures(
 				themeDisplay.getURLPortal(), url);
 
 		syndEnclosures.addAll(
-			com.liferay.portlet.journal.util.JournalRSSUtil.getIGEnclosures(themeDisplay.getURLPortal(), url));
+			com.liferay.portlet.journal.util.JournalRSSUtil.getIGEnclosures(
+				themeDisplay.getURLPortal(), url));
 
 		syndEntry.setEnclosures(syndEnclosures);
 
-		List<SyndLink> syndLinks = com.liferay.portlet.journal.util.JournalRSSUtil.getDLLinks(
+		List<SyndLink> syndLinks =
+			com.liferay.portlet.journal.util.JournalRSSUtil.getDLLinks(
 				themeDisplay.getURLPortal(), url);
 
 		syndLinks.addAll(
-			com.liferay.portlet.journal.util.JournalRSSUtil.getIGLinks(themeDisplay.getURLPortal(), url));
+			com.liferay.portlet.journal.util.JournalRSSUtil.getIGLinks(
+				themeDisplay.getURLPortal(), url));
 
 		syndEntry.setLinks(syndLinks);
 
@@ -674,5 +677,7 @@ public class JournalRSSUtil {
 	private static final String _XML_REQUUEST =
 		"<request><parameters><parameter><name>rss</name><value>true</value>" +
 			"</parameter></parameters></request>";
+
+	private static final Log _log = LogFactoryUtil.getLog(JournalRSSUtil.class);
 
 }

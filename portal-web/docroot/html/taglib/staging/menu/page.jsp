@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/staging/menu/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
 
 <liferay-staging:defineObjects />
 

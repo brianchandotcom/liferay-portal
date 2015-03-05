@@ -59,6 +59,8 @@ import javax.portlet.PortletRequest;
 @ProviderType
 public class ExportImportDateUtil {
 
+	public static final String RANGE = "range";
+
 	public static final String RANGE_ALL = "all";
 
 	public static final String RANGE_DATE_RANGE = "dateRange";
@@ -124,7 +126,7 @@ public class ExportImportDateUtil {
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
 
-		String range = MapUtil.getString(parameterMap, "range", defaultRange);
+		String range = MapUtil.getString(parameterMap, RANGE, defaultRange);
 		int rangeLast = MapUtil.getInteger(parameterMap, "last");
 		int startDateAmPm = MapUtil.getInteger(parameterMap, "startDateAmPm");
 		int startDateYear = MapUtil.getInteger(parameterMap, "startDateYear");
@@ -172,8 +174,7 @@ public class ExportImportDateUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String range = ParamUtil.getString(
-			portletRequest, "range", defaultRange);
+		String range = ParamUtil.getString(portletRequest, RANGE, defaultRange);
 		int rangeLast = ParamUtil.getInteger(portletRequest, "last");
 		int startDateAmPm = ParamUtil.getInteger(
 			portletRequest, "startDateAmPm");
@@ -222,7 +223,7 @@ public class ExportImportDateUtil {
 			portletDataContext.getGroupId());
 
 		String range = MapUtil.getString(
-			portletDataContext.getParameterMap(), "range");
+			portletDataContext.getParameterMap(), RANGE);
 
 		if (!group.isStagedRemotely() &&
 			range.equals(RANGE_FROM_LAST_PUBLISH_DATE)) {

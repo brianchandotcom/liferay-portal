@@ -42,6 +42,17 @@ import javax.portlet.PortletRequest;
 @ProviderType
 public class ExportImportHelperUtil {
 
+	public static long[] getAllLayoutIds(long groupId, boolean privateLayout) {
+		return getExportImportHelper().getAllLayoutIds(groupId, privateLayout);
+	}
+
+	public static Map<Long, Boolean> getAllLayoutIdsMap(
+		long groupId, boolean privateLayout) {
+
+		return getExportImportHelper().getAllLayoutIdsMap(
+			groupId, privateLayout);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, moved to {@link
 	 *             ExportImportDateUtil#getCalendar(PortletRequest, String,

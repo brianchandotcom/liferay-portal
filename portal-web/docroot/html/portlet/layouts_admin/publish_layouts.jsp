@@ -31,6 +31,8 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 String publishConfigurationButtons = ParamUtil.getString(request, "publishConfigurationButtons", "custom");
 
+boolean quickPublish = ParamUtil.getBoolean(request, "quickPublish");
+
 long exportImportConfigurationId = 0;
 
 ExportImportConfiguration exportImportConfiguration = null;
@@ -70,8 +72,6 @@ boolean localPublishing = true;
 if ((liveGroup.isStaged() && liveGroup.isStagedRemotely()) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
 	localPublishing = false;
 }
-
-boolean quickPublish = ParamUtil.getBoolean(request, "quickPublish");
 
 String treeId = "liveLayoutsTree";
 
@@ -113,15 +113,7 @@ long[] selectedLayoutIds = null;
 String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
 
 if (openNodes == null) {
-	List<Layout> stagingGroupLayouts = LayoutLocalServiceUtil.getLayouts(stagingGroupId, privateLayout);
-
-	selectedLayoutIds = new long[stagingGroupLayouts.size()];
-
-	for (int i = 0; i < stagingGroupLayouts.size(); i++) {
-		Layout stagingGroupLayout = stagingGroupLayouts.get(i);
-
-		selectedLayoutIds[i] = stagingGroupLayout.getLayoutId();
-	}
+	selectedLayoutIds = ExportImportHelperUtil.getAllLayoutIds(stagingGroupId, privateLayout);
 }
 else {
 	selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));
@@ -394,6 +386,7 @@ else if (!quickPublish) {
 				<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 				<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 				<liferay-util:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
+				<liferay-util:param name="quickPublish" value="<%= String.valueOf(quickPublish) %>" />
 			</liferay-util:include>
 		</div>
 	</liferay-ui:section>
@@ -452,6 +445,7 @@ else if (!quickPublish) {
 		<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 		<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
 		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+		<portlet:param name="quickPublish" value="<%= String.valueOf(quickPublish) %>" />
 	</liferay-portlet:resourceURL>
 
 	new Liferay.ExportImport(

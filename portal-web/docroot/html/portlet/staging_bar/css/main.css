@@ -188,11 +188,7 @@
 			.publish-link {
 				@include ellipsis;
 
-				padding: 5px 0;
-
-				a {
-					padding: 6px 10px;
-				}
+				padding: 5px;
 
 				em {
 					display: inline-block;

@@ -147,6 +147,30 @@ import org.xml.sax.XMLReader;
  */
 public class ExportImportHelperImpl implements ExportImportHelper {
 
+	@Override
+	public long[] getAllLayoutIds(long groupId, boolean privateLayout) {
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout);
+
+		return getLayoutIds(layouts);
+	}
+
+	@Override
+	public Map<Long, Boolean> getAllLayoutIdsMap(
+		long groupId, boolean privateLayout) {
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		Map<Long, Boolean> layoutIdMap = new HashMap<>();
+
+		for (Layout layout : layouts) {
+			layoutIdMap.put(layout.getPlid(), true);
+		}
+
+		return layoutIdMap;
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, moved to {@link
 	 *             ExportImportDateUtil#getCalendar(PortletRequest, String,

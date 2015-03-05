@@ -22,6 +22,14 @@ String backURL = ParamUtil.getString(request, "backURL");
 
 long exportImportConfigurationId = ParamUtil.getLong(request, "exportImportConfigurationId");
 
+boolean publishOnLayout = false;
+
+if (exportImportConfigurationId <= 0) {
+	exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("exportImportConfigurationId"));
+
+	publishOnLayout = true;
+}
+
 ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 
 String cmd = Constants.EXPORT;
@@ -33,18 +41,16 @@ if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TY
 }
 else if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE) {
 	cmd = Constants.PUBLISH_TO_REMOTE;
-	submitLanguageKey = "publish-to-remote";
+	submitLanguageKey = "publish-to-remote-live";
 }
 
 Map<String, Serializable> settingsMap = exportImportConfiguration.getSettingsMap();
 
-long[] layoutIds = GetterUtil.getLongValues(settingsMap.get("layoutIds"));
 Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
-
-boolean quickPublish = ParamUtil.getBoolean(request, "quickPublish");
+long[] layoutIds = GetterUtil.getLongValues(settingsMap.get("layoutIds"));
 %>
 
-<c:if test="<%= !quickPublish %>">
+<c:if test="<%= !publishOnLayout %>">
 	<liferay-ui:header
 		backURL="<%= backURL %>"
 		title="<%= exportImportConfiguration.getName() %>"
@@ -88,11 +94,19 @@ boolean quickPublish = ParamUtil.getBoolean(request, "quickPublish");
 							<%
 							StringBundler sb = new StringBundler();
 
-							if (ArrayUtil.isEmpty(layoutIds)) {
+							long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
+							boolean privateLayout = MapUtil.getBoolean(settingsMap, "privateLayout");
+
+							long[] allLayoutIds = ExportImportHelperUtil.getAllLayoutIds(sourceGroupId, privateLayout);
+
+							if (ArrayUtil.containsAll(layoutIds, allLayoutIds)) {
+								sb.append(LanguageUtil.get(locale, "all-pages"));
+							}
+							else if (ArrayUtil.isNotEmpty(layoutIds)) {
 								sb.append(LanguageUtil.get(locale, "selected-pages"));
 							}
 							else {
-								sb.append(LanguageUtil.get(locale, "all-pages"));
+								sb.append(LanguageUtil.get(locale, "no-pages"));
 							}
 
 							if (MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS)) {

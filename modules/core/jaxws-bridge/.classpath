@@ -17,6 +17,10 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
-	<classpathentry kind="lib" path="lib/aQute.bnd.jar" />
+	<classpathentry kind="lib" path="lib/javax.annotation-api.jar" />
+	<classpathentry kind="lib" path="lib/javax.xml.soap-api.jar" />
+	<classpathentry kind="lib" path="lib/jaxb-api.jar" />
+	<classpathentry kind="lib" path="lib/jaxws-api.jar" />
+	<classpathentry kind="lib" path="lib/jsr181-api.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

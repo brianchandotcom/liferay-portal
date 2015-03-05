@@ -26,9 +26,14 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>panel-category</name>
-		<tag-class>com.liferay.productivity.center.taglib.ui.PanelCategoryTag</tag-class>
+		<name>panel-app</name>
+		<tag-class>com.liferay.productivity.center.taglib.ui.PanelAppTag</tag-class>
 		<body-content>empty</body-content>
+		<attribute>
+			<name>panelApp</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<attribute>
 			<name>panelCategory</name>
 			<required>true</required>
@@ -41,14 +46,9 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>panel-app</name>
-		<tag-class>com.liferay.productivity.center.taglib.ui.PanelAppTag</tag-class>
+		<name>panel-category</name>
+		<tag-class>com.liferay.productivity.center.taglib.ui.PanelCategoryTag</tag-class>
 		<body-content>empty</body-content>
-		<attribute>
-			<name>panelApp</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
 		<attribute>
 			<name>panelCategory</name>
 			<required>true</required>

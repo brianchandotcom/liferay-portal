@@ -219,7 +219,7 @@ public class ConfigurationHelper {
 
 		return new ConfigurationModel(
 			metaTypeInformation.getObjectClassDefinition(pid, locale),
-			getConfiguration(pid), bundle.getLocation(), factory);
+			getConfiguration(pid), StringPool.QUESTION, factory);
 	}
 
 	private Map<String, ConfigurationModel> _getConfigurationModels(

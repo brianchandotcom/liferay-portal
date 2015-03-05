@@ -35,7 +35,7 @@ public class AssetCategoriesAvailableTag<R> extends TagSupport {
 			_assetCategories = AssetCategoryServiceUtil.getCategories(
 				_className, _classPK);
 
-			if (_assetCategories.isEmpty()) {
+			if (!_assetCategories.isEmpty()) {
 				return EVAL_BODY_INCLUDE;
 			}
 

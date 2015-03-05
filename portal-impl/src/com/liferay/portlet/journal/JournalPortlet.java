@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -66,6 +69,7 @@ import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFeedServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
+import com.liferay.portlet.journal.util.JournalRSSUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.util.RSSUtil;
@@ -88,7 +92,12 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eduardo Garcia
@@ -273,6 +282,41 @@ public class JournalPortlet extends MVCPortlet {
 		throws Exception {
 
 		updateArticle(actionRequest, actionResponse);
+	}
+
+	@Override
+	public void serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		String resourceID = GetterUtil.getString(
+			resourceRequest.getResourceID());
+
+		if (resourceID.equals("rss")) {
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				resourceRequest);
+
+			HttpServletResponse response = PortalUtil.getHttpServletResponse(
+				resourceResponse);
+
+			try {
+				byte[] xml = JournalRSSUtil.getRSS(
+					resourceRequest, resourceResponse);
+
+				ServletResponseUtil.sendFile(
+					request, response, null, xml, ContentTypes.TEXT_XML_UTF8);
+			}
+			catch (Exception e) {
+				try {
+					PortalUtil.sendError(e, request, response);
+				}
+				catch (ServletException se) {
+				}
+			}
+		}
+		else {
+			super.serveResource(resourceRequest, resourceResponse);
+		}
 	}
 
 	public void subscribeFolder(

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.attachments;
+package com.liferay.wiki.attachments.test;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

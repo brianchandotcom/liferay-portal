@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.search;
+package com.liferay.wiki.search.test;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.SearchContext;

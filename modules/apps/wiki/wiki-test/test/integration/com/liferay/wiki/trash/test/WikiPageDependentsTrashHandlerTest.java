@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.trash;
+package com.liferay.wiki.trash.test;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

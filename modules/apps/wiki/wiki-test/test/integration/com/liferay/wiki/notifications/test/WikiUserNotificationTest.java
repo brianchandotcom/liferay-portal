@@ -12,61 +12,67 @@
  * details.
  */
 
-package com.liferay.wiki.lar;
+package com.liferay.wiki.notifications.test;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
-import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.test.rule.SynchronousMailTestRule;
+import com.liferay.portlet.notifications.test.BaseUserNotificationTestCase;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.util.test.WikiTestUtil;
-
-import java.util.List;
-import java.util.Map;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 
 /**
- * @author Zsolt Berentey
+ * @author Roberto Díaz
+ * @author Sergio González
  */
-public class WikiNodeStagedModelDataHandlerTest
-	extends BaseStagedModelDataHandlerTestCase {
+@Sync
+public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			TransactionalTestRule.INSTANCE);
+			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected StagedModel addStagedModel(
-			Group group, Map<String,
-			List<StagedModel>> dependentStagedModelsMap)
+	protected BaseModel<?> addBaseModel() throws Exception {
+		return WikiTestUtil.addPage(
+			group.getGroupId(), _node.getNodeId(), true);
+	}
+
+	@Override
+	protected void addContainerModel() throws Exception {
+		_node = WikiTestUtil.addNode(group.getGroupId());
+	}
+
+	@Override
+	protected String getPortletId() {
+		return WikiPortletKeys.WIKI;
+	}
+
+	@Override
+	protected void subscribeToContainer() throws Exception {
+		WikiNodeLocalServiceUtil.subscribeNode(
+			user.getUserId(), _node.getNodeId());
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		return WikiTestUtil.addNode(group.getGroupId());
+		return WikiTestUtil.updatePage((WikiPage)baseModel);
 	}
 
-	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return WikiNodeLocalServiceUtil.getWikiNodeByUuidAndGroupId(
-				uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
-	}
-
-	@Override
-	protected Class<? extends StagedModel> getStagedModelClass() {
-		return WikiNode.class;
-	}
+	private WikiNode _node;
 
 }

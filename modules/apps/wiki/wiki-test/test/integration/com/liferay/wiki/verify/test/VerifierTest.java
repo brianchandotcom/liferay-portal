@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.wiki.verify;
+package com.liferay.wiki.verify.test;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
+import com.liferay.wiki.verify.WikiServiceVerifyProcess;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

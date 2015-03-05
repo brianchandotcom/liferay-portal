@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.wiki.translator;
+package com.liferay.wiki.translator.test;
 
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.wiki.translator.ClassicToCreoleTranslator;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

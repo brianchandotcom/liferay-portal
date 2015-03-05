@@ -65,6 +65,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESOURCE_TABLE_KNOWLEDGE_BASE_ARTICLE</td>
+	<td>//div[@id='_152_workflowHandlersSearchContainerSearchContainer']//tr[contains(.,'Knowledge Base Article')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_KNOWLEDGE_BASE_ARTICLE_SELECT</td>
+	<td>//select[contains(@id,'KBArticle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESOURCE_TABLE_MESSAGE_BOARDS_MESSAGE</td>
 	<td>//div[@id='_152_workflowHandlersSearchContainerSearchContainer']//tr[contains(.,'Message Boards Message')]/td[1]</td>
 	<td></td>

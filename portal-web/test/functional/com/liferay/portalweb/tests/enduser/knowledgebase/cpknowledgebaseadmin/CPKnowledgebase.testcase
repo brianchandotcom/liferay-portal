@@ -658,4 +658,36 @@
 			<var name="kbTemplateTitle" value="Knowledge Base Template Title" />
 		</execute>
 	</command>
+
+	<command name="ViewPendingKBArticleContent" priority="4">
+		<var name="kbArticleContent" value="Knowledge Base Article Content" />
+		<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Workflow Configuration" />
+		</execute>
+
+		<execute macro="Workflow#configureSiteWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_KNOWLEDGE_BASE_ARTICLE_SELECT" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="${kbArticleContent}" />
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+			<var name="kbWorkflowAction" value="Submit for Publication" />
+		</execute>
+
+		<execute macro="KBArticle#viewCP">
+			<var name="kbArticleContent" value="${kbArticleContent}" />
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+			<var name="kbAuthor" value="Test Test" />
+			<var name="kbPriority" value="1.0" />
+			<var name="kbWorkflowStatus" value="Pending" />
+		</execute>
+	</command>
 </definition>

@@ -398,7 +398,9 @@
 		</execute>
 	</command>
 
-	<command name="AddTaskNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="5">
+	<command known-issues="LPS-53992" name="AddTaskNodeEditNameAndDesciptionAndRecipientsAndDeleteViaViewTab" priority="5">
+		<description message="This is a use case for LPS-53992." />
+
 		<var name="nodeNodeLabel" value="Task" />
 		<var name="nodeType" value="task" />
 
@@ -424,6 +426,25 @@
 		<execute macro="KaleoDesigner#viewNodeType">
 			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
 			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editNodeNotifications">
+			<var name="nodeNotificationsDescription" value="Update Notification Description" />
+			<var name="nodeNotificationsName" value="Update Notification" />
+			<var name="nodeNotificationsRecipientType" value="Role Type" />
+			<var name="roleName" value="Administrator" />
+			<var name="roleType" value="Regular" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeNotifications">
+			<var name="nodeNotificationsName" value="Update Notification" />
+			<var name="nodeNotificationsRecipientType" value="Role Type" />
+			<var name="roleName" value="Administrator" />
+			<var name="roleType" value="Regular" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">

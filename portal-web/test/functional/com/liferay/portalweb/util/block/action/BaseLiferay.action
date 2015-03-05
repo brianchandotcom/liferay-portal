@@ -319,6 +319,12 @@
 		</default>
 	</command>
 
+	<command name="mouseOverNoError">
+		<default>
+			<execute function="MouseOverNoError#mouseOverNoError" />
+		</default>
+	</command>
+
 	<command name="mouseUp">
 		<default>
 			<execute function="MouseUp#mouseUp" />

@@ -102,7 +102,15 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#PUBLISH_BUTTON" value1="Publish" />
+		<if>
+			<equals arg1="${kbWorkflowAction}" arg2="Submit for Publication" />
+			<then>
+				<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#PUBLISH_BUTTON" value1="Publish" />
+			</else>
+		</if>
 
 		<if>
 			<equals arg1="${kbArticleInvalidTitle}" arg2="true" />
@@ -793,6 +801,20 @@
 	</command>
 
 	<command name="viewCP">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+
+		<if>
+			<equals arg1="${kbWorkflowStatus}" arg2="Pending" />
+			<then>
+				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_STATUS" value1="Pending" />
+			</then>
+		</if>
+
+		<execute function="Click" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_VIEW" value1="View" />
+
 		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#CONTENT" value1="${kbArticleContent}" />
 

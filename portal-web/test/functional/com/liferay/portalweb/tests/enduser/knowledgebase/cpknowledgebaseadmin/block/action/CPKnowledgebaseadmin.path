@@ -218,6 +218,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ARTICLE_TABLE_STATUS</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[7]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ARTICLE_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[9]//a</td>
 	<td></td>

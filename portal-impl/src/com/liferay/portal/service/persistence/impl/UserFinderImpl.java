@@ -562,7 +562,7 @@ public class UserFinderImpl
 			}
 
 			if (!organizationIds.isEmpty()) {
-				params2 = new LinkedHashMap<String, Object>(params1);
+				params2 = new LinkedHashMap<>(params1);
 
 				params2.remove("usersGroups");
 
@@ -584,13 +584,13 @@ public class UserFinderImpl
 				Long[] siteGroupIdsArray = siteGroupIds.toArray(
 					new Long[siteGroupIds.size()]);
 
-				params3 = new LinkedHashMap<String, Object>(params1);
+				params3 = new LinkedHashMap<>(params1);
 
 				params3.remove("usersGroups");
 
 				params3.put("groupsOrgs", siteGroupIdsArray);
 
-				params4 = new LinkedHashMap<String, Object>(params1);
+				params4 = new LinkedHashMap<>(params1);
 
 				params4.remove("usersGroups");
 
@@ -598,7 +598,7 @@ public class UserFinderImpl
 			}
 
 			if (!userGroupIds.isEmpty()) {
-				params5 = new LinkedHashMap<String, Object>(params1);
+				params5 = new LinkedHashMap<>(params1);
 
 				params5.remove("usersGroups");
 
@@ -632,7 +632,7 @@ public class UserFinderImpl
 			}
 
 			if (!organizationIds.isEmpty()) {
-				params2 = new LinkedHashMap<String, Object>(params1);
+				params2 = new LinkedHashMap<>(params1);
 
 				params2.remove("usersRoles");
 
@@ -657,19 +657,19 @@ public class UserFinderImpl
 				Long[] siteGroupIdsArray = siteGroupIds.toArray(
 					new Long[siteGroupIds.size()]);
 
-				params3 = new LinkedHashMap<String, Object>(params1);
+				params3 = new LinkedHashMap<>(params1);
 
 				params3.remove("usersRoles");
 
 				params3.put("usersGroups", siteGroupIdsArray);
 
-				params4 = new LinkedHashMap<String, Object>(params1);
+				params4 = new LinkedHashMap<>(params1);
 
 				params4.remove("usersRoles");
 
 				params4.put("groupsOrgs", siteGroupIdsArray);
 
-				params5 = new LinkedHashMap<String, Object>(params1);
+				params5 = new LinkedHashMap<>(params1);
 
 				params5.remove("usersRoles");
 
@@ -677,7 +677,7 @@ public class UserFinderImpl
 			}
 
 			if (!userGroupIds.isEmpty()) {
-				params6 = new LinkedHashMap<String, Object>(params1);
+				params6 = new LinkedHashMap<>(params1);
 
 				params6.remove("usersRoles");
 
@@ -692,7 +692,7 @@ public class UserFinderImpl
 				params.get("socialRelationType"));
 
 			if (hasSocialRelationTypes && ArrayUtil.isNotEmpty(groupIds)) {
-				params2 = new LinkedHashMap<String, Object>(params1);
+				params2 = new LinkedHashMap<>(params1);
 
 				params1.remove("socialRelationType");
 
@@ -1351,6 +1351,6 @@ public class UserFinderImpl
 	private static final String _STATUS_SQL = "AND (User_.status = ?)";
 
 	private final LinkedHashMap<String, Object> _emptyLinkedHashMap =
-		new LinkedHashMap<String, Object>(0);
+		new LinkedHashMap<>(0);
 
 }

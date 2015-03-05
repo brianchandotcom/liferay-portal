@@ -173,10 +173,10 @@ public class IconTag extends IncludeTag {
 		Map<String, Object> data = null;
 
 		if (_data != null) {
-			data = new HashMap<String, Object>(_data);
+			data = new HashMap<>(_data);
 		}
 		else {
-			data = new HashMap<String, Object>(1);
+			data = new HashMap<>(1);
 		}
 
 		if (_useDialog && Validator.isNull(data.get("title"))) {

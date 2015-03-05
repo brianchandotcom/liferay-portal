@@ -357,8 +357,8 @@ public abstract class BaseUserNotificationTestCase {
 			UserNotificationEventLocalServiceUtil.getUserNotificationEvents(
 				userId);
 
-		List<JSONObject> userNotificationEventJSONObjects =
-			new ArrayList<JSONObject>(userNotificationEvents.size());
+		List<JSONObject> userNotificationEventJSONObjects = new ArrayList<>(
+			userNotificationEvents.size());
 
 		for (UserNotificationEvent userNotificationEvent :
 				userNotificationEvents) {

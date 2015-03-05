@@ -215,8 +215,7 @@ public class AuthVerifierPipeline {
 	private Map<String, Object> _mergeSettings(
 		Properties properties, Map<String, Object> settings) {
 
-		Map<String, Object> mergedSettings = new HashMap<String, Object>(
-			settings);
+		Map<String, Object> mergedSettings = new HashMap<>(settings);
 
 		if (properties != null) {
 			for (Map.Entry<Object, Object> entry : properties.entrySet()) {

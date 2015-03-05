@@ -83,7 +83,7 @@ public class BatchEvent {
 			parameters.put("urlPath", event.getURLPath());
 			parameters.put("zipFileId", zipFileId);
 
-			parameters = new HashMap<String, Object>(parameters);
+			parameters = new HashMap<>(parameters);
 
 			parameters.remove("deltaFilePath");
 			parameters.remove("filePath");

@@ -53,7 +53,7 @@ public class Message implements Cloneable, Serializable {
 		message._responseId = _responseId;
 
 		if (_values != null) {
-			message._values = new HashMap<String, Object>(_values);
+			message._values = new HashMap<>(_values);
 		}
 
 		return message;
@@ -76,7 +76,7 @@ public class Message implements Cloneable, Serializable {
 		_responseId = message._responseId;
 
 		if (message._values != null) {
-			_values = new HashMap<String, Object>(message._values);
+			_values = new HashMap<>(message._values);
 		}
 	}
 
@@ -88,7 +88,7 @@ public class Message implements Cloneable, Serializable {
 		message._responseId = _responseId;
 
 		if (_values != null) {
-			message._values = new HashMap<String, Object>(_values);
+			message._values = new HashMap<>(_values);
 		}
 	}
 
@@ -211,7 +211,7 @@ public class Message implements Cloneable, Serializable {
 		}
 
 		if (!(value instanceof Serializable)) {
-			value = new TransientValue<Object>(value);
+			value = new TransientValue<>(value);
 		}
 
 		_values.put(key, value);

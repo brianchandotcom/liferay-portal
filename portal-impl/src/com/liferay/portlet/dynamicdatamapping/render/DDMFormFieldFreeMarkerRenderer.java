@@ -348,8 +348,8 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			if (Validator.equals(ddmFormField.getType(), "select") ||
 				Validator.equals(ddmFormField.getType(), "radio")) {
 
-				Map<String, Object> optionFreeMarkerContext =
-					new HashMap<String, Object>(freeMarkerContext);
+				Map<String, Object> optionFreeMarkerContext = new HashMap<>(
+					freeMarkerContext);
 
 				optionFreeMarkerContext.put(
 					"parentFieldStructure", fieldStructure);

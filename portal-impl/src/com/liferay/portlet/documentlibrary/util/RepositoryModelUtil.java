@@ -60,7 +60,7 @@ public class RepositoryModelUtil {
 	public static List<Object> toFileEntriesAndFolders(
 		List<Object> dlFileEntriesAndDLFolders) {
 
-		List<Object> fileEntriesAndFolders = new ArrayList<Object>(
+		List<Object> fileEntriesAndFolders = new ArrayList<>(
 			dlFileEntriesAndDLFolders.size());
 
 		for (Object object : dlFileEntriesAndDLFolders) {

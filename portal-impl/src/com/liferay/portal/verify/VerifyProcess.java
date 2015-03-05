@@ -115,7 +115,7 @@ public abstract class VerifyProcess extends BaseDBProcess {
 			ExecutorService executorService = Executors.newFixedThreadPool(
 				throwableAwareRunnables.size());
 
-			List<Callable<Object>> jobs = new ArrayList<Callable<Object>>(
+			List<Callable<Object>> jobs = new ArrayList<>(
 				throwableAwareRunnables.size());
 
 			for (Runnable runnable : throwableAwareRunnables) {

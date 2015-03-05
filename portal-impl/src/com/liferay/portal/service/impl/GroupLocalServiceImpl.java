@@ -3744,7 +3744,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			parentGroupIdEquals = false;
 		}
 
-		params = new LinkedHashMap<String, Object>(params);
+		params = new LinkedHashMap<>(params);
 
 		Boolean active = (Boolean)params.remove("active");
 		List<Long> excludedGroupIds = (List<Long>)params.remove(

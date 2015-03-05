@@ -79,7 +79,7 @@ public class BatchDownloadEvent {
 
 		parameters.put("zipFileId", zipFileId);
 
-		parameters = new HashMap<String, Object>(parameters);
+		parameters = new HashMap<>(parameters);
 
 		parameters.remove("syncFile");
 

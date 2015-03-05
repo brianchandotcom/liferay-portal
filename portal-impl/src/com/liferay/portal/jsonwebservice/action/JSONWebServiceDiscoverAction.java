@@ -125,8 +125,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 				_contextName);
 
 		List<Map<String, Object>> jsonWebServiceActionMappingMaps =
-			new ArrayList<Map<String, Object>>(
-				jsonWebServiceActionMappings.size());
+			new ArrayList<>(jsonWebServiceActionMappings.size());
 
 		for (JSONWebServiceActionMapping jsonWebServiceActionMapping :
 				jsonWebServiceActionMappings) {

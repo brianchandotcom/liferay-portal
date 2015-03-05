@@ -14,9 +14,12 @@
 
 package com.liferay.portal.authenticator.ldap;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.PasswordExpiredException;
 import com.liferay.portal.UserLockoutException;
+import com.liferay.portal.authenticator.ldap.configuration.LDAPAuthConfiguration;
 import com.liferay.portal.kernel.ldap.LDAPFilterException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,6 +41,7 @@ import com.liferay.portal.security.ldap.PortalLDAPUtil;
 import com.liferay.portal.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.admin.util.Omniadmin;
 
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -54,11 +58,24 @@ import javax.naming.ldap.Control;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Scott Lee
  * @author Josef Sustacek
  */
+@Component(
+	configurationPid = "com.liferay.portal.authenticator.ldap.configuration.LDAPAuthConfiguration",
+	immediate = true,
+	property = {
+		"key=auth.pipeline.pre"
+	},
+	service = Authenticator.class
+)
 public class LDAPAuth implements Authenticator {
 
 	public static final String AUTH_METHOD_BIND = "bind";
@@ -124,6 +141,13 @@ public class LDAPAuth implements Authenticator {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ldapAuthConfiguration = Configurable.createConfigurable(
+			LDAPAuthConfiguration.class, properties);
+	}
+
 	protected LDAPAuthResult authenticate(
 			LdapContext ctx, long companyId, Attributes attributes,
 			String userDN, String password)
@@ -136,7 +160,8 @@ public class LDAPAuth implements Authenticator {
 		// auth method must be used in order to get the result control codes.
 
 		String authMethod = PrefsPropsUtil.getString(
-			companyId, PropsKeys.LDAP_AUTH_METHOD);
+			companyId, PropsKeys.LDAP_AUTH_METHOD,
+			_ldapAuthConfiguration.method());
 
 		if (authMethod.equals(AUTH_METHOD_BIND)) {
 			Hashtable<String, Object> env =
@@ -204,7 +229,8 @@ public class LDAPAuth implements Authenticator {
 
 				String algorithm = PrefsPropsUtil.getString(
 					companyId,
-					PropsKeys.LDAP_AUTH_PASSWORD_ENCRYPTION_ALGORITHM);
+					PropsKeys.LDAP_AUTH_PASSWORD_ENCRYPTION_ALGORITHM,
+					_ldapAuthConfiguration.passwordEncryptionAlgorithm());
 
 				if (Validator.isNotNull(algorithm)) {
 					encryptedPassword = PasswordEncryptorUtil.encrypt(
@@ -366,7 +392,7 @@ public class LDAPAuth implements Authenticator {
 
 		if (!PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_AUTH_ENABLED,
-				PropsValues.LDAP_AUTH_ENABLED)) {
+				_ldapAuthConfiguration.enabled())) {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Authenticator is not enabled");
@@ -518,7 +544,7 @@ public class LDAPAuth implements Authenticator {
 		}
 
 		if (userId > 0) {
-			if (OmniadminUtil.isOmniadmin(userId)) {
+			if (_omniadmin.isOmniadmin(userId)) {
 				return SUCCESS;
 			}
 		}
@@ -527,7 +553,7 @@ public class LDAPAuth implements Authenticator {
 				companyId, emailAddress);
 
 			if (user != null) {
-				if (OmniadminUtil.isOmniadmin(user)) {
+				if (_omniadmin.isOmniadmin(user)) {
 					return SUCCESS;
 				}
 			}
@@ -537,7 +563,7 @@ public class LDAPAuth implements Authenticator {
 				companyId, screenName);
 
 			if (user != null) {
-				if (OmniadminUtil.isOmniadmin(user)) {
+				if (_omniadmin.isOmniadmin(user)) {
 					return SUCCESS;
 				}
 			}
@@ -562,7 +588,8 @@ public class LDAPAuth implements Authenticator {
 		}
 
 		if (PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.LDAP_AUTH_REQUIRED)) {
+				companyId, PropsKeys.LDAP_AUTH_REQUIRED,
+				_ldapAuthConfiguration.required())) {
 
 			return failureCode;
 		}
@@ -607,6 +634,11 @@ public class LDAPAuth implements Authenticator {
 		failedLDAPAuthResults.put(cacheKey, ldapAuthResult);
 	}
 
+	@Reference
+	protected void setOmniadmin(Omniadmin omniadmin) {
+		_omniadmin = omniadmin;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(LDAPAuth.class);
 
 	private final ThreadLocal<Map<String, LDAPAuthResult>>
@@ -614,5 +646,7 @@ public class LDAPAuth implements Authenticator {
 			new AutoResetThreadLocal<Map<String, LDAPAuthResult>>(
 				LDAPAuth.class + "._failedLDAPAuthResultCache",
 				new HashMap<String, LDAPAuthResult>());
+	private volatile LDAPAuthConfiguration _ldapAuthConfiguration;
+	private Omniadmin _omniadmin;
 
 }

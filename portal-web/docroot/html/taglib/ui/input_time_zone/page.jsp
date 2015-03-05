@@ -47,21 +47,35 @@ numberFormat.setMinimumIntegerDigits(2);
 	for (TimeZone curTimeZone : timeZones) {
 		String offset = StringPool.BLANK;
 
-		int totalOffset = curTimeZone.getRawOffset() + curTimeZone.getDSTSavings();
+		boolean inDaylightTime = curTimeZone.inDaylightTime(new Date());
 
-		if (totalOffset > 0) {
-			offset = "+";
+		int totalOffset = curTimeZone.getRawOffset();
+
+		if (inDaylightTime) {
+			totalOffset = totalOffset + curTimeZone.getDSTSavings();
 		}
 
 		if (totalOffset != 0) {
 			String offsetHour = numberFormat.format(totalOffset / Time.HOUR);
 			String offsetMinute = numberFormat.format(Math.abs(totalOffset % Time.HOUR) / Time.MINUTE);
 
-			offset += offsetHour + ":" + offsetMinute;
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(StringPool.SPACE);
+
+			if (totalOffset > 0) {
+				sb.append(StringPool.PLUS);
+			}
+
+			sb.append(offsetHour);
+			sb.append(StringPool.COLON);
+			sb.append(offsetMinute);
+
+			offset = sb.toString();
 		}
 	%>
 
-		<option <%= value.equals(curTimeZone.getID()) ? "selected" : "" %> value="<%= curTimeZone.getID() %>">(UTC <%= offset %>) <%= curTimeZone.getDisplayName(curTimeZone.inDaylightTime(new Date()), displayStyle, locale) %></option>
+		<option <%= value.equals(curTimeZone.getID()) ? "selected" : "" %> value="<%= curTimeZone.getID() %>">(UTC<%= offset %>) <%= curTimeZone.getDisplayName(inDaylightTime, displayStyle, locale) %></option>
 
 	<%
 	}

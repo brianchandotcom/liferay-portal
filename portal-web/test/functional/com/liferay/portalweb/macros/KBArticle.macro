@@ -18,7 +18,6 @@
 
 		<execute function="Type" locator1="PGKnowledgebasedisplayAddchildarticle#TITLE_FIELD" value1="${kbArticleTitle}" />
 		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGKnowledgebasedisplayAddchildarticle#CONTENT_FIELD" value1="${kbArticleContent}" />
-		<execute function="AddSelection" locator1="SECTIONS_SELECT" value1="${kbArticleSection}" />
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplayAddchildarticle#PUBLISH_BUTTON" value1="Publish" />
 	</command>
 
@@ -374,7 +373,7 @@
 	<command name="editCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" value1="Actions" />
+		<execute function="Click" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#INFO_MESSAGE" value1="A new version is created automatically if this content is modified." />
@@ -393,7 +392,25 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="editKBArticleViaKBDisplay">
+	<command name="editKBArticlePriorityCP">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_PRIORITY" value1="${kbPriority}" />
+		<execute function="Type" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_PRIORITY" value1="${kbNewPriority}" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ACTIONS_BUTTON" value1="Actions" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ACTIONS_MENULIST_SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_PRIORITY" value1="${kbNewPriority}" />
+	</command>
+
+	<command name="editKBArticlePriorityViaEnterKeyCP">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="CPKnowledgebaseadmin#type" locator-key1="ARTICLE_TABLE_PRIORITY" value1="${kbNewPriority}" />
+		<execute action="CPKnowledgebaseadmin#keyPress" locator-key1="ARTICLE_TABLE_PRIORITY" value1="\RETURN" />
+	</command>
+
+	<command name="editKBArticleViaKBDisplayPG">
 		<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_ACTIONS_BUTTON" />
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_EDIT" value1="Edit" />
 
@@ -448,6 +465,10 @@
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_GRANDCHILD" value1="${kbGrandchildArticleTitle}" />
 	</command>
 
+	<command name="gotoNextArticle">
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_NEXT" value1="${kbDisplayNextArticle}" />
+	</command>
+
 	<command name="gotoPGViaKBSearchResult">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
@@ -455,9 +476,12 @@
 	</command>
 
 	<command name="gotoPGViaKBSection">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="AssertClick" locator1="PGKnowledgebasesection#KB_ARTICLE_LINK" value1="${kbArticleTitle}" />
+	</command>
+
+	<command name="gotoPreviousArticle">
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_PREVIOUS" value1="${kbDisplayPreviousArticle}" />
 	</command>
 
 	<command name="gotoRelatedAssetCP">
@@ -525,7 +549,11 @@
 		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_MOVE" value1="Move" />
 
 		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#CURRENT_PARENT_TITLE_LABEL" value1="Current Parent" />
 		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#CURRENT_PARENT_TITLE_FIELD" value1="${kbArticleCurrentParent}" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#CURRENT_PARENT_PRIORITY_LABEL" value1="Priority" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#NEW_PARENT_TITLE_LABEL" value1="New Parent" />
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#NEW_PARENT_PRIORITY_LABEL" value1="Priority" />
 		<execute function="Click" locator1="CPKnowledgebaseadminMoveArticle#SELECT_BUTTON" value1="Select" />
 	</command>
 
@@ -536,7 +564,11 @@
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_MOVE" value1="Move" />
 
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#CURRENT_PARENT_TITLE_LABEL" value1="Current Parent" />
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#CURRENT_PARENT_TITLE_FIELD" value1="(None)" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#CURRENT_PARENT_PRIORITY_LABEL" value1="Priority" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#NEW_PARENT_TITLE_LABEL" value1="New Parent" />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#NEW_PARENT_PRIORITY_LABEL" value1="Priority" />
 		<execute function="Click" locator1="PGKnowledgebasedisplayMoveArticle#SELECT_BUTTON" />
 	</command>
 
@@ -617,8 +649,6 @@
 		<execute function="SelectFrame" locator1="PGKnowledgebasedisplaySelectParentArticle#SELECT_PARENT_IFRAME" />
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplaySelectParentArticle#ARTICLE_TITLE" value1="${kbArticleTitle}" />
 		<execute function="Click" locator1="PGKnowledgebasedisplaySelectParentArticle#CHOOSE_BUTTON" value1="Choose" />
-		<execute function="SelectFrame" locator1="PGKnowledgebasedisplaySelectParentArticle#FRAME_HEADER" />
-		<execute function="Click" locator1="PGKnowledgebasedisplaySelectParentArticle#CLOSE_BUTTON" />
 
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />
 		<execute function="Click" locator1="PGKnowledgebasedisplayMoveArticle#MOVE_BUTTON" />

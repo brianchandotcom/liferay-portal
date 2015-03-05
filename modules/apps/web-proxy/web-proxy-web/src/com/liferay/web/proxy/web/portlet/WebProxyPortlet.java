@@ -67,7 +67,6 @@ import org.portletbridge.portlet.PortletBridgeServlet;
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
-		"com.liferay.portlet.struts-path=web_proxy",
 		"javax.portlet.display-name=Web Proxy",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.authenticatorClassName=org.portletbridge.portlet.DefaultBridgeAuthenticator",

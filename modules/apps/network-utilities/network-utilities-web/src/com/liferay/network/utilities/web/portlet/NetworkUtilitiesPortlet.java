@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=0",
 		"com.liferay.portlet.remoteable=true",
-		"com.liferay.portlet.struts-path=network_utilities",
 		"javax.portlet.display-name=Network Utilities",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",

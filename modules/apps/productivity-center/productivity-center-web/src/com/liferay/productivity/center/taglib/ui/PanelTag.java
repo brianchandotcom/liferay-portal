@@ -19,17 +19,11 @@ import com.liferay.productivity.center.panel.model.RootPanelCategory;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
 
 /**
  * @author Adolfo Pérez
  */
 public class PanelTag extends IncludeTag {
-
-	@Override
-	public int doStartTag() throws JspException {
-		return EVAL_BODY_INCLUDE;
-	}
 
 	public void setPanelCategory(PanelCategory panelCategory) {
 		_panelCategory = panelCategory;
@@ -50,7 +44,7 @@ public class PanelTag extends IncludeTag {
 			"productivity-center-ui:panel:panelCategory", _panelCategory);
 	}
 
-	private static final String _PAGE = "/taglib/ui/panel/start.jsp";
+	private static final String _PAGE = "/taglib/ui/panel/page.jsp";
 
 	private PanelCategory _panelCategory;
 

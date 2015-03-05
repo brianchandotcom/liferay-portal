@@ -17,17 +17,11 @@ package com.liferay.productivity.center.taglib.ui;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
 
 /**
  * @author Adolfo Pérez
  */
 public class PanelContentTag extends IncludeTag {
-
-	@Override
-	public int doStartTag() throws JspException {
-		return EVAL_BODY_INCLUDE;
-	}
 
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
@@ -44,7 +38,7 @@ public class PanelContentTag extends IncludeTag {
 			"productivity-center-ui:panel-content:portletId", _portletId);
 	}
 
-	private static final String _PAGE = "/taglib/ui/panel_content/start.jsp";
+	private static final String _PAGE = "/taglib/ui/panel_content/page.jsp";
 
 	private String _portletId;
 

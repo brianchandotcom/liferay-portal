@@ -1,3 +1,5 @@
+@import "mixins";
+
 .portlet-search {
 	.asset-actions {
 		float: right;
@@ -267,5 +269,14 @@
 .ie .portlet-search {
 	.full-query .container, .result td.value .container {
 		height: expression(this.scrollHeight > 100 ? "100px" : "auto");
+	}
+}
+
+@include respond-to(phone, tablet) {
+	.portlet-search .search-item {
+		> input, > button, > select {
+			font-size: 17px;
+			height: 39px;
+		}
 	}
 }

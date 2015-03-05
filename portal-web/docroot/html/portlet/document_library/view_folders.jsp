@@ -74,10 +74,12 @@ else if ((folderId != rootFolderId) || expandFolder) {
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
+portletURL.setParameter("curEntry", HttpUtil.getParameter(currentURL, liferayPortletResponse.getNamespace() + "curEntry", false));
+portletURL.setParameter("deltaEntry", HttpUtil.getParameter(currentURL, liferayPortletResponse.getNamespace() + "deltaEntry", false));
 portletURL.setParameter("struts_action", "/document_library/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
 
-SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "curFolder", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
 searchContainer.setTotal(total);
 

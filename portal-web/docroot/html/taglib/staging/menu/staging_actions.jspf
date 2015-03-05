@@ -22,26 +22,22 @@
 			url="<%= publishRenderURL.toString() %>"
 		/>
 
-		<aui:script use="aui-base">
-			var publishGlobalLink = A.one('#<portlet:namespace /><%= groupId + "publishGlobalLink" %>');
+		<aui:script sandbox="<%= true %>">
+			var publishGlobalLink = $('#<portlet:namespace /><%= groupId + "publishGlobalLink" %>');
 
-			if (publishGlobalLink) {
-				publishGlobalLink.detach('click');
+			publishGlobalLink.on(
+				'click',
+				function(event) {
+					event.preventDefault();
 
-				publishGlobalLink.on(
-					'click',
-					function(event) {
-						event.preventDefault();
-
-						Liferay.LayoutExporter.publishToLive(
-							{
-								title: '<%= UnicodeFormatter.toString(publishMessage) %>',
-								url: event.currentTarget.attr('href')
-							}
-						);
-					}
-				);
-			}
+					Liferay.LayoutExporter.publishToLive(
+						{
+							title: '<%= UnicodeFormatter.toString(publishMessage) %>',
+							url: publishGlobalLink.attr('href')
+						}
+					);
+				}
+			);
 		</aui:script>
 	</c:when>
 	<c:otherwise>
@@ -129,7 +125,7 @@
 			</liferay-util:buffer>
 
 			<c:choose>
-				<c:when test="<%= !onlyActions %>">
+				<c:when test="<%= !onlyActions && false %>">
 					<li class="publish-link-container">
 						<%= publishOnControlPanelLink %>
 					</li>
@@ -141,50 +137,42 @@
 				</c:otherwise>
 			</c:choose>
 
-			<aui:script use="aui-base">
-				var publishLink = A.one('#<portlet:namespace /><%= layoutSetBranchId + "publishLink" %>');
+			<aui:script sandbox="<%= true %>">
+				var publishLink = $('#<portlet:namespace /><%= layoutSetBranchId + "publishLink" %>');
 
-				if (publishLink) {
-					publishLink.detach('click');
+				publishLink.on(
+					'click',
+					function(event) {
+						event.preventDefault();
 
-					publishLink.on(
-						'click',
-						function(event) {
-							event.preventDefault();
+						Liferay.LayoutExporter.publishToLive(
+							{
+								title: '<%= UnicodeFormatter.toString(publishMessage) %>',
+								url: publishLink.attr('href')
+							}
+						);
+					}
+				);
 
-							Liferay.LayoutExporter.publishToLive(
-								{
-									title: '<%= UnicodeFormatter.toString(publishMessage) %>',
-									url: event.currentTarget.attr('href')
-								}
-							);
-						}
-					);
-				}
+				var publishToLiveLink = $('#<portlet:namespace /><%= layoutSetBranchId + "publishToLiveLink" %>');
 
-				var publishToLiveLink = A.one('#<portlet:namespace /><%= layoutSetBranchId + "publishToLiveLink" %>');
+				publishToLiveLink.on(
+					'click',
+					function(event) {
+						event.preventDefault();
 
-				if (publishToLiveLink) {
-					publishToLiveLink.detach('click');
-
-					publishToLiveLink.on(
-						'click',
-						function(event) {
-							event.preventDefault();
-
-							Liferay.Util.openWindow(
-								{
-									dialog: {
-										width: 820
-									},
-									id: '<portlet:namespace />publishLatestChangesDialog',
-									title: '<%= UnicodeLanguageUtil.get(request, "publish-to-live") %>',
-									uri: event.currentTarget.attr('href')
-								}
-							);
-						}
-					);
-				}
+						Liferay.Util.openWindow(
+							{
+								dialog: {
+									width: 820
+								},
+								id: '<portlet:namespace />publishLatestChangesDialog',
+								title: '<%= UnicodeLanguageUtil.get(request, "publish-to-live") %>',
+								uri: publishToLiveLink.attr('href')
+							}
+						);
+					}
+				);
 			</aui:script>
 		</c:if>
 
@@ -213,30 +201,26 @@
 				</c:otherwise>
 			</c:choose>
 
-			<aui:script use="aui-base">
-				var layoutSetBranchesLink = A.one('#<portlet:namespace />manageLayoutSetBranches');
+			<aui:script sandbox="<%= true %>">
+				var layoutSetBranchesLink = $('#<portlet:namespace />manageLayoutSetBranches');
 
-				if (layoutSetBranchesLink) {
-					layoutSetBranchesLink.detach('click');
+				layoutSetBranchesLink.on(
+					'click',
+					function(event) {
+						event.preventDefault();
 
-					layoutSetBranchesLink.on(
-						'click',
-						function(event) {
-							event.preventDefault();
-
-							Liferay.Util.openWindow(
-								{
-									dialog: {
-										width: 820
-									},
-									id: '<portlet:namespace />layoutSetBranches',
-									title: '<%= UnicodeLanguageUtil.get(request, "manage-site-pages-variations") %>',
-									uri: event.currentTarget.attr('href')
-								}
-							);
-						}
-					);
-				}
+						Liferay.Util.openWindow(
+							{
+								dialog: {
+									width: 820
+								},
+								id: '<portlet:namespace />layoutSetBranches',
+								title: '<%= UnicodeLanguageUtil.get(request, "manage-site-pages-variations") %>',
+								uri: layoutSetBranchesLink.attr('href')
+							}
+						);
+					}
+				);
 			</aui:script>
 		</c:if>
 	</c:otherwise>

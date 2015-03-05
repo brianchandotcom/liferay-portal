@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.subscription;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,10 +33,12 @@ import com.liferay.wiki.util.test.WikiTestUtil;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author José Ángel Jiménez
  */
+@RunWith(Arquillian.class)
 @Sync
 public class WikiSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 

@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.translator.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.wiki.translator.MediaWikiToCreoleTranslator;
 
@@ -21,10 +22,12 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Jorge Ferrer
  */
+@RunWith(Arquillian.class)
 public class MediaWikiToCreoleTranslatorTest {
 
 	@ClassRule

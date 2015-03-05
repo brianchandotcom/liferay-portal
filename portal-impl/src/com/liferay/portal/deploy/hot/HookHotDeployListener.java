@@ -662,7 +662,7 @@ public class HookHotDeployListener
 	}
 
 	protected void getCustomJsps(
-		ServletContext servletContext, String webDir, String resourcePath,
+		ServletContext servletContext, String resourcePath,
 		List<String> customJsps) {
 
 		Set<String> resourcePaths = servletContext.getResourcePaths(
@@ -674,11 +674,10 @@ public class HookHotDeployListener
 
 		for (String curResourcePath : resourcePaths) {
 			if (curResourcePath.endsWith(StringPool.SLASH)) {
-				getCustomJsps(
-					servletContext, webDir, curResourcePath, customJsps);
+				getCustomJsps(servletContext, curResourcePath, customJsps);
 			}
 			else {
-				String customJsp = webDir + curResourcePath;
+				String customJsp = curResourcePath;
 
 				customJsp = StringUtil.replace(
 					customJsp, StringPool.DOUBLE_SLASH, StringPool.SLASH);
@@ -949,7 +948,9 @@ public class HookHotDeployListener
 					servletContextName, portalJsp);
 			}
 
-			FileUtil.copyFile(customJsp, portalWebDir + portalJsp);
+			FileUtil.write(
+				portalWebDir + portalJsp,
+				customJspBag.getCustomJspInputStream(customJsp));
 		}
 
 		if (!customJspGlobal) {
@@ -986,16 +987,14 @@ public class HookHotDeployListener
 
 		List<String> customJsps = new ArrayList<>();
 
-		String webDir = servletContext.getRealPath(StringPool.SLASH);
-
-		getCustomJsps(servletContext, webDir, customJspDir, customJsps);
+		getCustomJsps(servletContext, customJspDir, customJsps);
 
 		if (customJsps.isEmpty()) {
 			return;
 		}
 
 		CustomJspBag customJspBag = new CustomJspBag(
-			customJspDir, customJspGlobal, customJsps);
+			servletContext, customJspDir, customJspGlobal, customJsps);
 
 		if (_log.isDebugEnabled()) {
 			StringBundler sb = new StringBundler(customJsps.size() * 2);
@@ -2590,12 +2589,17 @@ public class HookHotDeployListener
 	private class CustomJspBag {
 
 		public CustomJspBag(
-			String customJspDir, boolean customJspGlobal,
-			List<String> customJsps) {
+			ServletContext servletContext, String customJspDir,
+			boolean customJspGlobal, List<String> customJsps) {
 
+			_servletContext = servletContext;
 			_customJspDir = customJspDir;
 			_customJspGlobal = customJspGlobal;
 			_customJsps = customJsps;
+		}
+
+		public InputStream getCustomJspInputStream(String customJsp) {
+			return _servletContext.getResourceAsStream(customJsp);
 		}
 
 		public String getCustomJspDir() {
@@ -2613,6 +2617,7 @@ public class HookHotDeployListener
 		private final String _customJspDir;
 		private final boolean _customJspGlobal;
 		private final List<String> _customJsps;
+		private final ServletContext _servletContext;
 
 	}
 

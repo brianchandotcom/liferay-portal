@@ -130,7 +130,7 @@ BlogsEntryEditorDisplayContext blogsEntryEditorDisplayContext = new BlogsEntryEd
 					<aui:input name="coverImageCaption" type="hidden" />
 
 					<div class="entry-cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %>">
-						<liferay-ui:input-editor contents="<%= coverImageCaption %>" data="<%= blogsEntryEditorDisplayContext.getCoverImageCaptionEditorData() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="coverImageCaptionEditor" placeholder="<%= coverImageCaptionPlaceholder %>" />
+						<liferay-ui:input-editor contents="<%= coverImageCaption %>" data="<%= blogsEntryEditorDisplayContext.getCoverImageCaptionEditorData() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="coverImageCaptionEditor" placeholder="<%= coverImageCaptionPlaceholder %>" showSource="<%= false %>" />
 					</div>
 
 					<div class="entry-title">

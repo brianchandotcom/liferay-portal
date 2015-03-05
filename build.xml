@@ -1027,7 +1027,7 @@
 			auto.deploy.dir=${liferay.home}/osgi/apps
 			clean.delete.ivy.md5=true
 			clean.delete.lib=true
-			ivy.home=${project.dir}/.ivy
+			ivy.home=${ivy.home}
 			junit.test.excludes=${junit.test.excludes}
 			liferay.home=${liferay.home}
 			lp.portal.project.dir=${project.dir}

@@ -125,7 +125,7 @@
 					<portlet:param name="targetGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 				</portlet:renderURL>
 
-				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= confirmationURL.toString() %>" id='<%= layoutSetBranchId + "publishLatestChangesLink" %>' label="publish-to-live" />
+				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= confirmationURL.toString() %>" id='<%= layoutSetBranchId + "publishToLiveLink" %>' label="publish-to-live" />
 			</liferay-util:buffer>
 
 			<c:choose>
@@ -162,12 +162,12 @@
 					);
 				}
 
-				var publishLatestChangesLink = A.one('#<portlet:namespace /><%= layoutSetBranchId + "publishLatestChangesLink" %>');
+				var publishToLiveLink = A.one('#<portlet:namespace /><%= layoutSetBranchId + "publishToLiveLink" %>');
 
-				if (publishLatestChangesLink) {
-					publishLatestChangesLink.detach('click');
+				if (publishToLiveLink) {
+					publishToLiveLink.detach('click');
 
-					publishLatestChangesLink.on(
+					publishToLiveLink.on(
 						'click',
 						function(event) {
 							event.preventDefault();

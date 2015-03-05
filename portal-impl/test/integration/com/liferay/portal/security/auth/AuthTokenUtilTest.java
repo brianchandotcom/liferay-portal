@@ -62,7 +62,7 @@ public class AuthTokenUtilTest {
 		Assert.assertFalse(
 			AuthTokenUtil.isValidPortletInvocationToken(
 				new MockHttpServletRequest(), 0L, "portletId", "struts action",
-				"foo"));
+				"INVALID_PORTLET_INVOCATION_TOKEN"));
 	}
 
 }

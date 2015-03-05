@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var CSS_INVISIBLE = 'invisible';
+
 		var STR_BLANK = '';
 
 		var STR_CHANGE = 'change';
@@ -104,7 +106,12 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						var eventHandles = [];
+						instance._captionNode = AUI.$('.entry-cover-image-caption');
+
+						var eventHandles = [
+							Liferay.on('imageDeleted', instance._removeCaption, instance),
+							Liferay.on('imageUploaded', instance._showCaption, instance)
+						];
 
 						var publishButton = instance.one('#publishButton');
 
@@ -266,6 +273,16 @@ AUI.add(
 						submitForm(form);
 					},
 
+					_removeCaption: function() {
+						var instance = this;
+
+						var captionNode = instance._captionNode;
+
+						captionNode.addClass(CSS_INVISIBLE);
+
+						window[instance.ns('coverImageCaptionEditor')].setHTML(STR_BLANK);
+					},
+
 					_saveEntry: function(draft, ajax) {
 						var instance = this;
 
@@ -275,6 +292,7 @@ AUI.add(
 						var title = window[instance.ns('titleEditor')].getHTML();
 						var subtitle = window[instance.ns('subtitleEditor')].getHTML();
 						var content = window[instance.ns('contentEditor')].getHTML();
+						var description = window[instance.ns('descriptionEditor')].getHTML();
 						var coverImageCaption = window[instance.ns('coverImageCaptionEditor')].getHTML();
 
 						var form = instance._getPrincipalForm();
@@ -426,6 +444,12 @@ AUI.add(
 						}
 
 						return text;
+					},
+
+					_showCaption: function() {
+						var instance = this;
+
+						instance._captionNode.removeClass(CSS_INVISIBLE);
 					},
 
 					_updateImages: function(persistentImages) {

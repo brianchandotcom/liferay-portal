@@ -45,13 +45,13 @@ catch (CaptchaMaxChallengesException cmce) {
 		</aui:input>
 	</div>
 
-	<aui:script use="aui-base">
-		A.one('#<portlet:namespace />refreshCaptcha').on(
+	<aui:script sandbox="<%= true %>">
+		$('#<portlet:namespace />refreshCaptcha').on(
 			'click',
 			function() {
-				var url = Liferay.Util.addParams('t=' + A.Lang.now(), '<%= url %>');
+				var url = Liferay.Util.addParams('t=' + $.now(), '<%= url %>');
 
-				A.one('#<portlet:namespace />captcha').attr('src', url);
+				$('#<portlet:namespace />captcha').attr('src', url);
 			}
 		);
 	</aui:script>

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="init.jsp" %>
+<%@ include file="/layout/view/init.jsp" %>
 
 <%
 String portletId = ParamUtil.getString(request, "p_p_id");

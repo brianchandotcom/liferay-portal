@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionContainerModelTestCase;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -37,8 +37,8 @@ import org.junit.Rule;
  * @author Roberto Díaz
  */
 @Sync
-public class BookmarksSubscriptionContainerModelTest
-	extends BaseSubscriptionContainerModelTestCase {
+public class BookmarksSubscriptionAuthorTest
+	extends BaseSubscriptionAuthorTestCase {
 
 	@ClassRule
 	@Rule
@@ -82,11 +82,11 @@ public class BookmarksSubscriptionContainerModelTest
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscription(long userId, long containerModelId)
 		throws Exception {
 
 		BookmarksFolderLocalServiceUtil.subscribeFolder(
-			user.getUserId(), group.getGroupId(), containerModelId);
+			userId, group.getGroupId(), containerModelId);
 	}
 
 	@Override

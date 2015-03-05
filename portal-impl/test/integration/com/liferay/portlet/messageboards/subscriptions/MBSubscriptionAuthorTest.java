@@ -12,13 +12,8 @@
  * details.
  */
 
-package com.liferay.bookmarks.subscription;
+package com.liferay.portlet.messageboards.subscriptions;
 
-import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
@@ -28,17 +23,22 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionContainerModelTestCase;
+import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.util.test.MBTestUtil;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 
 /**
- * @author Roberto Díaz
+ * @author José Ángel Jiménez
  */
 @Sync
-public class BookmarksSubscriptionContainerModelTest
-	extends BaseSubscriptionContainerModelTestCase {
+public class MBSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 
 	@ClassRule
 	@Rule
@@ -55,15 +55,15 @@ public class BookmarksSubscriptionContainerModelTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), userId);
 
-		BookmarksTestUtil.populateNotificationsServiceContext(
+		MBTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.ADD);
 
-		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.addEntry(
-			userId, group.getGroupId(), containerModelId,
-			RandomTestUtil.randomString(), "http://www.liferay.com",
+		MBMessage message = MBMessageLocalServiceUtil.addMessage(
+			userId, RandomTestUtil.randomString(), group.getGroupId(),
+			containerModelId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
-		return entry.getEntryId();
+		return message.getMessageId();
 	}
 
 	@Override
@@ -74,39 +74,42 @@ public class BookmarksSubscriptionContainerModelTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), userId);
 
-		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.addFolder(
+		MBCategory category = MBCategoryServiceUtil.addCategory(
 			userId, containerModelId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
-		return folder.getFolderId();
+		return category.getCategoryId();
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscription(long userId, long containerModelId)
 		throws Exception {
 
-		BookmarksFolderLocalServiceUtil.subscribeFolder(
-			user.getUserId(), group.getGroupId(), containerModelId);
+		MBCategoryLocalServiceUtil.subscribeCategory(
+			userId, group.getGroupId(), containerModelId);
+	}
+
+	@Override
+	protected boolean isSubscriptionForAuthorEnabled() {
+		return true;
 	}
 
 	@Override
 	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
-		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
-			baseModelId);
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), userId);
+				message.getGroupId(), userId);
 
-		BookmarksTestUtil.populateNotificationsServiceContext(
+		MBTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.UPDATE);
 
-		BookmarksEntryLocalServiceUtil.updateEntry(
-			userId, entry.getEntryId(), entry.getGroupId(), entry.getFolderId(),
-			RandomTestUtil.randomString(), entry.getUrl(),
-			entry.getDescription(), serviceContext);
+		MBMessageLocalServiceUtil.updateMessage(
+			userId, message.getMessageId(), RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 }

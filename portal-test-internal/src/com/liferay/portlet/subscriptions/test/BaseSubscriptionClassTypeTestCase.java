@@ -50,7 +50,7 @@ public abstract class BaseSubscriptionClassTypeTestCase
 
 		addSubscriptionClassType(classTypeId);
 
-		updateBaseModel(baseModelId);
+		updateBaseModel(contextUser.getUserId(), baseModelId);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
@@ -82,7 +82,7 @@ public abstract class BaseSubscriptionClassTypeTestCase
 
 		addSubscriptionClassType(classTypeId);
 
-		updateBaseModel(baseModelId);
+		updateBaseModel(contextUser.getUserId(), baseModelId);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 

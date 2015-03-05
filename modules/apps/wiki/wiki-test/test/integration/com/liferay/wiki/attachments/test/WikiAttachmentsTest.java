@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.attachments.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -38,12 +39,14 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Eudaldo Alonso
  * @author Roberto Díaz
  * @author Sergio González
  */
+@RunWith(Arquillian.class)
 public class WikiAttachmentsTest {
 
 	@ClassRule

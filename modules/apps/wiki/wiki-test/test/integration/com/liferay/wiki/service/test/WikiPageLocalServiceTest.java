@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -60,11 +61,13 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
  * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 @Sync
 public class WikiPageLocalServiceTest {
 

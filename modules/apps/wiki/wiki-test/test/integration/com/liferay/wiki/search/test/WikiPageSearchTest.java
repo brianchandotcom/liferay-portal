@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.search.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngine;
@@ -48,10 +49,12 @@ import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Eudaldo Alonso
  */
+@RunWith(Arquillian.class)
 @Sync
 public class WikiPageSearchTest extends BaseSearchTestCase {
 

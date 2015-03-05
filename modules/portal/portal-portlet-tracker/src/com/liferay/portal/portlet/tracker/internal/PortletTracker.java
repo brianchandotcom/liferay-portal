@@ -1128,7 +1128,9 @@ public class PortletTracker
 			properties.get(
 				HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT_ATTRIBUTE));
 
-		_httpServiceEndpoint = httpServiceEndpoints.get(0);
+		if (!httpServiceEndpoints.isEmpty()) {
+			_httpServiceEndpoint = httpServiceEndpoints.get(0);
+		}
 	}
 
 	@Reference(unbind = "-")
@@ -1204,7 +1206,7 @@ public class PortletTracker
 
 	private CompanyLocalService _companyLocalService;
 	private ComponentContext _componentContext;
-	private String _httpServiceEndpoint;
+	private String _httpServiceEndpoint = StringPool.BLANK;
 	private PortletInstanceFactory _portletInstanceFactory;
 	private PortletLocalService _portletLocalService;
 	private final PortletPropertyValidator _portletPropertyValidator =

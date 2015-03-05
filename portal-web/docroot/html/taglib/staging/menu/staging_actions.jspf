@@ -125,7 +125,7 @@
 					<portlet:param name="targetGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 				</portlet:renderURL>
 
-				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= confirmationURL.toString() %>" id='<%= layoutSetBranchId + "publishLatestChangesLink" %>' label="publish-latest-changes" />
+				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= confirmationURL.toString() %>" id='<%= layoutSetBranchId + "publishLatestChangesLink" %>' label="publish-to-live" />
 			</liferay-util:buffer>
 
 			<c:choose>
@@ -178,7 +178,7 @@
 										width: 820
 									},
 									id: '<portlet:namespace />publishLatestChangesDialog',
-									title: '<%= UnicodeLanguageUtil.get(request, "publish-latest-changes") %>',
+									title: '<%= UnicodeLanguageUtil.get(request, "publish-to-live") %>',
 									uri: event.currentTarget.attr('href')
 								}
 							);

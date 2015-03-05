@@ -53,14 +53,18 @@ public class Provider extends javax.xml.ws.spi.Provider {
 	public Endpoint createAndPublishEndpoint(
 		String address, Object implementor) {
 
-		return _getProvider().createAndPublishEndpoint(address, implementor);
+		javax.xml.ws.spi.Provider provider = _getProvider();
+
+		return provider.createAndPublishEndpoint(address, implementor);
 	}
 
 	@Override
 	public Endpoint createAndPublishEndpoint(
 		String address, Object implementor, WebServiceFeature... features) {
 
-		return _getProvider().createAndPublishEndpoint(
+		javax.xml.ws.spi.Provider provider = _getProvider();
+
+		return provider.createAndPublishEndpoint(
 			address, implementor, features);
 	}
 
@@ -69,20 +73,26 @@ public class Provider extends javax.xml.ws.spi.Provider {
 		String bindingId, Class<?> implementorClass, Invoker invoker,
 		WebServiceFeature... features) {
 
-		return _getProvider().createEndpoint(
+		javax.xml.ws.spi.Provider provider = _getProvider();
+
+		return provider.createEndpoint(
 			bindingId, implementorClass, invoker, features);
 	}
 
 	@Override
 	public Endpoint createEndpoint(String bindingId, Object implementor) {
-		return _getProvider().createEndpoint(bindingId, implementor);
+		javax.xml.ws.spi.Provider provider = _getProvider();
+
+		return provider.createEndpoint(bindingId, implementor);
 	}
 
 	@Override
 	public Endpoint createEndpoint(
 		String bindingId, Object implementor, WebServiceFeature... features) {
 
-		return _getProvider().createEndpoint(bindingId, implementor, features);
+		javax.xml.ws.spi.Provider provider = _getProvider();
+
+		return provider.createEndpoint(bindingId, implementor, features);
 	}
 
 	@Override
@@ -90,7 +100,9 @@ public class Provider extends javax.xml.ws.spi.Provider {
 		URL wsdlDocumentLocation, QName serviceName,
 		Class<? extends Service> serviceClass) {
 
-		return _getProvider().createServiceDelegate(
+		javax.xml.ws.spi.Provider provider = _getProvider();
+
+		return provider.createServiceDelegate(
 			wsdlDocumentLocation, serviceName, serviceClass);
 	}
 
@@ -109,7 +121,9 @@ public class Provider extends javax.xml.ws.spi.Provider {
 		List<Element> metadata, String wsdlDocumentLocation,
 		List<Element> referenceParameters) {
 
-		return _getProvider().createW3CEndpointReference(
+		javax.xml.ws.spi.Provider provider = _getProvider();
+
+		return provider.createW3CEndpointReference(
 			address, serviceName, portName, metadata, wsdlDocumentLocation,
 			referenceParameters);
 	}
@@ -121,7 +135,9 @@ public class Provider extends javax.xml.ws.spi.Provider {
 		List<Element> referenceParameters, List<Element> elements,
 		Map<QName, String> attributes) {
 
-		return _getProvider().createW3CEndpointReference(
+		javax.xml.ws.spi.Provider provider = _getProvider();
+
+		return provider.createW3CEndpointReference(
 			address, interfaceName, serviceName, portName, metadata,
 			wsdlDocumentLocation, referenceParameters, elements, attributes);
 	}
@@ -131,7 +147,9 @@ public class Provider extends javax.xml.ws.spi.Provider {
 		EndpointReference endpointReference, Class<T> serviceEndpointInterface,
 		WebServiceFeature... features) {
 
-		return _getProvider().getPort(
+		javax.xml.ws.spi.Provider provider = _getProvider();
+
+		return provider.getPort(
 			endpointReference, serviceEndpointInterface, features);
 	}
 
@@ -144,8 +162,8 @@ public class Provider extends javax.xml.ws.spi.Provider {
 		try {
 			return _serviceTracker.waitForService(10 * 1000L);
 		}
-		catch (InterruptedException e) {
-			throw new RuntimeException(e);
+		catch (InterruptedException ie) {
+			throw new RuntimeException(ie);
 		}
 	}
 

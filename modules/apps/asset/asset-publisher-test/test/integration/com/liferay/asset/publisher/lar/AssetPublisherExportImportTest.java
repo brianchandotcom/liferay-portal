@@ -14,7 +14,7 @@
 
 package com.liferay.asset.publisher.lar;
 
-import com.liferay.arquillian.bridge.junit.Arquillian;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;

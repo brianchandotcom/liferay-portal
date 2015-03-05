@@ -131,7 +131,11 @@ public class ToolDependencies {
 
 		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
 
-		saxReaderUtil.setSecureSAXReader(saxReader);
+		SAXReaderImpl secureSAXReader = new SAXReaderImpl();
+		secureSAXReader.setSecure(true);
+
+		saxReaderUtil.setSecureSAXReader(secureSAXReader);
+		saxReaderUtil.setUnsecureSAXReader(saxReader);
 
 		SecureXMLFactoryProviderUtil secureXMLFactoryProviderUtil =
 			new SecureXMLFactoryProviderUtil();

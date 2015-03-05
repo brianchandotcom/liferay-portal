@@ -175,6 +175,20 @@
 		.entry-subtitle {
 			margin-bottom: 30px;
 		}
+
+		.entry-cover-image-caption {
+			font-size: 12px;
+			margin-bottom: 35px;
+
+			.alloy-editor {
+				color: #868889;
+				padding-left: 0;
+
+				&.alloy-editor.alloy-editor-placeholder:empty:not(:focus) {
+					border-left-width: 0;
+				}
+			}
+		}
 	}
 
 	.entry-title {
@@ -323,7 +337,7 @@
 	}
 
 	.lfr-blogs-cover-image-selector {
-		margin: 0 0 60px;
+		margin: 0 0 10px;
 		padding-top: 10px;
 	}
 

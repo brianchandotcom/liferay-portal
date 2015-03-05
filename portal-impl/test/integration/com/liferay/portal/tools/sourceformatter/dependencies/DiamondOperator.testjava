@@ -52,6 +52,12 @@ public class DiamondOperator {
 		return _map;
 	}
 
+	public Map<String, Object> getObjectMap() {
+		Map<String, Object> objectMap = new HashMap<String, Object>();
+
+		return objectMap;
+	}
+
 	private final List<String> _list = new ArrayList<String>();
 	private Map<Long, Map<String, Map<String, String[]>>> _map;
 

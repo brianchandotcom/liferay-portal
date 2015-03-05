@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Arquillian Bundle Manager
-Bundle-SymbolicName: com.liferay.arquillian.bundle.manager
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.arquillian.bundle.manager
-Import-Package:\
-	com.liferay.portal.http.service.servlet,\
-	*
-Web-ContextPath: /arquillian-bundle-manager

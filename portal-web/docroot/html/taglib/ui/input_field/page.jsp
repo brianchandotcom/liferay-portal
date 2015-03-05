@@ -250,31 +250,33 @@ if (hints != null) {
 					<aui:input id="<%= formName + fieldParam %>" label="<%= dateTogglerCheckboxLabel %>" name="<%= dateTogglerCheckboxName %>" type="checkbox" value="<%= disabled %>" />
 				</div>
 
-				<aui:script use="aui-base">
-					var checkbox = A.one('#<portlet:namespace /><%= formName + fieldParam %>');
+				<aui:script sandbox="<%= true %>">
+					var checkbox = $('#<portlet:namespace /><%= formName + fieldParam %>');
 
-					checkbox.once(
-						['click', 'mouseover'],
+					checkbox.one(
+						'click mouseover',
 						function() {
 							Liferay.component('<portlet:namespace /><%= fieldParam %>DatePicker');
 						}
 					);
 
 					checkbox.on(
-						['click', 'mouseover'],
+						'click mouseover',
 						function(event) {
-							var checked = document.getElementById('<portlet:namespace /><%= formName + fieldParam %>').checked;
+							var checked = checkbox.prop('checked');
 
-							document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>'].disabled = checked;
-							document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Month'].disabled = checked;
-							document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Day'].disabled = checked;
-							document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Year'].disabled = checked;
+							var form = $(document.<portlet:namespace /><%= formName %>);
+
+							form.fm('<%= fieldParam %>').prop('disabled', checked);
+							form.fm('<%= fieldParam %>Month').prop('disabled', checked);
+							form.fm('<%= fieldParam %>Day').prop('disabled', checked);
+							form.fm('<%= fieldParam %>Year').prop('disabled', checked);
 
 							<c:if test="<%= showTime %>">
-								document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Time'].disabled = checked;
-								document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Hour'].disabled = checked;
-								document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Minute'].disabled = checked;
-								document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>AmPm'].disabled = checked;
+								form.fm('<%= fieldParam %>Time').prop('disabled', checked);
+								form.fm('<%= fieldParam %>Hour').prop('disabled', checked);
+								form.fm('<%= fieldParam %>Minute').prop('disabled', checked);
+								form.fm('<%= fieldParam %>AmPm').prop('disabled', checked);
 							</c:if>
 						}
 					);
@@ -487,7 +489,7 @@ if (hints != null) {
 							/>
 						</c:when>
 						<c:otherwise>
-							<textarea class="<%= cssClass + " lfr-textarea" %>" <%= disabled ? "disabled=\"disabled\"" : StringPool.BLANK %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(request, placeholder) + "\"" : StringPool.BLANK %> style="<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK %>" onKeyDown="<%= checkTab ? "Liferay.Util.checkTab(this); " : StringPool.BLANK %> Liferay.Util.disableEsc();" wrap="soft"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>
+							<textarea class="<%= cssClass + " lfr-textarea" %>" <%= disabled ? "disabled=\"disabled\"" : StringPool.BLANK %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" onKeyDown="<%= checkTab ? "Liferay.Util.checkTab(this); " : StringPool.BLANK %> Liferay.Util.disableEsc();" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(request, placeholder) + "\"" : StringPool.BLANK %> style="<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK %>" wrap="soft"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>
 						</c:otherwise>
 					</c:choose>
 

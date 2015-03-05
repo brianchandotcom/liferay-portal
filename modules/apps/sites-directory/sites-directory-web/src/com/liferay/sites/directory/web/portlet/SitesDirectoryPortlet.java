@@ -27,9 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	configurationPid = "com.liferay.sites.directory.web",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	property = {
+	immediate = true, property = {
 		"com.liferay.portlet.add-default-resource=true;",
 		"com.liferay.portlet.css-class-wrapper=portlet-sites-directory",
 		"com.liferay.portlet.display-category=category.cms",
@@ -41,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.single-page-application=false",
-		"com.liferay.portlet.struts-path=sites_directory",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Sites Directory",
 		"javax.portlet.expiration-cache=0",

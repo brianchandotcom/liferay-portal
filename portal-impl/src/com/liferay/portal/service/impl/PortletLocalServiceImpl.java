@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -81,6 +82,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletBagFactory;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletContextFactory;
 import com.liferay.portlet.PortletInstanceFactoryUtil;
@@ -809,6 +811,14 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			// Return the new portlets
 
+			PortletBagFactory portletBagFactory = new PortletBagFactory();
+
+			portletBagFactory.setClassLoader(
+				ClassLoaderPool.getClassLoader(servletContextName));
+
+			portletBagFactory.setServletContext(servletContext);
+			portletBagFactory.setWARFile(true);
+
 			for (String portletId : portlets.keySet()) {
 				Portlet portlet = _portletsPool.get(portletId);
 
@@ -818,6 +828,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 				PortletConfigFactoryUtil.destroy(portlet);
 				PortletContextFactory.destroy(portlet);
+
+				portletBagFactory.create(portlet);
 			}
 
 			// Sprite images

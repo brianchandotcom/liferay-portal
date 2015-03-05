@@ -14,33 +14,62 @@
 
 package com.liferay.portlet.journal.util;
 
+import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.Image;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.ImageLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
+import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.model.JournalFeed;
+import com.liferay.portlet.journal.model.JournalFeedConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleDisplayDateComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleModifiedDateComparator;
 
+import com.sun.syndication.feed.synd.SyndContent;
+import com.sun.syndication.feed.synd.SyndContentImpl;
 import com.sun.syndication.feed.synd.SyndEnclosure;
 import com.sun.syndication.feed.synd.SyndEnclosureImpl;
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndEntryImpl;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.feed.synd.SyndFeedImpl;
 import com.sun.syndication.feed.synd.SyndLink;
 import com.sun.syndication.feed.synd.SyndLinkImpl;
+import com.sun.syndication.io.FeedException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,6 +77,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
 
 /**
  * @author Raymond Augé
@@ -341,7 +376,7 @@ public class JournalRSSUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalRSSUtil.class);
 
-	protected String exportToRSS(
+	protected static String exportToRSS(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 			JournalFeed feed, String languageId, Layout layout,
 			ThemeDisplay themeDisplay)
@@ -438,7 +473,7 @@ public class JournalRSSUtil {
 		}
 	}
 
-	protected String getEntryURL(
+	protected static String getEntryURL(
 			ResourceRequest resourceRequest, JournalFeed feed,
 			JournalArticle article, Layout layout, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -476,8 +511,7 @@ public class JournalRSSUtil {
 		return entryURL.toString();
 	}
 
-	@Override
-	protected byte[] getRSS(
+	public static byte[] getRSS(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
@@ -520,7 +554,7 @@ public class JournalRSSUtil {
 		return rss.getBytes(StringPool.UTF8);
 	}
 
-	protected String processContent(
+	protected static String processContent(
 			JournalFeed feed, JournalArticle article, String languageId,
 			ThemeDisplay themeDisplay, SyndEntry syndEntry,
 			SyndContent syndContent)
@@ -603,7 +637,7 @@ public class JournalRSSUtil {
 		return content;
 	}
 
-	protected String processURL(
+	protected static String processURL(
 		JournalFeed feed, String url, ThemeDisplay themeDisplay,
 		SyndEntry syndEntry) {
 
@@ -640,7 +674,5 @@ public class JournalRSSUtil {
 	private static final String _XML_REQUUEST =
 		"<request><parameters><parameter><name>rss</name><value>true</value>" +
 			"</parameter></parameters></request>";
-
-	private static final Log _log = LogFactoryUtil.getLog(JournalRSSUtil.class);
 
 }

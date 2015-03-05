@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="init.jsp" %>
+<%@ include file="/taglib/ui/panel_app/init.jsp" %>
 
 <%
 PanelApp panelApp = (PanelApp)request.getAttribute("productivity-center-ui:panel-app:panelApp");

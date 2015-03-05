@@ -94,6 +94,7 @@ import com.liferay.util.ContentUtil;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -704,11 +705,15 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					StringPool.BLANK, servletContext, xmls[1],
 					servletURLPatterns, pluginPackage));
 
+			for (Map.Entry<String, Portlet> entry : portlets.entrySet()) {
+				_portletsPool.put(entry.getKey(), entry.getValue());
+			}
+
 			Set<String> liferayPortletIds = _readLiferayPortletXML(
-				StringPool.BLANK, xmls[2]);
+				StringPool.BLANK, xmls[2], portlets);
 
 			liferayPortletIds.addAll(
-				_readLiferayPortletXML(StringPool.BLANK, xmls[3]));
+				_readLiferayPortletXML(StringPool.BLANK, xmls[3], portlets));
 
 			// Check for missing entries in liferay-portlet.xml
 
@@ -768,8 +773,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		String servletContextName, ServletContext servletContext, String[] xmls,
 		PluginPackage pluginPackage) {
 
-		List<Portlet> portletList = new ArrayList<>();
-
 		try {
 			Set<String> servletURLPatterns = _readWebXML(xmls[3]);
 
@@ -783,7 +786,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					servletURLPatterns, pluginPackage));
 
 			Set<String> liferayPortletIds = _readLiferayPortletXML(
-				servletContextName, xmls[2]);
+				servletContextName, xmls[2], portlets);
 
 			// Check for missing entries in liferay-portlet.xml
 
@@ -819,17 +822,21 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			portletBagFactory.setServletContext(servletContext);
 			portletBagFactory.setWARFile(true);
 
-			for (String portletId : portlets.keySet()) {
-				Portlet portlet = _portletsPool.get(portletId);
+			for (Map.Entry<String, Portlet> entry : portlets.entrySet()) {
+				Portlet portlet = _portletsPool.remove(entry.getKey());
 
-				portletList.add(portlet);
+				if (portlet != null) {
+					PortletInstanceFactoryUtil.clear(portlet);
 
-				PortletInstanceFactoryUtil.clear(portlet);
+					PortletConfigFactoryUtil.destroy(portlet);
+					PortletContextFactory.destroy(portlet);
+				}
 
-				PortletConfigFactoryUtil.destroy(portlet);
-				PortletContextFactory.destroy(portlet);
+				portlet = entry.getValue();
 
 				portletBagFactory.create(portlet);
+
+				_portletsPool.put(entry.getKey(), portlet);
 			}
 
 			// Sprite images
@@ -837,14 +844,17 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			PortletApp portletApp = _getPortletApp(servletContextName);
 
 			_setSpriteImages(servletContext, portletApp, "/icons/");
+
+			return ListUtil.fromMapValues(portlets);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+
+			return Collections.emptyList();
 		}
-
-		clearCache();
-
-		return portletList;
+		finally {
+			clearCache();
+		}
 	}
 
 	@Override
@@ -1186,7 +1196,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 	private void _readLiferayPortletXML(
 		String servletContextName, Set<String> liferayPortletIds,
-		Map<String, String> roleMappers, Element portletElement) {
+		Map<String, String> roleMappers, Element portletElement,
+		Map<String, Portlet> portlets) {
 
 		String portletId = portletElement.elementText("portlet-name");
 
@@ -1203,7 +1214,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		liferayPortletIds.add(portletId);
 
-		Portlet portletModel = _portletsPool.get(portletId);
+		Portlet portletModel = portlets.get(portletId);
 
 		if (portletModel == null) {
 			return;
@@ -1781,7 +1792,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	}
 
 	private Set<String> _readLiferayPortletXML(
-			String servletContextName, String xml)
+			String servletContextName, String xml,
+			Map<String, Portlet> portlets)
 		throws Exception {
 
 		Set<String> liferayPortletIds = new HashSet<>();
@@ -1826,7 +1838,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		for (Element portletElement : rootElement.elements("portlet")) {
 			_readLiferayPortletXML(
 				servletContextName, liferayPortletIds, roleMappers,
-				portletElement);
+				portletElement, portlets);
 		}
 
 		return liferayPortletIds;
@@ -1866,8 +1878,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		if (portletModel == null) {
 			portletModel = new PortletImpl(CompanyConstants.SYSTEM, portletId);
-
-			_portletsPool.put(portletId, portletModel);
 		}
 
 		portletModel.setPluginPackage(pluginPackage);

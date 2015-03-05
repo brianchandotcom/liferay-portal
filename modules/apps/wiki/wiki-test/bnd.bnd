@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.wiki.test
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
+	test-classes/integration,\
 	../../../../portal-impl/test/test-portal-impl.properties
 Import-Package:\
 	!org.junit.experimental.theories,\

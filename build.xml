@@ -1033,6 +1033,7 @@
 			lp.portal.project.dir=${project.dir}
 			module.framework.base.dir=${liferay.home}/osgi
 			-baselinerepo=${-baselinerepo}
+			-metatype=${-metatype}
 			-plugin=${-plugin}
 			-releaserepo=${-releaserepo}
 		</echo>

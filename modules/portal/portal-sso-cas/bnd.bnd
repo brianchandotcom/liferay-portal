@@ -8,7 +8,4 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	@lib/cas-client-core.jar,\
-	@lib/opensaml.jar,\
-	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
-
--metatype: *
+	@lib/opensaml.jar

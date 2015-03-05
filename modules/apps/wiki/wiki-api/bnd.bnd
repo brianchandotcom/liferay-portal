@@ -6,8 +6,4 @@ Export-Package:\
 	!com.liferay.wiki.configuration.dependencies,\
 	!com.liferay.wiki.configuration.impl,\
 	!com.liferay.wiki.settings.provider
-Include-Resource:\
-	classes,\
-    @../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
-
--metatype: *
+Include-Resource: classes

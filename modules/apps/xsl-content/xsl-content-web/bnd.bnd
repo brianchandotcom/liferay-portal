@@ -3,13 +3,10 @@ Bundle-SymbolicName: com.liferay.xsl.content.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources,\
-	@../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+	META-INF/resources=src/META-INF/resources
 Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/portlet))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/theme))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))"
-
--metatype: *

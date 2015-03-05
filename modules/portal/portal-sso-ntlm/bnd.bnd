@@ -6,7 +6,4 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	@lib/jcifs.jar,\
-	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
-
--metatype: *
+	@lib/jcifs.jar

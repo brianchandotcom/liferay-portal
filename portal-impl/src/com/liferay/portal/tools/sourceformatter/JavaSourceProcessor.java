@@ -282,24 +282,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _diamondOperatorPattern.matcher(content);
 
 		while (matcher.find()) {
-			String parameterType = matcher.group(5);
-
-			if (parameterType.contains("Object")) {
-				String constructorParameter = matcher.group(6);
-
-				if (Validator.isNotNull(constructorParameter)) {
-					continue;
-				}
-			}
-
 			String match = matcher.group();
-
 			String whitespace = matcher.group(4);
+			String parameterType = matcher.group(5);
 
 			String replacement = StringUtil.replaceFirst(
 				match, whitespace + "<" + parameterType + ">", "<>");
 
-			return StringUtil.replace(content, match, replacement);
+			content = StringUtil.replace(content, match, replacement);
 		}
 
 		return content;
@@ -2932,7 +2922,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _diamondOperatorExclusionFiles;
 	private List<String> _diamondOperatorExclusionPaths;
 	private Pattern _diamondOperatorPattern = Pattern.compile(
-		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<(.+)>\\(\n*\t*(.*)\\);\n");
+		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<(.+)>\\(\n*\t*.*\\);\n");
 	private Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
 	private List<String> _fitOnSingleLineExclusionFiles;

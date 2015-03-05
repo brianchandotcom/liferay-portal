@@ -85,8 +85,7 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 			throw new IllegalStateException();
 		}
 
-		Map<String, Object> properties = new HashMap<String, Object>(
-			_properties);
+		Map<String, Object> properties = new HashMap<>(_properties);
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -104,7 +103,7 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 			throw new IllegalArgumentException("Service is null");
 		}
 
-		properties = new HashMap<String, Object>(properties);
+		properties = new HashMap<>(properties);
 
 		properties.putAll(_properties);
 

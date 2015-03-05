@@ -6785,7 +6785,7 @@ public class JournalArticleLocalServiceImpl
 		List<JournalArticle> articles) {
 
 		List<ObjectValuePair<Long, Integer>> articleVersionStatusOVPs =
-			new ArrayList<ObjectValuePair<Long, Integer>>(articles.size());
+			new ArrayList<>(articles.size());
 
 		for (JournalArticle article : articles) {
 			int status = article.getStatus();

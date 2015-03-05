@@ -477,8 +477,8 @@ public class DLAppHelperLocalServiceImpl
 
 				// Folders, file entries, and file shortcuts
 
-				QueryDefinition<?> queryDefinition =
-					new QueryDefinition<Object>(WorkflowConstants.STATUS_ANY);
+				QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+					WorkflowConstants.STATUS_ANY);
 
 				List<Object> foldersAndFileEntriesAndFileShortcuts =
 					dlFolderLocalService.
@@ -847,9 +847,8 @@ public class DLAppHelperLocalServiceImpl
 
 				// Folders, file entries, and file shortcuts
 
-				QueryDefinition<?> queryDefinition =
-					new QueryDefinition<Object>(
-						WorkflowConstants.STATUS_IN_TRASH);
+				QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+					WorkflowConstants.STATUS_IN_TRASH);
 
 				List<Object> foldersAndFileEntriesAndFileShortcuts =
 					dlFolderLocalService.
@@ -1028,7 +1027,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// Folders, file entries, and file shortcuts
 
-		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
 			WorkflowConstants.STATUS_IN_TRASH);
 
 		List<Object> foldersAndFileEntriesAndFileShortcuts =
@@ -1686,7 +1685,7 @@ public class DLAppHelperLocalServiceImpl
 
 			// Folders, file entries, and file shortcuts
 
-			QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
+			QueryDefinition<?> queryDefinition = new QueryDefinition<>(
 				WorkflowConstants.STATUS_IN_TRASH);
 
 			List<Object> foldersAndFileEntriesAndFileShortcuts =
@@ -1751,7 +1750,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// Folders, file entries, and file shortcuts
 
-		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
 			WorkflowConstants.STATUS_ANY);
 
 		List<Object> foldersAndFileEntriesAndFileShortcuts =
@@ -1786,8 +1785,7 @@ public class DLAppHelperLocalServiceImpl
 		List<DLFileVersion> dlFileVersions) {
 
 		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =
-			new ArrayList<ObjectValuePair<Long, Integer>>(
-				dlFileVersions.size());
+			new ArrayList<>(dlFileVersions.size());
 
 		for (DLFileVersion dlFileVersion : dlFileVersions) {
 			int status = dlFileVersion.getStatus();

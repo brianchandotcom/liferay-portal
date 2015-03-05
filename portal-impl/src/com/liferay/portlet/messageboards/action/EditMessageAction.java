@@ -367,7 +367,7 @@ public class EditMessageAction extends PortletAction {
 			MBGroupServiceSettings.getInstance(groupId);
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			new ArrayList<ObjectValuePair<String, InputStream>>(5);
+			new ArrayList<>(5);
 
 		try {
 			UploadPortletRequest uploadPortletRequest =

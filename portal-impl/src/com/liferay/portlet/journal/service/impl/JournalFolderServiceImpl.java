@@ -148,7 +148,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		long groupId, long folderId, int status, int start, int end,
 		OrderByComparator<?> obc) {
 
-		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
 			status, start, end, (OrderByComparator<Object>)obc);
 
 		return journalFolderFinder.filterFindF_A_ByG_F(

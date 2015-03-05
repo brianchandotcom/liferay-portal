@@ -138,9 +138,8 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 	private static Map<CentralizedThreadLocal<?>, Object> _toMap(
 		ThreadLocalMap threadLocalMap) {
 
-		Map<CentralizedThreadLocal<?>, Object> map =
-			new HashMap<CentralizedThreadLocal<?>, Object>(
-				threadLocalMap._table.length);
+		Map<CentralizedThreadLocal<?>, Object> map = new HashMap<>(
+			threadLocalMap._table.length);
 
 		for (Entry entry : threadLocalMap._table) {
 			if (entry != null) {

@@ -47,7 +47,7 @@ public class TaskQueueTest {
 		catch (IllegalArgumentException iae) {
 		}
 
-		TaskQueue<Object> taskQueue = new TaskQueue<Object>(10);
+		TaskQueue<Object> taskQueue = new TaskQueue<>(10);
 
 		Assert.assertEquals(10, taskQueue.remainingCapacity());
 
@@ -144,7 +144,7 @@ public class TaskQueueTest {
 
 	@Test
 	public void testOffer() {
-		TaskQueue<Object> taskQueue = new TaskQueue<Object>(10);
+		TaskQueue<Object> taskQueue = new TaskQueue<>(10);
 
 		try {
 			taskQueue.offer(null, new boolean[1]);
@@ -154,7 +154,7 @@ public class TaskQueueTest {
 		catch (NullPointerException npe) {
 		}
 
-		taskQueue = new TaskQueue<Object>(10);
+		taskQueue = new TaskQueue<>(10);
 
 		try {
 			taskQueue.offer(new Object(), null);
@@ -164,7 +164,7 @@ public class TaskQueueTest {
 		catch (NullPointerException npe) {
 		}
 
-		taskQueue = new TaskQueue<Object>(10);
+		taskQueue = new TaskQueue<>(10);
 
 		try {
 			taskQueue.offer(new Object(), new boolean[0]);
@@ -174,7 +174,7 @@ public class TaskQueueTest {
 		catch (IllegalArgumentException iae) {
 		}
 
-		taskQueue = new TaskQueue<Object>(10);
+		taskQueue = new TaskQueue<>(10);
 
 		boolean[] hasWaiterMarker = new boolean[1];
 
@@ -237,7 +237,7 @@ public class TaskQueueTest {
 
 	@Test
 	public void testRemainingCapacity() {
-		TaskQueue<Object> taskQueue = new TaskQueue<Object>(10);
+		TaskQueue<Object> taskQueue = new TaskQueue<>(10);
 
 		Assert.assertEquals(10, taskQueue.remainingCapacity());
 
@@ -249,7 +249,7 @@ public class TaskQueueTest {
 
 	@Test
 	public void testRemove() {
-		TaskQueue<Object> taskQueue = new TaskQueue<Object>(10);
+		TaskQueue<Object> taskQueue = new TaskQueue<>(10);
 
 		Assert.assertFalse(taskQueue.remove(null));
 		Assert.assertFalse(taskQueue.remove(new Object()));
@@ -272,7 +272,7 @@ public class TaskQueueTest {
 
 	@Test
 	public void testSize() {
-		TaskQueue<Object> taskQueue = new TaskQueue<Object>(10);
+		TaskQueue<Object> taskQueue = new TaskQueue<>(10);
 
 		Assert.assertEquals(0, taskQueue.size());
 

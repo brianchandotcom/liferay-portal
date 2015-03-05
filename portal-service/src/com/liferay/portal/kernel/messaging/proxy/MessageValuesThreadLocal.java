@@ -83,8 +83,7 @@ public class MessageValuesThreadLocal {
 		"THREAD_LOCAL_KEY_PREFIX#";
 
 	private static final ThreadLocal<Map<String, Object>>
-		_messageValuesThreadLocal =
-			new AutoResetThreadLocal<Map<String, Object>>(
-				MessageValuesThreadLocal.class.getName());
+		_messageValuesThreadLocal = new AutoResetThreadLocal<>(
+			MessageValuesThreadLocal.class.getName());
 
 }

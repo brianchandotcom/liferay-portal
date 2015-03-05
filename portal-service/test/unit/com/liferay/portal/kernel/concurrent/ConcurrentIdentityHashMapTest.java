@@ -83,15 +83,14 @@ public class ConcurrentIdentityHashMapTest {
 			new ConcurrentHashMap<>();
 
 		ConcurrentIdentityHashMap<String, Object> concurrentIdentityHashMap =
-			new ConcurrentIdentityHashMap<String, Object>(innerConcurrentMap);
+			new ConcurrentIdentityHashMap<>(innerConcurrentMap);
 
 		Assert.assertSame(
 			innerConcurrentMap, concurrentIdentityHashMap.innerConcurrentMap);
 
 		Map<String, Object> dataMap = createDataMap();
 
-		concurrentIdentityHashMap =
-			new ConcurrentIdentityHashMap<String, Object>(dataMap);
+		concurrentIdentityHashMap = new ConcurrentIdentityHashMap<>(dataMap);
 
 		Assert.assertEquals(dataMap, concurrentIdentityHashMap);
 

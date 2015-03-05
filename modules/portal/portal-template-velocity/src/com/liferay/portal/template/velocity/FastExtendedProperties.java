@@ -63,8 +63,7 @@ public class FastExtendedProperties extends ExtendedProperties {
 		FastExtendedProperties fastExtendedProperties =
 			(FastExtendedProperties)super.clone();
 
-		fastExtendedProperties._map = new ConcurrentHashMap<Object, Object>(
-			_map);
+		fastExtendedProperties._map = new ConcurrentHashMap<>(_map);
 
 		return fastExtendedProperties;
 	}

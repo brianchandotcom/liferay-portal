@@ -2539,7 +2539,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		List<WikiPage> pages) {
 
 		List<ObjectValuePair<Long, Integer>> pageVersionStatusOVPs =
-			new ArrayList<ObjectValuePair<Long, Integer>>(pages.size());
+			new ArrayList<>(pages.size());
 
 		for (WikiPage page : pages) {
 			int status = page.getStatus();

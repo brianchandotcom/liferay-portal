@@ -41,7 +41,7 @@ public class PACLInitialContextFactory implements InitialContextFactory {
 		_initialContextFactoryBuilder = initialContextFactoryBuilder;
 
 		if (environment != null) {
-			_environment = new Hashtable<Object, Object>(environment);
+			_environment = new Hashtable<>(environment);
 		}
 		else {
 			_environment = null;

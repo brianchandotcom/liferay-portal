@@ -271,8 +271,8 @@ public class RubyExecutor extends BaseScriptingExecutor {
 			allowedClasses, inputObjects, outputNames, scriptFile, script,
 			classLoaders);
 
-		FutureTask<Map<String, Object>> futureTask =
-			new FutureTask<Map<String, Object>>(evalCallable);
+		FutureTask<Map<String, Object>> futureTask = new FutureTask<>(
+			evalCallable);
 
 		Thread oneTimeExecutorThread = _threadFactory.newThread(futureTask);
 

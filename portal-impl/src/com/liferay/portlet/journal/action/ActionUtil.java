@@ -45,9 +45,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -382,65 +380,6 @@ public class ActionUtil {
 			portletRequest);
 
 		return getFolders(request);
-	}
-
-	public static void getStructure(HttpServletRequest request)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(request, "groupId");
-		long classNameId = ParamUtil.getLong(request, "classNameId");
-		String ddmStructureKey = ParamUtil.getString(
-			request, "ddmStructureKey");
-
-		DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(
-			groupId, classNameId, ddmStructureKey);
-
-		request.setAttribute(WebKeys.JOURNAL_STRUCTURE, ddmStructure);
-	}
-
-	public static void getStructure(PortletRequest portletRequest)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		getStructure(request);
-
-		DDMStructure ddmStructure = (DDMStructure)portletRequest.getAttribute(
-			WebKeys.JOURNAL_STRUCTURE);
-
-		JournalUtil.addRecentDDMStructure(portletRequest, ddmStructure);
-	}
-
-	public static void getTemplate(HttpServletRequest request)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(request, "groupId");
-		String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey");
-
-		DDMTemplate ddmTemplate = null;
-
-		if (Validator.isNotNull(ddmTemplateKey)) {
-			ddmTemplate = DDMTemplateServiceUtil.getTemplate(
-				groupId, PortalUtil.getClassNameId(DDMStructure.class),
-				ddmTemplateKey, true);
-		}
-
-		request.setAttribute(WebKeys.JOURNAL_TEMPLATE, ddmTemplate);
-	}
-
-	public static void getTemplate(PortletRequest portletRequest)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		getTemplate(request);
-
-		DDMTemplate ddmTemplate = (DDMTemplate)portletRequest.getAttribute(
-			WebKeys.JOURNAL_TEMPLATE);
-
-		JournalUtil.addRecentDDMTemplate(portletRequest, ddmTemplate);
 	}
 
 	protected static String getElementInstanceId(

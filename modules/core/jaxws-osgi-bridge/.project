@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <projectDescription>
-	<name>jaxws-bridge-master</name>
+	<name>jaxws-osgi-bridge-master</name>
 	<comment></comment>
 	<projects></projects>
 	<buildSpec>

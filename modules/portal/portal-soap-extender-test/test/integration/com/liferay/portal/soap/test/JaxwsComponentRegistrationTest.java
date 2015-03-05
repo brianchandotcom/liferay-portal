@@ -1,0 +1,62 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.soap.test;
+
+import com.liferay.portal.soap.sample.service.Greeter;
+
+import java.io.IOException;
+
+import java.net.URL;
+
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
+
+import org.arquillian.liferay.deploymentscenario.annotations.BndFile;
+
+import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.api.ArquillianResource;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Carlos Sierra Andrés
+ */
+@BndFile("bnd-component.bnd")
+@RunAsClient
+@RunWith(Arquillian.class)
+public class JaxwsComponentRegistrationTest {
+
+	@Test
+	public void testIsRegistered() throws IOException {
+		URL url = new URL(_url, "/o/soap/greeter?wsdl");
+
+		QName serviceName = new QName(
+			"http://service.sample.soap.portal.liferay.com/",
+			"GreeterImplService");
+
+		Service service = Service.create(url, serviceName);
+
+		Greeter port = service.getPort(Greeter.class);
+
+		Assert.assertEquals("Greetings!", port.greet());
+	}
+
+	@ArquillianResource
+	private URL _url;
+
+}

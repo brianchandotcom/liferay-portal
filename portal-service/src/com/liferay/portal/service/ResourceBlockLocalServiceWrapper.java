@@ -404,6 +404,14 @@ public class ResourceBlockLocalServiceWrapper
 	}
 
 	@Override
+	public boolean[] hasIndividualPermissions(java.lang.String name,
+		long primKey, long[] roleIds, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceBlockLocalService.hasIndividualPermissions(name,
+			primKey, roleIds, actionId);
+	}
+
+	@Override
 	public boolean hasPermission(java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,
 		java.lang.String actionId,

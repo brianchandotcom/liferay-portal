@@ -439,6 +439,34 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-test-simple-class-name">
+		<sequential>
+			<fail message="Please set the property ${test.class}" unless="test.class" />
+
+			<var name="test.simple.class.name" unset="true" />
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					String testClass = project.getProperty("test.class");
+
+					String testSimpleClassName = testClass;
+
+					if (testClass.contains("#")) {
+						int x = testClass.indexOf("#");
+
+						testSimpleClassName =  testClass.substring(0, x);
+					}
+
+					if (!testSimpleClassName.endsWith("TestCase")) {
+						testSimpleClassName = testSimpleClassName + "TestCase";
+					}
+
+					project.setProperty("test.simple.class.name", testSimpleClassName);
+				]]>
+			</script>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-testcase-property">
 		<attribute name="property.name" />
 
@@ -585,34 +613,6 @@
 							break;
 						}
 					}
-				]]>
-			</script>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-test-simple-class-name">
-		<sequential>
-			<fail message="Please set the property ${test.class}" unless="test.class" />
-
-			<var name="test.simple.class.name" unset="true" />
-
-			<script classpathref="project.classpath" language="beanshell">
-				<![CDATA[
-					String testClass = project.getProperty("test.class");
-
-					String testSimpleClassName = testClass;
-
-					if (testClass.contains("#")) {
-						int x = testClass.indexOf("#");
-
-						testSimpleClassName =  testClass.substring(0, x);
-					}
-
-					if (!testSimpleClassName.endsWith("TestCase")) {
-						testSimpleClassName = testSimpleClassName + "TestCase";
-					}
-
-					project.setProperty("test.simple.class.name", testSimpleClassName);
 				]]>
 			</script>
 		</sequential>

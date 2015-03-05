@@ -48,8 +48,8 @@ public class AuthTokenUtilTest {
 	public void testGetTokenByPlidAndPortletId() {
 		Assert.assertEquals(
 			"TEST_TOKEN_BY_PLID_AND_PORTLETID",
-			AuthTokenUtil.getToken(new MockHttpServletRequest(), 0L,
-				"portletId"));
+			AuthTokenUtil.getToken(
+				new MockHttpServletRequest(), 0L, "portletId"));
 	}
 
 	@Test

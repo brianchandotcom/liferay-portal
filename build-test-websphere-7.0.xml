@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-websphere" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="portal-test-websphere-7.0" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<target name="run-selenium-websphere">
+	<target name="run-selenium-websphere-7.0">
 		<app-server-properties-update>
 			app.server.type=websphere
 		</app-server-properties-update>
@@ -36,7 +36,7 @@
 		<antcall target="stop-selenium" />
 	</target>
 
-	<target name="run-websphere">
+	<target name="run-websphere-7.0">
 		<antcall target="run-simple-server" />
 
 		<antcall target="evaluate-logs" />

@@ -47,7 +47,7 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 	</nav>
 
 	<c:if test="<%= (quickAccessEntries != null) && !quickAccessEntries.isEmpty() %>">
-		<aui:script use="aui-base">
+		<aui:script sandbox="<%= true %>">
 			var callbacks = {};
 
 			<%
@@ -66,16 +66,16 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 			}
 			%>
 
-			A.one('#<%= randomNamespace %>quickAccessNav').delegate(
+			$('#<%= randomNamespace %>quickAccessNav').on(
 				'click',
+				'li a',
 				function(event) {
-					var callbackFn = callbacks[event.currentTarget.attr('id')];
+					var callbackFn = callbacks[$(event.currentTarget).attr('id')];
 
-					if (A.Lang.isFunction(callbackFn)) {
+					if (_.isFunction(callbackFn)) {
 						callbackFn();
 					}
-				},
-				'li a'
+				}
 			);
 		</aui:script>
 	</c:if>

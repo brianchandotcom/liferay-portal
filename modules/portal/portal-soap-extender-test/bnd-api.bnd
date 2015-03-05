@@ -1,0 +1,7 @@
+Bundle-Activator: com.liferay.portal.soap.sample.activators.simple.JaxwsApiBundleActivator
+Bundle-Name: Liferay Portal SOAP Test API registration
+Bundle-SymbolicName: com.liferay.portal.soap.extender.test.api
+Bundle-Version: 1.0.0
+Include-Resource:\
+	com/liferay/portal/soap/sample/activators/simple=classes/com/liferay/portal/soap/sample/activators/simple,\
+	com/liferay/portal/soap/sample/service=classes/com/liferay/portal/soap/sample/service

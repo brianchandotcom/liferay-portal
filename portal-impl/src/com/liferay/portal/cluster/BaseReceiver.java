@@ -89,10 +89,6 @@ public abstract class BaseReceiver extends ReceiverAdapter {
 			return;
 		}
 
-		if (!_hasDoViewAccepted) {
-			return;
-		}
-
 		View oldView = _view;
 
 		try {
@@ -100,7 +96,9 @@ public abstract class BaseReceiver extends ReceiverAdapter {
 
 			_view = view;
 
-			_executorService.execute(new ViewCallBackJob(oldView, view));
+			if (_hasDoViewAccepted) {
+				_executorService.execute(new ViewCallBackJob(oldView, view));
+			}
 		}
 		catch (InterruptedException ie) {
 			_log.error(

@@ -88,8 +88,7 @@ public class PoshiRunnerGetterUtilTest extends TestCase {
 		String value = PoshiRunnerGetterUtil.getVarMethodValue(
 			"MathUtil#sum(1,2)");
 
-		Assert.assertEquals(
-			"getVarMethodValue (MathUtil) is broken", "3", value);
+		Assert.assertEquals("getVarMethodValue is broken", "3", value);
 
 		value = PoshiRunnerGetterUtil.getVarMethodValue(
 			"StringUtil#endsWith(The fox jumped over the dog, dog)");

@@ -15,10 +15,12 @@
 package com.liferay.portlet.journal;
 
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.kernel.diff.CompareVersionsException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -86,9 +88,11 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -293,7 +297,43 @@ public class JournalPortlet extends MVCPortlet {
 		String resourceID = GetterUtil.getString(
 			resourceRequest.getResourceID());
 
-		if (resourceID.equals("rss")) {
+		if (resourceID.equals("compareVersions")) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+			long groupId = ParamUtil.getLong(resourceRequest, "groupId");
+			String articleId = ParamUtil.getString(resourceRequest, "articleId");
+			double sourceVersion = ParamUtil.getDouble(
+				resourceRequest, "filterSourceVersion");
+			double targetVersion = ParamUtil.getDouble(
+				resourceRequest, "filterTargetVersion");
+			String languageId = ParamUtil.getString(resourceRequest, "languageId");
+
+			String diffHtmlResults = null;
+
+			try {
+				diffHtmlResults = JournalUtil.diffHtml(
+					groupId, articleId, sourceVersion, targetVersion, languageId,
+					new PortletRequestModel(resourceRequest, resourceResponse),
+					themeDisplay);
+			}
+			catch (CompareVersionsException cve) {
+				resourceRequest.setAttribute(
+					WebKeys.DIFF_VERSION, cve.getVersion());
+			}
+
+			resourceRequest.setAttribute(
+				WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
+
+			PortletContext portletContext = portletConfig.getPortletContext();
+
+			PortletRequestDispatcher portletRequestDispatcher =
+				portletContext.getRequestDispatcher(
+					"/html/taglib/ui/diff_version_comparator/diff_html.jsp");
+
+			portletRequestDispatcher.include(resourceRequest, resourceResponse);
+		}
+		else if (resourceID.equals("rss")) {
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				resourceRequest);
 

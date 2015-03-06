@@ -220,7 +220,7 @@ public class ServiceBuilder {
 		return false;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		ToolDependencies.wireServiceBuilder();
@@ -266,7 +266,9 @@ public class ServiceBuilder {
 				sqlIndexesFileName, sqlSequencesFileName, targetEntityName,
 				testDir, true);
 		}
-		catch (RuntimeException re) {
+		catch (Exception e) {
+			e.printStackTrace();
+
 			System.out.println(
 				"Please set these arguments. Sample values are:\n" +
 				"\n" +
@@ -340,7 +342,7 @@ public class ServiceBuilder {
 				"\t-Dservice.tpl.spring_xml=" + _TPL_ROOT + "spring_xml.ftl\n"+
 				"\t-Dservice.tpl.spring_xml_session=" + _TPL_ROOT + "spring_xml_session.ftl");
 
-			throw re;
+			throw e;
 		}
 
 		try {
@@ -525,15 +527,16 @@ public class ServiceBuilder {
 	}
 
 	public ServiceBuilder(
-		String apiDir, boolean autoImportDefaultReferences,
-		boolean autoNamespaceTables, String beanLocatorUtil, long buildNumber,
-		boolean buildNumberIncrement, String hbmFileName, String implDir,
-		String inputFileName, String modelHintsFileName, boolean osgiModule,
-		String pluginName, String propsUtil, String remotingFileName,
-		String resourcesDir, String springFileName, String[] springNamespaces,
-		String sqlDir, String sqlFileName, String sqlIndexesFileName,
-		String sqlSequencesFileName, String targetEntityName, String testDir,
-		boolean build) {
+			String apiDir, boolean autoImportDefaultReferences,
+			boolean autoNamespaceTables, String beanLocatorUtil,
+			long buildNumber, boolean buildNumberIncrement, String hbmFileName,
+			String implDir, String inputFileName, String modelHintsFileName,
+			boolean osgiModule, String pluginName, String propsUtil,
+			String remotingFileName, String resourcesDir, String springFileName,
+			String[] springNamespaces, String sqlDir, String sqlFileName,
+			String sqlIndexesFileName, String sqlSequencesFileName,
+			String targetEntityName, String testDir, boolean build)
+		throws Exception {
 
 		_tplBadAliasNames = _getTplProperty(
 			"bad_alias_names", _tplBadAliasNames);
@@ -898,20 +901,19 @@ public class ServiceBuilder {
 		catch (FileNotFoundException fnfe) {
 			System.out.println(fnfe.getMessage());
 		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	public ServiceBuilder(
-		String apiDir, boolean autoImportDefaultReferences,
-		boolean autoNamespaceTables, String beanLocatorUtil, String hbmFileName,
-		String implDir, String inputFileName, String modelHintsFileName,
-		boolean osgiModule, String pluginName, String propsUtil,
-		String remotingFileName, String resourcesDir, String springFileName,
-		String[] springNamespaces, String sqlDir, String sqlFileName,
-		String sqlIndexesFileName, String sqlSequencesFileName,
-		String targetEntityName, String testDir) {
+			String apiDir, boolean autoImportDefaultReferences,
+			boolean autoNamespaceTables, String beanLocatorUtil,
+			String hbmFileName, String implDir, String inputFileName,
+			String modelHintsFileName, boolean osgiModule, String pluginName,
+			String propsUtil, String remotingFileName, String resourcesDir,
+			String springFileName, String[] springNamespaces, String sqlDir,
+			String sqlFileName, String sqlIndexesFileName,
+			String sqlSequencesFileName, String targetEntityName,
+			String testDir)
+		throws Exception {
 
 		this(
 			apiDir, autoImportDefaultReferences, autoNamespaceTables,
@@ -1052,7 +1054,7 @@ public class ServiceBuilder {
 	}
 
 	public String getCreateMappingTableSQL(EntityMapping entityMapping)
-		throws IOException {
+		throws Exception {
 
 		String createMappingTableSQL = _getCreateMappingTableSQL(entityMapping);
 
@@ -1091,7 +1093,7 @@ public class ServiceBuilder {
 		return getDimensions(GetterUtil.getInteger(dims));
 	}
 
-	public Entity getEntity(String name) throws IOException {
+	public Entity getEntity(String name) throws Exception {
 		Entity entity = _entityPool.get(name);
 
 		if (entity != null) {
@@ -1257,7 +1259,7 @@ public class ServiceBuilder {
 	}
 
 	public List<EntityColumn> getMappingEntities(String mappingTable)
-		throws IOException {
+		throws Exception {
 
 		List<EntityColumn> mappingEntitiesPKList = new ArrayList<>();
 
@@ -3287,7 +3289,7 @@ public class ServiceBuilder {
 		}
 	}
 
-	private void _createSQLIndexes() throws IOException {
+	private void _createSQLIndexes() throws Exception {
 		if (!FileUtil.exists(_sqlDir)) {
 			return;
 		}
@@ -3553,7 +3555,7 @@ public class ServiceBuilder {
 		FileUtil.write(sqlFile, sb.toString(), true);
 	}
 
-	private void _createSQLTables() throws IOException {
+	private void _createSQLTables() throws Exception {
 		if (!FileUtil.exists(_sqlDir)) {
 			return;
 		}
@@ -3892,7 +3894,7 @@ public class ServiceBuilder {
 	private void _getCreateMappingTableIndex(
 			EntityMapping entityMapping,
 			Map<String, List<IndexMetadata>> indexMetadataMap)
-		throws IOException {
+		throws Exception {
 
 		Entity[] entities = new Entity[2];
 
@@ -3924,7 +3926,7 @@ public class ServiceBuilder {
 	}
 
 	private String _getCreateMappingTableSQL(EntityMapping entityMapping)
-		throws IOException {
+		throws Exception {
 
 		Entity[] entities = new Entity[2];
 
@@ -5147,7 +5149,7 @@ public class ServiceBuilder {
 				_getSessionTypeName(sessionType) + "ServiceWrapper.java");
 	}
 
-	private void _resolveEntity(Entity entity) throws IOException {
+	private void _resolveEntity(Entity entity) throws Exception {
 		if (entity.isResolved()) {
 			return;
 		}

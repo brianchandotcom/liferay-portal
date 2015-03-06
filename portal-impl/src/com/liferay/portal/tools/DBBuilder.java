@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class DBBuilder {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		ToolDependencies.wireBasic();
 
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
@@ -55,48 +55,44 @@ public class DBBuilder {
 	}
 
 	public DBBuilder(
-		String databaseName, String[] databaseTypes, String sqlDir) {
+			String databaseName, String[] databaseTypes, String sqlDir)
+		throws Exception {
 
 		_databaseName = databaseName;
 		_databaseTypes = databaseTypes;
 
-		try {
-			if (!sqlDir.endsWith("/META-INF/sql") &&
-				!sqlDir.endsWith("/WEB-INF/sql")) {
+		if (!sqlDir.endsWith("/META-INF/sql") &&
+			!sqlDir.endsWith("/WEB-INF/sql")) {
 
-				_buildSQLFile(sqlDir, "portal");
-				_buildSQLFile(sqlDir, "portal-tables");
-			}
-			else {
-				_buildSQLFile(sqlDir, "tables");
-			}
-
-			_buildSQLFile(sqlDir, "indexes");
-			_buildSQLFile(sqlDir, "sequences");
-			_buildSQLFile(sqlDir, "update-5.0.1-5.1.0");
-			_buildSQLFile(sqlDir, "update-5.1.1-5.1.2");
-			_buildSQLFile(sqlDir, "update-5.1.2-5.2.0");
-			_buildSQLFile(sqlDir, "update-5.2.0-5.2.1");
-			_buildSQLFile(sqlDir, "update-5.2.2-5.2.3");
-			_buildSQLFile(sqlDir, "update-5.2.3-6.0.0");
-			_buildSQLFile(sqlDir, "update-5.2.5-6.0.0");
-			_buildSQLFile(sqlDir, "update-5.2.7-6.0.0");
-			_buildSQLFile(sqlDir, "update-5.2.8-6.0.5");
-			_buildSQLFile(sqlDir, "update-6.0.0-6.0.1");
-			_buildSQLFile(sqlDir, "update-6.0.1-6.0.2");
-			_buildSQLFile(sqlDir, "update-6.0.2-6.0.3");
-			_buildSQLFile(sqlDir, "update-6.0.4-6.0.5");
-			_buildSQLFile(sqlDir, "update-6.0.5-6.0.6");
-			_buildSQLFile(sqlDir, "update-6.0.6-6.1.0");
-			_buildSQLFile(sqlDir, "update-6.0.12-6.1.0");
-			_buildSQLFile(sqlDir, "update-6.1.0-6.1.1");
-			_buildSQLFile(sqlDir, "update-6.1.1-6.2.0");
-
-			_buildCreateFile(sqlDir);
+			_buildSQLFile(sqlDir, "portal");
+			_buildSQLFile(sqlDir, "portal-tables");
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		else {
+			_buildSQLFile(sqlDir, "tables");
 		}
+
+		_buildSQLFile(sqlDir, "indexes");
+		_buildSQLFile(sqlDir, "sequences");
+		_buildSQLFile(sqlDir, "update-5.0.1-5.1.0");
+		_buildSQLFile(sqlDir, "update-5.1.1-5.1.2");
+		_buildSQLFile(sqlDir, "update-5.1.2-5.2.0");
+		_buildSQLFile(sqlDir, "update-5.2.0-5.2.1");
+		_buildSQLFile(sqlDir, "update-5.2.2-5.2.3");
+		_buildSQLFile(sqlDir, "update-5.2.3-6.0.0");
+		_buildSQLFile(sqlDir, "update-5.2.5-6.0.0");
+		_buildSQLFile(sqlDir, "update-5.2.7-6.0.0");
+		_buildSQLFile(sqlDir, "update-5.2.8-6.0.5");
+		_buildSQLFile(sqlDir, "update-6.0.0-6.0.1");
+		_buildSQLFile(sqlDir, "update-6.0.1-6.0.2");
+		_buildSQLFile(sqlDir, "update-6.0.2-6.0.3");
+		_buildSQLFile(sqlDir, "update-6.0.4-6.0.5");
+		_buildSQLFile(sqlDir, "update-6.0.5-6.0.6");
+		_buildSQLFile(sqlDir, "update-6.0.6-6.1.0");
+		_buildSQLFile(sqlDir, "update-6.0.12-6.1.0");
+		_buildSQLFile(sqlDir, "update-6.1.0-6.1.1");
+		_buildSQLFile(sqlDir, "update-6.1.1-6.2.0");
+
+		_buildCreateFile(sqlDir);
 	}
 
 	private void _buildCreateFile(String sqlDir) throws IOException {

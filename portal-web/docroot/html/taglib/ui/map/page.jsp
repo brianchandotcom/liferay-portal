@@ -19,6 +19,7 @@
 <%
 String protocol = HttpUtil.getProtocol(request);
 
+String apiKey = GetterUtil.getString(request.getAttribute("liferay-ui:map:apiKey"));
 boolean geolocation = GetterUtil.getBoolean(request.getAttribute("liferay-ui:map:geolocation"));
 double latitude = (Double)request.getAttribute("liferay-ui:map:latitude");
 double longitude = (Double)request.getAttribute("liferay-ui:map:longitude");
@@ -51,7 +52,15 @@ name = namespace + name;
 			};
 		</script>
 
-		<script src="<%= protocol %>://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady" type="text/javascript"></script>
+		<%
+		String mapsAPIUrl = protocol + "://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady";
+
+		if (Validator.isNotNull(apiKey)) {
+			mapsAPIUrl += "&key=" + apiKey;
+		}
+		%>
+
+		<script src="<%= mapsAPIUrl %>" type="text/javascript"></script>
 	</liferay-util:html-bottom>
 </c:if>
 

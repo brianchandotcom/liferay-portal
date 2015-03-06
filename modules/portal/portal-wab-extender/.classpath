@@ -37,7 +37,6 @@
 	<classpathentry kind="lib" path="lib/org.apache.aries.jmx.core.whiteboard.jar" />
 	<classpathentry kind="lib" path="lib/org.apache.aries.util.jar" />
 	<classpathentry kind="lib" path="lib/org.apache.felix.bundlerepository.jar" />
-	<classpathentry kind="lib" path="lib/org.apache.felix.configadmin.jar" />
 	<classpathentry kind="lib" path="lib/org.apache.felix.eventadmin.jar" />
 	<classpathentry kind="lib" path="lib/org.apache.felix.gogo.command.jar" />
 	<classpathentry kind="lib" path="lib/org.apache.felix.gogo.runtime.jar" />

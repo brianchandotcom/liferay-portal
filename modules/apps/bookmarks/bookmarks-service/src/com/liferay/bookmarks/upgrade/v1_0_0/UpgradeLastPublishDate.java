@@ -16,14 +16,14 @@ package com.liferay.bookmarks.upgrade.v1_0_0;
 
 import com.liferay.bookmarks.upgrade.v1_0_0.util.BookmarksEntryTable;
 import com.liferay.bookmarks.upgrade.v1_0_0.util.BookmarksFolderTable;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.SQLException;
 
 /**
  * @author Levente Hudák
  */
-public class UpgradeLastPublishDate
-	extends com.liferay.portal.kernel.upgrade.UpgradeProcess {
+public class UpgradeLastPublishDate extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

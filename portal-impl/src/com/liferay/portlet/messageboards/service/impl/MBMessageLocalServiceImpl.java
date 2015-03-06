@@ -167,9 +167,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String body, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (isMaxDiscussionMessagesCountReached(className, classPK)) {
-			throw new DiscussionMessageNumberException();
-		}
+		validateDiscussionCommentsMaxCount(className, classPK);
 
 		// Message
 
@@ -1985,22 +1983,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return subject;
 	}
 
-	protected boolean isMaxDiscussionMessagesCountReached(
-		String className, long classPK) {
-
-		int discussionMessagesCount = getDiscussionMessagesCount(
-			className, classPK, WorkflowConstants.STATUS_APPROVED);
-
-		if ((PropsValues.DISCUSSION_COMMENTS_MAX_NUMBER > 0) &&
-			(discussionMessagesCount >=
-				PropsValues.DISCUSSION_COMMENTS_MAX_NUMBER)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	protected void notifyDiscussionSubscribers(
 			long creatorUserId, MBMessage message,
 			ServiceContext serviceContext)
@@ -2494,6 +2476,24 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (Validator.isNull(subject) && Validator.isNull(body)) {
 			throw new MessageSubjectException();
+		}
+	}
+
+	protected void validateDiscussionCommentsMaxCount(
+			String className, long classPK)
+		throws PortalException {
+
+		if (PropsValues.DISCUSSION_COMMENTS_MAX_COUNT <= 0) {
+			return;
+		}
+
+		int discussionMessagesCount = getDiscussionMessagesCount(
+			className, classPK, WorkflowConstants.STATUS_APPROVED);
+
+		if (discussionMessagesCount >=
+				PropsValues.DISCUSSION_COMMENTS_MAX_COUNT) {
+
+			throw new DiscussionMessageNumberException();
 		}
 	}
 

@@ -19,7 +19,6 @@
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
-		<column name="lastPublishDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Permission fields -->
@@ -39,6 +38,7 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -124,7 +124,6 @@
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
-		<column name="lastPublishDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Permission fields -->
@@ -141,6 +140,7 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 

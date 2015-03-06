@@ -12,27 +12,10 @@
  * details.
  */
 
-package com.liferay.productivity.center.panel.model;
-
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.security.permission.PermissionChecker;
-
-import java.util.Locale;
+package com.liferay.productivity.center.panel;
 
 /**
  * @author Adolfo Pérez
  */
-public interface PanelEntry {
-
-	public String getIconCssClass();
-
-	public String getKey();
-
-	public String getLabel(Locale locale);
-
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException;
-
+public interface PanelCategory extends PanelEntry {
 }

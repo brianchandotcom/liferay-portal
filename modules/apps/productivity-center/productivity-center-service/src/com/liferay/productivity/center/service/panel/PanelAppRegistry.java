@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.productivity.center.service.panel.model;
+package com.liferay.productivity.center.service.panel;
 
-import com.liferay.productivity.center.panel.model.PanelCategory;
+import com.liferay.productivity.center.panel.PanelApp;
+import com.liferay.productivity.center.panel.PanelCategory;
 import com.liferay.productivity.center.service.util.PanelEntryServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
@@ -25,37 +26,32 @@ import java.util.List;
 /**
  * @author Adolfo Pérez
  */
-public class PanelCategoryRegistry {
+public class PanelAppRegistry {
 
-	public static Iterable<PanelCategory> getPanelCategories(
-		PanelCategory panelCategory) {
-
-		return _instance._getPanelCategories(panelCategory);
+	public static Iterable<PanelApp> getPanelApps(PanelCategory panelCategory) {
+		return _instance._getPanelApps(panelCategory);
 	}
 
-	private PanelCategoryRegistry() {
+	private PanelAppRegistry() {
 		_serviceTrackerMap.open();
 	}
 
-	private Iterable<PanelCategory> _getPanelCategories(
-		PanelCategory panelCategory) {
-
-		Iterable<PanelCategory> panelCategories = _serviceTrackerMap.getService(
+	private Iterable<PanelApp> _getPanelApps(PanelCategory panelCategory) {
+		Iterable<PanelApp> panelItems = _serviceTrackerMap.getService(
 			panelCategory.getKey());
 
-		if (panelCategories == null) {
+		if (panelItems == null) {
 			return Collections.emptyList();
 		}
 
-		return panelCategories;
+		return panelItems;
 	}
 
-	private static final PanelCategoryRegistry _instance =
-		new PanelCategoryRegistry();
+	private static final PanelAppRegistry _instance = new PanelAppRegistry();
 
-	private static final ServiceTrackerMap<String, List<PanelCategory>>
+	private final ServiceTrackerMap<String, List<PanelApp>>
 		_serviceTrackerMap = ServiceTrackerCollections.multiValueMap(
-			PanelCategory.class, "(panel.category=*)",
-			PanelEntryServiceReferenceMapper.<PanelCategory>create());
+			PanelApp.class, "(panel.category=*)",
+			PanelEntryServiceReferenceMapper.<PanelApp>create());
 
 }

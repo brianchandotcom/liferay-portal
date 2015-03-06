@@ -15,7 +15,7 @@
 package com.liferay.productivity.center.service.util;
 
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.productivity.center.panel.model.PanelEntry;
+import com.liferay.productivity.center.panel.PanelEntry;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 

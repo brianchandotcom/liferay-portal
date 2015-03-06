@@ -14,9 +14,9 @@
  */
 --%>
 
-<%@ page import="com.liferay.productivity.center.panel.model.PanelApp" %><%@
-page import="com.liferay.productivity.center.panel.model.PanelCategory" %><%@
-page import="com.liferay.productivity.center.service.panel.model.PanelAppRegistry" %>
+<%@ page import="com.liferay.productivity.center.panel.PanelApp" %><%@
+page import="com.liferay.productivity.center.panel.PanelCategory" %><%@
+page import="com.liferay.productivity.center.service.panel.PanelAppRegistry" %>
 
 <%@ taglib uri="http://liferay.com/tld/productivity-center/ui" prefix="productivity-center-ui" %>
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>

@@ -17,8 +17,8 @@
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portlet.PortletURLFactoryUtil" %><%@
-page import="com.liferay.productivity.center.panel.model.PanelApp" %><%@
-page import="com.liferay.productivity.center.panel.model.PanelCategory" %>
+page import="com.liferay.productivity.center.panel.PanelApp" %><%@
+page import="com.liferay.productivity.center.panel.PanelCategory" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %><%@

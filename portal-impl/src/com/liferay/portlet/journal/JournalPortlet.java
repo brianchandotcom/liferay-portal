@@ -111,6 +111,13 @@ public class JournalPortlet extends MVCPortlet {
 		updateFeed(actionRequest, actionResponse);
 	}
 
+	public void addFolder(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		updateFolder(actionRequest, actionResponse);
+	}
+
 	public void deleteArticles(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -130,6 +137,13 @@ public class JournalPortlet extends MVCPortlet {
 		for (int i = 0; i < deleteFeedIds.length; i++) {
 			JournalFeedServiceUtil.deleteFeed(groupId, deleteFeedIds[i]);
 		}
+	}
+
+	public void deleteFolders(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		doDeleteFolders(actionRequest, actionResponse, false);
 	}
 
 	public void expireArticles(
@@ -161,11 +175,31 @@ public class JournalPortlet extends MVCPortlet {
 		doDeleteArticles(actionRequest, actionResponse, true);
 	}
 
+	public void moveFoldersToTrash(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		doDeleteFolders(actionRequest, actionResponse, true);
+	}
+
 	public void previewArticle(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		updateArticle(actionRequest, actionResponse);
+	}
+
+	public void subscribeFolder(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
+		JournalFolderServiceUtil.subscribe(
+			themeDisplay.getScopeGroupId(), folderId);
 	}
 
 	public void subscribeStructure(
@@ -183,6 +217,19 @@ public class JournalPortlet extends MVCPortlet {
 			ddmStructureId);
 
 		sendEditArticleRedirect(actionRequest, actionResponse);
+	}
+
+	public void unsubscribeFolder(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
+		JournalFolderServiceUtil.unsubscribe(
+			themeDisplay.getScopeGroupId(), folderId);
 	}
 
 	public void unsubscribeStructure(
@@ -434,7 +481,7 @@ public class JournalPortlet extends MVCPortlet {
 		}
 
 		sendEditArticleRedirect(
-				actionRequest, actionResponse, article, oldUrlTitle);
+			actionRequest, actionResponse, article, oldUrlTitle);
 	}
 
 	public void updateFeed(
@@ -497,6 +544,69 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
+	public void updateFolder(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
+		long parentFolderId = ParamUtil.getLong(
+			actionRequest, "parentFolderId");
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
+
+		boolean mergeWithParentFolder = ParamUtil.getBoolean(
+			actionRequest, "mergeWithParentFolder");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			JournalFolder.class.getName(), actionRequest);
+
+		if (folderId <= 0) {
+
+			// Add folder
+
+			JournalFolderServiceUtil.addFolder(
+				serviceContext.getScopeGroupId(), parentFolderId, name,
+				description, serviceContext);
+		}
+		else {
+
+			// Update folder
+
+			long[] ddmStructureIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "ddmStructuresSearchContainerPrimaryKeys"),
+				0L);
+			int restrinctionType = ParamUtil.getInteger(
+				actionRequest, "restrictionType");
+
+			JournalFolderServiceUtil.updateFolder(
+				folderId, parentFolderId, name, description, ddmStructureIds,
+				restrinctionType, mergeWithParentFolder, serviceContext);
+		}
+	}
+
+	public void updateWorkflowDefinitions(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] ddmStructureIds = StringUtil.split(
+				ParamUtil.getString(
+						actionRequest,
+						"ddmStructuresSearchContainerPrimaryKeys"),
+				0L);
+		int restrinctionType = ParamUtil.getInteger(
+			actionRequest, "restrictionType");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			JournalFolder.class.getName(), actionRequest);
+
+		JournalFolderServiceUtil.updateFolder(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, null, null,
+			ddmStructureIds, restrinctionType, false, serviceContext);
+	}
+
 	protected void doDeleteArticles(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			boolean moveToTrash)
@@ -541,6 +651,44 @@ public class JournalPortlet extends MVCPortlet {
 		}
 
 		sendEditArticleRedirect(actionRequest, actionResponse);
+	}
+
+	protected void doDeleteFolders(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			boolean moveToTrash)
+		throws Exception {
+
+		long[] deleteFolderIds = null;
+
+		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
+		if (folderId > 0) {
+			deleteFolderIds = new long[] {folderId};
+		}
+		else {
+			deleteFolderIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "folderIds"), 0L);
+		}
+
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		for (long deleteFolderId : deleteFolderIds) {
+			if (moveToTrash) {
+				JournalFolder folder =
+					JournalFolderServiceUtil.moveFolderToTrash(deleteFolderId);
+
+				trashedModels.add(folder);
+			}
+			else {
+				JournalFolderServiceUtil.deleteFolder(deleteFolderId);
+			}
+		}
+
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
+
+			hideDefaultSuccessMessage(actionRequest);
+		}
 	}
 
 	@Override
@@ -751,152 +899,5 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalPortlet.class);
-
-	public void addFolder(
-			ActionRequest actionRequest, ActionResponse actionResponse) 
-		throws Exception {
-
-		updateFolder(actionRequest, actionResponse);
-	}
-	
-	public void deleteFolders(
-			ActionRequest actionRequest, ActionResponse actionResponse) 
-		throws Exception {
-		
-		doDeleteFolders(actionRequest, actionResponse, false);
-	}
-	
-	public void moveFoldersToTrash(
-			ActionRequest actionRequest, ActionResponse actionResponse) 
-		throws Exception {
-		
-		doDeleteFolders(actionRequest, actionResponse, true);
-	}
-
-	protected void doDeleteFolders(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			boolean moveToTrash)
-		throws Exception {
-
-		long[] deleteFolderIds = null;
-
-		long folderId = ParamUtil.getLong(actionRequest, "folderId");
-
-		if (folderId > 0) {
-			deleteFolderIds = new long[] {folderId};
-		}
-		else {
-			deleteFolderIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "folderIds"), 0L);
-		}
-
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
-		for (long deleteFolderId : deleteFolderIds) {
-			if (moveToTrash) {
-				JournalFolder folder =
-					JournalFolderServiceUtil.moveFolderToTrash(deleteFolderId);
-
-				trashedModels.add(folder);
-			}
-			else {
-				JournalFolderServiceUtil.deleteFolder(deleteFolderId);
-			}
-		}
-
-		if (moveToTrash && !trashedModels.isEmpty()) {
-			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
-
-			hideDefaultSuccessMessage(actionRequest);
-		}
-	}
-
-	public void subscribeFolder(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long folderId = ParamUtil.getLong(actionRequest, "folderId");
-
-		JournalFolderServiceUtil.subscribe(
-			themeDisplay.getScopeGroupId(), folderId);
-	}
-
-	public void unsubscribeFolder(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long folderId = ParamUtil.getLong(actionRequest, "folderId");
-
-		JournalFolderServiceUtil.unsubscribe(
-				themeDisplay.getScopeGroupId(), folderId);
-	}
-
-	public void updateFolder(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long folderId = ParamUtil.getLong(actionRequest, "folderId");
-
-		long parentFolderId = ParamUtil.getLong(
-				actionRequest, "parentFolderId");
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-
-		boolean mergeWithParentFolder = ParamUtil.getBoolean(
-				actionRequest, "mergeWithParentFolder");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			JournalFolder.class.getName(), actionRequest);
-
-		if (folderId <= 0) {
-
-			// Add folder
-
-			JournalFolderServiceUtil.addFolder(
-				serviceContext.getScopeGroupId(), parentFolderId, name,
-				description, serviceContext);
-		}
-		else {
-
-			// Update folder
-
-			long[] ddmStructureIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "ddmStructuresSearchContainerPrimaryKeys"),
-				0L);
-			int restrinctionType = ParamUtil.getInteger(
-				actionRequest, "restrictionType");
-
-			JournalFolderServiceUtil.updateFolder(
-				folderId, parentFolderId, name, description, ddmStructureIds,
-				restrinctionType, mergeWithParentFolder, serviceContext);
-		}
-	}
-
-	public void updateWorkflowDefinitions(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long[] ddmStructureIds = StringUtil.split(
-				ParamUtil.getString(
-						actionRequest, "ddmStructuresSearchContainerPrimaryKeys"),
-				0L);
-		int restrinctionType = ParamUtil.getInteger(
-				actionRequest, "restrictionType");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			JournalFolder.class.getName(), actionRequest);
-
-		JournalFolderServiceUtil.updateFolder(
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, null, null,
-			ddmStructureIds, restrinctionType, false, serviceContext);
-	}
 
 }

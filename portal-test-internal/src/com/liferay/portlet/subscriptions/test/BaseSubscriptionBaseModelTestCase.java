@@ -30,13 +30,15 @@ public abstract class BaseSubscriptionBaseModelTestCase
 		throws Exception {
 
 		long containerModelId = addContainerModel(
+			creatorUser.getUserId(),
 			BaseSubscriptionTestCase.PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
-		long baseModelId = addBaseModel(containerModelId);
+		long baseModelId = addBaseModel(
+			creatorUser.getUserId(), containerModelId);
 
 		addSubscriptionBaseModel(baseModelId);
 
-		updateBaseModel(baseModelId);
+		updateBaseModel(creatorUser.getUserId(), baseModelId);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
@@ -46,15 +48,17 @@ public abstract class BaseSubscriptionBaseModelTestCase
 		throws Exception {
 
 		long containerModelId = addContainerModel(
+			creatorUser.getUserId(),
 			BaseSubscriptionTestCase.PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
-		long baseModelId = addBaseModel(containerModelId);
+		long baseModelId = addBaseModel(
+			creatorUser.getUserId(), containerModelId);
 
 		addSubscriptionBaseModel(baseModelId);
 
 		removeContainerModelResourceViewPermission();
 
-		updateBaseModel(baseModelId);
+		updateBaseModel(creatorUser.getUserId(), baseModelId);
 
 		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
 	}
@@ -64,11 +68,12 @@ public abstract class BaseSubscriptionBaseModelTestCase
 		throws Exception {
 
 		long baseModelId = addBaseModel(
+			creatorUser.getUserId(),
 			BaseSubscriptionTestCase.PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		addSubscriptionBaseModel(baseModelId);
 
-		updateBaseModel(baseModelId);
+		updateBaseModel(creatorUser.getUserId(), baseModelId);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}

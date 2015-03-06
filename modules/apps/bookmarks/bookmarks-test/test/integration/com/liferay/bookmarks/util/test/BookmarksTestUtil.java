@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
@@ -152,6 +153,19 @@ public class BookmarksTestUtil {
 		searchContext.setQueryConfig(queryConfig);
 
 		return searchContext;
+	}
+
+	public static void populateNotificationsServiceContext(
+			ServiceContext serviceContext, String command)
+		throws Exception {
+
+		serviceContext.setAttribute("entryURL", "http://localhost");
+
+		if (Validator.isNotNull(command)) {
+			serviceContext.setCommand(command);
+		}
+
+		serviceContext.setLayoutFullURL("http://localhost");
 	}
 
 	public static BookmarksEntry updateEntry(BookmarksEntry entry)

@@ -230,8 +230,8 @@ public class SubscriptionSender implements Serializable {
 		return _context.get(key);
 	}
 
-	public long getContextUserId() {
-		return contextUserId;
+	public long getCreatorUserId() {
+		return creatorUserId;
 	}
 
 	public String getMailId() {
@@ -320,12 +320,12 @@ public class SubscriptionSender implements Serializable {
 		}
 	}
 
-	public void setContextUserId(long contextUserId) {
-		this.contextUserId = contextUserId;
-	}
-
 	public void setContextUserPrefix(String contextUserPrefix) {
 		_contextUserPrefix = contextUserPrefix;
+	}
+
+	public void setCreatorUserId(long creatorUserId) {
+		this.creatorUserId = creatorUserId;
 	}
 
 	public void setEntryTitle(String entryTitle) {
@@ -822,9 +822,9 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	protected void sendNotification(User user) throws Exception {
-		if (contextUserId == user.getUserId() ) {
+		if (creatorUserId == user.getUserId() ) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Skip context user " + contextUserId);
+				_log.debug("Skip context user " + creatorUserId);
 			}
 
 			return;
@@ -871,7 +871,7 @@ public class SubscriptionSender implements Serializable {
 	protected String body;
 	protected boolean bulk;
 	protected long companyId;
-	protected long contextUserId;
+	protected long creatorUserId;
 	protected List<FileAttachment> fileAttachments = new ArrayList<>();
 	protected String fromAddress;
 	protected String fromName;

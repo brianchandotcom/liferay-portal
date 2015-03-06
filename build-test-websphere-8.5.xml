@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-websphere-8.5" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="run-selenium-websphere-8.5">
+		<execute>
+			C:/Progra~2/IBM/WebSphere/AppServer/profiles/AppSrv01/bin/stopServer.bat server1
+		</execute>
+
+		<copy overwrite="true" todir="C:/Progra~2/IBM/WebSphere/AppServer/lib/ext">
+			<file file="${project.dir}/portal-service/portal-service.jar" />
+
+			<fileset
+				dir="${project.dir}/lib/development"
+				includes="activation.jar,hsql.jar,jtds.jar,junit.jar,mysql.jar,persistence.jar"
+			/>
+		</copy>
+
+		<copy overwrite="true" todir="C:/Progra~2/IBM/WebSphere/AppServer/java/jre/lib/ext">
+			<file file="${project.dir}/lib/development/servlet-api.jar" />
+			<file file="${project.dir}/lib/global/portlet.jar" />
+		</copy>
+	</target>
+</project>

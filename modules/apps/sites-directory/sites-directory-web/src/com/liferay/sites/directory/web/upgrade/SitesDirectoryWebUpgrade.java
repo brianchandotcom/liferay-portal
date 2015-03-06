@@ -23,6 +23,7 @@ import java.util.Collections;
 
 import javax.servlet.ServletContext;
 
+import com.liferay.sites.directory.web.constants.SitesDirectoryPortletKeys;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,9 +54,7 @@ public class SitesDirectoryWebUpgrade {
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
 					new String[] {
-						"184",
-						"com_liferay_sites_directory_web_portlet_" +
-							"SitesDirectoryPortlet"
+						"184", SitesDirectoryPortletKeys.SITES_DIRECTORY
 					}
 				};
 			}

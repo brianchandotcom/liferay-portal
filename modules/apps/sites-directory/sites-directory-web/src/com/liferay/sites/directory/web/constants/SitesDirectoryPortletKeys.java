@@ -1,5 +1,3 @@
-package com.liferay.sites.directory.web.portlet.action;
-
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -14,22 +12,14 @@ package com.liferay.sites.directory.web.portlet.action;
  * details.
  */
 
-import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-
-import com.liferay.sites.directory.web.constants.SitesDirectoryPortletKeys;
-import org.osgi.service.component.annotations.Component;
+package com.liferay.sites.directory.web.constants;
 
 /**
- * @author Peter Fellwock
+ * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + SitesDirectoryPortletKeys.SITES_DIRECTORY
-	},
-	service = ConfigurationAction.class
-)
-public class SitesDirectoryConfigurationAction
-	extends DefaultConfigurationAction {
+public class SitesDirectoryPortletKeys {
+
+	public static final String SITES_DIRECTORY =
+		"com_liferay_sites_directory_web_portlet_SitesDirectoryPortlet";
+
 }

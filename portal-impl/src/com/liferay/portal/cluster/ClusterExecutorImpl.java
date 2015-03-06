@@ -225,10 +225,10 @@ public class ClusterExecutorImpl
 
 			sendNotifyRequest();
 
-			BaseReceiver baseReceiver =
-				(BaseReceiver)_controlJChannel.getReceiver();
+			JGroupsReceiver jGroupsReceiver =
+				(JGroupsReceiver)_controlJChannel.getReceiver();
 
-			baseReceiver.openLatch();
+			jGroupsReceiver.openLatch();
 		}
 		catch (Exception e) {
 			if (_log.isErrorEnabled()) {
@@ -348,6 +348,10 @@ public class ClusterExecutorImpl
 		return _futureClusterResponses.get(uuid);
 	}
 
+	protected ExecutorService getExecutorService() {
+		return _executorService;
+	}
+
 	protected void initControlChannel() throws Exception {
 		Properties controlProperties = PropsUtil.getProperties(
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL, false);
@@ -356,7 +360,7 @@ public class ClusterExecutorImpl
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
 
 		ClusterRequestReceiver clusterRequestReceiver =
-			new ClusterRequestReceiver(this, _executorService);
+			new ClusterRequestReceiver(this);
 
 		_controlJChannel = createJChannel(
 			controlProperty, clusterRequestReceiver, _DEFAULT_CLUSTER_NAME);

@@ -14,75 +14,44 @@
 
 package com.liferay.portal.cluster;
 
-import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 import org.jgroups.Address;
 
 /**
  * @author Shuyang Zhou
  */
-public class ClusterForwardReceiver extends BaseReceiver {
+public class ClusterForwardReceiver extends JGroupsReceiver {
 
-	public ClusterForwardReceiver(
-		ExecutorService executorService,
-		List<Address> localTransportAddresses) {
+	public ClusterForwardReceiver(ClusterLinkImpl clusterLinkImpl) {
+		super(clusterLinkImpl.getExecutorService());
 
-		super(executorService);
-
-		_localTransportAddresses = localTransportAddresses;
+		_clusterLinkImpl = clusterLinkImpl;
 	}
 
 	@Override
 	protected void doReceive(org.jgroups.Message jGroupsMessage) {
-		if (!_localTransportAddresses.contains(jGroupsMessage.getSrc()) ||
-			(jGroupsMessage.getDest() != null)) {
+		List<Address> localTransportAddresses =
+			_clusterLinkImpl.getLocalTransportAddresses();
 
-			Message message = (Message)jGroupsMessage.getObject();
-
-			String destinationName = message.getDestinationName();
-
-			if (Validator.isNotNull(destinationName)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Forwarding cluster link message " + message + " to " +
-							destinationName);
-				}
-
-				ClusterInvokeThreadLocal.setEnabled(false);
-
-				try {
-					MessageBusUtil.sendMessage(destinationName, message);
-				}
-				finally {
-					ClusterInvokeThreadLocal.setEnabled(true);
-				}
-			}
-			else {
-				if (_log.isErrorEnabled()) {
-					_log.error(
-						"Forwarded cluster link message has no destination " +
-							message);
-				}
-			}
-		}
-		else {
+		if (localTransportAddresses.contains(jGroupsMessage.getSrc())) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Block received message " + jGroupsMessage);
 			}
+		}
+		else {
+			_clusterLinkImpl.sendLocalMessage(
+				(Message)jGroupsMessage.getObject());
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterForwardReceiver.class);
 
-	private final List<Address> _localTransportAddresses;
+	private final ClusterLinkImpl _clusterLinkImpl;
 
 }

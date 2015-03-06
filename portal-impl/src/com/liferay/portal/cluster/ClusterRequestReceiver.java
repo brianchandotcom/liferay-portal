@@ -30,7 +30,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 import org.jgroups.Channel;
 import org.jgroups.Message;
@@ -40,13 +39,10 @@ import org.jgroups.View;
  * @author Michael C. Han
  * @author Tina Tian
  */
-public class ClusterRequestReceiver extends BaseReceiver {
+public class ClusterRequestReceiver extends JGroupsReceiver {
 
-	public ClusterRequestReceiver(
-		ClusterExecutorImpl clusterExecutorImpl,
-		ExecutorService executorService) {
-
-		super(executorService);
+	public ClusterRequestReceiver(ClusterExecutorImpl clusterExecutorImpl) {
+		super(clusterExecutorImpl.getExecutorService());
 
 		_clusterExecutorImpl = clusterExecutorImpl;
 	}

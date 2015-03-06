@@ -27,6 +27,7 @@ import javax.servlet.Servlet;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Binding;
 import javax.xml.ws.handler.Handler;
+import javax.xml.ws.spi.Provider;
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
@@ -34,6 +35,7 @@ import org.apache.cxf.bus.CXFBusFactory;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 import org.apache.cxf.jaxws.support.JaxWsEndpointImpl;
+import org.apache.cxf.jaxws22.spi.ProviderImpl;
 import org.apache.cxf.transport.servlet.CXFNonSpringServlet;
 
 import org.osgi.framework.Bundle;
@@ -82,6 +84,8 @@ public class SoapExtender {
 			clazz.getName());
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, contextPath);
+
+		_registerLiferayJaxWsProvider();
 
 		_servletContextHelperServiceRegistration =
 			_bundleContext.registerService(
@@ -142,6 +146,17 @@ public class SoapExtender {
 		}
 
 		try {
+			_providerServiceRegistration.unregister();
+		}
+		catch (Exception e) {
+			if (_logger.isWarnEnabled()) {
+				_logger.warn(
+					"Could not unregister jaxws provider " +
+						_providerServiceRegistration);
+			}
+		}
+
+		try {
 			_servletServiceRegistration.unregister();
 		}
 		catch (Exception e) {
@@ -164,12 +179,20 @@ public class SoapExtender {
 		}
 	}
 
+	private void _registerLiferayJaxWsProvider() {
+		ProviderImpl providerImpl = new ProviderImpl();
+
+		_providerServiceRegistration = _bundleContext.registerService(
+			Provider.class, providerImpl, null);
+	}
+
 	private static final Logger _logger = LoggerFactory.getLogger(
 		SoapExtender.class);
 
 	private final BundleContext _bundleContext;
 	private final String _contextPath;
 	private final ExtensionManager _extensionManager;
+	private ServiceRegistration<Provider> _providerServiceRegistration;
 	private ServiceTracker<Object, ServerTrackingInformation>
 		_serverServiceTracker;
 	private ServiceRegistration<ServletContextHelper>

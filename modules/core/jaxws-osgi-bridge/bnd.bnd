@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal JAX-WS OSGi Bridge
+Bundle-SymbolicName: com.liferay.jaxws.osgi.bridge
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	@lib/jaxws-api.jar

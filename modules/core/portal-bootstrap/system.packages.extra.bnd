@@ -91,6 +91,7 @@ Export-Package:\
 	javax.xml.stream.*;version='1.0',\
 	javax.xml.transform.*;version='1.4',\
 	javax.xml.validation.*;version='1.4',\
+	javax.xml.ws.*;version='2.2.11',\
 	javax.xml.xpath.*;version='1.4',\
 	org.aopalliance.*;version='1.0',\
 	org.apache.bcel.*;version='2.7.1',\
@@ -187,6 +188,7 @@ Export-Package:\
 	*
 Include-Resource:\
 	@lib/com.liferay.registry.api.jar,\
+	@lib/jaxws-api.jar,\
 	@../../../lib/development/jms.jar,\
 	@../../../lib/development/mail.jar,\
 	@../../../lib/development/servlet-api.jar,\

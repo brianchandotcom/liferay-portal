@@ -18,14 +18,15 @@
 
 <%
 String className = (String)request.getAttribute("liferay-ui:discussion:className");
+CommentsEditorDisplayContext commentsEditorDisplayContext = (CommentsEditorDisplayContext)request.getAttribute("liferay-ui:discussion:commentsEditorDisplayContext");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:classPK"));
 boolean hideControls = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:discussion:hideControls"));
+MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute("liferay-ui:discussion:messageDisplay");
 String permissionClassName = (String)request.getAttribute("liferay-ui:discussion:permissionClassName");
 long permissionClassPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:permissionClassPK"));
 boolean ratingsEnabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:ratingsEnabled"));
 long userId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:userId"));
 
-CommentsEditorDisplayContext commentsEditorDisplayContext = (CommentsEditorDisplayContext)request.getAttribute(WebKeys.COMMENTS_EDITOR_DISPLAY_CONTEXT);
 MBTreeWalker treeWalker = (MBTreeWalker)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER);
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE);
 
@@ -34,8 +35,6 @@ String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:ran
 MBMessage rootMessage = (MBMessage)request.getAttribute("liferay-ui:discussion:rootMessage");
 List<RatingsEntry> ratingsEntries = (List<RatingsEntry>)request.getAttribute("liferay-ui:discussion:ratingsEntries");
 List<RatingsStats> ratingsStatsList = (List<RatingsStats>)request.getAttribute("liferay-ui:discussion:ratingsStatsList");
-
-MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(userId, scopeGroupId, className, classPK, WorkflowConstants.STATUS_ANY);
 
 index++;
 

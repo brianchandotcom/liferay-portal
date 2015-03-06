@@ -203,10 +203,11 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 
 							message = (MBMessage)messages.get(j);
 
-							request.setAttribute(WebKeys.COMMENTS_EDITOR_DISPLAY_CONTEXT, commentsEditorDisplayContext);
 							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
 							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, message);
 
+							request.setAttribute("liferay-ui:discussion:commentsEditorDisplayContext", commentsEditorDisplayContext);
+							request.setAttribute("liferay-ui:discussion:messageDisplay", messageDisplay);
 							request.setAttribute("liferay-ui:discussion:randomNamespace", randomNamespace);
 							request.setAttribute("liferay-ui:discussion:ratingsEntries", ratingsEntries);
 							request.setAttribute("liferay-ui:discussion:ratingsStatsList", ratingsStatsList);

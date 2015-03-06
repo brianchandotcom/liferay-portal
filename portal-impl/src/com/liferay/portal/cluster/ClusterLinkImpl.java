@@ -15,14 +15,17 @@
 package com.liferay.portal.cluster;
 
 import com.liferay.portal.kernel.cluster.Address;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
@@ -108,6 +111,12 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		org.jgroups.Address jGroupsAddress =
 			(org.jgroups.Address)address.getRealAddress();
 
+		if (_localTransportAddresses.contains(jGroupsAddress)) {
+			forwardMessage(message);
+
+			return;
+		}
+
 		JChannel jChannel = getChannel(priority);
 
 		try {
@@ -115,6 +124,34 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		}
 		catch (Exception e) {
 			_log.error("Unable to send unicast message " + message, e);
+		}
+	}
+
+	protected void forwardMessage(Message message) {
+		String destinationName = message.getDestinationName();
+
+		if (Validator.isNotNull(destinationName)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Forwarding cluster link message " + message + " to " +
+						destinationName);
+			}
+
+			ClusterInvokeThreadLocal.setEnabled(false);
+
+			try {
+				MessageBusUtil.sendMessage(destinationName, message);
+			}
+			finally {
+				ClusterInvokeThreadLocal.setEnabled(true);
+			}
+		}
+		else {
+			if (_log.isErrorEnabled()) {
+				_log.error(
+					"Forwarded cluster link message has no destination " +
+						message);
+			}
 		}
 	}
 
@@ -161,7 +198,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 			JChannel jChannel = createJChannel(
 				value,
 				new ClusterForwardReceiver(
-					_executorService, _localTransportAddresses),
+					this, _executorService, _localTransportAddresses),
 				_LIFERAY_TRANSPORT_CHANNEL + i);
 
 			_localTransportAddresses.add(jChannel.getAddress());

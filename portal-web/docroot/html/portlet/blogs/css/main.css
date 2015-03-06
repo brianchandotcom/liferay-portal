@@ -184,7 +184,7 @@
 				color: #868889;
 				padding-left: 0;
 
-				&.alloy-editor.alloy-editor-placeholder:empty:not(:focus) {
+				&.alloy-editor-placeholder:empty:not(:focus) {
 					border-left-width: 0;
 				}
 			}

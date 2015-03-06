@@ -15,6 +15,7 @@
 package com.liferay.poshi.runner;
 
 import com.liferay.poshi.runner.util.FileUtil;
+import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
 
 import java.util.ArrayList;
@@ -311,8 +312,7 @@ public class PoshiRunnerContext {
 	}
 
 	private static final String _BASE_DIR =
-		PoshiRunnerGetterUtil.getCanonicalPath(
-			"../../../portal-web/test/functional/com/liferay/portalweb/");
+		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);
 
 	private static final Map<String, String> _actionExtendClassName =
 		new HashMap<>();

@@ -119,8 +119,6 @@ for (int j = 0; j < folderColumns.length; j++) {
 					}
 					%>
 
-					<br />
-
 					<c:if test="<%= !subfolders.isEmpty() %>">
 						<liferay-ui:message key="subfolders" />:
 

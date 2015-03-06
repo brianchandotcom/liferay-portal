@@ -1,3 +1,4 @@
+/* @generated */
 /*
  * Copyright 2010 JBoss Inc
  *

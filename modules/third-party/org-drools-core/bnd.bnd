@@ -1,4 +1,4 @@
-Bundle-SymbolicName: org.drools
+Bundle-SymbolicName: org.drools.core
 Bundle-Version: 5.4.0.Final.LIFERAY-PATCHED-1
 Export-Package: org.drools.*
 Include-Resource: classes

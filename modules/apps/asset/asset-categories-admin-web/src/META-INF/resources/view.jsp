@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String keywords = ParamUtil.getString(request, "keywords");
-
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabularies"), null);
 %>
 
@@ -71,22 +69,30 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 		rowChecker="<%= new RowChecker(renderResponse) %>"
 	>
 
-		<%
-		List<AssetVocabulary> vocabularies = null;
+		<liferay-ui:search-container-results>
 
-		if (Validator.isNotNull(keywords)) {
-			AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), true);
+			<%
+				List<AssetVocabulary> vocabularies = null;
 
-			vocabularies = assetVocabularyDisplay.getVocabularies();
-		}
-		else {
-			vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId, true, searchContainer.getStart(), searchContainer.getEnd(), null);
-		}
-		%>
+				String keywords = ParamUtil.getString(request, "keywords", null);
 
-		<liferay-ui:search-container-results
-			results="<%= vocabularies %>"
-		/>
+				total = AssetVocabularyServiceUtil.getGroupVocabulariesCount(scopeGroupId);
+
+				searchContainer.setTotal(total);
+
+				if (Validator.isNotNull(keywords)) {
+					AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), true);
+
+					vocabularies = assetVocabularyDisplay.getVocabularies();
+				}
+				else {
+					vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId, true, searchContainer.getStart(), searchContainer.getEnd(), null);
+				}
+
+				searchContainer.setResults(vocabularies);
+			%>
+
+		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portlet.asset.model.AssetVocabulary"

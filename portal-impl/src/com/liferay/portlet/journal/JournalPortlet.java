@@ -93,6 +93,7 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -297,6 +298,12 @@ public class JournalPortlet extends MVCPortlet {
 		String resourceID = GetterUtil.getString(
 			resourceRequest.getResourceID());
 
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			resourceRequest);
+
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			resourceResponse);
+
 		if (resourceID.equals("compareVersions")) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -321,11 +328,20 @@ public class JournalPortlet extends MVCPortlet {
 				resourceRequest.setAttribute(
 					WebKeys.DIFF_VERSION, cve.getVersion());
 			}
+			catch (Exception e) {
+				try {
+					PortalUtil.sendError(e, request, response);
+				}
+				catch (ServletException se) {
+				}
+			}
 
 			resourceRequest.setAttribute(
 				WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
 
-			PortletContext portletContext = portletConfig.getPortletContext();
+			PortletSession portletSession = resourceRequest.getPortletSession();
+
+			PortletContext portletContext = portletSession.getPortletContext();
 
 			PortletRequestDispatcher portletRequestDispatcher =
 				portletContext.getRequestDispatcher(
@@ -334,12 +350,6 @@ public class JournalPortlet extends MVCPortlet {
 			portletRequestDispatcher.include(resourceRequest, resourceResponse);
 		}
 		else if (resourceID.equals("rss")) {
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				resourceRequest);
-
-			HttpServletResponse response = PortalUtil.getHttpServletResponse(
-				resourceResponse);
-
 			try {
 				byte[] xml = JournalRSSUtil.getRSS(
 					resourceRequest, resourceResponse);

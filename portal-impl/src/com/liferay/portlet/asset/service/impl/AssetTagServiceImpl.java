@@ -211,7 +211,8 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		long[] groupIds, String name, int start, int end) {
 
 		if (Validator.isNull(name)) {
-			return assetTagPersistence.filterFindByGroupId(groupIds);
+			return assetTagPersistence.filterFindByGroupId(
+				groupIds, start, end);
 		}
 
 		return assetTagPersistence.filterFindByG_LikeN(

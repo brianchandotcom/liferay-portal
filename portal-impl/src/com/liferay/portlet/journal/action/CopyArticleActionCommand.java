@@ -63,15 +63,18 @@ public class CopyArticleActionCommand extends BaseActionCommand {
 
 				SessionErrors.add(portletRequest, e.getClass());
 
-				PortletSession portletSession = portletRequest.getPortletSession();
+				PortletSession portletSession =
+					portletRequest.getPortletSession();
 
-				PortletContext portletContext = portletSession.getPortletContext();
+				PortletContext portletContext =
+					portletSession.getPortletContext();
 
 				PortletRequestDispatcher portletRequestDispatcher =
 					portletContext.getRequestDispatcher(
 						"/html/portlet/journal/error.jsp");
 
-				portletRequestDispatcher.include(portletRequest, portletResponse);
+				portletRequestDispatcher.include(
+					portletRequest, portletResponse);
 			}
 			else if (e instanceof DuplicateArticleIdException ||
 					 e instanceof ArticleIdException) {

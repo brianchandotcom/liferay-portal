@@ -450,8 +450,8 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
-			JGroupsReceiverAdvice.class, DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class, JGroupsReceiverAdvice.class
 		}
 	)
 	@Test

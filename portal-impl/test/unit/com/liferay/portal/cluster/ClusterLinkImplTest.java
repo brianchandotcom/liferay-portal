@@ -134,7 +134,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
-
 	)
 	@Test
 	public void testInitChannel() throws Exception {
@@ -190,11 +189,10 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
-			JGroupsReceiverAdvice.class, DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class,
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class, JGroupsReceiverAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
-
 	)
 	@Test
 	public void testSendMulticastMessage() throws Exception {
@@ -255,7 +253,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
-
 	)
 	@Test
 	public void testSendMulticastMessageWithError() {
@@ -306,11 +303,10 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
-			JGroupsReceiverAdvice.class, DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class,
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class, JGroupsReceiverAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
-
 	)
 	@Test
 	public void testSendUnicastMessage() throws Exception {
@@ -362,7 +358,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
-
 	)
 	@Test
 	public void testSendUnicastMessageWithError() {

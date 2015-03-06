@@ -113,7 +113,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 			(org.jgroups.Address)address.getRealAddress();
 
 		if (_localTransportAddresses.contains(jGroupsAddress)) {
-			forwardMessage(message);
+			sendLocalMessage(message);
 
 			return;
 		}
@@ -125,34 +125,6 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		}
 		catch (Exception e) {
 			_log.error("Unable to send unicast message " + message, e);
-		}
-	}
-
-	protected void forwardMessage(Message message) {
-		String destinationName = message.getDestinationName();
-
-		if (Validator.isNotNull(destinationName)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Forwarding cluster link message " + message + " to " +
-						destinationName);
-			}
-
-			ClusterInvokeThreadLocal.setEnabled(false);
-
-			try {
-				MessageBusUtil.sendMessage(destinationName, message);
-			}
-			finally {
-				ClusterInvokeThreadLocal.setEnabled(true);
-			}
-		}
-		else {
-			if (_log.isErrorEnabled()) {
-				_log.error(
-					"Forwarded cluster link message has no destination " +
-						message);
-			}
 		}
 	}
 
@@ -210,6 +182,31 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 
 			_localTransportAddresses.add(jChannel.getAddress());
 			_transportJChannels.add(jChannel);
+		}
+	}
+
+	protected void sendLocalMessage(Message message) {
+		String destinationName = message.getDestinationName();
+
+		if (Validator.isNotNull(destinationName)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Sending local cluster link message " + message + " to " +
+						destinationName);
+			}
+
+			ClusterInvokeThreadLocal.setEnabled(false);
+
+			try {
+				MessageBusUtil.sendMessage(destinationName, message);
+			}
+			finally {
+				ClusterInvokeThreadLocal.setEnabled(true);
+			}
+		}
+		else {
+			_log.error(
+				"Local cluster link message has no destination " + message);
 		}
 	}
 

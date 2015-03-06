@@ -38,15 +38,14 @@ public class ClusterForwardReceiver extends JGroupsReceiver {
 		List<Address> localTransportAddresses =
 			_clusterLinkImpl.getLocalTransportAddresses();
 
-		if (!localTransportAddresses.contains(jGroupsMessage.getSrc())) {
-			Message message = (Message)jGroupsMessage.getObject();
-
-			_clusterLinkImpl.forwardMessage(message);
-		}
-		else {
+		if (localTransportAddresses.contains(jGroupsMessage.getSrc())) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Block received message " + jGroupsMessage);
 			}
+		}
+		else {
+			_clusterLinkImpl.sendLocalMessage(
+				(Message)jGroupsMessage.getObject());
 		}
 	}
 

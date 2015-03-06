@@ -168,8 +168,6 @@ public class BaseClusterTestCase {
 		)
 		public void doReceive(ProceedingJoinPoint proceedingJoinPoint) {
 			Receiver receiver = (Receiver)proceedingJoinPoint.getThis();
-			org.jgroups.Message jGroupsMessage =
-				(org.jgroups.Message)proceedingJoinPoint.getArgs()[0];
 
 			List<org.jgroups.Message> jGroupsMessageList = _jGroupsMessages.get(
 				receiver);
@@ -185,7 +183,9 @@ public class BaseClusterTestCase {
 				}
 			}
 
-			jGroupsMessageList.add(jGroupsMessage);
+			Object[] args = proceedingJoinPoint.getArgs();
+
+			jGroupsMessageList.add((org.jgroups.Message)args[0]);
 
 			_countDownLatch.countDown();
 		}

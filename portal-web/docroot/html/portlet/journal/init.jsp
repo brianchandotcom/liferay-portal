@@ -23,7 +23,6 @@ page import="com.liferay.portal.kernel.xml.Node" %><%@
 page import="com.liferay.portal.kernel.xml.SAXReaderUtil" %><%@
 page import="com.liferay.portal.kernel.xml.XPath" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePermission" %><%@

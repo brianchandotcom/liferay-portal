@@ -33,7 +33,6 @@ page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionServic
 page import="com.liferay.portlet.dynamicdatalists.service.permission.DDLPermission" %><%@
 page import="com.liferay.portlet.dynamicdatalists.service.permission.DDLRecordSetPermission" %><%@
 page import="com.liferay.portlet.dynamicdatalists.util.DDLUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMForm" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMFormField" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.LocalizedValue" %><%@

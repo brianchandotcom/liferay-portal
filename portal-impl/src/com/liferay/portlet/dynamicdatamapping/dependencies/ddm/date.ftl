@@ -7,7 +7,7 @@
 <#assign nullable = false>
 
 <#if (fieldRawValue?is_date)>
-	<#assign fieldValue = calendarFactory.getCalendar(fieldRawValue?long)>
+	<#assign fieldValue = calendarFactory.getCalendar(fieldRawValue?long, timezone)>
 
 <#elseif (validator.isNotNull(predefinedValue))>
 	<#assign predefinedDate = dateUtil.parseDate(predefinedValue, requestedLocale)>

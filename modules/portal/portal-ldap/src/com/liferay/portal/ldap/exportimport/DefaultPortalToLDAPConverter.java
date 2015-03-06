@@ -14,6 +14,9 @@
 
 package com.liferay.portal.ldap.exportimport;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.portal.authenticator.ldap.configuration.LDAPAuthConfiguration;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -54,7 +57,9 @@ import javax.naming.directory.BasicAttribute;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.DirContext;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Michael C. Han
@@ -62,7 +67,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  * @author Wesley Gong
  */
-@Component(immediate = true, service = PortalToLDAPConverter.class)
+@Component(
+	configurationPid = "com.liferay.portal.authenticator.ldap.configuration.LDAPAuthConfiguration",
+	immediate = true, service = PortalToLDAPConverter.class
+)
 public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 	public DefaultPortalToLDAPConverter() {
@@ -371,6 +379,13 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ldapAuthConfiguration = Configurable.createConfigurable(
+			LDAPAuthConfiguration.class, properties);
+	}
+
 	protected void addAttributeMapping(
 		String attributeName, Object attributeValue, Attributes attributes) {
 
@@ -417,7 +432,8 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 		String algorithm = PrefsPropsUtil.getString(
 			user.getCompanyId(),
-			PropsKeys.LDAP_AUTH_PASSWORD_ENCRYPTION_ALGORITHM);
+			PropsKeys.LDAP_AUTH_PASSWORD_ENCRYPTION_ALGORITHM,
+			_ldapAuthConfiguration.passwordEncryptionAlgorithm());
 
 		if (Validator.isNull(algorithm)) {
 			return password;
@@ -563,6 +579,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultPortalToLDAPConverter.class);
 
+	private volatile LDAPAuthConfiguration _ldapAuthConfiguration;
 	private final Map<String, String> _reservedContactFieldNames =
 		new HashMap<>();
 	private final Map<String, String> _reservedUserFieldNames = new HashMap<>();

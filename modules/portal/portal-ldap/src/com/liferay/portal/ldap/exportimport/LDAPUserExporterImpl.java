@@ -14,6 +14,9 @@
 
 package com.liferay.portal.ldap.exportimport;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.portal.authenticator.ldap.configuration.LDAPAuthConfiguration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -32,7 +35,6 @@ import com.liferay.portal.security.ldap.PortalLDAPUtil;
 import com.liferay.portal.security.ldap.PortalToLDAPConverter;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -50,7 +52,9 @@ import javax.naming.directory.ModificationItem;
 import javax.naming.directory.SchemaViolationException;
 import javax.naming.ldap.LdapContext;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -60,7 +64,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Wesley Gong
  * @author Vilmos Papp
  */
-@Component(immediate = true, service = UserExporter.class)
+@Component(
+	configurationPid = "com.liferay.portal.authenticator.ldap.configuration.LDAPAuthConfiguration",
+	immediate = true, service = UserExporter.class
+)
 public class LDAPUserExporterImpl implements UserExporter {
 
 	@Override
@@ -72,7 +79,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 		if (!PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_AUTH_ENABLED,
-				PropsValues.LDAP_AUTH_ENABLED) ||
+				_ldapAuthConfiguration.enabled()) ||
 			!LDAPSettingsUtil.isExportEnabled(companyId)) {
 
 			return;
@@ -153,7 +160,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 		if (!PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_AUTH_ENABLED,
-				PropsValues.LDAP_AUTH_ENABLED) ||
+				_ldapAuthConfiguration.enabled()) ||
 			!LDAPSettingsUtil.isExportEnabled(companyId) ||
 			!LDAPSettingsUtil.isExportGroupEnabled(companyId)) {
 
@@ -243,7 +250,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 		if (!PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_AUTH_ENABLED,
-				PropsValues.LDAP_AUTH_ENABLED) ||
+				_ldapAuthConfiguration.enabled()) ||
 			!LDAPSettingsUtil.isExportEnabled(companyId)) {
 
 			return;
@@ -320,7 +327,8 @@ public class LDAPUserExporterImpl implements UserExporter {
 		}
 		catch (NameNotFoundException nnfe) {
 			if (PrefsPropsUtil.getBoolean(
-					companyId, PropsKeys.LDAP_AUTH_REQUIRED)) {
+					companyId, PropsKeys.LDAP_AUTH_REQUIRED,
+					_ldapAuthConfiguration.required())) {
 
 				throw nnfe;
 			}
@@ -339,6 +347,13 @@ public class LDAPUserExporterImpl implements UserExporter {
 		PortalToLDAPConverter portalToLDAPConverter) {
 
 		_portalToLDAPConverter = portalToLDAPConverter;
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ldapAuthConfiguration = Configurable.createConfigurable(
+			LDAPAuthConfiguration.class, properties);
 	}
 
 	protected Binding addGroup(
@@ -389,6 +404,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPUserExporterImpl.class);
 
+	private volatile LDAPAuthConfiguration _ldapAuthConfiguration;
 	private PortalToLDAPConverter _portalToLDAPConverter;
 
 }

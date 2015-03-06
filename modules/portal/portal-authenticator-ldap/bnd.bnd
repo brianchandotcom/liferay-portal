@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Portal LDAP Authenticator
+Bundle-SymbolicName: com.liferay.portal.authenticator.ldap
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.authenticator.ldap.configuration.*;version=${plugin.full.version}
+Include-Resource:\
+	classes,\
+	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+
+-metatype: *
+

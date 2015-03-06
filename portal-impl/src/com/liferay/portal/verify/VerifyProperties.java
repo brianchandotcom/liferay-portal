@@ -524,6 +524,23 @@ public class VerifyProperties extends VerifyProcess {
 		// LDAP
 
 		new String[] {
+			"ldap.auth.enabled", "enabled",
+			"com.liferay.portal.authenticator.ldap"
+		},
+		new String[] {
+			"ldap.auth.method", "method",
+			"com.liferay.portal.authenticator.ldap"
+		},
+		new String[] {
+			"ldap.auth.password.encryption.algorithm",
+			"passwordEncryptionAlgorithm",
+			"com.liferay.portal.authenticator.ldap"
+		},
+		new String[] {
+			"ldap.auth.required", "required",
+			"com.liferay.portal.authenticator.ldap"
+		},
+		new String[] {
 			"ldap.export.enabled", "export.enabled", "com.liferay.portal.ldap"
 		},
 		new String[] {

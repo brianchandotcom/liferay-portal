@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.DateRange;
@@ -312,6 +313,9 @@ public interface PortletDataContext extends Serializable {
 	public String getDataStrategy();
 
 	public DateRange getDateRange();
+
+	public Criterion getDateRangeCriteria(
+		DynamicQuery dynamicQuery, String modifiedDatePropertyName);
 
 	public Set<StagedModelType> getDeletionSystemEventStagedModelTypes();
 

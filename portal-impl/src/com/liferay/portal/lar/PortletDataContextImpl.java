@@ -17,9 +17,12 @@ package com.liferay.portal.lar;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.NoSuchTeamException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.dao.orm.Conjunction;
+import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportClassedModelUtil;
@@ -311,15 +314,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public void addDateRangeCriteria(
 		DynamicQuery dynamicQuery, String modifiedDatePropertyName) {
 
-		if (!hasDateRange()) {
+		Criterion criterion = getDateRangeCriteria(
+			dynamicQuery, modifiedDatePropertyName);
+
+		if (criterion == null) {
 			return;
 		}
 
-		Property modifiedDateProperty = PropertyFactoryUtil.forName(
-			modifiedDatePropertyName);
-
-		dynamicQuery.add(modifiedDateProperty.ge(_startDate));
-		dynamicQuery.add(modifiedDateProperty.le(_endDate));
+		dynamicQuery.add(criterion);
 	}
 
 	@Override
@@ -818,6 +820,25 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return dateRange;
+	}
+
+	@Override
+	public Criterion getDateRangeCriteria(
+		DynamicQuery dynamicQuery, String modifiedDatePropertyName) {
+
+		if (!hasDateRange()) {
+			return null;
+		}
+
+		Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
+
+		Property modifiedDateProperty = PropertyFactoryUtil.forName(
+			modifiedDatePropertyName);
+
+		conjunction.add(modifiedDateProperty.ge(_startDate));
+		conjunction.add(modifiedDateProperty.le(_endDate));
+
+		return conjunction;
 	}
 
 	@Override

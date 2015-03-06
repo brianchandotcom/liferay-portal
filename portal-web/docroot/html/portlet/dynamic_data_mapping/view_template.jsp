@@ -45,6 +45,7 @@ portletURL.setParameter("struts_action", "/dynamic_data_mapping/view_template");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("classNameId", String.valueOf(classNameId));
 portletURL.setParameter("classPK", String.valueOf(classPK));
+portletURL.setParameter("resourceClassNameId", String.valueOf(resourceClassNameId));
 
 boolean controlPanel = false;
 

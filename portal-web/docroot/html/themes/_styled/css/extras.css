@@ -484,13 +484,13 @@ body:first-of-type {
 
 			.lfr-icon-menu-text, .taglib-text {
 				@extend %portlet-action-bar-fx-text;
-
-				@include respond-to(phone, tablet) {
-					max-width: 200px;
-				}
 			}
 		}
 	}
+}
+
+.mobile.touch body:first-of-type .portlet-content .lfr-icon-actions .taglib-text {
+	max-width: 200px;
 }
 
 .portlet-boundary.yui3-dd-dragging {

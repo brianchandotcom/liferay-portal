@@ -4627,8 +4627,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		if (groupId == parentGroupId) {
-			throw new GroupParentException(
-				GroupParentException.SELF_DESCENDANT);
+			throw new GroupParentException.MustNotBeOwnParent(groupId);
 		}
 
 		Group group = groupPersistence.fetchByPrimaryKey(groupId);
@@ -4643,8 +4642,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// Prevent circular groupal references
 
 			if (isParentGroup(groupId, parentGroupId)) {
-				throw new GroupParentException(
-					GroupParentException.CHILD_DESCENDANT);
+				throw new GroupParentException.MustNotHaveChildParent(
+					groupId, parentGroupId);
 			}
 		}
 
@@ -4654,8 +4653,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			Group stagingGroup = parentGroup.getStagingGroup();
 
 			if (groupId == stagingGroup.getGroupId()) {
-				throw new GroupParentException(
-					GroupParentException.STAGING_DESCENDANT);
+				throw new GroupParentException.MustNotHaveStagingParent(
+					groupId);
 			}
 		}
 	}

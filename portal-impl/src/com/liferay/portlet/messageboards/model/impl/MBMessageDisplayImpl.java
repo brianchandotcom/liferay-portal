@@ -56,7 +56,7 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 		_nextThread = nextThread;
 		_threadView = threadView;
 
-		boolean maxMessageCountReached = false;
+		boolean messageMaxCount = false;
 
 		if (message.isDiscussion() &&
 			(PropsValues.DISCUSSION_COMMENTS_MAX_COUNT > 0)) {
@@ -69,11 +69,11 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 			if (discussionMessagesCount >=
 					PropsValues.DISCUSSION_COMMENTS_MAX_COUNT) {
 
-				maxMessageCountReached = true;
+				messageMaxCount = true;
 			}
 		}
 
-		_maxMessageCountReached = maxMessageCountReached;
+		_messageMaxCount = messageMaxCount;
 	}
 
 	@Override
@@ -117,13 +117,13 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	@Override
-	public boolean isMaxMessageCountReached() {
-		return _maxMessageCountReached;
+	public boolean isMessageMaxCount() {
+		return _messageMaxCount;
 	}
 
 	private final MBCategory _category;
-	private final boolean _maxMessageCountReached;
 	private final MBMessage _message;
+	private final boolean _messageMaxCount;
 	private final MBThread _nextThread;
 	private final MBMessage _parentMessage;
 	private final MBThread _previousThread;

@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title>Action2</title>
+	</head>
+	<body>
+		<table cellpadding="1" cellspacing="1" border="1">
+			<thead>
+				<tr>
+					<td rowspan="1" colspan="3">Action2</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>PAGE_NAME</td>
+					<td></td>
+					<td>Action2</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>TEST_TITLE</td>
+					<td>//input[@class='Title']</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>

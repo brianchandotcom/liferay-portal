@@ -46,7 +46,7 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 <section>
 	<div class="hide lfr-message-response" id="<portlet:namespace />discussionStatusMessages"></div>
 
-	<c:if test="<%= messageDisplay.isMessageMaxCount() %>">
+	<c:if test="<%= messageDisplay.isMessageLimit() %>">
 		<div class="alert alert-warning">
 			<liferay-ui:message key="max-number-of-comments-has-been-reached" />
 		</div>
@@ -78,7 +78,7 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 
 				<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
 					<aui:fieldset cssClass="add-comment" id='<%= randomNamespace + "messageScroll0" %>'>
-						<c:if test="<%= !messageDisplay.isMessageMaxCount() %>">
+						<c:if test="<%= !messageDisplay.isMessageLimit() %>">
 							<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
 								<aui:input name="messageId0" type="hidden" value="<%= message.getMessageId() %>" />
 								<aui:input name="parentMessageId0" type="hidden" value="<%= message.getMessageId() %>" />
@@ -129,7 +129,7 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 							</c:choose>
 						</c:if>
 
-						<c:if test="<%= !messageDisplay.isMessageMaxCount() %>">
+						<c:if test="<%= !messageDisplay.isMessageLimit() %>">
 							<aui:input name="emailAddress" type="hidden" />
 
 							<c:choose>
@@ -144,14 +144,13 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 										</div>
 
 										<div class="lfr-discussion-body">
-
 											<liferay-ui:input-editor contents="" data="<%= commentsEditorDisplayContext.getEditorData() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
 
 											<aui:input name="postReplyBody0" type="hidden" />
 
-												<aui:button-row>
-													<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
-												</aui:button-row>
+											<aui:button-row>
+												<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
+											</aui:button-row>
 										</div>
 									</aui:row>
 								</c:when>

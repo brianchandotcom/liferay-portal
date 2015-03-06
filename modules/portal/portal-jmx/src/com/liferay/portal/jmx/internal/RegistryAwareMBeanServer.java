@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.jmx;
+package com.liferay.portal.jmx.internal;
+
+import com.liferay.portal.jmx.MBeanRegistry;
 
 import java.io.ObjectInputStream;
 

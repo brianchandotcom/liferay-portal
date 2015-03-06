@@ -120,32 +120,34 @@ for (int j = 0; j < folderColumns.length; j++) {
 					%>
 
 					<c:if test="<%= !subfolders.isEmpty() %>">
-						<liferay-ui:message key="subfolders" />:
+						<div class="entry-metadata">
+							<liferay-ui:message key="subfolders" />:
 
-						<%
-						for (int k = 0; k < subfolders.size(); k++) {
-							Folder subfolder = (Folder)subfolders.get(k);
+							<%
+							for (int k = 0; k < subfolders.size(); k++) {
+								Folder subfolder = (Folder)subfolders.get(k);
 
-							rowURL.setParameter("folderId", String.valueOf(subfolder.getFolderId()));
+								rowURL.setParameter("folderId", String.valueOf(subfolder.getFolderId()));
 
-							String name = HtmlUtil.escape(subfolder.getName());
+								String name = HtmlUtil.escape(subfolder.getName());
 
-							if (((k + 1) < subfolders.size()) || (curFoldersCount > subfolders.size())) {
-								name += StringPool.COMMA_AND_SPACE;
+								if (((k + 1) < subfolders.size()) || (curFoldersCount > subfolders.size())) {
+									name += StringPool.COMMA_AND_SPACE;
+								}
+							%>
+
+								<a href="<%= rowURL %>" /><%= name %></a>
+
+							<%
 							}
-						%>
 
-							<a href="<%= rowURL %>" /><%= name %></a>
+							rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+							%>
 
-						<%
-						}
-
-						rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-						%>
-
-						<c:if test="<%= curFoldersCount > subfolders.size() %>">
-							<a href="<%= rowURL %>"><liferay-ui:message key="more" /> &raquo;</a>
-						</c:if>
+							<c:if test="<%= curFoldersCount > subfolders.size() %>">
+								<a href="<%= rowURL %>"><liferay-ui:message key="more" /> &raquo;</a>
+							</c:if>
+						</div>
 					</c:if>
 				</c:if>
 			</liferay-ui:search-container-column-text>

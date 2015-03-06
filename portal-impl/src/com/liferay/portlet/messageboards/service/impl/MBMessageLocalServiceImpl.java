@@ -71,7 +71,7 @@ import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.messageboards.DiscussionMessageNumberException;
+import com.liferay.portlet.messageboards.DiscussionMessageMaxCountException;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
@@ -167,7 +167,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String body, ServiceContext serviceContext)
 		throws PortalException {
 
-		validateDiscussionCommentsMaxCount(className, classPK);
+		validateDiscussionMessageMaxCount(className, classPK);
 
 		// Message
 
@@ -2479,7 +2479,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validateDiscussionCommentsMaxCount(
+	protected void validateDiscussionMessageMaxCount(
 			String className, long classPK)
 		throws PortalException {
 
@@ -2493,7 +2493,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (discussionMessagesCount >=
 				PropsValues.DISCUSSION_COMMENTS_MAX_COUNT) {
 
-			throw new DiscussionMessageNumberException();
+			throw new DiscussionMessageMaxCountException();
 		}
 	}
 

@@ -36,7 +36,13 @@
 			background-repeat: no-repeat;
 			background-size: cover;
 			height: 400px;
-			margin-bottom: 60px;
+			margin-bottom: 10px;
+		}
+
+		.cover-image-caption {
+			color: #868896;
+			font-size: 12px;
+			margin-bottom: 35px;
 		}
 
 		.uploading-image-container {

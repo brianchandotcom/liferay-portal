@@ -225,10 +225,10 @@ public class ClusterExecutorImpl
 
 			sendNotifyRequest();
 
-			BaseReceiver baseReceiver =
-				(BaseReceiver)_controlJChannel.getReceiver();
+			JGroupsReceiver jGroupsReceiver =
+				(JGroupsReceiver)_controlJChannel.getReceiver();
 
-			baseReceiver.openLatch();
+			jGroupsReceiver.openLatch();
 		}
 		catch (Exception e) {
 			if (_log.isErrorEnabled()) {

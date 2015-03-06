@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.ehcache;
 
-import com.liferay.portal.cluster.BaseReceiver;
+import com.liferay.portal.cluster.JGroupsReceiver;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -81,9 +81,10 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 
 		_jChannel = jChannel;
 
-		BaseReceiver baseReceiver = (BaseReceiver)_jChannel.getReceiver();
+		JGroupsReceiver jGroupsReceiver =
+			(JGroupsReceiver)_jChannel.getReceiver();
 
-		baseReceiver.openLatch();
+		jGroupsReceiver.openLatch();
 	}
 
 	@Override
@@ -102,9 +103,10 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 	}
 
 	public List<Address> getBusMembership() {
-		BaseReceiver baseReceiver = (BaseReceiver)_jChannel.getReceiver();
+		JGroupsReceiver jGroupsReceiver =
+			(JGroupsReceiver)_jChannel.getReceiver();
 
-		View view = baseReceiver.getView();
+		View view = jGroupsReceiver.getView();
 
 		return view.getMembers();
 	}
@@ -290,7 +292,7 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 	private final ExecutorService _executorService;
 	private final JChannel _jChannel;
 
-	private class EhcacheJGroupsReceiver extends BaseReceiver {
+	private class EhcacheJGroupsReceiver extends JGroupsReceiver {
 
 		@Override
 		protected void doReceive(Message message) {

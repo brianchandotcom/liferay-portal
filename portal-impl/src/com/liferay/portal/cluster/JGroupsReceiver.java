@@ -28,9 +28,9 @@ import org.jgroups.View;
 /**
  * @author Tina Tian
  */
-public abstract class BaseReceiver extends ReceiverAdapter {
+public abstract class JGroupsReceiver extends ReceiverAdapter {
 
-	public BaseReceiver(ExecutorService executorService) {
+	public JGroupsReceiver(ExecutorService executorService) {
 		if (executorService == null) {
 			throw new NullPointerException("Executor service is null");
 		}
@@ -117,7 +117,8 @@ public abstract class BaseReceiver extends ReceiverAdapter {
 	protected void doViewAccepted(View oldView, View newView) {
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(BaseReceiver.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		JGroupsReceiver.class);
 
 	private final CountDownLatch _countDownLatch = new CountDownLatch(1);
 	private final ExecutorService _executorService;

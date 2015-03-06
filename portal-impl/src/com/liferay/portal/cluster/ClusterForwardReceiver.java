@@ -25,7 +25,7 @@ import org.jgroups.Address;
 /**
  * @author Shuyang Zhou
  */
-public class ClusterForwardReceiver extends BaseReceiver {
+public class ClusterForwardReceiver extends JGroupsReceiver {
 
 	public ClusterForwardReceiver(ClusterLinkImpl clusterLinkImpl) {
 		super(clusterLinkImpl.getExecutorService());

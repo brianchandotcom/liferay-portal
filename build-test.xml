@@ -5150,6 +5150,8 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 
 		<ant dir="util-java" target="test-class-group" inheritAll="false" />
 
+		<antcall target="rebuild-database" inheritAll="false" />
+
 		<ant dir="modules" target="test-class-group" inheritAll="false" />
 	</target>
 

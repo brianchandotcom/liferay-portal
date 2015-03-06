@@ -305,22 +305,26 @@ public class JournalPortlet extends MVCPortlet {
 			resourceResponse);
 
 		if (resourceID.equals("compareVersions")) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			long groupId = ParamUtil.getLong(resourceRequest, "groupId");
-			String articleId = ParamUtil.getString(resourceRequest, "articleId");
+			String articleId = ParamUtil.getString(
+				resourceRequest, "articleId");
 			double sourceVersion = ParamUtil.getDouble(
 				resourceRequest, "filterSourceVersion");
 			double targetVersion = ParamUtil.getDouble(
 				resourceRequest, "filterTargetVersion");
-			String languageId = ParamUtil.getString(resourceRequest, "languageId");
+			String languageId = ParamUtil.getString(
+				resourceRequest, "languageId");
 
 			String diffHtmlResults = null;
 
 			try {
 				diffHtmlResults = JournalUtil.diffHtml(
-					groupId, articleId, sourceVersion, targetVersion, languageId,
+					groupId, articleId, sourceVersion, targetVersion,
+					languageId,
 					new PortletRequestModel(resourceRequest, resourceResponse),
 					themeDisplay);
 			}
@@ -845,7 +849,7 @@ public class JournalPortlet extends MVCPortlet {
 		List<TrashedModel> trashedModels = new ArrayList<>();
 
 		long[] deleteFolderIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "folderIds"), 0L);
+			ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
 		for (long deleteFolderId : deleteFolderIds) {
 			if (moveToTrash) {

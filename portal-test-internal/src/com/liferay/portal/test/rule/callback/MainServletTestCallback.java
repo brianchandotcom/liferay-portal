@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.servlet.MainServlet;
 import com.liferay.portal.test.mock.AutoDeployMockServletContext;
@@ -78,6 +79,8 @@ public class MainServletTestCallback extends BaseTestCallback<Object, Object> {
 				throw new RuntimeException(
 					"The main servlet could not be initialized");
 			}
+
+			ModuleFrameworkUtilAdapter.registerContext(mockServletContext);
 		}
 
 		return null;

@@ -595,7 +595,7 @@ public interface PropsKeys {
 
 	public static final String DISCUSSION_COMMENTS_FORMAT = "discussion.comments.format";
 
-	public static final String DISCUSSION_COMMENTS_MAX_COUNT = "discussion.comments.max.count";
+	public static final String DISCUSSION_COMMENTS_LIMIT = "discussion.comments.limit";
 
 	public static final String DISCUSSION_EMAIL_BODY = "discussion.email.body";
 

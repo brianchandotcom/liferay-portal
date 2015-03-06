@@ -22,20 +22,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class DiscussionMessageMaxCountException extends PortalException {
+public class DiscussionMessageLimitException extends PortalException {
 
-	public DiscussionMessageMaxCountException() {
+	public DiscussionMessageLimitException() {
 	}
 
-	public DiscussionMessageMaxCountException(String msg) {
+	public DiscussionMessageLimitException(String msg) {
 		super(msg);
 	}
 
-	public DiscussionMessageMaxCountException(String msg, Throwable cause) {
+	public DiscussionMessageLimitException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public DiscussionMessageMaxCountException(Throwable cause) {
+	public DiscussionMessageLimitException(Throwable cause) {
 		super(cause);
 	}
 

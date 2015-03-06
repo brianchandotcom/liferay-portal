@@ -59,7 +59,7 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 		boolean messageMaxCount = false;
 
 		if (message.isDiscussion() &&
-			(PropsValues.DISCUSSION_COMMENTS_MAX_COUNT > 0)) {
+			(PropsValues.DISCUSSION_COMMENTS_LIMIT > 0)) {
 
 			int discussionMessagesCount =
 				messageLocalService.getDiscussionMessagesCount(
@@ -67,13 +67,13 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 					WorkflowConstants.STATUS_APPROVED);
 
 			if (discussionMessagesCount >=
-					PropsValues.DISCUSSION_COMMENTS_MAX_COUNT) {
+					PropsValues.DISCUSSION_COMMENTS_LIMIT) {
 
 				messageMaxCount = true;
 			}
 		}
 
-		_messageMaxCount = messageMaxCount;
+		_messageLimit = messageMaxCount;
 	}
 
 	@Override
@@ -117,13 +117,13 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	@Override
-	public boolean isMessageMaxCount() {
-		return _messageMaxCount;
+	public boolean isMessageLimit() {
+		return _messageLimit;
 	}
 
 	private final MBCategory _category;
 	private final MBMessage _message;
-	private final boolean _messageMaxCount;
+	private final boolean _messageLimit;
 	private final MBThread _nextThread;
 	private final MBMessage _parentMessage;
 	private final MBThread _previousThread;

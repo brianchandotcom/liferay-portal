@@ -14,19 +14,17 @@
  */
 --%>
 
-<%@ include file="/layout/view/init.jsp" %>
+<%@ include file="/taglib/ui/panel/init.jsp" %>
 
 <%
-String portletId = ParamUtil.getString(request, "p_p_id");
+PanelCategory panelCategory = (PanelCategory)request.getAttribute("productivity-center-ui:panel:panelCategory");
 %>
 
-<aui:container>
-	<aui:row>
-		<aui:col width="<%= 25 %>">
-			<productivity-center-ui:panel servletContext="<%= application %>" />
-		</aui:col>
-		<aui:col width="<%= 75 %>">
-			<productivity-center-ui:panel-content portletId="<%= portletId %>" servletContext="<%= application %>" />
-		</aui:col>
-	</aui:row>
-</aui:container>
+<liferay-ui:panel-container
+	accordion="<%= true %>"
+	extended="<%= true %>"
+	id="userPersonalPanelMenuAddContentPanelContainer"
+	persistState="<%= true %>"
+>
+	<productivity-center-ui:panel-category panelCategory="<%= panelCategory %>" servletContext="<%= application %>" />
+</liferay-ui:panel-container>

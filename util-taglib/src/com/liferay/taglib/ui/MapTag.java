@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class MapTag extends IncludeTag {
 
-	public void setApiKey(String apikey) {
-		_apiKey = apikey;
+	public void setApiKey(String apiKey) {
+		_apiKey = apiKey;
 	}
 
 	public void setGeolocation(boolean geolocation) {
@@ -69,7 +69,7 @@ public class MapTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:map:apikey", _apiKey);
+		request.setAttribute("liferay-ui:map:apiKey", _apiKey);
 		request.setAttribute("liferay-ui:map:geolocation", _geolocation);
 		request.setAttribute("liferay-ui:map:latitude", _latitude);
 		request.setAttribute("liferay-ui:map:longitude", _longitude);

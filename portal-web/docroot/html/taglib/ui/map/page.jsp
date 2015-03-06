@@ -19,13 +19,13 @@
 <%
 String protocol = HttpUtil.getProtocol(request);
 
+String apiKey = GetterUtil.getString(request.getAttribute("liferay-ui:map:apiKey"));
 boolean geolocation = GetterUtil.getBoolean(request.getAttribute("liferay-ui:map:geolocation"));
 double latitude = (Double)request.getAttribute("liferay-ui:map:latitude");
 double longitude = (Double)request.getAttribute("liferay-ui:map:longitude");
 String mapsAPIProvider = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:provider"));
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:name"));
 String points = GetterUtil.getString(request.getAttribute("liferay-ui:map:points"));
-String apiKey = GetterUtil.getString(request.getAttribute("liferay-ui:map:apikey"));
 
 if (Validator.isNull(mapsAPIProvider)) {
 	Group group = layout.getGroup();
@@ -53,14 +53,14 @@ name = namespace + name;
 		</script>
 
 		<%
-			String mapsAPIUrl = protocol + "://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady";
+		String mapsAPIUrl = protocol + "://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady";
 
-			if (Validator.isNotNull(apiKey)) {
-				mapsAPIUrl += "&key=" + apiKey;
-			}
+		if (Validator.isNotNull(apiKey)) {
+			mapsAPIUrl += "&key=" + apiKey;
+		}
 		%>
 
- 		<script src="<%= mapsAPIUrl %>" type="text/javascript"></script>
+		<script src="<%= mapsAPIUrl %>" type="text/javascript"></script>
 	</liferay-util:html-bottom>
 </c:if>
 

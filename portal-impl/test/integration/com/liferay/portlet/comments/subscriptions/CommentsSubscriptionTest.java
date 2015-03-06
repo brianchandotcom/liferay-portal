@@ -66,7 +66,7 @@ public class CommentsSubscriptionTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_contextUser = UserTestUtil.addGroupUser(
+		_creatorUser = UserTestUtil.addGroupUser(
 			_group, RoleConstants.SITE_MEMBER);
 
 		_user = UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER);
@@ -78,21 +78,21 @@ public class CommentsSubscriptionTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group, _contextUser.getUserId());
+				_group, _creatorUser.getUserId());
 
 		BlogsTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.ADD);
 
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			_contextUser.getUserId(), RandomTestUtil.randomString(),
+			_creatorUser.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
 		MBDiscussionLocalServiceUtil.subscribeDiscussion(
-			_contextUser.getUserId(), _group.getGroupId(),
+			_creatorUser.getUserId(), _group.getGroupId(),
 			BlogsEntry.class.getName(), blogsEntry.getEntryId());
 
 		addDiscussionMessage(
-			_contextUser.getUserId(), serviceContext, blogsEntry);
+			_creatorUser.getUserId(), serviceContext, blogsEntry);
 
 		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
 	}
@@ -103,27 +103,27 @@ public class CommentsSubscriptionTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group, _contextUser.getUserId());
+				_group, _creatorUser.getUserId());
 
 		BlogsTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.ADD);
 
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			_contextUser.getUserId(), RandomTestUtil.randomString(),
+			_creatorUser.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
 		MBMessage mbMessage = addDiscussionMessage(
-			_contextUser.getUserId(), serviceContext, blogsEntry);
+			_creatorUser.getUserId(), serviceContext, blogsEntry);
 
 		MBDiscussionLocalServiceUtil.subscribeDiscussion(
-			_contextUser.getUserId(), _group.getGroupId(),
+			_creatorUser.getUserId(), _group.getGroupId(),
 			BlogsEntry.class.getName(), blogsEntry.getEntryId());
 
 		MBTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.UPDATE);
 
 		MBMessageLocalServiceUtil.updateDiscussionMessage(
-			_contextUser.getUserId(), mbMessage.getMessageId(),
+			_creatorUser.getUserId(), mbMessage.getMessageId(),
 			BlogsEntry.class.getName(), blogsEntry.getEntryId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(50),
 			serviceContext);
@@ -137,14 +137,14 @@ public class CommentsSubscriptionTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _contextUser.getUserId());
+				_group.getGroupId(), _creatorUser.getUserId());
 
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			_contextUser.getUserId(), RandomTestUtil.randomString(),
+			_creatorUser.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
 		MBDiscussionLocalServiceUtil.subscribeDiscussion(
-			_contextUser.getUserId(), _group.getGroupId(),
+			_creatorUser.getUserId(), _group.getGroupId(),
 			BlogsEntry.class.getName(), blogsEntry.getEntryId());
 
 		MBTestUtil.populateNotificationsServiceContext(
@@ -162,10 +162,10 @@ public class CommentsSubscriptionTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _contextUser.getUserId());
+				_group.getGroupId(), _creatorUser.getUserId());
 
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			_contextUser.getUserId(), RandomTestUtil.randomString(),
+			_creatorUser.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
 		MBTestUtil.populateNotificationsServiceContext(
@@ -182,7 +182,7 @@ public class CommentsSubscriptionTest {
 			serviceContext, Constants.UPDATE);
 
 		MBMessageLocalServiceUtil.updateDiscussionMessage(
-			_contextUser.getUserId(), message.getMessageId(),
+			_creatorUser.getUserId(), message.getMessageId(),
 			BlogsEntry.class.getName(), blogsEntry.getEntryId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(50),
 			serviceContext);
@@ -214,7 +214,7 @@ public class CommentsSubscriptionTest {
 	}
 
 	@DeleteAfterTestRun
-	private User _contextUser;
+	private User _creatorUser;
 
 	@DeleteAfterTestRun
 	private Group _group;

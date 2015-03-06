@@ -1981,7 +1981,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected void notifyDiscussionSubscribers(
-			long contextUserId, MBMessage message,
+			long creatorUserId, MBMessage message,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2028,7 +2028,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setContextAttributes(
 			"[$COMMENTS_USER_ADDRESS$]", userAddress, "[$COMMENTS_USER_NAME$]",
 			userName, "[$CONTENT_URL$]", contentURL);
-		subscriptionSender.setContextUserId(contextUserId);
+		subscriptionSender.setCreatorUserId(creatorUserId);
 		subscriptionSender.setEntryTitle(message.getBody());
 		subscriptionSender.setEntryURL(contentURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
@@ -2066,7 +2066,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected void notifySubscribers(
-			long contextUserId, MBMessage message, String messageURL,
+			long creatorUserId, MBMessage message, String messageURL,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2077,7 +2077,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (message.isDiscussion()) {
 			try {
 				notifyDiscussionSubscribers(
-					contextUserId, message, serviceContext);
+					creatorUserId, message, serviceContext);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -2259,7 +2259,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			(SubscriptionSender)SerializableUtil.clone(
 				subscriptionSenderPrototype);
 
-		subscriptionSender.setContextUserId(contextUserId);
+		subscriptionSender.setCreatorUserId(creatorUserId);
 		subscriptionSender.addPersistedSubscribers(
 			MBCategory.class.getName(), message.getGroupId());
 

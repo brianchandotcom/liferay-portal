@@ -6905,7 +6905,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			long contextUserId, JournalArticle article, String articleURL,
+			long creatorUserId, JournalArticle article, String articleURL,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -7008,7 +7008,7 @@ public class JournalArticleLocalServiceImpl
 			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
 			articleTitle, "[$ARTICLE_URL$]", articleURL, "[$ARTICLE_VERSION$]",
 			article.getVersion());
-		subscriptionSender.setContextUserId(contextUserId);
+		subscriptionSender.setCreatorUserId(creatorUserId);
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setEntryTitle(articleTitle);
 		subscriptionSender.setEntryURL(articleURL);

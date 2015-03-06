@@ -702,7 +702,7 @@ public class BookmarksEntryLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			long contextUserId, BookmarksEntry entry,
+			long creatorUserId, BookmarksEntry entry,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -771,7 +771,7 @@ public class BookmarksEntryLocalServiceImpl
 		subscriptionSender.setContextAttributes(
 			"[$BOOKMARKS_ENTRY_STATUS_BY_USER_NAME$]", statusByUserName,
 			"[$BOOKMARKS_ENTRY_URL$]", entryURL);
-		subscriptionSender.setContextUserId(contextUserId);
+		subscriptionSender.setCreatorUserId(creatorUserId);
 		subscriptionSender.setContextUserPrefix("BOOKMARKS_ENTRY");
 		subscriptionSender.setEntryTitle(entryTitle);
 		subscriptionSender.setEntryURL(entryURL);

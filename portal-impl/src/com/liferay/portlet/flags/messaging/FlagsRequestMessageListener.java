@@ -240,7 +240,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 			"[$CONTENT_TITLE$]", contentTitle, false);
 		subscriptionSender.setContextAttribute(
 			"[$CONTENT_URL$]", contentURL, false);
-		subscriptionSender.setContextUserId(reporterUserId);
+		subscriptionSender.setCreatorUserId(reporterUserId);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("flags_request", contentId);

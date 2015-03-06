@@ -35,7 +35,7 @@ public abstract class BaseSubscriptionTestCase {
 
 		user = UserTestUtil.addGroupUser(group, RoleConstants.SITE_MEMBER);
 
-		contextUser = UserTestUtil.addGroupUser(
+		creatorUser = UserTestUtil.addGroupUser(
 			group, RoleConstants.SITE_MEMBER);
 	}
 
@@ -58,7 +58,7 @@ public abstract class BaseSubscriptionTestCase {
 	protected static final long PARENT_CONTAINER_MODEL_ID_DEFAULT = 0;
 
 	@DeleteAfterTestRun
-	protected User contextUser;
+	protected User creatorUser;
 
 	@DeleteAfterTestRun
 	protected Group group;

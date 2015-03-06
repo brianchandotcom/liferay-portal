@@ -1332,8 +1332,8 @@ public class LiferaySeleniumHelper {
 
 		sikuliType(
 			liferaySelenium, image,
-				getPortalRootDirName() +
-				liferaySelenium.getDependenciesDirName() + value);
+			getPortalRootDirName() + liferaySelenium.getDependenciesDirName() +
+				value);
 
 		keyboard.type(Key.ENTER);
 	}

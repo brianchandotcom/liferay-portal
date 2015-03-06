@@ -88,7 +88,16 @@ public class DBLoader {
 		String sqlDir = arguments.get("db.sql.dir");
 		String fileName = arguments.get("db.file.name");
 
-		new DBLoader(databaseName, databaseType, sqlDir, fileName);
+		try {
+			new DBLoader(databaseName, databaseType, sqlDir, fileName);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+			if (ArgumentsUtil.shouldThrowExceptions(arguments)) {
+				throw e;
+			}
+		}
 	}
 
 	public DBLoader(

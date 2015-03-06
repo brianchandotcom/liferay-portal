@@ -96,7 +96,16 @@ public class SassToCssBuilder {
 		String docrootDirName = arguments.get("sass.docroot.dir");
 		String portalCommonDirName = arguments.get("sass.portal.common.dir");
 
-		new SassToCssBuilder(dirNames, docrootDirName, portalCommonDirName);
+		try {
+			new SassToCssBuilder(dirNames, docrootDirName, portalCommonDirName);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+			if (ArgumentsUtil.shouldThrowExceptions(arguments)) {
+				throw e;
+			}
+		}
 	}
 
 	public static String parseStaticTokens(String content) {

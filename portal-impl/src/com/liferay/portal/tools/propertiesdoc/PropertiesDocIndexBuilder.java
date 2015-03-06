@@ -36,17 +36,21 @@ import java.util.Map;
 public class PropertiesDocIndexBuilder {
 
 	public static void main(String[] args) {
+		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
+
 		try {
-			new PropertiesDocIndexBuilder(args);
+			new PropertiesDocIndexBuilder(arguments);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+
+			if (ArgumentsUtil.shouldThrowExceptions(arguments)) {
+				throw e;
+			}
 		}
 	}
 
-	public PropertiesDocIndexBuilder(String[] args) {
-		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
-
+	public PropertiesDocIndexBuilder(Map<String, String> arguments) {
 		String propertiesDirName = GetterUtil.getString(
 			arguments.get("properties.dir"));
 

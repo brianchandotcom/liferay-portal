@@ -43,8 +43,17 @@ public class ThumbnailBuilder {
 		boolean overwrite = GetterUtil.getBoolean(
 			arguments.get("thumbnail.overwrite"));
 
-		new ThumbnailBuilder(
-			originalFile, thumbnailFile, height, width, overwrite);
+		try {
+			new ThumbnailBuilder(
+				originalFile, thumbnailFile, height, width, overwrite);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+			if (ArgumentsUtil.shouldThrowExceptions(arguments)) {
+				throw e;
+			}
+		}
 	}
 
 	public ThumbnailBuilder(

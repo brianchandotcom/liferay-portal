@@ -17,6 +17,13 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency name="antlr" org="org.antlr" rev="3.3" />
+		<dependency name="antlr-runtime" org="org.antlr" rev="3.3" />
+		<dependency name="knowledge-api" org="org.drools" rev="5.4.0.Final" />
+		<dependency name="knowledge-internal-api" org="org.drools" rev="5.4.0.Final" />
+		<dependency name="mvel2" org="org.mvel" rev="2.1.0.drools16" />
+		<dependency name="protobuf-java" org="com.google.protobuf" rev="2.4.1" />
+		<dependency name="xstream" org="com.thoughtworks.xstream" rev="1.4.1" />
 		<dependency conf="internal->default" name="drools-core" org="org.drools" rev="5.4.0.Final" />
 	</dependencies>
 </ivy-module>

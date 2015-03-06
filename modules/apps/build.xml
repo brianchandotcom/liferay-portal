@@ -32,6 +32,7 @@
 		<dirset dir="rss" includes="*" />
 		<dirset dir="search" includes="*" />
 		<dirset dir="site" includes="*" />
+		<dirset dir="sites-directory" includes="*" />
 		<dirset dir="social" includes="*" />
 		<dirset dir="translator" includes="*" />
 		<dirset dir="unit-converter" includes="*" />

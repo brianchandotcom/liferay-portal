@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,11 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/sites_directory/init.jsp" %>
+package com.liferay.sites.directory.web.constants;
 
-<liferay-ui:sites-directory
-	displayStyle="<%= displayStyle %>"
-	sites="<%= sites %>"
-/>
+/**
+ * @author Eudaldo Alonso
+ */
+public class SitesDirectoryPortletKeys {
+
+	public static final String SITES_DIRECTORY =
+		"com_liferay_sites_directory_web_portlet_SitesDirectoryPortlet";
+
+}

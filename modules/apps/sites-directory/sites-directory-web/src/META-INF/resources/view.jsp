@@ -14,15 +14,9 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.taglib.ui.SitesDirectoryTag" %>
-
-<%
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-String displayStyle = PrefsParamUtil.getString(portletPreferences, renderRequest, "displayStyle", "descriptive");
-String sites = PrefsParamUtil.getString(portletPreferences, renderRequest, "sites", SitesDirectoryTag.SITES_TOP_LEVEL);
-%>
-
-<%@ include file="/html/portlet/sites_directory/init-ext.jsp" %>
+<liferay-ui:sites-directory
+	displayStyle="<%= displayStyle %>"
+	sites="<%= sites %>"
+/>

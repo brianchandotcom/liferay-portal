@@ -145,6 +145,9 @@ public class EditArticleAction extends PortletAction {
 				article = (JournalArticle)contentAndImages[0];
 				oldUrlTitle = ((String)contentAndImages[1]);
 			}
+			else if (cmd.equals(Constants.CHANGE_STRUCTURE)) {
+				return;
+			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteArticles(actionRequest, false);
 			}

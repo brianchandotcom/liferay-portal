@@ -107,6 +107,7 @@ boolean choiceField = checkboxField || radioField;
 			classPK="<%= _getClassPK(bean, classPK) %>"
 			classTypePK="<%= classTypePK %>"
 			contentCallback='<%= portletResponse.getNamespace() + "getSuggestionsContent" %>'
+			ignoreRequestValue="<%= ignoreRequestValue %>"
 		/>
 	</c:when>
 	<c:when test='<%= (model != null) && type.equals("assetTags") %>'>
@@ -116,6 +117,7 @@ boolean choiceField = checkboxField || radioField;
 			classPK="<%= _getClassPK(bean, classPK) %>"
 			contentCallback='<%= portletResponse.getNamespace() + "getSuggestionsContent" %>'
 			id="<%= namespace + id %>"
+			ignoreRequestValue="<%= ignoreRequestValue %>"
 		/>
 	</c:when>
 	<c:when test="<%= (model != null) && Validator.isNull(type) %>">

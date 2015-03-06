@@ -41,6 +41,8 @@ public interface Constants {
 
 	public static final String CHANGE_PARENT = "change_parent";
 
+	public static final String CHANGE_STRUCTURE = "change_structure";
+
 	public static final String CHECK = "check";
 
 	public static final String CHECKIN = "checkin";

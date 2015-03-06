@@ -63,6 +63,10 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_id = id;
 	}
 
+	public void setIgnoreRequestValue(boolean ignoreRequestValue) {
+		_ignoreRequestValue = ignoreRequestValue;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_autoFocus = false;
@@ -73,6 +77,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_groupIds = null;
 		_hiddenInput = "assetTagNames";
 		_id = null;
+		_ignoreRequestValue = false;
 	}
 
 	@Override
@@ -132,6 +137,9 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:asset-tags-selector:hiddenInput", _hiddenInput);
 		request.setAttribute("liferay-ui:asset-tags-selector:id", id);
+		request.setAttribute(
+			"liferay-ui:asset-tags-selector:ignoreRequestValue",
+			_ignoreRequestValue);
 	}
 
 	private static final String _PAGE =
@@ -145,5 +153,6 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	private long[] _groupIds;
 	private String _hiddenInput = "assetTagNames";
 	private String _id;
+	private boolean _ignoreRequestValue;
 
 }

@@ -101,6 +101,9 @@ else if ((article != null) && (article.getId() > 0)) {
 
 String[][] categorySections = {mainSections};
 
+String cmd = ParamUtil.getString(request, Constants.CMD);
+
+request.setAttribute("edit_article.jsp-changedStructure", cmd.equals(Constants.CHANGE_STRUCTURE));
 request.setAttribute("edit_article.jsp-redirect", redirect);
 
 request.setAttribute("edit_article.jsp-structure", ddmStructure);

@@ -27,6 +27,7 @@ String curTags = GetterUtil.getString((String)request.getAttribute("liferay-ui:a
 long[] groupIds = (long[])request.getAttribute("liferay-ui:asset-tags-selector:groupIds");
 String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-selector:id"));
 String contentCallback = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-selector:contentCallback"));
+boolean ignoreRequestValue = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-tags-selector:ignoreRequestValue"));
 
 if (Validator.isNotNull(className) && (classPK > 0)) {
 	List<AssetTag> tags = AssetTagServiceUtil.getTags(className, classPK);
@@ -34,10 +35,12 @@ if (Validator.isNotNull(className) && (classPK > 0)) {
 	curTags = ListUtil.toString(tags, AssetTag.NAME_ACCESSOR);
 }
 
-String curTagsParam = request.getParameter(hiddenInput);
+if (!ignoreRequestValue) {
+	String curTagsParam = request.getParameter(hiddenInput);
 
-if (Validator.isNotNull(curTagsParam)) {
-	curTags = curTagsParam;
+	if (Validator.isNotNull(curTagsParam)) {
+		curTags = curTagsParam;
+	}
 }
 %>
 

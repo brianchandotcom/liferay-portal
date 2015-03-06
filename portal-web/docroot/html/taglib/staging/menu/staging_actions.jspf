@@ -125,7 +125,7 @@
 			</liferay-util:buffer>
 
 			<c:choose>
-				<c:when test="<%= !onlyActions && false %>">
+				<c:when test="<%= !onlyActions %>">
 					<li class="publish-link-container">
 						<%= publishOnControlPanelLink %>
 					</li>

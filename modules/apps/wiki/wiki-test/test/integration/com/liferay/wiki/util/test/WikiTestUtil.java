@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.settings.WikiGroupServiceSettings;
 
 import java.io.File;
 import java.io.Serializable;
@@ -137,7 +139,8 @@ public class WikiTestUtil {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			WikiPage page = WikiPageLocalServiceUtil.addPage(
-				userId, nodeId, title, content, "Summary", false,
+				userId, nodeId, title, WikiPageConstants.VERSION_DEFAULT,
+				content, "Summary", false, "creole", true, parentTitle, null,
 				serviceContext);
 
 			if (approved) {

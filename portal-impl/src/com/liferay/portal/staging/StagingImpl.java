@@ -346,8 +346,8 @@ public class StagingImpl implements Staging {
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				user.getUserId(), sourceGroupId, privateLayout, layoutIdMap,
 				parameterMap, remoteAddress, remotePort, remotePathContext,
-				secureConnection, remoteGroupId, remotePrivateLayout, startDate,
-				endDate, user.getLocale(), user.getTimeZone());
+				secureConnection, remoteGroupId, remotePrivateLayout,
+				user.getLocale(), user.getTimeZone());
 
 		ServiceContext serviceContext = new ServiceContext();
 

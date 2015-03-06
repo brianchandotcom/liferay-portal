@@ -96,15 +96,14 @@ public class ExportImportConfigurationSettingsMapFactory {
 		Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
 		String remoteAddress, int remotePort, String remotePathContext,
 		boolean secureConnection, long remoteGroupId,
-		boolean remotePrivateLayout, Date startDate, Date endDate,
-		Locale locale, TimeZone timeZone) {
+		boolean remotePrivateLayout, Locale locale, TimeZone timeZone) {
 
 		return buildSettingsMap(
 			userId, sourceGroupId, 0, 0, 0, StringPool.BLANK, privateLayout,
 			layoutIdMap, null, parameterMap, remoteAddress, remotePort,
 			remotePathContext, secureConnection, remoteGroupId,
-			remotePrivateLayout, StringPool.BLANK, startDate, endDate, locale,
-			timeZone, StringPool.BLANK);
+			remotePrivateLayout, StringPool.BLANK, null, null, locale, timeZone,
+			StringPool.BLANK);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(
@@ -208,7 +207,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 		return buildSettingsMap(
 			themeDisplay.getUserId(), groupId, privateLayout, layoutIdMap,
 			parameterMap, remoteAddress, remotePort, remotePathContext,
-			secureConnection, remoteGroupId, remotePrivateLayout, null, null,
+			secureConnection, remoteGroupId, remotePrivateLayout,
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 	}
 

@@ -18,12 +18,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
+import com.liferay.sites.directory.web.constants.SitesDirectoryPortletKeys;
 
 import java.util.Collections;
 
 import javax.servlet.ServletContext;
 
-import com.liferay.sites.directory.web.constants.SitesDirectoryPortletKeys;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

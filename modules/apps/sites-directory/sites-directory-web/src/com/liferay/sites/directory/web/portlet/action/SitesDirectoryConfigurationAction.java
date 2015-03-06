@@ -16,8 +16,8 @@ package com.liferay.sites.directory.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-
 import com.liferay.sites.directory.web.constants.SitesDirectoryPortletKeys;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

@@ -20,7 +20,6 @@ import com.liferay.sites.directory.web.upgrade.SitesDirectoryWebUpgrade;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**

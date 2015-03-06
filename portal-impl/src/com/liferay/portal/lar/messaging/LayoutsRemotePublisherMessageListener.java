@@ -15,11 +15,9 @@
 package com.liferay.portal.lar.messaging;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageStatus;
 import com.liferay.portal.kernel.staging.StagingUtil;
-import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.ExportImportConfiguration;
@@ -72,9 +70,6 @@ public class LayoutsRemotePublisherMessageListener
 		long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
 		boolean remotePrivateLayout = MapUtil.getBoolean(
 			settingsMap, "remotePrivateLayout");
-		DateRange dateRange = ExportImportDateUtil.getDateRange(
-			exportImportConfiguration,
-			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
 
 		initThreadLocals(userId, parameterMap);
 
@@ -86,8 +81,7 @@ public class LayoutsRemotePublisherMessageListener
 			StagingUtil.copyRemoteLayouts(
 				sourceGroupId, privateLayout, layoutIdMap, parameterMap,
 				remoteAddress, remotePort, remotePathContext, secureConnection,
-				remoteGroupId, remotePrivateLayout, dateRange.getStartDate(),
-				dateRange.getEndDate());
+				remoteGroupId, remotePrivateLayout);
 		}
 		finally {
 			resetThreadLocals();

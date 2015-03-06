@@ -158,13 +158,19 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		String portletId = getPortletId(routeParameters);
 
-		if (Validator.isNull(portletId)) {
+		String namespace = null;
+
+		if (Validator.isNotNull(portletId)) {
+			namespace = PortalUtil.getPortletNamespace(portletId);
+
+			addParameter(namespace, parameterMap, "p_p_id", portletId);
+		}
+		else if (isAllPublicRenderParameters(routeParameters)) {
+			addParameter(namespace, parameterMap, "p_p_id", getPortletId());
+		}
+		else {
 			return;
 		}
-
-		String namespace = PortalUtil.getPortletNamespace(portletId);
-
-		addParameter(namespace, parameterMap, "p_p_id", portletId);
 
 		populateParams(parameterMap, namespace, routeParameters);
 	}
@@ -310,6 +316,27 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 		}
 
 		return PortletConstants.assemblePortletId(getPortletId(), instanceId);
+	}
+
+	/**
+	 * Identifies if all the route parameters are public render parameters.
+	 *
+	 * @param  routeParameters the parameter map.
+	 * @return true if all the route parameters are public redenr parameters,
+	 * 		   false otherwise
+	 */
+	protected boolean isAllPublicRenderParameters(
+		Map<String, String> routeParameters) {
+
+		Map<String, String> publicRenderParameters =
+			FriendlyURLMapperThreadLocal.getPRPIdentifiers();
+		Set<String> routeParameterKeys = routeParameters.keySet();
+
+		if (routeParameterKeys.containsAll(publicRenderParameters.keySet())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

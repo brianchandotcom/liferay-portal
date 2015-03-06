@@ -29,20 +29,17 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.lar.LayoutExporter;
 import com.liferay.portal.lar.LayoutImporter;
 import com.liferay.portal.lar.PortletExporter;
 import com.liferay.portal.lar.PortletImporter;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portlet.PortletRequestImpl;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
@@ -57,8 +54,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.powermock.api.mockito.PowerMockito;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Daniel Kocsis
@@ -187,36 +182,12 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 	@Test
 	public void testFailedPortletLocalPublishing() throws Exception {
-		PortletRequestImpl portletRequest = PowerMockito.mock(
-			PortletRequestImpl.class);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.USER_ID, TestPropsValues.getUserId());
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setLocale(LocaleUtil.getDefault());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		when(
-			portletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			themeDisplay
-		);
-
-		when(
-			portletRequest.getHttpServletRequest()
-		).thenReturn(
-			mockHttpServletRequest
-		);
+		User user = TestPropsValues.getUser();
 
 		try {
-			StagingUtil.copyPortlet(
-				portletRequest, _group.getGroupId(), _liveGroup.getGroupId(), 0,
-				0, StringPool.BLANK);
+			StagingUtil.publishPortlet(
+				user.getUserId(), _group.getGroupId(), _liveGroup.getGroupId(),
+				0, 0, StringPool.BLANK, _parameterMap, null, null);
 		}
 		catch (Throwable t) {
 			if (_log.isInfoEnabled()) {

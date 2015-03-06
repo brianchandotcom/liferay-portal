@@ -198,8 +198,6 @@ public class PortletKeys {
 
 	public static final String STOCKS = "12";
 
-	public static final String TAGS_COMPILER = "103";
-
 	public static final String TRANSLATOR = "26";
 
 	public static final String TRASH = "182";

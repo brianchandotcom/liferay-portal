@@ -101,7 +101,6 @@ public class BlogsEntryEditorDisplayContext {
 
 		JSONObject editorOptionsJSONObject = JSONFactoryUtil.createJSONObject();
 
-		editorOptionsJSONObject.put("showSource", Boolean.FALSE);
 		editorOptionsJSONObject.put("textMode", Boolean.TRUE);
 
 		_textEditorData.put("editorOptions", editorOptionsJSONObject);

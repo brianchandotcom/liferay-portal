@@ -114,20 +114,11 @@ else if (group != null) {
 <liferay-ui:error exception="<%= GroupInheritContentException.class %>" message="this-site-cannot-inherit-content-from-its-parent-site" />
 <liferay-ui:error exception="<%= GroupKeyException.class %>" message="please-enter-a-valid-name" />
 
-<liferay-ui:error exception="<%= GroupParentException.class %>">
+<liferay-ui:error exception="<%= GroupParentException.MustNotHaveChildParent.class %>" message="the-site-cannot-have-a-child-as-its-parent-site" />
 
-	<%
-	GroupParentException gpe = (GroupParentException)errorException;
-	%>
+<liferay-ui:error exception="<%= GroupParentException.MustNotBeOwnParent.class %>" message="the-site-cannot-be-its-own-parent-site" />
 
-	<c:if test="<%= gpe.getType() == GroupParentException.CHILD_DESCENDANT %>">
-		<liferay-ui:message key="the-site-cannot-have-a-child-as-its-parent-site" />
-	</c:if>
-
-	<c:if test="<%= gpe.getType() == GroupParentException.SELF_DESCENDANT %>">
-		<liferay-ui:message key="the-site-cannot-be-its-own-parent-site" />
-	</c:if>
-</liferay-ui:error>
+<liferay-ui:error exception="<%= GroupParentException.MustNotHaveStagingParent.class %>" message="the-site-cannot-have-a-staging-parent" />
 
 <liferay-ui:error exception="<%= PendingBackgroundTaskException.class %>" message="the-site-cannot-be-deleted-because-it-has-background-tasks-in-progress" />
 

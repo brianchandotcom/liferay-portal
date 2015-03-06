@@ -35,12 +35,18 @@ import org.apache.tools.ant.DirectoryScanner;
  */
 public class XMLAttributesSorter {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
+
 		try {
 			new XMLAttributesSorter(args);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+
+			if (ArgumentsUtil.shouldThrowExceptions(arguments)) {
+				throw e;
+			}
 		}
 	}
 

@@ -537,6 +537,7 @@
 			<arg value="sass.dir.2=/html/themes" />
 			<arg value="sass.docroot.dir=${basedir}/docroot" />
 			<arg value="sass.portal.common.dir=${basedir}/docroot/html/css/common" />
+			<arg value="throw.exceptions=true" />
 		</java>
 
 		<delete dir="${sass.tmp.dir}" />
@@ -589,6 +590,7 @@
 			<arg value="selenium.base.dir=test/functional" />
 			<arg value="selenium.types=${selenium.types}" />
 			<arg value="test.class=${test.class}" />
+			<arg value="throw.exceptions=true" />
 		</java>
 	</target>
 

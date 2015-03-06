@@ -80,7 +80,7 @@ public class DBLoader {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		String databaseName = arguments.get("db.database.name");
@@ -88,28 +88,33 @@ public class DBLoader {
 		String sqlDir = arguments.get("db.sql.dir");
 		String fileName = arguments.get("db.file.name");
 
-		new DBLoader(databaseName, databaseType, sqlDir, fileName);
+		try {
+			new DBLoader(databaseName, databaseType, sqlDir, fileName);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+			if (ArgumentsUtil.shouldThrowExceptions(arguments)) {
+				throw e;
+			}
+		}
 	}
 
 	public DBLoader(
-		String databaseName, String databaseType, String sqlDir,
-		String fileName) {
+			String databaseName, String databaseType, String sqlDir,
+			String fileName)
+		throws Exception {
 
 		_databaseName = databaseName;
 		_databaseType = databaseType;
 		_sqlDir = sqlDir;
 		_fileName = fileName;
 
-		try {
-			if (_databaseType.equals("derby")) {
-				_loadDerby();
-			}
-			else if (_databaseType.equals("hypersonic")) {
-				_loadHypersonic();
-			}
+		if (_databaseType.equals("derby")) {
+			_loadDerby();
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		else if (_databaseType.equals("hypersonic")) {
+			_loadHypersonic();
 		}
 	}
 

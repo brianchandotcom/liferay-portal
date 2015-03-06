@@ -38,15 +38,25 @@ public class WSDDBuilder {
 
 		ToolDependencies.wireBasic();
 
-		WSDDBuilder wsddBuilder = new WSDDBuilder();
+		try {
+			WSDDBuilder wsddBuilder = new WSDDBuilder();
 
-		wsddBuilder._fileName = arguments.get("wsdd.input.file");
-		wsddBuilder._outputPath = arguments.get("wsdd.output.path");
-		wsddBuilder._serverConfigFileName = arguments.get(
-			"wsdd.server.config.file");
-		wsddBuilder._serviceNamespace = arguments.get("wsdd.service.namespace");
+			wsddBuilder._fileName = arguments.get("wsdd.input.file");
+			wsddBuilder._outputPath = arguments.get("wsdd.output.path");
+			wsddBuilder._serverConfigFileName = arguments.get(
+				"wsdd.server.config.file");
+			wsddBuilder._serviceNamespace = arguments.get(
+				"wsdd.service.namespace");
 
-		wsddBuilder.build();
+			wsddBuilder.build();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+			if (ArgumentsUtil.shouldThrowExceptions(arguments)) {
+				throw e;
+			}
+		}
 	}
 
 	public void build() throws Exception {

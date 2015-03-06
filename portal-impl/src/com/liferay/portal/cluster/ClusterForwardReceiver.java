@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 import org.jgroups.Address;
 
@@ -28,19 +27,18 @@ import org.jgroups.Address;
  */
 public class ClusterForwardReceiver extends BaseReceiver {
 
-	public ClusterForwardReceiver(
-		ClusterLinkImpl clusterLinkImpl, ExecutorService executorService,
-		List<Address> localTransportAddresses) {
-
-		super(executorService);
+	public ClusterForwardReceiver(ClusterLinkImpl clusterLinkImpl) {
+		super(clusterLinkImpl.getExecutorService());
 
 		_clusterLinkImpl = clusterLinkImpl;
-		_localTransportAddresses = localTransportAddresses;
 	}
 
 	@Override
 	protected void doReceive(org.jgroups.Message jGroupsMessage) {
-		if (!_localTransportAddresses.contains(jGroupsMessage.getSrc())) {
+		List<Address> localTransportAddresses =
+			_clusterLinkImpl.getLocalTransportAddresses();
+
+		if (!localTransportAddresses.contains(jGroupsMessage.getSrc())) {
 			Message message = (Message)jGroupsMessage.getObject();
 
 			_clusterLinkImpl.forwardMessage(message);
@@ -56,6 +54,5 @@ public class ClusterForwardReceiver extends BaseReceiver {
 		ClusterForwardReceiver.class);
 
 	private final ClusterLinkImpl _clusterLinkImpl;
-	private final List<Address> _localTransportAddresses;
 
 }

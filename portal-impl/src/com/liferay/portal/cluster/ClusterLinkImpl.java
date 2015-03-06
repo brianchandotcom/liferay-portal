@@ -168,6 +168,14 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		return _transportJChannels.get(channelIndex);
 	}
 
+	protected ExecutorService getExecutorService() {
+		return _executorService;
+	}
+
+	protected List<org.jgroups.Address> getLocalTransportAddresses() {
+		return _localTransportAddresses;
+	}
+
 	protected void initChannels() throws Exception {
 		Properties transportProperties = PropsUtil.getProperties(
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT, true);
@@ -196,9 +204,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 			String value = transportProperties.getProperty(customName);
 
 			JChannel jChannel = createJChannel(
-				value,
-				new ClusterForwardReceiver(
-					this, _executorService, _localTransportAddresses),
+				value, new ClusterForwardReceiver(this),
 				_LIFERAY_TRANSPORT_CHANNEL + i);
 
 			_localTransportAddresses.add(jChannel.getAddress());

@@ -1,7 +1,9 @@
 Bundle-Name: Liferay Document Selector Web
 Bundle-SymbolicName: com.liferay.document.selector.web
 Bundle-Version: 1.0.0
-Import-Package: \
+Export-Package:\
+	com.liferay.document.selector
+Import-Package:\
 	com.liferay.portal,\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.configuration,\

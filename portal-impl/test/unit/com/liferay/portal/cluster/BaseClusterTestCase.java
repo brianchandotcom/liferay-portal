@@ -60,71 +60,6 @@ public class BaseClusterTestCase {
 	}
 
 	@Aspect
-	public static class BaseReceiverAdvice {
-
-		public static Object getJGroupsMessagePayload(
-				Receiver receiver, org.jgroups.Address sourceAddress)
-			throws InterruptedException {
-
-			_countDownLatch.await(10, TimeUnit.MINUTES);
-
-			List<org.jgroups.Message> jGroupsMessageList = _jGroupsMessages.get(
-				receiver);
-
-			if ((jGroupsMessageList == null) || jGroupsMessageList.isEmpty()) {
-				return null;
-			}
-
-			for (org.jgroups.Message jGroupsMessage : jGroupsMessageList) {
-				if (sourceAddress.equals(jGroupsMessage.getSrc())) {
-					return jGroupsMessage.getObject();
-				}
-			}
-
-			return null;
-		}
-
-		public static void reset(int expectedMessageNumber) {
-			_countDownLatch = new CountDownLatch(expectedMessageNumber);
-
-			_jGroupsMessages.clear();
-		}
-
-		@Around(
-			"execution(* com.liferay.portal.cluster.BaseReceiver." +
-				"doReceive(org.jgroups.Message))"
-		)
-		public void doReceive(ProceedingJoinPoint proceedingJoinPoint) {
-			Receiver receiver = (Receiver)proceedingJoinPoint.getThis();
-			org.jgroups.Message jGroupsMessage =
-				(org.jgroups.Message)proceedingJoinPoint.getArgs()[0];
-
-			List<org.jgroups.Message> jGroupsMessageList = _jGroupsMessages.get(
-				receiver);
-
-			if (jGroupsMessageList == null) {
-				jGroupsMessageList = new ArrayList<>();
-
-				List<org.jgroups.Message> previousJgroupsMessageList =
-					_jGroupsMessages.putIfAbsent(receiver, jGroupsMessageList);
-
-				if (previousJgroupsMessageList != null) {
-					jGroupsMessageList = previousJgroupsMessageList;
-				}
-			}
-
-			jGroupsMessageList.add(jGroupsMessage);
-
-			_countDownLatch.countDown();
-		}
-
-		private static CountDownLatch _countDownLatch;
-		private static final ConcurrentMap<Receiver, List<org.jgroups.Message>>
-			_jGroupsMessages = new ConcurrentHashMap<>();
-
-	}
-
-	@Aspect
 	public static class DisableAutodetectedAddressAdvice {
 
 		@Around(
@@ -193,6 +128,71 @@ public class BaseClusterTestCase {
 		}
 
 		private static Exception _connectException;
+
+	}
+
+	@Aspect
+	public static class JGroupsReceiverAdvice {
+
+		public static Object getJGroupsMessagePayload(
+				Receiver receiver, org.jgroups.Address sourceAddress)
+			throws InterruptedException {
+
+			_countDownLatch.await(10, TimeUnit.MINUTES);
+
+			List<org.jgroups.Message> jGroupsMessageList = _jGroupsMessages.get(
+				receiver);
+
+			if ((jGroupsMessageList == null) || jGroupsMessageList.isEmpty()) {
+				return null;
+			}
+
+			for (org.jgroups.Message jGroupsMessage : jGroupsMessageList) {
+				if (sourceAddress.equals(jGroupsMessage.getSrc())) {
+					return jGroupsMessage.getObject();
+				}
+			}
+
+			return null;
+		}
+
+		public static void reset(int expectedMessageNumber) {
+			_countDownLatch = new CountDownLatch(expectedMessageNumber);
+
+			_jGroupsMessages.clear();
+		}
+
+		@Around(
+			"execution(* com.liferay.portal.cluster.JGroupsReceiver." +
+				"doReceive(org.jgroups.Message))"
+		)
+		public void doReceive(ProceedingJoinPoint proceedingJoinPoint) {
+			Receiver receiver = (Receiver)proceedingJoinPoint.getThis();
+			org.jgroups.Message jGroupsMessage =
+				(org.jgroups.Message)proceedingJoinPoint.getArgs()[0];
+
+			List<org.jgroups.Message> jGroupsMessageList = _jGroupsMessages.get(
+				receiver);
+
+			if (jGroupsMessageList == null) {
+				jGroupsMessageList = new ArrayList<>();
+
+				List<org.jgroups.Message> previousJgroupsMessageList =
+					_jGroupsMessages.putIfAbsent(receiver, jGroupsMessageList);
+
+				if (previousJgroupsMessageList != null) {
+					jGroupsMessageList = previousJgroupsMessageList;
+				}
+			}
+
+			jGroupsMessageList.add(jGroupsMessage);
+
+			_countDownLatch.countDown();
+		}
+
+		private static CountDownLatch _countDownLatch;
+		private static final ConcurrentMap<Receiver, List<org.jgroups.Message>>
+			_jGroupsMessages = new ConcurrentHashMap<>();
 
 	}
 

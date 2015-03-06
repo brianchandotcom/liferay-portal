@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -44,7 +42,6 @@ import org.jgroups.Receiver;
 import org.jgroups.util.UUID;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -54,12 +51,6 @@ import org.junit.Test;
  */
 @NewEnv(type = NewEnv.Type.CLASSLOADER)
 public class ClusterLinkImplTest extends BaseClusterTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@AdviseWith(
 		adviceClasses = {
@@ -199,7 +190,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
-			BaseReceiverAdvice.class, DisableAutodetectedAddressAdvice.class,
+			JGroupsReceiverAdvice.class, DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
@@ -209,7 +200,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	public void testSendMulticastMessage() throws Exception {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
-		BaseReceiverAdvice.reset(3);
+		JGroupsReceiverAdvice.reset(3);
 
 		ClusterLinkImpl clusterLinkImpl1 = getClusterLinkImpl();
 		ClusterLinkImpl clusterLinkImpl2 = getClusterLinkImpl();
@@ -235,13 +226,13 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			org.jgroups.Address sourceJAddress = jChannel1.getAddress();
 
 			Message receivedMessage1 =
-				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
+				(Message)JGroupsReceiverAdvice.getJGroupsMessagePayload(
 					receiver1, sourceJAddress);
 			Message receivedMessage2 =
-				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
+				(Message)JGroupsReceiverAdvice.getJGroupsMessagePayload(
 					receiver2, sourceJAddress);
 			Message receivedMessage3 =
-				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
+				(Message)JGroupsReceiverAdvice.getJGroupsMessagePayload(
 					receiver3, sourceJAddress);
 
 			Assert.assertEquals(
@@ -315,7 +306,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
-			BaseReceiverAdvice.class, DisableAutodetectedAddressAdvice.class,
+			JGroupsReceiverAdvice.class, DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
@@ -325,7 +316,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	public void testSendUnicastMessage() throws Exception {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
-		BaseReceiverAdvice.reset(1);
+		JGroupsReceiverAdvice.reset(1);
 
 		ClusterLinkImpl clusterLinkImpl1 = getClusterLinkImpl();
 		ClusterLinkImpl clusterLinkImpl2 = getClusterLinkImpl();
@@ -349,10 +340,10 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			org.jgroups.Address sourceJAddress = jChannel1.getAddress();
 
 			Message receivedMessage1 =
-				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
+				(Message)JGroupsReceiverAdvice.getJGroupsMessagePayload(
 					receiver1, sourceJAddress);
 			Message receivedMessage2 =
-				(Message)BaseReceiverAdvice.getJGroupsMessagePayload(
+				(Message)JGroupsReceiverAdvice.getJGroupsMessagePayload(
 					receiver2, sourceJAddress);
 
 			Assert.assertNull(receivedMessage1);
@@ -435,6 +426,10 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 		clusterLinkImpl.destroy();
 	}
+
+	@Rule
+	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
+		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class TransportationConfigurationAdvice {

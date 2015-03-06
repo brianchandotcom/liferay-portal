@@ -450,13 +450,13 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
-			BaseReceiverAdvice.class, DisableAutodetectedAddressAdvice.class,
+			JGroupsReceiverAdvice.class, DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class
 		}
 	)
 	@Test
 	public void testExecuteByShortcutMethod() throws Exception {
-		BaseReceiverAdvice.reset(1);
+		JGroupsReceiverAdvice.reset(1);
 
 		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
 
@@ -466,7 +466,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			Channel channel = clusterExecutorImpl.getControlChannel();
 
-			Object object = BaseReceiverAdvice.getJGroupsMessagePayload(
+			Object object = JGroupsReceiverAdvice.getJGroupsMessagePayload(
 				channel.getReceiver(), channel.getAddress());
 
 			ClusterRequest clusterRequest = (ClusterRequest)object;

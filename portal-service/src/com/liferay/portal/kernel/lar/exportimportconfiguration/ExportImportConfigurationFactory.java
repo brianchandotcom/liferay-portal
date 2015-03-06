@@ -73,7 +73,7 @@ public class ExportImportConfigurationFactory {
 				ExportImportHelperUtil.getAllLayoutIdsMap(
 					sourceGroupId, privateLayout),
 				parameterMap, remoteAddress, remotePort, remotePathContext,
-				secureConnection, remoteGroupId, privateLayout, null, null,
+				secureConnection, remoteGroupId, privateLayout,
 				user.getLocale(), user.getTimeZone());
 
 		return ExportImportConfigurationLocalServiceUtil.

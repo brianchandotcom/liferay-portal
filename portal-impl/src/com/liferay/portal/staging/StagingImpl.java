@@ -1378,8 +1378,8 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				userId, sourceGroupId, sourcePlid, targetGroupId, targetPlid,
-				portletId, parameterMap, Constants.PUBLISH_TO_LIVE, startDate,
-				endDate, user.getLocale(), user.getTimeZone());
+				portletId, parameterMap, Constants.PUBLISH_TO_LIVE,
+				user.getLocale(), user.getTimeZone());
 
 		ServiceContext serviceContext = new ServiceContext();
 

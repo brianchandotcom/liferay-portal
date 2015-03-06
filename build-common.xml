@@ -1246,6 +1246,7 @@ rerun your task.
 					<if>
 						<equals arg1="@{test.type}" arg2="integration" />
 						<then>
+							<delete dir="${liferay.home}/data" />
 							<delete dir="${liferay.home}/osgi/state" />
 						</then>
 					</if>

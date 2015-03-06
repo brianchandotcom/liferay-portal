@@ -14,6 +14,7 @@
 
 package com.liferay.portal.portlet.tracker.internal;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.model.EventDefinition;
 import com.liferay.portal.model.Portlet;
@@ -23,6 +24,7 @@ import com.liferay.portal.model.PortletURLListener;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.SpriteImage;
 
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -47,9 +49,7 @@ public class BundlePortletApp implements PortletApp, ServletContextListener {
 		_pluginPackage = new BundlePluginPackage(bundle, this);
 		_portletApp = portalPortletModel.getPortletApp();
 
-		String symbolicName = bundle.getSymbolicName();
-
-		_servletContextName = symbolicName.replaceAll("[^a-zA-Z0-9]", "");
+		_servletContextName = _getServletContextName(bundle);
 
 		if ((httpServiceEndpoint.length() > 0) &&
 			httpServiceEndpoint.endsWith("/")) {
@@ -223,6 +223,20 @@ public class BundlePortletApp implements PortletApp, ServletContextListener {
 	@Override
 	public void setWARFile(boolean warFile) {
 		_portletApp.setWARFile(warFile);
+	}
+
+	private String _getServletContextName(Bundle bundle) {
+		Dictionary<String, String> headers = bundle.getHeaders();
+
+		String header = headers.get("Servlet-Context-Name");
+
+		if (Validator.isNotNull(header)) {
+			return header;
+		}
+
+		String symbolicName = bundle.getSymbolicName();
+
+		return symbolicName.replaceAll("[^a-zA-Z0-9]", "");
 	}
 
 	private final String _contextPath;

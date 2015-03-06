@@ -4778,62 +4778,9 @@ if (ppstate.equals("normal")) {
 					<available file="${liferay.home}/logs" type="dir" />
 				</waitfor>
 
-				<for param="log.file">
-					<path>
-						<fileset dir="${liferay.home}/logs">
-							<include name="*.log" />
-						</fileset>
-					</path>
-					<sequential>
-						<var name="log.file" value="@{log.file}" />
-					</sequential>
-				</for>
-
-				<script classpathref="project.classpath" language="beanshell">
-					<![CDATA[
-						import com.liferay.portal.kernel.util.StringUtil;
-
-						import org.apache.commons.io.FileUtils;
-
-						Set requiredPluginNamesSet = new HashSet();
-
-						requiredPluginNamesSet.add("marketplace-portlet");
-
-						String[] pluginTypes = {"hook", "layouttpl", "portlet", "theme", "web"};
-
-						for (String pluginType : pluginTypes) {
-							String[] pluginNames = StringUtil.split(project.getProperty(pluginType + ".plugins.includes"), ',');
-
-							for (String pluginName : pluginNames) {
-								requiredPluginNamesSet.add(pluginName);
-							}
-						}
-
-						System.out.println("Ensuring the following plugins have been deployed:");
-						System.out.println(StringUtil.merge(requiredPluginNamesSet));
-
-						int i = 0;
-
-						for (String pluginName : requiredPluginNamesSet) {
-							String content = "";
-
-							while (i < 120 && !content.contains(pluginName + " is available for use")) {
-								try {
-									Thread.sleep(1000);
-
-									File file = new File(StringUtil.replace(project.getProperty("log.file"), "\\", "/"));
-
-									content = FileUtils.readFileToString(file);
-
-									i++;
-								}
-								catch (Exception e) {
-									e.printStackTrace();
-								}
-							}
-						}
-					]]>
-				</script>
+				<antcall target="wait-for-plugins-deployment">
+					<param name="required.plugins.includes" value="marketplace-portlet" />
+				</antcall>
 			</then>
 		</if>
 
@@ -5229,5 +5176,92 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<ant dir="util-java" target="test-unit" inheritAll="false" />
 
 		<ant dir="modules" target="test-unit" inheritAll="false" />
+	</target>
+
+	<target name="wait-for-plugins-deployment">
+		<fail message="Please set the property ${test.class}" unless="test.class" />
+
+		<condition property="required.plugins.includes" value="">
+			<not>
+				<isset property="required.plugins.includes" />
+			</not>
+		</condition>
+
+		<if>
+			<not>
+				<available file="${liferay.home}/logs" type="dir" />
+			</not>
+			<then>
+				<fail message="${liferay.home}/logs is not available" />
+			</then>
+		</if>
+
+		<first id="first">
+			<fileset dir="${liferay.home}/logs" includes="*.log" />
+		</first>
+
+		<var name="log.file.path" value="${toString:first}" />
+
+		<get-testcase-property property.name="hook.plugins.includes" />
+		<get-testcase-property property.name="layouttpl.plugins.includes" />
+		<get-testcase-property property.name="portlet.plugins.includes" />
+		<get-testcase-property property.name="theme.plugins.includes" />
+		<get-testcase-property property.name="web.plugins.includes" />
+
+		<script classpathref="project.classpath" language="beanshell">
+			<![CDATA[
+				import com.liferay.portal.kernel.util.StringUtil;
+
+				import org.apache.commons.io.FileUtils;
+
+				Set requiredPluginNamesSet = new HashSet();
+
+				String[] pluginTypes = {"hook", "layouttpl", "portlet", "required", "theme", "web"};
+
+				for (String pluginType : pluginTypes) {
+					String[] pluginNames = StringUtil.split(project.getProperty(pluginType + ".plugins.includes"), ',');
+
+					for (String pluginName : pluginNames) {
+						requiredPluginNamesSet.add(pluginName);
+					}
+				}
+
+				System.out.println("Ensuring the following plugins have been deployed:");
+				System.out.println(StringUtil.merge(requiredPluginNamesSet));
+
+				String logFilePath = project.getProperty("log.file.path");
+
+				logFilePath = logFilePath.replaceAll("\\\\", "/");
+
+				int second = 0;
+
+				for (String pluginName : requiredPluginNamesSet) {
+					while (true) {
+						try {
+							File file = new File(logFilePath);
+
+							String fileContent = FileUtils.readFileToString(file);
+
+							if (fileContent.contains(pluginName + " is available for use") ||
+								fileContent.contains(pluginName + " are available for use")) {
+
+								break;
+							}
+						}
+						catch (Exception e) {
+							e.printStackTrace();
+						}
+
+						if (second >= 120) {
+							break;
+						}
+
+						second++;
+
+						Thread.sleep(1000);
+					}
+				}
+			]]>
+		</script>
 	</target>
 </project>

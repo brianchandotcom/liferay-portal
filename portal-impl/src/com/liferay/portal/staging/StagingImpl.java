@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.Staging;
 import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -264,7 +263,7 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #publishPortlet(long, long,
-	 *             long, long, long, String, Map, Date, Date)}
+	 *             long, long, long, String, Map)}
 	 */
 	@Deprecated
 	@Override
@@ -281,14 +280,9 @@ public class StagingImpl implements Staging {
 			ExportImportConfigurationParameterMapFactory.buildParameterMap(
 				portletRequest);
 
-		DateRange dateRange = ExportImportDateUtil.getDateRange(
-			portletRequest, sourceGroupId, false, sourcePlid, portletId,
-			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
-
 		publishPortlet(
 			themeDisplay.getUserId(), sourceGroupId, targetGroupId, sourcePlid,
-			targetPlid, portletId, parameterMap, dateRange.getStartDate(),
-			dateRange.getEndDate());
+			targetPlid, portletId, parameterMap);
 	}
 
 	@Override
@@ -1323,7 +1317,7 @@ public class StagingImpl implements Staging {
 	public void publishPortlet(
 			long userId, long sourceGroupId, long targetGroupId,
 			long sourcePlid, long targetPlid, String portletId,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			Map<String, String[]> parameterMap)
 		throws PortalException {
 
 		User user = UserLocalServiceUtil.getUser(userId);

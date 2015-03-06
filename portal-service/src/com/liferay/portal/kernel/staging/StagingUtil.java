@@ -99,7 +99,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #publishPortlet(long, long,
-	 *             long, long, long, String, Map, Date, Date)}
+	 *             long, long, long, String, Map)}
 	 */
 	@Deprecated
 	public static void copyPortlet(
@@ -472,12 +472,12 @@ public class StagingUtil {
 	public static void publishPortlet(
 			long userId, long sourceGroupId, long targetGroupId,
 			long sourcePlid, long targetPlid, String portletId,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			Map<String, String[]> parameterMap)
 		throws PortalException {
 
 		getStaging().publishPortlet(
 			userId, sourceGroupId, targetGroupId, sourcePlid, targetPlid,
-			portletId, parameterMap, startDate, endDate);
+			portletId, parameterMap);
 	}
 
 	public static void publishToLive(PortletRequest PortletRequest)

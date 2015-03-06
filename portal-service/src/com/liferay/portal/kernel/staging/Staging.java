@@ -77,7 +77,7 @@ public interface Staging {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #publishPortlet(long, long,
-	 *             long, long, long, String, Map, Date, Date)}
+	 *             long, long, long, String, Map)}
 	 */
 	@Deprecated
 	public void copyPortlet(
@@ -299,7 +299,7 @@ public interface Staging {
 	public void publishPortlet(
 			long userId, long sourceGroupId, long targetGroupId,
 			long sourcePlid, long targetPlid, String portletId,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			Map<String, String[]> parameterMap)
 		throws PortalException;
 
 	public void publishToLive(PortletRequest PortletRequest)

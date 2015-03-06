@@ -1205,6 +1205,7 @@
 						</then>
 					</if>
 
+					<delete dir="${liferay.home}/data" />
 					<delete dir="${liferay.home}/osgi/state" />
 
 					<if>

@@ -41,6 +41,8 @@ public class ModuleSessionFactory
 	public void setBundleContext(BundleContext bundleContext) {
 		_classLoader = new BundleResolverClassLoader(
 			bundleContext.getBundle(), null);
+
+		setSessionFactoryClassLoader(_classLoader);
 	}
 
 	@Override

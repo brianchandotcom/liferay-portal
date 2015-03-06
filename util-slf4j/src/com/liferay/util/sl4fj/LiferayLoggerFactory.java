@@ -57,7 +57,7 @@ public class LiferayLoggerFactory implements ILoggerFactory {
 			try {
 				Log log = LogFactoryUtil.getLog(name);
 
-				logger = new LiferayLoggerAdapter(log);
+				logger = new LiferayLoggerAdapter(log, name);
 
 				_loggers.put(name, logger);
 			}

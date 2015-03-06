@@ -31,7 +31,19 @@ public class LiferayLoggerAdapter
 	extends MarkerIgnoringBase implements LocationAwareLogger, Serializable {
 
 	public LiferayLoggerAdapter(Log log) {
-		_log = log;
+		this._log = log;
+
+		// Used by log4j to get the log caller correct location (line number)
+
+		this._log.setLogWrapperClassName(LiferayLoggerAdapter.class.getName());
+	}
+
+	public LiferayLoggerAdapter(Log log, String name) {
+		this(log);
+
+		// Registers the log name
+
+		this.name = name;
 	}
 
 	@Override

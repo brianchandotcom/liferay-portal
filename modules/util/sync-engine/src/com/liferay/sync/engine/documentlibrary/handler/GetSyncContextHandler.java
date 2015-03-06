@@ -90,4 +90,9 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 		return syncContext;
 	}
 
+	@Override
+	protected void logResponse(String response) {
+		super.logResponse("");
+	}
+
 }

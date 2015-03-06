@@ -28,6 +28,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Shinn Lok
  */
@@ -41,12 +44,14 @@ public class GetUserSitesGroupsHandler extends BaseJSONHandler {
 	public void processResponse(String response) throws Exception {
 		Set<Long> remoteSyncSiteIds = new HashSet<>();
 
-		ObjectMapper objectMapper = new ObjectMapper();
+		if (_remoteSyncSites == null) {
+			ObjectMapper objectMapper = new ObjectMapper();
 
-		List<SyncSite> remoteSyncSites = objectMapper.readValue(
-			response, new TypeReference<List<SyncSite>>() {});
+			_remoteSyncSites = objectMapper.readValue(
+				response, new TypeReference<List<SyncSite>>() {});
+		}
 
-		for (SyncSite remoteSyncSite : remoteSyncSites) {
+		for (SyncSite remoteSyncSite : _remoteSyncSites) {
 			SyncSite localSyncSite = SyncSiteService.fetchSyncSite(
 				remoteSyncSite.getGroupId(), getSyncAccountId());
 
@@ -96,5 +101,25 @@ public class GetUserSitesGroupsHandler extends BaseJSONHandler {
 			SyncSiteService.deleteSyncSite(localSyncSite.getSyncSiteId());
 		}
 	}
+
+	@Override
+	protected void logResponse(String response) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			_remoteSyncSites = objectMapper.readValue(
+				response, new TypeReference<List<SyncSite>>() {});
+
+			super.logResponse("{\"count\":" + _remoteSyncSites.size() + "}");
+		}
+		catch (Exception e) {
+			_logger.error(e.getMessage(), e);
+		}
+	}
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		GetUserSitesGroupsHandler.class);
+
+	private static List<SyncSite> _remoteSyncSites;
 
 }

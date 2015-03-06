@@ -1,6 +1,8 @@
 <?xml version="1.0" ?>
 
 <configuration>
+	<property resource="sync.properties" />
+
 	<appender class="ch.qos.logback.core.ConsoleAppender" name="CONSOLE">
 		<encoder>
 			<charset>UTF-8</charset>
@@ -9,9 +11,9 @@
 		</encoder>
 	</appender>
 
-	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="FILE">
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="SYNC_LOG_FILE">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${user.home}/.liferay-sync-3/logs/liferay-sync-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${sync.configuration.directory}/logs/sync-%d{yyyy-MM-dd}.log</fileNamePattern>
 
 			<maxHistory>9</maxHistory>
 		</rollingPolicy>
@@ -23,15 +25,31 @@
 		</encoder>
 	</appender>
 
-	<logger name="com.j256.ormlite" level="INFO" />
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="WATCHER_EVENTS_LOG_FILE">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${sync.configuration.directory}/logs/watcher-events-%d{yyyy-MM-dd}.log</fileNamePattern>
 
-	<logger name="com.liferay.nativity" level="ERROR" />
+			<maxHistory>9</maxHistory>
+		</rollingPolicy>
 
-	<logger name="com.liferay.sync.engine.documentlibrary.event.GetSyncContextEvent" level="ERROR" />
+		<encoder>
+			<charset>UTF-8</charset>
 
-	<logger name="org.apache" level="ERROR" />
+			<pattern>%d{HH:mm:ss.SSS} %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger additivity="false" name="WATCHER_EVENTS_LOGGER">
+		<appender-ref ref="WATCHER_EVENTS_LOG_FILE" />
+	</logger>
+
+	<logger level="ERROR" name="com.liferay.nativity" />
+
+	<logger level="ERROR" name="org.apache" />
+
+	<logger level="INFO" name="com.j256.ormlite" />
 
 	<root level="TRACE">
-		<appender-ref ref="FILE" />
+		<appender-ref ref="SYNC_LOG_FILE" />
 	</root>
 </configuration>

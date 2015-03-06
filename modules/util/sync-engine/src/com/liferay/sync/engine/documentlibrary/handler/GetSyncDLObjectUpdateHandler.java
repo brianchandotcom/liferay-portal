@@ -62,15 +62,17 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 	@Override
 	public void processResponse(String response) throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper();
+		if (_syncDLObjectUpdate == null) {
+			ObjectMapper objectMapper = new ObjectMapper();
 
-		SyncDLObjectUpdate syncDLObjectUpdate = objectMapper.readValue(
-			response, new TypeReference<SyncDLObjectUpdate>() {});
+			_syncDLObjectUpdate = objectMapper.readValue(
+				response, new TypeReference<SyncDLObjectUpdate>() {});
+		}
 
 		boolean firedProcessingState = false;
 		long start = System.currentTimeMillis();
 
-		for (SyncFile targetSyncFile : syncDLObjectUpdate.getSyncDLObjects()) {
+		for (SyncFile targetSyncFile : _syncDLObjectUpdate.getSyncDLObjects()) {
 			processSyncFile(targetSyncFile);
 
 			if (!firedProcessingState &&
@@ -100,7 +102,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				return;
 			}
 
-			syncSite.setRemoteSyncTime(syncDLObjectUpdate.getLastAccessTime());
+			syncSite.setRemoteSyncTime(_syncDLObjectUpdate.getLastAccessTime());
 
 			SyncSiteService.update(syncSite);
 		}
@@ -236,6 +238,28 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		}
 
 		return FileUtil.isIgnoredFilePath(FileUtil.getFilePath(filePathName));
+	}
+
+	@Override
+	protected void logResponse(String response) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			_syncDLObjectUpdate = objectMapper.readValue(
+				response, new TypeReference<SyncDLObjectUpdate>() {});
+
+			List<SyncFile> syncFiles = _syncDLObjectUpdate.getSyncDLObjects();
+
+			if (syncFiles.size() > 0) {
+				super.logResponse(response);
+			}
+			else {
+				super.logResponse("");
+			}
+		}
+		catch (Exception e) {
+			_logger.error(e.getMessage(), e);
+		}
 	}
 
 	protected void moveFile(
@@ -471,6 +495,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		GetSyncDLObjectUpdateHandler.class);
+
+	private static SyncDLObjectUpdate _syncDLObjectUpdate;
 
 	private final Map<Long, List<SyncFile>> _dependentSyncFilesMap =
 		new HashMap<>();

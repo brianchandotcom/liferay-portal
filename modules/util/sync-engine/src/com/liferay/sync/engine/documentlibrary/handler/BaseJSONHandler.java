@@ -239,10 +239,7 @@ public class BaseJSONHandler extends BaseHandler {
 		}
 
 		if (_logger.isTraceEnabled()) {
-			Class<?> clazz = getClass();
-
-			_logger.trace(
-				"Handling response {} {}", clazz.getSimpleName(), response);
+			logResponse(response);
 		}
 
 		processResponse(response);
@@ -254,6 +251,13 @@ public class BaseJSONHandler extends BaseHandler {
 		HttpEntity httpEntity = httpResponse.getEntity();
 
 		return EntityUtils.toString(httpEntity);
+	}
+
+	protected void logResponse(String response) {
+		Class<?> clazz = getClass();
+
+		_logger.trace(
+			"Handling response {} {}", clazz.getSimpleName(), response);
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

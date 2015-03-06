@@ -1207,7 +1207,7 @@ public class StagingImpl implements Staging {
 
 		publishLayouts(
 			userId, layout.getGroupId(), liveGroupId, layout.isPrivateLayout(),
-			layoutIds, parameterMap, null, null);
+			layoutIds, parameterMap);
 	}
 
 	@Override
@@ -1243,7 +1243,7 @@ public class StagingImpl implements Staging {
 	public void publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, long[] layoutIds,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			Map<String, String[]> parameterMap)
 		throws PortalException {
 
 		parameterMap.put(
@@ -1268,6 +1268,23 @@ public class StagingImpl implements Staging {
 					new ServiceContext());
 
 		publishLayouts(userId, exportImportConfiguration);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #publishLayouts(long, long,
+	 *             long, boolean, long[], Map)}
+	 */
+	@Deprecated
+	@Override
+	public void publishLayouts(
+			long userId, long sourceGroupId, long targetGroupId,
+			boolean privateLayout, long[] layoutIds,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException {
+
+		publishLayouts(
+			userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
+			parameterMap);
 	}
 
 	/**

@@ -15,11 +15,9 @@
 package com.liferay.portal.lar.messaging;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageStatus;
 import com.liferay.portal.kernel.staging.StagingUtil;
-import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.ExportImportConfiguration;
@@ -62,16 +60,13 @@ public class LayoutsLocalPublisherMessageListener
 			settingsMap.get("layoutIds"));
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
-		DateRange dateRange = ExportImportDateUtil.getDateRange(
-			exportImportConfiguration,
-			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
 
 		initThreadLocals(userId, parameterMap);
 
 		try {
 			StagingUtil.publishLayouts(
 				userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
-				parameterMap, dateRange.getStartDate(), dateRange.getEndDate());
+				parameterMap);
 		}
 		finally {
 			resetThreadLocals();

@@ -440,6 +440,22 @@ public class StagingUtil {
 	public static void publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, long[] layoutIds,
+			Map<String, String[]> parameterMap)
+		throws PortalException {
+
+		getStaging().publishLayouts(
+			userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
+			parameterMap);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #publishLayouts(long, long,
+	 *             long, boolean, long[], Map)}
+	 */
+	@Deprecated
+	public static void publishLayouts(
+			long userId, long sourceGroupId, long targetGroupId,
+			boolean privateLayout, long[] layoutIds,
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws PortalException {
 

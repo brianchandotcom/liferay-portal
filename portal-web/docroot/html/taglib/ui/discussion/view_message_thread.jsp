@@ -17,9 +17,7 @@
 <%@ include file="/html/taglib/ui/discussion/init.jsp" %>
 
 <%
-String className = (String)request.getAttribute("liferay-ui:discussion:className");
 CommentsEditorDisplayContext commentsEditorDisplayContext = (CommentsEditorDisplayContext)request.getAttribute("liferay-ui:discussion:commentsEditorDisplayContext");
-long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:classPK"));
 boolean hideControls = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:discussion:hideControls"));
 MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute("liferay-ui:discussion:messageDisplay");
 String permissionClassName = (String)request.getAttribute("liferay-ui:discussion:permissionClassName");

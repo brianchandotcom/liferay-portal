@@ -63,8 +63,7 @@ public class DBBuilder {
 		}
 	}
 
-	public DBBuilder(
-			String databaseName, String[] databaseTypes, String sqlDir)
+	public DBBuilder(String databaseName, String[] databaseTypes, String sqlDir)
 		throws Exception {
 
 		_databaseName = databaseName;

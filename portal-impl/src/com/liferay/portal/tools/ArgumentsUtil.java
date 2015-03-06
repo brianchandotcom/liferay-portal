@@ -51,9 +51,7 @@ public class ArgumentsUtil {
 		return arguments;
 	}
 
-	public static boolean shouldThrowExceptions(
-		Map<String, String> arguments) {
-
+	public static boolean shouldThrowExceptions(Map<String, String> arguments) {
 		String throwExceptions = arguments.get("throw.exceptions");
 
 		return GetterUtil.getBoolean(throwExceptions, false);

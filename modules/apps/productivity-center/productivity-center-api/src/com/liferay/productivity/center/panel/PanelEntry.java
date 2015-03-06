@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,21 +11,28 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/layout/view/init.jsp" %>
+package com.liferay.productivity.center.panel;
 
-<%
-String portletId = ParamUtil.getString(request, "p_p_id");
-%>
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.security.permission.PermissionChecker;
 
-<aui:container>
-	<aui:row>
-		<aui:col width="<%= 25 %>">
-			<productivity-center-ui:panel servletContext="<%= application %>" />
-		</aui:col>
-		<aui:col width="<%= 75 %>">
-			<productivity-center-ui:panel-content portletId="<%= portletId %>" servletContext="<%= application %>" />
-		</aui:col>
-	</aui:row>
-</aui:container>
+import java.util.Locale;
+
+/**
+ * @author Adolfo Pérez
+ */
+public interface PanelEntry {
+
+	public String getIconCssClass();
+
+	public String getKey();
+
+	public String getLabel(Locale locale);
+
+	public boolean hasAccessPermission(
+			PermissionChecker permissionChecker, Group group)
+		throws PortalException;
+
+}

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,21 +11,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/layout/view/init.jsp" %>
+package com.liferay.productivity.center.portlet;
 
-<%
-String portletId = ParamUtil.getString(request, "p_p_id");
-%>
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
-<aui:container>
-	<aui:row>
-		<aui:col width="<%= 25 %>">
-			<productivity-center-ui:panel servletContext="<%= application %>" />
-		</aui:col>
-		<aui:col width="<%= 75 %>">
-			<productivity-center-ui:panel-content portletId="<%= portletId %>" servletContext="<%= application %>" />
-		</aui:col>
-	</aui:row>
-</aui:container>
+import javax.portlet.Portlet;
+
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Sergio González
+ */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.display-category=category.hidden",
+		"javax.portlet.init-param.template-path=/"
+	},
+	service = Portlet.class
+)
+public class ProductivityCenterPortlet extends MVCPortlet {
+}

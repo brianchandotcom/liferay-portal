@@ -14,19 +14,7 @@
  */
 --%>
 
-<%@ include file="/layout/view/init.jsp" %>
+<%@ page import="com.liferay.productivity.center.panel.PanelCategory" %>
 
-<%
-String portletId = ParamUtil.getString(request, "p_p_id");
-%>
-
-<aui:container>
-	<aui:row>
-		<aui:col width="<%= 25 %>">
-			<productivity-center-ui:panel servletContext="<%= application %>" />
-		</aui:col>
-		<aui:col width="<%= 75 %>">
-			<productivity-center-ui:panel-content portletId="<%= portletId %>" servletContext="<%= application %>" />
-		</aui:col>
-	</aui:row>
-</aui:container>
+<%@ taglib uri="http://liferay.com/tld/productivity-center/ui" prefix="productivity-center-ui" %>
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>

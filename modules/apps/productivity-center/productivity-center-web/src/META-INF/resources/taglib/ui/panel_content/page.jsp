@@ -14,19 +14,23 @@
  */
 --%>
 
-<%@ include file="/layout/view/init.jsp" %>
+<%@ include file="/taglib/ui/panel_content/init.jsp" %>
 
 <%
-String portletId = ParamUtil.getString(request, "p_p_id");
+PanelAppContentHelper panelAppContentHelper = new PanelAppContentHelper(request, response);
 %>
 
-<aui:container>
-	<aui:row>
-		<aui:col width="<%= 25 %>">
-			<productivity-center-ui:panel servletContext="<%= application %>" />
-		</aui:col>
-		<aui:col width="<%= 75 %>">
-			<productivity-center-ui:panel-content portletId="<%= portletId %>" servletContext="<%= application %>" />
-		</aui:col>
-	</aui:row>
-</aui:container>
+<c:choose>
+	<c:when test="<%= panelAppContentHelper.isValidPortletSelected() %>">
+
+		<%
+		panelAppContentHelper.writeContent(pageContext.getOut());
+		%>
+
+	</c:when>
+	<c:otherwise>
+		<div class="portlet-msg-info">
+			<liferay-ui:message key="please-select-a-tool-from-the-left-menu" />
+		</div>
+	</c:otherwise>
+</c:choose>

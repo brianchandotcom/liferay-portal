@@ -20,7 +20,7 @@ import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
-import com.liferay.portal.util.test.AtomicStateUtil;
+import com.liferay.portal.util.test.AtomicState;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -45,22 +45,22 @@ public class UserExporterUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_atomicStateUtil = new AtomicStateUtil();
+		_atomicState = new AtomicState();
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
-		_atomicStateUtil.close();
+		_atomicState.close();
 	}
 
 	@Before
 	public void setUp() {
-		_atomicStateUtil.resetState();
+		_atomicState.resetState();
 	}
 
 	@After
 	public void tearDown() {
-		Assert.assertTrue(_atomicStateUtil.isStateSet());
+		Assert.assertTrue(_atomicState.isStateSet());
 	}
 
 	@Test
@@ -78,6 +78,6 @@ public class UserExporterUtilTest {
 		UserExporterUtil.exportUser(new UserImpl(), null);
 	}
 
-	private static AtomicStateUtil _atomicStateUtil;
+	private static AtomicState _atomicState;
 
 }

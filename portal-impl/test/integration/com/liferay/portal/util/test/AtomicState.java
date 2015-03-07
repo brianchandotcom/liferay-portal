@@ -26,9 +26,9 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * @author Peter Fellwock
  */
-public class AtomicStateUtil {
+public class AtomicState {
 
-	public AtomicStateUtil() {
+	public AtomicState() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Map<String, Object> properties = new HashMap<>();

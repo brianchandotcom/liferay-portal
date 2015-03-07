@@ -18,6 +18,8 @@
 
 <%
 String browseBy = ParamUtil.getString(request, "browseBy");
+String curEntry = ParamUtil.getString(request, "curEntry");
+String deltaEntry = ParamUtil.getString(request, "deltaEntry");
 
 Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 
@@ -74,8 +76,8 @@ else if ((folderId != rootFolderId) || expandFolder) {
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-portletURL.setParameter("curEntry", HttpUtil.getParameter(currentURL, liferayPortletResponse.getNamespace() + "curEntry", false));
-portletURL.setParameter("deltaEntry", HttpUtil.getParameter(currentURL, liferayPortletResponse.getNamespace() + "deltaEntry", false));
+portletURL.setParameter("curEntry", curEntry);
+portletURL.setParameter("deltaEntry", deltaEntry);
 portletURL.setParameter("struts_action", "/document_library/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
 

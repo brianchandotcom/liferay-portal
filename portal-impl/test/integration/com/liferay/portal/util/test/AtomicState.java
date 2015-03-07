@@ -26,6 +26,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * @author Peter Fellwock
  */
+@SuppressWarnings("rawtypes")
 public class AtomicState {
 
 	public AtomicState() {

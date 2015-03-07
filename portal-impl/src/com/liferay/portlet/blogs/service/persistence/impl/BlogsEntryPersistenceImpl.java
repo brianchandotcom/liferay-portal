@@ -18145,6 +18145,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		blogsEntryImpl.setTrackbacks(blogsEntry.getTrackbacks());
 		blogsEntryImpl.setCoverImageFileEntryId(blogsEntry.getCoverImageFileEntryId());
 		blogsEntryImpl.setCoverImageURL(blogsEntry.getCoverImageURL());
+		blogsEntryImpl.setCoverImageCaption(blogsEntry.getCoverImageCaption());
 		blogsEntryImpl.setSmallImage(blogsEntry.isSmallImage());
 		blogsEntryImpl.setSmallImageFileEntryId(blogsEntry.getSmallImageFileEntryId());
 		blogsEntryImpl.setSmallImageId(blogsEntry.getSmallImageId());

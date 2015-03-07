@@ -389,6 +389,21 @@ public interface BlogsEntryModel extends BaseModel<BlogsEntry>,
 	public void setCoverImageURL(String coverImageURL);
 
 	/**
+	 * Returns the cover image caption of this blogs entry.
+	 *
+	 * @return the cover image caption of this blogs entry
+	 */
+	@AutoEscape
+	public String getCoverImageCaption();
+
+	/**
+	 * Sets the cover image caption of this blogs entry.
+	 *
+	 * @param coverImageCaption the cover image caption of this blogs entry
+	 */
+	public void setCoverImageCaption(String coverImageCaption);
+
+	/**
 	 * Returns the small image of this blogs entry.
 	 *
 	 * @return the small image of this blogs entry

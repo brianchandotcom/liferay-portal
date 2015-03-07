@@ -1473,6 +1473,7 @@
 		<property name="trackbacks" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="coverImageFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="coverImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="coverImageCaption" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="smallImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="smallImageFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="smallImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

@@ -53,7 +53,13 @@ public class AtomicStateUtil {
 	}
 
 	public boolean isStateSet() {
-		return (_state != null);
+		Object reference = _state.get();
+
+		if (reference == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public void resetState() {

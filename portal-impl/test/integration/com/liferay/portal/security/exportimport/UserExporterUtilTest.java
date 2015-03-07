@@ -22,8 +22,10 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.portal.util.test.AtomicStateUtil;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -51,46 +53,29 @@ public class UserExporterUtilTest {
 		_atomicStateUtil.close();
 	}
 
-	@Test
-	public void testExportUser1() {
+	@Before
+	public void setUp() {
 		_atomicStateUtil.resetState();
+	}
 
-		try {
-			UserExporterUtil.exportUser(new ContactImpl(), null);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
-
+	@After
+	public void tearDown() {
 		Assert.assertTrue(_atomicStateUtil.isStateSet());
 	}
 
 	@Test
-	public void testExportUser2() {
-		_atomicStateUtil.resetState();
-
-		try {
-			UserExporterUtil.exportUser(1, 1, null);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
-
-		Assert.assertTrue(_atomicStateUtil.isStateSet());
+	public void testExportUser1() throws Exception {
+		UserExporterUtil.exportUser(new ContactImpl(), null);
 	}
 
 	@Test
-	public void testExportUser3() {
-		_atomicStateUtil.resetState();
+	public void testExportUser2() throws Exception {
+		UserExporterUtil.exportUser(1, 1, null);
+	}
 
-		try {
-			UserExporterUtil.exportUser(new UserImpl(), null);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
-
-		Assert.assertTrue(_atomicStateUtil.isStateSet());
+	@Test
+	public void testExportUser3() throws Exception {
+		UserExporterUtil.exportUser(new UserImpl(), null);
 	}
 
 	private static AtomicStateUtil _atomicStateUtil;

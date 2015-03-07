@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Isaac Obrist
  */
 public class GroupParentException extends PortalException {
 
@@ -89,7 +90,7 @@ public class GroupParentException extends PortalException {
 		public MustNotBeOwnParent(long groupId) {
 			super(
 				String.format(
-						"Site for groupId %s cannot be its own parent site.",
+					"Site for groupId %s cannot be its own parent site",
 					groupId),
 				SELF_DESCENDANT);
 
@@ -105,9 +106,9 @@ public class GroupParentException extends PortalException {
 		public MustNotHaveChildParent(long groupId, long parentGroupId) {
 			super(
 				String.format(
-					"The parent group id %s cannot be among the group Ids" +
-					"for site %s", groupId,
-					parentGroupId),
+					"The parent groupId %s cannot be among the groupIds" +
+						" for site %s",
+					parentGroupId, groupId),
 				CHILD_DESCENDANT);
 
 			this.groupId = groupId;
@@ -121,18 +122,18 @@ public class GroupParentException extends PortalException {
 
 	public static class MustNotHaveStagingParent extends GroupParentException {
 
-		public MustNotHaveStagingParent(long groupId) {
+		public MustNotHaveStagingParent(long parentGroupId) {
 			super(
 				String.format(
 					"The site corresponding with groupId" +
-					"%s cannot be a descendant of a staging site.",
-					groupId),
+						" %s cannot be a child of a staging site",
+					parentGroupId),
 				STAGING_DESCENDANT);
 
-			this.groupId = groupId;
+			this.parentGroupId = parentGroupId;
 		}
 
-		public long groupId;
+		public long parentGroupId;
 
 	}
 

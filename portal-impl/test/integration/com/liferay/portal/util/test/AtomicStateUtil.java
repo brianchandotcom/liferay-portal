@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util.test;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -45,7 +46,7 @@ public class AtomicStateUtil {
 	}
 
 	public boolean equalsState(String value) {
-		return _state.get().equals(value);
+		return Validator.equals(_state.get(), value);
 	}
 
 	public String getState() {

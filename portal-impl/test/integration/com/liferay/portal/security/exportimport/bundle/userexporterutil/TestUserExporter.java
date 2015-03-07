@@ -39,24 +39,21 @@ public class TestUserExporter implements UserExporter {
 
 	@Override
 	public void exportUser(
-			Contact contact, Map<String, Serializable> contactExpandoAttributes)
-		throws Exception {
+		Contact contact, Map<String, Serializable> contactExpandoAttributes) {
 
 		_atomicReference.set("exportUser.contact.contactExpandoAttributes");
 	}
 
 	@Override
 	public void exportUser(
-			long userId, long userGroupId, UserOperation userOperation)
-		throws Exception {
+		long userId, long userGroupId, UserOperation userOperation) {
 
 		_atomicReference.set("exportUser.userId.userGroupId.userOperation");
 	}
 
 	@Override
 	public void exportUser(
-			User user, Map<String, Serializable> userExpandoAttributes)
-		throws Exception {
+		User user, Map<String, Serializable> userExpandoAttributes) {
 
 		_atomicReference.set("exportUser.user.userExpandoAttributes");
 	}

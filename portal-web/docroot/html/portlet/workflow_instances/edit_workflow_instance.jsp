@@ -114,6 +114,27 @@ if (assetEntry != null) {
 						metadataFields="<%= metadataFields %>"
 					/>
 				</liferay-ui:panel>
+
+				<liferay-ui:panel title="comments">
+					<portlet:actionURL var="discussionURL">
+						<portlet:param name="struts_action" value="/workflow_instances/edit_workflow_instance_discussion" />
+					</portlet:actionURL>
+
+					<portlet:resourceURL var="discussionPaginationURL">
+						<portlet:param name="struts_action" value="/workflow_instances/edit_workflow_instance_discussion" />
+					</portlet:resourceURL>
+
+					<liferay-ui:discussion
+						className="<%= assetRenderer.getClassName() %>"
+						classPK="<%= assetRenderer.getClassPK() %>"
+						formAction="<%= discussionURL %>"
+						formName="fm1"
+						paginationURL="<%= discussionPaginationURL %>"
+						ratingsEnabled="<%= false %>"
+						redirect="<%= currentURL %>"
+						userId="<%= user.getUserId() %>"
+					/>
+				</liferay-ui:panel>
 			</c:if>
 
 			<%
@@ -195,27 +216,6 @@ if (assetEntry != null) {
 				%>
 
 				<%@ include file="/html/portlet/workflow_instances/workflow_logs.jspf" %>
-			</liferay-ui:panel>
-
-			<liferay-ui:panel title="comments">
-				<portlet:actionURL var="discussionURL">
-					<portlet:param name="struts_action" value="/workflow_instances/edit_workflow_instance_discussion" />
-				</portlet:actionURL>
-
-				<portlet:resourceURL var="discussionPaginationURL">
-					<portlet:param name="struts_action" value="/workflow_instances/edit_workflow_instance_discussion" />
-				</portlet:resourceURL>
-
-				<liferay-ui:discussion
-					className="<%= WorkflowInstance.class.getName() %>"
-					classPK="<%= workflowInstance.getWorkflowInstanceId() %>"
-					formAction="<%= discussionURL %>"
-					formName="fm1"
-					paginationURL="<%= discussionPaginationURL %>"
-					ratingsEnabled="<%= false %>"
-					redirect="<%= currentURL %>"
-					userId="<%= user.getUserId() %>"
-				/>
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>
 	</aui:col>

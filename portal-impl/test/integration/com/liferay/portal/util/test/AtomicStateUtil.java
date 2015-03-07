@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class AtomicStateUtil {
 
 	public AtomicStateUtil() {
-		_state = new AtomicReference(null);
+		_state = new AtomicReference<>(null);
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -45,15 +45,15 @@ public class AtomicStateUtil {
 	}
 
 	public boolean equalsState(String value) {
-		return _state.toString().equals(value);
+		return _state.get().equals(value);
 	}
 
 	public String getState() {
-		return _state.toString();
+		return _state.get();
 	}
 
 	public boolean isStateSet() {
-		Object reference = _state.get();
+		String reference = _state.get();
 
 		if (reference == null) {
 			return false;
@@ -67,6 +67,6 @@ public class AtomicStateUtil {
 	}
 
 	private final ServiceRegistration<AtomicReference> _serviceRegistration;
-	private final AtomicReference _state;
+	private final AtomicReference<String> _state;
 
 }

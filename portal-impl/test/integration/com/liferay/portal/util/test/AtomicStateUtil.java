@@ -29,8 +29,6 @@ import java.util.concurrent.atomic.AtomicReference;
 public class AtomicStateUtil {
 
 	public AtomicStateUtil() {
-		_state = new AtomicReference<>(null);
-
 		Registry registry = RegistryUtil.getRegistry();
 
 		Map<String, Object> properties = new HashMap<>();
@@ -68,6 +66,6 @@ public class AtomicStateUtil {
 	}
 
 	private final ServiceRegistration<AtomicReference> _serviceRegistration;
-	private final AtomicReference<String> _state;
+	private final AtomicReference<String> _state = new AtomicReference<>();
 
 }

@@ -11,6 +11,8 @@
 	<target name="prepare-poshi-runner" depends="compile">
 		<echo file="classes/poshi-runner-ext.properties">
 			test.class.command.name=${test.case.name}
+
+			test.basedir=../../../portal-web/test/functional/com/liferay/portalweb/
 		</echo>
 	</target>
 

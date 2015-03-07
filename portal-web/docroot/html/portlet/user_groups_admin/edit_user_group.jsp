@@ -129,12 +129,11 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 					}
 				}
 			}
-
 			%>
 
 			<c:choose>
 				<c:when test="<%= ((userGroupGroup == null) || ((publicLayoutSetPrototype == null) && (userGroupGroup.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
-					<aui:select label="public-pages" name="publicLayoutSetPrototypeId" disabled="<%= !hasUpdateSitePermission %>">
+					<aui:select disabled="<%= !hasUpdateSitePermission %>" label="public-pages" name="publicLayoutSetPrototypeId">
 						<aui:option label="none" selected="<%= true %>" value="" />
 
 						<%
@@ -204,7 +203,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 
 			<c:choose>
 				<c:when test="<%= ((userGroup == null) || ((privateLayoutSetPrototype == null) && (userGroupGroup.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
-					<aui:select label="private-pages" name="privateLayoutSetPrototypeId" disabled="<%= !hasUpdateSitePermission %>">
+					<aui:select disabled="<%= !hasUpdateSitePermission %>" label="private-pages" name="privateLayoutSetPrototypeId">
 						<aui:option label="none" selected="<%= true %>" value="" />
 
 						<%

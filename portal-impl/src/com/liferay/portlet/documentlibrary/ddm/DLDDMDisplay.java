@@ -15,8 +15,6 @@
 package com.liferay.portlet.documentlibrary.ddm;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
@@ -29,11 +27,6 @@ import java.util.Locale;
  * @author Eduardo Garcia
  */
 public class DLDDMDisplay extends BaseDDMDisplay {
-
-	public static final long[] RESOURCE_CLASS_NAME_IDS = new long[] {
-		PortalUtil.getClassNameId(DLFileEntryMetadata.class),
-		PortalUtil.getClassNameId(RawMetadataProcessor.class)
-	};
 
 	@Override
 	public DDMPermissionHandler getDDMPermissionHandler() {

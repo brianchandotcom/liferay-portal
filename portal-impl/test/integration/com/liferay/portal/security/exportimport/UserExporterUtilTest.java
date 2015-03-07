@@ -55,12 +55,12 @@ public class UserExporterUtilTest {
 
 	@Before
 	public void setUp() {
-		_atomicState.resetState();
+		_atomicState.reset();
 	}
 
 	@After
 	public void tearDown() {
-		Assert.assertTrue(_atomicState.isStateSet());
+		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test

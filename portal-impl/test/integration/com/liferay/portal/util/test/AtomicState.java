@@ -37,23 +37,23 @@ public class AtomicState {
 		properties.put("test", "AtomicState");
 
 		_serviceRegistration = registry.registerService(
-			AtomicReference.class, _state, properties);
+			AtomicReference.class, _atomicReference, properties);
 	}
 
 	public void close() {
 		_serviceRegistration.unregister();
 	}
 
-	public boolean equalsState(String value) {
-		return Validator.equals(_state.get(), value);
+	public boolean equalsTo(String value) {
+		return Validator.equals(_atomicReference.get(), value);
 	}
 
-	public String getState() {
-		return _state.get();
+	public String get() {
+		return _atomicReference.get();
 	}
 
-	public boolean isStateSet() {
-		String reference = _state.get();
+	public boolean isSet() {
+		String reference = _atomicReference.get();
 
 		if (reference == null) {
 			return false;
@@ -62,11 +62,12 @@ public class AtomicState {
 		return true;
 	}
 
-	public void resetState() {
-		_state.set(null);
+	public void reset() {
+		_atomicReference.set(null);
 	}
 
+	private final AtomicReference<String> _atomicReference =
+		new AtomicReference<>();
 	private final ServiceRegistration<AtomicReference> _serviceRegistration;
-	private final AtomicReference<String> _state = new AtomicReference<>();
 
 }

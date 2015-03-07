@@ -70,7 +70,7 @@ public class WebXMLDefinition {
 	}
 
 	public void setJspTaglibMappings(Map<String, String> jspTaglibMappings) {
-		_jspTaglibMappings = jspTaglibMappings;
+		_jspTaglibMappings.putAll(jspTaglibMappings);
 	}
 
 	public void setListenerDefinition(ListenerDefinition listenerDefinition) {
@@ -97,7 +97,7 @@ public class WebXMLDefinition {
 
 	private Map<String, String> _contextParameters = new HashMap<>();
 	private Map<String, FilterDefinition> _filterDefinitions = new HashMap<>();
-	private Map<String, String> _jspTaglibMappings;
+	private Map<String, String> _jspTaglibMappings = new HashMap<>();
 	private List<ListenerDefinition> _listenerDefinitions = new ArrayList<>();
 	private Map<String, ServletDefinition> _servletDefinitions =
 		new HashMap<>();

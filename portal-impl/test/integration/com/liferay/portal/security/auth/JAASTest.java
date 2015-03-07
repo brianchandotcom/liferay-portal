@@ -333,7 +333,16 @@ public class JAASTest {
 			}
 		);
 
-		MainServlet mainServlet = new MainServlet();
+		MainServlet mainServlet = new MainServlet() {
+
+			@Override
+			protected void processStartupEvents() {
+
+				// Don't run StartupAction again, it will create race condition.
+
+			}
+
+		};
 
 		MockServletContext mockServletContext =
 			new AutoDeployMockServletContext(new FileSystemResourceLoader());

@@ -92,6 +92,8 @@ public class MainServletTestCallback extends BaseTestCallback<Object, Object> {
 				throw new RuntimeException(
 					"The main servlet could not be initialized");
 			}
+
+			ServiceTestUtil.initStaticServices();
 		}
 
 		ServiceTestUtil.initServices();

@@ -179,16 +179,7 @@ public class ServiceTestUtil {
 		}
 	}
 
-	public static void initServices() {
-
-		// JCR
-
-		try {
-			JCRFactoryUtil.prepare();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+	public static void initStaticServices() {
 
 		// Indexers
 
@@ -234,10 +225,6 @@ public class ServiceTestUtil {
 
 		PortalRegisterTestUtil.registerAssetRendererFactories();
 
-		// Thread locals
-
-		_setThreadLocals();
-
 		// Company
 
 		try {
@@ -247,6 +234,22 @@ public class ServiceTestUtil {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	public static void initServices() {
+
+		// JCR
+
+		try {
+			JCRFactoryUtil.prepare();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		// Thread locals
+
+		_setThreadLocals();
 
 		// Directories
 

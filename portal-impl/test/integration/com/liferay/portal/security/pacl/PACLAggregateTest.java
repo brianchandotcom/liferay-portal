@@ -134,6 +134,8 @@ public class PACLAggregateTest {
 		arguments.add(
 			"-D" + PropsKeys.LIFERAY_LIB_PORTAL_DIR + "=" +
 				PropsValues.LIFERAY_LIB_PORTAL_DIR);
+		arguments.add(
+			"-D" + PropsKeys.MODULE_FRAMEWORK_PROPERTIES + _OSGI_CONSOLE);
 
 		builder.setArguments(arguments);
 		builder.setBootstrapClassPath(System.getProperty("java.class.path"));
@@ -195,6 +197,8 @@ public class PACLAggregateTest {
 	private static final String _JVM_MAX_PERM_SIZE = "-XX:MaxPermSize=256m";
 
 	private static final String _JVM_XMX = "-Xmx1024m";
+
+	private static final String _OSGI_CONSOLE = "osgi.console=localhost:11312";
 
 	private static class DummySocksProxySelector extends ProxySelector {
 

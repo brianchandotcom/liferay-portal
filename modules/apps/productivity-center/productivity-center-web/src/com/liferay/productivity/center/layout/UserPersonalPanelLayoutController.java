@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypeController;
-import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
@@ -31,10 +30,18 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Adolfo Pérez
@@ -71,9 +78,14 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 			Layout layout)
 		throws Exception {
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			Portal.PATH_MODULE + StringPool.SLASH + "productivity_center_web" +
-				_EDIT_PAGE);
+		ServletContext servletContext = _serviceTracker.getService();
+
+		if (servletContext == null) {
+			return StringPool.BLANK;
+		}
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher(getEditPage());
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -91,9 +103,14 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 			Layout layout)
 		throws Exception {
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			Portal.PATH_MODULE + StringPool.SLASH + "productivity_center_web" +
-				_VIEW_PATH);
+		ServletContext servletContext = _serviceTracker.getService();
+
+		if (servletContext == null) {
+			return false;
+		}
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher(_VIEW_PATH);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -150,6 +167,27 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 		}
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
+
+		Bundle bundle = bundleContext.getBundle();
+
+		Filter filter = bundleContext.createFilter(
+			"(&(objectClass=" + ServletContext.class.getName() +
+				")(service.bundleid=" + bundle.getBundleId() + "))");
+
+		_serviceTracker = new ServiceTracker<ServletContext, ServletContext>(
+			bundleContext, filter, null);
+
+		_serviceTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTracker.close();
+	}
+
 	private static final String _EDIT_PAGE =
 		"/layout/edit/user_personal_panel.jsp";
 
@@ -164,5 +202,7 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 
 	private static final String _VIEW_PATH =
 		"/layout/view/user_personal_panel.jsp";
+
+	private ServiceTracker<ServletContext, ServletContext> _serviceTracker;
 
 }

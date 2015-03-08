@@ -32,6 +32,13 @@ public class ResourceActionLocalServiceWrapper
 		_resourceActionLocalService = resourceActionLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.model.ResourceAction addResourceAction(
+		java.lang.String name, java.lang.String actionId, long bitwiseValue) {
+		return _resourceActionLocalService.addResourceAction(name, actionId,
+			bitwiseValue);
+	}
+
 	/**
 	* Adds the resource action to the database. Also notifies the appropriate model listeners.
 	*

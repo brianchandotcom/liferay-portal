@@ -40,6 +40,10 @@ public class ResourceActionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.ResourceActionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.model.ResourceAction addResourceAction(
+		java.lang.String name, java.lang.String actionId, long bitwiseValue) {
+		return getService().addResourceAction(name, actionId, bitwiseValue);
+	}
 
 	/**
 	* Adds the resource action to the database. Also notifies the appropriate model listeners.

@@ -76,7 +76,6 @@ public class ClassNameLocalServiceImpl
 	}
 
 	@Override
-	@Skip
 	public ClassName fetchClassName(String value) {
 		if (Validator.isNull(value)) {
 			return _nullClassName;
@@ -99,26 +98,6 @@ public class ClassNameLocalServiceImpl
 
 	@Override
 	@Skip
-	public long fetchClassNameId(Class<?> clazz) {
-		return fetchClassNameId(clazz.getName());
-	}
-
-	@Override
-	@Skip
-	public long fetchClassNameId(String value) {
-		try {
-			ClassName className = fetchClassName(value);
-
-			return className.getClassNameId();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(
-				"Unable to get class name from value " + value, e);
-		}
-	}
-
-	@Override
-	@Skip
 	public ClassName getClassName(String value) {
 		if (Validator.isNull(value)) {
 			return _nullClassName;
@@ -130,9 +109,16 @@ public class ClassNameLocalServiceImpl
 		ClassName className = _classNames.get(value);
 
 		if (className == null) {
-			className = classNameLocalService.addClassName(value);
+			try {
+				className = classNameLocalService.addClassName(value);
+			}
+			catch (Throwable t) {
+				className = classNameLocalService.fetchClassName(value);
 
-			_classNames.put(value, className);
+				if (className == _nullClassName) {
+					throw t;
+				}
+			}
 		}
 
 		return className;
@@ -147,15 +133,9 @@ public class ClassNameLocalServiceImpl
 	@Override
 	@Skip
 	public long getClassNameId(String value) {
-		try {
-			ClassName className = getClassName(value);
+		ClassName className = getClassName(value);
 
-			return className.getClassNameId();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(
-				"Unable to get class name from value " + value, e);
-		}
+		return className.getClassNameId();
 	}
 
 	@Override

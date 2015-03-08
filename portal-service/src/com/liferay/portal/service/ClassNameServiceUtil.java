@@ -45,14 +45,6 @@ public class ClassNameServiceUtil {
 		return getService().fetchClassName(value);
 	}
 
-	public static long fetchClassNameId(java.lang.Class<?> clazz) {
-		return getService().fetchClassNameId(clazz);
-	}
-
-	public static long fetchClassNameId(java.lang.String value) {
-		return getService().fetchClassNameId(value);
-	}
-
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

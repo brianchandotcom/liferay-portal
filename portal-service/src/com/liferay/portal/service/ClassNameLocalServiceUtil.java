@@ -193,14 +193,6 @@ public class ClassNameLocalServiceUtil {
 		return getService().fetchClassName(value);
 	}
 
-	public static long fetchClassNameId(java.lang.Class<?> clazz) {
-		return getService().fetchClassNameId(clazz);
-	}
-
-	public static long fetchClassNameId(java.lang.String value) {
-		return getService().fetchClassNameId(value);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

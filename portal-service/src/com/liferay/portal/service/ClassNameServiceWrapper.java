@@ -36,16 +36,6 @@ public class ClassNameServiceWrapper implements ClassNameService,
 		return _classNameService.fetchClassName(value);
 	}
 
-	@Override
-	public long fetchClassNameId(java.lang.Class<?> clazz) {
-		return _classNameService.fetchClassNameId(clazz);
-	}
-
-	@Override
-	public long fetchClassNameId(java.lang.String value) {
-		return _classNameService.fetchClassNameId(value);
-	}
-
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

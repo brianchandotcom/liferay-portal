@@ -291,8 +291,8 @@ public class BlogsEntryStagedModelDataHandler
 					entry.getDescription(), entry.getContent(),
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, allowPingbacks,
-					allowTrackbacks, trackbacks, coverImageImageSelector,
-					entry.getCoverImageCaption(), smallImageImageSelector,
+					allowTrackbacks, trackbacks, entry.getCoverImageCaption(),
+					coverImageImageSelector, smallImageImageSelector,
 					serviceContext);
 			}
 			else {
@@ -302,7 +302,7 @@ public class BlogsEntryStagedModelDataHandler
 					entry.getContent(), displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
 					allowPingbacks, allowTrackbacks, trackbacks,
-					coverImageImageSelector, entry.getCoverImageCaption(),
+					entry.getCoverImageCaption(), coverImageImageSelector,
 					smallImageImageSelector, serviceContext);
 			}
 		}
@@ -312,7 +312,7 @@ public class BlogsEntryStagedModelDataHandler
 				entry.getDescription(), entry.getContent(), displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				coverImageImageSelector, entry.getCoverImageCaption(),
+				entry.getCoverImageCaption(), coverImageImageSelector,
 				smallImageImageSelector, serviceContext);
 		}
 

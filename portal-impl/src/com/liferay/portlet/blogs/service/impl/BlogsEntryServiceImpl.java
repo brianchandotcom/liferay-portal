@@ -71,7 +71,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #addEntry(String, String,
 	 *             String, String, int, int, int, int, int, boolean, boolean,
-	 *             String[], ImageSelector, String, ImageSelector,
+	 *             String[], String, ImageSelector, ImageSelector,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -108,9 +108,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		return addEntry(
 			title, StringPool.BLANK, description, content, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			allowPingbacks, allowTrackbacks, trackbacks,
-			coverImageImageSelector, StringPool.BLANK, smallImageImageSelector,
-			serviceContext);
+			allowPingbacks, allowTrackbacks, trackbacks, StringPool.BLANK,
+			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
 	@Override
@@ -119,7 +118,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 			boolean allowTrackbacks, String[] trackbacks,
-			ImageSelector coverImageImageSelector, String coverImageCaption,
+			String coverImageCaption, ImageSelector coverImageImageSelector,
 			ImageSelector smallImageImageSelector,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -132,7 +131,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			getUserId(), title, subtitle, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			coverImageImageSelector, coverImageCaption, smallImageImageSelector,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
 			serviceContext);
 	}
 
@@ -448,7 +447,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
 	 *             String, String, String, int, int, int, int, int, boolean,
-	 *             boolean, String[], ImageSelector, String, ImageSelector,
+	 *             boolean, String[], String, ImageSelector, ImageSelector,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -491,7 +490,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			entryId, title, StringPool.BLANK, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			coverImageImageSelector, StringPool.BLANK, smallImageImageSelector,
+			StringPool.BLANK, coverImageImageSelector, smallImageImageSelector,
 			serviceContext);
 	}
 
@@ -501,8 +500,9 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			String content, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			boolean allowPingbacks, boolean allowTrackbacks,
-			String[] trackbacks, ImageSelector coverImageImageSelector,
-			String coverImageCaption, ImageSelector smallImageImageSelector,
+			String[] trackbacks, String coverImageCaption,
+			ImageSelector coverImageImageSelector,
+			ImageSelector smallImageImageSelector,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -513,7 +513,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			getUserId(), entryId, title, subtitle, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			coverImageImageSelector, coverImageCaption, smallImageImageSelector,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
 			serviceContext);
 	}
 

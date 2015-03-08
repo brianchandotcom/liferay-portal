@@ -44,6 +44,12 @@ import java.net.SocketAddress;
 import java.net.URI;
 import java.net.URL;
 
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -323,7 +329,15 @@ public class PACLAggregateTest {
 		public Result call() throws ProcessException {
 			ProxySelector.setDefault(new DummySocksProxySelector());
 
+			Path tempStatePath = null;
+
 			try {
+				tempStatePath = Files.createTempDirectory(null);
+
+				System.setProperty(
+					"portal:" + PropsKeys.MODULE_FRAMEWORK_STATE_DIR,
+					tempStatePath.toString());
+
 				JUnitCore junitCore = new JUnitCore();
 
 				junitCore.addListener(new NoticeBridgeRunListener());
@@ -331,10 +345,47 @@ public class PACLAggregateTest {
 				return junitCore.run(
 					_classes.toArray(new Class<?>[_classes.size()]));
 			}
+			catch (IOException ioe) {
+				throw new ProcessException(ioe);
+			}
 			finally {
 				InitUtil.stopModuleFramework();
 
 				MPIHelperUtil.shutdown();
+
+				if (tempStatePath != null) {
+					try {
+						Files.walkFileTree(
+							tempStatePath,
+							new SimpleFileVisitor<Path>() {
+
+								@Override
+								public FileVisitResult postVisitDirectory(
+										Path path, IOException ioe)
+									throws IOException {
+
+									Files.delete(path);
+
+									return FileVisitResult.CONTINUE;
+								}
+
+								@Override
+								public FileVisitResult visitFile(
+										Path path,
+										BasicFileAttributes basicFileAttributes)
+									throws IOException {
+
+									Files.delete(path);
+
+									return FileVisitResult.CONTINUE;
+								}
+
+							});
+					}
+					catch (IOException ioe) {
+						throw new ProcessException(ioe);
+					}
+				}
 			}
 		}
 

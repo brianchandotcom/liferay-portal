@@ -133,20 +133,7 @@ public class ServiceTestUtil {
 		}
 	}
 
-	public static void initServices() {
-
-		// JCR
-
-		try {
-			JCRFactoryUtil.prepare();
-		}
-		catch (Exception e) {
-			_log.error(e.getMessage(), e);
-		}
-
-		// Indexers
-
-		PortalRegisterTestUtil.registerIndexers();
+	public static void initMainServletServices() {
 
 		// Upgrade
 
@@ -176,19 +163,6 @@ public class ServiceTestUtil {
 			DoPrivilegedUtil.wrap(messageSender),
 			DoPrivilegedUtil.wrap(synchronousMessageSender));
 
-		if (TestPropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
-			_replaceWithSynchronousDestination(
-				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR);
-			_replaceWithSynchronousDestination(
-				DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR);
-			_replaceWithSynchronousDestination(
-				DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR);
-			_replaceWithSynchronousDestination(
-				DestinationNames.DOCUMENT_LIBRARY_RAW_METADATA_PROCESSOR);
-			_replaceWithSynchronousDestination(
-				DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR);
-		}
-
 		// Scheduler
 
 		try {
@@ -205,6 +179,37 @@ public class ServiceTestUtil {
 		}
 		catch (Exception e) {
 			_log.error(e.getMessage(), e);
+		}
+	}
+
+	public static void initServices() {
+
+		// JCR
+
+		try {
+			JCRFactoryUtil.prepare();
+		}
+		catch (Exception e) {
+			_log.error(e.getMessage(), e);
+		}
+
+		// Indexers
+
+		PortalRegisterTestUtil.registerIndexers();
+
+		// Messaging
+
+		if (TestPropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
+			_replaceWithSynchronousDestination(
+				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR);
+			_replaceWithSynchronousDestination(
+				DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR);
+			_replaceWithSynchronousDestination(
+				DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR);
+			_replaceWithSynchronousDestination(
+				DestinationNames.DOCUMENT_LIBRARY_RAW_METADATA_PROCESSOR);
+			_replaceWithSynchronousDestination(
+				DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR);
 		}
 
 		// Class names

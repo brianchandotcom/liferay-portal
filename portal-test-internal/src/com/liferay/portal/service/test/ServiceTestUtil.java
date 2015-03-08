@@ -129,7 +129,7 @@ public class ServiceTestUtil {
 			setUser(TestPropsValues.getUser());
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error(e, e);
 		}
 	}
 
@@ -140,11 +140,8 @@ public class ServiceTestUtil {
 		try {
 			DBUpgrader.upgrade();
 		}
-		catch (AssertionError ae) {
-			_log.error(ae.getMessage(), ae);
-		}
-		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+		catch (Throwable t) {
+			_log.error(t, t);
 		}
 
 		// Messaging
@@ -169,7 +166,7 @@ public class ServiceTestUtil {
 			SchedulerEngineHelperUtil.start();
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error(e, e);
 		}
 
 		// Verify
@@ -178,7 +175,7 @@ public class ServiceTestUtil {
 			DBUpgrader.verify();
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error(e, e);
 		}
 	}
 
@@ -190,7 +187,7 @@ public class ServiceTestUtil {
 			JCRFactoryUtil.prepare();
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error(e, e);
 		}
 
 		// Indexers
@@ -222,7 +219,7 @@ public class ServiceTestUtil {
 			_checkResourceActions();
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error(e, e);
 		}
 
 		// Trash
@@ -248,7 +245,7 @@ public class ServiceTestUtil {
 				TestPropsValues.COMPANY_WEB_ID);
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error(e, e);
 		}
 
 		// Directories
@@ -264,7 +261,7 @@ public class ServiceTestUtil {
 			SearchEngineUtil.initialize(TestPropsValues.getCompanyId());
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error(e, e);
 		}
 	}
 
@@ -338,7 +335,7 @@ public class ServiceTestUtil {
 				PropsValues.LUCENE_DIR + TestPropsValues.getCompanyId());
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error(e, e);
 		}
 	}
 

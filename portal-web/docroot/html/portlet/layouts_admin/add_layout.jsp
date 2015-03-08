@@ -192,7 +192,9 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 							</div>
 
 							<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
-								<liferay-util:include page="<%= layoutTypeController.getEditPage() %>" />
+
+								<%= layoutTypeController.includeEditContent(request, response, selLayout) %>
+
 							</div>
 						</aui:nav-item>
 

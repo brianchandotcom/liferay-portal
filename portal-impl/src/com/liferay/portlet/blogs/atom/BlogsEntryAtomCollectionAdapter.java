@@ -189,7 +189,7 @@ public class BlogsEntryAtomCollectionAdapter
 		return BlogsEntryServiceUtil.addEntry(
 			title, StringPool.BLANK, summary, content, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			allowPingbacks, allowTrackbacks, trackbacks, null, StringPool.BLANK,
+			allowPingbacks, allowTrackbacks, trackbacks, StringPool.BLANK, null,
 			null, serviceContext);
 	}
 
@@ -217,7 +217,7 @@ public class BlogsEntryAtomCollectionAdapter
 			blogsEntry.getEntryId(), title, blogsEntry.getSubtitle(), summary,
 			content, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, blogsEntry.getAllowPingbacks(),
-			blogsEntry.isAllowTrackbacks(), trackbacks, null, StringPool.BLANK,
+			blogsEntry.isAllowTrackbacks(), trackbacks, StringPool.BLANK, null,
 			null, serviceContext);
 	}
 

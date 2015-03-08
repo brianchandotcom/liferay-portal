@@ -60,8 +60,8 @@ public class BlogsTestUtil {
 			BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 				userId, title, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				displayCalendar.getTime(), true, true, new String[0], null,
-				StringPool.BLANK, null, serviceContext);
+				displayCalendar.getTime(), true, true, new String[0],
+				StringPool.BLANK, null, null, serviceContext);
 
 			if (approved) {
 				return updateStatus(entry, serviceContext);

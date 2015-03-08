@@ -491,7 +491,7 @@ public class EditEntryAction extends PortletAction {
 				entry.getDescription(), content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, entry.getAllowPingbacks(),
-				entry.getAllowTrackbacks(), null, null, StringPool.BLANK, null,
+				entry.getAllowTrackbacks(), null, StringPool.BLANK, null, null,
 				serviceContext);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -568,12 +568,12 @@ public class EditEntryAction extends PortletAction {
 		String coverImageFileEntryCropRegion = ParamUtil.getString(
 			actionRequest, "coverImageFileEntryCropRegion");
 
+		String coverImageCaption = ParamUtil.getString(
+			actionRequest, "coverImageCaption");
+
 		ImageSelector coverImageImageSelector = new ImageSelector(
 			coverImageFileEntryId, coverImageURL,
 			coverImageFileEntryCropRegion);
-
-		String coverImageCaption = ParamUtil.getString(
-			actionRequest, "coverImageCaption");
 
 		long smallImageFileEntryId = ParamUtil.getLong(
 			actionRequest, "smallImageFileEntryId");
@@ -599,7 +599,7 @@ public class EditEntryAction extends PortletAction {
 				title, subtitle, description, content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				coverImageImageSelector, coverImageCaption,
+				coverImageCaption, coverImageImageSelector,
 				smallImageImageSelector, serviceContext);
 
 			BlogsEntryAttachmentFileEntryHelper
@@ -675,8 +675,9 @@ public class EditEntryAction extends PortletAction {
 				entryId, title, subtitle, description, content,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, allowPingbacks,
-				allowTrackbacks, trackbacks, coverImageImageSelector,
-				coverImageCaption, smallImageImageSelector, serviceContext);
+				allowTrackbacks, trackbacks, coverImageCaption,
+				coverImageImageSelector, smallImageImageSelector,
+				serviceContext);
 
 			for (FileEntry tempBlogsEntryAttachmentFileEntry :
 					tempBlogsEntryAttachmentFileEntries) {

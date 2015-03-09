@@ -14,6 +14,7 @@
 
 package com.liferay.bookmarks.social.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksEntryServiceUtil;
@@ -33,10 +34,12 @@ import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
  */
+@RunWith(Arquillian.class)
 @Sync
 public class BookmarksEntryActivityInterpreterTest
 	extends BaseSocialActivityInterpreterTestCase {

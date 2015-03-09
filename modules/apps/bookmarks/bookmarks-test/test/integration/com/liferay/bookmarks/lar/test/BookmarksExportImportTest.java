@@ -14,6 +14,7 @@
 
 package com.liferay.bookmarks.lar.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.lar.BookmarksPortletDataHandler;
 import com.liferay.bookmarks.model.BookmarksEntry;
@@ -35,10 +36,12 @@ import java.util.Map;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Juan Fernández
  */
+@RunWith(Arquillian.class)
 @Sync
 public class BookmarksExportImportTest extends BasePortletExportImportTestCase {
 

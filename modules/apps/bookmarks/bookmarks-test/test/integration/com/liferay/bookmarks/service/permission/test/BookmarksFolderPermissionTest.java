@@ -14,6 +14,7 @@
 
 package com.liferay.bookmarks.service.permission.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermission;
 import com.liferay.bookmarks.service.permission.BookmarksPermission;
@@ -27,11 +28,13 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Eric Chin
  * @author Shinn Lok
  */
+@RunWith(Arquillian.class)
 public class BookmarksFolderPermissionTest extends BasePermissionTestCase {
 
 	@ClassRule

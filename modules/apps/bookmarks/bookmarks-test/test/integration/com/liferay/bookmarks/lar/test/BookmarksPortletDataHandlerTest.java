@@ -14,6 +14,7 @@
 
 package com.liferay.bookmarks.lar.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.lar.BookmarksPortletDataHandler;
 import com.liferay.bookmarks.model.BookmarksFolder;
@@ -36,10 +37,12 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
  */
+@RunWith(Arquillian.class)
 public class BookmarksPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
 

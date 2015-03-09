@@ -18,12 +18,17 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.HtmlImpl;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.creole.util.test.CreoleTestUtil;
 import com.liferay.wiki.parser.creole.visitor.impl.XhtmlTranslationVisitor;
+import com.liferay.wiki.service.settings.WikiServiceSettingsProvider;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 /**
  * @author Miguel Pastor
@@ -36,6 +41,25 @@ public class XhtmlTranslationVisitorTest {
 		HtmlUtil htmlUtil = new HtmlUtil();
 
 		htmlUtil.setHtml(new HtmlImpl());
+
+		_wikiServiceSettingsProvider.activate();
+
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
+			Mockito.mock(WikiGroupServiceConfiguration.class);
+
+		Mockito.when(
+			wikiGroupServiceConfiguration.parsersCreoleSupportedProtocols()
+		).thenReturn(
+			new String[] {"ftp://", "http://", "https://", "mailto", "mms://"}
+		);
+
+		_wikiServiceSettingsProvider.setWikiGroupServiceConfiguration(
+			wikiGroupServiceConfiguration);
+	}
+
+	@After
+	public void tearDown() {
+		_wikiServiceSettingsProvider.deactivate();
 	}
 
 	@Test
@@ -722,6 +746,8 @@ public class XhtmlTranslationVisitorTest {
 
 	private static final String _NEW_LINE = StringPool.NEW_LINE;
 
+	private final WikiServiceSettingsProvider _wikiServiceSettingsProvider =
+		new WikiServiceSettingsProvider();
 	private final XhtmlTranslationVisitor _xhtmlTranslationVisitor =
 		new XhtmlTranslationVisitor();
 

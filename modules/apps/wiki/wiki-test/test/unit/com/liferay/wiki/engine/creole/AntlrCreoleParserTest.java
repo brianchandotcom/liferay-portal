@@ -15,6 +15,7 @@
 package com.liferay.wiki.engine.creole;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.parser.creole.ast.ASTNode;
 import com.liferay.wiki.parser.creole.ast.BaseListNode;
 import com.liferay.wiki.parser.creole.ast.BoldTextNode;
@@ -40,6 +41,7 @@ import com.liferay.wiki.parser.creole.ast.table.TableHeaderNode;
 import com.liferay.wiki.parser.creole.ast.table.TableNode;
 import com.liferay.wiki.parser.creole.parser.Creole10Lexer;
 import com.liferay.wiki.parser.creole.parser.Creole10Parser;
+import com.liferay.wiki.service.settings.WikiServiceSettingsProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,14 +52,40 @@ import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 /**
  * @author Miguel Pastor
  * @author Manuel de la Peña
  */
 public class AntlrCreoleParserTest {
+
+	@Before
+	public void setUp() {
+		_wikiServiceSettingsProvider.activate();
+
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
+			Mockito.mock(WikiGroupServiceConfiguration.class);
+
+		Mockito.when(
+			wikiGroupServiceConfiguration.parsersCreoleSupportedProtocols()
+		).thenReturn(
+			new String[] {"ftp://", "http://", "https://", "mailto", "mms://"}
+		);
+
+		_wikiServiceSettingsProvider.setWikiGroupServiceConfiguration(
+			wikiGroupServiceConfiguration);
+	}
+
+	@After
+	public void tearDown() {
+		_wikiServiceSettingsProvider.deactivate();
+	}
 
 	@Test
 	public void testParseCorrectlyBoldContentInListItems() {
@@ -908,5 +936,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	private Creole10Parser _creole10parser;
+	private final WikiServiceSettingsProvider _wikiServiceSettingsProvider =
+		new WikiServiceSettingsProvider();
 
 }

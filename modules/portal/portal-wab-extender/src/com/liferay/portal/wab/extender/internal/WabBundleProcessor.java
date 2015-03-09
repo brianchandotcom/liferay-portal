@@ -21,13 +21,13 @@ import com.liferay.portal.wab.extender.internal.definition.ServletDefinition;
 import com.liferay.portal.wab.extender.internal.definition.WebXMLDefinition;
 import com.liferay.portal.wab.extender.internal.definition.WebXMLDefinitionLoader;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Dictionary;
 import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -222,65 +222,48 @@ public class WabBundleProcessor implements ServletContextListener {
 	}
 
 	protected void destroyFilters() {
-		Map<String, FilterDefinition> filterDefinitions =
-			_webXMLDefinition.getFilterDefinitions();
+		for (ServiceRegistration<?> serviceRegistration :
+				_filterRegistrations) {
 
-		List<FilterDefinition> filterDefinitionsList = new ArrayList<>(
-			filterDefinitions.values());
-
-		Collections.reverse(filterDefinitionsList);
-
-		for (FilterDefinition filterDefinition : filterDefinitionsList) {
 			try {
-				_extendedHttpService.unregisterFilter(
-					filterDefinition.getFilter(), _contextName);
+				serviceRegistration.unregister();
 			}
 			catch (Exception e) {
 				_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 			}
 		}
 
-		filterDefinitions.clear();
+		_filterRegistrations.clear();
 	}
 
 	protected void destroyListeners() {
-		List<ListenerDefinition> listenerDefinitions =
-			_webXMLDefinition.getListenerDefinitions();
+		for (ServiceRegistration<?> serviceRegistration :
+				_listenerRegistrations) {
 
-		Collections.reverse(listenerDefinitions);
-
-		for (ListenerDefinition listenerDefinition : listenerDefinitions) {
 			try {
-				_extendedHttpService.unregisterListener(
-					listenerDefinition.getEventListener(), _contextName);
+				serviceRegistration.unregister();
 			}
 			catch (Exception e) {
 				_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 			}
 		}
 
-		listenerDefinitions.clear();
+		_listenerRegistrations.clear();
 	}
 
 	protected void destroyServlets() {
-		Map<String, ServletDefinition> servletDefinitions =
-			_webXMLDefinition.getServletDefinitions();
-
-		List<ServletDefinition> servletDefinitionsList = new ArrayList<>(
-			servletDefinitions.values());
-
-		Collections.reverse(servletDefinitionsList);
-
-		for (ServletDefinition servletDefinition : servletDefinitionsList) {
-			Servlet servlet = servletDefinition.getServlet();
+		for (ServiceRegistration<?> serviceRegistration :
+				_servletRegistrations) {
 
 			try {
-				_extendedHttpService.unregisterServlet(servlet, _contextName);
+				serviceRegistration.unregister();
 			}
 			catch (Exception e) {
 				_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 			}
 		}
+
+		_servletRegistrations.clear();
 	}
 
 	protected void initContext() throws Exception {
@@ -399,9 +382,15 @@ public class WabBundleProcessor implements ServletContextListener {
 	private final String _contextPath;
 	private ServiceRegistration<Servlet> _defaultServletServiceRegistration;
 	private final ExtendedHttpService _extendedHttpService;
+	private Set<ServiceRegistration<Filter>> _filterRegistrations =
+		new ConcurrentSkipListSet<>();
 	private ServiceRegistration<Servlet> _jspServletServiceRegistration;
+	private Set<ServiceRegistration<?>> _listenerRegistrations =
+		new ConcurrentSkipListSet<>();
 	private final Logger _logger;
 	private ServiceRegistration<ServletContextHelper> _serviceRegistration;
+	private Set<ServiceRegistration<Servlet>> _servletRegistrations =
+		new ConcurrentSkipListSet<>();
 	private ServiceRegistration<ServletContext> _servletContextRegistration;
 	private ServiceRegistration<EventListener> _thisEventListenerRegistration;
 	private WabServletContextHelper _wabServletContextHelper;

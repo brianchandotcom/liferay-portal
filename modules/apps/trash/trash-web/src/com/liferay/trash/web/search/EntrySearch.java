@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.trash.search;
+package com.liferay.trash.web.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;

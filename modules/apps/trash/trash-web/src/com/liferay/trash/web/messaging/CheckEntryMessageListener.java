@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.trash.messaging;
+package com.liferay.trash.web.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;

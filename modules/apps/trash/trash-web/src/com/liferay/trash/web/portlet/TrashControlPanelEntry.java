@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.trash;
+package com.liferay.trash.web.portlet;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;

@@ -271,7 +271,7 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementPresent" locator1="CPUsergroups#USER_GROUP_TABLE_ALL_CHECKBOX" />
+			<condition function="IsVisible" locator1="CPUsergroups#USER_GROUP_TABLE_ALL_CHECKBOX" />
 			<then>
 				<execute function="Check" locator1="CPUsergroups#USER_GROUP_TABLE_ALL_CHECKBOX" />
 				<execute function="AssertClickNoError" locator1="CPUsergroups#DELETE_BUTTON" value1="Delete" />

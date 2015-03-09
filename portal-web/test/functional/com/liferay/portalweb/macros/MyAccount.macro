@@ -6,7 +6,6 @@
 		<execute function="AssertClick" locator1="Dockbar#USER_MY_ACCOUNT_LOCALIZED" value1="${myAccount}" />
 
 		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-		<execute function="AssertClick" locator1="Myaccount#MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="${displaySettings}" />
 		<execute function="Select" locator1="Myaccount#LANGUAGE_SELECT" value1="${languageName}" />
 
 		<var name="key_saveButton" value="${saveButton}" />

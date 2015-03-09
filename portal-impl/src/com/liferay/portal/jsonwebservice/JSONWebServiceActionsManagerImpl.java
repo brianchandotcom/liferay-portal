@@ -535,6 +535,11 @@ public class JSONWebServiceActionsManagerImpl
 						contextName);
 		}
 
+		jsonWebServiceActionConfigs = new ArrayList<>(
+			jsonWebServiceActionConfigs);
+
+		Collections.sort(jsonWebServiceActionConfigs);
+
 		int max = -1;
 
 		JSONWebServiceActionConfig matchedJSONWebServiceActionConfig = null;

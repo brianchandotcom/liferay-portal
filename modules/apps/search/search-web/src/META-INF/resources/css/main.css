@@ -233,35 +233,42 @@
 		font-weight: bold;
 		margin: 10px 0;
 	}
-}
 
-.portlet-search.portlet-configuration {
-	.fieldset-content {
-		padding-top: 0.5em;
-	}
-
-	.facet-configuration, .options-container {
-		margin-left: 1.8em;
-	}
-
-	.facet-configuration {
-		margin-bottom: 10px;
-
-		.advance-configuration {
-			background-color: #EEE;
-			border: 1px solid #DEDEDE;
-			margin-top: 10px;
-			padding: 10px;
+	&.portlet-configuration {
+		.fieldset-content {
+			padding-top: 0.5em;
 		}
 
-		.facet-configuration-options {
-			margin: 1em;
+		.facet-configuration, .options-container {
+			margin-left: 1.8em;
+		}
+
+		.facet-configuration {
+			margin-bottom: 10px;
+
+			.advance-configuration {
+				background-color: #EEE;
+				border: 1px solid #DEDEDE;
+				margin-top: 10px;
+				padding: 10px;
+			}
+
+			.facet-configuration-options {
+				margin: 1em;
+			}
+		}
+
+		.facet-configuration-container {
+			.form-group {
+				margin-bottom: 0;
+			}
 		}
 	}
 
-	.facet-configuration-container {
-		.form-group {
-			margin-bottom: 0;
+	@include respond-to(phone, tablet) {
+		.search-button, .search-input, .search-select {
+			font-size: 17px;
+			height: 39px;
 		}
 	}
 }
@@ -269,14 +276,5 @@
 .ie .portlet-search {
 	.full-query .container, .result td.value .container {
 		height: expression(this.scrollHeight > 100 ? "100px" : "auto");
-	}
-}
-
-@include respond-to(phone, tablet) {
-	.portlet-search .search-item {
-		> input, > button, > select {
-			font-size: 17px;
-			height: 39px;
-		}
 	}
 }

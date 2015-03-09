@@ -35,7 +35,7 @@ pageContext.setAttribute("portletURL", portletURL);
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 
 	<aui:fieldset>
-		<aui:input wrapperCssClass="search-item" inlineField="<%= true %>" label="" name="keywords" size="30" title="search" type="text" value="<%= HtmlUtil.escapeAttribute(keywords) %>" />
+		<aui:input cssClass="search-input" inlineField="<%= true %>" label="" name="keywords" size="30" title="search" type="text" value="<%= HtmlUtil.escapeAttribute(keywords) %>" />
 
 		<%
 		String taglibOnClick = "Liferay.Util.focusFormField('#" + renderResponse.getNamespace() + "keywords');";
@@ -43,7 +43,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		<liferay-ui:quick-access-entry label="skip-to-search" onClick="<%= taglibOnClick %>" />
 
-		<aui:select inlineField="<%= true %>" label="" name="groupId" title="scope" wrapperCssClass="search-item">
+		<aui:select cssClass="search-select" inlineField="<%= true %>" label="" name="groupId" title="scope">
 
 			<%
 			Group group = themeDisplay.getScopeGroup();
@@ -56,8 +56,8 @@ pageContext.setAttribute("portletURL", portletURL);
 			<aui:option label='<%= "this-" + (group.isOrganization() ? "organization" : "site") %>' selected="<%= (groupId != 0) %>" value="<%= group.getGroupId() %>" />
 		</aui:select>
 
-		<aui:field-wrapper cssClass="search-item" inlineField="<%= true %>">
-			<aui:button icon="icon-search" onClick='<%= renderResponse.getNamespace() + "search();" %>' value="search" />
+		<aui:field-wrapper inlineField="<%= true %>">
+			<aui:button cssClass="search-button" icon="icon-search" onClick='<%= renderResponse.getNamespace() + "search();" %>' value="search" />
 		</aui:field-wrapper>
 	</aui:fieldset>
 

@@ -72,24 +72,24 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 		<liferay-ui:search-container-results>
 
 			<%
-				List<AssetVocabulary> vocabularies = null;
+			String keywords = ParamUtil.getString(request, "keywords");
 
-				String keywords = ParamUtil.getString(request, "keywords", null);
+			total = AssetVocabularyServiceUtil.getGroupVocabulariesCount(scopeGroupId);
 
-				total = AssetVocabularyServiceUtil.getGroupVocabulariesCount(scopeGroupId);
+			searchContainer.setTotal(total);
 
-				searchContainer.setTotal(total);
+			List<AssetVocabulary> vocabularies = null;
 
-				if (Validator.isNotNull(keywords)) {
-					AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), true);
+			if (Validator.isNotNull(keywords)) {
+				AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), true);
 
-					vocabularies = assetVocabularyDisplay.getVocabularies();
-				}
-				else {
-					vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId, true, searchContainer.getStart(), searchContainer.getEnd(), null);
-				}
+				vocabularies = assetVocabularyDisplay.getVocabularies();
+			}
+			else {
+				vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId, true, searchContainer.getStart(), searchContainer.getEnd(), null);
+			}
 
-				searchContainer.setResults(vocabularies);
+			searchContainer.setResults(vocabularies);
 			%>
 
 		</liferay-ui:search-container-results>

@@ -26,12 +26,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.util.BinarySearch;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
-import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,11 +42,14 @@ import com.liferay.portal.util.PropsValues;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -63,17 +64,8 @@ public class JSONWebServiceActionsManagerImpl
 
 	@Override
 	public Set<String> getContextNames() {
-		Set<String> contextNames = new TreeSet<>();
-
-		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
-				_jsonWebServiceActionConfigs) {
-
-			String contextName = jsonWebServiceActionConfig.getContextName();
-
-			contextNames.add(contextName);
-		}
-
-		return contextNames;
+		return new TreeSet<>(
+			_contextNameIndexedJSONWebServiceActionConfigs.keySet());
 	}
 
 	@Override
@@ -155,56 +147,34 @@ public class JSONWebServiceActionsManagerImpl
 	public JSONWebServiceActionMapping getJSONWebServiceActionMapping(
 		String signature) {
 
-		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
-				_jsonWebServiceActionConfigs) {
-
-			if (signature.equals(jsonWebServiceActionConfig.getSignature())) {
-				return jsonWebServiceActionConfig;
-			}
-		}
-
-		return null;
+		return _signatureIndexedJSONWebServiceActionConfigs.get(signature);
 	}
 
 	@Override
 	public List<JSONWebServiceActionMapping> getJSONWebServiceActionMappings(
 		String contextName) {
 
-		List<JSONWebServiceActionMapping> jsonWebServiceActionMappings =
-			new ArrayList<>(_jsonWebServiceActionConfigs.size());
+		List<JSONWebServiceActionConfig> jsonWebServiceActionConfigs =
+			_contextNameIndexedJSONWebServiceActionConfigs.get(contextName);
 
-		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
-				_jsonWebServiceActionConfigs) {
-
-			if (contextName.equals(
-					jsonWebServiceActionConfig.getContextName())) {
-
-				jsonWebServiceActionMappings.add(jsonWebServiceActionConfig);
-			}
+		if (jsonWebServiceActionConfigs == null) {
+			return Collections.emptyList();
 		}
 
-		return jsonWebServiceActionMappings;
+		return new ArrayList<JSONWebServiceActionMapping>(
+			jsonWebServiceActionConfigs);
 	}
 
 	@Override
 	public int getJSONWebServiceActionsCount(String contextName) {
-		int count = 0;
+		List<JSONWebServiceActionConfig> jsonWebServiceActionConfigs =
+			_contextNameIndexedJSONWebServiceActionConfigs.get(contextName);
 
-		// Do not use enhanced loop in order to prevent possible
-		// ConcurrentModificationException
-
-		for (int i = 0; i < _jsonWebServiceActionConfigs.size(); i++) {
-			JSONWebServiceActionConfig jsonWebServiceActionConfig =
-				_jsonWebServiceActionConfigs.get(i);
-
-			if (contextName.equals(
-					jsonWebServiceActionConfig.getContextName())) {
-
-				count++;
-			}
+		if (jsonWebServiceActionConfigs == null) {
+			return 0;
 		}
 
-		return count;
+		return jsonWebServiceActionConfigs.size();
 	}
 
 	@Override
@@ -213,29 +183,22 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	@Override
-	public void registerJSONWebServiceAction(
+	public synchronized void registerJSONWebServiceAction(
 		String contextName, String contextPath, Class<?> actionClass,
 		Method actionMethod, String path, String method) {
 
 		try {
-			JSONWebServiceActionConfig jsonWebServiceActionConfig =
-				new JSONWebServiceActionConfig(
-					contextName, contextPath, actionClass, actionMethod, path,
-					method);
-
-			if (_jsonWebServiceActionConfigs.contains(
-					jsonWebServiceActionConfig)) {
+			if (!_addJSONWebServiceActionConfig(
+					new JSONWebServiceActionConfig(
+						contextName, contextPath, actionClass, actionMethod,
+						path, method))) {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"A JSON web service action is already registered at " +
 							path);
 				}
-
-				return;
 			}
-
-			_jsonWebServiceActionConfigs.add(jsonWebServiceActionConfig);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -262,29 +225,22 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	@Override
-	public void registerJSONWebServiceAction(
+	public synchronized void registerJSONWebServiceAction(
 		String contextName, String contextPath, Object actionObject,
 		Class<?> actionClass, Method actionMethod, String path, String method) {
 
 		try {
-			JSONWebServiceActionConfig jsonWebServiceActionConfig =
-				new JSONWebServiceActionConfig(
-					contextName, contextPath, actionObject, actionClass,
-					actionMethod, path, method);
-
-			if (_jsonWebServiceActionConfigs.contains(
-					jsonWebServiceActionConfig)) {
+			if (!_addJSONWebServiceActionConfig(
+					new JSONWebServiceActionConfig(
+						contextName, contextPath, actionObject, actionClass,
+						actionMethod, path, method))) {
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"A JSON web service action is already registered at " +
 							path);
 				}
-
-				return;
 			}
-
-			_jsonWebServiceActionConfigs.add(jsonWebServiceActionConfig);
 		}
 		catch (Exception e) {
 			StringBundler sb = new StringBundler(17);
@@ -376,20 +332,17 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	@Override
-	public int unregisterJSONWebServiceActions(Object actionObject) {
+	public synchronized int unregisterJSONWebServiceActions(
+		Object actionObject) {
+
 		int count = 0;
 
-		Iterator<JSONWebServiceActionConfig> iterator =
-			_jsonWebServiceActionConfigs.iterator();
-
-		while (iterator.hasNext()) {
-			JSONWebServiceActionConfig jsonWebServiceActionConfig =
-				iterator.next();
+		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
+				_signatureIndexedJSONWebServiceActionConfigs.values()) {
 
 			if (actionObject.equals(
-					jsonWebServiceActionConfig.getActionObject())) {
-
-				iterator.remove();
+					jsonWebServiceActionConfig.getActionObject()) &&
+				_removeJSONWebServiceActionConfig(jsonWebServiceActionConfig)) {
 
 				count++;
 			}
@@ -399,20 +352,17 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	@Override
-	public int unregisterJSONWebServiceActions(String contextPath) {
+	public synchronized int unregisterJSONWebServiceActions(
+		String contextPath) {
+
 		int count = 0;
 
-		Iterator<JSONWebServiceActionConfig> iterator =
-			_jsonWebServiceActionConfigs.iterator();
-
-		while (iterator.hasNext()) {
-			JSONWebServiceActionConfig jsonWebServiceActionConfig =
-				iterator.next();
+		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
+				_signatureIndexedJSONWebServiceActionConfigs.values()) {
 
 			if (contextPath.equals(
-					jsonWebServiceActionConfig.getContextPath())) {
-
-				iterator.remove();
+					jsonWebServiceActionConfig.getContextPath()) &&
+				_removeJSONWebServiceActionConfig(jsonWebServiceActionConfig)) {
 
 				count++;
 			}
@@ -426,6 +376,49 @@ public class JSONWebServiceActionsManagerImpl
 		String contextPath = ContextPathUtil.getContextPath(servletContext);
 
 		return unregisterJSONWebServiceActions(contextPath);
+	}
+
+	private boolean _addJSONWebServiceActionConfig(
+		JSONWebServiceActionConfig jsonWebServiceActionConfig) {
+
+		JSONWebServiceActionConfig oldJSONWebServiceActionConfig =
+			_signatureIndexedJSONWebServiceActionConfigs.putIfAbsent(
+				jsonWebServiceActionConfig.getSignature(),
+				jsonWebServiceActionConfig);
+
+		if (oldJSONWebServiceActionConfig != null) {
+			return false;
+		}
+
+		String contextName = jsonWebServiceActionConfig.getContextName();
+
+		List<JSONWebServiceActionConfig> jsonWebServiceActionConfigs =
+			_contextNameIndexedJSONWebServiceActionConfigs.get(contextName);
+
+		if (jsonWebServiceActionConfigs == null) {
+			jsonWebServiceActionConfigs = new CopyOnWriteArrayList<>();
+
+			_contextNameIndexedJSONWebServiceActionConfigs.put(
+				contextName, jsonWebServiceActionConfigs);
+		}
+
+		jsonWebServiceActionConfigs.add(jsonWebServiceActionConfig);
+
+		String path = jsonWebServiceActionConfig.getPath();
+
+		jsonWebServiceActionConfigs =
+			_pathIndexedJSONWebServiceActionConfigs.get(path);
+
+		if (jsonWebServiceActionConfigs == null) {
+			jsonWebServiceActionConfigs = new CopyOnWriteArrayList<>();
+
+			_pathIndexedJSONWebServiceActionConfigs.put(
+				path, jsonWebServiceActionConfigs);
+		}
+
+		jsonWebServiceActionConfigs.add(jsonWebServiceActionConfig);
+
+		return true;
 	}
 
 	private int _countMatchedParameters(
@@ -470,34 +463,30 @@ public class JSONWebServiceActionsManagerImpl
 		String[] parameterNames =
 			jsonWebServiceActionParameters.getParameterNames();
 
-		int jsonWebServiceActionConfigIndex =
-			_getJSONWebServiceActionConfigIndex(
+		JSONWebServiceActionConfig jsonWebServiceActionConfig =
+			_getJSONWebServiceActionConfig(
 				contextName, path, method, parameterNames);
 
-		if (jsonWebServiceActionConfigIndex == -1) {
+		if (jsonWebServiceActionConfig == null) {
 			if (jsonWebServiceActionParameters.includeDefaultParameters()) {
 				parameterNames =
 					jsonWebServiceActionParameters.getParameterNames();
 
-				jsonWebServiceActionConfigIndex =
-					_getJSONWebServiceActionConfigIndex(
-						contextName, path, method, parameterNames);
+				jsonWebServiceActionConfig = _getJSONWebServiceActionConfig(
+					contextName, path, method, parameterNames);
 			}
 		}
 
-		if (jsonWebServiceActionConfigIndex == -1) {
+		if (jsonWebServiceActionConfig == null) {
 			throw new NoSuchJSONWebServiceException(
 				"No JSON web service action with path " + path +
 					" and method " + method + " for " + contextName);
 		}
 
-		JSONWebServiceActionConfig jsonWebServiceActionConfig =
-			_jsonWebServiceActionConfigs.get(jsonWebServiceActionConfigIndex);
-
 		return jsonWebServiceActionConfig;
 	}
 
-	private int _getJSONWebServiceActionConfigIndex(
+	private JSONWebServiceActionConfig _getJSONWebServiceActionConfig(
 		String contextName, String path, String method,
 		String[] parameterNames) {
 
@@ -524,39 +513,34 @@ public class JSONWebServiceActionsManagerImpl
 			}
 		}
 
-		int firstIndex = _pathBinarySearch.findFirst(path);
+		List<JSONWebServiceActionConfig> jsonWebServiceActionConfigs =
+			_pathIndexedJSONWebServiceActionConfigs.get(path);
 
-		if (firstIndex < 0) {
+		if ((jsonWebServiceActionConfigs == null) ||
+			jsonWebServiceActionConfigs.isEmpty()) {
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to find JSON web service actions with path " +
 						path + " for " + contextName);
 			}
 
-			return -1;
+			return null;
 		}
 
-		int lastIndex = _pathBinarySearch.findLast(path, firstIndex);
-
-		if (lastIndex < 0) {
-			lastIndex = firstIndex;
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Found " + jsonWebServiceActionConfigs.size() +
+					" JSON web service actions with path " + path + " in for " +
+						contextName);
 		}
-
-		int index = -1;
 
 		int max = -1;
 
-		if (_log.isDebugEnabled()) {
-			int total = lastIndex - firstIndex + 1;
+		JSONWebServiceActionConfig matchedJSONWebServiceActionConfig = null;
 
-			_log.debug(
-				"Found " + total + " JSON web service actions with path " +
-					path + " in for " + contextName);
-		}
-
-		for (int i = firstIndex; i <= lastIndex; i++) {
-			JSONWebServiceActionConfig jsonWebServiceActionConfig =
-				_jsonWebServiceActionConfigs.get(i);
+		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
+				jsonWebServiceActionConfigs) {
 
 			String jsonWebServiceActionConfigMethod =
 				jsonWebServiceActionConfig.getMethod();
@@ -588,13 +572,14 @@ public class JSONWebServiceActionsManagerImpl
 				if ((hint != -1) || (count >= methodParametersCount)) {
 					max = count;
 
-					index = i;
+					matchedJSONWebServiceActionConfig =
+						jsonWebServiceActionConfig;
 				}
 			}
 		}
 
 		if (_log.isDebugEnabled()) {
-			if (index == -1) {
+			if (matchedJSONWebServiceActionConfig == null) {
 				_log.debug(
 					"Unable to match parameters to a JSON web service " +
 						"action with path " + path + " for " + contextName);
@@ -606,7 +591,7 @@ public class JSONWebServiceActionsManagerImpl
 			}
 		}
 
-		return index;
+		return matchedJSONWebServiceActionConfig;
 	}
 
 	private int _getParameterPathIndex(String path) {
@@ -617,6 +602,42 @@ public class JSONWebServiceActionsManagerImpl
 		}
 
 		return index;
+	}
+
+	private boolean _removeJSONWebServiceActionConfig(
+		JSONWebServiceActionConfig jsonWebServiceActionConfig) {
+
+		boolean removed = _signatureIndexedJSONWebServiceActionConfigs.remove(
+			jsonWebServiceActionConfig.getSignature(),
+			jsonWebServiceActionConfig);
+
+		if (!removed) {
+			return false;
+		}
+
+		String contextName = jsonWebServiceActionConfig.getContextName();
+
+		List<JSONWebServiceActionConfig> jsonWebServiceActionConfigs =
+			_contextNameIndexedJSONWebServiceActionConfigs.get(contextName);
+
+		jsonWebServiceActionConfigs.remove(jsonWebServiceActionConfig);
+
+		if (jsonWebServiceActionConfigs.isEmpty()) {
+			_contextNameIndexedJSONWebServiceActionConfigs.remove(contextName);
+		}
+
+		String path = jsonWebServiceActionConfig.getPath();
+
+		jsonWebServiceActionConfigs =
+			_pathIndexedJSONWebServiceActionConfigs.get(path);
+
+		jsonWebServiceActionConfigs.remove(jsonWebServiceActionConfig);
+
+		if (jsonWebServiceActionConfigs.isEmpty()) {
+			_pathIndexedJSONWebServiceActionConfigs.remove(path);
+		}
+
+		return true;
 	}
 
 	private String[] _resolvePaths(HttpServletRequest request, String path) {
@@ -649,30 +670,15 @@ public class JSONWebServiceActionsManagerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceActionsManagerImpl.class);
 
-	private final SortedArrayList<JSONWebServiceActionConfig>
-		_jsonWebServiceActionConfigs = new SortedArrayList<>();
+	private final Map<String, List<JSONWebServiceActionConfig>>
+		_contextNameIndexedJSONWebServiceActionConfigs =
+			new ConcurrentHashMap<>();
 	private final JSONWebServiceNaming _jsonWebServiceNaming =
 		new JSONWebServiceNaming();
-	private final BinarySearch<String> _pathBinarySearch =
-		new PathBinarySearch();
-
-	private class PathBinarySearch extends BinarySearch<String> {
-
-		@Override
-		protected int compare(int index, String element) {
-			JSONWebServiceActionConfig jsonWebServiceActionConfig =
-				_jsonWebServiceActionConfigs.get(index);
-
-			String path = jsonWebServiceActionConfig.getPath();
-
-			return path.compareTo(element);
-		}
-
-		@Override
-		protected int getLastIndex() {
-			return _jsonWebServiceActionConfigs.size() - 1;
-		}
-
-	}
+	private final Map<String, List<JSONWebServiceActionConfig>>
+		_pathIndexedJSONWebServiceActionConfigs = new ConcurrentHashMap<>();
+	private final ConcurrentMap<String, JSONWebServiceActionConfig>
+		_signatureIndexedJSONWebServiceActionConfigs =
+			new ConcurrentHashMap<>();
 
 }

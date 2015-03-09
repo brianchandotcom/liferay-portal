@@ -12,18 +12,16 @@
  * details.
  */
 
-package com.liferay.bookmarks.social;
+package com.liferay.bookmarks.social.test;
 
-import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.bookmarks.service.BookmarksEntryServiceUtil;
+import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.bookmarks.social.BookmarksFolderActivityInterpreter;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.social.model.SocialActivityConstants;
@@ -37,7 +35,7 @@ import org.junit.Rule;
  * @author Zsolt Berentey
  */
 @Sync
-public class BookmarksEntryActivityInterpreterTest
+public class BookmarksFolderActivityInterpreterTest
 	extends BaseSocialActivityInterpreterTestCase {
 
 	@ClassRule
@@ -49,47 +47,43 @@ public class BookmarksEntryActivityInterpreterTest
 
 	@Override
 	protected void addActivities() throws Exception {
-		_entry = BookmarksTestUtil.addEntry(group.getGroupId(), true);
+		_folder = BookmarksTestUtil.addFolder(group.getGroupId(), "Folder");
 	}
 
 	@Override
 	protected SocialActivityInterpreter getActivityInterpreter() {
-		return new BookmarksEntryActivityInterpreter();
+		return new BookmarksFolderActivityInterpreter();
 	}
 
 	@Override
 	protected int[] getActivityTypes() {
 		return new int[] {
-			BookmarksActivityKeys.ADD_ENTRY, BookmarksActivityKeys.UPDATE_ENTRY,
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH
 		};
 	}
 
 	@Override
-	protected void moveModelsToTrash() throws Exception {
-		BookmarksEntryLocalServiceUtil.moveEntryToTrash(
-			TestPropsValues.getUserId(), _entry.getEntryId());
+	protected boolean isSupportsRename(String className) {
+		return false;
 	}
 
 	@Override
-	protected void renameModels() throws Exception {
-		_entry.setName(RandomTestUtil.randomString());
+	protected void moveModelsToTrash() throws Exception {
+		BookmarksFolderLocalServiceUtil.moveFolderToTrash(
+			TestPropsValues.getUserId(), _folder.getFolderId());
+	}
 
-		serviceContext.setCommand(Constants.UPDATE);
-
-		BookmarksEntryServiceUtil.updateEntry(
-			_entry.getEntryId(), serviceContext.getScopeGroupId(),
-			_entry.getFolderId(), _entry.getName(), _entry.getUrl(),
-			_entry.getUrl(), serviceContext);
+	@Override
+	protected void renameModels() {
 	}
 
 	@Override
 	protected void restoreModelsFromTrash() throws Exception {
-		BookmarksEntryLocalServiceUtil.restoreEntryFromTrash(
-			TestPropsValues.getUserId(), _entry.getEntryId());
+		BookmarksFolderLocalServiceUtil.restoreFolderFromTrash(
+			TestPropsValues.getUserId(), _folder.getFolderId());
 	}
 
-	private BookmarksEntry _entry;
+	private BookmarksFolder _folder;
 
 }

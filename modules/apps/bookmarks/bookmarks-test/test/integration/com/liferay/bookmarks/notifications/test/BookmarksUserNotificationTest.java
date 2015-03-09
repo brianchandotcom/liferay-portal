@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.notifications;
+package com.liferay.bookmarks.notifications.test;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;

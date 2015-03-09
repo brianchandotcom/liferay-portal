@@ -310,6 +310,16 @@ public interface Staging {
 
 	public void publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
+			boolean privateLayout, Map<String, String[]> parameterMap)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #publishLayouts(long, long,
+	 *             long, boolean, Map)}
+	 */
+	@Deprecated
+	public void publishLayouts(
+			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, Map<String, String[]> parameterMap,
 			Date startDate, Date endDate)
 		throws PortalException;

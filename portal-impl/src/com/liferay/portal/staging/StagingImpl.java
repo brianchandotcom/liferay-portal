@@ -1308,8 +1308,7 @@ public class StagingImpl implements Staging {
 	@Override
 	public void publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
-			boolean privateLayout, Map<String, String[]> parameterMap,
-			Date startDate, Date endDate)
+			boolean privateLayout, Map<String, String[]> parameterMap)
 		throws PortalException {
 
 		List<Layout> sourceGroupLayouts = LayoutLocalServiceUtil.getLayouts(
@@ -1318,7 +1317,23 @@ public class StagingImpl implements Staging {
 		publishLayouts(
 			userId, sourceGroupId, targetGroupId, privateLayout,
 			ExportImportHelperUtil.getLayoutIds(sourceGroupLayouts),
-			parameterMap, startDate, endDate);
+			parameterMap);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #publishLayouts(long, long,
+	 *             long, boolean, Map)}
+	 */
+	@Deprecated
+	@Override
+	public void publishLayouts(
+			long userId, long sourceGroupId, long targetGroupId,
+			boolean privateLayout, Map<String, String[]> parameterMap,
+			Date startDate, Date endDate)
+		throws PortalException {
+
+		publishLayouts(
+			userId, sourceGroupId, targetGroupId, privateLayout, parameterMap);
 	}
 
 	@Override
@@ -2126,12 +2141,12 @@ public class StagingImpl implements Staging {
 			if (scope.equals("all-pages")) {
 				publishLayouts(
 					themeDisplay.getUserId(), sourceGroupId, targetGroupId,
-					privateLayout, parameterMap, null, null);
+					privateLayout, parameterMap);
 			}
 			else {
 				publishLayouts(
 					themeDisplay.getUserId(), sourceGroupId, targetGroupId,
-					privateLayout, layoutIds, parameterMap, null, null);
+					privateLayout, layoutIds, parameterMap);
 			}
 		}
 	}

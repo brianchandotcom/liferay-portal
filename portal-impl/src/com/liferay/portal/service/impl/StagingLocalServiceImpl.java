@@ -294,7 +294,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			if (liveGroup.hasPrivateLayouts()) {
 				StagingUtil.publishLayouts(
 					userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),
-					true, parameterMap, null, null);
+					true, parameterMap);
 			}
 
 			if (liveGroup.hasPublicLayouts() ||
@@ -302,7 +302,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 				StagingUtil.publishLayouts(
 					userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),
-					false, parameterMap, null, null);
+					false, parameterMap);
 			}
 		}
 	}

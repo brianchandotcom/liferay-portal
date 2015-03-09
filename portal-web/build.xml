@@ -378,7 +378,7 @@
 	</target>
 
 	<target name="build-ckeditor-plugins-creole">
-		<mirrors-get
+		<get
 			dest="docroot/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js"
 			src="http://www.ivan.fomichev.name/2008/04/javascript-creole-10-wiki-markup-parser.html"
 		/>
@@ -458,6 +458,10 @@
 				// Add cke_show_border class to table start tag to keep CKEditor's formatting
 
 				creoleParserContent = creoleParserContent.replace("table: { tag: 'table', capture: 0,", "table: { tag: 'table', capture: 0,\n\t\t\tattrs: { 'class': 'cke_show_border' },");
+
+				// Fix parsing empty columns in tables
+
+				creoleParserContent = creoleParserContent.replace("regex: '\\\\|+([^|~\\\\[{]*((~(.|(?=\\\\n)|$)|' +", "regex: '\\\\|([^|~\\\\[{]*((~(.|(?=\\\\n)|$)|' +");
 
 				// Register Creole parser
 

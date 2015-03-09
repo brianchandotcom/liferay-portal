@@ -17,6 +17,7 @@ package com.liferay.portal.wab.extender.internal;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.wab.extender.internal.adaptor.FilterExceptionAdaptor;
 import com.liferay.portal.wab.extender.internal.adaptor.ServletContextListenerExceptionAdaptor;
+import com.liferay.portal.wab.extender.internal.adaptor.ServletExceptionAdaptor;
 import com.liferay.portal.wab.extender.internal.definition.FilterDefinition;
 import com.liferay.portal.wab.extender.internal.definition.ListenerDefinition;
 import com.liferay.portal.wab.extender.internal.definition.ServletDefinition;
@@ -453,7 +454,7 @@ public class WabBundleProcessor implements ServletContextListener {
 		}
 	}
 
-	protected void initServlets() {
+	protected void initServlets() throws Exception {
 		Map<String, ServletDefinition> servletDefinitions =
 			_webXMLDefinition.getServletDefinitions();
 
@@ -462,22 +463,55 @@ public class WabBundleProcessor implements ServletContextListener {
 
 			ServletDefinition servletDefinition = entry.getValue();
 
-			Servlet servlet = servletDefinition.getServlet();
+			Dictionary<String, Object> properties = new Hashtable<>();
 
-			try {
-				Map<String, String> initParameters =
-					servletDefinition.getInitParameters();
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+				_contextName);
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED,
+				servletDefinition.isAsyncSupported());
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ERROR_PAGE,
+				servletDefinition.getErrorPages());
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
+				servletDefinition.getName());
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
+				servletDefinition.getURLPatterns());
 
-				_extendedHttpService.registerServlet(
-					servlet, servletDefinition.getName(),
-					servletDefinition.getURLPatterns().toArray(new String[0]),
-					servletDefinition.getErrorPages().toArray(new String[0]),
-					servletDefinition.isAsyncSupported(), initParameters,
-					_contextName);
+			Map<String, String> initParameters =
+				servletDefinition.getInitParameters();
+
+			for (Entry<String, String> initParametersEntry :
+					initParameters.entrySet()) {
+
+				String key = initParametersEntry.getKey();
+				String value = initParametersEntry.getValue();
+
+				properties.put(
+					HttpWhiteboardConstants.
+						HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX + key,
+					value);
 			}
-			catch (Exception e) {
-				_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
+
+			ServletExceptionAdaptor servletExceptionAdaptor =
+				new ServletExceptionAdaptor(servletDefinition.getServlet());
+
+			ServiceRegistration<Servlet> serviceRegistration =
+				_bundleContext.registerService(
+					Servlet.class, servletExceptionAdaptor, properties);
+
+			Exception exception = servletExceptionAdaptor.getException();
+
+			if (exception != null) {
+				serviceRegistration.unregister();
+
+				throw exception;
 			}
+
+			_servletRegistrations.add(serviceRegistration);
 		}
 	}
 

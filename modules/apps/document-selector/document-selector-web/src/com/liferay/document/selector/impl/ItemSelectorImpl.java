@@ -140,9 +140,9 @@ public class ItemSelectorImpl implements ItemSelector {
 	@Reference(policyOption = ReferencePolicyOption.GREEDY)
 	protected <T extends ItemSelectorCriterion>
 		void setItemSelectionCriterionHandler(
-			ItemSelectorCriterionHandler<?> itemSelectionCriterionHandler) {
+			ItemSelectorCriterionHandler<T> itemSelectionCriterionHandler) {
 
-		Class<?> itemSelectorCriterionClass =
+		Class<T> itemSelectorCriterionClass =
 			itemSelectionCriterionHandler.getItemSelectorCriterionClass();
 
 		_itemSelectionCriterionHandlers.put(

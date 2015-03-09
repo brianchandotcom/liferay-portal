@@ -14,6 +14,7 @@
 
 package com.liferay.bookmarks.subscription.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
@@ -32,10 +33,12 @@ import com.liferay.portlet.subscriptions.test.BaseSubscriptionLocalizedContentTe
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 @Sync
 public class BookmarksSubscriptionLocalizedContentTest
 	extends BaseSubscriptionLocalizedContentTestCase {

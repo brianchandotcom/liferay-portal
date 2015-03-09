@@ -11,7 +11,13 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+<#if entity.isWorkflowEnabled()>
+	import com.liferay.portal.kernel.dao.orm.Criterion;
+</#if>
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
+<#if entity.isWorkflowEnabled()>
+	import com.liferay.portal.kernel.dao.orm.Disjunction;
+</#if>
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -19,6 +25,9 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+<#if entity.isWorkflowEnabled()>
+	import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+</#if>
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -448,7 +457,21 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 
 							@Override
 							public void addCriteria(DynamicQuery dynamicQuery) {
-								portletDataContext.addDateRangeCriteria(dynamicQuery, "modifiedDate");
+								<#if entity.isWorkflowEnabled()>
+									Criterion modifiedDateCriterion = portletDataContext.getDateRangeCriteria(dynamicQuery, "modifiedDate");
+									Criterion statusDateCriterion = portletDataContext.getDateRangeCriteria(dynamicQuery, "statusDate");
+
+									if ((modifiedDateCriterion != null) && (statusDateCriterion != null)) {
+										Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+										disjunction.add(modifiedDateCriterion);
+										disjunction.add(statusDateCriterion);
+
+										dynamicQuery.add(disjunction);
+									}
+								<#else>
+									portletDataContext.addDateRangeCriteria(dynamicQuery, "modifiedDate");
+								</#if>
 
 								<#if entity.isTypedModel()>
 									StagedModelType stagedModelType = exportActionableDynamicQuery.getStagedModelType();

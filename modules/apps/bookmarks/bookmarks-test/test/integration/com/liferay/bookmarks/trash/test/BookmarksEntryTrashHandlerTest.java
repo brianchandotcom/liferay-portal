@@ -12,10 +12,13 @@
  * details.
  */
 
-package com.liferay.bookmarks.trash;
+package com.liferay.bookmarks.trash.test;
 
+import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -28,6 +31,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -42,7 +46,7 @@ import org.junit.Test;
  * @author Eudaldo Alonso
  */
 @Sync
-public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
+public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@ClassRule
 	@Rule
@@ -67,18 +71,6 @@ public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	@Test
 	public void testTrashDuplicate() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashMyBaseModel() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashRecentBaseModel() throws Exception {
 	}
 
 	@Ignore()
@@ -111,13 +103,11 @@ public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		BookmarksFolder parentFolder = (BookmarksFolder)parentBaseModel;
+		BookmarksFolder folder = (BookmarksFolder)parentBaseModel;
 
-		String name = getSearchKeywords();
-
-		return BookmarksFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), parentFolder.getFolderId(), name,
-			StringPool.BLANK, serviceContext);
+		return addBaseModelWithWorkflow(
+			folder.getUserId(), folder.getGroupId(), folder.getFolderId(),
+			serviceContext);
 	}
 
 	@Override
@@ -125,12 +115,22 @@ public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 			boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
-		String name = getSearchKeywords();
+		return addBaseModelWithWorkflow(
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+	}
 
-		return BookmarksFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(),
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, name,
-			StringPool.BLANK, serviceContext);
+	protected BaseModel<?> addBaseModelWithWorkflow(
+			long userId, long groupId, long folderId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String name = getSearchKeywords();
+		String url = "http://www.liferay.com";
+		String description = "Content: Enterprise. Open Source.";
+
+		return BookmarksEntryLocalServiceUtil.addEntry(
+			userId, groupId, folderId, name, url, description, serviceContext);
 	}
 
 	@Override
@@ -145,30 +145,36 @@ public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected BaseModel<?> getBaseModel(long primaryKey) throws Exception {
-		return BookmarksFolderLocalServiceUtil.getFolder(primaryKey);
+		return BookmarksEntryLocalServiceUtil.getEntry(primaryKey);
 	}
 
 	@Override
 	protected Class<?> getBaseModelClass() {
-		return BookmarksFolder.class;
+		return BookmarksEntry.class;
 	}
 
 	@Override
 	protected String getBaseModelName(ClassedModel classedModel) {
-		BookmarksFolder folder = (BookmarksFolder)classedModel;
+		BookmarksEntry entry = (BookmarksEntry)classedModel;
 
-		return folder.getName();
+		return entry.getName();
+	}
+
+	@Override
+	protected int getMineBaseModelsCount(long groupId, long userId)
+		throws Exception {
+
+		return BookmarksEntryServiceUtil.getGroupEntriesCount(groupId, userId);
 	}
 
 	@Override
 	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
-		BookmarksFolder parentFolder = (BookmarksFolder)parentBaseModel;
+		BookmarksFolder folder = (BookmarksFolder)parentBaseModel;
 
-		return BookmarksFolderLocalServiceUtil.getFoldersCount(
-			parentFolder.getGroupId(), parentFolder.getFolderId(),
-			WorkflowConstants.STATUS_APPROVED);
+		return BookmarksEntryServiceUtil.getEntriesCount(
+			folder.getGroupId(), folder.getFolderId());
 	}
 
 	@Override
@@ -192,6 +198,16 @@ public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected Class<?> getParentBaseModelClass() {
+		return BookmarksFolder.class;
+	}
+
+	@Override
+	protected int getRecentBaseModelsCount(long groupId) throws Exception {
+		return BookmarksEntryServiceUtil.getGroupEntriesCount(groupId, 0);
+	}
+
+	@Override
 	protected String getSearchKeywords() {
 		return "Title";
 	}
@@ -199,6 +215,15 @@ public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
 		return null;
+	}
+
+	@Override
+	protected WorkflowedModel getWorkflowedModel(ClassedModel baseModel)
+		throws Exception {
+
+		BookmarksEntry entry = (BookmarksEntry)baseModel;
+
+		return entry;
 	}
 
 	@Override
@@ -210,7 +235,7 @@ public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		BookmarksFolderServiceUtil.moveFolderFromTrash(
+		BookmarksEntryServiceUtil.moveEntryFromTrash(
 			(Long)classedModel.getPrimaryKeyObj(),
 			(Long)parentBaseModel.getPrimaryKeyObj());
 
@@ -219,7 +244,7 @@ public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		BookmarksFolderServiceUtil.moveFolderToTrash(primaryKey);
+		BookmarksEntryServiceUtil.moveEntryToTrash(primaryKey);
 	}
 
 	@Override
@@ -234,18 +259,18 @@ public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 			long primaryKey, ServiceContext serviceContext)
 		throws Exception {
 
-		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
 			primaryKey);
 
 		if (serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_SAVE_DRAFT) {
 
-			folder = BookmarksFolderLocalServiceUtil.updateStatus(
-				TestPropsValues.getUserId(), folder,
+			entry = BookmarksEntryLocalServiceUtil.updateStatus(
+				TestPropsValues.getUserId(), entry,
 				WorkflowConstants.STATUS_DRAFT);
 		}
 
-		return folder;
+		return entry;
 	}
 
 }

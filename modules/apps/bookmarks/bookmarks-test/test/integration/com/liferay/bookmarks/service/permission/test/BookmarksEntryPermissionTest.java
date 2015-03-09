@@ -12,9 +12,12 @@
  * details.
  */
 
-package com.liferay.bookmarks.service.permission;
+package com.liferay.bookmarks.service.permission.test;
 
+import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.service.permission.BookmarksEntryPermission;
+import com.liferay.bookmarks.service.permission.BookmarksPermission;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -22,7 +25,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -32,7 +34,7 @@ import org.junit.Test;
  * @author Eric Chin
  * @author Shinn Lok
  */
-public class BookmarksFolderPermissionTest extends BasePermissionTestCase {
+public class BookmarksEntryPermissionTest extends BasePermissionTestCase {
 
 	@ClassRule
 	@Rule
@@ -43,30 +45,31 @@ public class BookmarksFolderPermissionTest extends BasePermissionTestCase {
 	@Test
 	public void testContains() throws Exception {
 		Assert.assertTrue(
-			BookmarksFolderPermission.contains(
-				permissionChecker, _folder, ActionKeys.VIEW));
+			BookmarksEntryPermission.contains(
+				permissionChecker, _entry.getEntryId(), ActionKeys.VIEW));
 		Assert.assertTrue(
-			BookmarksFolderPermission.contains(
-				permissionChecker, _subfolder, ActionKeys.VIEW));
+			BookmarksEntryPermission.contains(
+				permissionChecker, _subentry.getEntryId(), ActionKeys.VIEW));
 
 		removePortletModelViewPermission();
 
 		Assert.assertFalse(
-			BookmarksFolderPermission.contains(
-				permissionChecker, _folder, ActionKeys.VIEW));
+			BookmarksEntryPermission.contains(
+				permissionChecker, _entry.getEntryId(), ActionKeys.VIEW));
 		Assert.assertFalse(
-			BookmarksFolderPermission.contains(
-				permissionChecker, _subfolder, ActionKeys.VIEW));
+			BookmarksEntryPermission.contains(
+				permissionChecker, _subentry.getEntryId(), ActionKeys.VIEW));
 	}
 
 	@Override
 	protected void doSetUp() throws Exception {
-		_folder = BookmarksTestUtil.addFolder(
+		_entry = BookmarksTestUtil.addEntry(group.getGroupId(), true);
+
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
 			group.getGroupId(), RandomTestUtil.randomString());
 
-		_subfolder = BookmarksTestUtil.addFolder(
-			_folder.getFolderId(), RandomTestUtil.randomString(),
-			serviceContext);
+		_subentry = BookmarksTestUtil.addEntry(
+			folder.getFolderId(), true, serviceContext);
 	}
 
 	@Override
@@ -74,7 +77,7 @@ public class BookmarksFolderPermissionTest extends BasePermissionTestCase {
 		return BookmarksPermission.RESOURCE_NAME;
 	}
 
-	private BookmarksFolder _folder;
-	private BookmarksFolder _subfolder;
+	private BookmarksEntry _entry;
+	private BookmarksEntry _subentry;
 
 }

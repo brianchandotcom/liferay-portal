@@ -18,6 +18,7 @@ import com.liferay.portal.cache.AbstractPortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
+import com.liferay.portal.kernel.jmx.RegistryAwareMBeanServer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -25,6 +26,9 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.io.Serializable;
 
@@ -33,8 +37,6 @@ import java.lang.reflect.Field;
 import java.net.URL;
 
 import java.util.Map;
-
-import javax.management.MBeanServer;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
@@ -53,6 +55,15 @@ import net.sf.ehcache.util.FailSafeTimer;
  */
 public class EhcachePortalCacheManager<K extends Serializable, V>
 	extends AbstractPortalCacheManager<K, V> {
+
+	public EhcachePortalCacheManager() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			RegistryAwareMBeanServer.class);
+
+		_serviceTracker.open();
+	}
 
 	public CacheManager getEhcacheManager() {
 		return _cacheManager;
@@ -81,10 +92,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	public void setConfigPropertyKey(String configPropertyKey) {
 		_configPropertyKey = configPropertyKey;
-	}
-
-	public void setMBeanServer(MBeanServer mBeanServer) {
-		_mBeanServer = mBeanServer;
 	}
 
 	public void setRegisterCacheConfigurations(
@@ -182,9 +189,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		if (PropsValues.EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED) {
 			_managementService = new ManagementService(
-				_cacheManager, _mBeanServer, _registerCacheManager,
-				_registerCaches, _registerCacheConfigurations,
-				_registerCacheStatistics);
+				_cacheManager, _serviceTracker.getService(),
+				_registerCacheManager, _registerCaches,
+				_registerCacheConfigurations, _registerCacheStatistics);
 
 			_managementService.init();
 		}
@@ -268,12 +275,13 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 		_configurationPair;
 	private ManagementService _managementService;
-	private MBeanServer _mBeanServer;
 	private String _name;
 	private boolean _registerCacheConfigurations = true;
 	private boolean _registerCacheManager = true;
 	private boolean _registerCaches = true;
 	private boolean _registerCacheStatistics = true;
+	private final ServiceTracker
+		<RegistryAwareMBeanServer, RegistryAwareMBeanServer> _serviceTracker;
 	private boolean _usingDefault;
 
 }

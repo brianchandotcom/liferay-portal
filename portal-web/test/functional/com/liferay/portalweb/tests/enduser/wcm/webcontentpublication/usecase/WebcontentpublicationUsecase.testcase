@@ -64,14 +64,15 @@
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Organization#addPrivatePageToSiteViaSiteTemplateCP">
 			<var name="organizationSite" value="Intranet Site" />
 			<var name="orgName" value="Organization Name" />
-			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -112,7 +113,7 @@
 		<for list="Home,Documents and Media,News" param="pageName">
 			<var name="key_pageName" value="Asset Publisher Page" />
 
-			<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Asset Publisher Page" />
+			<execute function="AssertElementNotPresent" locator1="Home#PAGE" value1="Asset Publisher Page" />
 		</for>
 
 		<execute macro="Page#openURL">
@@ -121,12 +122,10 @@
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Home" />
-
 		<for list="Documents and Media,News" param="pageName">
 			<var name="key_pageName" value="Asset Publisher Page" />
 
-			<execute function="AssertElementNotPresent" locator1="Home#PAGE" value1="Asset Publisher Page" />
+			<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Asset Publisher Page" />
 		</for>
 
 		<execute macro="Page#addPG">
@@ -178,7 +177,7 @@
 
 		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="PGAssetpublisher#DISPLAY_ICON_EDIT" value1="Edit" />
 
-		<execute function="AssertTextNotEquals" locator1="PGSignin#PORTLET_TITLE" value1="Sign In" />
+		<execute function="AssertElementNotPresent" locator1="PGSignin#PORTLET_TITLE" value1="Sign" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Page" />
@@ -188,6 +187,7 @@
 		</execute>
 
 		<execute macro="WebContent#editPGViaAP">
+			<var name="assetTitle" value="WC WebContent Title" />
 			<var name="webContentContentEdit" value="WC WebContent Content Edit" />
 			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
 		</execute>
@@ -213,6 +213,17 @@
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="WC WebContent Content Edit" />
+		</execute>
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Page" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaAP">
+			<var name="webContentContent" value="WC WebContent Content Edit" />
+			<var name="webContentTitle" value="WC WebContent Title Edit" />
 		</execute>
 	</command>
 
@@ -276,7 +287,7 @@
 
 		<execute macro="Category#addCategoryLocalizationCP">
 			<var name="categoryName" value="Vocabulary1 Category" />
-			<var name="localization2Name" value="Nom de la Catégorie" />
+			<var name="localization2Name" value="Nom de la CatÃ©gorie" />
 			<var name="localization2NameKey" value="fr_FR" />
 			<var name="localizationName" value="Kategorienamen" />
 			<var name="localizationNameKey" value="de_DE" />
@@ -403,7 +414,7 @@
 			<var name="addMetadata" value="true" />
 			<var name="assetContent" value="Contenu de Contenu Web1" />
 			<var name="assetTitle" value="Titre de Contenu Web1" />
-			<var name="categoryName" value="Nom de la Catégorie" />
+			<var name="categoryName" value="Nom de la CatÃ©gorie" />
 			<var name="vocabularyName" value="Nom Vocabulaire" />
 		</execute>
 

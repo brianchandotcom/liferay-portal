@@ -67,10 +67,6 @@ String placeholder = GetterUtil.getString((String)request.getAttribute("liferay-
 
 boolean showSource = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:showSource"));
 
-if (Validator.isNotNull(editorOptions) && !editorOptions.getBoolean("showSource")) {
-	showSource = false;
-}
-
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
 %>
 
@@ -159,7 +155,19 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	</c:if>
 </div>
 
-<aui:script use="aui-base,alloy-editor,liferay-editor-image-uploader">
+<%
+String modules = "liferay-alloy-editor";
+
+if (Validator.isNotNull(data) && Validator.isNotNull(data.get("uploadURL"))) {
+	modules += ",liferay-editor-image-uploader";
+}
+
+if (showSource) {
+	modules += ",liferay-alloy-editor-source";
+}
+%>
+
+<aui:script use="<%= modules %>">
 
 	<%
 	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
@@ -169,6 +177,8 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 	String languageId = LocaleUtil.toLanguageId(locale);
 	%>
+
+	var alloyEditor;
 
 	var createInstance = function() {
 		document.getElementById('<%= name %>').setAttribute('contenteditable', true);
@@ -213,246 +223,41 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 		var config = A.merge(defaultConfig, customConfig);
 
-		var alloyEditor = new A.AlloyEditor(config);
+		var plugins = [];
 
-		var nativeEditor = alloyEditor.get('nativeEditor');
-
-		<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">
-			nativeEditor.on(
-				'blur',
-				function(event) {
-					window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'](event.editor);
+		<c:if test='<%= Validator.isNotNull(data) && Validator.isNotNull(data.get("uploadURL")) %>'>
+			plugins.push(
+				{
+					cfg: {
+						uploadUrl: '<%= data.get("uploadURL") %>'
+					},
+					fn: A.Plugin.LiferayBlogsUploader
 				}
 			);
 		</c:if>
-
-		<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
-			nativeEditor.on(
-				'change',
-				function(event) {
-					window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'](window['<%= name %>'].getHTML());
-				}
-			);
-		</c:if>
-
-		<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
-			nativeEditor.on(
-				'focus',
-				function(event) {
-					window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'](event.editor);
-				}
-			);
-		</c:if>
-
-		nativeEditor.on(
-			'instanceReady',
-			function(event) {
-				<c:if test="<%= Validator.isNotNull(onInitMethod) %>">
-					window['<%= HtmlUtil.escapeJS(onInitMethod) %>']();
-				</c:if>
-
-				window['<%= name %>'].editor = alloyEditor;
-
-				window['<%= name %>'].instanceReady = true;
-
-				<%
-				String uploadURL = StringPool.BLANK;
-
-				if (data != null) {
-					uploadURL = GetterUtil.getString(data.get("uploadURL"), StringPool.BLANK);
-				}
-				%>
-
-				<c:if test="<%= Validator.isNotNull(uploadURL) %>">
-					var uploader = new Liferay.BlogsUploader(
-						{
-							editor: nativeEditor,
-							uploadUrl: '<%= uploadURL %>'
-						}
-					);
-
-					nativeEditor.on(
-						'imagedrop',
-						function(event) {
-							uploader.uploadImage(event.data.el.$, event.data.file);
-						}
-					);
-				</c:if>
-			}
-		);
-
-		<c:if test='<%= Validator.isNotNull(editorConfig) && editorConfig.getString("disallowedContent").contains("br") %>'>
-			nativeEditor.on(
-				'key',
-				function(event) {
-					if (event.data.keyCode === 13) {
-						event.cancel();
-					}
-				}
-			);
-		</c:if>
-
-		var contentFilter = new CKEDITOR.filter(
-			{
-				$1: {
-					attributes: ['alt', 'aria-*', 'height', 'href', 'src', 'width'],
-					classes: false,
-					elements: CKEDITOR.dtd,
-					styles: false
-				}
-			}
-		);
-
-		nativeEditor.on(
-			'paste',
-			function(event) {
-				var fragment = CKEDITOR.htmlParser.fragment.fromHtml(event.data.dataValue);
-
-				var writer = new CKEDITOR.htmlParser.basicWriter();
-
-				contentFilter.applyTo(fragment);
-
-				fragment.writeHtml(writer);
-
-				event.data.dataValue = writer.getHtml();
-			}
-		);
 
 		<c:if test="<%= showSource %>">
-			var CSS_SHOW_SOURCE = 'show-source';
-
-			var STR_VALUE = 'value';
-
-			var editorWrapper = A.one('#<%= name %>Wrapper');
-			var editorSwitch = A.one('#<%= name %>Switch');
-			var editorFullscreen = A.one('#<%= name %>Fullscreen');
-
-			var editorSwitchContainer = editorSwitch.ancestor();
-
-			var toggleEditorModeUI = function() {
-				editorWrapper.toggleClass(CSS_SHOW_SOURCE);
-				editorSwitchContainer.toggleClass(CSS_SHOW_SOURCE);
-				editorFullscreen.toggleClass('hide');
-
-				editorSwitch.setHTML(editorWrapper.hasClass(CSS_SHOW_SOURCE) ? 'abc' : '&lt;/&gt;');
-			};
-
-			var createSourceEditor = function() {
-				A.use(
-					'liferay-source-editor',
-					function(A) {
-						var sourceEditor = new A.LiferaySourceEditor(
-							{
-								boundingBox: A.one('#<%= name %>Source'),
-								mode: 'html',
-								value: window['<%= name %>'].getHTML()
-							}
-						).render();
-
-						toggleEditorModeUI();
-
-						Liferay.component('<%= name %>Source', sourceEditor);
-					}
-				);
-			};
-
-			var switchMode = function(event) {
-				var editor = Liferay.component('<%= name %>Source');
-
-				if (editorWrapper.hasClass(CSS_SHOW_SOURCE)) {
-					var content = event.content || (editor ? editor.get(STR_VALUE) : '');
-
-					window['<%= name %>'].setHTML(content);
-
-					toggleEditorModeUI();
-				}
-				else if (editor) {
-					var currentContent = event.content || window['<%= name %>'].getHTML();
-
-					if (currentContent !== editor.get(STR_VALUE)) {
-						editor.set(STR_VALUE, currentContent);
-					}
-
-					toggleEditorModeUI();
-				}
-				else {
-					createSourceEditor();
-				}
-			};
-
-			editorSwitch.on('click', switchMode);
-
-			var fullScreenDialog;
-			var fullScreenEditor;
-
-			editorFullscreen.on(
-				'click',
-				function(event) {
-					if (fullScreenDialog) {
-						fullScreenEditor.set('value', window['<%= name %>'].getHTML());
-
-						fullScreenDialog.show();
-					}
-					else {
-						Liferay.Util.openWindow(
-							{
-								dialog: {
-									constrain: true,
-									cssClass: 'lfr-fulscreen-source-editor-dialog',
-									modal: true,
-									'toolbars.footer': [
-										{
-											cssClass: 'btn-primary',
-											label: '<liferay-ui:message key="done" />',
-											on: {
-												click: function(event) {
-													fullScreenDialog.hide();
-													switchMode(
-														{
-															content: fullScreenEditor.get('value')
-														}
-													);
-												}
-											}
-										},
-										{
-											label: '<liferay-ui:message key="cancel" />',
-											on: {
-												click: function(event) {
-													fullScreenDialog.hide();
-												}
-											}
-										}
-									]
-								},
-								title: '<liferay-ui:message key="edit-content" />'
-							},
-							function(dialog) {
-								fullScreenDialog = dialog;
-
-								A.use(
-									'liferay-fullscreen-source-editor',
-									function(A) {
-										fullScreenEditor = new A.LiferayFullScreenSourceEditor(
-											{
-												boundingBox: dialog.getStdModNode(A.WidgetStdMod.BODY).appendChild('<div></div>'),
-												previewCssClass: 'alloy-editor alloy-editor-placeholder',
-												value: window['<%= name %>'].getHTML()
-											}
-										).render();
-									}
-								);
-							}
-						);
-					}
-				}
-			);
+			plugins.push(A.Plugin.LiferayAlloyEditorSource);
 		</c:if>
+
+		alloyEditor = new A.LiferayAlloyEditor(
+			{
+				editorConfig: config,
+				editorOptions: <%= editorOptions %>,
+				initMethod: window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'],
+				namespace: '<%= name %>',
+				onBlurMethod: window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'],
+				onChangeMethod: window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'],
+				onFocusMethod: window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'],
+				onInitMethod: window['<%= HtmlUtil.escapeJS(onInitMethod) %>'],
+				plugins: plugins
+			}
+		).render();
 	};
 
 	window['<%= name %>'] = {
 		create: function() {
-			if (!window['<%= name %>'].instanceReady) {
+			if (!alloyEditor) {
 				var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
 
 				var editorContainer = A.one('#<%= name %>Container');
@@ -467,23 +272,13 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			window['<%= name %>'].dispose();
 
 			window['<%= name %>'] = null;
-
-			<c:if test="<%= showSource %>">
-				var sourceEditor = Liferay.component('<%= name %>Source');
-
-				if (sourceEditor) {
-					sourceEditor.destroy();
-				}
-			</c:if>
 		},
 
 		dispose: function() {
-			var editor = window['<%= name %>'].editor;
+			if (alloyEditor) {
+				alloyEditor.destroy();
 
-			if (editor) {
-				editor.destroy();
-
-				window['<%= name %>'].instanceReady = false;
+				alloyEditor = null;
 			}
 
 			var editorNode = document.getElementById('<%= name %>');
@@ -494,64 +289,26 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		},
 
 		focus: function() {
-			CKEDITOR.instances['<%= name %>'].focus();
+			if (alloyEditor) {
+				alloyEditor.focus();
+			}
 		},
 
 		getCkData: function() {
 			var data;
 
-			if (!window['<%= name %>'].instanceReady && window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
-				data = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
+			if (alloyEditor && alloyEditor.instanceReady) {
+				data = alloyEditor.getCkData();
 			}
-			else {
-				data = CKEDITOR.instances['<%= name %>'].getData();
-
-				if (CKEDITOR.env.gecko && (CKEDITOR.tools.trim(data) == '<br />')) {
-					data = '';
-				}
+			else if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
+				data = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
 			}
 
 			return data;
 		},
 
 		getHTML: function() {
-			var text = '';
-
-			<c:choose>
-				<c:when test='<%= Validator.isNotNull(editorOptions) && editorOptions.getBoolean("textMode") %>'>
-					var editorElement = CKEDITOR.instances['<%= name %>'].element.$;
-
-					var childElement;
-
-					if (editorElement.children.length) {
-						childElement = editorElement.children[0];
-					}
-					else if (editorElement.childNodes.length) {
-						childElement = editorElement.childNodes[0];
-					}
-
-					if (childElement) {
-						text = childElement.textContent;
-
-						if (text === undefined) {
-							text = childElement.innerText;
-						}
-					}
-				</c:when>
-				<c:otherwise>
-					text = window['<%= name %>'].getCkData();
-
-					<c:if test="<%= showSource %>">
-						var sourceEditor = Liferay.component('<%= name %>Source');
-
-						if (sourceEditor && sourceEditor.get('boundingBox').test(':visible')) {
-							text = sourceEditor.get('value');
-						}
-					</c:if>
-				</c:otherwise>
-			</c:choose>
-
-			return text;
+			return alloyEditor ? alloyEditor.getHTML() : window['<%= name %>'].getCkData();
 		},
 
 		getText: function() {
@@ -562,10 +319,10 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			createInstance();
 		},
 
-		instanceReady: false,
-
 		setHTML: function(value) {
-			CKEDITOR.instances['<%= name %>'].setData(value);
+			if (alloyEditor) {
+				alloyEditor.setHTML(value);
+			}
 		}
 	};
 

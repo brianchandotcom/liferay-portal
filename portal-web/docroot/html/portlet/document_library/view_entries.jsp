@@ -50,10 +50,10 @@ String displayStyle = GetterUtil.getString((String)request.getAttribute("view.js
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-portletURL.setParameter("curFolder", currentFolder);
-portletURL.setParameter("deltaFolder", deltaFolder);
 portletURL.setParameter("struts_action", "/document_library/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
+portletURL.setParameter("curFolder", currentFolder);
+portletURL.setParameter("deltaFolder", deltaFolder);
 
 SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "curEntry", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 

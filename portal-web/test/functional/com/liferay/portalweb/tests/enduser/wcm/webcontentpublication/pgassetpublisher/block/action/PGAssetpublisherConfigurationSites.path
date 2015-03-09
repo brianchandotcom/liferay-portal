@@ -41,22 +41,22 @@
 <!--SITES_TABLE-->
 <tr>
 	<td>SITES_TABLE_NAME</td>
-	<td>//div[@id='_185_groupsSearchContainerSearchContainer']//tr[contains(.,'${key_siteName}')]/td[1]</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITES_TABLE_TYPE</td>
-	<td>//div[@id='_185_groupsSearchContainerSearchContainer']//tr[contains(.,'${key_siteName}')]/td[2]</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITES_TABLE_CHOOSE_BUTTON</td>
-	<td>//div[@id='_185_groupsSearchContainerSearchContainer']//tr[contains(.,'${key_siteName}')]/td[3]/button</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[3]/button</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITES_TABLE_CHOOSE_BUTTON_DISABLED</td>
-	<td>//div[@id='_185_groupsSearchContainerSearchContainer']//tr[contains(.,'${key_siteName}')]/td[3]/button[contains(@class,'disabled') and contains(@class,'selector-button')]</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[3]/button[contains(@class,'disabled') and contains(@class,'selector-button')]</td>
 	<td></td>
 </tr>
 <tr>

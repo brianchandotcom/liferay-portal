@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>BREADCRUMB_ENTRY</td>
-	<td>//div[contains(@class,'nav-menu')]/div/ul/li[contains(.,'${key_pageName}')]</td>
+	<td>//div[contains(@class,'nav-menu')]/div/ul/li/a[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 <tr>

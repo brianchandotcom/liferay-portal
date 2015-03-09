@@ -129,35 +129,19 @@ public class ServiceTestUtil {
 			setUser(TestPropsValues.getUser());
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error(e, e);
 		}
 	}
 
-	public static void initServices() {
-
-		// JCR
-
-		try {
-			JCRFactoryUtil.prepare();
-		}
-		catch (Exception e) {
-			_log.error(e.getMessage(), e);
-		}
-
-		// Indexers
-
-		PortalRegisterTestUtil.registerIndexers();
+	public static void initMainServletServices() {
 
 		// Upgrade
 
 		try {
 			DBUpgrader.upgrade();
 		}
-		catch (AssertionError ae) {
-			_log.error(ae.getMessage(), ae);
-		}
-		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+		catch (Throwable t) {
+			_log.error(t, t);
 		}
 
 		// Messaging
@@ -176,6 +160,33 @@ public class ServiceTestUtil {
 			DoPrivilegedUtil.wrap(messageSender),
 			DoPrivilegedUtil.wrap(synchronousMessageSender));
 
+		// Scheduler
+
+		try {
+			SchedulerEngineHelperUtil.start();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		// Verify
+
+		try {
+			DBUpgrader.verify();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
+
+	public static void initStaticServices() {
+
+		// Indexers
+
+		PortalRegisterTestUtil.registerIndexers();
+
+		// Messaging
+
 		if (TestPropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
 			_replaceWithSynchronousDestination(
 				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR);
@@ -189,24 +200,6 @@ public class ServiceTestUtil {
 				DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR);
 		}
 
-		// Scheduler
-
-		try {
-			SchedulerEngineHelperUtil.start();
-		}
-		catch (Exception e) {
-			_log.error(e.getMessage(), e);
-		}
-
-		// Verify
-
-		try {
-			DBUpgrader.verify();
-		}
-		catch (Exception e) {
-			_log.error(e.getMessage(), e);
-		}
-
 		// Class names
 
 		_checkClassNames();
@@ -217,7 +210,7 @@ public class ServiceTestUtil {
 			_checkResourceActions();
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error(e, e);
 		}
 
 		// Trash
@@ -232,10 +225,6 @@ public class ServiceTestUtil {
 
 		PortalRegisterTestUtil.registerAssetRendererFactories();
 
-		// Thread locals
-
-		_setThreadLocals();
-
 		// Company
 
 		try {
@@ -243,8 +232,24 @@ public class ServiceTestUtil {
 				TestPropsValues.COMPANY_WEB_ID);
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error(e, e);
 		}
+	}
+
+	public static void initServices() {
+
+		// JCR
+
+		try {
+			JCRFactoryUtil.prepare();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		// Thread locals
+
+		_setThreadLocals();
 
 		// Directories
 
@@ -259,7 +264,7 @@ public class ServiceTestUtil {
 			SearchEngineUtil.initialize(TestPropsValues.getCompanyId());
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error(e, e);
 		}
 	}
 
@@ -333,7 +338,7 @@ public class ServiceTestUtil {
 				PropsValues.LUCENE_DIR + TestPropsValues.getCompanyId());
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error(e, e);
 		}
 	}
 

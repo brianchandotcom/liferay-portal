@@ -167,18 +167,9 @@ public interface ClassNameLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ClassName fetchClassName(long classNameId);
 
-	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ClassName fetchClassName(
 		java.lang.String value);
-
-	@com.liferay.portal.kernel.spring.aop.Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long fetchClassNameId(java.lang.Class<?> clazz);
-
-	@com.liferay.portal.kernel.spring.aop.Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long fetchClassNameId(java.lang.String value);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();

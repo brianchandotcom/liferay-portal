@@ -251,6 +251,8 @@ public class PACLTestRule implements TestRule {
 
 		InitUtil.initWithSpring(configLocations, true);
 
+		ServiceTestUtil.initMainServletServices();
+		ServiceTestUtil.initStaticServices();
 		ServiceTestUtil.initServices();
 		ServiceTestUtil.initPermissions();
 

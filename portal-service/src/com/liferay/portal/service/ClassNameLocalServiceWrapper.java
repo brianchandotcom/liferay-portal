@@ -196,16 +196,6 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	}
 
 	@Override
-	public long fetchClassNameId(java.lang.Class<?> clazz) {
-		return _classNameLocalService.fetchClassNameId(clazz);
-	}
-
-	@Override
-	public long fetchClassNameId(java.lang.String value) {
-		return _classNameLocalService.fetchClassNameId(value);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _classNameLocalService.getActionableDynamicQuery();
 	}

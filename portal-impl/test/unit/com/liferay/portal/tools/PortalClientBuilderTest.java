@@ -49,9 +49,10 @@ public class PortalClientBuilderTest {
 		finally {
 			FileUtil.deltree(outputPath.toFile());
 
-			for (String line : StringUtil.splitLines(
-				ConsoleTestUtil.restoreStdOut(unsyncByteArrayOutputStream))) {
+			String output = ConsoleTestUtil.restoreStdOut(
+				unsyncByteArrayOutputStream);
 
+			for (String line : StringUtil.splitLines(output)) {
 				line = line.trim();
 
 				if (line.startsWith("Loading ") ||
@@ -60,7 +61,7 @@ public class PortalClientBuilderTest {
 					continue;
 				}
 
-				Assert.fail("Unexpected output " + line);
+				Assert.fail("Unexpected output " + output);
 			}
 		}
 	}

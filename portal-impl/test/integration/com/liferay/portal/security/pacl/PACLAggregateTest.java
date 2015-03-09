@@ -44,6 +44,12 @@ import java.net.SocketAddress;
 import java.net.URI;
 import java.net.URL;
 
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -123,6 +129,7 @@ public class PACLAggregateTest {
 		URL url = PACLAggregateTest.class.getResource("security.policy");
 
 		arguments.add("-Djava.security.policy=" + url.getFile());
+		arguments.add("-Dliferay.mode=test");
 
 		boolean junitDebug = Boolean.getBoolean("junit.debug");
 
@@ -134,6 +141,8 @@ public class PACLAggregateTest {
 		arguments.add(
 			"-D" + PropsKeys.LIFERAY_LIB_PORTAL_DIR + "=" +
 				PropsValues.LIFERAY_LIB_PORTAL_DIR);
+		arguments.add(
+			"-D" + PropsKeys.MODULE_FRAMEWORK_PROPERTIES + _OSGI_CONSOLE);
 
 		builder.setArguments(arguments);
 		builder.setBootstrapClassPath(System.getProperty("java.class.path"));
@@ -195,6 +204,8 @@ public class PACLAggregateTest {
 	private static final String _JVM_MAX_PERM_SIZE = "-XX:MaxPermSize=256m";
 
 	private static final String _JVM_XMX = "-Xmx1024m";
+
+	private static final String _OSGI_CONSOLE = "osgi.console=localhost:11312";
 
 	private static class DummySocksProxySelector extends ProxySelector {
 
@@ -319,7 +330,15 @@ public class PACLAggregateTest {
 		public Result call() throws ProcessException {
 			ProxySelector.setDefault(new DummySocksProxySelector());
 
+			Path tempStatePath = null;
+
 			try {
+				tempStatePath = Files.createTempDirectory(null);
+
+				System.setProperty(
+					"portal:" + PropsKeys.MODULE_FRAMEWORK_STATE_DIR,
+					tempStatePath.toString());
+
 				JUnitCore junitCore = new JUnitCore();
 
 				junitCore.addListener(new NoticeBridgeRunListener());
@@ -327,10 +346,47 @@ public class PACLAggregateTest {
 				return junitCore.run(
 					_classes.toArray(new Class<?>[_classes.size()]));
 			}
+			catch (IOException ioe) {
+				throw new ProcessException(ioe);
+			}
 			finally {
 				InitUtil.stopModuleFramework();
 
 				MPIHelperUtil.shutdown();
+
+				if (tempStatePath != null) {
+					try {
+						Files.walkFileTree(
+							tempStatePath,
+							new SimpleFileVisitor<Path>() {
+
+								@Override
+								public FileVisitResult postVisitDirectory(
+										Path path, IOException ioe)
+									throws IOException {
+
+									Files.delete(path);
+
+									return FileVisitResult.CONTINUE;
+								}
+
+								@Override
+								public FileVisitResult visitFile(
+										Path path,
+										BasicFileAttributes basicFileAttributes)
+									throws IOException {
+
+									Files.delete(path);
+
+									return FileVisitResult.CONTINUE;
+								}
+
+							});
+					}
+					catch (IOException ioe) {
+						throw new ProcessException(ioe);
+					}
+				}
 			}
 		}
 

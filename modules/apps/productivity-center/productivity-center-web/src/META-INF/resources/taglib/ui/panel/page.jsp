@@ -18,6 +18,7 @@
 
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("productivity-center-ui:panel:panelCategory");
+PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ProductivityCenterWebKeys.PANEL_CATEGORY_REGISTRY);
 %>
 
 <liferay-ui:panel-container
@@ -26,5 +27,11 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute("productivity-
 	id="userPersonalPanelMenuAddContentPanelContainer"
 	persistState="<%= true %>"
 >
-	<productivity-center-ui:panel-category panelCategory="<%= panelCategory %>" servletContext="<%= application %>" />
+
+	<% for (PanelCategory panelSubcategory : panelCategoryRegistry.getPanelCategories(panelCategory)) { %>
+
+		<productivity-center-ui:panel-category panelCategory="<%= panelSubcategory %>" servletContext="<%= application %>" />
+
+	<% } %>
+
 </liferay-ui:panel-container>

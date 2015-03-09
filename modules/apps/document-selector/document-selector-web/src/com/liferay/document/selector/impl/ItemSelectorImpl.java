@@ -28,7 +28,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +40,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import org.apache.commons.beanutils.BeanUtils;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
@@ -83,12 +81,12 @@ public class ItemSelectorImpl implements ItemSelector {
 		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderers =
 			new ArrayList<>();
 
-		List<Class> itemSelectorCriterionClasses =
+		List<Class<?>> itemSelectorCriterionClasses =
 			_getItemSelectorCriterionClasses(parameters);
 
 		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
-			Class itemSelectorCriterionClass = itemSelectorCriterionClasses.get(
-				i);
+			Class<?> itemSelectorCriterionClass =
+				itemSelectorCriterionClasses.get(i);
 
 			ItemSelectorCriterionHandler itemSelectorCriterionHandler =
 				_itemSelectionCriterionHandlers.get(
@@ -189,14 +187,14 @@ public class ItemSelectorImpl implements ItemSelector {
 		}
 	}
 
-	private List<Class> _getItemSelectorCriterionClasses(
+	private List<Class<?>> _getItemSelectorCriterionClasses(
 		Map<String, String> parameters) {
 
 		String criteria = parameters.get(PARAM_CRITERIA);
 
 		String[] itemSelectorCriterionClassNames = criteria.split(",");
 
-		List<Class> itemSelectorCriterionClasses = new ArrayList<>();
+		List<Class<?>> itemSelectorCriterionClasses = new ArrayList<>();
 
 		for (String itemSelectorCriterionClassName :
 				itemSelectorCriterionClassNames) {

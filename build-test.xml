@@ -467,17 +467,38 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-test-url">
+		<sequential>
+			<get-testcase-property property.name="portal.url" />
+
+			<if>
+				<isset property="test.url" />
+				<then>
+					<var name="test.url" value="${test.url}" />
+				</then>
+				<elseif>
+					<isset property="portal.url" />
+					<then>
+						<var name="test.url" value="${portal.url}" />
+					</then>
+				</elseif>
+				<else>
+					<var name="test.url" value="http://localhost:8080" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-testcase-property">
 		<attribute name="property.name" />
 
 		<sequential>
+			<var name="@{property.name}" unset="true" />
+
 			<if>
 				<isset property="test.class" />
 				<then>
 					<property file="${project.dir}/test.generated.properties" />
-
-					<var name="property.name" unset="true" />
-					<var name="@{property.name}" unset="true" />
 
 					<property name="property.name" value="@{property.name}" />
 

@@ -233,6 +233,7 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 				}
 			}
 		}
+
 	}
 
 }

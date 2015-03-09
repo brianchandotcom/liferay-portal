@@ -15,6 +15,7 @@
 package com.liferay.portal.wab.extender.internal;
 
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.wab.extender.internal.adaptor.FilterExceptionAdaptor;
 import com.liferay.portal.wab.extender.internal.definition.FilterDefinition;
 import com.liferay.portal.wab.extender.internal.definition.ListenerDefinition;
 import com.liferay.portal.wab.extender.internal.definition.ServletDefinition;
@@ -23,12 +24,14 @@ import com.liferay.portal.wab.extender.internal.definition.WebXMLDefinitionLoade
 
 import java.util.Dictionary;
 import java.util.EventListener;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
+import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -288,7 +291,7 @@ public class WabBundleProcessor implements ServletContextListener {
 			ServletContextHelper.class, _wabServletContextHelper, properties);
 	}
 
-	protected void initFilters() {
+	protected void initFilters() throws Exception {
 		Map<String, FilterDefinition> filterDefinitions =
 			_webXMLDefinition.getFilterDefinitions();
 
@@ -297,19 +300,61 @@ public class WabBundleProcessor implements ServletContextListener {
 
 			FilterDefinition filterDefinition = entry.getValue();
 
-			try {
-				_extendedHttpService.registerFilter(
-					filterDefinition.getFilter(), filterDefinition.getName(),
-					filterDefinition.getURLPatterns().toArray(new String[0]),
-					filterDefinition.getServletNames().toArray(new String[0]),
-					filterDefinition.getDispatchers().toArray(new String[0]),
-					filterDefinition.isAsyncSupported(),
-					filterDefinition.getPriority(),
-					filterDefinition.getInitParameters(), _contextName);
+			Dictionary<String, Object> properties = new Hashtable<>();
+
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+				_contextName);
+			properties.put(
+				HttpWhiteboardConstants.
+					HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED,
+				filterDefinition.isAsyncSupported());
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER,
+				filterDefinition.getDispatchers());
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
+				filterDefinition.getName());
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN,
+				filterDefinition.getURLPatterns());
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET,
+				filterDefinition.getServletNames());
+			properties.put(
+				Constants.SERVICE_RANKING, filterDefinition.getPriority());
+
+			Map<String, String> initParameters =
+				filterDefinition.getInitParameters();
+
+			for (Entry<String, String> initParametersEntry :
+					initParameters.entrySet()) {
+
+				String key = initParametersEntry.getKey();
+				String value = initParametersEntry.getValue();
+
+				properties.put(
+					HttpWhiteboardConstants.
+						HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX + key,
+					value);
 			}
-			catch (Exception e) {
-				_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
+
+			FilterExceptionAdaptor filterExceptionAdaptor =
+				new FilterExceptionAdaptor(filterDefinition.getFilter());
+
+			ServiceRegistration<Filter> serviceRegistration =
+				_bundleContext.registerService(
+					Filter.class, filterExceptionAdaptor, properties);
+
+			Exception exception = filterExceptionAdaptor.getException();
+
+			if (exception != null) {
+				serviceRegistration.unregister();
+
+				throw exception;
 			}
+
+			_filterRegistrations.add(serviceRegistration);
 		}
 	}
 

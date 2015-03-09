@@ -50,8 +50,6 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.felix.utils.log.Logger;
 
-import org.eclipse.equinox.http.servlet.ExtendedHttpService;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -67,9 +65,8 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 public class WabBundleProcessor implements ServletContextListener {
 
 	public WabBundleProcessor(
-		Bundle bundle, String contextPath,
-		ExtendedHttpService extendedHttpService,
-		SAXParserFactory saxParserFactory, Logger logger) {
+		Bundle bundle, String contextPath, SAXParserFactory saxParserFactory,
+		Logger logger) {
 
 		_bundle = bundle;
 		_contextPath = contextPath;
@@ -79,7 +76,6 @@ public class WabBundleProcessor implements ServletContextListener {
 				"Context path must start with /");
 		}
 
-		_extendedHttpService = extendedHttpService;
 		_logger = logger;
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
@@ -552,7 +548,6 @@ public class WabBundleProcessor implements ServletContextListener {
 	private final String _contextName;
 	private final String _contextPath;
 	private ServiceRegistration<Servlet> _defaultServletServiceRegistration;
-	private final ExtendedHttpService _extendedHttpService;
 	private Set<ServiceRegistration<Filter>> _filterRegistrations =
 		new ConcurrentSkipListSet<>();
 	private ServiceRegistration<Servlet> _jspServletServiceRegistration;

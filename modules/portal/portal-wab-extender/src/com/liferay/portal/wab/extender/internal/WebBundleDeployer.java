@@ -23,8 +23,6 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.felix.utils.log.Logger;
 
-import org.eclipse.equinox.http.servlet.ExtendedHttpService;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
@@ -35,14 +33,11 @@ import org.osgi.framework.BundleContext;
 public class WebBundleDeployer {
 
 	public WebBundleDeployer(
-			BundleContext bundleContext,
-			ExtendedHttpService extendedHttpService,
-			SAXParserFactory saxParserFactory, EventUtil eventUtil,
-			Logger logger)
+			BundleContext bundleContext, SAXParserFactory saxParserFactory,
+			EventUtil eventUtil, Logger logger)
 		throws Exception {
 
 		_bundleContext = bundleContext;
-		_extendedHttpService = extendedHttpService;
 		_saxParserFactory = saxParserFactory;
 		_eventUtil = eventUtil;
 		_logger = logger;
@@ -73,8 +68,7 @@ public class WebBundleDeployer {
 
 		try {
 			WabBundleProcessor newWabBundleProcessor = new WabBundleProcessor(
-				bundle, contextPath, _extendedHttpService, _saxParserFactory,
-				_logger);
+				bundle, contextPath, _saxParserFactory, _logger);
 
 			WabBundleProcessor oldWabBundleProcessor =
 				_wabBundleProcessors.putIfAbsent(bundle, newWabBundleProcessor);
@@ -137,7 +131,6 @@ public class WebBundleDeployer {
 
 	private final BundleContext _bundleContext;
 	private final EventUtil _eventUtil;
-	private final ExtendedHttpService _extendedHttpService;
 	private final Logger _logger;
 	private final SAXParserFactory _saxParserFactory;
 	private final ConcurrentMap<Bundle, WabBundleProcessor>

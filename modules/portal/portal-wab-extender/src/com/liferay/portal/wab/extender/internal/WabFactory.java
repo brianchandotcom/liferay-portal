@@ -29,8 +29,6 @@ import org.apache.felix.utils.extender.AbstractExtender;
 import org.apache.felix.utils.extender.Extension;
 import org.apache.felix.utils.log.Logger;
 
-import org.eclipse.equinox.http.servlet.ExtendedHttpService;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentContext;
@@ -66,8 +64,7 @@ public class WabFactory extends AbstractExtender {
 
 		try {
 			_webBundleDeployer = new WebBundleDeployer(
-				_bundleContext, _extendedHttpService, _saxParserFactory,
-				_eventUtil, _logger);
+				_bundleContext, _saxParserFactory, _eventUtil, _logger);
 
 			super.start(_bundleContext);
 		}
@@ -108,13 +105,6 @@ public class WabFactory extends AbstractExtender {
 		_logger.log(Logger.LOG_ERROR, message, t);
 	}
 
-	@Reference
-	protected void setExtendedHttpService(
-		ExtendedHttpService extendedHttpService) {
-
-		_extendedHttpService = extendedHttpService;
-	}
-
 	@Reference(unbind = "-")
 	protected void setSAXParserFactory(SAXParserFactory saxParserFactory) {
 		_saxParserFactory = saxParserFactory;
@@ -129,7 +119,6 @@ public class WabFactory extends AbstractExtender {
 
 	private BundleContext _bundleContext;
 	private EventUtil _eventUtil;
-	private ExtendedHttpService _extendedHttpService;
 	private Logger _logger;
 	private SAXParserFactory _saxParserFactory;
 	private WabExtenderConfiguration _wabExtenderConfiguration;

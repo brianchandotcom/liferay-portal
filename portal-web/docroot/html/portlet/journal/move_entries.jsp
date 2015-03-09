@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 long newFolderId = ParamUtil.getLong(request, "newFolderId");
 
-List<JournalFolder> folders = (List<JournalFolder>)request.getAttribute(WebKeys.JOURNAL_FOLDERS);
+List<JournalFolder> folders = ActionUtil.getFolders(request);
 
 List<JournalFolder> invalidMoveFolders = new ArrayList<JournalFolder>();
 List<JournalFolder> validMoveFolders = new ArrayList<JournalFolder>();

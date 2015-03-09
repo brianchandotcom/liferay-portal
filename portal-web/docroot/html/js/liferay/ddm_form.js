@@ -914,9 +914,9 @@ AUI.add(
 
 						portletURL.setParameter('cmd', 'add_temp');
 						portletURL.setParameter('p_auth', Liferay.authToken);
-						portletURL.setParameter('struts_action', '/journal/upload_file_entry');
+						portletURL.setParameter('struts_action', '/document_library/upload_file_entry');
 
-						portletURL.setPortletId(Liferay.PortletKeys.JOURNAL);
+						portletURL.setPortletId(Liferay.PortletKeys.DOCUMENT_LIBRARY);
 
 						return portletURL.toString();
 					},

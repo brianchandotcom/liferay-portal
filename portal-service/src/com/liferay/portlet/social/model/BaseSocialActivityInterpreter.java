@@ -357,18 +357,11 @@ public abstract class BaseSocialActivityInterpreter
 		String className = activity.getClassName();
 		long classPK = activity.getClassPK();
 
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			className);
+		String viewEntryInTrashURL = getViewEntryInTrashURL(
+			className, classPK, serviceContext);
 
-		if ((trashHandler != null) && trashHandler.isInTrash(classPK)) {
-			PortletURL portletURL = TrashUtil.getViewContentURL(
-				serviceContext.getRequest(), className, classPK);
-
-			if (portletURL == null) {
-				return null;
-			}
-
-			return portletURL.toString();
+		if (viewEntryInTrashURL != null) {
+			return viewEntryInTrashURL;
 		}
 
 		String path = getPath(activity, serviceContext);
@@ -515,6 +508,27 @@ public abstract class BaseSocialActivityInterpreter
 	@Deprecated
 	protected String getValue(String json, String key, String defaultValue) {
 		return getJSONValue(json, key, defaultValue);
+	}
+
+	protected String getViewEntryInTrashURL(
+			String className, long classPK, ServiceContext serviceContext)
+		throws Exception {
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			className);
+
+		if ((trashHandler != null) && trashHandler.isInTrash(classPK)) {
+			PortletURL portletURL = TrashUtil.getViewContentURL(
+				serviceContext.getRequest(), className, classPK);
+
+			if (portletURL == null) {
+				return null;
+			}
+
+			return portletURL.toString();
+		}
+
+		return null;
 	}
 
 	protected PortletURL getViewEntryPortletURL(

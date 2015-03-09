@@ -1520,7 +1520,7 @@
 	</command>
 
 	<command name="viewNotPresentCP">
-		<execute function="AssertTextNotPresent" locator1="CPWebcontentEditwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
+		<execute function="AssertElementNotPresent" locator1="CPWebcontentEditwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 	</command>
 
 	<command name="viewPGViaAP">

@@ -59,12 +59,86 @@
 		<if>
 			<equals arg1="${contentDeletion}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_RADIO" />
-				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX" />
+				<execute function="Click" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_RADIO" />
+				<execute function="Click" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_EXTRA_CHANGE_LINK" />
+				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_EXTRA_CHANGE_LINK_DELETIONS_CHECKBOX" />
+				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_OK_BUTTON" value1="OK" />
 			</then>
 		</if>
 
 		<if>
+			<isset var="checkApplicationNameList" />
+			<then>
+				<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+
+				<for list="${checkApplicationNameList}" param="contentName">
+					<var name="key_applicationName" value="${applicationName}" />
+
+					<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="uncheckApplicationNameList" />
+			<then>
+				<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+
+				<for list="${uncheckApplicationNameList}" param="applicationName">
+					<var name="key_applicationName" value="${contentName}" />
+
+					<execute function="Uncheck" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="uncheckSubApplicationList" />
+			<then>
+				<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+
+				<var name="key_applicationName" value="${mainApplication}" />
+
+				<execute function="Check" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
+
+				<var name="key_applicationName" value="${mainApplication}" />
+
+				<execute function="AssertClick" locator1="BasePortletExport#APPLICATION_CONFIGURATION_APPLICATION_CHANGE_LINK" value1="Change" />
+
+				<for list="${uncheckSubApplicationList}" param="uncheckSubApplication">
+					<var name="key_subApplication" value="${uncheckSubApplication}" />
+
+					<execute function="Uncheck" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_CHECKBOX" />
+				</for>
+
+				<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_OK_BUTTON" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="checkApplicationNameList" />
+			<then>
+				<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+
+				<for list="${checkApplicationNameList}" param="contentName">
+					<var name="key_applicationName" value="${applicationName}" />
+
+					<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="uncheckApplicationNameList" />
+			<then>
+				<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+
+				<for list="${uncheckApplicationNameList}" param="applicationName">
+					<var name="key_applicationName" value="${contentName}" />
+
+					<execute function="Uncheck" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
+				</for>
+			</then>os
 			<isset var="checkContentNameList" />
 			<then>
 				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_RADIO" />
@@ -91,30 +165,36 @@
 		</if>
 
 		<if>
-			<not>
-				<and>
-					<isset var="checkContentNameList" />
-					<isset var="uncheckContentNameList" />
-				</and>
-			</not>
-			<then>
-				<execute function="Check" locator1="BasePortletExport#CONTENT_ALL_CONTENT_RADIO" />
-			</then>
-		</if>
-
-		<if>
 			<isset var="uncheckSubContent" />
 			<then>
-				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_RADIO" />
+				<execute function="Click" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_RADIO" />
 
-				<var name="key_contentName" value="${mainContent}" />
+				<var name="key_contentName" value="${contentName}" />
 
 				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_CHECKBOX" value1="Change" />
 
-				<var name="key_dataName" value="${uncheckSubContent}" />
+				<var name="key_subContent" value="${uncheckSubContent}" />
 
 				<execute function="Uncheck" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX" />
+				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_OK_BUTTON" value1="OK" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="uncheckSubSubContent" />
+			<then>
+				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_RADIO" />
+
+				<var name="key_contentName" value="${contentName}" />
+
+				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_CHECKBOX" value1="Change" />
+
+				<var name="key_subContent" value="${subContent}" />
+				<var name="key_subSubContent" value="${uncheckSubSubContent}" />
+
+				<execute function="Uncheck" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_SUB_SUBCONTENT_CHECKBOX" />
 				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_OK_BUTTON" value1="OK" />
 			</then>
 		</if>
@@ -247,11 +327,6 @@
 	</command>
 
 	<command name="gotoExportSiteCmd">
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="${siteName}" />
-		</execute>
-
 		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_EXPORT" value1="Export" />
 	</command>
 
@@ -268,6 +343,8 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_IMPORT" value1="Import" />
+
+		<execute action="BasePortletImport#selectFrame" locator-key1="IMPORT_IFRAME" />
 	</command>
 
 	<command name="importDDL">
@@ -293,6 +370,29 @@
 			<equals arg1="${importPermissions}" arg2="true" />
 			<then>
 				<execute function="Check" locator1="CPSitepagesImport#PERMISSIONS_CHECKBOX" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="checkContentNameList" />
+			<then>
+				<execute function="Click" locator1="BasePortletImport#CONTENT_CHOOSE_CONTENT_RADIO" />
+
+				<for list="${checkContentNameList}" param="contentName">
+					<var name="key_contentName" value="${contentName}" />
+
+					<execute function="Click" locator1="BasePortletImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${contentDeletion}" arg2="true" />
+			<then>
+				<execute function="Click" locator1="BasePortletImport#CONTENT_CHOOSE_CONTENT_RADIO" />
+				<execute function="Click" locator1="BasePortletImport#CONTENT_CHOOSE_CONTENT_EXTRA_CHANGE_LINK" />
+				<execute function="Check" locator1="BasePortletImport#CONTENT_CHOOSE_CONTENT_EXTRA_CHANGE_LINK_DELETIONS_CHECKBOX" />
+				<execute function="AssertClick" locator1="BasePortletImport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_OK_BUTTON" value1="OK" />
 			</then>
 		</if>
 

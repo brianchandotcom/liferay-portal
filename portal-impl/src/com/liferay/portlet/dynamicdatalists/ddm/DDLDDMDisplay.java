@@ -30,10 +30,6 @@ import java.util.Locale;
  */
 public class DDLDDMDisplay extends BaseDDMDisplay {
 
-	public static final long[] RESOURCE_CLASS_NAME_IDS = new long[] {
-		PortalUtil.getClassNameId(DDLRecordSet.class)
-	};
-
 	@Override
 	public DDMPermissionHandler getDDMPermissionHandler() {
 		return _ddmPermissionHandler;

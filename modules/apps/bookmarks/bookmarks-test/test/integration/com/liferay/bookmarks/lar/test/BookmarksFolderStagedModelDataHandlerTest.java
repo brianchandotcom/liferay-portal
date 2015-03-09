@@ -14,6 +14,7 @@
 
 package com.liferay.bookmarks.lar.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
@@ -32,10 +33,12 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Daniel Kocsis
  */
+@RunWith(Arquillian.class)
 public class BookmarksFolderStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 

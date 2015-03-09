@@ -14,6 +14,7 @@
 
 package com.liferay.bookmarks.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
@@ -32,10 +33,12 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Shinn Lok
  */
+@RunWith(Arquillian.class)
 public class BookmarksFolderLocalServiceTreeTest
 	extends BaseLocalServiceTreeTestCase {
 

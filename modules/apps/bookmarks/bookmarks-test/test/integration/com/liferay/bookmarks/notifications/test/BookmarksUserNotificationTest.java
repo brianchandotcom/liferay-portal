@@ -14,6 +14,7 @@
 
 package com.liferay.bookmarks.notifications.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
@@ -31,11 +32,13 @@ import com.liferay.portlet.notifications.test.BaseUserNotificationTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
  * @author Sergio González
  */
+@RunWith(Arquillian.class)
 @Sync
 public class BookmarksUserNotificationTest
 	extends BaseUserNotificationTestCase {

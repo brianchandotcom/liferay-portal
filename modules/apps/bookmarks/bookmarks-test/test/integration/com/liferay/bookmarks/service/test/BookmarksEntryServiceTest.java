@@ -14,6 +14,7 @@
 
 package com.liferay.bookmarks.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
@@ -26,10 +27,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@RunWith(Arquillian.class)
 public class BookmarksEntryServiceTest {
 
 	@ClassRule

@@ -215,7 +215,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		throws Exception {
 
 		AssetCategoriesSummaryTag<?> assetCategorySummaryTag =
-			new AssetCategoriesSummaryTag<Object>();
+			new AssetCategoriesSummaryTag<>();
 
 		setUp(assetCategorySummaryTag);
 
@@ -249,7 +249,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		throws Exception {
 
 		AssetTagsSummaryTag<?> assetTagsSummaryTag =
-			new AssetTagsSummaryTag<Object>();
+			new AssetTagsSummaryTag<>();
 
 		setUp(assetTagsSummaryTag);
 
@@ -361,7 +361,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		throws Exception {
 
 		AssetCategoriesSummaryTag<?> assetCategoriesSummaryTag =
-			new AssetCategoriesSummaryTag<Object>();
+			new AssetCategoriesSummaryTag<>();
 
 		setUp(assetCategoriesSummaryTag);
 
@@ -380,7 +380,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	@Override
 	public AssetTagsSummaryTag<?> getAssetTagsSummaryTag() throws Exception {
 		AssetTagsSummaryTag<?> assetTagsSummaryTag =
-			new AssetTagsSummaryTag<Object>();
+			new AssetTagsSummaryTag<>();
 
 		setUp(assetTagsSummaryTag);
 

@@ -187,7 +187,7 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 		try {
 			StagingUtil.publishPortlet(
 				user.getUserId(), _group.getGroupId(), _liveGroup.getGroupId(),
-				0, 0, StringPool.BLANK, _parameterMap, null, null);
+				0, 0, StringPool.BLANK, _parameterMap);
 		}
 		catch (Throwable t) {
 			if (_log.isInfoEnabled()) {

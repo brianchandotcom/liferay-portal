@@ -351,6 +351,10 @@ public class VerifyProperties extends VerifyProcess {
 			"asset.tags.navigation.display.templates.config",
 			"display.templates.config", "com.liferay.asset.tags.navigation.web"
 		},
+		new String[] {
+			"tags.compiler.enabled", "enabled",
+			"com.liferay.asset.tags.compiler.web"
+		},
 
 		// Bookmarks
 

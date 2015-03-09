@@ -378,7 +378,7 @@
 	</target>
 
 	<target name="build-ckeditor-plugins-creole">
-		<get
+		<mirrors-get
 			dest="docroot/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js"
 			src="http://www.ivan.fomichev.name/2008/04/javascript-creole-10-wiki-markup-parser.html"
 		/>

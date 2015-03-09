@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>IMPORT_IFRAME</td>
-	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>//iframe[contains(@id,'importDialog')]</td>
 	<td></td>
 </tr>
 <tr>

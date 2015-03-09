@@ -60,7 +60,6 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.EventListener;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -76,7 +75,7 @@ import javax.portlet.WindowState;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.ServletContextListener;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -932,10 +931,13 @@ public class PortletTracker
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
 			bundlePortletApp.getServletContextName());
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER,
+			Boolean.TRUE.toString());
 
 		serviceRegistrations.addServiceRegistration(
 			bundleContext.registerService(
-				EventListener.class, bundlePortletApp, properties));
+				ServletContextListener.class, bundlePortletApp, properties));
 
 		return bundlePortletApp;
 	}
@@ -964,7 +966,7 @@ public class PortletTracker
 				ServletContextHelper.class, servletContextHelper, properties));
 	}
 
-	protected ServiceRegistration<Servlet> createDefaultServlet(
+	protected ServiceRegistration<?> createDefaultServlet(
 		BundleContext bundleContext, String contextName) {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
@@ -976,10 +978,10 @@ public class PortletTracker
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX,
 			"/META-INF/resources");
 		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/*");
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN, "/*");
 
 		return bundleContext.registerService(
-			Servlet.class, new HttpServlet() {}, properties);
+			Object.class, new Object(), properties);
 	}
 
 	protected ServiceRegistration<Servlet> createJspServlet(

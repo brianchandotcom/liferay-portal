@@ -155,7 +155,7 @@ public interface PortletDataContext extends Serializable {
 		String className, long classPK, List<MBMessage> messages);
 
 	public void addDateRangeCriteria(
-		DynamicQuery dynamicQuery, String modifiedDatePropertyName);
+		DynamicQuery dynamicQuery, String datePropertyName);
 
 	public void addDeletionSystemEventStagedModelTypes(
 		StagedModelType... stagedModelTypes);

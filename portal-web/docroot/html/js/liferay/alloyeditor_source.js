@@ -40,7 +40,7 @@ AUI.add(
 						instance._editorSwitch = host.one('#Switch');
 						instance._editorWrapper = host.one('#Wrapper');
 
-						instance.eventHandles = [
+						instance._eventHandles = [
 							instance._editorSwitch.on('click', instance._switchMode, instance),
 							instance._editorFullscreen.on('click', instance._onFullScreenBtnClick, instance),
 							instance.doAfter('getHTML', instance._getHTML, instance)

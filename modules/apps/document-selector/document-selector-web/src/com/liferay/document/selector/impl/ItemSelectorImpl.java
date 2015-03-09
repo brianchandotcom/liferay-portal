@@ -18,7 +18,7 @@ import com.liferay.document.selector.ItemSelector;
 import com.liferay.document.selector.ItemSelectorCriterion;
 import com.liferay.document.selector.ItemSelectorCriterionHandler;
 import com.liferay.document.selector.ItemSelectorView;
-import com.liferay.document.selector.ItemSelectorViewWithCriterion;
+import com.liferay.document.selector.ItemSelectorViewRenderer;
 import com.liferay.document.selector.web.constants.DocumentSelectorPortletKeys;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Accessor;
@@ -77,11 +77,10 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	@Override
-	public List<ItemSelectorViewWithCriterion<?>>
-		getItemSelectorViewsWithCriteria(
-			Map<String, String> parameters) {
+	public List<ItemSelectorViewRenderer<?>> getItemSelectorViewRenderers(
+		Map<String, String> parameters) {
 
-		List<ItemSelectorViewWithCriterion<?>> itemSelectorViewWithCriteria =
+		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderers =
 			new ArrayList<>();
 
 		List<Class> itemSelectorCriterionClasses =
@@ -104,14 +103,14 @@ public class ItemSelectorImpl implements ItemSelector {
 					itemSelectorCriterion);
 
 			for (ItemSelectorView itemSelectorView : itemSelectorViews) {
-				itemSelectorViewWithCriteria.add(
-					new ItemSelectorViewWithCriterion(
+				itemSelectorViewRenderers.add(
+					new ItemSelectorViewRenderer(
 						itemSelectorView, itemSelectorCriterion)
 				);
 			}
 		}
 
-		return itemSelectorViewWithCriteria;
+		return itemSelectorViewRenderers;
 	}
 
 	protected Map<String, String> getItemSelectorParameters(

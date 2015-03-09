@@ -113,7 +113,6 @@
 		<execute macro="SiteTemplates#viewDefaultCP" />
 
 		<execute macro="MyAccount#configureDisplaySettingsLanguage">
-			<var name="displaySettings" value="Display Settings" />
 			<var name="languageName" value="español (España)" />
 			<var name="myAccount" value="My Account" />
 			<var name="saveButton" value="Save" />
@@ -134,7 +133,6 @@
 		</execute>
 
 		<execute macro="MyAccount#configureDisplaySettingsLanguage">
-			<var name="displaySettings" value="Preferencias de presentación" />
 			<var name="languageName" value="English (United States)" />
 			<var name="myAccount" value="Mi cuenta" />
 			<var name="saveButton" value="Guardar" />

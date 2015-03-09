@@ -44,6 +44,10 @@ public class MainServletTestCallback extends BaseTestCallback<Object, Object> {
 	public static final MainServletTestCallback INSTANCE =
 		new MainServletTestCallback();
 
+	public static MainServlet getMainServlet() {
+		return _mainServlet;
+	}
+
 	@Override
 	public void doAfterClass(Description description, Object object) {
 		ServiceTestUtil.destroyServices();

@@ -14,9 +14,9 @@
  */
 --%>
 
-<%@ include file="/html/portlet/trash/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<liferay-util:include page="/html/portlet/trash/restore_path.jsp" />
+<liferay-util:include page="/restore_path.jsp" />
 
 <div class="asset-content">
 
@@ -53,7 +53,7 @@
 
 	PortletURL containerModelURL = renderResponse.createRenderURL();
 
-	containerModelURL.setParameter("mvcPath", "/html/portlet/trash/view_content.jsp");
+	containerModelURL.setParameter("mvcPath", "/view_content.jsp");
 	containerModelURL.setParameter("redirect", redirect);
 	containerModelURL.setParameter("className", trashHandler.getContainerModelClassName(classPK));
 	containerModelURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
@@ -109,7 +109,7 @@
 								</c:when>
 								<c:when test="<%= !trashHandler.isRestorable(entry.getClassPK()) && trashHandler.isMovable() %>">
 									<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-										<portlet:param name="mvcPath" value="/html/portlet/trash/view_container_model.jsp" />
+										<portlet:param name="mvcPath" value="/view_container_model.jsp" />
 										<portlet:param name="redirect" value="<%= backURL %>" />
 										<portlet:param name="className" value="<%= entry.getClassName() %>" />
 										<portlet:param name="classPK" value="<%= String.valueOf(entry.getClassPK()) %>" />
@@ -149,7 +149,7 @@
 						<c:otherwise>
 							<c:if test="<%= trashHandler.isMovable() %>">
 								<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-									<portlet:param name="mvcPath" value="/html/portlet/trash/view_container_model.jsp" />
+									<portlet:param name="mvcPath" value="/view_container_model.jsp" />
 									<portlet:param name="redirect" value="<%= backURL %>" />
 									<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
 									<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
@@ -196,7 +196,7 @@
 			<%
 			PortletURL iteratorURL = renderResponse.createRenderURL();
 
-			iteratorURL.setParameter("mvcPath", "/html/portlet/trash/view_content.jsp");
+			iteratorURL.setParameter("mvcPath", "/view_content.jsp");
 			iteratorURL.setParameter("redirect", redirect);
 			iteratorURL.setParameter("className", className);
 			iteratorURL.setParameter("classPK", String.valueOf(classPK));
@@ -232,7 +232,7 @@
 
 								PortletURL rowURL = renderResponse.createRenderURL();
 
-								rowURL.setParameter("mvcPath", "/html/portlet/trash/view_content.jsp");
+								rowURL.setParameter("mvcPath", "/view_content.jsp");
 								rowURL.setParameter("redirect", redirect);
 								rowURL.setParameter("backURL", currentURL);
 								rowURL.setParameter("className", (curTrashRenderer.getClassName()));
@@ -265,7 +265,7 @@
 								<liferay-ui:search-container-column-jsp
 									align="right"
 									cssClass="entry-action"
-									path="/html/portlet/trash/view_content_action.jsp"
+									path="/view_content_action.jsp"
 								/>
 							</liferay-ui:search-container-row>
 
@@ -294,7 +294,7 @@
 								<%
 								PortletURL rowURL = renderResponse.createRenderURL();
 
-								rowURL.setParameter("mvcPath", "/html/portlet/trash/view_content.jsp");
+								rowURL.setParameter("mvcPath", "/view_content.jsp");
 								rowURL.setParameter("redirect", redirect);
 								rowURL.setParameter("backURL", currentURL);
 								rowURL.setParameter("className", curTrashRenderer.getClassName());
@@ -317,7 +317,7 @@
 								<liferay-ui:search-container-column-jsp
 									align="right"
 									cssClass="entry-action"
-									path="/html/portlet/trash/view_content_action.jsp"
+									path="/view_content_action.jsp"
 								/>
 							</liferay-ui:search-container-row>
 

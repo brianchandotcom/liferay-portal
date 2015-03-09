@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/trash/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -34,7 +34,7 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashRender
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= trashHandler.isMovable() %>">
 		<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcPath" value="/html/portlet/trash/view_container_model.jsp" />
+			<portlet:param name="mvcPath" value="/view_container_model.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />

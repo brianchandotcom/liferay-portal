@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/trash/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "staging");
@@ -42,7 +42,7 @@ if (Validator.isNotNull(keywords)) {
 }
 %>
 
-<liferay-util:include page="/html/portlet/trash/restore_path.jsp" />
+<liferay-util:include page="/restore_path.jsp" />
 
 <liferay-ui:error exception="<%= RestoreEntryException.class %>">
 
@@ -157,7 +157,7 @@ if (Validator.isNotNull(keywords)) {
 		if (trashRenderer != null) {
 			PortletURL viewContentURL = renderResponse.createRenderURL();
 
-			viewContentURL.setParameter("mvcPath", "/html/portlet/trash/view_content.jsp");
+			viewContentURL.setParameter("mvcPath", "/view_content.jsp");
 			viewContentURL.setParameter("redirect", currentURL);
 
 			if (entry.getRootEntry() != null) {
@@ -202,7 +202,7 @@ if (Validator.isNotNull(keywords)) {
 				if (rootTrashRenderer != null) {
 					PortletURL viewContentURL = renderResponse.createRenderURL();
 
-					viewContentURL.setParameter("mvcPath", "/html/portlet/trash/view_content.jsp");
+					viewContentURL.setParameter("mvcPath", "/view_content.jsp");
 					viewContentURL.setParameter("redirect", currentURL);
 					viewContentURL.setParameter("trashEntryId", String.valueOf(rootEntry.getEntryId()));
 					viewContentURL.setParameter("type", rootTrashRenderer.getType());
@@ -258,7 +258,7 @@ if (Validator.isNotNull(keywords)) {
 				<liferay-ui:search-container-column-jsp
 					align="right"
 					cssClass="entry-action"
-					path="/html/portlet/trash/entry_action.jsp"
+					path="/entry_action.jsp"
 				/>
 			</c:when>
 			<c:otherwise>
@@ -270,7 +270,7 @@ if (Validator.isNotNull(keywords)) {
 					request.setAttribute(WebKeys.TRASH_RENDERER, trashRenderer);
 					%>
 
-					<liferay-util:include page="/html/portlet/trash/view_content_action.jsp" />
+					<liferay-util:include page="/view_content_action.jsp" />
 				</liferay-ui:search-container-column-text>
 			</c:otherwise>
 		</c:choose>
@@ -292,7 +292,7 @@ if (Validator.isNotNull(keywords)) {
 		<aui:input name="restoreTrashEntryIds" type="hidden" />
 
 		<liferay-ui:search-form
-			page="/html/portlet/trash/entry_search.jsp"
+			page="/entry_search.jsp"
 		/>
 	</aui:form>
 

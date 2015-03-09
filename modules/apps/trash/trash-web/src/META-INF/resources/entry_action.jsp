@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/trash/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
@@ -38,6 +38,6 @@ else {
 %>
 
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<%@ include file="/html/portlet/trash/action/restore.jspf" %>
-	<%@ include file="/html/portlet/trash/action/delete.jspf" %>
+	<%@ include file="/action/restore.jspf" %>
+	<%@ include file="/action/delete.jspf" %>
 </liferay-ui:icon-menu>

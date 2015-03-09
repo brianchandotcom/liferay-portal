@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/trash/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -54,7 +54,7 @@ if (rootContainerModelMovable) {
 
 PortletURL containerURL = renderResponse.createRenderURL();
 
-containerURL.setParameter("mvcPath", "/html/portlet/trash/view_container_model.jsp");
+containerURL.setParameter("mvcPath", "/view_container_model.jsp");
 containerURL.setParameter("redirect", redirect);
 containerURL.setParameter("backURL", currentURL);
 containerURL.setParameter("className", className);

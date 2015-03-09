@@ -14,12 +14,8 @@
  */
 --%>
 
-<%@ include file="/html/portlet/trash/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<aui:nav-bar>
-	<aui:nav-bar-search>
-		<div class="form-search">
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
-		</div>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<liferay-ui:error-header />
+
+<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />

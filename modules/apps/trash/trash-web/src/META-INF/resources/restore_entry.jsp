@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/trash/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <liferay-portlet:actionURL name="restoreEntries" varImpl="restoreURL" />
 

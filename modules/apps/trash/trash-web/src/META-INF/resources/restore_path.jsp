@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/trash/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <c:if test="<%= SessionMessages.contains(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA) %>">
 	<div class="alert alert-success">
@@ -68,7 +68,7 @@
 <portlet:resourceURL id="checkEntry" var="checkEntryURL" />
 
 <portlet:renderURL var="duplicateEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="mvcPath" value="/html/portlet/trash/restore_entry.jsp" />
+	<portlet:param name="mvcPath" value="/restore_entry.jsp" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:renderURL>
 

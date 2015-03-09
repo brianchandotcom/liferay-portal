@@ -326,8 +326,16 @@ public class WabBundleProcessor implements ServletContextListener {
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, _contextPath);
 		properties.put(Constants.SERVICE_RANKING, 1000);
 
-		for (String key : contextParameters.keySet()) {
-			properties.put(key, contextParameters.get(key));
+		for (Entry<String, String> contextParametersEntry :
+				contextParameters.entrySet()) {
+
+			String key = contextParametersEntry.getKey();
+			String value = contextParametersEntry.getValue();
+
+			properties.put(
+				HttpWhiteboardConstants.
+					HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX + key,
+				value);
 		}
 
 		_serviceRegistration = _bundleContext.registerService(

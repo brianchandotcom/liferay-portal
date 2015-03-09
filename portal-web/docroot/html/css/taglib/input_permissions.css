@@ -35,6 +35,12 @@
 				width: 10px;
 			}
 		}
+
+		.responsive-table-horizontal {
+			input[type="checkbox"] {
+				margin-top: 0;
+			}
+		}
 	}
 
 	.ie9 {

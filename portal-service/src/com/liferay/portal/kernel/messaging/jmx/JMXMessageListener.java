@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.messaging.jmx;
 
-import com.liferay.portal.kernel.jmx.MBeanRegistry;
+//import com.liferay.portal.kernel.jmx.MBeanRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseDestinationEventListener;
@@ -30,7 +30,7 @@ import java.util.Collection;
 public class JMXMessageListener extends BaseDestinationEventListener {
 
 	public void afterPropertiesSet() throws Exception {
-		if ((_mBeanRegistry == null) || (_messageBus == null)) {
+		/*if ((_mBeanRegistry == null) || (_messageBus == null)) {
 			throw new IllegalStateException(
 				"MBean server and message bus are not configured");
 		}
@@ -45,7 +45,7 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to register message bus manager", e);
 			}
-		}
+		}*/
 
 		Collection<Destination> destinations = _messageBus.getDestinations();
 
@@ -103,7 +103,7 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 			}
 		}
 
-		try {
+		/*try {
 			_mBeanRegistry.unregister(
 				_MESSAGE_BUS_MANAGER_OBJECT_NAME_CACHE_KEY,
 				MessageBusManager.createObjectName());
@@ -112,7 +112,7 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to unregister message bus manager", e);
 			}
-		}
+		}*/
 	}
 
 	/**
@@ -123,9 +123,9 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 		afterPropertiesSet();
 	}
 
-	public void setMBeanRegistry(MBeanRegistry mBeanRegistry) {
+	/*public void setMBeanRegistry(MBeanRegistry mBeanRegistry) {
 		_mBeanRegistry = mBeanRegistry;
-	}
+	}*/
 
 	public void setMessageBus(MessageBus messageBus) {
 		_messageBus = messageBus;
@@ -136,14 +136,14 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 
 		String destinationName = destination.getName();
 
-		_mBeanRegistry.replace(
+		/*_mBeanRegistry.replace(
 			destinationName, new DestinationManager(destination),
 			DestinationManager.createObjectName(destinationName));
 
 		_mBeanRegistry.replace(
 			_getStatisticsObjectNameCacheKey(destinationName),
 			new DestinationStatisticsManager(destination),
-			DestinationStatisticsManager.createObjectName(destinationName));
+			DestinationStatisticsManager.createObjectName(destinationName));*/
 	}
 
 	protected void unregisterDestination(Destination destination)
@@ -151,13 +151,13 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 
 		String destinationName = destination.getName();
 
-		_mBeanRegistry.unregister(
+		/*_mBeanRegistry.unregister(
 			destinationName,
 			DestinationManager.createObjectName(destinationName));
 
 		_mBeanRegistry.unregister(
 			_getStatisticsObjectNameCacheKey(destinationName),
-			DestinationStatisticsManager.createObjectName(destinationName));
+			DestinationStatisticsManager.createObjectName(destinationName));*/
 	}
 
 	private String _getStatisticsObjectNameCacheKey(String destinationName) {
@@ -170,7 +170,7 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JMXMessageListener.class);
 
-	private MBeanRegistry _mBeanRegistry;
+	//private MBeanRegistry _mBeanRegistry;
 	private MessageBus _messageBus;
 
 }

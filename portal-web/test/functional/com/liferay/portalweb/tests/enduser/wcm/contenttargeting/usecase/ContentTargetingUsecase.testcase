@@ -1,6 +1,15 @@
 <definition component-name="extra-apps-content-targeting">
 	<property name="testray.main.component.name" value="Content Targeting" />
 
+	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 
@@ -26,15 +35,6 @@
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 	</set-up>
-
-	<tear-down>
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Site#tearDownCP" />
-	</tear-down>
 
 	<command name="CampaignAddMultipleWithPrioritiesViaCampaignDisplayPortlet" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
@@ -1019,6 +1019,151 @@
 		</execute>
 	</command>
 
+	<command name="ExportImportDeletions" priority="4">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignEndDate" value="1/1/2099" />
+			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPriorityField" value="3" />
+			<var name="campaignStartDate" value="1/1/2015" />
+			<var name="campaignStartTime" value="12:00 AM" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#saveCP" />
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#gotoExportSite" />
+
+		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+
+		<var name="key_larFileName" value="${larFileName}" />
+
+		<execute function="AssertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="lar file name ${larFileName}" />
+
+		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="DownloadTempFile" />
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Import Site" />
+		</execute>
+
+		<execute macro="LAR#importSiteCP">
+			<var name="larFileName" value="${larFileName}" />
+			<var name="siteName" value="Import Site" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#deleteAllCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#deleteAllCP" />
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#gotoExportSite">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="checkContentNameList" value="Audience Targeting" />
+			<var name="contentDeletion" value="true" />
+		</execute>
+
+		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+
+		<var name="key_larFileName" value="${larFileName}" />
+
+		<execute function="AssertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="lar file name ${larFileName}" />
+
+		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="DownloadTempFile" />
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Import Site" />
+		</execute>
+
+		<execute macro="LAR#importSiteCP">
+			<var name="checkContentNameList" value="Audience Targeting" />
+			<var name="contentDeletion" value="true" />
+			<var name="larFileName" value="${larFileName}" />
+			<var name="siteName" value="Import Site" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Import Site" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewNotPresentCP">
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Import Site" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#viewNotPresentCP">
+			<var name="campaignName" value="Campaign Name" />
+		</execute>
+	</command>
+
 	<command name="ExportImportSmoke" priority="5">
 		<execute macro="LAR#setupContentTargeting" />
 
@@ -1027,22 +1172,25 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="LAR#configureExportSiteCP" />
+		<execute macro="LAR#gotoExportSite" />
 
 		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<var name="key_larFileName" value="${larFileName}" />
+
+		<execute function="AssertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
-		<echo message="import file name ${larFileName}" />
+		<echo message="lar file name ${larFileName}" />
 
 		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
+		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -1059,7 +1207,6 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
-			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Import Site" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -1085,6 +1232,453 @@
 			<var name="preview1Text" value="Campaign Name" />
 			<var name="preview2Text" value="Default" />
 			<var name="viewCampaignSelected" value="Campaign Name" />
+		</execute>
+	</command>
+
+	<command name="ExportImportUncheckAppAllAndContentCTRefAllAndWC" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addBehaviorContentVisitedRuleCP">
+			<var name="contentVisitedContent" value="Web Content Article" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignEndDate" value="1/1/2099" />
+			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPriorityField" value="3" />
+			<var name="campaignStartDate" value="1/1/2015" />
+			<var name="campaignStartTime" value="12:00 AM" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionContentCP">
+			<var name="contentAlias" value="Content Alias" />
+			<var name="contentTitle" value="Web Content Title" />
+			<var name="menulistContent" value="Web Content Article" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#saveCP" />
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#gotoExportSite">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="contentName" value="Audience Targeting" />
+			<var name="subContent" value="Campaigns" />
+			<var name="uncheckSubSubContent" value="Referenced Content" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="contentName" value="Audience Targeting" />
+			<var name="subContent" value="User Segments" />
+			<var name="uncheckSubSubContent" value="Referenced Content" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="uncheckContentNameList" value="Web Content" />
+		</execute>
+
+		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+
+		<var name="key_larFileName" value="${larFileName}" />
+
+		<execute function="AssertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="lar file name ${larFileName}" />
+
+		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="DownloadTempFile" />
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Import Site" />
+		</execute>
+
+		<execute macro="LAR#importSiteCP">
+			<var name="larFileName" value="${larFileName}" />
+			<var name="siteName" value="Import Site" />
+		</execute>
+
+		<execute function="AssertConsoleTextPresent" value1="Cannot import rule Content Visited from user segment User Segment Name because it refers to a missing Asset" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Import Site" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewImportContentVisitedRuleEmpty">
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Import Site" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#viewImportContentTrackingActionContentEmpty">
+			<var name="campaignName" value="Campaign Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Import Site" />
+		</execute>
+
+		<execute macro="WebContent#viewNotPresentCP">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+	</command>
+
+	<command name="ExportImportUncheckAppCTRefAllAndContentAll" priority="4">
+		<execute macro="LAR#setupContentTargeting" />
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#gotoExportSite">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="contentName" value="User Segment Content Display" />
+			<var name="uncheckSubApplicationList" value="Referenced User Segments,Referenced Content" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="contentName" value="Campaign Content Display" />
+			<var name="uncheckSubApplicationList" value="Referenced Campaigns,Referenced Content" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="uncheckContentNameList" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="uncheckContentNameList" value="Web Content" />
+		</execute>
+
+		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+
+		<var name="key_larFileName" value="${larFileName}" />
+
+		<execute function="AssertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="lar file name ${larFileName}" />
+
+		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="DownloadTempFile" />
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Import Site" />
+		</execute>
+
+		<execute macro="LAR#importSiteCP">
+			<var name="importFail" value="true" />
+			<var name="larFileName" value="${larFileName}" />
+			<var name="siteName" value="Import Site" />
+		</execute>
+	</command>
+
+	<command name="ExportImportUncheckAppCTRefAllAndContentAT" priority="4">
+		<execute macro="LAR#setupContentTargeting" />
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#gotoExportSite">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="contentName" value="User Segment Content Display" />
+			<var name="uncheckSubApplicationList" value="Referenced User Segments,Referenced Content" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="contentName" value="Campaign Content Display" />
+			<var name="uncheckSubApplicationList" value="Referenced Campaigns,Referenced Content" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="uncheckContentNameList" value="Audience Targeting" />
+		</execute>
+
+		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+
+		<var name="key_larFileName" value="${larFileName}" />
+
+		<execute function="AssertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="lar file name ${larFileName}" />
+
+		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="DownloadTempFile" />
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Import Site" />
+		</execute>
+
+		<execute macro="LAR#importSiteCP">
+			<var name="importFail" value="true" />
+			<var name="larFileName" value="${larFileName}" />
+			<var name="siteName" value="Import Site" />
+		</execute>
+	</command>
+
+	<command name="ExportImportUncheckAppCTRefAllAndContentWC" priority="4">
+		<execute macro="LAR#setupContentTargeting" />
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#gotoExportSite">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="contentName" value="User Segment Content Display" />
+			<var name="uncheckSubApplicationList" value="Referenced User Segments,Referenced Content" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="contentName" value="Campaign Content Display" />
+			<var name="uncheckSubApplicationList" value="Referenced Campaigns,Referenced Content" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="uncheckContentNameList" value="Web Content" />
+		</execute>
+
+		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+
+		<var name="key_larFileName" value="${larFileName}" />
+
+		<execute function="AssertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="lar file name ${larFileName}" />
+
+		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="DownloadTempFile" />
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Import Site" />
+		</execute>
+
+		<execute macro="LAR#importSiteCP">
+			<var name="importFail" value="true" />
+			<var name="larFileName" value="${larFileName}" />
+			<var name="siteName" value="Import Site" />
+		</execute>
+	</command>
+
+	<command name="ExportImportViewOnlyContentCTWithReferencedWCImported" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC Content Unreferenced" />
+			<var name="webContentTitle" value="WC Title Unreferenced" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addBehaviorContentVisitedRuleCP">
+			<var name="contentVisitedContent" value="Web Content Article" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignEndDate" value="1/1/2099" />
+			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPriorityField" value="3" />
+			<var name="campaignStartDate" value="1/1/2015" />
+			<var name="campaignStartTime" value="12:00 AM" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionContentCP">
+			<var name="contentAlias" value="Content Alias" />
+			<var name="contentTitle" value="Web Content Title" />
+			<var name="menulistContent" value="Web Content Article" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#saveCP" />
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#gotoExportSite">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="checkContentNameList" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteOptions">
+			<var name="uncheckContentNameList" value="Web Content" />
+		</execute>
+
+		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+
+		<var name="key_larFileName" value="${larFileName}" />
+
+		<execute function="AssertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="lar file name ${larFileName}" />
+
+		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="DownloadTempFile" />
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Import Site" />
+		</execute>
+
+		<execute macro="LAR#importSiteCP">
+			<var name="larFileName" value="${larFileName}" />
+			<var name="siteName" value="Import Site" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Import Site" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Import Site" />
+		</execute>
+
+		<execute macro="WebContent#viewNotPresentCP">
+			<var name="webContentTitle" value="WC Title Unreferenced" />
 		</execute>
 	</command>
 
@@ -1145,18 +1739,21 @@
 
 		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<var name="key_larFileName" value="${larFileName}" />
+
+		<execute function="AssertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
-		<echo message="import file name ${larFileName}" />
+		<echo message="lar file name ${larFileName}" />
 
 		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
+		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -1171,83 +1768,10 @@
 			<var name="siteName" value="Import Site" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page Name" />
-			<var name="pageStaging" value="true" />
+		<execute macro="LAR#importSiteCP">
+			<var name="importFail" value="true" />
+			<var name="larFileName" value="${larFileName}" />
 			<var name="siteName" value="Import Site" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content" />
-			<var name="viewEntryTitleList" value="Web Content Title" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="entryContentText" value="Web Content Content" />
-			<var name="preview1Text" value="User Segment Name" />
-			<var name="preview2Text" value="Default" />
-			<var name="viewUserSegmentSelected" value="User Segment Name" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="CampaignDisplayPortlet#viewPG">
-			<var name="entryContentText" value="Web Content Content" />
-			<var name="preview1Text" value="Campaign Name" />
-			<var name="preview2Text" value="Default" />
-			<var name="viewCampaignSelected" value="Campaign Name" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="Import Site" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="Import Site" />
-		</execute>
-
-		<execute macro="WebContent#viewNotPresentCP">
-			<var name="webContentTitle" value="Web Content Title Unreferenced" />
-		</execute>
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Import Site" />
-		</execute>
-
-		<execute macro="ContentTargetingUserSegment#viewCP">
-			<var name="userSegmentDescription" value="User Segment Description" />
-			<var name="userSegmentName" value="User Segment Name" />
-		</execute>
-
-		<execute macro="ContentTargetingUserSegment#viewNotPresentCP">
-			<var name="userSegmentName" value="User Segment Name Unreferenced" />
-		</execute>
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Import Site" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#viewCampaignCP">
-			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignName" value="Campaign Name" />
-			<var name="campaignPriority" value="3" />
-			<var name="campaignStatus" value="Started" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#viewCampaignNotPresentCP">
-			<var name="campaignName" value="Campaign Name Unreferenced" />
 		</execute>
 	</command>
 

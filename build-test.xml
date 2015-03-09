@@ -1630,7 +1630,7 @@ create database lportal${database.index} character set utf8;</echo>
 	</target>
 
 	<target name="deploy-required-plugins">
-		<ant dir="${lp.plugins.dir}/portlets/marketplace-portlet" target="direct-deploy" />
+		<ant dir="${lp.plugins.dir}/portlets/marketplace-portlet" target="direct-deploy" inheritAll="false" />
 
 		<if>
 			<equals arg1="${marketplace.staging.enabled}" arg2="true" />
@@ -1651,7 +1651,7 @@ ${marketplace.portlet.properties}</echo>
 		<if>
 			<isset property="hook.plugins.includes" />
 			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" inheritAll="false">
 					<property name="plugin.types" value="hooks" />
 					<property name="plugins.includes" value="${hook.plugins.includes}" />
 				</ant>
@@ -1661,7 +1661,7 @@ ${marketplace.portlet.properties}</echo>
 		<if>
 			<isset property="layouttpl.plugins.includes" />
 			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" inheritAll="false">
 					<property name="plugin.types" value="layouttpl" />
 					<property name="plugins.includes" value="${layouttpl.plugins.includes}" />
 				</ant>
@@ -1671,7 +1671,7 @@ ${marketplace.portlet.properties}</echo>
 		<if>
 			<isset property="portlet.plugins.includes" />
 			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" inheritAll="false">
 					<property name="plugin.types" value="portlets" />
 					<property name="plugins.includes" value="${portlet.plugins.includes}" />
 				</ant>
@@ -1681,7 +1681,7 @@ ${marketplace.portlet.properties}</echo>
 		<if>
 			<equals arg1="${test.pacl}" arg2="true" />
 			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" inheritAll="false">
 					<property name="plugin.types" value="portlets" />
 					<property name="plugins.includes" value="chat-portlet,flash-portlet,portal-compat-hook,sample-service-builder-portlet,test-pacl-portlet" />
 				</ant>
@@ -1691,7 +1691,7 @@ ${marketplace.portlet.properties}</echo>
 		<if>
 			<isset property="theme.plugins.includes" />
 			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" inheritAll="false">
 					<property name="plugin.types" value="themes" />
 					<property name="plugins.includes" value="${theme.plugins.includes}" />
 				</ant>
@@ -1701,7 +1701,7 @@ ${marketplace.portlet.properties}</echo>
 		<if>
 			<isset property="web.plugins.includes" />
 			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" inheritAll="false">
 					<property name="plugin.types" value="webs" />
 					<property name="plugins.includes" value="${web.plugins.includes}" />
 				</ant>

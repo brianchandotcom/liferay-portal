@@ -733,6 +733,13 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.site.map.web"
 		},
 
+		// Tags Compiler
+
+		new String[] {
+			"tags.compiler.enabled", "enabled",
+			"com.liferay.asset.tags.compiler.web"
+		},
+
 		// Translator
 
 		new String[] {

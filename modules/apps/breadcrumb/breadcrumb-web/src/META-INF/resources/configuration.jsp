@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(Layout.class.getName());
+TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(BreadcrumbEntry.class.getName());
 %>
 
 <aui:row>

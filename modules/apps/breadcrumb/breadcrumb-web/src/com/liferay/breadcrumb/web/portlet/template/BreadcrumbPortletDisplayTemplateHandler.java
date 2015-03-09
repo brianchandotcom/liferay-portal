@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
@@ -50,7 +49,7 @@ public class BreadcrumbPortletDisplayTemplateHandler
 
 	@Override
 	public String getClassName() {
-		return Layout.class.getName();
+		return BreadcrumbEntry.class.getName();
 	}
 
 	@Override

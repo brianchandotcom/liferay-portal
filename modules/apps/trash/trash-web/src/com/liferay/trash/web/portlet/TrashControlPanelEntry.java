@@ -18,11 +18,22 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.trash.web.constants.TrashPortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + TrashPortletKeys.TRASH
+	},
+	service = ControlPanelEntry.class
+)
 public class TrashControlPanelEntry extends BaseControlPanelEntry {
 
 	@Override

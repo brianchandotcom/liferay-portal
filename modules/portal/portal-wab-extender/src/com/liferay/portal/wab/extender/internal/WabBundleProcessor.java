@@ -176,6 +176,16 @@ public class WabBundleProcessor implements ServletContextListener {
 
 			initServlets();
 		}
+		catch (Exception e) {
+			_logger.log(
+				Logger.LOG_ERROR,
+				"Catastrophic initialization failure! Shutting down " +
+					_contextName + " WAB due to: " + e.getMessage(), e);
+
+			destroy();
+
+			throw e;
+		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
 		}

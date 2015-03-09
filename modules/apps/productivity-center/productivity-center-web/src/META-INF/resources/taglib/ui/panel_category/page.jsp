@@ -21,6 +21,10 @@ PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(Produ
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("productivity-center-ui:panel-category:panelCategory");
 
 String panelPageCategoryId = "panel-manage-" + panelCategory.getKey();
+
+String portletId = ParamUtil.getString(request, "p_p_id");
+
+PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategory);
 %>
 
 <liferay-ui:panel
@@ -30,7 +34,7 @@ String panelPageCategoryId = "panel-manage-" + panelCategory.getKey();
 	iconCssClass="<%= panelCategory.getIconCssClass() %>"
 	id="<%= panelPageCategoryId %>"
 	persistState="<%= true %>"
-	state="closed"
+	state='<%= panelCategoryHelper.containsPortlet(portletId) ? "open" : "closed" %>'
 	title="<%= panelCategory.getLabel(themeDisplay.getLocale()) %>"
 >
 

@@ -14,7 +14,9 @@
  */
 --%>
 
-<%@ page import="com.liferay.productivity.center.constants.ProductivityCenterWebKeys" %><%@
+<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.productivity.center.constants.ProductivityCenterWebKeys" %><%@
+page import="com.liferay.productivity.center.display.context.logic.PanelCategoryHelper" %><%@
 page import="com.liferay.productivity.center.panel.PanelApp" %><%@
 page import="com.liferay.productivity.center.panel.PanelCategory" %><%@
 page import="com.liferay.productivity.center.service.panel.PanelAppRegistry" %>

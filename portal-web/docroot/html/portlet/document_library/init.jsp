@@ -72,7 +72,6 @@ page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.RawMetadataProcessor" %><%@
 page import="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.RequiredStructureException" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.StructureDefinitionException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.StructureNameException" %><%@

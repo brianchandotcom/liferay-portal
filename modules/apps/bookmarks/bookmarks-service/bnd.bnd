@@ -14,7 +14,8 @@ Export-Package:\
 	com.liferay.bookmarks.service.permission,\
 	com.liferay.bookmarks.social,\
 	com.liferay.bookmarks.trash,\
-	com.liferay.bookmarks.util
+	com.liferay.bookmarks.util,\
+	com.liferay.bookmarks.verify
 Include-Resource:\
 	classes,\
 	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\

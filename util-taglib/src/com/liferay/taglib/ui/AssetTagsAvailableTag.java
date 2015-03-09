@@ -19,6 +19,7 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetTagServiceUtil;
 import com.liferay.taglib.TagSupport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.jsp.JspException;
@@ -26,15 +27,14 @@ import javax.servlet.jsp.JspException;
 /**
  * @author Sergio González
  */
-public class AssetTagsAvailableTag extends TagSupport {
+public class AssetTagsAvailableTag<R> extends TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			List<AssetTag> tags = AssetTagServiceUtil.getTags(
-				_className, _classPK);
+			_assetTags = AssetTagServiceUtil.getTags(_className, _classPK);
 
-			if (!tags.isEmpty()) {
+			if (!_assetTags.isEmpty()) {
 				return EVAL_BODY_INCLUDE;
 			}
 
@@ -51,6 +51,10 @@ public class AssetTagsAvailableTag extends TagSupport {
 		}
 	}
 
+	public List<AssetTag> getAssetTags() {
+		return _assetTags;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -59,6 +63,7 @@ public class AssetTagsAvailableTag extends TagSupport {
 		_classPK = classPK;
 	}
 
+	private List<AssetTag> _assetTags = new ArrayList<>();
 	private String _className;
 	private long _classPK;
 

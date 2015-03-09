@@ -122,6 +122,28 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 	}
 
 	@Override
+	public String includeEditContent(
+			HttpServletRequest request, HttpServletResponse response,
+			Layout layout)
+		throws Exception {
+
+		ServletContext servletContext = (ServletContext)request.getAttribute(
+			WebKeys.CTX);
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher(getEditPage());
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			response, unsyncStringWriter);
+
+		requestDispatcher.include(request, pipingServletResponse);
+
+		return unsyncStringWriter.toString();
+	}
+
+	@Override
 	public boolean includeLayoutContent(
 			HttpServletRequest request, HttpServletResponse response,
 			Layout layout)

@@ -66,6 +66,26 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 	}
 
 	@Override
+	public String includeEditContent(
+			HttpServletRequest request, HttpServletResponse response,
+			Layout layout)
+		throws Exception {
+
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
+			Portal.PATH_MODULE + StringPool.SLASH + "productivity_center_web" +
+				_EDIT_PAGE);
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			response, unsyncStringWriter);
+
+		requestDispatcher.include(request, pipingServletResponse);
+
+		return unsyncStringWriter.toString();
+	}
+
+	@Override
 	public boolean includeLayoutContent(
 			HttpServletRequest request, HttpServletResponse response,
 			Layout layout)

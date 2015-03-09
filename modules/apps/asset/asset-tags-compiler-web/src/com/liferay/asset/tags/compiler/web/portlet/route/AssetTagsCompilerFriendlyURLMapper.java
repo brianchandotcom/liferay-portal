@@ -14,6 +14,7 @@
 
 package com.liferay.asset.tags.compiler.web.portlet.route;
 
+import com.liferay.asset.tags.compiler.web.configuration.AssetTagsCompilerWebConfigurationValues;
 import com.liferay.asset.tags.compiler.web.constants.AssetTagsCompilerPortletKeys;
 import com.liferay.portal.kernel.portlet.BaseFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
 
@@ -57,7 +57,7 @@ public class AssetTagsCompilerFriendlyURLMapper extends BaseFriendlyURLMapper {
 		String friendlyURLPath, Map<String, String[]> parameterMap,
 		Map<String, Object> requestContext) {
 
-		if (PropsValues.TAGS_COMPILER_ENABLED) {
+		if (AssetTagsCompilerWebConfigurationValues.TAGS_COMPILER_ENABLED) {
 			addParameter(parameterMap, "p_p_id", getPortletId());
 			addParameter(parameterMap, "p_p_lifecycle", "0");
 			addParameter(parameterMap, "p_p_state", WindowState.NORMAL);

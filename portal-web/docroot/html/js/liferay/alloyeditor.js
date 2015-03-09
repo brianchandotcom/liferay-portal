@@ -87,7 +87,7 @@ AUI.add(
 
 						var editorConfig = instance.get('editorConfig');
 
-						if (editorConfig.disallowedContent && editorConfig.disallowedContent.indexOf('br') != -1) {
+						if (editorConfig.disallowedContent && editorConfig.disallowedContent.indexOf('br') !== -1) {
 							nativeEditor.on('key', instance._onKey, instance);
 						}
 					},
@@ -123,7 +123,7 @@ AUI.add(
 						else {
 							data = instance.getNativeEditor().getData();
 
-							if (CKEDITOR.env.gecko && (CKEDITOR.tools.trim(data) == '<br />')) {
+							if (CKEDITOR.env.gecko && (CKEDITOR.tools.trim(data) === '<br />')) {
 								data = '';
 							}
 						}

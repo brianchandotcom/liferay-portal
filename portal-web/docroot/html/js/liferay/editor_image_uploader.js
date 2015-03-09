@@ -228,7 +228,7 @@ AUI.add(
 						uploader.set(
 							'postVarsPerFile',
 							{
-								'randomId': randomId
+								randomId: randomId
 							}
 						);
 

@@ -111,6 +111,8 @@ public class ClassNameLocalServiceImpl
 		if (className == null) {
 			try {
 				className = classNameLocalService.addClassName(value);
+
+				_classNames.put(value, className);
 			}
 			catch (Throwable t) {
 				className = classNameLocalService.fetchClassName(value);

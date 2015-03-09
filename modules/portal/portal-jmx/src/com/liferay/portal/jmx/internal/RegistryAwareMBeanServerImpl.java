@@ -15,8 +15,7 @@
 package com.liferay.portal.jmx.internal;
 
 import com.liferay.portal.jmx.MBeanRegistry;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.jmx.RegistryAwareMBeanServer;
 
 import java.io.ObjectInputStream;
 
@@ -44,13 +43,16 @@ import javax.management.QueryExp;
 import javax.management.ReflectionException;
 import javax.management.loading.ClassLoaderRepository;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
 @Component(
-	immediate = true,
-	service = RegistryAwareMBeanServer.class)
-public class RegistryAwareMBeanServer implements MBeanServer {
+	immediate = true, service = RegistryAwareMBeanServer.class
+)
+public class RegistryAwareMBeanServerImpl implements RegistryAwareMBeanServer {
 
 	@Override
 	public void addNotificationListener(

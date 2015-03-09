@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>ALL_VOCABULARIES_CHECKBOX</td>
-	<td>//th[contains(@id,'_147_assetVocabularies')]/input</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ALL_CATEGORIES_CHECKBOX</td>
-	<td>//input[@name='_147_allRowIds']</td>
+	<td>//input[contains(@name,'AssetCategories')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -252,8 +252,8 @@
 </tr>
 <tr>
 	<td>VOCABULARY_ENTRY_LINK</td>
-	<td>//tr[contains(.,'${key_vocabularyName}')]/td[2]/a</td>
-	<td></td>
+	<td>//tr[contains(.,'Vocabulary Name')]/td[2]/a</td>
+	<td>${key_vocabularyName}</td>
 </tr>
 <tr>
 	<td>VOCABULARY_ENTRY_MENULIST_ARROW</td>

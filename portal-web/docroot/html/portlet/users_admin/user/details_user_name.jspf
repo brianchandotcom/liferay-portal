@@ -30,7 +30,7 @@ FullNameDefinition fullNameDefinition = FullNameDefinitionFactory.getInstance(us
 
 		<c:choose>
 			<c:when test="<%= fullNameField.isFreeText() %>">
-				<aui:input disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" name="<%= fieldName %>">
+				<aui:input disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" model="<%= User.class %>" name="<%= fieldName %>">
 					<c:if test="<%= fullNameField.isRequired() %>">
 						<aui:validator name="required" />
 					</c:if>

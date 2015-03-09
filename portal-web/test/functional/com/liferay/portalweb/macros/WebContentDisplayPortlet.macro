@@ -96,7 +96,7 @@
 				<execute function="SelectFrame" locator1="PGWebcontentdisplayEditwebcontent#WEB_CONTENT_EDIT_IFRAME" />
 				<execute function="AssertTextEquals" locator1="PGWebcontentdisplayEditwebcontent#STRUCTURE_NAME" value1="${structureName}" />
 				<execute function="ClickNoError" locator1="PGWebcontentdisplayEditwebcontent#EDIT_TEMPLATE" />
-				<execute function="Confirm" locator1="PGWebcontentdisplayEditwebcontent#CONFIRMATION" value1="Editing the current template will delete all unsaved content." />
+				<execute function="Confirm" locator1="PGWebcontentdisplayEditwebcontent#CONFIRMATION" value1="Editing the current template deletes all unsaved content." />
 			</else>
 		</if>
 

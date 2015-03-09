@@ -1213,7 +1213,7 @@
 
 		<execute function="SelectFrame" locator1="CPWebcontentSelecttemplate#TEMPLATES_IFRAME" />
 		<execute function="AssertClickNoError" locator1="CPWebcontentSelecttemplate#TEMPLATE_TABLE_CHOOSE" value1="Choose" />
-		<execute function="Confirm" locator1="CPWebcontentSelecttemplate#CONFIRMATION" value1="Selecting a new template will delete all unsaved content. Do you want to proceed?" />
+		<execute function="Confirm" locator1="CPWebcontentSelecttemplate#CONFIRMATION" value1="Selecting a new template deletes all unsaved content. Do you want to proceed?" />
 
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#PUBLISH_BUTTON" value1="Publish" />
 

@@ -33,6 +33,15 @@ public class WabServletContextHelper extends ServletContextHelper {
 	public WabServletContextHelper(Bundle bundle) {
 		super(bundle);
 
+		URL url = bundle.getEntry("WEB-INF/");
+
+		if (url == null) {
+			_wabShapedBundle = false;
+		}
+		else {
+			_wabShapedBundle = true;
+		}
+
 		Class<?> clazz = getClass();
 
 		_string = clazz.getSimpleName() + '[' + bundle.getBundleId() + ']';
@@ -47,6 +56,19 @@ public class WabServletContextHelper extends ServletContextHelper {
 		}
 
 		return url.toExternalForm();
+	}
+
+	@Override
+	public URL getResource(String name) {
+		if (name.charAt(0) != '/') {
+			name = '/' + name;
+		}
+
+		if (!_wabShapedBundle && !name.startsWith("/META-INF/resources")) {
+			return super.getResource("/META-INF/resources" + name);
+		}
+
+		return super.getResource(name);
 	}
 
 	@Override
@@ -97,5 +119,6 @@ public class WabServletContextHelper extends ServletContextHelper {
 	}
 
 	private final String _string;
+	private final boolean _wabShapedBundle;
 
 }

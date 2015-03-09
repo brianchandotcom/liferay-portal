@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.subscription;
+package com.liferay.bookmarks.subscription.test;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
@@ -28,7 +28,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionRootContainerModelTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -37,8 +37,8 @@ import org.junit.Rule;
  * @author Roberto Díaz
  */
 @Sync
-public class BookmarksSubscriptionAuthorTest
-	extends BaseSubscriptionAuthorTestCase {
+public class BookmarksSubscriptionRootContainerModelTest
+	extends BaseSubscriptionRootContainerModelTestCase {
 
 	@ClassRule
 	@Rule
@@ -82,11 +82,11 @@ public class BookmarksSubscriptionAuthorTest
 	}
 
 	@Override
-	protected void addSubscription(long userId, long containerModelId)
+	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
 		BookmarksFolderLocalServiceUtil.subscribeFolder(
-			userId, group.getGroupId(), containerModelId);
+			user.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override

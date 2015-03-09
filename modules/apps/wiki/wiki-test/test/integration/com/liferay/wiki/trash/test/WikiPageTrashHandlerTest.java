@@ -46,17 +46,17 @@ import org.junit.runner.RunWith;
 @Sync
 public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
-	@Before
-	public void setUp() throws Exception {
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
-	}
-
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+	}
 
 	@Ignore()
 	@Override

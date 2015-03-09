@@ -39,15 +39,15 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class WikiPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
-	@Before
-	public void setUp() throws Exception {
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
-	}
-
 	@ClassRule
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+	}
 
 	@Override
 	protected void addStagedModels() throws Exception {

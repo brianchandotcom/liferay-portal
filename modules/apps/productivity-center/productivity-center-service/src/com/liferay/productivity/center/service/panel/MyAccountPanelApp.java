@@ -38,11 +38,6 @@ import org.osgi.service.component.annotations.Component;
 public class MyAccountPanelApp implements PanelApp {
 
 	@Override
-	public String getIconCssClass() {
-		return StringPool.BLANK;
-	}
-
-	@Override
 	public String getKey() {
 		return MyAccountPanelApp.class.getName();
 	}

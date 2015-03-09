@@ -18,4 +18,7 @@ package com.liferay.productivity.center.panel;
  * @author Adolfo Pérez
  */
 public interface PanelCategory extends PanelEntry {
+
+	public String getIconCssClass();
+
 }

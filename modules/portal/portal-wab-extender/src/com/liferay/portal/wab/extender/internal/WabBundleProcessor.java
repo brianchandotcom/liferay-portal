@@ -537,7 +537,7 @@ public class WabBundleProcessor implements ServletContextListener {
 			_contextName);
 
 		_thisEventListenerRegistration = _bundleContext.registerService(
-			EventListener.class, this, properties);
+			ServletContextListener.class, this, properties);
 	}
 
 	private static final String _VENDOR = "Liferay, Inc.";
@@ -558,7 +558,8 @@ public class WabBundleProcessor implements ServletContextListener {
 	private Set<ServiceRegistration<Servlet>> _servletRegistrations =
 		new ConcurrentSkipListSet<>();
 	private ServiceRegistration<ServletContext> _servletContextRegistration;
-	private ServiceRegistration<EventListener> _thisEventListenerRegistration;
+	private ServiceRegistration<ServletContextListener>
+		_thisEventListenerRegistration;
 	private WabServletContextHelper _wabServletContextHelper;
 	private WebXMLDefinition _webXMLDefinition;
 	private final WebXMLDefinitionLoader _webXMLDefinitionLoader;

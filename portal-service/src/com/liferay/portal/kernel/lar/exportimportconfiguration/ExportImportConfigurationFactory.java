@@ -47,7 +47,7 @@ public class ExportImportConfigurationFactory {
 				user.getUserId(), sourceGroupId, targetGroupId, privateLayout,
 				ExportImportHelperUtil.getAllLayoutIds(
 					sourceGroupId, privateLayout),
-				parameterMap, null, null, user.getLocale(), user.getTimeZone());
+				parameterMap, user.getLocale(), user.getTimeZone());
 
 		return ExportImportConfigurationLocalServiceUtil.
 			addExportImportConfiguration(

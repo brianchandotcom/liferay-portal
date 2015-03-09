@@ -87,8 +87,8 @@ public class ExportImportConfigurationSettingsMapFactory {
 		Locale locale, TimeZone timeZone) {
 
 		return buildSettingsMap(
-			userId, groupId, 0, privateLayout, layoutIds, parameterMap,
-			startDate, endDate, locale, timeZone);
+			userId, groupId, 0, privateLayout, layoutIds, parameterMap, locale,
+			timeZone);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(
@@ -109,14 +109,13 @@ public class ExportImportConfigurationSettingsMapFactory {
 	public static Map<String, Serializable> buildSettingsMap(
 		long userId, long sourceGroupId, long targetGroupId,
 		boolean privateLayout, long[] layoutIds,
-		Map<String, String[]> parameterMap, Date startDate, Date endDate,
-		Locale locale, TimeZone timeZone) {
+		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
 
 		return buildSettingsMap(
 			userId, sourceGroupId, 0, targetGroupId, 0, StringPool.BLANK,
 			privateLayout, null, layoutIds, parameterMap, StringPool.BLANK, 0,
-			StringPool.BLANK, null, 0, null, StringPool.BLANK, startDate,
-			endDate, locale, timeZone, StringPool.BLANK);
+			StringPool.BLANK, null, 0, null, StringPool.BLANK, null, null,
+			locale, timeZone, StringPool.BLANK);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(
@@ -168,8 +167,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 			return buildSettingsMap(
 				themeDisplay.getUserId(), stagingGroup.getGroupId(),
 				liveGroup.getGroupId(), privateLayout, layoutIds, parameterMap,
-				null, null, themeDisplay.getLocale(),
-				themeDisplay.getTimeZone());
+				themeDisplay.getLocale(), themeDisplay.getTimeZone());
 		}
 
 		UnicodeProperties groupTypeSettingsProperties =

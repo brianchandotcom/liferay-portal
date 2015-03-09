@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.portlet.bridges.mvc;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortlet;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -395,6 +396,13 @@ public class MVCPortlet extends LiferayPortlet {
 		}
 
 		return mvcPath;
+	}
+
+	protected void hideDefaultSuccessMessage(PortletRequest portletRequest) {
+		SessionMessages.add(
+			portletRequest,
+			PortalUtil.getPortletId(portletRequest) +
+				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 	}
 
 	protected void include(

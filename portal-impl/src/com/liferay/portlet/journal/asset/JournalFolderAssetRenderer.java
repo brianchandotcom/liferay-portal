@@ -197,9 +197,15 @@ public class JournalFolderAssetRenderer
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
-		return getURLViewInContext(
-			liferayPortletRequest, noSuchEntryRedirect, "/journal/find_folder",
-			"folderId", _folder.getFolderId());
+		try {
+			PortletURL viewInContextURL = getURLView(
+				liferayPortletResponse, WindowState.MAXIMIZED);
+
+			return viewInContextURL.toString();
+		}
+		catch (Exception e) {
+			return noSuchEntryRedirect;
+		}
 	}
 
 	@Override
@@ -240,8 +246,6 @@ public class JournalFolderAssetRenderer
 		throws Exception {
 
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			renderRequest.setAttribute(WebKeys.JOURNAL_FOLDER, _folder);
-
 			return "/html/portlet/journal/asset/folder_" + template + ".jsp";
 		}
 		else {

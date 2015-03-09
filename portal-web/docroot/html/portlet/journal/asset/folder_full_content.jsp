@@ -17,7 +17,11 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-JournalFolder folder = (JournalFolder)request.getAttribute(WebKeys.JOURNAL_FOLDER);
+JournalFolder folder = ActionUtil.getFolder(request);
+
+if (folder == null) {
+	folder = ActionUtil.getFolder(request);
+}
 %>
 
 <c:if test="<%= folder != null %>">

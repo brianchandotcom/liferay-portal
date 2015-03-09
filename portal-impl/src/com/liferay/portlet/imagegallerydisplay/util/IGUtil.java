@@ -98,11 +98,6 @@ public class IGUtil {
 		portletURL.setParameter(
 			"folderId", String.valueOf(folder.getFolderId()));
 
-		if (strutsAction.equals("/journal/select_image_gallery")) {
-			portletURL.setParameter(
-				"groupId", String.valueOf(folder.getGroupId()));
-		}
-
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, folder.getName(), portletURL.toString());
 	}

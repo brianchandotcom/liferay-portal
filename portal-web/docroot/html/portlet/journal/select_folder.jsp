@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-JournalFolder folder = (JournalFolder)request.getAttribute(WebKeys.JOURNAL_FOLDER);
+JournalFolder folder = ActionUtil.getFolder(request);
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 

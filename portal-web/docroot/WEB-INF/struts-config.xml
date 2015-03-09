@@ -428,6 +428,8 @@
 
 		<action path="/document_library/select_restricted_file_entry_type" forward="portlet.document_library.select_restricted_file_entry_type" />
 
+		<action path="/document_library/upload_file_entry" type="com.liferay.portlet.documentlibrary.action.EditFileEntryAction" />
+
 		<action path="/document_library/upload_multiple_file_entries" type="com.liferay.portlet.documentlibrary.action.EditFileEntryAction">
 			<forward name="portlet.document_library.edit_file_entry" path="portlet.document_library.upload_multiple_file_entries" />
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
@@ -752,16 +754,6 @@
 		</action>
 
 		<action path="/journal/export_article" type="com.liferay.portlet.journal.action.ExportArticleAction" />
-
-		<action path="/journal/find_folder" type="com.liferay.portlet.journal.action.FindFolderAction" />
-
-		<action path="/journal/get_article" type="com.liferay.portlet.journal.action.GetArticleAction" />
-
-		<action path="/journal/get_article_content" type="com.liferay.portlet.journal.action.GetArticleContentAction" />
-
-		<action path="/journal/get_articles" type="com.liferay.portlet.journal.action.GetArticlesAction" />
-
-		<action path="/journal/get_latest_article_content" type="com.liferay.portlet.journal.action.GetLatestArticleContentAction" />
 
 		<action path="/journal/move_entry" type="com.liferay.portlet.journal.action.EditEntryAction">
 			<forward name="portlet.journal.edit_entry" path="portlet.journal.move_entries" />

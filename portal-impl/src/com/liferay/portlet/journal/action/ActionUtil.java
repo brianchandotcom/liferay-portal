@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -44,15 +45,12 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
-import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFeed;
@@ -320,7 +318,9 @@ public class ActionUtil {
 		getFeed(request);
 	}
 
-	public static void getFolder(HttpServletRequest request) throws Exception {
+	public static JournalFolder getFolder(HttpServletRequest request)
+		throws PortalException {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -331,7 +331,7 @@ public class ActionUtil {
 		if ((folderId > 0) &&
 			(folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
-			folder = JournalFolderServiceUtil.getFolder(folderId);
+			folder = JournalFolderServiceUtil.fetchFolder(folderId);
 		}
 		else {
 			JournalPermission.check(
@@ -339,104 +339,47 @@ public class ActionUtil {
 				themeDisplay.getScopeGroupId(), ActionKeys.VIEW);
 		}
 
-		request.setAttribute(WebKeys.JOURNAL_FOLDER, folder);
+		return folder;
 	}
 
-	public static void getFolder(PortletRequest portletRequest)
-		throws Exception {
+	public static JournalFolder getFolder(PortletRequest portletRequest)
+		throws PortalException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getFolder(request);
+		return getFolder(request);
 	}
 
-	public static void getFolders(HttpServletRequest request) throws Exception {
+	public static List<JournalFolder> getFolders(HttpServletRequest request)
+		throws PortalException {
+
 		long[] folderIds = StringUtil.split(
 			ParamUtil.getString(request, "folderIds"), 0L);
 
 		List<JournalFolder> folders = new ArrayList<>();
 
 		for (long folderId : folderIds) {
-			try {
-				JournalFolder folder = JournalFolderServiceUtil.getFolder(
-					folderId);
+			JournalFolder folder = JournalFolderServiceUtil.fetchFolder(
+				folderId);
 
-				folders.add(folder);
+			if (folder == null) {
+				continue;
 			}
-			catch (NoSuchFolderException nsfee) {
-			}
+
+			folders.add(folder);
 		}
 
-		request.setAttribute(WebKeys.JOURNAL_FOLDERS, folders);
+		return folders;
 	}
 
-	public static void getFolders(PortletRequest portletRequest)
-		throws Exception {
+	public static List<JournalFolder> getFolders(PortletRequest portletRequest)
+		throws PortalException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getFolders(request);
-	}
-
-	public static void getStructure(HttpServletRequest request)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(request, "groupId");
-		long classNameId = ParamUtil.getLong(request, "classNameId");
-		String ddmStructureKey = ParamUtil.getString(
-			request, "ddmStructureKey");
-
-		DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(
-			groupId, classNameId, ddmStructureKey);
-
-		request.setAttribute(WebKeys.JOURNAL_STRUCTURE, ddmStructure);
-	}
-
-	public static void getStructure(PortletRequest portletRequest)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		getStructure(request);
-
-		DDMStructure ddmStructure = (DDMStructure)portletRequest.getAttribute(
-			WebKeys.JOURNAL_STRUCTURE);
-
-		JournalUtil.addRecentDDMStructure(portletRequest, ddmStructure);
-	}
-
-	public static void getTemplate(HttpServletRequest request)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(request, "groupId");
-		String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey");
-
-		DDMTemplate ddmTemplate = null;
-
-		if (Validator.isNotNull(ddmTemplateKey)) {
-			ddmTemplate = DDMTemplateServiceUtil.getTemplate(
-				groupId, PortalUtil.getClassNameId(DDMStructure.class),
-				ddmTemplateKey, true);
-		}
-
-		request.setAttribute(WebKeys.JOURNAL_TEMPLATE, ddmTemplate);
-	}
-
-	public static void getTemplate(PortletRequest portletRequest)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		getTemplate(request);
-
-		DDMTemplate ddmTemplate = (DDMTemplate)portletRequest.getAttribute(
-			WebKeys.JOURNAL_TEMPLATE);
-
-		JournalUtil.addRecentDDMTemplate(portletRequest, ddmTemplate);
+		return getFolders(request);
 	}
 
 	protected static String getElementInstanceId(

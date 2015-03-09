@@ -571,8 +571,10 @@ public class SyncFileService {
 
 		// Local sync file
 
-		FileUtil.writeFileKey(
-			filePath, String.valueOf(syncFile.getSyncFileId()));
+		if (FileUtil.getFileKey(filePath) != syncFile.getSyncFileId()) {
+			FileUtil.writeFileKey(
+				filePath, String.valueOf(syncFile.getSyncFileId()));
+		}
 
 		Path deltaFilePath = null;
 

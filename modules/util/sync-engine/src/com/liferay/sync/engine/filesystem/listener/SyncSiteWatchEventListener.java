@@ -140,6 +140,17 @@ public class SyncSiteWatchEventListener extends BaseWatchEventListener {
 				}
 			}
 			else if (parentFilePath.equals(previousFilePath.getParent())) {
+				String fileName = String.valueOf(filePath.getFileName());
+
+				if (FileUtil.isOfficeTempFile(fileName, filePath) &&
+					!Files.exists(filePath)) {
+
+					SyncWatchEventService.deleteSyncWatchEvent(
+						lastSyncWatchEvent.getSyncWatchEventId());
+
+					return;
+				}
+
 				lastSyncWatchEvent.setEventType(
 					SyncWatchEvent.EVENT_TYPE_RENAME);
 				lastSyncWatchEvent.setFilePathName(filePathName);

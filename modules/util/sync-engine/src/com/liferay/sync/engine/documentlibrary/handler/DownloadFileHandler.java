@@ -118,7 +118,9 @@ public class DownloadFileHandler extends BaseHandler {
 
 		if (exception.equals(
 				"com.liferay.portlet.documentlibrary." +
-					"NoSuchFileEntryException")) {
+					"NoSuchFileEntryException") ||
+			exception.equals(
+				"com.liferay.portlet.documentlibrary.NoSuchFileException")) {
 
 			if (_logger.isDebugEnabled()) {
 				_logger.debug(

@@ -16,12 +16,14 @@ package com.liferay.portal.wab.extender.internal;
 
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.wab.extender.internal.adaptor.FilterExceptionAdaptor;
+import com.liferay.portal.wab.extender.internal.adaptor.ServletContextListenerExceptionAdaptor;
 import com.liferay.portal.wab.extender.internal.definition.FilterDefinition;
 import com.liferay.portal.wab.extender.internal.definition.ListenerDefinition;
 import com.liferay.portal.wab.extender.internal.definition.ServletDefinition;
 import com.liferay.portal.wab.extender.internal.definition.WebXMLDefinition;
 import com.liferay.portal.wab.extender.internal.definition.WebXMLDefinitionLoader;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.EventListener;
 import java.util.Hashtable;
@@ -34,9 +36,14 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletContextAttributeListener;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.ServletRequestAttributeListener;
+import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpSessionAttributeListener;
+import javax.servlet.http.HttpSessionListener;
 
 import javax.xml.parsers.SAXParserFactory;
 
@@ -269,6 +276,41 @@ public class WabBundleProcessor implements ServletContextListener {
 		_servletRegistrations.clear();
 	}
 
+	protected String[] getClassNames(EventListener eventListener) {
+		List<String> classNamesList = new ArrayList<>();
+
+		if (HttpSessionAttributeListener.class.isInstance(eventListener)) {
+			classNamesList.add(HttpSessionAttributeListener.class.getName());
+		}
+
+		if (HttpSessionListener.class.isInstance(eventListener)) {
+			classNamesList.add(HttpSessionListener.class.getName());
+		}
+
+		if (ServletContextAttributeListener.class.isInstance(eventListener)) {
+			classNamesList.add(ServletContextAttributeListener.class.getName());
+		}
+
+		// The following supported listener is omitted on purpose because it is
+		// registered individually.
+
+		/*
+		if (ServletContextListener.class.isInstance(eventListener)) {
+			classNamesList.add(ServletContextListener.class.getName());
+		}
+		*/
+
+		if (ServletRequestAttributeListener.class.isInstance(eventListener)) {
+			classNamesList.add(ServletRequestAttributeListener.class.getName());
+		}
+
+		if (ServletRequestListener.class.isInstance(eventListener)) {
+			classNamesList.add(ServletRequestListener.class.getName());
+		}
+
+		return classNamesList.toArray(new String[classNamesList.size()]);
+	}
+
 	protected void initContext() throws Exception {
 		Map<String, String> contextParameters =
 			_webXMLDefinition.getContextParameters();
@@ -363,19 +405,51 @@ public class WabBundleProcessor implements ServletContextListener {
 			_webXMLDefinition.getListenerDefinitions();
 
 		for (ListenerDefinition listenerDefinition : listenerDefinitions) {
-			try {
-				_extendedHttpService.registerListener(
-					listenerDefinition.getEventListener(), _contextName);
-			}
-			catch (Exception e1) {
-				try {
-					destroy();
-				}
-				catch (Exception e2) {
-				}
+			Dictionary<String, Object> properties = new Hashtable<>();
 
-				throw e1;
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+				_contextName);
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER,
+				Boolean.TRUE.toString());
+
+			String[] classNames = getClassNames(
+				listenerDefinition.getEventListener());
+
+			ServiceRegistration<?> serviceRegistration =
+				_bundleContext.registerService(
+					classNames, listenerDefinition.getEventListener(),
+					properties);
+
+			_listenerRegistrations.add(serviceRegistration);
+
+			if (!ServletContextListener.class.isInstance(
+					listenerDefinition.getEventListener())) {
+
+				continue;
 			}
+
+			ServletContextListenerExceptionAdaptor
+				servletContextListenerExceptionAdaptor =
+					new ServletContextListenerExceptionAdaptor(
+						(ServletContextListener)
+							listenerDefinition.getEventListener());
+
+			serviceRegistration = _bundleContext.registerService(
+				ServletContextListener.class,
+				servletContextListenerExceptionAdaptor, properties);
+
+			Exception exception =
+				servletContextListenerExceptionAdaptor.getException();
+
+			if (exception != null) {
+				serviceRegistration.unregister();
+
+				throw exception;
+			}
+
+			_listenerRegistrations.add(serviceRegistration);
 		}
 	}
 

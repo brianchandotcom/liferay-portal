@@ -42,7 +42,6 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionListener;
 
@@ -187,7 +186,7 @@ public class WabBundleProcessor implements ServletContextListener {
 		}
 	}
 
-	protected ServiceRegistration<Servlet> createDefaultServlet() {
+	protected ServiceRegistration<?> createDefaultServlet() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
@@ -199,7 +198,7 @@ public class WabBundleProcessor implements ServletContextListener {
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN, "/*");
 
 		return _bundleContext.registerService(
-			Servlet.class, new HttpServlet() {}, properties);
+			Object.class, new Object(), properties);
 	}
 
 	protected ServiceRegistration<Servlet> createJspServlet() {
@@ -550,7 +549,7 @@ public class WabBundleProcessor implements ServletContextListener {
 	private final BundleContext _bundleContext;
 	private final String _contextName;
 	private final String _contextPath;
-	private ServiceRegistration<Servlet> _defaultServletServiceRegistration;
+	private ServiceRegistration<?> _defaultServletServiceRegistration;
 	private Set<ServiceRegistration<Filter>> _filterRegistrations =
 		new ConcurrentSkipListSet<>();
 	private ServiceRegistration<Servlet> _jspServletServiceRegistration;

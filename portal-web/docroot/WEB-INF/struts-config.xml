@@ -755,16 +755,6 @@
 
 		<action path="/journal/export_article" type="com.liferay.portlet.journal.action.ExportArticleAction" />
 
-		<action path="/journal/find_folder" type="com.liferay.portlet.journal.action.FindFolderAction" />
-
-		<action path="/journal/get_article" type="com.liferay.portlet.journal.action.GetArticleAction" />
-
-		<action path="/journal/get_article_content" type="com.liferay.portlet.journal.action.GetArticleContentAction" />
-
-		<action path="/journal/get_articles" type="com.liferay.portlet.journal.action.GetArticlesAction" />
-
-		<action path="/journal/get_latest_article_content" type="com.liferay.portlet.journal.action.GetLatestArticleContentAction" />
-
 		<action path="/journal/move_entry" type="com.liferay.portlet.journal.action.EditEntryAction">
 			<forward name="portlet.journal.edit_entry" path="portlet.journal.move_entries" />
 			<forward name="portlet.journal.error" path="portlet.journal.error" />

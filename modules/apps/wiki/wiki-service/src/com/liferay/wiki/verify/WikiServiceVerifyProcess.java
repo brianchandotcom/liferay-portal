@@ -46,31 +46,31 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class WikiServiceVerifyProcess extends VerifyProcess {
 
-	@Override
-	protected void doVerify() throws Exception {
-		verifyCreateDate();
-		verifyNoAssetPages();
-		verifyResourcedModels();
-		verifyUUIDModels();
-	}
-
 	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
+	public void setWikiPageLocalService(
 		WikiPageLocalService wikiPageLocalService) {
 
 		_wikiPageLocalService = wikiPageLocalService;
 	}
 
 	@Reference(unbind = "-")
-	protected void setWikiPageResourceLocalService(
+	public void setWikiPageResourceLocalService(
 		WikiPageResourceLocalService wikiPageResourceLocalService) {
 
 		_wikiPageResourceLocalService = wikiPageResourceLocalService;
 	}
 
 	@Reference(unbind = "-")
-	protected void setWikiServiceConfigurator(
+	public void setWikiServiceConfigurator(
 		WikiServiceConfigurator wikiServiceConfigurator) {
+	}
+
+	@Override
+	protected void doVerify() throws Exception {
+		verifyCreateDate();
+		verifyNoAssetPages();
+		verifyResourcedModels();
+		verifyUUIDModels();
 	}
 
 	protected void verifyCreateDate() throws Exception {

@@ -19,21 +19,26 @@ import com.liferay.document.selector.ItemSelectorCriterion;
 import com.liferay.document.selector.ItemSelectorCriterionHandler;
 import com.liferay.document.selector.ItemSelectorView;
 import com.liferay.document.selector.ItemSelectorViewWithCriterion;
-import com.liferay.document.selector.RequestDescriptor;
+import com.liferay.document.selector.web.constants.DocumentSelectorPortletKeys;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.Function;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Accessor;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -49,41 +54,38 @@ public class ItemSelectorImpl implements ItemSelector {
 
 	public static final String PARAM_CRITERIA = "criteria";
 
-	public static final String PORTLET_URL = "/item_selector";
-
 	@Override
-	public RequestDescriptor getRequestDescriptor(
+	public PortletURL getItemSelectorURL(
+		PortletRequest portletRequest,
 		ItemSelectorCriterion... itemSelectorCriteria) {
 
-		Map<String, String> params = new HashMap<>();
+		Map<String, String> params = getItemSelectorParameters(
+			itemSelectorCriteria);
 
-		_putCriteriaParam(params, itemSelectorCriteria);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		for (int i = 0; i<itemSelectorCriteria.length; i++) {
-			ItemSelectorCriterion itemSelectorCriterion =
-				itemSelectorCriteria[i];
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, DocumentSelectorPortletKeys.DOCUMENT_SELECTOR,
+			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-			String paramPrefix = i + "_";
-
-			_putDesiredReturnTypesParam(
-				params, paramPrefix, itemSelectorCriterion);
-
-			_putItemCriterionSelectionParams(
-				params, paramPrefix, itemSelectorCriterion);
+		for (Map.Entry<String, String> entry : params.entrySet()) {
+			portletURL.setParameter(entry.getKey(), entry.getValue());
 		}
 
-		return new RequestDescriptor(PORTLET_URL, params);
+		return portletURL;
 	}
 
 	@Override
-	public List<ItemSelectorViewWithCriterion<?>> processRequestDescriptor(
-		RequestDescriptor requestDescriptor) {
+	public List<ItemSelectorViewWithCriterion<?>>
+		getItemSelectorViewsWithCriteria(
+			Map<String, String> parameters) {
 
-		List<ItemSelectorViewWithCriterion<?>> itemSelectorViewWithCriterions =
+		List<ItemSelectorViewWithCriterion<?>> itemSelectorViewWithCriteria =
 			new ArrayList<>();
 
 		List<Class> itemSelectorCriterionClasses =
-			_getItemSelectorCriterionClasses(requestDescriptor);
+			_getItemSelectorCriterionClasses(parameters);
 
 		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
 			Class itemSelectorCriterionClass = itemSelectorCriterionClasses.get(
@@ -95,22 +97,44 @@ public class ItemSelectorImpl implements ItemSelector {
 
 			ItemSelectorCriterion itemSelectorCriterion =
 				_getItemSelectorCriterion(
-					requestDescriptor.getParams(), i + "_",
-					itemSelectorCriterionClass);
+					parameters, i + "_", itemSelectorCriterionClass);
 
 			List<ItemSelectorView> itemSelectorViews =
 				itemSelectorCriterionHandler.getItemSelectorViews(
 					itemSelectorCriterion);
 
 			for (ItemSelectorView itemSelectorView : itemSelectorViews) {
-				itemSelectorViewWithCriterions.add(
+				itemSelectorViewWithCriteria.add(
 					new ItemSelectorViewWithCriterion(
 						itemSelectorView, itemSelectorCriterion)
 				);
 			}
 		}
 
-		return itemSelectorViewWithCriterions;
+		return itemSelectorViewWithCriteria;
+	}
+
+	protected Map<String, String> getItemSelectorParameters(
+		ItemSelectorCriterion... itemSelectorCriteria) {
+
+		Map<String, String> params = new HashMap<>();
+
+		_populateCriteria(params, itemSelectorCriteria);
+
+		for (int i = 0; i < itemSelectorCriteria.length; i++) {
+			ItemSelectorCriterion itemSelectorCriterion =
+				itemSelectorCriteria[i];
+
+			String paramPrefix = i + "_";
+
+			_populateDesiredReturnTypes(
+				params, paramPrefix, itemSelectorCriterion);
+
+			_populateItemSelectorCriteria(
+				params, paramPrefix, itemSelectorCriterion);
+		}
+
+		return params;
 	}
 
 	@Reference(policyOption = ReferencePolicyOption.GREEDY)
@@ -135,33 +159,6 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		_itemSelectionCriterionHandlers.remove(
 			itemSelectorCriterionClass.getName());
-	}
-
-	private <T> String _getCommaSeparatedList(
-		Iterable<T> items, Function<T, ?> mapper) {
-
-		StringBundler sb = new StringBundler();
-
-		boolean first = true;
-
-		for (T item : items) {
-			if (first) {
-				first = false;
-			}
-			else {
-				sb.append(",");
-			}
-
-			Object mappedItem = item;
-
-			if (mapper != null) {
-				mappedItem = mapper.apply(item);
-			}
-
-			sb.append(mappedItem.toString());
-		}
-
-		return sb.toString();
 	}
 
 	private ItemSelectorCriterion _getItemSelectorCriterion(
@@ -194,11 +191,9 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	private List<Class> _getItemSelectorCriterionClasses(
-		RequestDescriptor requestDescriptor) {
+		Map<String, String> parameters) {
 
-		Map<String, String> params = requestDescriptor.getParams();
-
-		String criteria = params.get(PARAM_CRITERIA);
+		String criteria = parameters.get(PARAM_CRITERIA);
 
 		String[] itemSelectorCriterionClassNames = criteria.split(",");
 
@@ -218,28 +213,37 @@ public class ItemSelectorImpl implements ItemSelector {
 		return itemSelectorCriterionClasses;
 	}
 
-	private void _putCriteriaParam(
+	private void _populateCriteria(
 		Map<String, String> params,
 		ItemSelectorCriterion[] itemSelectorCriteria) {
 
+		Accessor<ItemSelectorCriterion, String> accessor =
+			new Accessor<ItemSelectorCriterion, String>() {
+
+				@Override
+				public String get(ItemSelectorCriterion itemSelectorCriterion) {
+					Class<?> clazz = itemSelectorCriterion.getClass();
+
+					return clazz.getName();
+				}
+
+				@Override
+				public Class<String> getAttributeClass() {
+					return String.class;
+				}
+
+				@Override
+				public Class<ItemSelectorCriterion> getTypeClass() {
+					return ItemSelectorCriterion.class;
+				}
+
+			};
+
 		params.put(
-			PARAM_CRITERIA,
-			_getCommaSeparatedList(
-				Arrays.asList(itemSelectorCriteria),
-				new Function<ItemSelectorCriterion, String>() {
-
-					@Override
-					public String apply(
-						ItemSelectorCriterion itemSelectorCriterion) {
-
-						Class<?> clazz = itemSelectorCriterion.getClass();
-
-						return clazz.getName();
-					}
-				}));
+			PARAM_CRITERIA, ArrayUtil.toString(itemSelectorCriteria, accessor));
 	}
 
-	private void _putDesiredReturnTypesParam(
+	private void _populateDesiredReturnTypes(
 		Map<String, String> params, String paramPrefix,
 		ItemSelectorCriterion itemSelectorCriterion) {
 
@@ -249,21 +253,38 @@ public class ItemSelectorImpl implements ItemSelector {
 		Set<Class<?>> availableReturnTypes =
 			itemSelectorCriterion.getAvailableReturnTypes();
 
-		if (desiredReturnTypes.size() != availableReturnTypes.size()) {
-			params.put(
-				paramPrefix + "desiredReturnTypes",
-				_getCommaSeparatedList(
-					desiredReturnTypes,
-					new Function<Class<?>, String>() {
-						@Override
-						public String apply(Class<?> clazz) {
-							return clazz.getName();
-					}
-				}));
+		if (desiredReturnTypes.size() == availableReturnTypes.size()) {
+			return;
 		}
+
+		Accessor<Class<?>, String> accessor = new Accessor<Class<?>, String>() {
+
+			@Override
+			public String get(Class<?> clazz) {
+				return clazz.getName();
+			}
+
+			@Override
+			public Class<String> getAttributeClass() {
+				return String.class;
+			}
+
+			@Override
+			public Class getTypeClass() {
+				return Class.class;
+			}
+
+		};
+
+		params.put(
+			paramPrefix + "desiredReturnTypes",
+			ArrayUtil.toString(
+				desiredReturnTypes.toArray(
+					new Class<?>[desiredReturnTypes.size()]),
+				accessor));
 	}
 
-	private void _putItemCriterionSelectionParams(
+	private void _populateItemSelectorCriteria(
 		Map<String, String> params, String paramPrefix,
 		ItemSelectorCriterion itemSelectorCriterion) {
 
@@ -277,6 +298,7 @@ public class ItemSelectorImpl implements ItemSelector {
 				if (key.equals("availableReturnTypes") ||
 					key.equals("class") ||
 					key.equals("desiredReturnTypes")) {
+
 					continue;
 				}
 

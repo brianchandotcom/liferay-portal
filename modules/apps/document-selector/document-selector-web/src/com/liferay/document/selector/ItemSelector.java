@@ -15,16 +15,22 @@
 package com.liferay.document.selector;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 /**
  * @author Iván Zaera
  */
 public interface ItemSelector {
 
-	public RequestDescriptor getRequestDescriptor(
+	public PortletURL getItemSelectorURL(
+		PortletRequest portletRequest,
 		ItemSelectorCriterion... itemSelectorCriteria);
 
-	public List<ItemSelectorViewWithCriterion<?>> processRequestDescriptor(
-		RequestDescriptor requestDescriptor);
+	public List<ItemSelectorViewWithCriterion<?>>
+		getItemSelectorViewsWithCriteria(
+			Map<String, String> parameters);
 
 }

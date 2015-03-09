@@ -94,7 +94,7 @@ import java.util.Map;
 import java.util.Set;
 
 <#list referenceList as tempEntity>
-	<#if tempEntity.hasColumns() && (entity.name == "Counter" || tempEntity.name != "Counter") && (tempEntity.packagePath != packagePath)>
+	<#if tempEntity.hasColumns() && (entity.name == "Counter" || tempEntity.name != "Counter")>
 		import ${tempEntity.packagePath}.service.persistence.${tempEntity.name}Persistence;
 	</#if>
 </#list>

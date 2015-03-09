@@ -1887,7 +1887,24 @@ go]]></replacevalue>
 	</target>
 
 	<target name="deploy-required-plugins">
-		<ant dir="${lp.plugins.dir}/portlets/marketplace-portlet" target="direct-deploy" />
+		<if>
+			<equals arg1="${app.server.type}" arg2="jboss" />
+			<then>
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
+app.server.type=${app.server.type}
+app.server.jboss.dir=${app.server.dir}
+
+auto.deploy.dir=${liferay.home}/deploy}</echo>
+			</then>
+			<else>
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
+app.server.type=${app.server.type}
+
+auto.deploy.dir=${liferay.home}/deploy</echo>
+			</else>
+		</if>
+
+		<ant dir="${lp.plugins.dir}/portlets/marketplace-portlet" target="direct-deploy" inheritAll="false" />
 
 		<get-testcase-property property.name="marketplace.staging.enabled" />
 
@@ -1912,7 +1929,7 @@ ${marketplace.portlet.properties}</echo>
 		<if>
 			<isset property="hook.plugins.includes" />
 			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" inheritAll="false">
 					<property name="plugin.types" value="hooks" />
 					<property name="plugins.includes" value="${hook.plugins.includes}" />
 				</ant>
@@ -1924,7 +1941,7 @@ ${marketplace.portlet.properties}</echo>
 		<if>
 			<isset property="layouttpl.plugins.includes" />
 			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" inheritAll="false">
 					<property name="plugin.types" value="layouttpl" />
 					<property name="plugins.includes" value="${layouttpl.plugins.includes}" />
 				</ant>
@@ -1936,7 +1953,7 @@ ${marketplace.portlet.properties}</echo>
 		<if>
 			<isset property="portlet.plugins.includes" />
 			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" inheritAll="false">
 					<property name="plugin.types" value="portlets" />
 					<property name="plugins.includes" value="${portlet.plugins.includes}" />
 				</ant>
@@ -1946,7 +1963,7 @@ ${marketplace.portlet.properties}</echo>
 		<if>
 			<equals arg1="${test.pacl}" arg2="true" />
 			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" inheritAll="false">
 					<property name="plugin.types" value="portlets" />
 					<property name="plugins.includes" value="chat-portlet,flash-portlet,portal-compat-hook,sample-service-builder-portlet,test-pacl-portlet" />
 				</ant>
@@ -1958,7 +1975,7 @@ ${marketplace.portlet.properties}</echo>
 		<if>
 			<isset property="theme.plugins.includes" />
 			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" inheritAll="false">
 					<property name="plugin.types" value="themes" />
 					<property name="plugins.includes" value="${theme.plugins.includes}" />
 				</ant>
@@ -1970,7 +1987,7 @@ ${marketplace.portlet.properties}</echo>
 		<if>
 			<isset property="web.plugins.includes" />
 			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" inheritAll="false">
 					<property name="plugin.types" value="webs" />
 					<property name="plugins.includes" value="${web.plugins.includes}" />
 				</ant>

@@ -384,6 +384,12 @@ public class StagingUtil {
 		return getStaging().isIncomplete(layout, layoutSetBranchId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor#getIsolationLevel(
+	 *             )}
+	 */
+	@Deprecated
 	public static void lockGroup(long userId, long groupId)
 		throws PortalException {
 
@@ -559,6 +565,12 @@ public class StagingUtil {
 		return getStaging().stripProtocolFromRemoteAddress(remoteAddress);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor#getIsolationLevel(
+	 *             )}
+	 */
+	@Deprecated
 	public static void unlockGroup(long groupId) {
 		getStaging().unlockGroup(groupId);
 	}

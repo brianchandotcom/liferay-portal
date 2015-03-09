@@ -1140,6 +1140,12 @@ public class StagingImpl implements Staging {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor#getIsolationLevel(
+	 *             )}
+	 */
+	@Deprecated
 	@Override
 	public void lockGroup(long userId, long groupId) throws PortalException {
 		if (LockLocalServiceUtil.isLocked(Staging.class.getName(), groupId)) {
@@ -1543,6 +1549,12 @@ public class StagingImpl implements Staging {
 		return remoteAddress;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor#getIsolationLevel(
+	 *             )}
+	 */
+	@Deprecated
 	@Override
 	public void unlockGroup(long groupId) {
 		LockLocalServiceUtil.unlock(Staging.class.getName(), groupId);

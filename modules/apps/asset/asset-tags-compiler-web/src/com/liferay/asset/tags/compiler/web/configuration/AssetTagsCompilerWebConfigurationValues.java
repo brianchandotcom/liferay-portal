@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class AssetTagsCompilerWebConfigurationValues {
 
-	public static final boolean TAGS_COMPILER_ENABLED = GetterUtil.getBoolean(
+	public static final boolean ENABLED = GetterUtil.getBoolean(
 		AssetTagsCompilerWebConfigurationUtil.get("enabled"));
 
 }

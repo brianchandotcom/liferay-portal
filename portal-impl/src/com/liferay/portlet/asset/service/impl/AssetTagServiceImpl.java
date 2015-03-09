@@ -212,7 +212,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 		if (Validator.isNull(name)) {
 			return assetTagPersistence.filterFindByGroupId(
-				groupIds, start, end);
+				groupIds, start, end, new AssetTagNameComparator());
 		}
 
 		return assetTagPersistence.filterFindByG_LikeN(

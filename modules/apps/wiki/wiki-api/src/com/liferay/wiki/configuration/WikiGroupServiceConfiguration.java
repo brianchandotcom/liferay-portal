@@ -99,7 +99,7 @@ public interface WikiGroupServiceConfiguration {
 	public String initialNodeName();
 
 	@Meta.AD(
-		deflt = "false", required = false
+		deflt = "true", required = false
 	)
 	public boolean pageCommentsEnabled();
 

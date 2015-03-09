@@ -18,6 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 import com.liferay.wiki.verify.WikiServiceVerifyProcess;
 
 import org.junit.ClassRule;
@@ -28,7 +30,7 @@ import org.junit.runner.RunWith;
  * @author Manuel de la Peña
  */
 @RunWith(Arquillian.class)
-public class VerifierTest extends BaseVerifyProcessTestCase {
+public class WikiServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -37,7 +39,9 @@ public class VerifierTest extends BaseVerifyProcessTestCase {
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return new WikiServiceVerifyProcess();
+		Registry registry = RegistryUtil.getRegistry();
+
+		return registry.getService(WikiServiceVerifyProcess.class);
 	}
 
 }

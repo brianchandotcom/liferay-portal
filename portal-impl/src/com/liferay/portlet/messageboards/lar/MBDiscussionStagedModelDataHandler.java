@@ -15,7 +15,6 @@
 package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -136,8 +135,9 @@ public class MBDiscussionStagedModelDataHandler
 			if (className.equals(Layout.class.getName()) &&
 				PropsValues.LAYOUT_COMMENTS_ENABLED) {
 
-				MBMessage rootMessage = MBMessageLocalServiceUtil.addDiscussionMessage(
-					userId, discussion.getUserName(),
+				MBMessage rootMessage =
+					MBMessageLocalServiceUtil.addDiscussionMessage(
+						userId, discussion.getUserName(),
 					portletDataContext.getScopeGroupId(), className, newClassPK,
 					WorkflowConstants.ACTION_PUBLISH);
 

@@ -196,7 +196,7 @@ public class WabBundleProcessor implements ServletContextListener {
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX, "/");
 		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/*");
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN, "/*");
 
 		return _bundleContext.registerService(
 			Servlet.class, new HttpServlet() {}, properties);

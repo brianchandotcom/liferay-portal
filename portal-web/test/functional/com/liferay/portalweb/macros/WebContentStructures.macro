@@ -50,6 +50,7 @@
 				<var name="key_structureName" value="${parentStructureName}" />
 
 				<execute function="AssertClick" locator1="CPWebcontentStructuresAddStructureChoosestructure#STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+				<execute function="SelectFrame" value1="relative=top" />
 
 				<execute function="SelectFrame" locator1="CPWebcontentStructuresAddstructure#STRUCTURES_IFRAME" />
 			</then>

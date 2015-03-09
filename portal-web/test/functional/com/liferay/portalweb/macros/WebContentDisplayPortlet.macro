@@ -174,7 +174,10 @@
 		<if>
 			<equals arg1="${addSearchedContent}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#WEB_CONTENT_CHOOSE_BUTTON" value1="${webContentTitle}" />
+				<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#WEB_CONTENT_CHOOSE_BUTTON" value1="Choose" />
+				<execute function="SelectFrame" value1="relative=top" />
+				<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
+
 				<execute function="AssertTextEquals" locator1="PGWebcontentdisplayConfiguration#INFO_MESSAGE_ARTICLE" value1="${webContentTitle} (Modified)" />
 				<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#SAVE_BUTTON" value1="Save" />
 				<execute function="AssertTextEquals" locator1="PGWebcontentdisplayConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />

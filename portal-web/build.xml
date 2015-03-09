@@ -459,6 +459,10 @@
 
 				creoleParserContent = creoleParserContent.replace("table: { tag: 'table', capture: 0,", "table: { tag: 'table', capture: 0,\n\t\t\tattrs: { 'class': 'cke_show_border' },");
 
+				// Fix parsing empty columns in tables
+
+				creoleParserContent = creoleParserContent.replace("regex: '\\\\|+([^|~\\\\[{]*((~(.|(?=\\\\n)|$)|' +", "regex: '\\\\|([^|~\\\\[{]*((~(.|(?=\\\\n)|$)|' +");
+
 				// Register Creole parser
 
 				creoleParserContent = creoleParserContent.replace("= Parse.Simple.Creole;", "= Parse.Simple.Creole;\n\nCKEDITOR.CreoleParser = Parse.Simple.Creole;");

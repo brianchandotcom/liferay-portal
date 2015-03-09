@@ -17,6 +17,7 @@ package com.liferay.portal.jmx;
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import javax.management.MBeanRegistrationException;
+import javax.management.MBeanServer;
 import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
@@ -25,6 +26,8 @@ import javax.management.ObjectName;
  * @author Michael C. Han
  */
 public interface MBeanRegistry {
+
+	public MBeanServer getMBeanServer();
 
 	public ObjectName getObjectName(String objectNameCacheKey);
 

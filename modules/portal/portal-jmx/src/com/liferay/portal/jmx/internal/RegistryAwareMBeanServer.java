@@ -15,6 +15,8 @@
 package com.liferay.portal.jmx.internal;
 
 import com.liferay.portal.jmx.MBeanRegistry;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.ObjectInputStream;
 
@@ -45,6 +47,9 @@ import javax.management.loading.ClassLoaderRepository;
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	service = RegistryAwareMBeanServer.class)
 public class RegistryAwareMBeanServer implements MBeanServer {
 
 	@Override
@@ -386,12 +391,11 @@ public class RegistryAwareMBeanServer implements MBeanServer {
 		return _mBeanServer.setAttributes(platformObjectName, attributeList);
 	}
 
+	@Reference
 	public void setMBeanRegistry(MBeanRegistry mBeanRegistry) {
 		_mBeanRegistry = mBeanRegistry;
-	}
 
-	public void setMBeanServer(MBeanServer mBeanServer) {
-		_mBeanServer = mBeanServer;
+		_mBeanServer = _mBeanRegistry.getMBeanServer();
 	}
 
 	@Override

@@ -30,6 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-asset-tags-navigation",
 		"com.liferay.portlet.display-category=category.cms",
+		"com.liferay.portlet.friendly-url-mapping=tag",
+		"com.liferay.portlet.friendly-url-routes=com/liferay/asset/tags/navigation/web/portlet/route/asset-tags-navigation-friendly-url-routes.xml",
 		"com.liferay.portlet.icon=/icons/asset_tags_cloud.png",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.layout-cacheable=true",
@@ -47,7 +49,6 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html",
-		"javax.portlet.supported-public-render-parameter=resetCur",
 		"javax.portlet.supported-public-render-parameter=tag"
 	},
 	service = Portlet.class

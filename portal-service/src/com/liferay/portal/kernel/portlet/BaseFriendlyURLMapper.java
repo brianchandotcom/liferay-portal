@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Map;
@@ -225,7 +226,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 				if (identiferValue != null) {
 					name = identiferValue;
 				}
-				else {
+				else if (Validator.isNotNull(namespace)) {
 					name = namespace.concat(name);
 				}
 			}

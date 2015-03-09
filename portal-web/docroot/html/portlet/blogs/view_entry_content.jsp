@@ -35,6 +35,10 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 				<c:if test="<%= Validator.isNotNull(coverImageURL) %>">
 					<div class="cover-image-container" style="background-image: url(<%= coverImageURL %>)"></div>
+
+					<div class="cover-image-caption">
+						<span><%= entry.getCoverImageCaption() %></span>
+					</div>
 				</c:if>
 
 				<%

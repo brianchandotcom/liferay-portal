@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var CSS_INVISIBLE = 'invisible';
+
 		var STR_BLANK = '';
 
 		var STR_CHANGE = 'change';
@@ -104,7 +106,12 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						var eventHandles = [];
+						instance._captionNode = AUI.$('.entry-cover-image-caption');
+
+						var eventHandles = [
+							Liferay.on('imageDeleted', instance._removeCaption, instance),
+							Liferay.on('imageUploaded', instance._showCaption, instance)
+						];
 
 						var publishButton = instance.one('#publishButton');
 
@@ -239,6 +246,12 @@ AUI.add(
 							instance.one('#content').val(contentEditor.getHTML());
 						}
 
+						var coverImageCaptionEditor = window[instance.ns('coverImageCaptionEditor')];
+
+						if (coverImageCaptionEditor) {
+							instance.one('#coverImageCaption').val(coverImageCaptionEditor.getHTML());
+						}
+
 						var descriptionEditor = window[instance.ns('descriptionEditor')];
 
 						if (descriptionEditor) {
@@ -260,6 +273,16 @@ AUI.add(
 						submitForm(form);
 					},
 
+					_removeCaption: function() {
+						var instance = this;
+
+						var captionNode = instance._captionNode;
+
+						captionNode.addClass(CSS_INVISIBLE);
+
+						window[instance.ns('coverImageCaptionEditor')].setHTML(STR_BLANK);
+					},
+
 					_saveEntry: function(draft, ajax) {
 						var instance = this;
 
@@ -270,6 +293,7 @@ AUI.add(
 						var subtitle = window[instance.ns('subtitleEditor')].getHTML();
 						var content = window[instance.ns('contentEditor')].getHTML();
 						var description = window[instance.ns('descriptionEditor')].getHTML();
+						var coverImageCaption = window[instance.ns('coverImageCaptionEditor')].getHTML();
 
 						var form = instance._getPrincipalForm();
 
@@ -293,6 +317,7 @@ AUI.add(
 										'assetTagNames': instance.one('#assetTagNames').val(),
 										'cmd': constants.ADD,
 										'content': content,
+										'coverImageCaption': coverImageCaption,
 										'displayDateAmPm': instance.one('#displayDateAmPm').val(),
 										'displayDateDay': instance.one('#displayDateDay').val(),
 										'displayDateHour': instance.one('#displayDateHour').val(),
@@ -383,11 +408,11 @@ AUI.add(
 						else {
 							instance.one('#' + constants.CMD).val(instance.get('entry') ? constants.UPDATE : constants.ADD);
 
-							instance.one('#title').val(title);
-							instance.one('#subtitle').val(subtitle);
 							instance.one('#content').val(content);
+							instance.one('#coverImageCaption').val(coverImageCaption);
 							instance.one('#description').val(description);
-
+							instance.one('#subtitle').val(subtitle);
+							instance.one('#title').val(title);
 							instance.one('#workflowAction').val(draft ? constants.ACTION_SAVE_DRAFT : constants.ACTION_PUBLISH);
 
 							submitForm(form);
@@ -419,6 +444,12 @@ AUI.add(
 						}
 
 						return text;
+					},
+
+					_showCaption: function() {
+						var instance = this;
+
+						instance._captionNode.removeClass(CSS_INVISIBLE);
 					},
 
 					_updateImages: function(persistentImages) {

@@ -98,6 +98,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 			{ "allowPingbacks", Types.BOOLEAN },
 			{ "allowTrackbacks", Types.BOOLEAN },
 			{ "trackbacks", Types.CLOB },
+			{ "coverImageCaption", Types.VARCHAR },
 			{ "coverImageFileEntryId", Types.BIGINT },
 			{ "coverImageURL", Types.VARCHAR },
 			{ "smallImage", Types.BOOLEAN },
@@ -109,7 +110,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table BlogsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(150) null,subtitle STRING null,urlTitle VARCHAR(150) null,description STRING null,content TEXT null,displayDate DATE null,allowPingbacks BOOLEAN,allowTrackbacks BOOLEAN,trackbacks TEXT null,coverImageFileEntryId LONG,coverImageURL VARCHAR(75) null,smallImage BOOLEAN,smallImageFileEntryId LONG,smallImageId LONG,smallImageURL STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table BlogsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(150) null,subtitle STRING null,urlTitle VARCHAR(150) null,description STRING null,content TEXT null,displayDate DATE null,allowPingbacks BOOLEAN,allowTrackbacks BOOLEAN,trackbacks TEXT null,coverImageCaption VARCHAR(75) null,coverImageFileEntryId LONG,coverImageURL VARCHAR(75) null,smallImage BOOLEAN,smallImageFileEntryId LONG,smallImageId LONG,smallImageURL STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table BlogsEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY blogsEntry.displayDate DESC, blogsEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY BlogsEntry.displayDate DESC, BlogsEntry.createDate DESC";
@@ -164,6 +165,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		model.setAllowPingbacks(soapModel.getAllowPingbacks());
 		model.setAllowTrackbacks(soapModel.getAllowTrackbacks());
 		model.setTrackbacks(soapModel.getTrackbacks());
+		model.setCoverImageCaption(soapModel.getCoverImageCaption());
 		model.setCoverImageFileEntryId(soapModel.getCoverImageFileEntryId());
 		model.setCoverImageURL(soapModel.getCoverImageURL());
 		model.setSmallImage(soapModel.getSmallImage());
@@ -255,6 +257,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		attributes.put("allowPingbacks", getAllowPingbacks());
 		attributes.put("allowTrackbacks", getAllowTrackbacks());
 		attributes.put("trackbacks", getTrackbacks());
+		attributes.put("coverImageCaption", getCoverImageCaption());
 		attributes.put("coverImageFileEntryId", getCoverImageFileEntryId());
 		attributes.put("coverImageURL", getCoverImageURL());
 		attributes.put("smallImage", getSmallImage());
@@ -374,6 +377,12 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 		if (trackbacks != null) {
 			setTrackbacks(trackbacks);
+		}
+
+		String coverImageCaption = (String)attributes.get("coverImageCaption");
+
+		if (coverImageCaption != null) {
+			setCoverImageCaption(coverImageCaption);
 		}
 
 		Long coverImageFileEntryId = (Long)attributes.get(
@@ -756,6 +765,22 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	@Override
 	public void setTrackbacks(String trackbacks) {
 		_trackbacks = trackbacks;
+	}
+
+	@JSON
+	@Override
+	public String getCoverImageCaption() {
+		if (_coverImageCaption == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _coverImageCaption;
+		}
+	}
+
+	@Override
+	public void setCoverImageCaption(String coverImageCaption) {
+		_coverImageCaption = coverImageCaption;
 	}
 
 	@JSON
@@ -1185,6 +1210,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		blogsEntryImpl.setAllowPingbacks(getAllowPingbacks());
 		blogsEntryImpl.setAllowTrackbacks(getAllowTrackbacks());
 		blogsEntryImpl.setTrackbacks(getTrackbacks());
+		blogsEntryImpl.setCoverImageCaption(getCoverImageCaption());
 		blogsEntryImpl.setCoverImageFileEntryId(getCoverImageFileEntryId());
 		blogsEntryImpl.setCoverImageURL(getCoverImageURL());
 		blogsEntryImpl.setSmallImage(getSmallImage());
@@ -1397,6 +1423,14 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 			blogsEntryCacheModel.trackbacks = null;
 		}
 
+		blogsEntryCacheModel.coverImageCaption = getCoverImageCaption();
+
+		String coverImageCaption = blogsEntryCacheModel.coverImageCaption;
+
+		if ((coverImageCaption != null) && (coverImageCaption.length() == 0)) {
+			blogsEntryCacheModel.coverImageCaption = null;
+		}
+
 		blogsEntryCacheModel.coverImageFileEntryId = getCoverImageFileEntryId();
 
 		blogsEntryCacheModel.coverImageURL = getCoverImageURL();
@@ -1447,7 +1481,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1483,6 +1517,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		sb.append(getAllowTrackbacks());
 		sb.append(", trackbacks=");
 		sb.append(getTrackbacks());
+		sb.append(", coverImageCaption=");
+		sb.append(getCoverImageCaption());
 		sb.append(", coverImageFileEntryId=");
 		sb.append(getCoverImageFileEntryId());
 		sb.append(", coverImageURL=");
@@ -1510,7 +1546,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(85);
+		StringBundler sb = new StringBundler(88);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.blogs.model.BlogsEntry");
@@ -1583,6 +1619,10 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		sb.append(
 			"<column><column-name>trackbacks</column-name><column-value><![CDATA[");
 		sb.append(getTrackbacks());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>coverImageCaption</column-name><column-value><![CDATA[");
+		sb.append(getCoverImageCaption());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>coverImageFileEntryId</column-name><column-value><![CDATA[");
@@ -1660,6 +1700,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	private boolean _allowPingbacks;
 	private boolean _allowTrackbacks;
 	private String _trackbacks;
+	private String _coverImageCaption;
 	private long _coverImageFileEntryId;
 	private String _coverImageURL;
 	private boolean _smallImage;

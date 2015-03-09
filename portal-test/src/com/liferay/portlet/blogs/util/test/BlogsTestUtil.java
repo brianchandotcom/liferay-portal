@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -59,8 +60,8 @@ public class BlogsTestUtil {
 			BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 				userId, title, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				displayCalendar.getTime(), true, true, new String[0], null,
-				null, serviceContext);
+				displayCalendar.getTime(), true, true, new String[0],
+				StringPool.BLANK, null, null, serviceContext);
 
 			if (approved) {
 				return updateStatus(entry, serviceContext);

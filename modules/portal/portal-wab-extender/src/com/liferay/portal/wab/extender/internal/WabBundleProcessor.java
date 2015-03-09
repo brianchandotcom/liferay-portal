@@ -535,6 +535,9 @@ public class WabBundleProcessor implements ServletContextListener {
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
 			_contextName);
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER,
+			Boolean.TRUE.toString());
 
 		_thisEventListenerRegistration = _bundleContext.registerService(
 			ServletContextListener.class, this, properties);

@@ -1206,8 +1206,8 @@
 		<execute function="AssertTextEquals" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_1" value1="Blank Page" />
 
 		<execute macro="SitePage#addCP">
-			<var name="pageTypeDescription" value="Liferay" />
-			<var name="pageTypeURL" value="http://www.liferay.com/" />
+			<var name="pageTypeDescription" value="Is California on Fire?" />
+			<var name="pageTypeURL" value="http://iscaliforniaonfire.com/" />
 			<var name="siteName" value="Page Type Test Site Name" />
 			<var name="sitePageName" value="Embedded Page" />
 			<var name="sitePagePrivacy" value="Public" />
@@ -1247,8 +1247,10 @@
 		<execute function="AssertLocation" value1="http://localhost:8080/web/page-type-test-site-name/embedded-page" />
 
 		<execute function="SelectFrame" locator1="PGEmbedded#EMBEDDED_IFRAME" />
-		<execute function="AssertTextEquals" locator1="PGEmbedded#EMBEDDED_LIFERAY_COPYRIGHT_TEXT" value1="© 2015 LIFERAY INC. ALL RIGHTS RESERVED" />
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGEmbedded#EMBEDDED_SITE_TEXT" value1="Yes" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGEmbedded#EMBEDDED_SITE_TEXT" value1="updated" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGEmbedded#EMBEDDED_SITE_TEXT" value1="PST" />
+		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Panel Page" />

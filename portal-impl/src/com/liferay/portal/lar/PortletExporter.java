@@ -131,17 +131,17 @@ public class PortletExporter {
 			return;
 		}
 
-		String portletId = portlet.getPortletId();
+		Group group = layout.getGroup();
 
-		Group liveGroup = layout.getGroup();
-
-		if (liveGroup.isStagingGroup()) {
-			liveGroup = liveGroup.getLiveGroup();
+		if (group.isStagingGroup()) {
+			group = group.getLiveGroup();
 		}
 
-		boolean staged = liveGroup.isStagedPortlet(portlet.getRootPortletId());
+		String portletId = portlet.getPortletId();
 
-		if (!staged && ExportImportThreadLocal.isLayoutExportInProcess()) {
+		if (ExportImportThreadLocal.isStagingInProcess() &&
+			!group.isStagedPortlet(portletId)) {
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Not exporting data for " + portletId +

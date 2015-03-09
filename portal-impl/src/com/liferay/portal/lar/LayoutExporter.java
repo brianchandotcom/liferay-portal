@@ -409,7 +409,9 @@ public class LayoutExporter {
 		for (Portlet portlet : getDataSiteLevelPortlets(companyId)) {
 			String portletId = portlet.getRootPortletId();
 
-			if (!group.isStagedPortlet(portletId)) {
+			if (ExportImportThreadLocal.isStagingInProcess() &&
+				!group.isStagedPortlet(portletId)) {
+
 				continue;
 			}
 

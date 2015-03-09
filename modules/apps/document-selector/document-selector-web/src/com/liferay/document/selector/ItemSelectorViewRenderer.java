@@ -17,9 +17,9 @@ package com.liferay.document.selector;
 /**
  * @author Iván Zaera
  */
-public class ItemSelectorViewWithCriterion<T extends ItemSelectorCriterion> {
+public class ItemSelectorViewRenderer<T extends ItemSelectorCriterion> {
 
-	public ItemSelectorViewWithCriterion(
+	public ItemSelectorViewRenderer(
 		ItemSelectorView<T> itemSelectorView, T itemSelectorCriterion) {
 
 		_itemSelectorView = itemSelectorView;

@@ -29,8 +29,7 @@ public interface ItemSelector {
 		PortletRequest portletRequest,
 		ItemSelectorCriterion... itemSelectorCriteria);
 
-	public List<ItemSelectorViewWithCriterion<?>>
-		getItemSelectorViewsWithCriteria(
-			Map<String, String> parameters);
+	public List<ItemSelectorViewRenderer<?>> getItemSelectorViewRenderers(
+		Map<String, String> parameters);
 
 }

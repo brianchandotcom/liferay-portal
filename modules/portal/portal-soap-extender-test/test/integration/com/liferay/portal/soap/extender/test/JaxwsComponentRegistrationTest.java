@@ -43,7 +43,7 @@ public class JaxwsComponentRegistrationTest {
 		URL url = new URL(_url, "/o/soap/greeter?wsdl");
 
 		QName qName = new QName(
-			"http://service.sample.soap.portal.liferay.com/",
+			"http://service.test.extender.soap.portal.liferay.com/",
 			"GreeterImplService");
 
 		Service service = Service.create(url, qName);

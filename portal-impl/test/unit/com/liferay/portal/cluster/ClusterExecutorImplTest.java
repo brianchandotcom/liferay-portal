@@ -96,11 +96,11 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 		ClusterEventListener clusterEventListener = new ClusterEventListener() {
 
-				@Override
-				public void processClusterEvent(ClusterEvent clusterEvent) {
-				}
+			@Override
+			public void processClusterEvent(ClusterEvent clusterEvent) {
+			}
 
-			};
+		};
 
 		clusterExecutorImpl.addClusterEventListener(clusterEventListener);
 
@@ -131,7 +131,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
 	@Test
-	public void testDestroy() throws Exception {
+	public void testDestroy() {
 		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
 
 		List<TestClusterChannel> clusterChannels =
@@ -296,7 +296,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 		clusterRequest = ClusterRequest.createUnicastRequest(
 			clusterRequest, newClusterNode.getClusterNodeId());
 
-		futureClusterResponses = clusterExecutorImpl.execute(clusterRequest);
+		clusterExecutorImpl.execute(clusterRequest);
 
 		Assert.assertTrue(multicastMessages.isEmpty());
 		Assert.assertEquals(1, unicastMessages.size());

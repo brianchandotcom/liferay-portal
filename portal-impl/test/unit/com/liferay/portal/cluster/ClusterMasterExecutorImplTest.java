@@ -40,7 +40,6 @@ import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.uuid.PortalUUIDImpl;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import java.util.Collections;
 import java.util.List;
@@ -363,7 +362,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 	}
 
 	@Test
-	public void testGetMasterAddressString() throws UnknownHostException {
+	public void testGetMasterAddressString() {
 
 		// Test 1, master to slave
 
@@ -410,8 +409,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 	}
 
 	@Test
-	public void testGetMasterAddressStringWithException()
-		throws UnknownHostException {
+	public void testGetMasterAddressStringWithException() {
 
 		// Test 1, current owner is not alive
 
@@ -499,7 +497,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 	}
 
 	@Test
-	public void testInitialize() throws UnknownHostException {
+	public void testInitialize() {
 
 		// Test 1, initialize when cluster link is disabled
 
@@ -606,16 +604,6 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 	private static class MockClusterExecutor extends ClusterExecutorImpl {
 
-		public MockClusterExecutor(boolean enabled) {
-			_enabled = enabled;
-
-			setClusterChannelFactory(new TestClusterChannelFactory());
-
-			initialize();
-
-			TestClusterChannel.reset();
-		}
-
 		public void addClusterNodeId(String clusterNodeId) {
 			memberJoined(
 				new TestAddress(clusterNodeId),
@@ -650,6 +638,16 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		@Override
 		public boolean isEnabled() {
 			return _enabled;
+		}
+
+		private MockClusterExecutor(boolean enabled) {
+			_enabled = enabled;
+
+			setClusterChannelFactory(new TestClusterChannelFactory());
+
+			initialize();
+
+			TestClusterChannel.reset();
 		}
 
 		private final boolean _enabled;

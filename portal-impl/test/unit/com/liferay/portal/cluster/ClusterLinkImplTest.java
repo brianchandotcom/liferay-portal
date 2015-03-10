@@ -171,10 +171,8 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		Assert.assertEquals(2, clusterChannels.size());
 
 		Assert.assertNotEquals(clusterChannel1, clusterChannel2);
-		Assert.assertTrue(
-			clusterChannels.contains((TestClusterChannel)clusterChannel1));
-		Assert.assertTrue(
-			clusterChannels.contains((TestClusterChannel)clusterChannel2));
+		Assert.assertTrue(clusterChannels.contains(clusterChannel1));
+		Assert.assertTrue(clusterChannels.contains(clusterChannel2));
 	}
 
 	@AdviseWith(

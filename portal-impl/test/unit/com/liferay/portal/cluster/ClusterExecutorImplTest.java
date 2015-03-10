@@ -17,20 +17,16 @@ package com.liferay.portal.cluster;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
-import com.liferay.portal.kernel.cluster.ClusterEventType;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -41,149 +37,35 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.uuid.PortalUUIDImpl;
 
+import java.io.Serializable;
+
 import java.lang.reflect.InvocationTargetException;
 
 import java.net.InetAddress;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
+import java.util.concurrent.ExecutorService;
 
-import org.jgroups.Channel;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Tina Tian
  */
-@NewEnv(type = NewEnv.Type.JVM)
-public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
+@NewEnv(type = NewEnv.Type.CLASSLOADER)
+public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
-	@AdviseWith(
-		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class,
-			EnableClusterExecutorDebugAdvice.class
-		}
-	)
-	@Test
-	public void testClusterEventListener() throws Exception {
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
-
-		try {
-			List<ClusterEventListener> clusterEventListeners =
-				clusterExecutorImpl.getClusterEventListeners();
-
-			Assert.assertEquals(1, clusterEventListeners.size());
-
-			// Test 1, add cluster event listener
-
-			ClusterEventListener clusterEventListener =
-				new MockClusterEventListener();
-
-			clusterExecutorImpl.addClusterEventListener(clusterEventListener);
-
-			clusterEventListeners =
-				clusterExecutorImpl.getClusterEventListeners();
-
-			Assert.assertEquals(2, clusterEventListeners.size());
-
-			// Test 2, remove cluster event listener
-
-			clusterExecutorImpl.removeClusterEventListener(
-				clusterEventListener);
-
-			clusterEventListeners =
-				clusterExecutorImpl.getClusterEventListeners();
-
-			Assert.assertEquals(1, clusterEventListeners.size());
-
-			// Test 3, set cluster event listener
-
-			clusterEventListeners = new ArrayList<>();
-
-			clusterEventListeners.add(clusterEventListener);
-
-			clusterExecutorImpl.setClusterEventListeners(clusterEventListeners);
-
-			clusterEventListeners =
-				clusterExecutorImpl.getClusterEventListeners();
-
-			Assert.assertEquals(2, clusterEventListeners.size());
-		}
-		finally {
-			clusterExecutorImpl.destroy();
-		}
-	}
-
-	@AdviseWith(
-		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class
-		}
-	)
-	@Test
-	public void testClusterTopology() throws Exception {
-		ClusterExecutorImpl clusterExecutorImpl1 = getClusterExecutorImpl();
-
-		MockClusterEventListener mockClusterEventListener =
-			new MockClusterEventListener();
-
-		clusterExecutorImpl1.addClusterEventListener(mockClusterEventListener);
-
-		ClusterExecutorImpl clusterExecutorImpl2 = getClusterExecutorImpl();
-
-		try {
-			ClusterNode clusterNode2 =
-				clusterExecutorImpl2.getLocalClusterNode();
-
-			ClusterEvent clusterEvent =
-				mockClusterEventListener.waitJoinMessage();
-
-			assertClusterEvent(
-				clusterEvent, ClusterEventType.JOIN, clusterNode2);
-
-			// Test 1, disconnect network
-
-			updateView(clusterExecutorImpl1);
-			updateView(clusterExecutorImpl2);
-
-			clusterEvent = mockClusterEventListener.waitDepartMessage();
-
-			assertClusterEvent(
-				clusterEvent, ClusterEventType.DEPART, clusterNode2);
-
-			// Test 2, reconnect network
-
-			updateView(clusterExecutorImpl1, clusterExecutorImpl2);
-
-			clusterEvent = mockClusterEventListener.waitJoinMessage();
-
-			assertClusterEvent(
-				clusterEvent, ClusterEventType.JOIN, clusterNode2);
-		}
-		finally {
-			clusterExecutorImpl1.destroy();
-			clusterExecutorImpl2.destroy();
-		}
-	}
-
-	@AdviseWith(
-		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class, JChannelExceptionAdvice.class,
-			SetBadPortalInetSocketAddressAdvice.class
-		}
-	)
-	@Test
-	public void testErrorLogAndExceptions() {
-		SetBadPortalInetSocketAddressAdvice.setPort(8080);
+	@Before
+	@Override
+	public void setUp() {
+		super.setUp();
 
 		PortalUtil portalUtil = new PortalUtil();
 
@@ -194,608 +76,332 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
 
 		PropsUtil.setProps(new PropsImpl());
-
-		PortalExecutorManagerUtil portalExecutorManagerUtil =
-			new PortalExecutorManagerUtil();
-
-		portalExecutorManagerUtil.setPortalExecutorManager(
-			new MockPortalExecutorManager());
-
-		ClusterExecutorImpl clusterExecutorImpl = new ClusterExecutorImpl();
-
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					ClusterExecutorImpl.class.getName(), Level.SEVERE)) {
-
-			// Test 1, connect channel with log enabled
-
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			clusterExecutorImpl.afterPropertiesSet();
-
-			JChannelExceptionAdvice.setConnectException(new Exception());
-
-			try {
-				clusterExecutorImpl.initialize();
-
-				Assert.fail();
-			}
-			catch (IllegalStateException ise) {
-				assertLogger(
-					logRecords, "Unable to initialize", Exception.class);
-			}
-
-			// Test 2, connect channel with log disabled
-
-			logRecords = captureHandler.resetLogLevel(Level.OFF);
-
-			clusterExecutorImpl = new ClusterExecutorImpl();
-
-			clusterExecutorImpl.afterPropertiesSet();
-
-			JChannelExceptionAdvice.setConnectException(new Exception());
-
-			try {
-				clusterExecutorImpl.initialize();
-
-				Assert.fail();
-			}
-			catch (IllegalStateException ise) {
-				Assert.assertTrue(logRecords.isEmpty());
-			}
-
-			// Test 3, send notify message
-
-			JChannelExceptionAdvice.setConnectException(null);
-
-			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
-
-			clusterExecutorImpl.initialize();
-
-			assertLogger(
-				logRecords, "Unable to send notify message", Exception.class);
-
-			// Test 4, execute multicast request
-
-			ClusterRequest clusterRequest =
-				ClusterRequest.createMulticastRequest(StringPool.BLANK);
-
-			try {
-				clusterExecutorImpl.execute(clusterRequest);
-
-				Assert.fail();
-			}
-			catch (Exception e) {
-				Assert.assertEquals(
-					"Unable to send multicast request", e.getMessage());
-			}
-
-			// Test 5, execute unicast request
-
-			String clusterNodeId = PortalUUIDUtil.generate();
-
-			clusterRequest = ClusterRequest.createUnicastRequest(
-				StringPool.BLANK, clusterNodeId);
-
-			try {
-				clusterExecutorImpl.memberJoined(
-					new AddressImpl(new MockAddress()),
-					new ClusterNode(clusterNodeId, InetAddress.getLocalHost()));
-
-				clusterExecutorImpl.execute(clusterRequest);
-
-				Assert.fail();
-			}
-			catch (Exception e) {
-				Assert.assertEquals(
-					"Unable to send unicast request", e.getMessage());
-			}
-		}
-		finally {
-			clusterExecutorImpl.destroy();
-		}
 	}
 
 	@AdviseWith(
 		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class
+			EnableClusterLinkAdvice.class,
+			EnableClusterExecutorDebugAdvice.class
 		}
 	)
 	@Test
-	public void testExecuteByFireAndForget() throws Exception {
-		ClusterExecutorImpl clusterExecutorImpl1 = getClusterExecutorImpl();
+	public void testClusterEventListener() {
 
-		MockClusterEventListener mockClusterEventListener =
-			new MockClusterEventListener();
-
-		clusterExecutorImpl1.addClusterEventListener(mockClusterEventListener);
-
-		ClusterExecutorImpl clusterExecutorImpl2 = getClusterExecutorImpl();
-
-		assertClusterEvent(
-			mockClusterEventListener.waitJoinMessage(), ClusterEventType.JOIN,
-			clusterExecutorImpl2.getLocalClusterNode());
-
-		String timestamp = null;
-
-		try {
-
-			// Test 1, execute with fire and forget disabled
-
-			timestamp = String.valueOf(System.currentTimeMillis());
-
-			MethodHandler methodHandler = new MethodHandler(
-				testMethod1MethodKey, timestamp);
-
-			ClusterRequest clusterRequest =
-				ClusterRequest.createMulticastRequest(methodHandler);
-
-			clusterRequest.setFireAndForget(false);
-
-			FutureClusterResponses futureClusterResponses =
-				clusterExecutorImpl1.execute(clusterRequest);
-
-			List<String> clusterNodeIds = new ArrayList<>();
-
-			for (ClusterNode clusterNode :
-					clusterExecutorImpl1.getClusterNodes()) {
-
-				clusterNodeIds.add(clusterNode.getClusterNodeId());
-			}
-
-			assertFutureClusterResponsesWithoutException(
-				futureClusterResponses.get(), clusterRequest.getUuid(),
-				timestamp, clusterNodeIds);
-
-			// Test 2, execute with fire and forget enabled
-
-			timestamp = String.valueOf(System.currentTimeMillis());
-
-			methodHandler = new MethodHandler(testMethod1MethodKey, timestamp);
-
-			clusterRequest = ClusterRequest.createMulticastRequest(
-				methodHandler);
-
-			clusterRequest.setFireAndForget(true);
-
-			futureClusterResponses = clusterExecutorImpl1.execute(
-				clusterRequest);
-
-			futureClusterResponses.get(1000, TimeUnit.MILLISECONDS);
-
-			Assert.fail();
-		}
-		catch (TimeoutException te) {
-			Assert.assertEquals(TestBean.TIMESTAMP, timestamp);
-		}
-		finally {
-			clusterExecutorImpl1.destroy();
-			clusterExecutorImpl2.destroy();
-		}
-	}
-
-	@AdviseWith(
-		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class
-		}
-	)
-	@Test
-	public void testExecuteByLocalMethod() throws Exception {
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
-
-		try {
-
-			// Test 1, execute when return value is null
-
-			ClusterNode clusterNode = clusterExecutorImpl.getLocalClusterNode();
-
-			String clusterNodeId = clusterNode.getClusterNodeId();
-
-			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
-				new MethodHandler(testMethod1MethodKey, StringPool.BLANK),
-				clusterNodeId);
-
-			FutureClusterResponses futureClusterResponses =
-				clusterExecutorImpl.execute(clusterRequest);
-
-			assertFutureClusterResponsesWithoutException(
-				futureClusterResponses.get(), clusterRequest.getUuid(), null,
-				Collections.singletonList(clusterNodeId));
-
-			// Test 2, execute when return value is not serializable
-
-			clusterRequest = ClusterRequest.createUnicastRequest(
-				new MethodHandler(testMethod2MethodKey), clusterNodeId);
-
-			futureClusterResponses = clusterExecutorImpl.execute(
-				clusterRequest);
-
-			assertFutureClusterResponsesWithException(
-				futureClusterResponses, clusterRequest.getUuid(), clusterNodeId,
-				"Return value is not serializable");
-
-			// Test 3, execute when exception is thrown
-
-			String timestamp = String.valueOf(System.currentTimeMillis());
-
-			clusterRequest = ClusterRequest.createUnicastRequest(
-				new MethodHandler(testMethod3MethodKey, timestamp),
-				clusterNodeId);
-
-			futureClusterResponses = clusterExecutorImpl.execute(
-				clusterRequest);
-
-			assertFutureClusterResponsesWithException(
-				futureClusterResponses, clusterRequest.getUuid(), clusterNodeId,
-				timestamp);
-
-			// Test 4, execute when method handler is null
-
-			clusterRequest = ClusterRequest.createUnicastRequest(
-				StringPool.BLANK, clusterNodeId);
-
-			futureClusterResponses = clusterExecutorImpl.execute(
-				clusterRequest);
-
-			assertFutureClusterResponsesWithException(
-				futureClusterResponses, clusterRequest.getUuid(), clusterNodeId,
-				"Payload is not of type " + MethodHandler.class.getName());
-		}
-		finally {
-			clusterExecutorImpl.destroy();
-		}
-	}
-
-	@AdviseWith(
-		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class, JGroupsReceiverAdvice.class
-		}
-	)
-	@Test
-	public void testExecuteByShortcutMethod() throws Exception {
-		JGroupsReceiverAdvice.reset(1);
+		// Test 1, add cluster event listener
 
 		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
 
-		try {
+		List<ClusterEventListener> clusterEventListeners =
+			clusterExecutorImpl.getClusterEventListeners();
 
-			// Test 1, send notify message
+		Assert.assertEquals(1, clusterEventListeners.size());
 
-			Channel channel = clusterExecutorImpl.getControlChannel();
+		ClusterEventListener clusterEventListener = new ClusterEventListener() {
 
-			Object object = JGroupsReceiverAdvice.getJGroupsMessagePayload(
-				channel.getReceiver(), channel.getAddress());
+				@Override
+				public void processClusterEvent(ClusterEvent clusterEvent) {
+				}
 
-			ClusterRequest clusterRequest = (ClusterRequest)object;
+			};
 
-			Assert.assertEquals(
-				clusterExecutorImpl.getLocalClusterNode(),
-				clusterRequest.getPayload());
+		clusterExecutorImpl.addClusterEventListener(clusterEventListener);
 
-			// Test 2, execute
+		clusterEventListeners = clusterExecutorImpl.getClusterEventListeners();
 
-			String timestamp = String.valueOf(System.currentTimeMillis());
+		Assert.assertEquals(2, clusterEventListeners.size());
 
-			ClusterNode clusterNode = clusterExecutorImpl.getLocalClusterNode();
+		// Test 2, remove cluster event listener
 
-			String clusterNodeId = clusterNode.getClusterNodeId();
+		clusterExecutorImpl.removeClusterEventListener(clusterEventListener);
 
-			clusterRequest = ClusterRequest.createUnicastRequest(
-				new MethodHandler(testMethod1MethodKey, timestamp),
-				clusterNodeId);
+		clusterEventListeners = clusterExecutorImpl.getClusterEventListeners();
 
-			FutureClusterResponses futureClusterResponses =
-				clusterExecutorImpl.execute(clusterRequest);
+		Assert.assertEquals(1, clusterEventListeners.size());
 
-			assertFutureClusterResponsesWithoutException(
-				futureClusterResponses.get(), clusterRequest.getUuid(),
-				timestamp, Collections.singletonList(clusterNodeId));
-		}
-		finally {
-			clusterExecutorImpl.destroy();
-		}
+		// Test 3, set cluster event listener
+
+		clusterEventListeners = new ArrayList<>();
+
+		clusterEventListeners.add(clusterEventListener);
+
+		clusterExecutorImpl.setClusterEventListeners(clusterEventListeners);
+
+		clusterEventListeners = clusterExecutorImpl.getClusterEventListeners();
+
+		Assert.assertEquals(2, clusterEventListeners.size());
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
 	@Test
-	public void testExecuteBySkipLocal() throws Exception {
+	public void testDestroy() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
 
-		try {
+		List<TestClusterChannel> clusterChannels =
+			TestClusterChannel.getClusterChannels();
 
-			// Test 1, execute with skip local disabled
+		Assert.assertEquals(1, clusterChannels.size());
 
-			String timestamp = String.valueOf(System.currentTimeMillis());
+		TestClusterChannel clusterChannel = clusterChannels.get(0);
 
-			MethodHandler methodHandler = new MethodHandler(
-				testMethod1MethodKey, timestamp);
+		ExecutorService executorService =
+			clusterExecutorImpl.getExecutorService();
 
-			ClusterNode clusterNode = clusterExecutorImpl.getLocalClusterNode();
+		Assert.assertFalse(executorService.isShutdown());
+		Assert.assertFalse(clusterChannel.isClosed());
 
-			String clusterNodeId = clusterNode.getClusterNodeId();
+		clusterExecutorImpl.destroy();
 
-			ClusterRequest clusterRequest =
-				ClusterRequest.createMulticastRequest(methodHandler, false);
-
-			FutureClusterResponses futureClusterResponses =
-				clusterExecutorImpl.execute(clusterRequest);
-
-			ClusterNodeResponses clusterNodeResponses =
-				futureClusterResponses.get();
-
-			ClusterNodeResponse clusterNodeResponse =
-				clusterNodeResponses.getClusterResponse(clusterNodeId);
-
-			Assert.assertNotNull(clusterNodeResponse);
-			Assert.assertEquals(timestamp, clusterNodeResponse.getResult());
-
-			// Test 2, execute with skip local enabled
-
-			timestamp = String.valueOf(System.currentTimeMillis());
-
-			methodHandler = new MethodHandler(testMethod1MethodKey, timestamp);
-
-			clusterRequest = ClusterRequest.createMulticastRequest(
-				methodHandler, true);
-
-			futureClusterResponses = clusterExecutorImpl.execute(
-				clusterRequest);
-
-			clusterNodeResponses = futureClusterResponses.get();
-
-			clusterNodeResponse = clusterNodeResponses.getClusterResponse(
-				clusterNodeId);
-
-			Assert.assertNull(clusterNodeResponse);
-			Assert.assertNotEquals(TestBean.TIMESTAMP, timestamp);
-		}
-		finally {
-			clusterExecutorImpl.destroy();
-		}
-	}
-
-	@AdviseWith(
-		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class
-		}
-	)
-	@Test
-	public void testExecuteClusterRequest() throws Exception {
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
-
-		try {
-
-			// Test 1, payload is not method handler
-
-			ClusterNodeResponse clusterNodeResponse =
-				clusterExecutorImpl.executeClusterRequest(
-					ClusterRequest.createMulticastRequest(StringPool.BLANK));
-
-			Exception exception = clusterNodeResponse.getException();
-
-			Assert.assertEquals(
-				"Payload is not of type " + MethodHandler.class.getName(),
-				exception.getMessage());
-
-			// Test 2, invoke with exception
-
-			String timestamp = String.valueOf(System.currentTimeMillis());
-
-			clusterNodeResponse = clusterExecutorImpl.executeClusterRequest(
-				ClusterRequest.createMulticastRequest(
-					new MethodHandler(testMethod3MethodKey, timestamp)));
-
-			try {
-				clusterNodeResponse.getResult();
-
-				Assert.fail();
-			}
-			catch (InvocationTargetException ite) {
-				Throwable throwable = ite.getTargetException();
-
-				Assert.assertEquals(timestamp, throwable.getMessage());
-			}
-
-			// Test 3, invoke without exception
-
-			timestamp = String.valueOf(System.currentTimeMillis());
-
-			clusterNodeResponse = clusterExecutorImpl.executeClusterRequest(
-				ClusterRequest.createMulticastRequest(
-					new MethodHandler(testMethod1MethodKey, timestamp)));
-
-			Assert.assertEquals(timestamp, clusterNodeResponse.getResult());
-
-			// Test 4, thread local
-
-			Assert.assertTrue(ClusterInvokeThreadLocal.isEnabled());
-
-			clusterNodeResponse = clusterExecutorImpl.executeClusterRequest(
-				ClusterRequest.createMulticastRequest(
-					new MethodHandler(
-						new MethodKey(TestBean.class, "testMethod5"))));
-
-			Assert.assertFalse((Boolean)clusterNodeResponse.getResult());
-			Assert.assertTrue(ClusterInvokeThreadLocal.isEnabled());
-		}
-		finally {
-			clusterExecutorImpl.destroy();
-		}
-	}
-
-	@AdviseWith(
-		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class
-		}
-	)
-	@Test
-	public void testGetMethods() throws Exception {
-		ClusterExecutorImpl clusterExecutorImpl1 = getClusterExecutorImpl();
-
-		MockClusterEventListener mockClusterEventListener =
-			new MockClusterEventListener();
-
-		clusterExecutorImpl1.addClusterEventListener(mockClusterEventListener);
-
-		ClusterExecutorImpl clusterExecutorImpl2 = getClusterExecutorImpl();
-
-		ClusterNode clusterNode = clusterExecutorImpl2.getLocalClusterNode();
-
-		assertClusterEvent(
-			mockClusterEventListener.waitJoinMessage(), ClusterEventType.JOIN,
-			clusterNode);
-
-		try {
-
-			// Test 1, get local cluster node
-
-			ClusterNode clusterNode1 =
-				clusterExecutorImpl1.getLocalClusterNode();
-
-			Assert.assertNotNull(clusterNode1);
-
-			ClusterNode clusterNode2 =
-				clusterExecutorImpl2.getLocalClusterNode();
-
-			Assert.assertNotNull(clusterNode2);
-
-			// Test 2, get all cluster nodes
-
-			List<ClusterNode> clusterNodes =
-				clusterExecutorImpl1.getClusterNodes();
-
-			Assert.assertEquals(2, clusterNodes.size());
-			Assert.assertTrue(clusterNodes.contains(clusterNode1));
-			Assert.assertTrue(clusterNodes.contains(clusterNode2));
-
-			// Test 3, if cluster node is alive using cluster node ID
-
-			Assert.assertTrue(
-				clusterExecutorImpl1.isClusterNodeAlive(
-					clusterNode2.getClusterNodeId()));
-		}
-		finally {
-			clusterExecutorImpl1.destroy();
-			clusterExecutorImpl2.destroy();
-		}
-	}
-
-	@AdviseWith(
-		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class
-		}
-	)
-	@Test
-	public void testMemberRemoved() throws Exception {
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
-
-		try {
-			MockClusterEventListener mockClusterEventListener =
-				new MockClusterEventListener();
-
-			clusterExecutorImpl.addClusterEventListener(
-				mockClusterEventListener);
-
-			List<Address> addresses = new ArrayList<>();
-
-			addresses.add(new AddressImpl(new MockAddress()));
-
-			clusterExecutorImpl.memberRemoved(addresses);
-
-			ClusterEvent clusterEvent =
-				mockClusterEventListener.waitDepartMessage();
-
-			Assert.assertNull(clusterEvent);
-		}
-		finally {
-			clusterExecutorImpl.destroy();
-		}
+		Assert.assertTrue(clusterChannel.isClosed());
+		Assert.assertTrue(executorService.isShutdown());
 	}
 
 	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
 	@Test
-	public void testWithClusterDisabled() throws Exception {
+	public void testDisabledClusterLink() {
+
+		// Test 1, initialize
+
 		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
 
+		clusterExecutorImpl.setClusterChannelFactory(
+			new TestClusterChannelFactory());
+
+		clusterExecutorImpl.initialize();
+
+		List<TestClusterChannel> clusterChannels =
+			TestClusterChannel.getClusterChannels();
+
+		Assert.assertTrue(clusterChannels.isEmpty());
+		Assert.assertNull(clusterExecutorImpl.getExecutorService());
+
+		// Test 2, send unitcast message
+
+		List<Serializable> multicastMessages =
+			TestClusterChannel.getMulticastMessages();
+		List<ObjectValuePair<Serializable, Address>> unicastMessages =
+			TestClusterChannel.getUnicastMessages();
+
+		Address newAddress = new TestAddress("test.address");
+		ClusterNode newClusterNode = new ClusterNode(
+			"test.cluster.node", InetAddress.getLoopbackAddress());
+
+		clusterExecutorImpl.memberJoined(newAddress, newClusterNode);
+
+		clusterExecutorImpl.execute(
+			ClusterRequest.createUnicastRequest(
+				StringPool.BLANK, newClusterNode.getClusterNodeId()));
+
+		Assert.assertTrue(multicastMessages.isEmpty());
+		Assert.assertTrue(unicastMessages.isEmpty());
+
+		// Test 3, send multicast message
+
+		clusterExecutorImpl.execute(
+			ClusterRequest.createMulticastRequest(StringPool.BLANK));
+
+		Assert.assertTrue(multicastMessages.isEmpty());
+		Assert.assertTrue(unicastMessages.isEmpty());
+
+		// Test 4, destroy
+
+		clusterExecutorImpl.destroy();
+	}
+
+	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@Test
+	public void testExecute() throws Exception {
+
+		// Test 1, execute multicast request and not skip local
+
+		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+
+		TestClusterChannel.clearAllMessages();
+
+		List<Serializable> multicastMessages =
+			TestClusterChannel.getMulticastMessages();
+		List<ObjectValuePair<Serializable, Address>> unicastMessages =
+			TestClusterChannel.getUnicastMessages();
+
+		Assert.assertTrue(multicastMessages.isEmpty());
+		Assert.assertTrue(unicastMessages.isEmpty());
+
+		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
+			StringPool.BLANK);
+
+		FutureClusterResponses futureClusterResponses =
+			clusterExecutorImpl.execute(clusterRequest);
+
+		Assert.assertEquals(1, multicastMessages.size());
+		Assert.assertTrue(multicastMessages.contains(clusterRequest));
+		Assert.assertTrue(unicastMessages.isEmpty());
+
+		ClusterNodeResponses clusterNodeResponses =
+			futureClusterResponses.get();
+
+		Assert.assertEquals(1, clusterNodeResponses.size());
+
+		// Test 2, execute multicast request and skip local
+
+		TestClusterChannel.clearAllMessages();
+
+		Assert.assertTrue(multicastMessages.isEmpty());
+		Assert.assertTrue(unicastMessages.isEmpty());
+
+		clusterRequest = ClusterRequest.createMulticastRequest(
+			StringPool.BLANK, true);
+
+		futureClusterResponses = clusterExecutorImpl.execute(clusterRequest);
+
+		Assert.assertEquals(1, multicastMessages.size());
+		Assert.assertTrue(multicastMessages.contains(clusterRequest));
+		Assert.assertTrue(unicastMessages.isEmpty());
+
+		clusterNodeResponses = futureClusterResponses.get();
+
+		Assert.assertEquals(0, clusterNodeResponses.size());
+
+		// Test 3, execute unicast request to local address
+
+		TestClusterChannel.clearAllMessages();
+
+		Assert.assertTrue(multicastMessages.isEmpty());
+		Assert.assertTrue(unicastMessages.isEmpty());
+
+		ClusterNode localClusterNode =
+			clusterExecutorImpl.getLocalClusterNode();
+
+		clusterRequest = ClusterRequest.createUnicastRequest(
+			clusterRequest, localClusterNode.getClusterNodeId());
+
+		futureClusterResponses = clusterExecutorImpl.execute(clusterRequest);
+
+		Assert.assertTrue(multicastMessages.isEmpty());
+		Assert.assertTrue(unicastMessages.isEmpty());
+
+		clusterNodeResponses = futureClusterResponses.get();
+
+		Assert.assertEquals(1, clusterNodeResponses.size());
+
+		// Test 4, execute unicast request to other address
+
+		TestClusterChannel.clearAllMessages();
+
+		Assert.assertTrue(multicastMessages.isEmpty());
+		Assert.assertTrue(unicastMessages.isEmpty());
+
+		Address newAddress = new TestAddress("test.address");
+		ClusterNode newClusterNode = new ClusterNode(
+			"test.cluster.node", InetAddress.getLoopbackAddress());
+
+		clusterExecutorImpl.memberJoined(newAddress, newClusterNode);
+
+		clusterRequest = ClusterRequest.createUnicastRequest(
+			clusterRequest, newClusterNode.getClusterNodeId());
+
+		futureClusterResponses = clusterExecutorImpl.execute(clusterRequest);
+
+		Assert.assertTrue(multicastMessages.isEmpty());
+		Assert.assertEquals(1, unicastMessages.size());
+
+		ObjectValuePair<Serializable, Address> receivedMessage =
+			unicastMessages.get(0);
+
+		Assert.assertEquals(clusterRequest, receivedMessage.getKey());
+		Assert.assertEquals(newAddress, receivedMessage.getValue());
+	}
+
+	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@Test
+	public void testExecuteClusterRequest() throws Exception {
+		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+
+		// Test 1, payload is not method handler
+
+		ClusterNodeResponse clusterNodeResponse =
+			clusterExecutorImpl.executeClusterRequest(
+				ClusterRequest.createMulticastRequest(StringPool.BLANK));
+
+		Exception exception = clusterNodeResponse.getException();
+
+		Assert.assertEquals(
+			"Payload is not of type " + MethodHandler.class.getName(),
+			exception.getMessage());
+
+		// Test 2, invoke with exception
+
+		String timestamp = String.valueOf(System.currentTimeMillis());
+
+		clusterNodeResponse = clusterExecutorImpl.executeClusterRequest(
+			ClusterRequest.createMulticastRequest(
+				new MethodHandler(
+					new MethodKey(TestBean.class, "testMethod3", String.class),
+					timestamp)));
+
 		try {
+			clusterNodeResponse.getResult();
 
-			// Test 1, add cluster event listener
-
-			List<ClusterEventListener> fieldClusterEventListeners =
-				ReflectionTestUtil.getFieldValue(
-					clusterExecutorImpl, "_clusterEventListeners");
-
-			ClusterEventListener clusterEventListener =
-				new MockClusterEventListener();
-
-			clusterExecutorImpl.addClusterEventListener(clusterEventListener);
-
-			Assert.assertTrue(fieldClusterEventListeners.isEmpty());
-
-			// Test 2, remove cluster event listener
-
-			clusterExecutorImpl.removeClusterEventListener(
-				clusterEventListener);
-
-			Assert.assertTrue(fieldClusterEventListeners.isEmpty());
-
-			// Test 3, get cluster event listener
-
-			List<ClusterEventListener> clusterEventListeners =
-				clusterExecutorImpl.getClusterEventListeners();
-
-			Assert.assertTrue(clusterEventListeners.isEmpty());
-
-			// Test 4, set cluster event listener
-
-			clusterEventListeners = new ArrayList<>();
-
-			clusterEventListeners.add(new MockClusterEventListener());
-
-			clusterExecutorImpl.setClusterEventListeners(clusterEventListeners);
-
-			Assert.assertTrue(fieldClusterEventListeners.isEmpty());
-
-			// Test 5, get cluster node
-
-			List<ClusterNode> clusterNodes =
-				clusterExecutorImpl.getClusterNodes();
-
-			Assert.assertTrue(clusterNodes.isEmpty());
-
-			// Test 6, get local cluster node
-
-			Assert.assertNull(clusterExecutorImpl.getLocalClusterNode());
-
-			// Test 7, if cluster node is alive using cluster node ID
-
-			Assert.assertFalse(
-				clusterExecutorImpl.isClusterNodeAlive("WrongClusterNodeId"));
-
-			// Test 8, execute cluster request
-
-			Assert.assertNull(
-				clusterExecutorImpl.execute(
-					ClusterRequest.createMulticastRequest(StringPool.BLANK)));
+			Assert.fail();
 		}
-		finally {
-			clusterExecutorImpl.destroy();
+		catch (InvocationTargetException ite) {
+			Throwable throwable = ite.getTargetException();
+
+			Assert.assertEquals(timestamp, throwable.getMessage());
 		}
+
+		// Test 3, invoke without exception
+
+		timestamp = String.valueOf(System.currentTimeMillis());
+
+		clusterNodeResponse = clusterExecutorImpl.executeClusterRequest(
+			ClusterRequest.createMulticastRequest(
+				new MethodHandler(
+					new MethodKey(TestBean.class, "testMethod1", String.class),
+					timestamp)));
+
+		Assert.assertEquals(timestamp, clusterNodeResponse.getResult());
+
+		// Test 4, thread local
+
+		Assert.assertTrue(ClusterInvokeThreadLocal.isEnabled());
+
+		clusterNodeResponse = clusterExecutorImpl.executeClusterRequest(
+			ClusterRequest.createMulticastRequest(
+				new MethodHandler(
+					new MethodKey(TestBean.class, "testMethod5"))));
+
+		Assert.assertFalse((Boolean)clusterNodeResponse.getResult());
+		Assert.assertTrue(ClusterInvokeThreadLocal.isEnabled());
 	}
 
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
 		AspectJNewEnvTestRule.INSTANCE;
+
+	@Aspect
+	public static class EnableClusterExecutorDebugAdvice {
+
+		@Around(
+			"set(* com.liferay.portal.util.PropsValues." +
+				"CLUSTER_EXECUTOR_DEBUG_ENABLED)"
+		)
+		public Object enableClusterExecutorDebug(
+				ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			return proceedingJoinPoint.proceed(new Object[] {Boolean.TRUE});
+		}
+
+	}
+
+	protected ClusterExecutorImpl getClusterExecutorImpl() {
+		ClusterExecutorImpl clusterExecutorImpl = new ClusterExecutorImpl();
+
+		clusterExecutorImpl.setClusterChannelFactory(
+			new TestClusterChannelFactory());
+
+		clusterExecutorImpl.initialize();
+
+		return clusterExecutorImpl;
+	}
 
 }

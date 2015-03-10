@@ -82,8 +82,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 
 	public static Map<String, Serializable> buildSettingsMap(
 		long userId, long groupId, boolean privateLayout, long[] layoutIds,
-		Map<String, String[]> parameterMap, Date startDate, Date endDate,
-		Locale locale, TimeZone timeZone) {
+		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
 
 		return buildSettingsMap(
 			userId, groupId, 0, privateLayout, layoutIds, parameterMap, locale,
@@ -147,8 +146,8 @@ public class ExportImportConfigurationSettingsMapFactory {
 
 			return buildSettingsMap(
 				themeDisplay.getUserId(), groupId, privateLayout, layoutIds,
-				portletRequest.getParameterMap(), null, null,
-				themeDisplay.getLocale(), themeDisplay.getTimeZone());
+				portletRequest.getParameterMap(), themeDisplay.getLocale(),
+				themeDisplay.getTimeZone());
 		}
 
 		Group stagingGroup = GroupLocalServiceUtil.getGroup(groupId);

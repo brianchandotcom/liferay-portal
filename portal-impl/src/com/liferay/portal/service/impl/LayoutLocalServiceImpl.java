@@ -952,7 +952,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				userId, groupId, privateLayout, layoutIds, parameterMap,
-				startDate, endDate, user.getLocale(), user.getTimeZone());
+				user.getLocale(), user.getTimeZone());
 
 		ServiceContext serviceContext = new ServiceContext();
 

@@ -406,6 +406,18 @@ public class TrashImpl implements Trash {
 
 	@Override
 	public PortletURL getViewContentURL(
+			HttpServletRequest request, long trashEntryId)
+		throws PortalException {
+
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(
+			trashEntryId);
+
+		return getViewContentURL(
+			request, trashEntry.getClassName(), trashEntry.getClassPK());
+	}
+
+	@Override
+	public PortletURL getViewContentURL(
 			HttpServletRequest request, String className, long classPK)
 		throws PortalException {
 

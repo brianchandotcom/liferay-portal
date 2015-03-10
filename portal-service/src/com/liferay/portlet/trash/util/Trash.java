@@ -97,6 +97,10 @@ public interface Trash {
 	public String getTrashTitle(long trashEntryId);
 
 	public PortletURL getViewContentURL(
+			HttpServletRequest request, long trashEntryId)
+		throws PortalException;
+
+	public PortletURL getViewContentURL(
 			HttpServletRequest request, String className, long classPK)
 		throws PortalException;
 

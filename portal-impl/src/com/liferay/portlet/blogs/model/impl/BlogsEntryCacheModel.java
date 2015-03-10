@@ -66,7 +66,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -102,6 +102,8 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		sb.append(allowTrackbacks);
 		sb.append(", trackbacks=");
 		sb.append(trackbacks);
+		sb.append(", coverImageCaption=");
+		sb.append(coverImageCaption);
 		sb.append(", coverImageFileEntryId=");
 		sb.append(coverImageFileEntryId);
 		sb.append(", coverImageURL=");
@@ -216,6 +218,13 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 			blogsEntryImpl.setTrackbacks(trackbacks);
 		}
 
+		if (coverImageCaption == null) {
+			blogsEntryImpl.setCoverImageCaption(StringPool.BLANK);
+		}
+		else {
+			blogsEntryImpl.setCoverImageCaption(coverImageCaption);
+		}
+
 		blogsEntryImpl.setCoverImageFileEntryId(coverImageFileEntryId);
 
 		if (coverImageURL == null) {
@@ -277,6 +286,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		allowPingbacks = objectInput.readBoolean();
 		allowTrackbacks = objectInput.readBoolean();
 		trackbacks = objectInput.readUTF();
+		coverImageCaption = objectInput.readUTF();
 		coverImageFileEntryId = objectInput.readLong();
 		coverImageURL = objectInput.readUTF();
 		smallImage = objectInput.readBoolean();
@@ -360,6 +370,13 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 			objectOutput.writeUTF(trackbacks);
 		}
 
+		if (coverImageCaption == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(coverImageCaption);
+		}
+
 		objectOutput.writeLong(coverImageFileEntryId);
 
 		if (coverImageURL == null) {
@@ -410,6 +427,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 	public boolean allowPingbacks;
 	public boolean allowTrackbacks;
 	public String trackbacks;
+	public String coverImageCaption;
 	public long coverImageFileEntryId;
 	public String coverImageURL;
 	public boolean smallImage;

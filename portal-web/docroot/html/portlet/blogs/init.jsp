@@ -25,6 +25,7 @@ page import="com.liferay.portlet.blogs.EntrySmallImageNameException" %><%@
 page import="com.liferay.portlet.blogs.EntrySmallImageSizeException" %><%@
 page import="com.liferay.portlet.blogs.EntryTitleException" %><%@
 page import="com.liferay.portlet.blogs.NoSuchEntryException" %><%@
+page import="com.liferay.portlet.blogs.display.context.BlogsEntryEditorDisplayContext" %><%@
 page import="com.liferay.portlet.blogs.model.impl.BlogsEntryImpl" %><%@
 page import="com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.blogs.service.BlogsEntryServiceUtil" %><%@

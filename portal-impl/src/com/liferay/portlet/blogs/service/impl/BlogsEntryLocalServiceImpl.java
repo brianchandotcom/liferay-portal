@@ -150,7 +150,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		return addEntry(
 			userId, title, StringPool.BLANK, StringPool.BLANK, content,
-			displayDate, true, true, new String[0], null, null, serviceContext);
+			displayDate, true, true, new String[0], StringPool.BLANK, null,
+			null, serviceContext);
 	}
 
 	@Override
@@ -163,13 +164,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		return addEntry(
 			userId, title, StringPool.BLANK, StringPool.BLANK, content, now,
-			true, true, new String[0], null, null, serviceContext);
+			true, true, new String[0], StringPool.BLANK, null, null,
+			serviceContext);
 	}
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #addEntry(long, String,
 	 *             String, String, String, int, int, int, int, int, boolean,
-	 *             boolean, String[], ImageSelector, ImageSelector,
+	 *             boolean, String[], String, ImageSelector, ImageSelector,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -203,7 +205,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, title, StringPool.BLANK, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			coverImageImageSelector, smallImageImageSelector, serviceContext);
+			StringPool.BLANK, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -212,7 +215,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			long userId, String title, String subtitle, String description,
 			String content, Date displayDate, boolean allowPingbacks,
 			boolean allowTrackbacks, String[] trackbacks,
-			ImageSelector coverImageImageSelector,
+			String coverImageCaption, ImageSelector coverImageImageSelector,
 			ImageSelector smallImageImageSelector,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -319,6 +322,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		validate(smallImageFileEntryId);
 
+		entry.setCoverImageCaption(coverImageCaption);
 		entry.setCoverImageFileEntryId(coverImageFileEntryId);
 		entry.setCoverImageURL(coverImageURL);
 		entry.setSmallImage(smallImage);
@@ -359,7 +363,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			String content, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			boolean allowPingbacks, boolean allowTrackbacks,
-			String[] trackbacks, ImageSelector coverImageImageSelector,
+			String[] trackbacks, String coverImageCaption,
+			ImageSelector coverImageImageSelector,
 			ImageSelector smallImageImageSelector,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -373,7 +378,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		return addEntry(
 			userId, title, subtitle, description, content, displayDate,
-			allowPingbacks, allowTrackbacks, trackbacks,
+			allowPingbacks, allowTrackbacks, trackbacks, coverImageCaption,
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
@@ -1156,14 +1161,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, entryId, title, entry.getSubtitle(), entry.getDescription(),
 			content, entry.getDisplayDate(), entry.getAllowPingbacks(),
 			entry.getAllowTrackbacks(), StringUtil.split(entry.getTrackbacks()),
-			null, null, serviceContext);
+			StringPool.BLANK, null, null, serviceContext);
 	}
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
 	 *             String, String, String, String, int, int, int, int, int,
-	 *             boolean, boolean, String[], ImageSelector, ImageSelector,
-	 *             ServiceContext)}
+	 *             boolean, boolean, String[], String, ImageSelector,
+	 *             ImageSelector, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -1202,7 +1207,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, entryId, title, StringPool.BLANK, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			coverImageImageSelector, smallImageImageSelector, serviceContext);
+			StringPool.BLANK, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1211,7 +1217,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			long userId, long entryId, String title, String subtitle,
 			String description, String content, Date displayDate,
 			boolean allowPingbacks, boolean allowTrackbacks,
-			String[] trackbacks, ImageSelector coverImageImageSelector,
+			String[] trackbacks, String coverImageCaption,
+			ImageSelector coverImageImageSelector,
 			ImageSelector smallImageImageSelector,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -1336,6 +1343,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		validate(smallImageFileEntryId);
 
+		entry.setCoverImageCaption(coverImageCaption);
 		entry.setCoverImageFileEntryId(coverImageFileEntryId);
 		entry.setCoverImageURL(coverImageURL);
 		entry.setSmallImage(smallImage);
@@ -1398,7 +1406,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, boolean allowPingbacks,
 			boolean allowTrackbacks, String[] trackbacks,
-			ImageSelector coverImageImageSelector,
+			String coverImageCaption, ImageSelector coverImageImageSelector,
 			ImageSelector smallImageImageSelector,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -1412,7 +1420,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		return updateEntry(
 			userId, entryId, title, subtitle, description, content, displayDate,
-			allowPingbacks, allowTrackbacks, trackbacks,
+			allowPingbacks, allowTrackbacks, trackbacks, coverImageCaption,
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 

@@ -16,6 +16,7 @@ package com.liferay.portal.cluster;
 
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterChannel;
+import com.liferay.portal.kernel.cluster.ClusterChannelFactory;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterReceiver;
@@ -115,6 +116,12 @@ public class ClusterLinkImpl implements ClusterLink {
 		clusterChannel.sendUnicastMessage(message, address);
 	}
 
+	public void setClusterChannelFactory(
+		ClusterChannelFactory clusterChannelFactory) {
+
+		_clusterChannelFactory = clusterChannelFactory;
+	}
+
 	protected ClusterChannel getChannel(Priority priority) {
 		int channelIndex =
 			priority.ordinal() * _channelCount / MAX_CHANNEL_COUNT;
@@ -166,8 +173,9 @@ public class ClusterLinkImpl implements ClusterLink {
 
 			ClusterReceiver clusterReceiver = new ClusterForwardReceiver(this);
 
-			ClusterChannel clusterChannel = new JGroupsClusterChannel(
-				value, _LIFERAY_TRANSPORT_CHANNEL + i, clusterReceiver);
+			ClusterChannel clusterChannel =
+				_clusterChannelFactory.createClusterChannel(
+					value, _LIFERAY_TRANSPORT_CHANNEL + i, clusterReceiver);
 
 			_clusterReceivers.add(clusterReceiver);
 			_localTransportAddresses.add(clusterChannel.getLocalAddress());
@@ -207,6 +215,7 @@ public class ClusterLinkImpl implements ClusterLink {
 		ClusterLinkImpl.class);
 
 	private int _channelCount;
+	private ClusterChannelFactory _clusterChannelFactory;
 	private List<ClusterReceiver> _clusterReceivers;
 	private ExecutorService _executorService;
 	private List<Address> _localTransportAddresses;

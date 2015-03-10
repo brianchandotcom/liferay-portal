@@ -16,6 +16,7 @@ package com.liferay.portal.cluster;
 
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterChannel;
+import com.liferay.portal.kernel.cluster.ClusterChannelFactory;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterException;
@@ -273,6 +274,12 @@ public class ClusterExecutorImpl
 		_clusterEventListeners.remove(clusterEventListener);
 	}
 
+	public void setClusterChannelFactory(
+		ClusterChannelFactory clusterChannelFactory) {
+
+		_clusterChannelFactory = clusterChannelFactory;
+	}
+
 	public void setClusterEventListeners(
 		List<ClusterEventListener> clusterEventListeners) {
 
@@ -340,7 +347,7 @@ public class ClusterExecutorImpl
 
 		_clusterReceiver = new ClusterRequestReceiver(this);
 
-		_controlChannel = new JGroupsClusterChannel(
+		_controlChannel = _clusterChannelFactory.createClusterChannel(
 			controlProperty, _DEFAULT_CLUSTER_NAME, _clusterReceiver);
 	}
 
@@ -488,6 +495,7 @@ public class ClusterExecutorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterExecutorImpl.class);
 
+	private ClusterChannelFactory _clusterChannelFactory;
 	private final CopyOnWriteArrayList<ClusterEventListener>
 		_clusterEventListeners = new CopyOnWriteArrayList<>();
 	private final Map<String, Address> _clusterNodeAddresses =

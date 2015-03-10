@@ -100,8 +100,7 @@ public class MBSubscriptionSender
 
 		if (userId == user.getUserId() ) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Skip notification for user " + userId);
+				_log.debug("Skip notification for user " + userId);
 			}
 
 			return;

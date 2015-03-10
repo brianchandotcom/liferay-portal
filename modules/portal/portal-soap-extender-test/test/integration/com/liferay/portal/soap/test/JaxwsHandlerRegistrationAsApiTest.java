@@ -16,14 +16,9 @@ package com.liferay.portal.soap.test;
 
 import com.liferay.portal.soap.sample.service.Greeter;
 
-import java.io.IOException;
-
 import java.net.URL;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.soap.SOAPException;
 import javax.xml.ws.Service;
 
 import org.arquillian.liferay.deploymentscenario.annotations.BndFile;
@@ -45,7 +40,7 @@ import org.junit.runner.RunWith;
 public class JaxwsHandlerRegistrationAsApiTest {
 
 	@Test
-	public void testHandlerIsRegistered() throws IOException {
+	public void testHandlerIsRegistered() throws Exception {
 		URL url = new URL(_url, "/o/soap/greeterApi?wsdl");
 
 		QName qName = new QName(

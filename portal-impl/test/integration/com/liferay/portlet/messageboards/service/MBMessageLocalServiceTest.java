@@ -46,6 +46,7 @@ import java.io.InputStream;
 import java.text.DateFormat;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -147,15 +148,17 @@ public class MBMessageLocalServiceTest {
 
 	@Test
 	public void testThreadLastPostDate() throws Exception {
-		MBMessage parentMessage = addMessage(null, false);
+		Date date = new Date();
 
-		Thread.sleep(2000);
+		long time = date.getTime();
 
-		MBMessage firstReplyMessage = addMessage(parentMessage, false);
+		MBMessage parentMessage = addMessage(null, false, date);
 
-		Thread.sleep(2000);
+		MBMessage firstReplyMessage = addMessage(
+			parentMessage, false, new Date(time + 1));
 
-		MBMessage secondReplyMessage = addMessage(parentMessage, false);
+		MBMessage secondReplyMessage = addMessage(
+			parentMessage, false, new Date(time + 2));
 
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			PropsValues.INDEX_DATE_FORMAT_PATTERN);
@@ -180,9 +183,20 @@ public class MBMessageLocalServiceTest {
 			MBMessage parentMessage, boolean addAttachments)
 		throws Exception {
 
+		return addMessage(parentMessage, addAttachments, null);
+	}
+
+	protected MBMessage addMessage(
+			MBMessage parentMessage, boolean addAttachments, Date date)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
+
+		if (date != null) {
+			serviceContext.setModifiedDate(date);
+		}
 
 		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
 		long parentMessageId = MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,9 +41,8 @@ import java.util.concurrent.ExecutorService;
  * @author Shuyang Zhou
  */
 @DoPrivileged
-public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
+public class ClusterLinkImpl implements ClusterLink {
 
-	@Override
 	public void destroy() {
 		if (!isEnabled()) {
 			return;
@@ -78,6 +78,11 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		for (ClusterReceiver clusterReceiver : _clusterReceivers) {
 			clusterReceiver.openLatch();
 		}
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return PropsValues.CLUSTER_LINK_ENABLED;
 	}
 
 	@Override

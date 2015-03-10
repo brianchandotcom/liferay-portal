@@ -51,7 +51,9 @@ public class JaxwsHandlerRegistrationAsApiTest {
 
 		Greeter greeter = service.getPort(Greeter.class);
 
-		Assert.assertTrue(greeter.greet().endsWith("has been handled!"));
+		String greeting = greeter.greet();
+
+		Assert.assertTrue(greeting.endsWith("has been handled!"));
 	}
 
 	@ArquillianResource

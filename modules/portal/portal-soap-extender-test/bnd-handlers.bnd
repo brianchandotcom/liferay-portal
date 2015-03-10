@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal SOAP Test simple registration
 Bundle-SymbolicName: com.liferay.portal.soap.extender.test.simple
 Bundle-Version: 1.0.0
-Include-Resource: \
-	com/liferay/portal/soap/sample/handlers=classes/com/liferay/portal/soap/sample/handlers,\
-	com/liferay/portal/soap/sample/service=classes/com/liferay/portal/soap/sample/service
+Include-Resource:\
+	com/liferay/portal/soap/extender/test/handlers=classes/com/liferay/portal/soap/extender/test/handlers,\
+	com/liferay/portal/soap/extender/test/service=classes/com/liferay/portal/soap/extender/test/service

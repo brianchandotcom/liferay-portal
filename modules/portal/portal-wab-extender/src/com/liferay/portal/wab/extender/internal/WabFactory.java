@@ -16,6 +16,7 @@ package com.liferay.portal.wab.extender.internal;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.wab.extender.internal.configuration.WabExtenderConfiguration;
 import com.liferay.portal.wab.extender.internal.event.EventUtil;
 
@@ -23,6 +24,7 @@ import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.felix.utils.extender.AbstractExtender;
@@ -37,6 +39,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
 
 /**
  * @author Miguel Pastor
@@ -61,6 +66,22 @@ public class WabFactory extends AbstractExtender {
 
 		_wabExtenderConfiguration = Configurable.createConfigurable(
 			WabExtenderConfiguration.class, properties);
+
+		_saxParserFactory.setNamespaceAware(false);
+		_saxParserFactory.setValidating(false);
+		_saxParserFactory.setXIncludeAware(false);
+
+		try {
+			_saxParserFactory.setFeature(_SAX_EXTERNAL_GENERAL_ENTITIES, false);
+			_saxParserFactory.setFeature(
+				_SAX_EXTERNAL_PARAMETER_ENTITIES, false);
+			_saxParserFactory.setFeature(_SAX_LOAD_EXTERNAL_DTD, false);
+		}
+		catch (ParserConfigurationException | SAXNotRecognizedException |
+			SAXNotSupportedException e) {
+
+			ReflectionUtil.throwException(e);
+		}
 
 		try {
 			_webBundleDeployer = new WebBundleDeployer(
@@ -108,14 +129,19 @@ public class WabFactory extends AbstractExtender {
 	@Reference(unbind = "-")
 	protected void setSAXParserFactory(SAXParserFactory saxParserFactory) {
 		_saxParserFactory = saxParserFactory;
-
-		_saxParserFactory.setValidating(false);
 	}
 
 	@Override
 	protected void warn(Bundle bundle, String message, Throwable t) {
 		_logger.log(Logger.LOG_WARNING, "[" + bundle + "] " + message, t);
 	}
+
+	private static final String _SAX_EXTERNAL_GENERAL_ENTITIES =
+		"http://xml.org/sax/features/external-general-entities";
+	private static final String _SAX_EXTERNAL_PARAMETER_ENTITIES =
+		"http://xml.org/sax/features/external-parameter-entities";
+	private static final String _SAX_LOAD_EXTERNAL_DTD =
+		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
 
 	private BundleContext _bundleContext;
 	private EventUtil _eventUtil;

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
+import com.liferay.portal.kernel.util.ReflectionUtil;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,6 +44,7 @@ import javax.tools.JavaFileManager;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -66,6 +69,8 @@ import org.phidias.compile.ResourceResolver;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -308,6 +313,18 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		saxParserFactory.setXIncludeAware(false);
 
 		try {
+			saxParserFactory.setFeature(_SAX_EXTERNAL_GENERAL_ENTITIES, false);
+			saxParserFactory.setFeature(
+				_SAX_EXTERNAL_PARAMETER_ENTITIES, false);
+			saxParserFactory.setFeature(_SAX_LOAD_EXTERNAL_DTD, false);
+		}
+		catch (ParserConfigurationException | SAXNotRecognizedException |
+			SAXNotSupportedException e) {
+
+			ReflectionUtil.throwException(e);
+		}
+
+		try {
 			SAXParser saxParser = saxParserFactory.newSAXParser();
 
 			for (Bundle bundle : _allParticipatingBundles) {
@@ -371,6 +388,12 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		"javax.servlet.ServletException"
 	};
 
+	private static final String _SAX_EXTERNAL_GENERAL_ENTITIES =
+		"http://xml.org/sax/features/external-general-entities";
+	private static final String _SAX_EXTERNAL_PARAMETER_ENTITIES =
+		"http://xml.org/sax/features/external-parameter-entities";
+	private static final String _SAX_LOAD_EXTERNAL_DTD =
+		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;
 	private final List<File> _classPath = new ArrayList<>();

@@ -7,7 +7,6 @@
 
 	.entry-body {
 		font-size: 18px;
-		overflow: auto;
 
 		h1 {
 			font-size: 22px;
@@ -30,6 +29,10 @@
 			&:last-child {
 				margin-bottom: 0;
 			}
+		}
+
+		img {
+			width: 100%;
 		}
 
 		.cover-image-container {

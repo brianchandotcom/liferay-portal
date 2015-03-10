@@ -384,9 +384,9 @@ definePermissionsURL.setRefererPlid(plid);
 						if (name.equals(RoleConstants.GUEST) && action.equals(ActionKeys.VIEW)) {
 						%>
 
-							<input checked disabled id='<%= renderResponse.getNamespace() + "guestViewPlaceholder" %>' type="checkbox" />
-
 							<input id="<%= FriendlyURLNormalizerUtil.normalize(role.getName()) + actionSeparator + action %>" name="<%= renderResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" type="hidden" value="<%= true %>" />
+
+							<input checked="checked" disabled="disabled" id='<%= renderResponse.getNamespace() + "guestViewPlaceholder" %>' type="checkbox" />
 
 						<%
 						}

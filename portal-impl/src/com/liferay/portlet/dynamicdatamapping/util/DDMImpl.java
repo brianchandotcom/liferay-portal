@@ -653,13 +653,13 @@ public class DDMImpl implements DDM {
 		for (String fieldNameValue : fieldNames) {
 			Serializable fieldValue = serviceContext.getAttribute(
 				fieldNameValue);
-			
+
 			String predefinedFieldValue = null;
-			
+
 			if (fieldValue == null) {
-				DDMFormField ddmFormField = 
+				DDMFormField ddmFormField =
 						ddmStructure.getDDMFormField(fieldName);
-				predefinedFieldValue = 
+				predefinedFieldValue =
 						ddmFormField.getPredefinedValue().getString(
 								serviceContext.getLocale());
 			}
@@ -678,13 +678,13 @@ public class DDMImpl implements DDM {
 					if (Validator.isNotNull(predefinedFieldValue)) {
 						Date predefinedDate = null;
 						try {
-							predefinedDate = 
+							predefinedDate =
 								DateUtil.parseDate(
-									predefinedFieldValue, 
+									predefinedFieldValue,
 									serviceContext.getLocale());
 						} catch (ParseException e) {}
 						if (Validator.isNotNull(predefinedDate)) {
-							fieldValue = 
+							fieldValue =
 								String.valueOf(predefinedDate.getTime());
 						}
 					}
@@ -695,10 +695,10 @@ public class DDMImpl implements DDM {
 						serviceContext.getAttribute(fieldNameValue + "Day"));
 					int fieldValueYear = GetterUtil.getInteger(
 						serviceContext.getAttribute(fieldNameValue + "Year"));
-	
+
 					Date fieldValueDate = PortalUtil.getDate(
 						fieldValueMonth, fieldValueDay, fieldValueYear);
-	
+
 					if (fieldValueDate != null) {
 						fieldValue = String.valueOf(fieldValueDate.getTime());
 					}
@@ -713,11 +713,11 @@ public class DDMImpl implements DDM {
 					}
 				} else {
 					HttpServletRequest request = serviceContext.getRequest();
-	
+
 					if (!(request instanceof UploadRequest)) {
 						return null;
 					}
-	
+
 					fieldValue = getImageFieldValue(
 						(UploadRequest)request, fieldNameValue);
 				}
@@ -734,11 +734,11 @@ public class DDMImpl implements DDM {
 					if (fieldValue instanceof String) {
 						fieldValue = new String[] {String.valueOf(fieldValue)};
 					}
-	
+
 					fieldValue = JSONFactoryUtil.serialize(fieldValue);
 				}
 			}
-			
+
 			if (fieldValue == null) {
 				if (Validator.isNull(predefinedFieldValue)) {
 					return null;

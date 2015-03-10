@@ -1152,7 +1152,6 @@ public class AssetPublisherUtil {
 			"[$ASSET_ENTRIES$]",
 			ListUtil.toString(
 				assetEntries, _titleAccessor, StringPool.COMMA_AND_SPACE));
-		subscriptionSender.setContextCreatorUserPrefix("ASSET_PUBLISHER");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);

@@ -61,14 +61,11 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 		if (message.isDiscussion() &&
 			(PropsValues.DISCUSSION_COMMENTS_LIMIT > 0)) {
 
-			int discussionMessagesCount =
-				messageLocalService.getDiscussionMessagesCount(
-					message.getClassName(), message.getClassPK(),
-					WorkflowConstants.STATUS_APPROVED);
+			int count = messageLocalService.getDiscussionMessagesCount(
+				message.getClassName(), message.getClassPK(),
+				WorkflowConstants.STATUS_APPROVED);
 
-			if (discussionMessagesCount >=
-					PropsValues.DISCUSSION_COMMENTS_LIMIT) {
-
+			if (count >= PropsValues.DISCUSSION_COMMENTS_LIMIT) {
 				messageLimit = true;
 			}
 		}

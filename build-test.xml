@@ -3333,7 +3333,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			</then>
 		</if>
 
-		<get-testcase-property property.name="portal.url" />
+		<get-test-url />
 
 		<if>
 			<equals arg1="${test.selenium.unit.enabled}" arg2="true" />
@@ -3351,10 +3351,10 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 				</then>
 			</elseif>
 			<elseif>
-				<isset property="portal.url" />
+				<isset property="test.url" />
 				<then>
 					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-						portal.url=${portal.url}
+						portal.url=${test.url}
 					</echo>
 				</then>
 			</elseif>

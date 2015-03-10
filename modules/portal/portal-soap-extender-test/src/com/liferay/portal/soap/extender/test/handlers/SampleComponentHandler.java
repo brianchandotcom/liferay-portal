@@ -42,7 +42,8 @@ public class SampleComponentHandler
 	public SampleComponentHandler() {
 		_transformerFactory = TransformerFactory.newInstance();
 
-		_url = SampleComponentHandler.class.getResource("handlerTemplate.xsl");
+		_url = SampleComponentHandler.class.getResource(
+			"dependencies/template.xsl");
 	}
 
 	@Override

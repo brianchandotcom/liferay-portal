@@ -60,14 +60,13 @@ public class ExportImportConfigurationSettingsMapFactory {
 	public static Map<String, Serializable> buildImportSettingsMap(
 		long userId, long targetGroupId, boolean privateLayout,
 		long[] layoutIds, Map<String, String[]> parameterMap, String cmd,
-		Date startDate, Date endDate, Locale locale, TimeZone timeZone,
-		String fileName) {
+		Locale locale, TimeZone timeZone, String fileName) {
 
 		return buildSettingsMap(
 			userId, 0, 0, targetGroupId, 0, StringPool.BLANK, privateLayout,
 			null, layoutIds, parameterMap, StringPool.BLANK, 0,
-			StringPool.BLANK, null, 0, null, cmd, startDate, endDate, locale,
-			timeZone, fileName);
+			StringPool.BLANK, null, 0, null, cmd, null, null, locale, timeZone,
+			fileName);
 	}
 
 	public static Map<String, Serializable> buildImportSettingsMap(

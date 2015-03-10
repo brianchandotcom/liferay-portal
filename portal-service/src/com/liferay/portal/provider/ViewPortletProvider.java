@@ -12,21 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.asset.provider;
+package com.liferay.portal.provider;
 
 /**
  * @author Eudaldo Alonso
  */
-public interface PortletProvider {
-
-	public static final String CLASS_NAME_ANY = "any-class-name";
-
-	public String getPortletId();
-
-	public enum Action {
-
-		ADD, BROWSE, VIEW
-
-	}
-
+public interface ViewPortletProvider extends PortletProvider {
 }

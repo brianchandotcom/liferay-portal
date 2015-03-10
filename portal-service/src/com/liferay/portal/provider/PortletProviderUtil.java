@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.asset.provider;
+package com.liferay.portal.provider;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.registry.collections.ServiceTrackerCollections;

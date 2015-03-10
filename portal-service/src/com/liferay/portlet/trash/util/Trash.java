@@ -104,6 +104,9 @@ public interface Trash {
 			HttpServletRequest request, String className, long classPK)
 		throws PortalException;
 
+	public PortletURL getViewURL(HttpServletRequest request)
+		throws PortalException;
+
 	public boolean isInTrash(String className, long classPK)
 		throws PortalException;
 

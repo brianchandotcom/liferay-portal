@@ -59,7 +59,7 @@ public class BaseSyncDLObjectHandler extends BaseJSONHandler {
 				sourceSyncFile);
 
 			if (Files.exists(sourceFilePath)) {
-				Files.move(sourceFilePath, targetFilePath);
+				FileUtil.moveFile(sourceFilePath, targetFilePath);
 			}
 
 			return true;
@@ -80,7 +80,7 @@ public class BaseSyncDLObjectHandler extends BaseJSONHandler {
 				sourceSyncFile);
 
 			if (Files.exists(sourceFilePath)) {
-				Files.move(sourceFilePath, targetFilePath);
+				FileUtil.moveFile(sourceFilePath, targetFilePath);
 			}
 
 			return true;

@@ -23,8 +23,6 @@ import com.liferay.sync.engine.service.persistence.SyncFilePersistence;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
 
-import java.io.IOException;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -571,10 +569,8 @@ public class SyncFileService {
 
 		// Local sync file
 
-		if (FileUtil.getFileKey(filePath) != syncFile.getSyncFileId()) {
-			FileUtil.writeFileKey(
-				filePath, String.valueOf(syncFile.getSyncFileId()));
-		}
+		FileUtil.writeFileKey(
+			filePath, String.valueOf(syncFile.getSyncFileId()));
 
 		Path deltaFilePath = null;
 
@@ -670,12 +666,7 @@ public class SyncFileService {
 
 				@Override
 				public void run() {
-					try {
-						Files.deleteIfExists(filePath);
-					}
-					catch (IOException ioe) {
-						_logger.error(ioe.getMessage(), ioe);
-					}
+					FileUtil.deleteFile(filePath);
 				}
 
 			};

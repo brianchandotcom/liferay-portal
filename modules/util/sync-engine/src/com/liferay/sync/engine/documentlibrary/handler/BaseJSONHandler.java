@@ -24,8 +24,8 @@ import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.session.Session;
 import com.liferay.sync.engine.session.SessionManager;
 import com.liferay.sync.engine.util.ConnectionRetryUtil;
+import com.liferay.sync.engine.util.FileUtil;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -153,7 +153,7 @@ public class BaseJSONHandler extends BaseHandler {
 
 			Path filePath = Paths.get(syncFile.getFilePathName());
 
-			Files.deleteIfExists(filePath);
+			FileUtil.deleteFile(filePath);
 
 			SyncFileService.deleteSyncFile(syncFile, false);
 		}

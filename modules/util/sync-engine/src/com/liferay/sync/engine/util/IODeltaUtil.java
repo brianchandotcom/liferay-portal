@@ -31,7 +31,6 @@ import java.nio.channels.WritableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -214,18 +213,9 @@ public class IODeltaUtil {
 			StreamUtil.cleanUp(deltaReadableByteChannel);
 		}
 
-		try {
-			Files.move(
-				patchedFilePath, targetFilePath,
-				StandardCopyOption.REPLACE_EXISTING);
+		FileUtil.moveFile(patchedFilePath, targetFilePath);
 
-			return targetFilePath;
-		}
-		catch (IOException ioe) {
-			_logger.error(ioe.getMessage(), ioe);
-
-			return null;
-		}
+		return targetFilePath;
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

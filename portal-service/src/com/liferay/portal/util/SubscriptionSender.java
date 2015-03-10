@@ -230,12 +230,12 @@ public class SubscriptionSender implements Serializable {
 		return _context.get(key);
 	}
 
-	public long getUserId() {
-		return userId;
-	}
-
 	public String getMailId() {
 		return this.mailId;
+	}
+
+	public long getUserId() {
+		return userId;
 	}
 
 	public void initialize() throws Exception {
@@ -326,8 +326,8 @@ public class SubscriptionSender implements Serializable {
 		_contextCreatorUserPrefix = contextCreatorUserPrefix;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setCreatorUserId(long creatorUserId) {
+		this.creatorUserId = creatorUserId;
 	}
 
 	public void setEntryTitle(String entryTitle) {
@@ -425,8 +425,8 @@ public class SubscriptionSender implements Serializable {
 		this.uniqueMailId = uniqueMailId;
 	}
 
-	public void setCreatorUserId(long creatorUserId) {
-		this.creatorUserId = creatorUserId;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	protected void deleteSubscription(Subscription subscription)

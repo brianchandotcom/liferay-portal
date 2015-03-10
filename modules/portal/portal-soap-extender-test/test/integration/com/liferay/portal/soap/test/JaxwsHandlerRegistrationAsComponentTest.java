@@ -47,19 +47,19 @@ public class JaxwsHandlerRegistrationAsComponentTest {
 	@Test
 	public void testHandlerIsRegistered()
 		throws JAXBException, IOException, SOAPException,
-		ParserConfigurationException {
+			ParserConfigurationException {
 
 		URL url = new URL(_url, "/o/soap/greeter?wsdl");
 
-		QName serviceName = new QName(
+		QName qName = new QName(
 			"http://service.sample.soap.portal.liferay.com/",
 			"GreeterImplService");
 
-		Service service = Service.create(url, serviceName);
+		Service service = Service.create(url, qName);
 
-		Greeter port = service.getPort(Greeter.class);
+		Greeter greeter = service.getPort(Greeter.class);
 
-		Assert.assertTrue(port.greet().endsWith("has been handled!"));
+		Assert.assertTrue(greeter.greet().endsWith("has been handled!"));
 	}
 
 	@ArquillianResource

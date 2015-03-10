@@ -21,6 +21,7 @@ import javax.jws.WebService;
  */
 @WebService
 public interface Greeter {
+
 	public String greet();
 
 }

@@ -100,6 +100,10 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		DDLRecordSetLocalServiceUtil.deleteRecordSets(
 			portletDataContext.getScopeGroupId());
 
+		DDMStructureLocalServiceUtil.deleteStructures(
+			portletDataContext.getScopeGroupId(),
+			PortalUtil.getClassNameId(DDLRecordSet.class));
+
 		return portletPreferences;
 	}
 

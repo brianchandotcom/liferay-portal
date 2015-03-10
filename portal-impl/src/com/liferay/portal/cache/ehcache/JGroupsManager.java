@@ -58,14 +58,15 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 		_executorService = PortalExecutorManagerUtil.getPortalExecutor(
 			JGroupsManager.class.getName());
 
-		_clusterReceiver = new EhcacheJGroupsReceiver(_executorService);
+		ClusterReceiver clusterReceiver = new EhcacheJGroupsReceiver(
+			_executorService);
 
 		JChannel jChannel = null;
 
 		try {
 			jChannel = new JChannel(channelProperties);
 
-			jChannel.setReceiver(new JGroupsReceiver(_clusterReceiver));
+			jChannel.setReceiver(new JGroupsReceiver(clusterReceiver));
 
 			jChannel.connect(clusterName);
 
@@ -83,7 +84,7 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 
 		_jChannel = jChannel;
 
-		_clusterReceiver.openLatch();
+		clusterReceiver.openLatch();
 	}
 
 	@Override
@@ -253,7 +254,6 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 	private static final Log _log = LogFactoryUtil.getLog(JGroupsManager.class);
 
 	private final CacheManager _cacheManager;
-	private final ClusterReceiver _clusterReceiver;
 	private final ExecutorService _executorService;
 	private final JChannel _jChannel;
 

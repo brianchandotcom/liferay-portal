@@ -47,7 +47,6 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,31 +122,8 @@ public class VerifyPermission extends VerifyProcess {
 		deleteDefaultPrivateLayoutPermissions();
 
 		checkPermissions();
-		fixDockbarPermissions();
 		fixOrganizationRolePermissions();
 		fixUserDefaultRolePermissions();
-	}
-
-	protected void fixDockbarPermissions() throws Exception {
-		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
-
-		for (long companyId : companyIds) {
-			try {
-				Role role = RoleLocalServiceUtil.getRole(
-					companyId, RoleConstants.USER);
-
-				ResourcePermissionLocalServiceUtil.addResourcePermission(
-					companyId, PortletKeys.DOCKBAR,
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(role.getCompanyId()), role.getRoleId(),
-					ActionKeys.VIEW);
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-			}
-		}
 	}
 
 	protected void fixOrganizationRolePermissions() throws Exception {

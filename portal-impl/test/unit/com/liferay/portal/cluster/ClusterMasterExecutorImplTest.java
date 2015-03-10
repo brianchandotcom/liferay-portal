@@ -49,7 +49,6 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -62,7 +61,6 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 	public static final CodeCoverageAssertor codeCoverageAssertor =
 		CodeCoverageAssertor.INSTANCE;
 
-	@Before
 	@Override
 	public void setUp() {
 		super.setUp();

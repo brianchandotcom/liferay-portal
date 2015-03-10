@@ -52,7 +52,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -62,7 +61,6 @@ import org.junit.Test;
 @NewEnv(type = NewEnv.Type.CLASSLOADER)
 public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
-	@Before
 	@Override
 	public void setUp() {
 		super.setUp();

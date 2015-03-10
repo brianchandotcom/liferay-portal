@@ -42,7 +42,7 @@ if (Validator.isNotNull(keywords)) {
 }
 %>
 
-<liferay-util:include page="/restore_path.jsp" />
+<liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
 
 <liferay-ui:error exception="<%= RestoreEntryException.class %>">
 
@@ -270,7 +270,7 @@ if (Validator.isNotNull(keywords)) {
 					request.setAttribute(WebKeys.TRASH_RENDERER, trashRenderer);
 					%>
 
-					<liferay-util:include page="/view_content_action.jsp" />
+					<liferay-util:include page="/view_content_action.jsp" servletContext="<%= application %>" />
 				</liferay-ui:search-container-column-text>
 			</c:otherwise>
 		</c:choose>
@@ -293,6 +293,7 @@ if (Validator.isNotNull(keywords)) {
 
 		<liferay-ui:search-form
 			page="/entry_search.jsp"
+			servletContext="<%= application %>"
 		/>
 	</aui:form>
 

@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:include page="/restore_path.jsp" />
+<liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
 
 <div class="asset-content">
 

@@ -203,11 +203,17 @@ public class PortletPreferencesLocalServiceStagingAdvice
 			return methodInvocation.proceed();
 		}
 
-		User user = UserLocalServiceUtil.getUserById(
-			PrincipalThreadLocal.getUserId());
+		long userId = PrincipalThreadLocal.getUserId();
 
-		plid = StagingUtil.getRecentLayoutRevisionId(
-			user, layoutRevision.getLayoutSetBranchId(), layout.getPlid());
+		if (userId == 0) {
+			plid = layoutRevision.getLayoutRevisionId();
+		}
+		else {
+			User user = UserLocalServiceUtil.getUserById(userId);
+
+			plid = StagingUtil.getRecentLayoutRevisionId(
+				user, layoutRevision.getLayoutSetBranchId(), layout.getPlid());
+		}
 
 		if (arguments.length == 1) {
 			PortletPreferencesIds portletPreferencesIds =

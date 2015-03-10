@@ -12,22 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.soap.sample.service;
+package com.liferay.portal.soap.extender.test.activators.simple;
 
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.soap.extender.test.service.GreeterImpl;
+
+import javax.xml.ws.Endpoint;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
-	immediate = true, property = {"jaxws=true", "soap.address=/greeter"},
-	service = Greeter.class
-	)
-public class GreeterImpl implements Greeter {
+public class JaxwsApiBundleActivator implements BundleActivator {
 
 	@Override
-	public String greet() {
-		return "Greetings!";
+	public void start(BundleContext bundleContext) throws Exception {
+		_endpoint = Endpoint.publish("/greeterApi", new GreeterImpl());
 	}
+
+	@Override
+	public void stop(BundleContext bundleContext) throws Exception {
+		_endpoint.stop();
+	}
+
+	private Endpoint _endpoint;
 
 }

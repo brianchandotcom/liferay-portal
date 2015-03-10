@@ -12,21 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.soap.test;
+package com.liferay.portal.soap.extender.test;
 
-import com.liferay.portal.soap.sample.service.Greeter;
+import com.liferay.portal.soap.extender.test.service.Greeter;
 
+import java.io.IOException;
 import java.net.URL;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
 import org.arquillian.liferay.deploymentscenario.annotations.BndFile;
-
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,13 +33,13 @@ import org.junit.runner.RunWith;
 /**
  * @author Carlos Sierra Andrés
  */
-@BndFile("bnd-handlers.bnd")
+@BndFile("bnd-component.bnd")
 @RunAsClient
 @RunWith(Arquillian.class)
-public class JaxwsHandlerRegistrationAsComponentTest {
+public class JaxwsComponentRegistrationTest {
 
 	@Test
-	public void testHandlerIsRegistered() throws Exception {
+	public void testIsRegistered() throws IOException {
 		URL url = new URL(_url, "/o/soap/greeter?wsdl");
 
 		QName qName = new QName(
@@ -51,9 +50,7 @@ public class JaxwsHandlerRegistrationAsComponentTest {
 
 		Greeter greeter = service.getPort(Greeter.class);
 
-		String greeting = greeter.greet();
-
-		Assert.assertTrue(greeting.endsWith("has been handled!"));
+		Assert.assertEquals("Greetings!", greeter.greet());
 	}
 
 	@ArquillianResource

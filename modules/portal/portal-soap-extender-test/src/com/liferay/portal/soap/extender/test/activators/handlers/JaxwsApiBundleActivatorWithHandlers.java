@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.soap.sample.activators.handlers;
+package com.liferay.portal.soap.extender.test.activators.handlers;
 
-import com.liferay.portal.soap.sample.handlers.SampleComponentHandler;
-import com.liferay.portal.soap.sample.service.GreeterImpl;
+import com.liferay.portal.soap.extender.test.handlers.SampleComponentHandler;
+import com.liferay.portal.soap.extender.test.service.GreeterImpl;
 
 import java.util.List;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.content.web.portlet.asset.provider;
+package com.liferay.journal.content.web.provider;
 
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.portal.kernel.provider.AddPortletProvider;

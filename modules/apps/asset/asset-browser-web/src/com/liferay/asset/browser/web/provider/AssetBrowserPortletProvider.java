@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.browser.web.asset.provider;
+package com.liferay.asset.browser.web.provider;
 
 import com.liferay.asset.browser.web.constants.AssetBrowserPortletKeys;
 import com.liferay.portal.kernel.provider.BrowsePortletProvider;

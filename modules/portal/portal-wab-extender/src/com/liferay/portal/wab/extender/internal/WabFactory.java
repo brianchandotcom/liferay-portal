@@ -62,6 +62,8 @@ public class WabFactory extends AbstractExtender {
 		_wabExtenderConfiguration = Configurable.createConfigurable(
 			WabExtenderConfiguration.class, properties);
 
+		setSynchronous(true);
+
 		try {
 			_webBundleDeployer = new WebBundleDeployer(
 				_bundleContext, _extendedHttpService, _saxParserFactory,

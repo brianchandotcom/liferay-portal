@@ -56,7 +56,7 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 		_nextThread = nextThread;
 		_threadView = threadView;
 
-		boolean messageMaxCount = false;
+		boolean messageLimit = false;
 
 		if (message.isDiscussion() &&
 			(PropsValues.DISCUSSION_COMMENTS_LIMIT > 0)) {
@@ -69,11 +69,11 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 			if (discussionMessagesCount >=
 					PropsValues.DISCUSSION_COMMENTS_LIMIT) {
 
-				messageMaxCount = true;
+				messageLimit = true;
 			}
 		}
 
-		_messageLimit = messageMaxCount;
+		_messageLimit = messageLimit;
 	}
 
 	@Override

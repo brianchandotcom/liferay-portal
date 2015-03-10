@@ -14,10 +14,6 @@
 
 package com.liferay.portal.soap.sample.handlers;
 
-/**
- * @author Carlos Sierra Andrés
- */
-
 import java.io.IOException;
 
 import java.net.URL;
@@ -36,6 +32,10 @@ import javax.xml.ws.handler.LogicalMessageContext;
 import javax.xml.ws.handler.MessageContext;
 
 import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Carlos Sierra Andrés
+ */
 @Component(
 	immediate = true, property = {"soap.address=/greeter"},
 	service = Handler.class
@@ -48,8 +48,7 @@ public class SampleComponentHandler
 
 		_transformerFactory = TransformerFactory.newInstance();
 
-		_templateUrl = SampleComponentHandler.class.getResource(
-			"handlerTemplate.xsl");
+		_url = SampleComponentHandler.class.getResource("handlerTemplate.xsl");
 	}
 
 	@Override
@@ -71,20 +70,20 @@ public class SampleComponentHandler
 				return true;
 			}
 
-			Source streamSource = new StreamSource(_templateUrl.openStream());
+			Source streamSource = new StreamSource(_url.openStream());
 
 			Transformer transformer = _transformerFactory.newTransformer(
 				streamSource);
 
-			LogicalMessage message = context.getMessage();
+			LogicalMessage logicalMessage = context.getMessage();
 
-			Source payload = message.getPayload();
+			Source source = logicalMessage.getPayload();
 
 			DOMResult domResult = new DOMResult();
 
-			transformer.transform(payload, domResult);
+			transformer.transform(source, domResult);
 
-			message.setPayload(new DOMSource(domResult.getNode()));
+			logicalMessage.setPayload(new DOMSource(domResult.getNode()));
 
 			return true;
 		}
@@ -93,7 +92,7 @@ public class SampleComponentHandler
 		}
 	}
 
-	private final URL _templateUrl;
 	private final TransformerFactory _transformerFactory;
+	private final URL _url;
 
 }

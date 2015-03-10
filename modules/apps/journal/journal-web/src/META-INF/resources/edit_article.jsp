@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/META-INF/resources/init.jsp" %>
 
 <%
 String tabs2 = ParamUtil.getString(request, "tabs2");

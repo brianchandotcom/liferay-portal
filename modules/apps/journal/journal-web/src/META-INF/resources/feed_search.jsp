@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/META-INF/resources/init.jsp" %>
 
 <%
 FeedSearch searchContainer = (FeedSearch)request.getAttribute("liferay-ui:search:searchContainer");

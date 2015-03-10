@@ -82,4 +82,4 @@ JournalDisplayContext journalDisplayContext = new JournalDisplayContext(liferayP
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
-<%@ include file="/html/portlet/journal/init-ext.jsp" %>
+<%@ include file="/META-INF/resources/init-ext.jsp" %>

@@ -56,8 +56,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.conn.routing.HttpRoutePlanner;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -72,6 +72,8 @@ import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.SSLContexts;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -433,18 +435,16 @@ public class Session {
 				Charset.forName("UTF-8")));
 	}
 
-	@SuppressWarnings("deprecation")
 	private SSLConnectionSocketFactory _getTrustingSSLSocketFactory()
 		throws Exception {
 
-		SSLContextBuilder sslContextBuilder = new SSLContextBuilder();
+		SSLContextBuilder sslContextBuilder = SSLContexts.custom();
 
 		sslContextBuilder.loadTrustMaterial(
 			null, new TrustSelfSignedStrategy());
 
 		return new SSLConnectionSocketFactory(
-			sslContextBuilder.build(),
-			SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+			sslContextBuilder.build(), new NoopHostnameVerifier());
 	}
 
 	private HttpEntity _getURLEncodedFormEntity(Map<String, Object> parameters)

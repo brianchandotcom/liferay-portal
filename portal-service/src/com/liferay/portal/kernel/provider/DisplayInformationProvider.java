@@ -12,21 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet.asset.provider;
+package com.liferay.portal.kernel.provider;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Eudaldo Alonso
  */
-public interface PortletProvider {
+public interface DisplayInformationProvider {
 
-	public static final String CLASS_NAME_ANY = "any-class-name";
+	public String getClassName();
 
-	public String getPortletId();
-
-	public enum Action {
-
-		ADD, BROWSE, VIEW
-
-	}
+	public String getClassPK(PortletPreferences portletPreferences);
 
 }

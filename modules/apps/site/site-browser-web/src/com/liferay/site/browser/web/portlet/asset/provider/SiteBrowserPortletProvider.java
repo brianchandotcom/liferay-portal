@@ -14,7 +14,7 @@
 
 package com.liferay.site.browser.web.portlet.asset.provider;
 
-import com.liferay.portlet.asset.provider.BrowsePortletProvider;
+import com.liferay.portal.kernel.provider.BrowsePortletProvider;
 import com.liferay.site.browser.web.constants.SiteBrowserPortletKeys;
 
 import org.osgi.service.component.annotations.Component;

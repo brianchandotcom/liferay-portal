@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -54,7 +53,6 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -453,25 +451,18 @@ public class ClusterExecutorImpl
 	}
 
 	protected List<Address> prepareAddresses(ClusterRequest clusterRequest) {
-		boolean isMulticast = clusterRequest.isMulticast();
-
 		List<Address> addresses = null;
 
-		if (isMulticast) {
-			addresses = ListUtil.fromCollection(_clusterNodeAddresses.values());
+		if (clusterRequest.isMulticast()) {
+			addresses = new ArrayList<>(_clusterNodeAddresses.values());
 		}
 		else {
 			addresses = new ArrayList<>();
 
-			Collection<String> clusterNodeIds =
-				clusterRequest.getTargetClusterNodeIds();
+			for (String clusterNodeId :
+					clusterRequest.getTargetClusterNodeIds()) {
 
-			if (clusterNodeIds != null) {
-				for (String clusterNodeId : clusterNodeIds) {
-					Address address = _clusterNodeAddresses.get(clusterNodeId);
-
-					addresses.add(address);
-				}
+				addresses.add(_clusterNodeAddresses.get(clusterNodeId));
 			}
 		}
 

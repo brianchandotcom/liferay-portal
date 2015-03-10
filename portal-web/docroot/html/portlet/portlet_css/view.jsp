@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/portlet_css/init.jsp" %>
 
 <%
-String portletResource= ParamUtil.getString(request, "portletResource");
+String portletResource = ParamUtil.getString(request, "portletResource");
 %>
 
 <c:choose>

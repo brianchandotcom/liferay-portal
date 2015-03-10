@@ -314,7 +314,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public void addDateRangeCriteria(
 		DynamicQuery dynamicQuery, String propertyName) {
 
-		Criterion criterion = getDateRangeCriteria(dynamicQuery, propertyName);
+		Criterion criterion = getDateRangeCriteria(propertyName);
 
 		if (criterion == null) {
 			return;
@@ -822,9 +822,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
-	public Criterion getDateRangeCriteria(
-		DynamicQuery dynamicQuery, String propertyName) {
-
+	public Criterion getDateRangeCriteria(String propertyName) {
 		if (!hasDateRange()) {
 			return null;
 		}

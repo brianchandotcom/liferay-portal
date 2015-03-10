@@ -657,8 +657,11 @@ public class DDMImpl implements DDM {
 			String predefinedFieldValue = null;
 			
 			if (fieldValue == null) {
-				DDMFormField ddmFormField = ddmStructure.getDDMFormField(fieldName);
-				predefinedFieldValue = ddmFormField.getPredefinedValue().getString(serviceContext.getLocale());
+				DDMFormField ddmFormField = 
+						ddmStructure.getDDMFormField(fieldName);
+				predefinedFieldValue = 
+						ddmFormField.getPredefinedValue().getString(
+								serviceContext.getLocale());
 			}
 
 			if (fieldType.equals(DDMImpl.TYPE_CHECKBOX) &&
@@ -719,7 +722,7 @@ public class DDMImpl implements DDM {
 						(UploadRequest)request, fieldNameValue);
 				}
 			}
-			
+
 			if (DDMImpl.TYPE_RADIO.equals(fieldType) ||
 					DDMImpl.TYPE_SELECT.equals(fieldType)) {
 

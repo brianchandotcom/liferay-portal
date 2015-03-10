@@ -177,8 +177,7 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 			"(&(objectClass=" + ServletContext.class.getName() +
 				")(service.bundleid=" + bundle.getBundleId() + "))");
 
-		_serviceTracker = new ServiceTracker<ServletContext, ServletContext>(
-			bundleContext, filter, null);
+		_serviceTracker = new ServiceTracker<>(bundleContext, filter, null);
 
 		_serviceTracker.open();
 	}

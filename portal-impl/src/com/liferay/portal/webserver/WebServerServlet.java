@@ -75,9 +75,10 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.asset.provider.PortletProvider;
+import com.liferay.portlet.asset.provider.PortletProviderUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -94,6 +95,7 @@ import com.liferay.portlet.documentlibrary.util.PDFProcessor;
 import com.liferay.portlet.documentlibrary.util.PDFProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.VideoProcessor;
 import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
+import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.awt.image.RenderedImage;
@@ -871,9 +873,11 @@ public class WebServerServlet extends HttpServlet {
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
+			String portletId = PortletProviderUtil.getPortletId(
+				TrashEntry.class.getName(), PortletProvider.Action.VIEW);
+
 			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
-					permissionChecker, fileEntry.getGroupId(),
-					PortletKeys.TRASH)) {
+					permissionChecker, fileEntry.getGroupId(), portletId)) {
 
 				throw new PrincipalException();
 			}

@@ -167,9 +167,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String body, ServiceContext serviceContext)
 		throws PortalException {
 
-		validateDiscussionMessageLimit(className, classPK);
-
 		// Message
+
+		validateDiscussionMessageLimit(className, classPK);
 
 		long categoryId = MBCategoryConstants.DISCUSSION_CATEGORY_ID;
 
@@ -2487,10 +2487,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return;
 		}
 
-		int discussionMessagesCount = getDiscussionMessagesCount(
+		int count = getDiscussionMessagesCount(
 			className, classPK, WorkflowConstants.STATUS_APPROVED);
 
-		if (discussionMessagesCount >= PropsValues.DISCUSSION_COMMENTS_LIMIT) {
+		if (count >= PropsValues.DISCUSSION_COMMENTS_LIMIT) {
 			throw new DiscussionMessageLimitException();
 		}
 	}

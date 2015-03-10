@@ -321,6 +321,15 @@
 		<execute function="AssertTextEquals" locator1="CPContenttargeting#USER_SEGMENT_TABLE_DESCRIPTION" value1="${userSegmentDescription}" />
 	</command>
 
+	<command name="viewImportContentVisitedRuleEmpty">
+		<var name="key_userSegment" value="${userSegmentName}" />
+
+		<execute function="Click" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_TABLE_ACTIONS" />
+		<execute function="Click" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_TABLE_ACTIONS_MENULIST_EDIT" />
+
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_RULE_CONTENT_VISITED_CONTENT_TITLE" />
+	</command>
+
 	<command name="viewNotPresentCP">
 		<execute function="Click" locator1="CPContenttargeting#NAVIGATION_USER_SEGMENTS" />
 

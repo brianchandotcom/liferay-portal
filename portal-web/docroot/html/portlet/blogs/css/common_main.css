@@ -7,6 +7,7 @@
 
 	.entry-body {
 		font-size: 18px;
+		overflow: auto;
 
 		h1 {
 			font-size: 22px;

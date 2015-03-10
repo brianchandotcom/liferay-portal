@@ -52,6 +52,8 @@ public class WabFactory extends AbstractExtender {
 
 	@Activate
 	public void activate(ComponentContext componentContext) {
+		setSynchronous(true);
+
 		_bundleContext = componentContext.getBundleContext();
 		_eventUtil = new EventUtil(_bundleContext);
 		_logger = new Logger(_bundleContext);
@@ -61,8 +63,6 @@ public class WabFactory extends AbstractExtender {
 
 		_wabExtenderConfiguration = Configurable.createConfigurable(
 			WabExtenderConfiguration.class, properties);
-
-		setSynchronous(true);
 
 		try {
 			_webBundleDeployer = new WebBundleDeployer(

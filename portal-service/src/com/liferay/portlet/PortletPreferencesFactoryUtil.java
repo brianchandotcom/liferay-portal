@@ -173,6 +173,14 @@ public class PortletPreferencesFactoryUtil {
 			scopeGroupId, userId, layout, portletId, modeEditGuest);
 	}
 
+	public static PortletPreferencesIds getPortletPreferencesIds(
+		long companyId, long siteGroupId, long plid, String portletId,
+		String settingsScope) {
+
+		return getPortletPreferencesFactory().getPortletPreferencesIds(
+			companyId, siteGroupId, plid, portletId, settingsScope);
+	}
+
 	public static PortletPreferences getPortletSetup(
 			HttpServletRequest request, String portletId)
 		throws PortalException {

@@ -43,8 +43,8 @@ public class TestClusterChannel implements ClusterChannel {
 	public static List<TestClusterChannel> getClusterChannels() {
 		List<TestClusterChannel> clusterChannels = new ArrayList<>();
 
-		for (Map<Address, TestClusterChannel> entry : _clusters.values()) {
-			clusterChannels.addAll(entry.values());
+		for (Map<Address, TestClusterChannel> map : _clusters.values()) {
+			clusterChannels.addAll(map.values());
 		}
 
 		return clusterChannels;
@@ -93,7 +93,7 @@ public class TestClusterChannel implements ClusterChannel {
 
 	@Override
 	public void close() {
-		_isClosed = true;
+		_closed = true;
 
 		Map<Address, TestClusterChannel> clusterChannels = _clusters.get(
 			_clusterName);
@@ -121,7 +121,7 @@ public class TestClusterChannel implements ClusterChannel {
 	}
 
 	public boolean isClosed() {
-		return _isClosed;
+		return _closed;
 	}
 
 	@Override
@@ -131,7 +131,7 @@ public class TestClusterChannel implements ClusterChannel {
 
 	@Override
 	public void sendUnicastMessage(Serializable message, Address address) {
-		_unicastMessages.add(new ObjectValuePair(message, address));
+		_unicastMessages.add(new ObjectValuePair<>(message, address));
 	}
 
 	private static final Map<String, Map<Address, TestClusterChannel>>
@@ -142,9 +142,9 @@ public class TestClusterChannel implements ClusterChannel {
 		_unicastMessages = new ArrayList<>();
 
 	private final InetAddress _bindInetAddress;
+	private boolean _closed;
 	private final String _clusterName;
 	private final ClusterReceiver _clusterReceiver;
-	private boolean _isClosed;
 	private final Address _localAddress;
 
 }

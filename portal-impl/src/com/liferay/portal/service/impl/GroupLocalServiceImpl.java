@@ -4650,11 +4650,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		Group parentGroup = groupPersistence.findByPrimaryKey(parentGroupId);
 
 		if (group.isStagingGroup()) {
-			Group stagingGroup = parentGroup.getStagingGroup();
+			long stagingGroupId = parentGroup.getStagingGroup().getGroupId();
 
-			if (groupId == stagingGroup.getGroupId()) {
+			if (groupId == stagingGroupId) {
 				throw new GroupParentException.MustNotHaveStagingParent(
-					groupId);
+					groupId, stagingGroupId);
 			}
 		}
 	}

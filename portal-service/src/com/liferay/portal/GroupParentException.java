@@ -90,7 +90,7 @@ public class GroupParentException extends PortalException {
 		public MustNotBeOwnParent(long groupId) {
 			super(
 				String.format(
-					"Site for groupId %s cannot be its own parent site",
+					"Site %s cannot be its own parent site",
 					groupId),
 				SELF_DESCENDANT);
 
@@ -106,9 +106,8 @@ public class GroupParentException extends PortalException {
 		public MustNotHaveChildParent(long groupId, long parentGroupId) {
 			super(
 				String.format(
-					"The parent groupId %s cannot be among the groupIds" +
-						" for site %s",
-					parentGroupId, groupId),
+					"Site %s cannot have a child site %s as its parent site",
+					groupId, parentGroupId),
 				CHILD_DESCENDANT);
 
 			this.groupId = groupId;
@@ -122,17 +121,18 @@ public class GroupParentException extends PortalException {
 
 	public static class MustNotHaveStagingParent extends GroupParentException {
 
-		public MustNotHaveStagingParent(long parentGroupId) {
+		public MustNotHaveStagingParent(long groupId, long parentGroupId) {
 			super(
 				String.format(
-					"The site corresponding with groupId" +
-						" %s cannot be a child of a staging site",
-					parentGroupId),
+					"Site %s cannot have a staging site %s as its parent site",
+					groupId, parentGroupId),
 				STAGING_DESCENDANT);
 
+			this.groupId = groupId;
 			this.parentGroupId = parentGroupId;
 		}
 
+		public long groupId;
 		public long parentGroupId;
 
 	}

@@ -317,9 +317,9 @@ public abstract class MBThreadLocalServiceBaseImpl extends BaseLocalServiceImpl
 		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Criterion modifiedDateCriterion = portletDataContext.getDateRangeCriteria(dynamicQuery,
+					Criterion modifiedDateCriterion = portletDataContext.getDateRangeCriteria(
 							"modifiedDate");
-					Criterion statusDateCriterion = portletDataContext.getDateRangeCriteria(dynamicQuery,
+					Criterion statusDateCriterion = portletDataContext.getDateRangeCriteria(
 							"statusDate");
 
 					if ((modifiedDateCriterion != null) &&

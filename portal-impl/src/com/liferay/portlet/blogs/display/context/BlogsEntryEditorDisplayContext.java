@@ -58,7 +58,7 @@ public class BlogsEntryEditorDisplayContext {
 
 	protected void populateContentEditorData() throws JSONException {
 		PortletURL uploadEditorImageURL =
-			_liferayPortletResponse.createRenderURL();
+			_liferayPortletResponse.createActionURL();
 
 		uploadEditorImageURL.setParameter(
 			"struts_action", "/blogs/upload_editor_image");

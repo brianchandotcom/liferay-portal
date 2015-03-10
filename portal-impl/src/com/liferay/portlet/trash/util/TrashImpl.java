@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.provider.PortletProvider;
+import com.liferay.portal.kernel.provider.PortletProviderUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -48,7 +50,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
@@ -127,8 +128,8 @@ public class TrashImpl implements Trash {
 			request, rootContainerModelTitle, containerModelURL.toString());
 
 		addBreadcrumbEntries(
-			request, liferayPortletResponse, className, classPK,
-			"containerModelId", containerModelURL, false);
+				request, liferayPortletResponse, className, classPK,
+				"containerModelId", containerModelURL, false);
 	}
 
 	@Override
@@ -136,7 +137,7 @@ public class TrashImpl implements Trash {
 		ActionRequest actionRequest, List<TrashedModel> trashedModels) {
 
 		addTrashSessionMessages(
-			actionRequest, trashedModels, Constants.MOVE_TO_TRASH);
+				actionRequest, trashedModels, Constants.MOVE_TO_TRASH);
 	}
 
 	@Override
@@ -183,9 +184,10 @@ public class TrashImpl implements Trash {
 			ArrayUtil.toStringArray(restoreTrashEntryIds.toArray()));
 
 		SessionMessages.add(
-			actionRequest,
-			PortalUtil.getPortletId(actionRequest) +
-				SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA, data);
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+						SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA, data
+		);
 	}
 
 	@Override
@@ -193,7 +195,7 @@ public class TrashImpl implements Trash {
 		ActionRequest actionRequest, TrashedModel trashedModel) {
 
 		addTrashSessionMessages(
-			actionRequest, trashedModel, Constants.MOVE_TO_TRASH);
+				actionRequest, trashedModel, Constants.MOVE_TO_TRASH);
 	}
 
 	@Override
@@ -329,8 +331,8 @@ public class TrashImpl implements Trash {
 			group.getParentLiveGroupTypeSettingsProperties();
 
 		return GetterUtil.getInteger(
-			typeSettingsProperties.getProperty("trashEntriesMaxAge"),
-			trashEntriesMaxAge);
+				typeSettingsProperties.getProperty("trashEntriesMaxAge"),
+				trashEntriesMaxAge);
 	}
 
 	@Override
@@ -425,11 +427,14 @@ public class TrashImpl implements Trash {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String portletId = PortletProviderUtil.getPortletId(
+			TrashEntry.class.getName(), PortletProvider.Action.VIEW);
+
 		if (!themeDisplay.isSignedIn() ||
 			!isTrashEnabled(themeDisplay.getScopeGroupId()) ||
 			!PortletPermissionUtil.hasControlPanelAccessPermission(
 				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), PortletKeys.TRASH)) {
+				themeDisplay.getScopeGroupId(), portletId)) {
 
 			return null;
 		}
@@ -455,7 +460,7 @@ public class TrashImpl implements Trash {
 		Layout layout = themeDisplay.getLayout();
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, PortletKeys.TRASH, layout.getLayoutId(),
+			request, portletId, layout.getLayoutId(),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view_content.jsp");
@@ -490,11 +495,14 @@ public class TrashImpl implements Trash {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String portletId = PortletProviderUtil.getPortletId(
+			TrashEntry.class.getName(), PortletProvider.Action.VIEW);
+
 		if (!themeDisplay.isSignedIn() ||
 			!isTrashEnabled(themeDisplay.getScopeGroupId()) ||
 			!PortletPermissionUtil.hasControlPanelAccessPermission(
 				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), PortletKeys.TRASH)) {
+				themeDisplay.getScopeGroupId(), portletId)) {
 
 			return null;
 		}
@@ -502,7 +510,7 @@ public class TrashImpl implements Trash {
 		Layout layout = themeDisplay.getLayout();
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, PortletKeys.TRASH, layout.getLayoutId(),
+			request, portletId, layout.getLayoutId(),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());

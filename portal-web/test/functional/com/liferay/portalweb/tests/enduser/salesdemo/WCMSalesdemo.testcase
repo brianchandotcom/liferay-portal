@@ -17,7 +17,7 @@
 		</execute>
 	</tear-down>
 
-	<command known-issues="LIFERAYQA-8943" name="SalesDemo" priority="5">
+	<command name="SalesDemo" priority="5">
 		<var name="webContentContent" value="DHS Content" />
 		<var name="webContentTitle" value="DHS Title" />
 
@@ -44,7 +44,6 @@
 
 		<execute macro="WebContentDisplayPortlet#searchWebContent">
 			<var name="addSearchedContent" value="true" />
-			<var name="webContentSearchValue" value="${webContentTitle}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 

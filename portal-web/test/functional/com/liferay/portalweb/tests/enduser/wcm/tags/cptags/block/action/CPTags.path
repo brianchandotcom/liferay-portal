@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_ACTIONS</td>
-	<td>//li[@id='_99_tagsActionsButton']/a</td>
+	<td>//td[contains(@class,'table-cell')]//a[contains(@id,'AssetTagsAdmin')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[@id='_99_keywords']</td>
+	<td>//input[contains(@id,'AssetTags') and contains(@class,'search-query')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -70,7 +70,7 @@
 </tr>
 <!--ACTIONS_MENULIST-->
 <tr>
-	<td>ACTIONS_MENULIST_MERGE</td>
+	<td>ACTIONS_MENULIST_EDIT</td>
 	<td>//li[@id='_99_tagsActionsButton']/ul/li[contains(.,'Merge')]</td>
 	<td></td>
 </tr>

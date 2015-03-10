@@ -126,6 +126,8 @@
 
 		<echo message="Adding ${portletName} portlet..." />
 
+		<execute function="Pause" locator1="5000" />
+
 		<if>
 			<or>
 				<equals arg1="${portletName}" arg2="Calendar" />

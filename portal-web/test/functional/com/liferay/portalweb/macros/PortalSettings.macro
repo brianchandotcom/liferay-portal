@@ -108,7 +108,7 @@
 
 		<execute function="ClickNoError" locator1="CPPortalsettingsRecyclebin#ENABLE_REYCLE_BIN_CHECKBOX" />
 
-		<execute function="Confirm" locator1="CPPortalsettingsRecyclebin#CONFIRM" value1="Disabling the Recycle Bin will prevent the restoring of content that has been moved to the Recycle Bin." />
+		<execute function="Confirm" locator1="CPPortalsettingsRecyclebin#CONFIRM" value1="Disabling the Recycle Bin prevents the restoring of content that has been moved to the Recycle Bin." />
 
 		<execute function="AssertClick" locator1="CPPortalsettings#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="CPPortalsettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />

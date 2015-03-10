@@ -35,7 +35,7 @@
 
 		<var name="key_pageName" value="${pageName}" />
 
-		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_HEADER2_ENTRY" value1="${pageName}" />
+		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_ENTRY" value1="${pageName}" />
 	</command>
 
 	<command name="ManualChangesToDisplayStyle" priority="3">
@@ -176,7 +176,7 @@
 
 		<var name="key_pageName" value="${pageName}" />
 
-		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_HEADER2_ENTRY" value1="${pageName}" />
+		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_ENTRY" value1="${pageName}" />
 		<execute function="AssertClick" locator1="PGNavigation#OPTIONS_ICON" value1="Options" />
 		<execute function="AssertClick" locator1="PGNavigation#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 

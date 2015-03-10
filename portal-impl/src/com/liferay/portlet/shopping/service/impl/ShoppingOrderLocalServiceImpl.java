@@ -655,6 +655,7 @@ public class ShoppingOrderLocalServiceImpl
 			currency.getSymbol(), "[$ORDER_NUMBER$]", order.getNumber(),
 			"[$ORDER_SHIPPING_ADDRESS$]", shippingAddress, "[$ORDER_TOTAL$]",
 			total);
+		subscriptionSender.setCreatorUserId(order.getUserId());
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setLocalizedBodyMap(bodyLocalizedValuesMap);
@@ -663,7 +664,6 @@ public class ShoppingOrderLocalServiceImpl
 		subscriptionSender.setPortletId(PortletKeys.SHOPPING);
 		subscriptionSender.setScopeGroupId(order.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setUserId(order.getUserId());
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 

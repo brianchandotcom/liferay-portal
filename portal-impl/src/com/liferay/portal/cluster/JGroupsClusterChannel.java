@@ -16,7 +16,6 @@ package com.liferay.portal.cluster;
 
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterChannel;
-import com.liferay.portal.kernel.cluster.ClusterException;
 import com.liferay.portal.kernel.cluster.ClusterReceiver;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -66,21 +65,15 @@ public class JGroupsClusterChannel implements ClusterChannel {
 
 			_jChannel.setReceiver(new JGroupsReceiver(clusterReceiver));
 
-			try {
-				_jChannel.connect(_clusterName);
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Create a new jgroups channel with properties " +
-							_jChannel.getProperties());
-				}
-			}
-			catch (Exception e) {
-				throw new ClusterException(
-					"Unable to connect to cluster " + _clusterName, e);
-			}
+			_jChannel.connect(_clusterName);
 
 			_localAddress = new AddressImpl(_jChannel.getAddress());
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Create a new jgroups channel with properties " +
+						_jChannel.getProperties());
+			}
 		}
 		catch (Exception e) {
 			throw new SystemException(

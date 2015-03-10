@@ -14,12 +14,13 @@
 
 package com.liferay.portlet.journal.action;
 
+import com.liferay.portal.kernel.diff.CompareVersionsException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -50,6 +51,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.portlet.journal.JournalPortlet;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
@@ -63,17 +65,22 @@ import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.journal.util.JournalConverterUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
+import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -81,6 +88,90 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  */
 public class ActionUtil {
+
+	public static void compareVersions(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long groupId = ParamUtil.getLong(renderRequest, "groupId");
+		String articleId = ParamUtil.getString(renderRequest, "articleId");
+
+		String sourceArticleId = ParamUtil.getString(
+			renderRequest, "sourceVersion");
+
+		int index = sourceArticleId.lastIndexOf(
+			JournalPortlet.VERSION_SEPARATOR);
+
+		if (index != -1) {
+			sourceArticleId = sourceArticleId.substring(
+				index + JournalPortlet.VERSION_SEPARATOR.length(),
+				sourceArticleId.length());
+		}
+
+		double sourceVersion = GetterUtil.getDouble(sourceArticleId);
+
+		String targetArticleId = ParamUtil.getString(
+			renderRequest, "targetVersion");
+
+		index = targetArticleId.lastIndexOf(JournalPortlet.VERSION_SEPARATOR);
+
+		if (index != -1) {
+			targetArticleId = targetArticleId.substring(
+				index + JournalPortlet.VERSION_SEPARATOR.length(),
+				targetArticleId.length());
+		}
+
+		double targetVersion = GetterUtil.getDouble(targetArticleId);
+
+		if ((sourceVersion == 0) && (targetVersion == 0)) {
+			List<JournalArticle> sourceArticles =
+				JournalArticleServiceUtil.getArticlesByArticleId(
+					groupId, articleId, 0, 1,
+					new ArticleVersionComparator(false));
+
+			JournalArticle sourceArticle = sourceArticles.get(0);
+
+			sourceVersion = sourceArticle.getVersion();
+
+			List<JournalArticle> targetArticles =
+				JournalArticleServiceUtil.getArticlesByArticleId(
+					groupId, articleId, 0, 1,
+					new ArticleVersionComparator(true));
+
+			JournalArticle targetArticle = targetArticles.get(0);
+
+			targetVersion = targetArticle.getVersion();
+		}
+
+		if (sourceVersion > targetVersion) {
+			double tempVersion = targetVersion;
+
+			targetVersion = sourceVersion;
+			sourceVersion = tempVersion;
+		}
+
+		String languageId = getLanguageId(
+			renderRequest, groupId, articleId, sourceVersion, targetVersion);
+
+		String diffHtmlResults = null;
+
+		try {
+			diffHtmlResults = JournalUtil.diffHtml(
+				groupId, articleId, sourceVersion, targetVersion, languageId,
+				new PortletRequestModel(renderRequest, renderResponse),
+				themeDisplay);
+		}
+		catch (CompareVersionsException cve) {
+			renderRequest.setAttribute(WebKeys.DIFF_VERSION, cve.getVersion());
+		}
+
+		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
+		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);
+		renderRequest.setAttribute(WebKeys.TARGET_VERSION, targetVersion);
+	}
 
 	public static void deleteArticle(
 			ActionRequest actionRequest, String deleteArticleId)
@@ -94,8 +185,7 @@ public class ActionUtil {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), actionRequest);
 
-		int pos = deleteArticleId.lastIndexOf(
-			EditArticleAction.VERSION_SEPARATOR);
+		int pos = deleteArticleId.lastIndexOf(JournalPortlet.VERSION_SEPARATOR);
 
 		if (pos == -1) {
 			JournalArticleServiceUtil.deleteArticle(
@@ -105,7 +195,7 @@ public class ActionUtil {
 			articleId = articleId.substring(0, pos);
 			version = GetterUtil.getDouble(
 				deleteArticleId.substring(
-					pos + EditArticleAction.VERSION_SEPARATOR.length()));
+					pos + JournalPortlet.VERSION_SEPARATOR.length()));
 
 			JournalArticleServiceUtil.deleteArticle(
 				groupId, articleId, version, articleURL, serviceContext);
@@ -126,8 +216,7 @@ public class ActionUtil {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), actionRequest);
 
-		int pos = expireArticleId.lastIndexOf(
-			EditArticleAction.VERSION_SEPARATOR);
+		int pos = expireArticleId.lastIndexOf(JournalPortlet.VERSION_SEPARATOR);
 
 		if (pos == -1) {
 			JournalArticleServiceUtil.expireArticle(
@@ -137,7 +226,7 @@ public class ActionUtil {
 			articleId = articleId.substring(0, pos);
 			version = GetterUtil.getDouble(
 				expireArticleId.substring(
-					pos + EditArticleAction.VERSION_SEPARATOR.length()));
+					pos + JournalPortlet.VERSION_SEPARATOR.length()));
 
 			JournalArticleServiceUtil.expireArticle(
 				groupId, articleId, version, articleURL, serviceContext);
@@ -166,8 +255,11 @@ public class ActionUtil {
 		}
 	}
 
-	public static void getArticle(HttpServletRequest request) throws Exception {
-		String cmd = ParamUtil.getString(request, Constants.CMD);
+	public static JournalArticle getArticle(HttpServletRequest request)
+		throws Exception {
+
+		String actionName = ParamUtil.getString(
+			request, ActionRequest.ACTION_NAME);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -185,11 +277,13 @@ public class ActionUtil {
 
 		JournalArticle article = null;
 
-		if (cmd.equals(Constants.ADD) && (resourcePrimKey != 0)) {
+		if (actionName.equals("addArticle") && (resourcePrimKey != 0)) {
 			article = JournalArticleLocalServiceUtil.getLatestArticle(
 				resourcePrimKey, status, false);
 		}
-		else if (!cmd.equals(Constants.ADD) && Validator.isNotNull(articleId)) {
+		else if (!actionName.equals("addArticle") &&
+				 Validator.isNotNull(articleId)) {
+
 			article = JournalArticleServiceUtil.getLatestArticle(
 				groupId, articleId, status);
 		}
@@ -198,8 +292,13 @@ public class ActionUtil {
 
 			String className = PortalUtil.getClassName(classNameId);
 
-			article = JournalArticleServiceUtil.getLatestArticle(
-				groupId, className, classPK);
+			try {
+				article = JournalArticleServiceUtil.getLatestArticle(
+					groupId, className, classPK);
+			}
+			catch (NoSuchArticleException nsae) {
+				return null;
+			}
 		}
 		else {
 			DDMStructure ddmStructure = null;
@@ -209,43 +308,47 @@ public class ActionUtil {
 					groupId, PortalUtil.getClassNameId(JournalArticle.class),
 					ddmStructureKey, true);
 			}
-			catch (NoSuchStructureException nsse1) {
-				return;
+			catch (NoSuchStructureException nsse) {
+				return null;
 			}
 
-			article = JournalArticleServiceUtil.getArticle(
-				ddmStructure.getGroupId(), DDMStructure.class.getName(),
-				ddmStructure.getStructureId());
+			try {
+				article = JournalArticleServiceUtil.getArticle(
+					ddmStructure.getGroupId(), DDMStructure.class.getName(),
+					ddmStructure.getStructureId());
 
-			article.setNew(true);
+				article.setNew(true);
 
-			article.setId(0);
-			article.setGroupId(groupId);
-			article.setClassNameId(
-				JournalArticleConstants.CLASSNAME_ID_DEFAULT);
-			article.setClassPK(0);
-			article.setArticleId(null);
-			article.setVersion(0);
+				article.setId(0);
+				article.setGroupId(groupId);
+				article.setClassNameId(
+					JournalArticleConstants.CLASSNAME_ID_DEFAULT);
+				article.setClassPK(0);
+				article.setArticleId(null);
+				article.setVersion(0);
+			}
+			catch (NoSuchArticleException nsae) {
+				return null;
+			}
 		}
 
-		request.setAttribute(WebKeys.JOURNAL_ARTICLE, article);
+		return article;
 	}
 
-	public static void getArticle(PortletRequest portletRequest)
+	public static JournalArticle getArticle(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getArticle(request);
-
-		JournalArticle article = (JournalArticle)portletRequest.getAttribute(
-			WebKeys.JOURNAL_ARTICLE);
+		JournalArticle article = getArticle(request);
 
 		JournalUtil.addRecentArticle(portletRequest, article);
+
+		return article;
 	}
 
-	public static void getArticles(HttpServletRequest request)
+	public static List<JournalArticle> getArticles(HttpServletRequest request)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -267,16 +370,17 @@ public class ActionUtil {
 			}
 		}
 
-		request.setAttribute(WebKeys.JOURNAL_ARTICLES, articles);
+		return articles;
 	}
 
-	public static void getArticles(PortletRequest portletRequest)
+	public static List<JournalArticle> getArticles(
+			PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getArticles(request);
+		return getArticles(request);
 	}
 
 	public static Object[] getContentAndImages(
@@ -298,7 +402,9 @@ public class ActionUtil {
 		return new Object[] {content, images};
 	}
 
-	public static void getFeed(HttpServletRequest request) throws Exception {
+	public static JournalFeed getFeed(HttpServletRequest request)
+		throws Exception {
+
 		long groupId = ParamUtil.getLong(request, "groupId");
 		String feedId = ParamUtil.getString(request, "feedId");
 
@@ -308,14 +414,16 @@ public class ActionUtil {
 			feed = JournalFeedServiceUtil.getFeed(groupId, feedId);
 		}
 
-		request.setAttribute(WebKeys.JOURNAL_FEED, feed);
+		return feed;
 	}
 
-	public static void getFeed(PortletRequest portletRequest) throws Exception {
+	public static JournalFeed getFeed(PortletRequest portletRequest)
+		throws Exception {
+
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getFeed(request);
+		return getFeed(request);
 	}
 
 	public static JournalFolder getFolder(HttpServletRequest request)
@@ -380,6 +488,59 @@ public class ActionUtil {
 			portletRequest);
 
 		return getFolders(request);
+	}
+
+	public static JournalArticle getPreviewArticle(
+			PortletRequest portletRequest)
+		throws Exception {
+
+		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+		String articleId = ParamUtil.getString(portletRequest, "articleId");
+		double version = ParamUtil.getDouble(
+			portletRequest, "version", JournalArticleConstants.VERSION_DEFAULT);
+
+		JournalArticle article = JournalArticleServiceUtil.getArticle(
+			groupId, articleId, version);
+
+		JournalUtil.addRecentArticle(portletRequest, article);
+
+		return article;
+	}
+
+	public static boolean hasArticle(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String articleId = ParamUtil.getString(actionRequest, "articleId");
+
+		if (Validator.isNull(articleId)) {
+			String[] articleIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "articleIds"));
+
+			if (articleIds.length <= 0) {
+				return false;
+			}
+
+			articleId = articleIds[0];
+		}
+
+		int pos = articleId.lastIndexOf(JournalPortlet.VERSION_SEPARATOR);
+
+		if (pos != -1) {
+			articleId = articleId.substring(0, pos);
+		}
+
+		try {
+			JournalArticleLocalServiceUtil.getArticle(
+				themeDisplay.getScopeGroupId(), articleId);
+		}
+		catch (NoSuchArticleException nsae) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected static String getElementInstanceId(
@@ -453,40 +614,42 @@ public class ActionUtil {
 		return images;
 	}
 
-	protected static boolean hasArticle(ActionRequest actionRequest)
+	protected static String getLanguageId(
+			RenderRequest renderRequest, long groupId, String articleId,
+			double sourceVersion, double targetVersion)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		JournalArticle sourceArticle =
+			JournalArticleLocalServiceUtil.fetchArticle(
+				groupId, articleId, sourceVersion);
 
-		String articleId = ParamUtil.getString(actionRequest, "articleId");
+		JournalArticle targetArticle =
+			JournalArticleLocalServiceUtil.fetchArticle(
+				groupId, articleId, targetVersion);
 
-		if (Validator.isNull(articleId)) {
-			String[] articleIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "articleIds"));
+		Set<Locale> locales = new HashSet<>();
 
-			if (articleIds.length <= 0) {
-				return false;
-			}
-
-			articleId = articleIds[0];
+		for (String locale : sourceArticle.getAvailableLanguageIds()) {
+			locales.add(LocaleUtil.fromLanguageId(locale));
 		}
 
-		int pos = articleId.lastIndexOf(EditArticleAction.VERSION_SEPARATOR);
-
-		if (pos != -1) {
-			articleId = articleId.substring(0, pos);
+		for (String locale : targetArticle.getAvailableLanguageIds()) {
+			locales.add(LocaleUtil.fromLanguageId(locale));
 		}
 
-		try {
-			JournalArticleLocalServiceUtil.getArticle(
-				themeDisplay.getScopeGroupId(), articleId);
-		}
-		catch (NoSuchArticleException nsae) {
-			return false;
+		String languageId = ParamUtil.get(
+			renderRequest, "languageId", targetArticle.getDefaultLanguageId());
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		if (!locales.contains(locale)) {
+			languageId = targetArticle.getDefaultLanguageId();
 		}
 
-		return true;
+		renderRequest.setAttribute(WebKeys.AVAILABLE_LOCALES, locales);
+		renderRequest.setAttribute(WebKeys.LANGUAGE_ID, languageId);
+
+		return languageId;
 	}
 
 }

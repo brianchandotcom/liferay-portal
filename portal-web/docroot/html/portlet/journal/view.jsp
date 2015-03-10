@@ -70,12 +70,11 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			<%
 			PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-			portletURL.setParameter("struts_action", "/journal/edit_article");
 			portletURL.setParameter("folderId", String.valueOf(folderId));
 			%>
 
 			<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
-				<aui:input name="<%= Constants.CMD %>" type="hidden" />
+				<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
 				<aui:input name="folderIds" type="hidden" />
@@ -123,14 +122,14 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			displayStyle: '<%= HtmlUtil.escapeJS(journalDisplayContext.getDisplayStyle()) %>',
 			move: {
 				allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',
-				editEntryUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_entry" /></portlet:actionURL>',
+				editEntryUrl: '<portlet:actionURL />',
 				folderIdHashRegEx: /#.*&?<portlet:namespace />folderId=([\d]+)/i,
 				folderIdRegEx: /&?<portlet:namespace />folderId=([\d]+)/i,
 				form: {
 					method: 'POST',
 					node: A.one(document.<portlet:namespace />fm)
 				},
-				moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="struts_action" value="/journal/move_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
+				moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="mvcPath" value="/html/portlet/journal/move_entries.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
 				trashLinkId: '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "_" + PortletKeys.CONTROL_PANEL_MENU + "_portlet_" + PortletKeys.TRASH : StringPool.BLANK %>',
 				updateable: true
 			},

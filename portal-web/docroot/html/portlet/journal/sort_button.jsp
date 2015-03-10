@@ -34,7 +34,6 @@ if (orderByType.equals("asc")) {
 
 <aui:nav-item dropdown="<%= true %>" id="sortButtonContainer" label="sort-by">
 	<portlet:renderURL var="sortDisplayDatetURL">
-		<portlet:param name="struts_action" value="/journal/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
@@ -45,7 +44,6 @@ if (orderByType.equals("asc")) {
 	<aui:nav-item href="<%= sortDisplayDatetURL %>" iconCssClass="icon-calendar" label="display-date" />
 
 	<portlet:renderURL var="sortModifiedDatetURL">
-		<portlet:param name="struts_action" value="/journal/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />

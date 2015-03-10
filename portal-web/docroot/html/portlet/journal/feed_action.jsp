@@ -25,7 +25,7 @@ JournalFeed feed = (JournalFeed)row.getObject();
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= JournalFeedPermission.contains(permissionChecker, feed, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editFeedURL">
-			<portlet:param name="struts_action" value="/journal/edit_feed" />
+			<portlet:param name="mvcPath" value="/html/portlet/journal/edit_feed.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(feed.getGroupId()) %>" />
 			<portlet:param name="feedId" value="<%= feed.getFeedId() %>" />
@@ -54,9 +54,7 @@ JournalFeed feed = (JournalFeed)row.getObject();
 	</c:if>
 
 	<c:if test="<%= JournalFeedPermission.contains(permissionChecker, feed, ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteFeedURL">
-			<portlet:param name="struts_action" value="/journal/edit_feed" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+		<portlet:actionURL name="deleteFeeds" var="deleteFeedURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(feed.getGroupId()) %>" />
 			<portlet:param name="deleteFeedIds" value="<%= feed.getFeedId() %>" />

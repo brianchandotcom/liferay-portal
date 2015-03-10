@@ -30,7 +30,6 @@
 
 	PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-	rowURL.setParameter("struts_action", "/journal/view");
 	rowURL.setParameter("redirect", currentURL);
 	rowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
 	rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));

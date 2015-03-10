@@ -73,6 +73,8 @@ page import="com.liferay.portlet.journal.util.JournalSearcher" %><%@
 page import="com.liferay.portlet.journal.util.JournalUtil" %><%@
 page import="com.liferay.portlet.journal.util.comparator.ArticleVersionComparator" %>
 
+<%@ page import="javax.portlet.ActionRequest" %>
+
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 

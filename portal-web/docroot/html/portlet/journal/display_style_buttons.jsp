@@ -25,7 +25,6 @@ String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
 
 PortletURL displayStyleURL = renderResponse.createRenderURL();
 
-displayStyleURL.setParameter("struts_action", "/journal/view");
 displayStyleURL.setParameter("navigation", HtmlUtil.escapeJS(navigation));
 displayStyleURL.setParameter("folderId", String.valueOf(folderId));
 

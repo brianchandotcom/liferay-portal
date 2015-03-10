@@ -119,6 +119,7 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
@@ -301,20 +302,20 @@ public class JournalUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
 
-		String strutsAction = ParamUtil.getString(request, "struts_action");
+		String actionName = ParamUtil.getString(
+			request, ActionRequest.ACTION_NAME);
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		if (strutsAction.equals("/journal/select_folder")) {
-			portletURL.setParameter("struts_action", "/journal/select_folder");
+		if (actionName.equals("selectFolder")) {
+			portletURL.setParameter(
+				"mvcPath", "/html/portlet/journal/select_folder.jsp");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, themeDisplay.translate("home"), portletURL.toString());
 		}
 		else {
-			portletURL.setParameter("struts_action", "/journal/view");
-
 			Map<String, Object> data = new HashMap<>();
 
 			data.put("direction-right", Boolean.TRUE.toString());
@@ -992,7 +993,6 @@ public class JournalUtil {
 			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/journal/view");
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		return portletURL.toString();

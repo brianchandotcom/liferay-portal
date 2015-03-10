@@ -165,7 +165,8 @@ public class JournalFolderAssetRenderer
 			getControlPanelPlid(liferayPortletRequest), PortletKeys.JOURNAL,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/journal/edit_folder");
+		portletURL.setParameter(
+			"mvcPath", "/html/portlet/journal/edit_folder.jsp");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 
@@ -183,7 +184,8 @@ public class JournalFolderAssetRenderer
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
-		portletURL.setParameter("struts_action", "/journal/view");
+		portletURL.setParameter(
+			"mvcPath", "/html/portlet/journal/asset/folder_full_content.jsp");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 		portletURL.setWindowState(windowState);

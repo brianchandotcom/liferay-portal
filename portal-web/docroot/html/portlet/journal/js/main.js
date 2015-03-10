@@ -3,9 +3,11 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var SELECTOR_CMD = '#cmd';
+		var SELECTOR_ACTION_NAME = '#javax-portlet-action';
 
-		var STR_ADD = 'add';
+		var STR_ACTION_NAME = 'javax.portlet.action';
+
+		var STR_ADD_ARTICLE = 'addArticle';
 
 		var STR_ARTICLE = 'article';
 
@@ -13,11 +15,9 @@ AUI.add(
 
 		var STR_CLICK = 'click';
 
-		var STR_CMD = 'cmd';
-
 		var STR_STRINGS = 'strings';
 
-		var STR_UPDATE = 'update';
+		var STR_UPDATE_ARTICLE = 'updateArticle';
 
 		var Journal = A.Component.create(
 			{
@@ -118,6 +118,7 @@ AUI.add(
 							name = instance.ns(name);
 						}
 
+
 						return instance.one('[name=' + name + ']', currentForm);
 					},
 
@@ -175,12 +176,12 @@ AUI.add(
 					_onButtonClick: function(event) {
 						var instance = this;
 
-						var cmd = event.currentTarget.attr('data-cmd');
+						var actionName = event.currentTarget.attr('data-actionname');
 
-						if (cmd) {
+						if (actionName) {
 							var form = instance._getPrincipalForm();
 
-							instance.one(SELECTOR_CMD, form).val(cmd);
+							instance.one(SELECTOR_ACTION_NAME, form).val(actionName);
 						}
 					},
 
@@ -197,9 +198,9 @@ AUI.add(
 
 						var form = instance._getPrincipalForm();
 
-						var cmd = instance.one(SELECTOR_CMD, form).val();
+						var actionName = instance.one(SELECTOR_ACTION_NAME, form).val();
 
-						instance._saveArticle(cmd);
+						instance._saveArticle(actionName);
 					},
 
 					_previewArticle: function(event) {
@@ -233,14 +234,14 @@ AUI.add(
 							else {
 								var form = instance._getPrincipalForm();
 
-								instance.one(SELECTOR_CMD, form).val('preview');
+								instance.one(SELECTOR_ACTION_NAME, form).val('previewArticle');
 
 								submitForm(form);
 							}
 						}
 					},
 
-					_saveArticle: function(cmd) {
+					_saveArticle: function(actionName) {
 						var instance = this;
 
 						var form = instance._getPrincipalForm();
@@ -253,21 +254,21 @@ AUI.add(
 
 							var articleId = article.id;
 
-							if (cmd === 'publish') {
+							if (actionName === 'publish') {
 								var workflowActionInput = instance._getByName(form, 'workflowAction');
 
 								workflowActionInput.val(Liferay.Workflow.ACTION_PUBLISH);
 
-								cmd = null;
+								actionName = null;
 							}
 
-							if (!cmd) {
-								cmd = articleId ? STR_UPDATE : STR_ADD;
+							if (!actionName) {
+								actionName = articleId ? STR_UPDATE_ARTICLE : STR_ADD_ARTICLE;
 							}
 
-							var cmdInput = instance._getByName(form, STR_CMD);
+							var actionNameInput = instance._getByName(form, STR_ACTION_NAME);
 
-							cmdInput.val(cmd);
+							actionNameInput.val(actionName);
 
 							if (!articleId) {
 								var articleIdInput = instance._getByName(form, STR_ARTICLE_ID);

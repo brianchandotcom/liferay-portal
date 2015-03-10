@@ -42,7 +42,7 @@ if (folder != null) {
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/journal/select_folder");
+	portletURL.setParameter("mvcPath", "/html/portlet/journal/select_folder.jsp");
 	portletURL.setParameter("folderId", String.valueOf(folderId));
 	%>
 
@@ -53,7 +53,7 @@ if (folder != null) {
 	<aui:button-row>
 		<c:if test="<%= hasAddFolderPermission %>">
 			<portlet:renderURL var="editFolderURL">
-				<portlet:param name="struts_action" value="/journal/edit_folder" />
+				<portlet:param name="mvcPath" value="/html/portlet/journal/edit_folder.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 			</portlet:renderURL>
@@ -88,7 +88,7 @@ if (folder != null) {
 			rowVar="row"
 		>
 			<liferay-portlet:renderURL varImpl="rowURL">
-				<portlet:param name="struts_action" value="/journal/select_folder" />
+				<portlet:param name="mvcPath" value="/html/portlet/journal/select_folder.jsp" />
 				<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 			</liferay-portlet:renderURL>
 

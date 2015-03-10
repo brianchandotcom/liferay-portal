@@ -19,11 +19,10 @@
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/journal/view_feeds");
+portletURL.setParameter("mvcPath", "/html/portlet/journal/view_feeds.jsp");
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="groupId" type="hidden" />
 	<aui:input name="deleteFeedIds" type="hidden" />
 
@@ -36,7 +35,7 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 			<aui:nav cssClass="navbar-nav">
 				<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED) %>">
 					<portlet:renderURL var="editFeedURL">
-						<portlet:param name="struts_action" value="/journal/edit_feed" />
+						<portlet:param name="mvcPath" value="/html/portlet/journal/edit_feed.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
@@ -89,7 +88,7 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 			<%
 			PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("struts_action", "/journal/edit_feed");
+			rowURL.setParameter("mvcPath", "/html/portlet/journal/edit_feed.jsp");
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("groupId", String.valueOf(feed.getGroupId()));
 			rowURL.setParameter("feedId", feed.getFeedId());
@@ -130,11 +129,10 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
-			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 			form.fm('groupId').val('<%= scopeGroupId %>');
 			form.fm('deleteFeedIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_feed" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+			submitForm(form, '<portlet:actionURL name="deleteFeeds"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 		}
 	}
 </aui:script>

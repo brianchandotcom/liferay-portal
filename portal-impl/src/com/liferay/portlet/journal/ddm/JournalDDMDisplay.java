@@ -63,7 +63,8 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 			getControlPanelPlid(liferayPortletRequest), PortletKeys.JOURNAL,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/journal/edit_article");
+		portletURL.setParameter(
+			"mvcPath", "/html/portlet/journal/edit_article.jsp");
 		portletURL.setParameter("redirect", redirectURL);
 		portletURL.setParameter("backURL", backURL);
 		portletURL.setParameter(

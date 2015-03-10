@@ -3676,7 +3676,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			"[$REMOTE_ADDRESS$]", serviceContext.getRemoteAddr(),
 			"[$REMOTE_HOST$]", serviceContext.getRemoteHost(), "[$USER_ID$]",
 			user.getUserId(), "[$USER_SCREENNAME$]", user.getScreenName());
-		subscriptionSender.setCreatorUserId(user.getUserId());
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
@@ -6160,7 +6159,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("user", user.getUserId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setCreatorUserId(user.getUserId());
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
@@ -6270,7 +6268,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("user", user.getUserId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setCreatorUserId(user.getUserId());
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 

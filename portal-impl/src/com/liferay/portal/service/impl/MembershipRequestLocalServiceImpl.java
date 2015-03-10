@@ -331,7 +331,6 @@ public class
 			"[$REQUEST_USER_NAME$]", requestUser.getFullName(), "[$STATUS$]",
 			LanguageUtil.get(user.getLocale(), statusKey), "[$USER_ADDRESS$]",
 			user.getEmailAddress(), "[$USER_NAME$]", user.getFullName());
-		subscriptionSender.setCreatorUserId(userId);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId(

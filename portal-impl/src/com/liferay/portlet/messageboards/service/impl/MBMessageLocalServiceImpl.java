@@ -2027,7 +2027,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setContextAttributes(
 			"[$COMMENTS_USER_ADDRESS$]", userAddress, "[$COMMENTS_USER_NAME$]",
 			userName, "[$CONTENT_URL$]", contentURL);
-		subscriptionSender.setCreatorUserId(message.getUserId());
 		subscriptionSender.setEntryTitle(message.getBody());
 		subscriptionSender.setEntryURL(contentURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
@@ -2258,7 +2257,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			(SubscriptionSender)SerializableUtil.clone(
 				subscriptionSenderPrototype);
 
-		subscriptionSender.setCreatorUserId(message.getUserId());
 		subscriptionSender.addPersistedSubscribers(
 			MBCategory.class.getName(), message.getGroupId());
 

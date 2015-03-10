@@ -141,13 +141,13 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 
 	@Deprecated
 	@Override
-	public Map<Long, String> getClassTypes(long[] groupId, Locale locale)
+	public Map<Long, String> getClassTypes(long[] groupIds, Locale locale)
 		throws Exception {
 
 		ClassTypeReader classTypeReader = getClassTypeReader();
 
 		List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
-			groupId, locale);
+			groupIds, locale);
 
 		Map<Long, String> classTypesMap = new HashMap<>();
 

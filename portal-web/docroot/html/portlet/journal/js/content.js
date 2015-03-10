@@ -238,6 +238,8 @@ AUI.add(
 								if (confirm(strings.selectStructure) && (ddmStructureId.val() != event.ddmstructureid)) {
 									ddmStructureId.val(event.ddmstructureid);
 
+									instance.one('#changeStructure').val(true);
+
 									instance.one('#ddmStructureKey').val(event.ddmstructurekey);
 
 									instance.one('#ddmTemplateKey').val('');

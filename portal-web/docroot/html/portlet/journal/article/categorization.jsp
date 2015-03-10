@@ -22,6 +22,8 @@ String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaul
 JournalArticle article = ActionUtil.getArticle(request);
 
 DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp-structure");
+
+boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
 %>
 
 <liferay-ui:error-marker key="errorSection" value="categorization" />
@@ -52,9 +54,9 @@ DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp
 	}
 	%>
 
-	<aui:input classPK="<%= classPK %>" classTypePK="<%= ddmStructure.getStructureId() %>" name="categories" type="assetCategories" />
+	<aui:input classPK="<%= classPK %>" classTypePK="<%= ddmStructure.getStructureId() %>" ignoreRequestValue="<%= changeStructure %>" name="categories" type="assetCategories" />
 
-	<aui:input classPK="<%= classPK %>" name="tags" type="assetTags" />
+	<aui:input classPK="<%= classPK %>" ignoreRequestValue="<%= changeStructure %>" name="tags" type="assetTags" />
 </aui:fieldset>
 
 <aui:script>

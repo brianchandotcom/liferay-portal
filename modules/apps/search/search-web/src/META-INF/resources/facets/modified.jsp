@@ -219,17 +219,21 @@ if (fieldParamSelection.equals("0")) {
 	}
 
 	function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>searchCustomRange(selection) {
+		var A = AUI();
+		var Lang = A.Lang
+		var LString = Lang.String;
+
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		var dayFrom = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayFrom');
-		var monthFrom = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthFrom');
-		var yearFrom = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearFrom');
+		var dayFrom = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayFrom').val();
+		var monthFrom = Lang.toInt(form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthFrom').val()) + 1;
+		var yearFrom = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearFrom').val();
 
-		var dayTo = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayTo');
-		var monthTo = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthTo');
-		var yearTo = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearTo');
+		var dayTo = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayTo').val();
+		var monthTo = Lang.toInt(form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthTo').val()) + 1;
+		var yearTo = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearTo').val();
 
-		var range = '[' + yearFrom.val() + monthFrom.val() + dayFrom.val() + '000000 TO ' + yearTo.val() + monthTo.val() + dayTo.val() + '235959]';
+		var range = '[' + yearFrom + LString.padNumber(monthFrom, 2) + LString.padNumber(dayFrom, 2) + '000000 TO ' + yearTo + LString.padNumber(monthTo, 2) + LString.padNumber(dayTo, 2) + '235959]';
 
 		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>').val(range);
 		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection').val(selection);

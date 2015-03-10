@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -473,7 +474,7 @@ public class ClusterExecutorImpl
 		List<Address> addresses = null;
 
 		if (isMulticast) {
-			addresses = getAddresses(_controlJChannel);
+			addresses = ListUtil.fromCollection(_clusterNodeAddresses.values());
 		}
 		else {
 			addresses = new ArrayList<>();

@@ -1,0 +1,5 @@
+Bundle-Description: Test Bundle for AuthTokenUtil
+Bundle-Version: 1.0
+Private-Package: $(bundle.package).*
+
+-dsannotations: *

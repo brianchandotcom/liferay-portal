@@ -70,8 +70,8 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 
 		super(
 			portletRequest, new ArticleDisplayTerms(portletRequest),
-			new ArticleSearchTerms(portletRequest), DEFAULT_CUR_PARAM, cur,
-			delta, iteratorURL, headerNames, null);
+			new ArticleSearchTerms(portletRequest), "curEntry", cur, delta,
+			iteratorURL, headerNames, null);
 
 		PortletConfig portletConfig =
 			(PortletConfig)portletRequest.getAttribute(

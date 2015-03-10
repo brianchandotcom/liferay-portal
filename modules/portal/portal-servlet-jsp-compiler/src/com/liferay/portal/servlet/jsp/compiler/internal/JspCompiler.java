@@ -88,9 +88,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		_jspBundle = FrameworkUtil.getBundle(
 			com.liferay.portal.servlet.jsp.compiler.JspServlet.class);
 
-		_jspBundleContext = _jspBundle.getBundleContext();
-
-		_logger = new Logger(_jspBundleContext);
+		_logger = new Logger(_jspBundle.getBundleContext());
 
 		ServletContext servletContext =
 			jspCompilationContext.getServletContext();
@@ -302,6 +300,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		tldMappings = new HashMap<>();
 
+		BundleContext _jspBundleContext = _jspBundle.getBundleContext();
+
 		ServiceReference<SAXParserFactory> saxParserFactoryServiceReference =
 			_jspBundleContext.getServiceReference(SAXParserFactory.class);
 
@@ -394,11 +394,11 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		"http://xml.org/sax/features/external-parameter-entities";
 	private static final String _SAX_LOAD_EXTERNAL_DTD =
 		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
+
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;
 	private final List<File> _classPath = new ArrayList<>();
 	private Bundle _jspBundle;
-	private BundleContext _jspBundleContext;
 	private Logger _logger;
 	private ResourceResolver _resourceResolver;
 

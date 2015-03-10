@@ -12,32 +12,31 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model;
+package com.liferay.portlet.messageboards;
 
-import java.io.Serializable;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
- * @author Shuyang Zhou
  */
-public interface MBMessageDisplay extends Serializable {
+@ProviderType
+public class DiscussionMessageLimitException extends PortalException {
 
-	public MBCategory getCategory();
+	public DiscussionMessageLimitException() {
+	}
 
-	public MBMessage getMessage();
+	public DiscussionMessageLimitException(String msg) {
+		super(msg);
+	}
 
-	public MBThread getNextThread();
+	public DiscussionMessageLimitException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 
-	public MBMessage getParentMessage();
-
-	public MBThread getPreviousThread();
-
-	public MBThread getThread();
-
-	public String getThreadView();
-
-	public MBTreeWalker getTreeWalker();
-
-	public boolean isMessageLimit();
+	public DiscussionMessageLimitException(Throwable cause) {
+		super(cause);
+	}
 
 }

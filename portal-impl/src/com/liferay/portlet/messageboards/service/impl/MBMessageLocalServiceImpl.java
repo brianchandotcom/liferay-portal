@@ -71,6 +71,7 @@ import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.messageboards.DiscussionMessageLimitException;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
@@ -165,6 +166,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long classPK, long threadId, long parentMessageId, String subject,
 			String body, ServiceContext serviceContext)
 		throws PortalException {
+
+		validateDiscussionMessageLimit(className, classPK);
 
 		// Message
 
@@ -2473,6 +2476,22 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (Validator.isNull(subject) && Validator.isNull(body)) {
 			throw new MessageSubjectException();
+		}
+	}
+
+	protected void validateDiscussionMessageLimit(
+			String className, long classPK)
+		throws PortalException {
+
+		if (PropsValues.DISCUSSION_COMMENTS_LIMIT <= 0) {
+			return;
+		}
+
+		int discussionMessagesCount = getDiscussionMessagesCount(
+			className, classPK, WorkflowConstants.STATUS_APPROVED);
+
+		if (discussionMessagesCount >= PropsValues.DISCUSSION_COMMENTS_LIMIT) {
+			throw new DiscussionMessageLimitException();
 		}
 	}
 

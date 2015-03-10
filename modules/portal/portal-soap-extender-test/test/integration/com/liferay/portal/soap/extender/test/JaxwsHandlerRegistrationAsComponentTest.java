@@ -51,7 +51,7 @@ public class JaxwsHandlerRegistrationAsComponentTest {
 
 		String greeting = greeter.greet();
 
-		Assert.assertTrue(greeting.endsWith("has been handled!"));
+		Assert.assertTrue(greeting.endsWith("was handled."));
 	}
 
 	@ArquillianResource

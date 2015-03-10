@@ -35,20 +35,20 @@ public class CommentsEditorDisplayContext {
 	}
 
 	private void _populateEditorData() {
-		JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
+		JSONObject editorConfigJSONObject = JSONFactoryUtil.createJSONObject();
 
-		editorConfig.put(
+		editorConfigJSONObject.put(
 			"allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
-		editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
+		editorConfigJSONObject.put("toolbars", JSONFactoryUtil.createJSONObject());
 
-		_editorData.put("editorConfig", editorConfig);
+		_editorData.put("editorConfig", editorConfigJSONObject);
 
-		JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
+		JSONObject editorOptionsJSONObject = JSONFactoryUtil.createJSONObject();
 
-		editorOptions.put("textMode", Boolean.FALSE);
-		editorOptions.put("showSource", Boolean.FALSE);
+		editorOptionsJSONObject.put("showSource", Boolean.FALSE);
+		editorOptionsJSONObject.put("textMode", Boolean.FALSE);
 
-		_editorData.put("editorOptions", editorOptions);
+		_editorData.put("editorOptions", editorOptionsJSONObject);
 	}
 
 	private final Map<String, Object> _editorData = new HashMap<>();

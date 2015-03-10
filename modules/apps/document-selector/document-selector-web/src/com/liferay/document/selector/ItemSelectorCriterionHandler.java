@@ -23,7 +23,7 @@ public interface ItemSelectorCriterionHandler<T extends ItemSelectorCriterion> {
 
 	public Class<T> getItemSelectorCriterionClass();
 
-	public List<? extends ItemSelectorView<T>> getItemSelectorViews(
+	public List<ItemSelectorView<T>> getItemSelectorViews(
 		T itemSelectorCriterion);
 
 }

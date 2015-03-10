@@ -28,6 +28,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.lang.reflect.InvocationTargetException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +41,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import org.apache.commons.beanutils.BeanUtils;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
@@ -75,37 +77,26 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<ItemSelectorViewRenderer<?>> getItemSelectorViewRenderers(
 		Map<String, String> parameters) {
 
 		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderers =
 			new ArrayList<>();
 
-		List<Class<?>> itemSelectorCriterionClasses =
-			_getItemSelectorCriterionClasses(parameters);
+		List<Class<? extends ItemSelectorCriterion>>
+			itemSelectorCriterionClasses = _getItemSelectorCriterionClasses(
+				parameters);
 
 		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
-			Class<?> itemSelectorCriterionClass =
+			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
 				itemSelectorCriterionClasses.get(i);
 
-			ItemSelectorCriterionHandler itemSelectorCriterionHandler =
-				_itemSelectionCriterionHandlers.get(
-					itemSelectorCriterionClass.getName());
+			String paramPrefix = i + "_";
 
-			ItemSelectorCriterion itemSelectorCriterion =
-				_getItemSelectorCriterion(
-					parameters, i + "_", itemSelectorCriterionClass);
-
-			List<ItemSelectorView> itemSelectorViews =
-				itemSelectorCriterionHandler.getItemSelectorViews(
-					itemSelectorCriterion);
-
-			for (ItemSelectorView itemSelectorView : itemSelectorViews) {
-				itemSelectorViewRenderers.add(
-					new ItemSelectorViewRenderer(
-						itemSelectorView, itemSelectorCriterion)
-				);
-			}
+			_addItemSelectorViewRenderers(
+				(List)itemSelectorViewRenderers, parameters, paramPrefix,
+				itemSelectorCriterionClass);
 		}
 
 		return itemSelectorViewRenderers;
@@ -158,13 +149,36 @@ public class ItemSelectorImpl implements ItemSelector {
 			itemSelectorCriterionClass.getName());
 	}
 
-	private ItemSelectorCriterion _getItemSelectorCriterion(
+	private <T extends ItemSelectorCriterion> void
+		_addItemSelectorViewRenderers(
+			List<ItemSelectorViewRenderer<T>> itemSelectorViewRenderers,
+			Map<String, String> parameters, String paramPrefix,
+			Class<T> itemSelectorCriterionClass) {
+
+		ItemSelectorCriterionHandler<T> itemSelectorCriterionHandler =
+			_getItemSelectorCriterionHandler(itemSelectorCriterionClass);
+
+		T itemSelectorCriterion = _getItemSelectorCriterion(
+			parameters, paramPrefix, itemSelectorCriterionClass);
+
+		List<ItemSelectorView<T>> itemSelectorViews =
+			itemSelectorCriterionHandler.getItemSelectorViews(
+				itemSelectorCriterion);
+
+		for (ItemSelectorView<T> itemSelectorView : itemSelectorViews) {
+			itemSelectorViewRenderers.add(
+				new ItemSelectorViewRenderer<T>(
+					itemSelectorView, itemSelectorCriterion)
+			);
+		}
+	}
+
+	private <T extends ItemSelectorCriterion> T _getItemSelectorCriterion(
 		Map<String, String> params, String paramPrefix,
-		Class<?> itemSelectorCriterionClass) {
+		Class<T> itemSelectorCriterionClass) {
 
 		try {
-			ItemSelectorCriterion itemSelectorCriterion =
-				(ItemSelectorCriterion)itemSelectorCriterionClass.newInstance();
+			T itemSelectorCriterion = itemSelectorCriterionClass.newInstance();
 
 			Map<String, String> properties = new HashMap<>();
 
@@ -187,14 +201,15 @@ public class ItemSelectorImpl implements ItemSelector {
 		}
 	}
 
-	private List<Class<?>> _getItemSelectorCriterionClasses(
-		Map<String, String> parameters) {
+	private List<Class<? extends ItemSelectorCriterion>>
+		_getItemSelectorCriterionClasses(Map<String, String> parameters) {
 
 		String criteria = parameters.get(PARAM_CRITERIA);
 
 		String[] itemSelectorCriterionClassNames = criteria.split(",");
 
-		List<Class<?>> itemSelectorCriterionClasses = new ArrayList<>();
+		List<Class<? extends ItemSelectorCriterion>>
+			itemSelectorCriterionClasses = new ArrayList<>();
 
 		for (String itemSelectorCriterionClassName :
 				itemSelectorCriterionClassNames) {
@@ -208,6 +223,15 @@ public class ItemSelectorImpl implements ItemSelector {
 		}
 
 		return itemSelectorCriterionClasses;
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T extends ItemSelectorCriterion> ItemSelectorCriterionHandler<T>
+		_getItemSelectorCriterionHandler(Class<T> itemSelectorCriterionClass) {
+
+		return (ItemSelectorCriterionHandler<T>)
+			_itemSelectionCriterionHandlers.get(
+				itemSelectorCriterionClass.getName());
 	}
 
 	private void _populateCriteria(
@@ -266,9 +290,10 @@ public class ItemSelectorImpl implements ItemSelector {
 				return String.class;
 			}
 
+			@SuppressWarnings("unchecked")
 			@Override
-			public Class getTypeClass() {
-				return Class.class;
+			public Class<Class<?>> getTypeClass() {
+				return (Class)Class.class;
 			}
 
 		};
@@ -281,6 +306,7 @@ public class ItemSelectorImpl implements ItemSelector {
 				accessor));
 	}
 
+	@SuppressWarnings("unchecked")
 	private void _populateItemSelectorCriteria(
 		Map<String, String> params, String paramPrefix,
 		ItemSelectorCriterion itemSelectorCriterion) {
@@ -312,7 +338,7 @@ public class ItemSelectorImpl implements ItemSelector {
 		}
 	}
 
-	private final ConcurrentMap<String, ItemSelectorCriterionHandler>
+	private final ConcurrentMap<String, ItemSelectorCriterionHandler<?>>
 		_itemSelectionCriterionHandlers = new ConcurrentHashMap<>();
 
 }

@@ -321,7 +321,6 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 					classPK: 0,
 					eventName: '<portlet:namespace />selectStructure',
 					groupId: <%= groupId %>,
-					refererPortletName: '<%= PortletKeys.JOURNAL %>',
 					showAncestorScopes: true,
 					struts_action: '/dynamic_data_mapping/select_structure',
 					title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'

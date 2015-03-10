@@ -38,12 +38,12 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.model.Portlet" %><%@
 page import="com.liferay.portal.security.auth.PrincipalException" %><%@
-page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
+page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
 page import="com.liferay.portlet.asset.provider.PortletProvider" %><%@
 page import="com.liferay.portlet.asset.provider.PortletProviderUtil" %><%@
@@ -53,8 +53,7 @@ page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil" %><%@
 page import="com.liferay.portlet.journal.NoSuchArticleException" %><%@
 page import="com.liferay.portlet.journal.model.JournalArticle" %><%@
-page import="com.liferay.portlet.journal.model.JournalArticleDisplay" %><%@
-page import="com.liferay.portlet.journal.service.permission.JournalArticlePermission" %>
+page import="com.liferay.portlet.journal.model.JournalArticleDisplay" %>
 
 <%@ page import="java.util.List" %>
 

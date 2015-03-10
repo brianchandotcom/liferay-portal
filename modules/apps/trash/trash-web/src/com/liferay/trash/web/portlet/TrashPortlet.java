@@ -33,6 +33,7 @@ import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.util.RestoreEntryUtil;
 import com.liferay.taglib.util.TrashUndoUtil;
+import com.liferay.trash.web.upgrade.TrashWebUpgrade;
 
 import java.io.IOException;
 
@@ -47,6 +48,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -259,6 +261,10 @@ public class TrashPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTrashWebUpgrade(TrashWebUpgrade trashWebUpgrade) {
 	}
 
 }

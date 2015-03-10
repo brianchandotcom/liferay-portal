@@ -252,8 +252,8 @@
 </tr>
 <tr>
 	<td>VOCABULARY_ENTRY_LINK</td>
-	<td>//tr[contains(.,'Vocabulary Name')]/td[2]/a</td>
-	<td>${key_vocabularyName}</td>
+	<td>//tr[contains(.,'${key_vocabularyName}')]/td[2]/a</td>
+	<td></td>
 </tr>
 <tr>
 	<td>VOCABULARY_ENTRY_MENULIST_ARROW</td>

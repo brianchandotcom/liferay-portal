@@ -287,7 +287,7 @@
 
 		<execute macro="Category#addCategoryLocalizationCP">
 			<var name="categoryName" value="Vocabulary1 Category" />
-			<var name="localization2Name" value="Nom de la CatÃ©gorie" />
+			<var name="localization2Name" value="Nom de la Catégorie" />
 			<var name="localization2NameKey" value="fr_FR" />
 			<var name="localizationName" value="Kategorienamen" />
 			<var name="localizationNameKey" value="de_DE" />
@@ -414,7 +414,7 @@
 			<var name="addMetadata" value="true" />
 			<var name="assetContent" value="Contenu de Contenu Web1" />
 			<var name="assetTitle" value="Titre de Contenu Web1" />
-			<var name="categoryName" value="Nom de la CatÃ©gorie" />
+			<var name="categoryName" value="Nom de la Catégorie" />
 			<var name="vocabularyName" value="Nom Vocabulaire" />
 		</execute>
 

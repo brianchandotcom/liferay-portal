@@ -889,6 +889,14 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
+		// LPS-49365, temporary workaround until Mate Thurzo can fix it
+
+		if (line.contains(
+				"Portal property \"staging.lock.enabled\" is obsolete")) {
+
+			return true;
+		}
+
 		// LPS-49505
 
 		if (line.matches(

@@ -45,10 +45,7 @@ import org.junit.runner.RunWith;
 public class JaxwsHandlerRegistrationAsApiTest {
 
 	@Test
-	public void testHandlerIsRegistered()
-		throws JAXBException, IOException, SOAPException,
-			ParserConfigurationException {
-
+	public void testHandlerIsRegistered() throws IOException {
 		URL url = new URL(_url, "/o/soap/greeterApi?wsdl");
 
 		QName qName = new QName(

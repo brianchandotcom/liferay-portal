@@ -27,7 +27,6 @@
 	<!-- JMX -->
 
 	<bean id="com.liferay.portal.kernel.messaging.jmx.JMXMessageListener" class="com.liferay.portal.kernel.messaging.jmx.JMXMessageListener">
-		<property name="MBeanRegistry" ref="mBeanRegistry" />
 		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
 	</bean>
 

@@ -40,10 +40,12 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.asset.provider.PortletProvider;
+import com.liferay.portlet.asset.provider.PortletProviderUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -72,8 +74,11 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 
 		_user = UserTestUtil.addUser(null, group.getGroupId());
 
+		String portletId = PortletProviderUtil.getPortletId(
+			TrashEntry.class.getName(), PortletProvider.Action.VIEW);
+
 		_role = RoleTestUtil.addRole(
-			"Trash Admin", RoleConstants.TYPE_REGULAR, PortletKeys.TRASH,
+			"Trash Admin", RoleConstants.TYPE_REGULAR, portletId,
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()),
 			ActionKeys.ACCESS_IN_CONTROL_PANEL);

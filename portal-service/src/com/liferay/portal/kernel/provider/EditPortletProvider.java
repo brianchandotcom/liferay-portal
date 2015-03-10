@@ -15,18 +15,7 @@
 package com.liferay.portal.kernel.provider;
 
 /**
- * @author Eudaldo Alonso
+ * @author Eduardo Garcia
  */
-public interface PortletProvider {
-
-	public static final String CLASS_NAME_ANY = "any-class-name";
-
-	public String getPortletId();
-
-	public enum Action {
-
-		ADD, BROWSE, EDIT, VIEW
-
-	}
-
+public interface EditPortletProvider extends PortletProvider {
 }

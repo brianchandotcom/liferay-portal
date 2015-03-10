@@ -16,7 +16,6 @@ package com.liferay.portal.soap.sample.handlers;
 
 import java.net.URL;
 
-import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMResult;
@@ -51,32 +50,28 @@ public class SampleComponentHandler
 	}
 
 	@Override
-	public boolean handleFault(LogicalMessageContext context) {
+	public boolean handleFault(LogicalMessageContext logicalMessageContext) {
 		return true;
 	}
 
 	@Override
-	public boolean handleMessage(LogicalMessageContext context) {
+	public boolean handleMessage(LogicalMessageContext logicalMessageContext) {
 		try {
-			boolean outboundMessage = (boolean)context.get(
+			boolean outboundMessage = (boolean)logicalMessageContext.get(
 				MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
 			if (!outboundMessage) {
 				return true;
 			}
 
-			Source streamSource = new StreamSource(_url.openStream());
+			LogicalMessage logicalMessage = logicalMessageContext.getMessage();
 
 			Transformer transformer = _transformerFactory.newTransformer(
-				streamSource);
-
-			LogicalMessage logicalMessage = context.getMessage();
-
-			Source source = logicalMessage.getPayload();
+				new StreamSource(_url.openStream()));
 
 			DOMResult domResult = new DOMResult();
 
-			transformer.transform(source, domResult);
+			transformer.transform(logicalMessage.getPayload(), domResult);
 
 			logicalMessage.setPayload(new DOMSource(domResult.getNode()));
 

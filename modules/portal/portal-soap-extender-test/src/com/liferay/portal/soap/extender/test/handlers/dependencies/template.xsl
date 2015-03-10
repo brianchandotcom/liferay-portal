@@ -6,5 +6,5 @@
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:copy>
 	</xsl:template>
-	<xsl:template match="text()"><xsl:copy-of select="." /> has been handled!</xsl:template>
+	<xsl:template match="text()"><xsl:copy-of select="." /> was handled.</xsl:template>
 </xsl:stylesheet>

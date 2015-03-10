@@ -52,8 +52,8 @@ public class JGroupsReceiver extends ReceiverAdapter {
 		}
 
 		_clusterReceiver.receive(
-			object, _wrapJGroupsAddress(message.getSrc()),
-			_wrapJGroupsAddress(message.getDest()));
+			object, new AddressImpl(message.getSrc()),
+			new AddressImpl(message.getDest()));
 	}
 
 	@Override
@@ -69,14 +69,6 @@ public class JGroupsReceiver extends ReceiverAdapter {
 		}
 
 		_clusterReceiver.addressesUpdated(members);
-	}
-
-	private Address _wrapJGroupsAddress(org.jgroups.Address address) {
-		if (address == null) {
-			return null;
-		}
-
-		return new AddressImpl(address);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

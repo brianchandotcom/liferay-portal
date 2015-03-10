@@ -39,7 +39,9 @@ public class WikiServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return new WikiServiceVerifyProcess();
+		Registry registry = RegistryUtil.getRegistry();
+
+		return registry.getService(WikiServiceVerifyProcess.class);
 	}
 
 }

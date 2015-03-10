@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.upload.UploadRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -65,9 +66,8 @@ import com.liferay.portlet.dynamicdatamapping.util.comparator.TemplateModifiedDa
 
 import java.io.File;
 import java.io.Serializable;
-
 import java.text.DateFormat;
-
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -653,52 +653,94 @@ public class DDMImpl implements DDM {
 		for (String fieldNameValue : fieldNames) {
 			Serializable fieldValue = serviceContext.getAttribute(
 				fieldNameValue);
+			
+			String predefinedFieldValue = null;
+			
+			if (fieldValue == null) {
+				DDMFormField ddmFormField = ddmStructure.getDDMFormField(fieldName);
+				predefinedFieldValue = ddmFormField.getPredefinedValue().getString(serviceContext.getLocale());
+			}
 
 			if (fieldType.equals(DDMImpl.TYPE_CHECKBOX) &&
 				Validator.isNull(fieldValue)) {
 
-				fieldValue = "false";
+				if (Validator.isNotNull(predefinedFieldValue)) {
+					fieldValue = predefinedFieldValue;
+				} else {
+					fieldValue = "false";
+				}
 			}
 			else if (fieldDataType.equals(FieldConstants.DATE)) {
-				int fieldValueMonth = GetterUtil.getInteger(
-					serviceContext.getAttribute(fieldNameValue + "Month"));
-				int fieldValueDay = GetterUtil.getInteger(
-					serviceContext.getAttribute(fieldNameValue + "Day"));
-				int fieldValueYear = GetterUtil.getInteger(
-					serviceContext.getAttribute(fieldNameValue + "Year"));
-
-				Date fieldValueDate = PortalUtil.getDate(
-					fieldValueMonth, fieldValueDay, fieldValueYear);
-
-				if (fieldValueDate != null) {
-					fieldValue = String.valueOf(fieldValueDate.getTime());
+				if (fieldValue == null) {
+					if (Validator.isNotNull(predefinedFieldValue)) {
+						Date predefinedDate = null;
+						try {
+							predefinedDate = 
+								DateUtil.parseDate(
+									predefinedFieldValue, 
+									serviceContext.getLocale());
+						} catch (ParseException e) {}
+						if (Validator.isNotNull(predefinedDate)) {
+							fieldValue = 
+								String.valueOf(predefinedDate.getTime());
+						}
+					}
+				} else {
+					int fieldValueMonth = GetterUtil.getInteger(
+						serviceContext.getAttribute(fieldNameValue + "Month"));
+					int fieldValueDay = GetterUtil.getInteger(
+						serviceContext.getAttribute(fieldNameValue + "Day"));
+					int fieldValueYear = GetterUtil.getInteger(
+						serviceContext.getAttribute(fieldNameValue + "Year"));
+	
+					Date fieldValueDate = PortalUtil.getDate(
+						fieldValueMonth, fieldValueDay, fieldValueYear);
+	
+					if (fieldValueDate != null) {
+						fieldValue = String.valueOf(fieldValueDate.getTime());
+					}
 				}
 			}
 			else if (fieldDataType.equals(FieldConstants.IMAGE) &&
 					 Validator.isNull(fieldValue)) {
 
-				HttpServletRequest request = serviceContext.getRequest();
+				if (fieldValue == null) {
+					if (Validator.isNotNull(predefinedFieldValue)) {
+						fieldValue = predefinedFieldValue;
+					}
+				} else {
+					HttpServletRequest request = serviceContext.getRequest();
+	
+					if (!(request instanceof UploadRequest)) {
+						return null;
+					}
+	
+					fieldValue = getImageFieldValue(
+						(UploadRequest)request, fieldNameValue);
+				}
+			}
+			
+			if (DDMImpl.TYPE_RADIO.equals(fieldType) ||
+					DDMImpl.TYPE_SELECT.equals(fieldType)) {
 
-				if (!(request instanceof UploadRequest)) {
+				if (fieldValue == null) {
+					if (Validator.isNotNull(predefinedFieldValue)) {
+						fieldValue = predefinedFieldValue;
+					}
+				} else {
+					if (fieldValue instanceof String) {
+						fieldValue = new String[] {String.valueOf(fieldValue)};
+					}
+	
+					fieldValue = JSONFactoryUtil.serialize(fieldValue);
+				}
+			}
+			
+			if (fieldValue == null) {
+				if (Validator.isNull(predefinedFieldValue)) {
 					return null;
 				}
-
-				fieldValue = getImageFieldValue(
-					(UploadRequest)request, fieldNameValue);
-			}
-
-			if (fieldValue == null) {
-				return null;
-			}
-
-			if (DDMImpl.TYPE_RADIO.equals(fieldType) ||
-				DDMImpl.TYPE_SELECT.equals(fieldType)) {
-
-				if (fieldValue instanceof String) {
-					fieldValue = new String[] {String.valueOf(fieldValue)};
-				}
-
-				fieldValue = JSONFactoryUtil.serialize(fieldValue);
+				fieldValue = predefinedFieldValue;
 			}
 
 			Serializable fieldValueSerializable =

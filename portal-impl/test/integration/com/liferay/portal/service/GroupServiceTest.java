@@ -621,12 +621,11 @@ public class GroupServiceTest {
 		Group group1111 = GroupTestUtil.addGroup(group111.getGroupId());
 
 		GroupLocalServiceUtil.updateGroup(
-			group1.getGroupId(), group1111.getGroupId(),
-			group1.getNameMap(), group1.getDescriptionMap(),
-			group1.getType(), group1.isManualMembership(),
-			group1.getMembershipRestriction(), group1.getFriendlyURL(),
-			group1.isInheritContent(), group1.isActive(),
-			ServiceContextTestUtil.getServiceContext());
+			group1.getGroupId(), group1111.getGroupId(), group1.getNameMap(),
+			group1.getDescriptionMap(), group1.getType(),
+			group1.isManualMembership(), group1.getMembershipRestriction(),
+			group1.getFriendlyURL(), group1.isInheritContent(),
+			group1.isActive(), ServiceContextTestUtil.getServiceContext());
 
 		Assert.fail("A child group cannot be its parent group");
 	}
@@ -661,8 +660,8 @@ public class GroupServiceTest {
 			group.getGroupId(), group.getGroupId(), group.getNameMap(),
 			group.getDescriptionMap(), group.getType(),
 			group.isManualMembership(), group.getMembershipRestriction(),
-			group.getFriendlyURL(), group.isInheritContent(),
-			group.isActive(), ServiceContextTestUtil.getServiceContext());
+			group.getFriendlyURL(), group.isInheritContent(), group.isActive(),
+			ServiceContextTestUtil.getServiceContext());
 
 		Assert.fail("A group cannot be its own parent");
 	}

@@ -61,10 +61,12 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 			return;
 		}
 
-		List<Address> oldAddresses = _addresses;
+		List<Address> oldAddresses = null;
 
 		try {
 			_countDownLatch.await();
+
+			oldAddresses = _addresses;
 
 			_addresses = addresses;
 

@@ -1,5 +1,5 @@
 <definition component-name="portal-tools">
-	<property name="portal.url" value="http://www.w3schools.com/tags/tryit.asp?filename=tryhtml_select_multiple" />
+	<property name="testcase.url" value="http://www.w3schools.com/tags/tryit.asp?filename=tryhtml_select_multiple" />
 	<property name="testray.main.component.name" value="Tools" />
 
 	<var name="commitMessage" value="LPS-41076" />

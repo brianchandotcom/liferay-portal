@@ -1,5 +1,5 @@
 <definition component-name="portal-tools">
-	<property name="portal.url" value="" />
+	<property name="testcase.url" value="" />
 	<property name="testray.main.component.name" value="Tools" />
 
 	<var name="commitMessage" value="LPS-41203" />

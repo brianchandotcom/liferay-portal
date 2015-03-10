@@ -14,7 +14,9 @@
 
 package com.liferay.journal.ratings.definition;
 
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.provider.PortletProvider;
+import com.liferay.portal.kernel.provider.PortletProviderUtil;
+import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.ratings.RatingsType;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
 
@@ -38,7 +40,10 @@ public class JournalPortletRatingsDefinition
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.JOURNAL;
+		String portletId = PortletProviderUtil.getPortletId(
+			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
+
+		return portletId;
 	}
 
 }

@@ -97,20 +97,6 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 		_executorService.shutdownNow();
 	}
 
-	public org.jgroups.Address getBusLocalAddress() {
-		return _jChannel.getAddress();
-	}
-
-	public List<org.jgroups.Address> getBusMembership() {
-		List<org.jgroups.Address> view = new ArrayList<>();
-
-		for (Address address : _clusterReceiver.getAddresses()) {
-			view.add((org.jgroups.Address)address.getRealAddress());
-		}
-
-		return view;
-	}
-
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List getElements(List list) {
@@ -158,21 +144,6 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 		return null;
 	}
 
-	public void handleNotification(Serializable serializable) {
-		if (serializable instanceof JGroupEventMessage) {
-			handleJGroupsNotification((JGroupEventMessage)serializable);
-		}
-		else if (serializable instanceof List<?>) {
-			List<?> valueList = (List<?>)serializable;
-
-			for (Object object : valueList) {
-				if (object instanceof JGroupEventMessage) {
-					handleJGroupsNotification((JGroupEventMessage)object);
-				}
-			}
-		}
-	}
-
 	@Override
 	public void init() {
 	}
@@ -203,11 +174,10 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 	public void removeAll() {
 	}
 
+	@Override
 	@SuppressWarnings("rawtypes")
-	public void send(Address address, List eventMessages)
-		throws RemoteException {
-
-		ArrayList<JGroupEventMessage> jGroupEventMessages = new ArrayList<>();
+	public void send(List eventMessages) throws RemoteException {
+		List<JGroupEventMessage> jGroupEventMessages = new ArrayList<>();
 
 		for (Object eventMessage : eventMessages) {
 			if (eventMessage instanceof JGroupEventMessage) {
@@ -230,12 +200,6 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 		catch (Throwable t) {
 			throw new RemoteException(t.getMessage());
 		}
-	}
-
-	@Override
-	@SuppressWarnings("rawtypes")
-	public void send(List eventMessages) throws RemoteException {
-		send(null, eventMessages);
 	}
 
 	@Override
@@ -300,7 +264,20 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 			Object messagePayload, Address srcAddress, Address destAddress) {
 
 			if (messagePayload instanceof Serializable) {
-				handleNotification((Serializable)messagePayload);
+				if (messagePayload instanceof JGroupEventMessage) {
+					handleJGroupsNotification(
+						(JGroupEventMessage)messagePayload);
+				}
+				else if (messagePayload instanceof List<?>) {
+					List<?> valueList = (List<?>)messagePayload;
+
+					for (Object object : valueList) {
+						if (object instanceof JGroupEventMessage) {
+							handleJGroupsNotification(
+								(JGroupEventMessage)object);
+						}
+					}
+				}
 			}
 			else {
 				if (_log.isWarnEnabled()) {

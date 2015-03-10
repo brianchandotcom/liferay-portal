@@ -44,6 +44,27 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 	}
 
 	@Override
+	protected void doAddressesUpdated(
+		List<Address> oldAddresses, List<Address> newAddresses) {
+
+		List<Address> addedAddresses = new ArrayList<>(newAddresses);
+
+		addedAddresses.removeAll(oldAddresses);
+
+		if (!addedAddresses.isEmpty()) {
+			_clusterExecutorImpl.sendNotifyRequest();
+		}
+
+		List<Address> removedAddresses = new ArrayList<>(oldAddresses);
+
+		removedAddresses.removeAll(newAddresses);
+
+		if (!removedAddresses.isEmpty()) {
+			_clusterExecutorImpl.memberRemoved(removedAddresses);
+		}
+	}
+
+	@Override
 	protected void doReceive(
 		Object messagePayload, Address srcAddress, Address destAddress) {
 
@@ -76,27 +97,6 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 			ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
 			CentralizedThreadLocal.clearShortLivedThreadLocals();
-		}
-	}
-
-	@Override
-	protected void doViewAccepted(
-		List<Address> oldAddresses, List<Address> newAddresses) {
-
-		List<Address> addedAddresses = new ArrayList<>(newAddresses);
-
-		addedAddresses.removeAll(oldAddresses);
-
-		if (!addedAddresses.isEmpty()) {
-			_clusterExecutorImpl.sendNotifyRequest();
-		}
-
-		List<Address> removedAddresses = new ArrayList<>(oldAddresses);
-
-		removedAddresses.removeAll(newAddresses);
-
-		if (!removedAddresses.isEmpty()) {
-			_clusterExecutorImpl.memberRemoved(removedAddresses);
 		}
 	}
 

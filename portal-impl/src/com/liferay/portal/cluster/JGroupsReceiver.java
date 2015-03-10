@@ -68,7 +68,7 @@ public class JGroupsReceiver extends ReceiverAdapter {
 			members.add(_wrapJGroupsAddress(address));
 		}
 
-		_clusterReceiver.viewAccepted(members);
+		_clusterReceiver.addressesUpdated(members);
 	}
 
 	private Address _wrapJGroupsAddress(org.jgroups.Address address) {

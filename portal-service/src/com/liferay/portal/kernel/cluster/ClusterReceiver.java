@@ -21,13 +21,13 @@ import java.util.List;
  */
 public interface ClusterReceiver {
 
+	public void addressesUpdated(List<Address> addresses);
+
 	public List<Address> getAddresses();
 
 	public void openLatch();
 
 	public void receive(
 		Object messagePayload, Address srcAddress, Address destAddress);
-
-	public void viewAccepted(List<Address> addresses);
 
 }

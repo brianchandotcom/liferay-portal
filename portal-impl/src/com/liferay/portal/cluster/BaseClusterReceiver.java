@@ -42,7 +42,8 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 		Class<?> clazz = getClass();
 
 		try {
-			clazz.getDeclaredMethod("doViewAccepted", List.class, List.class);
+			clazz.getDeclaredMethod(
+				"doAddressesUpdated", List.class, List.class);
 
 			hasDoViewAccepted = true;
 		}
@@ -50,6 +51,39 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 		}
 
 		_hasDoViewAccepted = hasDoViewAccepted;
+	}
+
+	@Override
+	public void addressesUpdated(List<Address> addresses) {
+		if (_addresses == null) {
+			_addresses = addresses;
+
+			return;
+		}
+
+		List<Address> oldAddresses = _addresses;
+
+		try {
+			_countDownLatch.await();
+
+			_addresses = addresses;
+
+			if (_hasDoViewAccepted) {
+				_executorService.execute(
+					new AddressesUpdatedRunnable(oldAddresses, addresses));
+			}
+		}
+		catch (InterruptedException ie) {
+			_log.error(
+				"Latch opened prematurely by interruption. Dependence may " +
+					"not be ready.");
+		}
+		catch (RejectedExecutionException ree) {
+			_log.error(
+				"Unable to handle view update from " + oldAddresses + " to " +
+					addresses,
+				ree);
+		}
 	}
 
 	@Override
@@ -70,8 +104,7 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 			_countDownLatch.await();
 
 			_executorService.execute(
-				new MessageCallBackJob(
-					messagePayload, srcAddress, destAddress));
+				new ReceiveRunnable(messagePayload, srcAddress, destAddress));
 		}
 		catch (InterruptedException ie) {
 			_log.error(
@@ -84,45 +117,12 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 		}
 	}
 
-	@Override
-	public void viewAccepted(List<Address> addresses) {
-		if (_addresses == null) {
-			_addresses = addresses;
-
-			return;
-		}
-
-		List<Address> oldAddresses = _addresses;
-
-		try {
-			_countDownLatch.await();
-
-			_addresses = addresses;
-
-			if (_hasDoViewAccepted) {
-				_executorService.execute(
-					new ViewCallBackJob(oldAddresses, addresses));
-			}
-		}
-		catch (InterruptedException ie) {
-			_log.error(
-				"Latch opened prematurely by interruption. Dependence may " +
-					"not be ready.");
-		}
-		catch (RejectedExecutionException ree) {
-			_log.error(
-				"Unable to handle view update from " + oldAddresses + " to " +
-					addresses,
-				ree);
-		}
+	protected void doAddressesUpdated(
+		List<Address> oldAddresses, List<Address> newAddresses) {
 	}
 
 	protected abstract void doReceive(
 		Object messagePayload, Address srcAddress, Address destAddress);
-
-	protected void doViewAccepted(
-		List<Address> oldAddresses, List<Address> newAddresses) {
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseClusterReceiver.class);
@@ -132,14 +132,33 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 	private final ExecutorService _executorService;
 	private final boolean _hasDoViewAccepted;
 
-	private class MessageCallBackJob implements Runnable {
+	private class AddressesUpdatedRunnable implements Runnable {
+
+		@Override
+		public void run() {
+			doAddressesUpdated(_oldAddresses, _newAddresses);
+		}
+
+		private AddressesUpdatedRunnable(
+			List<Address> oldAddresses, List<Address> newAddresses) {
+
+			_oldAddresses = oldAddresses;
+			_newAddresses = newAddresses;
+		}
+
+		private final List<Address> _newAddresses;
+		private final List<Address> _oldAddresses;
+
+	}
+
+	private class ReceiveRunnable implements Runnable {
 
 		@Override
 		public void run() {
 			doReceive(_messagePayload, _srcAddress, _destAddress);
 		}
 
-		private MessageCallBackJob(
+		private ReceiveRunnable(
 			Object messagePayload, Address srcAddress, Address destAddress) {
 
 			_messagePayload = messagePayload;
@@ -150,25 +169,6 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 		private final Address _destAddress;
 		private final Object _messagePayload;
 		private final Address _srcAddress;
-
-	}
-
-	private class ViewCallBackJob implements Runnable {
-
-		@Override
-		public void run() {
-			doViewAccepted(_oldAddresses, _newAddresses);
-		}
-
-		private ViewCallBackJob(
-			List<Address> oldAddresses, List<Address> newAddresses) {
-
-			_oldAddresses = oldAddresses;
-			_newAddresses = newAddresses;
-		}
-
-		private final List<Address> _newAddresses;
-		private final List<Address> _oldAddresses;
 
 	}
 

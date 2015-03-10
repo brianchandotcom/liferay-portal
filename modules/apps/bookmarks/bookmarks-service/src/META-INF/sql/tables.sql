@@ -18,7 +18,8 @@ create table BookmarksEntry (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	lastPublishDate DATE null
 );
 
 create table BookmarksFolder (
@@ -38,5 +39,6 @@ create table BookmarksFolder (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	lastPublishDate DATE null
 );

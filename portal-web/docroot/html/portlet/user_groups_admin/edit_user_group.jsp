@@ -24,6 +24,12 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 UserGroup userGroup = (UserGroup)request.getAttribute(WebKeys.USER_GROUP);
 
 long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
+
+boolean hasUserGroupUpdatePermission = true;
+
+if (userGroup != null) {
+	hasUserGroupUpdatePermission = UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.UPDATE);
+}
 %>
 
 <aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveUserGroup();" %>'>
@@ -44,9 +50,9 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 	<aui:model-context bean="<%= userGroup %>" model="<%= UserGroup.class %>" />
 
 	<aui:fieldset>
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label='<%= (userGroup != null) ? "new-name" : "name" %>' name="name" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" disabled="<%= !hasUserGroupUpdatePermission %>" label='<%= (userGroup != null) ? "new-name" : "name" %>' name="name" />
 
-		<aui:input name="description" />
+		<aui:input disabled="<%= !hasUserGroupUpdatePermission %>" name="description" />
 
 		<liferay-ui:custom-attributes-available className="<%= UserGroup.class.getName() %>">
 			<liferay-ui:custom-attribute-list
@@ -133,7 +139,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 
 			<c:choose>
 				<c:when test="<%= ((userGroupGroup == null) || ((publicLayoutSetPrototype == null) && (userGroupGroup.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
-					<aui:select disabled="<%= !hasUpdateSitePermission %>" label="public-pages" name="publicLayoutSetPrototypeId">
+					<aui:select disabled="<%= !hasUpdateSitePermission || !hasUserGroupUpdatePermission %>" label="public-pages" name="publicLayoutSetPrototypeId">
 						<aui:option label="none" selected="<%= true %>" value="" />
 
 						<%
@@ -274,9 +280,9 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 	</c:if>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button disabled="<%= !hasUserGroupUpdatePermission %>" type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button disabled="<%= !hasUserGroupUpdatePermission %>" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

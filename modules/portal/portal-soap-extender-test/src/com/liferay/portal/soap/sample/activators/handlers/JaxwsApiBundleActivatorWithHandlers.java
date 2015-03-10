@@ -32,7 +32,7 @@ import org.osgi.framework.BundleContext;
 public class JaxwsApiBundleActivatorWithHandlers implements BundleActivator {
 
 	@Override
-	public void start(BundleContext context) throws Exception {
+	public void start(BundleContext bundleContext) throws Exception {
 		_endpoint = Endpoint.publish("/greeterApi", new GreeterImpl());
 
 		Binding binding = _endpoint.getBinding();
@@ -48,7 +48,7 @@ public class JaxwsApiBundleActivatorWithHandlers implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext context) throws Exception {
+	public void stop(BundleContext bundleContext) throws Exception {
 		_endpoint.stop();
 	}
 

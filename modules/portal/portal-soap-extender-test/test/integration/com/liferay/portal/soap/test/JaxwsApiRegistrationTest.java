@@ -45,15 +45,15 @@ public class JaxwsApiRegistrationTest {
 	public void testGreeter() throws IOException {
 		URL url = new URL(_url, "/o/soap/greeterApi?wsdl");
 
-		QName serviceName = new QName(
+		QName qName = new QName(
 			"http://service.sample.soap.portal.liferay.com/",
 			"GreeterImplService");
 
-		Service service = Service.create(url, serviceName);
+		Service service = Service.create(url, qName);
 
-		Greeter port = service.getPort(Greeter.class);
+		Greeter greeter = service.getPort(Greeter.class);
 
-		Assert.assertEquals("Greetings!", port.greet());
+		Assert.assertEquals("Greetings!", greeter.greet());
 	}
 
 	@ArquillianResource

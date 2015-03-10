@@ -33,7 +33,7 @@
 		<dirset dir="search" includes="*" />
 		<dirset dir="site" includes="*" />
 		<dirset dir="sites-directory" includes="*" />
-		<dirset dir="social" includes="*" />
+		<dirset dir="social" excludes="social-networking-*" includes="*" />
 		<dirset dir="translator" includes="*" />
 		<dirset dir="unit-converter" includes="*" />
 		<dirset dir="web-proxy" includes="*" />

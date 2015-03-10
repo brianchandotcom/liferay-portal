@@ -17,6 +17,7 @@ package com.liferay.portal.cluster;
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.cluster.Address;
+import com.liferay.portal.kernel.cluster.ClusterChannel;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -29,8 +30,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.jgroups.Channel;
 
 /**
  * @author Michael C. Han
@@ -48,9 +47,10 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 	protected void doReceive(
 		Object messagePayload, Address srcAddress, Address destAddress) {
 
-		Channel channel = _clusterExecutorImpl.getControlChannel();
+		ClusterChannel clusterChannel =
+			_clusterExecutorImpl.getControlChannel();
 
-		if (srcAddress.equals(new AddressImpl(channel.getAddress()))) {
+		if (srcAddress.equals(clusterChannel.getLocalAddress())) {
 			return;
 		}
 
@@ -103,7 +103,7 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 	protected void processClusterRequest(
 		ClusterRequest clusterRequest, Address sourceAddress) {
 
-		Object responsePayload = null;
+		Serializable responsePayload = null;
 
 		Serializable requestPayload = clusterRequest.getPayload();
 
@@ -129,12 +129,11 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 			return;
 		}
 
-		Channel channel = _clusterExecutorImpl.getControlChannel();
+		ClusterChannel clusterChannel =
+			_clusterExecutorImpl.getControlChannel();
 
 		try {
-			channel.send(
-				(org.jgroups.Address)sourceAddress.getRealAddress(),
-				responsePayload);
+			clusterChannel.sendUnicastMessage(responsePayload, sourceAddress);
 		}
 		catch (Throwable t) {
 			_log.error("Unable to send message " + responsePayload, t);

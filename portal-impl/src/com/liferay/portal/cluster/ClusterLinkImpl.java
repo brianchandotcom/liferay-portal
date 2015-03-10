@@ -15,6 +15,7 @@
 package com.liferay.portal.cluster;
 
 import com.liferay.portal.kernel.cluster.Address;
+import com.liferay.portal.kernel.cluster.ClusterChannel;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterReceiver;
@@ -35,8 +36,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
-import org.jgroups.JChannel;
-
 /**
  * @author Shuyang Zhou
  */
@@ -49,10 +48,8 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 			return;
 		}
 
-		for (JChannel jChannel : _transportJChannels) {
-			jChannel.setReceiver(null);
-
-			jChannel.close();
+		for (ClusterChannel clusterChannel : _transportChannels) {
+			clusterChannel.close();
 		}
 
 		_executorService.shutdownNow();
@@ -89,14 +86,9 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 			return;
 		}
 
-		JChannel jChannel = getChannel(priority);
+		ClusterChannel clusterChannel = getChannel(priority);
 
-		try {
-			jChannel.send(null, message);
-		}
-		catch (Exception e) {
-			_log.error("Unable to send multicast message " + message, e);
-		}
+		clusterChannel.sendMulticastMessage(message);
 	}
 
 	@Override
@@ -107,26 +99,18 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 			return;
 		}
 
-		org.jgroups.Address jGroupsAddress =
-			(org.jgroups.Address)address.getRealAddress();
-
-		if (_localTransportAddresses.contains(jGroupsAddress)) {
+		if (_localTransportAddresses.contains(address)) {
 			sendLocalMessage(message);
 
 			return;
 		}
 
-		JChannel jChannel = getChannel(priority);
+		ClusterChannel clusterChannel = getChannel(priority);
 
-		try {
-			jChannel.send(jGroupsAddress, message);
-		}
-		catch (Exception e) {
-			_log.error("Unable to send unicast message " + message, e);
-		}
+		clusterChannel.sendUnicastMessage(message, address);
 	}
 
-	protected JChannel getChannel(Priority priority) {
+	protected ClusterChannel getChannel(Priority priority) {
 		int channelIndex =
 			priority.ordinal() * _channelCount / MAX_CHANNEL_COUNT;
 
@@ -136,7 +120,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 					priority);
 		}
 
-		return _transportJChannels.get(channelIndex);
+		return _transportChannels.get(channelIndex);
 	}
 
 	protected ExecutorService getExecutorService() {
@@ -159,7 +143,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		}
 
 		_localTransportAddresses = new ArrayList<>(_channelCount);
-		_transportJChannels = new ArrayList<>(_channelCount);
+		_transportChannels = new ArrayList<>(_channelCount);
 		_clusterReceivers = new ArrayList<>(_channelCount);
 
 		List<String> keys = new ArrayList<>(_channelCount);
@@ -177,13 +161,12 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 
 			ClusterReceiver clusterReceiver = new ClusterForwardReceiver(this);
 
-			JChannel jChannel = createJChannel(
-				value, clusterReceiver, _LIFERAY_TRANSPORT_CHANNEL + i);
+			ClusterChannel clusterChannel = new JGroupsClusterChannel(
+				value, _LIFERAY_TRANSPORT_CHANNEL + i, clusterReceiver);
 
 			_clusterReceivers.add(clusterReceiver);
-			_localTransportAddresses.add(
-				new AddressImpl(jChannel.getAddress()));
-			_transportJChannels.add(jChannel);
+			_localTransportAddresses.add(clusterChannel.getLocalAddress());
+			_transportChannels.add(clusterChannel);
 		}
 	}
 
@@ -222,6 +205,6 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 	private List<ClusterReceiver> _clusterReceivers;
 	private ExecutorService _executorService;
 	private List<Address> _localTransportAddresses;
-	private List<JChannel> _transportJChannels;
+	private List<ClusterChannel> _transportChannels;
 
 }

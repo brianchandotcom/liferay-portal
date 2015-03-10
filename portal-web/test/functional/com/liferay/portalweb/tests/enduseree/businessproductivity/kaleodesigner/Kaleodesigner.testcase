@@ -398,7 +398,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-53992" name="AddTaskNodeEditNameAndDesciptionAndRecipientsAndDeleteViaViewTab" priority="5">
+	<command name="AddTaskNodeEditNameAndDesciptionAndRecipientsAndDeleteViaViewTab" priority="5">
 		<description message="This is a use case for LPS-53992." />
 
 		<var name="nodeNodeLabel" value="Task" />

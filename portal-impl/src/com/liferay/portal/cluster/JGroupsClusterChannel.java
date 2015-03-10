@@ -47,8 +47,6 @@ public class JGroupsClusterChannel implements ClusterChannel {
 		String channelProperties, String clusterName,
 		ClusterReceiver clusterReceiver) {
 
-		_initBindAddress();
-
 		if (Validator.isNull(channelProperties)) {
 			throw new NullPointerException("Channel properties is null");
 		}
@@ -174,13 +172,7 @@ public class JGroupsClusterChannel implements ClusterChannel {
 		}
 	}
 
-	private void _initBindAddress() {
-		if (_initBindAddress) {
-			return;
-		}
-
-		_initSystemProperties();
-
+	private static void _initBindAddress() {
 		String autodetectAddress = PropsValues.CLUSTER_LINK_AUTODETECT_ADDRESS;
 
 		if (Validator.isNull(autodetectAddress)) {
@@ -228,11 +220,9 @@ public class JGroupsClusterChannel implements ClusterChannel {
 				_log.error("Unable to detect bind address for jgroups", e);
 			}
 		}
-
-		_initBindAddress = true;
 	}
 
-	private void _initSystemProperties() {
+	private static void _initSystemProperties() {
 		for (String systemProperty :
 				PropsValues.CLUSTER_LINK_CHANNEL_SYSTEM_PROPERTIES) {
 
@@ -258,7 +248,10 @@ public class JGroupsClusterChannel implements ClusterChannel {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JGroupsClusterChannel.class);
 
-	private static volatile boolean _initBindAddress;
+	static {
+		_initSystemProperties();
+		_initBindAddress();
+	}
 
 	private final String _clusterName;
 	private final JChannel _jChannel;

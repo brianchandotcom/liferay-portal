@@ -704,6 +704,58 @@
 		</execute>
 	</command>
 
+	<command name="ViewKBArticleFriendlyURL" priority="3">
+		<var name="kbArticleContent" value="KB Article Content" />
+		<var name="kbArticleContent2" value="KB Article 2 Content" />
+		<var name="kbArticleTitle" value="Article Title" />
+		<var name="kbArticleTitle2" value="KB Article 2 Title" />
+		<var name="pageName" value="Knowledge Base Display" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="${kbArticleContent}" />
+			<var name="kbArticleFriendlyURL" value="friendly-url-test" />
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="${kbArticleContent2}" />
+			<var name="kbArticleTitle" value="${kbArticleTitle2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
+
+		<execute macro="KBArticle#viewKBDisplayPG">
+			<var name="kbArticleFriendlyURL" value="friendly-url-test" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="${kbArticleContent}" />
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
+	</command>
+
 	<command name="ViewKBArticleGitHubSourceURL" priority="3">
 		<property name="portlet.properties.knowledge-base-portlet" value="knowledge.base.source.url.enabled=true" />
 
@@ -748,6 +800,73 @@
 			<var name="print" value="${print}" />
 			<var name="sourceURL" value="true" />
 			<var name="subscribe" value="${subscribe}" />
+		</execute>
+	</command>
+
+	<command name="ViewKBArticleNoHierarchyInFolder" priority="3">
+		<var name="kbArticleContent" value="Test Content" />
+		<var name="kbArticleTitle" value="Article 1 Title" />
+		<var name="kbFolderName" value="Folder 1" />
+		<var name="pageName" value="Knowledge Base Page" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="kbFolderName" value="${kbFolderName}" />
+		</execute>
+
+		<execute macro="KBFolder#addCP">
+			<var name="kbFolderName" value="Folder 2" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="${kbArticleContent}" />
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="${kbArticleContent}" />
+			<var name="kbArticleTitle" value="Article 2 Title" />
+		</execute>
+
+		<execute macro="KBArticle#moveArticleCP">
+			<var name="kbArticleCurrentParent" value="(None)" />
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
+
+		<execute macro="KBFolder#selectParentCP">
+			<var name="kbFolderName" value="${kbFolderName}" />
+		</execute>
+
+		<execute macro="KBArticle#moveArticleCP">
+			<var name="kbArticleCurrentParent" value="(None)" />
+			<var name="kbArticleTitle" value="Article 2 Title" />
+		</execute>
+
+		<execute macro="KBFolder#selectParentCP">
+			<var name="kbFolderName" value="Folder 2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="KBArticle#viewNoHierarchyPG">
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
 		</execute>
 	</command>
 

@@ -49,6 +49,19 @@
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#FOLDER_SELECT_OPTION" value1="${kbFolderName}" />
 	</command>
 
+	<command name="selectParentCP">
+		<var name="key_kbArticleTitle" value="${kbFolderName}" />
+
+		<execute function="SelectFrame" locator1="CPKnowledgebaseadminSelectParent#SELECT_PARENT_IFRAME" />
+		<execute function="Click" locator1="CPKnowledgebaseadminSelectParent#CHOOSE_BUTTON" value1="Choose" />
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#NEW_PARENT_TITLE_FIELD" value1="${kbFolderName}" />
+		<execute function="Click" locator1="CPKnowledgebaseadminMoveArticle#MOVE_BUTTON" />
+
+		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />

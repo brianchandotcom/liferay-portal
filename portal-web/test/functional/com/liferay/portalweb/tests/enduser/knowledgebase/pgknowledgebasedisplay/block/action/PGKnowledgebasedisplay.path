@@ -248,6 +248,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--FOLDER_NAVIGATION-->
+<tr>
+	<td>FOLDER_NAVIGATION_MENULIST</td>
+	<td>//div[contains(@class,'form-group')]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SUGGESTION-->
 <tr>
 	<td>SUGGESTION_TITLE</td>

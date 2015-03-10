@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -74,7 +76,7 @@ public class MBMessageLocalServiceTest {
 
 	@Test
 	public void testDeleteAttachmentsWhenUpdatingMessageAndTrashDisabled()
-		throws Exception {
+		throws PortalException {
 
 		TrashUtil.disableTrash(_group);
 
@@ -98,7 +100,7 @@ public class MBMessageLocalServiceTest {
 
 	@Test
 	public void testDeleteAttachmentsWhenUpdatingMessageAndTrashEnabled()
-		throws Exception {
+		throws PortalException {
 
 		MBMessage message = addMessage(null, true);
 
@@ -127,7 +129,7 @@ public class MBMessageLocalServiceTest {
 	}
 
 	@Test
-	public void testGetNoAssetMessages() throws Exception {
+	public void testGetNoAssetMessages() throws PortalException {
 		addMessage(null, false);
 
 		MBMessage message = addMessage(null, false);
@@ -147,18 +149,16 @@ public class MBMessageLocalServiceTest {
 	}
 
 	@Test
-	public void testThreadLastPostDate() throws Exception {
+	public void testThreadLastPostDate() throws PortalException {
 		Date date = new Date();
-
-		long time = date.getTime();
 
 		MBMessage parentMessage = addMessage(null, false, date);
 
 		MBMessage firstReplyMessage = addMessage(
-			parentMessage, false, new Date(time + 1));
+			parentMessage, false, new Date(date.getTime() + Time.SECOND));
 
 		MBMessage secondReplyMessage = addMessage(
-			parentMessage, false, new Date(time + 2));
+			parentMessage, false, new Date(date.getTime() + Time.SECOND * 2));
 
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			PropsValues.INDEX_DATE_FORMAT_PATTERN);
@@ -181,22 +181,18 @@ public class MBMessageLocalServiceTest {
 
 	protected MBMessage addMessage(
 			MBMessage parentMessage, boolean addAttachments)
-		throws Exception {
+		throws PortalException {
 
-		return addMessage(parentMessage, addAttachments, null);
+		return addMessage(parentMessage, addAttachments, new Date());
 	}
 
 	protected MBMessage addMessage(
 			MBMessage parentMessage, boolean addAttachments, Date date)
-		throws Exception {
+		throws PortalException {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
-
-		if (date != null) {
-			serviceContext.setModifiedDate(date);
-		}
 
 		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
 		long parentMessageId = MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;

@@ -21,12 +21,14 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.lar.WikiPortletDataHandler;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.util.test.WikiTestUtil;
 
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -41,6 +43,13 @@ public class WikiPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		super.setUp();
+	}
 
 	@Override
 	protected void addStagedModels() throws Exception {

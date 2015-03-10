@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -82,6 +83,8 @@ public class WikiPageLocalServiceTest {
 		_group = GroupTestUtil.addGroup();
 
 		_node = WikiTestUtil.addNode(_group.getGroupId());
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
 	}
 
 	@Test
@@ -536,6 +539,9 @@ public class WikiPageLocalServiceTest {
 	public void testGetNoAssetPages() throws Exception {
 		WikiTestUtil.addPage(_group.getGroupId(), _node.getNodeId(), true);
 
+		List<WikiPage> initialPages =
+			WikiPageLocalServiceUtil.getNoAssetPages();
+
 		WikiPage page = WikiTestUtil.addPage(
 			_group.getGroupId(), _node.getNodeId(), true);
 
@@ -548,8 +554,8 @@ public class WikiPageLocalServiceTest {
 
 		List<WikiPage> pages = WikiPageLocalServiceUtil.getNoAssetPages();
 
-		Assert.assertEquals(1, pages.size());
-		Assert.assertEquals(page, pages.get(0));
+		Assert.assertEquals(initialPages.size() + 1, pages.size());
+		Assert.assertEquals(page, pages.get(pages.size() - 1));
 	}
 
 	@Test

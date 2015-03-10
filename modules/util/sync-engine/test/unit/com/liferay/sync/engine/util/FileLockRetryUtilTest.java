@@ -42,6 +42,8 @@ public class FileLockRetryUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
+		FileLockRetryUtil.init();
+
 		_filePath = Files.createTempFile("test", "test");
 
 		_fileChannel = FileChannel.open(
@@ -57,6 +59,8 @@ public class FileLockRetryUtilTest {
 		StreamUtil.cleanUp(_fileChannel);
 
 		Files.deleteIfExists(_filePath);
+
+		FileLockRetryUtil.shutdown();
 	}
 
 	@Test

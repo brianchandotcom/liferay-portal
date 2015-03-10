@@ -32,16 +32,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class FileLockRetryUtil {
 
-	public static void registerPathCallable(PathCallable pathCallable) {
-		_pathCallables.add(pathCallable);
-	}
-
-	private static final List<PathCallable> _pathCallables = new ArrayList<>();
-
-	static {
-		ScheduledExecutorService scheduledExecutorService =
-			Executors.newSingleThreadScheduledExecutor();
-
+	public static void init() {
 		Runnable runnable = new Runnable() {
 
 			@Override
@@ -95,8 +86,20 @@ public class FileLockRetryUtil {
 
 		};
 
-		scheduledExecutorService.scheduleAtFixedRate(
+		_scheduledExecutorService.scheduleAtFixedRate(
 			runnable, 0, 5, TimeUnit.SECONDS);
 	}
+
+	public static void registerPathCallable(PathCallable pathCallable) {
+		_pathCallables.add(pathCallable);
+	}
+
+	public static void shutdown() {
+		_scheduledExecutorService.shutdownNow();
+	}
+
+	private static final List<PathCallable> _pathCallables = new ArrayList<>();
+	private static final ScheduledExecutorService _scheduledExecutorService =
+		Executors.newSingleThreadScheduledExecutor();
 
 }

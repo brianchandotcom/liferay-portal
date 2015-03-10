@@ -48,13 +48,13 @@ public class ExportImportConfigurationSettingsMapFactory {
 
 	public static Map<String, Serializable> buildExportSettingsMap(
 		long userId, long sourcePlid, long sourceGroupId, String portletId,
-		Map<String, String[]> parameterMap, String cmd, Date startDate,
-		Date endDate, Locale locale, TimeZone timeZone, String fileName) {
+		Map<String, String[]> parameterMap, String cmd, Locale locale,
+		TimeZone timeZone, String fileName) {
 
 		return buildSettingsMap(
 			userId, sourceGroupId, sourcePlid, 0, 0, portletId, null, null,
 			null, parameterMap, StringPool.BLANK, 0, StringPool.BLANK, null, 0,
-			null, cmd, startDate, endDate, locale, timeZone, fileName);
+			null, cmd, null, null, locale, timeZone, fileName);
 	}
 
 	public static Map<String, Serializable> buildImportSettingsMap(

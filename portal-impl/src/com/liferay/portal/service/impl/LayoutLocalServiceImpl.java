@@ -1151,8 +1151,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildExportSettingsMap(
 				userId, plid, groupId, portletId, parameterMap,
-				Constants.EXPORT, startDate, endDate, user.getLocale(),
-				user.getTimeZone(), fileName);
+				Constants.EXPORT, user.getLocale(), user.getTimeZone(),
+				fileName);
 
 		ServiceContext serviceContext = new ServiceContext();
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
+import com.liferay.portal.kernel.cluster.ClusterReceiver;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
@@ -226,10 +227,7 @@ public class ClusterExecutorImpl
 
 			sendNotifyRequest();
 
-			JGroupsReceiver jGroupsReceiver =
-				(JGroupsReceiver)_controlJChannel.getReceiver();
-
-			jGroupsReceiver.openLatch();
+			_clusterReceiver.openLatch();
 		}
 		catch (Exception e) {
 			if (_log.isErrorEnabled()) {
@@ -360,11 +358,10 @@ public class ClusterExecutorImpl
 		String controlProperty = controlProperties.getProperty(
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
 
-		ClusterRequestReceiver clusterRequestReceiver =
-			new ClusterRequestReceiver(this);
+		_clusterReceiver = new ClusterRequestReceiver(this);
 
 		_controlJChannel = createJChannel(
-			controlProperty, clusterRequestReceiver, _DEFAULT_CLUSTER_NAME);
+			controlProperty, _clusterReceiver, _DEFAULT_CLUSTER_NAME);
 	}
 
 	protected void initLocalClusterNode() {
@@ -520,6 +517,7 @@ public class ClusterExecutorImpl
 		_clusterEventListeners = new CopyOnWriteArrayList<>();
 	private final Map<String, Address> _clusterNodeAddresses =
 		new ConcurrentHashMap<>();
+	private ClusterReceiver _clusterReceiver;
 	private JChannel _controlJChannel;
 	private ExecutorService _executorService;
 	private final Map<String, FutureClusterResponses> _futureClusterResponses =

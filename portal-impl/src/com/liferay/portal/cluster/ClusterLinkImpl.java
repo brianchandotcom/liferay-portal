@@ -17,6 +17,7 @@ package com.liferay.portal.cluster;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterLink;
+import com.liferay.portal.kernel.cluster.ClusterReceiver;
 import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -77,11 +78,8 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 			throw new IllegalStateException(e);
 		}
 
-		for (JChannel jChannel : _transportJChannels) {
-			JGroupsReceiver jGroupsReceiver =
-				(JGroupsReceiver)jChannel.getReceiver();
-
-			jGroupsReceiver.openLatch();
+		for (ClusterReceiver clusterReceiver : _clusterReceivers) {
+			clusterReceiver.openLatch();
 		}
 	}
 
@@ -145,7 +143,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		return _executorService;
 	}
 
-	protected List<org.jgroups.Address> getLocalTransportAddresses() {
+	protected List<Address> getLocalTransportAddresses() {
 		return _localTransportAddresses;
 	}
 
@@ -162,6 +160,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 
 		_localTransportAddresses = new ArrayList<>(_channelCount);
 		_transportJChannels = new ArrayList<>(_channelCount);
+		_clusterReceivers = new ArrayList<>(_channelCount);
 
 		List<String> keys = new ArrayList<>(_channelCount);
 
@@ -176,11 +175,14 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 
 			String value = transportProperties.getProperty(customName);
 
-			JChannel jChannel = createJChannel(
-				value, new ClusterForwardReceiver(this),
-				_LIFERAY_TRANSPORT_CHANNEL + i);
+			ClusterReceiver clusterReceiver = new ClusterForwardReceiver(this);
 
-			_localTransportAddresses.add(jChannel.getAddress());
+			JChannel jChannel = createJChannel(
+				value, clusterReceiver, _LIFERAY_TRANSPORT_CHANNEL + i);
+
+			_clusterReceivers.add(clusterReceiver);
+			_localTransportAddresses.add(
+				new AddressImpl(jChannel.getAddress()));
 			_transportJChannels.add(jChannel);
 		}
 	}
@@ -217,8 +219,9 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		ClusterLinkImpl.class);
 
 	private int _channelCount;
+	private List<ClusterReceiver> _clusterReceivers;
 	private ExecutorService _executorService;
-	private List<org.jgroups.Address> _localTransportAddresses;
+	private List<Address> _localTransportAddresses;
 	private List<JChannel> _transportJChannels;
 
 }

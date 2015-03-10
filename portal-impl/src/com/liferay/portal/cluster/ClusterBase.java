@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cluster;
 
+import com.liferay.portal.kernel.cluster.ClusterReceiver;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -26,7 +27,6 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 
 import org.jgroups.JChannel;
-import org.jgroups.Receiver;
 import org.jgroups.stack.Protocol;
 import org.jgroups.stack.ProtocolStack;
 
@@ -63,12 +63,13 @@ public abstract class ClusterBase {
 	}
 
 	protected JChannel createJChannel(
-			String properties, Receiver receiver, String clusterName)
+			String properties, ClusterReceiver clusterReceiver,
+			String clusterName)
 		throws Exception {
 
 		JChannel jChannel = new JChannel(properties);
 
-		jChannel.setReceiver(receiver);
+		jChannel.setReceiver(new JGroupsReceiver(clusterReceiver));
 
 		jChannel.connect(clusterName);
 

@@ -14,12 +14,13 @@
 
 package com.liferay.portal.cluster;
 
+import com.liferay.portal.kernel.cluster.Address;
+import com.liferay.portal.kernel.cluster.ClusterReceiver;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.RejectedExecutionException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jgroups.Message;
 import org.jgroups.ReceiverAdapter;
@@ -28,53 +29,31 @@ import org.jgroups.View;
 /**
  * @author Tina Tian
  */
-public abstract class JGroupsReceiver extends ReceiverAdapter {
+public class JGroupsReceiver extends ReceiverAdapter {
 
-	public JGroupsReceiver(ExecutorService executorService) {
-		if (executorService == null) {
-			throw new NullPointerException("Executor service is null");
+	public JGroupsReceiver(ClusterReceiver clusterReceiver) {
+		if (clusterReceiver == null) {
+			throw new NullPointerException("Cluster receiver is null");
 		}
 
-		_executorService = executorService;
-
-		boolean hasDoViewAccepted = false;
-
-		Class<?> clazz = getClass();
-
-		try {
-			clazz.getDeclaredMethod("doViewAccepted", View.class, View.class);
-
-			hasDoViewAccepted = true;
-		}
-		catch (ReflectiveOperationException roe) {
-		}
-
-		_hasDoViewAccepted = hasDoViewAccepted;
-	}
-
-	public View getView() {
-		return _view;
-	}
-
-	public void openLatch() {
-		_countDownLatch.countDown();
+		_clusterReceiver = clusterReceiver;
 	}
 
 	@Override
 	public void receive(Message message) {
-		try {
-			_countDownLatch.await();
+		Object object = message.getObject();
 
-			_executorService.execute(new MessageCallBackJob(message));
+		if (object == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Message content is null");
+			}
+
+			return;
 		}
-		catch (InterruptedException ie) {
-			_log.error(
-				"Latch opened prematurely by interruption. Dependence may " +
-					"not be ready.");
-		}
-		catch (RejectedExecutionException ree) {
-			_log.error("Unable to handle received message " + message, ree);
-		}
+
+		_clusterReceiver.receive(
+			object, _wrapJGroupsAddress(message.getSrc()),
+			_wrapJGroupsAddress(message.getDest()));
 	}
 
 	@Override
@@ -83,78 +62,26 @@ public abstract class JGroupsReceiver extends ReceiverAdapter {
 			_log.info("Accepted view " + view);
 		}
 
-		if (_view == null) {
-			_view = view;
+		List<Address> members = new ArrayList<>();
 
-			return;
+		for (org.jgroups.Address address : view.getMembers()) {
+			members.add(_wrapJGroupsAddress(address));
 		}
 
-		View oldView = _view;
-
-		try {
-			_countDownLatch.await();
-
-			_view = view;
-
-			if (_hasDoViewAccepted) {
-				_executorService.execute(new ViewCallBackJob(oldView, view));
-			}
-		}
-		catch (InterruptedException ie) {
-			_log.error(
-				"Latch opened prematurely by interruption. Dependence may " +
-					"not be ready.");
-		}
-		catch (RejectedExecutionException ree) {
-			_log.error(
-				"Unable to handle view update from " + oldView + " to " + view,
-				ree);
-		}
+		_clusterReceiver.viewAccepted(members);
 	}
 
-	protected abstract void doReceive(Message message);
+	private Address _wrapJGroupsAddress(org.jgroups.Address address) {
+		if (address == null) {
+			return null;
+		}
 
-	protected void doViewAccepted(View oldView, View newView) {
+		return new AddressImpl(address);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JGroupsReceiver.class);
 
-	private final CountDownLatch _countDownLatch = new CountDownLatch(1);
-	private final ExecutorService _executorService;
-	private final boolean _hasDoViewAccepted;
-	private volatile View _view;
-
-	private class MessageCallBackJob implements Runnable {
-
-		@Override
-		public void run() {
-			doReceive(_message);
-		}
-
-		private MessageCallBackJob(Message message) {
-			_message = message;
-		}
-
-		private final Message _message;
-
-	}
-
-	private class ViewCallBackJob implements Runnable {
-
-		@Override
-		public void run() {
-			doViewAccepted(_oldView, _newView);
-		}
-
-		private ViewCallBackJob(View oldView, View newView) {
-			_oldView = oldView;
-			_newView = newView;
-		}
-
-		private final View _newView;
-		private final View _oldView;
-
-	}
+	private final ClusterReceiver _clusterReceiver;
 
 }

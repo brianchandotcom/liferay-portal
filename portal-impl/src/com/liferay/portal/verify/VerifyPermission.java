@@ -14,19 +14,29 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -36,6 +46,7 @@ import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 
 import java.util.ArrayList;
@@ -114,6 +125,7 @@ public class VerifyPermission extends VerifyProcess {
 		checkPermissions();
 		fixDockbarPermissions();
 		fixOrganizationRolePermissions();
+		fixUserDefaultRolePermissions();
 	}
 
 	protected void fixDockbarPermissions() throws Exception {
@@ -200,6 +212,85 @@ public class VerifyPermission extends VerifyProcess {
 		}
 
 		PermissionCacheUtil.clearCache();
+	}
+
+	protected void fixUserDefaultRolePermissions() throws Exception {
+		long userClassNameId = PortalUtil.getClassNameId(User.class);
+		long userGroupClassNameId = PortalUtil.getClassNameId(UserGroup.class);
+
+		DB db = DBFactoryUtil.getDB();
+
+		String dbType = db.getType();
+
+		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+
+		for (long companyId : companyIds) {
+			Role powerUserRole = RoleLocalServiceUtil.getRole(
+				companyId, RoleConstants.POWER_USER);
+			Role userRole = RoleLocalServiceUtil.getRole(
+				companyId, RoleConstants.USER);
+
+			StringBundler join = new StringBundler(17);
+
+			join.append("ResourcePermission rp1 ");
+			join.append("left outer join ResourcePermission rp2 on ");
+			join.append("rp1.companyId = rp2.companyId and ");
+			join.append("rp1.name = rp2.name and ");
+			join.append("rp1.primKey = rp2.primKey and ");
+			join.append("rp1.scope = rp2.scope and rp2.roleId = ");
+			join.append(userRole.getRoleId());
+			join.append(" inner join Layout l on ");
+			join.append("rp1.companyId = l.companyId and ");
+			join.append("rp1.primKey like replace('[$PLID$]");
+			join.append(PortletConstants.LAYOUT_SEPARATOR);
+			join.append("%', '[$PLID$]', cast_text(l.plid)) ");
+			join.append("inner join Group_ g on ");
+			join.append("l.groupId = g.groupId and ");
+			join.append("l.type_ = '");
+			join.append(LayoutConstants.TYPE_PORTLET);
+			join.append(StringPool.APOSTROPHE);
+
+			StringBundler where = new StringBundler(12);
+
+			where.append("where rp1.scope = ");
+			where.append(ResourceConstants.SCOPE_INDIVIDUAL);
+			where.append(" and rp1.primKey like '%");
+			where.append(PortletConstants.LAYOUT_SEPARATOR);
+			where.append("%' and rp1.roleId = ");
+			where.append(powerUserRole.getRoleId());
+			where.append(" and rp2.roleId is null and ");
+			where.append("(g.classNameId = ");
+			where.append(userClassNameId);
+			where.append(" or g.classNameId = ");
+			where.append(userGroupClassNameId);
+			where.append(StringPool.CLOSE_PARENTHESIS);
+
+			StringBundler sb = new StringBundler(8);
+
+			if (dbType.equals(DB.TYPE_MYSQL)) {
+				sb.append("update ");
+				sb.append(join.toString());
+				sb.append(" set rp1.roleId = ");
+				sb.append(userRole.getRoleId());
+				sb.append(StringPool.SPACE);
+				sb.append(where.toString());
+			}
+			else {
+				sb.append("update ResourcePermission set roleId = ");
+				sb.append(userRole.getRoleId());
+				sb.append(" where resourcePermissionId in (");
+				sb.append("select rp1.resourcePermissionId from ");
+				sb.append(join.toString());
+				sb.append(StringPool.SPACE);
+				sb.append(where.toString());
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
+			runSQL(sb.toString());
+		}
+
+		EntityCacheUtil.clearCache();
+		FinderCacheUtil.clearCache();
 	}
 
 	protected boolean isPrivateLayout(String name, String primKey)

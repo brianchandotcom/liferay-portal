@@ -6905,7 +6905,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			long creatorUserId, JournalArticle article, String articleURL,
+			long userId, JournalArticle article, String articleURL,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -7032,7 +7032,7 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setUserId(creatorUserId);
+		subscriptionSender.setUserId(userId);
 
 		JournalFolder folder = article.getFolder();
 

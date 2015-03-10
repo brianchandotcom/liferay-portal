@@ -14,22 +14,25 @@
 
 package com.liferay.wiki.translator;
 
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.util.DigesterImpl;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.mockito.Mockito;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Jorge Ferrer
  */
+@PrepareForTest(DigesterUtil.class)
+@RunWith(PowerMockRunner.class)
 public class MediaWikiToCreoleTranslatorTest {
-
-	@ClassRule
-	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testAngleBracketsUnscape() throws Exception {
@@ -301,6 +304,21 @@ public class MediaWikiToCreoleTranslatorTest {
 			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS +
 				"previous line\n{{{{\nmonospace\n''second'' line\n}}}}\nnext" +
 					" line";
+
+		PowerMockito.mockStatic(DigesterUtil.class);
+
+		Mockito.when(
+			DigesterUtil.getDigester()
+		).thenReturn(
+			new DigesterImpl()
+		);
+
+		Mockito.when(
+			DigesterUtil.digest(Mockito.anyString())
+		).thenReturn(
+			new DigesterImpl().digest(content)
+		);
+
 		String actual = _mediaWikiToCreoleTranslator.translate(content);
 
 		Assert.assertEquals(expected, actual);

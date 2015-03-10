@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.wiki.trash;
+package com.liferay.wiki.trash.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -24,7 +25,6 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.model.WikiNode;
@@ -34,10 +34,12 @@ import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Eudaldo Alonso
  */
+@RunWith(Arquillian.class)
 @Sync
 public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 
@@ -45,7 +47,7 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Ignore()

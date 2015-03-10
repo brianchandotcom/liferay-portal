@@ -12,50 +12,52 @@
  * details.
  */
 
-package com.liferay.wiki.subscription;
+package com.liferay.wiki.subscription.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionLocalizedContentTestCase;
-import com.liferay.wiki.constants.WikiConstants;
-import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionBaseModelTestCase;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.util.test.WikiTestUtil;
 
-import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
+ * @author Sergio González
  * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 @Sync
-public class WikiSubscriptionLocalizedContentTest
-	extends BaseSubscriptionLocalizedContentTestCase {
+public class WikiSubscriptionBaseModelTest
+	extends BaseSubscriptionBaseModelTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			SynchronousMailTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
-	@Before
+	@Ignore
 	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		_node = WikiTestUtil.addNode(group.getGroupId());
+	@Test
+	public void testSubscriptionBaseModelWhenInRootContainerModel() {
 	}
 
 	@Override
@@ -70,38 +72,44 @@ public class WikiSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected long addContainerModel(long userId, long containerModelId)
 		throws Exception {
 
-		WikiNodeLocalServiceUtil.subscribeNode(
-			user.getUserId(), _node.getNodeId());
+		_node = WikiTestUtil.addNode(
+			userId, group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(50));
+
+		return _node.getNodeId();
 	}
 
 	@Override
-	protected String getPortletId() {
-		return WikiPortletKeys.WIKI;
+	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
+		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId);
+
+		WikiPageLocalServiceUtil.subscribePage(
+			user.getUserId(), page.getNodeId(), page.getTitle());
 	}
 
 	@Override
-	protected String getServiceName() {
-		return WikiConstants.SERVICE_NAME;
-	}
+	protected void removeContainerModelResourceViewPermission()
+		throws Exception {
 
-	@Override
-	protected String getSubscriptionAddedBodyPreferenceName() {
-		return "emailPageAddedBody";
-	}
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, WikiNode.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_node.getNodeId()), ActionKeys.VIEW);
 
-	@Override
-	protected String getSubscriptionUpdatedBodyPreferenceName() {
-		return "emailPageUpdatedBody";
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.SITE_MEMBER, WikiNode.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_node.getNodeId()), ActionKeys.VIEW);
 	}
 
 	@Override
 	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
-		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId);
+		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId, true);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(page.getGroupId(), userId);

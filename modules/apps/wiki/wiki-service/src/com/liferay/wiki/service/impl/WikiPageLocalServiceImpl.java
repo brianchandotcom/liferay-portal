@@ -218,7 +218,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
 
-		// Message boards
+		// Comments
 
 		WikiGroupServiceSettings wikiGroupServiceSettings =
 			_groupServiceSettingsProvider.getGroupServiceSettings(

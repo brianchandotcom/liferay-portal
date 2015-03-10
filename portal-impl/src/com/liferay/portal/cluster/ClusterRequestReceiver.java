@@ -17,6 +17,7 @@ package com.liferay.portal.cluster;
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.cluster.Address;
+import com.liferay.portal.kernel.cluster.ClusterChannel;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -28,18 +29,13 @@ import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import org.jgroups.Channel;
-import org.jgroups.Message;
-import org.jgroups.View;
 
 /**
  * @author Michael C. Han
  * @author Tina Tian
  */
-public class ClusterRequestReceiver extends JGroupsReceiver {
+public class ClusterRequestReceiver extends BaseClusterReceiver {
 
 	public ClusterRequestReceiver(ClusterExecutorImpl clusterExecutorImpl) {
 		super(clusterExecutorImpl.getExecutorService());
@@ -48,43 +44,53 @@ public class ClusterRequestReceiver extends JGroupsReceiver {
 	}
 
 	@Override
-	protected void doReceive(Message message) {
-		Object obj = message.getObject();
+	protected void doAddressesUpdated(
+		List<Address> oldAddresses, List<Address> newAddresses) {
 
-		if (obj == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Message content is null");
-			}
+		List<Address> addedAddresses = new ArrayList<>(newAddresses);
 
-			return;
+		addedAddresses.removeAll(oldAddresses);
+
+		if (!addedAddresses.isEmpty()) {
+			_clusterExecutorImpl.sendNotifyRequest();
 		}
 
-		org.jgroups.Address sourceJGroupsAddress = message.getSrc();
+		List<Address> removedAddresses = new ArrayList<>(oldAddresses);
 
-		Channel channel = _clusterExecutorImpl.getControlChannel();
+		removedAddresses.removeAll(newAddresses);
 
-		if (sourceJGroupsAddress.equals(channel.getAddress())) {
+		if (!removedAddresses.isEmpty()) {
+			_clusterExecutorImpl.memberRemoved(removedAddresses);
+		}
+	}
+
+	@Override
+	protected void doReceive(
+		Object messagePayload, Address srcAddress, Address destAddress) {
+
+		ClusterChannel clusterChannel =
+			_clusterExecutorImpl.getControlChannel();
+
+		if (srcAddress.equals(clusterChannel.getLocalAddress())) {
 			return;
 		}
 
 		try {
-			if (obj instanceof ClusterRequest) {
-				ClusterRequest clusterRequest = (ClusterRequest)obj;
+			if (messagePayload instanceof ClusterRequest) {
+				ClusterRequest clusterRequest = (ClusterRequest)messagePayload;
 
-				processClusterRequest(
-					clusterRequest, new AddressImpl(sourceJGroupsAddress));
+				processClusterRequest(clusterRequest, srcAddress);
 			}
-			else if (obj instanceof ClusterNodeResponse) {
+			else if (messagePayload instanceof ClusterNodeResponse) {
 				ClusterNodeResponse clusterNodeResponse =
-					(ClusterNodeResponse)obj;
+					(ClusterNodeResponse)messagePayload;
 
-				processClusterResponse(
-					clusterNodeResponse, new AddressImpl(sourceJGroupsAddress));
+				processClusterResponse(clusterNodeResponse, srcAddress);
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to process message content of type " +
-						obj.getClass());
+						messagePayload.getClass());
 			}
 		}
 		finally {
@@ -94,78 +100,10 @@ public class ClusterRequestReceiver extends JGroupsReceiver {
 		}
 	}
 
-	@Override
-	protected void doViewAccepted(View oldView, View newView) {
-		List<Address> departAddresses = getDepartAddresses(oldView, newView);
-		List<Address> newAddresses = getNewAddresses(oldView, newView);
-
-		if (!newAddresses.isEmpty()) {
-			_clusterExecutorImpl.sendNotifyRequest();
-		}
-
-		if (!departAddresses.isEmpty()) {
-			_clusterExecutorImpl.memberRemoved(departAddresses);
-		}
-	}
-
-	protected List<Address> getDepartAddresses(View oldView, View newView) {
-		List<org.jgroups.Address> currentJGroupsAddresses =
-			newView.getMembers();
-		List<org.jgroups.Address> lastJGroupsAddresses = oldView.getMembers();
-
-		List<org.jgroups.Address> departJGroupsAddresses = new ArrayList<>(
-			lastJGroupsAddresses);
-
-		departJGroupsAddresses.removeAll(currentJGroupsAddresses);
-
-		if (departJGroupsAddresses.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<Address> departAddresses = new ArrayList<>(
-			departJGroupsAddresses.size());
-
-		for (org.jgroups.Address departJGroupsAddress :
-				departJGroupsAddresses) {
-
-			Address departAddress = new AddressImpl(departJGroupsAddress);
-
-			departAddresses.add(departAddress);
-		}
-
-		return departAddresses;
-	}
-
-	protected List<Address> getNewAddresses(View oldView, View newView) {
-		List<org.jgroups.Address> currentJGroupsAddresses =
-			newView.getMembers();
-		List<org.jgroups.Address> lastJGroupsAddresses = oldView.getMembers();
-
-		List<org.jgroups.Address> newJGroupsAddresses = new ArrayList<>(
-			currentJGroupsAddresses);
-
-		newJGroupsAddresses.removeAll(lastJGroupsAddresses);
-
-		if (newJGroupsAddresses.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<Address> newAddresses = new ArrayList<>(
-			newJGroupsAddresses.size());
-
-		for (org.jgroups.Address newJGroupsAddress : newJGroupsAddresses) {
-			Address newAddress = new AddressImpl(newJGroupsAddress);
-
-			newAddresses.add(newAddress);
-		}
-
-		return newAddresses;
-	}
-
 	protected void processClusterRequest(
 		ClusterRequest clusterRequest, Address sourceAddress) {
 
-		Object responsePayload = null;
+		Serializable responsePayload = null;
 
 		Serializable requestPayload = clusterRequest.getPayload();
 
@@ -191,12 +129,11 @@ public class ClusterRequestReceiver extends JGroupsReceiver {
 			return;
 		}
 
-		Channel channel = _clusterExecutorImpl.getControlChannel();
+		ClusterChannel clusterChannel =
+			_clusterExecutorImpl.getControlChannel();
 
 		try {
-			channel.send(
-				(org.jgroups.Address)sourceAddress.getRealAddress(),
-				responsePayload);
+			clusterChannel.sendUnicastMessage(responsePayload, sourceAddress);
 		}
 		catch (Throwable t) {
 			_log.error("Unable to send message " + responsePayload, t);

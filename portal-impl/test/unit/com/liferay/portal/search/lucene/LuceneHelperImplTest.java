@@ -103,7 +103,7 @@ public class LuceneHelperImplTest {
 
 		PortalInstances.addCompanyId(_COMPANY_ID);
 
-		_localhostInetAddress = InetAddress.getLocalHost();
+		_localhostInetAddress = InetAddress.getLoopbackAddress();
 
 		_mockClusterExecutor = new MockClusterExecutor();
 

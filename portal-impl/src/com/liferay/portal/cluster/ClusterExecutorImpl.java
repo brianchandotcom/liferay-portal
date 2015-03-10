@@ -15,6 +15,8 @@
 package com.liferay.portal.cluster;
 
 import com.liferay.portal.kernel.cluster.Address;
+import com.liferay.portal.kernel.cluster.ClusterChannel;
+import com.liferay.portal.kernel.cluster.ClusterChannelFactory;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterException;
@@ -22,10 +24,10 @@ import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
+import com.liferay.portal.kernel.cluster.ClusterReceiver;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -51,7 +53,6 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -62,15 +63,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 
-import org.jgroups.JChannel;
-
 /**
  * @author Tina Tian
  * @author Shuyang Zhou
  */
 @DoPrivileged
 public class ClusterExecutorImpl
-	extends ClusterBase
 	implements ClusterExecutor, PortalInetSocketAddressEventListener {
 
 	@Override
@@ -90,9 +88,7 @@ public class ClusterExecutorImpl
 			return;
 		}
 
-		_controlJChannel.setReceiver(null);
-
-		_controlJChannel.close();
+		_controlChannel.close();
 
 		_executorService.shutdownNow();
 
@@ -142,26 +138,11 @@ public class ClusterExecutorImpl
 		}
 
 		if (clusterRequest.isMulticast()) {
-			try {
-				_controlJChannel.send(null, clusterRequest);
-			}
-			catch (Exception e) {
-				throw new SystemException(
-					"Unable to send multicast request", e);
-			}
+			_controlChannel.sendMulticastMessage(clusterRequest);
 		}
 		else {
 			for (Address address : addresses) {
-				org.jgroups.Address jGroupsAddress =
-					(org.jgroups.Address)address.getRealAddress();
-
-				try {
-					_controlJChannel.send(jGroupsAddress, clusterRequest);
-				}
-				catch (Exception e) {
-					throw new SystemException(
-						"Unable to send unicast request", e);
-				}
+				_controlChannel.sendUnicastMessage(clusterRequest, address);
 			}
 		}
 
@@ -217,7 +198,7 @@ public class ClusterExecutorImpl
 		try {
 			initControlChannel();
 
-			_localAddress = new AddressImpl(_controlJChannel.getAddress());
+			_localAddress = _controlChannel.getLocalAddress();
 
 			initLocalClusterNode();
 
@@ -225,10 +206,7 @@ public class ClusterExecutorImpl
 
 			sendNotifyRequest();
 
-			JGroupsReceiver jGroupsReceiver =
-				(JGroupsReceiver)_controlJChannel.getReceiver();
-
-			jGroupsReceiver.openLatch();
+			_clusterReceiver.openLatch();
 		}
 		catch (Exception e) {
 			if (_log.isErrorEnabled()) {
@@ -249,6 +227,11 @@ public class ClusterExecutorImpl
 	}
 
 	@Override
+	public boolean isEnabled() {
+		return PropsValues.CLUSTER_LINK_ENABLED;
+	}
+
+	@Override
 	public void portalLocalInetSocketAddressConfigured(
 		InetSocketAddress inetSocketAddress, boolean secure) {
 
@@ -256,26 +239,21 @@ public class ClusterExecutorImpl
 			return;
 		}
 
-		try {
-			_localClusterNode.setPortalInetSocketAddress(inetSocketAddress);
+		_localClusterNode.setPortalInetSocketAddress(inetSocketAddress);
 
-			if (secure) {
-				_localClusterNode.setPortalProtocol(Http.HTTPS);
-			}
-			else {
-				_localClusterNode.setPortalProtocol(Http.HTTP);
-			}
-
-			memberJoined(_localAddress, _localClusterNode);
-
-			ClusterRequest clusterRequest =
-				ClusterRequest.createMulticastRequest(_localClusterNode, true);
-
-			_controlJChannel.send(null, clusterRequest);
+		if (secure) {
+			_localClusterNode.setPortalProtocol(Http.HTTPS);
 		}
-		catch (Exception e) {
-			_log.error("Unable to determine configure node port", e);
+		else {
+			_localClusterNode.setPortalProtocol(Http.HTTP);
 		}
+
+		memberJoined(_localAddress, _localClusterNode);
+
+		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
+			_localClusterNode, true);
+
+		_controlChannel.sendMulticastMessage(clusterRequest);
 	}
 
 	@Override
@@ -292,6 +270,12 @@ public class ClusterExecutorImpl
 		}
 
 		_clusterEventListeners.remove(clusterEventListener);
+	}
+
+	public void setClusterChannelFactory(
+		ClusterChannelFactory clusterChannelFactory) {
+
+		_clusterChannelFactory = clusterChannelFactory;
 	}
 
 	public void setClusterEventListeners(
@@ -340,8 +324,8 @@ public class ClusterExecutorImpl
 		}
 	}
 
-	protected JChannel getControlChannel() {
-		return _controlJChannel;
+	protected ClusterChannel getControlChannel() {
+		return _controlChannel;
 	}
 
 	protected FutureClusterResponses getExecutionResults(String uuid) {
@@ -359,15 +343,14 @@ public class ClusterExecutorImpl
 		String controlProperty = controlProperties.getProperty(
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
 
-		ClusterRequestReceiver clusterRequestReceiver =
-			new ClusterRequestReceiver(this);
+		_clusterReceiver = new ClusterRequestReceiver(this);
 
-		_controlJChannel = createJChannel(
-			controlProperty, clusterRequestReceiver, _DEFAULT_CLUSTER_NAME);
+		_controlChannel = _clusterChannelFactory.createClusterChannel(
+			controlProperty, _DEFAULT_CLUSTER_NAME, _clusterReceiver);
 	}
 
 	protected void initLocalClusterNode() {
-		InetAddress inetAddress = getBindInetAddress(_controlJChannel);
+		InetAddress inetAddress = _controlChannel.getBindInetAddress();
 
 		ClusterNode clusterNode = new ClusterNode(
 			PortalUUIDUtil.generate(), inetAddress);
@@ -468,25 +451,18 @@ public class ClusterExecutorImpl
 	}
 
 	protected List<Address> prepareAddresses(ClusterRequest clusterRequest) {
-		boolean isMulticast = clusterRequest.isMulticast();
-
 		List<Address> addresses = null;
 
-		if (isMulticast) {
-			addresses = getAddresses(_controlJChannel);
+		if (clusterRequest.isMulticast()) {
+			addresses = new ArrayList<>(_clusterNodeAddresses.values());
 		}
 		else {
 			addresses = new ArrayList<>();
 
-			Collection<String> clusterNodeIds =
-				clusterRequest.getTargetClusterNodeIds();
+			for (String clusterNodeId :
+					clusterRequest.getTargetClusterNodeIds()) {
 
-			if (clusterNodeIds != null) {
-				for (String clusterNodeId : clusterNodeIds) {
-					Address address = _clusterNodeAddresses.get(clusterNodeId);
-
-					addresses.add(address);
-				}
+				addresses.add(_clusterNodeAddresses.get(clusterNodeId));
 			}
 		}
 
@@ -501,12 +477,7 @@ public class ClusterExecutorImpl
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			_localClusterNode, true);
 
-		try {
-			_controlJChannel.send(null, clusterRequest);
-		}
-		catch (Exception e) {
-			_log.error("Unable to send notify message", e);
-		}
+		_controlChannel.sendMulticastMessage(clusterRequest);
 	}
 
 	private static final String _DEFAULT_CLUSTER_NAME =
@@ -515,11 +486,13 @@ public class ClusterExecutorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterExecutorImpl.class);
 
+	private ClusterChannelFactory _clusterChannelFactory;
 	private final CopyOnWriteArrayList<ClusterEventListener>
 		_clusterEventListeners = new CopyOnWriteArrayList<>();
 	private final Map<String, Address> _clusterNodeAddresses =
 		new ConcurrentHashMap<>();
-	private JChannel _controlJChannel;
+	private ClusterReceiver _clusterReceiver;
+	private ClusterChannel _controlChannel;
 	private ExecutorService _executorService;
 	private final Map<String, FutureClusterResponses> _futureClusterResponses =
 		new ConcurrentReferenceValueHashMap<>(

@@ -14,18 +14,17 @@
 
 package com.liferay.portal.cluster;
 
+import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 
 import java.util.List;
 
-import org.jgroups.Address;
-
 /**
  * @author Shuyang Zhou
  */
-public class ClusterForwardReceiver extends JGroupsReceiver {
+public class ClusterForwardReceiver extends BaseClusterReceiver {
 
 	public ClusterForwardReceiver(ClusterLinkImpl clusterLinkImpl) {
 		super(clusterLinkImpl.getExecutorService());
@@ -34,18 +33,19 @@ public class ClusterForwardReceiver extends JGroupsReceiver {
 	}
 
 	@Override
-	protected void doReceive(org.jgroups.Message jGroupsMessage) {
+	protected void doReceive(
+		Object messagePayload, Address srcAddress, Address destAddress) {
+
 		List<Address> localTransportAddresses =
 			_clusterLinkImpl.getLocalTransportAddresses();
 
-		if (localTransportAddresses.contains(jGroupsMessage.getSrc())) {
+		if (localTransportAddresses.contains(srcAddress)) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Block received message " + jGroupsMessage);
+				_log.debug("Block received message " + messagePayload);
 			}
 		}
 		else {
-			_clusterLinkImpl.sendLocalMessage(
-				(Message)jGroupsMessage.getObject());
+			_clusterLinkImpl.sendLocalMessage((Message)messagePayload);
 		}
 	}
 

@@ -500,7 +500,7 @@
 				<then>
 					<property file="${project.dir}/test.generated.properties" />
 
-					<property name="property.name" value="@{property.name}" />
+					<var name="property.name" value="@{property.name}" />
 
 					<get-test-method-name />
 					<get-test-simple-class-name />

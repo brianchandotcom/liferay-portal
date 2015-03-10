@@ -48,7 +48,7 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 
 	<c:if test="<%= messageDisplay.isMessageLimit() %>">
 		<div class="alert alert-warning">
-			<liferay-ui:message key="max-number-of-comments-has-been-reached" />
+			<liferay-ui:message key="maximum-number-of-comments-has-been-reached" />
 		</div>
 	</c:if>
 

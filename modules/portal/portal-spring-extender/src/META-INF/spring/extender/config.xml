@@ -9,4 +9,5 @@
 >
 	<bean id="applicationContextCreator" class="com.liferay.portal.spring.extender.internal.context.ModuleApplicationContextCreator" />
 	<bean id="osgiApplicationContextListener" class="com.liferay.portal.spring.extender.internal.context.event.BeanLocatorLifecycleManager" />
+	<bean id="taskExecutor" class="org.springframework.core.task.SyncTaskExecutor" />
 </beans>

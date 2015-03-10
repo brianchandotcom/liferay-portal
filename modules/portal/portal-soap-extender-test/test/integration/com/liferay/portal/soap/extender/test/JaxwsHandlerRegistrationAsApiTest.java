@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.soap.test;
+package com.liferay.portal.soap.extender.test;
 
-import com.liferay.portal.soap.sample.service.Greeter;
+import com.liferay.portal.soap.extender.test.service.Greeter;
 
 import java.net.URL;
 
@@ -22,11 +22,9 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
 import org.arquillian.liferay.deploymentscenario.annotations.BndFile;
-
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

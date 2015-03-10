@@ -12,16 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.soap.sample.service;
+package com.liferay.portal.soap.extender.test.service;
 
-import javax.jws.WebService;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@WebService
-public interface Greeter {
+@Component(
+	immediate = true, property = {"jaxws=true", "soap.address=/greeter"},
+	service = Greeter.class
+	)
+public class GreeterImpl implements Greeter {
 
-	public String greet();
+	@Override
+	public String greet() {
+		return "Greetings!";
+	}
 
 }

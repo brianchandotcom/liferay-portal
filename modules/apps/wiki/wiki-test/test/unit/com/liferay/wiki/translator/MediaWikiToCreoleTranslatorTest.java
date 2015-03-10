@@ -14,6 +14,9 @@
 
 package com.liferay.wiki.translator;
 
+import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.util.DigesterImpl;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -292,6 +295,10 @@ public class MediaWikiToCreoleTranslatorTest {
 			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS +
 				"previous line\n{{{{\nmonospace\n''second'' line\n}}}}\nnext" +
 					" line";
+
+		DigesterUtil digesterUtil = new DigesterUtil();
+		digesterUtil.setDigester(new DigesterImpl());
+
 		String actual = _mediaWikiToCreoleTranslator.translate(content);
 
 		Assert.assertEquals(expected, actual);

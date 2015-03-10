@@ -14,13 +14,10 @@
 
 package com.liferay.portal.soap.sample.handlers;
 
-import java.io.IOException;
-
 import java.net.URL;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
@@ -43,9 +40,7 @@ import org.osgi.service.component.annotations.Component;
 public class SampleComponentHandler
 	implements LogicalHandler<LogicalMessageContext> {
 
-	public SampleComponentHandler()
-		throws IOException, TransformerConfigurationException {
-
+	public SampleComponentHandler() {
 		_transformerFactory = TransformerFactory.newInstance();
 
 		_url = SampleComponentHandler.class.getResource("handlerTemplate.xsl");

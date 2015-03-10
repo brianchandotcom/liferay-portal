@@ -65,7 +65,7 @@ public class JGroupsReceiver extends ReceiverAdapter {
 		List<Address> members = new ArrayList<>();
 
 		for (org.jgroups.Address address : view.getMembers()) {
-			members.add(_wrapJGroupsAddress(address));
+			members.add(new AddressImpl(address));
 		}
 
 		_clusterReceiver.addressesUpdated(members);

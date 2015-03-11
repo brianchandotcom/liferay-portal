@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Marketplace Tests
+Bundle-SymbolicName: com.liferay.marketplace.test
+Bundle-Version: 1.0.0
+Include-Resource: classes

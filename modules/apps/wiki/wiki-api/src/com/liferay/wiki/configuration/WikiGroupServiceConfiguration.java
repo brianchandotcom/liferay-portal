@@ -104,8 +104,8 @@ public interface WikiGroupServiceConfiguration {
 	public boolean pageCommentsEnabled();
 
 	/**
-	 * Set this to true to enable social activity notifications on minor edits
-	 * of a wiki page.
+	 * Set this to <code>true</code> to enable social activity notifications on
+	 * minor edits of a wiki page.
 	 */
 	@Meta.AD(
 		deflt = "true", required = false
@@ -113,8 +113,8 @@ public interface WikiGroupServiceConfiguration {
 	public boolean pageMinorEditAddSocialActivity();
 
 	/**
-	 * Set this to true to enable email notifications on minor edits of a wiki
-	 * page.
+	 * Set this to <code>true</code> to enable email notifications on minor
+	 * edits of a wiki page.
 	 */
 	@Meta.AD(
 		deflt = "false", required = false

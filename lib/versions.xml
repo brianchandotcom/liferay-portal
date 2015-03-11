@@ -768,14 +768,14 @@
 			</library>
 			<library>
 				<file-name>lib/development/qdox.jar</file-name>
-				<version>1.12 (Snapshot 20100502)</version>
+				<version>1.12.1 (Snapshot 20121104)</version>
 				<project-name>QDox</project-name>
 				<project-url>http://qdox.codehaus.org</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2002-2006 Joe Walnes and QDox Project Team</copyright-notice>
+						<copyright-notice>Copyright (c) 2002-2009 Joe Walnes and QDox Project Team</copyright-notice>
 					</license>
 				</licenses>
 			</library>

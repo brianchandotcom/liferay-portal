@@ -25,6 +25,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.taglib.TagSupport;
 import com.liferay.taglib.aui.ColumnTag;
 import com.liferay.taglib.aui.LayoutTag;
@@ -273,7 +274,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	@Override
 	public void breadcrumb(
-			String displayStyle, boolean showGuestGroup,
+			DDMTemplate ddmTemplate, boolean showGuestGroup,
 			boolean showParentGroups, boolean showLayout,
 			boolean showPortletBreadcrumb)
 		throws Exception {
@@ -282,7 +283,27 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 		setUp(breadcrumbTag);
 
-		breadcrumbTag.setDisplayStyle(displayStyle);
+		breadcrumbTag.setDdmTemplate(ddmTemplate);
+		breadcrumbTag.setShowGuestGroup(showGuestGroup);
+		breadcrumbTag.setShowLayout(showLayout);
+		breadcrumbTag.setShowParentGroups(showParentGroups);
+		breadcrumbTag.setShowPortletBreadcrumb(showPortletBreadcrumb);
+
+		breadcrumbTag.runTag();
+	}
+
+	@Override
+	public void breadcrumb(
+			String ddmTemplateKey, boolean showGuestGroup,
+			boolean showParentGroups, boolean showLayout,
+			boolean showPortletBreadcrumb)
+		throws Exception {
+
+		BreadcrumbTag breadcrumbTag = new BreadcrumbTag();
+
+		setUp(breadcrumbTag);
+
+		breadcrumbTag.setDdmTemplateKey(ddmTemplateKey);
 		breadcrumbTag.setShowGuestGroup(showGuestGroup);
 		breadcrumbTag.setShowLayout(showLayout);
 		breadcrumbTag.setShowParentGroups(showParentGroups);

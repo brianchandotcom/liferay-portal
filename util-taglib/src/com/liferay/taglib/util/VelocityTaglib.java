@@ -17,6 +17,7 @@ package com.liferay.taglib.util;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.taglib.aui.ColumnTag;
 import com.liferay.taglib.aui.LayoutTag;
 import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
@@ -98,7 +99,13 @@ public interface VelocityTaglib {
 	public void breadcrumb() throws Exception;
 
 	public void breadcrumb(
-			String displayStyle, boolean showGuestGroup,
+			DDMTemplate ddmTemplate, boolean showGuestGroup,
+			boolean showParentGroups, boolean showLayout,
+			boolean showPortletBreadcrumb)
+		throws Exception;
+
+	public void breadcrumb(
+			String ddmTemplateKey, boolean showGuestGroup,
 			boolean showParentGroups, boolean showLayout,
 			boolean showPortletBreadcrumb)
 		throws Exception;

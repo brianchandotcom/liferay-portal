@@ -279,7 +279,7 @@ public interface PropsKeys {
 
 	public static final String BLOGS_TRACKBACK_ENABLED = "blogs.trackback.enabled";
 
-	public static final String BREADCRUMB_DISPLAY_STYLE_DEFAULT = "breadcrumb.display.style.default";
+	public static final String BREADCRUMB_DDM_TEMPLATE_KEY_DEFAULT = "breadcrumb.ddm.template.key.default";
 
 	public static final String BREADCRUMB_SHOW_GUEST_GROUP = "breadcrumb.show.guest.group";
 

@@ -20,6 +20,10 @@
 	<h1 class="hide-accessible"><liferay-ui:message key="breadcrumbs" /></h1>
 
 	<c:if test="<%= !breadcrumbEntries.isEmpty() %>">
-		<liferay-util:include page='<%= "/html/taglib/ui/breadcrumb/display_style_" + displayStyle + ".jsp" %>' />
+		<liferay-ui:ddm-template-renderer
+			displayStyle="<%= displayStyle %>"
+			displayStyleGroupId="<%= displayStyleGroupId %>"
+			entries="<%= breadcrumbEntries %>"
+		/>
 	</c:if>
 </div>

@@ -21,4 +21,5 @@
 <%
 List<BreadcrumbEntry> breadcrumbEntries = (List<BreadcrumbEntry>)request.getAttribute("liferay-ui:breadcrumb:breadcrumbEntries");
 String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:breadcrumb:displayStyle"));
+long displayStyleGroupId = GetterUtil.getLong(request.getAttribute("liferay-ui:breadcrumb:displayStyleGroupId"));
 %>

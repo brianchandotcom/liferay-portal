@@ -17,8 +17,8 @@ package com.liferay.portal.security.auth;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 /**
-* @author Jorge Ferrer
-*/
+ * @author Jorge Ferrer
+ */
 public class FullNameField {
 
 	public String getName() {

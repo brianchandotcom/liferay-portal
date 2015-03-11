@@ -56,6 +56,7 @@ import java.io.Writer;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -135,7 +136,7 @@ public class JavadocFormatter {
 			});
 
 		for (String limit : limits) {
-			List<String> includes = new ArrayList<String>();
+			List<String> includes = new ArrayList<>();
 
 			if (Validator.isNotNull(limit) && !limit.startsWith("$")) {
 				System.out.println("Limit on " + limit);
@@ -149,7 +150,6 @@ public class JavadocFormatter {
 					includes.add("**\\" + curLimit + ".java");
 				}
 			}
-
 			else {
 				includes.add("**\\*.java");
 			}
@@ -347,9 +347,9 @@ public class JavadocFormatter {
 		Element parentElement, String[] tagNames, String indent,
 		boolean publicAccess) {
 
-		List<String> allTagNames = new ArrayList<String>();
-		List<String> customTagNames = new ArrayList<String>();
-		List<String> requiredTagNames = new ArrayList<String>();
+		List<String> allTagNames = new ArrayList<>();
+		List<String> customTagNames = new ArrayList<>();
+		List<String> requiredTagNames = new ArrayList<>();
 
 		for (String tagName : tagNames) {
 			List<Element> elements = parentElement.elements(tagName);
@@ -399,7 +399,7 @@ public class JavadocFormatter {
 
 		int maxTagNameLength = 0;
 
-		List<String> maxTagNameLengthTags = new ArrayList<String>();
+		List<String> maxTagNameLengthTags = new ArrayList<>();
 
 		if (_initializeMissingJavadocs) {
 			maxTagNameLengthTags.addAll(allTagNames);
@@ -1559,7 +1559,7 @@ public class JavadocFormatter {
 	}
 
 	private String _removeJavadocFromJava(JavaClass javaClass, String content) {
-		Set<Integer> lineNumbers = new HashSet<Integer>();
+		Set<Integer> lineNumbers = new HashSet<>();
 
 		lineNumbers.add(_getJavaClassLineNumber(javaClass));
 
@@ -1711,14 +1711,14 @@ public class JavadocFormatter {
 
 		_updateLanguageProperties(document, javaClass.getName());
 
-		List<Tuple> ancestorJavaClassTuples = new ArrayList<Tuple>();
+		List<Tuple> ancestorJavaClassTuples = new ArrayList<>();
 
 		ancestorJavaClassTuples = _addAncestorJavaClassTuples(
 			javaClass, ancestorJavaClassTuples);
 
 		Element rootElement = document.getRootElement();
 
-		Map<Integer, String> commentsMap = new TreeMap<Integer, String>();
+		Map<Integer, String> commentsMap = new TreeMap<>();
 
 		String javaClassComment = _getJavaClassComment(rootElement, javaClass);
 
@@ -1727,7 +1727,7 @@ public class JavadocFormatter {
 
 		commentsMap.put(_getJavaClassLineNumber(javaClass), javaClassComment);
 
-		Map<String, Element> methodElementsMap = new HashMap<String, Element>();
+		Map<String, Element> methodElementsMap = new HashMap<>();
 
 		List<Element> methodElements = rootElement.elements("method");
 
@@ -1772,7 +1772,7 @@ public class JavadocFormatter {
 			commentsMap.put(javaMethod.getLineNumber(), javaMethodComment);
 		}
 
-		Map<String, Element> fieldElementsMap = new HashMap<String, Element>();
+		Map<String, Element> fieldElementsMap = new HashMap<>();
 
 		List<Element> fieldElements = rootElement.elements("field");
 
@@ -1897,7 +1897,7 @@ public class JavadocFormatter {
 
 		StringBundler sb = new StringBundler();
 
-		try (UnsyncBufferedReader unsyncBufferedReader = 
+		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(
 					new FileReader(_languagePropertiesFile))) {
 

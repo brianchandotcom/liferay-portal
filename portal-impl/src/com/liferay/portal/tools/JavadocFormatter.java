@@ -130,6 +130,7 @@ public class JavadocFormatter {
 			new String[] {
 				"**\\classes\\**", "**\\portal-client\\**",
 				"**\\src\\PortletViewController.java",
+				"**\\template\\Template.java",
 				"**\\wiki\\configuration\\WikiGroupServiceConfiguration.java"
 			});
 

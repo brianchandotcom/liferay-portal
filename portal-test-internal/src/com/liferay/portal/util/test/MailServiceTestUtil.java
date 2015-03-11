@@ -91,38 +91,42 @@ public class MailServiceTestUtil {
 			throw new IllegalStateException("Server is already running");
 		}
 
-		_smtpServer = new SmtpServer();
+		try {
+			_prefsPropsReplacement = new PrefsPropsTemporarySwapper(
+				PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT, 7890,
+				PropsKeys.MAIL_SESSION_MAIL, true);
 
-		_smtpServer.setMailStore(
-			new RollingMailStore() {
+			_smtpServer = new SmtpServer();
 
-				@Override
-				public void addMessage(MailMessage message) {
-					try {
-						List<MailMessage> receivedMail =
-							ReflectionTestUtil.getFieldValue(
-								this, "receivedMail");
+			_smtpServer.setMailStore(
+				new RollingMailStore() {
 
-						receivedMail.add(message);
+					@Override
+					public void addMessage(MailMessage message) {
+						try {
+							List<MailMessage> receivedMail =
+								ReflectionTestUtil.getFieldValue(
+									this, "receivedMail");
 
-						if (getEmailCount() > 100) {
-							receivedMail.remove(0);
+							receivedMail.add(message);
+
+							if (getEmailCount() > 100) {
+								receivedMail.remove(0);
+							}
+						}
+						catch (Exception e) {
+							throw new RuntimeException(e);
 						}
 					}
-					catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-				}
 
-			});
-		_smtpServer.setPort(
-			PrefsPropsUtil.getInteger(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT,
-				PropsValues.MAIL_SESSION_MAIL_SMTP_PORT));
+				});
+			_smtpServer.setPort(
+				PrefsPropsUtil.getInteger(
+					PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT,
+					PropsValues.MAIL_SESSION_MAIL_SMTP_PORT));
 
-		_smtpServer.setThreaded(false);
+			_smtpServer.setThreaded(false);
 
-		try {
 			ReflectionTestUtil.invoke(
 				SmtpServerFactory.class, "startServerThread",
 				new Class<?>[] {SmtpServer.class}, _smtpServer);
@@ -140,8 +144,16 @@ public class MailServiceTestUtil {
 		_smtpServer.stop();
 
 		_smtpServer = null;
+
+		try {
+			_prefsPropsReplacement.close();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
+	private static PrefsPropsTemporarySwapper _prefsPropsReplacement;
 	private static SmtpServer _smtpServer;
 
 }

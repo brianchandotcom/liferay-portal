@@ -1837,7 +1837,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
-	protected String formatWhitespace(
+	protected String formatIncorrectSyntax(
 		String line, String incorrectSyntax, String correctSyntax) {
 
 		for (int x = -1;;) {
@@ -1855,16 +1855,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatWhitespace(String line, String trimmedLine) {
-		line = formatWhitespace(line, "catch(", "catch (");
-		line = formatWhitespace(line, "else{", "else {");
-		line = formatWhitespace(line, "for(", "for (");
-		line = formatWhitespace(line, "if(", "if (");
-		line = formatWhitespace(line, "while(", "while (");
-		line = formatWhitespace(line, "List <", "List<");
-		line = formatWhitespace(line, "){", ") {");
-		line = formatWhitespace(line, "]{", "] {");
-		line = formatWhitespace(line, " [", "[");
-		line = formatWhitespace(
+		line = formatIncorrectSyntax(line, "catch(", "catch (");
+		line = formatIncorrectSyntax(line, "else{", "else {");
+		line = formatIncorrectSyntax(line, "for(", "for (");
+		line = formatIncorrectSyntax(line, "if(", "if (");
+		line = formatIncorrectSyntax(line, "while(", "while (");
+		line = formatIncorrectSyntax(line, "List <", "List<");
+		line = formatIncorrectSyntax(line, "){", ") {");
+		line = formatIncorrectSyntax(line, "]{", "] {");
+		line = formatIncorrectSyntax(line, " [", "[");
+		line = formatIncorrectSyntax(
 			line, StringPool.SPACE + StringPool.TAB, StringPool.TAB);
 
 		for (int x = 0;;) {

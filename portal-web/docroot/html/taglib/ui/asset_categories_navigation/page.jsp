@@ -135,7 +135,6 @@ private void _buildCategoriesNavigation(List<AssetCategory> categories, long cat
 			sb.append("<a class=\"tag-selected\" href=\"");
 		}
 		else {
-			portletURL.setParameter("resetCur", Boolean.TRUE.toString());
 			portletURL.setParameter("categoryId", String.valueOf(category.getCategoryId()));
 
 			sb.append("<a href=\"");

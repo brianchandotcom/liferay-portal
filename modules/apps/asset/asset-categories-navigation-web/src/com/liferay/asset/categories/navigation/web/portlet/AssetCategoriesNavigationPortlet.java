@@ -30,6 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-asset-categories-navigation",
 		"com.liferay.portlet.display-category=category.cms",
+		"com.liferay.portlet.friendly-url-mapping=categories",
+		"com.liferay.portlet.friendly-url-routes=com/liferay/asset/categories/navigation/web/portlet/route/asset-categories-navigation-friendly-url-routes.xml",
 		"com.liferay.portlet.icon=/icons/asset_categories_navigation.png",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.layout-cacheable=true",
@@ -46,7 +48,6 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supported-public-render-parameter=categoryId",
-		"javax.portlet.supported-public-render-parameter=resetCur",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class

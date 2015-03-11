@@ -33,9 +33,7 @@ public class ClusterForwardReceiver extends BaseClusterReceiver {
 	}
 
 	@Override
-	protected void doReceive(
-		Object messagePayload, Address srcAddress, Address destAddress) {
-
+	protected void doReceive(Object messagePayload, Address srcAddress) {
 		List<Address> localTransportAddresses =
 			_clusterLinkImpl.getLocalTransportAddresses();
 

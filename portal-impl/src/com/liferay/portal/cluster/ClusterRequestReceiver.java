@@ -65,9 +65,7 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 	}
 
 	@Override
-	protected void doReceive(
-		Object messagePayload, Address srcAddress, Address destAddress) {
-
+	protected void doReceive(Object messagePayload, Address srcAddress) {
 		ClusterChannel clusterChannel =
 			_clusterExecutorImpl.getControlChannel();
 

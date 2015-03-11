@@ -74,18 +74,22 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			<%
 			String keywords = ParamUtil.getString(request, "keywords");
 
-			total = AssetVocabularyServiceUtil.getGroupVocabulariesCount(scopeGroupId);
-
-			searchContainer.setTotal(total);
-
 			List<AssetVocabulary> vocabularies = null;
 
 			if (Validator.isNotNull(keywords)) {
 				AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), true);
 
+				total = assetVocabularyDisplay.getTotal();
+
+				searchContainer.setTotal(total);
+
 				vocabularies = assetVocabularyDisplay.getVocabularies();
 			}
 			else {
+				total = AssetVocabularyServiceUtil.getGroupVocabulariesCount(scopeGroupId);
+
+				searchContainer.setTotal(total);
+
 				vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId, true, searchContainer.getStart(), searchContainer.getEnd(), null);
 			}
 

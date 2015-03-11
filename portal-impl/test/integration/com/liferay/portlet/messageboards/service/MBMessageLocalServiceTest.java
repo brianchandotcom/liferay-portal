@@ -193,6 +193,7 @@ public class MBMessageLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
+		serviceContext.setCreateDate(date);
 		serviceContext.setModifiedDate(date);
 
 		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;

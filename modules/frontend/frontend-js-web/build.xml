@@ -5,4 +5,384 @@
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
+
+	<property name="alloyeditor.version" value="0.2.5" />
+	<property name="ckeditor.file" value="ckeditor_4.4.5_liferay.zip" />
+	<property name="html.js.path" value="src/META-INF/resources/html/js" />
+	<property name="scayt.file" value="scayt_4.4.5.zip" />
+	<property name="third.party.path" value="../../../portal-web/third-party" />
+	<property name="tinymce.file" value="tinymce_4.1.7.zip" />
+	<property name="wsc.file" value="wsc_4.4.5.zip" />
+
+	<target name="build-alloy">
+		<property name="alloy.extracted.path" value="ALLOY_ZIP" />
+		<property name="alloy.version" value="3.0.1" />
+
+		<path id="alloy.zip.path">
+			<fileset dir="${third.party.path}">
+				<include name="alloy-${alloy.version}*.zip" />
+			</fileset>
+		</path>
+
+		<property name="alloy.zip.path" refid="alloy.zip.path" />
+
+		<basename file="${alloy.zip.path}" property="alloy.file" />
+
+		<if>
+			<not>
+				<uptodate
+					srcfile="${third.party.path}/${alloy.file}"
+					targetfile="tmp/aui"
+				/>
+			</not>
+			<then>
+
+				<!-- Prepare -->
+
+				<delete dir="{alloy.extracted.path}" />
+				<delete dir="tmp/aui" />
+
+				<echo>${alloy.file}</echo>
+
+				<unzip src="${third.party.path}/${alloy.file}" dest="${alloy.extracted.path}" />
+
+				<!-- CSS -->
+
+				<property name="alloy.build.dir" value="${alloy.extracted.path}/build" />
+				<property name="alloy.temp.dir" value="${alloy.extracted.path}/temp" />
+
+				<concat destfile="${alloy.temp.dir}/aui_deprecated.css">
+					<filelist
+						dir="${alloy.build.dir}/aui-skin-deprecated/css"
+						files="aui-skin-deprecated.css"
+					/>
+				</concat>
+
+ 				<for param="dir">
+					<path>
+						<dirset
+							dir="${alloy.build.dir}"
+							includes="aui-*"
+						/>
+					</path>
+					<sequential>
+						<basename property="dir.name" file="@{dir}" />
+						<if>
+							<and>
+								<available file="${alloy.build.dir}/${dir.name}/assets/skins/sam/${dir.name}.css" />
+								<matches pattern="-deprecated" string="${dir.name}" />
+							</and>
+							<then>
+								<concat append="true" destfile="${alloy.temp.dir}/aui_deprecated.css">
+									<filelist
+										dir="${alloy.build.dir}/${dir.name}/assets/skins/sam"
+										files="${dir.name}.css"
+									/>
+								</concat>
+							</then>
+						</if>
+						<var name="dir.name" unset="true" />
+					</sequential>
+				</for>
+
+  				<replaceregexp match="url\(([^)]+)\)" replace="url(@theme_image_path@/aui/\1)" flags="g" byline="false">
+					<fileset
+						dir="${alloy.temp.dir}"
+						includes="aui_deprecated.css"
+					/>
+				</replaceregexp>
+
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
+					<replacefilter token="../images/" value="" />
+				</replace>
+
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
+					<replacefilter token="../../../../../build/aui-skin-base/images/" value="" />
+				</replace>
+
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
+					<replacefilter token="../../../../../build/aui-skin-classic/images/" value="" />
+				</replace>
+
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
+					<replacefilter token="../../../../../build/aui-skin-deprecated/images/" value="" />
+				</replace>
+
+ 				<copy
+					file="${alloy.temp.dir}/aui_deprecated.css"
+					tofile="tmp/aui/aui_deprecated.css"
+					overwrite="true"
+				/>
+
+				<!-- JavaScript -->
+
+				<copy todir="tmp/aui" overwrite="true" preservelastmodified="true">
+					<fileset dir="${alloy.build.dir}/" />
+				</copy>
+
+				<!-- Clean up -->
+
+				<delete dir="${alloy.extracted.path}" />
+			</then>
+		</if>
+	</target>
+
+	<target name="build-alloy-editor">
+		<path id="alloyeditor.zip.path">
+			<fileset dir="${third.party.path}">
+				<include name="alloy-editor-${alloyeditor.version}.zip" />
+			</fileset>
+		</path>
+
+		<property name="alloyeditor.zip.path" refid="alloyeditor.zip.path" />
+
+		<basename file="${alloyeditor.zip.path}" property="alloyeditor.file" />
+
+		<if>
+			<not>
+				<uptodate
+					srcfile="${third.party.path}/${alloyeditor.file}"
+					targetfile="tmp/editor/alloyeditor"
+				/>
+			</not>
+			<then>
+				<delete dir="tmp/editor/alloyeditor" />
+
+				<echo>${alloyeditor.file}</echo>
+
+				<unzip src="${third.party.path}/${alloyeditor.file}" dest="tmp/editor/_tmp" />
+
+				<copy todir="tmp/editor/alloyeditor" overwrite="true" preservelastmodified="true">
+					<fileset dir="tmp/editor/_tmp/alloy-editor-${alloyeditor.version}/alloy-editor" />
+				</copy>
+
+				<copy todir="tmp/editor/alloyeditor" overwrite="true" preservelastmodified="true">
+					<fileset dir="${html.js.path}/editor/alloyeditor_diffs" />
+				</copy>
+
+				<delete dir="tmp/editor/_tmp" />
+			</then>
+			<else>
+				<copy todir="tmp/editor/alloyeditor" preservelastmodified="true">
+					<fileset dir="${html.js.path}/editor/alloyeditor_diffs" />
+				</copy>
+			</else>
+		</if>
+	</target>
+
+	<target name="build-ckeditor">
+		<if>
+			<not>
+				<uptodate
+					srcfile="${third.party.path}/${ckeditor.file}"
+					targetfile="tmp/editor/ckeditor"
+				/>
+			</not>
+			<then>
+				<delete dir="tmp/editor/ckeditor" />
+
+				<unzip src="${third.party.path}/${ckeditor.file}" dest="tmp/editor" />
+
+				<copy todir="tmp/editor/ckeditor" overwrite="true" preservelastmodified="true">
+					<fileset dir="${html.js.path}/editor/ckeditor_diffs" />
+				</copy>
+
+				<antcall target="build-ckeditor-plugins-scayt" />
+
+				<antcall target="build-ckeditor-plugins-wsc" />
+			</then>
+			<else>
+				<copy todir="tmp/editor/ckeditor" preservelastmodified="true">
+					<fileset dir="${html.js.path}/editor/ckeditor_diffs" />
+				</copy>
+			</else>
+		</if>
+	</target>
+
+	<target name="build-ckeditor-plugins-bbcode">
+		<concat destfile="${html.js.path}/editor/ckeditor_diffs/plugins/bbcode/bbcode_parser.js">
+			<filelist
+				dir="${html.js.path}/editor/ckeditor_diffs/plugins/bbcode"
+				files="bbcode_utils.js,lexer.js,parser.js,converter.js"
+			/>
+		</concat>
+	</target>
+
+	<target name="build-ckeditor-plugins-creole">
+		<mirrors-get
+			dest="${html.js.path}/editor/ckeditor_diffs/plugins/creole/creole_parser.js"
+			src="http://www.ivan.fomichev.name/2008/04/javascript-creole-10-wiki-markup-parser.html"
+		/>
+
+		<loadfile property="creole_parser.content" srcfile="${front.end.js.web.src.path}/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js" />
+
+		<script classpathref="project.classpath" language="beanshell">
+			<![CDATA[
+				import org.apache.commons.lang.StringEscapeUtils;
+
+				// Read content
+
+				String creoleParserContent = project.getProperty("creole_parser.content");
+
+				// Get source
+
+				int x = creoleParserContent.indexOf("<pre id=\"parser\"");
+
+				x  = creoleParserContent.indexOf(">", x) + 1;
+
+				int y = creoleParserContent.indexOf("</pre>", x);
+
+				creoleParserContent = creoleParserContent.substring(x, y);
+
+				// Unescape
+
+				creoleParserContent = StringEscapeUtils.unescapeHtml(creoleParserContent);
+
+				// Wrap with function
+
+				x = creoleParserContent.indexOf("if (!Parse) {");
+
+				creoleParserContent = creoleParserContent.substring(0, x) + "(function() {\n" + creoleParserContent.substring(x) + "\n})();";
+
+				// Fix for loop
+
+				creoleParserContent = creoleParserContent.replace("for (i in this.options) {", "for (var i in this.options) {");
+
+				// Add data-cke-saved-href attribute to named links
+
+				creoleParserContent = creoleParserContent.replace(": r[1].replace(/~(.)/g, '$1');", ": r[1].replace(/~(.)/g, '$1');\nlink.setAttribute('data-cke-saved-href', link.href);\n");
+
+				// Fix image
+
+				x = creoleParserContent.indexOf("regex: rx.img,");
+				x = creoleParserContent.indexOf("{", x) + 1;
+
+				y = creoleParserContent.indexOf("r[1];", x) + 5;
+
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("\n\t\t\t\tvar imagePath = r[1];\n");
+				sb.append("\t\t\t\tvar imagePathPrefix = options ? options.imagePrefix : '';\n\n");
+				sb.append("\t\t\t\tif (imagePathPrefix) {\n");
+				sb.append("\t\t\t\t\tif (!(/^https?:\\/\\//gi.test(imagePath))) {\n");
+				sb.append("\t\t\t\t\t\timagePath = imagePathPrefix + imagePath;\n");
+				sb.append("\t\t\t\t\t}\n");
+				sb.append("\t\t\t\t}\n\n");
+				sb.append("\t\t\t\tvar img = document.createElement('img');\n");
+				sb.append("\t\t\t\timg.src = imagePath;");
+
+				creoleParserContent = creoleParserContent.substring(0, x) + sb.toString() + creoleParserContent.substring(y);
+
+				// Add support for whitespace in headings
+
+				creoleParserContent = creoleParserContent.replace("'(^|\\\\n)[ \\\\t]*={' + i + '}[ \\\\t]'", "'(^|\\\\n)[ \\\\t]*={' + i + '}[ \\\\t]*'");
+				creoleParserContent = creoleParserContent.replace("'([^~]*?(~(.|(?=\\\\n)|$))*)[ \\\\t]*=*\\\\s*(\\\\n|$)'", "'([^\\\\n=][^~]*?(~(.|(?=\\\\n)|$))*)[ \\\\t]*=*\\\\s*(\\\\n|$)'");
+
+				// Fix handling mixed list items
+
+				creoleParserContent = creoleParserContent.replace("regex: /[ \\t]*([*#]).+(\\n[ \\t]*[^*#\\s].*)*(\\n[ \\t]*\\1[*#].+)*/,", "regex: /[ \\t]*([*#]).+(\\n[ \\t]*[^*#\\s].*)*(\\n[ \\t]*[*#]{2}.+)*/,");
+
+				// Add support for multiple links in table cells
+
+				creoleParserContent = creoleParserContent.replace("'\\\\[\\\\[' + rx.link + '(\\\\|' + rx.linkText + ')?\\\\]\\\\]' +", "'(?:\\\\[\\\\[' + rx.link + '(\\\\|' + rx.linkText + ')?\\\\]\\\\][^|~\\\\[{]*)*' +");
+
+				// Add cke_show_border class to table start tag to keep CKEditor's formatting
+
+				creoleParserContent = creoleParserContent.replace("table: { tag: 'table', capture: 0,", "table: { tag: 'table', capture: 0,\n\t\t\tattrs: { 'class': 'cke_show_border' },");
+
+				// Fix parsing empty columns in tables
+
+				creoleParserContent = creoleParserContent.replace("regex: '\\\\|+([^|~\\\\[{]*((~(.|(?=\\\\n)|$)|' +", "regex: '\\\\|([^|~\\\\[{]*((~(.|(?=\\\\n)|$)|' +");
+
+				// Register Creole parser
+
+				creoleParserContent = creoleParserContent.replace("= Parse.Simple.Creole;", "= Parse.Simple.Creole;\n\nCKEDITOR.CreoleParser = Parse.Simple.Creole;");
+
+				// Fix paragraphs
+
+				creoleParserContent = creoleParserContent.replace("regex: /(^|\\n)([ \\t]*\\S.*(\\n|$))+/ },", "regex: /(^|\\n)(\\s*\\S.*(\\n|$))/ },");
+				creoleParserContent = creoleParserContent.replace("text: { capture: 0, regex: /(^|\\n)([ \\t]*[^\\s].*(\\n|$))+/ },", "text: { capture: 0, regex: /(^|\\n)(\\s*[^\\s].*(\\n|$))+/ },");
+
+
+				// Set content
+
+				project.setProperty("creole_parser.content", creoleParserContent);
+			]]>
+		</script>
+
+		<echo file="${html.js.path}/editor/ckeditor_diffs/plugins/creole/creole_parser.js">${creole_parser.content}</echo>
+	</target>
+
+	<target name="build-ckeditor-plugins-scayt">
+		<if>
+			<not>
+				<available file="${third.party.path}/${scayt.file}" />
+			</not>
+			<then>
+				<mirrors-get
+					dest="${third.party.path}/${scayt.file}"
+					src="http://download.ckeditor.com/scayt/releases/${scayt.file}"
+				/>
+			</then>
+		</if>
+
+		<unzip
+			dest="tmp/editor/ckeditor/plugins"
+			src="${third.party.path}/${scayt.file}"
+		/>
+	</target>
+
+	<target name="build-ckeditor-plugins-wsc">
+		<if>
+			<not>
+				<available file="${third.party.path}/${wsc.file}" />
+			</not>
+			<then>
+				<mirrors-get
+					dest="${third.party.path}/${wsc.file}"
+					src="http://download.ckeditor.com/wsc/releases/${wsc.file}"
+				/>
+			</then>
+		</if>
+
+		<unzip
+			dest="tmp/editor/ckeditor/plugins"
+			src="${third.party.path}/${wsc.file}"
+		/>
+	</target>
+
+	<target name="build-tinymce">
+		<if>
+			<not>
+				<uptodate
+					srcfile="${third.party.path}/${tinymce.file}"
+					targetfile="tmp/editor/tiny_mce"
+				/>
+			</not>
+			<then>
+				<delete dir="tmp/editor/tiny_mce" />
+				<delete dir="tmp/editor/tinymce" />
+
+				<unzip src="${third.party.path}/${tinymce.file}" dest="tmp/editor" />
+
+				<move todir="tmp/editor/tiny_mce" preservelastmodified="true">
+					<fileset dir="tmp/editor/tinymce/js/tinymce">
+						<include name="*/**" />
+					</fileset>
+				</move>
+
+				<copy todir="tmp/editor/tiny_mce" overwrite="true" preservelastmodified="true">
+					<fileset dir="${html.js.path}/editor/tiny_mce_diffs" />
+				</copy>
+
+				<delete dir="tmp/editor/tinymce" />
+			</then>
+		</if>
+	</target>
+
+	<target name="jar" depends="build-common.compile,build-alloy,build-alloy-editor,build-ckeditor,build-tinymce">
+		<jar-macro
+			module.dir="${basedir}"
+		/>
+	</target>
 </project>

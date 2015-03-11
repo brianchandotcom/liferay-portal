@@ -368,6 +368,15 @@
 		<portlet-name>88</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>layouts_admin</struts-path>
+		<scheduler-entry>
+			<scheduler-event-listener-class>com.liferay.portlet.layoutsadmin.messaging.DraftExportImportConfigurationsMessageListener</scheduler-event-listener-class>
+			<trigger>
+				<simple>
+					<property-key>staging.draft.export.import.configuration.cleanup.check.interval</property-key>
+					<time-unit>hour</time-unit>
+				</simple>
+			</trigger>
+		</scheduler-entry>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<staged-model-data-handler-class>com.liferay.portlet.layoutsadmin.lar.LayoutFriendlyURLStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.layoutsadmin.lar.LayoutStagedModelDataHandler</staged-model-data-handler-class>

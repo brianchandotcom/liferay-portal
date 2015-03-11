@@ -200,7 +200,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						</p>
 
 						<div class="entry-abstract-options" id="<portlet:namespace />entryAbstractOptions">
-							<aui:input checked="<%= !customAbstract %>" label='<%= LanguageUtil.format(request, "use-first-x-characters-of-the-content-entry", pageAbstractLength, false) %>' name="customAbstract" type="radio" value="<%= false %>" />
+							<aui:input checked="<%= !customAbstract %>" label='<%= LanguageUtil.format(request, "use-the-first-x-characters-of-the-entry-content", pageAbstractLength, false) %>' name="customAbstract" type="radio" value="<%= false %>" />
 
 							<aui:input checked="<%= customAbstract %>" label="custom-abstract" name="customAbstract" type="radio" value="<%= true %>" />
 						</div>

@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.TrashedModel;
-import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -38,14 +38,12 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.taglib.util.RestoreEntryUtil;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
-import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageServiceUtil;
-import com.liferay.wiki.util.WikiPageAttachmentsUtil;
 
 import java.io.InputStream;
 
@@ -98,6 +96,14 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 			else if (cmd.equals(Constants.ADD_TEMP)) {
 				addTempAttachment(actionRequest);
 			}
+			else if (cmd.equals(Constants.CHECK)) {
+				JSONObject jsonObject = RestoreEntryUtil.checkEntry(
+					actionRequest);
+
+				writeJSON(actionRequest, actionResponse, jsonObject);
+
+				return;
+			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteAttachment(actionRequest, false);
 			}
@@ -110,8 +116,14 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteAttachment(actionRequest, true);
 			}
+			else if (cmd.equals(Constants.RENAME)) {
+				restoreRename(actionRequest);
+			}
 			else if (cmd.equals(Constants.RESTORE)) {
-				restoreAttachment(actionRequest);
+				restoreEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.OVERRIDE)) {
+				restoreOverride(actionRequest);
 			}
 
 			if (cmd.equals(Constants.ADD_TEMP) ||
@@ -365,25 +377,52 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 		WikiPageServiceUtil.deleteTrashPageAttachments(nodeId, title);
 	}
 
-	protected void restoreAttachment(ActionRequest actionRequest)
+	protected void restoreEntries(ActionRequest actionRequest)
 		throws Exception {
+
+		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
+
+		if (trashEntryId > 0) {
+			TrashEntryServiceUtil.restoreEntry(trashEntryId);
+
+			return;
+		}
 
 		long[] restoreEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
 		for (long restoreEntryId : restoreEntryIds) {
-			TrashEntry trashEntry = TrashEntryLocalServiceUtil.getTrashEntry(
-				restoreEntryId);
-
-			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-				trashEntry.getClassPK());
-
-			WikiPage page = WikiPageAttachmentsUtil.getPage(
-				fileEntry.getFileEntryId());
-
-			WikiPageServiceUtil.restorePageAttachmentFromTrash(
-				page.getNodeId(), page.getTitle(), fileEntry.getTitle());
+			TrashEntryServiceUtil.restoreEntry(restoreEntryId);
 		}
+	}
+
+	protected void restoreOverride(ActionRequest actionRequest)
+		throws Exception {
+
+		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
+
+		long duplicateEntryId = ParamUtil.getLong(
+			actionRequest, "duplicateEntryId");
+
+		TrashEntryServiceUtil.restoreEntry(
+			trashEntryId, duplicateEntryId, null);
+	}
+
+	protected void restoreRename(ActionRequest actionRequest) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
+
+		String newName = ParamUtil.getString(actionRequest, "newName");
+
+		if (Validator.isNull(newName)) {
+			String oldName = ParamUtil.getString(actionRequest, "oldName");
+
+			newName = TrashUtil.getNewName(themeDisplay, null, 0, oldName);
+		}
+
+		TrashEntryServiceUtil.restoreEntry(trashEntryId, 0, newName);
 	}
 
 	private static final String _TEMP_FOLDER_NAME =

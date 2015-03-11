@@ -811,6 +811,20 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void emptyMessageAttachments(long messageId) throws PortalException {
+		MBMessage message = getMessage(messageId);
+
+		long folderId = message.getAttachmentsFolderId();
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return;
+		}
+
+		PortletFileRepositoryUtil.deletePortletFileEntries(
+			message.getGroupId(), folderId, WorkflowConstants.STATUS_IN_TRASH);
+	}
+
+	@Override
 	public List<MBMessage> getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end) {
 

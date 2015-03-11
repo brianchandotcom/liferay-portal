@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.trash.action;
+package com.liferay.taglib.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -24,21 +25,21 @@ import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
-import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-public class ActionUtil {
+public class RestoreEntryUtil {
 
-	public static JSONObject checkEntry(ActionRequest actionRequest)
-		throws Exception {
+	public static JSONObject checkEntry(PortletRequest portletRequest)
+		throws PortalException {
 
-		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
+		long trashEntryId = ParamUtil.getLong(portletRequest, "trashEntryId");
 
-		String newName = ParamUtil.getString(actionRequest, "newName");
+		String newName = ParamUtil.getString(portletRequest, "newName");
 
-		TrashEntry entry = TrashEntryLocalServiceUtil.getTrashEntry(
+		TrashEntry entry = TrashEntryLocalServiceUtil.fetchTrashEntry(
 			trashEntryId);
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(

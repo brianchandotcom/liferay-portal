@@ -67,11 +67,7 @@
 			<forward name="portlet.wiki.view_categorized_pages" path="/portlet/wiki/view_categorized_pages.jsp" />
 		</action>
 
-		<action path="/wiki/restore_entry" forward="portlet.trash.restore_entry" />
-
-		<action path="/wiki/restore_page_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
-			<forward name="portlet.trash.view" path="/portlet/wiki/view_page_attachments.jsp" />
-		</action>
+		<action path="/wiki/restore_entry" forward="/portlet/wiki/restore_entry.jsp" />
 
 		<action path="/wiki/rss" type="com.liferay.wiki.web.wiki.portlet.action.RSSAction">
 			<forward name="portlet.wiki.view_categorized_pages" path="/portlet/wiki/view_categorized_pages.jsp" />
@@ -222,11 +218,7 @@
 			<forward name="portlet.wiki.move_page" path="/portlet/wiki/move_page.jsp" />
 		</action>
 
-		<action path="/wiki_admin/restore_entry" forward="portlet.trash.restore_entry" />
-
-		<action path="/wiki_admin/restore_page_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
-			<forward name="portlet.trash.view" path="/portlet/wiki/view_page_attachments.jsp" />
-		</action>
+		<action path="/wiki_admin/restore_entry" forward="/portlet/wiki/restore_entry.jsp" />
 
 		<action path="/wiki_admin/rss" type="com.liferay.wiki.web.wiki.portlet.action.RSSAction" />
 
@@ -355,11 +347,7 @@
 			<forward name="portlet.wiki.move_page" path="/portlet/wiki/move_page.jsp" />
 		</action>
 
-		<action path="/wiki_display/restore_entry" forward="portlet.trash.restore_entry" />
-
-		<action path="/wiki_display/restore_page_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
-			<forward name="portlet.trash.view" path="/portlet/wiki/view_page_attachments.jsp" />
-		</action>
+		<action path="/wiki_display/restore_entry" forward="/portlet/wiki/restore_entry.jsp" />
 
 		<action path="/wiki_display/search" type="com.liferay.wiki.web.wiki.portlet.action.ViewNodeAction">
 			<forward name="portlet.wiki.error" path="/portlet/wiki/error.jsp" />

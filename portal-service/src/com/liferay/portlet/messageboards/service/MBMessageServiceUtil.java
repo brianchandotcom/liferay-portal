@@ -124,6 +124,11 @@ public class MBMessageServiceUtil {
 		getService().deleteMessageAttachments(messageId);
 	}
 
+	public static void emptyMessageAttachments(long messageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().emptyMessageAttachments(messageId);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

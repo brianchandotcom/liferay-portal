@@ -14,10 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/portlet/trash/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
 
-<liferay-portlet:actionURL name="restoreEntries" varImpl="restoreURL" />
-
-<liferay-ui:restore-entry
-	restoreURL="<%= restoreURL %>"
-/>
+<%@ page import="com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil" %>

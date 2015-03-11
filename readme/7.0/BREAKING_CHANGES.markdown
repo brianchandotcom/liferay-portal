@@ -1091,3 +1091,45 @@ This change was made in order to implement model resource permissions for
 DDM templates, such as `VIEW`, `DELETE`, `PERMISSIONS`, and `UPDATE`.
 
 ---------------------------------------
+
+### Taglib <liferay-ui:restore-entry /> has changed its usage
+- **Date:** 2015-Mar-1
+- **JIRA Ticket:** LPS-54106
+
+#### What changed?
+
+The usage of this taglib serves a different purpose now. Now it renders the UI
+to restore elements from the Recycle Bin.
+
+#### Who is affected?
+
+Anyone using the taglib liferay-ui:restore-entry.
+
+#### How should I update my code?
+
+You need to replace the call to your taglib with this code. The CheckEntryURL
+should be an ActionURL of your portlet which checks if the current entry can
+be restored form the Recycle Bin. The duplicateEntryURL should be a RenderURL of
+your portlet that renders the UI to restore the entry resolving the conflicts
+(if they exist). In order to generate that URL you can use the taglib
+<liferay-ui:restore-entry /> which has been refactored for this usage.
+
+```
+<aui:script use="liferay-restore-entry">
+	new Liferay.RestoreEntry(
+	{
+			checkEntryURL: '<%= checkEntryURL.toString() %>',
+			duplicateEntryURL: '<%= duplicateEntryURL.toString() %>',
+			namespace: '<portlet:namespace />'
+		}
+	);
+</aui:script>
+```
+
+#### Why was this change made?
+
+This change allows the Trash Portlet to be an independent module. Its actions
+and views are not used anymore by the taglib and they are now responsability of
+each plugin.
+
+---------------------------------------

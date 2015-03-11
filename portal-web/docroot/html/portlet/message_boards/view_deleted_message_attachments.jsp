@@ -116,9 +116,22 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<liferay-ui:restore-entry
-	duplicateEntryAction="/message_boards/restore_entry"
-	overrideMessage="overwrite-the-existing-attachment-with-the-removed-one"
-	renameMessage="keep-both-attachments-and-rename-the-removed-attachment-as"
-	restoreEntryAction="/message_boards/restore_message_attachment"
-/>
+<portlet:actionURL var="checkEntryURL">
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" />
+	<portlet:param name="struts_action" value="/message_boards/edit_message_attachments" />
+</portlet:actionURL>
+
+<portlet:renderURL var="duplicateEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+	<portlet:param name="struts_action" value="/message_boards/restore_entry" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:renderURL>
+
+<aui:script use="liferay-restore-entry">
+	new Liferay.RestoreEntry(
+	{
+			checkEntryURL: '<%= checkEntryURL.toString() %>',
+			duplicateEntryURL: '<%= duplicateEntryURL.toString() %>',
+			namespace: '<portlet:namespace />'
+		}
+	);
+</aui:script>

@@ -14,10 +14,14 @@
  */
 --%>
 
-<%@ include file="/html/portlet/trash/init.jsp" %>
+<%@ include file="/html/portlet/message_boards/init.jsp" %>
 
-<liferay-portlet:actionURL name="restoreEntries" varImpl="restoreURL" />
+<liferay-portlet:actionURL varImpl="restoreURL">
+	<portlet:param name="struts_action" value="/message_boards/edit_message_attachments" />
+</liferay-portlet:actionURL>
 
 <liferay-ui:restore-entry
+	overrideMessage="overwrite-the-existing-attachment-with-the-removed-one"
+	renameMessage="keep-both-attachments-and-rename-the-removed-attachment-as"
 	restoreURL="<%= restoreURL %>"
 />

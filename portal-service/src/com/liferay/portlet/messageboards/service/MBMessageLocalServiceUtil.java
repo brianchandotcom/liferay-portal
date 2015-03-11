@@ -313,6 +313,11 @@ public class MBMessageLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static void emptyMessageAttachments(long messageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().emptyMessageAttachments(messageId);
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchMBMessage(
 		long messageId) {
 		return getService().fetchMBMessage(messageId);

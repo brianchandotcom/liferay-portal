@@ -103,6 +103,9 @@ public interface MBMessageService extends BaseService {
 	public void deleteMessageAttachments(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public void emptyMessageAttachments(long messageId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

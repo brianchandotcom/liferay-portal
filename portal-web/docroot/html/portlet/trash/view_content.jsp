@@ -47,8 +47,13 @@
 
 	TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
 
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(locale, "recycle-bin"), portletURL.toString());
+
 	PortletURL containerModelURL = renderResponse.createRenderURL();
 
+	containerModelURL.setParameter("mvcPath", "/html/portlet/trash/view_content.jsp");
 	containerModelURL.setParameter("redirect", redirect);
 	containerModelURL.setParameter("className", trashHandler.getContainerModelClassName(classPK));
 
@@ -82,9 +87,7 @@
 									<aui:button icon="icon-undo" name="restoreEntryButton" value="restore" />
 
 									<aui:script>
-										<portlet:actionURL var="restoreEntryURL">
-											<portlet:param name="struts_action" value="/trash/edit_entry" />
-											<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+										<portlet:actionURL name="restoreEntries" var="restoreEntryURL">
 											<portlet:param name="redirect" value="<%= backURL %>" />
 											<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 										</portlet:actionURL>
@@ -105,7 +108,7 @@
 								</c:when>
 								<c:when test="<%= !trashHandler.isRestorable(entry.getClassPK()) && trashHandler.isMovable() %>">
 									<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-										<portlet:param name="struts_action" value="/trash/view_container_model" />
+										<portlet:param name="mvcPath" value="/html/portlet/trash/view_container_model.jsp" />
 										<portlet:param name="redirect" value="<%= backURL %>" />
 										<portlet:param name="className" value="<%= entry.getClassName() %>" />
 										<portlet:param name="classPK" value="<%= String.valueOf(entry.getClassPK()) %>" />
@@ -126,9 +129,7 @@
 								<aui:button icon="icon-remove" name="removeEntryButton" value="delete" />
 
 								<aui:script>
-									<portlet:actionURL var="deleteEntryURL">
-										<portlet:param name="struts_action" value="/trash/edit_entry" />
-										<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+									<portlet:actionURL name="deleteEntries" var="deleteEntryURL">
 										<portlet:param name="redirect" value="<%= backURL %>" />
 										<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 									</portlet:actionURL>
@@ -147,7 +148,7 @@
 						<c:otherwise>
 							<c:if test="<%= trashHandler.isMovable() %>">
 								<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-									<portlet:param name="struts_action" value="/trash/view_container_model" />
+									<portlet:param name="mvcPath" value="/html/portlet/trash/view_container_model.jsp" />
 									<portlet:param name="redirect" value="<%= backURL %>" />
 									<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
 									<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
@@ -165,9 +166,7 @@
 								<aui:button icon="icon-remove" name="removeEntryButton" value="delete" />
 
 								<aui:script>
-									<portlet:actionURL var="deleteEntryURL">
-										<portlet:param name="struts_action" value="/trash/edit_entry" />
-										<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+									<portlet:actionURL name="deleteEntries" var="deleteEntryURL">
 										<portlet:param name="redirect" value="<%= backURL %>" />
 										<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
 										<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
@@ -196,7 +195,7 @@
 			<%
 			PortletURL iteratorURL = renderResponse.createRenderURL();
 
-			iteratorURL.setParameter("struts_action", "/trash/view_content");
+			iteratorURL.setParameter("mvcPath", "/html/portlet/trash/view_content.jsp");
 			iteratorURL.setParameter("redirect", redirect);
 			iteratorURL.setParameter("className", className);
 			iteratorURL.setParameter("classPK", String.valueOf(classPK));
@@ -231,7 +230,7 @@
 
 								PortletURL rowURL = renderResponse.createRenderURL();
 
-								rowURL.setParameter("struts_action", "/trash/view_content");
+								rowURL.setParameter("mvcPath", "/html/portlet/trash/view_content.jsp");
 								rowURL.setParameter("redirect", redirect);
 								rowURL.setParameter("backURL", currentURL);
 								rowURL.setParameter("className", (curTrashRenderer.getClassName()));
@@ -292,7 +291,7 @@
 								<%
 								PortletURL rowURL = renderResponse.createRenderURL();
 
-								rowURL.setParameter("struts_action", "/trash/view_content");
+								rowURL.setParameter("mvcPath", "/html/portlet/trash/view_content.jsp");
 								rowURL.setParameter("redirect", redirect);
 								rowURL.setParameter("backURL", currentURL);
 								rowURL.setParameter("className", curTrashRenderer.getClassName());
@@ -366,12 +365,10 @@
 					<liferay-ui:message key="commenting-is-disabled-because-this-entry-is-in-the-recycle-bin" />
 				</div>
 
-				<portlet:actionURL var="discussionURL">
-					<portlet:param name="struts_action" value="/trash/edit_discussion" />
-				</portlet:actionURL>
+				<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
 
 				<portlet:resourceURL var="discussionPaginationURL">
-					<portlet:param name="struts_action" value="/trash/edit_discussion" />
+					<portlet:param name="invokeTaglibDiscussion" value="<%= Boolean.TRUE.toString() %>" />
 				</portlet:resourceURL>
 
 				<div class="asset-discussion">

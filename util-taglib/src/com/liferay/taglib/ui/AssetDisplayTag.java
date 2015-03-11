@@ -208,16 +208,18 @@ public class AssetDisplayTag extends IncludeTag {
 			assetRendererFactory = assetEntry.getAssetRendererFactory();
 		}
 
-		request.setAttribute(
-			WebKeys.ASSET_RENDERER_FACTORY, assetRendererFactory);
+		if (assetRendererFactory != null) {
+			request.setAttribute(
+				WebKeys.ASSET_RENDERER_FACTORY, assetRendererFactory);
 
-		if (Validator.isNotNull(assetRendererFactory.getPortletId())) {
-			String rootPortletId = PortletConstants.getRootPortletId(
-				assetRendererFactory.getPortletId());
+			if (Validator.isNotNull(assetRendererFactory.getPortletId())) {
+				String rootPortletId = PortletConstants.getRootPortletId(
+					assetRendererFactory.getPortletId());
 
-			PortletBag portletBag = PortletBagPool.get(rootPortletId);
+				PortletBag portletBag = PortletBagPool.get(rootPortletId);
 
-			servletContext = portletBag.getServletContext();
+				servletContext = portletBag.getServletContext();
+			}
 		}
 
 		request.setAttribute(WebKeys.ASSET_ENTRY_VIEW_URL, _viewURL);

@@ -30,13 +30,17 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
 
 TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
 
-ContainerModel containerModel = (ContainerModel)request.getAttribute(WebKeys.TRASH_CONTAINER_MODEL);
+String containerModelClassName = ParamUtil.getString(request, "containerModelClassName", trashHandler.getContainerModelClassName(classPK));
 
-String containerModelClassName = trashHandler.getContainerModelClassName(classPK);
+long containerModelId = ParamUtil.getLong(request, "containerModelId");
 
-long containerModelId = 0;
+TrashHandler containerTrashHandler = TrashHandlerRegistryUtil.getTrashHandler(containerModelClassName);
 
-if (containerModel != null) {
+ContainerModel containerModel = null;
+
+if (containerModelId > 0) {
+	containerModel = containerTrashHandler.getContainerModel(containerModelId);
+
 	containerModelClassName = containerModel.getModelClassName();
 
 	containerModelId = containerModel.getContainerModelId();
@@ -50,7 +54,7 @@ if (rootContainerModelMovable) {
 
 PortletURL containerURL = renderResponse.createRenderURL();
 
-containerURL.setParameter("struts_action", "/trash/view_container_model");
+containerURL.setParameter("mvcPath", "/html/portlet/trash/view_container_model.jsp");
 containerURL.setParameter("redirect", redirect);
 containerURL.setParameter("backURL", currentURL);
 containerURL.setParameter("className", className);
@@ -142,7 +146,7 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, liferayPortletResponse, co
 
 			<liferay-ui:search-container-column-text
 				name='<%= LanguageUtil.format(request, "num-of-x", curContainerModelTrashHandler.getSubcontainerModelName()) %>'
-				value="<%= String.valueOf(curContainerModelTrashHandler.getContainerModelsCount(classPK, curContainerModelId)) %>"
+				value="<%= String.valueOf(curContainerModelTrashHandler.getContainerModelsCount(curContainerModelId, curContainerModelId)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text>

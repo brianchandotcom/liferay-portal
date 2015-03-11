@@ -1218,30 +1218,6 @@
 
 	<definition name="portlet.staging_bar.view_layout_set_branches" path="/portlet/staging_bar/view_layout_set_branches.jsp" />
 
-	<!-- Trash -->
-
-	<definition name="portlet.trash" extends="portlet" />
-
-	<definition name="portlet.trash.error" extends="portlet.trash">
-		<put name="portlet_content" value="/portlet/trash/error.jsp" />
-	</definition>
-
-	<definition name="portlet.trash.restore_entry" extends="portlet.trash">
-		<put name="portlet_content" value="/portlet/trash/restore_entry.jsp" />
-	</definition>
-
-	<definition name="portlet.trash.view" extends="portlet.trash">
-		<put name="portlet_content" value="/portlet/trash/view.jsp" />
-	</definition>
-
-	<definition name="portlet.trash.view_container_model" extends="portlet.trash">
-		<put name="portlet_content" value="/portlet/trash/view_container_model.jsp" />
-	</definition>
-
-	<definition name="portlet.trash.view_content" extends="portlet.trash">
-		<put name="portlet_content" value="/portlet/trash/view_content.jsp" />
-	</definition>
-
 	<!-- User Groups Admin -->
 
 	<definition name="portlet.user_groups_admin" extends="portlet" />

@@ -3640,11 +3640,6 @@
 		<tag-class>com.liferay.taglib.ui.RestoreEntryTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>duplicateEntryAction</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>overrideMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3655,8 +3650,8 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>restoreEntryAction</name>
-			<required>false</required>
+			<name>restoreURL</name>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

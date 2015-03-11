@@ -122,6 +122,12 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		_mbMessageService.deleteMessageAttachments(messageId);
 	}
 
+	@Override
+	public void emptyMessageAttachments(long messageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbMessageService.emptyMessageAttachments(messageId);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

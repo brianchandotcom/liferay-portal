@@ -115,9 +115,22 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<liferay-ui:restore-entry
-	duplicateEntryAction="/wiki/restore_entry"
-	overrideMessage="overwrite-the-existing-attachment-with-the-removed-one"
-	renameMessage="keep-both-attachments-and-rename-the-removed-attachment-as"
-	restoreEntryAction="/wiki/restore_page_attachment"
-/>
+<portlet:actionURL var="checkEntryURL">
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" />
+	<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
+</portlet:actionURL>
+
+<portlet:renderURL var="duplicateEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+	<portlet:param name="struts_action" value="/wiki/restore_entry" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:renderURL>
+
+<aui:script use="liferay-restore-entry">
+	new Liferay.RestoreEntry(
+		{
+			checkEntryURL: '<%= checkEntryURL.toString() %>',
+			duplicateEntryURL: '<%= duplicateEntryURL.toString() %>',
+			namespace: '<portlet:namespace />'
+		}
+	);
+</aui:script>

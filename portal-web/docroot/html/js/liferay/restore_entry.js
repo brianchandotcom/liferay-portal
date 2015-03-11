@@ -7,30 +7,23 @@ AUI.add(
 
 		var RESPONSE_DATA = 'responseData';
 
-		var STR_RESTORE_ENTRY_URL = 'restoreEntryURL';
+		var STR_CHECK_ENTRY_URL = 'checkEntryURL';
 
 		var RestoreEntry = A.Component.create(
 			{
 				ATTRS: {
+					checkEntryURL: {
+						validator: isString
+					},
+
 					duplicateEntryURL: {
 						validator: isString
 					},
 
 					namespace: {
 						validator: isString
-					},
-
-					overrideMessage:{
-						validator:isString
-					},
-
-					renameMessage:{
-						validator: isString
-					},
-
-					restoreEntryURL: {
-						validator: isString
 					}
+
 				},
 
 				AUGMENTS: [Liferay.PortletBase],
@@ -80,8 +73,6 @@ AUI.add(
 									duplicateEntryId: responseData.duplicateEntryId,
 									oldName: responseData.oldName,
 									overridable: responseData.overridable,
-									overrideMessage: instance.get('overrideMessage'),
-									renameMessage: instance.get('renameMessage'),
 									trashEntryId: responseData.trashEntryId
 								}
 							);
@@ -118,7 +109,7 @@ AUI.add(
 						var uri = event.uri;
 
 						A.io.request(
-							instance.get(STR_RESTORE_ENTRY_URL),
+							instance.get(STR_CHECK_ENTRY_URL),
 							{
 								after: {
 									failure: A.rbind('_afterCheckEntryFailure', instance),
@@ -204,7 +195,7 @@ AUI.add(
 						}
 						else {
 							A.io.request(
-								instance.get(STR_RESTORE_ENTRY_URL),
+								instance.get(STR_CHECK_ENTRY_URL),
 								{
 									after: {
 										failure: A.rbind('_afterPopupCheckEntryFailure', instance),

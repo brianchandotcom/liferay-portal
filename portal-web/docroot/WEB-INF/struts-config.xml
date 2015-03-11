@@ -958,11 +958,7 @@
 			<forward name="portlet.message_boards.move_thread" path="portlet.message_boards.move_thread" />
 		</action>
 
-		<action path="/message_boards/restore_entry" forward="portlet.trash.restore_entry" />
-
-		<action path="/message_boards/restore_message_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
-			<forward name="portlet.trash.view" path="portlet.message_boards.view_message" />
-		</action>
+		<action path="/message_boards/restore_entry" forward="/portlet/message_boards/restore_entry.jsp" />
 
 		<action path="/message_boards/rss" type="com.liferay.portlet.messageboards.action.RSSAction" />
 
@@ -1041,11 +1037,7 @@
 			<forward name="portlet.message_boards.move_thread" path="portlet.message_boards.move_thread" />
 		</action>
 
-		<action path="/message_boards_admin/restore_entry" forward="portlet.trash.restore_entry" />
-
-		<action path="/message_boards_admin/restore_message_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
-			<forward name="portlet.trash.view" path="portlet.message_boards.view_message" />
-		</action>
+		<action path="/message_boards_admin/restore_entry" forward="/portlet/message_boards/restore_entry.jsp" />
 
 		<action path="/message_boards_admin/search" forward="portlet.message_boards.search" />
 
@@ -1645,27 +1637,6 @@
 		<action path="/staging_bar/view_layout_revisions" forward="portlet.staging_bar.view_layout_revisions" />
 
 		<action path="/staging_bar/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
-
-		<!-- Trash -->
-
-		<action path="/trash/edit_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.trash.error" />
-		</action>
-
-		<action path="/trash/edit_entry" type="com.liferay.portlet.trash.action.EditEntryAction">
-			<forward name="portlet.trash.view" path="portlet.trash.view" />
-		</action>
-
-		<action path="/trash/restore_entry" forward="portlet.trash.restore_entry" />
-
-		<action path="/trash/view" forward="portlet.trash.view" />
-
-		<action path="/trash/view_container_model" type="com.liferay.portlet.trash.action.ContainerModelAction">
-			<forward name="portlet.trash.error" path="portlet.trash.error" />
-			<forward name="portlet.trash.view_container_model" path="portlet.trash.view_container_model" />
-		</action>
-
-		<action path="/trash/view_content" forward="portlet.trash.view_content" />
 
 		<!-- User Groups Admin -->
 

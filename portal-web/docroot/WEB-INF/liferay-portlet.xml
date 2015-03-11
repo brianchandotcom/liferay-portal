@@ -1314,7 +1314,6 @@
 	<portlet>
 		<portlet-name>182</portlet-name>
 		<icon>/html/icons/trash.png</icon>
-		<struts-path>trash</struts-path>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.trash.messaging.CheckEntryMessageListener</scheduler-event-listener-class>
 			<trigger>
@@ -1328,7 +1327,7 @@
 		<control-panel-entry-weight>30.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.trash.TrashControlPanelEntry</control-panel-entry-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<scopeable>true</scopeable>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>

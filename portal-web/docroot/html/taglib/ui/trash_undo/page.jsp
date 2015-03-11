@@ -41,31 +41,27 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 		}
 
 		String restoreNamespace = namespace;
+%>
 
-		if (Validator.isNull(portletURL)) {
-			long controlPanelPlid = PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
+		<c:if test="<%= Validator.isNull(portletURL) %>">
+			<liferay-portlet:actionURL name="restoreEntries" plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.TRASH %>" varImpl="restoreURL">
+				<portlet:param name="redirect" value="<%= redirect %>" />
+			</liferay-portlet:actionURL>
 
-			PortletURL restoreURL = PortletURLFactoryUtil.create(request, PortletKeys.TRASH, controlPanelPlid, PortletRequest.ACTION_PHASE);
-
-			restoreURL.setParameter("struts_action", "/trash/edit_entry");
-			restoreURL.setParameter(Constants.CMD, Constants.RESTORE);
-			restoreURL.setParameter("redirect", redirect);
-			restoreURL.setWindowState(WindowState.MAXIMIZED);
-
+			<%
 			portletURL = restoreURL.toString();
 
 			restoreNamespace = PortalUtil.getPortletNamespace(PortletKeys.TRASH);
-		}
-%>
+			%>
+
+		</c:if>
 
 		<div class="alert alert-success taglib-trash-undo">
 			<aui:form action="<%= portletURL %>" name="undoForm" portletNamespace="<%= restoreNamespace %>">
 				<liferay-util:buffer var="trashLink">
 					<c:choose>
 						<c:when test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
-							<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.TRASH %>" varImpl="trashURL" windowState="<%= WindowState.NORMAL.toString() %>">
-								<portlet:param name="struts_action" value="/trash/view" />
-							</liferay-portlet:renderURL>
+							<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.TRASH %>" varImpl="trashURL" windowState="<%= WindowState.NORMAL.toString() %>" />
 
 							<%
 							String trashURLString = HttpUtil.setParameter(trashURL.toString(), "doAsGroupId", String.valueOf(themeDisplay.getScopeGroupId()));
@@ -126,7 +122,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 							<c:choose>
 								<c:when test="<%= !Validator.equals(cmd, Constants.REMOVE) && themeDisplay.isShowSiteAdministrationIcon() && Validator.isNotNull(className) && Validator.isNotNull(title) && Validator.isNotNull(primaryKeys[0]) %>">
 									<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.TRASH %>" varImpl="trashURL" windowState="<%= WindowState.NORMAL.toString() %>">
-										<portlet:param name="struts_action" value="/trash/view_content" />
+										<portlet:param name="mvcPath" value="/html/portlet/trash/view_content.jsp" />
 										<portlet:param name="redirect" value="<%= currentURL %>" />
 										<portlet:param name="trashEntryId" value="<%= String.valueOf(primaryKeys[0]) %>" />
 									</liferay-portlet:renderURL>

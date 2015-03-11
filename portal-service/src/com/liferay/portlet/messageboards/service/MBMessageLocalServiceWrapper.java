@@ -327,6 +327,12 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
+	public void emptyMessageAttachments(long messageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbMessageLocalService.emptyMessageAttachments(messageId);
+	}
+
+	@Override
 	public com.liferay.portlet.messageboards.model.MBMessage fetchMBMessage(
 		long messageId) {
 		return _mbMessageLocalService.fetchMBMessage(messageId);

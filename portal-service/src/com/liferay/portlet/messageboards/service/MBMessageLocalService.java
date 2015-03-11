@@ -254,6 +254,9 @@ public interface MBMessageLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection);
 
+	public void emptyMessageAttachments(long messageId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBMessage fetchMBMessage(
 		long messageId);

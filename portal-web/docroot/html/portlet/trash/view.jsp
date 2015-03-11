@@ -33,7 +33,6 @@ if (group.isStagingGroup() && tabs1.equals("live")) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/trash/view");
 portletURL.setParameter("tabs1", tabs1);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recycle-bin"), portletURL.toString());
@@ -99,9 +98,7 @@ if (Validator.isNotNull(keywords)) {
 	/>
 </c:if>
 
-<liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="struts_action" value="/trash/view" />
-</liferay-portlet:renderURL>
+<liferay-portlet:renderURL varImpl="searchURL" />
 
 <liferay-ui:search-container
 	searchContainer="<%= new EntrySearch(renderRequest, portletURL) %>"
@@ -160,7 +157,7 @@ if (Validator.isNotNull(keywords)) {
 		if (trashRenderer != null) {
 			PortletURL viewContentURL = renderResponse.createRenderURL();
 
-			viewContentURL.setParameter("struts_action", "/trash/view_content");
+			viewContentURL.setParameter("mvcPath", "/html/portlet/trash/view_content.jsp");
 			viewContentURL.setParameter("redirect", currentURL);
 
 			if (entry.getRootEntry() != null) {
@@ -204,7 +201,7 @@ if (Validator.isNotNull(keywords)) {
 				if (rootTrashRenderer != null) {
 					PortletURL viewContentURL = renderResponse.createRenderURL();
 
-					viewContentURL.setParameter("struts_action", "/trash/view_content");
+					viewContentURL.setParameter("mvcPath", "/html/portlet/trash/view_content.jsp");
 					viewContentURL.setParameter("redirect", currentURL);
 					viewContentURL.setParameter("trashEntryId", String.valueOf(rootEntry.getEntryId()));
 					viewContentURL.setParameter("type", rootTrashRenderer.getType());
@@ -277,8 +274,7 @@ if (Validator.isNotNull(keywords)) {
 		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<portlet:actionURL var="emptyTrashURL">
-		<portlet:param name="struts_action" value="/trash/edit_entry" />
+	<portlet:actionURL name="emptyTrash" var="emptyTrashURL">
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	</portlet:actionURL>
 

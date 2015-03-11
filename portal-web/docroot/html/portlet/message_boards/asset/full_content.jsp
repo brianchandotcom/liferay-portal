@@ -18,6 +18,7 @@
 
 <%
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
+AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASSET_RENDERER);
 
 request.setAttribute("edit_message.jsp-category", message.getCategory());
 request.setAttribute("edit_message.jsp-className", message.getClassName());
@@ -32,22 +33,8 @@ request.setAttribute("edit_message.jsp-thread", message.getThread());
 
 <liferay-util:include page="/html/portlet/message_boards/view_thread_message.jsp" />
 
-<c:if test="<%= portletName.equals(PortletKeys.TRASH) %>">
-
-	<%
-	MBThread thread = message.getThread();
-
-	PortletURL viewContentURL = renderResponse.createRenderURL();
-
-	viewContentURL.setParameter("struts_action", "/trash/view_content");
-	viewContentURL.setParameter("redirect", currentURL);
-	viewContentURL.setParameter("className", MBThread.class.getName());
-	viewContentURL.setParameter("classPK", String.valueOf(thread.getPrimaryKey()));
-	viewContentURL.setParameter("showActions", Boolean.FALSE.toString());
-	viewContentURL.setParameter("showEditURL", Boolean.FALSE.toString());
-	%>
-
+<c:if test="<%= assetRenderer != null %>">
 	<div class="asset-more">
-		<a href="<%= viewContentURL.toString() %>"><liferay-ui:message key="view-in-context" /> &raquo;</a>
+		<aui:a href="<%= assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null) %>"><liferay-ui:message key="view-in-context" /> &raquo;</aui:a>
 	</div>
 </c:if>

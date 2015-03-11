@@ -34,7 +34,7 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashRender
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= trashHandler.isMovable() %>">
 		<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/trash/view_container_model" />
+			<portlet:param name="mvcPath" value="/html/portlet/trash/view_container_model.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
@@ -56,9 +56,7 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashRender
 	</c:if>
 
 	<c:if test="<%= trashHandler.isDeletable() %>">
-		<portlet:actionURL var="deleteEntryURL">
-			<portlet:param name="struts_action" value="/trash/edit_entry" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+		<portlet:actionURL name="deleteEntries" var="deleteEntryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />

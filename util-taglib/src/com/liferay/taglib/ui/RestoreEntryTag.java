@@ -16,16 +16,14 @@ package com.liferay.taglib.ui;
 
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Roberto Diaz
  */
 public class RestoreEntryTag extends IncludeTag {
-
-	public void setDuplicateEntryAction(String duplicateEntryAction) {
-		_duplicateEntryAction = duplicateEntryAction;
-	}
 
 	public void setOverrideMessage(String overrideMessage) {
 		_overrideMessage = overrideMessage;
@@ -35,16 +33,15 @@ public class RestoreEntryTag extends IncludeTag {
 		_renameMessage = renameMessage;
 	}
 
-	public void setRestoreEntryAction(String restoreEntryAction) {
-		_restoreEntryAction = restoreEntryAction;
+	public void setRestoreURL(PortletURL restoreURL) {
+		_restoreURL = restoreURL;
 	}
 
 	@Override
 	protected void cleanUp() {
-		_duplicateEntryAction = _DUPLICATE_ENTRY_ACTION;
 		_overrideMessage = _OVERRIDE_MESSAGE;
 		_renameMessage = _RENAME_MESSAGE;
-		_restoreEntryAction = _RESTORE_ENTRY_ACTION;
+		_restoreURL = null;
 	}
 
 	@Override
@@ -60,20 +57,14 @@ public class RestoreEntryTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:restore-entry:duplicateEntryAction",
-			_duplicateEntryAction);
-		request.setAttribute(
 			"liferay-ui:restore-entry:overrideMessage", _overrideMessage);
 		request.setAttribute(
 			"liferay-ui:restore-entry:renameMessage", _renameMessage);
 		request.setAttribute(
-			"liferay-ui:restore-entry:restoreEntryAction", _restoreEntryAction);
+			"liferay-ui:restore-entry:restoreURL", _restoreURL);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
-
-	private static final String _DUPLICATE_ENTRY_ACTION =
-		"/trash/restore_entry";
 
 	private static final String _OVERRIDE_MESSAGE =
 		"overwrite-the-existing-entry-with-the-one-from-the-recycle-bin";
@@ -84,11 +75,8 @@ public class RestoreEntryTag extends IncludeTag {
 	private static final String _RENAME_MESSAGE =
 		"keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as";
 
-	private static final String _RESTORE_ENTRY_ACTION = "/trash/edit_entry";
-
-	private String _duplicateEntryAction = _DUPLICATE_ENTRY_ACTION;
 	private String _overrideMessage = _OVERRIDE_MESSAGE;
 	private String _renameMessage = _RENAME_MESSAGE;
-	private String _restoreEntryAction = _RESTORE_ENTRY_ACTION;
+	private PortletURL _restoreURL = null;
 
 }

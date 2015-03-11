@@ -214,6 +214,18 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	public static void emptyMessageAttachments(long messageId)
+		throws RemoteException {
+		try {
+			MBMessageServiceUtil.emptyMessageAttachments(messageId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBMessageSoap[] getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end)
 		throws RemoteException {

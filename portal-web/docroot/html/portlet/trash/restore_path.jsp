@@ -65,14 +65,26 @@
 	</div>
 </c:if>
 
-<liferay-ui:restore-entry />
+<portlet:resourceURL id="checkEntry" var="checkEntryURL" />
 
-<portlet:actionURL var="selectContainerURL">
-	<portlet:param name="struts_action" value="/trash/edit_entry" />
-</portlet:actionURL>
+<portlet:renderURL var="duplicateEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+	<portlet:param name="mvcPath" value="/html/portlet/trash/restore_entry.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:renderURL>
+
+<aui:script use="liferay-restore-entry">
+	new Liferay.RestoreEntry(
+		{
+			checkEntryURL: '<%= checkEntryURL.toString() %>',
+			duplicateEntryURL: '<%= duplicateEntryURL.toString() %>',
+			namespace: '<portlet:namespace />'
+		}
+	);
+</aui:script>
+
+<portlet:actionURL name="moveEntry" var="selectContainerURL" />
 
 <aui:form action="<%= selectContainerURL.toString() %>" method="post" name="selectContainerForm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.MOVE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="className" type="hidden" value="" />
 	<aui:input name="classPK" type="hidden" value="" />

@@ -253,6 +253,14 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	@Override
+	public void emptyMessageAttachments(long messageId) throws PortalException {
+		MBMessagePermission.check(
+			getPermissionChecker(), messageId, ActionKeys.DELETE);
+
+		mbMessageLocalService.emptyMessageAttachments(messageId);
+	}
+
+	@Override
 	public List<MBMessage> getCategoryMessages(
 			long groupId, long categoryId, int status, int start, int end)
 		throws PortalException {

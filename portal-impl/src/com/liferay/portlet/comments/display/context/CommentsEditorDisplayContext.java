@@ -39,7 +39,8 @@ public class CommentsEditorDisplayContext {
 
 		editorConfigJSONObject.put(
 			"allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
-		editorConfigJSONObject.put("toolbars", JSONFactoryUtil.createJSONObject());
+		editorConfigJSONObject.put(
+			"toolbars", JSONFactoryUtil.createJSONObject());
 
 		_editorData.put("editorConfig", editorConfigJSONObject);
 

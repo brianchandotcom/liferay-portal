@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -108,11 +107,10 @@ public class TrashPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			className, actionRequest);
 
-		TrashEntryServiceUtil.moveEntry(
+		TrashEntry entry = TrashEntryServiceUtil.moveEntry(
 			className, classPK, containerModelId, serviceContext);
 
-		TrashUndoUtil.addRestoreData(
-			actionRequest, getEntryOVPs(className, classPK));
+		TrashUndoUtil.addRestoreData(actionRequest, entry);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -121,14 +119,14 @@ public class TrashPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		List<ObjectValuePair<String, Long>> entryOVPs = new ArrayList<>();
+		List<TrashEntry> trashEntries = new ArrayList<>();
 
 		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
 
 		if (trashEntryId > 0) {
 			TrashEntry entry = TrashEntryServiceUtil.restoreEntry(trashEntryId);
 
-			entryOVPs = getEntryOVPs(entry.getClassName(), entry.getClassPK());
+			trashEntries.add(entry);
 		}
 		else {
 			long[] restoreEntryIds = StringUtil.split(
@@ -138,12 +136,11 @@ public class TrashPortlet extends MVCPortlet {
 				TrashEntry entry = TrashEntryServiceUtil.restoreEntry(
 					restoreEntryId);
 
-				entryOVPs.addAll(
-					getEntryOVPs(entry.getClassName(), entry.getClassPK()));
+				trashEntries.add(entry);
 			}
 		}
 
-		TrashUndoUtil.addRestoreData(actionRequest, entryOVPs);
+		TrashUndoUtil.addRestoreData(actionRequest, trashEntries);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -174,9 +171,7 @@ public class TrashPortlet extends MVCPortlet {
 		TrashEntry entry = TrashEntryServiceUtil.restoreEntry(
 			trashEntryId, duplicateEntryId, null);
 
-		TrashUndoUtil.addRestoreData(
-			actionRequest,
-			getEntryOVPs(entry.getClassName(), entry.getClassPK()));
+		TrashUndoUtil.addRestoreData(actionRequest, entry);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -201,9 +196,7 @@ public class TrashPortlet extends MVCPortlet {
 		TrashEntry entry = TrashEntryServiceUtil.restoreEntry(
 			trashEntryId, 0, newName);
 
-		TrashUndoUtil.addRestoreData(
-			actionRequest,
-			getEntryOVPs(entry.getClassName(), entry.getClassPK()));
+		TrashUndoUtil.addRestoreData(actionRequest, entry);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -229,19 +222,6 @@ public class TrashPortlet extends MVCPortlet {
 		else {
 			super.serveResource(resourceRequest, resourceResponse);
 		}
-	}
-
-	protected List<ObjectValuePair<String, Long>> getEntryOVPs(
-		String className, long classPK) {
-
-		List<ObjectValuePair<String, Long>> entryOVPs = new ArrayList<>();
-
-		ObjectValuePair<String, Long> entryOVP = new ObjectValuePair<>(
-			className, classPK);
-
-		entryOVPs.add(entryOVP);
-
-		return entryOVPs;
 	}
 
 	@Override

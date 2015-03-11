@@ -330,14 +330,15 @@ public class JournalFeedStagedModelDataHandler
 		}
 		catch (FeedTargetLayoutFriendlyUrlException ftlfurle) {
 			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(6);
+				StringBundler sb = new StringBundler(7);
 
 				sb.append("A feed with the ID ");
 				sb.append(feedId);
 				sb.append(" cannot be imported because layout with friendly ");
 				sb.append("URL ");
 				sb.append(feed.getTargetLayoutFriendlyUrl());
-				sb.append(" does not exist");
+				sb.append(" does not exist - ");
+				sb.append(ftlfurle.getMessage());
 
 				_log.warn(sb.toString());
 			}

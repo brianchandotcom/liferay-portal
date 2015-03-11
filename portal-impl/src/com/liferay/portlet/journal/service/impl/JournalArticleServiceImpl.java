@@ -424,6 +424,16 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			getUserId(), groupId, articleId, articleURL, serviceContext);
 	}
 
+	@Override
+	public JournalArticle fetchArticle(long groupId, String articleId)
+		throws PortalException {
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), groupId, articleId, ActionKeys.VIEW);
+
+		return journalArticleLocalService.fetchArticle(groupId, articleId);
+	}
+
 	/**
 	 * Returns the web content article with the ID.
 	 *

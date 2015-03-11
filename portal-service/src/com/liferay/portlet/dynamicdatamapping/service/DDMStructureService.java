@@ -258,6 +258,12 @@ public interface DDMStructureService extends BaseService {
 		long groupId, long classNameId, java.lang.String structureKey)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchStructure(
+		long groupId, long classNameId, java.lang.String structureKey,
+		boolean includeAncestorStructures)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

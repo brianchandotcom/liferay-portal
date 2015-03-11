@@ -274,7 +274,7 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 		}
 		catch (InvalidDDMStructureException iddmse) {
 			throw new RestoreEntryException(
-				RestoreEntryException.INVALID_CONTAINER);
+				RestoreEntryException.INVALID_CONTAINER, iddmse);
 		}
 	}
 

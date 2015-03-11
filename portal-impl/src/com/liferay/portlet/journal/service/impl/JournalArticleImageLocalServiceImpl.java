@@ -15,6 +15,8 @@
 package com.liferay.portlet.journal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portlet.journal.DuplicateArticleImageIdException;
 import com.liferay.portlet.journal.model.JournalArticleImage;
 import com.liferay.portlet.journal.service.base.JournalArticleImageLocalServiceBaseImpl;
@@ -67,6 +69,9 @@ public class JournalArticleImageLocalServiceImpl
 			imageLocalService.deleteImage(articleImage.getArticleImageId());
 		}
 		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Article image was already deleted", pe);
+			}
 		}
 
 		journalArticleImagePersistence.remove(articleImage);
@@ -169,5 +174,8 @@ public class JournalArticleImageLocalServiceImpl
 	public int getArticleImagesCount(long groupId) {
 		return journalArticleImagePersistence.countByGroupId(groupId);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalArticleImageLocalServiceImpl.class);
 
 }

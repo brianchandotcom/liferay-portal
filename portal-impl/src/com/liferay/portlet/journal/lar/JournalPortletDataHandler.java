@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -462,16 +461,12 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 							portletDataContext, ddmStructure);
 					}
 
-					try {
-						List<DDMTemplate> ddmStructureDDMTemplates =
-							DDMTemplateLocalServiceUtil.getTemplatesByClassPK(
-								ddmStructure.getGroupId(),
-								ddmStructure.getStructureId());
+					List<DDMTemplate> ddmStructureDDMTemplates =
+						DDMTemplateLocalServiceUtil.getTemplatesByClassPK(
+							ddmStructure.getGroupId(),
+							ddmStructure.getStructureId());
 
-						ddmTemplates.addAll(ddmStructureDDMTemplates);
-					}
-					catch (SystemException se) {
-					}
+					ddmTemplates.addAll(ddmStructureDDMTemplates);
 				}
 
 			});

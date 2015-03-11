@@ -717,6 +717,12 @@ public class JournalArticleLocalServiceWrapper
 			articleId, version, articleURL, serviceContext);
 	}
 
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticle fetchArticle(
+		long groupId, java.lang.String articleId) {
+		return _journalArticleLocalService.fetchArticle(groupId, articleId);
+	}
+
 	/**
 	* Returns the web content article matching the group, article ID, and
 	* version.
@@ -733,6 +739,20 @@ public class JournalArticleLocalServiceWrapper
 		long groupId, java.lang.String articleId, double version) {
 		return _journalArticleLocalService.fetchArticle(groupId, articleId,
 			version);
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticle fetchArticleByUrlTitle(
+		long groupId, java.lang.String urlTitle) {
+		return _journalArticleLocalService.fetchArticleByUrlTitle(groupId,
+			urlTitle);
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticle fetchDisplayArticle(
+		long groupId, java.lang.String articleId) {
+		return _journalArticleLocalService.fetchDisplayArticle(groupId,
+			articleId);
 	}
 
 	@Override
@@ -817,6 +837,13 @@ public class JournalArticleLocalServiceWrapper
 		long resourcePrimKey, int[] statuses) {
 		return _journalArticleLocalService.fetchLatestArticle(resourcePrimKey,
 			statuses);
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticle fetchLatestArticleByUrlTitle(
+		long groupId, java.lang.String urlTitle, int status) {
+		return _journalArticleLocalService.fetchLatestArticleByUrlTitle(groupId,
+			urlTitle, status);
 	}
 
 	/**

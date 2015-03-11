@@ -343,6 +343,11 @@ public interface JournalArticleService extends BaseService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalArticle fetchArticle(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	/**
 	* Returns the latest approved web content article, or the latest unapproved
 	* article if none are approved. Both approved and unapproved articles must

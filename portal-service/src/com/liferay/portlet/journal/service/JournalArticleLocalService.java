@@ -620,6 +620,10 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalArticle fetchArticle(
+		long groupId, java.lang.String articleId);
+
 	/**
 	* Returns the web content article matching the group, article ID, and
 	* version.
@@ -634,6 +638,14 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalArticle fetchArticle(
 		long groupId, java.lang.String articleId, double version);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalArticle fetchArticleByUrlTitle(
+		long groupId, java.lang.String urlTitle);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalArticle fetchDisplayArticle(
+		long groupId, java.lang.String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalArticle fetchJournalArticle(
@@ -699,6 +711,10 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
 		long resourcePrimKey, int[] statuses);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalArticle fetchLatestArticleByUrlTitle(
+		long groupId, java.lang.String urlTitle, int status);
 
 	/**
 	* Returns the latest indexable web content article matching the resource

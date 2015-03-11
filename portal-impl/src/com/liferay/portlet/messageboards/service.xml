@@ -617,6 +617,7 @@
 	<exceptions>
 		<exception>BannedUser</exception>
 		<exception>CategoryName</exception>
+		<exception>DiscussionMaxComments</exception>
 		<exception>LockedThread</exception>
 		<exception>MailingListEmailAddress</exception>
 		<exception>MailingListInServerName</exception>

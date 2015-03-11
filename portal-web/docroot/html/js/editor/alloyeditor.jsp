@@ -31,8 +31,8 @@ String contents = (String)request.getAttribute("liferay-ui:input-editor:contents
 String contentsLanguageId = (String)request.getAttribute("liferay-ui:input-editor:contentsLanguageId");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:input-editor:data");
-JSONObject editorConfigJSONObject = (data != null) ? (JSONObject) data.get("editorConfig") : null;
-JSONObject editorOptionsJSONObject = (data != null) ? (JSONObject) data.get("editorOptions") : null;
+JSONObject editorConfigJSONObject = (data != null) ? (JSONObject)data.get("editorConfig") : null;
+JSONObject editorOptionsJSONObject = (data != null) ? (JSONObject)data.get("editorOptions") : null;
 
 String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
 Map<String, String> fileBrowserParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:fileBrowserParams");

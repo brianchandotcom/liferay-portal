@@ -55,7 +55,7 @@ public class DynamicServletRequest extends HttpServletRequestWrapper {
 			return request;
 		}
 
-		parameterMap = new HashMap<String, String[]>(parameterMap);
+		parameterMap = new HashMap<>(parameterMap);
 
 		for (String parameter : parameters) {
 			String[] parameterParts = StringUtil.split(

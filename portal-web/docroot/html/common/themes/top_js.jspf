@@ -289,7 +289,7 @@
 				return filter;
 			},
 			getJavaScriptRootPath: function() {
-				return '<%= themeDisplay.getPathContext() %>/html/js';
+				return '<%= themeDisplay.getPathJavaScript() %>';
 			},
 			getLangPath: function() {
 				return '<%= PortalUtil.getStaticResourceURL(request, "aui_lang.jsp", javaScriptLastModified) %>';

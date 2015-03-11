@@ -103,6 +103,14 @@
 		</execute>
 	</command>
 
+	<command name="viewIncrementalSearchPG">
+		<execute function="Type" locator1="PGSearch#SEARCH_FIELD" value1="${searchTerm}" />
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute function="AssertTextEquals" locator1="PGSearch#INCREMENTAL_SEARCH_SUGGESTION" value1="${kbArticleTitle}" />
+		<execute function="AssertClick" locator1="PGSearch#INCREMENTAL_SEARCH_SUGGESTION" value1="${kbArticleTitle}" />
+	</command>
+
 	<command name="viewSearchAssetTitle">
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 

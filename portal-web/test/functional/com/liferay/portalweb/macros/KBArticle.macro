@@ -410,6 +410,10 @@
 		<execute function="AssertClick" locator1="CPKnowledgebaseadminArticle#BACK_TO_ICON" value1="Back" />
 	</command>
 
+	<command name="goBackToSearchResultsPG">
+		<execute function="AssertClick" locator1="PGKnowledgebasesearchArticle#SEARCH_BACK_BUTTON" value1="Back" />
+	</command>
+
 	<command name="gotoCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 

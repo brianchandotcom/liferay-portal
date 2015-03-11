@@ -17,6 +17,7 @@ package com.liferay.asset.publisher.web.lar;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
@@ -483,7 +484,7 @@ public class AssetPublisherPortletDataHandler
 
 				newValues.add(newValue);
 			}
-			catch (NoSuchGroupException nsge) {
+			catch (NoSuchGroupException|NoSuchLayoutException e) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Ignoring scope " + newValue + " because the " +

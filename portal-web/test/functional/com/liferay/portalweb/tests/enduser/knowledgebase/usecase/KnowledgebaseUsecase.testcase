@@ -2199,4 +2199,66 @@
 			<var name="kbArticleTitle1" value="Knowledge Base Parent Article Title" />
 		</execute>
 	</command>
+
+	<command name="ViewUnchangedKBArticleTitleViaLocalizedPage" priority="3">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addChildCP">
+			<var name="siteChildPageName" value="Knowledge Base Display Page" />
+			<var name="siteName" value="Liferay" />
+			<var name="sitePageName" value="Welcome" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="Knowledge Base Display Page" />
+			<var name="pageName" value="Welcome" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="Page#viewTranslationsPG">
+			<var name="adminTranslation"><![CDATA[Administración]]></var>
+			<var name="mySitesTranslation" value="Mis Sitios" />
+			<var name="pageLocalizationMessage" value="This page is displayed in Spanish (Spain)." />
+			<var name="pageLocalizationPreferredLanguage" value="Set Spanish (Spain) as your preferred language." />
+			<var name="pageName" value="Knowledge Base Display Page" />
+			<var name="sitePageURL" value="http://localhost:8080/es/web/guest/knowledge-base-display-page" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="KBArticle#editViaLocalizedKBDisplay">
+			<var name="localizedSuccessMessage"><![CDATA[Su petición ha terminado con éxito.]]></var>
+			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edited" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="kbArticleTitleEdit" value="Knowledge Base Article Title Edited" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content Edited" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title Edited" />
+		</execute>
+	</command>
 </definition>

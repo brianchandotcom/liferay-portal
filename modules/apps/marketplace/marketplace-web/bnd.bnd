@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Marketplace Web
+Bundle-SymbolicName: com.liferay.marketplace.web
+Bundle-Version: 1.0.0
+Import-Package: *
+Web-ContextPath: /marketplace-web
+
+-donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
+-wab: docroot

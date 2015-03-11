@@ -24,13 +24,6 @@
 		<property name="timeout" value="10000" />
 	</bean>
 
-	<!-- JMX -->
-
-	<bean id="com.liferay.portal.kernel.messaging.jmx.JMXMessageListener" class="com.liferay.portal.kernel.messaging.jmx.JMXMessageListener">
-		<property name="MBeanRegistry" ref="mBeanRegistry" />
-		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
-	</bean>
-
 	<!-- Destinations -->
 
 	<bean id="destination.global" class="com.liferay.portal.kernel.messaging.ParallelDestination">
@@ -64,19 +57,6 @@
 	<!-- Configurator -->
 
 	<bean id="messagingConfigurator.core" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
-		<property name="globalDestinationEventListeners">
-			<list>
-				<ref bean="com.liferay.portal.kernel.messaging.jmx.JMXMessageListener" />
-				<!--<bean class="com.liferay.portal.kernel.messaging.GlobalDestinationEventListener">
-					<property name="ignoredDestinations">
-						<list>
-							<value>liferay/global</value>
-						</list>
-					</property>
-					<property name="messageListener" ref="messageListener.global" />
-				</bean>-->
-			</list>
-		</property>
 		<property name="destinations">
 			<list>
 				<!--<ref bean="destination.global" />-->

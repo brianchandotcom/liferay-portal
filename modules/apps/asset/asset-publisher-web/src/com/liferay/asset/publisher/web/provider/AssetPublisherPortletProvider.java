@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.asset.publisher.web.portlet.provider;
+package com.liferay.asset.publisher.web.provider;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.portal.provider.AddPortletProvider;
+import com.liferay.portal.provider.PortletProvider;
+import com.liferay.portal.provider.ViewPortletProvider;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.provider.AddPortletProvider;
-import com.liferay.portlet.asset.provider.PortletProvider;
-import com.liferay.portlet.asset.provider.ViewPortletProvider;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import javax.portlet.PortletPreferences;

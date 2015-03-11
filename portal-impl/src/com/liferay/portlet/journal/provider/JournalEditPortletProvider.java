@@ -12,10 +12,25 @@
  * details.
  */
 
-package com.liferay.portlet.asset.provider;
+package com.liferay.portlet.journal.provider;
+
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.provider.EditPortletProvider;
+import com.liferay.portal.util.PortletKeys;
 
 /**
- * @author Eudaldo Alonso
+ * @author Eduardo Garcia
  */
-public interface ViewPortletProvider extends PortletProvider {
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
+	}
+)
+public class JournalEditPortletProvider implements EditPortletProvider {
+
+	@Override
+	public String getPortletId() {
+		return PortletKeys.JOURNAL;
+	}
+
 }

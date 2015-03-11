@@ -12,20 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.asset.provider;
-
-import com.liferay.portal.theme.ThemeDisplay;
-
-import javax.portlet.PortletPreferences;
+package com.liferay.portal.provider;
 
 /**
- * @author Eudaldo Alonso
+ * @author Eduardo Garcia
  */
-public interface AddPortletProvider extends PortletProvider {
-
-	public void updatePortletPreferences(
-			PortletPreferences portletPreferences, String portletId,
-			String className, long classPK, ThemeDisplay themeDisplay)
-		throws Exception;
-
+public interface EditPortletProvider extends PortletProvider {
 }

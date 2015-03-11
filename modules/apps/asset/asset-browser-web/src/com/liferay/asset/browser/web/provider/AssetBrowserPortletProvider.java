@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.asset.browser.web.asset.provider;
+package com.liferay.asset.browser.web.provider;
 
 import com.liferay.asset.browser.web.constants.AssetBrowserPortletKeys;
-import com.liferay.portlet.asset.provider.BrowsePortletProvider;
-import com.liferay.portlet.asset.provider.PortletProvider;
+import com.liferay.portal.provider.BrowsePortletProvider;
+import com.liferay.portal.provider.PortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 

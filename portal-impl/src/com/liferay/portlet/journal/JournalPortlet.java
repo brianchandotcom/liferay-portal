@@ -73,6 +73,7 @@ import com.liferay.portlet.journal.service.JournalFeedServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.journal.util.JournalRSSUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
+import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.util.RSSUtil;
 
@@ -402,6 +403,18 @@ public class JournalPortlet extends MVCPortlet {
 			ddmStructureId);
 
 		sendEditArticleRedirect(actionRequest, actionResponse);
+	}
+
+	public void undoTrashEntries(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] restoreEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
+
+		for (long restoreEntryId : restoreEntryIds) {
+			TrashEntryServiceUtil.restoreEntry(restoreEntryId);
+		}
 	}
 
 	public void unsubscribeFolder(

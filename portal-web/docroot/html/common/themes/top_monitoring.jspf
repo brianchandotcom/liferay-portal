@@ -15,13 +15,13 @@
 --%>
 
 <%
-PortalRequestDataSample portalRequestDataSample = new PortalRequestDataSample(company.getCompanyId(), request.getRemoteUser(), request.getRequestURI(), request.getRequestURL().toString() + ".jsp_display");
+DataSample dataSample = DataSampleFactoryUtil.createPortalRequestDataSample(company.getCompanyId(), request.getRemoteUser(), request.getRequestURI(), request.getRequestURL().toString() + ".jsp_display");
 
-portalRequestDataSample.setDescription("Portal Request");
+dataSample.setDescription("Portal Request");
 
-portalRequestDataSample.prepare();
+dataSample.prepare();
 
 DataSampleThreadLocal.initialize();
 
-request.setAttribute(WebKeys.PORTAL_REQUEST_DATA_SAMPLE, portalRequestDataSample);
+request.setAttribute(WebKeys.PORTAL_REQUEST_DATA_SAMPLE, dataSample);
 %>

@@ -16,8 +16,8 @@
 
 <%@ include file="/html/taglib/ui/language/init.jsp" %>
 
-<aui:form action="<%= formAction %>" method="post" name="<%= formName %>">
-	<aui:select changesContext="<%= true %>" label="" name="<%= name %>" onChange='<%= "submitForm(document." + namespace + formName + ");" %>' title="language">
+<aui:form action="<%= formAction %>" method="post" name="<%= namespace + formName %>" useNamespace="<%= false %>">
+	<aui:select changesContext="<%= true %>" label="" name="<%= namespace + name %>" onChange='<%= namespace + "changeLanguage();" %>' title="language">
 
 		<%
 		for (int i = 0; i < locales.length; i++) {
@@ -44,4 +44,9 @@
 	}
 	%>
 
+	function <%= namespace %>changeLanguage() {
+		var languageId = AUI.$(document.<%= namespace + formName %>.<%= namespace + name %>).val();
+
+		submitForm(document.<%= namespace + formName %>, '<%= formAction %>&languageId=' + languageId);
+	}
 </aui:script>

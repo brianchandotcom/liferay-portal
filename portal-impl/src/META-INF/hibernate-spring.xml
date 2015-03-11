@@ -42,20 +42,12 @@
 		<constructor-arg ref="liferayHibernateSessionFactory" />
 		<constructor-arg name="shardSessionFactoryTargetSource" value="#{shardDetector.shardSessionFactoryTargetSource}" />
 	</bean>
-	<bean id="hibernateMBeanExporter" class="org.springframework.jmx.export.MBeanExporter">
-		<property name="beans">
-			<map>
-				<entry key="Hibernate:name=statistics">
-					<bean class="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService">
-						<property name="sessionFactory" ref="liferaySessionFactory" />
-					</bean>
-				</entry>
-			</map>
+	<bean id="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsJmxAdapter" class="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsJmxAdapter">
+		<property name="hibernateStatisticsService">
+			<bean class="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService">
+				<property name="sessionFactory" ref="liferaySessionFactory" />
+			</bean>
 		</property>
-		<property name="registrationBehavior">
-			<util:constant static-field="org.springframework.jmx.support.MBeanRegistrationSupport.REGISTRATION_IGNORE_EXISTING" />
-		</property>
-		<property name="server" ref="mBeanServer" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil" class="com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil">
 		<property name="dynamicQueryFactory">

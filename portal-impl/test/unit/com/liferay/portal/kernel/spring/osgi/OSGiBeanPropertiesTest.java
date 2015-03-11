@@ -52,7 +52,7 @@ public class OSGiBeanPropertiesTest {
 	public void testWithArrayOfBooleanProperties() {
 		@OSGiBeanProperties(
 			property = {
-				"key:Boolean=true", "key:Boolean=false", "key:Boolean=true",
+				"key:Boolean=true", "key:Boolean=false", "key:Boolean=true"
 			}
 		)
 		class C {}
@@ -79,7 +79,7 @@ public class OSGiBeanPropertiesTest {
 	public void testWithArrayOfByteProperties() {
 		@OSGiBeanProperties(
 			property = {
-				"key:Byte=127", "key:Byte=95", "key:Byte=13",
+				"key:Byte=127", "key:Byte=95", "key:Byte=13"
 			}
 		)
 		class C {}
@@ -106,7 +106,7 @@ public class OSGiBeanPropertiesTest {
 	public void testWithArrayOfCharacterProperties() {
 		@OSGiBeanProperties(
 			property = {
-				"key:Character=@", "key:Character=#", "key:Character=\u0069",
+				"key:Character=@", "key:Character=#", "key:Character=\u0069"
 			}
 		)
 		class C {}
@@ -134,7 +134,7 @@ public class OSGiBeanPropertiesTest {
 		@OSGiBeanProperties(
 			property = {
 				"key:Double=1.7976931348623157E308", "key:Double=4.9E-324",
-				"key:Double=2.2250738585072014E-308",
+				"key:Double=2.2250738585072014E-308"
 			}
 		)
 		class C {}
@@ -163,7 +163,7 @@ public class OSGiBeanPropertiesTest {
 			property = {
 				"key:Float=3.4028234663852886E38",
 				"key:Float=1.401298464324817E-45",
-				"key:Float=1.1754943508222875E-38",
+				"key:Float=1.1754943508222875E-38"
 			}
 		)
 		class C {}
@@ -191,7 +191,7 @@ public class OSGiBeanPropertiesTest {
 		@OSGiBeanProperties(
 			property = {
 				"key:Integer=2147483647", "key:Integer=-2147483648",
-				"key:Integer=12",
+				"key:Integer=12"
 			}
 		)
 		class C {}
@@ -219,7 +219,7 @@ public class OSGiBeanPropertiesTest {
 		@OSGiBeanProperties(
 			property = {
 				"key:Long=9223372036854775807", "key:Long=-9223372036854775808",
-				"key:Long=12",
+				"key:Long=12"
 			}
 		)
 		class C {}
@@ -246,7 +246,7 @@ public class OSGiBeanPropertiesTest {
 	public void testWithArrayOfMixedProperties() {
 		@OSGiBeanProperties(
 			property = {
-				"key:String=32767", "key:Integer=-32768", "key:Short=12",
+				"key:String=32767", "key:Integer=-32768", "key:Short=12"
 			}
 		)
 		class C {}
@@ -258,7 +258,7 @@ public class OSGiBeanPropertiesTest {
 	public void testWithArrayOfProperties() {
 		@OSGiBeanProperties(
 			property = {
-				"key=valueA", "key=valueB", "key=valueC",
+				"key=valueA", "key=valueB", "key=valueC"
 			}
 		)
 		class C {}
@@ -285,7 +285,7 @@ public class OSGiBeanPropertiesTest {
 	public void testWithArrayOfShortProperties() {
 		@OSGiBeanProperties(
 			property = {
-				"key:Short=32767", "key:Short=-32768", "key:Short=12",
+				"key:Short=32767", "key:Short=-32768", "key:Short=12"
 			}
 		)
 		class C {}

@@ -12,29 +12,25 @@
  * details.
  */
 
-package com.liferay.util.xml.descriptor;
+package com.liferay.portal.tools.sourceformatter.dependencies;
 
-import com.liferay.util.xml.ElementIdentifier;
+import com.liferay.portal.kernel.util.SetUtil;
 
-import org.dom4j.Document;
+import java.util.Set;
 
 /**
- * @author Jorge Ferrer
+ * @author Hugo Huijser
  */
-public class PortletAppDescriptor extends SimpleXMLDescriptor {
+public class RedundantCommas {
 
-	@Override
-	public boolean canHandleType(String doctype, Document root) {
-		return root.getRootElement().getName().equals("portlet-app");
+	public Set<String> getPrimaryColors() {
+		return SetUtil.fromArray(new String[] {"Red", "Green", "Blue"});
 	}
 
-	@Override
-	public ElementIdentifier[] getElementsIdentifiedByChild() {
-		return _ELEMENTS_IDENTIFIED_BY_CHILD;
+	public String[] getRainbowColors() {
+		return new String[] {
+			"Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Violet"
+		};
 	}
-
-	private static final ElementIdentifier[] _ELEMENTS_IDENTIFIED_BY_CHILD = {
-		new ElementIdentifier("portlet", "portlet-name")
-	};
 
 }

@@ -1434,7 +1434,7 @@ public class SeleniumBuilderFileUtil {
 					fileName, element,
 					new String[] {
 						"description", "echo", "execute", "fail", "for", "if",
-						"take-screenshot", "var", "while",
+						"take-screenshot", "var", "while"
 					},
 					new String[] {"action", "function", "macro"},
 					new String[] {"var"},

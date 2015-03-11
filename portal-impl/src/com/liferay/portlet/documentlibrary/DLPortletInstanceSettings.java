@@ -33,7 +33,6 @@ import java.util.Map;
 /**
  * @author Sergio González
  */
-
 @Settings.Config(
 	settingsIds = {
 		PortletKeys.DOCUMENT_LIBRARY, PortletKeys.DOCUMENT_LIBRARY_ADMIN,

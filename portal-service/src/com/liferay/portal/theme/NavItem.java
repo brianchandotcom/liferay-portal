@@ -53,7 +53,6 @@ public class NavItem implements Serializable {
 	 *
 	 * @param  request the currently served {@link HttpServletRequest}
 	 * @param  layouts the layouts from which to create the navigation items
-	 * @param  template the template to add navigation items to
 	 * @return a single level of navigation items from the layouts, or
 	 *         <code>null</code> if the collection of layouts was
 	 *         <code>null</code>.

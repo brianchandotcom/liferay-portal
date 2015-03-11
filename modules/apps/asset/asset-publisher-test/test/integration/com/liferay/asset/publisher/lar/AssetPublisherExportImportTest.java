@@ -93,6 +93,7 @@ public class AssetPublisherExportImportTest
 			PortletConstants.INSTANCE_SEPARATOR + RandomTestUtil.randomString();
 	}
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();

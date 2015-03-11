@@ -251,7 +251,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			metadataElement,
 			new String[] {
 				"multiple", "name", "readOnly", "repeatable", "required",
-				"showLabel", "type", "width",
+				"showLabel", "type", "width"
 			},
 			new String[] {
 				"acceptFiles", "displayChildLabelAsValue", "fieldCssClass",

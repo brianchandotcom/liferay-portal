@@ -1255,7 +1255,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 					dateFormatDateTime.format(startDate.getTime()),
 					event.getTitle(), fromAddress, fromName,
 					company.getPortalURL(event.getGroupId()), portletName,
-					HtmlUtil.escape(toAddress), HtmlUtil.escape(toName),
+					HtmlUtil.escape(toAddress), HtmlUtil.escape(toName)
 				});
 
 			body = StringUtil.replace(
@@ -1271,7 +1271,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 					dateFormatDateTime.format(startDate.getTime()),
 					event.getTitle(), fromAddress, fromName,
 					company.getPortalURL(event.getGroupId()), portletName,
-					HtmlUtil.escape(toAddress), HtmlUtil.escape(toName),
+					HtmlUtil.escape(toAddress), HtmlUtil.escape(toName)
 				});
 
 			if ((remindBy == CalEventConstants.REMIND_BY_EMAIL) ||

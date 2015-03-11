@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* @author Iván Zaera
-*/
+ * @author Iván Zaera
+ */
 public class MockResourceManager implements ResourceManager, ResourceRetriever {
 
 	public MockResourceManager(String content) {

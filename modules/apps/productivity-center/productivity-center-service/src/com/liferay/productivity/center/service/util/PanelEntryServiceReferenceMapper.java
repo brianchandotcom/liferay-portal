@@ -23,8 +23,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
-* @author Adolfo Pérez
-*/
+ * @author Adolfo Pérez
+ */
 public class PanelEntryServiceReferenceMapper<T extends PanelEntry>
 	implements ServiceReferenceMapper<String, T> {
 

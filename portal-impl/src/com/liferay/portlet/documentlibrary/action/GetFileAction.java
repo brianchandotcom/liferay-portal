@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -282,6 +283,15 @@ public class GetFileAction extends PortletAction {
 				contentLength = convertedFile.length();
 				contentType = MimeTypesUtil.getContentType(fileName);
 			}
+		}
+
+		FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
+			FlashMagicBytesUtil.check(is);
+
+		is = flashMagicBytesUtilResult.getInputStream();
+
+		if (flashMagicBytesUtilResult.isFlash()) {
+			fileName = FileUtil.stripExtension(fileName) + ".swf";
 		}
 
 		ServletResponseUtil.sendFile(

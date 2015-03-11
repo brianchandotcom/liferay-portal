@@ -35,6 +35,7 @@ renderURL.setParameter("groupId", String.valueOf(groupId));
 renderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 renderURL.setParameter("layoutSetBranchName", layoutSetBranchName);
 renderURL.setParameter("localPublishing", String.valueOf(localPublishing));
+renderURL.setParameter("quickPublish", String.valueOf(quickPublish));
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");

@@ -1240,6 +1240,23 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected String formatIncorrectSyntax(
+		String line, String incorrectSyntax, String correctSyntax) {
+
+		for (int x = -1;;) {
+			x = line.indexOf(incorrectSyntax, x + 1);
+
+			if (x == -1) {
+				return line;
+			}
+
+			if (!isInsideQuotes(line, x)) {
+				line = StringUtil.replaceFirst(
+					line, incorrectSyntax, correctSyntax, x);
+			}
+		}
+	}
+
 	protected String formatJava(
 			String fileName, String absolutePath, String content)
 		throws Exception {
@@ -1835,23 +1852,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return newContent;
-	}
-
-	protected String formatIncorrectSyntax(
-		String line, String incorrectSyntax, String correctSyntax) {
-
-		for (int x = -1;;) {
-			x = line.indexOf(incorrectSyntax, x + 1);
-
-			if (x == -1) {
-				return line;
-			}
-
-			if (!isInsideQuotes(line, x)) {
-				line = StringUtil.replaceFirst(
-					line, incorrectSyntax, correctSyntax, x);
-			}
-		}
 	}
 
 	protected String formatWhitespace(String line, String trimmedLine) {

@@ -15,35 +15,54 @@
 package com.liferay.portal.monitoring.internal.statistics.jmx;
 
 import com.liferay.portal.kernel.monitoring.MonitoringException;
-import com.liferay.portal.kernel.monitoring.statistics.SummaryStatistics;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.monitoring.internal.statistics.portal.ServerStatistics;
+import com.liferay.portal.monitoring.internal.statistics.portal.ServerSummaryStatistics;
 
 import java.util.Set;
+
+import javax.management.DynamicMBean;
+import javax.management.NotCompliantMBeanException;
+import javax.management.StandardMBean;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public class PortalManager implements PortalManagerMBean {
+@Component(
+	immediate = true,
+	property = {
+		"object-name=com.liferay.portal.monitoring:classification=portal_statistic,name=PortalManager",
+		"object-name-cache-key=PortalManager"
+	},
+	service = DynamicMBean.class
+)
+public class PortalManager extends StandardMBean implements PortalManagerMBean {
+
+	public PortalManager() throws NotCompliantMBeanException {
+		super(PortalManagerMBean.class);
+	}
 
 	@Override
 	public long getAverageTime() throws MonitoringException {
-		return _summaryStatistics.getAverageTime();
+		return _serverSummaryStatistics.getAverageTime();
 	}
 
 	@Override
 	public long getAverageTimeByCompany(long companyId)
 		throws MonitoringException {
 
-		return _summaryStatistics.getAverageTimeByCompany(companyId);
+		return _serverSummaryStatistics.getAverageTimeByCompany(companyId);
 	}
 
 	@Override
 	public long getAverageTimeByCompany(String webId)
 		throws MonitoringException {
 
-		return _summaryStatistics.getAverageTimeByCompany(webId);
+		return _serverSummaryStatistics.getAverageTimeByCompany(webId);
 	}
 
 	@Override
@@ -56,70 +75,70 @@ public class PortalManager implements PortalManagerMBean {
 
 	@Override
 	public long getErrorCount() throws MonitoringException {
-		return _summaryStatistics.getErrorCount();
+		return _serverSummaryStatistics.getErrorCount();
 	}
 
 	@Override
 	public long getErrorCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return _summaryStatistics.getErrorCountByCompany(companyId);
+		return _serverSummaryStatistics.getErrorCountByCompany(companyId);
 	}
 
 	@Override
 	public long getErrorCountByCompany(String webId)
 		throws MonitoringException {
 
-		return _summaryStatistics.getErrorCountByCompany(webId);
+		return _serverSummaryStatistics.getErrorCountByCompany(webId);
 	}
 
 	@Override
 	public long getMaxTime() throws MonitoringException {
-		return _summaryStatistics.getMaxTime();
+		return _serverSummaryStatistics.getMaxTime();
 	}
 
 	@Override
 	public long getMaxTimeByCompany(long companyId) throws MonitoringException {
-		return _summaryStatistics.getMaxTimeByCompany(companyId);
+		return _serverSummaryStatistics.getMaxTimeByCompany(companyId);
 	}
 
 	@Override
 	public long getMaxTimeByCompany(String webId) throws MonitoringException {
-		return _summaryStatistics.getMaxTimeByCompany(webId);
+		return _serverSummaryStatistics.getMaxTimeByCompany(webId);
 	}
 
 	@Override
 	public long getMinTime() throws MonitoringException {
-		return _summaryStatistics.getMinTime();
+		return _serverSummaryStatistics.getMinTime();
 	}
 
 	@Override
 	public long getMinTimeByCompany(long companyId) throws MonitoringException {
-		return _summaryStatistics.getMinTimeByCompany(companyId);
+		return _serverSummaryStatistics.getMinTimeByCompany(companyId);
 	}
 
 	@Override
 	public long getMinTimeByCompany(String webId) throws MonitoringException {
-		return _summaryStatistics.getMinTimeByCompany(webId);
+		return _serverSummaryStatistics.getMinTimeByCompany(webId);
 	}
 
 	@Override
 	public long getRequestCount() throws MonitoringException {
-		return _summaryStatistics.getRequestCount();
+		return _serverSummaryStatistics.getRequestCount();
 	}
 
 	@Override
 	public long getRequestCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return _summaryStatistics.getRequestCountByCompany(companyId);
+		return _serverSummaryStatistics.getRequestCountByCompany(companyId);
 	}
 
 	@Override
 	public long getRequestCountByCompany(String webId)
 		throws MonitoringException {
 
-		return _summaryStatistics.getRequestCountByCompany(webId);
+		return _serverSummaryStatistics.getRequestCountByCompany(webId);
 	}
 
 	public long getStartTime(long companyId) throws MonitoringException {
@@ -132,40 +151,40 @@ public class PortalManager implements PortalManagerMBean {
 
 	@Override
 	public long getSuccessCount() throws MonitoringException {
-		return _summaryStatistics.getSuccessCount();
+		return _serverSummaryStatistics.getSuccessCount();
 	}
 
 	@Override
 	public long getSuccessCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return _summaryStatistics.getSuccessCountByCompany(companyId);
+		return _serverSummaryStatistics.getSuccessCountByCompany(companyId);
 	}
 
 	@Override
 	public long getSuccessCountByCompany(String webId)
 		throws MonitoringException {
 
-		return _summaryStatistics.getSuccessCountByCompany(webId);
+		return _serverSummaryStatistics.getSuccessCountByCompany(webId);
 	}
 
 	@Override
 	public long getTimeoutCount() throws MonitoringException {
-		return _summaryStatistics.getTimeoutCount();
+		return _serverSummaryStatistics.getTimeoutCount();
 	}
 
 	@Override
 	public long getTimeoutCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return _summaryStatistics.getTimeoutCountByCompany(companyId);
+		return _serverSummaryStatistics.getTimeoutCountByCompany(companyId);
 	}
 
 	@Override
 	public long getTimeoutCountByCompany(String webId)
 		throws MonitoringException {
 
-		return _summaryStatistics.getTimeoutCountByCompany(webId);
+		return _serverSummaryStatistics.getTimeoutCountByCompany(webId);
 	}
 
 	@Override
@@ -200,15 +219,19 @@ public class PortalManager implements PortalManagerMBean {
 		_serverStatistics.reset(webId);
 	}
 
-	public void setServerStatistics(ServerStatistics serverStatistics) {
+	@Reference
+	protected void setServerStatistics(ServerStatistics serverStatistics) {
 		_serverStatistics = serverStatistics;
 	}
 
-	public void setSummaryStatistics(SummaryStatistics summaryStatistics) {
-		_summaryStatistics = summaryStatistics;
+	@Reference
+	protected void setServerSummaryStatistics(
+		ServerSummaryStatistics serverSummaryStatistics) {
+
+		_serverSummaryStatistics = serverSummaryStatistics;
 	}
 
 	private ServerStatistics _serverStatistics;
-	private SummaryStatistics _summaryStatistics;
+	private ServerSummaryStatistics _serverSummaryStatistics;
 
 }

@@ -20,10 +20,30 @@ import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
 
 import java.util.Set;
 
+import javax.management.DynamicMBean;
+import javax.management.NotCompliantMBeanException;
+import javax.management.StandardMBean;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
-public class ServiceManager implements ServiceManagerMBean {
+@Component(
+	immediate = true,
+	property = {
+		"object-name=com.liferay.portal.monitoring:classification=instrumentation,name=ServiceManager",
+		"object-name-cache-key=ServiceManager"
+	},
+	service = DynamicMBean.class
+)
+public class ServiceManager extends StandardMBean
+	implements ServiceManagerMBean {
+
+	public ServiceManager() throws NotCompliantMBeanException {
+		super(ServiceManagerMBean.class);
+	}
 
 	@Override
 	public void addMonitoredClass(String className) {
@@ -100,11 +120,13 @@ public class ServiceManager implements ServiceManagerMBean {
 		_serviceMonitorAdvice.setPermissiveMode(permissiveMode);
 	}
 
-	public void setServerStatistics(ServerStatistics serverStatistics) {
+	@Reference
+	protected void setServerStatistics(ServerStatistics serverStatistics) {
 		_serverStatistics = serverStatistics;
 	}
 
-	public void setServiceMonitorAdvice(
+	@Reference
+	protected void setServiceMonitorAdvice(
 		ServiceMonitorAdvice serviceMonitorAdvice) {
 
 		_serviceMonitorAdvice = serviceMonitorAdvice;

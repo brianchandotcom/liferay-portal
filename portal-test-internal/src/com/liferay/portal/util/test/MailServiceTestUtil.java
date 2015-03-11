@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test.util;
+package com.liferay.portal.util.test;
 
 import com.dumbster.smtp.MailMessage;
 import com.dumbster.smtp.SmtpServer;

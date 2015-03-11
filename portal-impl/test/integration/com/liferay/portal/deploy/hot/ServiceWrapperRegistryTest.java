@@ -23,7 +23,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,10 +43,18 @@ public class ServiceWrapperRegistryTest {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			new SyntheticBundleRule("bundle.servicewrapperregistry"));
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_serviceWrapperRegistry = new ServiceWrapperRegistry();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_serviceWrapperRegistry.close();
+	}
+
 	@Test
 	public void testInvokeOverrideMethod() throws PortalException {
-		new ServiceWrapperRegistry();
-
 		EmailAddressLocalService emailAddressLocalService =
 			(EmailAddressLocalService)PortalBeanLocatorUtil.locate(
 				EmailAddressLocalService.class.getName());
@@ -53,5 +63,7 @@ public class ServiceWrapperRegistryTest {
 
 		Assert.assertEquals("email@liferay.com", emailAddress.getAddress());
 	}
+
+	private static ServiceWrapperRegistry _serviceWrapperRegistry;
 
 }

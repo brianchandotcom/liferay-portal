@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Marketplace API
+Bundle-SymbolicName: com.liferay.marketplace.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.marketplace.*
+Include-Resource: classes

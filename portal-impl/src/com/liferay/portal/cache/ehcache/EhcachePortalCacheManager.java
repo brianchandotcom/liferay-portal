@@ -25,6 +25,11 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.io.Serializable;
 
@@ -83,10 +88,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_configPropertyKey = configPropertyKey;
 	}
 
-	public void setMBeanServer(MBeanServer mBeanServer) {
-		_mBeanServer = mBeanServer;
-	}
-
 	public void setRegisterCacheConfigurations(
 		boolean registerCacheConfigurations) {
 
@@ -133,6 +134,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				_managementService.dispose();
 			}
 		}
+
+		_serviceTracker.close();
 	}
 
 	@Override
@@ -180,21 +183,19 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			throw new RuntimeException(e);
 		}
 
-		if (PropsValues.EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED) {
-			_managementService = new ManagementService(
-				_cacheManager, _mBeanServer, _registerCacheManager,
-				_registerCaches, _registerCacheConfigurations,
-				_registerCacheStatistics);
-
-			_managementService.init();
-		}
-
 		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
 			_cacheManager.getCacheManagerEventListenerRegistry();
 
 		cacheManagerEventListenerRegistry.registerListener(
 			new PortalCacheManagerEventListener(
 				aggregatedCacheManagerListener));
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			MBeanServer.class, new MBeanServerServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 	protected void reconfigEhcache(Configuration configuration) {
@@ -268,12 +269,49 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 		_configurationPair;
 	private ManagementService _managementService;
-	private MBeanServer _mBeanServer;
 	private String _name;
 	private boolean _registerCacheConfigurations = true;
 	private boolean _registerCacheManager = true;
 	private boolean _registerCaches = true;
 	private boolean _registerCacheStatistics = true;
+	private ServiceTracker <MBeanServer, MBeanServer> _serviceTracker;
 	private boolean _usingDefault;
+
+	private class MBeanServerServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<MBeanServer, MBeanServer> {
+
+		@Override
+		public MBeanServer addingService(
+			ServiceReference<MBeanServer> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			MBeanServer mBeanServer = registry.getService(serviceReference);
+
+			if (PropsValues.EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED) {
+				_managementService = new ManagementService(
+					_cacheManager, mBeanServer, _registerCacheManager,
+					_registerCaches, _registerCacheConfigurations,
+					_registerCacheStatistics);
+
+				_managementService.init();
+			}
+
+			return mBeanServer;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<MBeanServer> serviceReference,
+			MBeanServer mBeanServer) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<MBeanServer> serviceReference,
+			MBeanServer mBeanServer) {
+		}
+
+	}
 
 }

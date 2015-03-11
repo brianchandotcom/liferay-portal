@@ -368,7 +368,10 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 							else {
 								var errorKey = '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>';
 
-								if (exception.indexOf('MessageBodyException') > -1) {
+								if (exception.indexOf('DiscussionMaxCommentsException') > -1) {
+									errorKey = '<%= UnicodeLanguageUtil.get(request, "maximum-number-of-comments-has-been-reached") %>';
+								}
+								else if (exception.indexOf('MessageBodyException') > -1) {
 									errorKey = '<%= UnicodeLanguageUtil.get(request, "please-enter-a-valid-message") %>';
 								}
 								else if (exception.indexOf('NoSuchMessageException') > -1) {

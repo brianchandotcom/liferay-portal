@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `7763533`.*
+*This document has been reviewed through commit `68d6f19`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1032,61 +1032,62 @@ This change has been made due to the deprecation of the `Fields` class.
 
 ---------------------------------------
 
-### DLProcessor needs to implement a new method getType()
+### Created a New `getType()` Method That is Implemented in `DLProcessor`
 - **Date:** 2015-Feb-17
 - **JIRA Ticket:** LPS-53574
 
 #### What changed?
 
-DLProcessor has a new method getType()
+The `DLProcessor` interface has a new method `getType()`.
 
 #### Who is affected?
 
-All developers who have created DLProcessor
+This affects developers who have created a `DLProcessor`.
 
 #### How should I update my code?
 
-You need to implement the method in the DLProcessor and return the type of
-Processor. You can check the class DLProcessorConstants to see the types.
-class.
+You should implement the new method and return the type of processor. You can
+check the class `DLProcessorConstants` to see processor types.
 
 #### Why was this change made?
 
-Before we were forcing developers to extend one of the existing DLProcessors and
-we were checking the instance of the class to determine what type of processor
-was.
+Previous to Liferay 7, developers were forced to extend one of the existing
+`DLProcessor` classes and developers using the extended class had to check the
+instance of that class to determine its processor type.
 
-With the new change developers don't need to extend any particular class to
-create their own DLProcessor.
+With this change, developers no longer need to extend any particular class to
+create their own `DLProcessor` and their processor's type can be clearly
+specified by a constant from the class `DLProcessorConstants`.
 
 ---------------------------------------
 
-### DDM Template search operation need to pass resourceClassNameId parameter
+### Added Required Parameter `resourceClassNameId` for DDM Template Search Operations
 - **Date:** 2015-Mar-03
 - **JIRA Ticket:** LPS-52990
 
 #### What changed?
 
-DDM Template `search` and `searchCount` operations have a new parameter called
-resourceClassNameid
+The DDM template `search` and `searchCount` operations have a new parameter
+called `resourceClassNameId`.
 
 #### Who is affected?
 
-All developers who have direct calls to DDMTemplateService or 
-DDMTemplateLocalService
+This affects developers who have direct calls to the `DDMTemplateService` or 
+`DDMTemplateLocalService`.
 
 #### How should I update my code?
 
-You need to add the resourceClassNameId parameter to your calls. The 
-resourceClassNameId represents the resource that owns the permission for the
-DDMTemplate. For example, if the template is a WCM Template resourceClassNameId 
-points to JournalArticle classNameId, if it's a DDL Template it points to
-DDLRecordSet classNameId, if it's a ADT template it points to 
-PortletDisplayTemplate classNameId
+You should add the `resourceClassNameId` parameter to your calls. This parameter
+represents the resource that owns the permission for the DDM template. For
+example, if the template is a WCM template, the `resourceClassNameId` points to
+the `JournalArticle`'s `classNameId`. If the template is a DDL template, the
+`resourceClassNameId` points to the `DDLRecordSet`'s `classNameId`. If the
+template is an ADT template, the `resourceClassNameId` points to the
+`PortletDisplayTemplate`'s `classNameId`.
 
 #### Why was this change made?
 
-This change was made in order to implement model resource permissions to 
-DDM Templates, such as VIEW, DELETE, PERMISSIONS, UPDATE.
+This change was made in order to implement model resource permissions for
+DDM templates, such as `VIEW`, `DELETE`, `PERMISSIONS`, and `UPDATE`.
 
 ---------------------------------------

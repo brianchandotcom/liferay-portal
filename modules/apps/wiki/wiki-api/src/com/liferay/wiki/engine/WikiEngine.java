@@ -36,7 +36,6 @@ public interface WikiEngine {
 	 * @param  attachmentURLPrefix the URL prefix to use for attachments to the
 	 *         page
 	 * @return the content of the given page converted to HTML
-	 * @throws PageContentException if a page content exception occurred
 	 */
 	public String convert(
 			WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
@@ -50,7 +49,6 @@ public interface WikiEngine {
 	 *
 	 * @param  page the page
 	 * @return a map of links included in the given page
-	 * @throws PageContentException if a page content exception occurred
 	 */
 	public Map<String, Boolean> getOutgoingLinks(WikiPage page)
 		throws PageContentException;

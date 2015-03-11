@@ -798,6 +798,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				continue;
 			}
 
+			matcher = _redundantCommaPattern.matcher(newContent);
+
+			if (matcher.find()) {
+				newContent = StringUtil.replaceFirst(
+					newContent, StringPool.COMMA, StringPool.BLANK,
+					matcher.start());
+
+				continue;
+			}
+
 			break;
 		}
 
@@ -1240,6 +1250,23 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected String formatIncorrectSyntax(
+		String line, String incorrectSyntax, String correctSyntax) {
+
+		for (int x = -1;;) {
+			x = line.indexOf(incorrectSyntax, x + 1);
+
+			if (x == -1) {
+				return line;
+			}
+
+			if (!isInsideQuotes(line, x)) {
+				line = StringUtil.replaceFirst(
+					line, incorrectSyntax, correctSyntax, x);
+			}
+		}
+	}
+
 	protected String formatJava(
 			String fileName, String absolutePath, String content)
 		throws Exception {
@@ -1446,6 +1473,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							line, StringPool.TAB + StringPool.SPACE,
 							StringPool.TAB);
 					}
+
+					line = formatIncorrectSyntax(line, ",}", "}");
 
 					line = formatWhitespace(line, trimmedLine);
 
@@ -1837,34 +1866,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
-	protected String formatWhitespace(
-		String line, String incorrectSyntax, String correctSyntax) {
-
-		for (int x = -1;;) {
-			x = line.indexOf(incorrectSyntax, x + 1);
-
-			if (x == -1) {
-				return line;
-			}
-
-			if (!isInsideQuotes(line, x)) {
-				line = StringUtil.replaceFirst(
-					line, incorrectSyntax, correctSyntax, x);
-			}
-		}
-	}
-
 	protected String formatWhitespace(String line, String trimmedLine) {
-		line = formatWhitespace(line, "catch(", "catch (");
-		line = formatWhitespace(line, "else{", "else {");
-		line = formatWhitespace(line, "for(", "for (");
-		line = formatWhitespace(line, "if(", "if (");
-		line = formatWhitespace(line, "while(", "while (");
-		line = formatWhitespace(line, "List <", "List<");
-		line = formatWhitespace(line, "){", ") {");
-		line = formatWhitespace(line, "]{", "] {");
-		line = formatWhitespace(line, " [", "[");
-		line = formatWhitespace(
+		line = formatIncorrectSyntax(line, "catch(", "catch (");
+		line = formatIncorrectSyntax(line, "else{", "else {");
+		line = formatIncorrectSyntax(line, "for(", "for (");
+		line = formatIncorrectSyntax(line, "if(", "if (");
+		line = formatIncorrectSyntax(line, "while(", "while (");
+		line = formatIncorrectSyntax(line, "List <", "List<");
+		line = formatIncorrectSyntax(line, "){", ") {");
+		line = formatIncorrectSyntax(line, "]{", "] {");
+		line = formatIncorrectSyntax(line, " [", "[");
+		line = formatIncorrectSyntax(
 			line, StringPool.SPACE + StringPool.TAB, StringPool.TAB);
 
 		for (int x = 0;;) {
@@ -2947,6 +2959,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
 	private List<String> _proxyExclusionFiles;
+	private Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
 	private List<String> _secureRandomExclusionFiles;
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");

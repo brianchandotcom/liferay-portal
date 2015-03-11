@@ -18,7 +18,6 @@ package com.liferay.poshi.runner;
  * @author Karen Dang
  * @author Michael Hashimoto
  */
-
 public class PoshiRunnerException extends Exception {
 
 	public PoshiRunnerException() {

@@ -32,7 +32,7 @@ public class GetUrlTei extends TagExtraInfo {
 		if (Validator.isNotNull(var)) {
 			return new VariableInfo[] {
 				new VariableInfo(
-					var, String.class.getName(), true, VariableInfo.AT_END),
+					var, String.class.getName(), true, VariableInfo.AT_END)
 			};
 		}
 		else {

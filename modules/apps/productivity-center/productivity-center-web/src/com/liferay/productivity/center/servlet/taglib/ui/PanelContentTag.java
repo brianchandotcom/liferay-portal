@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PanelContentTag extends IncludeTag {
 
+	@Override
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
 	}

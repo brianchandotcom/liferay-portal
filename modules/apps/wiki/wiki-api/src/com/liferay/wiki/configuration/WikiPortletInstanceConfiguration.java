@@ -35,7 +35,7 @@ public interface WikiPortletInstanceConfiguration {
 	public String displayStyle();
 
 	/**
-	 * Set this to true to enable ratings in Wiki comments.
+	 * Set this to <code>true</code> to enable ratings in Wiki comments.
 	 */
 	@Meta.AD(
 		deflt = "true", required = false
@@ -43,7 +43,7 @@ public interface WikiPortletInstanceConfiguration {
 	public boolean enableCommentRatings();
 
 	/**
-	 * Set this to true to enable comments for Wiki pages.
+	 * Set this to <code>true</code> to enable comments for Wiki pages.
 	 */
 	@Meta.AD(
 		deflt = "true", required = false
@@ -51,7 +51,7 @@ public interface WikiPortletInstanceConfiguration {
 	public boolean enableComments();
 
 	/**
-	 * Set this to true to enable ratings for Wiki pages.
+	 * Set this to <code>true</code> to enable ratings for Wiki pages.
 	 */
 	@Meta.AD(
 		deflt = "true", required = false

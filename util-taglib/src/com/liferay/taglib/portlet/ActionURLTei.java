@@ -34,14 +34,14 @@ public class ActionURLTei extends TagExtraInfo {
 		if (Validator.isNotNull(var)) {
 			return new VariableInfo[] {
 				new VariableInfo(
-					var, String.class.getName(), true, VariableInfo.AT_END),
+					var, String.class.getName(), true, VariableInfo.AT_END)
 			};
 		}
 		else if (Validator.isNotNull(varImpl)) {
 			return new VariableInfo[] {
 				new VariableInfo(
 					varImpl, LiferayPortletURL.class.getName(), true,
-					VariableInfo.AT_END),
+					VariableInfo.AT_END)
 			};
 		}
 		else {

@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
-		"servlet-filter-name=SSO Ntlm Filter", "url-pattern=/c/portal/login",
+		"servlet-filter-name=SSO Ntlm Filter", "url-pattern=/c/portal/login"
 	},
 	service = Filter.class
 )

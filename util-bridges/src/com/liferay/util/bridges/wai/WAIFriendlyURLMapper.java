@@ -154,7 +154,7 @@ public class WAIFriendlyURLMapper implements FriendlyURLMapper {
 
 	private static final String[] _BINARY_EXTENSIONS = new String[] {
 		".css", ".doc", ".gif", ".jpeg", ".jpg", ".js", ".odp", ".png", ".ppt",
-		".tgz", ".xls", ".zip",
+		".tgz", ".xls", ".zip"
 	};
 
 	private static final boolean _CHECK_MAPPING_WITH_PREFIX = true;

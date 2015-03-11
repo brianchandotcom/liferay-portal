@@ -469,7 +469,7 @@
 
 	<macrodef name="get-test-url">
 		<sequential>
-			<get-testcase-property property.name="portal.url" />
+			<get-testcase-property property.name="testcase.url" />
 
 			<if>
 				<isset property="test.url" />
@@ -477,9 +477,9 @@
 					<var name="test.url" value="${test.url}" />
 				</then>
 				<elseif>
-					<isset property="portal.url" />
+					<isset property="testcase.url" />
 					<then>
-						<var name="test.url" value="${portal.url}" />
+						<var name="test.url" value="${testcase.url}" />
 					</then>
 				</elseif>
 				<else>

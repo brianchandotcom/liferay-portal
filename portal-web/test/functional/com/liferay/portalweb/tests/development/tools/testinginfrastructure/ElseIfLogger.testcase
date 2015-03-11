@@ -1,5 +1,5 @@
 <definition component-name="portal-tools">
-	<property name="portal.url" value="http://the-internet.herokuapp.com/status_codes" />
+	<property name="testcase.url" value="http://the-internet.herokuapp.com/status_codes" />
 	<property name="testray.main.component.name" value="Tools" />
 
 	<command name="MacroElseClauseEvaluated" priority="5">

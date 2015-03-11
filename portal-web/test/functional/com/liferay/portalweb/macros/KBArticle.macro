@@ -414,13 +414,28 @@
 		<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_ACTIONS_BUTTON" />
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_EDIT" value1="Edit" />
 
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayEditarticle#INFO_MESSAGE" value1="A new version will be created automatically if this content is modified." />
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayEditarticle#INFO_MESSAGE" value1="A new version is created automatically if this content is modified." />
 		<execute function="Type" locator1="PGKnowledgebasedisplayEditarticle#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
 		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGKnowledgebasedisplayEditarticle#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
-		<execute function="AddSelection" locator1="PGKnowledgebasedisplayEditarticle#SECTIONS_SELECT" value1="${kbArticleSectionEdit}" />
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplayEditarticle#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="editViaLocalizedKBDisplay">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute function="Click" locator1="xpath=//div[@class='kb-article-container']//div//a[@title='Acciones']" />
+
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_EDIT" value1="Editar" />
+
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayEditarticle#HEADER_TITLE" value1="${kbArticleTitle}" />
+		<execute function="Type" locator1="PGKnowledgebasedisplayEditarticle#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
+		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGKnowledgebasedisplayEditarticle#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
+
+		<execute function="AssertClick" locator1="xpath=//button[contains(@id,'_knowledgebaseportlet_publish')]" value1="Publicar" />
+
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUCCESS_MESSAGE" value1="${localizedSuccessMessage}" />
 	</command>
 
 	<command name="goBackCP">

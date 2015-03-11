@@ -20,9 +20,9 @@ import com.dumbster.smtp.SmtpServerFactory;
 import com.dumbster.smtp.mailstores.RollingMailStore;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,8 +116,10 @@ public class MailServiceTestUtil {
 
 			});
 		_smtpServer.setPort(
-			GetterUtil.getInteger(
-				PropsUtil.get(PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT)));
+			PrefsPropsUtil.getInteger(
+				PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT,
+				PropsValues.MAIL_SESSION_MAIL_SMTP_PORT));
+
 		_smtpServer.setThreaded(false);
 
 		try {

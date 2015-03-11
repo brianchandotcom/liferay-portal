@@ -20,6 +20,7 @@
 String redirect = ParamUtil.getString(request, "redirect");
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
+boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
@@ -122,12 +123,14 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 	}
 	%>
 
-	<liferay-ui:header
-		backURL="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, portletResource) %>"
-		localizeTitle="<%= false %>"
-		showBackURL="<%= showBackURL %>"
-		title="<%= title %>"
-	/>
+	<c:if test="<%= showHeader %>">
+		<liferay-ui:header
+			backURL="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, portletResource) %>"
+			localizeTitle="<%= false %>"
+			showBackURL="<%= showBackURL %>"
+			title="<%= title %>"
+		/>
+	</c:if>
 
 	<aui:model-context bean="<%= template %>" model="<%= DDMTemplate.class %>" />
 

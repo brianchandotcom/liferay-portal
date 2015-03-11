@@ -247,6 +247,12 @@ public interface Staging {
 
 	public boolean isIncomplete(Layout layout, long layoutSetBranchId);
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor#getIsolationLevel(
+	 *             )}
+	 */
+	@Deprecated
 	public void lockGroup(long userId, long groupId) throws PortalException;
 
 	public void publishLayout(
@@ -336,6 +342,12 @@ public interface Staging {
 
 	public String stripProtocolFromRemoteAddress(String remoteAddress);
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor#getIsolationLevel(
+	 *             )}
+	 */
+	@Deprecated
 	public void unlockGroup(long groupId);
 
 	public void unscheduleCopyFromLive(PortletRequest PortletRequest)

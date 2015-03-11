@@ -595,13 +595,13 @@ public interface PropsKeys {
 
 	public static final String DISCUSSION_COMMENTS_FORMAT = "discussion.comments.format";
 
-	public static final String DISCUSSION_COMMENTS_LIMIT = "discussion.comments.limit";
-
 	public static final String DISCUSSION_EMAIL_BODY = "discussion.email.body";
 
 	public static final String DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED = "discussion.email.comments.added.enabled";
 
 	public static final String DISCUSSION_EMAIL_SUBJECT = "discussion.email.subject";
+
+	public static final String DISCUSSION_MAX_COMMENTS = "discussion.max.comments";
 
 	public static final String DISCUSSION_SUBSCRIBE_BY_DEFAULT = "discussion.subscribe.by.default";
 

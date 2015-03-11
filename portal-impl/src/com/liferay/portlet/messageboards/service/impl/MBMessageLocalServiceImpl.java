@@ -71,7 +71,7 @@ import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.messageboards.DiscussionMessageLimitException;
+import com.liferay.portlet.messageboards.DiscussionMaxCommentsException;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
@@ -169,7 +169,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Message
 
-		validateDiscussionMessageLimit(className, classPK);
+		validateDiscussionMessagesCount(className, classPK);
 
 		long categoryId = MBCategoryConstants.DISCUSSION_CATEGORY_ID;
 
@@ -2479,19 +2479,19 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validateDiscussionMessageLimit(
+	protected void validateDiscussionMessagesCount(
 			String className, long classPK)
 		throws PortalException {
 
-		if (PropsValues.DISCUSSION_COMMENTS_LIMIT <= 0) {
+		if (PropsValues.DISCUSSION_MAX_COMMENTS <= 0) {
 			return;
 		}
 
 		int count = getDiscussionMessagesCount(
 			className, classPK, WorkflowConstants.STATUS_APPROVED);
 
-		if (count >= PropsValues.DISCUSSION_COMMENTS_LIMIT) {
-			throw new DiscussionMessageLimitException();
+		if (count >= PropsValues.DISCUSSION_MAX_COMMENTS) {
+			throw new DiscussionMaxCommentsException();
 		}
 	}
 

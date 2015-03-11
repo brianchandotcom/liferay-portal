@@ -490,7 +490,7 @@ public class PropsValues {
 
 	public static final String DISCUSSION_COMMENTS_FORMAT = PropsUtil.get(PropsKeys.DISCUSSION_COMMENTS_FORMAT);
 
-	public static final int DISCUSSION_COMMENTS_LIMIT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DISCUSSION_COMMENTS_LIMIT));
+	public static final int DISCUSSION_MAX_COMMENTS = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DISCUSSION_MAX_COMMENTS));
 
 	public static final boolean DISCUSSION_SUBSCRIBE_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DISCUSSION_SUBSCRIBE_BY_DEFAULT));
 

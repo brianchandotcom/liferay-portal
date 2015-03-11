@@ -38,6 +38,6 @@ public interface MBMessageDisplay extends Serializable {
 
 	public MBTreeWalker getTreeWalker();
 
-	public boolean isMessageLimit();
+	public boolean isMaxMessagesCountExceeded();
 
 }

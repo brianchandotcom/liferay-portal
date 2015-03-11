@@ -1910,6 +1910,7 @@ public class DLAppHelperLocalServiceImpl
 			"[$DOCUMENT_URL$]", entryURL, "[$FOLDER_NAME$]", folderName);
 		subscriptionSender.setContextCreatorUserPrefix("DOCUMENT");
 		subscriptionSender.setCreatorUserId(fileVersion.getUserId());
+		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(entryTitle);
 		subscriptionSender.setEntryURL(entryURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
@@ -1933,7 +1934,6 @@ public class DLAppHelperLocalServiceImpl
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(fileVersion.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setUserId(userId);
 
 		subscriptionSender.addPersistedSubscribers(
 			DLFolder.class.getName(), fileVersion.getGroupId());

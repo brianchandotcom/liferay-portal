@@ -230,12 +230,20 @@ public class SubscriptionSender implements Serializable {
 		return _context.get(key);
 	}
 
+	public long getCurrentUserId() {
+		return currentUserId;
+	}
+
 	public String getMailId() {
 		return this.mailId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link getCurrentUserId()}
+	 */
+	@Deprecated
 	public long getUserId() {
-		return userId;
+		return getCurrentUserId();
 	}
 
 	public void initialize() throws Exception {
@@ -328,6 +336,10 @@ public class SubscriptionSender implements Serializable {
 
 	public void setCreatorUserId(long creatorUserId) {
 		this.creatorUserId = creatorUserId;
+	}
+
+	public void setCurrentUserId(long currentUserId) {
+		this.currentUserId = currentUserId;
 	}
 
 	public void setEntryTitle(String entryTitle) {
@@ -425,8 +437,12 @@ public class SubscriptionSender implements Serializable {
 		this.uniqueMailId = uniqueMailId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setCurrentUserId(long)}
+	 */
+	@Deprecated
 	public void setUserId(long userId) {
-		this.userId = userId;
+		setCurrentUserId(userId);
 	}
 
 	protected void deleteSubscription(Subscription subscription)
@@ -824,9 +840,9 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	protected void sendNotification(User user) throws Exception {
-		if (userId == user.getUserId() ) {
+		if (currentUserId == user.getUserId() ) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Skip user " + userId);
+				_log.debug("Skip user " + currentUserId);
 			}
 
 			return;
@@ -874,6 +890,7 @@ public class SubscriptionSender implements Serializable {
 	protected boolean bulk;
 	protected long companyId;
 	protected long creatorUserId;
+	protected long currentUserId;
 	protected List<FileAttachment> fileAttachments = new ArrayList<>();
 	protected String fromAddress;
 	protected String fromName;
@@ -890,7 +907,6 @@ public class SubscriptionSender implements Serializable {
 	protected SMTPAccount smtpAccount;
 	protected String subject;
 	protected boolean uniqueMailId = true;
-	protected long userId;
 
 	private void readObject(ObjectInputStream objectInputStream)
 		throws ClassNotFoundException, IOException {

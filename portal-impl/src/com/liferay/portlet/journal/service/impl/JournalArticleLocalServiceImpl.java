@@ -7010,6 +7010,7 @@ public class JournalArticleLocalServiceImpl
 			article.getVersion());
 		subscriptionSender.setContextCreatorUserPrefix("ARTICLE");
 		subscriptionSender.setCreatorUserId(article.getUserId());
+		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(articleTitle);
 		subscriptionSender.setEntryURL(articleURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
@@ -7032,7 +7033,6 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setUserId(userId);
 
 		JournalFolder folder = article.getFolder();
 

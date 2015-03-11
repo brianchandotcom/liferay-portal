@@ -772,6 +772,7 @@ public class BookmarksEntryLocalServiceImpl
 			"[$BOOKMARKS_ENTRY_URL$]", entryURL);
 		subscriptionSender.setContextCreatorUserPrefix("BOOKMARKS_ENTRY");
 		subscriptionSender.setCreatorUserId(entry.getUserId());
+		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(entryTitle);
 		subscriptionSender.setEntryURL(entryURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
@@ -794,7 +795,6 @@ public class BookmarksEntryLocalServiceImpl
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setUserId(userId);
 
 		BookmarksFolder folder = entry.getFolder();
 

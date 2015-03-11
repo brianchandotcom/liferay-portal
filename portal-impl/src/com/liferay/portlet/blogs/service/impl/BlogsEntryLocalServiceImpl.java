@@ -1881,6 +1881,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			workflowContext.get(WorkflowConstants.CONTEXT_USER_URL));
 		subscriptionSender.setContextCreatorUserPrefix("BLOGS_ENTRY");
 		subscriptionSender.setCreatorUserId(entry.getUserId());
+		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(entryTitle);
 		subscriptionSender.setEntryURL(entryURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
@@ -1903,7 +1904,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setUserId(userId);
 
 		subscriptionSender.addPersistedSubscribers(
 			BlogsEntry.class.getName(), entry.getGroupId());

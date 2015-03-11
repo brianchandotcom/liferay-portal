@@ -2027,6 +2027,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setContextAttributes(
 			"[$COMMENTS_USER_ADDRESS$]", userAddress, "[$COMMENTS_USER_NAME$]",
 			userName, "[$CONTENT_URL$]", contentURL);
+		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(message.getBody());
 		subscriptionSender.setEntryURL(contentURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
@@ -2053,7 +2054,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUniqueMailId(false);
-		subscriptionSender.setUserId(userId);
 
 		String className = (String)serviceContext.getAttribute("className");
 		long classPK = ParamUtil.getLong(serviceContext, "classPK");
@@ -2220,6 +2220,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			"[$MESSAGE_SUBJECT$]", entryTitle, "[$MESSAGE_URL$]", messageURL,
 			"[$MESSAGE_USER_ADDRESS$]", emailAddress, "[$MESSAGE_USER_NAME$]",
 			fullName);
+		subscriptionSenderPrototype.setCurrentUserId(userId);
 		subscriptionSenderPrototype.setEntryTitle(entryTitle);
 		subscriptionSenderPrototype.setEntryURL(messageURL);
 		subscriptionSenderPrototype.setFrom(fromAddress, fromName);
@@ -2250,7 +2251,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSenderPrototype.setScopeGroupId(message.getGroupId());
 		subscriptionSenderPrototype.setServiceContext(serviceContext);
 		subscriptionSenderPrototype.setUniqueMailId(false);
-		subscriptionSenderPrototype.setUserId(userId);
 
 		SubscriptionSender subscriptionSender =
 			(SubscriptionSender)SerializableUtil.clone(

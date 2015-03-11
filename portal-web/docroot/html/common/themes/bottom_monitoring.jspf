@@ -15,12 +15,12 @@
 --%>
 
 <%
-PortalRequestDataSample portalRequestDataSample = (PortalRequestDataSample)request.getAttribute(WebKeys.PORTAL_REQUEST_DATA_SAMPLE);
+DataSample dataSample = (DataSample)request.getAttribute(WebKeys.PORTAL_REQUEST_DATA_SAMPLE);
 
-if (portalRequestDataSample != null) {
-	portalRequestDataSample.capture(RequestStatus.SUCCESS);
+if (dataSample != null) {
+	dataSample.capture(RequestStatus.SUCCESS);
 
-	DataSampleThreadLocal.addDataSample(portalRequestDataSample);
+	DataSampleThreadLocal.addDataSample(dataSample);
 }
 %>
 
@@ -32,10 +32,10 @@ if (portalRequestDataSample != null) {
 	%>
 
 	<%
-	for (DataSample dataSample : dataSamples) {
+	for (DataSample sample : dataSamples) {
 	%>
 
-		<%= dataSample %><br />
+		<%= sample %><br />
 
 	<%
 	}

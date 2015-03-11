@@ -16,8 +16,10 @@ package com.liferay.portal.monitoring.statistics.service;
 
 import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
+import com.liferay.portal.kernel.monitoring.statistics.DataSample;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.portal.monitoring.statistics.DataSampleFactoryUtil;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 
 import java.lang.reflect.Method;
@@ -61,11 +63,10 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 	public void afterReturning(MethodInvocation methodInvocation, Object result)
 		throws Throwable {
 
-		ServiceRequestDataSample serviceRequestDataSample =
-			_serviceRequestDataSampleThreadLocal.get();
+		DataSample dataSample = _dataSampleThreadLocal.get();
 
-		if (serviceRequestDataSample != null) {
-			serviceRequestDataSample.capture(RequestStatus.SUCCESS);
+		if (dataSample != null) {
+			dataSample.capture(RequestStatus.SUCCESS);
 		}
 	}
 
@@ -74,11 +75,10 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 			MethodInvocation methodInvocation, Throwable throwable)
 		throws Throwable {
 
-		ServiceRequestDataSample serviceRequestDataSample =
-			_serviceRequestDataSampleThreadLocal.get();
+		DataSample dataSample = _dataSampleThreadLocal.get();
 
-		if (serviceRequestDataSample != null) {
-			serviceRequestDataSample.capture(RequestStatus.ERROR);
+		if (dataSample != null) {
+			dataSample.capture(RequestStatus.ERROR);
 		}
 	}
 
@@ -95,12 +95,16 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 			return null;
 		}
 
-		ServiceRequestDataSample serviceRequestDataSample =
-			new ServiceRequestDataSample(methodInvocation);
+		MethodSignature methodSignature = new MethodSignature(
+			methodInvocation.getMethod());
 
-		serviceRequestDataSample.prepare();
+		DataSample dataSample =
+			DataSampleFactoryUtil.createServiceRequestDataSample(
+				methodSignature);
 
-		_serviceRequestDataSampleThreadLocal.set(serviceRequestDataSample);
+		dataSample.prepare();
+
+		_dataSampleThreadLocal.set(dataSample);
 
 		DataSampleThreadLocal.initialize();
 
@@ -109,13 +113,12 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public void duringFinally(MethodInvocation methodInvocation) {
-		ServiceRequestDataSample serviceRequestDataSample =
-			_serviceRequestDataSampleThreadLocal.get();
+		DataSample dataSample = _dataSampleThreadLocal.get();
 
-		if (serviceRequestDataSample != null) {
-			_serviceRequestDataSampleThreadLocal.remove();
+		if (dataSample!= null) {
+			_dataSampleThreadLocal.remove();
 
-			DataSampleThreadLocal.addDataSample(serviceRequestDataSample);
+			DataSampleThreadLocal.addDataSample(dataSample);
 		}
 	}
 
@@ -179,13 +182,11 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 	}
 
 	private static boolean _active;
+	private static final ThreadLocal<DataSample>
+		_dataSampleThreadLocal = new AutoResetThreadLocal<>(
+			ServiceMonitorAdvice.class + "._dataSampleThreadLocal");
 	private static Set<String> _monitoredClasses = new HashSet<>();
 	private static Set<MethodSignature> _monitoredMethods = new HashSet<>();
 	private static boolean _permissiveMode;
-	private static final ThreadLocal<ServiceRequestDataSample>
-		_serviceRequestDataSampleThreadLocal =
-			new AutoResetThreadLocal<ServiceRequestDataSample>(
-				ServiceRequestDataSample.class +
-					"._serviceRequestDataSampleThreadLocal");
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
@@ -59,25 +60,23 @@ public class PermissionCheckerBagImpl
 	public PermissionCheckerBagImpl(
 		long userId, Set<Group> userGroups, List<Organization> userOrgs,
 		Set<Group> userOrgGroups, List<Group> userUserGroupGroups,
-		List<Role> roles) {
+		Set<Role> roles) {
 
-		super(userId, userGroups, userOrgs, userOrgGroups, userUserGroupGroups);
-
-		_roles = roles;
+		super(
+			userId, userGroups, userOrgs, userOrgGroups, userUserGroupGroups,
+			roles);
 	}
 
 	public PermissionCheckerBagImpl(
 		UserPermissionCheckerBag userPermissionCheckerBag, List<Role> roles) {
 
 		super(userPermissionCheckerBag);
-
-		_roles = roles;
 	}
 
 	@Override
 	public long[] getRoleIds() {
 		if (_roleIds == null) {
-			List<Role> roles = getRoles();
+			List<Role> roles = ListUtil.fromCollection(getRoles());
 
 			long[] roleIds = new long[roles.size()];
 
@@ -93,11 +92,6 @@ public class PermissionCheckerBagImpl
 		}
 
 		return _roleIds;
-	}
-
-	@Override
-	public List<Role> getRoles() {
-		return _roles;
 	}
 
 	/**
@@ -164,7 +158,7 @@ public class PermissionCheckerBagImpl
 			PermissionChecker permissionChecker, Group group)
 		throws Exception {
 
-		for (Role role : _roles) {
+		for (Role role : getRoles()) {
 			String roleName = role.getName();
 
 			if (roleName.equals(RoleConstants.SITE_MEMBER)) {
@@ -464,6 +458,5 @@ public class PermissionCheckerBagImpl
 	private final Map<Long, Boolean> _organizationAdmins = new HashMap<>();
 	private final Map<Long, Boolean> _organizationOwners = new HashMap<>();
 	private long[] _roleIds;
-	private final List<Role> _roles;
 
 }

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.Role;
 
 import java.io.Serializable;
 
@@ -32,6 +33,8 @@ public interface UserPermissionCheckerBag extends Serializable {
 
 	public List<Group> getGroups();
 
+	public Set<Role> getRoles();
+
 	public Set<Group> getUserGroups();
 
 	public long getUserId();
@@ -41,5 +44,7 @@ public interface UserPermissionCheckerBag extends Serializable {
 	public List<Organization> getUserOrgs();
 
 	public List<Group> getUserUserGroupGroups();
+
+	public boolean hasRole(Role role);
 
 }

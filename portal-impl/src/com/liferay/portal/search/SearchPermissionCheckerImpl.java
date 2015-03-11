@@ -315,7 +315,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			PermissionCheckerBag userBag = advancedPermissionChecker.getUserBag(
 				userId, group.getGroupId());
 
-			List<Role> groupRoles = userBag.getRoles();
+			List<Role> groupRoles = ListUtil.fromCollection(userBag.getRoles());
 
 			groupIdsToRoles.put(group.getGroupId(), groupRoles);
 

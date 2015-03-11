@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.Role;
-
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -29,8 +26,6 @@ import java.util.List;
 public interface PermissionCheckerBag extends UserPermissionCheckerBag {
 
 	public long[] getRoleIds();
-
-	public List<Role> getRoles();
 
 	/**
 	 * @deprecated As of 6.1.0, renamed to {@link

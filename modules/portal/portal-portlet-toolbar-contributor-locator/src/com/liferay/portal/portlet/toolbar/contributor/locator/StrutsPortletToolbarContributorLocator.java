@@ -24,6 +24,38 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Provides an implementation of {@link PortletToolbarContributorLocator} for
+ * portlets using Struts as MVC pattern, allowing them to have a different
+ * {@link
+ * com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor}
+ * for different struts actions.
+ *
+ * <p>
+ * PortletToolbarContributor implementations must be registered in the OSGI
+ * Registry using the following properties:
+ * </p>
+ *
+ * <ul>
+ * <li>
+ * &quot;javax.portlet.name&quot; the ID of the portlet whose portlet toolbar to
+ * extend.
+ * </li>
+ * <li>
+ * &quot;struts.action&quot; this property is optional. If this property is not
+ * present, the portlet toolbar is always extended. If it contains a value
+ * (e.g., <code>/blogs/view_entry</code>) the portlet toolbar is extended only
+ * for that specific struts action. If the value is &quot;-&quot; the portlet
+ * toolbar is extended when there is no <code>strutsAction</code> specified in
+ * the request (typically when rendering the first view of the portlet).
+ * </li>
+ * </ul>
+ *
+ * <p>
+ * A single PortletToolbarContributor implementation can be used for different
+ * portlets and struts actions by including multiple times with the same
+ * properties.
+ * </p>
+ *
  * @author Sergio González
  */
 @Component(immediate = true, service = PortletToolbarContributorLocator.class)

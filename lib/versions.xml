@@ -768,7 +768,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/qdox.jar</file-name>
-				<version>1.12 (Snapshot 20100502)</version>
+				<version>1.12.1 (Snapshot 20121104)</version>
 				<project-name>QDox</project-name>
 				<project-url>http://qdox.codehaus.org</project-url>
 				<licenses>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.statistics.portlet;
+package com.liferay.portal.monitoring.internal.statistics.portlet;
 
 import com.liferay.portal.kernel.monitoring.MonitoringException;
 import com.liferay.portal.kernel.monitoring.statistics.RequestStatistics;
@@ -23,7 +23,7 @@ import java.util.Set;
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public class ActionRequestSummaryStatistics
+public class RenderRequestSummaryStatistics
 	implements PortletSummaryStatistics {
 
 	@Override
@@ -36,7 +36,7 @@ public class ActionRequestSummaryStatistics
 				_serverStatistics.getCompanyStatisticsSet()) {
 
 			for (RequestStatistics requestStatistics :
-					companyStatistics.getActionRequestStatisticsSet()) {
+					companyStatistics.getRenderRequestStatisticsSet()) {
 
 				averageTime += requestStatistics.getAverageTime();
 
@@ -78,7 +78,7 @@ public class ActionRequestSummaryStatistics
 
 		for (CompanyStatistics companyStatistics : companyStatisticsSet) {
 			RequestStatistics requestStatistics =
-				companyStatistics.getActionRequestStatistics(portletId);
+				companyStatistics.getRenderRequestStatistics(portletId);
 
 			averageTime += requestStatistics.getAverageTime();
 		}
@@ -94,7 +94,7 @@ public class ActionRequestSummaryStatistics
 			_serverStatistics.getCompanyStatistics(companyId);
 
 		RequestStatistics requestStatistics =
-			companyStatistics.getActionRequestStatistics(portletId);
+			companyStatistics.getRenderRequestStatistics(portletId);
 
 		return requestStatistics.getAverageTime();
 	}
@@ -107,7 +107,7 @@ public class ActionRequestSummaryStatistics
 			_serverStatistics.getCompanyStatistics(webId);
 
 		RequestStatistics requestStatistics =
-			companyStatistics.getActionRequestStatistics(portletId);
+			companyStatistics.getRenderRequestStatistics(portletId);
 
 		return requestStatistics.getAverageTime();
 	}
@@ -188,7 +188,7 @@ public class ActionRequestSummaryStatistics
 				_serverStatistics.getCompanyStatisticsSet()) {
 
 			for (RequestStatistics requestStatistics :
-					companyStatistics.getActionRequestStatisticsSet()) {
+					companyStatistics.getRenderRequestStatisticsSet()) {
 
 				if (requestStatistics.getMaxTime() > maxTime) {
 					maxTime = requestStatistics.getMaxTime();
@@ -262,7 +262,7 @@ public class ActionRequestSummaryStatistics
 				_serverStatistics.getCompanyStatisticsSet()) {
 
 			for (RequestStatistics requestStatistics :
-					companyStatistics.getActionRequestStatisticsSet()) {
+					companyStatistics.getRenderRequestStatisticsSet()) {
 
 				if (requestStatistics.getMinTime() < minTime) {
 					minTime = requestStatistics.getMinTime();
@@ -545,7 +545,7 @@ public class ActionRequestSummaryStatistics
 		long averageTime = 0;
 
 		Set<RequestStatistics> requestStatisticsSet =
-			companyStatistics.getActionRequestStatisticsSet();
+			companyStatistics.getRenderRequestStatisticsSet();
 
 		for (RequestStatistics requestStatistics : requestStatisticsSet) {
 			averageTime += requestStatistics.getAverageTime();
@@ -558,7 +558,7 @@ public class ActionRequestSummaryStatistics
 		long errorCount = 0;
 
 		for (RequestStatistics requestStatistics :
-				companyStatistics.getActionRequestStatisticsSet()) {
+				companyStatistics.getRenderRequestStatisticsSet()) {
 
 			errorCount += requestStatistics.getErrorCount();
 		}
@@ -571,7 +571,7 @@ public class ActionRequestSummaryStatistics
 		throws MonitoringException {
 
 		RequestStatistics requestStatistics =
-			companyStatistics.getActionRequestStatistics(portletId);
+			companyStatistics.getRenderRequestStatistics(portletId);
 
 		return requestStatistics.getErrorCount();
 	}
@@ -583,7 +583,7 @@ public class ActionRequestSummaryStatistics
 		long maxTime = 0;
 
 		RequestStatistics requestStatistics =
-			companyStatistics.getActionRequestStatistics(portletId);
+			companyStatistics.getRenderRequestStatistics(portletId);
 
 		if (requestStatistics.getMaxTime() > maxTime) {
 			maxTime = requestStatistics.getMaxTime();
@@ -599,7 +599,7 @@ public class ActionRequestSummaryStatistics
 		long minTime = 0;
 
 		RequestStatistics requestStatistics =
-			companyStatistics.getActionRequestStatistics(portletId);
+			companyStatistics.getRenderRequestStatistics(portletId);
 
 		if (requestStatistics.getMinTime() < minTime) {
 			minTime = requestStatistics.getMinTime();
@@ -614,7 +614,7 @@ public class ActionRequestSummaryStatistics
 		long requestCount = 0;
 
 		for (RequestStatistics requestStatistics :
-				companyStatistics.getActionRequestStatisticsSet()) {
+				companyStatistics.getRenderRequestStatisticsSet()) {
 
 			requestCount += requestStatistics.getRequestCount();
 		}
@@ -627,7 +627,7 @@ public class ActionRequestSummaryStatistics
 		throws MonitoringException {
 
 		RequestStatistics requestStatistics =
-			companyStatistics.getActionRequestStatistics(portletId);
+			companyStatistics.getRenderRequestStatistics(portletId);
 
 		return requestStatistics.getRequestCount();
 	}
@@ -638,7 +638,7 @@ public class ActionRequestSummaryStatistics
 		long successCount = 0;
 
 		for (RequestStatistics requestStatistics :
-				companyStatistics.getActionRequestStatisticsSet()) {
+				companyStatistics.getRenderRequestStatisticsSet()) {
 
 			successCount += requestStatistics.getSuccessCount();
 		}
@@ -651,7 +651,7 @@ public class ActionRequestSummaryStatistics
 		throws MonitoringException {
 
 		RequestStatistics requestStatistics =
-			companyStatistics.getActionRequestStatistics(portletId);
+			companyStatistics.getRenderRequestStatistics(portletId);
 
 		return requestStatistics.getSuccessCount();
 	}
@@ -662,7 +662,7 @@ public class ActionRequestSummaryStatistics
 		long timeoutCount = 0;
 
 		for (RequestStatistics requestStatistics :
-				companyStatistics.getActionRequestStatisticsSet()) {
+				companyStatistics.getRenderRequestStatisticsSet()) {
 
 			timeoutCount += requestStatistics.getTimeoutCount();
 		}
@@ -675,7 +675,7 @@ public class ActionRequestSummaryStatistics
 		throws MonitoringException {
 
 		RequestStatistics requestStatistics =
-			companyStatistics.getActionRequestStatistics(portletId);
+			companyStatistics.getRenderRequestStatistics(portletId);
 
 		return requestStatistics.getTimeoutCount();
 	}

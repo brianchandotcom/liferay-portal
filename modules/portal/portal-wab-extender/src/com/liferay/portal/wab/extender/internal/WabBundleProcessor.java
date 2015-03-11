@@ -550,16 +550,16 @@ public class WabBundleProcessor implements ServletContextListener {
 	private final String _contextName;
 	private final String _contextPath;
 	private ServiceRegistration<?> _defaultServletServiceRegistration;
-	private Set<ServiceRegistration<Filter>> _filterRegistrations =
+	private final Set<ServiceRegistration<Filter>> _filterRegistrations =
 		new ConcurrentSkipListSet<>();
 	private ServiceRegistration<Servlet> _jspServletServiceRegistration;
-	private Set<ServiceRegistration<?>> _listenerRegistrations =
+	private final Set<ServiceRegistration<?>> _listenerRegistrations =
 		new ConcurrentSkipListSet<>();
 	private final Logger _logger;
 	private ServiceRegistration<ServletContextHelper> _serviceRegistration;
-	private Set<ServiceRegistration<Servlet>> _servletRegistrations =
-		new ConcurrentSkipListSet<>();
 	private ServiceRegistration<ServletContext> _servletContextRegistration;
+	private final Set<ServiceRegistration<Servlet>> _servletRegistrations =
+		new ConcurrentSkipListSet<>();
 	private ServiceRegistration<ServletContextListener>
 		_thisEventListenerRegistration;
 	private WabServletContextHelper _wabServletContextHelper;

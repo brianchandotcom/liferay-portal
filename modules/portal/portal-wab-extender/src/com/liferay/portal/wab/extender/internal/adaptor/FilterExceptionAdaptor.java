@@ -46,6 +46,10 @@ public class FilterExceptionAdaptor implements Filter {
 		_filter.doFilter(servletRequest, servletResponse, filterChain);
 	}
 
+	public Exception getException() {
+		return _exception;
+	}
+
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		try {
@@ -56,11 +60,7 @@ public class FilterExceptionAdaptor implements Filter {
 		}
 	}
 
-	public Exception getException() {
-		return _exception;
-	}
-
-	private final Filter _filter;
 	private Exception _exception;
+	private final Filter _filter;
 
 }

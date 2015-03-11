@@ -36,6 +36,10 @@ public class ServletExceptionAdaptor implements Servlet {
 		_servlet.destroy();
 	}
 
+	public Exception getException() {
+		return _exception;
+	}
+
 	@Override
 	public ServletConfig getServletConfig() {
 		return _servlet.getServletConfig();
@@ -59,13 +63,9 @@ public class ServletExceptionAdaptor implements Servlet {
 	@Override
 	public void service(
 			ServletRequest servletRequest, ServletResponse servletResponse)
-		throws ServletException, IOException {
+		throws IOException, ServletException {
 
 		_servlet.service(servletRequest, servletResponse);
-	}
-
-	public Exception getException() {
-		return _exception;
 	}
 
 	private Exception _exception;

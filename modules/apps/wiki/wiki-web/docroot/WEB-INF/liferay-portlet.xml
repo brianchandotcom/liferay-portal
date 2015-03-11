@@ -29,7 +29,7 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/wiki/css/main.css</header-portlet-css>
+		<header-portlet-css>/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-wiki</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 	</portlet>
@@ -48,7 +48,7 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/wiki/css/main.css</header-portlet-css>
+		<header-portlet-css>/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-wiki</css-class-wrapper>
 	</portlet>
 	<portlet>
@@ -67,7 +67,7 @@
 		<scopeable>true</scopeable>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
-		<header-portlet-css>/html/portlet/wiki/css/main.css</header-portlet-css>
+		<header-portlet-css>/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-wiki</css-class-wrapper>
 	</portlet>
 	<role-mapper>

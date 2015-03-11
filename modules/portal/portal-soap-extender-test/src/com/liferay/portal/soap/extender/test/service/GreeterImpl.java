@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true, property = {"jaxws=true", "soap.address=/greeter"},
 	service = Greeter.class
-	)
+)
 public class GreeterImpl implements Greeter {
 
 	@Override

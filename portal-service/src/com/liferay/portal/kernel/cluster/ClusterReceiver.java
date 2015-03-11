@@ -27,7 +27,6 @@ public interface ClusterReceiver {
 
 	public void openLatch();
 
-	public void receive(
-		Object messagePayload, Address srcAddress, Address destAddress);
+	public void receive(Object messagePayload, Address srcAddress);
 
 }

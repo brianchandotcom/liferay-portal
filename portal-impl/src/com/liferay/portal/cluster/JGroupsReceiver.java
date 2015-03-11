@@ -51,9 +51,7 @@ public class JGroupsReceiver extends ReceiverAdapter {
 			return;
 		}
 
-		_clusterReceiver.receive(
-			object, new AddressImpl(message.getSrc()),
-			new AddressImpl(message.getDest()));
+		_clusterReceiver.receive(object, new AddressImpl(message.getSrc()));
 	}
 
 	@Override

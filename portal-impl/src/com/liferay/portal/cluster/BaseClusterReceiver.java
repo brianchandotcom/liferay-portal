@@ -99,14 +99,12 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 	}
 
 	@Override
-	public void receive(
-		Object messagePayload, Address srcAddress, Address destAddress) {
-
+	public void receive(Object messagePayload, Address srcAddress) {
 		try {
 			_countDownLatch.await();
 
 			_executorService.execute(
-				new ReceiveRunnable(messagePayload, srcAddress, destAddress));
+				new ReceiveRunnable(messagePayload, srcAddress));
 		}
 		catch (InterruptedException ie) {
 			_log.error(
@@ -124,7 +122,7 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 	}
 
 	protected abstract void doReceive(
-		Object messagePayload, Address srcAddress, Address destAddress);
+		Object messagePayload, Address srcAddress);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseClusterReceiver.class);
@@ -157,18 +155,14 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 
 		@Override
 		public void run() {
-			doReceive(_messagePayload, _srcAddress, _destAddress);
+			doReceive(_messagePayload, _srcAddress);
 		}
 
-		private ReceiveRunnable(
-			Object messagePayload, Address srcAddress, Address destAddress) {
-
+		private ReceiveRunnable(Object messagePayload, Address srcAddress) {
 			_messagePayload = messagePayload;
 			_srcAddress = srcAddress;
-			_destAddress = destAddress;
 		}
 
-		private final Address _destAddress;
 		private final Object _messagePayload;
 		private final Address _srcAddress;
 

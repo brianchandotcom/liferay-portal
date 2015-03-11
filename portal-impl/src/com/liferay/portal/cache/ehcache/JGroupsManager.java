@@ -260,9 +260,7 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 	private class EhcacheJGroupsReceiver extends BaseClusterReceiver {
 
 		@Override
-		protected void doReceive(
-			Object messagePayload, Address srcAddress, Address destAddress) {
-
+		protected void doReceive(Object messagePayload, Address srcAddress) {
 			if (messagePayload instanceof Serializable) {
 				if (messagePayload instanceof JGroupEventMessage) {
 					handleJGroupsNotification(

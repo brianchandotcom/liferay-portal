@@ -1449,7 +1449,17 @@ public class JavadocFormatter {
 
 			JavaMethod ancestorJavaMethod = null;
 
-			if (ancestorJavaClassTuple.getSize() > 1) {
+			String ancestorJavaClassName =
+				ancestorJavaClass.getFullyQualifiedName();
+
+			if ((ancestorJavaClassTuple.getSize() == 1) ||
+				(ancestorJavaClassName.equals("java.util.Map") &&
+				 methodName.equals("get"))) {
+
+				ancestorJavaMethod = ancestorJavaClass.getMethodBySignature(
+					methodName, types);
+			}
+			else {
 
 				// LPS-35613
 
@@ -1487,10 +1497,6 @@ public class JavadocFormatter {
 
 				ancestorJavaMethod = ancestorJavaClass.getMethodBySignature(
 					methodName, genericTypes);
-			}
-			else {
-				ancestorJavaMethod = ancestorJavaClass.getMethodBySignature(
-					methodName, types);
 			}
 
 			if (ancestorJavaMethod == null) {

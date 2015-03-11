@@ -921,6 +921,10 @@ public class VerifyProperties extends VerifyProcess {
 			"amazon.license.3", "amazon.access.key.id"
 		},
 		new String[] {
+			"breadcrumb.display.style.default",
+			"breadcrumb.ddm.template.key.default"
+		},
+		new String[] {
 			"cdn.host", "cdn.host.http"
 		},
 		new String[] {

@@ -87,11 +87,11 @@ public class IndexableAdvice
 			}
 		}
 
-		Indexer indexer = null;
-
-		if ((serviceContext == null) || serviceContext.isIndexingEnabled()) {
-			indexer = IndexerRegistryUtil.getIndexer(returnType.getName());
+		if ((serviceContext != null) && !serviceContext.isIndexingEnabled()) {
+			return;
 		}
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(returnType.getName());
 
 		if (indexer != null) {
 			if (indexable.type() == IndexableType.DELETE) {

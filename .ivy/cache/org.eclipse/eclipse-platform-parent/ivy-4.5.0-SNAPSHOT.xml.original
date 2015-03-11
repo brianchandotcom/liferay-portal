@@ -10,18 +10,22 @@
      Igor Fedorenko - initial implementation
      Thanh Ha - improvements and maintenance
      David Williams - improvements and maintenance
+     Lars Vogel - Bug 442042
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.eclipse</groupId>
   <artifactId>eclipse-platform-parent</artifactId>
   <version>4.5.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <prerequisites>
-    <maven>3.0.5</maven>
+    <maven>3.1.1</maven>
   </prerequisites>
   <properties>
-    <maven.test.skip>true</maven.test.skip>
+    <skipTests>true</skipTests>
     <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
     <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
     <buildType>I</buildType>
@@ -34,32 +38,32 @@
         See bug 328139.
      -->
     <releaseName>Mars</releaseName>
-    <!-- 
-        The releaseNumbers below, for SDK and Platform, might be 
-        thought of as the "marketing number" or "branding number", 
-        and in fact are used in the branding bundle of the corresponding products. 
-        In practice, the SDK number and Platform number are always the same, 
-        though in theory they would not always have to be ... so we'll use 
-        separate numbers. Also in practice, they are almost always the same as 
-        or nearly the same as the "product feature" numbers, but for example, for 
-        the initial release, some prefer we not use the trailing zero, but instead 
-        merely "4.5, instead of 4.5.0". And, hypothetically, there might be a time 
-        in the future when the platform for a new release was "merely service", 
-        but we'd still want the "marketing number" to be increased to reflect 
+    <!--
+        The releaseNumbers below, for SDK and Platform, might be
+        thought of as the "marketing number" or "branding number",
+        and in fact are used in the branding bundle of the corresponding products.
+        In practice, the SDK number and Platform number are always the same,
+        though in theory they would not always have to be ... so we'll use
+        separate numbers. Also in practice, they are almost always the same as
+        or nearly the same as the "product feature" numbers, but for example, for
+        the initial release, some prefer we not use the trailing zero, but instead
+        merely "4.5, instead of 4.5.0". And, hypothetically, there might be a time
+        in the future when the platform for a new release was "merely service",
+        but we'd still want the "marketing number" to be increased to reflect
         "a new yearly release".
     -->
     <releaseNumberSDK>4.5</releaseNumberSDK>
     <releaseNumberPlatform>4.5</releaseNumberPlatform>
-    
 
-    <tycho.version>0.20.0</tycho.version>
-    <tycho-extras.version>0.20.0</tycho-extras.version>
-    <cbi-plugins.version>1.0.5</cbi-plugins.version>
+
+    <tycho.version>0.22.0</tycho.version>
+    <tycho-extras.version>0.22.0</tycho-extras.version>
+    <cbi-plugins.version>1.1.1</cbi-plugins.version>
     <!--
       The tycho-eclipserun-plugin will create its instance of Eclipse from this
       'eclipiserun-repo' repository, such as for computing .api-descriptions.
     -->
-    <eclipserun-repo>http://download.eclipse.org/eclipse/updates/4.4/R-4.4-201406061215/</eclipserun-repo>
+    <eclipserun-repo>http://download.eclipse.org/eclipse/updates/4.5milestones/S-4.5M5-201501291830/</eclipserun-repo>
 
     <comparator.repo>http://download.eclipse.org/eclipse/updates/4.5-I-builds</comparator.repo>
 
@@ -69,14 +73,21 @@
       a copy of the EMF features and ECF features into our own repository. This is required since we merely "require" EMF (not "include" it).
       And, of course, in the PDE target file, the URL is expected to be the actual URL, not a variable.
     -->
-    <emf-repo.url>http://download.eclipse.org/modeling/emf/emf/updates/2.10milestones/base/S201405141158/</emf-repo.url>
-    <ecf-repo.url>http://download.eclipse.org/rt/ecf/3.8.1.rc3/site.p2/</ecf-repo.url>
+    <emf-repo.url>http://download.eclipse.org/modeling/emf/emf/updates/2.11milestones/base/S201501230347/</emf-repo.url>
+
+    <ecf-repo.url>http://download.eclipse.org/rt/ecf/3.9.2/site.p2/</ecf-repo.url>
 
     <tycho-repo.url>https://oss.sonatype.org/content/repositories/public/</tycho-repo.url>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <cbi-jdt-repo.url>https://repo.eclipse.org/content/repositories/eclipse-staging/</cbi-jdt-repo.url>
-    <cbi-jdt-version>3.10.0.v20140604-1726</cbi-jdt-version>
+    <cbi-jdt-version>3.11.0.v20150118-1315</cbi-jdt-version>
+    
+    <!-- 
+        This jetty-version is used by the help system in building the JSPs, 
+        and should change when ever our "shipped" version of Jetty changes. 
+     -->
+    <jetty-version>9.2.5.v20141112</jetty-version>
 
     <!--
        Production bundles are produced by ignoring the compiler warnings specified
@@ -97,7 +108,7 @@
     <eclipse-repo.url>https://repo.eclipse.org/content/repositories/releases/</eclipse-repo.url>
     <cbi-snapshots-repo.url>https://repo.eclipse.org/content/repositories/cbi-snapshots/</cbi-snapshots-repo.url>
     <!-- this eclipse-p2-repo.url is specifically for the build individual bundles profile. -->
-    <eclipse-p2-repo.url>http://download.eclipse.org/eclipse/updates/4.5-I-builds</eclipse-p2-repo.url>
+    <eclipse-p2-repo.url>http://download.eclipse.org/eclipse/updates/4.5-N-builds</eclipse-p2-repo.url>
 
     <!--
         If configuration is not specified at all, in signing plugin, the default
@@ -127,6 +138,7 @@
     </snapshotRepository>
   </distributionManagement>
   <pluginRepositories>
+   
     <pluginRepository>
       <id>tycho</id>
       <url>${tycho-repo.url}</url>
@@ -189,11 +201,14 @@
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
         <configuration>
+        <!-- https://bugs.eclipse.org/bugs/show_bug.cgi?id=453757
+          <resolveWithExecutionEnvironmentConstraints>false</resolveWithExecutionEnvironmentConstraints>
+        -->
           <target>
             <artifact>
               <groupId>org.eclipse</groupId>
               <artifactId>eclipse-sdk-prereqs</artifactId>
-              <version>4.4.0-SNAPSHOT</version>
+              <version>4.5.0-SNAPSHOT</version>
             </artifact>
           </target>
           <environments>
@@ -220,6 +235,11 @@
             <environment>
               <os>linux</os>
               <ws>gtk</ws>
+              <arch>ppc64le</arch>
+            </environment>
+            <environment>
+              <os>linux</os>
+              <ws>gtk</ws>
               <arch>s390</arch>
             </environment>
             <environment>
@@ -236,11 +256,6 @@
               <os>win32</os>
               <ws>win32</ws>
               <arch>x86_64</arch>
-            </environment>
-            <environment>
-              <os>macosx</os>
-              <ws>cocoa</ws>
-              <arch>x86</arch>
             </environment>
             <environment>
               <os>macosx</os>
@@ -295,7 +310,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
         <executions>
           <execution>
             <id>filter-resources</id>
@@ -315,6 +329,11 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.8</version>
+        </plugin>
+        <plugin>
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>target-platform-configuration</artifactId>
           <version>${tycho.version}</version>
@@ -331,15 +350,17 @@
             </dependency>
           </dependencies>
           <configuration>
-            <compilerArgument>${code.ignoredWarnings}</compilerArgument>
-            <compilerArguments>
-              <verbose/>
-              <inlineJSR/>
-              <enableJavadoc/>
-              <encoding>${project.build.sourceEncoding}</encoding>
-              <proceedOnError/>
-              <log>${project.build.directory}/@dot.xml</log>
-            </compilerArguments>
+            <compilerArgs>
+              <args>${code.ignoredWarnings}</args>
+              <args>-verbose</args>
+              <args>-inlineJSR</args>
+              <args>-enableJavadoc</args>
+              <args>-encoding</args>
+              <args>${project.build.sourceEncoding}</args>
+              <args>-proceedOnError</args>
+              <args>-log</args>
+              <args>${project.build.directory}/@dot.xml</args>
+            </compilerArgs>
             <showWarnings>true</showWarnings>
             <excludeResources>
               <exclude>**/package.html</exclude>
@@ -437,6 +458,11 @@
               </repository>
             </baselineRepositories>
           </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.7</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -723,68 +749,67 @@
            the "template" file be part of the 'saveproperties' directory. Its only purpose
            is to "fill in" the property values named in that file.
        -->
-      <resource>
-        <directory>saveproperties</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
+          <resource>
+            <directory>saveproperties</directory>
+            <filtering>true</filtering>
+          </resource>
+        </resources>
 
-  </build>
-</profile>
+      </build>
+    </profile>
 
-<profile>
-  <id>update-branding-plugins-about.mappings</id>
-  <activation>
-    <file>
-      <exists>${basedir}/about.mappings</exists>
-    </file>
-  </activation>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
-        <executions>
-          <execution>
-            <id>process-about.mappings</id>
-            <phase>prepare-package</phase>
+    <profile>
+      <id>update-branding-plugins-about.mappings</id>
+      <activation>
+        <file>
+          <exists>${basedir}/about.mappings</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>process-about.mappings</id>
+                <phase>prepare-package</phase>
+                <configuration>
+                  <outputDirectory>${project.build.directory}</outputDirectory>
+                  <overwrite>true</overwrite>
+                  <resources>
+                    <resource>
+                      <directory>${basedir}</directory>
+                      <includes>
+                        <include>about.mappings</include>
+                      </includes>
+                      <filtering>true</filtering>
+                    </resource>
+                  </resources>
+                </configuration>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>tycho-packaging-plugin</artifactId>
+            <version>${tycho.version}</version>
             <configuration>
-              <outputDirectory>${project.build.directory}</outputDirectory>
-              <overwrite>true</overwrite>
-              <resources>
-                <resource>
-                  <directory>${basedir}</directory>
+              <additionalFileSets>
+                <fileSet>
+                  <directory>${project.build.directory}</directory>
                   <includes>
                     <include>about.mappings</include>
                   </includes>
-                  <filtering>true</filtering>
-                </resource>
-              </resources>
+                </fileSet>
+              </additionalFileSets>
             </configuration>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.eclipse.tycho</groupId>
-        <artifactId>tycho-packaging-plugin</artifactId>
-        <version>${tycho.version}</version>
-        <configuration>
-          <additionalFileSets>
-            <fileSet>
-              <directory>${project.build.directory}</directory>
-              <includes>
-                <include>about.mappings</include>
-              </includes>
-            </fileSet>
-          </additionalFileSets>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-</profile>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 </project>

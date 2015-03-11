@@ -187,18 +187,23 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/pbhs/*");
 		properties.put(
-			"servlet.init.mementoSessionKey",
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX +
+				"mementoSessionKey",
 			portletConfig.getInitParameter("mementoSessionKey"));
 		properties.put(
-			"servlet.init.cssRegex",
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX +
+				"cssRegex",
 			portletConfig.getInitParameter("cssRegex"));
 		properties.put(
-			"servlet.init.jsRegex", portletConfig.getInitParameter("jsRegex"));
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX +
+				"jsRegex", portletConfig.getInitParameter("jsRegex"));
 		properties.put(
-			"servlet.init.ignoreRequestHeaders",
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX +
+				"ignoreRequestHeaders",
 			"accept-encoding,connection,keep-alive");
 		properties.put(
-			"servlet.init.ignorePostToGetRequestHeaders",
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX +
+				"ignorePostToGetRequestHeaders",
 			"content-type,content-length");
 
 		BundleContext bundleContext = _componentContext.getBundleContext();

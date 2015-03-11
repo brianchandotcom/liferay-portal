@@ -30,6 +30,7 @@ import org.junit.Test;
 
 /**
  * @author Manuel de la Peña
+ * @author Miguel Pastor
  */
 public class ServiceWrapperRegistryTest {
 

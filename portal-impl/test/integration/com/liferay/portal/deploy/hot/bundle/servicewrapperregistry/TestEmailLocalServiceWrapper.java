@@ -24,6 +24,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Manuel de la Peña
+ * @author Miguel Pastor
  */
 @Component(
 	immediate = true, service = ServiceWrapper.class

@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test.rule;
+package com.liferay.portal.test.rule;
 
+import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.kernel.test.rule.callback.SynchronousDestinationTestCallback.SyncHandler;
-import com.liferay.portal.kernel.test.rule.callback.SynchronousMailTestCallback;
+import com.liferay.portal.test.rule.callback.SynchronousMailTestCallback;
 
 /**
  * @author Manuel de la Peña

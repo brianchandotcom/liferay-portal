@@ -17,6 +17,7 @@ package com.liferay.poshi.runner;
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
+import com.liferay.poshi.runner.util.PropsValues;
 
 import java.lang.reflect.Method;
 
@@ -144,7 +145,19 @@ public class PoshiRunnerExecutor {
 					runFunctionElement(childElement);
 				}
 				else if (childElement.attributeValue("macro") != null) {
-					runMacroElement(childElement);
+					runMacroElement(childElement, "macro");
+				}
+				else if ((childElement.attributeValue(
+							"macro-desktop") != null) &&
+						 !_MOBILE_DEVICE_ENABLED) {
+
+					runMacroElement(childElement, "macro-desktop");
+				}
+				else if ((childElement.attributeValue(
+							"macro-mobile") != null) &&
+						 _MOBILE_DEVICE_ENABLED) {
+
+					runMacroElement(childElement, "macro-mobile");
 				}
 				else if (childElement.attributeValue("selenium") != null) {
 					try {
@@ -453,10 +466,10 @@ public class PoshiRunnerExecutor {
 		}
 	}
 
-	public static void runMacroElement(Element executeElement)
+	public static void runMacroElement(Element executeElement, String macroType)
 		throws Exception {
 
-		String classCommandName = executeElement.attributeValue("macro");
+		String classCommandName = executeElement.attributeValue(macroType);
 
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
@@ -485,7 +498,7 @@ public class PoshiRunnerExecutor {
 		PoshiRunnerVariablesUtil.pushCommandMap();
 
 		PoshiRunnerStackTraceUtil.pushFilePath(
-			classCommandName, "macro",
+			classCommandName, macroType,
 			executeElement.attributeValue("line-number"));
 
 		Element commandElement = PoshiRunnerContext.getMacroCommandElement(
@@ -611,6 +624,9 @@ public class PoshiRunnerExecutor {
 			parseElement(thenElement);
 		}
 	}
+
+	private static final boolean _MOBILE_DEVICE_ENABLED =
+		PropsValues.MOBILE_DEVICE_ENABLED;
 
 	private static Object _returnObject;
 

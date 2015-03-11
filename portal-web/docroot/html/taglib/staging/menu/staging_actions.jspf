@@ -164,6 +164,7 @@
 						Liferay.Util.openWindow(
 							{
 								dialog: {
+									destroyOnHide: true,
 									width: 820
 								},
 								id: '<portlet:namespace />publishLatestChangesDialog',

@@ -117,22 +117,27 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 		rowChecker="<%= new RowChecker(renderResponse) %>"
 	>
 
-		<%
-		List<AssetCategory> categories = null;
+		<liferay-ui:search-container-results>
 
-		if (Validator.isNotNull(keywords)) {
-			AssetCategoryDisplay assetCategoryDisplay = AssetCategoryServiceUtil.searchCategoriesDisplay(scopeGroupId, keywords, categoryId, vocabularyId, searchContainer.getStart(), searchContainer.getEnd());
+			<%
+			total = AssetCategoryServiceUtil.getVocabularyCategoriesCount(scopeGroupId, categoryId, vocabularyId);
 
-			categories = assetCategoryDisplay.getCategories();
-		}
-		else {
-			categories = AssetCategoryServiceUtil.getVocabularyCategories(scopeGroupId, categoryId, vocabularyId, searchContainer.getStart(), searchContainer.getEnd(), null);
-		}
-		%>
+			searchContainer.setTotal(total);
 
-		<liferay-ui:search-container-results
-			results="<%= categories %>"
-		/>
+			List<AssetCategory> categories = null;
+
+			if (Validator.isNotNull(keywords)) {
+				AssetCategoryDisplay assetCategoryDisplay = AssetCategoryServiceUtil.searchCategoriesDisplay(scopeGroupId, keywords, categoryId, vocabularyId, searchContainer.getStart(), searchContainer.getEnd());
+
+				categories = assetCategoryDisplay.getCategories();
+			}
+			else {
+				categories = AssetCategoryServiceUtil.getVocabularyCategories(scopeGroupId, categoryId, vocabularyId, searchContainer.getStart(), searchContainer.getEnd(), null);
+			}
+
+			searchContainer.setResults(categories);
+			%>
+		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portlet.asset.model.AssetCategory"

@@ -263,7 +263,7 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="KBArticle#editKBArticleViaKBDisplayPG">
+		<execute macro="KBArticle#editPGViaKBDisplay">
 			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edit" />
 			<var name="kbArticleSectionEdit" value="Development" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />

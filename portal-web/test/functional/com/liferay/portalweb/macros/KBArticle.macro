@@ -406,11 +406,11 @@
 	<command name="editKBArticlePriorityViaEnterKeyCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute action="CPKnowledgebaseadmin#type" locator-key1="ARTICLE_TABLE_PRIORITY" value1="${kbNewPriority}" />
-		<execute action="CPKnowledgebaseadmin#keyPress" locator-key1="ARTICLE_TABLE_PRIORITY" value1="\RETURN" />
+		<execute function="Type" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_PRIORITY" value1="${kbNewPriority}" />
+		<execute function="KeyPress" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_PRIORITY" value1="\RETURN" />
 	</command>
 
-	<command name="editKBArticleViaKBDisplayPG">
+	<command name="editPGViaKBDisplay">
 		<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_ACTIONS_BUTTON" />
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_EDIT" value1="Edit" />
 
@@ -465,7 +465,7 @@
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_GRANDCHILD" value1="${kbGrandchildArticleTitle}" />
 	</command>
 
-	<command name="gotoNextArticle">
+	<command name="gotoNextArticlePG">
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_NEXT" value1="${kbDisplayNextArticle}" />
 	</command>
 

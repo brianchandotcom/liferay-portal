@@ -554,7 +554,6 @@ public class AnnouncementsEntryLocalServiceImpl
 		subscriptionSender.setPortletId(PortletKeys.ANNOUNCEMENTS);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 		subscriptionSender.setSubject(subject);
-		subscriptionSender.setUserId(entry.getUserId());
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 

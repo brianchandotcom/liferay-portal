@@ -338,7 +338,6 @@ public class
 		subscriptionSender.setScopeGroupId(membershipRequest.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(subject);
-		subscriptionSender.setUserId(userId);
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 

@@ -3007,7 +3007,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected void notifySubscribers(
-			long creatorUserId, WikiPage page, String pageURL,
+			long userId, WikiPage page, String pageURL,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -3105,8 +3105,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			"[$PAGE_SUMMARY$]", page.getSummary(), "[$PAGE_TITLE$]", pageTitle,
 			"[$PAGE_URL$]", pageURL);
 
-		subscriptionSender.setCreatorUserId(creatorUserId);
-		subscriptionSender.setContextUserPrefix("PAGE");
+		subscriptionSender.setContextCreatorUserPrefix("PAGE");
+		subscriptionSender.setCreatorUserId(page.getUserId());
+		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(pageTitle);
 		subscriptionSender.setEntryURL(pageURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
@@ -3130,7 +3131,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(page.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setUserId(page.getUserId());
 
 		subscriptionSender.addPersistedSubscribers(
 			WikiNode.class.getName(), page.getNodeId());

@@ -1826,7 +1826,7 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			long creatorUserId, FileVersion fileVersion, String entryURL,
+			long userId, FileVersion fileVersion, String entryURL,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1904,8 +1904,9 @@ public class DLAppHelperLocalServiceImpl
 			"[$DOCUMENT_TYPE$]",
 			dlFileEntryType.getName(serviceContext.getLocale()),
 			"[$DOCUMENT_URL$]", entryURL, "[$FOLDER_NAME$]", folderName);
-		subscriptionSender.setCreatorUserId(creatorUserId);
-		subscriptionSender.setContextUserPrefix("DOCUMENT");
+		subscriptionSender.setContextCreatorUserPrefix("DOCUMENT");
+		subscriptionSender.setCreatorUserId(fileVersion.getUserId());
+		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(entryTitle);
 		subscriptionSender.setEntryURL(entryURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
@@ -1929,7 +1930,6 @@ public class DLAppHelperLocalServiceImpl
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(fileVersion.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setUserId(fileVersion.getUserId());
 
 		subscriptionSender.addPersistedSubscribers(
 			DLFolder.class.getName(), fileVersion.getGroupId());

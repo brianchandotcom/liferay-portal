@@ -702,8 +702,7 @@ public class BookmarksEntryLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			long creatorUserId, BookmarksEntry entry,
-			ServiceContext serviceContext)
+			long userId, BookmarksEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
 		String layoutFullURL = serviceContext.getLayoutFullURL();
@@ -771,8 +770,9 @@ public class BookmarksEntryLocalServiceImpl
 		subscriptionSender.setContextAttributes(
 			"[$BOOKMARKS_ENTRY_STATUS_BY_USER_NAME$]", statusByUserName,
 			"[$BOOKMARKS_ENTRY_URL$]", entryURL);
-		subscriptionSender.setCreatorUserId(creatorUserId);
-		subscriptionSender.setContextUserPrefix("BOOKMARKS_ENTRY");
+		subscriptionSender.setContextCreatorUserPrefix("BOOKMARKS_ENTRY");
+		subscriptionSender.setCreatorUserId(entry.getUserId());
+		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(entryTitle);
 		subscriptionSender.setEntryURL(entryURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
@@ -795,7 +795,6 @@ public class BookmarksEntryLocalServiceImpl
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setUserId(entry.getUserId());
 
 		BookmarksFolder folder = entry.getFolder();
 

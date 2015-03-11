@@ -663,7 +663,6 @@ public class ShoppingOrderLocalServiceImpl
 		subscriptionSender.setPortletId(PortletKeys.SHOPPING);
 		subscriptionSender.setScopeGroupId(order.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setUserId(order.getUserId());
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 

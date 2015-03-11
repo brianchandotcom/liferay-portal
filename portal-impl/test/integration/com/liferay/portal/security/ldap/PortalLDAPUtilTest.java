@@ -217,7 +217,6 @@ public class PortalLDAPUtilTest {
 
 	@Test
 	public void testGetNameInNamespace() {
-
 		try {
 			String name = PortalLDAPUtil.getNameInNamespace(1, 1, null);
 			Assert.assertEquals("1:1", name);
@@ -227,7 +226,6 @@ public class PortalLDAPUtilTest {
 			e.printStackTrace();
 			Assert.fail();
 		}
-
 	}
 
 	@Test

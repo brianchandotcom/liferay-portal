@@ -515,6 +515,18 @@ public class SeleniumBuilder {
 				_seleniumBuilderFileUtil.getAllChildElements(
 					rootElement, "command");
 
+			String extendsTestCaseName = rootElement.attributeValue("extends");
+
+			if (extendsTestCaseName != null) {
+				Element extendsRootElement =
+					_seleniumBuilderContext.getTestCaseRootElement(
+						extendsTestCaseName);
+
+				commandElements.addAll(
+					_seleniumBuilderFileUtil.getAllChildElements(
+						extendsRootElement, "command"));
+			}
+
 			for (Element commandElement : commandElements) {
 				List<Element> commandPropertyElements =
 					_seleniumBuilderFileUtil.getAllChildElements(

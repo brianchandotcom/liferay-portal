@@ -798,6 +798,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				continue;
 			}
 
+			matcher = _redundantCommaPattern.matcher(newContent);
+
+			if (matcher.find()) {
+				newContent = StringUtil.replaceFirst(
+					newContent, StringPool.COMMA, StringPool.BLANK,
+					matcher.start());
+
+				continue;
+			}
+
 			break;
 		}
 
@@ -1463,6 +1473,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							line, StringPool.TAB + StringPool.SPACE,
 							StringPool.TAB);
 					}
+
+					line = formatIncorrectSyntax(line, ",}", "}");
 
 					line = formatWhitespace(line, trimmedLine);
 
@@ -2947,6 +2959,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
 	private List<String> _proxyExclusionFiles;
+	private Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
 	private List<String> _secureRandomExclusionFiles;
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");

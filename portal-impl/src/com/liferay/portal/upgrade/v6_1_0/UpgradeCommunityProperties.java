@@ -152,7 +152,7 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 		"communities.email.membership.reply.body",
 		"communities.email.membership.reply.subject",
 		"communities.email.membership.request.body",
-		"communities.email.membership.request.subject",
+		"communities.email.membership.request.subject"
 	};
 
 	private static final String[] _OLD_PORTLET_PREFERENCES = {

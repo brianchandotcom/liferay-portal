@@ -1096,7 +1096,7 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.kernel.util.StringBundler.unsafe.create." +
 				"threshold",
 			"com.liferay.portal.kernel.util.StringBundler.threadlocal.buffer." +
-				"limit",
+				"limit"
 		}
 	};
 

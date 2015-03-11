@@ -1289,7 +1289,7 @@ public class DLFileEntryFinderTest {
 		List<Long> folderIds = ListUtil.toList(
 			new long[] {
 				_defaultRepositoryFolder.getFolderId(),
-				_newRepositoryFolder.getFolderId(),
+				_newRepositoryFolder.getFolderId()
 			});
 
 		return doCountBy_G_U_R_F_M(
@@ -1383,7 +1383,7 @@ public class DLFileEntryFinderTest {
 		List<Long> folderIds = ListUtil.toList(
 			new long[] {
 				_defaultRepositoryFolder.getFolderId(),
-				_newRepositoryFolder.getFolderId(),
+				_newRepositoryFolder.getFolderId()
 			});
 
 		return doFindBy_G_U_R_F_M(

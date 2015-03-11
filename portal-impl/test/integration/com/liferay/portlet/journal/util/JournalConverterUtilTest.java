@@ -899,7 +899,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 				String.valueOf(privateLayout.getLayoutId()),
 				String.valueOf(privateUserLayout.getLayoutId()),
 				String.valueOf(publicLayout.getLayoutId()),
-				String.valueOf(publicUserLayout.getLayoutId()),
+				String.valueOf(publicUserLayout.getLayoutId())
 			});
 	}
 

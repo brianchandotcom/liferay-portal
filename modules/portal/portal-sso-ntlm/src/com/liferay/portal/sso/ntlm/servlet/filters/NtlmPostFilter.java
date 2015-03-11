@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Modified;
 	immediate = true,
 	property = {
 		"servlet-context-name=", "servlet-filter-name=SSO Ntlm Post Filter",
-		"url-pattern=/*",
+		"url-pattern=/*"
 	},
 	service = Filter.class
 )

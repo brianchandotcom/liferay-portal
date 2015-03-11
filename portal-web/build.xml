@@ -7,12 +7,9 @@
 
 	<property name="alloy.version" value="3.0.1" />
 	<property name="alloy-font-awesome.version" value="2.0" />
-	<property name="alloyeditor.version" value="0.2.5" />
-	<property name="ckeditor.file" value="ckeditor_4.4.5_liferay.zip" />
-	<property name="scayt.file" value="scayt_4.4.5.zip" />
-	<property name="tinymce.file" value="tinymce_4.1.7.zip" />
 	<property name="vaadin.file" value="vaadin-6.8.12-liferay.zip" />
-	<property name="wsc.file" value="wsc_4.4.5.zip" />
+
+	<property name="front.end.js.web.path" value="../modules/frontend/frontend-js-web" />
 
 	<path id="jspc.common.classpath">
 		<pathelement path="docroot/WEB-INF/classes" />
@@ -49,133 +46,7 @@
 		<pathelement location="${project.dir}/lib/portal/struts.jar" />
 	</path>
 
-	<extension-point name="build-portal-web-dependencies" depends="build-alloy,build-alloy-editor,build-bourbon,build-ckeditor,build-css,build-dtd,build-tinymce,build-vaadin" />
-
-	<target name="build-alloy" depends="build-alloy-bootstrap,build-alloy-font-awesome">
-		<path id="alloy.zip.path">
-			<fileset dir="third-party">
-				<include name="alloy-${alloy.version}*.zip" />
-			</fileset>
-		</path>
-
-		<property name="alloy.zip.path" refid="alloy.zip.path" />
-
-		<basename file="${alloy.zip.path}" property="alloy.file" />
-
-		<if>
-			<not>
-				<uptodate
-					srcfile="third-party/${alloy.file}"
-					targetfile="docroot/html/js/aui"
-				/>
-			</not>
-			<then>
-
-				<!-- Prepare -->
-
-				<delete dir="docroot/html/ALLOY_ZIP" />
-				<delete dir="docroot/html/css/portal/aui_deprecated.css" />
-				<delete dir="docroot/html/js/aui" />
-				<delete dir="docroot/html/themes/_unstyled/images/aui" />
-
-				<echo>${alloy.file}</echo>
-
-				<unzip src="third-party/${alloy.file}" dest="docroot/html/ALLOY_ZIP" />
-
-				<!-- CSS -->
-
-				<property name="alloy.build.dir" value="docroot/html/ALLOY_ZIP/build" />
-				<property name="alloy.temp.dir" value="docroot/html/ALLOY_ZIP/temp" />
-
-				<concat destfile="${alloy.temp.dir}/aui_deprecated.css">
-					<filelist
-						dir="${alloy.build.dir}/aui-skin-deprecated/css"
-						files="aui-skin-deprecated.css"
-					/>
-				</concat>
-
-				<for param="dir">
-					<path>
-						<dirset
-							dir="${alloy.build.dir}"
-							includes="aui-*"
-						/>
-					</path>
-					<sequential>
-						<basename property="dir.name" file="@{dir}" />
-						<if>
-							<and>
-								<available file="${alloy.build.dir}/${dir.name}/assets/skins/sam/${dir.name}.css" />
-								<matches pattern="-deprecated" string="${dir.name}" />
-							</and>
-							<then>
-								<concat append="true" destfile="${alloy.temp.dir}/aui_deprecated.css">
-									<filelist
-										dir="${alloy.build.dir}/${dir.name}/assets/skins/sam"
-										files="${dir.name}.css"
-									/>
-								</concat>
-							</then>
-						</if>
-						<if>
-							<available file="docroot/html/js/aui/${dir.name}/assets/skins/sam" />
-							<then>
-								<copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
-									<fileset dir="docroot/html/js/aui/${dir.name}/assets/skins/sam" includes="**/*.png,**/*.jpg,**/*.gif" />
-								</copy>
-							</then>
-						</if>
-						<var name="dir.name" unset="true" />
-					</sequential>
-				</for>
-
-				<replaceregexp match="url\(([^)]+)\)" replace="url(@theme_image_path@/aui/\1)" flags="g" byline="false">
-					<fileset
-						dir="${alloy.temp.dir}"
-						includes="aui_deprecated.css"
-					/>
-				</replaceregexp>
-
-				<replace file="${alloy.temp.dir}/aui_deprecated.css">
-					<replacefilter token="../images/" value="" />
-				</replace>
-
-				<replace file="${alloy.temp.dir}/aui_deprecated.css">
-					<replacefilter token="../../../../../build/aui-skin-base/images/" value="" />
-				</replace>
-
-				<replace file="${alloy.temp.dir}/aui_deprecated.css">
-					<replacefilter token="../../../../../build/aui-skin-classic/images/" value="" />
-				</replace>
-
-				<replace file="${alloy.temp.dir}/aui_deprecated.css">
-					<replacefilter token="../../../../../build/aui-skin-deprecated/images/" value="" />
-				</replace>
-
-				<copy
-					file="${alloy.temp.dir}/aui_deprecated.css"
-					tofile="docroot/html/css/portal/aui_deprecated.css"
-					overwrite="true"
-				/>
-
-				<!-- JavaScript -->
-
-				<copy todir="docroot/html/js/aui" overwrite="true" preservelastmodified="true">
-					<fileset dir="${alloy.build.dir}/" />
-				</copy>
-
-				<!-- Images -->
-
-				<copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
-					<fileset dir="${alloy.build.dir}/aui-skin-deprecated/images" />
-				</copy>
-
-				<!-- Clean up -->
-
-				<delete dir="docroot/html/ALLOY_ZIP" />
-			</then>
-		</if>
-	</target>
+	<extension-point name="build-portal-web-dependencies" depends="build-bourbon,build-css,build-dtd,build-vaadin" />
 
 	<target name="build-alloy-bootstrap">
 		<property name="alloy.bootstrap.version" value="3.2.0-2" />
@@ -240,47 +111,66 @@
 		</if>
 	</target>
 
-	<target name="build-alloy-editor">
-		<path id="alloyeditor.zip.path">
+	<target name="build-alloy-themes">
+		<path id="alloy.zip.path">
 			<fileset dir="third-party">
-				<include name="alloy-editor-${alloyeditor.version}.zip" />
+				<include name="alloy-${alloy.version}*.zip" />
 			</fileset>
 		</path>
 
-		<property name="alloyeditor.zip.path" refid="alloyeditor.zip.path" />
+		<property name="alloy.zip.path" refid="alloy.zip.path" />
 
-		<basename file="${alloyeditor.zip.path}" property="alloyeditor.file" />
+		<basename file="${alloy.zip.path}" property="alloy.file" />
+
+		<property name="alloy.dir" value="${front.end.js.web.path}/tmp/aui" />
 
 		<if>
 			<not>
 				<uptodate
-					srcfile="third-party/${alloyeditor.file}"
-					targetfile="docroot/html/js/editor/alloyeditor"
+					srcfile="third-party/${alloy.file}"
+					targetfile="${alloy.dir}"
 				/>
 			</not>
 			<then>
-				<delete dir="docroot/html/js/editor/alloyeditor" />
-
-				<echo>${alloyeditor.file}</echo>
-
-				<unzip src="third-party/${alloyeditor.file}" dest="docroot/html/js/editor/_tmp" />
-
-				<copy todir="docroot/html/js/editor/alloyeditor" overwrite="true" preservelastmodified="true">
-					<fileset dir="docroot/html/js/editor/_tmp/alloy-editor-${alloyeditor.version}/alloy-editor" />
-				</copy>
-
-				<copy todir="docroot/html/js/editor/alloyeditor" overwrite="true" preservelastmodified="true">
-					<fileset dir="docroot/html/js/editor/alloyeditor_diffs" />
-				</copy>
-
-				<delete dir="docroot/html/js/editor/_tmp" />
+				<ant-execute
+					ant.build.file="build.xml"
+					ant.dir="${front.end.js.web.path}"
+					ant.target="build-alloy"
+				/>
 			</then>
-			<else>
-				<copy todir="docroot/html/js/editor/alloyeditor" preservelastmodified="true">
-					<fileset dir="docroot/html/js/editor/alloyeditor_diffs" />
-				</copy>
-			</else>
 		</if>
+
+		<delete dir="docroot/html/themes/_unstyled/images/aui" />
+
+		<for param="dir">
+			<path>
+				<dirset
+					dir="${alloy.dir}"
+					includes="aui-*"
+				/>
+			</path>
+			<sequential>
+				<basename property="dir.name" file="@{dir}" />
+				<if>
+					<available file="${alloy.dir}/${dir.name}/assets/skins/sam" />
+					<then>
+						<copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
+							<fileset dir="{alloy.dir}/${dir.name}/assets/skins/sam" includes="**/*.png,**/*.jpg,**/*.gif" />
+						</copy>
+					</then>
+				</if>
+			</sequential>
+		</for>
+
+		<copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
+			<fileset dir="${alloy.dir}/aui-skin-deprecated/images" />
+		</copy>
+
+		<copy
+			file="${alloy.dir}/aui_deprecated.css"
+			tofile="docroot/html/css/portal/aui_deprecated.css"
+			overwrite="true"
+		/>
 	</target>
 
 	<target name="build-alloy-font-awesome" depends="build-alloy-bootstrap">
@@ -345,187 +235,6 @@
 				<delete dir="${bourbon.tmp.dir}" />
 			</then>
 		</if>
-	</target>
-
-	<target name="build-ckeditor">
-		<if>
-			<not>
-				<uptodate
-					srcfile="third-party/${ckeditor.file}"
-					targetfile="docroot/html/js/editor/ckeditor"
-				/>
-			</not>
-			<then>
-				<delete dir="docroot/html/js/editor/ckeditor" />
-
-				<unzip src="third-party/${ckeditor.file}" dest="docroot/html/js/editor" />
-
-				<copy todir="docroot/html/js/editor/ckeditor" overwrite="true" preservelastmodified="true">
-					<fileset dir="docroot/html/js/editor/ckeditor_diffs" />
-				</copy>
-
-				<antcall target="build-ckeditor-plugins-scayt" />
-
-				<antcall target="build-ckeditor-plugins-wsc" />
-			</then>
-			<else>
-				<copy todir="docroot/html/js/editor/ckeditor" preservelastmodified="true">
-					<fileset dir="docroot/html/js/editor/ckeditor_diffs" />
-				</copy>
-			</else>
-		</if>
-	</target>
-
-	<target name="build-ckeditor-plugins-bbcode">
-		<concat destfile="docroot/html/js/editor/ckeditor_diffs/plugins/bbcode/bbcode_parser.js">
-			<filelist
-				dir="docroot/html/js/editor/ckeditor_diffs/plugins/bbcode"
-				files="bbcode_utils.js,lexer.js,parser.js,converter.js"
-			/>
-		</concat>
-	</target>
-
-	<target name="build-ckeditor-plugins-creole">
-		<mirrors-get
-			dest="docroot/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js"
-			src="http://www.ivan.fomichev.name/2008/04/javascript-creole-10-wiki-markup-parser.html"
-		/>
-
-		<loadfile property="creole_parser.content" srcfile="docroot/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js" />
-
-		<script classpathref="project.classpath" language="beanshell">
-			<![CDATA[
-				import org.apache.commons.lang.StringEscapeUtils;
-
-				// Read content
-
-				String creoleParserContent = project.getProperty("creole_parser.content");
-
-				// Get source
-
-				int x = creoleParserContent.indexOf("<pre id=\"parser\"");
-
-				x  = creoleParserContent.indexOf(">", x) + 1;
-
-				int y = creoleParserContent.indexOf("</pre>", x);
-
-				creoleParserContent = creoleParserContent.substring(x, y);
-
-				// Unescape
-
-				creoleParserContent = StringEscapeUtils.unescapeHtml(creoleParserContent);
-
-				// Wrap with function
-
-				x = creoleParserContent.indexOf("if (!Parse) {");
-
-				creoleParserContent = creoleParserContent.substring(0, x) + "(function() {\n" + creoleParserContent.substring(x) + "\n})();";
-
-				// Fix for loop
-
-				creoleParserContent = creoleParserContent.replace("for (i in this.options) {", "for (var i in this.options) {");
-
-				// Add data-cke-saved-href attribute to named links
-
-				creoleParserContent = creoleParserContent.replace(": r[1].replace(/~(.)/g, '$1');", ": r[1].replace(/~(.)/g, '$1');\nlink.setAttribute('data-cke-saved-href', link.href);\n");
-
-				// Fix image
-
-				x = creoleParserContent.indexOf("regex: rx.img,");
-				x = creoleParserContent.indexOf("{", x) + 1;
-
-				y = creoleParserContent.indexOf("r[1];", x) + 5;
-
-				StringBuilder sb = new StringBuilder();
-
-				sb.append("\n\t\t\t\tvar imagePath = r[1];\n");
-				sb.append("\t\t\t\tvar imagePathPrefix = options ? options.imagePrefix : '';\n\n");
-				sb.append("\t\t\t\tif (imagePathPrefix) {\n");
-				sb.append("\t\t\t\t\tif (!(/^https?:\\/\\//gi.test(imagePath))) {\n");
-				sb.append("\t\t\t\t\t\timagePath = imagePathPrefix + imagePath;\n");
-				sb.append("\t\t\t\t\t}\n");
-				sb.append("\t\t\t\t}\n\n");
-				sb.append("\t\t\t\tvar img = document.createElement('img');\n");
-				sb.append("\t\t\t\timg.src = imagePath;");
-
-				creoleParserContent = creoleParserContent.substring(0, x) + sb.toString() + creoleParserContent.substring(y);
-
-				// Add support for whitespace in headings
-
-				creoleParserContent = creoleParserContent.replace("'(^|\\\\n)[ \\\\t]*={' + i + '}[ \\\\t]'", "'(^|\\\\n)[ \\\\t]*={' + i + '}[ \\\\t]*'");
-				creoleParserContent = creoleParserContent.replace("'([^~]*?(~(.|(?=\\\\n)|$))*)[ \\\\t]*=*\\\\s*(\\\\n|$)'", "'([^\\\\n=][^~]*?(~(.|(?=\\\\n)|$))*)[ \\\\t]*=*\\\\s*(\\\\n|$)'");
-
-				// Fix handling mixed list items
-
-				creoleParserContent = creoleParserContent.replace("regex: /[ \\t]*([*#]).+(\\n[ \\t]*[^*#\\s].*)*(\\n[ \\t]*\\1[*#].+)*/,", "regex: /[ \\t]*([*#]).+(\\n[ \\t]*[^*#\\s].*)*(\\n[ \\t]*[*#]{2}.+)*/,");
-
-				// Add support for multiple links in table cells
-
-				creoleParserContent = creoleParserContent.replace("'\\\\[\\\\[' + rx.link + '(\\\\|' + rx.linkText + ')?\\\\]\\\\]' +", "'(?:\\\\[\\\\[' + rx.link + '(\\\\|' + rx.linkText + ')?\\\\]\\\\][^|~\\\\[{]*)*' +");
-
-				// Add cke_show_border class to table start tag to keep CKEditor's formatting
-
-				creoleParserContent = creoleParserContent.replace("table: { tag: 'table', capture: 0,", "table: { tag: 'table', capture: 0,\n\t\t\tattrs: { 'class': 'cke_show_border' },");
-
-				// Fix parsing empty columns in tables
-
-				creoleParserContent = creoleParserContent.replace("regex: '\\\\|+([^|~\\\\[{]*((~(.|(?=\\\\n)|$)|' +", "regex: '\\\\|([^|~\\\\[{]*((~(.|(?=\\\\n)|$)|' +");
-
-				// Register Creole parser
-
-				creoleParserContent = creoleParserContent.replace("= Parse.Simple.Creole;", "= Parse.Simple.Creole;\n\nCKEDITOR.CreoleParser = Parse.Simple.Creole;");
-
-				// Fix paragraphs
-
-				creoleParserContent = creoleParserContent.replace("regex: /(^|\\n)([ \\t]*\\S.*(\\n|$))+/ },", "regex: /(^|\\n)(\\s*\\S.*(\\n|$))/ },");
-				creoleParserContent = creoleParserContent.replace("text: { capture: 0, regex: /(^|\\n)([ \\t]*[^\\s].*(\\n|$))+/ },", "text: { capture: 0, regex: /(^|\\n)(\\s*[^\\s].*(\\n|$))+/ },");
-
-
-				// Set content
-
-				project.setProperty("creole_parser.content", creoleParserContent);
-			]]>
-		</script>
-
-		<echo file="docroot/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js">${creole_parser.content}</echo>
-	</target>
-
-	<target name="build-ckeditor-plugins-scayt">
-		<if>
-			<not>
-				<available file="third-party/${scayt.file}" />
-			</not>
-			<then>
-				<mirrors-get
-					dest="third-party/${scayt.file}"
-					src="http://download.ckeditor.com/scayt/releases/${scayt.file}"
-				/>
-			</then>
-		</if>
-
-		<unzip
-			dest="docroot/html/js/editor/ckeditor/plugins"
-			src="third-party/${scayt.file}"
-		/>
-	</target>
-
-	<target name="build-ckeditor-plugins-wsc">
-		<if>
-			<not>
-				<available file="third-party/${wsc.file}" />
-			</not>
-			<then>
-				<mirrors-get
-					dest="third-party/${wsc.file}"
-					src="http://download.ckeditor.com/wsc/releases/${wsc.file}"
-				/>
-			</then>
-		</if>
-
-		<unzip
-			dest="docroot/html/js/editor/ckeditor/plugins"
-			src="third-party/${wsc.file}"
-		/>
 	</target>
 
 	<target name="build-css" depends="build-themes">
@@ -681,7 +390,7 @@
 		<echo file="${project.dir}/tools/selenium/extensions/ide.${user.name}.js">${ide.js.content}</echo>
 	</target>
 
-	<target name="build-themes" depends="build-alloy,build-bourbon">
+	<target name="build-themes" depends="build-alloy-bootstrap,build-alloy-themes,build-alloy-font-awesome,build-bourbon">
 		<for param="module.name">
 			<path>
 				<dirset dir="docroot/html/themes" excludes="_styled,_unstyled" includes="*" />
@@ -755,35 +464,6 @@
 		/>
 	</target>
 
-	<target name="build-tinymce">
-		<if>
-			<not>
-				<uptodate
-					srcfile="third-party/${tinymce.file}"
-					targetfile="docroot/html/js/editor/tiny_mce"
-				/>
-			</not>
-			<then>
-				<delete dir="docroot/html/js/editor/tiny_mce" />
-				<delete dir="docroot/html/js/editor/tinymce" />
-
-				<unzip src="third-party/${tinymce.file}" dest="docroot/html/js/editor" />
-
-				<move todir="docroot/html/js/editor/tiny_mce" preservelastmodified="true">
-					<fileset dir="docroot/html/js/editor/tinymce/js/tinymce">
-						<include name="*/**" />
-					</fileset>
-				</move>
-
-				<copy todir="docroot/html/js/editor/tiny_mce" overwrite="true" preservelastmodified="true">
-					<fileset dir="docroot/html/js/editor/tiny_mce_diffs" />
-				</copy>
-
-				<delete dir="docroot/html/js/editor/tinymce" />
-			</then>
-		</if>
-	</target>
-
 	<target name="build-vaadin">
 		<if>
 			<not>
@@ -823,10 +503,6 @@
 	<target name="clean" depends="build-common-web.clean,clean-css,clean-themes,clean-tlds">
 		<delete dir="classes" />
 		<delete dir="docroot/dtd" />
-		<delete dir="docroot/html/js/aui" />
-		<delete dir="docroot/html/js/editor/alloyeditor" />
-		<delete dir="docroot/html/js/editor/ckeditor" />
-		<delete dir="docroot/html/js/editor/tiny_mce" />
 		<delete dir="docroot/html/portal/aui" />
 		<delete dir="docroot/html/themes/_unstyled/images/aui/" />
 		<delete dir="docroot/html/themes/classic/color_schemes" />

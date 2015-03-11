@@ -19,10 +19,14 @@ import com.dumbster.smtp.SmtpServer;
 import com.dumbster.smtp.SmtpServerFactory;
 import com.dumbster.smtp.mailstores.RollingMailStore;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsValues;
+
+import java.io.IOException;
+
+import java.net.ServerSocket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,8 +96,10 @@ public class MailServiceTestUtil {
 		}
 
 		try {
+			int smtpPort = getFreePort();
+
 			_prefsPropsReplacement = new PrefsPropsTemporarySwapper(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT, 7890,
+				PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT, smtpPort,
 				PropsKeys.MAIL_SESSION_MAIL, true);
 
 			_smtpServer = new SmtpServer();
@@ -120,10 +126,7 @@ public class MailServiceTestUtil {
 					}
 
 				});
-			_smtpServer.setPort(
-				PrefsPropsUtil.getInteger(
-					PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT,
-					PropsValues.MAIL_SESSION_MAIL_SMTP_PORT));
+			_smtpServer.setPort(smtpPort);
 
 			_smtpServer.setThreaded(false);
 
@@ -152,6 +155,38 @@ public class MailServiceTestUtil {
 			throw new RuntimeException(e);
 		}
 	}
+
+	protected static int getFreePort() {
+		for (int i = 0; i < 10; i++) {
+			int port = (int)(Math.random() * (_MAX_PORT - _MIN_PORT));
+
+			try {
+				ServerSocket serverSocket = new ServerSocket(port);
+				serverSocket.close();
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"The server is going to be started in the port: " +
+							port);
+				}
+
+				return port;
+			}
+			catch (IOException ex) {
+				continue; // try next port
+			}
+		}
+
+		throw new IllegalStateException(
+			"It is not possible to find a free port to start the server");
+	}
+
+	private static final int _MAX_PORT = 65535;
+
+	private static final int _MIN_PORT = 1025;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MailServiceTestUtil.class);
 
 	private static PrefsPropsTemporarySwapper _prefsPropsReplacement;
 	private static SmtpServer _smtpServer;

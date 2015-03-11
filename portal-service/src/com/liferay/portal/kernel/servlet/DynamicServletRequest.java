@@ -49,9 +49,13 @@ public class DynamicServletRequest extends HttpServletRequestWrapper {
 		HttpServletRequest request, Map<String, String[]> parameterMap,
 		String queryString, boolean inherit) {
 
-		parameterMap = new HashMap<>(parameterMap);
-
 		String[] parameters = StringUtil.split(queryString, CharPool.AMPERSAND);
+
+		if (parameters.length == 0) {
+			return request;
+		}
+
+		parameterMap = new HashMap<>(parameterMap);
 
 		for (String parameter : parameters) {
 			String[] parameterParts = StringUtil.split(

@@ -264,7 +264,7 @@
 	</command>
 
 	<command name="gotoDashboardPG">
-		<execute function="Click#textClickAtAndWait" locator1="SOUserBar#DASHBOARD" />
+		<execute function="AssertClick" locator1="SOUserBar#DASHBOARD" value1="Dashboard" />
 		<execute function="Pause" locator1="1000" />
 
 		<execute function="AssertElementPresent" locator1="SOActivities#ACTIVITIES_PORTLET_LOADED" />

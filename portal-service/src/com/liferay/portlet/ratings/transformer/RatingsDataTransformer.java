@@ -19,14 +19,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.ratings.RatingsType;
 
 /**
- * An interface defining the transformations that will be applied to the ratings
- * data when the ratings type used by an entity is changed to use a different
- * ratings type.
+ * Provides an interface defining the transformations to be applied to the
+ * ratings data when the ratings type used by an entity is changed to use a
+ * different ratings type.
  *
  * <p>
- * RatingsDataTransformer implementation will need to be registered in the
- * OSGI Registry. The portal will invoke the highest ranking OSGI component
- * implementing this interface when the ratings type of an entity is changed.
+ * Implementations must be registered in the OSGI Registry. The portal invokes
+ * the highest ranking OSGI component implementing this interface when the
+ * ratings type of an entity is changed.
  * </p>
  *
  * @author Roberto Díaz
@@ -35,24 +35,23 @@ import com.liferay.portlet.ratings.RatingsType;
 public interface RatingsDataTransformer {
 
 	/**
-	 * Defines the transformations that will be applied on a ratings entry when
-	 * ratings type is changed from <code>fromRatingsType</code> to
-	 * <code>toRatingsType</code>.
+	 * Defines the transformations to be applied on a ratings entry when the
+	 * ratings type is changed from the previous ratings type to the new ratings
+	 * type.
 	 *
 	 * <p>
-	 * This methow will return a
-	 * <code>ActionableDynamicQuery.PerformActionMethod</code> that will operate
-	 * on a {@link com.liferay.portlet.ratings.model.RatingsEntry} entity to
-	 * transform its values based when the ratings type is changed.
+	 * This method returns an {@link ActionableDynamicQuery.PerformActionMethod}
+	 * for operating on a {@link com.liferay.portlet.ratings.model.RatingsEntry}
+	 * entity to transform its values based on when the ratings type is changed.
 	 * </p>
 	 *
 	 * @param  fromRatingsType the previous ratings type
 	 * @param  toRatingsType the final ratings type
-	 * @return a ActionableDynamicQuery.PerformActionMethod with the actions
-	 *         that needs to be applied to the RatingsEntry when the ratings
-	 *         type changes.
-	 * @throws PortalException if the transformation cannot be applied
-	 *         successfully.
+	 * @return an {@link ActionableDynamicQuery.PerformActionMethod} with the
+	 *         actions to be applied to the ratings entry when the ratings type
+	 *         changes.
+	 * @throws PortalException if the transformation could not be applied
+	 *         successfully
 	 */
 	public ActionableDynamicQuery.PerformActionMethod transformRatingsData(
 			final RatingsType fromRatingsType, final RatingsType toRatingsType)

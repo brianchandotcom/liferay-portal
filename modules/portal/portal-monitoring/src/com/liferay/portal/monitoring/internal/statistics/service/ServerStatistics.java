@@ -20,9 +20,15 @@ import com.liferay.portal.kernel.monitoring.statistics.DataSampleProcessor;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = { "namespace=com.liferay.monitoring.Service" },
+	service = { DataSampleProcessor.class, ServerStatistics.class }
+)
 public class ServerStatistics
 	implements DataSampleProcessor<ServiceRequestDataSample> {
 

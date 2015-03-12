@@ -68,15 +68,20 @@ public class BookmarksEntryLocalServiceTest {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			BookmarksEntry.class.getName(), entry.getEntryId());
 
+		List<BookmarksEntry> initialBookmarksEntries =
+			BookmarksEntryLocalServiceUtil.getNoAssetEntries();
+
 		Assert.assertNotNull(assetEntry);
 
 		AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
 
-		List<BookmarksEntry> bookmarksEntries =
+		List<BookmarksEntry> actualBookmarksEntries =
 			BookmarksEntryLocalServiceUtil.getNoAssetEntries();
 
-		Assert.assertEquals(1, bookmarksEntries.size());
-		Assert.assertEquals(entry, bookmarksEntries.get(0));
+		Assert.assertEquals(
+			initialBookmarksEntries.size() + 1, actualBookmarksEntries.size());
+
+		Assert.assertTrue(actualBookmarksEntries.contains(entry));
 	}
 
 	@DeleteAfterTestRun

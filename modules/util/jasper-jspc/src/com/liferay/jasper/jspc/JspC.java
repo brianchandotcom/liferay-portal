@@ -15,10 +15,14 @@
 package com.liferay.jasper.jspc;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.Iterator;
 
 import org.apache.jasper.JasperException;
+import org.apache.jasper.compiler.JspConfig;
+import org.apache.jasper.compiler.WebXml;
+import org.apache.tomcat.util.scan.Constants;
 
 /**
  * @author Shuyang Zhou
@@ -55,6 +59,27 @@ public class JspC extends org.apache.jasper.JspC {
 				iterator.remove();
 			}
 		}
+	}
+
+	@Override
+	protected void initServletContext() {
+		super.initServletContext();
+
+		try {
+			WebXml webXml = new WebXml(context);
+
+			if (webXml.getInputSource() != null) {
+				return;
+			}
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		context.setAttribute(
+			Constants.MERGED_WEB_XML, "<web-app version=\"2.4\" />");
+
+		jspConfig = new JspConfig(context);
 	}
 
 }

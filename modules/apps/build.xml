@@ -35,6 +35,7 @@
 		<dirset dir="sites-directory" includes="*" />
 		<dirset dir="social" excludes="social-networking-*" includes="*" />
 		<dirset dir="translator" includes="*" />
+		<dirset dir="trash" includes="*" />
 		<dirset dir="unit-converter" includes="*" />
 		<dirset dir="web-proxy" includes="*" />
 		<dirset dir="wiki" includes="*" />

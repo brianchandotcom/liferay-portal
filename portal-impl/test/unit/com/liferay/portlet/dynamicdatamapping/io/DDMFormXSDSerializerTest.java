@@ -33,8 +33,9 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 public class DDMFormXSDSerializerTest extends BaseDDMFormSerializerTestCase {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		setUpDDMFormXSDSerializerUtil();
+		setUpPropsUtil();
 		setUpSAXReaderUtil();
 		setUpStringUtil();
 	}

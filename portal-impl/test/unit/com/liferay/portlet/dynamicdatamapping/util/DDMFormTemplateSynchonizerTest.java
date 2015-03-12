@@ -58,6 +58,7 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		setUpDDMTemplateLocalServiceUtil();
 		setUpLocaleUtil();
 		setUpHtmlUtil();
+		setUpPropsUtil();
 		setUpSAXReaderUtil();
 	}
 

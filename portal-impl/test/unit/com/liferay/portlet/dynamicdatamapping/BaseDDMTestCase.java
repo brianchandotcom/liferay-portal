@@ -603,6 +603,21 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 			"yyyyMMddHHmmss"
 		);
 
+		when(
+			props.get(PropsKeys.XML_SECURITY_ENABLED)
+		).thenReturn(
+			Boolean.TRUE.toString()
+		);
+
+		when(
+			props.getArray(PropsKeys.XML_SECURITY_WHITELIST)
+		).thenReturn(
+			new String[] {
+				"com.liferay.portlet.dynamicdatamapping.util.DDMXMLImplTest",
+				"com.liferay.portlet.dynamicdatamapping.util.test." +
+					"DDMStructureTestUtil"}
+		);
+
 		PropsUtil.setProps(props);
 	}
 

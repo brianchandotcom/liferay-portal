@@ -467,21 +467,21 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			tag = "ol";
 		}
 		else {
-			tag = "ul style=\"list-style: disc outside;\"";
+			listStyle = "list-style: disc outside;";
+
+			tag = "ul";
 		}
 
-		if (listStyle == null) {
-			sb.append("<");
-			sb.append(tag);
-			sb.append(">");
-		}
-		else {
-			sb.append("<");
-			sb.append(tag);
+		sb.append("<");
+		sb.append(tag);
+
+		if (Validator.isNotNull(listStyle)) {
 			sb.append(" style=\"");
 			sb.append(listStyle);
-			sb.append("\">");
+			sb.append("\"");
 		}
+
+		sb.append(">");
 
 		tags.push("</" + tag + ">");
 	}

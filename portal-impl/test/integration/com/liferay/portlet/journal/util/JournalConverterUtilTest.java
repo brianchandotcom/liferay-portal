@@ -722,7 +722,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		field.setDDMStructureId(ddmStructureId);
 		field.setName("multi-list");
 
-		field.addValue(_enLocale, "[\"a\",\"b\"]");
+		field.addValue(_enLocale, "[\"a\"]");
 
 		return field;
 	}

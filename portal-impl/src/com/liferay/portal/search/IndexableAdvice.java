@@ -75,35 +75,34 @@ public class IndexableAdvice
 			}
 		}
 
-		Object[] arguments = methodInvocation.getArguments();
+		Indexer indexer = IndexerRegistryUtil.getIndexer(returnType.getName());
 
-		ServiceContext serviceContext = null;
+		if (indexer == null) {
+			serviceBeanAopCacheManager.removeMethodInterceptor(
+				methodInvocation, this);
 
-		for (int i = arguments.length - 1; i >= 0; i--) {
-			if (arguments[i] instanceof ServiceContext) {
-				serviceContext = (ServiceContext)arguments[i];
-
-				break;
-			}
-		}
-
-		if ((serviceContext != null) && !serviceContext.isIndexingEnabled()) {
 			return;
 		}
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(returnType.getName());
+		Object[] arguments = methodInvocation.getArguments();
 
-		if (indexer != null) {
-			if (indexable.type() == IndexableType.DELETE) {
-				indexer.delete(result);
-			}
-			else {
-				indexer.reindex(result);
+		for (int i = arguments.length - 1; i >= 0; i--) {
+			if (arguments[i] instanceof ServiceContext) {
+				ServiceContext serviceContext = (ServiceContext)arguments[i];
+
+				if (serviceContext.isIndexingEnabled()) {
+					break;
+				}
+
+				return;
 			}
 		}
+
+		if (indexable.type() == IndexableType.DELETE) {
+			indexer.delete(result);
+		}
 		else {
-			serviceBeanAopCacheManager.removeMethodInterceptor(
-				methodInvocation, this);
+			indexer.reindex(result);
 		}
 	}
 

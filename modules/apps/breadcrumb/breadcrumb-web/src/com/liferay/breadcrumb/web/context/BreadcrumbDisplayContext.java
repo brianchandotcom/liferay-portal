@@ -50,45 +50,43 @@ public class BreadcrumbDisplayContext {
 	}
 
 	public DDMTemplate getDDMTemplate() {
-		if (_ddmTemplate == null) {
-			if (_displayStyle == null) {
-				_displayStyle = PrefsParamUtil.getString(
-					_portletPreferences, _request, "displayStyle");
+		if (_ddmTemplate != null) {
+			return _ddmTemplate;
+		}
 
-				if (Validator.isNull(_displayStyle) &&
-					Validator.isNotNull(
-						PropsValues.BREADCRUMB_DDM_TEMPLATE_KEY_DEFAULT)) {
+		if (_displayStyle == null) {
+			_displayStyle = PrefsParamUtil.getString(
+				_portletPreferences, _request, "displayStyle");
 
-					try {
-						_ddmTemplate = DDMTemplateLocalServiceUtil.
-							fetchTemplate(
-								getDisplayStyleGroupId(),
-								PortalUtil.getClassNameId(
-									BreadcrumbEntry.class.getName()),
-								PropsValues.BREADCRUMB_DDM_TEMPLATE_KEY_DEFAULT,
-								true);
-					}
-					catch (PortalException e) {
-						_log.error(
-							"Error obtaining DDM Template with key " +
-							PropsValues.BREADCRUMB_DDM_TEMPLATE_KEY_DEFAULT);
-					}
+			if (Validator.isNull(_displayStyle) &&
+				Validator.isNotNull(
+					PropsValues.BREADCRUMB_DDM_TEMPLATE_KEY_DEFAULT)) {
+
+				try {
+					_ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
+						getDisplayStyleGroupId(),
+						PortalUtil.getClassNameId(
+							BreadcrumbEntry.class.getName()),
+						PropsValues.BREADCRUMB_DDM_TEMPLATE_KEY_DEFAULT, true);
+				}
+				catch (PortalException e) {
+					_log.error(
+						"Error obtaining DDM Template with key " +
+						PropsValues.BREADCRUMB_DDM_TEMPLATE_KEY_DEFAULT);
 				}
 			}
+		}
 
-			if ((_ddmTemplate == null) &&
-				(Validator.isNotNull(_displayStyle))) {
+		if ((_ddmTemplate == null) && Validator.isNotNull(_displayStyle)) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-				ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+			_displayStyleGroupId = PrefsParamUtil.getLong(
+				_portletPreferences, _request, "displayStyleGroupId",
+				themeDisplay.getSiteGroupId());
 
-				_displayStyleGroupId = PrefsParamUtil.getLong(
-					_portletPreferences, _request, "displayStyleGroupId",
-					themeDisplay.getSiteGroupId());
-
-				_ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(
-					_displayStyleGroupId, _displayStyle);
-			}
+			_ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(
+				_displayStyleGroupId, _displayStyle);
 		}
 
 		return _ddmTemplate;
@@ -105,104 +103,119 @@ public class BreadcrumbDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		if (_displayStyle == null) {
-			DDMTemplate ddmTemplate = getDDMTemplate();
+		if (_displayStyle != null) {
+			return _displayStyle;
+		}
 
-			if (ddmTemplate != null) {
-				_displayStyle =
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-						ddmTemplate.getUuid();
-			}
+		DDMTemplate ddmTemplate = getDDMTemplate();
+
+		if (ddmTemplate != null) {
+			_displayStyle =
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+					ddmTemplate.getUuid();
 		}
 
 		return _displayStyle;
 	}
 
 	public long getDisplayStyleGroupId() {
-		if (_displayStyleGroupId == 0) {
-			DDMTemplate ddmTemplate = getDDMTemplate();
+		if (_displayStyleGroupId != 0) {
+			return _displayStyleGroupId;
+		}
 
-			if (ddmTemplate != null) {
-				_displayStyleGroupId = ddmTemplate.getGroupId();
-			}
+		DDMTemplate ddmTemplate = getDDMTemplate();
+
+		if (ddmTemplate != null) {
+			_displayStyleGroupId = ddmTemplate.getGroupId();
 		}
 
 		return _displayStyleGroupId;
 	}
 
 	public String getPortletResource() {
-		if (_portletResource == null) {
-			_portletResource = ParamUtil.getString(_request, "portletResource");
+		if (_portletResource != null) {
+			return _portletResource;
 		}
+
+		_portletResource = ParamUtil.getString(_request, "portletResource");
 
 		return _portletResource;
 	}
 
 	public boolean isShowCurrentGroup() {
-		if (_showCurrentGroup == null) {
-			_showCurrentGroup = PrefsParamUtil.getBoolean(
-				_portletPreferences, _request, "showCurrentGroup", true);
+		if (_showCurrentGroup != null) {
+			return _showCurrentGroup;
 		}
+
+		_showCurrentGroup = PrefsParamUtil.getBoolean(
+			_portletPreferences, _request, "showCurrentGroup", true);
 
 		return _showCurrentGroup;
 	}
 
 	public boolean isShowGuestGroup() {
-		if (_showGuestGroup == null) {
-			_showGuestGroup = PrefsParamUtil.getBoolean(
-				_portletPreferences, _request, "showGuestGroup",
-				PropsValues.BREADCRUMB_SHOW_GUEST_GROUP);
+		if (_showGuestGroup != null) {
+			return _showGuestGroup;
 		}
+
+		_showGuestGroup = PrefsParamUtil.getBoolean(
+			_portletPreferences, _request, "showGuestGroup",
+			PropsValues.BREADCRUMB_SHOW_GUEST_GROUP);
 
 		return _showGuestGroup;
 	}
 
 	public boolean isShowLayout() {
-		if (_showLayout == null) {
-			_showLayout = PrefsParamUtil.getBoolean(
-				_portletPreferences, _request, "showLayout", true);
+		if (_showLayout != null) {
+			return _showLayout;
 		}
+
+		_showLayout = PrefsParamUtil.getBoolean(
+			_portletPreferences, _request, "showLayout", true);
 
 		return _showLayout;
 	}
 
 	public boolean isShowParentGroups() {
-		if (_showParentGroups == null) {
-			String showParentGroupsString = PrefsParamUtil.getString(
-				_portletPreferences, _request, "showParentGroups", null);
+		if (_showParentGroups != null) {
+			return _showParentGroups;
+		}
 
-			if (Validator.isNotNull(showParentGroupsString)) {
-				_showParentGroups = GetterUtil.getBoolean(
-					showParentGroupsString);
+		String showParentGroupsString = PrefsParamUtil.getString(
+			_portletPreferences, _request, "showParentGroups", null);
 
-				return _showParentGroups;
-			}
+		if (Validator.isNotNull(showParentGroupsString)) {
+			_showParentGroups = GetterUtil.getBoolean(showParentGroupsString);
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			return _showParentGroups;
+		}
 
-			try {
-				Layout layout = themeDisplay.getLayout();
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-				Group group = layout.getGroup();
+		try {
+			Layout layout = themeDisplay.getLayout();
 
-				_showParentGroups = GetterUtil.getBoolean(
-					group.getTypeSettingsProperty("breadcrumbShowParentGroups"),
-					PropsValues.BREADCRUMB_SHOW_PARENT_GROUPS);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			Group group = layout.getGroup();
+
+			_showParentGroups = GetterUtil.getBoolean(
+				group.getTypeSettingsProperty("breadcrumbShowParentGroups"),
+				PropsValues.BREADCRUMB_SHOW_PARENT_GROUPS);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
 		return _showParentGroups;
 	}
 
 	public boolean isShowPortletBreadcrumb() {
-		if (_showPortletBreadcrumb == null) {
-			_showPortletBreadcrumb = PrefsParamUtil.getBoolean(
-				_portletPreferences, _request, "showPortletBreadcrumb", true);
+		if (_showPortletBreadcrumb != null) {
+			return _showPortletBreadcrumb;
 		}
+
+		_showPortletBreadcrumb = PrefsParamUtil.getBoolean(
+			_portletPreferences, _request, "showPortletBreadcrumb", true);
 
 		return _showPortletBreadcrumb;
 	}

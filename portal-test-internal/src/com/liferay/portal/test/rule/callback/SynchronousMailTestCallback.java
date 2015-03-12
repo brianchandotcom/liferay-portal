@@ -30,7 +30,9 @@ public class SynchronousMailTestCallback
 		new SynchronousMailTestCallback();
 
 	@Override
-	public void doAfterClass(Description description, SyncHandler syncHandler) {
+	public void doAfterClass(Description description, SyncHandler syncHandler)
+		throws Exception {
+
 		syncHandler.restorePreviousSync();
 
 		MailServiceTestUtil.stop();
@@ -46,7 +48,7 @@ public class SynchronousMailTestCallback
 	}
 
 	@Override
-	public SyncHandler doBeforeClass(Description description) {
+	public SyncHandler doBeforeClass(Description description) throws Exception {
 		MailServiceTestUtil.start();
 
 		SyncHandler syncHandler = new SyncHandler();

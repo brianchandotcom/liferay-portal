@@ -91,58 +91,53 @@ public class MailServiceTestUtil {
 		return bodyMailMessage.contains(text);
 	}
 
-	public static void start() {
+	public static void start() throws Exception {
 		if (_smtpServer != null) {
 			throw new IllegalStateException("Server is already running");
 		}
 
-		try {
-			int smtpPort = _getFreePort();
+		int smtpPort = _getFreePort();
 
-			_prefsPropsTemporarySwapper = new PrefsPropsTemporarySwapper(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT, smtpPort,
-				PropsKeys.MAIL_SESSION_MAIL, true);
+		_prefsPropsTemporarySwapper = new PrefsPropsTemporarySwapper(
+			PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT, smtpPort,
+			PropsKeys.MAIL_SESSION_MAIL, true);
 
-			_smtpServer = new SmtpServer();
+		_smtpServer = new SmtpServer();
 
-			_smtpServer.setMailStore(
-				new RollingMailStore() {
+		_smtpServer.setMailStore(
+			new RollingMailStore() {
 
-					@Override
-					public void addMessage(MailMessage message) {
-						try {
-							List<MailMessage> receivedMail =
-								ReflectionTestUtil.getFieldValue(
-									this, "receivedMail");
+				@Override
+				public void addMessage(MailMessage message) {
+					try {
+						List<MailMessage> receivedMail =
+							ReflectionTestUtil.getFieldValue(
+								this, "receivedMail");
 
-							receivedMail.add(message);
+						receivedMail.add(message);
 
-							if (getEmailCount() > 100) {
-								receivedMail.remove(0);
-							}
-						}
-						catch (Exception e) {
-							throw new RuntimeException(e);
+						if (getEmailCount() > 100) {
+							receivedMail.remove(0);
 						}
 					}
+					catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+				}
 
-				});
-			_smtpServer.setPort(smtpPort);
+			});
+		_smtpServer.setPort(smtpPort);
 
-			_smtpServer.setThreaded(false);
+		_smtpServer.setThreaded(false);
 
-			ReflectionTestUtil.invoke(
-				SmtpServerFactory.class, "startServerThread",
-				new Class<?>[] {SmtpServer.class}, _smtpServer);
+		ReflectionTestUtil.invoke(
+			SmtpServerFactory.class, "startServerThread",
+			new Class<?>[] {SmtpServer.class}, _smtpServer);
 
-			MailServiceUtil.clearSession();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		MailServiceUtil.clearSession();
 	}
 
-	public static void stop() {
+	public static void stop() throws Exception {
 		if ((_smtpServer != null) && _smtpServer.isStopped()) {
 			throw new IllegalStateException("Server is already stopped");
 		}
@@ -151,12 +146,7 @@ public class MailServiceTestUtil {
 
 		_smtpServer = null;
 
-		try {
-			_prefsPropsTemporarySwapper.close();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_prefsPropsTemporarySwapper.close();
 
 		MailServiceUtil.clearSession();
 	}

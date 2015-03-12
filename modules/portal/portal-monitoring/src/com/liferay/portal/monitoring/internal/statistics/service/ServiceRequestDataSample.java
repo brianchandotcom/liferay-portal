@@ -18,23 +18,17 @@ import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.monitoring.MonitorNames;
 import com.liferay.portal.monitoring.internal.statistics.BaseDataSample;
 
-import java.lang.reflect.Method;
-
-import org.aopalliance.intercept.MethodInvocation;
-
 /**
  * @author Michael C. Han
  */
 public class ServiceRequestDataSample extends BaseDataSample {
 
-	public ServiceRequestDataSample(MethodInvocation methodInvocation) {
+	public ServiceRequestDataSample(MethodSignature methodSignature) {
 		setNamespace(MonitorNames.SERVICE);
 
-		Method method = methodInvocation.getMethod();
+		_methodSignature = methodSignature;
 
-		_methodSignature = new MethodSignature(method);
-
-		setDescription(method.toString());
+		setDescription(_methodSignature.toString());
 	}
 
 	public MethodSignature getMethodSignature() {

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.monitoring;
 
 import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.lang.reflect.Method;
 
@@ -101,6 +102,25 @@ public class MethodSignature {
 		}
 
 		return hashCode;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(11);
+
+		sb.append("{className=");
+		sb.append(_className);
+		sb.append(", methodName=");
+		sb.append(_methodName);
+
+		sb.append(", parameterTypeNames=");
+		StringBundler parameterTypeNamesSB = new StringBundler(
+			_parameterTypeNames);
+		sb.append(parameterTypeNamesSB.toString());
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final String _className;

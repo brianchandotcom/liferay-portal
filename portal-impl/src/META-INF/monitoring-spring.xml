@@ -4,7 +4,6 @@
 	default-destroy-method="destroy"
 	default-init-method="afterPropertiesSet"
 	xmlns="http://www.springframework.org/schema/beans"
-	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
 >
@@ -43,5 +42,9 @@
 
 	<!-- Portlet container -->
 
-	<bean id="com.liferay.portlet.MonitoringPortletFactoryImpl" class="com.liferay.portlet.MonitoringPortletFactoryImpl" />
+	<bean id="com.liferay.portal.kernel.monitoring.PortletMonitoringControl" class="com.liferay.portal.kernel.monitoring.DefaultPortletMonitoringControl" />
+
+	<bean id="com.liferay.portlet.InvokerPortletFactory" class="com.liferay.portlet.MonitoringPortletFactoryImpl">
+		<property name="portletMonitoringControl" ref="com.liferay.portal.kernel.monitoring.PortletMonitoringControl" />
+	</bean>
 </beans>

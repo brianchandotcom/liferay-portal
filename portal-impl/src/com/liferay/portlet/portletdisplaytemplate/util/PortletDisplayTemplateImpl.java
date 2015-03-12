@@ -309,13 +309,16 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		contextObjects.put(
 			PortletDisplayTemplateConstants.RENDER_RESPONSE, renderResponse);
 
-		PortletURL currentURL = PortletURLUtil.getCurrent(
-			renderRequest, renderResponse);
+		if ((renderRequest != null) && (renderResponse != null)) {
+			PortletURL currentURL = PortletURLUtil.getCurrent(
+				renderRequest, renderResponse);
 
-		contextObjects.put(
-			PortletDisplayTemplateConstants.CURRENT_URL, currentURL.toString());
+			contextObjects.put(
+				PortletDisplayTemplateConstants.CURRENT_URL,
+				currentURL.toString());
+		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		contextObjects.put(
@@ -386,7 +389,9 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		contextObjects.put(TemplateConstants.WRITER, unsyncStringWriter);
 
-		contextObjects.putAll(_getPortletPreferences(renderRequest));
+		if (renderRequest != null) {
+			contextObjects.putAll(_getPortletPreferences(renderRequest));
+		}
 
 		return _transformer.transform(
 			themeDisplay, contextObjects, ddmTemplate.getScript(), language,

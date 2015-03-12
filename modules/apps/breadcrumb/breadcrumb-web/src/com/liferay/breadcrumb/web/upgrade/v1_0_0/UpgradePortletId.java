@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/taglib/ui/breadcrumb/init.jsp" %>
+package com.liferay.breadcrumb.web.upgrade.v1_0_0;
 
-<ul aria-label="<%= LanguageUtil.get(request, "breadcrumb") %>" class="breadcrumb breadcrumb-vertical">
-	<%@ include file="/html/taglib/ui/breadcrumb/breadcrumb.jspf" %>
-</ul>
+import com.liferay.breadcrumb.web.constants.BreadcrumbPortletKeys;
+
+/**
+ * @author Julio Camarero
+ */
+public class UpgradePortletId
+	extends com.liferay.portal.upgrade.util.UpgradePortletId {
+
+	@Override
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"73", BreadcrumbPortletKeys.BREADCRUMB}
+		};
+	}
+
+}

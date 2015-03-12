@@ -16,39 +16,11 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-List<Integer> breadcrumbEntryTypes = new ArrayList<Integer>();
-
-if (showCurrentGroup) {
-	breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_CURRENT_GROUP);
-}
-
-if (showGuestGroup) {
-	breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_GUEST_GROUP);
-}
-
-if (showLayout) {
-	breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_LAYOUT);
-}
-
-if (showParentGroups) {
-	breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_PARENT_GROUP);
-}
-
-if (showPortletBreadcrumb) {
-	breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_PORTLET);
-}
-
-List<BreadcrumbEntry> breadcrumbEntries = BreadcrumbUtil.getBreadcrumbEntries(request, ArrayUtil.toIntArray(breadcrumbEntryTypes));
-%>
-
-<liferay-ui:ddm-template-renderer displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= breadcrumbEntries %>">
-	<liferay-ui:breadcrumb
-		displayStyle="<%= displayStyle %>"
-		showCurrentGroup="<%= showCurrentGroup %>"
-		showGuestGroup="<%= showGuestGroup %>"
-		showLayout="<%= showLayout %>"
-		showParentGroups="<%= showParentGroups %>"
-		showPortletBreadcrumb="<%= showPortletBreadcrumb %>"
-	/>
-</liferay-ui:ddm-template-renderer>
+<liferay-ui:breadcrumb
+	ddmTemplate="<%= breadcrumbDisplayContext.getDDMTemplate() %>"
+	showCurrentGroup="<%= breadcrumbDisplayContext.isShowCurrentGroup() %>"
+	showGuestGroup="<%= breadcrumbDisplayContext.isShowGuestGroup() %>"
+	showLayout="<%= breadcrumbDisplayContext.isShowLayout() %>"
+	showParentGroups="<%= breadcrumbDisplayContext.isShowParentGroups() %>"
+	showPortletBreadcrumb="<%= breadcrumbDisplayContext.isShowPortletBreadcrumb() %>"
+/>

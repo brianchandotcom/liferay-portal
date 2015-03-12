@@ -30,6 +30,7 @@ import org.elasticsearch.node.NodeBuilder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -70,6 +71,11 @@ public class EmbeddedElasticsearchConnection
 			MapUtil.getString(properties, "testConfigFileName"));
 
 		initialize();
+	}
+
+	@Deactivate
+	protected void deactivate(Map<String, Object> properties) {
+		close();
 	}
 
 	@Override

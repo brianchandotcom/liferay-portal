@@ -40,7 +40,8 @@ import org.junit.Test;
 public class DDMXMLImplTest extends BaseDDMTestCase {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
+		setUpPropsUtil();
 		setUpSAXReaderUtil();
 	}
 

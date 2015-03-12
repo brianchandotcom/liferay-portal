@@ -38,8 +38,9 @@ import org.springframework.mock.web.MockHttpServletResponse;
 public class DDMXSDImplTest extends BaseDDMTestCase {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		setUpLocalizationUtil();
+		setUpPropsUtil();
 		setUpSAXReaderUtil();
 
 		_document = createSampleDocument();

@@ -16,7 +16,13 @@ package com.liferay.portal.kernel.xml;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
 import java.io.InputStream;
@@ -123,6 +129,10 @@ public class SAXReaderUtil {
 	public static SAXReader getSecureSAXReader() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			SAXReaderUtil.class, "secureSAXReader");
+
+		if (isCallerWhitelisted()) {
+			return getUnsecureSAXReader();
+		}
 
 		return _saxReader;
 	}
@@ -237,6 +247,54 @@ public class SAXReaderUtil {
 
 		_unsecureSAXReader = unsecureSAXReader;
 	}
+
+	protected static boolean isCallerWhitelisted() {
+		StringBundler sb = new StringBundler(3);
+
+		Exception e = new Exception();
+
+		StackTraceElement[] stackTraceElements = e.getStackTrace();
+
+		StackTraceElement stackTraceElement = stackTraceElements[2];
+
+		String methodName = stackTraceElement.getMethodName();
+
+		if (!methodName.startsWith("read")) {
+			return false;
+		}
+
+		stackTraceElement = stackTraceElements[3];
+
+		sb.append(stackTraceElement.getClassName());
+		sb.append(StringPool.POUND);
+		sb.append(stackTraceElement.getMethodName());
+
+		String callerSignature = sb.toString();
+
+		for (String whitelistSignature : _XML_SECURITY_WHITELIST) {
+			if (callerSignature.startsWith(whitelistSignature)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unsecure SAX reader allowed for " + callerSignature +
+							" based on the \"" + whitelistSignature +
+								"\" whitelist");
+				}
+
+				return true;
+			}
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Unsecure SAX reader disallowed for " + callerSignature);
+		}
+
+		return false;
+	}
+
+	private static final String[] _XML_SECURITY_WHITELIST = PropsUtil.getArray(
+		PropsKeys.XML_SECURITY_WHITELIST);
+
+	private static final Log _log = LogFactoryUtil.getLog(SAXReaderUtil.class);
 
 	private static SAXReader _saxReader;
 	private static SAXReader _unsecureSAXReader;

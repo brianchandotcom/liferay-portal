@@ -395,8 +395,8 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getSmallImageURL(
-	ThemeDisplay)}
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getSmallImageURL(ThemeDisplay)}
 	*/
 	@Deprecated
 	@Override

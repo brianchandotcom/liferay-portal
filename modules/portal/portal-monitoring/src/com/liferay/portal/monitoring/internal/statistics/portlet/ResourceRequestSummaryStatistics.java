@@ -19,10 +19,14 @@ import com.liferay.portal.kernel.monitoring.statistics.RequestStatistics;
 
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = ResourceRequestSummaryStatistics.class)
 public class ResourceRequestSummaryStatistics
 	implements PortletSummaryStatistics {
 
@@ -535,6 +539,7 @@ public class ResourceRequestSummaryStatistics
 		return getTimeoutCountByPortlet(portletId, companyStatistics);
 	}
 
+	@Reference
 	public void setServerStatistics(ServerStatistics serverStatistics) {
 		_serverStatistics = serverStatistics;
 	}

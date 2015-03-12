@@ -14,6 +14,8 @@
 
 package com.liferay.portal.monitoring.internal.statistics.portlet;
 
+import aQute.bnd.annotation.component.Activate;
+
 import com.liferay.portal.kernel.monitoring.MonitoringException;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleProcessor;
 import com.liferay.portal.model.Company;
@@ -24,21 +26,19 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = { "namespace=com.liferay.monitoring.Portlet" },
+	service = { DataSampleProcessor.class, ServerStatistics.class }
+)
 public class ServerStatistics
 	implements DataSampleProcessor<PortletRequestDataSample> {
-
-	public void afterPropertiesSet() {
-		CompanyStatistics systemCompanyStatistics = new CompanyStatistics();
-
-		_companyStatisticsByCompanyId.put(
-			systemCompanyStatistics.getCompanyId(), systemCompanyStatistics);
-		_companyStatisticsByWebId.put(
-			systemCompanyStatistics.getWebId(), systemCompanyStatistics);
-	}
 
 	public Set<Long> getCompanyIds() {
 		return _companyStatisticsByCompanyId.keySet();
@@ -156,6 +156,7 @@ public class ServerStatistics
 		companyStatistics.reset();
 	}
 
+	@Reference
 	public void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
 
@@ -170,6 +171,16 @@ public class ServerStatistics
 			_companyStatisticsByCompanyId.remove(
 				companyStatistics.getCompanyId());
 		}
+	}
+
+	@Activate
+	protected void activate() {
+		CompanyStatistics systemCompanyStatistics = new CompanyStatistics();
+
+		_companyStatisticsByCompanyId.put(
+			systemCompanyStatistics.getCompanyId(), systemCompanyStatistics);
+		_companyStatisticsByWebId.put(
+			systemCompanyStatistics.getWebId(), systemCompanyStatistics);
 	}
 
 	private CompanyLocalService _companyLocalService;

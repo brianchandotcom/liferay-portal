@@ -31,6 +31,10 @@
 			}
 		}
 
+		img {
+			max-width: 100%;
+		}
+
 		.cover-image-container {
 			background-position: center;
 			background-repeat: no-repeat;

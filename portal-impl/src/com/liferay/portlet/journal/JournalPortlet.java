@@ -970,7 +970,8 @@ public class JournalPortlet extends MVCPortlet {
 			actionRequest, PortletKeys.JOURNAL, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcPath", "edit_article.jsp");
+		portletURL.setParameter(
+			"mvcPath", "/html/portlet/journal/edit_article.jsp");
 		portletURL.setParameter("redirect", redirect, false);
 		portletURL.setParameter(
 			"referringPortletResource", referringPortletResource, false);

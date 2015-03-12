@@ -6,37 +6,7 @@
 	</set-up>
 
 	<command name="Smoke" priority="5">
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Test Page1" />
-		</execute>
-
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Test Page2" />
-		</execute>
-
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Test Page3" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page1" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Hello World" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page1" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="Hello World" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="CPBlogs#PORTLET_TITLE" value1="Blogs" />
+		<execute macro="Smoke#runSmoke" />
 	</command>
 
 	<tear-down>

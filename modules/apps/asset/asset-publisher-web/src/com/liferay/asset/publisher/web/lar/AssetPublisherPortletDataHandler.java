@@ -484,11 +484,18 @@ public class AssetPublisherPortletDataHandler
 
 				newValues.add(newValue);
 			}
-			catch (NoSuchGroupException|NoSuchLayoutException e) {
+			catch (NoSuchGroupException nsge) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Ignoring scope " + newValue + " because the " +
 							"referenced group was not found");
+				}
+			}
+			catch (NoSuchLayoutException nsle) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Ignoring scope " + newValue + " because the " +
+							"referenced layout was not found");
 				}
 			}
 			catch (PrincipalException pe) {

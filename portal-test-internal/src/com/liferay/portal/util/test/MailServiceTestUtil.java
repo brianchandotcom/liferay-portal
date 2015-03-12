@@ -97,7 +97,7 @@ public class MailServiceTestUtil {
 		}
 
 		try {
-			int smtpPort = getFreePort();
+			int smtpPort = _getFreePort();
 
 			_prefsPropsReplacement = new PrefsPropsTemporarySwapper(
 				PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT, smtpPort,
@@ -161,7 +161,7 @@ public class MailServiceTestUtil {
 		MailServiceUtil.clearSession();
 	}
 
-	protected static int getFreePort() {
+	private static int _getFreePort() {
 		for (int i = 0; i < 10; i++) {
 			int port = (int)(Math.random() * (_MAX_PORT - _MIN_PORT));
 

@@ -12,18 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.internal.statistics.jmx;
+package com.liferay.portal.monitoring.internal.jmx;
+
+import com.liferay.portal.kernel.monitoring.PortalMonitoringControl;
+import com.liferay.portal.kernel.monitoring.PortletMonitoringControl;
+import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public interface MonitoringProcessorManagerMBean {
+public interface MonitoringConfigurationManagerMBean
+	extends PortalMonitoringControl,
+	PortletMonitoringControl, ServiceMonitoringControl {
 
 	public String getLevel(String namespace);
 
 	public String[] getNamespaces();
 
+	public boolean isMonitorPortalRequest();
+
 	public void setLevel(String namespace, String levelName);
+
+	public void setMonitorPortalRequest(boolean monitorPortalRequest);
+
+	public void setMonitorPortletRequests(boolean monitorPortletRequests);
 
 }

@@ -14,19 +14,10 @@
 
 package com.liferay.portal.monitoring.internal.statistics.jmx;
 
-import com.liferay.portal.kernel.monitoring.MethodSignature;
-
-import java.util.Set;
-
 /**
  * @author Michael C. Han
  */
 public interface ServiceManagerMBean {
-
-	public void addMonitoredClass(String className);
-
-	public void addMonitoredMethod(
-		String className, String methodName, String[] parameterTypes);
 
 	public long getErrorCount(
 		String className, String methodName, String[] parameterTypes);
@@ -37,19 +28,7 @@ public interface ServiceManagerMBean {
 	public long getMinTime(
 		String className, String methodName, String[] parameterTypes);
 
-	public Set<String> getMonitoredClasses();
-
-	public Set<MethodSignature> getMonitoredMethods();
-
 	public long getRequestCount(
 		String className, String methodName, String[] parameterTypes);
-
-	public boolean isActive();
-
-	public boolean isPermissiveMode();
-
-	public void setActive(boolean active);
-
-	public void setPermissiveMode(boolean permissiveMode);
 
 }

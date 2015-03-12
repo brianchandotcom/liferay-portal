@@ -14,11 +14,7 @@
 
 package com.liferay.portal.monitoring.internal.statistics.jmx;
 
-import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.monitoring.internal.statistics.service.ServerStatistics;
-import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
-
-import java.util.Set;
 
 import javax.management.DynamicMBean;
 import javax.management.NotCompliantMBeanException;
@@ -33,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"object-name=com.liferay.portal.monitoring:classification=instrumentation,name=ServiceManager",
+		"object-name=com.liferay.portal.monitoring:classification=service_statistic,name=ServiceManager",
 		"object-name-cache-key=ServiceManager"
 	},
 	service = DynamicMBean.class
@@ -43,19 +39,6 @@ public class ServiceManager extends StandardMBean
 
 	public ServiceManager() throws NotCompliantMBeanException {
 		super(ServiceManagerMBean.class);
-	}
-
-	@Override
-	public void addMonitoredClass(String className) {
-		_serviceMonitorAdvice.addMonitoredClass(className);
-	}
-
-	@Override
-	public void addMonitoredMethod(
-		String className, String methodName, String[] parameterTypes) {
-
-		_serviceMonitorAdvice.addMonitoredMethod(
-			className, methodName, parameterTypes);
 	}
 
 	@Override
@@ -83,16 +66,6 @@ public class ServiceManager extends StandardMBean
 	}
 
 	@Override
-	public Set<String> getMonitoredClasses() {
-		return _serviceMonitorAdvice.getMonitoredClasses();
-	}
-
-	@Override
-	public Set<MethodSignature> getMonitoredMethods() {
-		return _serviceMonitorAdvice.getMonitoredMethods();
-	}
-
-	@Override
 	public long getRequestCount(
 		String className, String methodName, String[] parameterTypes) {
 
@@ -100,39 +73,11 @@ public class ServiceManager extends StandardMBean
 			className, methodName, parameterTypes);
 	}
 
-	@Override
-	public boolean isActive() {
-		return ServiceMonitorAdvice.isActive();
-	}
-
-	@Override
-	public boolean isPermissiveMode() {
-		return _serviceMonitorAdvice.isPermissiveMode();
-	}
-
-	@Override
-	public void setActive(boolean active) {
-		_serviceMonitorAdvice.setActive(active);
-	}
-
-	@Override
-	public void setPermissiveMode(boolean permissiveMode) {
-		_serviceMonitorAdvice.setPermissiveMode(permissiveMode);
-	}
-
 	@Reference
 	protected void setServerStatistics(ServerStatistics serverStatistics) {
 		_serverStatistics = serverStatistics;
 	}
 
-	@Reference
-	protected void setServiceMonitorAdvice(
-		ServiceMonitorAdvice serviceMonitorAdvice) {
-
-		_serviceMonitorAdvice = serviceMonitorAdvice;
-	}
-
 	private ServerStatistics _serverStatistics;
-	private ServiceMonitorAdvice _serviceMonitorAdvice;
 
 }

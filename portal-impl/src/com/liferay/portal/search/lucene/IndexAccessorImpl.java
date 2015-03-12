@@ -82,7 +82,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 		IndexSearcherManager indexSearcherManager = null;
 
 		try {
-			if (!SPIUtil.isSPI()) {
+			if (!SPIUtil.isSPI() && !SearchEngineUtil.isIndexReadOnly()) {
 				_checkLuceneDir();
 				_initIndexWriter();
 				_initCommitScheduler();
@@ -121,6 +121,10 @@ public class IndexAccessorImpl implements IndexAccessor {
 	public void addDocuments(Collection<Document> documents)
 		throws IOException {
 
+		if (_isIndexReadOnly()) {
+			return;
+		}
+
 		try {
 			for (Document document : documents) {
 				_indexWriter.addDocument(document);
@@ -135,7 +139,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 	@Override
 	public void close() {
-		if (SPIUtil.isSPI()) {
+		if (_isIndexReadOnly()) {
 			return;
 		}
 
@@ -157,7 +161,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 	@Override
 	public void delete() {
-		if (SearchEngineUtil.isIndexReadOnly()) {
+		if (_isIndexReadOnly()) {
 			return;
 		}
 
@@ -166,7 +170,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 	@Override
 	public void deleteDocuments(Term term) throws IOException {
-		if (SearchEngineUtil.isIndexReadOnly()) {
+		if (_isIndexReadOnly()) {
 			return;
 		}
 
@@ -182,6 +186,10 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 	@Override
 	public void dumpIndex(OutputStream outputStream) throws IOException {
+		if (_isIndexReadOnly()) {
+			return;
+		}
+
 		try {
 			_dumpIndexDeletionPolicy.dump(
 				outputStream, _indexWriter, _commitLock);
@@ -320,7 +328,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	private void _checkLuceneDir() {
-		if (SearchEngineUtil.isIndexReadOnly()) {
+		if (_isIndexReadOnly()) {
 			return;
 		}
 
@@ -345,6 +353,10 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	private void _deleteAll() {
+		if (_isIndexReadOnly()) {
+			return;
+		}
+
 		try {
 			_indexWriter.deleteAll();
 
@@ -380,19 +392,21 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	private void _doCommit() throws IOException {
-		if (_indexWriter != null) {
-			_commitLock.lock();
+		if (_isIndexReadOnly()) {
+			return;
+		}
 
-			try {
-				_indexWriter.commit();
-			}
-			finally {
-				_commitLock.unlock();
+		_commitLock.lock();
 
-				_indexSearcherManager.invalidate();
+		try {
+			_indexWriter.commit();
+		}
+		finally {
+			_commitLock.unlock();
 
-				_invalidate(_companyId);
-			}
+			_indexSearcherManager.invalidate();
+
+			_invalidate(_companyId);
 		}
 
 		_batchCount = 0;
@@ -521,7 +535,23 @@ public class IndexAccessorImpl implements IndexAccessor {
 		}
 	}
 
+	private boolean _isIndexReadOnly() {
+		if (_indexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Index in read only mode");
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _write(Term term, Document document) throws IOException {
+		if (_isIndexReadOnly()) {
+			return;
+		}
+
 		try {
 			if (term != null) {
 				_indexWriter.updateDocument(term, document);

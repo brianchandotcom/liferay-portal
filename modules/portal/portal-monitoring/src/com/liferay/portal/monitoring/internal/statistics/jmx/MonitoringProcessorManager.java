@@ -19,12 +19,31 @@ import com.liferay.portal.kernel.monitoring.MonitoringControl;
 
 import java.util.Set;
 
+import javax.management.DynamicMBean;
+import javax.management.NotCompliantMBeanException;
+import javax.management.StandardMBean;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public class MonitoringProcessorManager
+@Component(
+	immediate = true,
+	property = {
+		"object-name=com.liferay.portal.monitoring:classification=monitoring_service,name=MonitoringProcessorManager",
+		"object-name-cache-key=MonitoringProcessorManager"
+	},
+	service = DynamicMBean.class
+)
+public class MonitoringProcessorManager extends StandardMBean
 	implements MonitoringProcessorManagerMBean {
+
+	public MonitoringProcessorManager() throws NotCompliantMBeanException {
+		super(MonitoringProcessorManagerMBean.class);
+	}
 
 	@Override
 	public String getLevel(String namespace) {
@@ -51,8 +70,8 @@ public class MonitoringProcessorManager
 		_monitoringControl.setLevel(namespace, level);
 	}
 
-	public void setMonitoringControl(
-		MonitoringControl monitoringControl) {
+	@Reference
+	protected void setMonitoringControl(MonitoringControl monitoringControl) {
 
 		_monitoringControl = monitoringControl;
 	}

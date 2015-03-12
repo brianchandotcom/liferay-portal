@@ -498,7 +498,7 @@ public class PoshiRunnerExecutor {
 		PoshiRunnerVariablesUtil.pushCommandMap();
 
 		PoshiRunnerStackTraceUtil.pushFilePath(
-			classCommandName, macroType,
+			classCommandName, "macro",
 			executeElement.attributeValue("line-number"));
 
 		Element commandElement = PoshiRunnerContext.getMacroCommandElement(

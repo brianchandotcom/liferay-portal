@@ -38,6 +38,7 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -126,6 +127,11 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		}
 
 		return transportClient;
+	}
+
+	@Deactivate
+	protected void deactivate(Map<String, Object> properties) {
+		close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

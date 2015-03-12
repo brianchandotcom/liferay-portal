@@ -30,6 +30,7 @@ import org.elasticsearch.node.NodeBuilder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -110,6 +111,11 @@ public class EmbeddedElasticsearchConnection
 		}
 
 		return client;
+	}
+
+	@Deactivate
+	protected void deactivate(Map<String, Object> properties) {
+		close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

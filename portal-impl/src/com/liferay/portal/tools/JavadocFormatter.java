@@ -44,6 +44,7 @@ import com.thoughtworks.qdox.model.JavaPackage;
 import com.thoughtworks.qdox.model.JavaParameter;
 import com.thoughtworks.qdox.model.Type;
 import com.thoughtworks.qdox.model.annotation.AnnotationValue;
+import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -192,8 +193,12 @@ public class JavadocFormatter {
 					_format(fileName);
 				}
 				catch (Exception e) {
-					throw new RuntimeException(
-						"Unable to format file " + fileName, e);
+					if (!(e instanceof ParseException) ||
+						!fileName.contains("/sdk/tools/templates/")) {
+
+						throw new RuntimeException(
+							"Unable to format file " + fileName, e);
+					}
 				}
 			}
 		}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.monitoring.jmx;
+package com.liferay.portal.monitoring.internal.servlet.filters.jmx;
 
 /**
  * @author Michael C. Han

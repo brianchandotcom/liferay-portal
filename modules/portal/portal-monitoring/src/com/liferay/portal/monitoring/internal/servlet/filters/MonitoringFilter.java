@@ -12,16 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.monitoring;
+package com.liferay.portal.monitoring.internal.servlet.filters;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal;
+import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.monitoring.statistics.portal.PortalRequestDataSample;
 import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
-import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.MonitoringPortlet;
@@ -37,7 +39,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Rajesh Thiagarajan
  * @author Michael C. Han
  */
-public class MonitoringFilter extends BasePortalFilter {
+public class MonitoringFilter extends BaseFilter {
 
 	public static boolean isMonitoringPortalRequest() {
 		return _monitoringPortalRequest;
@@ -66,6 +68,11 @@ public class MonitoringFilter extends BasePortalFilter {
 		}
 
 		return true;
+	}
+
+	@Override
+	protected Log getLog() {
+		return _log;
 	}
 
 	@Override
@@ -123,6 +130,8 @@ public class MonitoringFilter extends BasePortalFilter {
 				DataSampleThreadLocal.getDataSamples());
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(MonitoringFilter.class);
 
 	private static boolean _monitoringPortalRequest =
 		PropsValues.MONITORING_PORTAL_REQUEST;

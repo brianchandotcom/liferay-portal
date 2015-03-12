@@ -81,15 +81,25 @@ public class DDMFormValuesTestUtil {
 		return createDDMFormFieldValue(name, localizedValue);
 	}
 
-	public static Value createLocalizedValue(
+	public static LocalizedValue createLocalizedValue(
+		String enValue, Locale defaultLocale) {
+
+		LocalizedValue localizedValue = new LocalizedValue(defaultLocale);
+
+		localizedValue.addString(LocaleUtil.US, enValue);
+
+		return localizedValue;
+	}
+
+	public static LocalizedValue createLocalizedValue(
 		String enValue, String ptValue, Locale defaultLocale) {
 
-		Value value = new LocalizedValue(defaultLocale);
+		LocalizedValue localizedValue = new LocalizedValue(defaultLocale);
 
-		value.addString(LocaleUtil.BRAZIL, ptValue);
-		value.addString(LocaleUtil.US, enValue);
+		localizedValue.addString(LocaleUtil.BRAZIL, ptValue);
+		localizedValue.addString(LocaleUtil.US, enValue);
 
-		return value;
+		return localizedValue;
 	}
 
 	public static DDMFormFieldValue createUnlocalizedDDMFormFieldValue(

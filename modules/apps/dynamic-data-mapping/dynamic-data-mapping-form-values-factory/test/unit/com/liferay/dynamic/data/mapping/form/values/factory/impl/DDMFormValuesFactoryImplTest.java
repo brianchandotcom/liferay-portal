@@ -24,6 +24,7 @@ import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
@@ -31,9 +32,11 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,6 +61,78 @@ public class DDMFormValuesFactoryImplTest extends PowerMockito {
 		setUpDDMFormValuesJSONSerializerUtil();
 		setUpJSONFactoryUtil();
 		setUpLocaleUtil();
+	}
+
+	@Test
+	public void testCreateDefaultWithEmptyRequest() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField nameDDMFormField = DDMFormTestUtil.createTextDDMFormField(
+			"Name", true, false, false);
+
+		LocalizedValue namePredefinedValue = createLocalizedValue(
+			"Joe", LocaleUtil.US);
+
+		nameDDMFormField.setPredefinedValue(namePredefinedValue);
+
+		DDMFormField phoneDDMFormField = DDMFormTestUtil.createTextDDMFormField(
+			"Phone", true, false, false);
+
+		LocalizedValue phonePredefinedValue = createLocalizedValue(
+			"123", LocaleUtil.US);
+
+		phoneDDMFormField.setPredefinedValue(phonePredefinedValue);
+
+		nameDDMFormField.addNestedDDMFormField(phoneDDMFormField);
+
+		ddmForm.addDDMFormField(nameDDMFormField);
+
+		DDMFormValues expectedDDMFormValues = createDDMFormValues(
+			ddmForm, createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormFieldValue nameDDMFormFieldValue = createDDMFormFieldValue(
+			"gatu", "Name", namePredefinedValue);
+
+		nameDDMFormFieldValue.addNestedDDMFormFieldValue(
+			createDDMFormFieldValue("waht", "Phone", phonePredefinedValue));
+
+		expectedDDMFormValues.addDDMFormFieldValue(nameDDMFormFieldValue);
+
+		DDMFormValues actualDDMFormValues = _ddmFormValuesFactory.create(
+			new MockHttpServletRequest(), ddmForm);
+
+		List<DDMFormFieldValue> actualDDMFormFieldValues =
+			actualDDMFormValues.getDDMFormFieldValues();
+
+		// Name
+
+		DDMFormFieldValue actualNameDDMFormFieldValue =
+			actualDDMFormFieldValues.get(0);
+
+		Value actualNameDDMFormFieldValueValue =
+			actualNameDDMFormFieldValue.getValue();
+
+		Assert.assertEquals(
+			LocaleUtil.US, actualNameDDMFormFieldValueValue.getDefaultLocale());
+		Assert.assertEquals(
+			"Joe", actualNameDDMFormFieldValueValue.getString(LocaleUtil.US));
+
+		// Phone
+
+		List<DDMFormFieldValue> actualPhoneDDMFormFieldValues =
+			actualNameDDMFormFieldValue.getNestedDDMFormFieldValues();
+
+		DDMFormFieldValue actualPhoneDDMFormFieldValue =
+			actualPhoneDDMFormFieldValues.get(0);
+
+		Value actualPhoneDDMFormFieldValueValue =
+			actualPhoneDDMFormFieldValue.getValue();
+
+		Assert.assertEquals(
+			LocaleUtil.US,
+			actualPhoneDDMFormFieldValueValue.getDefaultLocale());
+		Assert.assertEquals(
+			"123", actualPhoneDDMFormFieldValueValue.getString(LocaleUtil.US));
 	}
 
 	@Test
@@ -592,7 +667,14 @@ public class DDMFormValuesFactoryImplTest extends PowerMockito {
 		return ddmFormValues;
 	}
 
-	protected Value createLocalizedValue(
+	protected LocalizedValue createLocalizedValue(
+		String enValue, Locale defaultLocale) {
+
+		return DDMFormValuesTestUtil.createLocalizedValue(
+			enValue, defaultLocale);
+	}
+
+	protected LocalizedValue createLocalizedValue(
 		String enValue, String ptValue, Locale defaultLocale) {
 
 		return DDMFormValuesTestUtil.createLocalizedValue(
@@ -617,6 +699,18 @@ public class DDMFormValuesFactoryImplTest extends PowerMockito {
 		mockStatic(LocaleUtil.class);
 
 		when(
+			LocaleUtil.fromLanguageId("en_US")
+		).thenReturn(
+			LocaleUtil.US
+		);
+
+		when(
+			LocaleUtil.fromLanguageId("pt_BR")
+		).thenReturn(
+			LocaleUtil.BRAZIL
+		);
+
+		when(
 			LocaleUtil.toLanguageId(LocaleUtil.US)
 		).thenReturn(
 			"en_US"
@@ -629,15 +723,9 @@ public class DDMFormValuesFactoryImplTest extends PowerMockito {
 		);
 
 		when(
-			LocaleUtil.fromLanguageId("en_US")
+			LocaleUtil.getSiteDefault()
 		).thenReturn(
 			LocaleUtil.US
-		);
-
-		when(
-			LocaleUtil.fromLanguageId("pt_BR")
-		).thenReturn(
-			LocaleUtil.BRAZIL
 		);
 	}
 

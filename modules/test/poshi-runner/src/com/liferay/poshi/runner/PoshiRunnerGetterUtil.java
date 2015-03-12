@@ -18,6 +18,7 @@ import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.MathUtil;
+import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
 
@@ -70,6 +71,10 @@ public class PoshiRunnerGetterUtil {
 	public static String getClassNameFromFilePath(String filePath) {
 		int x = filePath.lastIndexOf("/");
 		int y = filePath.lastIndexOf(".");
+
+		if (OSDetector.isWindows()) {
+			x = filePath.lastIndexOf("\\");
+		}
 
 		return filePath.substring(x + 1, y);
 	}
@@ -136,7 +141,8 @@ public class PoshiRunnerGetterUtil {
 
 		String content = sb.toString();
 
-		InputStream inputStream = new ByteArrayInputStream(content.getBytes());
+		InputStream inputStream = new ByteArrayInputStream(
+			content.getBytes("UTF-8"));
 
 		SAXReader saxReader = new SAXReader();
 

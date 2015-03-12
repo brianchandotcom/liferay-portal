@@ -73,11 +73,6 @@ public class EmbeddedElasticsearchConnection
 		initialize();
 	}
 
-	@Deactivate
-	protected void deactivate(Map<String, Object> properties) {
-		close();
-	}
-
 	@Override
 	protected Client createClient(ImmutableSettings.Builder builder) {
 		NodeBuilder nodeBuilder = NodeBuilder.nodeBuilder();
@@ -116,6 +111,11 @@ public class EmbeddedElasticsearchConnection
 		}
 
 		return client;
+	}
+
+	@Deactivate
+	protected void deactivate(Map<String, Object> properties) {
+		close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

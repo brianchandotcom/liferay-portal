@@ -292,13 +292,13 @@ public class PoshiRunnerContext {
 		};
 
 		for (String fileName : fileNames) {
-			String path = "src/com/liferay/poshi/runner/selenium/";
+			String filePath = "src/com/liferay/poshi/runner/selenium/";
 
 			if (OSDetector.isWindows()) {
-				path = path.replace("/", "\\");
+				filePath = filePath.replace("/", "\\");
 			}
 
-			String content = FileUtil.read(path + fileName);
+			String content = FileUtil.read(filePath + fileName);
 
 			Matcher matcher = _pattern.matcher(content);
 

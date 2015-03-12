@@ -20,14 +20,18 @@ import com.dumbster.smtp.SmtpServerFactory;
 import com.dumbster.smtp.mailstores.RollingMailStore;
 
 import com.liferay.mail.service.MailServiceUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.SocketUtil;
+import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
 
 import java.io.IOException;
 
+import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.SocketException;
+
+import java.nio.channels.ServerSocketChannel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,37 +155,28 @@ public class MailServiceTestUtil {
 		MailServiceUtil.clearSession();
 	}
 
-	private static int _getFreePort() {
-		for (int i = 0; i < 10; i++) {
-			int port = (int)(Math.random() * (_MAX_PORT - _MIN_PORT));
+	private static int _getFreePort() throws IOException {
+		try (ServerSocketChannel serverSocketChannel =
+			SocketUtil.createServerSocketChannel(
+				InetAddress.getLocalHost(), _START_PORT,
+				new ServerSocketConfigurator() {
 
-			try {
-				ServerSocket serverSocket = new ServerSocket(port);
-				serverSocket.close();
+					@Override
+					public void configure(ServerSocket serverSocket)
+						throws SocketException {
 
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"The server is going to be started in the port: " +
-							port);
-				}
+						serverSocket.setReuseAddress(true);
+					}
 
-				return port;
-			}
-			catch (IOException ex) {
-				continue; // try next port
-			}
+				})) {
+
+			ServerSocket serverSocket = serverSocketChannel.socket();
+
+			return serverSocket.getLocalPort();
 		}
-
-		throw new IllegalStateException(
-			"It is not possible to find a free port to start the server");
 	}
 
-	private static final int _MAX_PORT = 65535;
-
-	private static final int _MIN_PORT = 1025;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MailServiceTestUtil.class);
+	private static final int _START_PORT = 3241;
 
 	private static PrefsPropsTemporarySwapper _prefsPropsTemporarySwapper;
 	private static SmtpServer _smtpServer;

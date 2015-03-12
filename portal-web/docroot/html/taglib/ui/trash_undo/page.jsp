@@ -61,9 +61,10 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 				<liferay-util:buffer var="trashLink">
 					<c:choose>
 						<c:when test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
-							<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.TRASH %>" varImpl="trashURL" windowState="<%= WindowState.NORMAL.toString() %>" />
 
 							<%
+							PortletURL trashURL = TrashUtil.getViewURL(request);
+
 							String trashURLString = HttpUtil.setParameter(trashURL.toString(), "doAsGroupId", String.valueOf(themeDisplay.getScopeGroupId()));
 
 							if (!layout.isTypeControlPanel() || Validator.isNull(themeDisplay.getControlPanelCategory())) {
@@ -121,13 +122,10 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 						<liferay-util:buffer var="trashEntityLink">
 							<c:choose>
 								<c:when test="<%= !Validator.equals(cmd, Constants.REMOVE) && themeDisplay.isShowSiteAdministrationIcon() && Validator.isNotNull(className) && Validator.isNotNull(title) && Validator.isNotNull(primaryKeys[0]) %>">
-									<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.TRASH %>" varImpl="trashURL" windowState="<%= WindowState.NORMAL.toString() %>">
-										<portlet:param name="mvcPath" value="/html/portlet/trash/view_content.jsp" />
-										<portlet:param name="redirect" value="<%= currentURL %>" />
-										<portlet:param name="trashEntryId" value="<%= String.valueOf(primaryKeys[0]) %>" />
-									</liferay-portlet:renderURL>
 
 									<%
+									PortletURL trashURL = TrashUtil.getViewContentURL(request, GetterUtil.getLong(primaryKeys[0]));
+
 									String trashURLString = HttpUtil.setParameter(trashURL.toString(), "doAsGroupId", String.valueOf(themeDisplay.getScopeGroupId()));
 
 									if (Validator.isNull(themeDisplay.getControlPanelCategory())) {

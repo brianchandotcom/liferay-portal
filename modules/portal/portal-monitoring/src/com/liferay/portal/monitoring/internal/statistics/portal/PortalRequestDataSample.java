@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.statistics.portal;
+package com.liferay.portal.monitoring.internal.statistics.portal;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.monitoring.MonitorNames;
-import com.liferay.portal.monitoring.statistics.BaseDataSample;
+import com.liferay.portal.monitoring.internal.statistics.BaseDataSample;
 
 /**
  * @author Rajesh Thiagarajan

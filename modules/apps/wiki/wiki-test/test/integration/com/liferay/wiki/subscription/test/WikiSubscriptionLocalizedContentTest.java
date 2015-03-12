@@ -64,7 +64,7 @@ public class WikiSubscriptionLocalizedContentTest
 		throws Exception {
 
 		WikiPage page = WikiTestUtil.addPage(
-			userId, group.getGroupId(), _node.getNodeId(),
+			userId, group.getGroupId(), containerModelId,
 			RandomTestUtil.randomString(), true);
 
 		return page.getResourcePrimKey();
@@ -75,7 +75,12 @@ public class WikiSubscriptionLocalizedContentTest
 		throws Exception {
 
 		WikiNodeLocalServiceUtil.subscribeNode(
-			user.getUserId(), _node.getNodeId());
+			user.getUserId(), containerModelId);
+	}
+
+	@Override
+	protected long getDefaultContainerModelId() {
+		return _node.getNodeId();
 	}
 
 	@Override

@@ -14,11 +14,14 @@
 
 package com.liferay.wiki.translator;
 
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
-import com.liferay.portal.util.DigesterImpl;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 /**
  * @author Jorge Ferrer
@@ -298,7 +301,15 @@ public class MediaWikiToCreoleTranslatorTest {
 
 		DigesterUtil digesterUtil = new DigesterUtil();
 
-		digesterUtil.setDigester(new DigesterImpl());
+		Digester digester = Mockito.mock(Digester.class);
+
+		Mockito.when(
+			digester.digest(Mockito.anyString())
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		digesterUtil.setDigester(digester);
 
 		String actual = _mediaWikiToCreoleTranslator.translate(content);
 

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.monitoring.statistics.service;
 
+import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.monitoring.MonitorNames;
-import com.liferay.portal.monitoring.jmx.MethodSignature;
 import com.liferay.portal.monitoring.statistics.BaseDataSample;
 
 import java.lang.reflect.Method;

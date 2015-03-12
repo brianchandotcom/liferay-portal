@@ -14,6 +14,8 @@
 
 package com.liferay.portal.monitoring.jmx;
 
+import com.liferay.portal.kernel.monitoring.MethodSignature;
+
 import java.util.Set;
 
 /**

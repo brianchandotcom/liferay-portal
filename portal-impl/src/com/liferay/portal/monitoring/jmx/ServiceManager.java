@@ -14,6 +14,7 @@
 
 package com.liferay.portal.monitoring.jmx;
 
+import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.monitoring.statistics.service.ServerStatistics;
 import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
 

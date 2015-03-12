@@ -14,24 +14,22 @@
 
 package com.liferay.portal.monitoring.internal.servlet.filters;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.monitoring.PortalMonitoringControl;
+import com.liferay.portal.kernel.monitoring.PortletMonitoringControl;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
+import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.kernel.monitoring.statistics.DataSample;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.monitoring.configuration.MonitoringConfiguration;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
-
-import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -39,9 +37,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -49,16 +45,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.monitoring.configuration.MonitoringConfiguration",
 	immediate = true,
 	property = {
 		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
 		"servlet-filter-name=Monitoring Filter", "url-pattern=/c/*",
 		"url-pattern=/group/*", "url-pattern=/user/*", "url-pattern=/web/*"
 	},
-	service = Filter.class
+	service = { Filter.class, PortalMonitoringControl.class }
 )
-public class MonitoringFilter extends BaseFilter {
+public class MonitoringFilter extends BaseFilter
+	implements PortalMonitoringControl {
 
 	@Override
 	public boolean isFilterEnabled() {
@@ -66,12 +62,12 @@ public class MonitoringFilter extends BaseFilter {
 			return false;
 		}
 
-		if (!_monitoringConfiguration.monitorPortalRequest() &&
-			!_monitoringConfiguration.monitorPortletActionRequest() &&
-			!_monitoringConfiguration.monitorPortletEventRequest() &&
-			!_monitoringConfiguration.monitorPortletRenderRequest() &&
-			!_monitoringConfiguration.monitorPortletResourceRequest() &&
-			!_monitoringConfiguration.monitorServiceRequest()) {
+		if (!_monitorPortalRequest &&
+			!_portletMonitoringControl.isMonitorPortletActionRequest() &&
+			!_portletMonitoringControl.isMonitorPortletEventRequest() &&
+			!_portletMonitoringControl.isMonitorPortletRenderRequest() &&
+			!_portletMonitoringControl.isMonitorPortletResourceRequest() &&
+			!_serviceMonitoringControl.isMonitorServiceRequest()) {
 
 			return false;
 		}
@@ -79,11 +75,14 @@ public class MonitoringFilter extends BaseFilter {
 		return true;
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_monitoringConfiguration = Configurable.createConfigurable(
-			MonitoringConfiguration.class, properties);
+	@Override
+	public boolean isMonitorPortalRequest() {
+		return _monitorPortalRequest;
+	}
+
+	@Override
+	public void setMonitorPortalRequest(boolean monitorPortalRequest) {
+		_monitorPortalRequest = monitorPortalRequest;
 	}
 
 	@Override
@@ -101,7 +100,7 @@ public class MonitoringFilter extends BaseFilter {
 
 		DataSample dataSample = null;
 
-		if (_monitoringConfiguration.monitorPortalRequest()) {
+		if (_monitorPortalRequest) {
 			dataSample = _dataSampleFactory.createPortalRequestDataSample(
 				companyId, request.getRemoteUser(), request.getRequestURI(),
 				GetterUtil.getString(request.getRequestURL()));
@@ -152,10 +151,26 @@ public class MonitoringFilter extends BaseFilter {
 		_dataSampleFactory = dataSampleFactory;
 	}
 
+	@Reference
+	protected final void setPortletMonitoringControl(
+		PortletMonitoringControl portletMonitoringControl) {
+
+		_portletMonitoringControl = portletMonitoringControl;
+	}
+
+	@Reference
+	protected void setServiceMonitoringControl(
+		ServiceMonitoringControl serviceMonitoringControl) {
+
+		_serviceMonitoringControl = serviceMonitoringControl;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		MonitoringFilter.class);
 
 	private DataSampleFactory _dataSampleFactory;
-	private volatile MonitoringConfiguration _monitoringConfiguration;
+	private boolean _monitorPortalRequest;
+	private PortletMonitoringControl _portletMonitoringControl;
+	private ServiceMonitoringControl _serviceMonitoringControl;
 
 }

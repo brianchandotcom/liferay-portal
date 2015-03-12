@@ -15,7 +15,7 @@
 package com.liferay.portal.monitoring.jmx;
 
 import com.liferay.portal.kernel.monitoring.Level;
-import com.liferay.portal.kernel.monitoring.MonitoringProcessor;
+import com.liferay.portal.kernel.monitoring.MonitoringControl;
 
 import java.util.Set;
 
@@ -28,7 +28,7 @@ public class MonitoringProcessorManager
 
 	@Override
 	public String getLevel(String namespace) {
-		Level level = _monitoringProcessor.getLevel(namespace);
+		Level level = _monitoringControl.getLevel(namespace);
 
 		if (level == null) {
 			level = Level.OFF;
@@ -39,7 +39,7 @@ public class MonitoringProcessorManager
 
 	@Override
 	public String[] getNamespaces() {
-		Set<String> namespaces = _monitoringProcessor.getNamespaces();
+		Set<String> namespaces = _monitoringControl.getNamespaces();
 
 		return namespaces.toArray(new String[namespaces.size()]);
 	}
@@ -48,15 +48,15 @@ public class MonitoringProcessorManager
 	public void setLevel(String namespace, String levelName) {
 		Level level = Level.valueOf(levelName);
 
-		_monitoringProcessor.setLevel(namespace, level);
+		_monitoringControl.setLevel(namespace, level);
 	}
 
-	public void setMonitoringProcessor(
-		MonitoringProcessor monitoringProcessor) {
+	public void setMonitoringControl(
+		MonitoringControl monitoringControl) {
 
-		_monitoringProcessor = monitoringProcessor;
+		_monitoringControl = monitoringControl;
 	}
 
-	private MonitoringProcessor _monitoringProcessor;
+	private MonitoringControl _monitoringControl;
 
 }

@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  */
 public class DefaultMonitoringProcessor
-	implements DataSampleProcessor<DataSample>, MonitoringProcessor {
+	implements DataSampleProcessor<DataSample>, MonitoringControl {
 
 	@Override
 	public Level getLevel(String namespace) {

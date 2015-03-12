@@ -53,7 +53,7 @@
 	<!-- JMX -->
 
 	<bean id="com.liferay.portal.monitoring.jmx.MonitoringProcessorManager" class="com.liferay.portal.monitoring.jmx.MonitoringProcessorManager">
-		<property name="monitoringProcessor" ref="com.liferay.portal.monitoring.MonitoringProcessor" />
+		<property name="monitoringControl" ref="com.liferay.portal.monitoring.MonitoringProcessor" />
 	</bean>
 	<bean id="com.liferay.portal.monitoring.jmx.ActionRequestPortletContainerManager" class="com.liferay.portal.monitoring.jmx.PortletManager">
 		<property name="portletSummaryStatistics">

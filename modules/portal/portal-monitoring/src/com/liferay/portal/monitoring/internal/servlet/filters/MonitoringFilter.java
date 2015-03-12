@@ -14,42 +14,51 @@
 
 package com.liferay.portal.monitoring.internal.servlet.filters;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
+import com.liferay.portal.kernel.monitoring.statistics.DataSample;
+import com.liferay.portal.kernel.monitoring.statistics.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.monitoring.statistics.portal.PortalRequestDataSample;
-import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
+import com.liferay.portal.monitoring.configuration.MonitoringConfiguration;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.MonitoringPortlet;
 
 import java.io.IOException;
 
+import java.util.Map;
+
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Rajesh Thiagarajan
  * @author Michael C. Han
  */
+@Component(
+	configurationPid = "com.liferay.portal.monitoring.configuration.MonitoringConfiguration",
+	immediate = true,
+	property = {
+		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
+		"servlet-filter-name=Monitoring Filter", "url-pattern=/c/*",
+		"url-pattern=/group/*", "url-pattern=/user/*", "url-pattern=/web/*"
+	},
+	service = Filter.class
+)
 public class MonitoringFilter extends BaseFilter {
-
-	public static boolean isMonitoringPortalRequest() {
-		return _monitoringPortalRequest;
-	}
-
-	public static void setMonitoringPortalRequest(
-		boolean monitoringPortalRequest) {
-
-		_monitoringPortalRequest = monitoringPortalRequest;
-	}
 
 	@Override
 	public boolean isFilterEnabled() {
@@ -57,17 +66,24 @@ public class MonitoringFilter extends BaseFilter {
 			return false;
 		}
 
-		if (!_monitoringPortalRequest &&
-			!MonitoringPortlet.isMonitoringPortletActionRequest() &&
-			!MonitoringPortlet.isMonitoringPortletEventRequest() &&
-			!MonitoringPortlet.isMonitoringPortletRenderRequest() &&
-			!MonitoringPortlet.isMonitoringPortletResourceRequest() &&
-			!ServiceMonitorAdvice.isActive()) {
+		if (!_monitoringConfiguration.monitorPortalRequest() &&
+			!_monitoringConfiguration.monitorPortletActionRequest() &&
+			!_monitoringConfiguration.monitorPortletEventRequest() &&
+			!_monitoringConfiguration.monitorPortletRenderRequest() &&
+			!_monitoringConfiguration.monitorPortletResourceRequest() &&
+			!_monitoringConfiguration.monitorServiceRequest()) {
 
 			return false;
 		}
 
 		return true;
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_monitoringConfiguration = Configurable.createConfigurable(
+			MonitoringConfiguration.class, properties);
 	}
 
 	@Override
@@ -83,10 +99,10 @@ public class MonitoringFilter extends BaseFilter {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		PortalRequestDataSample portalRequestDataSample = null;
+		DataSample dataSample = null;
 
-		if (_monitoringPortalRequest) {
-			portalRequestDataSample = new PortalRequestDataSample(
+		if (_monitoringConfiguration.monitorPortalRequest()) {
+			dataSample = _dataSampleFactory.createPortalRequestDataSample(
 				companyId, request.getRemoteUser(), request.getRequestURI(),
 				GetterUtil.getString(request.getRequestURL()));
 
@@ -94,20 +110,20 @@ public class MonitoringFilter extends BaseFilter {
 		}
 
 		try {
-			if (portalRequestDataSample != null) {
-				portalRequestDataSample.prepare();
+			if (dataSample != null) {
+				dataSample.prepare();
 			}
 
 			processFilter(
 				MonitoringFilter.class, request, response, filterChain);
 
-			if (portalRequestDataSample != null) {
-				portalRequestDataSample.capture(RequestStatus.SUCCESS);
+			if (dataSample != null) {
+				dataSample.capture(RequestStatus.SUCCESS);
 			}
 		}
 		catch (Exception e) {
-			if (portalRequestDataSample != null) {
-				portalRequestDataSample.capture(RequestStatus.ERROR);
+			if (dataSample != null) {
+				dataSample.capture(RequestStatus.ERROR);
 			}
 
 			if (e instanceof IOException) {
@@ -121,8 +137,8 @@ public class MonitoringFilter extends BaseFilter {
 			}
 		}
 		finally {
-			if (portalRequestDataSample != null) {
-				DataSampleThreadLocal.addDataSample(portalRequestDataSample);
+			if (dataSample != null) {
+				DataSampleThreadLocal.addDataSample(dataSample);
 			}
 
 			MessageBusUtil.sendMessage(
@@ -131,9 +147,15 @@ public class MonitoringFilter extends BaseFilter {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MonitoringFilter.class);
+	@Reference
+	protected void setDataSampleFactory(DataSampleFactory dataSampleFactory) {
+		_dataSampleFactory = dataSampleFactory;
+	}
 
-	private static boolean _monitoringPortalRequest =
-		PropsValues.MONITORING_PORTAL_REQUEST;
+	private static final Log _log = LogFactoryUtil.getLog(
+		MonitoringFilter.class);
+
+	private DataSampleFactory _dataSampleFactory;
+	private volatile MonitoringConfiguration _monitoringConfiguration;
 
 }

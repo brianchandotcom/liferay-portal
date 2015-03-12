@@ -20,10 +20,17 @@ import com.liferay.portal.kernel.monitoring.statistics.SummaryStatistics;
 
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = { "name=portalSummaryStatistics" },
+	service = ServerSummaryStatistics.class
+)
 public class ServerSummaryStatistics implements SummaryStatistics {
 
 	@Override
@@ -219,6 +226,7 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 		return getRequestStatistics(webId).getTimeoutCount();
 	}
 
+	@Reference
 	public void setServerStatistics(ServerStatistics serverStatistics) {
 		_serverStatistics = serverStatistics;
 	}

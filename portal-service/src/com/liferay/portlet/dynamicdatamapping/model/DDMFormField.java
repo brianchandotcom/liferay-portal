@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -148,6 +150,14 @@ public class DDMFormField implements Serializable {
 
 	public boolean isShowLabel() {
 		return _showLabel;
+	}
+
+	public boolean isTransient() {
+		if (Validator.isNull(_dataType)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public void setDataType(String dataType) {

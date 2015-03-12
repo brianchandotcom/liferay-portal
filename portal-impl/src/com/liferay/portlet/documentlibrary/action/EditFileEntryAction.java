@@ -77,6 +77,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
+import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.InputStream;
@@ -179,6 +180,9 @@ public class EditFileEntryAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteFileEntry(actionRequest, true);
+			}
+			else if (cmd.equals(Constants.RESTORE)) {
+				restoreEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.REVERT)) {
 				revertFileEntry(actionRequest);
@@ -914,6 +918,17 @@ public class EditFileEntryAction extends PortletAction {
 			else {
 				throw e;
 			}
+		}
+	}
+
+	protected void restoreEntries(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] restoreEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
+
+		for (long restoreEntryId : restoreEntryIds) {
+			TrashEntryServiceUtil.restoreEntry(restoreEntryId);
 		}
 	}
 

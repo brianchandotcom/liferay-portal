@@ -70,9 +70,9 @@ public class WikiPageStagedModelDataHandlerTest
 
 	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		super.setUp();
 	}
 
 	@Override

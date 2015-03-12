@@ -297,6 +297,7 @@ public class MediaWikiToCreoleTranslatorTest {
 					" line";
 
 		DigesterUtil digesterUtil = new DigesterUtil();
+
 		digesterUtil.setDigester(new DigesterImpl());
 
 		String actual = _mediaWikiToCreoleTranslator.translate(content);

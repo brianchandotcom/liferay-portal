@@ -1133,3 +1133,40 @@ and views are not used anymore by the taglib and they are now responsability of
 each plugin.
 
 ---------------------------------------
+
+### Display Styles for the Breadcrumb Portlet have been replaced by ADT
+- **Date:** 2015-Mar-12
+- **JIRA Ticket:** LPS-54106
+
+#### What changed?
+
+The custom display styles of the breadcrumb tag added using JSPs won't work
+anymore. They have been replaced by Application Display Templates.
+
+
+#### Who is affected?
+
+Anyone using the properties.
+
+```
+breadcrumb.display.style.default=horizontal
+
+
+breadcrumb.display.style.options=horizontal,vertical
+```
+
+
+#### How should I update my code?
+
+You need to convert your jsps with custom styles for the breadcrumb with
+Application Display Templates (ADT) for the breadcrumb and use those. ADT can be
+created from the UI of the portal in Site Settings >>
+Application Display Tempaltes or also programatically.
+
+
+#### Why was this change made?
+
+Application Display Templates provide more flexibility that JSPs since coding
+is not needed to change the look and feel of your application.
+
+---------------------------------------

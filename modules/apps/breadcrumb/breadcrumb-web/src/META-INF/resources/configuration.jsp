@@ -34,8 +34,8 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 				<div class="display-template">
 					<liferay-ui:ddm-template-selector
 						classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
-						displayStyle="<%= displayStyle %>"
-						displayStyleGroupId="<%= displayStyleGroupId %>"
+						displayStyle="<%= breadcrumbDisplayContext.getDisplayStyle() %>"
+						displayStyleGroupId="<%= breadcrumbDisplayContext.getDisplayStyleGroupId() %>"
 						refreshURL="<%= configurationRenderURL %>"
 					/>
 				</div>
@@ -43,14 +43,14 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 
 			<aui:fieldset id="checkBoxes">
 				<aui:col width="<%= 50 %>">
-					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(portletResource) + "_showCurrentGroup" %>' label="show-current-site" name="preferences--showCurrentGroup--" type="checkbox" value="<%= showCurrentGroup %>" />
-					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(portletResource) + "_showGuestGroup" %>' label="show-guest-site" name="preferences--showGuestGroup--" type="checkbox" value="<%= showGuestGroup %>" />
+					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) + "_showCurrentGroup" %>' label="show-current-site" name="preferences--showCurrentGroup--" type="checkbox" value="<%= breadcrumbDisplayContext.isShowCurrentGroup() %>" />
+					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) + "_showGuestGroup" %>' label="show-guest-site" name="preferences--showGuestGroup--" type="checkbox" value="<%= breadcrumbDisplayContext.isShowGuestGroup() %>" />
 				</aui:col>
 
 				<aui:col width="<%= 50 %>">
-					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(portletResource) + "_showLayout" %>' label="show-page" name="preferences--showLayout--" type="checkbox" value="<%= showLayout %>" />
-					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(portletResource) + "_showParentGroups" %>' label="show-parent-sites" name="preferences--showParentGroups--" type="checkbox" value="<%= showParentGroups %>" />
-					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(portletResource) + "_showPortletBreadcrumb" %>' label="show-application-breadcrumb" name="preferences--showPortletBreadcrumb--" type="checkbox" value="<%= showPortletBreadcrumb %>" />
+					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) + "_showLayout" %>' label="show-page" name="preferences--showLayout--" type="checkbox" value="<%= breadcrumbDisplayContext.isShowLayout() %>" />
+					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) + "_showParentGroups" %>' label="show-parent-sites" name="preferences--showParentGroups--" type="checkbox" value="<%= breadcrumbDisplayContext.isShowParentGroups() %>" />
+					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) + "_showPortletBreadcrumb" %>' label="show-application-breadcrumb" name="preferences--showPortletBreadcrumb--" type="checkbox" value="<%= breadcrumbDisplayContext.isShowPortletBreadcrumb() %>" />
 				</aui:col>
 			</aui:fieldset>
 
@@ -68,7 +68,7 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 		%>
 
 		<liferay-portlet:preview
-			portletName="<%= portletResource %>"
+			portletName="<%= breadcrumbDisplayContext.getPortletResource() %>"
 			showBorders="<%= true %>"
 		/>
 	</aui:col>
@@ -76,12 +76,12 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 
 <aui:script sandbox="<%= true %>">
 	var data = {
-		'_<%= HtmlUtil.escapeJS(portletResource) %>_displayStyle': '<%= displayStyle %>',
-		'_<%= HtmlUtil.escapeJS(portletResource) %>_showCurrentGroup': <%= showCurrentGroup %>,
-		'_<%= HtmlUtil.escapeJS(portletResource) %>_showGuestGroup': <%= showGuestGroup %>,
-		'_<%= HtmlUtil.escapeJS(portletResource) %>_showLayout': <%= showLayout %>,
-		'_<%= HtmlUtil.escapeJS(portletResource) %>_showParentGroups': <%= showParentGroups %>,
-		'_<%= HtmlUtil.escapeJS(portletResource) %>_showPortletBreadcrumb': <%= showPortletBreadcrumb %>
+		'_<%= HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) %>_displayStyle': '<%= breadcrumbDisplayContext.getDisplayStyle() %>',
+		'_<%= HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) %>_showCurrentGroup': <%= breadcrumbDisplayContext.isShowCurrentGroup() %>,
+		'_<%= HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) %>_showGuestGroup': <%= breadcrumbDisplayContext.isShowGuestGroup() %>,
+		'_<%= HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) %>_showLayout': <%= breadcrumbDisplayContext.isShowLayout() %>,
+		'_<%= HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) %>_showParentGroups': <%= breadcrumbDisplayContext.isShowParentGroups() %>,
+		'_<%= HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) %>_showPortletBreadcrumb': <%= breadcrumbDisplayContext.isShowPortletBreadcrumb() %>
 	};
 
 	var selectDisplayStyle = $('#<portlet:namespace />displayStyle');
@@ -90,9 +90,9 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 		'change',
 		function(event) {
 			if (selectDisplayStyle.prop('selectedIndex') > -1) {
-				data['_<%= HtmlUtil.escapeJS(portletResource) %>_displayStyle'] = selectDisplayStyle.val();
+				data['_<%= HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) %>_displayStyle'] = selectDisplayStyle.val();
 
-				Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
+				Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) %>_', data);
 			}
 		}
 	);
@@ -105,7 +105,7 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 
 			data[currentTarget.data('key')] = currentTarget.prop('checked');
 
-			Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
+			Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) %>_', data);
 		}
 	);
 </aui:script>

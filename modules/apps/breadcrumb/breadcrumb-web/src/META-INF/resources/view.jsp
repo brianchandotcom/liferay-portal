@@ -19,36 +19,36 @@
 <%
 List<Integer> breadcrumbEntryTypes = new ArrayList<Integer>();
 
-if (showCurrentGroup) {
+if (breadcrumbDisplayContext.isShowCurrentGroup()) {
 	breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_CURRENT_GROUP);
 }
 
-if (showGuestGroup) {
+if (breadcrumbDisplayContext.isShowGuestGroup()) {
 	breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_GUEST_GROUP);
 }
 
-if (showLayout) {
+if (breadcrumbDisplayContext.isShowLayout()) {
 	breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_LAYOUT);
 }
 
-if (showParentGroups) {
+if (breadcrumbDisplayContext.isShowParentGroups()) {
 	breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_PARENT_GROUP);
 }
 
-if (showPortletBreadcrumb) {
+if (breadcrumbDisplayContext.isShowPortletBreadcrumb()) {
 	breadcrumbEntryTypes.add(BreadcrumbUtil.ENTRY_TYPE_PORTLET);
 }
 
 List<BreadcrumbEntry> breadcrumbEntries = BreadcrumbUtil.getBreadcrumbEntries(request, ArrayUtil.toIntArray(breadcrumbEntryTypes));
 %>
 
-<liferay-ui:ddm-template-renderer displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= breadcrumbEntries %>">
+<liferay-ui:ddm-template-renderer displayStyle="<%= breadcrumbDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= breadcrumbDisplayContext.getDisplayStyleGroupId() %>" entries="<%= breadcrumbEntries %>">
 	<liferay-ui:breadcrumb
-		displayStyle="<%= displayStyle %>"
-		showCurrentGroup="<%= showCurrentGroup %>"
-		showGuestGroup="<%= showGuestGroup %>"
-		showLayout="<%= showLayout %>"
-		showParentGroups="<%= showParentGroups %>"
-		showPortletBreadcrumb="<%= showPortletBreadcrumb %>"
+		displayStyle="<%= breadcrumbDisplayContext.getDisplayStyle() %>"
+		showCurrentGroup="<%= breadcrumbDisplayContext.isShowCurrentGroup() %>"
+		showGuestGroup="<%= breadcrumbDisplayContext.isShowGuestGroup() %>"
+		showLayout="<%= breadcrumbDisplayContext.isShowLayout( %>"
+		showParentGroups="<%= breadcrumbDisplayContext.isShowParentGroups() %>"
+		showPortletBreadcrumb="<%= breadcrumbDisplayContext.isShowPortletBreadcrumb() %>"
 	/>
 </liferay-ui:ddm-template-renderer>

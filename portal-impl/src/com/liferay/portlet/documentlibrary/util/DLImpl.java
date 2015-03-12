@@ -909,19 +909,6 @@ public class DLImpl implements DL {
 
 		sb.append(queryString);
 
-		if (themeDisplay != null) {
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			if (portletDisplay != null) {
-				String portletId = portletDisplay.getId();
-
-				if (portletId.equals(PortletKeys.TRASH)) {
-					sb.append("&status=");
-					sb.append(WorkflowConstants.STATUS_IN_TRASH);
-				}
-			}
-		}
-
 		String previewURL = sb.toString();
 
 		if ((themeDisplay != null) && themeDisplay.isAddSessionIdToURL()) {

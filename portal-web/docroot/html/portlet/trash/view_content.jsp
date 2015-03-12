@@ -56,6 +56,7 @@
 	containerModelURL.setParameter("mvcPath", "/html/portlet/trash/view_content.jsp");
 	containerModelURL.setParameter("redirect", redirect);
 	containerModelURL.setParameter("className", trashHandler.getContainerModelClassName(classPK));
+	containerModelURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
 
 	TrashUtil.addBaseModelBreadcrumbEntries(request, liferayPortletResponse, className, classPK, containerModelURL);
 	%>
@@ -199,6 +200,7 @@
 			iteratorURL.setParameter("redirect", redirect);
 			iteratorURL.setParameter("className", className);
 			iteratorURL.setParameter("classPK", String.valueOf(classPK));
+			iteratorURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
 
 			int containerModelsCount = trashHandler.getTrashContainerModelsCount(classPK);
 			int baseModelsCount = trashHandler.getTrashContainedModelsCount(classPK);
@@ -235,6 +237,7 @@
 								rowURL.setParameter("backURL", currentURL);
 								rowURL.setParameter("className", (curTrashRenderer.getClassName()));
 								rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
+								rowURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
 								%>
 
 								<liferay-ui:search-container-column-text
@@ -296,6 +299,7 @@
 								rowURL.setParameter("backURL", currentURL);
 								rowURL.setParameter("className", curTrashRenderer.getClassName());
 								rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
+								rowURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
 								%>
 
 								<liferay-ui:search-container-column-text

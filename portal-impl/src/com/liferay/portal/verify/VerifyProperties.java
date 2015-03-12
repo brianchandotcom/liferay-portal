@@ -828,6 +828,7 @@ public class VerifyProperties extends VerifyProcess {
 		"asset.publisher.filter.unlistable.entries",
 		"asset.tag.permissions.enabled", "asset.tag.properties.default",
 		"asset.tag.properties.enabled", "auth.max.failures.limit",
+		"breadcrumb.display.style.options",
 		"buffered.increment.parallel.queue.size",
 		"buffered.increment.serial.queue.size", "cas.validate.url",
 		"cluster.executor.heartbeat.interval",
@@ -919,6 +920,10 @@ public class VerifyProperties extends VerifyProcess {
 		},
 		new String[] {
 			"amazon.license.3", "amazon.access.key.id"
+		},
+		new String[] {
+			"breadcrumb.display.style.default",
+			"breadcrumb.ddm.template.key.default"
 		},
 		new String[] {
 			"cdn.host", "cdn.host.http"

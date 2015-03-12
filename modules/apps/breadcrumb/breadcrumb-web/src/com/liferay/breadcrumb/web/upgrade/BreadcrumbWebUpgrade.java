@@ -14,13 +14,14 @@
 
 package com.liferay.breadcrumb.web.upgrade;
 
-import com.liferay.breadcrumb.web.constants.BreadcrumbPortletKeys;
+import com.liferay.breadcrumb.web.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -49,21 +50,14 @@ public class BreadcrumbWebUpgrade {
 
 	@Activate
 	protected void upgrade() throws PortalException {
-		UpgradePortletId upgradePortletId = new UpgradePortletId() {
+		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
-			@Override
-			protected String[][] getRenamePortletIdsArray() {
-				return new String[][] {
-					new String[] {"73", BreadcrumbPortletKeys.BREADCRUMB}
-				};
-			}
+		upgradeProcesses.add(new UpgradePortletId());
 
-		};
+		upgradeProcesses.add(new UpgradePortletPreferences());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.breadcrumb.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
-			false);
+			"com.liferay.breadcrumb.web", upgradeProcesses, 1, 0, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

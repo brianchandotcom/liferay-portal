@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.MailServiceTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
@@ -29,6 +28,7 @@ import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.util.test.MailServiceTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;

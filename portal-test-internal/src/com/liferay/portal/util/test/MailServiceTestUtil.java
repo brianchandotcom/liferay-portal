@@ -12,17 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test.util;
+package com.liferay.portal.util.test;
 
 import com.dumbster.smtp.MailMessage;
 import com.dumbster.smtp.SmtpServer;
 import com.dumbster.smtp.SmtpServerFactory;
 import com.dumbster.smtp.mailstores.RollingMailStore;
 
+import com.liferay.mail.service.MailServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+
+import java.io.IOException;
+
+import java.net.ServerSocket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,39 +96,46 @@ public class MailServiceTestUtil {
 			throw new IllegalStateException("Server is already running");
 		}
 
-		_smtpServer = new SmtpServer();
+		try {
+			int smtpPort = _getFreePort();
 
-		_smtpServer.setMailStore(
-			new RollingMailStore() {
+			_prefsPropsReplacement = new PrefsPropsTemporarySwapper(
+				PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT, smtpPort,
+				PropsKeys.MAIL_SESSION_MAIL, true);
 
-				@Override
-				public void addMessage(MailMessage message) {
-					try {
-						List<MailMessage> receivedMail =
-							ReflectionTestUtil.getFieldValue(
-								this, "receivedMail");
+			_smtpServer = new SmtpServer();
 
-						receivedMail.add(message);
+			_smtpServer.setMailStore(
+				new RollingMailStore() {
 
-						if (getEmailCount() > 100) {
-							receivedMail.remove(0);
+					@Override
+					public void addMessage(MailMessage message) {
+						try {
+							List<MailMessage> receivedMail =
+								ReflectionTestUtil.getFieldValue(
+									this, "receivedMail");
+
+							receivedMail.add(message);
+
+							if (getEmailCount() > 100) {
+								receivedMail.remove(0);
+							}
+						}
+						catch (Exception e) {
+							throw new RuntimeException(e);
 						}
 					}
-					catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-				}
 
-			});
-		_smtpServer.setPort(
-			GetterUtil.getInteger(
-				PropsUtil.get(PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT)));
-		_smtpServer.setThreaded(false);
+				});
+			_smtpServer.setPort(smtpPort);
 
-		try {
+			_smtpServer.setThreaded(false);
+
 			ReflectionTestUtil.invoke(
 				SmtpServerFactory.class, "startServerThread",
 				new Class<?>[] {SmtpServer.class}, _smtpServer);
+
+			MailServiceUtil.clearSession();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -138,8 +150,50 @@ public class MailServiceTestUtil {
 		_smtpServer.stop();
 
 		_smtpServer = null;
+
+		try {
+			_prefsPropsReplacement.close();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		MailServiceUtil.clearSession();
 	}
 
+	private static int _getFreePort() {
+		for (int i = 0; i < 10; i++) {
+			int port = (int)(Math.random() * (_MAX_PORT - _MIN_PORT));
+
+			try {
+				ServerSocket serverSocket = new ServerSocket(port);
+				serverSocket.close();
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"The server is going to be started in the port: " +
+							port);
+				}
+
+				return port;
+			}
+			catch (IOException ex) {
+				continue; // try next port
+			}
+		}
+
+		throw new IllegalStateException(
+			"It is not possible to find a free port to start the server");
+	}
+
+	private static final int _MAX_PORT = 65535;
+
+	private static final int _MIN_PORT = 1025;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MailServiceTestUtil.class);
+
+	private static PrefsPropsTemporarySwapper _prefsPropsReplacement;
 	private static SmtpServer _smtpServer;
 
 }

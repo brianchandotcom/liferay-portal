@@ -17,6 +17,7 @@ package com.liferay.asset.publisher.web.lar;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
@@ -488,6 +489,13 @@ public class AssetPublisherPortletDataHandler
 					_log.info(
 						"Ignoring scope " + newValue + " because the " +
 							"referenced group was not found");
+				}
+			}
+			catch (NoSuchLayoutException nsle) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Ignoring scope " + newValue + " because the " +
+							"referenced layout was not found");
 				}
 			}
 			catch (PrincipalException pe) {

@@ -64,11 +64,11 @@ public class WikiPageDependentsTrashHandlerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
 		_group = GroupTestUtil.addGroup();
 
 		_node = WikiTestUtil.addNode(_group.getGroupId());
-
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
 	}
 
 	@Test

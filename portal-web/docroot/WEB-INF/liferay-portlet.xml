@@ -1312,31 +1312,6 @@
 		<css-class-wrapper>portlet-group-statistics</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>182</portlet-name>
-		<icon>/html/icons/trash.png</icon>
-		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.portlet.trash.messaging.CheckEntryMessageListener</scheduler-event-listener-class>
-			<trigger>
-				<simple>
-					<property-key>trash.entry.check.interval</property-key>
-					<time-unit>minute</time-unit>
-				</simple>
-			</trigger>
-		</scheduler-entry>
-		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
-		<control-panel-entry-weight>30.0</control-panel-entry-weight>
-		<control-panel-entry-class>com.liferay.portlet.trash.TrashControlPanelEntry</control-panel-entry-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<header-portlet-css>/html/portlet/document_library/css/main.css</header-portlet-css>
-		<header-portlet-css>/html/portlet/message_boards/css/main.css</header-portlet-css>
-		<header-portlet-css>/html/portlet/trash/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-trash</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>183</portlet-name>
 		<icon>/html/icons/portlet_display_template.png</icon>
 		<parent-struts-path>dynamic_data_mapping</parent-struts-path>

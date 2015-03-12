@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,16 +11,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%
-DataSample dataSample = DataSampleFactoryUtil.createPortalRequestDataSample(company.getCompanyId(), request.getRemoteUser(), request.getRequestURI(), request.getRequestURL().toString() + ".jsp_display");
+package com.liferay.portal.kernel.monitoring;
 
-dataSample.setDescription("Portal Request");
+/**
+ * @author Michael C. Han
+ */
+public interface PortalMonitoringControl {
 
-dataSample.prepare();
+	public boolean isMonitorPortalRequest();
 
-DataSampleThreadLocal.initialize();
+	public void setMonitorPortalRequest(boolean monitorPortalRequest);
 
-request.setAttribute(WebKeys.PORTAL_REQUEST_DATA_SAMPLE, dataSample);
-%>
+}

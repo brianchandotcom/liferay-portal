@@ -12,35 +12,31 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portal.kernel.monitoring;
 
 /**
  * @author Michael C. Han
  */
-public interface MonitoringPortletManagerMBean {
+public interface PortletMonitoringControl {
 
-	public boolean isActive();
+	public boolean isMonitorPortletActionRequest();
 
-	public boolean isMonitoringPortletActionRequest();
+	public boolean isMonitorPortletEventRequest();
 
-	public boolean isMonitoringPortletEventRequest();
+	public boolean isMonitorPortletRenderRequest();
 
-	public boolean isMonitoringPortletRenderRequest();
+	public boolean isMonitorPortletResourceRequest();
 
-	public boolean isMonitoringPortletResourceRequest();
-
-	public void setActive(boolean active);
-
-	public void setMonitoringPortletActionRequest(
+	public void setMonitorPortletActionRequest(
 		boolean monitoringPortletActionRequest);
 
-	public void setMonitoringPortletEventRequest(
+	public void setMonitorPortletEventRequest(
 		boolean monitoringPortletEventRequest);
 
-	public void setMonitoringPortletRenderRequest(
+	public void setMonitorPortletRenderRequest(
 		boolean monitoringPortletRenderRequest);
 
-	public void setMonitoringPortletResourceRequest(
+	public void setMonitorPortletResourceRequest(
 		boolean monitoringPortletResourceRequest);
 
 }

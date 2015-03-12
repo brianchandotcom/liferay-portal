@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,34 +11,31 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%
-DataSample dataSample = (DataSample)request.getAttribute(WebKeys.PORTAL_REQUEST_DATA_SAMPLE);
+package com.liferay.portal.kernel.monitoring;
 
-if (dataSample != null) {
-	dataSample.capture(RequestStatus.SUCCESS);
+import java.util.Set;
 
-	DataSampleThreadLocal.addDataSample(dataSample);
+/**
+ * @author Michael C. Han
+ */
+public interface ServiceMonitoringControl {
+
+	public void addServiceClass(String className);
+
+	public void addServiceClassMethod(
+		String className, String methodName, String[] parameterTypes);
+
+	public Set<String> getServiceClasses();
+
+	public Set<MethodSignature> getServiceClassMethods();
+
+	public boolean isInclusiveMode();
+
+	public boolean isMonitorServiceRequest();
+
+	public void setInclusiveMode(boolean inclusiveMode);
+
+	public void setMonitorServiceRequest(boolean monitorServiceRequest);
+
 }
-%>
-
-<c:if test="<%= PropsValues.MONITORING_SHOW_PER_REQUEST_DATA_SAMPLE %>">
-
-	<!--
-	<%
-	List<DataSample> dataSamples = DataSampleThreadLocal.getDataSamples();
-	%>
-
-	<%
-	for (DataSample sample : dataSamples) {
-	%>
-
-		<%= sample %><br />
-
-	<%
-	}
-	%>
-	-->
-
-</c:if>

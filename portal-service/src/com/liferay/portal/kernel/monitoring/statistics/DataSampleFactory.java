@@ -12,35 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.statistics.service;
+package com.liferay.portal.kernel.monitoring.statistics;
 
 import com.liferay.portal.kernel.monitoring.MethodSignature;
-import com.liferay.portal.monitoring.MonitorNames;
-import com.liferay.portal.monitoring.statistics.BaseDataSample;
 
-import java.lang.reflect.Method;
-
-import org.aopalliance.intercept.MethodInvocation;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Michael C. Han
  */
-public class ServiceRequestDataSample extends BaseDataSample {
+public interface DataSampleFactory {
 
-	public ServiceRequestDataSample(MethodInvocation methodInvocation) {
-		setNamespace(MonitorNames.SERVICE);
+	public DataSample createPortalRequestDataSample(
+		long companyId, String remoteUser, String requestURI,
+		String requestURL);
 
-		Method method = methodInvocation.getMethod();
+	public DataSample createPortletRequestDataSample(
+		PortletRequestType requestType, PortletRequest portletRequest,
+		PortletResponse portletResponse);
 
-		_methodSignature = new MethodSignature(method);
-
-		setDescription(method.toString());
-	}
-
-	public MethodSignature getMethodSignature() {
-		return _methodSignature;
-	}
-
-	private final MethodSignature _methodSignature;
+	public DataSample createServiceRequestDataSample(
+		MethodSignature methodSignature);
 
 }

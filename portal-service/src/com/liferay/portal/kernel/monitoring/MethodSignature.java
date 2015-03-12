@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.jmx;
+package com.liferay.portal.kernel.monitoring;
 
 import com.liferay.portal.kernel.util.HashUtil;
 

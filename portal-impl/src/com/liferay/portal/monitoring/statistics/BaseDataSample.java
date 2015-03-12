@@ -30,6 +30,7 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class BaseDataSample implements DataSample, Serializable {
 
+	@Override
 	public void capture(RequestStatus requestStatus) {
 		if (_stopWatch != null) {
 			_stopWatch.stop();
@@ -47,6 +48,7 @@ public class BaseDataSample implements DataSample, Serializable {
 		}
 	}
 
+	@Override
 	public Map<String, String> getAttributes() {
 		return _attributes;
 	}
@@ -81,6 +83,7 @@ public class BaseDataSample implements DataSample, Serializable {
 		return _requestStatus;
 	}
 
+	@Override
 	public long getTimeout() {
 		return _timeout;
 	}
@@ -90,6 +93,7 @@ public class BaseDataSample implements DataSample, Serializable {
 		return _user;
 	}
 
+	@Override
 	public void prepare() {
 		if (_stopWatch == null) {
 			_stopWatch = new StopWatch();
@@ -98,30 +102,37 @@ public class BaseDataSample implements DataSample, Serializable {
 		_stopWatch.start();
 	}
 
+	@Override
 	public void setAttributes(Map<String, String> attributes) {
 		_attributes = attributes;
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
 
+	@Override
 	public void setDescription(String description) {
 		_description = description;
 	}
 
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}
 
+	@Override
 	public void setNamespace(String namespace) {
 		_namespace = namespace;
 	}
 
+	@Override
 	public void setTimeout(long timeout) {
 		_timeout = timeout;
 	}
 
+	@Override
 	public void setUser(String user) {
 		_user = user;
 	}

@@ -137,19 +137,9 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice
 		return _monitorServiceRequest;
 	}
 
-	public void setActive(boolean active) {
-	}
-
 	@Override
 	public void setInclusiveMode(boolean inclusiveMode) {
 		_inclusiveMode = inclusiveMode;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setMonitoringDestinationName(String monitoringDestinationName) {
 	}
 
 	@Override
@@ -159,10 +149,6 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice
 		}
 
 		_monitorServiceRequest = monitorServiceRequest;
-	}
-
-	public void setPermissiveMode(boolean permissiveMode) {
-		_inclusiveMode = permissiveMode;
 	}
 
 	protected boolean isIncluded(MethodInvocation methodInvocation) {
@@ -188,7 +174,7 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice
 	private static final ThreadLocal<DataSample>
 		_dataSampleThreadLocal = new AutoResetThreadLocal<>(
 			ServiceMonitorAdvice.class + "._dataSampleThreadLocal");
-	private static boolean _inclusiveMode;
+	private static boolean _inclusiveMode = true;
 	private static boolean _monitorServiceRequest;
 	private static final Set<String> _serviceClasses = new HashSet<>();
 	private static final Set<MethodSignature> _serviceClassMethods =

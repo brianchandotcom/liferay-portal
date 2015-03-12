@@ -66,6 +66,8 @@ public class ExportImportConfigurationIndexer extends BaseIndexer {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
+		addStatus(contextQuery, searchContext);
+
 		contextQuery.addRequiredTerm(
 			Field.COMPANY_ID, searchContext.getCompanyId());
 		contextQuery.addRequiredTerm(

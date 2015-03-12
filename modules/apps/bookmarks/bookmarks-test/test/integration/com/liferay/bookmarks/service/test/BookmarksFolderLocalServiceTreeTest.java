@@ -23,11 +23,13 @@ import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.TreeModel;
-import com.liferay.portal.service.test.BaseLocalServiceTreeTestCase;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.service.tree.test.BaseLocalServiceTreeTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;

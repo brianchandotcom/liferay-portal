@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<bean id="com.liferay.marketplace.service.AppLocalService" class="com.liferay.marketplace.service.impl.AppLocalServiceImpl" />
+	<osgi:service interface="com.liferay.marketplace.service.AppLocalService" ref="com.liferay.marketplace.service.AppLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="marketplace" />
+			<entry key="json.web.service.context.path" value="App" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.marketplace.service.AppService" class="com.liferay.marketplace.service.impl.AppServiceImpl" />
+	<osgi:service interface="com.liferay.marketplace.service.AppService" ref="com.liferay.marketplace.service.AppService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="marketplace" />
+			<entry key="json.web.service.context.path" value="App" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.marketplace.service.persistence.AppPersistence" class="com.liferay.marketplace.service.persistence.impl.AppPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.marketplace.service.persistence.AppPersistence" ref="com.liferay.marketplace.service.persistence.AppPersistence" />
+	<bean id="com.liferay.marketplace.service.ModuleLocalService" class="com.liferay.marketplace.service.impl.ModuleLocalServiceImpl" />
+	<osgi:service interface="com.liferay.marketplace.service.ModuleLocalService" ref="com.liferay.marketplace.service.ModuleLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="marketplace" />
+			<entry key="json.web.service.context.path" value="Module" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.marketplace.service.persistence.ModulePersistence" class="com.liferay.marketplace.service.persistence.impl.ModulePersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.marketplace.service.persistence.ModulePersistence" ref="com.liferay.marketplace.service.persistence.ModulePersistence" />
+</beans>

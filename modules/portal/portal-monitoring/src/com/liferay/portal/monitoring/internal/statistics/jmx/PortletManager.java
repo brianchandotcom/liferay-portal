@@ -21,11 +21,23 @@ import com.liferay.portal.monitoring.internal.statistics.portlet.ServerStatistic
 
 import java.util.Set;
 
+import javax.management.NotCompliantMBeanException;
+import javax.management.StandardMBean;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public class PortletManager implements PortletManagerMBean {
+public class PortletManager extends StandardMBean
+	implements PortletManagerMBean {
+
+	public PortletManager(Class<?> mBeanInterface)
+		throws NotCompliantMBeanException {
+
+		super(mBeanInterface);
+	}
 
 	@Override
 	public long getAverageTime() throws MonitoringException {
@@ -348,13 +360,14 @@ public class PortletManager implements PortletManagerMBean {
 		_serverStatistics.reset(webId);
 	}
 
-	public void setPortletSummaryStatistics(
+	protected void setPortletSummaryStatistics(
 		PortletSummaryStatistics portletSummaryStatistics) {
 
 		_portletSummaryStatistics = portletSummaryStatistics;
 	}
 
-	public void setServerStatistics(ServerStatistics serverStatistics) {
+	@Reference
+	protected void setServerStatistics(ServerStatistics serverStatistics) {
 		_serverStatistics = serverStatistics;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.model.Portlet;
+
 import java.util.Map;
 
 import javax.portlet.PortletResponse;
@@ -58,6 +60,8 @@ public interface LiferayPortletResponse extends PortletResponse {
 	public LiferayPortletURL createResourceURL(String portletName);
 
 	public HttpServletResponse getHttpServletResponse();
+
+	public Portlet getPortlet();
 
 	public Map<String, String[]> getProperties();
 

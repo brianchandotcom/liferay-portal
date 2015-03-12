@@ -356,6 +356,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		return _plid;
 	}
 
+	@Override
 	public Portlet getPortlet() {
 		if (_portlet == null) {
 			try {

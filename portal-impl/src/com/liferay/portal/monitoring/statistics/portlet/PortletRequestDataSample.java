@@ -15,11 +15,11 @@
 package com.liferay.portal.monitoring.statistics.portlet;
 
 import com.liferay.portal.kernel.monitoring.statistics.PortletRequestType;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.monitoring.MonitorNames;
 import com.liferay.portal.monitoring.statistics.BaseDataSample;
-import com.liferay.portlet.PortletResponseImpl;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -35,10 +35,10 @@ public class PortletRequestDataSample extends BaseDataSample {
 		PortletRequestType requestType, PortletRequest portletRequest,
 		PortletResponse portletResponse) {
 
-		PortletResponseImpl portletResponseImpl =
-			(PortletResponseImpl)portletResponse;
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)portletResponse;
 
-		Portlet portlet = portletResponseImpl.getPortlet();
+		Portlet portlet = liferayPortletResponse.getPortlet();
 
 		setCompanyId(portlet.getCompanyId());
 		setUser(portletRequest.getRemoteUser());

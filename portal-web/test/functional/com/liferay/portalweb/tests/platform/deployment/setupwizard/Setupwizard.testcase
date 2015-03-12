@@ -2,11 +2,9 @@
 	<property name="setup.wizard.enabled" value="true" />
 	<property name="testray.main.component.name" value="Deployment" />
 
-	<command name="SetupWizardDefaultConfiguration" priority="5">
+	<command name="SetupWizardDefaultConfigurationWithoutSampleData" priority="5">
 		<var name="administratorFirstName" value="Test" />
 		<var name="administratorLastName" value="Test" />
-		<var name="pageName" value="Blogs Page" />
-		<var name="portletName" value="Blogs" />
 
 		<execute macro="SetupWizard#configureDefaultPG">
 			<var name="setupWizardAddSampleData" value="false" />
@@ -21,28 +19,14 @@
 		<execute function="AssertTextEquals#assertText" locator1="PGHelloworld#PORTLET_TITLE" value1="Hello World" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGHelloworld#PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
 
-		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
-		</execute>
+		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command name="SetupWizardDefaultConfigurationAddSampleData" priority="5">
+	<command name="SetupWizardDefaultConfigurationWithSampleData" priority="5">
 		<var name="administratorFirstName" value="Test" />
 		<var name="administratorLastName" value="Test" />
-		<var name="pageName" value="Blogs Page" />
-		<var name="portletName" value="Blogs" />
 
-		<execute macro="SetupWizard#configureDefaultPG">
-			<var name="setupWizardAddSampleData" value="true" />
-		</execute>
+		<execute macro="SetupWizard#configureDefaultPG" />
 
 		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="Welcome" />
 
@@ -52,16 +36,7 @@
 
 		<execute function="AssertTextEquals#assertText" locator1="PGHelloworld#PORTLET_TITLE" value1="Hello World" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGHelloworld#PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
-		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
-		</execute>
+		<execute macro="Smoke#runSmoke" />
 	</command>
 </definition>

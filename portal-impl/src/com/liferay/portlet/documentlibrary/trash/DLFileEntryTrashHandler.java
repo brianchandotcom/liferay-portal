@@ -41,6 +41,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -287,6 +288,18 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			long classPK, long entryId, long containerModelId,
 			String originalFileName, String originalTitle, String newName)
 		throws PortalException {
+
+		if (Validator.isNotNull(newName) &&
+			!DLValidatorUtil.isValidName(newName)) {
+
+			RestoreEntryException ree = new RestoreEntryException(
+				RestoreEntryException.INVALID_TITLE);
+
+			ree.setErrorMessage("please-enter-a-valid-title");
+			ree.setTrashEntryId(entryId);
+
+			throw ree;
+		}
 
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 

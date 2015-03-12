@@ -51,8 +51,10 @@ public class MailServiceTestUtil {
 	}
 
 	public static MailMessage getLastMailMessage() {
-		if (_smtpServer.getEmailCount() > 0) {
-			return _smtpServer.getMessage(_smtpServer.getEmailCount() - 1);
+		MailMessage[] mailMessages = _smtpServer.getMessages();
+
+		if (mailMessages.length > 0) {
+			return mailMessages[mailMessages.length - 1];
 		}
 
 		throw new IndexOutOfBoundsException(
@@ -64,22 +66,20 @@ public class MailServiceTestUtil {
 
 		List<MailMessage> mailMessages = new ArrayList<>();
 
-		for (int i = 0; i < _smtpServer.getEmailCount(); ++i) {
-			MailMessage message = _smtpServer.getMessage(i);
-
+		for (MailMessage mailMessage : _smtpServer.getMessages()) {
 			if (headerName.equals("Body")) {
-				String body = message.getBody();
+				String body = mailMessage.getBody();
 
 				if (body.equals(headerValue)) {
-					mailMessages.add(message);
+					mailMessages.add(mailMessage);
 				}
 			}
 			else {
-				String messageHeaderValue = message.getFirstHeaderValue(
+				String messageHeaderValue = mailMessage.getFirstHeaderValue(
 					headerName);
 
 				if (messageHeaderValue.equals(headerValue)) {
-					mailMessages.add(message);
+					mailMessages.add(mailMessage);
 				}
 			}
 		}

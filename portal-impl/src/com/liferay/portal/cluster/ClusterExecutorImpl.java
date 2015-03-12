@@ -346,7 +346,7 @@ public class ClusterExecutorImpl
 		_clusterReceiver = new ClusterRequestReceiver(this);
 
 		_controlChannel = _clusterChannelFactory.createClusterChannel(
-			controlProperty, _DEFAULT_CLUSTER_NAME, _clusterReceiver);
+			controlProperty, _LIFERAY_CONTROL_CHANNEL_NAME, _clusterReceiver);
 	}
 
 	protected void initLocalClusterNode() {
@@ -480,8 +480,8 @@ public class ClusterExecutorImpl
 		_controlChannel.sendMulticastMessage(clusterRequest);
 	}
 
-	private static final String _DEFAULT_CLUSTER_NAME =
-		"LIFERAY-CONTROL-CHANNEL";
+	private static final String _LIFERAY_CONTROL_CHANNEL_NAME =
+		PropsValues.CLUSTER_LINK_CHANNEL_NAME_PREFIX + "control";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterExecutorImpl.class);

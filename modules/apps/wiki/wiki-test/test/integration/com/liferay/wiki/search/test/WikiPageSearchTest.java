@@ -282,7 +282,7 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 
 			String vendor = searchEngine.getVendor();
 
-			if (vendor.equals("Lucene") || vendor.equals("Elasticsearch")) {
+			if (vendor.equals("Lucene")) {
 				return true;
 			}
 

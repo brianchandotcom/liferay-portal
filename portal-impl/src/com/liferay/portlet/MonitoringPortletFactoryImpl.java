@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.monitoring.PortletMonitoringControl;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -38,7 +40,7 @@ public class MonitoringPortletFactoryImpl extends InvokerPortletFactoryImpl {
 			invokerFilterContainer, checkAuthToken, facesPortlet, strutsPortlet,
 			strutsBridgePortlet);
 
-		return new MonitoringPortlet(invokerPortlet);
+		return new MonitoringPortlet(invokerPortlet, _portletMonitoringControl);
 	}
 
 	@Override
@@ -51,7 +53,15 @@ public class MonitoringPortletFactoryImpl extends InvokerPortletFactoryImpl {
 		InvokerPortlet invokerPortlet = super.create(
 			portletModel, portlet, portletContext, invokerFilterContainer);
 
-		return new MonitoringPortlet(invokerPortlet);
+		return new MonitoringPortlet(invokerPortlet, _portletMonitoringControl);
 	}
+
+	public void setPortletMonitoringControl(
+		PortletMonitoringControl portletMonitoringControl) {
+
+		_portletMonitoringControl = portletMonitoringControl;
+	}
+
+	private PortletMonitoringControl _portletMonitoringControl;
 
 }

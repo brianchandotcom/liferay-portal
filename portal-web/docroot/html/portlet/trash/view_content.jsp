@@ -342,48 +342,46 @@
 		AssetRenderer assetRenderer = (AssetRenderer)trashRenderer;
 		%>
 
-		<c:if test="<%= !assetRenderer.getClassName().equals(DLFileEntry.class.getName()) %>">
-			<div class="asset-ratings">
-				<liferay-ui:ratings
+		<div class="asset-ratings">
+			<liferay-ui:ratings
+				className="<%= className %>"
+				classPK="<%= classPK %>"
+			/>
+		</div>
+
+		<%
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(className, classPK);
+		%>
+
+		<div class="asset-related-assets">
+			<liferay-ui:asset-links
+				assetEntryId="<%= assetEntry.getEntryId() %>"
+			/>
+		</div>
+
+		<c:if test="<%= Validator.isNotNull(assetRenderer.getDiscussionPath()) %>">
+			<div class="alert alert-warning">
+				<liferay-ui:message key="commenting-is-disabled-because-this-entry-is-in-the-recycle-bin" />
+			</div>
+
+			<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
+
+			<portlet:resourceURL var="discussionPaginationURL">
+				<portlet:param name="invokeTaglibDiscussion" value="<%= Boolean.TRUE.toString() %>" />
+			</portlet:resourceURL>
+
+			<div class="asset-discussion">
+				<liferay-ui:discussion
 					className="<%= className %>"
 					classPK="<%= classPK %>"
+					formAction="<%= discussionURL %>"
+					formName='<%= "fm" + classPK %>'
+					hideControls="<%= true %>"
+					paginationURL="<%= discussionPaginationURL %>"
+					redirect="<%= currentURL %>"
+					userId="<%= assetEntry.getUserId() %>"
 				/>
 			</div>
-
-			<%
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(className, classPK);
-			%>
-
-			<div class="asset-related-assets">
-				<liferay-ui:asset-links
-					assetEntryId="<%= assetEntry.getEntryId() %>"
-				/>
-			</div>
-
-			<c:if test="<%= Validator.isNotNull(assetRenderer.getDiscussionPath()) %>">
-				<div class="alert alert-warning">
-					<liferay-ui:message key="commenting-is-disabled-because-this-entry-is-in-the-recycle-bin" />
-				</div>
-
-				<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
-
-				<portlet:resourceURL var="discussionPaginationURL">
-					<portlet:param name="invokeTaglibDiscussion" value="<%= Boolean.TRUE.toString() %>" />
-				</portlet:resourceURL>
-
-				<div class="asset-discussion">
-					<liferay-ui:discussion
-						className="<%= className %>"
-						classPK="<%= classPK %>"
-						formAction="<%= discussionURL %>"
-						formName='<%= "fm" + classPK %>'
-						hideControls="<%= true %>"
-						paginationURL="<%= discussionPaginationURL %>"
-						redirect="<%= currentURL %>"
-						userId="<%= assetEntry.getUserId() %>"
-					/>
-				</div>
-			</c:if>
 		</c:if>
 	</c:if>
 </div>

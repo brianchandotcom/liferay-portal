@@ -279,11 +279,9 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 						</h3>
 					</c:if>
 
-					<c:if test="<%= !portletId.equals(PortletKeys.TRASH) %>">
-						<div>
-							<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
-						</div>
-					</c:if>
+					<div>
+						<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
+					</div>
 
 					<div class="icon-user lfr-asset-icon">
 						<liferay-ui:message arguments="<%= HtmlUtil.escape(fileVersion.getStatusByUserName()) %>" key="last-updated-by-x" translateArguments="<%= false %>" />
@@ -524,7 +522,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 											value="<%= (TextFormatter.formatStorageSize(curFileVersion.getSize(), locale)) %>"
 										/>
 
-										<c:if test="<%= showNonApprovedDocuments && !portletId.equals(PortletKeys.TRASH) %>">
+										<c:if test="<%= showNonApprovedDocuments %>">
 											<liferay-ui:search-container-column-status property="status" />
 										</c:if>
 
@@ -674,7 +672,5 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 </aui:script>
 
 <%
-if (!portletId.equals(PortletKeys.TRASH)) {
-	DLUtil.addPortletBreadcrumbEntries(fileEntry, request, renderResponse);
-}
+DLUtil.addPortletBreadcrumbEntries(fileEntry, request, renderResponse);
 %>

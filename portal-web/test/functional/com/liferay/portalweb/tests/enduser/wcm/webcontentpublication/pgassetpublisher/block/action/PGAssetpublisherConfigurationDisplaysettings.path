@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>SHOW_ADD_CONTENT_BUTTON_CHECKBOX</td>
-	<td>//input[@id='_86_showAddContentButton']</td>
+	<td>//input[contains(@id,'showAddContentButton')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,27 +40,27 @@
 </tr>
 <tr>
 	<td>DISPLAY_TEMPLATE_SELECT</td>
-	<td>//select[@id='_86_displayStyle']</td>
+	<td>//select[contains(@id,'displayStyle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ABSTRACT_LENGTH_SELECT</td>
-	<td>//select[@id='_86_abstractLength']</td>
+	<td>//select[contains(@id,'abstractLength')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_LINK_BEHAVIOR_SELECT</td>
-	<td>//select[@id='_86_assetLinkBehavior']</td>
+	<td>//select[contains(@id,'assetLinkBehavior')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NUMBER_OF_ITEMS_TO_DISPLAY_FIELD</td>
-	<td>//input[@id='_86_delta']</td>
+	<td>//input[contains(@id,'delta')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGINATION_TYPE_SELECT</td>
-	<td>//select[@id='_86_paginationType']</td>
+	<td>//select[contains(@id,'paginationType')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -70,12 +70,12 @@
 </tr>
 <tr>
 	<td>SET_AS_THE_DEFAULT_ASSET_PUBLISHER_FOR_THIS_PAGE_CHECKBOX</td>
-	<td>//input[@id='_86_defaultAssetPublisher']</td>
+	<td>//input[contains(@id,'defaultAssetPublisher')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SHOW_AVAILABLE_LOCALES_CHECKBOX</td>
-	<td>//input[@id='_86_showAvailableLocales']</td>
+	<td>//input[contains(@id,'showAvailableLocales')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,32 +86,32 @@
 <!--ENABLE_CONVERSION-->
 <tr>
 	<td>ENABLE_CONVERSION_DOC_CHECKBOX</td>
-	<td>//input[@id='_86_extensionsdoc']</td>
+	<td>//input[contains(@id,'extensionsdoc')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_CONVERSION_ODT_CHECKBOX</td>
-	<td>//input[@id='_86_extensionsodt']</td>
+	<td>//input[contains(@id,'extensionsodt')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_CONVERSION_PDF_CHECKBOX</td>
-	<td>//input[@id='_86_extensionspdf']</td>
+	<td>//input[contains(@id,'extensionspdf')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_CONVERSION_RTF_CHECKBOX</td>
-	<td>//input[@id='_86_extensionsrtf']</td>
+	<td>//input[contains(@id,'extensionsrtf')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_CONVERSION_SXW_CHECKBOX</td>
-	<td>//input[@id='_86_extensionssxw']</td>
+	<td>//input[contains(@id,'extensionssxw')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_CONVERSION_TXT_CHECKBOX</td>
-	<td>//input[@id='_86_extensionstxt']</td>
+	<td>//input[contains(@id,'extensionstxt')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -121,37 +121,37 @@
 </tr>
 <tr>
 	<td>ENABLE_PRINT_CHECKBOX</td>
-	<td>//input[@id='_86_enablePrint']</td>
+	<td>//input[contains(@id,'enablePrint')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_FLAGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableFlags']</td>
+	<td>//input[contains(@id,'enableFlags')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_RELATED_ASSETS_CHECKBOX</td>
-	<td>//input[@id='_86_enableRelatedAssets']</td>
+	<td>//input[contains(@id,'enableRelatedAssets')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableRatings']</td>
+	<td>//input[contains(@id,'enableRatings')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_COMMENTS_CHECKBOX</td>
-	<td>//input[@id='_86_enableComments']</td>
+	<td>//input[contains(@id,'enableComments')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_COMMENT_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableCommentRatings']</td>
+	<td>//input[contains(@id,'enableCommentRatings')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_SOCIAL_BOOKMARKS_CHECKBOX</td>
-	<td>//input[@id='_86_enableSocialBookmarks']</td>
+	<td>//input[contains(@id,'enableSocialBookmarks')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -162,7 +162,7 @@
 <!--SHOW_METADATA-->
 <tr>
 	<td>SHOW_METADATA_CURRENT_FIELD_SELECT</td>
-	<td>//select[@id='_86_currentMetadataFields']</td>
+	<td>//select[contains(@id,'currentMetadataFields')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -177,7 +177,7 @@
 </tr>
 <tr>
 	<td>SHOW_METADATA_AVAILABLE_FIELD_SELECT</td>
-	<td>//select[@id='_86_availableMetadataFields']</td>
+	<td>//select[contains(@id,'availableMetadataFields')]</td>
 	<td></td>
 </tr>
 </tbody>

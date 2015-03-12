@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SITES_SEARCH_FIELD</td>
-	<td>//input[@name='_185_keywords']</td>
+	<td>//input[contains(@name,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>

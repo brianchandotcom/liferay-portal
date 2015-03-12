@@ -21,12 +21,12 @@
 <!--SELECT_FOLDER-->
 <tr>
 	<td>SELECT_FOLDER_IFRAME</td>
-	<td>//iframe[@id='_28_selectFolder_iframe_']</td>
+	<td>//iframe[contains(@id,'selectFolder_iframe')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_FOLDER_ADD_FOLDER_BUTTON</td>
-	<td>//button[contains(.,'Add Folder')]</td>
+	<td>//a[contains(.,'Add Folder')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -42,7 +42,7 @@
 <!--SELECT_FOLDER_TABLE-->
 <tr>
 	<td>SELECT_FOLDER_TABLE_FOLDER_NAME</td>
-	<td>//tr[contains(.,'${key_bookmarkFolderName}')]/td/a</td>
+	<td>//tr[contains(.,'${key_bookmarkFolderName}')]/td//a</td>
 	<td></td>
 </tr>
 <tr>

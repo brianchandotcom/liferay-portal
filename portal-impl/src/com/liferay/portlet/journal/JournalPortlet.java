@@ -291,6 +291,18 @@ public class JournalPortlet extends MVCPortlet {
 		updateArticle(actionRequest, actionResponse);
 	}
 
+	public void restoreTrashEntries(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] restoreTrashEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
+
+		for (long restoreTrashEntryId : restoreTrashEntryIds) {
+			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
+		}
+	}
+
 	@Override
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -403,18 +415,6 @@ public class JournalPortlet extends MVCPortlet {
 			ddmStructureId);
 
 		sendEditArticleRedirect(actionRequest, actionResponse);
-	}
-
-	public void undoTrashEntries(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long[] restoreEntryIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
-
-		for (long restoreEntryId : restoreEntryIds) {
-			TrashEntryServiceUtil.restoreEntry(restoreEntryId);
-		}
 	}
 
 	public void unsubscribeFolder(

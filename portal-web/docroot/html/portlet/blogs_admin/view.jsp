@@ -25,13 +25,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/blogs_admin/view");
 %>
 
-<portlet:actionURL var="undoTrashURL">
+<portlet:actionURL var="restoreTrashEntriesURL">
 	<portlet:param name="struts_action" value="/blogs_admin/edit_entry" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
 <liferay-ui:trash-undo
-	portletURL="<%= undoTrashURL %>"
+	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
 <liferay-portlet:renderURL varImpl="searchURL">

@@ -45,10 +45,10 @@ request.setAttribute("view.jsp-folder", folder);
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 %>
 
-<portlet:actionURL name="undoTrashEntries" var="undoTrashURL" />
+<portlet:actionURL name="restoreTrashEntries" var="restoreTrashEntriesURL" />
 
 <liferay-ui:trash-undo
-	portletURL="<%= undoTrashURL %>"
+	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
 <div id="<portlet:namespace />journalContainer">

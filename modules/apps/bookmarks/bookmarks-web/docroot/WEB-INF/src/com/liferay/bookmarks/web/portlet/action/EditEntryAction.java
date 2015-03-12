@@ -81,7 +81,7 @@ public class EditEntryAction extends PortletAction {
 				deleteEntry(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
-				restoreEntries(actionRequest);
+				restoreTrashEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribeEntry(actionRequest);
@@ -206,14 +206,14 @@ public class EditEntryAction extends PortletAction {
 		}
 	}
 
-	protected void restoreEntries(ActionRequest actionRequest)
+	protected void restoreTrashEntries(ActionRequest actionRequest)
 		throws Exception {
 
-		long[] restoreEntryIds = StringUtil.split(
+		long[] restoreTrashEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
-		for (long restoreEntryId : restoreEntryIds) {
-			TrashEntryServiceUtil.restoreEntry(restoreEntryId);
+		for (long restoreTrashEntryId : restoreTrashEntryIds) {
+			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
 		}
 	}
 

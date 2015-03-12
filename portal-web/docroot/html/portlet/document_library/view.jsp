@@ -99,13 +99,13 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 
 <liferay-util:buffer var="uploadURL"><liferay-portlet:actionURL><portlet:param name="struts_action" value="/document_library/view_file_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_DYNAMIC %>" /><portlet:param name="folderId" value="{folderId}" /><portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" /></liferay-portlet:actionURL></liferay-util:buffer>
 
-<portlet:actionURL var="undoTrashURL">
+<portlet:actionURL var="restoreTrashEntriesURL">
 	<portlet:param name="struts_action" value="/document_library/edit_entry" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
 <liferay-ui:trash-undo
-	portletURL="<%= undoTrashURL %>"
+	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
 <div id="<portlet:namespace />documentLibraryContainer">

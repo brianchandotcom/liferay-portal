@@ -39,13 +39,13 @@ List results = WikiNodeServiceUtil.getNodes(scopeGroupId, searchContainer.getSta
 searchContainer.setResults(results);
 %>
 
-<portlet:actionURL var="undoTrashURL">
+<portlet:actionURL var="restoreTrashEntriesURL">
 	<portlet:param name="struts_action" value="/wiki/edit_node" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
 <liferay-ui:trash-undo
-	portletURL="<%= undoTrashURL %>"
+	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
 <liferay-ui:error exception="<%= RequiredNodeException.class %>" message="the-last-main-node-is-required-and-cannot-be-deleted" />

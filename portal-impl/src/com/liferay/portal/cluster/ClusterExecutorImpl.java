@@ -187,7 +187,7 @@ public class ClusterExecutorImpl
 
 		PortalUtil.addPortalInetSocketAddressEventListener(this);
 
-		if (PropsValues.CLUSTER_EXECUTOR_DEBUG_ENABLED) {
+		if (PropsValues.CLUSTER_LINK_DEBUG_ENABLED) {
 			addClusterEventListener(new DebuggingClusterEventListenerImpl());
 		}
 

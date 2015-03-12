@@ -64,15 +64,14 @@ public class IndexableAdvice
 			return;
 		}
 
-		if (StagedModel.class.isAssignableFrom(returnType)) {
-			if (ExportImportThreadLocal.isImportInProcess()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Skipping indexing until the import is finished");
-				}
+		if (StagedModel.class.isAssignableFrom(returnType) &&
+			ExportImportThreadLocal.isImportInProcess()) {
 
-				return;
+			if (_log.isDebugEnabled()) {
+				_log.debug("Skipping indexing until the import is finished");
 			}
+
+			return;
 		}
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(returnType.getName());

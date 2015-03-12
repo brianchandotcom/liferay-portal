@@ -18,32 +18,25 @@ import com.liferay.portal.TrashPermissionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.util.RestoreEntryUtil;
+import com.liferay.taglib.util.TrashUndoUtil;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -114,10 +107,10 @@ public class TrashPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			className, actionRequest);
 
-		TrashEntryServiceUtil.moveEntry(
+		TrashEntry entry = TrashEntryServiceUtil.moveEntry(
 			className, classPK, containerModelId, serviceContext);
 
-		addRestoreData(actionRequest, getEntryOVPs(className, classPK));
+		TrashUndoUtil.addRestoreData(actionRequest, entry);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -126,14 +119,14 @@ public class TrashPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		List<ObjectValuePair<String, Long>> entryOVPs = new ArrayList<>();
+		List<TrashEntry> trashEntries = new ArrayList<>();
 
 		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
 
 		if (trashEntryId > 0) {
 			TrashEntry entry = TrashEntryServiceUtil.restoreEntry(trashEntryId);
 
-			entryOVPs = getEntryOVPs(entry.getClassName(), entry.getClassPK());
+			trashEntries.add(entry);
 		}
 		else {
 			long[] restoreEntryIds = StringUtil.split(
@@ -143,12 +136,11 @@ public class TrashPortlet extends MVCPortlet {
 				TrashEntry entry = TrashEntryServiceUtil.restoreEntry(
 					restoreEntryId);
 
-				entryOVPs.addAll(
-					getEntryOVPs(entry.getClassName(), entry.getClassPK()));
+				trashEntries.add(entry);
 			}
 		}
 
-		addRestoreData(actionRequest, entryOVPs);
+		TrashUndoUtil.addRestoreData(actionRequest, trashEntries);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -179,9 +171,7 @@ public class TrashPortlet extends MVCPortlet {
 		TrashEntry entry = TrashEntryServiceUtil.restoreEntry(
 			trashEntryId, duplicateEntryId, null);
 
-		addRestoreData(
-			actionRequest,
-			getEntryOVPs(entry.getClassName(), entry.getClassPK()));
+		TrashUndoUtil.addRestoreData(actionRequest, entry);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -206,9 +196,7 @@ public class TrashPortlet extends MVCPortlet {
 		TrashEntry entry = TrashEntryServiceUtil.restoreEntry(
 			trashEntryId, 0, newName);
 
-		addRestoreData(
-			actionRequest,
-			getEntryOVPs(entry.getClassName(), entry.getClassPK()));
+		TrashUndoUtil.addRestoreData(actionRequest, entry);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -234,85 +222,6 @@ public class TrashPortlet extends MVCPortlet {
 		else {
 			super.serveResource(resourceRequest, resourceResponse);
 		}
-	}
-
-	protected void addRestoreData(
-			ActionRequest actionRequest,
-			List<ObjectValuePair<String, Long>> entryOVPs)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if ((entryOVPs == null) || (entryOVPs.size() <= 0)) {
-			return;
-		}
-
-		List<String> restoreClassNames = new ArrayList<>();
-		List<String> restoreEntryLinks = new ArrayList<>();
-		List<String> restoreEntryMessages = new ArrayList<>();
-		List<String> restoreLinks = new ArrayList<>();
-		List<String> restoreMessages = new ArrayList<>();
-
-		for (int i = 0; i < entryOVPs.size(); i++) {
-			ObjectValuePair<String, Long> entryOVP = entryOVPs.get(i);
-
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(entryOVP.getKey());
-
-			String restoreEntryLink = trashHandler.getRestoreContainedModelLink(
-				actionRequest, entryOVP.getValue());
-			String restoreLink = trashHandler.getRestoreContainerModelLink(
-				actionRequest, entryOVP.getValue());
-			String restoreMessage = trashHandler.getRestoreMessage(
-				actionRequest, entryOVP.getValue());
-
-			if (Validator.isNull(restoreLink) ||
-				Validator.isNull(restoreMessage)) {
-
-				continue;
-			}
-
-			restoreClassNames.add(trashHandler.getClassName());
-			restoreEntryLinks.add(restoreEntryLink);
-
-			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				entryOVP.getValue());
-
-			String restoreEntryTitle = trashRenderer.getTitle(
-				themeDisplay.getLocale());
-
-			restoreEntryMessages.add(restoreEntryTitle);
-
-			restoreLinks.add(restoreLink);
-			restoreMessages.add(restoreMessage);
-		}
-
-		Map<String, List<String>> data = new HashMap<>();
-
-		data.put("restoreClassNames", restoreClassNames);
-		data.put("restoreEntryLinks", restoreEntryLinks);
-		data.put("restoreEntryMessages", restoreEntryMessages);
-		data.put("restoreLinks", restoreLinks);
-		data.put("restoreMessages", restoreMessages);
-
-		SessionMessages.add(
-			actionRequest,
-			PortalUtil.getPortletId(actionRequest) +
-				SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA, data);
-	}
-
-	protected List<ObjectValuePair<String, Long>> getEntryOVPs(
-		String className, long classPK) {
-
-		List<ObjectValuePair<String, Long>> entryOVPs = new ArrayList<>();
-
-		ObjectValuePair<String, Long> entryOVP = new ObjectValuePair<>(
-			className, classPK);
-
-		entryOVPs.add(entryOVP);
-
-		return entryOVPs;
 	}
 
 	@Override

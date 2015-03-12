@@ -181,12 +181,13 @@ public class TrashEntryServiceUtil {
 	trash entry, if a duplicate trash entry exists at the new
 	location, or if a portal exception occurred
 	*/
-	public static void moveEntry(java.lang.String className, long classPK,
+	public static com.liferay.portlet.trash.model.TrashEntry moveEntry(
+		java.lang.String className, long classPK,
 		long destinationContainerModelId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.moveEntry(className, classPK, destinationContainerModelId,
+		return getService()
+				   .moveEntry(className, classPK, destinationContainerModelId,
 			serviceContext);
 	}
 

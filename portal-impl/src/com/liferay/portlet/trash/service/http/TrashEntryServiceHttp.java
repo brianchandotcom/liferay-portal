@@ -226,8 +226,8 @@ public class TrashEntryServiceHttp {
 		}
 	}
 
-	public static void moveEntry(HttpPrincipal httpPrincipal,
-		java.lang.String className, long classPK,
+	public static com.liferay.portlet.trash.model.TrashEntry moveEntry(
+		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
 		long destinationContainerModelId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -239,8 +239,10 @@ public class TrashEntryServiceHttp {
 					className, classPK, destinationContainerModelId,
 					serviceContext);
 
+			Object returnObj = null;
+
 			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
@@ -249,6 +251,8 @@ public class TrashEntryServiceHttp {
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
+
+			return (com.liferay.portlet.trash.model.TrashEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

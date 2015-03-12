@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.monitoring.jmx;
+package com.liferay.portal.monitoring.internal.servlet.filters.jmx;
 
-import com.liferay.portal.servlet.filters.monitoring.MonitoringFilter;
+import com.liferay.portal.monitoring.internal.servlet.filters.MonitoringFilter;
 
 /**
  * @author Michael C. Han

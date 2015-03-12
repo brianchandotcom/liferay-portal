@@ -25,6 +25,8 @@ public class RestoreEntryException extends PortalException {
 
 	public static final int INVALID_CONTAINER = 2;
 
+	public static final int INVALID_TITLE = 3;
+
 	public RestoreEntryException() {
 	}
 
@@ -48,6 +50,10 @@ public class RestoreEntryException extends PortalException {
 		return _duplicateEntryId;
 	}
 
+	public String getErrorMessage() {
+		return _errorMessage;
+	}
+
 	public String getOldName() {
 		return _oldName;
 	}
@@ -68,6 +74,10 @@ public class RestoreEntryException extends PortalException {
 		_duplicateEntryId = duplicateEntryId;
 	}
 
+	public void setErrorMessage(String errorMessage) {
+		_errorMessage = errorMessage;
+	}
+
 	public void setOldName(String oldName) {
 		_oldName = oldName;
 	}
@@ -85,6 +95,7 @@ public class RestoreEntryException extends PortalException {
 	}
 
 	private long _duplicateEntryId;
+	private String _errorMessage;
 	private String _oldName;
 	private boolean _overridable = true;
 	private long _trashEntryId;

@@ -102,7 +102,7 @@
 			</then>
 		</if>
 
-		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
 
 		<execute function="AssertClick#assertTextClickAtAddApplication" locator1="DockbarAddpanelapplications#NAVIGATION_APPLICATIONS" value1="Applications" />
 		<execute function="Type#sendKeysApplicationSearch" locator1="DockbarAddpanelapplications#SEARCH_FIELD" value1="${portletName}" />

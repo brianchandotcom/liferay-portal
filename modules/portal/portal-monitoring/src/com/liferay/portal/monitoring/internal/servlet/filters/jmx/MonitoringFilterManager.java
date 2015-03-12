@@ -14,21 +14,37 @@
 
 package com.liferay.portal.monitoring.internal.servlet.filters.jmx;
 
-import com.liferay.portal.monitoring.internal.servlet.filters.MonitoringFilter;
+import javax.management.DynamicMBean;
+import javax.management.NotCompliantMBeanException;
+import javax.management.StandardMBean;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
  */
-public class MonitoringFilterManager implements MonitoringFilterManagerMBean {
+@Component(
+	immediate = true,
+	property = {
+		"object-name=com.liferay.portal.monitoring:classification=instrumentation,name=MonitoringFilterManager",
+		"object-name-cache-key=MonitoringFilterManager"
+	},
+	service = DynamicMBean.class
+)
+public class MonitoringFilterManager extends StandardMBean
+	implements MonitoringFilterManagerMBean {
+
+	public MonitoringFilterManager() throws NotCompliantMBeanException {
+		super(MonitoringFilterManagerMBean.class);
+	}
 
 	@Override
 	public boolean isMonitoringPortalRequest() {
-		return MonitoringFilter.isMonitoringPortalRequest();
+		return true;
 	}
 
 	@Override
 	public void setMonitoringPortalRequest(boolean monitoringPortalRequest) {
-		MonitoringFilter.setMonitoringPortalRequest(monitoringPortalRequest);
 	}
 
 }

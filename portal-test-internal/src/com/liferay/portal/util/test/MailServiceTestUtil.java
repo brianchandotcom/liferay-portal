@@ -99,7 +99,7 @@ public class MailServiceTestUtil {
 		try {
 			int smtpPort = _getFreePort();
 
-			_prefsPropsReplacement = new PrefsPropsTemporarySwapper(
+			_prefsPropsTemporarySwapper = new PrefsPropsTemporarySwapper(
 				PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT, smtpPort,
 				PropsKeys.MAIL_SESSION_MAIL, true);
 
@@ -152,7 +152,7 @@ public class MailServiceTestUtil {
 		_smtpServer = null;
 
 		try {
-			_prefsPropsReplacement.close();
+			_prefsPropsTemporarySwapper.close();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -193,7 +193,7 @@ public class MailServiceTestUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		MailServiceTestUtil.class);
 
-	private static PrefsPropsTemporarySwapper _prefsPropsReplacement;
+	private static PrefsPropsTemporarySwapper _prefsPropsTemporarySwapper;
 	private static SmtpServer _smtpServer;
 
 }

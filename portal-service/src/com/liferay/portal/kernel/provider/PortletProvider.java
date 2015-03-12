@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.asset.provider;
+package com.liferay.portal.kernel.provider;
 
 /**
  * @author Eudaldo Alonso
@@ -25,7 +25,7 @@ public interface PortletProvider {
 
 	public enum Action {
 
-		ADD, BROWSE, VIEW
+		ADD, BROWSE, EDIT, VIEW
 
 	}
 

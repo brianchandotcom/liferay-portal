@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.asset.provider;
+package com.liferay.portal.kernel.provider;
 
 /**
- * @author Eudaldo Alonso
+ * @author Eduardo Garcia
  */
-public interface BrowsePortletProvider extends PortletProvider {
+public interface EditPortletProvider extends PortletProvider {
 }

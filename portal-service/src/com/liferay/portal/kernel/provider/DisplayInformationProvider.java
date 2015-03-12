@@ -12,10 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet.asset.provider;
+package com.liferay.portal.kernel.provider;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Eudaldo Alonso
  */
-public interface ViewPortletProvider extends PortletProvider {
+public interface DisplayInformationProvider {
+
+	public String getClassName();
+
+	public String getClassPK(PortletPreferences portletPreferences);
+
 }

@@ -1120,6 +1120,7 @@
 			<bean class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.journal.provider.JournalEditPortletProvider" class="com.liferay.portlet.journal.provider.JournalEditPortletProvider" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalArticlePermission" class="com.liferay.portlet.journal.service.permission.JournalArticlePermission" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalFeedPermission" class="com.liferay.portlet.journal.service.permission.JournalFeedPermission" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalFolderPermission" class="com.liferay.portlet.journal.service.permission.JournalFolderPermission" />

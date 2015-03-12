@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.journal.content.web.portlet.asset.provider;
+package com.liferay.journal.content.web.provider;
 
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
+import com.liferay.portal.kernel.provider.AddPortletProvider;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.provider.AddPortletProvider;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory;

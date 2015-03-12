@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.journal.content.web.portlet.asset.provider;
+package com.liferay.journal.content.web.provider;
 
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
+import com.liferay.portal.kernel.provider.DisplayInformationProvider;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.asset.provider.DisplayInformationProvider;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 import javax.portlet.PortletPreferences;

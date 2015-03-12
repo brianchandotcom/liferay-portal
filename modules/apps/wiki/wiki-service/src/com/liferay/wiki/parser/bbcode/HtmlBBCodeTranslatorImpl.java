@@ -474,9 +474,14 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 		sb.append("<");
 		sb.append(tag);
-		sb.append(" style=\"");
-		sb.append(listStyle);
-		sb.append("\">");
+
+		if (Validator.isNotNull(listStyle)) {
+			sb.append(" style=\"");
+			sb.append(listStyle);
+			sb.append("\"");
+		}
+
+		sb.append(">");
 
 		tags.push("</" + tag + ">");
 	}

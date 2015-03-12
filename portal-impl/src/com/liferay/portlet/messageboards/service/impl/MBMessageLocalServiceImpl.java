@@ -2489,8 +2489,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validateDiscussionMaxComments(
-			String className, long classPK)
+	protected void validateDiscussionMaxComments(String className, long classPK)
 		throws PortalException {
 
 		if (PropsValues.DISCUSSION_MAX_COMMENTS <= 0) {

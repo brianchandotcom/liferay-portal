@@ -303,7 +303,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	 *         location, or if a portal exception occurred
 	 */
 	@Override
-	public void moveEntry(
+	public TrashEntry moveEntry(
 			String className, long classPK, long destinationContainerModelId,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -351,6 +351,8 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 
 		trashHandler.moveTrashEntry(
 			getUserId(), classPK, destinationContainerModelId, serviceContext);
+
+		return trashEntry;
 	}
 
 	@Override

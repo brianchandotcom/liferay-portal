@@ -73,6 +73,7 @@ import com.liferay.portlet.journal.service.JournalFeedServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.journal.util.JournalRSSUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
+import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.util.RSSUtil;
 
@@ -288,6 +289,18 @@ public class JournalPortlet extends MVCPortlet {
 		throws Exception {
 
 		updateArticle(actionRequest, actionResponse);
+	}
+
+	public void restoreTrashEntries(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] restoreTrashEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
+
+		for (long restoreTrashEntryId : restoreTrashEntryIds) {
+			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
+		}
 	}
 
 	@Override

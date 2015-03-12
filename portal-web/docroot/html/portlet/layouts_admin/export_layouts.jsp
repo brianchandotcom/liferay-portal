@@ -111,7 +111,14 @@ if (!cmd.equals(Constants.ADD)) {
 }
 %>
 
-<liferay-ui:trash-undo />
+<portlet:actionURL var="restoreTrashEntriesURL">
+	<portlet:param name="struts_action" value="/layouts_admin/edit_export_configuration" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+</portlet:actionURL>
+
+<liferay-ui:trash-undo
+	portletURL="<%= restoreTrashEntriesURL %>"
+/>
 
 <portlet:renderURL var="backURL">
 	<portlet:param name="struts_action" value="/layouts_admin/edit_layout_set" />

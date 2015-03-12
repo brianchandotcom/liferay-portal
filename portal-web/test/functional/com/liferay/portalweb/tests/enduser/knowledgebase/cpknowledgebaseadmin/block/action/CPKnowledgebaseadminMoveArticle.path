@@ -29,8 +29,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CURRENT_PARENT_TITLE_LABEL</td>
+	<td>//span[(@class='control-label') and contains (.,'Current Parent')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CURRENT_PARENT_TITLE_FIELD</td>
 	<td>//div[contains(.,'Current Parent')]/div/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_PARENT_PRIORITY_LABEL</td>
+	<td>//label[(@class='control-label') and contains(.,'Priority')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -39,8 +49,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEW_PARENT_TITLE_LABEL</td>
+	<td>//span[(@class='control-label') and contains (.,'New Parent')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEW_PARENT_TITLE_FIELD</td>
 	<td>//div[contains(@id,'knowledgebaseportlet_newParent')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PARENT_PRIORITY_LABEL</td>
+	<td>//div[contains(@id,'knowledgebaseportlet_newParent')]//label[(@class='control-label') and contains(.,'Priority')]</td>
 	<td></td>
 </tr>
 <tr>

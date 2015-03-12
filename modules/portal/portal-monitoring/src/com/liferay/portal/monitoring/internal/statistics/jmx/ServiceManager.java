@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.jmx;
+package com.liferay.portal.monitoring.internal.statistics.jmx;
 
 import com.liferay.portal.kernel.monitoring.MethodSignature;
-import com.liferay.portal.monitoring.statistics.service.ServerStatistics;
+import com.liferay.portal.monitoring.internal.statistics.service.ServerStatistics;
 import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
 
 import java.util.Set;

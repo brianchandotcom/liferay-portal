@@ -12,20 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.jmx;
+package com.liferay.portal.monitoring.internal.statistics.jmx;
 
 import com.liferay.portal.kernel.monitoring.MonitoringException;
-import com.liferay.portal.monitoring.statistics.portlet.PortletSummaryStatistics;
+import com.liferay.portal.kernel.monitoring.statistics.SummaryStatistics;
 
 /**
+ * @author Karthik Sudarshan
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public interface PortletManagerMBean extends PortletSummaryStatistics {
+public interface PortalManagerMBean extends SummaryStatistics {
 
 	public long[] getCompanyIds() throws MonitoringException;
 
-	public String[] getPortletIds() throws MonitoringException;
+	public long getUptime(long companyId) throws MonitoringException;
+
+	public long getUptime(String companyWebId) throws MonitoringException;
 
 	public String[] getWebIds() throws MonitoringException;
 

@@ -12,18 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.jmx;
+package com.liferay.portal.monitoring.internal.statistics.jmx;
+
+import com.liferay.portal.kernel.monitoring.MonitoringException;
+import com.liferay.portal.monitoring.internal.statistics.portlet.PortletSummaryStatistics;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public interface MonitoringProcessorManagerMBean {
+public interface PortletManagerMBean extends PortletSummaryStatistics {
 
-	public String getLevel(String namespace);
+	public long[] getCompanyIds() throws MonitoringException;
 
-	public String[] getNamespaces();
+	public String[] getPortletIds() throws MonitoringException;
 
-	public void setLevel(String namespace, String levelName);
+	public String[] getWebIds() throws MonitoringException;
+
+	public void reset();
+
+	public void reset(long companyId);
+
+	public void reset(String webId);
 
 }

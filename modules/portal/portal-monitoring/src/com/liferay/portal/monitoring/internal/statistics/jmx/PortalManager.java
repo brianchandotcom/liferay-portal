@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.jmx;
+package com.liferay.portal.monitoring.internal.statistics.jmx;
 
 import com.liferay.portal.kernel.monitoring.MonitoringException;
 import com.liferay.portal.kernel.monitoring.statistics.SummaryStatistics;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.monitoring.statistics.portal.ServerStatistics;
+import com.liferay.portal.monitoring.internal.statistics.portal.ServerStatistics;
 
 import java.util.Set;
 

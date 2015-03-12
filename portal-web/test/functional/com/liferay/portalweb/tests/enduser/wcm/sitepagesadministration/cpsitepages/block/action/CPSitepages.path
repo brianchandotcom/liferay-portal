@@ -346,7 +346,7 @@
 </tr>
 <tr>
 	<td>STAGING_MENULIST_PUBLISH_TO_LIVE</td>
-	<td>//li[@class='publish-link-container']/a[contains(.,'Publish to Live')]</td>
+	<td>//a[contains(.,'Publish to Live')]</td>
 	<td></td>
 </tr>
 <tr>

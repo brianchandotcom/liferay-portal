@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//button[@id='_88_publishButton']</td>
+	<td>//button[@type='submit']</td>
 	<td></td>
 </tr>
 <tr>

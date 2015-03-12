@@ -130,8 +130,8 @@ public class MBDiscussionStagedModelDataHandler
 				MBMessage rootMessage =
 					MBMessageLocalServiceUtil.addDiscussionMessage(
 						userId, discussion.getUserName(),
-					portletDataContext.getScopeGroupId(), className, newClassPK,
-					WorkflowConstants.ACTION_PUBLISH);
+						portletDataContext.getScopeGroupId(), className,
+						newClassPK, WorkflowConstants.ACTION_PUBLISH);
 
 				existingDiscussion =
 					MBDiscussionLocalServiceUtil.getThreadDiscussion(

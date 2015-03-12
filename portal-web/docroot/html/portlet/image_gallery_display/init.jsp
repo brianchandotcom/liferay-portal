@@ -16,8 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.search.Document" %><%@
-page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
+<%@ page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
 page import="com.liferay.portlet.documentlibrary.display.context.logic.DLPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@

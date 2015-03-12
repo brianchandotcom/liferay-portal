@@ -27,6 +27,11 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ page import="com.liferay.journal.web.constants.JournalPortletKeys" %><%@
+page import="com.liferay.journal.web.context.JournalDisplayContext" %><%@
+page import="com.liferay.journal.web.portlet.action.ActionUtil" %><%@
+page import="com.liferay.journal.web.search.ArticleDisplayTerms" %><%@
+page import="com.liferay.journal.web.search.FeedDisplayTerms" %><%@
+page import="com.liferay.journal.web.search.FeedSearch" %><%@
 page import="com.liferay.portal.kernel.xml.Document" %><%@
 page import="com.liferay.portal.kernel.xml.Element" %><%@
 page import="com.liferay.portal.kernel.xml.Node" %><%@
@@ -51,9 +56,6 @@ page import="com.liferay.portlet.journal.model.JournalFeed" %><%@
 page import="com.liferay.portlet.journal.model.JournalFeedConstants" %><%@
 page import="com.liferay.portlet.journal.model.JournalFolder" %><%@
 page import="com.liferay.portlet.journal.model.JournalFolderConstants" %><%@
-page import="com.liferay.portlet.journal.search.ArticleDisplayTerms" %><%@
-page import="com.liferay.portlet.journal.search.FeedDisplayTerms" %><%@
-page import="com.liferay.portlet.journal.search.FeedSearch" %><%@
 page import="com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil" %><%@
 page import="com.liferay.portlet.journal.service.JournalFolderServiceUtil" %><%@
 page import="com.liferay.portlet.journal.service.permission.JournalArticlePermission" %><%@

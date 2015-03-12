@@ -79,7 +79,7 @@
 	<portlet>
 		<portlet-name>15</portlet-name>
 		<icon>/html/icons/journal.png</icon>
-		<configuration-action-class>com.liferay.portlet.journal.action.ConfigurationActionImpl</configuration-action-class>
+		<configuration-action-class>com.liferay.journal.web.portlet.action.ConfigurationActionImpl</configuration-action-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.journal.messaging.CheckArticleMessageListener</scheduler-event-listener-class>
 			<trigger>

@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal;
+import com.liferay.portal.kernel.monitoring.statistics.PortletRequestType;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.monitoring.statistics.portlet.PortletRequestDataSample;
-import com.liferay.portal.monitoring.statistics.portlet.PortletRequestType;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;

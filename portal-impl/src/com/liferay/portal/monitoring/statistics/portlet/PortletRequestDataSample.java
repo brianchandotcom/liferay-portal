@@ -14,6 +14,7 @@
 
 package com.liferay.portal.monitoring.statistics.portlet;
 
+import com.liferay.portal.kernel.monitoring.statistics.PortletRequestType;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.monitoring.MonitorNames;

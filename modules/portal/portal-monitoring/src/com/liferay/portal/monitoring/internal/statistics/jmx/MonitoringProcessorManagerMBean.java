@@ -12,30 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.jmx;
-
-import com.liferay.portal.kernel.monitoring.MonitoringException;
-import com.liferay.portal.kernel.monitoring.statistics.SummaryStatistics;
+package com.liferay.portal.monitoring.internal.statistics.jmx;
 
 /**
- * @author Karthik Sudarshan
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public interface PortalManagerMBean extends SummaryStatistics {
+public interface MonitoringProcessorManagerMBean {
 
-	public long[] getCompanyIds() throws MonitoringException;
+	public String getLevel(String namespace);
 
-	public long getUptime(long companyId) throws MonitoringException;
+	public String[] getNamespaces();
 
-	public long getUptime(String companyWebId) throws MonitoringException;
-
-	public String[] getWebIds() throws MonitoringException;
-
-	public void reset();
-
-	public void reset(long companyId);
-
-	public void reset(String webId);
+	public void setLevel(String namespace, String levelName);
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.jmx;
+package com.liferay.portal.monitoring.internal.statistics.jmx;
 
 import com.liferay.portal.kernel.monitoring.Level;
 import com.liferay.portal.kernel.monitoring.MonitoringControl;

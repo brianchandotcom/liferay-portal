@@ -16,13 +16,17 @@ package com.liferay.portal.kernel.monitoring.statistics;
 
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 
+import java.util.Map;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
 public interface DataSample {
 
-	public long getCompanyId();
+	public void capture(RequestStatus requestStatus);
+
+	public Map<String, String> getAttributes();
 
 	public String getDescription();
 
@@ -34,6 +38,24 @@ public interface DataSample {
 
 	public RequestStatus getRequestStatus();
 
+	public long getTimeout();
+
 	public String getUser();
+
+	public void prepare();
+
+	public void setAttributes(Map<String, String> attributes);
+
+	public void setCompanyId(long companyId);
+
+	public void setDescription(String description);
+
+	public void setName(String name);
+
+	public void setNamespace(String namespace);
+
+	public void setTimeout(long timeout);
+
+	public void setUser(String user); public long getCompanyId();
 
 }

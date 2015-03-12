@@ -18,4 +18,6 @@ Export-Package:\
 	com.liferay.portlet.subscriptions.test,\
 	com.liferay.portlet.trash.test
 Import-Package: *;resolution:=optional
-Include-Resource: classes
+Include-Resource:\
+	classes,\
+	@${project.dir}/../lib/development/dumbster.jar

@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test.rule.callback;
+package com.liferay.portal.test.rule.callback;
 
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.test.util.MailServiceTestUtil;
+import com.liferay.portal.kernel.test.rule.callback.SynchronousDestinationTestCallback;
+import com.liferay.portal.util.test.MailServiceTestUtil;
 
 import org.junit.runner.Description;
 
@@ -29,7 +30,9 @@ public class SynchronousMailTestCallback
 		new SynchronousMailTestCallback();
 
 	@Override
-	public void doAfterClass(Description description, SyncHandler syncHandler) {
+	public void doAfterClass(Description description, SyncHandler syncHandler)
+		throws Exception {
+
 		syncHandler.restorePreviousSync();
 
 		MailServiceTestUtil.stop();
@@ -45,7 +48,7 @@ public class SynchronousMailTestCallback
 	}
 
 	@Override
-	public SyncHandler doBeforeClass(Description description) {
+	public SyncHandler doBeforeClass(Description description) throws Exception {
 		MailServiceTestUtil.start();
 
 		SyncHandler syncHandler = new SyncHandler();

@@ -12,17 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test.util;
+package com.liferay.portal.util.test;
 
 import com.dumbster.smtp.MailMessage;
 import com.dumbster.smtp.SmtpServer;
 import com.dumbster.smtp.SmtpServerFactory;
 import com.dumbster.smtp.mailstores.RollingMailStore;
 
+import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SocketUtil;
+import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
+
+import java.io.IOException;
+
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.SocketException;
+
+import java.nio.channels.ServerSocketChannel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +51,10 @@ public class MailServiceTestUtil {
 	}
 
 	public static MailMessage getLastMailMessage() {
-		if (_smtpServer.getEmailCount() > 0) {
-			return _smtpServer.getMessage(_smtpServer.getEmailCount() - 1);
+		MailMessage[] mailMessages = _smtpServer.getMessages();
+
+		if (mailMessages.length > 0) {
+			return mailMessages[mailMessages.length - 1];
 		}
 
 		throw new IndexOutOfBoundsException(
@@ -55,22 +66,20 @@ public class MailServiceTestUtil {
 
 		List<MailMessage> mailMessages = new ArrayList<>();
 
-		for (int i = 0; i < _smtpServer.getEmailCount(); ++i) {
-			MailMessage message = _smtpServer.getMessage(i);
-
+		for (MailMessage mailMessage : _smtpServer.getMessages()) {
 			if (headerName.equals("Body")) {
-				String body = message.getBody();
+				String body = mailMessage.getBody();
 
 				if (body.equals(headerValue)) {
-					mailMessages.add(message);
+					mailMessages.add(mailMessage);
 				}
 			}
 			else {
-				String messageHeaderValue = message.getFirstHeaderValue(
+				String messageHeaderValue = mailMessage.getFirstHeaderValue(
 					headerName);
 
 				if (messageHeaderValue.equals(headerValue)) {
-					mailMessages.add(message);
+					mailMessages.add(mailMessage);
 				}
 			}
 		}
@@ -86,10 +95,16 @@ public class MailServiceTestUtil {
 		return bodyMailMessage.contains(text);
 	}
 
-	public static void start() {
+	public static void start() throws Exception {
 		if (_smtpServer != null) {
 			throw new IllegalStateException("Server is already running");
 		}
+
+		int smtpPort = _getFreePort();
+
+		_prefsPropsTemporarySwapper = new PrefsPropsTemporarySwapper(
+			PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT, smtpPort,
+			PropsKeys.MAIL_SESSION_MAIL, true);
 
 		_smtpServer = new SmtpServer();
 
@@ -115,22 +130,18 @@ public class MailServiceTestUtil {
 				}
 
 			});
-		_smtpServer.setPort(
-			GetterUtil.getInteger(
-				PropsUtil.get(PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT)));
+		_smtpServer.setPort(smtpPort);
+
 		_smtpServer.setThreaded(false);
 
-		try {
-			ReflectionTestUtil.invoke(
-				SmtpServerFactory.class, "startServerThread",
-				new Class<?>[] {SmtpServer.class}, _smtpServer);
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		ReflectionTestUtil.invoke(
+			SmtpServerFactory.class, "startServerThread",
+			new Class<?>[] {SmtpServer.class}, _smtpServer);
+
+		MailServiceUtil.clearSession();
 	}
 
-	public static void stop() {
+	public static void stop() throws Exception {
 		if ((_smtpServer != null) && _smtpServer.isStopped()) {
 			throw new IllegalStateException("Server is already stopped");
 		}
@@ -138,8 +149,36 @@ public class MailServiceTestUtil {
 		_smtpServer.stop();
 
 		_smtpServer = null;
+
+		_prefsPropsTemporarySwapper.close();
+
+		MailServiceUtil.clearSession();
 	}
 
+	private static int _getFreePort() throws IOException {
+		try (ServerSocketChannel serverSocketChannel =
+			SocketUtil.createServerSocketChannel(
+				InetAddress.getLocalHost(), _START_PORT,
+				new ServerSocketConfigurator() {
+
+					@Override
+					public void configure(ServerSocket serverSocket)
+						throws SocketException {
+
+						serverSocket.setReuseAddress(true);
+					}
+
+				})) {
+
+			ServerSocket serverSocket = serverSocketChannel.socket();
+
+			return serverSocket.getLocalPort();
+		}
+	}
+
+	private static final int _START_PORT = 3241;
+
+	private static PrefsPropsTemporarySwapper _prefsPropsTemporarySwapper;
 	private static SmtpServer _smtpServer;
 
 }

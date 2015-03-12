@@ -24,6 +24,8 @@
 	</target>
 
 	<target name="Test" depends="compile">
+		<echo file="portal-ext.properties">liferay.home=${liferay.home}</echo>
+
 		<java
 			classname="Test"
 			classpathref="project.classpath"
@@ -36,5 +38,7 @@
 			<jvmarg value="-Duser.timezone=GMT" />
 			-->
 		</java>
+
+		<delete file="portal-ext.properties" quiet="true" />
 	</target>
 </project>

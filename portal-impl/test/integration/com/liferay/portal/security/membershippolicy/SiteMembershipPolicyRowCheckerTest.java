@@ -27,7 +27,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.sites.search.UserGroupRoleRoleChecker;
 import com.liferay.portlet.sites.search.UserGroupRoleUserChecker;
-import com.liferay.portlet.usergroupsadmin.search.UserGroupChecker;
+import com.liferay.portlet.sitesadmin.search.SiteMembershipChecker;
 
 import javax.portlet.RenderResponse;
 
@@ -60,12 +60,12 @@ public class SiteMembershipPolicyRowCheckerTest
 
 		Group forbiddenGroup = GroupLocalServiceUtil.getGroup(forbiddenGroupId);
 
-		UserGroupChecker userGroupChecker = new UserGroupChecker(
+		SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(
 			renderResponse, forbiddenGroup);
 
 		User user = UserTestUtil.addUser();
 
-		Assert.assertTrue(userGroupChecker.isDisabled(user));
+		Assert.assertTrue(siteMembershipChecker.isDisabled(user));
 	}
 
 	@Test
@@ -96,12 +96,12 @@ public class SiteMembershipPolicyRowCheckerTest
 
 		Group requiredGroup = GroupLocalServiceUtil.getGroup(requiredGroupId);
 
-		UserGroupChecker userGroupChecker = new UserGroupChecker(
+		SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(
 			renderResponse, requiredGroup);
 
 		User user = UserTestUtil.addUser();
 
-		Assert.assertFalse(userGroupChecker.isDisabled(user));
+		Assert.assertFalse(siteMembershipChecker.isDisabled(user));
 	}
 
 	@Test
@@ -164,13 +164,13 @@ public class SiteMembershipPolicyRowCheckerTest
 
 		Group forbiddenGroup = GroupLocalServiceUtil.getGroup(forbiddenGroupId);
 
-		UserGroupChecker userGroupChecker = new UserGroupChecker(
+		SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(
 			renderResponse, forbiddenGroup);
 
 		User user = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), forbiddenGroupId);
 
-		Assert.assertFalse(userGroupChecker.isDisabled(user));
+		Assert.assertFalse(siteMembershipChecker.isDisabled(user));
 	}
 
 	@Test
@@ -204,13 +204,13 @@ public class SiteMembershipPolicyRowCheckerTest
 
 		Group requiredGroup = GroupLocalServiceUtil.getGroup(requiredGroupId);
 
-		UserGroupChecker userGroupChecker = new UserGroupChecker(
+		SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(
 			renderResponse, requiredGroup);
 
 		User user = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), requiredGroupId);
 
-		Assert.assertTrue(userGroupChecker.isDisabled(user));
+		Assert.assertTrue(siteMembershipChecker.isDisabled(user));
 	}
 
 	@Test

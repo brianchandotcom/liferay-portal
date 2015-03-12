@@ -21,6 +21,7 @@ page import="com.liferay.portal.RequiredUserGroupException" %><%@
 page import="com.liferay.portal.UserGroupNameException" %><%@
 page import="com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.service.permission.UserGroupPermissionUtil" %><%@
+page import="com.liferay.portlet.usergroupsadmin.search.UserGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserUserGroupChecker" %>
 
 <%

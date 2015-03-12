@@ -19,7 +19,7 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL)
 %>
 
 <liferay-ui:search-container
-	rowChecker="<%= new RowChecker(renderResponse) %>"
+	rowChecker="<%= new UserGroupChecker(renderResponse) %>"
 	searchContainer="<%= userGroupSearch %>"
 >
 	<aui:input disabled="<%= true %>" name="userGroupsRedirect" type="hidden" value="<%= portletURL.toString() %>" />

@@ -15,8 +15,6 @@
 package com.liferay.portlet.mobiledevicerules.search;
 
 import com.liferay.portal.kernel.dao.search.RowChecker;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -41,21 +39,13 @@ public class RuleGroupChecker extends RowChecker {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		try {
-			if (!MDRRuleGroupPermissionUtil.contains(
-					permissionChecker, ruleGroup, ActionKeys.DELETE)) {
+		if (!MDRRuleGroupPermissionUtil.contains(
+				permissionChecker, ruleGroup, ActionKeys.DELETE)) {
 
-				return true;
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+			return true;
 		}
 
 		return super.isDisabled(obj);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RuleGroupChecker.class);
 
 }

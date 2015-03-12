@@ -36,10 +36,10 @@ viewUsersURL.setParameter("tabs2", tabs2);
 viewUsersURL.setParameter("redirect", currentURL);
 viewUsersURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
-UserGroupChecker userGroupChecker = null;
+SiteMembershipChecker siteMembershipChecker = null;
 
 if (!tabs1.equals("summary") && !tabs2.equals("current")) {
-	userGroupChecker = new UserGroupChecker(renderResponse, group);
+	siteMembershipChecker = new SiteMembershipChecker(renderResponse, group);
 }
 
 String emptyResultsMessage = UserSearch.EMPTY_RESULTS_MESSAGE;
@@ -60,7 +60,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 <liferay-ui:membership-policy-error />
 
 <liferay-ui:search-container
-	rowChecker="<%= userGroupChecker %>"
+	rowChecker="<%= siteMembershipChecker %>"
 	searchContainer="<%= searchContainer %>"
 	var="userSearchContainer"
 >

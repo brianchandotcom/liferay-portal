@@ -3,7 +3,7 @@
 		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
 
 		<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT" value1="Select" />
-		<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT_OTHER_SITE" value1="Other Site..." />
+		<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_MENULIST_OTHER_SITE" value1="Other Site..." />
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="PGAssetpublisherConfigurationSites#SITES_IFRAME" />
@@ -25,7 +25,7 @@
 			<equals arg1="${addGlobalSite}" arg2="true" />
 			<then>
 				<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT" value1="Select" />
-				<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT_GLOBAL" value1="Global" />
+				<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_MENULIST_GLOBAL" value1="Global" />
 
 				<var name="key_siteName" value="${globalSite}" />
 
@@ -37,7 +37,7 @@
 			<equals arg1="${addOtherSite}" arg2="true" />
 			<then>
 				<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT" value1="Select" />
-				<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT_OTHER_SITE" value1="Other Site..." />
+				<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_MENULIST_OTHER_SITE" value1="Other Site..." />
 				<execute function="SelectFrame" value1="relative=top" />
 
 				<execute function="SelectFrame" locator1="PGAssetpublisherConfigurationSites#SITES_IFRAME" />
@@ -56,7 +56,7 @@
 			<equals arg1="${addSite}" arg2="true" />
 			<then>
 				<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT" value1="Select" />
-				<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT_OTHER_SITE" value1="Other Site..." />
+				<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_MENULIST_OTHER_SITE" value1="Other Site..." />
 				<execute function="SelectFrame" value1="relative=top" />
 
 				<execute function="SelectFrame" locator1="PGAssetpublisherConfigurationSites#SITES_IFRAME" />
@@ -71,7 +71,7 @@
 			</then>
 			<else>
 				<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT" value1="Select" />
-				<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_SELECT_OTHER_SITE" value1="Other Site..." />
+				<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_MENULIST_OTHER_SITE" value1="Other Site..." />
 				<execute function="SelectFrame" value1="relative=top" />
 
 				<execute function="SelectFrame" locator1="PGAssetpublisherConfigurationSites#SITES_IFRAME" />
@@ -165,7 +165,7 @@
 		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
 
 		<execute function="Select" locator1="PGAssetpublisherConfiguration#ORDERING_AND_GROUPING_ORDER_BY_SELECT" value1="${fieldNameOrder}" />
-		<execute function="Select" locator1="PGAssetpublisherConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTION" value1="${sortOrder}" />
+		<execute function="Select" locator1="PGAssetpublisherConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTION_SELECT" value1="${sortOrder}" />
 		<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="PGAssetpublisherConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>

@@ -92,7 +92,14 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 	request.setAttribute("view.jsp-portletURL", portletURL);
 	%>
 
-	<liferay-ui:trash-undo />
+	<portlet:actionURL var="undoTrashURL">
+		<portlet:param name="struts_action" value="/image_gallery_display/edit_entry" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+	</portlet:actionURL>
+
+	<liferay-ui:trash-undo
+		portletURL="<%= undoTrashURL %>"
+	/>
 
 	<liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 

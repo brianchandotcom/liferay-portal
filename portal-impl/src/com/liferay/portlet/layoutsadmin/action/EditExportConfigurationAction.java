@@ -38,6 +38,7 @@ import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.sites.action.ActionUtil;
+import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
@@ -92,6 +93,9 @@ public class EditExportConfigurationAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteExportImportConfiguration(actionRequest, true);
+			}
+			else if (cmd.equals(Constants.RESTORE)) {
+				restoreEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.RELAUNCH)) {
 				relaunchExportLayoutConfiguration(actionRequest);
@@ -249,6 +253,17 @@ public class EditExportConfigurationAction extends PortletAction {
 
 		LayoutServiceUtil.exportLayoutsAsFileInBackground(
 			exportImportConfigurationId);
+	}
+
+	protected void restoreEntries(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] restoreEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
+
+		for (long restoreEntryId : restoreEntryIds) {
+			TrashEntryServiceUtil.restoreEntry(restoreEntryId);
+		}
 	}
 
 	protected ExportImportConfiguration updateExportConfiguration(

@@ -45,7 +45,11 @@ request.setAttribute("view.jsp-folder", folder);
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 %>
 
-<liferay-ui:trash-undo />
+<portlet:actionURL name="undoTrashEntries" var="undoTrashURL" />
+
+<liferay-ui:trash-undo
+	portletURL="<%= undoTrashURL %>"
+/>
 
 <div id="<portlet:namespace />journalContainer">
 	<aui:row cssClass="lfr-app-column-view">

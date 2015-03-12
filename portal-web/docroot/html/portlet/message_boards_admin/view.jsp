@@ -38,7 +38,14 @@ if ((category != null) && layout.isTypeControlPanel()) {
 }
 %>
 
-<liferay-ui:trash-undo />
+<portlet:actionURL var="undoTrashURL">
+	<portlet:param name="struts_action" value="/message_boards/edit_category" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+</portlet:actionURL>
+
+<liferay-ui:trash-undo
+	portletURL="<%= undoTrashURL %>"
+/>
 
 <liferay-util:include page="/html/portlet/message_boards/top_links.jsp" />
 

@@ -45,6 +45,10 @@
 		videoThumbnailURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
 	}
 
+	if (status != WorkflowConstants.STATUS_ANY) {
+		previewQueryString = "&status=" + status;
+	}
+
 	if (Validator.isNotNull(previewQueryString)) {
 		if (hasAudio) {
 			previewFileURLs = new String[PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS.length];

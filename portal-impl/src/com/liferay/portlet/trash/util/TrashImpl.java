@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -448,6 +449,8 @@ public class TrashImpl implements Trash {
 		portletURL.setParameter(
 			"mvcPath", "/html/portlet/trash/view_content.jsp");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
 			className, classPK);

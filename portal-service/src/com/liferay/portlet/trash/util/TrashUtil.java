@@ -152,10 +152,23 @@ public class TrashUtil {
 	}
 
 	public static PortletURL getViewContentURL(
+			HttpServletRequest request, long trashEntryId)
+		throws PortalException {
+
+		return getTrash().getViewContentURL(request, trashEntryId);
+	}
+
+	public static PortletURL getViewContentURL(
 			HttpServletRequest request, String className, long classPK)
 		throws PortalException {
 
 		return getTrash().getViewContentURL(request, className, classPK);
+	}
+
+	public static PortletURL getViewURL(HttpServletRequest request)
+		throws PortalException {
+
+		return getTrash().getViewURL(request);
 	}
 
 	public static boolean isInTrash(String className, long classPK)

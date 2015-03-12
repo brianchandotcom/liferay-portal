@@ -406,6 +406,18 @@ public class TrashImpl implements Trash {
 
 	@Override
 	public PortletURL getViewContentURL(
+			HttpServletRequest request, long trashEntryId)
+		throws PortalException {
+
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(
+			trashEntryId);
+
+		return getViewContentURL(
+			request, trashEntry.getClassName(), trashEntry.getClassPK());
+	}
+
+	@Override
+	public PortletURL getViewContentURL(
 			HttpServletRequest request, String className, long classPK)
 		throws PortalException {
 
@@ -465,6 +477,36 @@ public class TrashImpl implements Trash {
 		portletURL.setParameter("showActions", Boolean.FALSE.toString());
 		portletURL.setParameter("showAssetMetadata", Boolean.TRUE.toString());
 		portletURL.setParameter("showEditURL", Boolean.FALSE.toString());
+
+		return portletURL;
+	}
+
+	@Override
+	public PortletURL getViewURL(HttpServletRequest request)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String portletId = PortletProviderUtil.getPortletId(
+			TrashEntry.class.getName(), PortletProvider.Action.VIEW);
+
+		if (!themeDisplay.isSignedIn() ||
+			!isTrashEnabled(themeDisplay.getScopeGroupId()) ||
+			!PortletPermissionUtil.hasControlPanelAccessPermission(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), portletId)) {
+
+			return null;
+		}
+
+		Layout layout = themeDisplay.getLayout();
+
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			request, portletId, layout.getLayoutId(),
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 		return portletURL;
 	}

@@ -13,101 +13,14 @@
 		<property name="newChainableMethodAdvice" ref="serviceMonitorAdvice" />
 		<property name="parentChainableMethodAdvice" ref="serviceAdvice" />
 	</bean>
-	<bean id="portalStatistics" class="com.liferay.portal.monitoring.statistics.portal.ServerStatistics">
-		<property name="companyLocalService" ref="com.liferay.portal.service.CompanyLocalService" />
-	</bean>
-	<bean id="portletStatistics" class="com.liferay.portal.monitoring.statistics.portlet.ServerStatistics">
-		<property name="companyLocalService" ref="com.liferay.portal.service.CompanyLocalService" />
-	</bean>
 	<bean id="serviceMonitorAdvice" class="com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice" />
-	<bean id="serviceStatistics" class="com.liferay.portal.monitoring.statistics.service.ServerStatistics" />
-	<bean id="com.liferay.portal.monitoring.MonitoringProcessor" class="com.liferay.portal.kernel.monitoring.DefaultMonitoringProcessor">
-		<property name="dataSampleProcessors">
-			<map>
-				<entry key="com.liferay.monitoring.Portal">
-					<list>
-						<ref bean="portalStatistics" />
-					</list>
-				</entry>
-				<entry key="com.liferay.monitoring.Portlet">
-					<list>
-						<ref bean="portletStatistics" />
-					</list>
-				</entry>
-				<entry key="com.liferay.monitoring.Service">
-					<list>
-						<ref bean="serviceStatistics" />
-					</list>
-				</entry>
-			</map>
-		</property>
-		<property name="levels">
-			<map>
-				<entry key="com.liferay.monitoring.Portal" value="HIGH" />
-				<entry key="com.liferay.monitoring.Portlet" value="HIGH" />
-				<entry key="com.liferay.monitoring.Service" value="HIGH" />
-			</map>
-		</property>
-	</bean>
 
 	<!-- JMX -->
-
-	<bean id="com.liferay.portal.monitoring.jmx.MonitoringProcessorManager" class="com.liferay.portal.monitoring.jmx.MonitoringProcessorManager">
-		<property name="monitoringControl" ref="com.liferay.portal.monitoring.MonitoringProcessor" />
-	</bean>
-	<bean id="com.liferay.portal.monitoring.jmx.ActionRequestPortletContainerManager" class="com.liferay.portal.monitoring.jmx.PortletManager">
-		<property name="portletSummaryStatistics">
-			<bean class="com.liferay.portal.monitoring.statistics.portlet.ActionRequestSummaryStatistics">
-				<property name="serverStatistics" ref="portletStatistics" />
-			</bean>
-		</property>
-		<property name="serverStatistics" ref="portletStatistics" />
-	</bean>
-	<bean id="com.liferay.portal.monitoring.jmx.EventRequestPortletContainerManager" class="com.liferay.portal.monitoring.jmx.PortletManager">
-		<property name="portletSummaryStatistics">
-			<bean class="com.liferay.portal.monitoring.statistics.portlet.EventRequestSummaryStatistics">
-				<property name="serverStatistics" ref="portletStatistics" />
-			</bean>
-		</property>
-		<property name="serverStatistics" ref="portletStatistics" />
-	</bean>
-	<bean id="com.liferay.portal.monitoring.jmx.PortalRequestManager" class="com.liferay.portal.monitoring.jmx.PortalManager">
-		<property name="summaryStatistics">
-			<bean class="com.liferay.portal.monitoring.statistics.portal.ServerSummaryStatistics">
-				<property name="serverStatistics" ref="portalStatistics" />
-			</bean>
-		</property>
-		<property name="serverStatistics" ref="portalStatistics" />
-	</bean>
-	<bean id="com.liferay.portal.monitoring.jmx.RenderRequestPortletContainerManager" class="com.liferay.portal.monitoring.jmx.PortletManager">
-		<property name="portletSummaryStatistics">
-			<bean class="com.liferay.portal.monitoring.statistics.portlet.RenderRequestSummaryStatistics">
-				<property name="serverStatistics" ref="portletStatistics" />
-			</bean>
-		</property>
-		<property name="serverStatistics" ref="portletStatistics" />
-	</bean>
-	<bean id="com.liferay.portal.monitoring.jmx.ResourceRequestPortletContainerManager" class="com.liferay.portal.monitoring.jmx.PortletManager">
-		<property name="portletSummaryStatistics">
-			<bean class="com.liferay.portal.monitoring.statistics.portlet.ResourceRequestSummaryStatistics">
-				<property name="serverStatistics" ref="portletStatistics" />
-			</bean>
-		</property>
-		<property name="serverStatistics" ref="portletStatistics" />
-	</bean>
-	<bean id="com.liferay.portal.monitoring.jmx.ServiceManager" class="com.liferay.portal.monitoring.jmx.ServiceManager">
-		<property name="serverStatistics" ref="serviceStatistics" />
-		<property name="serviceMonitorAdvice" ref="serviceMonitorAdvice" />
-	</bean>
-
-	<!-- Messaging -->
 
 	<bean id="destination.monitoring" class="com.liferay.portal.kernel.messaging.ParallelDestination">
 		<property name="name" value="liferay/monitoring" />
 	</bean>
-	<bean id="messageListener.monitoring" class="com.liferay.portal.monitoring.messaging.MonitoringMessageListener">
-		<property name="dataSampleProcessor" ref="com.liferay.portal.monitoring.MonitoringProcessor" />
-	</bean>
+	<bean id="messageListener.monitoring" class="com.liferay.portal.kernel.monitoring.messaging.MonitoringMessageListener" />
 	<bean id="messagingConfigurator.monitoring" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
 		<property name="destinations">
 			<list>
@@ -130,9 +43,5 @@
 
 	<!-- Portlet container -->
 
-	<bean id="messageSender.monitoring" class="com.liferay.portal.kernel.messaging.sender.DefaultSingleDestinationMessageSender">
-		<property name="destinationName" value="liferay/monitoring" />
-		<property name="messageSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
-	</bean>
 	<bean id="com.liferay.portlet.MonitoringPortletFactoryImpl" class="com.liferay.portlet.MonitoringPortletFactoryImpl" />
 </beans>

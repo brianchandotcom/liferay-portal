@@ -16,6 +16,7 @@ package com.liferay.portal.monitoring.statistics.service;
 
 import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
+import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.kernel.monitoring.statistics.DataSample;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
@@ -24,6 +25,7 @@ import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 
 import java.lang.reflect.Method;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,31 +34,22 @@ import org.aopalliance.intercept.MethodInvocation;
 /**
  * @author Michael C. Han
  */
-public class ServiceMonitorAdvice extends ChainableMethodAdvice {
+public class ServiceMonitorAdvice extends ChainableMethodAdvice
+	implements ServiceMonitoringControl {
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public static ServiceMonitorAdvice getInstance() {
-		return new ServiceMonitorAdvice();
+	@Override
+	public void addServiceClass(String className) {
+		_serviceClasses.add(className);
 	}
 
-	public static boolean isActive() {
-		return _active;
-	}
-
-	public void addMonitoredClass(String className) {
-		_monitoredClasses.add(className);
-	}
-
-	public void addMonitoredMethod(
+	@Override
+	public void addServiceClassMethod(
 		String className, String methodName, String[] parameterTypes) {
 
 		MethodSignature methodSignature = new MethodSignature(
 			className, methodName, parameterTypes);
 
-		_monitoredMethods.add(methodSignature);
+		_serviceClassMethods.add(methodSignature);
 	}
 
 	@Override
@@ -84,14 +77,16 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
-		if (!_active) {
+		if (!_monitorServiceRequest) {
 			serviceBeanAopCacheManager.removeMethodInterceptor(
 				methodInvocation, this);
 
 			return null;
 		}
 
-		if (!_permissiveMode && !isMonitored(methodInvocation)) {
+		boolean included = isIncluded(methodInvocation);
+
+		if ((!_inclusiveMode && included) || (_inclusiveMode && !included)) {
 			return null;
 		}
 
@@ -122,71 +117,67 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 		}
 	}
 
-	public Set<String> getMonitoredClasses() {
-		return _monitoredClasses;
+	@Override
+	public Set<String> getServiceClasses() {
+		return Collections.unmodifiableSet(_serviceClasses);
 	}
 
-	public Set<MethodSignature> getMonitoredMethods() {
-		return _monitoredMethods;
+	@Override
+	public Set<MethodSignature> getServiceClassMethods() {
+		return Collections.unmodifiableSet(_serviceClassMethods);
 	}
 
-	public boolean isPermissiveMode() {
-		return _permissiveMode;
+	@Override
+	public boolean isInclusiveMode() {
+		return _inclusiveMode;
 	}
 
-	public void setActive(boolean active) {
-		if (active && !_active) {
+	@Override
+	public boolean isMonitorServiceRequest() {
+		return _monitorServiceRequest;
+	}
+
+	@Override
+	public void setInclusiveMode(boolean inclusiveMode) {
+		_inclusiveMode = inclusiveMode;
+	}
+
+	@Override
+	public void setMonitorServiceRequest(boolean monitorServiceRequest) {
+		if (monitorServiceRequest && !_monitorServiceRequest) {
 			serviceBeanAopCacheManager.reset();
 		}
 
-		_active = active;
+		_monitorServiceRequest = monitorServiceRequest;
 	}
 
-	public void setMonitoredClasses(Set<String> monitoredClasses) {
-		_monitoredClasses = monitoredClasses;
-	}
-
-	public void setMonitoredMethods(Set<MethodSignature> monitoredMethods) {
-		_monitoredMethods = monitoredMethods;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setMonitoringDestinationName(String monitoringDestinationName) {
-	}
-
-	public void setPermissiveMode(boolean permissiveMode) {
-		_permissiveMode = permissiveMode;
-	}
-
-	protected boolean isMonitored(MethodInvocation methodInvocation) {
+	protected boolean isIncluded(MethodInvocation methodInvocation) {
 		Method method = methodInvocation.getMethod();
 
 		Class<?> declaringClass = method.getDeclaringClass();
 
 		String className = declaringClass.getName();
 
-		if (_monitoredClasses.contains(className)) {
+		if (_serviceClasses.contains(className)) {
 			return true;
 		}
 
 		MethodSignature methodSignature = new MethodSignature(method);
 
-		if (_monitoredMethods.contains(methodSignature)) {
+		if (_serviceClassMethods.contains(methodSignature)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private static boolean _active;
 	private static final ThreadLocal<DataSample>
 		_dataSampleThreadLocal = new AutoResetThreadLocal<>(
 			ServiceMonitorAdvice.class + "._dataSampleThreadLocal");
-	private static Set<String> _monitoredClasses = new HashSet<>();
-	private static Set<MethodSignature> _monitoredMethods = new HashSet<>();
-	private static boolean _permissiveMode;
+	private static boolean _inclusiveMode = true;
+	private static boolean _monitorServiceRequest;
+	private static final Set<String> _serviceClasses = new HashSet<>();
+	private static final Set<MethodSignature> _serviceClassMethods =
+		new HashSet<>();
 
 }

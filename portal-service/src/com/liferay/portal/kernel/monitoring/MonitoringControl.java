@@ -20,7 +20,7 @@ import java.util.Set;
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public interface MonitoringProcessor {
+public interface MonitoringControl {
 
 	public Level getLevel(String namespace);
 

@@ -1537,6 +1537,29 @@ go]]></replacevalue>
 		<get-testray-project-name />
 		<get-testray-team-name />
 
+		<if>
+			<available file="portal-web/test-results/functional/report.html" />
+			<then>
+				<property name="test.case.attachments">
+					<![CDATA[
+						<attachments>
+							<file name="console.output" value="${testray.logs.console}" />
+							<file name="report.html" value="${testray.logs.report}" />
+						</attachments>
+					]]>
+				</property>
+			</then>
+			<else>
+				<property name="test.case.attachments">
+					<![CDATA[
+						<attachments>
+							<file name="console.output" value="${testray.logs.console}" />
+						</attachments>
+					]]>
+				</property>
+			</else>
+		</if>
+
 		<property name="test.case.properties">
 			<![CDATA[
 				<properties>
@@ -1622,7 +1645,7 @@ go]]></replacevalue>
 				<replaceregexp
 					file="@{file.name}"
 					match="&lt;testcase[^&gt;]*&gt;"
-					replace="${test.suite.properties}\0${test.case.properties}"
+					replace="${test.suite.properties}\0${test.case.attachments}${line.separator}${test.case.properties}"
 				/>
 
 				<replaceregexp

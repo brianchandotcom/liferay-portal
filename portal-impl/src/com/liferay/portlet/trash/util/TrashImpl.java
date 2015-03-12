@@ -137,7 +137,7 @@ public class TrashImpl implements Trash {
 		ActionRequest actionRequest, List<TrashedModel> trashedModels) {
 
 		addTrashSessionMessages(
-				actionRequest, trashedModels, Constants.MOVE_TO_TRASH);
+			actionRequest, trashedModels, Constants.MOVE_TO_TRASH);
 	}
 
 	@Override
@@ -195,7 +195,7 @@ public class TrashImpl implements Trash {
 		ActionRequest actionRequest, TrashedModel trashedModel) {
 
 		addTrashSessionMessages(
-				actionRequest, trashedModel, Constants.MOVE_TO_TRASH);
+			actionRequest, trashedModel, Constants.MOVE_TO_TRASH);
 	}
 
 	@Override

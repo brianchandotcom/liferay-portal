@@ -590,7 +590,6 @@ public class LayoutExporter {
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
 
 		_portletExporter.exportAssetLinks(portletDataContext);
-		_portletExporter.exportAssetTags(portletDataContext);
 		_portletExporter.exportExpandoTables(portletDataContext);
 		_portletExporter.exportLocks(portletDataContext);
 

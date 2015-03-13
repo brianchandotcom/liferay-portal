@@ -142,12 +142,12 @@ public class ExportImportDateUtil {
 		int endDateHour = MapUtil.getInteger(parameterMap, "endDateHour");
 		int endDateMinute = MapUtil.getInteger(parameterMap, "endDateMinute");
 
+		String portletId = (String)settingsMap.get("portletId");
 		long groupId = MapUtil.getLong(settingsMap, "sourceGroupId");
+		long plid = MapUtil.getLong(settingsMap, "sourcePlid");
 		boolean privateLayout = MapUtil.getBoolean(
 			settingsMap, "privateLayout");
 		Locale locale = (Locale)settingsMap.get("locale");
-		long plid = MapUtil.getLong(settingsMap, "sourcePlid");
-		String portletId = (String)settingsMap.get("portletId");
 		TimeZone timeZone = (TimeZone)settingsMap.get("timezone");
 
 		return getDateRange(

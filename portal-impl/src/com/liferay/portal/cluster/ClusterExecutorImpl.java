@@ -200,7 +200,18 @@ public class ClusterExecutorImpl
 
 		_localAddress = _controlChannel.getLocalAddress();
 
-		initLocalClusterNode();
+		_localClusterNodeId = PortalUUIDUtil.generate();
+
+		_localClusterNode = new ClusterNode(
+			_localClusterNodeId, _controlChannel.getBindInetAddress());
+
+		if (Validator.isNotNull(PropsValues.PORTAL_INSTANCE_PROTOCOL)) {
+			_localClusterNode.setPortalProtocol(
+				PropsValues.PORTAL_INSTANCE_PROTOCOL);
+
+			_localClusterNode.setPortalInetSocketAddress(
+				getConfiguredPortalAddress());
+		}
 
 		memberJoined(_localAddress, _localClusterNode);
 
@@ -316,30 +327,7 @@ public class ClusterExecutorImpl
 		}
 	}
 
-	protected ClusterChannel getControlChannel() {
-		return _controlChannel;
-	}
-
-	protected FutureClusterResponses getExecutionResults(String uuid) {
-		return _futureClusterResponses.get(uuid);
-	}
-
-	protected ExecutorService getExecutorService() {
-		return _executorService;
-	}
-
-	protected void initLocalClusterNode() {
-		InetAddress inetAddress = _controlChannel.getBindInetAddress();
-
-		ClusterNode clusterNode = new ClusterNode(
-			PortalUUIDUtil.generate(), inetAddress);
-
-		if (Validator.isNull(PropsValues.PORTAL_INSTANCE_PROTOCOL)) {
-			_localClusterNode = clusterNode;
-
-			return;
-		}
-
+	protected InetSocketAddress getConfiguredPortalAddress() {
 		if (Validator.isNull(PropsValues.PORTAL_INSTANCE_INET_SOCKET_ADDRESS)) {
 			throw new IllegalArgumentException(
 				"Portal instance host name and port needs to be set in the " +
@@ -377,12 +365,19 @@ public class ClusterExecutorImpl
 					PropsValues.PORTAL_INSTANCE_INET_SOCKET_ADDRESS, nfe);
 		}
 
-		clusterNode.setPortalInetSocketAddress(
-			new InetSocketAddress(hostInetAddress, port));
+		return new InetSocketAddress(hostInetAddress, port);
+	}
 
-		clusterNode.setPortalProtocol(PropsValues.PORTAL_INSTANCE_PROTOCOL);
+	protected ClusterChannel getControlChannel() {
+		return _controlChannel;
+	}
 
-		_localClusterNode = clusterNode;
+	protected FutureClusterResponses getExecutionResults(String uuid) {
+		return _futureClusterResponses.get(uuid);
+	}
+
+	protected ExecutorService getExecutorService() {
+		return _executorService;
 	}
 
 	protected boolean memberJoined(
@@ -480,5 +475,6 @@ public class ClusterExecutorImpl
 		new ConcurrentHashMap<>();
 	private Address _localAddress;
 	private ClusterNode _localClusterNode;
+	private String _localClusterNodeId;
 
 }

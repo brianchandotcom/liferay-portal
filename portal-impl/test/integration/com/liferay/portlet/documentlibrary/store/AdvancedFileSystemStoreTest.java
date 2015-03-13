@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -67,19 +66,9 @@ public class AdvancedFileSystemStoreTest {
 			}
 		}
 		finally {
-			try {
-				_store.deleteDirectory(
-					companyId, repositoryId, StringPool.BLANK);
-			}
-			catch (NoSuchDirectoryException nsde) {
-			}
-
-			try {
-				_store.deleteDirectory(
-					companyId, newRepositoryId, StringPool.BLANK);
-			}
-			catch (NoSuchDirectoryException nsde) {
-			}
+			_store.deleteDirectory(companyId, repositoryId, StringPool.BLANK);
+			_store.deleteDirectory(
+				companyId, newRepositoryId, StringPool.BLANK);
 		}
 	}
 

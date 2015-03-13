@@ -129,7 +129,8 @@ public class DBStore extends BaseStore {
 				companyId, repositoryId, fileName);
 		}
 		catch (NoSuchContentException nsce) {
-			throw new NoSuchFileException(nsce);
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, nsce);
 		}
 
 		dlContent.resetOriginalValues();
@@ -186,7 +187,8 @@ public class DBStore extends BaseStore {
 				companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (NoSuchContentException nsce) {
-			throw new NoSuchFileException(nsce);
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, versionLabel, nsce);
 		}
 
 		Blob blobData = dlContent.getData();
@@ -277,7 +279,8 @@ public class DBStore extends BaseStore {
 				companyId, repositoryId, fileName);
 		}
 		catch (NoSuchContentException nsce) {
-			throw new NoSuchFileException(nsce);
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, nsce);
 		}
 
 		return dlContent.getSize();
@@ -330,7 +333,8 @@ public class DBStore extends BaseStore {
 		if (DLContentLocalServiceUtil.hasContent(
 				companyId, repositoryId, fileName, versionLabel)) {
 
-			throw new DuplicateFileException(fileName);
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, versionLabel);
 		}
 
 		DLContentLocalServiceUtil.addContent(
@@ -346,7 +350,8 @@ public class DBStore extends BaseStore {
 		if (DLContentLocalServiceUtil.hasContent(
 				companyId, repositoryId, fileName, versionLabel)) {
 
-			throw new DuplicateFileException(fileName);
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, versionLabel);
 		}
 
 		InputStream inputStream = null;
@@ -372,7 +377,8 @@ public class DBStore extends BaseStore {
 		if (DLContentLocalServiceUtil.hasContent(
 				companyId, repositoryId, fileName, versionLabel)) {
 
-			throw new DuplicateFileException(fileName);
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, versionLabel);
 		}
 
 		long length = -1;

@@ -15,6 +15,8 @@
 package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.lar.ExportImportDateUtil;
+import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
@@ -24,7 +26,6 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import java.io.File;
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -58,12 +59,12 @@ public class PortletExportBackgroundTaskExecutor
 		String portletId = MapUtil.getString(settingsMap, "portletId");
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
-		Date startDate = (Date)settingsMap.get("startDate");
-		Date endDate = (Date)settingsMap.get("endDate");
+		DateRange dateRange = ExportImportDateUtil.getDateRange(
+			exportImportConfiguration, ExportImportDateUtil.RANGE_ALL);
 
 		File larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
-			sourcePlid, sourceGroupId, portletId, parameterMap, startDate,
-			endDate);
+			sourcePlid, sourceGroupId, portletId, parameterMap,
+			dateRange.getStartDate(), dateRange.getEndDate());
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
 			userId, backgroundTask.getBackgroundTaskId(), fileName, larFile);

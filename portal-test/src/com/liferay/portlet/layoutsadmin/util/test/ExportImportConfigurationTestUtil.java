@@ -26,7 +26,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -64,13 +63,9 @@ public class ExportImportConfigurationTestUtil {
 
 		User user = UserLocalServiceUtil.getUser(userId);
 
-		Date startDate = new Date();
-
-		Date endDate = startDate;
-
 		return ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-			userId, groupId, groupId, false, null, null, startDate, endDate,
-			user.getLocale(), user.getTimeZone());
+			userId, groupId, groupId, false, null, null, user.getLocale(),
+			user.getTimeZone());
 	}
 
 }

@@ -320,7 +320,7 @@ public class StagingImplTest {
 
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-			_group.getGroupId(), false, parameters, null, null);
+			_group.getGroupId(), false, parameters);
 
 		// Retrieve content from live after publishing
 

@@ -952,7 +952,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				userId, groupId, privateLayout, layoutIds, parameterMap,
-				startDate, endDate, user.getLocale(), user.getTimeZone());
+				user.getLocale(), user.getTimeZone());
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -1151,8 +1151,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildExportSettingsMap(
 				userId, plid, groupId, portletId, parameterMap,
-				Constants.EXPORT, startDate, endDate, user.getLocale(),
-				user.getTimeZone(), fileName);
+				Constants.EXPORT, user.getLocale(), user.getTimeZone(),
+				fileName);
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -1970,8 +1970,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				userId, groupId, privateLayout, null, parameterMap,
-				Constants.IMPORT, null, null, user.getLocale(),
-				user.getTimeZone(), file.getName());
+				Constants.IMPORT, user.getLocale(), user.getTimeZone(),
+				file.getName());
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -2208,8 +2208,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				userId, plid, groupId, portletId, parameterMap,
-				Constants.IMPORT, null, null, user.getLocale(),
-				user.getTimeZone(), file.getName());
+				Constants.IMPORT, user.getLocale(), user.getTimeZone(),
+				file.getName());
 
 		ServiceContext serviceContext = new ServiceContext();
 

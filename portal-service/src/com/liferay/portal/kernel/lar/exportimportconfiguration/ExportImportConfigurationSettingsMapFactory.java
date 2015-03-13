@@ -32,7 +32,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -48,47 +47,44 @@ public class ExportImportConfigurationSettingsMapFactory {
 
 	public static Map<String, Serializable> buildExportSettingsMap(
 		long userId, long sourcePlid, long sourceGroupId, String portletId,
-		Map<String, String[]> parameterMap, String cmd, Date startDate,
-		Date endDate, Locale locale, TimeZone timeZone, String fileName) {
+		Map<String, String[]> parameterMap, String cmd, Locale locale,
+		TimeZone timeZone, String fileName) {
 
 		return buildSettingsMap(
 			userId, sourceGroupId, sourcePlid, 0, 0, portletId, null, null,
 			null, parameterMap, StringPool.BLANK, 0, StringPool.BLANK, null, 0,
-			null, cmd, startDate, endDate, locale, timeZone, fileName);
+			null, cmd, locale, timeZone, fileName);
 	}
 
 	public static Map<String, Serializable> buildImportSettingsMap(
 		long userId, long targetGroupId, boolean privateLayout,
 		long[] layoutIds, Map<String, String[]> parameterMap, String cmd,
-		Date startDate, Date endDate, Locale locale, TimeZone timeZone,
-		String fileName) {
+		Locale locale, TimeZone timeZone, String fileName) {
 
 		return buildSettingsMap(
 			userId, 0, 0, targetGroupId, 0, StringPool.BLANK, privateLayout,
 			null, layoutIds, parameterMap, StringPool.BLANK, 0,
-			StringPool.BLANK, null, 0, null, cmd, startDate, endDate, locale,
-			timeZone, fileName);
+			StringPool.BLANK, null, 0, null, cmd, locale, timeZone, fileName);
 	}
 
 	public static Map<String, Serializable> buildImportSettingsMap(
 		long userId, long targetPlid, long targetGroupId, String portletId,
-		Map<String, String[]> parameterMap, String cmd, Date startDate,
-		Date endDate, Locale locale, TimeZone timeZone, String fileName) {
+		Map<String, String[]> parameterMap, String cmd, Locale locale,
+		TimeZone timeZone, String fileName) {
 
 		return buildSettingsMap(
 			userId, 0, 0, targetGroupId, targetPlid, portletId, null, null,
 			null, parameterMap, StringPool.BLANK, 0, StringPool.BLANK, null, 0,
-			null, cmd, startDate, endDate, locale, timeZone, fileName);
+			null, cmd, locale, timeZone, fileName);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(
 		long userId, long groupId, boolean privateLayout, long[] layoutIds,
-		Map<String, String[]> parameterMap, Date startDate, Date endDate,
-		Locale locale, TimeZone timeZone) {
+		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
 
 		return buildSettingsMap(
-			userId, groupId, 0, privateLayout, layoutIds, parameterMap,
-			startDate, endDate, locale, timeZone);
+			userId, groupId, 0, privateLayout, layoutIds, parameterMap, locale,
+			timeZone);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(
@@ -96,41 +92,37 @@ public class ExportImportConfigurationSettingsMapFactory {
 		Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
 		String remoteAddress, int remotePort, String remotePathContext,
 		boolean secureConnection, long remoteGroupId,
-		boolean remotePrivateLayout, Date startDate, Date endDate,
-		Locale locale, TimeZone timeZone) {
+		boolean remotePrivateLayout, Locale locale, TimeZone timeZone) {
 
 		return buildSettingsMap(
 			userId, sourceGroupId, 0, 0, 0, StringPool.BLANK, privateLayout,
 			layoutIdMap, null, parameterMap, remoteAddress, remotePort,
 			remotePathContext, secureConnection, remoteGroupId,
-			remotePrivateLayout, StringPool.BLANK, startDate, endDate, locale,
-			timeZone, StringPool.BLANK);
+			remotePrivateLayout, StringPool.BLANK, locale, timeZone,
+			StringPool.BLANK);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(
 		long userId, long sourceGroupId, long targetGroupId,
 		boolean privateLayout, long[] layoutIds,
-		Map<String, String[]> parameterMap, Date startDate, Date endDate,
-		Locale locale, TimeZone timeZone) {
+		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
 
 		return buildSettingsMap(
 			userId, sourceGroupId, 0, targetGroupId, 0, StringPool.BLANK,
 			privateLayout, null, layoutIds, parameterMap, StringPool.BLANK, 0,
-			StringPool.BLANK, null, 0, null, StringPool.BLANK, startDate,
-			endDate, locale, timeZone, StringPool.BLANK);
+			StringPool.BLANK, null, 0, null, StringPool.BLANK, locale, timeZone,
+			StringPool.BLANK);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(
 		long userId, long sourceGroupId, long sourcePlid, long targetGroupId,
 		long targetPlid, String portletId, Map<String, String[]> parameterMap,
-		String cmd, Date startDate, Date endDate, Locale locale,
-		TimeZone timeZone) {
+		String cmd, Locale locale, TimeZone timeZone) {
 
 		return buildSettingsMap(
 			userId, sourceGroupId, sourcePlid, targetGroupId, targetPlid,
 			portletId, null, null, null, parameterMap, StringPool.BLANK, 0,
-			StringPool.BLANK, null, 0, null, cmd, startDate, endDate, locale,
-			timeZone, null);
+			StringPool.BLANK, null, 0, null, cmd, locale, timeZone, null);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(
@@ -151,8 +143,8 @@ public class ExportImportConfigurationSettingsMapFactory {
 
 			return buildSettingsMap(
 				themeDisplay.getUserId(), groupId, privateLayout, layoutIds,
-				portletRequest.getParameterMap(), null, null,
-				themeDisplay.getLocale(), themeDisplay.getTimeZone());
+				portletRequest.getParameterMap(), themeDisplay.getLocale(),
+				themeDisplay.getTimeZone());
 		}
 
 		Group stagingGroup = GroupLocalServiceUtil.getGroup(groupId);
@@ -170,8 +162,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 			return buildSettingsMap(
 				themeDisplay.getUserId(), stagingGroup.getGroupId(),
 				liveGroup.getGroupId(), privateLayout, layoutIds, parameterMap,
-				null, null, themeDisplay.getLocale(),
-				themeDisplay.getTimeZone());
+				themeDisplay.getLocale(), themeDisplay.getTimeZone());
 		}
 
 		UnicodeProperties groupTypeSettingsProperties =
@@ -209,7 +200,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 		return buildSettingsMap(
 			themeDisplay.getUserId(), groupId, privateLayout, layoutIdMap,
 			parameterMap, remoteAddress, remotePort, remotePathContext,
-			secureConnection, remoteGroupId, remotePrivateLayout, null, null,
+			secureConnection, remoteGroupId, remotePrivateLayout,
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 	}
 
@@ -220,17 +211,12 @@ public class ExportImportConfigurationSettingsMapFactory {
 		Map<String, String[]> parameterMap, String remoteAddress,
 		int remotePort, String remotePathContext, Boolean secureConnection,
 		long remoteGroupId, Boolean remotePrivateLayout, String cmd,
-		Date startDate, Date endDate, Locale locale, TimeZone timeZone,
-		String fileName) {
+		Locale locale, TimeZone timeZone, String fileName) {
 
 		Map<String, Serializable> settingsMap = new HashMap<>();
 
 		if (Validator.isNotNull(cmd)) {
 			settingsMap.put(Constants.CMD, cmd);
-		}
-
-		if (endDate != null) {
-			settingsMap.put("endDate", endDate);
 		}
 
 		if (Validator.isNotNull(fileName)) {
@@ -293,10 +279,6 @@ public class ExportImportConfigurationSettingsMapFactory {
 
 		if (sourceGroupId > 0) {
 			settingsMap.put("sourceGroupId", sourceGroupId);
-		}
-
-		if (startDate != null) {
-			settingsMap.put("startDate", startDate);
 		}
 
 		if (sourcePlid > 0) {

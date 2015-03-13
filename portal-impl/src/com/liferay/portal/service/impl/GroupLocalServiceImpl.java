@@ -786,17 +786,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				 PortalUtil.isSystemGroup(group.getGroupKey())) &&
 				!CompanyThreadLocal.isDeleteInProcess()) {
 
-				throw new RequiredGroupException(
-					String.valueOf(group.getGroupId()),
-					RequiredGroupException.SYSTEM_GROUP);
+				throw new RequiredGroupException.MustNotDeleteSystemGroup(
+					group.getGroupId());
 			}
 
 			if (groupPersistence.countByC_P_S(
 					group.getCompanyId(), group.getGroupId(), true) > 0) {
 
-				throw new RequiredGroupException(
-					String.valueOf(group.getGroupId()),
-					RequiredGroupException.PARENT_GROUP);
+				throw new RequiredGroupException.MustNotDeleteGroupThatHasChild(
+					group.getGroupId());
 			}
 
 			List<BackgroundTask> backgroundTasks =
@@ -3342,9 +3340,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (PortalUtil.isSystemGroup(group.getGroupKey()) &&
 			!groupKey.equals(group.getGroupKey())) {
 
-			throw new RequiredGroupException(
-				String.valueOf(group.getGroupId()),
-				RequiredGroupException.SYSTEM_GROUP);
+			throw new RequiredGroupException.MustNotDeleteSystemGroup(
+				group.getGroupId());
 		}
 
 		validateFriendlyURL(

@@ -117,25 +117,9 @@ else if (group != null) {
 <liferay-ui:error exception="<%= GroupParentException.MustNotHaveChildParent.class %>" message="the-site-cannot-have-a-child-as-its-parent-site" />
 <liferay-ui:error exception="<%= GroupParentException.MustNotHaveStagingParent.class %>" message="the-site-cannot-have-a-staging-site-as-its-parent-site" />
 <liferay-ui:error exception="<%= PendingBackgroundTaskException.class %>" message="the-site-cannot-be-deleted-because-it-has-background-tasks-in-progress" />
-
-<liferay-ui:error exception="<%= RequiredGroupException.class %>">
-
-	<%
-	RequiredGroupException rge = (RequiredGroupException)errorException;
-	%>
-
-	<c:if test="<%= rge.getType() == RequiredGroupException.CURRENT_GROUP %>">
-		<liferay-ui:message key="the-site-cannot-be-deleted-or-deactivated-because-you-are-accessing-the-site" />
-	</c:if>
-
-	<c:if test="<%= rge.getType() == RequiredGroupException.PARENT_GROUP %>">
-		<liferay-ui:message key="you-cannot-delete-sites-that-have-subsites" />
-	</c:if>
-
-	<c:if test="<%= rge.getType() == RequiredGroupException.SYSTEM_GROUP %>">
-		<liferay-ui:message key="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
-	</c:if>
-</liferay-ui:error>
+<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteCurrentGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-you-are-accessing-the-site" />
+<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteGroupThatHasChild.class %>" message="you-cannot-delete-sites-that-have-subsites" />
+<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteSystemGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
 
 <liferay-ui:error key="resetMergeFailCountAndMerge" message="unable-to-reset-the-failure-counter-and-propagate-the-changes" />
 

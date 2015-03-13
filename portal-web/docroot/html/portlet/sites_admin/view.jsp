@@ -62,24 +62,9 @@ String searchURLString = searchURL.toString();
 		<liferay-ui:message arguments="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" key="site-x-does-not-have-any-private-pages" translateArguments="<%= false %>" />
 	</liferay-ui:error>
 
-	<liferay-ui:error exception="<%= RequiredGroupException.class %>">
-
-		<%
-		RequiredGroupException rge = (RequiredGroupException)errorException;
-		%>
-
-		<c:if test="<%= rge.getType() == RequiredGroupException.CURRENT_GROUP %>">
-			<liferay-ui:message key="you-cannot-delete-this-site-because-you-are-currently-accessing-this-site" />
-		</c:if>
-
-		<c:if test="<%= rge.getType() == RequiredGroupException.PARENT_GROUP %>">
-			<liferay-ui:message key="you-cannot-delete-sites-that-have-subsites" />
-		</c:if>
-
-		<c:if test="<%= rge.getType() == RequiredGroupException.SYSTEM_GROUP %>">
-			<liferay-ui:message key="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
-		</c:if>
-	</liferay-ui:error>
+	<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteCurrentGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-you-are-accessing-the-site" />
+	<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteGroupThatHasChild.class %>" message="you-cannot-delete-sites-that-have-subsites" />
+	<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteSystemGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
 
 	<c:choose>
 		<c:when test="<%= sitesListView.equals(SiteConstants.LIST_VIEW_FLAT_SITES) %>">

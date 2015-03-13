@@ -21,7 +21,7 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = (CommentsEditorDispl
 boolean hideControls = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:discussion:hideControls"));
 MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute("liferay-ui:discussion:messageDisplay");
 String permissionClassName = (String)request.getAttribute("liferay-ui:discussion:permissionClassName");
-long permissionClassPK = GetterUtil.getLong((String) request.getAttribute("liferay-ui:discussion:permissionClassPK"));
+long permissionClassPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:permissionClassPK"));
 boolean ratingsEnabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:ratingsEnabled"));
 long userId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:userId"));
 
@@ -75,9 +75,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 
 					Date createDate = message.getCreateDate();
-					Date modifyDate = message.getModifiedDate();
+					Date modifiedDate = message.getModifiedDate();
 
-					String createDateMessage = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+					String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 					%>
 
 					<aui:a href="<%= (messageUser != null) ? messageUser.getDisplayURL(themeDisplay) : null %>">
@@ -90,7 +90,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 					<c:choose>
 						<c:when test="<%= message.getParentMessageId() == rootMessage.getMessageId() %>">
-							<liferay-ui:message arguments="<%= createDateMessage %>" key="x-ago" translateArguments="<%= false %>" />
+							<liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" translateArguments="<%= false %>" />
 						</c:when>
 						<c:otherwise>
 
@@ -135,12 +135,12 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							sb.append("</a>");
 							%>
 
-							<%= LanguageUtil.format(request, "x-ago-in-reply-to-x", new Object[] {createDateMessage, sb.toString()}, false) %>
+							<%= LanguageUtil.format(request, "x-ago-in-reply-to-x", new Object[] {createDateDescription, sb.toString()}, false) %>
 						</c:otherwise>
 					</c:choose>
 
-					<c:if test="<%= createDate.before(modifyDate) %>">
-						<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= dateFormatDateTime.format(modifyDate) %>');">
+					<c:if test="<%= createDate.before(modifiedDate) %>">
+						<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= dateFormatDateTime.format(modifiedDate) %>');">
 							- <liferay-ui:message key="edited" />
 						</strong>
 					</c:if>

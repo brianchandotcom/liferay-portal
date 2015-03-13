@@ -7,9 +7,6 @@
 		<icon>/html/icons/polls.png</icon>
 		<struts-path>polls</struts-path>
 		<portlet-data-handler-class>com.liferay.polls.lar.PollsPortletDataHandler</portlet-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.polls.lar.PollsChoiceStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.polls.lar.PollsQuestionStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.polls.lar.PollsVoteStagedModelDataHandler</staged-model-data-handler-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
 		<control-panel-entry-weight>10.0</control-panel-entry-weight>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>

@@ -1198,7 +1198,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-46786, LPS-46845" name="ImportLarSOCalendarSite" priority="4">
+	<command name="ImportLarSOCalendarSite" priority="4">
 		<var name="eventComment1" value="Calendar Event Comment 1" />
 		<var name="eventComment2" value="Calendar Event Comment 2" />
 		<var name="eventTitle1" value="Calendar Event Title 1" />

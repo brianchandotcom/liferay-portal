@@ -1944,7 +1944,9 @@
 
 		<execute function="Refresh" />
 
-		<execute macro="Staging#publishToLiveNow" />
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
@@ -1973,6 +1975,549 @@
 			<var name="preview1Text" value="Campaign Name" />
 			<var name="preview2Text" value="Default" />
 			<var name="viewCampaignSelected" value="Campaign Name" />
+		</execute>
+	</command>
+
+	<command name="StagingCTDeletions" priority="4">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#setupContentTargeting">
+			<var name="stagingSetup" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#deleteAllCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#deleteAllCP" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CampaignDisplayPortlet#viewNoContentPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#viewNoContentPG" />
+	</command>
+
+	<command name="StagingCTDisabled" priority="4">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+			<var name="uncheckContent" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
+			<var name="genderRadio" value="Male" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContent#addWithCategoryCP">
+			<var name="categoryName" value="User Segment Name" />
+			<var name="vocabularyName" value="User Segment" />
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="User Segment Content List" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentListPortlet#viewContent">
+			<var name="viewEntryContentList" value="Web Content Content" />
+			<var name="viewEntryTitleList" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentListPortlet#viewContent">
+			<var name="viewEntryContentList" value="Web Content Content" />
+			<var name="viewEntryTitleList" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#editGenderRule">
+			<var name="genderRadioPath" value="FEMALE" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentListPortlet#viewContentNotPresent" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentListPortlet#viewContentNotPresent" />
+	</command>
+
+	<command name="StagingCTEnabled" priority="4">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
+			<var name="genderRadio" value="Male" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContent#addWithCategoryCP">
+			<var name="categoryName" value="User Segment Name" />
+			<var name="vocabularyName" value="User Segment" />
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="User Segment Content List" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentListPortlet#viewContent">
+			<var name="viewEntryContentList" value="Web Content Content" />
+			<var name="viewEntryTitleList" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentListPortlet#viewContent">
+			<var name="viewEntryContentList" value="Web Content Content" />
+			<var name="viewEntryTitleList" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#editGenderRule">
+			<var name="genderRadioPath" value="FEMALE" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentListPortlet#viewContentNotPresent" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentListPortlet#viewContent">
+			<var name="viewEntryContentList" value="Web Content Content" />
+			<var name="viewEntryTitleList" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentListPortlet#viewContentNotPresent" />
+	</command>
+
+	<command name="StagingUncheckAppAllAndContentCTRefAllAndWC" priority="4">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addBehaviorContentVisitedRuleCP">
+			<var name="contentVisitedContent" value="Web Content Article" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignEndDate" value="1/1/2099" />
+			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPriorityField" value="3" />
+			<var name="campaignStartDate" value="1/1/2015" />
+			<var name="campaignStartTime" value="12:00 AM" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionContentCP">
+			<var name="contentAlias" value="Content Alias" />
+			<var name="contentTitle" value="Web Content Title" />
+			<var name="contentTrackingActionSelect" value="View" />
+			<var name="menulistContent" value="Web Content Article" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#saveCP" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="contentDateRange" value="All" />
+			<var name="contentName" value="Audience Targeting" />
+			<var name="subContent" value="User Segments" />
+			<var name="uncheckSubSubContent" value="Referenced Content" />
+		</execute>
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="contentName" value="Audience Targeting" />
+			<var name="subContent" value="Campaigns" />
+			<var name="uncheckSubSubContent" value="Referenced Content" />
+		</execute>
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="uncheckContentNameList" value="Web Content" />
+		</execute>
+
+		<execute macro="Staging#publishToLive">
+			<var name="publishValidation" value="true" />
+		</execute>
+
+		<execute function="AssertConsoleTextPresent" value1="Cannot import rule Content Visited from user segment User Segment Name because it refers to a missing Asset" />
+
+		<execute function="AssertConsoleTextPresent" value1="Cannot import custom data for tracking action Content in campaignCampaign Name" />
+	</command>
+
+	<command known-issues="LPS-54232" name="StagingUncheckAppCTRefAllAndContentAll" priority="4">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#setupContentTargeting">
+			<var name="stagingSetup" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="mainApplication" value="Campaign Content Display" />
+			<var name="uncheckSubApplicationList" value="Referenced Campaigns,Referenced Content" />
+		</execute>
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="mainApplication" value="User Segment Content Display" />
+			<var name="uncheckSubApplicationList" value="Referenced User Segments,Referenced Content" />
+		</execute>
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="contentDateRange" value="All" />
+			<var name="uncheckContentNameList" value="Audience Targeting,Web Content" />
+		</execute>
+
+		<execute macro="Staging#publishToLive">
+			<var name="publishValidation" value="true" />
+		</execute>
+	</command>
+
+	<command known-issues="WCM-345,LPS-54232" name="StagingUncheckAppCTRefAllAndContentAT" priority="4">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#setupContentTargeting">
+			<var name="stagingSetup" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="mainApplication" value="Campaign Content Display" />
+			<var name="uncheckSubApplicationList" value="Referenced Campaigns,Referenced Content" />
+		</execute>
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="mainApplication" value="User Segment Content Display" />
+			<var name="uncheckSubApplicationList" value="Referenced User Segments,Referenced Content" />
+		</execute>
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="contentDateRange" value="All" />
+			<var name="uncheckContentNameList" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="Staging#publishToLive">
+			<var name="publishValidation" value="true" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-54232" name="StagingUncheckAppCTRefAllAndContentWC" priority="4">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#setupContentTargeting">
+			<var name="stagingSetup" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="mainApplication" value="Campaign Content Display" />
+			<var name="uncheckSubApplicationList" value="Referenced Campaigns,Referenced Content" />
+		</execute>
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="mainApplication" value="User Segment Content Display" />
+			<var name="uncheckSubApplicationList" value="Referenced User Segments,Referenced Content" />
+		</execute>
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="contentDateRange" value="All" />
+			<var name="uncheckContentNameList" value="Web Content" />
+		</execute>
+
+		<execute macro="Staging#publishToLive">
+			<var name="publishValidation" value="true" />
 		</execute>
 	</command>
 

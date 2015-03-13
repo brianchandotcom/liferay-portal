@@ -126,6 +126,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_ENTRY_TITLE_BASIC</td>
+	<td>//h3[@class='asset-title']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_ENTRY_EDIT</td>
 	<td>//div[@class='asset-content']/div[contains(.,'${key_entryContent}')]</td>
 	<td></td>

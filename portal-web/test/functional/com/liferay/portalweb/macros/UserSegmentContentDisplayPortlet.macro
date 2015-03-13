@@ -230,4 +230,8 @@
 			</then>
 		</if>
 	</command>
+
+	<command name="viewNoContentPG">
+		<execute function="AssertTextEquals" locator1="PGUsersegmentcontentdisplay#INFO_MESSAGE" value1="There are no matching rules" />
+	</command>
 </definition>

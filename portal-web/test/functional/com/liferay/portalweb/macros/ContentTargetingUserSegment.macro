@@ -273,6 +273,15 @@
 		<execute function="AssertTextEquals" locator1="CPContenttargetingAddusersegment#INFO_MESSAGE" value1="No User Segments were found" />
 	</command>
 
+	<command name="editGenderRule">
+		<var name="key_userSegment" value="${userSegmentName}" />
+
+		<execute function="Click" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_TABLE_ACTIONS" />
+		<execute function="Click" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_TABLE_ACTIONS_MENULIST_EDIT" />
+
+		<execute function="Click" locator1="CPContenttargetingAddusersegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_${genderRadioPath}_RADIO" />
+	</command>
+
 	<command name="editUserSegmentCP">
 		<var name="key_userSegment" value="${userSegmentName}" />
 

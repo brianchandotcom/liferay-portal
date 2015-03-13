@@ -338,29 +338,13 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected String getDDMFormJSONDefinition(long structureId)
-		throws Exception {
-
-		DDMForm ddmForm = getDDMForm(structureId);
-
-		return DDMFormJSONSerializerUtil.serialize(ddmForm);
-	}
-
 	protected String getDefaultDDMFormLayoutDefinition(DDMForm ddmForm) {
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 
 		return DDMFormLayoutJSONSerializerUtil.serialize(ddmFormLayout);
 	}
 
-	protected String getDefaultDDMFormLayoutDefinition(long structureId)
-		throws Exception {
-
-		DDMForm ddmForm = getDDMForm(structureId);
-
-		return getDefaultDDMFormLayoutDefinition(ddmForm);
-	}
-
-	protected String toJSON(DDMForm ddmForm, String xml)
+	protected String toJSONContent(DDMForm ddmForm, String xml)
 		throws PortalException {
 
 		DDMFormValuesXSDDeserializer ddmFormValuesXSDDeserializer =
@@ -370,6 +354,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			ddmForm, xml);
 
 		return DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
+	}
+
+	protected String toJSONDefinition(DDMForm ddmForm) throws Exception {
+		return DDMFormJSONSerializerUtil.serialize(ddmForm);
 	}
 
 	protected void updateContent(DDMForm ddmForm, long contentId)
@@ -392,7 +380,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			if (rs.next()) {
 				String xml = rs.getString("data_");
 
-				updateContent(contentId, toJSON(ddmForm, xml));
+				updateContent(contentId, toJSONContent(ddmForm, xml));
 			}
 		}
 		finally {
@@ -491,7 +479,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				String storageType = rs.getString("storageType");
 				int type = rs.getInt("type_");
 
-				String definition = getDDMFormJSONDefinition(structureId);
+				DDMForm ddmForm = getDDMForm(structureId);
+
+				String definition = toJSONDefinition(ddmForm);
 
 				upgradeStructureDefinition(structureId, definition);
 
@@ -503,7 +493,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					storageType, type);
 
 				String ddmFormLayoutDefinition =
-					getDefaultDDMFormLayoutDefinition(structureId);
+					getDefaultDDMFormLayoutDefinition(ddmForm);
 
 				addStructureLayout(
 					PortalUUIDUtil.generate(), increment(), groupId, companyId,

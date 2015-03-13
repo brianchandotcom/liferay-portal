@@ -181,10 +181,13 @@ public class DLFileEntryTypeStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
+
 		long liveGroupId = GetterUtil.getLong(
 			referenceElement.attributeValue("live-group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
+		liveGroupId = MapUtil.getLong(groupIds, groupId, liveGroupId);
 
 		String fileEntryTypeKey = referenceElement.attributeValue(
 			"file-entry-type-key");

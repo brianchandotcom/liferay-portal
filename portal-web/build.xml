@@ -522,12 +522,15 @@
 
 	<target name="build-css" depends="build-themes">
 		<property name="sass.tmp.dir" value="${basedir}/sass_tmp_dir" />
+		<path id="web-lib.classpath">
+			<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
+		</path>
 
 		<mkdir dir="${sass.tmp.dir}" />
 
 		<java
 			classname="com.liferay.portal.tools.SassToCssBuilder"
-			classpathref="project.classpath"
+			classpathref="web.classpath"
 			fork="true"
 			newenvironment="true"
 			outputproperty="build-css.output"
@@ -808,7 +811,7 @@
 		</if>
 	</target>
 
-	<target name="clean" depends="build-common-web.clean,clean-css,clean-themes">
+	<target name="clean" depends="build-common-web.clean,clean-css,clean-themes,clean-tlds">
 		<delete dir="classes" />
 		<delete dir="docroot/dtd" />
 		<delete dir="docroot/html/js/aui" />
@@ -830,7 +833,6 @@
 			<fileset dir="docroot/html/css" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
 			<fileset dir="docroot/html/portlet" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
 			<fileset dir="docroot/html/themes" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
-			<fileset dir="docroot/WEB-INF/tld" includes="liferay*.tld" />
 		</delete>
 	</target>
 
@@ -848,6 +850,12 @@
 				</delete>
 			</sequential>
 		</for>
+	</target>
+
+	<target name="clean-tlds">
+		<delete includeemptydirs="true">
+			<fileset dir="docroot/WEB-INF/tld" includes="liferay*.tld" />
+		</delete>
 	</target>
 
 	<target name="compile-common-jsp">

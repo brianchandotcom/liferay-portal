@@ -14,7 +14,6 @@
 
 package com.liferay.portal.repository.registry;
 
-import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
@@ -22,18 +21,14 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
 import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
-import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
-import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.repository.InitializedDocumentRepository;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
 import com.liferay.portal.repository.capabilities.ConfigurationCapabilityImpl;
 import com.liferay.portal.repository.capabilities.LiferayRepositoryEventTriggerCapability;
-import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 
 /**
  * @author Adolfo Pérez
@@ -119,9 +114,6 @@ public class RepositoryClassDefinition
 		Repository repository = _repositoryFactory.createRepository(
 			repositoryId);
 
-		setUpCapabilityRepositoryCapabilities(
-			repository, defaultCapabilityRegistry);
-
 		defaultCapabilityRegistry.registerCapabilityRepositoryEvents(
 			defaultRepositoryEventRegistry);
 
@@ -154,39 +146,6 @@ public class RepositoryClassDefinition
 
 		_repositoryDefiner = repositoryDefiner;
 		_rootRepositoryEventTrigger = rootRepositoryEventTrigger;
-	}
-
-	protected CMISRepositoryHandler getCMISRepositoryHandler(
-		Repository repository) {
-
-		if (repository instanceof BaseRepositoryProxyBean) {
-			BaseRepositoryProxyBean baseRepositoryProxyBean =
-				(BaseRepositoryProxyBean)repository;
-
-			ClassLoaderBeanHandler classLoaderBeanHandler =
-				(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
-					baseRepositoryProxyBean.getProxyBean());
-
-			Object bean = classLoaderBeanHandler.getBean();
-
-			if (bean instanceof CMISRepositoryHandler) {
-				return (CMISRepositoryHandler)bean;
-			}
-		}
-
-		return null;
-	}
-
-	protected void setUpCapabilityRepositoryCapabilities(
-		Repository repository, CapabilityRegistry<?> capabilityRegistry) {
-
-		CMISRepositoryHandler cmisRepositoryHandler = getCMISRepositoryHandler(
-			repository);
-
-		if (cmisRepositoryHandler != null) {
-			capabilityRegistry.addExportedCapability(
-				CMISRepositoryHandler.class, cmisRepositoryHandler);
-		}
 	}
 
 	protected void setUpCommonCapabilities(

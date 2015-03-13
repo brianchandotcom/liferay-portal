@@ -44,7 +44,7 @@
 			INNER JOIN
 				(
 					SELECT
-						scope, primKey, roleId, ownerId
+						primKey
 					FROM
 						ResourcePermission
 					WHERE

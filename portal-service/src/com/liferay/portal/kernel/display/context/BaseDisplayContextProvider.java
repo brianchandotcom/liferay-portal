@@ -45,6 +45,10 @@ public class BaseDisplayContextProvider<T extends DisplayContextFactory>
 		_serviceTracker.open();
 	}
 
+	public void close() {
+		_serviceTracker.close();
+	}
+
 	public Iterable<T> getDisplayContextFactories() {
 		return new DisplayContextFactoriesIterable<>(
 			_displayContextFactoryReferences);

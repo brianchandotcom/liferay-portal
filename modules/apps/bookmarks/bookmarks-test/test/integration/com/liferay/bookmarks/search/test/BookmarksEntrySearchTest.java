@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
@@ -36,6 +37,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -59,9 +61,18 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		_testMode = PortalRunMode.isTestMode();
+
+		PortalRunMode.setTestMode(true);
+
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		super.setUp();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PortalRunMode.setTestMode(_testMode);
 	}
 
 	@Ignore()
@@ -209,5 +220,7 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 
 		return BookmarksTestUtil.updateEntry(entry, keywords);
 	}
+
+	private boolean _testMode;
 
 }

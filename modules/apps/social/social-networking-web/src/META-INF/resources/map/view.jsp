@@ -63,7 +63,17 @@ IPGeocoder ipGeocoder = (IPGeocoder)request.getAttribute(SocialNetworkingWebKeys
 	</c:otherwise>
 </c:choose>
 
-<script src="http://maps.googleapis.com/maps/api/js?key=<%= PortletProps.get("map.google.maps.api.key") %>&language=<%= themeDisplay.getLanguageId() %>&sensor=false" type="text/javascript"></script>
+<%
+String apiKey = GetterUtil.getString(group.getLiveParentTypeSettingsProperty("googleMapsAPIKey"));
+
+if (Validator.isNull(apiKey)) {
+	PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId());
+
+	apiKey = GetterUtil.getString(companyPortletPreferences.getValue("googleMapsAPIKey", null));
+}
+%>
+
+<script src="http://maps.googleapis.com/maps/api/js?key=<%= apiKey %>&language=<%= themeDisplay.getLanguageId() %>&sensor=false" type="text/javascript"></script>
 
 <aui:script>
 	function <portlet:namespace />initMap() {

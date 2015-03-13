@@ -38,6 +38,7 @@ import com.liferay.portal.tools.SassToCssBuilder;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.sass.compiler.SassCompiler;
 
 import java.io.File;
 
@@ -62,6 +63,7 @@ import org.jruby.runtime.builtin.IRubyObject;
 /**
  * @author Raymond Augé
  * @author Sergio Sánchez
+ * @author David Truong
  */
 public class DynamicCSSUtil {
 
@@ -71,16 +73,21 @@ public class DynamicCSSUtil {
 				return;
 			}
 
-			RubyExecutor rubyExecutor = new RubyExecutor();
+			try {
+				_sassCompiler = new SassCompiler();
+			}
+			catch (Throwable t) {
+				RubyExecutor rubyExecutor = new RubyExecutor();
 
-			_scriptingContainer = rubyExecutor.getScriptingContainer();
+				_scriptingContainer = rubyExecutor.getScriptingContainer();
 
-			String rubyScript = StringUtil.read(
-				ClassLoaderUtil.getPortalClassLoader(),
-				"com/liferay/portal/servlet/filters/dynamiccss" +
-					"/dependencies/main.rb");
+				String rubyScript = StringUtil.read(
+					ClassLoaderUtil.getPortalClassLoader(),
+					"com/liferay/portal/servlet/filters/dynamiccss" +
+						"/dependencies/main.rb");
 
-			_scriptObject = _scriptingContainer.runScriptlet(rubyScript);
+				_scriptObject = _scriptingContainer.runScriptlet(rubyScript);
+			}
 
 			RTLCSSUtil.init();
 
@@ -555,39 +562,48 @@ public class DynamicCSSUtil {
 			}
 		}
 
-		File sassTempDir = _getSassTempDir(servletContext);
+		if (_sassCompiler != null) {
+			String inputPaths = commonSassPath + File.pathSeparator +
+				cssThemePath;
 
-		Object[] arguments = new Object[] {
-			content, commonSassPath, resourcePath, cssThemePath,
-			sassTempDir.getCanonicalPath(), _log.isDebugEnabled()
-		};
-
-		try {
-			content = _scriptingContainer.callMethod(
-				_scriptObject, "process", arguments, String.class);
+			content = _sassCompiler.compileString(content, inputPaths, "");
 		}
-		catch (Exception e) {
-			if (e instanceof RaiseException) {
-				RaiseException raiseException = (RaiseException)e;
+		else {
+			File sassTempDir = _getSassTempDir(servletContext);
 
-				RubyException rubyException = raiseException.getException();
+			Object[] arguments = new Object[] {
+				content, commonSassPath, resourcePath, cssThemePath,
+				sassTempDir.getCanonicalPath(), _log.isDebugEnabled()
+			};
 
-				_log.error(
-					String.valueOf(rubyException.message.toJava(String.class)));
-
-				IRubyObject iRubyObject = rubyException.getBacktrace();
-
-				RubyArray rubyArray = (RubyArray)iRubyObject.toJava(
-					RubyArray.class);
-
-				for (int i = 0; i < rubyArray.size(); i++) {
-					Object object = rubyArray.get(i);
-
-					_log.error(String.valueOf(object));
-				}
+			try {
+				content = _scriptingContainer.callMethod(
+					_scriptObject, "process", arguments, String.class);
 			}
-			else {
-				_log.error(e, e);
+			catch (Exception e) {
+				if (e instanceof RaiseException) {
+					RaiseException raiseException = (RaiseException)e;
+
+					RubyException rubyException = raiseException.getException();
+
+					_log.error(
+						String.valueOf(
+							rubyException.message.toJava(String.class)));
+
+					IRubyObject iRubyObject = rubyException.getBacktrace();
+
+					RubyArray rubyArray = (RubyArray)iRubyObject.toJava(
+						RubyArray.class);
+
+					for (int i = 0; i < rubyArray.size(); i++) {
+						Object object = rubyArray.get(i);
+
+						_log.error(String.valueOf(object));
+					}
+				}
+				else {
+					_log.error(e, e);
+				}
 			}
 		}
 
@@ -612,6 +628,7 @@ public class DynamicCSSUtil {
 		"\\/([^\\/]+)-theme\\/", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _portalThemePattern = Pattern.compile(
 		"themes\\/([^\\/]+)\\/css", Pattern.CASE_INSENSITIVE);
+	private static SassCompiler _sassCompiler;
 	private static ScriptingContainer _scriptingContainer;
 	private static Object _scriptObject;
 

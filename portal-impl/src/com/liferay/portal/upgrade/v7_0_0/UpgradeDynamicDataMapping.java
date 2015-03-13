@@ -338,6 +338,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
+	protected String getDDMFormJSONDefinition(long structureId)
+		throws Exception {
+
+		DDMForm ddmForm = getDDMForm(structureId);
+
+		return DDMFormJSONSerializerUtil.serialize(ddmForm);
+	}
+
 	protected String getDefaultDDMFormLayoutDefinition(DDMForm ddmForm) {
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 
@@ -427,7 +435,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				"storageType = 'xml'");
 	}
 
-	protected void upgradeStructureDefinition(long structureId)
+	protected void upgradeStructureDefinition(
+			long structureId, String definition)
 		throws Exception {
 
 		Connection con = null;
@@ -439,9 +448,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			ps = con.prepareStatement(
 				"update DDMStructure set definition = ? where structureId = ?");
 
-			DDMForm ddmForm = getDDMForm(structureId);
-
-			ps.setString(1, DDMFormJSONSerializerUtil.serialize(ddmForm));
+			ps.setString(1, definition);
 			ps.setLong(2, structureId);
 
 			ps.executeUpdate();
@@ -481,11 +488,12 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 				String name = rs.getString("name");
 				String description = rs.getString("description");
-				String definition = rs.getString("definition");
 				String storageType = rs.getString("storageType");
 				int type = rs.getInt("type_");
 
-				upgradeStructureDefinition(structureId);
+				String definition = getDDMFormJSONDefinition(structureId);
+
+				upgradeStructureDefinition(structureId, definition);
 
 				long structureVersionId = increment();
 

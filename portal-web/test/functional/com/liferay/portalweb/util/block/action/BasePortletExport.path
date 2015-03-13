@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPORT_IMPORT_IFRAME</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPORT_FILE_NAME</td>
 	<td>//input[@id='_86_exportFileName']</td>
 	<td></td>

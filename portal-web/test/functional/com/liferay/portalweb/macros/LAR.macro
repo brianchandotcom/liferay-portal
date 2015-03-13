@@ -276,6 +276,9 @@
 	<command name="exportPortlet">
 		<execute macro="LAR#gotoExportImportCmd" />
 
+		<execute function="SelectFrameTop" value1="relative=top" />
+		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
+
 		<execute macro="LAR#exportCmd">
 			<var name="larFileName" value="${larFileName}" />
 		</execute>
@@ -359,6 +362,9 @@
 
 	<command name="importPortlet">
 		<execute macro="LAR#gotoExportImportCmd" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
 
 		<execute macro="LAR#selectImportFileCmd">
 			<var name="larFileName" value="${larFileName}" />

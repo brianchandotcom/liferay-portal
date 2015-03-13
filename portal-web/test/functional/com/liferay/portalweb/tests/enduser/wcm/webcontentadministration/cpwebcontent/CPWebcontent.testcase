@@ -1098,6 +1098,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="nonAdminUser" value="true" />
 			<var name="portletName" value="Web Content" />
 		</execute>
 

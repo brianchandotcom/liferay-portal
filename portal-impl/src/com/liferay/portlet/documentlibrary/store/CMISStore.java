@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -94,7 +96,7 @@ public class CMISStore extends BaseStore {
 	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
-		throws PortalException {
+		throws DuplicateFileException {
 
 		updateFile(companyId, repositoryId, fileName, VERSION_DEFAULT, is);
 	}
@@ -107,7 +109,7 @@ public class CMISStore extends BaseStore {
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
-		throws PortalException {
+		throws DuplicateFileException, NoSuchFileException {
 
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, false);
@@ -146,14 +148,26 @@ public class CMISStore extends BaseStore {
 	}
 
 	@Override
-	public void deleteFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
+	public void deleteFile(long companyId, long repositoryId, String fileName) {
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, false);
 
 		if (versioningFolder == null) {
-			throw new NoSuchFileException();
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("Cannot delete file {companyId=");
+				sb.append(companyId);
+				sb.append(", repositoryId=");
+				sb.append(repositoryId);
+				sb.append(", fileName=");
+				sb.append(fileName);
+				sb.append("} because it does not exist");
+
+				_log.warn(sb.toString());
+			}
+
+			return;
 		}
 
 		versioningFolder.deleteTree(true, UnfileObject.DELETE, false);
@@ -161,12 +175,34 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void deleteFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
-		Document document = getVersionedDocument(
-			companyId, repositoryId, fileName, versionLabel);
+		Document document = null;
+
+		try {
+			document = getVersionedDocument(
+				companyId, repositoryId, fileName, versionLabel);
+		}
+		catch (NoSuchFileException nsfe) {
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(9);
+
+				sb.append("Cannot delete file {companyId=");
+				sb.append(companyId);
+				sb.append(", repositoryId=");
+				sb.append(repositoryId);
+				sb.append(", fileName=");
+				sb.append(fileName);
+				sb.append(", versionLabel=");
+				sb.append(versionLabel);
+				sb.append("} because it does not exist");
+
+				_log.warn(sb.toString());
+			}
+
+			return;
+		}
 
 		document.delete(true);
 	}
@@ -175,7 +211,7 @@ public class CMISStore extends BaseStore {
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException {
+		throws NoSuchFileException {
 
 		if (Validator.isNull(versionLabel)) {
 			versionLabel = getHeadVersionLabel(
@@ -240,7 +276,7 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException {
+		throws NoSuchFileException {
 
 		String versionLabel = getHeadVersionLabel(
 			companyId, repositoryId, fileName);
@@ -374,7 +410,7 @@ public class CMISStore extends BaseStore {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, InputStream is)
-		throws PortalException {
+		throws DuplicateFileException {
 
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, true);
@@ -394,7 +430,7 @@ public class CMISStore extends BaseStore {
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
-		throws PortalException {
+		throws DuplicateFileException, NoSuchFileException {
 
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, false);
@@ -556,6 +592,8 @@ public class CMISStore extends BaseStore {
 
 		return versioningFolder;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(CMISStore.class);
 
 	private final Folder _systemRootDir;
 

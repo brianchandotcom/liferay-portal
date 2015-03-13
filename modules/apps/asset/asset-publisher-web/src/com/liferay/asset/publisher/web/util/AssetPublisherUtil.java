@@ -108,6 +108,9 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 /**
+ * Provides utility methods for managing the configuration, managing scopes of
+ * content, and obtaining lists of assets for the Asset Publisher portlet.
+ *
  * @author Raymond Augé
  * @author Julio Camarero
  */

@@ -563,8 +563,8 @@ public class DynamicCSSUtil {
 		}
 
 		if (_sassCompiler != null) {
-			String inputPaths = commonSassPath + File.pathSeparator +
-				cssThemePath;
+			String inputPaths =
+				commonSassPath + File.pathSeparator + cssThemePath;
 
 			content = _sassCompiler.compileString(content, inputPaths, "");
 		}

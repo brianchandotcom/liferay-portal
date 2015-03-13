@@ -811,7 +811,7 @@
 		</if>
 	</target>
 
-	<target name="clean" depends="build-common-web.clean,clean-css,clean-tlds,clean-themes">
+	<target name="clean" depends="build-common-web.clean,clean-css,clean-themes,clean-tlds">
 		<delete dir="classes" />
 		<delete dir="docroot/dtd" />
 		<delete dir="docroot/html/js/aui" />
@@ -836,12 +836,6 @@
 		</delete>
 	</target>
 
-	<target name="clean-tlds">
-		<delete includeemptydirs="true">
-			<fileset dir="docroot/WEB-INF/tld" includes="liferay*.tld" />
-		</delete>
-	</target>
-
 	<target name="clean-themes">
 		<for param="module.name">
 			<path>
@@ -856,6 +850,12 @@
 				</delete>
 			</sequential>
 		</for>
+	</target>
+
+	<target name="clean-tlds">
+		<delete includeemptydirs="true">
+			<fileset dir="docroot/WEB-INF/tld" includes="liferay*.tld" />
+		</delete>
 	</target>
 
 	<target name="compile-common-jsp">

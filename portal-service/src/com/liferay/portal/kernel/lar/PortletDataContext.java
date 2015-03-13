@@ -314,8 +314,7 @@ public interface PortletDataContext extends Serializable {
 
 	public DateRange getDateRange();
 
-	public Criterion getDateRangeCriteria(
-		DynamicQuery dynamicQuery, String modifiedDatePropertyName);
+	public Criterion getDateRangeCriteria(String propertyName);
 
 	public Set<StagedModelType> getDeletionSystemEventStagedModelTypes();
 

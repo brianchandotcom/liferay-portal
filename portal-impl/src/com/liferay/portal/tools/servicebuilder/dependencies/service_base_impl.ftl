@@ -452,8 +452,8 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 							@Override
 							public void addCriteria(DynamicQuery dynamicQuery) {
 								<#if entity.isWorkflowEnabled()>
-									Criterion modifiedDateCriterion = portletDataContext.getDateRangeCriteria(dynamicQuery, "modifiedDate");
-									Criterion statusDateCriterion = portletDataContext.getDateRangeCriteria(dynamicQuery, "statusDate");
+									Criterion modifiedDateCriterion = portletDataContext.getDateRangeCriteria("modifiedDate");
+									Criterion statusDateCriterion = portletDataContext.getDateRangeCriteria("statusDate");
 
 									if ((modifiedDateCriterion != null) && (statusDateCriterion != null)) {
 										Disjunction disjunction = RestrictionsFactoryUtil.disjunction();

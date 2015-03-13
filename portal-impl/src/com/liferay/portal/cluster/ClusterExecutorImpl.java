@@ -37,13 +37,11 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PortalInetSocketAddressEventListener;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
@@ -57,7 +55,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -195,26 +192,21 @@ public class ClusterExecutorImpl
 			addClusterEventListener(new LiveUsersClusterEventListenerImpl());
 		}
 
-		try {
-			initControlChannel();
+		_clusterReceiver = new ClusterRequestReceiver(this);
 
-			_localAddress = _controlChannel.getLocalAddress();
+		_controlChannel = _clusterChannelFactory.createClusterChannel(
+			PropsValues.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL,
+			_LIFERAY_CONTROL_CHANNEL_NAME, _clusterReceiver);
 
-			initLocalClusterNode();
+		_localAddress = _controlChannel.getLocalAddress();
 
-			memberJoined(_localAddress, _localClusterNode);
+		initLocalClusterNode();
 
-			sendNotifyRequest();
+		memberJoined(_localAddress, _localClusterNode);
 
-			_clusterReceiver.openLatch();
-		}
-		catch (Exception e) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Unable to initialize", e);
-			}
+		sendNotifyRequest();
 
-			throw new IllegalStateException(e);
-		}
+		_clusterReceiver.openLatch();
 	}
 
 	@Override
@@ -334,19 +326,6 @@ public class ClusterExecutorImpl
 
 	protected ExecutorService getExecutorService() {
 		return _executorService;
-	}
-
-	protected void initControlChannel() throws Exception {
-		Properties controlProperties = PropsUtil.getProperties(
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL, false);
-
-		String controlProperty = controlProperties.getProperty(
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
-
-		_clusterReceiver = new ClusterRequestReceiver(this);
-
-		_controlChannel = _clusterChannelFactory.createClusterChannel(
-			controlProperty, _LIFERAY_CONTROL_CHANNEL_NAME, _clusterReceiver);
 	}
 
 	protected void initLocalClusterNode() {

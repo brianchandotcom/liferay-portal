@@ -24,11 +24,11 @@ import com.liferay.portal.theme.ThemeDisplay;
 public class PortletEditorConfigFactoryUtil {
 
 	public static PortletEditorConfig getPortletEditorConfig(
-		String portletName, String editorName, ThemeDisplay themeDisplay,
+		String portletName, String editorConfigKey, ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		return getPortletEditorConfigFactory().getPortletEditorConfig(
-			portletName, editorName, themeDisplay, liferayPortletResponse);
+			portletName, editorConfigKey, themeDisplay, liferayPortletResponse);
 	}
 
 	public static PortletEditorConfigFactory getPortletEditorConfigFactory() {

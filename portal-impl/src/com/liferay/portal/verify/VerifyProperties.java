@@ -929,6 +929,9 @@ public class VerifyProperties extends VerifyProcess {
 			"cdn.host", "cdn.host.http"
 		},
 		new String[] {
+			"cluster.executor.debug.enabled", "cluster.link.debug.enabled"
+		},
+		new String[] {
 			"com.liferay.portal.servlet.filters.compression.CompressionFilter",
 			"com.liferay.portal.servlet.filters.gzip.GZipFilter"
 		},

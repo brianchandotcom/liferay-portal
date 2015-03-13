@@ -380,7 +380,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"CLUSTER_EXECUTOR_DEBUG_ENABLED)"
+				"CLUSTER_LINK_DEBUG_ENABLED)"
 		)
 		public Object enableClusterExecutorDebug(
 				ProceedingJoinPoint proceedingJoinPoint)

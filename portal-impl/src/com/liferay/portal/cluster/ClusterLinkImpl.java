@@ -175,7 +175,8 @@ public class ClusterLinkImpl implements ClusterLink {
 
 			ClusterChannel clusterChannel =
 				_clusterChannelFactory.createClusterChannel(
-					value, _LIFERAY_TRANSPORT_CHANNEL + i, clusterReceiver);
+					value, _LIFERAY_TRANSPORT_CHANNEL_NAME + i,
+					clusterReceiver);
 
 			_clusterReceivers.add(clusterReceiver);
 			_localTransportAddresses.add(clusterChannel.getLocalAddress());
@@ -208,8 +209,8 @@ public class ClusterLinkImpl implements ClusterLink {
 		}
 	}
 
-	private static final String _LIFERAY_TRANSPORT_CHANNEL =
-		"LIFERAY-TRANSPORT-CHANNEL-";
+	private static final String _LIFERAY_TRANSPORT_CHANNEL_NAME =
+		PropsValues.CLUSTER_LINK_CHANNEL_NAME_PREFIX + "transport-";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterLinkImpl.class);

@@ -389,15 +389,17 @@ public interface PropsKeys {
 
 	public static final String CDN_HOST_HTTPS = "cdn.host.https";
 
-	public static final String CLUSTER_EXECUTOR_DEBUG_ENABLED = "cluster.executor.debug.enabled";
-
 	public static final String CLUSTER_LINK_AUTODETECT_ADDRESS = "cluster.link.autodetect.address";
+
+	public static final String CLUSTER_LINK_CHANNEL_NAME_PREFIX = "cluster.link.channel.name.prefix";
 
 	public static final String CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL = "cluster.link.channel.properties.control";
 
 	public static final String CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT = "cluster.link.channel.properties.transport";
 
 	public static final String CLUSTER_LINK_CHANNEL_SYSTEM_PROPERTIES = "cluster.link.channel.system.properties";
+
+	public static final String CLUSTER_LINK_DEBUG_ENABLED = "cluster.link.debug.enabled";
 
 	public static final String CLUSTER_LINK_ENABLED = "cluster.link.enabled";
 

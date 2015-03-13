@@ -288,6 +288,12 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected DDMForm getDDMForm(long structureId) throws Exception {
+		DDMForm ddmForm = _ddmFormMap.get(structureId);
+
+		if (ddmForm != null) {
+			return ddmForm;
+		}
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -307,8 +313,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				long parentStructureId = rs.getLong("parentStructureId");
 				String definition = rs.getString("definition");
 
-				DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
-					definition);
+				ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
 
 				if (parentStructureId > 0) {
 					DDMForm parentDDMForm = getDDMForm(parentStructureId);
@@ -318,6 +323,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 					ddmFormFields.addAll(parentDDMForm.getDDMFormFields());
 				}
+
+				_ddmFormMap.put(structureId, ddmForm);
 
 				return ddmForm;
 			}
@@ -524,19 +531,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			Map<Long, DDMForm> ddmFormMap = new HashMap<>();
-
 			while (rs.next()) {
 				long structureId = rs.getLong("structureId");
 				long classPK = rs.getLong("classPK");
 
-				DDMForm ddmForm = ddmFormMap.get(structureId);
-
-				if (ddmForm == null) {
-					ddmForm = getDDMForm(structureId);
-
-					ddmFormMap.put(structureId, ddmForm);
-				}
+				DDMForm ddmForm = getDDMForm(structureId);
 
 				updateContent(ddmForm, classPK);
 			}
@@ -551,6 +550,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeDynamicDataMapping.class);
+
+	private final Map<Long, DDMForm> _ddmFormMap = new HashMap<>();
 
 	private class DDMFormValuesXSDDeserializer {
 

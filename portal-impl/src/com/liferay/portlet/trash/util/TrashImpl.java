@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -368,8 +367,9 @@ public class TrashImpl implements Trash {
 		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(
 			StringUtil.replace(
-				dateFormatDateTime.format(new Date()), CharPool.SLASH,
-				CharPool.PERIOD));
+				dateFormatDateTime.format(new Date()),
+				new String[] {StringPool.SLASH, StringPool.COLON},
+				new String[] {StringPool.PERIOD, StringPool.PERIOD}));
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		if (trashRenderer != null) {

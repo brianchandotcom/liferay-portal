@@ -96,10 +96,22 @@ AUI.add(
 							submitForm(form);
 						}
 						else {
-							var newName = instance.byId('newName');
-							var messageContainer = instance.byId('messageContainer');
+							var errorMessageContainer = instance.byId('errorMessageContainer');
+							var errorMessage = responseData.errorMessage;
 
-							messageContainer.html(Lang.sub(Liferay.Language.get('an-entry-with-name-x-already-exists'), [newName.val()]));
+							if (errorMessage) {
+								errorMessageContainer.html(Liferay.Language.get(responseData.errorMessage));
+
+								errorMessageContainer.show();
+							}
+							else {
+								errorMessageContainer.hide();
+
+								var newName = instance.byId('newName');
+								var messageContainer = instance.byId('messageContainer');
+
+								messageContainer.html(Lang.sub(Liferay.Language.get('an-entry-with-name-x-already-exists'), [newName.val()]));
+							}
 						}
 					},
 

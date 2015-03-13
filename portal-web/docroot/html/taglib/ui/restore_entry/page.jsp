@@ -47,6 +47,8 @@ String oldName = ParamUtil.getString(request, "oldName");
 boolean overridable = ParamUtil.getBoolean(request, "overridable");
 %>
 
+<div class="alert alert-danger hide" id="<portlet:namespace />errorMessageContainer"></div>
+
 <div class="alert alert-warning" id="<portlet:namespace />messageContainer">
 	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(oldName)} %>" key="an-entry-with-name-x-already-exists" translateArguments="<%= false %>" />
 </div>

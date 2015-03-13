@@ -172,7 +172,7 @@
 				<var name="key_contentName" value="${contentName}" />
 
 				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
-				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_CHECKBOX" value1="Change" />
+				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK" value1="Change" />
 
 				<var name="key_subContent" value="${uncheckSubContent}" />
 
@@ -189,7 +189,7 @@
 				<var name="key_contentName" value="${contentName}" />
 
 				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
-				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_CHECKBOX" value1="Change" />
+				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK" value1="Change" />
 
 				<var name="key_subContent" value="${subContent}" />
 				<var name="key_subSubContent" value="${uncheckSubSubContent}" />
@@ -572,11 +572,24 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
+		<if>
+			<equals arg1="${stagingSetup}" arg2="true" />
+			<then>
+				<execute macro="Page#gotoPG">
+					<var name="pageName" value="Test Page Name" />
+					<var name="pageStaging" value="true" />
+					<var name="siteName" value="Site Name" />
+					<var name="siteURL" value="true" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Page#gotoPG">
+					<var name="pageName" value="Test Page Name" />
+					<var name="siteName" value="Site Name" />
+					<var name="siteURL" value="true" />
+				</execute>
+			</else>
+		</if>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="User Segment Content Display" />
@@ -599,11 +612,24 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
+		<if>
+			<equals arg1="${stagingSetup}" arg2="true" />
+			<then>
+				<execute macro="Page#gotoPG">
+					<var name="pageName" value="Test Page Name" />
+					<var name="pageStaging" value="true" />
+					<var name="siteName" value="Site Name" />
+					<var name="siteURL" value="true" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Page#gotoPG">
+					<var name="pageName" value="Test Page Name" />
+					<var name="siteName" value="Site Name" />
+					<var name="siteURL" value="true" />
+				</execute>
+			</else>
+		</if>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Campaign Content Display" />
@@ -624,11 +650,24 @@
 
 		<execute macro="CampaignDisplayPortlet#savePG" />
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
+		<if>
+			<equals arg1="${stagingSetup}" arg2="true" />
+			<then>
+				<execute macro="Page#gotoPG">
+					<var name="pageName" value="Test Page Name" />
+					<var name="pageStaging" value="true" />
+					<var name="siteName" value="Site Name" />
+					<var name="siteURL" value="true" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Page#gotoPG">
+					<var name="pageName" value="Test Page Name" />
+					<var name="siteName" value="Site Name" />
+					<var name="siteURL" value="true" />
+				</execute>
+			</else>
+		</if>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="User Segment Content List" />

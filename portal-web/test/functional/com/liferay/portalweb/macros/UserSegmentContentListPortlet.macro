@@ -63,4 +63,8 @@
 			<execute function="AssertTextEquals" locator1="PGUsersegmentcontentlist#VIEW_ENTRY_CONTENT" value1="${entryContent}" />
 		</for>
 	</command>
+
+	<command name="viewContentNotPresent">
+		<execute function="AssertElementNotPresent" locator1="PGUsersegmentcontentlist#VIEW_ENTRY_TITLE_BASIC" />
+	</command>
 </definition>

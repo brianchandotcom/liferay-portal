@@ -54,6 +54,10 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="viewNoContentPG">
+		<execute function="AssertTextEquals" locator1="PGCampaigncontentdisplay#INFO_MESSAGE" value1="There are no matching rules" />
+	</command>
+
 	<command name="viewPG">
 		<if>
 			<isset var="viewCampaignSelected" />

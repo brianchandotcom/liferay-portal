@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatamapping.action;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -45,7 +44,6 @@ import com.liferay.portlet.dynamicdatamapping.TemplateSmallImageSizeException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil;
 
 import java.io.File;
 
@@ -267,21 +265,7 @@ public class EditTemplateAction extends PortletAction {
 			return fileScriptContent;
 		}
 
-		String scriptContent = ParamUtil.getString(
-			uploadPortletRequest, "scriptContent");
-
-		String type = ParamUtil.getString(uploadPortletRequest, "type");
-
-		if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
-			try {
-				scriptContent = DDMXSDUtil.getXSD(scriptContent);
-			}
-			catch (PortalException pe) {
-				throw new TemplateScriptException();
-			}
-		}
-
-		return scriptContent;
+		return ParamUtil.getString(uploadPortletRequest, "scriptContent");
 	}
 
 	protected boolean isValidFile(File file) {

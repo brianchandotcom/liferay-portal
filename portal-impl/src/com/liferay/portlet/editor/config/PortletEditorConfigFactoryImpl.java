@@ -35,11 +35,11 @@ public class PortletEditorConfigFactoryImpl
 	implements PortletEditorConfigFactory {
 
 	public PortletEditorConfig getPortletEditorConfig(
-		String portletName, String editorName, ThemeDisplay themeDisplay,
+		String portletName, String editorConfigKey, ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		List<PortletEditorConfigContributor> portletEditorConfigContributors =
-			getPortletEditorConfigContributors(portletName, editorName);
+			getPortletEditorConfigContributors(portletName, editorConfigKey);
 
 		return new PortletEditorConfigImpl(
 			portletEditorConfigContributors, themeDisplay,
@@ -48,7 +48,7 @@ public class PortletEditorConfigFactoryImpl
 
 	protected List<PortletEditorConfigContributor>
 		getPortletEditorConfigContributors(
-			String portletName, String editorName) {
+			String portletName, String editorConfigKey) {
 
 		List<PortletEditorConfigContributor> portletEditorConfigContributors =
 			new ArrayList<>();
@@ -62,28 +62,29 @@ public class PortletEditorConfigFactoryImpl
 				portletEditorConfigContributorsByPortletName);
 		}
 
-		if (Validator.isNull(editorName)) {
+		if (Validator.isNull(editorConfigKey)) {
 			return portletEditorConfigContributors;
 		}
 
 		List<PortletEditorConfigContributor>
-			portletEditorConfigContributorsByEditorName =
-				_serviceTrackerMap.getService(_getKey(portletName, editorName));
+			portletEditorConfigContributorsByConfigKey =
+				_serviceTrackerMap.getService(
+					_getKey(portletName, editorConfigKey));
 
-		if (ListUtil.isNotEmpty(portletEditorConfigContributorsByEditorName)) {
+		if (ListUtil.isNotEmpty(portletEditorConfigContributorsByConfigKey)) {
 			portletEditorConfigContributors.addAll(
-				portletEditorConfigContributorsByEditorName);
+				portletEditorConfigContributorsByConfigKey);
 		}
 
 		return portletEditorConfigContributors;
 	}
 
-	private static String _getKey(String portletName, String editorName) {
-		if (Validator.isNull(editorName)) {
+	private static String _getKey(String portletName, String editorConfigKey) {
+		if (Validator.isNull(editorConfigKey)) {
 			return portletName;
 		}
 
-		return portletName.concat(StringPool.PERIOD).concat(editorName);
+		return portletName.concat(StringPool.PERIOD).concat(editorConfigKey);
 	}
 
 	private static final
@@ -101,16 +102,16 @@ public class PortletEditorConfigFactoryImpl
 
 				List<String> portletNames = StringPlus.asList(
 					serviceReference.getProperty("javax.portlet.name"));
-				List<String> editorNames = StringPlus.asList(
-					serviceReference.getProperty("editor.name"));
+				List<String> editorConfigKeys = StringPlus.asList(
+					serviceReference.getProperty("editor.config.key"));
 
 				for (String portletName : portletNames) {
-					if (editorNames.isEmpty()) {
+					if (editorConfigKeys.isEmpty()) {
 						emitter.emit(_getKey(portletName, null));
 					}
 					else {
-						for (String editorName : editorNames) {
-							emitter.emit(_getKey(portletName, editorName));
+						for (String editorConfigKey : editorConfigKeys) {
+							emitter.emit(_getKey(portletName, editorConfigKey));
 						}
 					}
 				}

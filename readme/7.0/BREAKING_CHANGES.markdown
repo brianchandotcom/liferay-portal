@@ -1171,6 +1171,36 @@ is not needed to change the look and feel of your application.
 
 ---------------------------------------
 
+### Exceptions in the File Store have been changed
+- **Date:** 2015-Mar-13
+- **JIRA Ticket:** LPS-54269
+
+#### What changed?
+
+The Store interface now throws DuplicateDirectoryExceptions,
+DuplicateFileExceptions or NoSuchFileExceptions instead of PortalExceptions.
+Some of the methods that threw exceptions before no longer throw any exception.
+
+
+#### Who is affected?
+
+Anyone implementing their own Store.
+
+
+#### How should I update my code?
+
+Update the implementation of the Store to throw the new exceptions. See any of
+our six implementations for examples.
+
+
+#### Why was this change made?
+
+Exception handling with the Store was difficult without knowing which Store
+implementation was being used. By updating the Store's exceptions we've made
+working with different Stores more reliable.
+
+---------------------------------------
+
 ### Taglib `liferay-ui:ddm-template-selector` has changed its usage
 - **Date:** 2015-Mar-16
 - **JIRA Ticket:** LPS-53790

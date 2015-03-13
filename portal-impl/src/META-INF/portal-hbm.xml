@@ -9,7 +9,6 @@
 	<import class="com.liferay.portal.model.BrowserTracker" />
 	<import class="com.liferay.portal.model.ClassName" />
 	<import class="com.liferay.portal.model.ClusterGroup" />
-	<import class="com.liferay.portal.model.CMISRepository" />
 	<import class="com.liferay.portal.model.Company" />
 	<import class="com.liferay.portal.model.Contact" />
 	<import class="com.liferay.portal.model.Country" />

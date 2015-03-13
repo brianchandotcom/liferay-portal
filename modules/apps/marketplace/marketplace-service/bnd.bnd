@@ -1,0 +1,16 @@
+Bundle-Name: Liferay Marketplace Service
+Bundle-SymbolicName: com.liferay.marketplace.service
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portlet.documentlibrary,\
+	com.liferay.portlet.expando.model,\
+	com.liferay.portlet.expando.service,\
+	com.liferay.portlet.expando.util
+Include-Resource:\
+	classes,\
+	@../../../../portal-service/portal-service.jar!/com/liferay/portal/license/util/LicenseManagerUtil.class
+Liferay-Service: true
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+Spring-Context: META-INF/*-spring.xml;timeout:=${spring.extender.time.to.wait}

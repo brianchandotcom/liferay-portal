@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
+	<td>//div[contains(@class,'usersegmentcontentdisplay')]/section//div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>

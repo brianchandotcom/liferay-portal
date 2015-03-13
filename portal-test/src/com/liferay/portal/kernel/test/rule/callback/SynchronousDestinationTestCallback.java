@@ -110,6 +110,7 @@ public class SynchronousDestinationTestCallback
 			replaceDestination(DestinationNames.MAIL);
 			replaceDestination(DestinationNames.SEARCH_READER);
 			replaceDestination(DestinationNames.SEARCH_WRITER);
+			replaceDestination(DestinationNames.SCHEDULER_ENGINE);
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);
 		}
 

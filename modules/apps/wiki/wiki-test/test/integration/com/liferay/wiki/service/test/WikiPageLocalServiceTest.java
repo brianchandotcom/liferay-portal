@@ -537,10 +537,10 @@ public class WikiPageLocalServiceTest {
 
 	@Test
 	public void testGetNoAssetPages() throws Exception {
-		WikiTestUtil.addPage(_group.getGroupId(), _node.getNodeId(), true);
-
 		List<WikiPage> initialPages =
 			WikiPageLocalServiceUtil.getNoAssetPages();
+
+		WikiTestUtil.addPage(_group.getGroupId(), _node.getNodeId(), true);
 
 		WikiPage page = WikiTestUtil.addPage(
 			_group.getGroupId(), _node.getNodeId(), true);

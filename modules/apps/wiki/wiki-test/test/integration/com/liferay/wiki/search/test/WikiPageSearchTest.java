@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
@@ -43,6 +44,7 @@ import com.liferay.wiki.util.test.WikiTestUtil;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -68,9 +70,18 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		_testMode = PortalRunMode.isTestMode();
+
+		PortalRunMode.setTestMode(true);
+
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		super.setUp();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PortalRunMode.setTestMode(_testMode);
 	}
 
 	@Ignore()
@@ -293,5 +304,7 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 		private final ServiceContext _serviceContext;
 
 	}
+
+	private boolean _testMode;
 
 }

@@ -46,6 +46,16 @@ public class MBMailMessage {
 		}
 	}
 
+	public String getBody(String format) {
+		String body = _htmlBody;
+
+		if (Validator.isNull(body) || !format.equals("html")) {
+			body = getBody();
+		}
+
+		return body;
+	}
+
 	public String getHtmlBody() {
 		return _htmlBody;
 	}

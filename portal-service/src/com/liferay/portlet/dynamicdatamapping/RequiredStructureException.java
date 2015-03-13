@@ -75,13 +75,13 @@ public class RequiredStructureException extends PortalException {
 
 	}
 
-	public static class MustNotDeleteReferencedTemplate
+	public static class MustNotDeleteStructureReferencedByTemplates
 		extends RequiredStructureException {
 
-		public MustNotDeleteReferencedTemplate(long structureId) {
+		public MustNotDeleteStructureReferencedByTemplates(long structureId) {
 			super(
 				String.format(
-					"Structure %s referenced by template and cannot be " +
+					"Structure %s referenced by templates and cannot be " +
 							"deleted.",
 					structureId),
 				REFERENCED_TEMPLATE);

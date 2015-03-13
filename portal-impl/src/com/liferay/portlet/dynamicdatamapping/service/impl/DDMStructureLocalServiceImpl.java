@@ -486,7 +486,7 @@ public class DDMStructureLocalServiceImpl
 					structure.getPrimaryKey()) > 0) {
 
 				throw new RequiredStructureException.
-					MustNotDeleteReferencedTemplate(structure.getStructureId());
+					MustNotDeleteStructureReferencedByTemplates(structure.getStructureId());
 			}
 		}
 

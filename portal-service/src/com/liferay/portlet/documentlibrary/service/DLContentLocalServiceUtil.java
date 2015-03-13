@@ -79,7 +79,7 @@ public class DLContentLocalServiceUtil {
 
 	public static void deleteContent(long companyId, long repositoryId,
 		java.lang.String path, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
 		getService().deleteContent(companyId, repositoryId, path, version);
 	}
 

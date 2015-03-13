@@ -20,31 +20,34 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.xml.Element;
 
 /**
- * Common interface for all the processors of the document library. All document
- * library processors must implement this interface.
+ * Provides a common interface for all the processors of the document library.
+ * All document library processors must implement this interface.
  *
- * A DLProcessor is responsible of extracting additional metadata or assets from
- * a Documents and Media file entry. For example:
+ * A DLProcessor (processor) is responsible for extracting additional metadata or assets from
+ * a Documents and Media file entry. Here are a couple examples of such metadata
+ * and assets:
  *
  * <ul>
  * <li>
- * Images to use as previews for PDF or Word documents.
+ * Metadata stored in JPEG images or video files.
  * </li>
  * <li>
- * Metadata stored in JPEG images or video files.
+ * Images to use as previews for PDF or Word documents.
  * </li>
  * </ul>
  *
- * DLProcessors can be defined as OSGi components. To do that, annotate your
- * DLProcessor and register it under the type DLProcessor:
+ * Processors can be defined as OSGi components. To do that, annotate your
+ * processor and register it under the type <code>DLProcessor</code>:
+ *
  * <pre>
  * {@literal @}Component(service = DLProcessor.class)
  * public class MyDLProcessor implements DLProcessor {
  *
  * }
  * </pre>
- * Implementing subclasses are responsible of managing any storage required
- * by the generated resources, and to provide access to any generated assets.
+ *
+ * Implementing classes are responsible for managing any storage required
+ * by the generated resources and for providing access to any generated assets.
  * See current implementations for examples.
  *
  * @author Alexander Chow
@@ -61,18 +64,18 @@ public interface DLProcessor {
 	public void afterPropertiesSet() throws Exception;
 
 	/**
-	 * Cleans up any resources created for the given file entry by this
-	 * processor. Note that all resources for all file versions of this file
-	 * entry will be permanently deleted.
+	 * Cleans up any resources that the processor created for the file entry.
+	 * Note that all resources for all file versions of this file
+	 * entry are permanently deleted.
 	 *
-	 * @param fileEntry the file entry for which resources will be cleaned up
+	 * @param fileEntry the file entry for which resources are cleaned up
 	 */
 	public void cleanUp(FileEntry fileEntry);
 
 	/**
-	 * Cleans up any resources created for the given file version by this
-	 * processor. Not that other resources associated with other file versions
-	 * of the same file entry won't be affected; use {@link #cleanUp(FileEntry)}
+	 * Cleans up any resources that the processor created for the given file version.
+	 * Note that other resources associated with other file versions
+	 * for the same file entry aren't affected; use {@link #cleanUp(FileEntry)}
 	 * if you want to clean up everything.
 	 *
 	 * @param fileVersion the file version for which resources will be cleaned
@@ -81,10 +84,10 @@ public interface DLProcessor {
 	public void cleanUp(FileVersion fileVersion);
 
 	/**
-	 * Copies all resources generated for sourceFileVersion, reusing them for
-	 * destinationFileVersion. Note that resources will be literally copied, so
-	 * that the resulting resources will be independent (i.e. if afterwards
-	 * sourceFileVersion is deleted, destinationFileVersion resources won't be
+	 * Copies all resources generated for the source file version, reusing them for
+	 * destination file version. Note that resources are literally copied,
+	 * making the resulting resources independent (i.e., if afterwards the
+	 * source file version is deleted, the destination file version resources aren't
 	 * affected).
 	 *
 	 * @param sourceFileVersion the file version to copy resources from
@@ -94,13 +97,13 @@ public interface DLProcessor {
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion);
 
 	/**
-	 * Exports any resources generated for fileEntry into fileEntryElement.
+	 * Exports any resources generated for the file entry into file entry element.
 	 *
 	 * @param  portletDataContext the portlet data context to use during this
 	 *         export operation
-	 * @param  fileEntry the file entry for which resources will be exported
+	 * @param  fileEntry the file entry for which resources are exported
 	 * @param  fileEntryElement the file entry element to save resources into
-	 * @throws Exception if an error occurs while exporting the file entry
+	 * @throws Exception if an error occurred while exporting the file entry
 	 *         resources
 	 */
 	public void exportGeneratedFiles(
@@ -109,30 +112,30 @@ public interface DLProcessor {
 		throws Exception;
 
 	/**
-	 * Returns the type of this processor. See {@link
+	 * Returns the processor's type. See {@link
 	 * com.liferay.portlet.documentlibrary.model.DLProcessorConstants} for the
-	 * set of predefined types.
+	 * set of predefined processor types.
 	 *
 	 * @return the type of this processor
 	 */
 	public String getType();
 
 	/**
-	 * Imports any existing resources from the given file entry or file entry
-	 * element. If the PortletDataContext supports direct binary import (see
+	 * Imports any existing resources from the file entry or file entry
+	 * element. If the portlet data context supports direct binary import (see
 	 * {@link PortletDataContext#isPerformDirectBinaryImport()}), the resources
-	 * will be directly copied from fileEntry; otherwise, they'll be extracted
-	 * from fileEntryElement.
+	 * are directly copied from the file entry; otherwise, they're extracted
+	 * from the file entry element.
 	 *
 	 * @param  portletDataContext the portlet data context to use during this
 	 *         import operation
-	 * @param  fileEntry the file entry to import resources from if direct
+	 * @param  fileEntry the file entry to import resources from, if direct
 	 *         binary import is supported
-	 * @param  importedFileEntry the file entry for which resources will be
+	 * @param  importedFileEntry the file entry for which resources are
 	 *         imported
-	 * @param  fileEntryElement the file entry element to import resources from
+	 * @param  fileEntryElement the file entry element to import resources from,
 	 *         if direct binary import is not supported
-	 * @throws Exception if an error occurs while importing the file entry
+	 * @throws Exception if an error occurred while importing the file entry
 	 *         resources
 	 */
 	public void importGeneratedFiles(
@@ -141,12 +144,12 @@ public interface DLProcessor {
 		throws Exception;
 
 	/**
-	 * Returns <code>true</code> if the given file version is supported by this
+	 * Returns <code>true</code> if the file version is supported by this
 	 * processor.
 	 *
 	 * @param  fileVersion the file version
-	 * @return <code>true</code> if this processor supports the file version,
-	 *         <code>false</code> otherwise.
+	 * @return <code>true</code> if this processor supports the file version;
+	 *         <code>false</code> otherwise
 	 */
 	public boolean isSupported(FileVersion fileVersion);
 
@@ -155,13 +158,13 @@ public interface DLProcessor {
 	 * this processor.
 	 *
 	 * @param  mimeType the MIME type
-	 * @return <code>true</code> if this processor supports the MIME type,
-	 *         <code>false</code> otherwise.
+	 * @return <code>true</code> if this processor supports the MIME type;
+	 *         <code>false</code> otherwise
 	 */
 	public boolean isSupported(String mimeType);
 
 	/**
-	 * Launches the processor's work with respect to the given file version.
+	 * Launches the processor's work with respect to the destination file version.
 	 *
 	 * @param sourceFileVersion the file version to copy previews and thumbnails
 	 *        from (optionally <code>null</code>)

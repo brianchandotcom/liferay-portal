@@ -16,9 +16,7 @@
 
 <%@ include file="/html/common/themes/init.jsp" %>
 
-<c:if test="<%= PropsValues.MONITORING_PORTAL_REQUEST %>">
-	<%@ include file="/html/common/themes/top_monitoring.jspf" %>
-</c:if>
+<liferay-util:dynamic-include key="/html/common/themes/top_head-ext.jsp" />
 
 <%@ include file="/html/common/themes/top_meta.jspf" %>
 <%@ include file="/html/common/themes/top_meta-ext.jsp" %>

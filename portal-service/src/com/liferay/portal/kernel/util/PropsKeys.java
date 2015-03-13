@@ -1741,18 +1741,6 @@ public interface PropsKeys {
 
 	public static final String MODULE_FRAMEWORK_WEB_GENERATOR_JSP_COMPILER_DEPENDENCIES = "module.framework.web.generator.jsp.compiler.dependencies";
 
-	public static final String MONITORING_PORTAL_REQUEST = "monitoring.portal.request";
-
-	public static final String MONITORING_PORTLET_ACTION_REQUEST = "monitoring.portlet.action.request";
-
-	public static final String MONITORING_PORTLET_EVENT_REQUEST = "monitoring.portlet.event.request";
-
-	public static final String MONITORING_PORTLET_RENDER_REQUEST = "monitoring.portlet.render.request";
-
-	public static final String MONITORING_PORTLET_RESOURCE_REQUEST = "monitoring.portlet.resource.request";
-
-	public static final String MONITORING_SHOW_PER_REQUEST_DATA_SAMPLE = "monitoring.show.per.request.data.sample";
-
 	public static final String MSN_LOGIN = "msn.login";
 
 	public static final String MSN_PASSWORD = "msn.password";

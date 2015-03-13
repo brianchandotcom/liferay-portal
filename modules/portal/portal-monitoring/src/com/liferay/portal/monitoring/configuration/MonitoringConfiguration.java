@@ -42,4 +42,7 @@ public interface MonitoringConfiguration {
 	@Meta.AD(deflt = "false", required = false)
 	public boolean monitorServiceRequest();
 
+	@Meta.AD(deflt = "false", required = false)
+	public boolean showPerRequestDataSample();
+
 }

@@ -609,6 +609,33 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.ldap"
 		},
 
+		// Monitoring
+
+		new String[] {
+			"monitoring.portal.request", "monitor.portal.request",
+			"com.liferay.portal.monitoring"
+		},
+		new String[] {
+			"monitoring.portlet.action.request",
+			"monitor.portlet.action.request", "com.liferay.portal.monitoring"
+		},
+		new String[] {
+			"monitoring.portlet.event.request", "monitor.portlet.event.request",
+			"com.liferay.portal.monitoring"
+		},
+		new String[] {
+			"monitoring.portlet.render.request",
+			"monitor.portlet.render.request", "com.liferay.portal.monitoring"
+		},
+		new String[] {
+			"monitoring.portlet.resource.request",
+			"monitor.portlet.resource.request", "com.liferay.portal.monitoring"
+		},
+		new String[] {
+			"monitoring.show.per.request.data.sample",
+			"show.per.request.data.sample", "com.liferay.portal.monitoring"
+		},
+
 		// Navigation
 
 		new String[] {

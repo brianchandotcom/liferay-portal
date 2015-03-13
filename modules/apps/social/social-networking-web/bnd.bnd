@@ -7,7 +7,11 @@ Import-Package:\
 	com.liferay.portlet.blogs.model,\
 	com.liferay.portlet.blogs.service,\
 	com.liferay.portlet.messageboards.service,\
+	com.liferay.social.networking.constants,\
 	com.liferay.social.networking.exception,\
+	com.liferay.social.networking.friends.social,\
+	com.liferay.social.networking.members.social,\
+	com.liferay.social.networking.wall.social,\
 	*
 Include-Resource:\
 	classes,\

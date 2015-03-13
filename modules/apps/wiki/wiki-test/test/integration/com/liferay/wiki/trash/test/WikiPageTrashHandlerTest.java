@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
@@ -31,6 +32,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.util.test.WikiPageTrashHandlerTestUtil;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -55,9 +57,18 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		_testMode = PortalRunMode.isTestMode();
+
+		PortalRunMode.setTestMode(true);
+
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		super.setUp();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PortalRunMode.setTestMode(_testMode);
 	}
 
 	@Ignore()
@@ -231,5 +242,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		return WikiPageTrashHandlerTestUtil.updateBaseModel(
 			primaryKey, serviceContext);
 	}
+
+	private boolean _testMode;
 
 }

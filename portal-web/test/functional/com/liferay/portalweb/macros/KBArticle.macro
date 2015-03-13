@@ -591,6 +591,7 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_TITLE" value1="${kbArticleTitle}" />
+
 		<execute function="Click#clickWaitForInlineCKEditorNoMouseOver" locator1="Ratings#YOUR_RATING_STAR_EMPTY_1" />
 		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_1" />
 		<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_5" />
@@ -600,6 +601,7 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_TITLE" value1="${kbArticleTitle}" />
+
 		<execute function="Click#clickWaitForInlineCKEditorNoMouseOver" locator1="Ratings#YOUR_RATING_STAR_EMPTY_4" />
 		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_5" />
 		<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_1" />

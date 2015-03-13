@@ -466,7 +466,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #publishLayouts(long, long,
-	 *             long, boolean, long[], Map, Date, Date)}
+	 *             long, boolean, long[], Map)}
 	 */
 	@Deprecated
 	public static void publishLayouts(

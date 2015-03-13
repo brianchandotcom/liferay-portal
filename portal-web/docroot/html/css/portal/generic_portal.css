@@ -101,7 +101,7 @@ img.icon {
 	margin-left: 5px;
 }
 
-.alert{
+.alert {
 	&.popup-alert-notice, &.popup-alert-warning, &.taglib-portal-message {
 		left: 0;
 		line-height: 30px;

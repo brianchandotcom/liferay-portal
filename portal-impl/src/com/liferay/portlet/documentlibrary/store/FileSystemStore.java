@@ -15,8 +15,6 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -124,11 +122,7 @@ public class FileSystemStore extends BaseStore {
 		File dirNameDir = getDirNameDir(companyId, repositoryId, dirName);
 
 		if (!dirNameDir.exists()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Cannot delete directory " + dirNameDir.getPath() +
-						" because it does not exist");
-			}
+			logFailedDeletion(companyId, repositoryId, dirName);
 
 			return;
 		}
@@ -150,11 +144,7 @@ public class FileSystemStore extends BaseStore {
 		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
 
 		if (!fileNameDir.exists()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Cannot delete file " + fileNameDir.getPath() +
-						" because it does not exist");
-			}
+			logFailedDeletion(companyId, repositoryId, fileName);
 
 			return;
 		}
@@ -175,11 +165,7 @@ public class FileSystemStore extends BaseStore {
 			companyId, repositoryId, fileName, versionLabel);
 
 		if (!fileNameVersionFile.exists()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Cannot delete file " + fileNameVersionFile.getPath() +
-						" because it does not exist");
-			}
+			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
 
 			return;
 		}
@@ -535,9 +521,6 @@ public class FileSystemStore extends BaseStore {
 	protected String getRootDirName() {
 		return PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FileSystemStore.class);
 
 	private final Map<RepositoryDirKey, File> _repositoryDirs =
 		new ConcurrentHashMap<>();

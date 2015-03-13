@@ -110,6 +110,8 @@ public class DBStore extends BaseStore {
 				companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (NoSuchContentException nsce) {
+			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
+
 			if (_log.isWarnEnabled()) {
 				_log.warn(nsce);
 			}

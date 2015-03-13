@@ -128,9 +128,7 @@ public class S3Store extends BaseStore {
 		catch (S3ServiceException s3se) {
 			getNoSuchFileException(s3se);
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(s3se);
-			}
+			logFailedDeletion(companyId, repositoryId, dirName);
 		}
 	}
 
@@ -148,9 +146,7 @@ public class S3Store extends BaseStore {
 		catch (S3ServiceException s3se) {
 			getNoSuchFileException(s3se);
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(s3se);
-			}
+			logFailedDeletion(companyId, repositoryId, fileName);
 		}
 	}
 
@@ -167,9 +163,7 @@ public class S3Store extends BaseStore {
 		catch (S3ServiceException s3se) {
 			getNoSuchFileException(s3se);
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(s3se);
-			}
+			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
 		}
 	}
 

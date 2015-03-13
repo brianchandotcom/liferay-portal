@@ -14,12 +14,9 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -153,19 +150,7 @@ public class CMISStore extends BaseStore {
 			companyId, repositoryId, fileName, false);
 
 		if (versioningFolder == null) {
-			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(7);
-
-				sb.append("Cannot delete file {companyId=");
-				sb.append(companyId);
-				sb.append(", repositoryId=");
-				sb.append(repositoryId);
-				sb.append(", fileName=");
-				sb.append(fileName);
-				sb.append("} because it does not exist");
-
-				_log.warn(sb.toString());
-			}
+			logFailedDeletion(companyId, repositoryId, fileName);
 
 			return;
 		}
@@ -185,21 +170,7 @@ public class CMISStore extends BaseStore {
 				companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (NoSuchFileException nsfe) {
-			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(9);
-
-				sb.append("Cannot delete file {companyId=");
-				sb.append(companyId);
-				sb.append(", repositoryId=");
-				sb.append(repositoryId);
-				sb.append(", fileName=");
-				sb.append(fileName);
-				sb.append(", versionLabel=");
-				sb.append(versionLabel);
-				sb.append("} because it does not exist");
-
-				_log.warn(sb.toString());
-			}
+			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
 
 			return;
 		}
@@ -595,8 +566,6 @@ public class CMISStore extends BaseStore {
 
 		return versioningFolder;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(CMISStore.class);
 
 	private final Folder _systemRootDir;
 

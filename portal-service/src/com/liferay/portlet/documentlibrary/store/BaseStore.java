@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
@@ -571,6 +573,36 @@ public abstract class BaseStore implements Store {
 		updateFile(companyId, repositoryId, fileName, toVersionLabel, is);
 
 		deleteFile(companyId, repositoryId, fileName, fromVersionLabel);
+	}
+
+	protected void logFailedDeletion(
+		long companyId, long repositoryId, String fileName) {
+
+		logFailedDeletion(companyId, repositoryId, fileName, null);
+	}
+
+	protected void logFailedDeletion(
+		long companyId, long repositoryId, String fileName, String version) {
+
+		if (_log.isWarnEnabled()) {
+			StringBundler sb = new StringBundler(9);
+
+			sb.append("Cannot delete file {companyId=");
+			sb.append(companyId);
+			sb.append(", repositoryId=");
+			sb.append(repositoryId);
+			sb.append(", fileName=");
+			sb.append(fileName);
+
+			if (Validator.isNotNull(version)) {
+				sb.append(", versionLabel=");
+				sb.append(version);
+			}
+
+			sb.append("} because it does not exist");
+
+			_log.warn(sb.toString());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseStore.class);

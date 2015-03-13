@@ -18,8 +18,6 @@ import com.liferay.portal.jcr.JCRConstants;
 import com.liferay.portal.jcr.JCRFactory;
 import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -214,21 +212,13 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Cannot delete directory " + dirName +
-						" because it does not exist");
-			}
+			logFailedDeletion(companyId, repositoryId, dirName);
 		}
 		catch (RepositoryException re) {
 			String message = GetterUtil.getString(re.getMessage());
 
 			if (message.contains("failed to resolve path")) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Cannot delete directory " + dirName +
-							" because it does not exist");
-				}
+				logFailedDeletion(companyId, repositoryId, dirName);
 			}
 			else {
 				throw new SystemException(re);
@@ -281,11 +271,7 @@ public class JCRStore extends BaseStore {
 			versionHistory.addVersionLabel(version.getName(), "0.0", false);
 		}
 		catch (PathNotFoundException pnfe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Cannot delete file " + fileName +
-						" because it does not exist");
-			}
+			logFailedDeletion(companyId, repositoryId, fileName);
 
 			return;
 		}
@@ -336,11 +322,7 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Cannot delete file " + fileName +
-						" because it does not exist");
-			}
+			logFailedDeletion(companyId, repositoryId, fileName);
 
 			return;
 		}
@@ -367,11 +349,7 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Cannot delete file " + fileName +
-						" because it does not exist");
-			}
+			logFailedDeletion(companyId, repositoryId, fileName);
 		}
 		catch (RepositoryException re) {
 			throw new SystemException(re);
@@ -407,11 +385,8 @@ public class JCRStore extends BaseStore {
 				contentNode.getPath());
 
 			if (!versionHistory.hasVersionLabel(versionLabel)) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Cannot delete file " + fileName +
-							" because it does not exist");
-				}
+				logFailedDeletion(
+					companyId, repositoryId, fileName, versionLabel);
 			}
 
 			Version version = versionHistory.getVersionByLabel(versionLabel);
@@ -439,11 +414,7 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Cannot delete file " + fileName +
-						" because it does not exist");
-			}
+			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (RepositoryException re) {
 			throw new SystemException(re);
@@ -952,7 +923,5 @@ public class JCRStore extends BaseStore {
 
 		return getFolderNode(companyNode, JCRFactory.NODE_DOCUMENTLIBRARY);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(JCRStore.class);
 
 }

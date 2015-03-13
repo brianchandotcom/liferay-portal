@@ -47,7 +47,6 @@ public abstract class BaseStore implements Store {
 	 * @param  repositoryId the primary key of the data repository (optionally
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  dirName the directory's name
-	 * @throws PortalException if the directory's information was invalid
 	 */
 	@Override
 	public abstract void addDirectory(
@@ -62,7 +61,6 @@ public abstract class BaseStore implements Store {
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  bytes the files's data
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public void addFile(
@@ -92,7 +90,6 @@ public abstract class BaseStore implements Store {
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  file Name the file name
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public void addFile(
@@ -129,7 +126,6 @@ public abstract class BaseStore implements Store {
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  is the files's data
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public abstract void addFile(
@@ -160,7 +156,6 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the original's file name
 	 * @param  fromVersionLabel the original file's version label
 	 * @param  toVersionLabel the new version label
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public void copyFileVersion(
@@ -185,7 +180,6 @@ public abstract class BaseStore implements Store {
 	 * @param  repositoryId the primary key of the data repository (optionally
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  dirName the directory's name
-	 * @throws PortalException if the directory's information was invalid
 	 */
 	@Override
 	public abstract void deleteDirectory(
@@ -199,7 +193,6 @@ public abstract class BaseStore implements Store {
 	 * @param  repositoryId the primary key of the data repository (optionally
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public abstract void deleteFile(
@@ -213,7 +206,6 @@ public abstract class BaseStore implements Store {
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public abstract void deleteFile(
@@ -236,7 +228,6 @@ public abstract class BaseStore implements Store {
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @return Returns the {@link File} object with the file's name
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public File getFile(long companyId, long repositoryId, String fileName)
@@ -267,7 +258,6 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
 	 * @return Returns the {@link File} object with the file's name
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public File getFile(
@@ -286,7 +276,6 @@ public abstract class BaseStore implements Store {
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @return Returns the byte array with the file's name
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public byte[] getFileAsBytes(
@@ -316,7 +305,6 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
 	 * @return Returns the byte array with the file's name
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public byte[] getFileAsBytes(
@@ -347,7 +335,6 @@ public abstract class BaseStore implements Store {
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @return Returns the {@link InputStream} object with the file's name
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public InputStream getFileAsStream(
@@ -367,7 +354,6 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
 	 * @return Returns the {@link InputStream} object with the file's name
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public abstract InputStream getFileAsStream(
@@ -383,7 +369,6 @@ public abstract class BaseStore implements Store {
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  dirName the directory's name
 	 * @return Returns all files of the directory
-	 * @throws PortalException if the directory's information was invalid
 	 */
 	@Override
 	public abstract String[] getFileNames(
@@ -397,7 +382,6 @@ public abstract class BaseStore implements Store {
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @return Returns the size of the file
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public abstract long getFileSize(
@@ -413,7 +397,6 @@ public abstract class BaseStore implements Store {
 	 * @param  dirName the directory's name
 	 * @return <code>true</code> if the directory exists; <code>false</code>
 	 *         otherwise
-	 * @throws PortalException if the directory's information was invalid
 	 */
 	@Override
 	public abstract boolean hasDirectory(
@@ -428,7 +411,6 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file's name
 	 * @return <code>true</code> if the file exists; <code>false</code>
 	 *         otherwise
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public boolean hasFile(long companyId, long repositoryId, String fileName) {
@@ -445,7 +427,6 @@ public abstract class BaseStore implements Store {
 	 * @param  versionLabel the file's version label
 	 * @return <code>true</code> if the file exists; <code>false</code>
 	 *         otherwise
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public abstract boolean hasFile(
@@ -469,7 +450,6 @@ public abstract class BaseStore implements Store {
 	 * @param  repositoryId the primary key of the data repository
 	 * @param  newRepositoryId the primary key of the new data repository
 	 * @param  fileName the file's name
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public abstract void updateFile(
@@ -486,7 +466,6 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file name
 	 * @param  versionLabel the file's new version label
 	 * @param  bytes the new file's data
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public void updateFile(
@@ -518,7 +497,6 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file name
 	 * @param  versionLabel the file's new version label
 	 * @param  file Name the file name
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public void updateFile(
@@ -557,7 +535,6 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file name
 	 * @param  versionLabel the file's new version label
 	 * @param  is the new file's data
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public abstract void updateFile(
@@ -576,7 +553,6 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file's name
 	 * @param  fromVersionLabel the file's version label
 	 * @param  toVersionLabel the file's new version label
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public void updateFileVersion(

@@ -25,7 +25,7 @@ public class RestoreEntryException extends PortalException {
 
 	public static final int INVALID_CONTAINER = 2;
 
-	public static final int INVALID_TITLE = 3;
+	public static final int INVALID_NAME = 3;
 
 	public RestoreEntryException() {
 	}

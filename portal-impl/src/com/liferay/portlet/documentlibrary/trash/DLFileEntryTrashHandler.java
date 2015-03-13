@@ -293,9 +293,9 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			!DLValidatorUtil.isValidName(newName)) {
 
 			RestoreEntryException ree = new RestoreEntryException(
-				RestoreEntryException.INVALID_TITLE);
+				RestoreEntryException.INVALID_NAME);
 
-			ree.setErrorMessage("please-enter-a-valid-title");
+			ree.setErrorMessage("please-enter-a-valid-name");
 			ree.setTrashEntryId(entryId);
 
 			throw ree;

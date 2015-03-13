@@ -284,6 +284,9 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 
 					addArticleURL.setParameter("redirect", redirectURL.toString());
 					addArticleURL.setParameter("showHeader", Boolean.FALSE.toString());
+					addArticleURL.setParameter("portletResource", portletDisplay.getId());
+					addArticleURL.setParameter("groupId", String.valueOf(scopeGroupId));
+
 					addArticleURL.setWindowState(LiferayWindowState.POP_UP);
 
 					List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), PortalUtil.getClassNameId(JournalArticle.class));

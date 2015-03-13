@@ -142,7 +142,9 @@ public class ExportImportDateUtil {
 		int endDateHour = MapUtil.getInteger(parameterMap, "endDateHour");
 		int endDateMinute = MapUtil.getInteger(parameterMap, "endDateMinute");
 
+		String portletId = (String)settingsMap.get("portletId");
 		long groupId = MapUtil.getLong(settingsMap, "sourceGroupId");
+		long plid = MapUtil.getLong(settingsMap, "sourcePlid");
 		boolean privateLayout = MapUtil.getBoolean(
 			settingsMap, "privateLayout");
 		Locale locale = (Locale)settingsMap.get("locale");
@@ -152,7 +154,7 @@ public class ExportImportDateUtil {
 			range, rangeLast, startDateAmPm, startDateYear, startDateMonth,
 			startDateDay, startDateHour, startDateMinute, endDateAmPm,
 			endDateYear, endDateMonth, endDateDay, endDateHour, endDateMinute,
-			null, groupId, 0, privateLayout, locale, timeZone);
+			portletId, groupId, plid, privateLayout, locale, timeZone);
 	}
 
 	public static DateRange getDateRange(

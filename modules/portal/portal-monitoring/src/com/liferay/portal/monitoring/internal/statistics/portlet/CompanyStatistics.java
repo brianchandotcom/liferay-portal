@@ -14,8 +14,8 @@
 
 package com.liferay.portal.monitoring.internal.statistics.portlet;
 
+import com.liferay.portal.kernel.monitoring.DataSampleProcessor;
 import com.liferay.portal.kernel.monitoring.MonitoringException;
-import com.liferay.portal.kernel.monitoring.statistics.DataSampleProcessor;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.monitoring.internal.statistics.RequestStatistics;

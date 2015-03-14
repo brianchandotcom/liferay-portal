@@ -126,9 +126,11 @@ public class S3Store extends BaseStore {
 			}
 		}
 		catch (S3ServiceException s3se) {
-			getNoSuchFileException(s3se);
+			if (isS3NoSuchKeyException(s3se)) {
+				logFailedDeletion(companyId, repositoryId, dirName);
+			}
 
-			logFailedDeletion(companyId, repositoryId, dirName);
+			throw new SystemException(s3se);
 		}
 	}
 
@@ -144,9 +146,11 @@ public class S3Store extends BaseStore {
 			}
 		}
 		catch (S3ServiceException s3se) {
-			getNoSuchFileException(s3se);
+			if (isS3NoSuchKeyException(s3se)) {
+				logFailedDeletion(companyId, repositoryId, fileName);
+			}
 
-			logFailedDeletion(companyId, repositoryId, fileName);
+			throw new SystemException(s3se);
 		}
 	}
 
@@ -161,9 +165,11 @@ public class S3Store extends BaseStore {
 				getKey(companyId, repositoryId, fileName, versionLabel));
 		}
 		catch (S3ServiceException s3se) {
-			getNoSuchFileException(s3se);
+			if (isS3NoSuchKeyException(s3se)) {
+				logFailedDeletion(companyId, repositoryId, fileName);
+			}
 
-			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
+			throw new SystemException(s3se);
 		}
 	}
 
@@ -190,11 +196,12 @@ public class S3Store extends BaseStore {
 			return tempFile;
 		}
 		catch (Exception e) {
-			throw getNoSuchFileException(
-				"{companyId=" + companyId + ", repositoryId=" + repositoryId +
-					", fileName=" + fileName + ", versionLabel=" +
-						versionLabel + "}",
-				e);
+			if (isS3NoSuchKeyException(e)) {
+				throw new NoSuchFileException(
+					companyId, repositoryId, fileName, versionLabel);
+			}
+
+			throw new SystemException(e);
 		}
 	}
 
@@ -230,9 +237,11 @@ public class S3Store extends BaseStore {
 			return getFileNames(s3Objects);
 		}
 		catch (S3ServiceException s3se) {
-			getNoSuchFileException(s3se);
+			if (isS3NoSuchKeyException(s3se)) {
+				return new String[0];
+			}
 
-			return new String[0];
+			throw new SystemException(s3se);
 		}
 	}
 
@@ -248,9 +257,11 @@ public class S3Store extends BaseStore {
 			return getFileNames(s3Objects);
 		}
 		catch (S3ServiceException s3se) {
-			getNoSuchFileException(s3se);
+			if (isS3NoSuchKeyException(s3se)) {
+				return new String[0];
+			}
 
-			return new String[0];
+			throw new SystemException(s3se);
 		}
 	}
 
@@ -298,9 +309,11 @@ public class S3Store extends BaseStore {
 			}
 		}
 		catch (S3ServiceException s3se) {
-			getNoSuchFileException(s3se);
+			if (isS3NoSuchKeyException(s3se)) {
+				return false;
+			}
 
-			return false;
+			throw new SystemException(s3se);
 		}
 	}
 
@@ -353,10 +366,12 @@ public class S3Store extends BaseStore {
 			}
 		}
 		catch (Exception e) {
-			throw getNoSuchFileException(
-				"{companyId=" + companyId + ", repositoryId=" + repositoryId +
-					", fileName=" + fileName + "}",
-				e);
+			if (isS3NoSuchKeyException(e)) {
+				throw new NoSuchFileException(
+					companyId, repositoryId, fileName, e);
+			}
+
+			throw new SystemException(e);
 		}
 		finally {
 			StreamUtil.cleanUp(is);
@@ -413,10 +428,12 @@ public class S3Store extends BaseStore {
 			}
 		}
 		catch (Exception e) {
-			throw getNoSuchFileException(
-				"{companyId=" + companyId + ", repositoryId=" + repositoryId +
-					", fileName=" + fileName + "}",
-				e);
+			if (isS3NoSuchKeyException(e)) {
+				throw new NoSuchFileException(
+					companyId, repositoryId, fileName);
+			}
+
+			throw new SystemException(e);
 		}
 		finally {
 			StreamUtil.cleanUp(is);
@@ -441,11 +458,12 @@ public class S3Store extends BaseStore {
 			_s3Service.putObject(_s3Bucket, s3Object);
 		}
 		catch (Exception e) {
-			throw getNoSuchFileException(
-				"{companyId=" + companyId + ", repositoryId=" + repositoryId +
-					", fileName=" + fileName + ", versionLabel=" +
-						versionLabel + "}",
-				e);
+			if (isS3NoSuchKeyException(e)) {
+				throw new NoSuchFileException(
+					companyId, repositoryId, fileName, versionLabel);
+			}
+
+			throw new SystemException(e);
 		}
 		finally {
 			StreamUtil.cleanUp(is);
@@ -639,24 +657,6 @@ public class S3Store extends BaseStore {
 		return normalizedFileName;
 	}
 
-	protected NoSuchFileException getNoSuchFileException(Exception e) {
-		return getNoSuchFileException(StringPool.BLANK, e);
-	}
-
-	protected NoSuchFileException getNoSuchFileException(
-		String message, Exception e) {
-
-		if (e instanceof S3ServiceException) {
-			S3ServiceException s3se = (S3ServiceException)e;
-
-			if (Validator.equals("NoSuchKey", s3se.getS3ErrorCode())) {
-				return new NoSuchFileException(message, s3se);
-			}
-		}
-
-		throw new SystemException(e);
-	}
-
 	protected S3Bucket getS3Bucket() throws S3ServiceException {
 		if (Validator.isNull(_BUCKET_NAME)) {
 			throw new S3ServiceException("S3 bucket name is not set");
@@ -723,6 +723,18 @@ public class S3Store extends BaseStore {
 		}
 
 		return tempFile;
+	}
+
+	protected boolean isS3NoSuchKeyException(Exception e) {
+		if (e instanceof S3ServiceException) {
+			S3ServiceException s3se = (S3ServiceException)e;
+
+			if (Validator.equals("NoSuchKey", s3se.getS3ErrorCode())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final String _ACCESS_KEY = PropsUtil.get(

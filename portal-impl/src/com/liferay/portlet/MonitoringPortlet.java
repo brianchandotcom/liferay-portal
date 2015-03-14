@@ -16,11 +16,11 @@ package com.liferay.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.monitoring.DataSample;
+import com.liferay.portal.kernel.monitoring.DataSampleThreadLocal;
 import com.liferay.portal.kernel.monitoring.PortletMonitoringControl;
+import com.liferay.portal.kernel.monitoring.PortletRequestType;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
-import com.liferay.portal.kernel.monitoring.statistics.DataSample;
-import com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal;
-import com.liferay.portal.kernel.monitoring.statistics.PortletRequestType;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.monitoring.statistics.DataSampleFactoryUtil;
 

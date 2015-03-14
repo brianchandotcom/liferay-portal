@@ -16,8 +16,8 @@ package com.liferay.portal.monitoring.internal.statistics.portal;
 
 import aQute.bnd.annotation.component.Activate;
 
+import com.liferay.portal.kernel.monitoring.DataSampleProcessor;
 import com.liferay.portal.kernel.monitoring.MonitoringException;
-import com.liferay.portal.kernel.monitoring.statistics.DataSampleProcessor;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.CompanyLocalService;
 

@@ -16,9 +16,9 @@ package com.liferay.portal.monitoring.internal.statistics.portal;
 
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleProcessor;
-import com.liferay.portal.kernel.monitoring.statistics.RequestStatistics;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.monitoring.internal.statistics.RequestStatistics;
 import com.liferay.portal.service.CompanyLocalService;
 
 /**

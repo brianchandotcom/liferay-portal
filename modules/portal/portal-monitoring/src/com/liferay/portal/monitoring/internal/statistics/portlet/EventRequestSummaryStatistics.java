@@ -15,7 +15,7 @@
 package com.liferay.portal.monitoring.internal.statistics.portlet;
 
 import com.liferay.portal.kernel.monitoring.MonitoringException;
-import com.liferay.portal.kernel.monitoring.statistics.RequestStatistics;
+import com.liferay.portal.monitoring.internal.statistics.RequestStatistics;
 
 import java.util.Set;
 

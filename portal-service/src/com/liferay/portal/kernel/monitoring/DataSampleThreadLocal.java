@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.monitoring.statistics;
+package com.liferay.portal.kernel.monitoring;
 
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;

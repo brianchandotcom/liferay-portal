@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.monitoring.statistics;
+package com.liferay.portal.monitoring.statistics;
 
 /**
  * @author Michael C. Han

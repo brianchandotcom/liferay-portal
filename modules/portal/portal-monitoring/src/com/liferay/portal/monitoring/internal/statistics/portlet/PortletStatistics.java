@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.monitoring.MonitoringException;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleProcessor;
 import com.liferay.portal.kernel.monitoring.statistics.PortletRequestType;
-import com.liferay.portal.kernel.monitoring.statistics.RequestStatistics;
+import com.liferay.portal.monitoring.internal.statistics.RequestStatistics;
 
 import java.util.HashMap;
 import java.util.Map;

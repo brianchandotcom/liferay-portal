@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.monitoring.MonitorNames;
-import com.liferay.portal.monitoring.internal.statistics.BaseDataSample;
+import com.liferay.portal.monitoring.internal.BaseDataSample;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.internal.statistics;
+package com.liferay.portal.monitoring.internal;
 
 import com.liferay.portal.kernel.monitoring.DataSample;
 import com.liferay.portal.kernel.monitoring.RequestStatus;

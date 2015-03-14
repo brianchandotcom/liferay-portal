@@ -8,10 +8,6 @@
 	position: relative;
 }
 
-.ie .lfr-form-row {
-	width: 100%;
-}
-
 .lfr-form-row:after {
 	clear: both;
 	content: '';
@@ -49,12 +45,6 @@
 	bottom: 5px;
 	position: absolute;
 	right: 5px;
-}
-
-.ie6, .ie7 {
-	.lfr-form-row {
-		zoom: 1;
-	}
 }
 
 /* Skin */

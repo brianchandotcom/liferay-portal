@@ -199,16 +199,6 @@
 	}
 }
 
-.ie6 {
-	.lfr-upload-movie {
-		position: static;
-	}
-
-	.lfr-upload-movie-content {
-		position: absolute;
-	}
-}
-
 .upload-drop-intent .lfr-upload-container .upload-target {
 	z-index: 100;
 }

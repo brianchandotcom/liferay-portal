@@ -236,11 +236,3 @@ body.green, .green .portlet {
 		background-image: url(@theme_image_path@/application/state_active_bg.png);
 	}
 }
-
-/* ---------- IE6 chokes on attribute selectors in a chain, so we separate them into their own rule ---------- */
-
-.ie6 .green {
-	button, input.button, input.submit, .button-disabled button, .button-disabled input.button, .button-disabled input.submit {
-		color: #404F34;
-	}
-}

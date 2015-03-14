@@ -260,19 +260,3 @@
 		}
 	}
 }
-
-.ie {
-	.portlet-users-admin {
-		.permission-scopes {
-			height: 1%;
-		}
-	}
-}
-
-.ie6 {
-	.portlet-users-admin {
-		.organization-information {
-			height: 1%;
-		}
-	}
-}

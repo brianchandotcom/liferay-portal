@@ -55,18 +55,6 @@
 	}
 }
 
-.ie .lfr-toolbar {
-	height: 1%;
-
-	select {
-		margin-top: 3px;
-	}
-}
-
-.ie6 .lfr-toolbar {
-	width: 750px;
-}
-
 /* Skin */
 
 .lfr-toolbar {

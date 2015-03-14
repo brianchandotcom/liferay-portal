@@ -104,9 +104,3 @@
 		margin-top: 5px;
 	}
 }
-
-.ie6, .ie7 {
-	.entry-display-style.display-descriptive {
-		zoom: 1;
-	}
-}

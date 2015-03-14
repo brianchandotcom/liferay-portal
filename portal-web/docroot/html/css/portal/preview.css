@@ -156,41 +156,6 @@
 	}
 }
 
-.ie8 {
-	.lfr-preview-file-image-current-column {
-		display: table;
-		height: 480px;
-		table-layout: fixed;
-		width: 100%;
-	}
-
-	.lfr-preview-file-image-container {
-		width: 100%;
-	}
-}
-
-.ie6, .ie7 {
-	.lfr-preview-file-image-container {
-		display: block;
-		height: 440px;
-	}
-}
-
-.ie6 {
-	.lfr-preview-file-image-current {
-		height: 440px;
-		width: 536px;
-	}
-
-	.lfr-preview-file-image-overlay-content img {
-		position: static;
-	}
-
-	.lfr-preview-file {
-		zoom: 1;
-	}
-}
-
 /* Skin */
 
 .lfr-preview-file-content {
@@ -247,13 +212,6 @@
 .lfr-preview-file-image-overlay-content {
 	background: url(@theme_image_path@/common/checkerboard.png);
 	border-color: #555;
-}
-
-.ie6, .ie7 {
-	.lfr-preview-file-image-container {
-		font-size: 398.2px;
-		line-height: 1;
-	}
 }
 
 .firefox .lfr-preview-video-content div.video-node {

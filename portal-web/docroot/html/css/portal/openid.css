@@ -2,20 +2,9 @@
 	padding-left: 18px;
 }
 
-.ie6 .openid-login input.text {
-	padding-left: 18px;
-}
-
 /* Skin */
 
 .openid-login input[type="text"] {
-	background: url(@theme_image_path@/common/openid.gif) no-repeat;
-	background-color: #FFF;
-	background-position: 0 50%;
-	color: #000;
-}
-
-.ie6 .openid-login input.text {
 	background: url(@theme_image_path@/common/openid.gif) no-repeat;
 	background-color: #FFF;
 	background-position: 0 50%;

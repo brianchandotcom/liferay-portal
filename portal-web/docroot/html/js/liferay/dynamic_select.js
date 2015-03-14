@@ -134,11 +134,6 @@ AUI.add(
 
 				if (select) {
 					select.empty().append(selectOptions).val(selectVal);
-
-					if (Liferay.Browser.isIe()) {
-						select.setStyle('width', 'auto');
-					}
-				}
 			}
 		};
 

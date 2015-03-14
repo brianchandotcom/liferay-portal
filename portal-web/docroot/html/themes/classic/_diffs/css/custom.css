@@ -866,11 +866,3 @@ html {
 		}
 	}
 }
-
-/* ---------- IE8 ---------- */
-
-.ie8 {
-	.dockbar-split .dockbar .info-button a {
-		margin-top: -2px;
-	}
-}

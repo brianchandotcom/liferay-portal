@@ -474,32 +474,6 @@
 	}
 }
 
-.ie {
-	.portlet-message-boards, .portlet-trash {
-		.message-container {
-			width: 100%;
-
-			.thread-body table {
-				table-layout: auto;
-			}
-		}
-	}
-}
-
-.ie6 {
-	.portlet-message-boards, .portlet-trash {
-		.code {
-			width: 100%;
-		}
-	}
-}
-
-.ie8 {
-	.question-details {
-		white-space: normal;
-	}
-}
-
 .trash-restore-popup {
 	.form {
 		fieldset {

@@ -23,18 +23,6 @@
 	margin-left: 20px;
 }
 
-.ie .lfr-portlet-item {
-	height: 1%;
-
-	p a {
-		top: -2px;
-	}
-}
-
-.ie6 .lfr-portlet-item p a {
-	right: 20px;
-}
-
 /* Skin */
 
 .lfr-portlet-item {

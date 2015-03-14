@@ -23,10 +23,6 @@
 	visibility: hidden;
 }
 
-.ie .taglib-webdav table {
-	height: 1%;
-}
-
 /* Skin */
 
 .js .taglib-webdav {

@@ -75,11 +75,3 @@
 		}
 	}
 }
-
-.ie {
-	.portlet-configuration {
-		.edit-permissions form {
-			height: 1%;
-		}
-	}
-}

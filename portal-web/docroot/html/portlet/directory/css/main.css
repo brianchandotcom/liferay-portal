@@ -117,17 +117,3 @@
 		overflow: hidden;
 	}
 }
-
-.ie6 {
-	.portlet-directory {
-		height: 1%;
-
-		dl.property-list {
-			height: 1%;
-		}
-
-		.user-information, .organization-information {
-			height: 1%;
-		}
-	}
-}

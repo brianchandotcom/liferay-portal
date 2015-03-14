@@ -178,9 +178,3 @@
 		}
 	}
 }
-
-.ie6, .ie7 {
-	.lfr-editor-container {
-		zoom: 1;
-	}
-}

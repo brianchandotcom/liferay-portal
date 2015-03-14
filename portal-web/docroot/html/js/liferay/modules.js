@@ -978,9 +978,5 @@
 		useBrowserConsole: false
 	};
 
-	if (Browser.isIe() && Browser.getMajorVersion() < 9) {
-		CORE_MODULES.push('aui-base-html5-shiv');
-	}
-
 	CORE_MODULES.push('liferay-browser-selectors');
 })();

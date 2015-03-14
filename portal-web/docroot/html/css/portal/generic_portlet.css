@@ -76,14 +76,6 @@
 	margin-bottom: 1.5em;
 }
 
-.ie .float-container {
-	height: 1%;
-}
-
-.ie8 .lfr-portrait-preview {
-	float: left;
-}
-
 .gecko .lfr-portrait-editor {
 	display: table-column;
 }
@@ -104,10 +96,4 @@
 
 .lfr-checkbox-preselected, .lfr-configurator-visibility {
 	opacity: 0.5;
-}
-
-.ie {
-	.lfr-checkbox-preselected, .lfr-configurator-visibility, .lfr-configurator-visibility .portlet-topper {
-		zoom: 1;
-	}
 }

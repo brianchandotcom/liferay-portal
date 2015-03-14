@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-look-and-feel',
 	function(A) {
-		var Browser = Liferay.Browser;
 		var Lang = A.Lang;
 
 		var BACKGROUND_COLOR = 'backgroundColor';
@@ -147,10 +146,6 @@ AUI.add(
 										modal: false,
 										on: {
 											visibleChange: function(event) {
-												if (!event.newVal && Browser.isIe() && Browser.getMajorVersion() == 6) {
-													window.location.reload(true);
-												}
-
 												instance._destroyColorPickers();
 											}
 										}

@@ -109,10 +109,6 @@
 	}
 }
 
-.ie6 .lfr-extended.lfr-collapsible .lfr-panel-titlebar {
-	zoom: 1;
-}
-
 /* Skin */
 
 .lfr-panel.lfr-extended, .lfr-panel-container, .lfr-floating-container {

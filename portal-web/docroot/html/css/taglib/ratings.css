@@ -57,13 +57,3 @@
 .js .taglib-ratings .liferay-rating-vote .rating-input-container {
 	display: none;
 }
-
-.ie6 .taglib-ratings {
-	.rating-content {
-		display: inline;
-	}
-
-	&.stars {
-		display: inline-block;
-	}
-}

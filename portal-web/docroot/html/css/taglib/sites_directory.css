@@ -16,9 +16,3 @@
 		}
 	}
 }
-
-.ie8 {
-	.sites-directory-taglib .app-view-entry-taglib.entry-display-style .entry-thumbnail {
-		width: 100px;
-	}
-}

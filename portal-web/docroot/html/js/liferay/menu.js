@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-menu',
 	function(A) {
-		var Browser = Liferay.Browser;
 		var Lang = A.Lang;
 		var Util = Liferay.Util;
 
@@ -361,16 +360,6 @@ AUI.add(
 					}
 
 					overlay.show();
-
-					if (Browser.isIe() && Browser.getMajorVersion() <= 7) {
-						var searchContainer = menu.one(SELECTOR_SEARCH_CONTAINER);
-
-						if (searchContainer) {
-							searchContainer.width(menu.innerWidth());
-
-							menu.one(SELECTOR_SEARCH_INPUT).width('100%');
-						}
-					}
 
 					if (cssClass.indexOf(CSS_EXTENDED) > -1) {
 						trigger.addClass(CSS_BTN_PRIMARY);

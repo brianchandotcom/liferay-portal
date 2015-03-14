@@ -223,12 +223,6 @@
 	height: 0;
 }
 
-.ie6, .ie7 {
-	.taglib-discussion .lfr-discussion {
-		zoom: 1;
-	}
-}
-
 /* Skin */
 
 .taglib-discussion {

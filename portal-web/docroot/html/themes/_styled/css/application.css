@@ -1101,44 +1101,6 @@ input.switch {
 	}
 }
 
-.ie {
-	& input.cke_dialog_ui_input_text {
-		height: auto;
-	}
-
-	.proxy.not-intersecting .forbidden-action {
-		right: 2px;
-		top: 2px;
-	}
-}
-
-.ie7 {
-	.menu-content li {
-		z-index: 10;
-	}
-
-	.paginator-link {
-		color: transparent;
-		font-size: 0;
-		overflow: hidden;
-		text-indent: 0;
-		vertical-align: middle;
-	}
-
-	.paginator-page-link {
-		color: #1F1E1E;
-		font-size: 1em;
-		height: auto;
-		line-height: 1.4;
-		overflow: visible;
-		text-indent: 0;
-	}
-
-	.paginator-current-page {
-		color: #FFF;
-	}
-}
-
 /* LPS-44925 */
 
 .modal-content .dialog-iframe-node {

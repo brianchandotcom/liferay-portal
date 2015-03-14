@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.monitoring.statistics;
-
-import com.liferay.portal.kernel.monitoring.RequestStatus;
+package com.liferay.portal.kernel.monitoring;
 
 import java.util.Map;
 

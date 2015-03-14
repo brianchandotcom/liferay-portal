@@ -12,16 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.kernel.monitoring.statistics;
+package com.liferay.portal.kernel.monitoring;
 
-import com.liferay.portal.kernel.monitoring.MonitoringException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Michael C. Han
- * @author Brian Wing Shun Chan
  */
-public interface DataSampleProcessor<T extends DataSample> {
+public interface DataSampleFactory {
 
-	public void processDataSample(T dataSample) throws MonitoringException;
+	public DataSample createPortalRequestDataSample(
+		long companyId, String remoteUser, String requestURI,
+		String requestURL);
+
+	public DataSample createPortletRequestDataSample(
+		PortletRequestType requestType, PortletRequest portletRequest,
+		PortletResponse portletResponse);
+
+	public DataSample createServiceRequestDataSample(
+		MethodSignature methodSignature);
 
 }

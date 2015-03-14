@@ -14,10 +14,10 @@
 
 package com.liferay.portal.monitoring.internal.statistics;
 
+import com.liferay.portal.kernel.monitoring.DataSample;
+import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
-import com.liferay.portal.kernel.monitoring.statistics.DataSample;
-import com.liferay.portal.kernel.monitoring.statistics.DataSampleFactory;
-import com.liferay.portal.kernel.monitoring.statistics.PortletRequestType;
+import com.liferay.portal.kernel.monitoring.PortletRequestType;
 import com.liferay.portal.monitoring.internal.statistics.portal.PortalRequestDataSample;
 import com.liferay.portal.monitoring.internal.statistics.portlet.PortletRequestDataSample;
 import com.liferay.portal.monitoring.internal.statistics.service.ServiceRequestDataSample;

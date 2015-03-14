@@ -14,8 +14,8 @@
 
 package com.liferay.portal.monitoring.internal.statistics;
 
+import com.liferay.portal.kernel.monitoring.DataSample;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
-import com.liferay.portal.kernel.monitoring.statistics.DataSample;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;

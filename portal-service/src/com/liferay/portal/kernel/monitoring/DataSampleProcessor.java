@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.monitoring.statistics;
+package com.liferay.portal.kernel.monitoring;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public enum PortletRequestType {
+public interface DataSampleProcessor<T extends DataSample> {
 
-	ACTION, EVENT, RENDER, RESOURCE
+	public void processDataSample(T dataSample) throws MonitoringException;
 
 }

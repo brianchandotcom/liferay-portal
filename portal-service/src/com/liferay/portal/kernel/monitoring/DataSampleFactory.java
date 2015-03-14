@@ -12,14 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.kernel.monitoring.statistics;
+package com.liferay.portal.kernel.monitoring;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Michael C. Han
- * @author Brian Wing Shun Chan
  */
-public enum PortletRequestType {
+public interface DataSampleFactory {
 
-	ACTION, EVENT, RENDER, RESOURCE
+	public DataSample createPortalRequestDataSample(
+		long companyId, String remoteUser, String requestURI,
+		String requestURL);
+
+	public DataSample createPortletRequestDataSample(
+		PortletRequestType requestType, PortletRequest portletRequest,
+		PortletResponse portletResponse);
+
+	public DataSample createServiceRequestDataSample(
+		MethodSignature methodSignature);
 
 }

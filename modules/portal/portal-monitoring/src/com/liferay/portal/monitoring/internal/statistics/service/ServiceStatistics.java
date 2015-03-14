@@ -14,10 +14,10 @@
 
 package com.liferay.portal.monitoring.internal.statistics.service;
 
+import com.liferay.portal.kernel.monitoring.DataSampleProcessor;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
-import com.liferay.portal.kernel.monitoring.statistics.DataSampleProcessor;
-import com.liferay.portal.kernel.monitoring.statistics.RequestStatistics;
+import com.liferay.portal.monitoring.internal.statistics.RequestStatistics;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

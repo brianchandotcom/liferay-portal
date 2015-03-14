@@ -16,10 +16,10 @@ package com.liferay.portal.monitoring.statistics;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.monitoring.DataSample;
+import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
-import com.liferay.portal.kernel.monitoring.statistics.DataSample;
-import com.liferay.portal.kernel.monitoring.statistics.DataSampleFactory;
-import com.liferay.portal.kernel.monitoring.statistics.PortletRequestType;
+import com.liferay.portal.kernel.monitoring.PortletRequestType;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;

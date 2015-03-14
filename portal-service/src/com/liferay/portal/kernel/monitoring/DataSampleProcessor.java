@@ -12,20 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.monitoring.statistics;
+package com.liferay.portal.kernel.monitoring;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public interface Statistics {
+public interface DataSampleProcessor<T extends DataSample> {
 
-	public String getDescription();
-
-	public String getName();
-
-	public void reset();
-
-	public void setDescription(String description);
+	public void processDataSample(T dataSample) throws MonitoringException;
 
 }

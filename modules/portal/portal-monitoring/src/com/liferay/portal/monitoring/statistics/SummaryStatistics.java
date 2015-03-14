@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.monitoring.statistics;
+package com.liferay.portal.monitoring.statistics;
 
 import com.liferay.portal.kernel.monitoring.MonitoringException;
 

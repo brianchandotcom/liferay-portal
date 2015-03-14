@@ -14,8 +14,8 @@
 
 package com.liferay.portal.monitoring.internal.statistics.service;
 
+import com.liferay.portal.kernel.monitoring.DataSampleProcessor;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
-import com.liferay.portal.kernel.monitoring.statistics.DataSampleProcessor;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

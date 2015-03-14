@@ -12,27 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.monitoring.statistics;
-
-import com.liferay.portal.kernel.monitoring.MethodSignature;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+package com.liferay.portal.kernel.monitoring;
 
 /**
  * @author Michael C. Han
+ * @author Brian Wing Shun Chan
  */
-public interface DataSampleFactory {
+public enum PortletRequestType {
 
-	public DataSample createPortalRequestDataSample(
-		long companyId, String remoteUser, String requestURI,
-		String requestURL);
-
-	public DataSample createPortletRequestDataSample(
-		PortletRequestType requestType, PortletRequest portletRequest,
-		PortletResponse portletResponse);
-
-	public DataSample createServiceRequestDataSample(
-		MethodSignature methodSignature);
+	ACTION, EVENT, RENDER, RESOURCE
 
 }

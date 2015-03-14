@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.monitoring.statistics;
+package com.liferay.portal.monitoring.internal.statistics;
+
+import com.liferay.portal.monitoring.statistics.Statistics;
 
 /**
  * @author Michael C. Han

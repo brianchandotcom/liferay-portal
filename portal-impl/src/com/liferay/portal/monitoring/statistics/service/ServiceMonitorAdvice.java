@@ -14,11 +14,11 @@
 
 package com.liferay.portal.monitoring.statistics.service;
 
+import com.liferay.portal.kernel.monitoring.DataSample;
+import com.liferay.portal.kernel.monitoring.DataSampleThreadLocal;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
-import com.liferay.portal.kernel.monitoring.statistics.DataSample;
-import com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.monitoring.statistics.DataSampleFactoryUtil;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;

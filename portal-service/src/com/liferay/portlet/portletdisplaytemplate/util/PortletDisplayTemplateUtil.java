@@ -57,6 +57,10 @@ public class PortletDisplayTemplateUtil {
 		return getPortletDisplayTemplate().getDDMTemplateGroupId(groupId);
 	}
 
+	public static String getDDMTemplateKey(String displayStyle) {
+		return getPortletDisplayTemplate().getDDMTemplateKey(displayStyle);
+	}
+
 	/**
 	 * Returns the UUID of the portlet display template's DDM template from the
 	 * display style stored in the portlet configuration.
@@ -75,6 +79,14 @@ public class PortletDisplayTemplateUtil {
 			PortletDisplayTemplate.class);
 
 		return _portletDisplayTemplate;
+	}
+
+	public static DDMTemplate getPortletDisplayTemplateDDMTemplate(
+		long groupId, long classNameId, String displayStyle) {
+
+		return
+			getPortletDisplayTemplate().getPortletDisplayTemplateDDMTemplate(
+				groupId, classNameId, displayStyle);
 	}
 
 	/**
@@ -128,6 +140,25 @@ public class PortletDisplayTemplateUtil {
 		getTemplateVariableGroups(String language) {
 
 		return getPortletDisplayTemplate().getTemplateVariableGroups(language);
+	}
+
+	public static String renderDDMTemplate(
+			HttpServletRequest request, HttpServletResponse response,
+			DDMTemplate ddmTemplate, List<?> entries)
+		throws Exception {
+
+		return getPortletDisplayTemplate().renderDDMTemplate(
+			request, response, ddmTemplate, entries);
+	}
+
+	public static String renderDDMTemplate(
+			HttpServletRequest request, HttpServletResponse response,
+			DDMTemplate ddmTemplate, List<?> entries,
+			Map<String, Object> contextObjects)
+		throws Exception {
+
+		return getPortletDisplayTemplate().renderDDMTemplate(
+			request, response, ddmTemplate, entries, contextObjects);
 	}
 
 	/**

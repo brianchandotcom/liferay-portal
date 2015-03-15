@@ -15,6 +15,7 @@
 package com.liferay.portlet.portletdisplaytemplate.util;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -140,12 +141,43 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	}
 
 	@Override
-	public String getDDMTemplateUuid(String displayStyle) {
+	public String getDDMTemplateKey(String displayStyle) {
 		if (!displayStyle.startsWith(DISPLAY_STYLE_PREFIX)) {
 			return null;
 		}
 
 		return displayStyle.substring(DISPLAY_STYLE_PREFIX.length());
+	}
+
+	@Override
+	public String getDDMTemplateUuid(String displayStyle) {
+		return getDDMTemplateKey(displayStyle);
+	}
+
+	@Override
+	public DDMTemplate getPortletDisplayTemplateDDMTemplate(
+		long groupId, long classNameId, String displayStyle) {
+
+		long portletDisplayDDMTemplateGroupId = getDDMTemplateGroupId(groupId);
+
+		DDMTemplate portletDisplayDDMTemplate = null;
+
+		if (displayStyle.startsWith(DISPLAY_STYLE_PREFIX)) {
+			String ddmTemplateKey = getDDMTemplateKey(displayStyle);
+
+			if (Validator.isNotNull(ddmTemplateKey)) {
+				try {
+					portletDisplayDDMTemplate =
+						DDMTemplateLocalServiceUtil.fetchTemplate(
+							portletDisplayDDMTemplateGroupId, classNameId,
+							ddmTemplateKey, true);
+				}
+				catch (PortalException e) {
+				}
+			}
+		}
+
+		return portletDisplayDDMTemplate;
 	}
 
 	@Override
@@ -267,24 +299,25 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	@Override
 	public String renderDDMTemplate(
 			HttpServletRequest request, HttpServletResponse response,
-			long ddmTemplateId, List<?> entries)
+			DDMTemplate ddmTemplate, List<?> entries)
 		throws Exception {
 
 		Map<String, Object> contextObjects = new HashMap<>();
 
 		return renderDDMTemplate(
-			request, response, ddmTemplateId, entries, contextObjects);
+			request, response, ddmTemplate, entries, contextObjects);
 	}
 
 	@Override
 	public String renderDDMTemplate(
 			HttpServletRequest request, HttpServletResponse response,
-			long ddmTemplateId, List<?> entries,
+			DDMTemplate ddmTemplate, List<?> entries,
 			Map<String, Object> contextObjects)
 		throws Exception {
 
 		contextObjects.put(
-			PortletDisplayTemplateConstants.TEMPLATE_ID, ddmTemplateId);
+			PortletDisplayTemplateConstants.TEMPLATE_ID,
+			ddmTemplate.getTemplateId());
 		contextObjects.put(PortletDisplayTemplateConstants.ENTRIES, entries);
 
 		if (!entries.isEmpty()) {
@@ -325,9 +358,6 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			PortletDisplayTemplateConstants.THEME_DISPLAY, themeDisplay);
 
 		// Custom context objects
-
-		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-			ddmTemplateId);
 
 		contextObjects.put(
 			TemplateConstants.CLASS_NAME_ID, ddmTemplate.getClassNameId());
@@ -396,6 +426,32 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		return _transformer.transform(
 			themeDisplay, contextObjects, ddmTemplate.getScript(), language,
 			unsyncStringWriter);
+	}
+
+	@Override
+	public String renderDDMTemplate(
+			HttpServletRequest request, HttpServletResponse response,
+			long ddmTemplateId, List<?> entries)
+		throws Exception {
+
+		Map<String, Object> contextObjects = new HashMap<>();
+
+		return renderDDMTemplate(
+			request, response, ddmTemplateId, entries, contextObjects);
+	}
+
+	@Override
+	public String renderDDMTemplate(
+			HttpServletRequest request, HttpServletResponse response,
+			long ddmTemplateId, List<?> entries,
+			Map<String, Object> contextObjects)
+		throws Exception {
+
+		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
+			ddmTemplateId);
+
+		return renderDDMTemplate(
+			request, response, ddmTemplate, entries, contextObjects);
 	}
 
 	private Map<String, Object> _getPortletPreferences(

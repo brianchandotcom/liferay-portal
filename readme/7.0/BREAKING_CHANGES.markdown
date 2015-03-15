@@ -1170,3 +1170,26 @@ Application Display Templates provide more flexibility that JSPs since coding
 is not needed to change the look and feel of your application.
 
 ---------------------------------------
+
+### Taglib `liferay-ui:ddm-template-selector` has changed its usage
+- **Date:** 2015-Mar-16
+- **JIRA Ticket:** LPS-53790
+
+#### What changed?
+
+The attribute `classNameId` of the mentioned taglib has changed to className.
+
+
+#### Who is affected?
+
+Anyone using the `liferay-ui:ddm-template-selector` taglib.
+
+
+#### How should I update my code?
+
+Use the className instead of the classNameId.
+
+
+#### Why was this change made?
+
+To simplify the usage of this taglib.

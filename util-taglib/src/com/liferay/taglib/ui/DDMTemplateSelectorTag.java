@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -26,8 +27,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DDMTemplateSelectorTag extends IncludeTag {
 
-	public void setClassNameId(long classNameId) {
-		_classNameId = classNameId;
+	public void setClassName(String className) {
+		_className = className;
 	}
 
 	public void setDefaultDisplayStyle(String defaultDisplayStyle) {
@@ -64,7 +65,7 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_classNameId = 0;
+		_className = null;
 		_defaultDisplayStyle = StringPool.BLANK;
 		_displayStyle = null;
 		_displayStyleGroupId = 0;
@@ -82,9 +83,11 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		long classNameId = PortalUtil.getClassNameId(_className);
+
 		request.setAttribute(
 			"liferay-ui:ddm-template-select:classNameId",
-			String.valueOf(_classNameId));
+			String.valueOf(classNameId));
 		request.setAttribute(
 			"liferay-ui:ddm-template-select:displayStyle", _displayStyle);
 		request.setAttribute(
@@ -107,7 +110,7 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/ddm_template_selector/page.jsp";
 
-	private long _classNameId;
+	private String _className;
 	private String _defaultDisplayStyle = StringPool.BLANK;
 	private String _displayStyle;
 	private long _displayStyleGroupId;

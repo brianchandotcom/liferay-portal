@@ -14,6 +14,8 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -30,15 +32,20 @@ public class DDMTemplateRendererTag extends IncludeTag {
 
 	@Override
 	public int processStartTag() throws Exception {
-		_portletDisplayDDMTemplateId =
-			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(
-				_displayStyleGroupId, _displayStyle);
+		_portletDisplayDDMTemplate =
+			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
+				_displayStyleGroupId, PortalUtil.getClassNameId(_className),
+				_displayStyle);
 
-		if (_portletDisplayDDMTemplateId > 0) {
+		if (_portletDisplayDDMTemplate != null) {
 			return SKIP_BODY;
 		}
 
 		return EVAL_BODY_INCLUDE;
+	}
+
+	public void setClassName(String className) {
+		_className = className;
 	}
 
 	public void setContextObjects(Map<String, Object> contextObjects) {
@@ -59,11 +66,12 @@ public class DDMTemplateRendererTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_className = null;
 		_contextObjects = new HashMap<>();
 		_displayStyle = null;
 		_displayStyleGroupId = 0;
 		_entries = null;
-		_portletDisplayDDMTemplateId = 0;
+		_portletDisplayDDMTemplate = null;
 	}
 
 	@Override
@@ -78,17 +86,18 @@ public class DDMTemplateRendererTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:ddm-template-renderer:entries", _entries);
 		request.setAttribute(
-			"liferay-ui:ddm-template-renderer:portletDisplayDDMTemplateId",
-			String.valueOf(_portletDisplayDDMTemplateId));
+			"liferay-ui:ddm-template-renderer:portletDisplayDDMTemplate",
+			_portletDisplayDDMTemplate);
 	}
 
 	private static final String _PAGE =
 		"/html/taglib/ui/ddm_template_renderer/page.jsp";
 
+	private String _className;
 	private Map<String, Object> _contextObjects = new HashMap<>();
 	private String _displayStyle;
 	private long _displayStyleGroupId;
 	private List<?> _entries;
-	private long _portletDisplayDDMTemplateId;
+	private DDMTemplate _portletDisplayDDMTemplate;
 
 }

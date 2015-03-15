@@ -792,7 +792,7 @@
 		<tag-class>com.liferay.taglib.ui.BreadcrumbTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>ddmTemplate</name>
+			<name>ddmTemplateGroupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

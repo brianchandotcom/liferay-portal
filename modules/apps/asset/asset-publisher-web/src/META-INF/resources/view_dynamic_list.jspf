@@ -72,7 +72,7 @@ if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) || (assetEntry
 
 				<h3 class="asset-entries-group-label"><%= assetCategory.getTitle(locale) %></h3>
 
-				<liferay-ui:ddm-template-renderer displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= results %>">
+				<liferay-ui:ddm-template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= results %>">
 					<%@ include file="/view_dynamic_list_asset.jspf" %>
 				</liferay-ui:ddm-template-renderer>
 
@@ -131,7 +131,7 @@ if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) || (assetEntry
 			request.setAttribute("view.jsp-results", results);
 %>
 
-			<liferay-ui:ddm-template-renderer displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= results %>">
+			<liferay-ui:ddm-template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= results %>">
 				<%@ include file="/view_dynamic_list_asset.jspf" %>
 			</liferay-ui:ddm-template-renderer>
 
@@ -175,7 +175,7 @@ if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) || (assetEntry
 
 				<h3 class="asset-entries-group-label"><%= ResourceActionsUtil.getModelResource(locale, groupAssetRendererFactory.getClassName()) %></h3>
 
-				<liferay-ui:ddm-template-renderer displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= results %>">
+				<liferay-ui:ddm-template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= results %>">
 					<%@ include file="/view_dynamic_list_asset.jspf" %>
 				</liferay-ui:ddm-template-renderer>
 
@@ -210,7 +210,7 @@ if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) || (assetEntry
 %>
 
 <c:if test="<%= total == 0 %>">
-	<liferay-ui:ddm-template-renderer displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= results %>">
+	<liferay-ui:ddm-template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= results %>">
 
 		<%
 		boolean hasAddPortletURLs = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-add-button:hasAddPortletURLs"));

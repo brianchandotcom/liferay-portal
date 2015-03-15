@@ -75,7 +75,7 @@ List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescription
 
 		<div class="display-template">
 			<liferay-ui:ddm-template-selector
-				classNameId="<%= PortalUtil.getClassNameId(LayoutSet.class.getName()) %>"
+				className="<%= LayoutSet.class.getName() %>"
 				displayStyle="<%= displayStyle %>"
 				displayStyleGroupId="<%= displayStyleGroupId %>"
 				refreshURL="<%= configurationRenderURL %>"

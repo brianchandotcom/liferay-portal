@@ -25,8 +25,7 @@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.util.PortalUtil" %>
+page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 
 <%@ page import="java.util.List" %>
 

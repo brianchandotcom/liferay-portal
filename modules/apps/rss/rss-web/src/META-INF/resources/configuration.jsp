@@ -85,7 +85,7 @@
 			<aui:fieldset>
 				<div class="display-template">
 					<liferay-ui:ddm-template-selector
-						classNameId="<%= PortalUtil.getClassNameId(RSSFeed.class.getName()) %>"
+						className="<%= RSSFeed.class.getName() %>"
 						displayStyle="<%= rssDisplayContext.getDisplayStyle() %>"
 						displayStyleGroupId="<%= rssDisplayContext.getDisplayStyleGroupId() %>"
 						label="display-template"

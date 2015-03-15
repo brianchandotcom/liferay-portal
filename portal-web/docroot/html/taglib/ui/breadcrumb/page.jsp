@@ -21,6 +21,7 @@
 
 	<c:if test="<%= !breadcrumbEntries.isEmpty() %>">
 		<liferay-ui:ddm-template-renderer
+			className="<%= BreadcrumbEntry.class.getName() %>"
 			displayStyle="<%= displayStyle %>"
 			displayStyleGroupId="<%= displayStyleGroupId %>"
 			entries="<%= breadcrumbEntries %>"

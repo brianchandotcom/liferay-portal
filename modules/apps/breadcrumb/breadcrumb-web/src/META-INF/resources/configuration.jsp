@@ -29,7 +29,7 @@
 			<aui:fieldset>
 				<div class="display-template">
 					<liferay-ui:ddm-template-selector
-						classNameId="<%= PortalUtil.getClassNameId(BreadcrumbEntry.class.getName()) %>"
+						className="<%= BreadcrumbEntry.class.getName() %>"
 						displayStyle="<%= breadcrumbDisplayContext.getDisplayStyle() %>"
 						displayStyleGroupId="<%= breadcrumbDisplayContext.getDisplayStyleGroupId() %>"
 						refreshURL="<%= configurationRenderURL %>"

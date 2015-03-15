@@ -44,7 +44,7 @@
 		%>
 
 		<liferay-ui:ddm-template-selector
-			classNameId="<%= PortalUtil.getClassNameId(BlogsEntry.class.getName()) %>"
+			className="<%= BlogsEntry.class.getName() %>"
 			displayStyle="<%= blogsPortletInstanceSettings.getDisplayStyle() %>"
 			displayStyleGroupId="<%= blogsPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()) %>"
 			displayStyles="<%= displayStyles %>"

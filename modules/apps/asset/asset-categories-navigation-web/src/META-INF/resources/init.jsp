@@ -26,7 +26,6 @@
 
 <%@ page import="com.liferay.asset.categories.navigation.web.context.AssetCategoriesNavigationDisplayContext" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetCategory" %>
 
 <liferay-theme:defineObjects />

@@ -67,7 +67,7 @@
 	<aui:fieldset>
 		<div class="display-template">
 			<liferay-ui:ddm-template-selector
-				classNameId="<%= PortalUtil.getClassNameId(Locale.class.getName()) %>"
+				className="<%= Locale.class.getName() %>"
 				defaultDisplayStyle="<%= PropsValues.LANGUAGE_DISPLAY_STYLE_DEFAULT %>"
 				displayStyle="<%= displayStyle %>"
 				displayStyleGroupId="<%= displayStyleGroupId %>"

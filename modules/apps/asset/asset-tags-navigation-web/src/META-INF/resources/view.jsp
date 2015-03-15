@@ -33,7 +33,7 @@ Map<String, Object> contextObjects = new HashMap<String, Object>();
 contextObjects.put("scopeGroupId", new Long(scopeGroupId));
 %>
 
-<liferay-ui:ddm-template-renderer contextObjects="<%= contextObjects %>" displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= assetTags %>">
+<liferay-ui:ddm-template-renderer className="<%= AssetTag.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= assetTags %>">
 	<liferay-ui:asset-tags-navigation
 		classNameId="<%= classNameId %>"
 		displayStyle="<%= displayStyle %>"

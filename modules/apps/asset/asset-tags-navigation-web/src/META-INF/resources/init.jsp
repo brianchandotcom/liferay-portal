@@ -25,7 +25,6 @@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
 page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
-page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
 page import="com.liferay.portlet.asset.model.AssetTag" %><%@

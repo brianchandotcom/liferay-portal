@@ -67,7 +67,7 @@
 						%>
 
 						<liferay-ui:ddm-template-selector
-							classNameId="<%= PortalUtil.getClassNameId(AssetTag.class.getName()) %>"
+							className="<%= AssetTag.class.getName() %>"
 							displayStyle="<%= displayStyle %>"
 							displayStyleGroupId="<%= displayStyleGroupId %>"
 							displayStyles="<%= displayStyles %>"

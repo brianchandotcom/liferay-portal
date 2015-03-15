@@ -21,7 +21,7 @@
 
 	<div class="display-template">
 		<liferay-ui:ddm-template-selector
-			classNameId="<%= PortalUtil.getClassNameId(AssetEntry.class.getName()) %>"
+			className="<%= AssetEntry.class.getName() %>"
 			defaultDisplayStyle="<%= AssetPublisherWebConfigurationValues.DISPLAY_STYLE_DEFAULT %>"
 			displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
 			displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>"

@@ -155,6 +155,33 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	}
 
 	@Override
+	public DDMTemplate getDefaultPortletDisplayTemplateDDMTemplate(
+		long groupId, long classNameId) {
+
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
+
+		DDMTemplate defaultDDMTemplate = null;
+
+		if (templateHandler != null) {
+			defaultDDMTemplate = getPortletDisplayTemplateDDMTemplate(
+				groupId, classNameId,
+				DISPLAY_STYLE_PREFIX + templateHandler.getDefaultTemplateKey());
+		}
+
+		if (defaultDDMTemplate == null) {
+			List<DDMTemplate> ddmTemplates =
+				DDMTemplateLocalServiceUtil.getTemplates(groupId, classNameId);
+
+			if (!ddmTemplates.isEmpty()) {
+				defaultDDMTemplate = ddmTemplates.get(0);
+			}
+		}
+
+		return defaultDDMTemplate;
+	}
+
+	@Override
 	public DDMTemplate getPortletDisplayTemplateDDMTemplate(
 		long groupId, long classNameId, String displayStyle) {
 
@@ -315,8 +342,8 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			Map<String, Object> contextObjects)
 		throws Exception {
 
-		contextObjects.put(
-			PortletDisplayTemplateConstants.TEMPLATE_ID,
+			contextObjects.put(
+					PortletDisplayTemplateConstants.TEMPLATE_ID,
 			ddmTemplate.getTemplateId());
 		contextObjects.put(PortletDisplayTemplateConstants.ENTRIES, entries);
 
@@ -325,8 +352,9 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 				PortletDisplayTemplateConstants.ENTRY, entries.get(0));
 		}
 
-		contextObjects.put(
-			PortletDisplayTemplateConstants.LOCALE, request.getLocale());
+			contextObjects.put(
+					PortletDisplayTemplateConstants.LOCALE,
+					request.getLocale());
 
 		contextObjects.put(PortletDisplayTemplateConstants.REQUEST, request);
 
@@ -347,8 +375,8 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 				renderRequest, renderResponse);
 
 			contextObjects.put(
-				PortletDisplayTemplateConstants.CURRENT_URL,
-				currentURL.toString());
+					PortletDisplayTemplateConstants.CURRENT_URL,
+					currentURL.toString());
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(

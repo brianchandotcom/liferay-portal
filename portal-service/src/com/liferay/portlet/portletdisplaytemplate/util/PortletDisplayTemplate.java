@@ -39,6 +39,9 @@ public interface PortletDisplayTemplate {
 
 	public String getDDMTemplateUuid(String displayStyle);
 
+	public DDMTemplate getDefaultPortletDisplayTemplateDDMTemplate(
+		long groupId, long classNameId);
+
 	public DDMTemplate getPortletDisplayTemplateDDMTemplate(
 		long groupId, long classNameId, String displayStyle);
 

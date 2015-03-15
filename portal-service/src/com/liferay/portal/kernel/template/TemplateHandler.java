@@ -47,6 +47,8 @@ public interface TemplateHandler {
 	 */
 	public List<Element> getDefaultTemplateElements() throws Exception;
 
+	public String getDefaultTemplateKey();
+
 	/**
 	 * Returns the template handler's name.
 	 *

@@ -74,6 +74,15 @@ public class PortletDisplayTemplateUtil {
 		return getPortletDisplayTemplate().getDDMTemplateUuid(displayStyle);
 	}
 
+	public static DDMTemplate getDefaultPortletDisplayTemplateDDMTemplate(
+		long groupId, long classNameId) {
+
+		return
+			getPortletDisplayTemplate().
+				getDefaultPortletDisplayTemplateDDMTemplate(
+					groupId, classNameId);
+	}
+
 	public static PortletDisplayTemplate getPortletDisplayTemplate() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			PortletDisplayTemplate.class);

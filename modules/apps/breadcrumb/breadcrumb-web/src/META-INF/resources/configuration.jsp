@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(BreadcrumbEntry.class.getName());
-%>
-
 <aui:row>
 	<aui:col width="<%= 50 %>">
 		<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -33,7 +29,7 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 			<aui:fieldset>
 				<div class="display-template">
 					<liferay-ui:ddm-template-selector
-						classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
+						classNameId="<%= PortalUtil.getClassNameId(BreadcrumbEntry.class.getName()) %>"
 						displayStyle="<%= breadcrumbDisplayContext.getDisplayStyle() %>"
 						displayStyleGroupId="<%= breadcrumbDisplayContext.getDisplayStyleGroupId() %>"
 						refreshURL="<%= configurationRenderURL %>"

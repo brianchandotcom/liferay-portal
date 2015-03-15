@@ -24,8 +24,6 @@
 <%@ page import="com.liferay.breadcrumb.web.context.BreadcrumbDisplayContext" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil" %><%@
-page import="com.liferay.portal.kernel.template.TemplateHandler" %><%@
-page import="com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %>

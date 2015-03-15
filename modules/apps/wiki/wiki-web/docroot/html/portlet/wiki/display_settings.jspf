@@ -26,13 +26,8 @@
 
 <aui:fieldset>
 	<div class="display-template">
-
-		<%
-		TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(WikiPage.class.getName());
-		%>
-
 		<liferay-ui:ddm-template-selector
-			classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
+			classNameId="<%= PortalUtil.getClassNameId(WikiPage.class.getName()) %>"
 			displayStyle="<%= wikiPortletInstanceSettings.getDisplayStyle() %>"
 			displayStyleGroupId="<%= wikiPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()) %>"
 			refreshURL="<%= configurationRenderURL %>"

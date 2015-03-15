@@ -22,8 +22,6 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.template.TemplateHandler" %><%@
-page import="com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@

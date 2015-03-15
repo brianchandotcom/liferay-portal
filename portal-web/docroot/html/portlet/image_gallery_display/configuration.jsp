@@ -58,13 +58,8 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				</aui:field-wrapper>
 
 				<div class="display-template">
-
-					<%
-					TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(FileEntry.class.getName());
-					%>
-
 					<liferay-ui:ddm-template-selector
-						classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
+						classNameId="<%= PortalUtil.getClassNameId(FileEntry.class.getName()) %>"
 						displayStyle="<%= displayStyle %>"
 						displayStyleGroupId="<%= displayStyleGroupId %>"
 						refreshURL="<%= configurationRenderURL %>"

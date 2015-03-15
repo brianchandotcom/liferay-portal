@@ -20,13 +20,8 @@
 	</c:if>
 
 	<div class="display-template">
-
-		<%
-		TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(AssetEntry.class.getName());
-		%>
-
 		<liferay-ui:ddm-template-selector
-			classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
+			classNameId="<%= PortalUtil.getClassNameId(AssetEntry.class.getName()) %>"
 			defaultDisplayStyle="<%= AssetPublisherWebConfigurationValues.DISPLAY_STYLE_DEFAULT %>"
 			displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
 			displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>"

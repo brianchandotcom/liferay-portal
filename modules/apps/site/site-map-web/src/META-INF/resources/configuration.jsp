@@ -74,13 +74,8 @@ List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescription
 		<aui:input name="preferences--showHiddenPages--" type="checkbox" value="<%= showHiddenPages %>" />
 
 		<div class="display-template">
-
-			<%
-			TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(LayoutSet.class.getName());
-			%>
-
 			<liferay-ui:ddm-template-selector
-				classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
+				classNameId="<%= PortalUtil.getClassNameId(LayoutSet.class.getName()) %>"
 				displayStyle="<%= displayStyle %>"
 				displayStyleGroupId="<%= displayStyleGroupId %>"
 				refreshURL="<%= configurationRenderURL %>"

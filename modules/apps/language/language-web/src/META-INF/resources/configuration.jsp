@@ -66,13 +66,8 @@
 
 	<aui:fieldset>
 		<div class="display-template">
-
-			<%
-			TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(Locale.class.getName());
-			%>
-
 			<liferay-ui:ddm-template-selector
-				classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
+				classNameId="<%= PortalUtil.getClassNameId(Locale.class.getName()) %>"
 				defaultDisplayStyle="<%= PropsValues.LANGUAGE_DISPLAY_STYLE_DEFAULT %>"
 				displayStyle="<%= displayStyle %>"
 				displayStyleGroupId="<%= displayStyleGroupId %>"

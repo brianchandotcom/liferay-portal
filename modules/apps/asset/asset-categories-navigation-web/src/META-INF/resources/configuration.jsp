@@ -45,13 +45,8 @@
 		</div>
 
 		<div class="display-template">
-
-			<%
-			TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(AssetCategory.class.getName());
-			%>
-
 			<liferay-ui:ddm-template-selector
-				classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
+				classNameId="<%= PortalUtil.getClassNameId(AssetCategory.class.getName()) %>"
 				displayStyle="<%= assetCategoriesNavigationDisplayContext.getDisplayStyle() %>"
 				displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>"
 				refreshURL="<%= configurationRenderURL %>"

@@ -64,7 +64,7 @@ public class UnitConverterWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.unit.converter.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}
 

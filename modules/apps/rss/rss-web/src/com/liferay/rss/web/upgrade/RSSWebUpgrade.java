@@ -58,7 +58,7 @@ public class RSSWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.rss.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}
 

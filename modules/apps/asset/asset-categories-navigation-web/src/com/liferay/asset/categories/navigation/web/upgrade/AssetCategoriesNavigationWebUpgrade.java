@@ -66,7 +66,7 @@ public class AssetCategoriesNavigationWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.asset.categories.navigation.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}
 

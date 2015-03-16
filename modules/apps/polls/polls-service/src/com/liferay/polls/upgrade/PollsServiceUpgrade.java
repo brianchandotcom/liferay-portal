@@ -63,7 +63,7 @@ public class PollsServiceUpgrade {
 		upgradeProcesses.add(new UpgradeClassNames());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.polls.service", upgradeProcesses, 1, 0, false);
+			"com.liferay.polls.service", upgradeProcesses, 1, 1, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

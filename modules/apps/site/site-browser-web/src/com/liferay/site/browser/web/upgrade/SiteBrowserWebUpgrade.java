@@ -62,7 +62,7 @@ public class SiteBrowserWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.site.browser.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}
 

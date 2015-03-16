@@ -62,7 +62,7 @@ public class DocumentSelectorWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.document.selector.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}
 

@@ -60,7 +60,7 @@ public class SearchWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.search.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}
 

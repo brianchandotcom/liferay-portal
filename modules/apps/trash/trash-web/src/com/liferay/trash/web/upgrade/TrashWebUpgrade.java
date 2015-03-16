@@ -60,7 +60,7 @@ public class TrashWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.trash.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}
 

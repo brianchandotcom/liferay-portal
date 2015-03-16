@@ -62,7 +62,7 @@ public class AssetTagsAdminWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.asset.tags.admin.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}
 

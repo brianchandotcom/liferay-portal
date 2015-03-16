@@ -64,7 +64,7 @@ public class PasswordGeneratorWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.password.generator.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}
 

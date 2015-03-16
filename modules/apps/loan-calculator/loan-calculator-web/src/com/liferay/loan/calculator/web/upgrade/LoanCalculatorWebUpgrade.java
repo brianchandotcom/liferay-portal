@@ -64,7 +64,7 @@ public class LoanCalculatorWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.loan.calculator.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}
 

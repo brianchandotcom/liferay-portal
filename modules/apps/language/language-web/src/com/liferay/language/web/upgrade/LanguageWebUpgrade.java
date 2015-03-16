@@ -58,7 +58,7 @@ public class LanguageWebUpgrade {
 		upgradeProcesses.add(new UpgradePortletPreferences());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.language.web", upgradeProcesses, 1, 0, false);
+			"com.liferay.language.web", upgradeProcesses, 1, 1, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

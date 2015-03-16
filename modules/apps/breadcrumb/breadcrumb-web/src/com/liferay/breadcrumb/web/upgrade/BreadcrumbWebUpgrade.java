@@ -57,7 +57,7 @@ public class BreadcrumbWebUpgrade {
 		upgradeProcesses.add(new UpgradePortletPreferences());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.breadcrumb.web", upgradeProcesses, 1, 0, false);
+			"com.liferay.breadcrumb.web", upgradeProcesses, 1, 1, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

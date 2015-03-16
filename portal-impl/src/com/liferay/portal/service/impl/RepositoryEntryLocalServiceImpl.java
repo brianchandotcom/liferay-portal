@@ -61,6 +61,13 @@ public class RepositoryEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteRepositoryEntry(long repositoryId, String mappedId)
+		throws PortalException {
+
+		repositoryEntryPersistence.removeByR_M(repositoryId, mappedId);
+	}
+
+	@Override
 	public List<RepositoryEntry> getRepositoryEntries(long repositoryId) {
 		return repositoryEntryPersistence.findByRepositoryId(repositoryId);
 	}
@@ -79,6 +86,13 @@ public class RepositoryEntryLocalServiceImpl
 
 		return addRepositoryEntry(
 			userId, groupId, repositoryId, objectId, new ServiceContext());
+	}
+
+	@Override
+	public RepositoryEntry getRepositoryEntry(String uuid, long groupId)
+		throws PortalException {
+
+		return repositoryEntryPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	@Override

@@ -57,7 +57,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.persistence.RepositoryEntryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
@@ -585,8 +584,9 @@ public class CMISRepository extends BaseCmisRepository {
 		try {
 			Session session = getSession();
 
-			RepositoryEntry repositoryEntry = RepositoryEntryUtil.findByUUID_G(
-				uuid, getGroupId());
+			RepositoryEntry repositoryEntry =
+				repositoryEntryLocalService.getRepositoryEntry(
+					uuid, getGroupId());
 
 			String objectId = repositoryEntry.getMappedId();
 
@@ -1580,7 +1580,9 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
-	protected void deleteMappedFileEntry(Document document) {
+	protected void deleteMappedFileEntry(Document document)
+		throws PortalException {
+
 		if (PropsValues.DL_REPOSITORY_CMIS_DELETE_DEPTH == _DELETE_NONE) {
 			return;
 		}
@@ -1589,7 +1591,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 		for (Document version : documentVersions) {
 			try {
-				RepositoryEntryUtil.removeByR_M(
+				repositoryEntryLocalService.deleteRepositoryEntry(
 					getRepositoryId(), version.getId());
 			}
 			catch (NoSuchRepositoryEntryException nsree) {
@@ -1597,7 +1599,7 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 
 		try {
-			RepositoryEntryUtil.removeByR_M(
+			repositoryEntryLocalService.deleteRepositoryEntry(
 				getRepositoryId(), document.getId());
 		}
 		catch (NoSuchRepositoryEntryException nsree) {
@@ -1605,7 +1607,8 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	protected void deleteMappedFolder(
-		org.apache.chemistry.opencmis.client.api.Folder cmisFolder) {
+			org.apache.chemistry.opencmis.client.api.Folder cmisFolder)
+		throws PortalException {
 
 		if (PropsValues.DL_REPOSITORY_CMIS_DELETE_DEPTH == _DELETE_NONE) {
 			return;
@@ -1626,7 +1629,7 @@ public class CMISRepository extends BaseCmisRepository {
 					(org.apache.chemistry.opencmis.client.api.Folder)cmisObject;
 
 				try {
-					RepositoryEntryUtil.removeByR_M(
+					repositoryEntryLocalService.deleteRepositoryEntry(
 						getRepositoryId(), cmisObject.getId());
 
 					if (PropsValues.DL_REPOSITORY_CMIS_DELETE_DEPTH ==
@@ -2240,8 +2243,8 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	protected String toFileEntryId(long fileEntryId) throws PortalException {
-		RepositoryEntry repositoryEntry = RepositoryEntryUtil.fetchByPrimaryKey(
-			fileEntryId);
+		RepositoryEntry repositoryEntry =
+			repositoryEntryLocalService.fetchRepositoryEntry(fileEntryId);
 
 		if (repositoryEntry == null) {
 			throw new NoSuchFileEntryException(
@@ -2254,8 +2257,8 @@ public class CMISRepository extends BaseCmisRepository {
 	protected String toFileVersionId(long fileVersionId)
 		throws PortalException {
 
-		RepositoryEntry repositoryEntry = RepositoryEntryUtil.fetchByPrimaryKey(
-			fileVersionId);
+		RepositoryEntry repositoryEntry =
+			repositoryEntryLocalService.fetchRepositoryEntry(fileVersionId);
 
 		if (repositoryEntry == null) {
 			throw new NoSuchFileVersionException(
@@ -2269,8 +2272,8 @@ public class CMISRepository extends BaseCmisRepository {
 	protected String toFolderId(Session session, long folderId)
 		throws PortalException {
 
-		RepositoryEntry repositoryEntry = RepositoryEntryUtil.fetchByPrimaryKey(
-			folderId);
+		RepositoryEntry repositoryEntry =
+			repositoryEntryLocalService.fetchRepositoryEntry(folderId);
 
 		if (repositoryEntry != null) {
 			return repositoryEntry.getMappedId();
@@ -2325,8 +2328,8 @@ public class CMISRepository extends BaseCmisRepository {
 	protected void updateMappedId(long repositoryEntryId, String mappedId)
 		throws PortalException {
 
-		RepositoryEntry repositoryEntry = RepositoryEntryUtil.findByPrimaryKey(
-			repositoryEntryId);
+		RepositoryEntry repositoryEntry =
+			repositoryEntryLocalService.getRepositoryEntry(repositoryEntryId);
 
 		if (!mappedId.equals(repositoryEntry.getMappedId())) {
 			RepositoryEntryLocalServiceUtil.updateRepositoryEntry(

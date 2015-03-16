@@ -14,13 +14,21 @@
 
 package com.liferay.portal.kernel.util;
 
+import static org.mockito.Mockito.*;
+
 import com.liferay.portal.util.PropsImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.lang.reflect.Field;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -32,6 +40,24 @@ public class CookieKeysTest {
 	@Before
 	public void setUp() {
 		PropsUtil.setProps(new PropsImpl());
+
+		MockitoAnnotations.initMocks(this);
+
+		setUpRegistryUtil();
+
+		DomainName domainName = mock(DomainName.class);
+
+		when(
+			_serviceTracker.getService()
+		).thenReturn(
+			domainName
+		);
+
+		when(
+			domainName.getCookieDomain("www.liferay.com")
+		).thenReturn(
+			".liferay.com"
+		);
 	}
 
 	@Test
@@ -124,5 +150,33 @@ public class CookieKeysTest {
 			field.set(null, value);
 		}
 	}
+
+	protected void setUpRegistryUtil() {
+		Registry registry = mock(Registry.class);
+
+		when(
+			registry.getRegistry()
+		).thenReturn(
+			registry
+		);
+
+		when(
+			registry.setRegistry(registry)
+		).thenReturn(
+			registry
+		);
+
+		when(
+			registry.trackServices(DomainName.class)
+		).thenReturn(
+			_serviceTracker
+		);
+
+		RegistryUtil.setRegistry(null);
+		RegistryUtil.setRegistry(registry);
+	}
+
+	@Mock
+	private ServiceTracker<DomainName, Object> _serviceTracker;
 
 }

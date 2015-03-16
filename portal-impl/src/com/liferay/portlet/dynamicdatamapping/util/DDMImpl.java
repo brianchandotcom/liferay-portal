@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
@@ -47,9 +48,12 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
+import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
@@ -149,6 +153,44 @@ public class DDMImpl implements DDM {
 		}
 		catch (PortalException pe) {
 			throw new StructureDefinitionException(pe);
+		}
+	}
+
+	@Override
+	public JSONArray getDDMFormFieldsJSONArray(
+		DDMStructure ddmStructure, String script) {
+
+		if (Validator.isNull(script)) {
+			return null;
+		}
+
+		if (ddmStructure == null) {
+			try {
+				DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(
+					script);
+
+				return getDDMFormFieldsJSONArray(
+					ddmForm.getDDMFormFields(), ddmForm.getAvailableLocales(),
+					ddmForm.getDefaultLocale());
+			}
+			catch (PortalException pe) {
+				return null;
+			}
+		}
+
+		try {
+			DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(script);
+
+			return getDDMFormFieldsJSONArray(
+				ddmForm.getDDMFormFields(), ddmForm.getAvailableLocales(),
+				ddmForm.getDefaultLocale());
+		}
+		catch (PortalException pe) {
+			DDMForm ddmForm = ddmStructure.getDDMForm();
+
+			return getDDMFormFieldsJSONArray(
+				ddmForm.getDDMFormFields(), ddmForm.getAvailableLocales(),
+				ddmForm.getDefaultLocale());
 		}
 	}
 
@@ -476,6 +518,110 @@ public class DDMImpl implements DDM {
 		return existingFields;
 	}
 
+	protected void addDDMFormFieldLocalizedProperties(
+		JSONObject jsonObject, DDMFormField ddmFormField, Locale locale,
+		Locale defaultLocale) {
+
+		addDDMFormFieldLocalizedProperty(
+			jsonObject, "label", ddmFormField.getLabel(), locale, defaultLocale,
+			ddmFormField.getType());
+
+		addDDMFormFieldLocalizedProperty(
+			jsonObject, "predefinedValue", ddmFormField.getPredefinedValue(),
+			locale, defaultLocale, ddmFormField.getType());
+
+		addDDMFormFieldLocalizedProperty(
+			jsonObject, "tip", ddmFormField.getTip(), locale, defaultLocale,
+			ddmFormField.getType());
+	}
+
+	protected void addDDMFormFieldLocalizedProperty(
+		JSONObject jsonObject, String propertyName,
+		LocalizedValue localizedValue, Locale locale, Locale defaultLocale,
+		String type) {
+
+		String propertyValue = localizedValue.getString(locale);
+
+		if (Validator.isNull(propertyValue)) {
+			propertyValue = localizedValue.getString(defaultLocale);
+		}
+
+		if (type.equals(DDMImpl.TYPE_RADIO) ||
+			type.equals(DDMImpl.TYPE_SELECT)) {
+
+			if (propertyName.equals("predefinedValue")) {
+				try {
+					jsonObject.put(
+						propertyName,
+						JSONFactoryUtil.createJSONArray(propertyValue));
+				}
+				catch (Exception e) {
+				}
+
+				return;
+			}
+		}
+
+		jsonObject.put(propertyName, propertyValue);
+	}
+
+	protected void addDDMFormFieldOptions(
+		JSONObject jsonObject, DDMFormField ddmFormField,
+		Set<Locale> availableLocales, Locale defaultLocale) {
+
+		String type = ddmFormField.getType();
+
+		if (!(type.equals(DDMImpl.TYPE_RADIO) ||
+			  type.equals(DDMImpl.TYPE_SELECT))) {
+
+			return;
+		}
+
+		String fieldName = ddmFormField.getName();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
+
+		for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
+			JSONObject optionJSONObject = JSONFactoryUtil.createJSONObject();
+
+			String name = fieldName.concat(StringUtil.randomString());
+
+			optionJSONObject.put("id", name);
+			optionJSONObject.put("name", name);
+			optionJSONObject.put("type", "option");
+			optionJSONObject.put("value", optionValue);
+
+			addDDMFormFieldLocalizedProperty(
+				optionJSONObject, "label",
+				ddmFormFieldOptions.getOptionLabels(optionValue), defaultLocale,
+				defaultLocale, "option");
+
+			JSONObject localizationMapJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			for (Locale availableLocale : availableLocales) {
+				JSONObject localeMap = JSONFactoryUtil.createJSONObject();
+
+				addDDMFormFieldLocalizedProperty(
+					localeMap, "label",
+					ddmFormFieldOptions.getOptionLabels(optionValue),
+					availableLocale, defaultLocale, "option");
+
+				localizationMapJSONObject.put(
+					LocaleUtil.toLanguageId(availableLocale), localeMap);
+			}
+
+			optionJSONObject.put("localizationMap", localizationMapJSONObject);
+
+			jsonArray.put(optionJSONObject);
+		}
+
+		jsonObject.put("options", jsonArray);
+	}
+
 	protected int countFieldRepetition(
 		String[] fieldsDisplayValues, String fieldName) {
 
@@ -524,6 +670,59 @@ public class DDMImpl implements DDM {
 		field.setValues(locale, fieldValues);
 
 		return field;
+	}
+
+	protected JSONArray getDDMFormFieldsJSONArray(
+		List<DDMFormField> ddmFormFields, Set<Locale> availableLocales,
+		Locale defaultLocale) {
+
+		JSONArray ddmFormFieldsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("dataType", ddmFormField.getDataType());
+			jsonObject.put("id", ddmFormField.getName());
+			jsonObject.put("indexType", ddmFormField.getIndexType());
+			jsonObject.put("localizable", ddmFormField.isLocalizable());
+			jsonObject.put("multiple", ddmFormField.isMultiple());
+			jsonObject.put("name", ddmFormField.getName());
+			jsonObject.put("repeatable", ddmFormField.isRepeatable());
+			jsonObject.put("required", ddmFormField.isRequired());
+			jsonObject.put("showLabel", ddmFormField.isShowLabel());
+			jsonObject.put("type", ddmFormField.getType());
+
+			addDDMFormFieldLocalizedProperties(
+				jsonObject, ddmFormField, defaultLocale, defaultLocale);
+
+			addDDMFormFieldOptions(
+				jsonObject, ddmFormField, availableLocales, defaultLocale);
+
+			JSONObject localizationMapJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			for (Locale availableLocale : availableLocales) {
+				JSONObject localeMap = JSONFactoryUtil.createJSONObject();
+
+				addDDMFormFieldLocalizedProperties(
+					localeMap, ddmFormField, availableLocale, defaultLocale);
+
+				localizationMapJSONObject.put(
+					LocaleUtil.toLanguageId(availableLocale), localeMap);
+			}
+
+			jsonObject.put("localizationMap", localizationMapJSONObject);
+
+			jsonObject.put(
+				"fields",
+				getDDMFormFieldsJSONArray(
+					ddmFormField.getNestedDDMFormFields(), availableLocales,
+					defaultLocale));
+
+			ddmFormFieldsJSONArray.put(jsonObject);
+		}
+
+		return ddmFormFieldsJSONArray;
 	}
 
 	protected DDMStructure getDDMStructure(

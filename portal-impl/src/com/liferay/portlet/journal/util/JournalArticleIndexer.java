@@ -49,7 +49,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
@@ -168,11 +167,9 @@ public class JournalArticleIndexer extends BaseIndexer {
 					LocaleUtil.toLanguageId(searchContext.getLocale())),
 				StringPool.BLANK);
 
-			try {
+			if (structure.hasField(fieldName)) {
 				ddmStructureFieldValue = DDMUtil.getIndexedFieldValue(
 					ddmStructureFieldValue, structure.getFieldType(fieldName));
-			}
-			catch (StructureFieldException sfe) {
 			}
 
 			contextQuery.addRequiredTerm(

@@ -377,6 +377,12 @@ public class JournalArticleServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticle fetchArticle(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchArticle(groupId, articleId);
+	}
+
 	/**
 	* Returns the latest approved web content article, or the latest unapproved
 	* article if none are approved. Both approved and unapproved articles must

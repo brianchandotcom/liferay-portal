@@ -374,6 +374,23 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	@Override
+	public DDMStructure fetchStructure(
+			long groupId, long classNameId, String structureKey,
+			boolean includeAncestorStructures)
+		throws PortalException {
+
+		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
+			groupId, classNameId, structureKey, includeAncestorStructures);
+
+		if (ddmStructure != null) {
+			DDMStructurePermission.check(
+				getPermissionChecker(), ddmStructure, ActionKeys.VIEW);
+		}
+
+		return ddmStructure;
+	}
+
+	@Override
 	public List<DDMStructure> getJournalFolderStructures(
 			long[] groupIds, long journalFolderId, int restrictionType)
 		throws PortalException {

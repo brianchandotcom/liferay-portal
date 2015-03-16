@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.diff.DiffVersion;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -210,14 +209,8 @@ public class JournalUtil {
 			JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
 			smallImageURL);
 
-		String[] assetTagNames = new String[0];
-
-		try {
-			assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-				JournalArticle.class.getName(), article.getResourcePrimKey());
-		}
-		catch (SystemException se) {
-		}
+		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
+			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		addReservedEl(
 			rootElement, tokens,
@@ -234,17 +227,13 @@ public class JournalUtil {
 		String userComments = StringPool.BLANK;
 		String userJobTitle = StringPool.BLANK;
 
-		try {
-			User user = UserLocalServiceUtil.fetchUserById(article.getUserId());
+		User user = UserLocalServiceUtil.fetchUserById(article.getUserId());
 
-			if (user != null) {
-				userName = user.getFullName();
-				userEmailAddress = user.getEmailAddress();
-				userComments = user.getComments();
-				userJobTitle = user.getJobTitle();
-			}
-		}
-		catch (SystemException se) {
+		if (user != null) {
+			userName = user.getFullName();
+			userEmailAddress = user.getEmailAddress();
+			userComments = user.getComments();
+			userJobTitle = user.getJobTitle();
 		}
 
 		addReservedEl(

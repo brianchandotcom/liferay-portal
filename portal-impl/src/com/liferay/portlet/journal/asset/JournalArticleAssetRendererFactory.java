@@ -30,7 +30,6 @@ import com.liferay.portlet.asset.model.ClassTypeReader;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePermission;
-import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
@@ -66,30 +65,21 @@ public class JournalArticleAssetRendererFactory
 	public AssetRenderer getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		JournalArticle article = null;
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.fetchJournalArticle(classPK);
 
-		try {
-			article = JournalArticleLocalServiceUtil.getArticle(classPK);
-		}
-		catch (NoSuchArticleException nsae1) {
+		if (article == null) {
 			JournalArticleResource articleResource =
 				JournalArticleResourceLocalServiceUtil.getArticleResource(
 					classPK);
 
-			boolean approvedArticleAvailable = true;
-
 			if (type == TYPE_LATEST_APPROVED) {
-				try {
-					article = JournalArticleLocalServiceUtil.getDisplayArticle(
-						articleResource.getGroupId(),
-						articleResource.getArticleId());
-				}
-				catch (NoSuchArticleException nsae2) {
-					approvedArticleAvailable = false;
-				}
+				article = JournalArticleLocalServiceUtil.fetchDisplayArticle(
+					articleResource.getGroupId(),
+					articleResource.getArticleId());
 			}
 
-			if ((type != TYPE_LATEST_APPROVED) || !approvedArticleAvailable) {
+			if (article == null) {
 				article = JournalArticleLocalServiceUtil.getLatestArticle(
 					articleResource.getGroupId(),
 					articleResource.getArticleId(),

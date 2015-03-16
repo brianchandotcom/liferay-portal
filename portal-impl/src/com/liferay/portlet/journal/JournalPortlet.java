@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -259,12 +260,23 @@ public class JournalPortlet extends MVCPortlet {
 					HtmlUtil.unescape(articleId), newFolderId, serviceContext);
 			}
 			catch (InvalidDDMStructureException idse) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(idse.getMessage());
+				}
+
 				invalidArticleIds.add(articleId);
 			}
 		}
 
 		if (!invalidArticleIds.isEmpty()) {
-			throw new InvalidDDMStructureException();
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("Folder ");
+			sb.append(newFolderId);
+			sb.append(" does not allow the structures for these articles: ");
+			sb.append(StringUtil.merge(invalidArticleIds));
+
+			throw new InvalidDDMStructureException(sb.toString());
 		}
 
 		sendEditEntryRedirect(actionRequest, actionResponse);

@@ -29,6 +29,17 @@ public class HttpSessionWrapper implements HttpSession {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof HttpSessionWrapper) {
+			HttpSessionWrapper sessionWrapper = (HttpSessionWrapper)obj;
+
+			obj = sessionWrapper.getWrappedSession();
+		}
+
+		return _session.equals(obj);
+	}
+
+	@Override
 	public Object getAttribute(String name) {
 		return _session.getAttribute(name);
 	}
@@ -92,6 +103,11 @@ public class HttpSessionWrapper implements HttpSession {
 
 	public HttpSession getWrappedSession() {
 		return _session;
+	}
+
+	@Override
+	public int hashCode() {
+		return _session.hashCode();
 	}
 
 	@Override

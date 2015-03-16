@@ -20,17 +20,23 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.ResourceServingConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletPreferencesFactoryConstants;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -67,7 +73,17 @@ public class EditConfigurationAction extends PortletAction {
 			return;
 		}
 
-		actionRequest = ActionUtil.getWrappedActionRequest(actionRequest, null);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String settingsScope = ParamUtil.getString(
+			actionRequest, "settingsScope");
+
+		PortletPreferences portletPreferences = getPortletPreferences(
+			themeDisplay, settingsScope, portlet.getPortletId());
+
+		actionRequest = ActionUtil.getWrappedActionRequest(
+			actionRequest, portletPreferences);
 
 		ConfigurationAction configurationAction = getConfigurationAction(
 			portlet);
@@ -78,9 +94,6 @@ public class EditConfigurationAction extends PortletAction {
 
 		configurationAction.processAction(
 			portletConfig, actionRequest, actionResponse);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -190,6 +203,25 @@ public class EditConfigurationAction extends PortletAction {
 		}
 
 		return configurationAction;
+	}
+
+	protected PortletPreferences getPortletPreferences(
+		ThemeDisplay themeDisplay, String settingsScope, String portletId) {
+
+		if (Validator.isNull(settingsScope) ||
+			settingsScope.equals(
+				PortletPreferencesFactoryConstants.SCOPE_PORTLET_INSTANCE)) {
+
+			return null;
+		}
+
+		PortletPreferencesIds portletPreferencesIds =
+			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
+				themeDisplay.getPlid(), portletId, settingsScope);
+
+		return PortletPreferencesLocalServiceUtil.getPreferences(
+			portletPreferencesIds);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

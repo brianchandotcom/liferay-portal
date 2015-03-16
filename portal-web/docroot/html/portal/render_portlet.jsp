@@ -428,6 +428,12 @@ urlConfiguration.setEscapeXml(false);
 
 if (portlet.getConfigurationActionInstance() != null) {
 	urlConfiguration.setParameter("struts_action", "/portlet_configuration/edit_configuration");
+
+	String settingsScope = (String)request.getAttribute("settingsScope");
+
+	if (Validator.isNotNull(settingsScope)) {
+		urlConfiguration.setParameter("settingsScope", settingsScope);
+	}
 }
 else if (PortletPermissionUtil.contains(permissionChecker, layout, portletDisplay.getId(), ActionKeys.PERMISSIONS)) {
 	urlConfiguration.setParameter("struts_action", "/portlet_configuration/edit_permissions");

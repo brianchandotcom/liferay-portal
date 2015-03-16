@@ -129,7 +129,7 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 			groupId, targetTagName);
 
 		if (targetTag == null) {
-			continue;
+			return;
 		}
 
 		String[] mergeTagNames = StringUtil.split(

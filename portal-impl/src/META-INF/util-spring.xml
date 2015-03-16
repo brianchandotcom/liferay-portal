@@ -884,7 +884,7 @@
 	</bean>
 	<bean id="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextFactoryProviderUtil" class="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextProviderUtil">
 		<property name="DLDisplayContextFactoryProvider">
-			<bean class="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextProviderImpl" />
+			<bean class="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextProviderImpl" destroy-method="close"/>
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" />
@@ -1117,7 +1117,7 @@
 	</bean>
 	<bean id="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderUtil" class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderUtil">
 		<property name="IGDisplayContextProvider">
-			<bean class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderImpl" />
+			<bean class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderImpl" destroy-method="close"/>
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.journal.provider.JournalEditPortletProvider" class="com.liferay.portlet.journal.provider.JournalEditPortletProvider" />

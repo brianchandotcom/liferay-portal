@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.sites.action.ActionUtil;
 
 import javax.portlet.PortletConfig;
@@ -76,45 +74,22 @@ public class ConfirmationExportImportConfigurationAction extends PortletAction {
 	protected void createExportImportConfiguration(RenderRequest renderRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		ExportImportConfiguration exportImportConfiguration = null;
-
-		long sourceGroupId = ParamUtil.getLong(renderRequest, "sourceGroupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			renderRequest, "privateLayout");
 
 		boolean localPublishing = ParamUtil.getBoolean(
 			renderRequest, "localPublishing");
 
 		if (localPublishing) {
-			long targetGroupId = ParamUtil.getLong(
-				renderRequest, "targetGroupId");
-
 			exportImportConfiguration =
 				ExportImportConfigurationFactory.
 					buildDefaultLocalPublishingExportImportConfiguration(
-						themeDisplay.getUser(), sourceGroupId, targetGroupId,
-						privateLayout);
+						renderRequest);
 		}
 		else {
-			String remoteAddress = ParamUtil.getString(
-				renderRequest, "remoteAddress");
-			int remotePort = ParamUtil.getInteger(renderRequest, "remotePort");
-			String remotePathContext = ParamUtil.getString(
-				renderRequest, "remotePathContext");
-			boolean secureConnection = ParamUtil.getBoolean(
-				renderRequest, "secureConnection");
-			long remoteGroupId = ParamUtil.getLong(
-				renderRequest, "remoteGroupId");
-
 			exportImportConfiguration =
 				ExportImportConfigurationFactory.
 					buildDefaultRemotePublishingExportImportConfiguration(
-						themeDisplay.getUser(), sourceGroupId, privateLayout,
-						remoteAddress, remotePort, remotePathContext,
-						secureConnection, remoteGroupId);
+						renderRequest);
 		}
 
 		renderRequest.setAttribute(

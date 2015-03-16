@@ -55,4 +55,12 @@ public class DDMFormXSDDeserializerTest
 		return ".xml";
 	}
 
+	protected void setUpDDMFormXSDDeserializerUtil() {
+		DDMFormXSDDeserializerUtil ddmFormXSDDeserializerUtil =
+			new DDMFormXSDDeserializerUtil();
+
+		ddmFormXSDDeserializerUtil.setDDMFormXSDDeserializer(
+			new DDMFormXSDDeserializerImpl());
+	}
+
 }

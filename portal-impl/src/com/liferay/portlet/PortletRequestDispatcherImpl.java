@@ -271,7 +271,7 @@ public class PortletRequestDispatcherImpl
 
 			for (String urlPattern : servletURLPatterns) {
 				if (urlPattern.endsWith("/*")) {
-					pos = urlPattern.indexOf("/*");
+					pos = urlPattern.lastIndexOf("/*");
 
 					urlPattern = urlPattern.substring(0, pos);
 

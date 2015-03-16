@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/META-INF/resources/init.jsp" %>
 
 <liferay-ui:breadcrumb
 	ddmTemplate="<%= breadcrumbDisplayContext.getDDMTemplate() %>"

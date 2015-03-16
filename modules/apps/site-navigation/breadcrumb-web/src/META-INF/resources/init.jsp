@@ -39,4 +39,4 @@ page import="com.liferay.portal.util.PortalUtil" %>
 BreadcrumbDisplayContext breadcrumbDisplayContext = new BreadcrumbDisplayContext(request, portletPreferences);
 %>
 
-<%@ include file="/init-ext.jsp" %>
+<%@ include file="/META-INF/resources/init-ext.jsp" %>

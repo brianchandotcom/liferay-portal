@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/META-INF/resources/init.jsp" %>
 
 <%
 TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(BreadcrumbEntry.class.getName());

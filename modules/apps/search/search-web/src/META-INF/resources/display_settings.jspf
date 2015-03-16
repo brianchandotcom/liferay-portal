@@ -14,14 +14,7 @@
  */
 --%>
 
-<div class="configuration-style" id="<portlet:namespace />configurationStyle">
-	<aui:field-wrapper>
-		<aui:input checked="<%= !searchDisplayContext.isAdvancedConfiguration() %>" id="basic" label="basic" name="preferences--advancedConfiguration--" type="radio" value="false" />
-		<aui:input checked="<%= searchDisplayContext.isAdvancedConfiguration() %>" id="advanced" label="advanced" name="preferences--advancedConfiguration--" type="radio" value="true" />
-	</aui:field-wrapper>
-</div>
-
-<div class="basic-configuration <%= (searchDisplayContext.isAdvancedConfiguration() ? "hide" : StringPool.BLANK) %>" id="<portlet:namespace />basicConfiguration">
+<div class="basic-configuration">
 	<aui:input name="preferences--displayScopeFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayScopeFacet() %>" />
 
 	<aui:input name="preferences--displayAssetTypeFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayAssetTypeFacet() %>" />
@@ -36,17 +29,3 @@
 
 	<aui:input name="preferences--displayModifiedRangeFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayModifiedRangeFacet() %>" />
 </div>
-
-<div class="advanced-configuration <%= (!searchDisplayContext.isAdvancedConfiguration() ? "hide" : StringPool.BLANK) %>" id="<portlet:namespace />advancedConfiguration">
-
-	<%
-	JSONObject searchConfigurationJSONObject = JSONFactoryUtil.createJSONObject(searchDisplayContext.getSearchConfiguration());
-	%>
-
-	<aui:input cssClass="search-configuration-text" helpMessage="search-configuration-help" name="preferences--searchConfiguration--" type="textarea" value="<%= searchConfigurationJSONObject.toString(4) %>" />
-</div>
-
-<aui:script>
-	Liferay.Util.toggleRadio('<portlet:namespace />advanced', '<portlet:namespace />advancedConfiguration', '<portlet:namespace />basicConfiguration');
-	Liferay.Util.toggleRadio('<portlet:namespace />basic', '<portlet:namespace />basicConfiguration', '<portlet:namespace />advancedConfiguration');
-</aui:script>

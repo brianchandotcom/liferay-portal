@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RepositoryEntryLocalServiceBaseImpl;
 
@@ -63,6 +64,23 @@ public class RepositoryEntryLocalServiceImpl
 	@Override
 	public List<RepositoryEntry> getRepositoryEntries(long repositoryId) {
 		return repositoryEntryPersistence.findByRepositoryId(repositoryId);
+	}
+
+	@Override
+	public RepositoryEntry getRepositoryEntry(
+			long groupId, long repositoryId, String objectId)
+		throws PortalException {
+
+		RepositoryEntry repositoryEntry = repositoryEntryPersistence.fetchByR_M(
+			repositoryId, objectId);
+
+		if (repositoryEntry != null) {
+			return repositoryEntry;
+		}
+
+		return addRepositoryEntry(
+			PrincipalThreadLocal.getUserId(), groupId, repositoryId, objectId,
+			new ServiceContext());
 	}
 
 	@Override

@@ -366,22 +366,13 @@ public abstract class BaseRepositoryImpl
 	public Object[] getRepositoryEntryIds(String objectId)
 		throws PortalException {
 
-		boolean newRepositoryEntry = false;
-
-		RepositoryEntry repositoryEntry = RepositoryEntryUtil.fetchByR_M(
-			getRepositoryId(), objectId);
-
-		if (repositoryEntry == null) {
-			repositoryEntry = repositoryEntryLocalService.addRepositoryEntry(
-				PrincipalThreadLocal.getUserId(), getGroupId(),
-				getRepositoryId(), objectId, new ServiceContext());
-
-			newRepositoryEntry = true;
-		}
+		RepositoryEntry repositoryEntry =
+			repositoryEntryLocalService.getRepositoryEntry(
+				getGroupId(), getRepositoryId(), objectId);
 
 		return new Object[] {
 			repositoryEntry.getRepositoryEntryId(), repositoryEntry.getUuid(),
-			newRepositoryEntry
+			false
 		};
 	}
 

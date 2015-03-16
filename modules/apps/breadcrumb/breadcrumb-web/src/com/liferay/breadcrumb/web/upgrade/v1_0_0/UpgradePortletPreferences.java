@@ -51,11 +51,15 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 		if (displayStyle.equals("horizontal")) {
 			portletPreferences.setValue(
-				"displayStyle", "breadcrumb-horizontal-ftl");
+				"displayStyle",
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+					"breadcrumb-horizontal-ftl");
 		}
 		else if (displayStyle.equals("vertical")) {
 			portletPreferences.setValue(
-				"displayStyle", "breadcrumb-vertical-ftl");
+				"displayStyle",
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+					"breadcrumb-vertical-ftl");
 		}
 		else {
 			portletPreferences.reset("displayStyle");

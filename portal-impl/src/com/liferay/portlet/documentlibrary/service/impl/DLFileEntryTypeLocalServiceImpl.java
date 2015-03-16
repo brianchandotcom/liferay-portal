@@ -194,17 +194,17 @@ public class DLFileEntryTypeLocalServiceImpl
 	public void deleteFileEntryType(DLFileEntryType dlFileEntryType)
 		throws PortalException {
 
-		if (dlFileEntryPersistence.countByFileEntryTypeId(
-				dlFileEntryType.getFileEntryTypeId()) > 0) {
-
-			throw new RequiredStructureException(
-				RequiredStructureException.REFERENCED_STRUCTURE);
-		}
-
 		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
 			dlFileEntryType.getGroupId(),
 			classNameLocalService.getClassNameId(DLFileEntryMetadata.class),
 			DLUtil.getDDMStructureKey(dlFileEntryType));
+
+		if (dlFileEntryPersistence.countByFileEntryTypeId(
+				dlFileEntryType.getFileEntryTypeId()) > 0) {
+
+			throw new RequiredStructureException.
+				MustNotDeleteReferencedStructure(ddmStructure.getStructureId());
+		}
 
 		if (ddmStructure == null) {
 			ddmStructure = ddmStructureLocalService.fetchStructure(

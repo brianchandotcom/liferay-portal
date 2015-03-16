@@ -58,7 +58,7 @@ public class RequiredGroupException extends PortalException {
 	}
 
 	public static class MustNotDeleteGroupThatHasChild
-		extends RequiredGroupException{
+		extends RequiredGroupException {
 
 		public MustNotDeleteGroupThatHasChild(long groupId) {
 			super(
@@ -74,7 +74,8 @@ public class RequiredGroupException extends PortalException {
 
 	}
 
-	public static class MustNotDeleteSystemGroup extends RequiredGroupException{
+	public static class MustNotDeleteSystemGroup
+		extends RequiredGroupException {
 
 		public MustNotDeleteSystemGroup(long groupId) {
 			super(

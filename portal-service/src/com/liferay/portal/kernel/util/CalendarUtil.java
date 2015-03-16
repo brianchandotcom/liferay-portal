@@ -32,8 +32,8 @@ public class CalendarUtil {
 
 	public static final String[] DAYS_ABBREVIATION = new String[] {
 		"sunday-abbreviation", "monday-abbreviation", "tuesday-abbreviation",
-		"wednesday-abbreviation", "thursday-abbreviation","friday-abbreviation",
-		"saturday-abbreviation"
+		"wednesday-abbreviation", "thursday-abbreviation",
+		"friday-abbreviation", "saturday-abbreviation"
 	};
 
 	public static final String ICAL_EXTENSION = "ics";

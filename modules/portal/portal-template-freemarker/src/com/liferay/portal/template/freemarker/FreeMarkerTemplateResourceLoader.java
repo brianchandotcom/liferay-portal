@@ -42,7 +42,8 @@ import org.osgi.service.component.annotations.Reference;
 		FreeMarkerTemplateResourceLoader.class, TemplateResourceLoader.class
 	}
 )
-public class FreeMarkerTemplateResourceLoader implements TemplateResourceLoader{
+public class FreeMarkerTemplateResourceLoader
+	implements TemplateResourceLoader {
 
 	@Override
 	public void clearCache() {

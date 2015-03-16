@@ -206,7 +206,11 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 				structure.getStructureId()));
 	}
 
-	@Test(expected = RequiredStructureException.MustNotDeleteStructureReferencedByTemplates.class)
+	@Test(
+		expected =
+			RequiredStructureException.
+				MustNotDeleteStructureReferencedByTemplates.class
+	)
 	public void testDeleteStructureReferencedByTemplates() throws Exception {
 		DDMStructure structure = addStructure(_CLASS_NAME_ID, "Test Structure");
 

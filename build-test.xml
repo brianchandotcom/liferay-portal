@@ -4202,9 +4202,6 @@ if (ppstate.equals("normal")) {
 	<target name="record-test-class-file-names">
 		<script classpathref="project.classpath" language="beanshell">
 			<![CDATA[
-				import java.nio.file.Files;
-				import java.nio.file.Paths;
-
 				import org.apache.tools.ant.DirectoryScanner;
 
 				List getClassGroups(List classFileNames, int groupsSize) {

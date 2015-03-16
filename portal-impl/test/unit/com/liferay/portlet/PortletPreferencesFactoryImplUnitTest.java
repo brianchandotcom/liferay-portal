@@ -35,7 +35,7 @@ import org.junit.Test;
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
-public class PortletPreferencesFactoryImplTest {
+public class PortletPreferencesFactoryImplUnitTest {
 
 	@Before
 	public void setUp() {
@@ -55,7 +55,7 @@ public class PortletPreferencesFactoryImplTest {
 
 		singleVMPoolImpl.setPortalCacheManager(
 			MemoryPortalCacheManager.createMemoryPortalCacheManager(
-				PortletPreferencesFactoryImplTest.class.getName()));
+				PortletPreferencesFactoryImplUnitTest.class.getName()));
 
 		singleVMPoolUtil.setSingleVMPool(singleVMPoolImpl);
 

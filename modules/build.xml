@@ -7,7 +7,6 @@
 		<dirset dir="apps/asset" includes="*" />
 		<dirset dir="apps/blogs" includes="*" />
 		<dirset dir="apps/bookmarks" includes="*" />
-		<dirset dir="apps/breadcrumb" includes="*" />
 		<dirset dir="apps/comments" includes="*" />
 		<dirset dir="apps/configuration-admin" includes="*" />
 		<dirset dir="apps/currency-converter" includes="*" />
@@ -19,10 +18,8 @@
 		<dirset dir="apps/iframe" includes="*" />
 		<dirset dir="apps/invitation" includes="*" />
 		<dirset dir="apps/journal" includes="*" />
-		<dirset dir="apps/language" includes="*" />
 		<dirset dir="apps/loan-calculator" includes="*" />
 		<dirset dir="apps/message-boards" includes="*" />
-		<dirset dir="apps/navigation" includes="*" />
 		<dirset dir="apps/nested-portlets" includes="*" />
 		<dirset dir="apps/network-utilities" includes="*" />
 		<dirset dir="apps/password-generator" includes="*" />
@@ -32,7 +29,7 @@
 		<dirset dir="apps/rss" includes="*" />
 		<dirset dir="apps/search" includes="*" />
 		<dirset dir="apps/site" includes="*" />
-		<dirset dir="apps/sites-directory" includes="*" />
+		<dirset dir="apps/site-navigation" includes="*" />
 		<dirset dir="apps/social" excludes="social-networking-*" includes="*" />
 		<dirset dir="apps/translator" includes="*" />
 		<dirset dir="apps/trash" includes="*" />

@@ -179,11 +179,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 			return toFileEntry(document);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -214,11 +211,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 			return toFolder(cmisFolder.createFolder(properties));
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -383,11 +377,8 @@ public class CMISRepository extends BaseCmisRepository {
 			throw new NoSuchFolderException(
 				"No CMIS folder with {folderId=" + destFolderId + "}", confe);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -407,11 +398,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 			document.deleteAllVersions();
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -432,11 +420,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 			cmisFolder.deleteTree(true, UnfileObject.DELETE, false);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -526,11 +511,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 			return toFileEntry(document);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -562,11 +544,8 @@ public class CMISRepository extends BaseCmisRepository {
 					title + "}",
 				confe);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -618,11 +597,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 			return getFileVersion(session, fileVersionId);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -638,11 +614,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 			return getFolder(session, folderId);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -674,11 +647,8 @@ public class CMISRepository extends BaseCmisRepository {
 					", name=" + name + "}",
 				confe);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -927,11 +897,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 			session.getRepositoryInfo();
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -979,11 +946,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 			return _cmisRepositoryHandler.isSupportsMinorVersions(productName);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -1049,11 +1013,8 @@ public class CMISRepository extends BaseCmisRepository {
 			throw new NoSuchFolderException(
 				"No CMIS folder with {folderId=" + newFolderId + "}", confe);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -1107,11 +1068,8 @@ public class CMISRepository extends BaseCmisRepository {
 			throw new NoSuchFolderException(
 				"No CMIS folder with {folderId=" + parentFolderId + "}", confe);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -1175,11 +1133,8 @@ public class CMISRepository extends BaseCmisRepository {
 				contentStream.getStream(), contentStream.getLength(),
 				serviceContext);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -1362,11 +1317,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 			return toFileEntry(document);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -1418,11 +1370,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 			return toFileEntry(document);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);
@@ -1473,11 +1422,8 @@ public class CMISRepository extends BaseCmisRepository {
 			throw new NoSuchFolderException(
 				"No CMIS folder with {folderId=" + folderId + "}", confe);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			processException(e);

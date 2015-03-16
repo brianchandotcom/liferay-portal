@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.search.web.configuration.SearchWebConfigurationValues;
-import com.liferay.util.ContentUtil;
 
 import javax.portlet.PortletPreferences;
 
@@ -140,25 +138,7 @@ public class SearchDisplayContext {
 		_searchConfiguration = _portletPreferences.getValue(
 			"searchConfiguration", StringPool.BLANK);
 
-		if (!isAdvancedConfiguration() &&
-			Validator.isNull(_searchConfiguration)) {
-
-			_searchConfiguration = ContentUtil.get(
-				SearchWebConfigurationValues.FACET_CONFIGURATION);
-		}
-
 		return _searchConfiguration;
-	}
-
-	public boolean isAdvancedConfiguration() {
-		if (_advancedConfiguration != null) {
-			return _advancedConfiguration;
-		}
-
-		_advancedConfiguration = GetterUtil.getBoolean(
-			_portletPreferences.getValue("advancedConfiguration", null));
-
-		return _advancedConfiguration;
 	}
 
 	public boolean isCollatedSpellCheckResultEnabled() {
@@ -341,10 +321,10 @@ public class SearchDisplayContext {
 	}
 
 	public boolean isShowMenu() {
-		if (isAdvancedConfiguration() || isDisplayScopeFacet() ||
-			isDisplayAssetTypeFacet() || isDisplayAssetTagsFacet() ||
-			isDisplayAssetCategoriesFacet() || isDisplayFolderFacet() ||
-			isDisplayUserFacet() || isDisplayModifiedRangeFacet()) {
+		if (isDisplayScopeFacet() || isDisplayAssetTypeFacet() ||
+			isDisplayAssetTagsFacet() || isDisplayAssetCategoriesFacet() ||
+			isDisplayFolderFacet() || isDisplayUserFacet() ||
+			isDisplayModifiedRangeFacet()) {
 
 			return true;
 		}
@@ -363,7 +343,6 @@ public class SearchDisplayContext {
 		return _viewInContext;
 	}
 
-	private Boolean _advancedConfiguration;
 	private Integer _collatedSpellCheckResultDisplayThreshold;
 	private Boolean _collatedSpellCheckResultEnabled;
 	private Boolean _displayAssetCategoriesFacet;

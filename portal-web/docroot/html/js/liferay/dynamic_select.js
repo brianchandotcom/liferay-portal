@@ -134,6 +134,7 @@ AUI.add(
 
 				if (select) {
 					select.empty().append(selectOptions).val(selectVal);
+				}
 			}
 		};
 

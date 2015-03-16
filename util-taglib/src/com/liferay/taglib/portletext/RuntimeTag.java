@@ -146,6 +146,7 @@ public class RuntimeTag extends TagSupport {
 			}
 
 			request.setAttribute("settingsScope", settingsScope);
+			request.setAttribute(WebKeys.PORTLET_DECORATE, false);
 
 			JSONObject jsonObject = null;
 

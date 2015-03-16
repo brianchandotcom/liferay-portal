@@ -274,8 +274,9 @@ public class PortletRequestDispatcherImpl
 					urlPattern = urlPattern.substring(
 						0, urlPattern.length() - 2);
 
-					if (pathNoQueryString.startsWith(
-							urlPattern.concat(StringPool.SLASH))) {
+					if (pathNoQueryString.startsWith(urlPattern) &&
+						(pathNoQueryString.charAt(
+								urlPattern.length() + 1) == CharPool.SLASH)) {
 
 						pathInfo = pathNoQueryString.substring(
 							urlPattern.length());

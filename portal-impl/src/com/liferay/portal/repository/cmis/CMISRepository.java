@@ -1618,14 +1618,11 @@ public class CMISRepository extends BaseCmisRepository {
 			_log.debug("CMIS search query: " + queryString);
 		}
 
-		ItemIterable<QueryResult> queryResults = null;
+		boolean searchAllVersions =
+			_cmisRepositoryDetector.isNuxeo5_5OrHigher();
 
-		if (_cmisRepositoryDetector.isNuxeo5_5OrHigher()) {
-			queryResults = session.query(queryString, true);
-		}
-		else {
-			queryResults = session.query(queryString, false);
-		}
+		ItemIterable<QueryResult> queryResults = session.query(
+			queryString, searchAllVersions);
 
 		int start = searchContext.getStart();
 		int end = searchContext.getEnd();

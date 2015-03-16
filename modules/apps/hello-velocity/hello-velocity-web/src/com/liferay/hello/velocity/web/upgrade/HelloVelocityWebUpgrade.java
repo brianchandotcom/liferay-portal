@@ -66,7 +66,7 @@ public class HelloVelocityWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			HelloVelocityPortlet.class.getName(),
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}
 

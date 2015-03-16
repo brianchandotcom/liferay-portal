@@ -2080,8 +2080,7 @@ public class CMISRepository extends BaseCmisRepository {
 			return;
 		}
 
-		httpSession.setAttribute(
-			_sessionKey, new TransientValue<Session>(session));
+		httpSession.setAttribute(_sessionKey, new TransientValue<>(session));
 	}
 
 	protected <E> List<E> subList(

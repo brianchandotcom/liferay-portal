@@ -53,4 +53,4 @@ String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLA
 long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), scopeGroupId);
 %>
 
-<%@ include file="/init-ext.jsp" %>
+<%@ include file="/META-INF/resources/init-ext.jsp" %>

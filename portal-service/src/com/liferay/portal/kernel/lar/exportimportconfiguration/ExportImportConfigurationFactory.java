@@ -18,16 +18,21 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.Serializable;
 
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author Levente Hudák
@@ -36,11 +41,42 @@ public class ExportImportConfigurationFactory {
 
 	public static ExportImportConfiguration
 			buildDefaultLocalPublishingExportImportConfiguration(
+				PortletRequest portletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		User user = themeDisplay.getUser();
+
+		long sourceGroupId = ParamUtil.getLong(portletRequest, "sourceGroupId");
+		long targetGroupId = ParamUtil.getLong(portletRequest, "targetGroupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			portletRequest, "privateLayout");
+
+		Map<String, String[]> parameterMap = getDefaultPublishingParameters(
+			portletRequest);
+
+		return buildDefaultLocalPublishingExportImportConfiguration(
+			user, sourceGroupId, targetGroupId, privateLayout, parameterMap);
+	}
+
+	public static ExportImportConfiguration
+			buildDefaultLocalPublishingExportImportConfiguration(
 				User user, long sourceGroupId, long targetGroupId,
 				boolean privateLayout)
 		throws PortalException {
 
-		Map<String, String[]> parameterMap = getDefaultPublishingParameters();
+		return buildDefaultLocalPublishingExportImportConfiguration(
+			user, sourceGroupId, targetGroupId, privateLayout,
+			getDefaultPublishingParameters());
+	}
+
+	public static ExportImportConfiguration
+		buildDefaultLocalPublishingExportImportConfiguration(
+			User user, long sourceGroupId, long targetGroupId,
+			boolean privateLayout, Map<String, String[]> parameterMap)
+		throws PortalException {
 
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
@@ -59,13 +95,84 @@ public class ExportImportConfigurationFactory {
 	}
 
 	public static ExportImportConfiguration
+		buildDefaultRemotePublishingExportImportConfiguration(
+			PortletRequest portletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		User user = themeDisplay.getUser();
+
+		long sourceGroupId = ParamUtil.getLong(portletRequest, "sourceGroupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			portletRequest, "privateLayout");
+		String remoteAddress = ParamUtil.getString(
+			portletRequest, "remoteAddress");
+		int remotePort = ParamUtil.getInteger(portletRequest, "remotePort");
+		String remotePathContext = ParamUtil.getString(
+			portletRequest, "remotePathContext");
+		boolean secureConnection = ParamUtil.getBoolean(
+			portletRequest, "secureConnection");
+		long remoteGroupId = ParamUtil.getLong(portletRequest, "remoteGroupId");
+
+		Map<String, String[]> parameterMap = getDefaultPublishingParameters(
+			portletRequest);
+
+		return buildDefaultRemotePublishingExportImportConfiguration(
+			user, sourceGroupId, privateLayout, remoteAddress, remotePort,
+			remotePathContext, secureConnection, remoteGroupId, parameterMap);
+	}
+
+	public static ExportImportConfiguration
+		buildDefaultRemotePublishingExportImportConfiguration(
+			User user, long sourceGroupId, boolean privateLayout,
+			String remoteAddress, int remotePort, String remotePathContext,
+			boolean secureConnection, long remoteGroupId)
+		throws PortalException {
+
+		return buildDefaultRemotePublishingExportImportConfiguration(
+			user, sourceGroupId, privateLayout, remoteAddress, remotePort,
+			remotePathContext, secureConnection, remoteGroupId,
+			getDefaultPublishingParameters());
+	}
+
+	public static Map<String, String[]> getDefaultPublishingParameters(
+		PortletRequest portletRequest) {
+
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+				portletRequest);
+
+		return addDefaultPublishingParameters(parameterMap);
+	}
+
+	protected static Map<String, String[]> addDefaultPublishingParameters(
+		Map<String, String[]> parameterMap) {
+
+		parameterMap.put(
+			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
+			new String[] {Boolean.FALSE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.LOGO,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			ExportImportDateUtil.RANGE,
+			new String[] {ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE});
+
+		return parameterMap;
+	}
+
+	protected static ExportImportConfiguration
 			buildDefaultRemotePublishingExportImportConfiguration(
 				User user, long sourceGroupId, boolean privateLayout,
 				String remoteAddress, int remotePort, String remotePathContext,
-				boolean secureConnection, long remoteGroupId)
+				boolean secureConnection, long remoteGroupId,
+				Map<String, String[]> parameterMap)
 		throws PortalException {
-
-		Map<String, String[]> parameterMap = getDefaultPublishingParameters();
 
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
@@ -89,20 +196,7 @@ public class ExportImportConfigurationFactory {
 		Map<String, String[]> parameterMap =
 			ExportImportConfigurationParameterMapFactory.buildParameterMap();
 
-		parameterMap.put(
-			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
-			new String[] {Boolean.FALSE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.LOGO,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			ExportImportDateUtil.RANGE,
-			new String[] {ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE});
-
-		return parameterMap;
+		return addDefaultPublishingParameters(parameterMap);
 	}
 
 }

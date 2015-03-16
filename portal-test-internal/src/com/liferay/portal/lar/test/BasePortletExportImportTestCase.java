@@ -400,7 +400,8 @@ public abstract class BasePortletExportImportTestCase
 		Map<String, String[]> preferenceMap = new HashMap<>();
 
 		String displayStyle =
-			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + ddmTemplate.getUuid();
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				ddmTemplate.getTemplateKey();
 
 		preferenceMap.put("displayStyle", new String[] {displayStyle});
 

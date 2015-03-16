@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.lar;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
@@ -672,8 +674,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			portletDataContext.setScopeGroupId(displayStyleGroupId);
 		}
 
-		DDMTemplate ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(
-			portletDataContext.getGroupId(), displayStyle);
+		DDMTemplate ddmTemplate =
+			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
+				portletDataContext.getGroupId(),
+				getClassNameId(portletDataContext, portletId), displayStyle);
 
 		if (ddmTemplate != null) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -681,6 +685,23 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
+	}
+
+	protected long getClassNameId(
+		PortletDataContext portletDataContext, String portletId) {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDataContext.getCompanyId(), portletId);
+
+		TemplateHandler templateHandler = portlet.getTemplateHandlerInstance();
+
+		if (templateHandler == null) {
+			return 0;
+		}
+
+		String className = templateHandler.getClassName();
+
+		return PortalUtil.getClassNameId(className);
 	}
 
 	protected String getDisplayStyle(
@@ -815,8 +836,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		long groupId = MapUtil.getLong(
 			groupIds, displayStyleGroupId, displayStyleGroupId);
 
-		DDMTemplate ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(
-			groupId, displayStyle);
+		DDMTemplate ddmTemplate =
+			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
+				groupId, getClassNameId(portletDataContext, portletId),
+				displayStyle);
 
 		if (ddmTemplate != null) {
 			portletPreferences.setValue(

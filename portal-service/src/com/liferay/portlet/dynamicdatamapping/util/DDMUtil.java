@@ -55,6 +55,12 @@ public class DDMUtil {
 		return getDDM().getDDMForm(actionRequest);
 	}
 
+	public static DDMForm getDDMForm(long classNameId, long classPK)
+		throws PortalException {
+
+		return getDDM().getDDMForm(classNameId, classPK);
+	}
+
 	public static JSONArray getDDMFormFieldsJSONArray(
 		DDMStructure ddmStructure, String script) {
 

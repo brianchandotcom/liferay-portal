@@ -157,6 +157,39 @@ public class DDMImpl implements DDM {
 	}
 
 	@Override
+	public DDMForm getDDMForm(long classNameId, long classPK)
+		throws PortalException {
+
+		if ((classNameId <= 0) || (classPK <= 0)) {
+			return null;
+		}
+
+		long ddmStructureClassNameId = PortalUtil.getClassNameId(
+			DDMStructure.class);
+
+		long ddmTemplateClassNameId = PortalUtil.getClassNameId(
+			DDMTemplate.class);
+
+		if (classNameId == ddmStructureClassNameId) {
+			DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+				classPK);
+
+			DDMForm ddmForm = structure.getFullHierarchyDDMForm();
+
+			return ddmForm;
+		}
+		else if (classNameId == ddmTemplateClassNameId) {
+			DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(
+				classPK);
+
+			return DDMFormJSONDeserializerUtil.deserialize(
+				template.getScript());
+		}
+
+		return null;
+	}
+
+	@Override
 	public JSONArray getDDMFormFieldsJSONArray(
 		DDMStructure ddmStructure, String script) {
 

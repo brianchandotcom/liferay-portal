@@ -1659,7 +1659,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								getTruncateLongLinesContent(
 									content, line, trimmedLine, lineCount);
 
-							if (truncateLongLinesContent != null) {
+							if ((truncateLongLinesContent != null) &&
+								!truncateLongLinesContent.equals(content)) {
+
 								return truncateLongLinesContent;
 							}
 

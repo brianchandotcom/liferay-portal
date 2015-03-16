@@ -62,7 +62,7 @@ public class XSLContentWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.xsl.content.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}
 

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.RepositoryEntry;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.ServiceContext;
@@ -371,7 +372,8 @@ public abstract class BaseRepositoryImpl
 
 		RepositoryEntry repositoryEntry =
 			repositoryEntryLocalService.getRepositoryEntry(
-				getGroupId(), getRepositoryId(), objectId);
+				PrincipalThreadLocal.getUserId(), getGroupId(),
+				getRepositoryId(), objectId);
 
 		return new Object[] {
 			repositoryEntry.getRepositoryEntryId(), repositoryEntry.getUuid(),
@@ -700,7 +702,8 @@ public abstract class BaseRepositoryImpl
 		throws PortalException {
 
 		return repositoryEntryLocalService.getRepositoryEntry(
-			getGroupId(), getRepositoryId(), objectId);
+			PrincipalThreadLocal.getUserId(), getGroupId(), getRepositoryId(),
+			objectId);
 	}
 
 	protected void setManualCheckInRequired(

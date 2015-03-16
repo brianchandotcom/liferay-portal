@@ -32,6 +32,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
+	property = {"service.ranking:Integer=" + Integer.MAX_VALUE},
 	service = DLDisplayContextFactory.class
 )
 public class TestDLDisplayContextFactoryImpl

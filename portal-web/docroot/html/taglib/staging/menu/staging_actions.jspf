@@ -47,9 +47,37 @@
 		%>
 
 		<c:if test="<%= (liveGroup != null) && GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.PUBLISH_STAGING) %>">
+			<portlet:renderURL var="publishRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/staging_bar/publish_layouts" />
+				<portlet:param name="tabs2" value="current-and-previous" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
+			</portlet:renderURL>
+
+			<%
+			UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
+			%>
+
+			<liferay-portlet:renderURL varImpl="confirmationURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/staging_bar/confirmation" />
+				<portlet:param name="redirect" value="<%= publishRedirectURL %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
+				<portlet:param name="localPublishing" value="<%= String.valueOf(liveGroup.isStaged() && !liveGroup.isStagedRemotely()) %>" />
+				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				<portlet:param name="remoteAddress" value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>' />
+				<portlet:param name="remotePort" value='<%= liveGroupTypeSettings.getProperty("remotePort") %>' />
+				<portlet:param name="remotePathContext" value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>' />
+				<portlet:param name="remoteGroupId" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
+				<portlet:param name="secureConnection" value='<%= liveGroupTypeSettings.getProperty("secureConnection") %>' />
+				<portlet:param name="sourceGroupId" value="<%= String.valueOf(stagingGroupId) %>" />
+				<portlet:param name="targetGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+			</liferay-portlet:renderURL>
 
 			<%
 			if (groupId == 0) {
+				confirmationURL.setParameter("selPlid", String.valueOf(plid));
+
 				publishRenderURL.setParameter("selPlid", String.valueOf(plid));
 			}
 			%>
@@ -59,6 +87,9 @@
 
 					<%
 					layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
+
+					confirmationURL.setParameter("layoutSetBranchName", layoutSetBranch.getName());
+					confirmationURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 
 					publishRenderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 					publishRenderURL.setParameter("layoutSetBranchName", layoutSetBranch.getName());
@@ -73,6 +104,7 @@
 						<%
 						layoutSetBranch = layoutSetBranches.get(0);
 
+						confirmationURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranch.getLayoutSetBranchId()));
 						publishRenderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranch.getLayoutSetBranchId()));
 						%>
 
@@ -91,36 +123,7 @@
 			<liferay-util:buffer var="publishOnControlPanelLink">
 				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
 			</liferay-util:buffer>
-
 			<liferay-util:buffer var="publishOnLayoutLink">
-
-				<%
-				UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
-				%>
-
-				<portlet:renderURL var="publishRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/staging_bar/publish_layouts" />
-					<portlet:param name="tabs2" value="current-and-previous" />
-					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-					<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
-				</portlet:renderURL>
-
-				<portlet:renderURL var="confirmationURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/staging_bar/confirmation" />
-					<portlet:param name="redirect" value="<%= publishRedirectURL %>" />
-					<portlet:param name="backURL" value="<%= currentURL %>" />
-					<portlet:param name="localPublishing" value="<%= String.valueOf(liveGroup.isStaged() && !liveGroup.isStagedRemotely()) %>" />
-					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-					<portlet:param name="remoteAddress" value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>' />
-					<portlet:param name="remotePort" value='<%= liveGroupTypeSettings.getProperty("remotePort") %>' />
-					<portlet:param name="remotePathContext" value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>' />
-					<portlet:param name="remoteGroupId" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
-					<portlet:param name="secureConnection" value='<%= liveGroupTypeSettings.getProperty("secureConnection") %>' />
-					<portlet:param name="sourceGroupId" value="<%= String.valueOf(stagingGroupId) %>" />
-					<portlet:param name="targetGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-				</portlet:renderURL>
-
 				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= confirmationURL.toString() %>" id='<%= layoutSetBranchId + "publishToLiveLink" %>' label="publish-to-live" />
 			</liferay-util:buffer>
 

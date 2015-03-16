@@ -142,7 +142,7 @@ public class PropertiesParamUtil {
 		Locale locale) {
 
 		return getDouble(
-			properties, request, param, GetterUtil.DEFAULT_DOUBLE,	locale);
+			properties, request, param, GetterUtil.DEFAULT_DOUBLE, locale);
 	}
 
 	public static double getDouble(
@@ -221,7 +221,8 @@ public class PropertiesParamUtil {
 		UnicodeProperties properties, HttpServletRequest request, String param,
 		Locale locale) {
 
-		return getDouble(properties, request, param, GetterUtil.DEFAULT_DOUBLE,	locale);
+		return getDouble(
+			properties, request, param, GetterUtil.DEFAULT_DOUBLE, locale);
 	}
 
 	public static double getDouble(

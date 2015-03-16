@@ -109,7 +109,8 @@ public class RSSFeedEntry {
 				(type.equals("html") || type.equals("xhtml"))) {
 
 				String value = StringUtil.replace(
-					syndContent.getValue(), new String[]{"src=\"/", "href=\"/"},
+					syndContent.getValue(),
+					new String[] {"src=\"/", "href=\"/"},
 					new String[] {
 						"src=\"" + baseURL + "/", "href=\"" + baseURL + "/"});
 

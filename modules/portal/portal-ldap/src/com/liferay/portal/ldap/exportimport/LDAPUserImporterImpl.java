@@ -1369,8 +1369,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 	private static final String[] _CONTACT_PROPERTY_NAMES = {
 		"aimSn", "birthday", "employeeNumber", "facebookSn", "icqSn",
-		"jabberSn", "male", "msnSn", "mySpaceSn","prefixId", "skypeSn", "smsSn",
-		"suffixId", "twitterSn", "ymSn"
+		"jabberSn", "male", "msnSn", "mySpaceSn", "prefixId", "skypeSn",
+		"smsSn", "suffixId", "twitterSn", "ymSn"
 	};
 
 	private static final String _IMPORT_BY_GROUP = "group";

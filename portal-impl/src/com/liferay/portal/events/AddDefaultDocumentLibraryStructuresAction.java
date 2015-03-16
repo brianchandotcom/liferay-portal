@@ -102,7 +102,9 @@ public class AddDefaultDocumentLibraryStructuresAction
 		String definition = getDynamicDDMStructureDefinition(
 			"document-library-structures.xml", languageKey, locale);
 
-		serviceContext.setAttribute("definition", definition);
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+
+		serviceContext.setAttribute("ddmForm", ddmForm);
 
 		try {
 			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
@@ -198,8 +200,11 @@ public class AddDefaultDocumentLibraryStructuresAction
 					PortalUtil.getClassNameId(RawMetadataProcessor.class),
 					name);
 
+			DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
+				structureElementRootXML);
+
 			if (ddmStructure != null) {
-				ddmStructure.setDefinition(structureElementRootXML);
+				ddmStructure.setDDMForm(ddmForm);
 
 				DDMStructureLocalServiceUtil.updateDDMStructure(ddmStructure);
 			}
@@ -211,9 +216,6 @@ public class AddDefaultDocumentLibraryStructuresAction
 				Map<Locale, String> descriptionMap = new HashMap<>();
 
 				descriptionMap.put(locale, description);
-
-				DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
-					structureElementRootXML);
 
 				DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(
 					ddmForm);

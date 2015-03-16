@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.User;
@@ -58,6 +59,20 @@ public class RepositoryEntryLocalServiceImpl
 		repositoryEntryPersistence.update(repositoryEntry);
 
 		return repositoryEntry;
+	}
+
+	@Override
+	public void deleteRepositoryEntries(
+			long repositoryId, Iterable<String> mappedIds)
+		throws PortalException {
+
+		for (String mappedId : mappedIds) {
+			try {
+				deleteRepositoryEntry(repositoryId, mappedId);
+			}
+			catch (NoSuchRepositoryEntryException nsree) {
+			}
+		}
 	}
 
 	@Override

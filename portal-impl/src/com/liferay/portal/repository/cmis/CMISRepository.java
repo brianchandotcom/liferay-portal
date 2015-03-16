@@ -1589,21 +1589,16 @@ public class CMISRepository extends BaseCmisRepository {
 
 		List<Document> documentVersions = document.getAllVersions();
 
+		List<String> mappedIds = new ArrayList<>(documentVersions.size() + 1);
+
 		for (Document version : documentVersions) {
-			try {
-				repositoryEntryLocalService.deleteRepositoryEntry(
-					getRepositoryId(), version.getId());
-			}
-			catch (NoSuchRepositoryEntryException nsree) {
-			}
+			mappedIds.add(version.getId());
 		}
 
-		try {
-			repositoryEntryLocalService.deleteRepositoryEntry(
-				getRepositoryId(), document.getId());
-		}
-		catch (NoSuchRepositoryEntryException nsree) {
-		}
+		mappedIds.add(document.getId());
+
+		repositoryEntryLocalService.deleteRepositoryEntries(
+			getRepositoryId(), mappedIds);
 	}
 
 	protected void deleteMappedFolder(

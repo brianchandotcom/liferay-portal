@@ -273,9 +273,11 @@ public class PortletRequestDispatcherImpl
 				if (urlPattern.endsWith("/*")) {
 					pos = urlPattern.indexOf("/*");
 
-					urlPattern = urlPattern.substring(0, pos + 1);
+					urlPattern = urlPattern.substring(0, pos);
 
-					if (pathNoQueryString.startsWith(urlPattern)) {
+					if (pathNoQueryString.startsWith(
+							urlPattern.concat(StringPool.SLASH))) {
+
 						pathInfo = pathNoQueryString.substring(
 							urlPattern.length());
 						servletPath = urlPattern;

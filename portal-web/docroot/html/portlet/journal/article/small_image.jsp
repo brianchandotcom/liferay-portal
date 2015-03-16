@@ -136,6 +136,13 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 			}
 		);
 
-		selectSmallImageType('<%= (article != null) && Validator.isNotNull(article.getSmallImageURL()) ? 0 : 1 %>');
+		// LPS-51306
+
+		setTimeout(
+			function() {
+				selectSmallImageType('<%= (article != null) && Validator.isNotNull(article.getSmallImageURL()) ? 0 : 1 %>');
+			},
+			0
+		);
 	</aui:script>
 </aui:fieldset>

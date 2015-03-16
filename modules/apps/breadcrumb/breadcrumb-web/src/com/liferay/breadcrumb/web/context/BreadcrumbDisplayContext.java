@@ -54,6 +54,9 @@ public class BreadcrumbDisplayContext {
 			return _ddmTemplate;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		if (_displayStyle == null) {
 			_displayStyle = PrefsParamUtil.getString(
 				_portletPreferences, _request, "displayStyle");
@@ -64,23 +67,21 @@ public class BreadcrumbDisplayContext {
 
 				try {
 					_ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
-						getDisplayStyleGroupId(),
+						themeDisplay.getSiteGroupId(),
 						PortalUtil.getClassNameId(
 							BreadcrumbEntry.class.getName()),
 						PropsValues.BREADCRUMB_DDM_TEMPLATE_KEY_DEFAULT, true);
 				}
 				catch (PortalException e) {
 					_log.error(
-						"Unable to get dynamic data mapping template with key" +
+						"Unable to get dynamic data mapping template with " +
+							"key " +
 							PropsValues.BREADCRUMB_DDM_TEMPLATE_KEY_DEFAULT);
 				}
 			}
 		}
 
 		if ((_ddmTemplate == null) && Validator.isNotNull(_displayStyle)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 			_displayStyleGroupId = PrefsParamUtil.getLong(
 				_portletPreferences, _request, "displayStyleGroupId",
 				themeDisplay.getSiteGroupId());

@@ -268,15 +268,16 @@ public class PortletBagImpl implements PortletBag {
 
 	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundle resourceBundle = _resourceBundleTracker.getResouceBundle(
-			LocaleUtil.toLanguageId(locale));
+		ResourceBundle resourceBundle =
+			_resourceBundleTracker.getResourceBundle(
+				LocaleUtil.toLanguageId(locale));
 
 		if (resourceBundle == null) {
-			resourceBundle = _resourceBundleTracker.getResouceBundle(
+			resourceBundle = _resourceBundleTracker.getResourceBundle(
 				locale.getLanguage());
 
 			if (resourceBundle == null) {
-				resourceBundle = _resourceBundleTracker.getResouceBundle(
+				resourceBundle = _resourceBundleTracker.getResourceBundle(
 					LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 			}
 		}

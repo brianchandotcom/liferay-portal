@@ -60,8 +60,6 @@
 					<div class="display-template">
 
 						<%
-						TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(AssetTag.class.getName());
-
 						List<String> displayStyles = new ArrayList<String>();
 
 						displayStyles.add("number");
@@ -69,7 +67,7 @@
 						%>
 
 						<liferay-ui:ddm-template-selector
-							classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
+							className="<%= AssetTag.class.getName() %>"
 							displayStyle="<%= displayStyle %>"
 							displayStyleGroupId="<%= displayStyleGroupId %>"
 							displayStyles="<%= displayStyles %>"

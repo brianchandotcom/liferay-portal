@@ -807,7 +807,7 @@
 		<tag-class>com.liferay.taglib.ui.BreadcrumbTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>ddmTemplate</name>
+			<name>ddmTemplateGroupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1016,6 +1016,11 @@
 		<tag-class>com.liferay.taglib.ui.DDMTemplateRendererTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>className</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>contextObjects</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1041,7 +1046,7 @@
 		<tag-class>com.liferay.taglib.ui.DDMTemplateSelectorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>classNameId</name>
+			<name>className</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

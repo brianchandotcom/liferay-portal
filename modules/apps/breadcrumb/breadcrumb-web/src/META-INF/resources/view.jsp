@@ -17,7 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-ui:breadcrumb
-	ddmTemplate="<%= breadcrumbDisplayContext.getDDMTemplate() %>"
+	ddmTemplateGroupId="<%= breadcrumbDisplayContext.getDisplayStyleGroupId() %>"
+	ddmTemplateKey="<%= breadcrumbDisplayContext.getDDMTemplateKey() %>"
 	showCurrentGroup="<%= breadcrumbDisplayContext.isShowCurrentGroup() %>"
 	showGuestGroup="<%= breadcrumbDisplayContext.isShowGuestGroup() %>"
 	showLayout="<%= breadcrumbDisplayContext.isShowLayout() %>"

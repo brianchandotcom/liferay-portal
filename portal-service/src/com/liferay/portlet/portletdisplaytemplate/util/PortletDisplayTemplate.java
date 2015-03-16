@@ -35,8 +35,18 @@ public interface PortletDisplayTemplate {
 
 	public long getDDMTemplateGroupId(long groupId);
 
+	public String getDDMTemplateKey(String displayStyle);
+
+	@Deprecated
 	public String getDDMTemplateUuid(String displayStyle);
 
+	public DDMTemplate getDefaultPortletDisplayTemplateDDMTemplate(
+		long groupId, long classNameId);
+
+	public DDMTemplate getPortletDisplayTemplateDDMTemplate(
+		long groupId, long classNameId, String displayStyle);
+
+	@Deprecated
 	public long getPortletDisplayTemplateDDMTemplateId(
 		long groupId, String displayStyle);
 
@@ -44,6 +54,17 @@ public interface PortletDisplayTemplate {
 
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
 		String language);
+
+	public String renderDDMTemplate(
+			HttpServletRequest request, HttpServletResponse response,
+			DDMTemplate ddmTemplate, List<?> entries)
+		throws Exception;
+
+	public String renderDDMTemplate(
+			HttpServletRequest request, HttpServletResponse response,
+			DDMTemplate ddmTemplate, List<?> entries,
+			Map<String, Object> contextObjects)
+		throws Exception;
 
 	public String renderDDMTemplate(
 			HttpServletRequest request, HttpServletResponse response,

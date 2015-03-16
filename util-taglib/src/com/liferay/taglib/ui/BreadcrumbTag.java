@@ -14,7 +14,6 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
@@ -29,9 +28,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -46,8 +42,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class BreadcrumbTag extends IncludeTag {
 
-	public void setDdmTemplate(DDMTemplate ddmTemplate) {
-		_ddmTemplate = ddmTemplate;
+	public void setDdmTemplateGroupId(long ddmTemplateGroupId) {
+		_ddmTemplateGroupId = ddmTemplateGroupId;
 	}
 
 	public void setDdmTemplateKey(String ddmTemplateKey) {
@@ -76,7 +72,7 @@ public class BreadcrumbTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_ddmTemplate = null;
+		_ddmTemplateGroupId = 0;
 		_ddmTemplateKey = null;
 		_showCurrentGroup = true;
 		_showGuestGroup = _SHOW_GUEST_GROUP;
@@ -122,51 +118,13 @@ public class BreadcrumbTag extends IncludeTag {
 		return breadcrumbEntries;
 	}
 
-	protected DDMTemplate getDDMTemplate(HttpServletRequest request) {
-		if (_ddmTemplate == null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			String ddmTemplateKey = _ddmTemplateKey;
-
-			if (Validator.isNull(_ddmTemplateKey)) {
-				ddmTemplateKey = _DDM_TEMPLATE_KEY;
-			}
-
-			try {
-				_ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
-					themeDisplay.getSiteGroupId(),
-					PortalUtil.getClassNameId(BreadcrumbEntry.class.getName()),
-					ddmTemplateKey, true);
-			}
-			catch (PortalException e) {
-				_log.error(
-					"Error obtaining DDM Template with key " + ddmTemplateKey);
-			}
-		}
-
-		return _ddmTemplate;
-	}
-
-	protected String getDisplayStyle(HttpServletRequest request) {
-		DDMTemplate ddmTemplate = getDDMTemplate(request);
-
-		if (ddmTemplate != null) {
+	protected String getDisplayStyle() {
+		if (Validator.isNotNull(_ddmTemplateKey)) {
 			return PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-				ddmTemplate.getUuid();
+				_ddmTemplateKey;
 		}
 
 		return null;
-	}
-
-	protected long getDisplayStyleGroupId(HttpServletRequest request) {
-		DDMTemplate ddmTemplate = getDDMTemplate(request);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate.getGroupId();
-		}
-
-		return 0;
 	}
 
 	@Override
@@ -208,14 +166,10 @@ public class BreadcrumbTag extends IncludeTag {
 			"liferay-ui:breadcrumb:breadcrumbEntries",
 			getBreadcrumbEntries(request));
 		request.setAttribute(
-			"liferay-ui:breadcrumb:displayStyle", getDisplayStyle(request));
+			"liferay-ui:breadcrumb:displayStyle", getDisplayStyle());
 		request.setAttribute(
-			"liferay-ui:breadcrumb:displayStyleGroupId",
-			getDisplayStyleGroupId(request));
+			"liferay-ui:breadcrumb:displayStyleGroupId", _ddmTemplateGroupId);
 	}
-
-	private static final String _DDM_TEMPLATE_KEY = GetterUtil.getString(
-		PropsUtil.get(PropsKeys.BREADCRUMB_DDM_TEMPLATE_KEY_DEFAULT));
 
 	private static final String _PAGE = "/html/taglib/ui/breadcrumb/page.jsp";
 
@@ -227,7 +181,7 @@ public class BreadcrumbTag extends IncludeTag {
 
 	private static final Log _log = LogFactoryUtil.getLog(BreadcrumbTag.class);
 
-	private DDMTemplate _ddmTemplate;
+	private long _ddmTemplateGroupId;
 	private String _ddmTemplateKey;
 	private boolean _showCurrentGroup = true;
 	private boolean _showGuestGroup = _SHOW_GUEST_GROUP;

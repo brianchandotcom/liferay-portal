@@ -48,6 +48,13 @@ public interface TemplateHandler {
 	public List<Element> getDefaultTemplateElements() throws Exception;
 
 	/**
+	 * Returns the key of the template handler's default template.
+	 *
+	 * @return the key of the template handler's default template
+	 */
+	public String getDefaultTemplateKey();
+
+	/**
 	 * Returns the template handler's name.
 	 *
 	 * @param  locale the locale of the template handler name to get

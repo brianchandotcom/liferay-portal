@@ -36,8 +36,6 @@
 	<div class="display-template">
 
 		<%
-		TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(BlogsEntry.class.getName());
-
 		List<String> displayStyles = new ArrayList<String>();
 
 		displayStyles.add(BlogsUtil.DISPLAY_STYLE_ABSTRACT);
@@ -46,7 +44,7 @@
 		%>
 
 		<liferay-ui:ddm-template-selector
-			classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
+			className="<%= BlogsEntry.class.getName() %>"
 			displayStyle="<%= blogsPortletInstanceSettings.getDisplayStyle() %>"
 			displayStyleGroupId="<%= blogsPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()) %>"
 			displayStyles="<%= displayStyles %>"

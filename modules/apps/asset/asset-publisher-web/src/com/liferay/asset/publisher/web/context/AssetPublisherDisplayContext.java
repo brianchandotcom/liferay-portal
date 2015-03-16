@@ -47,7 +47,6 @@ import com.liferay.portlet.asset.model.ClassTypeReader;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.util.RSSUtil;
 
 import java.util.Locale;
@@ -421,17 +420,6 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return _paginationType;
-	}
-
-	public Long getPortletDisplayDDMTemplateId() {
-		if (_portletDisplayDDMTemplateId == null) {
-			_portletDisplayDDMTemplateId =
-				PortletDisplayTemplateUtil.
-					getPortletDisplayTemplateDDMTemplateId(
-						getDisplayStyleGroupId(), getDisplayStyle());
-		}
-
-		return _portletDisplayDDMTemplateId;
 	}
 
 	public String getPortletResource() {
@@ -1086,7 +1074,6 @@ public class AssetPublisherDisplayContext {
 	private String _orderByType1;
 	private String _orderByType2;
 	private String _paginationType;
-	private Long _portletDisplayDDMTemplateId;
 	private final PortletPreferences _portletPreferences;
 	private String _portletResource;
 	private long[] _referencedModelsGroupIds;

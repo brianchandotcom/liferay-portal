@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.RepositoryEntry;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.ServiceContext;
@@ -363,6 +362,10 @@ public abstract class BaseRepositoryImpl
 		return _localRepository;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getRepositoryEntry(String)}
+	 */
+	@Deprecated
 	public Object[] getRepositoryEntryIds(String objectId)
 		throws PortalException {
 
@@ -691,6 +694,13 @@ public abstract class BaseRepositoryImpl
 		repositoryEntry.setManualCheckInRequired(false);
 
 		RepositoryEntryUtil.update(repositoryEntry);
+	}
+
+	protected RepositoryEntry getRepositoryEntry(String objectId)
+		throws PortalException {
+
+		return repositoryEntryLocalService.getRepositoryEntry(
+			getGroupId(), getRepositoryId(), objectId);
 	}
 
 	protected void setManualCheckInRequired(

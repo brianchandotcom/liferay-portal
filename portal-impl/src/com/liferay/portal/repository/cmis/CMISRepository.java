@@ -1228,10 +1228,10 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	public FileVersion toFileVersion(Document version) throws PortalException {
-		Object[] ids = getRepositoryEntryIds(version.getId());
+		RepositoryEntry repositoryEntry = getRepositoryEntry(version.getId());
 
-		long fileVersionId = (Long)ids[0];
-		String uuid = (String)ids[1];
+		long fileVersionId = repositoryEntry.getRepositoryEntryId();
+		String uuid = repositoryEntry.getUuid();
 
 		return new CMISFileVersion(this, uuid, fileVersionId, version);
 	}
@@ -1240,10 +1240,11 @@ public class CMISRepository extends BaseCmisRepository {
 			org.apache.chemistry.opencmis.client.api.Folder cmisFolder)
 		throws PortalException {
 
-		Object[] ids = getRepositoryEntryIds(cmisFolder.getId());
+		RepositoryEntry repositoryEntry = getRepositoryEntry(
+			cmisFolder.getId());
 
-		long folderId = (Long)ids[0];
-		String uuid = (String)ids[1];
+		long folderId = repositoryEntry.getRepositoryEntryId();
+		String uuid = repositoryEntry.getUuid();
 
 		return new CMISFolder(this, uuid, folderId, cmisFolder);
 	}
@@ -2167,17 +2168,17 @@ public class CMISRepository extends BaseCmisRepository {
 	protected FileEntry toFileEntry(Document document, boolean strict)
 		throws PortalException {
 
-		Object[] ids = null;
+		RepositoryEntry repositoryEntry = null;
 
 		if (isDocumentRetrievableByVersionSeriesId()) {
-			ids = getRepositoryEntryIds(document.getVersionSeriesId());
+			repositoryEntry = getRepositoryEntry(document.getVersionSeriesId());
 		}
 		else {
-			ids = getRepositoryEntryIds(document.getId());
+			repositoryEntry = getRepositoryEntry(document.getId());
 		}
 
-		long fileEntryId = (Long)ids[0];
-		String uuid = (String)ids[1];
+		long fileEntryId = repositoryEntry.getRepositoryEntryId();
+		String uuid = repositoryEntry.getUuid();
 
 		FileEntry fileEntry = new CMISFileEntry(
 			this, uuid, fileEntryId, document);
@@ -2189,10 +2190,6 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 		catch (Exception e) {
 			if (strict) {
-				if ((Boolean)ids[2]) {
-					RepositoryEntryUtil.remove(fileEntryId);
-				}
-
 				if (e instanceof CmisObjectNotFoundException) {
 					throw new NoSuchFileVersionException(
 						"No CMIS file version with CMIS file entry {objectId=" +

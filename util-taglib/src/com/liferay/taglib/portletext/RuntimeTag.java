@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.portletext;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -27,10 +28,12 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PrefixPredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -39,6 +42,8 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.Map;
+
+import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -71,6 +76,17 @@ public class RuntimeTag extends TagSupport {
 			String portletName, String queryString, String defaultPreferences,
 			PageContext pageContext, HttpServletRequest request,
 			HttpServletResponse response)
+		throws Exception {
+
+		doTag(
+			portletName, queryString, "group", defaultPreferences, pageContext,
+			request, response);
+	}
+
+	public static void doTag(
+			String portletName, String queryString, String settingsScope,
+			String defaultPreferences, PageContext pageContext,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		if (pageContext != null) {
@@ -118,6 +134,17 @@ public class RuntimeTag extends TagSupport {
 
 			Portlet portlet = getPortlet(
 				themeDisplay.getCompanyId(), portletId);
+
+			PortletPreferences renderPortletPreferences =
+				getRenderPortletPreferences(
+					themeDisplay, portlet, settingsScope, defaultPreferences);
+
+			if (renderPortletPreferences != null) {
+				request.setAttribute(
+					"renderPortletPreferences", renderPortletPreferences);
+			}
+
+			request.setAttribute("settingsScope", settingsScope);
 
 			JSONObject jsonObject = null;
 
@@ -176,8 +203,8 @@ public class RuntimeTag extends TagSupport {
 				(HttpServletResponse)pageContext.getResponse();
 
 			doTag(
-				_portletName, _queryString, _defaultPreferences, pageContext,
-				request, response);
+				_portletName, _queryString, _SETTINGS_SCOPE,
+				_defaultPreferences, pageContext, request, response);
 
 			return EVAL_PAGE;
 		}
@@ -221,6 +248,37 @@ public class RuntimeTag extends TagSupport {
 
 		return portlet;
 	}
+
+	protected static PortletPreferences getRenderPortletPreferences(
+			ThemeDisplay themeDisplay, Portlet portlet, String settingsScope,
+			String defaultPreferences)
+		throws PortalException {
+
+		PortletPreferencesIds portletPreferencesIds =
+			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
+				themeDisplay.getPlid(), portlet.getPortletId(), settingsScope);
+
+		if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				portletPreferencesIds.getOwnerId(),
+				portletPreferencesIds.getOwnerType(),
+				portletPreferencesIds.getPlid(), portlet, true) > 0) {
+
+			return PortletPreferencesLocalServiceUtil.getPreferences(
+				themeDisplay.getCompanyId(), portletPreferencesIds.getOwnerId(),
+				portletPreferencesIds.getOwnerType(),
+				portletPreferencesIds.getPlid(), portlet.getPortletId());
+		}
+
+		if (Validator.isNotNull(defaultPreferences)) {
+			return PortletPreferencesFactoryUtil.fromDefaultXML(
+				defaultPreferences);
+		}
+
+		return null;
+	}
+
+	private static final String _SETTINGS_SCOPE = "group";
 
 	private static final Log _log = LogFactoryUtil.getLog(RuntimeTag.class);
 

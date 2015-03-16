@@ -1093,6 +1093,11 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.validator.DDMFormValuesValidatorImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.editor.config.PortletEditorConfigFactory" class="com.liferay.portlet.editor.config.PortletEditorConfigFactoryUtil">
+		<property name="portletEditorConfigFactory">
+			<bean class="com.liferay.portlet.editor.config.PortletEditorConfigFactoryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil">
 		<property name="expandoColumnPermission">
 			<bean class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionImpl" />

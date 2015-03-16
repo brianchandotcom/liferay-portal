@@ -140,7 +140,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					</c:choose>
 
 					<c:if test="<%= createDate.before(modifiedDate) %>">
-						<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= dateFormatDateTime.format(modifiedDate) %>');">
+						<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(dateFormatDateTime.format(modifiedDate)) %>');">
 							- <liferay-ui:message key="edited" />
 						</strong>
 					</c:if>

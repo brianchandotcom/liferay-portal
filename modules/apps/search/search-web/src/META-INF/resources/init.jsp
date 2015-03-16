@@ -90,6 +90,7 @@ page import="com.liferay.portlet.asset.service.permission.AssetCategoryPermissio
 page import="com.liferay.search.web.constants.SearchPortletKeys" %><%@
 page import="com.liferay.search.web.context.SearchDisplayContext" %><%@
 page import="com.liferay.search.web.util.SearchFacet" %><%@
+page import="com.liferay.search.web.util.SearchFacetTracker" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.util.PropertyComparator" %>
 

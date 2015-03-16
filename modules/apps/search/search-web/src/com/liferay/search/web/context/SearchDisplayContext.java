@@ -16,12 +16,17 @@ package com.liferay.search.web.context;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.search.web.util.SearchFacet;
+
+import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
@@ -37,6 +42,9 @@ public class SearchDisplayContext {
 
 		_request = request;
 		_portletPreferences = portletPreferences;
+
+		_searchFacets = (List<SearchFacet>)_request.getAttribute(
+			"searchFacets");
 	}
 
 	public String checkViewURL(String viewURL, String currentURL) {
@@ -76,6 +84,24 @@ public class SearchDisplayContext {
 		}
 
 		return _collatedSpellCheckResultDisplayThreshold;
+	}
+
+	public List<SearchFacet> getEnabledSearchFacets() {
+		if (_enabledSearchFacets != null) {
+			return _enabledSearchFacets;
+		}
+
+		_enabledSearchFacets = ListUtil.filter(
+			_searchFacets, new PredicateFilter<SearchFacet>() {
+
+				@Override
+				public boolean filter(SearchFacet searchFacet) {
+					return isDisplayFacet(searchFacet.getClassName());
+				}
+
+			});
+
+		return _enabledSearchFacets;
 	}
 
 	public int getQueryIndexingThreshold() {
@@ -154,49 +180,9 @@ public class SearchDisplayContext {
 		return _collatedSpellCheckResultEnabled;
 	}
 
-	public boolean isDisplayAssetCategoriesFacet() {
-		if (_displayAssetCategoriesFacet != null) {
-			return _displayAssetCategoriesFacet;
-		}
-
-		_displayAssetCategoriesFacet = GetterUtil.getBoolean(
-			_portletPreferences.getValue("displayAssetCategoriesFacet", null),
-			true);
-
-		return _displayAssetCategoriesFacet;
-	}
-
-	public boolean isDisplayAssetTagsFacet() {
-		if (_displayAssetTagsFacet != null) {
-			return _displayAssetTagsFacet;
-		}
-
-		_displayAssetTagsFacet = GetterUtil.getBoolean(
-			_portletPreferences.getValue("displayAssetTagsFacet", null), true);
-
-		return _displayAssetTagsFacet;
-	}
-
-	public boolean isDisplayAssetTypeFacet() {
-		if (_displayAssetTypeFacet != null) {
-			return _displayAssetTypeFacet;
-		}
-
-		_displayAssetTypeFacet = GetterUtil.getBoolean(
-			_portletPreferences.getValue("displayAssetTypeFacet", null), true);
-
-		return _displayAssetTypeFacet;
-	}
-
-	public boolean isDisplayFolderFacet() {
-		if (_displayFolderFacet != null) {
-			return _displayFolderFacet;
-		}
-
-		_displayFolderFacet = GetterUtil.getBoolean(
-			_portletPreferences.getValue("displayFolderFacet", null), true);
-
-		return _displayFolderFacet;
+	public boolean isDisplayFacet(String className) {
+		return GetterUtil.getBoolean(
+			_portletPreferences.getValue(className, null), true);
 	}
 
 	public boolean isDisplayMainQuery() {
@@ -208,18 +194,6 @@ public class SearchDisplayContext {
 			_portletPreferences.getValue("displayMainQuery", null));
 
 		return _displayMainQuery;
-	}
-
-	public boolean isDisplayModifiedRangeFacet() {
-		if (_displayModifiedRangeFacet != null) {
-			return _displayModifiedRangeFacet;
-		}
-
-		_displayModifiedRangeFacet = GetterUtil.getBoolean(
-			_portletPreferences.getValue("displayModifiedRangeFacet", null),
-			true);
-
-		return _displayModifiedRangeFacet;
 	}
 
 	public boolean isDisplayOpenSearchResults() {
@@ -252,28 +226,6 @@ public class SearchDisplayContext {
 		}
 
 		return _displayResultsInDocumentForm;
-	}
-
-	public boolean isDisplayScopeFacet() {
-		if (_displayScopeFacet != null) {
-			return _displayScopeFacet;
-		}
-
-		_displayScopeFacet = GetterUtil.getBoolean(
-			_portletPreferences.getValue("displayScopeFacet", null), true);
-
-		return _displayScopeFacet;
-	}
-
-	public boolean isDisplayUserFacet() {
-		if (_displayUserFacet != null) {
-			return _displayUserFacet;
-		}
-
-		_displayUserFacet = GetterUtil.getBoolean(
-			_portletPreferences.getValue("displayUserFacet", null), true);
-
-		return _displayUserFacet;
 	}
 
 	public boolean isDLLinkToViewURL() {
@@ -321,12 +273,10 @@ public class SearchDisplayContext {
 	}
 
 	public boolean isShowMenu() {
-		if (isDisplayScopeFacet() || isDisplayAssetTypeFacet() ||
-			isDisplayAssetTagsFacet() || isDisplayAssetCategoriesFacet() ||
-			isDisplayFolderFacet() || isDisplayUserFacet() ||
-			isDisplayModifiedRangeFacet()) {
-
-			return true;
+		for (SearchFacet searchFacet : _searchFacets) {
+			if (isDisplayFacet(searchFacet.getClassName())) {
+				return true;
+			}
 		}
 
 		return false;
@@ -345,17 +295,11 @@ public class SearchDisplayContext {
 
 	private Integer _collatedSpellCheckResultDisplayThreshold;
 	private Boolean _collatedSpellCheckResultEnabled;
-	private Boolean _displayAssetCategoriesFacet;
-	private Boolean _displayAssetTagsFacet;
-	private Boolean _displayAssetTypeFacet;
-	private Boolean _displayFolderFacet;
 	private Boolean _displayMainQuery;
-	private Boolean _displayModifiedRangeFacet;
 	private Boolean _displayOpenSearchResults;
 	private Boolean _displayResultsInDocumentForm;
-	private Boolean _displayScopeFacet;
-	private Boolean _displayUserFacet;
 	private Boolean _dlLinkToViewURL;
+	private List<SearchFacet> _enabledSearchFacets;
 	private Boolean _includeSystemPortlets;
 	private final PortletPreferences _portletPreferences;
 	private Boolean _queryIndexingEnabled;
@@ -365,6 +309,7 @@ public class SearchDisplayContext {
 	private Integer _querySuggestionsMax;
 	private final HttpServletRequest _request;
 	private String _searchConfiguration;
+	private final List<SearchFacet> _searchFacets;
 	private Boolean _viewInContext;
 
 }

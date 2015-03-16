@@ -24,11 +24,14 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.PortalOpenSearchImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.search.web.upgrade.SearchWebUpgrade;
+import com.liferay.search.web.util.SearchFacetTracker;
 
 import java.io.IOException;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
@@ -102,6 +105,17 @@ public class SearchPortlet extends MVCPortlet {
 		}
 	}
 
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			"searchFacets", _searchFacetTracker.getSearchFacets());
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
 	protected byte[] getXML(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
@@ -137,7 +151,20 @@ public class SearchPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setSearchFacetTracker(
+		SearchFacetTracker searchFacetTracker) {
+
+		_searchFacetTracker = searchFacetTracker;
+	}
+
+	@Reference(unbind = "-")
 	protected void setSearchWebUpgrade(SearchWebUpgrade searchWebUpgrade) {
 	}
+
+	protected void unsetSearchFacetRegistryUtil() {
+		_searchFacetTracker = null;
+	}
+
+	private SearchFacetTracker _searchFacetTracker;
 
 }

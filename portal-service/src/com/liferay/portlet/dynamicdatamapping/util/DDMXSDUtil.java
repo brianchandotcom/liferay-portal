@@ -177,10 +177,6 @@ public class DDMXSDUtil {
 		return getDDMXSD().getXSD(classNameId, classPK);
 	}
 
-	public static String getXSD(String json) throws PortalException {
-		return getDDMXSD().getXSD(json);
-	}
-
 	public void setDDMXSD(DDMXSD ddmXSD) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

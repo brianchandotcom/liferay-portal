@@ -61,9 +61,9 @@ public class BookmarksFolderLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test

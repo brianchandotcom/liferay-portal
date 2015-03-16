@@ -67,7 +67,6 @@ import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFolderUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelCreateDateComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameComparator;
@@ -2277,7 +2276,7 @@ public class CMISRepository extends BaseCmisRepository {
 			return repositoryEntry.getMappedId();
 		}
 
-		DLFolder dlFolder = DLFolderUtil.fetchByPrimaryKey(folderId);
+		DLFolder dlFolder = dlFolderLocalService.fetchFolder(folderId);
 
 		if (dlFolder == null) {
 			throw new NoSuchFolderException(

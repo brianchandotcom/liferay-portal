@@ -14,8 +14,17 @@
 
 package com.liferay.search.web.util;
 
+import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+
 /**
  * @author Eudaldo Alonso
  */
 public interface SearchFacet {
+
+	public String getClassName();
+
+	public FacetConfiguration getDefaultConfiguration();
+
+	public String getTitle();
+
 }

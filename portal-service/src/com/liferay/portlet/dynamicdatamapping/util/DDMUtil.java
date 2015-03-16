@@ -28,6 +28,8 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.Serializable;
 
+import javax.portlet.ActionRequest;
+
 /**
  * @author Eduardo Lundgren
  * @author Marcellus Tavares
@@ -44,6 +46,12 @@ public class DDMUtil {
 		throws PortalException {
 
 		return getDDM().getDDMDisplay(classNameId);
+	}
+
+	public static DDMForm getDDMForm(ActionRequest actionRequest)
+		throws PortalException {
+
+		return getDDM().getDDMForm(actionRequest);
 	}
 
 	public static DDMPermissionHandler getDDMPermissionHandler(

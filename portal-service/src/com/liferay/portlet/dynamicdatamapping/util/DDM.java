@@ -27,6 +27,8 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.Serializable;
 
+import javax.portlet.ActionRequest;
+
 /**
  * @author Eduardo Lundgren
  * @author Marcellus Tavares
@@ -34,6 +36,9 @@ import java.io.Serializable;
 public interface DDM {
 
 	public DDMDisplay getDDMDisplay(long classNameId) throws PortalException;
+
+	public DDMForm getDDMForm(ActionRequest actionRequest)
+		throws PortalException;
 
 	public DDMPermissionHandler getDDMPermissionHandler(long classNameId);
 

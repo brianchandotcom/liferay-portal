@@ -101,7 +101,7 @@ img.icon {
 	margin-left: 5px;
 }
 
-.alert{
+.alert {
 	&.popup-alert-notice, &.popup-alert-warning, &.taglib-portal-message {
 		left: 0;
 		line-height: 30px;
@@ -158,16 +158,6 @@ img.icon {
 
 .lfr-token-close {
 	margin-left: 0.3em;
-}
-
-.ie6 {
-	.popup-alert-notice, .popup-alert-warning {
-		bottom: auto;
-		left: expression( ( LFR_IGNORE_ME2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) + 'px' );
-		position: absolute;
-		right: auto;
-		top: expression( ( LFR_IGNORE_ME = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) + 'px' );
-	}
 }
 
 /* Skin */

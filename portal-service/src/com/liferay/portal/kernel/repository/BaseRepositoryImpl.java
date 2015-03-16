@@ -40,6 +40,7 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.persistence.RepositoryEntryUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.util.DL;
 
 import java.io.File;
@@ -549,6 +550,13 @@ public abstract class BaseRepositoryImpl
 	}
 
 	@Override
+	public void setDLFolderLocalService(
+		DLFolderLocalService dlFolderLocalService) {
+
+		this.dlFolderLocalService = dlFolderLocalService;
+	}
+
+	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 	}
@@ -728,6 +736,7 @@ public abstract class BaseRepositoryImpl
 	protected AssetEntryLocalService assetEntryLocalService;
 	protected CompanyLocalService companyLocalService;
 	protected DLAppHelperLocalService dlAppHelperLocalService;
+	protected DLFolderLocalService dlFolderLocalService;
 	protected RepositoryEntryLocalService repositoryEntryLocalService;
 	protected UserLocalService userLocalService;
 

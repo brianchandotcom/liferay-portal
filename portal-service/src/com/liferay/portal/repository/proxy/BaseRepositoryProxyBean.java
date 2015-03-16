@@ -36,6 +36,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 
 import java.io.File;
 import java.io.InputStream;
@@ -848,6 +849,13 @@ public class BaseRepositoryProxyBean
 		DLAppHelperLocalService dlAppHelperLocalService) {
 
 		_baseRepository.setDLAppHelperLocalService(dlAppHelperLocalService);
+	}
+
+	@Override
+	public void setDLFolderLocalService(
+		DLFolderLocalService dlFolderLocalService) {
+
+		_baseRepository.setDLFolderLocalService(dlFolderLocalService);
 	}
 
 	@Override

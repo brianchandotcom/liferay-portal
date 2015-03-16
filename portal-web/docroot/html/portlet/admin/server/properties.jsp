@@ -122,7 +122,7 @@ Map<String, String[]> companyPortletPreferencesMap = companyPortletPreferences.g
 			<c:if test="<%= Validator.isNotNull(value) %>">
 				<c:choose>
 					<c:when test="<%= value.length() > 80 %>">
-						<span onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escape(value) %>');">
+						<span onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(value) %>');">
 							<%= HtmlUtil.escape(StringUtil.shorten(value, 80)) %>
 						</span>
 					</c:when>

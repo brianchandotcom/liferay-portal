@@ -27,7 +27,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.DuplicateTagException;
-import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.base.AssetTagLocalServiceBaseImpl;
@@ -154,12 +153,9 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		List<AssetTag> tags = new ArrayList<>();
 
 		for (String name : names) {
-			AssetTag tag = null;
+			AssetTag tag = fetchTag(group.getGroupId(), name);
 
-			try {
-				tag = getTag(group.getGroupId(), name);
-			}
-			catch (NoSuchTagException nste1) {
+			if (tag == null) {
 				ServiceContext serviceContext = new ServiceContext();
 
 				serviceContext.setAddGroupPermissions(true);
@@ -178,12 +174,12 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void checkTags(long userId, long groupId, String[] names)
+	public List<AssetTag> checkTags(long userId, long groupId, String[] names)
 		throws PortalException {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
-		checkTags(userId, group, names);
+		return checkTags(userId, group, names);
 	}
 
 	@Override
@@ -238,6 +234,11 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		AssetTag tag = assetTagPersistence.findByPrimaryKey(tagId);
 
 		deleteTag(tag);
+	}
+
+	@Override
+	public AssetTag fetchTag(long groupId, String name) throws PortalException {
+		return assetTagPersistence.fetchByG_N(groupId, name);
 	}
 
 	@Override
@@ -316,13 +317,13 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		List<Long> tagIds = new ArrayList<>(names.length);
 
 		for (String name : names) {
-			try {
-				AssetTag tag = getTag(groupId, name);
+			AssetTag tag = fetchTag(groupId, name);
 
-				tagIds.add(tag.getTagId());
+			if (tag == null) {
+				continue;
 			}
-			catch (NoSuchTagException nste) {
-			}
+
+			tagIds.add(tag.getTagId());
 		}
 
 		return ArrayUtil.toArray(tagIds.toArray(new Long[tagIds.size()]));
@@ -335,13 +336,13 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		List<Long> tagIds = new ArrayList<>(groupIds.length);
 
 		for (long groupId : groupIds) {
-			try {
-				AssetTag tag = getTag(groupId, name);
+			AssetTag tag = fetchTag(groupId, name);
 
-				tagIds.add(tag.getTagId());
+			if (tag == null) {
+				continue;
 			}
-			catch (NoSuchTagException nste) {
-			}
+
+			tagIds.add(tag.getTagId());
 		}
 
 		return ArrayUtil.toArray(tagIds.toArray(new Long[tagIds.size()]));
@@ -422,14 +423,13 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 	@Override
 	public boolean hasTag(long groupId, String name) throws PortalException {
-		try {
-			getTag(groupId, name);
+		AssetTag tag = fetchTag(groupId, name);
 
+		if (tag != null) {
 			return true;
 		}
-		catch (NoSuchTagException nste) {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -494,15 +494,13 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		}
 
 		if (!tag.getName().equals(name)) {
-			try {
-				AssetTag existingAssetTag = getTag(tag.getGroupId(), name);
+			AssetTag existingAssetTag = fetchTag(tag.getGroupId(), name);
 
-				if (existingAssetTag.getTagId() != tagId) {
-					throw new DuplicateTagException(
-						"A tag with the name " + name + " already exists");
-				}
-			}
-			catch (NoSuchTagException nste) {
+			if ((existingAssetTag != null) &&
+				(existingAssetTag.getTagId() != tagId)) {
+
+				throw new DuplicateTagException(
+					"A tag with the name " + name + " already exists");
 			}
 		}
 

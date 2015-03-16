@@ -118,9 +118,10 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	@Override
-	public void checkTags(long userId, long groupId, java.lang.String[] names)
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> checkTags(
+		long userId, long groupId, java.lang.String[] names)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetTagLocalService.checkTags(userId, groupId, names);
+		return _assetTagLocalService.checkTags(userId, groupId, names);
 	}
 
 	@Override
@@ -308,6 +309,13 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	@Override
 	public com.liferay.portlet.asset.model.AssetTag fetchAssetTag(long tagId) {
 		return _assetTagLocalService.fetchAssetTag(tagId);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetTag fetchTag(long groupId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetTagLocalService.fetchTag(groupId, name);
 	}
 
 	@Override

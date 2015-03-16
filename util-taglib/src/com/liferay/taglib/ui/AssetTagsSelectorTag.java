@@ -31,6 +31,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AssetTagsSelectorTag extends IncludeTag {
 
+	public void setAddCallback(String addCallback) {
+		_addCallback = addCallback;
+	}
+
+	public void setAllowAddEntry(boolean allowAddEntry) {
+		_allowAddEntry = allowAddEntry;
+	}
+
 	public void setAutoFocus(boolean autoFocus) {
 		_autoFocus = autoFocus;
 	}
@@ -67,8 +75,14 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_ignoreRequestValue = ignoreRequestValue;
 	}
 
+	public void setRemoveCallback(String removeCallback) {
+		_removeCallback = removeCallback;
+	}
+
 	@Override
 	protected void cleanUp() {
+		_addCallback = null;
+		_allowAddEntry = true;
 		_autoFocus = false;
 		_className = null;
 		_classPK = 0;
@@ -78,6 +92,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_hiddenInput = "assetTagNames";
 		_id = null;
 		_ignoreRequestValue = false;
+		_removeCallback = null;
 	}
 
 	@Override
@@ -96,6 +111,12 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		}
 
 		request.setAttribute(
+			"liferay-ui:asset-tags-selector:addCallback",
+			String.valueOf(_addCallback));
+		request.setAttribute(
+			"liferay-ui:asset-tags-selector:allowAddEntry",
+			String.valueOf(_allowAddEntry));
+		request.setAttribute(
 			"liferay-ui:asset-tags-selector:autoFocus",
 			String.valueOf(_autoFocus));
 		request.setAttribute(
@@ -107,6 +128,9 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			String.valueOf(_contentCallback));
 		request.setAttribute(
 			"liferay-ui:asset-tags-selector:curTags", _curTags);
+		request.setAttribute(
+			"liferay-ui:asset-tags-selector:removeCallback",
+			String.valueOf(_removeCallback));
 
 		if (_groupIds == null) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -145,6 +169,8 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/asset_tags_selector/page.jsp";
 
+	private String _addCallback;
+	private boolean _allowAddEntry;
 	private boolean _autoFocus;
 	private String _className;
 	private long _classPK;
@@ -154,5 +180,6 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	private String _hiddenInput = "assetTagNames";
 	private String _id;
 	private boolean _ignoreRequestValue;
+	private String _removeCallback;
 
 }

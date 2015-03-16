@@ -93,6 +93,10 @@ AUI.add(
 		var AssetTagsSelector = A.Component.create(
 			{
 				ATTRS: {
+					allowAddEntry: {
+						value: true
+					},
+
 					allowAnyEntry: {
 						value: true
 					},
@@ -440,14 +444,6 @@ AUI.add(
 
 						var buttonGroup = [
 							{
-								icon: 'icon-plus',
-								label: Liferay.Language.get('add'),
-								on: {
-									click: A.bind('_onAddEntryClick', instance)
-								},
-								title: Liferay.Language.get('add-tags')
-							},
-							{
 								icon: 'icon-search',
 								label: Liferay.Language.get('select'),
 								on: {
@@ -456,6 +452,19 @@ AUI.add(
 								title: Liferay.Language.get('select-tags')
 							}
 						];
+
+						if (instance.get('allowAddEntry')) {
+							buttonGroup.unshift(
+								{
+									icon: 'icon-plus',
+									label: Liferay.Language.get('add'),
+									on: {
+										click: A.bind('_onAddEntryClick', instance)
+									},
+									title: Liferay.Language.get('add-tags')
+								}
+							);
+						}
 
 						if (instance.get('contentCallback')) {
 							buttonGroup.push(

@@ -116,10 +116,10 @@ public class AssetTagLocalServiceUtil {
 		return getService().checkTags(userId, group, names);
 	}
 
-	public static void checkTags(long userId, long groupId,
-		java.lang.String[] names)
+	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> checkTags(
+		long userId, long groupId, java.lang.String[] names)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().checkTags(userId, groupId, names);
+		return getService().checkTags(userId, groupId, names);
 	}
 
 	public static void clearAssetEntryAssetTags(long entryId) {
@@ -289,6 +289,12 @@ public class AssetTagLocalServiceUtil {
 	public static com.liferay.portlet.asset.model.AssetTag fetchAssetTag(
 		long tagId) {
 		return getService().fetchAssetTag(tagId);
+	}
+
+	public static com.liferay.portlet.asset.model.AssetTag fetchTag(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchTag(groupId, name);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

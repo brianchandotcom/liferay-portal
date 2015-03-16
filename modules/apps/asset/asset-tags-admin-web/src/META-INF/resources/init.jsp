@@ -41,6 +41,9 @@ page import="com.liferay.portlet.asset.service.AssetTagServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetPermission" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetTagPermission" %>
 
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.List" %>
+
 <%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-theme:defineObjects />

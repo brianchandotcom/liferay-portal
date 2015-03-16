@@ -26,6 +26,18 @@ if (Validator.isNull(redirect)) {
 }
 
 long[] mergeTagIds = StringUtil.split(ParamUtil.getString(renderRequest, "mergeTagIds"), 0L);
+
+List<String> mergeTagNames = new ArrayList();
+
+for (long mergeTagId : mergeTagIds) {
+	AssetTag tag = AssetTagLocalServiceUtil.fetchAssetTag(mergeTagId);
+
+	if (tag == null) {
+		continue;
+	}
+
+	mergeTagNames.add(tag.getName());
+}
 %>
 
 <liferay-ui:header
@@ -37,43 +49,32 @@ long[] mergeTagIds = StringUtil.split(ParamUtil.getString(renderRequest, "mergeT
 
 <aui:form action="<%= mergeURL %>" method="post" name="fm" onSubmit="event.preventDefault();">
 	<aui:input name="mvcPath" type="hidden" value="/merge_tag.jsp" />
+	<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="mergeTagIds" type="hidden" />
 
 	<div class="merge-tags">
 		<span class="merge-tags-label">
 		   <liferay-ui:message key="tags-to-merge" />
 		</span>
 
-		<div class="merge-tags-container" id="<portlet:namespace />mergeTagsContainer">
-
-			<%
-			for (long mergeTagId : mergeTagIds) {
-				AssetTag tag = AssetTagLocalServiceUtil.getTag(mergeTagId);
-			%>
-
-				<div class="merge-tag" data-tag-id="<%= tag.getTagId() %>" data-tag-name="<%= tag.getName() %>">
-					<span class="merge-tag-name"><%= tag.getName() %></span>
-
-					<i class="icon-remove-sign"></i>
-				</div>
-
-			<%
-			}
-			%>
-
-		</div>
+		<liferay-ui:asset-tags-selector
+			addCallback="onAddTag"
+			allowAddEntry="<%= false %>"
+			curTags="<%= StringUtil.merge(mergeTagNames) %>"
+			hiddenInput="mergeTagNames"
+			id="assetTagsSelector"
+			removeCallback="onRemoveTag"
+		/>
 	</div>
 
 	<div class="target-tag-container">
-		<aui:select cssClass="target-tag" label="into-this-tag" name="targetTagId">
+		<aui:select cssClass="target-tag" label="into-this-tag" name="targetTagName">
 
 			<%
-			for (long mergeTagId : mergeTagIds) {
-				AssetTag tag = AssetTagLocalServiceUtil.getTag(mergeTagId);
+			for (String tagName : mergeTagNames) {
 			%>
 
-				<aui:option label="<%= tag.getName() %>" value="<%= tag.getTagId() %>" />
+				<aui:option value="<%= tagName %>" />
 
 			<%
 			}
@@ -90,44 +91,44 @@ long[] mergeTagIds = StringUtil.split(ParamUtil.getString(renderRequest, "mergeT
 </aui:form>
 
 <aui:script use="aui-base,aui-selector">
-	A.one('#<portlet:namespace />mergeTagsContainer').delegate(
-		'click',
-		function(event) {
-			var currentTarget = event.currentTarget;
-
-			var mergeTag = currentTarget.ancestor('.merge-tag');
-
-			mergeTag.hide();
-		},
-		'.icon-remove-sign'
-	);
-
 	var form = A.one('#<portlet:namespace />fm');
+
+	window['<portlet:namespace />onAddTag'] = function(item) {
+		if (item.value === undefined) {
+			return;
+		}
+
+		var targetTag = AUI.$('#<portlet:namespace />targetTagName');
+
+		var addedValue = item.value;
+
+		targetTag.append($('<option>', {value:addedValue, text:addedValue}));
+	}
+
+	window['<portlet:namespace />onRemoveTag'] = function(item) {
+		if (item.value === undefined) {
+			return;
+		}
+
+		var removedValue = item.value;
+
+		AUI.$("#<portlet:namespace />targetTagName option[value='" + removedValue + "']").remove();
+	}
 
 	form.on(
 		'submit',
 		function(event) {
+			var mergeTagNames = A.one('#<portlet:namespace />mergeTagNames').val();
+
 			var mergeText = '<liferay-ui:message key="are-you-sure-you-want-to-merge-x-into-x" />';
 
-			var targetTag = A.one('#<portlet:namespace />targetTagId');
-
-			var mergeTagIds = [];
-			var mergeTagNames = [];
-
-			A.all('.merge-tag:visible').each(
-				function(item, index, collection) {
-					mergeTagIds.push(item.attr('data-tag-id'));
-					mergeTagNames.push(item.attr('data-tag-name'));
-				}
-			);
+			var targetTag = A.one('#<portlet:namespace />targetTagName');
 
 			var tag = targetTag.one(':selected');
 
-			mergeText = A.Lang.sub(mergeText, [mergeTagNames, A.Lang.trim(tag.html())]);
+			mergeText = A.Lang.sub(mergeText, [mergeTagNames.split(','), A.Lang.trim(tag.html())]);
 
 			if (confirm(mergeText)) {
-				document.<portlet:namespace />fm.<portlet:namespace />mergeTagIds.value = mergeTagIds;
-
 				submitForm(form, form.attr('action'));
 			}
 		}

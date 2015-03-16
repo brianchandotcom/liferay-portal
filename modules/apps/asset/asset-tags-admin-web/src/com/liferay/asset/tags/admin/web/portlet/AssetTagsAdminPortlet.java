@@ -26,6 +26,7 @@ import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.DuplicateTagException;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagServiceUtil;
 
 import java.io.IOException;
@@ -120,16 +121,31 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] mergeTagIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "mergeTagIds"), 0L);
-		long targetTagId = ParamUtil.getLong(actionRequest, "targetTagId");
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
-		for (long mergeTagId : mergeTagIds) {
-			if (targetTagId == mergeTagId) {
+		String[] mergeTagNames = StringUtil.split(
+			ParamUtil.getString(actionRequest, "mergeTagNames"));
+
+		String targetTagName = ParamUtil.getString(
+			actionRequest, "targetTagName");
+
+		AssetTag targetTag = AssetTagLocalServiceUtil.fetchTag(
+			groupId, targetTagName);
+
+		for (String mergeTagName : mergeTagNames) {
+			if (targetTagName.equals(mergeTagName)) {
 				continue;
 			}
 
-			AssetTagServiceUtil.mergeTags(mergeTagId, targetTagId);
+			AssetTag mergeTag = AssetTagLocalServiceUtil.fetchTag(
+				groupId, mergeTagName);
+
+			if (mergeTag == null) {
+				continue;
+			}
+
+			AssetTagServiceUtil.mergeTags(
+				mergeTag.getTagId(), targetTag.getTagId());
 		}
 	}
 

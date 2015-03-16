@@ -336,7 +336,7 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" arrayable-operator="OR" />
 		</finder>
-		<finder name="G_N" return-type="AssetTag">
+		<finder name="G_N" return-type="AssetTag" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="name" />
 		</finder>

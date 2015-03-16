@@ -167,6 +167,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 				dialog: {
 					destroyOnHide: true
 				},
+				groupId: <%= scopeGroupId %>,
 				refererPortletName: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
 				showAncestorScopes: true,
 				showManageTemplates: false,

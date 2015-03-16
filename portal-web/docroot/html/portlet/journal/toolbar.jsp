@@ -137,6 +137,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 						}
 					}
 				},
+				groupId: <%= scopeGroupId %>,
 				refererPortletName: '<%= PortletKeys.JOURNAL %>',
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
 				showAncestorScopes: true,

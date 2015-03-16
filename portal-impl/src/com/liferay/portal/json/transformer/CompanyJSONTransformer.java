@@ -29,18 +29,12 @@ public class CompanyJSONTransformer extends ObjectTransformer {
 	public void transform(JSONContext jsonContext, Object object) {
 		Company company = (Company)object;
 
-		boolean hidePrivateData = true;
-
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (permissionChecker != null) {
-			if (permissionChecker.isCompanyAdmin(company.getCompanyId())) {
-				hidePrivateData = false;
-			}
-		}
+		if ((permissionChecker == null) ||
+			!permissionChecker.isCompanyAdmin(company.getCompanyId())) {
 
-		if (hidePrivateData) {
 			company.setKey(StringPool.BLANK);
 			company.setKeyObj(null);
 		}

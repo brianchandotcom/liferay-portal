@@ -1,0 +1,84 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.kernel.display.context;
+
+import com.liferay.portal.kernel.display.context.bundle.basedisplaycontextprovider.TestDLDisplayContextFactoryImpl;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portlet.documentlibrary.display.context.DLDisplayContextFactory;
+
+import java.util.Iterator;
+
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+/**
+ * @author Manuel de la Peña
+ */
+public class DLDisplayContextProviderTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new SyntheticBundleRule("bundle.basedisplaycontextprovider"));
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_baseDisplayContextProvider = new BaseDisplayContextProvider<>(
+			DLDisplayContextFactory.class);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_baseDisplayContextProvider.close();
+	}
+
+	@Test
+	public void testDisplayContextHasBeenRegistered() throws Exception {
+		Iterable<DLDisplayContextFactory> displayContextFactories =
+			_baseDisplayContextProvider.getDisplayContextFactories();
+
+		Iterator<DLDisplayContextFactory> iterator =
+			displayContextFactories.iterator();
+
+		DLDisplayContextFactory dlDisplayContextFactoryExtension = null;
+
+		String className = TestDLDisplayContextFactoryImpl.class.getName();
+
+		while (iterator.hasNext()) {
+			DLDisplayContextFactory dlDisplayContextFactory = iterator.next();
+
+			if (className.equals(
+					dlDisplayContextFactory.getClass().getName())) {
+
+				dlDisplayContextFactoryExtension = dlDisplayContextFactory;
+			}
+		}
+
+		Assert.assertNotNull(dlDisplayContextFactoryExtension);
+	}
+
+	private static BaseDisplayContextProvider<DLDisplayContextFactory>
+		_baseDisplayContextProvider;
+
+}

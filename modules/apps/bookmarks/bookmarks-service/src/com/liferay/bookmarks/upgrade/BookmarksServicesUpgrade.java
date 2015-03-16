@@ -65,7 +65,7 @@ public class BookmarksServicesUpgrade {
 		upgradeProcesses.add(new UpgradePortletSettings());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.bookmarks.service", upgradeProcesses, 1, 0, false);
+			"com.liferay.bookmarks.service", upgradeProcesses, 1, 1, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

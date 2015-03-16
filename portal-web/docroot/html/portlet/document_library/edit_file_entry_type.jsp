@@ -31,15 +31,7 @@ long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId"
 
 String script = BeanParamUtil.getString(ddmStructure, request, "definition");
 
-JSONArray fieldsJSONArray = null;
-
-if (Validator.isNotNull(script)) {
-	try {
-		fieldsJSONArray = DDMXSDUtil.getJSONArray(script);
-	}
-	catch (Exception e) {
-	}
-}
+JSONArray fieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(ddmStructure, script);
 
 List<DDMStructure> ddmStructures = null;
 

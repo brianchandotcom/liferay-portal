@@ -45,25 +45,7 @@ String structureKey = BeanParamUtil.getString(structure, request, "structureKey"
 
 String script = BeanParamUtil.getString(structure, request, "definition");
 
-JSONArray fieldsJSONArray = null;
-
-if (Validator.isNotNull(script)) {
-	if (structure != null) {
-		try {
-			fieldsJSONArray = DDMXSDUtil.getJSONArray(structure, script);
-		}
-		catch (Exception e) {
-			fieldsJSONArray = DDMXSDUtil.getJSONArray(structure.getDefinition());
-		}
-	}
-	else {
-		try {
-			fieldsJSONArray = DDMXSDUtil.getJSONArray(script);
-		}
-		catch (Exception e) {
-		}
-	}
-}
+JSONArray fieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(structure, script);
 %>
 
 <portlet:actionURL var="editStructureURL">

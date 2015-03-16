@@ -528,18 +528,6 @@
 		<put name="portlet_content" value="/portlet/invitation/view.jsp" />
 	</definition>
 
-	<!-- Journal Content Search -->
-
-	<definition name="portlet.journal_content_search" extends="portlet" />
-
-	<definition name="portlet.journal_content_search.search" extends="portlet.journal_content_search">
-		<put name="portlet_content" value="/portlet/journal_content_search/search.jsp" />
-	</definition>
-
-	<definition name="portlet.journal_content_search.view" extends="portlet.journal_content_search">
-		<put name="portlet_content" value="/portlet/journal_content_search/view.jsp" />
-	</definition>
-
 	<!-- Layout Prototypes -->
 
 	<definition name="portlet.layout_prototypes" extends="portlet" />

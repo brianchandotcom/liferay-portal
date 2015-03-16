@@ -84,8 +84,6 @@ public class PortletKeys {
 
 	public static final String JOURNAL = "15";
 
-	public static final String JOURNAL_CONTENT_SEARCH = "77";
-
 	public static final String LAYOUT_PROTOTYPE = "146";
 
 	public static final String LAYOUT_SET_PROTOTYPE = "149";

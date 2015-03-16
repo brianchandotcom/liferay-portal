@@ -17,7 +17,6 @@ package com.liferay.taglib.ui;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Brian Wing Shun Chan
@@ -32,34 +31,15 @@ public class JournalContentSearchTag extends IncludeTag {
 		_targetPortletId = targetPortletId;
 	}
 
-	public void setType(String type) {
-		_type = type;
-	}
-
 	@Override
 	protected void cleanUp() {
 		_showListed = true;
 		_targetPortletId = null;
-		_type = null;
 	}
 
 	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
-
-	@Override
-	protected int processEndTag() throws Exception {
-		JspWriter jspWriter = pageContext.getOut();
-
-		jspWriter.write("</form>");
-
-		return EVAL_PAGE;
+	protected String getPage() {
+		return _PAGE;
 	}
 
 	@Override
@@ -70,17 +50,12 @@ public class JournalContentSearchTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:journal-content-search:targetPortletId",
 			_targetPortletId);
-		request.setAttribute("liferay-ui:journal-content-search:type", _type);
 	}
 
-	private static final String _END_PAGE =
-		"/html/taglib/ui/journal_content_search/end.jsp";
-
-	private static final String _START_PAGE =
-		"/html/taglib/ui/journal_content_search/start.jsp";
+	private static final String _PAGE =
+		"/html/taglib/ui/journal_content_search/page.jsp";
 
 	private boolean _showListed;
 	private String _targetPortletId;
-	private String _type;
 
 }

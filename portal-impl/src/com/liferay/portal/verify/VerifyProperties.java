@@ -514,6 +514,11 @@ public class VerifyProperties extends VerifyProcess {
 			"publish.to.live.by.default", "com.liferay.journal.content.web"
 		},
 
+		new String[] {
+			"journal.content.search.show.listed", "show.listed",
+			"com.liferay.journal.content.search.web"
+		},
+
 		// Language
 
 		new String[] {

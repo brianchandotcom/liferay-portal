@@ -718,14 +718,6 @@
 			<forward name="portlet.invitation.view" path="portlet.invitation.view" />
 		</action>
 
-		<!-- Journal Content Search -->
-
-		<action path="/journal_content_search/search" type="com.liferay.portlet.journalcontentsearch.action.SearchAction">
-			<forward name="portlet.journal_content_search.search" path="portlet.journal_content_search.search" />
-		</action>
-
-		<action path="/journal_content_search/view" forward="portlet.journal_content_search.view" />
-
 		<!-- Layout Prototypes -->
 
 		<action path="/layout_prototypes/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />

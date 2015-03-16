@@ -111,6 +111,4 @@ public interface DDMXSD {
 
 	public String getXSD(long classNameId, long classPK) throws PortalException;
 
-	public String getXSD(String json) throws PortalException;
-
 }

@@ -577,13 +577,6 @@ public class DDMXSDImpl implements DDMXSD {
 		return null;
 	}
 
-	@Override
-	public String getXSD(String json) throws PortalException {
-		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(json);
-
-		return DDMFormXSDSerializerUtil.serialize(ddmForm);
-	}
-
 	protected JSONArray addStructureFieldAttributes(
 		DDMStructure structure, JSONArray jsonArray) {
 

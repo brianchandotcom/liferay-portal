@@ -74,7 +74,7 @@ public class AssetPublisherWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.asset.publisher.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}
 

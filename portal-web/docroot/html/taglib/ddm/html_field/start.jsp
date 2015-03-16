@@ -17,11 +17,9 @@
 <%@ include file="/html/taglib/ddm/html_field/init.jsp" %>
 
 <div class="lfr-ddm-container" id="<%= randomNamespace %>">
-	<c:if test="<%= Validator.isNotNull(xsd) %>">
+	<c:if test="<%= ddmForm != null %>">
 
 		<%
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(xsd);
-
 		Map<String, DDMFormField> ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(true);
 
 		DDMFormField ddmFormField = ddmFormFieldsMap.get(field.getName());

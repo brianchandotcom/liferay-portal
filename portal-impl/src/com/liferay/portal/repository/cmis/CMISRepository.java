@@ -1003,11 +1003,7 @@ public class CMISRepository extends BaseCmisRepository {
 				updateMappedId(fileEntryId, document.getVersionSeriesId());
 			}
 
-			FileEntry fileEntry = toFileEntry(document);
-
-			document = null;
-
-			return fileEntry;
+			return toFileEntry(document);
 		}
 		catch (CmisObjectNotFoundException confe) {
 			throw new NoSuchFolderException(
@@ -1819,9 +1815,7 @@ public class CMISRepository extends BaseCmisRepository {
 		try {
 			String versionSeriesId = toFileEntryId(fileEntryId);
 
-			Document document = (Document)session.getObject(versionSeriesId);
-
-			return document;
+			return (Document)session.getObject(versionSeriesId);
 		}
 		catch (CmisObjectNotFoundException confe) {
 			throw new NoSuchFileEntryException(
@@ -2247,9 +2241,7 @@ public class CMISRepository extends BaseCmisRepository {
 		throws PortalException {
 
 		if (cmisObject instanceof Document) {
-			FileEntry fileEntry = toFileEntry((Document)cmisObject);
-
-			return fileEntry;
+			return toFileEntry((Document)cmisObject);
 		}
 		else if (cmisObject instanceof
 					org.apache.chemistry.opencmis.client.api.Folder) {
@@ -2257,9 +2249,7 @@ public class CMISRepository extends BaseCmisRepository {
 			org.apache.chemistry.opencmis.client.api.Folder cmisFolder =
 				(org.apache.chemistry.opencmis.client.api.Folder)cmisObject;
 
-			Folder folder = toFolder(cmisFolder);
-
-			return folder;
+			return toFolder(cmisFolder);
 		}
 		else {
 			return null;

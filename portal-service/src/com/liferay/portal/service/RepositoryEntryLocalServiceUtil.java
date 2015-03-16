@@ -82,6 +82,12 @@ public class RepositoryEntryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static void deleteRepositoryEntries(long repositoryId,
+		java.lang.Iterable<java.lang.String> mappedIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRepositoryEntries(repositoryId, mappedIds);
+	}
+
 	/**
 	* Deletes the repository entry from the database. Also notifies the appropriate model listeners.
 	*
@@ -104,6 +110,12 @@ public class RepositoryEntryLocalServiceUtil {
 		long repositoryEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRepositoryEntry(repositoryEntryId);
+	}
+
+	public static void deleteRepositoryEntry(long repositoryId,
+		java.lang.String mappedId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRepositoryEntry(repositoryId, mappedId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -297,6 +309,19 @@ public class RepositoryEntryLocalServiceUtil {
 		long repositoryEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRepositoryEntry(repositoryEntryId);
+	}
+
+	public static com.liferay.portal.model.RepositoryEntry getRepositoryEntry(
+		long userId, long groupId, long repositoryId, java.lang.String objectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getRepositoryEntry(userId, groupId, repositoryId, objectId);
+	}
+
+	public static com.liferay.portal.model.RepositoryEntry getRepositoryEntry(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRepositoryEntry(uuid, groupId);
 	}
 
 	/**

@@ -79,6 +79,10 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 		com.liferay.portal.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public void deleteRepositoryEntries(long repositoryId,
+		java.lang.Iterable<java.lang.String> mappedIds)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	/**
 	* Deletes the repository entry from the database. Also notifies the appropriate model listeners.
 	*
@@ -99,6 +103,10 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.RepositoryEntry deleteRepositoryEntry(
 		long repositoryEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteRepositoryEntry(long repositoryId,
+		java.lang.String mappedId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
@@ -264,6 +272,16 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.RepositoryEntry getRepositoryEntry(
 		long repositoryEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.RepositoryEntry getRepositoryEntry(
+		long userId, long groupId, long repositoryId, java.lang.String objectId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.RepositoryEntry getRepositoryEntry(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**

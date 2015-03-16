@@ -14,16 +14,8 @@
 
 package com.liferay.portal.kernel.display.context.bundle.basedisplaycontextprovider;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portlet.documentlibrary.display.context.BaseDLDisplayContextFactory;
 import com.liferay.portlet.documentlibrary.display.context.DLDisplayContextFactory;
-import com.liferay.portlet.documentlibrary.display.context.DLEditFileEntryDisplayContext;
-import com.liferay.portlet.documentlibrary.display.context.DLViewFileVersionDisplayContext;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,47 +23,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Manuel de la Peña
  */
 @Component(
-	immediate = true,
-	property = {"service.ranking:Integer=" + Integer.MAX_VALUE},
-	service = DLDisplayContextFactory.class
+	immediate = true, service = DLDisplayContextFactory.class
 )
 public class TestDLDisplayContextFactoryImpl
-	implements DLDisplayContextFactory {
-
-	@Override
-	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
-		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		DLFileEntryType dlFileEntryType) {
-
-		return null;
-	}
-
-	@Override
-	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
-		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry) {
-
-		return null;
-	}
-
-	@Override
-	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
-		DLViewFileVersionDisplayContext parentDLViewFileVersionDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		DLFileShortcut dlFileShortcut) {
-
-		return null;
-	}
-
-	@Override
-	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
-		DLViewFileVersionDisplayContext parentDLViewFileVersionDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion) {
-
-		return null;
-	}
-
+	extends BaseDLDisplayContextFactory {
 }

@@ -20,12 +20,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.portlet.documentlibrary.display.context.DLDisplayContextFactory;
-import com.liferay.portlet.documentlibrary.display.context.DLEditFileEntryDisplayContext;
-import com.liferay.portlet.documentlibrary.display.context.DLViewFileVersionDisplayContext;
-import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl;
-import com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutImpl;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
+
+import java.util.Iterator;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -33,9 +29,6 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Manuel de la Peña
@@ -51,7 +44,7 @@ public class DLDisplayContextProviderTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_baseDisplayContextProvider = new BaseDisplayContextProvider(
+		_baseDisplayContextProvider = new BaseDisplayContextProvider<>(
 			DLDisplayContextFactory.class);
 	}
 
@@ -61,50 +54,31 @@ public class DLDisplayContextProviderTest {
 	}
 
 	@Test
-	public void testDisplayContextHasBeenOverriden() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
+	public void testDisplayContextHasBeenRegistered() throws Exception {
+		Iterable<DLDisplayContextFactory> displayContextFactories =
+			_baseDisplayContextProvider.getDisplayContextFactories();
 
-		DisplayContextFactory service = registry.getService(
-			DLDisplayContextFactory.class);
+		Iterator<DLDisplayContextFactory> iterator =
+			displayContextFactories.iterator();
 
-		Assert.assertEquals(
-			TestDLDisplayContextFactoryImpl.class.getName(),
-			service.getClass().getName());
+		DLDisplayContextFactory dlDisplayContextFactoryExtension = null;
+
+		String className = TestDLDisplayContextFactoryImpl.class.getName();
+
+		while (iterator.hasNext()) {
+			DLDisplayContextFactory dlDisplayContextFactory = iterator.next();
+
+			if (className.equals(
+					dlDisplayContextFactory.getClass().getName())) {
+
+				dlDisplayContextFactoryExtension = dlDisplayContextFactory;
+			}
+		}
+
+		Assert.assertNotNull(dlDisplayContextFactoryExtension);
 	}
 
-	@Test
-	public void testDisplayContextMethodsHasBeenOverriden() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
-
-		DisplayContextFactory service = registry.getService(
-			DLDisplayContextFactory.class);
-
-		DLDisplayContextFactory dlDisplayContextFactory =
-			(DLDisplayContextFactory)service;
-
-		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext =
-			null;
-
-		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
-			dlDisplayContextFactory.getDLEditFileEntryDisplayContext(
-				parentDLEditFileEntryDisplayContext,
-				new MockHttpServletRequest(), new MockHttpServletResponse(),
-				new DLFileEntryTypeImpl());
-
-		Assert.assertNull(dlEditFileEntryDisplayContext);
-
-		DLViewFileVersionDisplayContext parentDLViewFileVersionDisplayContext =
-			null;
-
-		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
-			dlDisplayContextFactory.getDLViewFileVersionDisplayContext(
-				parentDLViewFileVersionDisplayContext,
-				new MockHttpServletRequest(), new MockHttpServletResponse(),
-				new DLFileShortcutImpl());
-
-		Assert.assertNull(dlViewFileVersionDisplayContext);
-	}
-
-	private static BaseDisplayContextProvider _baseDisplayContextProvider;
+	private static BaseDisplayContextProvider<DLDisplayContextFactory>
+		_baseDisplayContextProvider;
 
 }

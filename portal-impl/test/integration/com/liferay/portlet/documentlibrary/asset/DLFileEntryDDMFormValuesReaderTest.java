@@ -36,7 +36,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -201,8 +200,7 @@ public class DLFileEntryDDMFormValuesReaderTest {
 
 		DDMForm ddmForm = createDDMForm();
 
-		serviceContext.setAttribute(
-			"definition", DDMFormXSDSerializerUtil.serialize(ddmForm));
+		serviceContext.setAttribute("ddmForm", ddmForm);
 
 		User user = TestPropsValues.getUser();
 

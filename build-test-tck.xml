@@ -43,9 +43,6 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 		<ant antfile="build-test-tck.xml" target="prepare-tck" />
 
 		<script classpathref="project.classpath" language="beanshell">
-			import com.liferay.portal.kernel.util.OSDetector;
-			import com.liferay.portal.kernel.util.StringUtil;
-
 			import org.apache.tools.ant.DirectoryScanner;
 
 			DirectoryScanner directoryScanner = new DirectoryScanner();
@@ -62,13 +59,8 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 			Set packageNames = new TreeSet();
 
 			for (String fileName : fileNames) {
-				int x = fileName.indexOf("com/");
-				int y = fileName.lastIndexOf("/");
-
-				if (OSDetector.isWindows()) {
-					x = fileName.indexOf("com\\");
-					y = fileName.lastIndexOf("\\");
-				}
+				int x = fileName.indexOf("com" + File.separator);
+				int y = fileName.lastIndexOf(File.separatorChar);
 
 				String packageName = fileName.substring(x, y);
 
@@ -76,13 +68,21 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 					continue;
 				}
 
-				packageName = StringUtil.replace(packageName, "/", ".");
-				packageName = StringUtil.replace(packageName, "\\", ".");
-
-				packageNames.add(packageName);
+				packageNames.add(packageName.replace(File.separatorChar, '.'));
 			}
 
-			project.setProperty("test.tck.package.names", StringUtil.merge(packageNames, " "));
+			StringBuilder sb = new StringBuilder();
+
+			for (String packageName : packageNames) {
+				sb.append(packageName);
+				sb.append(' ');
+			}
+
+			if (!packageNames.isEmpty()) {
+				sb.setLength(sb.length() - 1);
+			}
+
+			project.setProperty("test.tck.package.names", sb.toString());
 		</script>
 
 		<echo file="test.tck.package.names.properties">TEST_TCK_PACKAGE_NAMES=${test.tck.package.names}</echo>

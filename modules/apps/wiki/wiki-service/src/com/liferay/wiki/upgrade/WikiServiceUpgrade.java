@@ -68,7 +68,7 @@ public class WikiServiceUpgrade {
 		upgradeProcesses.add(new UpgradePortletSettings());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.wiki.service", upgradeProcesses, 1, 0, false);
+			"com.liferay.wiki.service", upgradeProcesses, 1, 1, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

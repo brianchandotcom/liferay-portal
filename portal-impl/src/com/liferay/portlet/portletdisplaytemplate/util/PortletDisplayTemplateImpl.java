@@ -149,6 +149,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		return displayStyle.substring(DISPLAY_STYLE_PREFIX.length());
 	}
 
+	@Deprecated
 	@Override
 	public String getDDMTemplateUuid(String displayStyle) {
 		return getDDMTemplateKey(displayStyle);
@@ -207,6 +208,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		return portletDisplayDDMTemplate;
 	}
 
+	@Deprecated
 	@Override
 	public long getPortletDisplayTemplateDDMTemplateId(
 		long groupId, String displayStyle) {

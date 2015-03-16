@@ -39,7 +39,9 @@ public class PortletDisplayTemplateUtil {
 	 *         configuration
 	 * @return the portlet display template's DDM template matching the group
 	 *         and the display style stored in the portlet configuration
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortletDisplayTemplateDDMTemplate(long, long, String)}
 	 */
+	@Deprecated
 	public static DDMTemplate fetchDDMTemplate(
 		long groupId, String displayStyle) {
 
@@ -69,7 +71,9 @@ public class PortletDisplayTemplateUtil {
 	 *         configuration
 	 * @return the UUID of the portlet display template's DDM template from the
 	 *         display style stored in the portlet configuration
+	 * @deprecated As of 7.0.0, replaced by {@link #getDDMTemplateKey(String)}
 	 */
+	@Deprecated
 	public static String getDDMTemplateUuid(String displayStyle) {
 		return getPortletDisplayTemplate().getDDMTemplateUuid(displayStyle);
 	}
@@ -109,7 +113,9 @@ public class PortletDisplayTemplateUtil {
 	 * @return the primary key of the portlet display template's DDM template
 	 *         matching the group and the display style stored in the portlet
 	 *         configuration
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortletDisplayTemplateDDMTemplate(long, long, String)}
 	 */
+	@Deprecated
 	public static long getPortletDisplayTemplateDDMTemplateId(
 		long groupId, String displayStyle) {
 

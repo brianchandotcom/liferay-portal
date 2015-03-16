@@ -2293,15 +2293,9 @@ public class CMISRepository extends BaseCmisRepository {
 
 		String rootFolderId = repositoryInfo.getRootFolderId();
 
-		repositoryEntry = RepositoryEntryUtil.fetchByR_M(
-			getRepositoryId(), rootFolderId);
-
-		if (repositoryEntry == null) {
-			repositoryEntry =
-				RepositoryEntryLocalServiceUtil.addRepositoryEntry(
-					dlFolder.getUserId(), getGroupId(), getRepositoryId(),
-					rootFolderId, new ServiceContext());
-		}
+		repositoryEntry = repositoryEntryLocalService.getRepositoryEntry(
+			dlFolder.getUserId(), getGroupId(), getRepositoryId(),
+			rootFolderId);
 
 		return repositoryEntry.getMappedId();
 	}

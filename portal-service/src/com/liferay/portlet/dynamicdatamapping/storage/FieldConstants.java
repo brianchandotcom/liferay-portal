@@ -78,6 +78,10 @@ public class FieldConstants {
 	public static final Serializable getSerializable(
 		String type, List<Serializable> values) {
 
+		if (Validator.isNull(type)) {
+			return values.toArray(new String[values.size()]);
+		}
+
 		if (type.equals(FieldConstants.BOOLEAN)) {
 			return values.toArray(new Boolean[values.size()]);
 		}
@@ -109,6 +113,10 @@ public class FieldConstants {
 
 	public static final Serializable getSerializable(
 		String type, String value) {
+
+		if (Validator.isNull(type)) {
+			return value;
+		}
 
 		if (isNumericType(type) && Validator.isNull(value)) {
 			return StringPool.BLANK;

@@ -973,11 +973,6 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil" class="com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil">
-		<property name="DDMFormXSDSerializer">
-			<bean class="com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil" class="com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil">
 		<property name="DDMFormFieldTypeRegistry">
 			<bean class="com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryImpl" />

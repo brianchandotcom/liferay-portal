@@ -552,7 +552,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BOOKMARKS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[@value='28ACCESS_IN_CONTROL_PANEL']</td>
+	<td>//input[contains(@value,'bookmarkswebACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -648,7 +648,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WIKI_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[@value='154ACCESS_IN_CONTROL_PANEL']</td>
+	<td>//input[contains(@value,'wikiwebACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -659,17 +659,17 @@
 <!--SITE_ADMIN_CONTENT_CATEGORIES_GENERAL_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_CATEGORIES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[@value='147ACCESS_IN_CONTROL_PANEL']</td>
+	<td>//input[contains(@value,'AssetCategoriesAdminPortletACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_CATEGORIES_GENERAL_PERMISSIONS_CONFIGURATION_CHECKBOX</td>
-	<td>//input[@value='147CONFIGURATION']</td>
+	<td>//input[contains(@value,'AssetCategoriesAdminPortletCONFIGURATION')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_CATEGORIES_GENERAL_PERMISSIONS_VIEW_CHECKBOX</td>
-	<td>//input[@value='147VIEW']</td>
+	<td>//input[contains(@value,'AssetCategoriesAdminPortletVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -807,22 +807,22 @@
 <!--SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_APPLICATION_PERIMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_APPLICATION_PERIMISSIONS_ADD_TO_PAGE_CHECKBOX</td>
-	<td>//input[contains(@value,'101ADD_TO_PAGE')]</td>
+	<td>//input[contains(@value,'AssetPublisherPortletADD_TO_PAGE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_APPLICATION_PERIMISSIONS_CONFIGURATION_CHECKBOX</td>
-	<td>//input[contains(@value,'101CONFIGURATION')]</td>
+	<td>//input[contains(@value,'AssetPublisherPortletCONFIGURATION')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_APPLICATION_PERIMISSIONS_PERMISSIONS_CHECKBOX</td>
-	<td>//input[contains(@value,'101PERMISSIONS')]</td>
+	<td>//input[contains(@value,'AssetPublisherPortletPERMISSIONS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_APPLICATION_PERIMISSIONS_VIEW_CHECKBOX</td>
-	<td>//input[contains(@value,'101VIEW')]</td>
+	<td>//input[contains(@value,'AssetPublisherPortletVIEW')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -25,27 +25,27 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//div[@id='_33_titleEditor']</td>
+	<td>//div[contains(@id,'titleEditor')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_FIELD</td>
-	<td>//div[@id='_33_contentEditor']</td>
+	<td>//div[contains(@id,'contentEditor')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SAVE_AS_DRAFT_BUTTON</td>
-	<td>//button[@id='_33_saveButton']</td>
+	<td>//button[contains(@id,'saveButton')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//button[@id='_33_publishButton' and contains(.,'Publish')]</td>
+	<td>//button[contains(@id,'publishButton') and contains(.,'Publish')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
-	<td>//button[@id='_33_publishButton' and contains(.,'Submit for Publication')]</td>
+	<td>//button[contains(@id,'publishButton') and contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
 <tr>

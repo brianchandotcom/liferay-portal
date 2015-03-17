@@ -119,11 +119,6 @@
 	<td>//span[contains(@class,'taglib-text') and contains (.,'TXT')]/../img</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

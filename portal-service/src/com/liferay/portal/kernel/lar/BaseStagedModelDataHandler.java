@@ -46,6 +46,7 @@ import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -149,7 +150,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		T existingStagedModel = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
-		if (existingStagedModel != null) {
+		if ((existingStagedModel != null) &&
+			!isStagedModelInTrash(existingStagedModel)) {
+
 			return existingStagedModel;
 		}
 
@@ -172,7 +175,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				group = group.getParentGroup();
 			}
 
-			if (existingStagedModel != null) {
+			if ((existingStagedModel != null) &&
+				!isStagedModelInTrash(existingStagedModel)) {
+
 				return existingStagedModel;
 			}
 
@@ -188,11 +193,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 						group = GroupLocalServiceUtil.getGroup(
 							stagedGroupedModel.getGroupId());
 
-						if (!group.isStagingGroup()) {
+						if (!group.isStagingGroup() &&
+							!isStagedModelInTrash(stagedModel)) {
+
 							return stagedModel;
 						}
 					}
-					else {
+					else if (!isStagedModelInTrash(stagedModel)) {
 						return stagedModel;
 					}
 				}
@@ -734,6 +741,23 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, stagedModel, className, classPK);
 		}
+	}
+
+	protected boolean isStagedModelInTrash(T stagedModel) {
+		String className = ExportImportClassedModelUtil.getClassName(
+			stagedModel);
+		long classPK = ExportImportClassedModelUtil.getClassPK(stagedModel);
+
+		try {
+			return TrashUtil.isInTrash(className, classPK);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return false;
 	}
 
 	protected void validateExport(

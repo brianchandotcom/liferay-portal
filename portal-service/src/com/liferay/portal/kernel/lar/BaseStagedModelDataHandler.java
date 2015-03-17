@@ -256,15 +256,15 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
+		groupId = MapUtil.getLong(groupIds, groupId);
 
 		long classPK = GetterUtil.getLong(
 			referenceElement.attributeValue("class-pk"));
 
-		importMissingReference(portletDataContext, uuid, liveGroupId, classPK);
+		importMissingReference(portletDataContext, uuid, groupId, classPK);
 	}
 
 	@Override
@@ -387,13 +387,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
+		groupId = MapUtil.getLong(groupIds, groupId);
 
 		try {
-			return validateMissingReference(uuid, liveGroupId);
+			return validateMissingReference(uuid, groupId);
 		}
 		catch (Exception e) {
 			return false;

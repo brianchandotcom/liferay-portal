@@ -60,6 +60,11 @@ public class ScopeSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
+	public String getDisplayView() {
+		return "/facets/scopes.jsp";
+	}
+
+	@Override
 	public String getTitle() {
 		return "scopes";
 	}

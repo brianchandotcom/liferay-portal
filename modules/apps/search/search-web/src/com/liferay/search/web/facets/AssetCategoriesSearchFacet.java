@@ -61,6 +61,11 @@ public class AssetCategoriesSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
+	public String getDisplayView() {
+		return "/facets/asset_categories.jsp";
+	}
+
+	@Override
 	public String getTitle() {
 		return "category";
 	}

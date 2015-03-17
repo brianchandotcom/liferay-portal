@@ -81,6 +81,11 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
+	public String getDisplayView() {
+		return "/facets/asset_entries.jsp";
+	}
+
+	@Override
 	public String getTitle() {
 		return "asset-type";
 	}

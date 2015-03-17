@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.wiki.search;
+package com.liferay.wiki.search.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngine;
@@ -25,14 +26,15 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.search.test.BaseSearchTestCase;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
@@ -42,16 +44,20 @@ import com.liferay.wiki.util.test.WikiTestUtil;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Eudaldo Alonso
  */
+@RunWith(Arquillian.class)
 @Sync
 public class WikiPageSearchTest extends BaseSearchTestCase {
 
@@ -59,8 +65,24 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		_testMode = PortalRunMode.isTestMode();
+
+		PortalRunMode.setTestMode(true);
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		super.setUp();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PortalRunMode.setTestMode(_testMode);
+	}
 
 	@Ignore()
 	@Override
@@ -271,7 +293,7 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 
 			String vendor = searchEngine.getVendor();
 
-			if (vendor.equals("Lucene") || vendor.equals("Elasticsearch")) {
+			if (vendor.equals("Lucene")) {
 				return true;
 			}
 
@@ -282,5 +304,7 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 		private final ServiceContext _serviceContext;
 
 	}
+
+	private boolean _testMode;
 
 }

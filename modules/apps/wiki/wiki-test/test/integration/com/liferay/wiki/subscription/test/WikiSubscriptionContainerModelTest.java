@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.wiki.subscription;
+package com.liferay.wiki.subscription.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -21,41 +22,57 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionLocalizedContentTestCase;
-import com.liferay.wiki.constants.WikiConstants;
-import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionContainerModelTestCase;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.util.test.WikiTestUtil;
 
-import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
+ * @author Sergio González
  * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 @Sync
-public class WikiSubscriptionLocalizedContentTest
-	extends BaseSubscriptionLocalizedContentTestCase {
+public class WikiSubscriptionContainerModelTest
+	extends BaseSubscriptionContainerModelTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			SynchronousMailTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
-	@Before
+	@Ignore
 	@Override
-	public void setUp() throws Exception {
-		super.setUp();
+	@Test
+	public void testSubscriptionContainerModelWhenAddingBaseModelInRootContainerModel() {
+	}
 
-		_node = WikiTestUtil.addNode(group.getGroupId());
+	@Ignore
+	@Override
+	@Test
+	public void testSubscriptionContainerModelWhenAddingBaseModelInSubcontainerModel() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSubscriptionContainerModelWhenUpdatingBaseModelInRootContainerModel() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSubscriptionContainerModelWhenUpdatingBaseModelInSubcontainerModel() {
 	}
 
 	@Override
@@ -70,38 +87,29 @@ public class WikiSubscriptionLocalizedContentTest
 	}
 
 	@Override
+	protected long addContainerModel(long userId, long containerModelId)
+		throws Exception {
+
+		WikiNode node = WikiTestUtil.addNode(
+			userId, group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		return node.getNodeId();
+	}
+
+	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
 		WikiNodeLocalServiceUtil.subscribeNode(
-			user.getUserId(), _node.getNodeId());
-	}
-
-	@Override
-	protected String getPortletId() {
-		return WikiPortletKeys.WIKI;
-	}
-
-	@Override
-	protected String getServiceName() {
-		return WikiConstants.SERVICE_NAME;
-	}
-
-	@Override
-	protected String getSubscriptionAddedBodyPreferenceName() {
-		return "emailPageAddedBody";
-	}
-
-	@Override
-	protected String getSubscriptionUpdatedBodyPreferenceName() {
-		return "emailPageUpdatedBody";
+			user.getUserId(), containerModelId);
 	}
 
 	@Override
 	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
-		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId);
+		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId, true);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(page.getGroupId(), userId);
@@ -113,7 +121,5 @@ public class WikiSubscriptionLocalizedContentTest
 			page, userId, page.getTitle(), RandomTestUtil.randomString(), true,
 			serviceContext);
 	}
-
-	private WikiNode _node;
 
 }

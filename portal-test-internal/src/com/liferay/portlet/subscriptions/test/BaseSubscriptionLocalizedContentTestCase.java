@@ -70,12 +70,11 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 		setBaseModelSubscriptionBodyPreferences(
 			getSubscriptionAddedBodyPreferenceName());
 
-		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+		addSubscriptionContainerModel(getDefaultContainerModelId());
 
 		LocaleThreadLocal.setDefaultLocale(LocaleUtil.GERMANY);
 
-		addBaseModel(
-			creatorUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
+		addBaseModel(creatorUser.getUserId(), getDefaultContainerModelId());
 
 		List<MailMessage> messages = MailServiceTestUtil.getMailMessages(
 			"Body", GERMAN_BODY);
@@ -101,9 +100,9 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 		LocaleThreadLocal.setDefaultLocale(LocaleUtil.SPAIN);
 
 		long baseModelId = addBaseModel(
-			creatorUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
+			creatorUser.getUserId(), getDefaultContainerModelId());
 
-		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+		addSubscriptionContainerModel(getDefaultContainerModelId());
 
 		updateBaseModel(creatorUser.getUserId(), baseModelId);
 
@@ -117,6 +116,10 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 
 	protected abstract void addSubscriptionContainerModel(long containerModelId)
 		throws Exception;
+
+	protected long getDefaultContainerModelId() {
+		return PARENT_CONTAINER_MODEL_ID_DEFAULT;
+	}
 
 	protected abstract String getPortletId();
 

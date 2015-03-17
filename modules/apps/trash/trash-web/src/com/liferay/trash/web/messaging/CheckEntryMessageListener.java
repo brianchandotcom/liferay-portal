@@ -25,9 +25,11 @@ import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.web.constants.TrashPortletKeys;
+import com.liferay.trash.web.portlet.TrashPortlet;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -120,6 +122,10 @@ public class CheckEntryMessageListener
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		TrashEntryLocalServiceUtil.checkEntries();
+	}
+
+	@Reference
+	protected void setTrashPortlet(TrashPortlet trashPortlet) {
 	}
 
 	private SchedulerEntry _schedulerEntry;

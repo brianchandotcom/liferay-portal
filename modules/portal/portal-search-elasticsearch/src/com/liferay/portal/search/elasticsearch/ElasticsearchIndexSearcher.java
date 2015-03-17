@@ -40,8 +40,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch.facet.ElasticsearchFacetFieldCollector;
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
+import com.liferay.portal.search.elasticsearch.internal.facet.CompositeFacetProcessor;
+import com.liferay.portal.search.elasticsearch.internal.facet.ElasticsearchFacetFieldCollector;
 import com.liferay.portal.search.elasticsearch.util.DocumentTypes;
 
 import java.util.ArrayList;
@@ -194,9 +195,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		_elasticsearchConnectionManager = elasticsearchConnectionManager;
 	}
 
-	@Reference(
-		target = "(objectClass=com.liferay.portal.search.elasticsearch.facet.CompositeFacetProcessor)"
-	)
+	@Reference(service = CompositeFacetProcessor.class)
 	public void setFacetProcessor(
 		FacetProcessor<SearchRequestBuilder> facetProcessor) {
 

@@ -12,17 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.util;
+package com.liferay.portal.search.elasticsearch.internal.io;
+
+import com.liferay.portal.kernel.util.StringBundler;
+
+import java.io.OutputStream;
 
 /**
  * @author Michael C. Han
  */
-public class DocumentTypes {
+public class StringOutputStream extends OutputStream {
 
-	public static final String KEYWORD_QUERY = "KeywordQueryDocumentType";
+	@Override
+	public String toString() {
+		return _sb.toString();
+	}
 
-	public static final String LIFERAY = "LiferayDocumentType";
+	@Override
+	public void write(int b) {
+		_sb.append(b);
+	}
 
-	public static final String SPELL_CHECK = "SpellCheckDocumentType";
+	private final StringBundler _sb = new StringBundler();
 
 }

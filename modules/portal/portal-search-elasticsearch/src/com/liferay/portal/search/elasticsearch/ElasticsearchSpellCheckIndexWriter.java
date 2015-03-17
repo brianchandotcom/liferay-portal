@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SpellCheckIndexWriter;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch.util.DocumentTypes;
-import com.liferay.portal.search.elasticsearch.util.LogUtil;
+import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
+import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
 
 import java.util.Collection;
 import java.util.concurrent.Future;

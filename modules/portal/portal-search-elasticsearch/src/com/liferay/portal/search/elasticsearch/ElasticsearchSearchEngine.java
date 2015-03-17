@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
-import com.liferay.portal.search.elasticsearch.util.LogUtil;
+import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
 
 import java.util.Map;
 import java.util.concurrent.ExecutionException;

@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch.internal.facet.ElasticsearchFacetFieldCollector;
-import com.liferay.portal.search.elasticsearch.util.DocumentTypes;
+import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
 
 import java.util.ArrayList;
 import java.util.Collection;

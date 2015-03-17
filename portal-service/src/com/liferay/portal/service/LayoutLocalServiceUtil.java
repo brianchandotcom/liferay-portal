@@ -1245,6 +1245,16 @@ public class LayoutLocalServiceUtil {
 			.importLayouts(userId, groupId, privateLayout, parameterMap, is);
 	}
 
+	public static void importLayoutsDataDeletions(long userId, long groupId,
+		boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.importLayoutsDataDeletions(userId, groupId, privateLayout,
+			parameterMap, file);
+	}
+
 	public static long importLayoutsInBackground(long userId,
 		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.File file)
@@ -1280,6 +1290,16 @@ public class LayoutLocalServiceUtil {
 		return getService()
 				   .importLayoutsInBackground(userId, taskName, groupId,
 			privateLayout, parameterMap, is);
+	}
+
+	public static void importPortletDataDeletions(long userId, long plid,
+		long groupId, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.importPortletDataDeletions(userId, plid, groupId, portletId,
+			parameterMap, file);
 	}
 
 	/**

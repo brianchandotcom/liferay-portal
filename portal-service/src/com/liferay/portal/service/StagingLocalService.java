@@ -85,8 +85,8 @@ public interface StagingLocalService extends BaseLocalService {
 	*/
 	public java.lang.String getBeanIdentifier();
 
-	public void publishStagingRequest(long userId, long stagingRequestId,
-		boolean privateLayout,
+	public com.liferay.portal.kernel.lar.MissingReferences publishStagingRequest(
+		long userId, long stagingRequestId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -101,6 +101,11 @@ public interface StagingLocalService extends BaseLocalService {
 		java.lang.String fileName, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
+	long, boolean, java.util.Map)}
+	*/
+	@java.lang.Deprecated
 	public com.liferay.portal.kernel.lar.MissingReferences validateStagingRequest(
 		long userId, long stagingRequestId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)

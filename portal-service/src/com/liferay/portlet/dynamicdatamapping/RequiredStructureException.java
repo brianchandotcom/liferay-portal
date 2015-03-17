@@ -47,7 +47,7 @@ public class RequiredStructureException extends PortalException {
 		public MustNotDeleteReferencedStructure(long structureId) {
 			super(
 				String.format(
-					"Structure %s is required and cannot be deleted.",
+					"Structure %s cannot be deleted because it is required",
 					structureId),
 				REFERENCED_STRUCTURE);
 
@@ -64,7 +64,8 @@ public class RequiredStructureException extends PortalException {
 		public MustNotDeleteReferencedStructureLink(long structureId) {
 			super(
 				String.format(
-					"Structure link %s is required and cannot be deleted.",
+					"Structure link %s cannot be deleted because it is " +
+						"required",
 					structureId),
 				REFERENCED_STRUCTURE_LINK);
 
@@ -81,8 +82,8 @@ public class RequiredStructureException extends PortalException {
 		public MustNotDeleteStructureReferencedByTemplates(long structureId) {
 			super(
 				String.format(
-					"Structure %s is referenced by templates and cannot be " +
-							"deleted.",
+					"Structure %s cannot be deleted because it is " +
+						"referenced by templates",
 					structureId),
 				REFERENCED_TEMPLATE);
 

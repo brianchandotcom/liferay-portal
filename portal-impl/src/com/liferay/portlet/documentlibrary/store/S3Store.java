@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -22,6 +21,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -101,7 +101,7 @@ public class S3Store extends BaseStore {
 			_s3Service.putObject(_s3Bucket, s3Object);
 		}
 		catch (S3ServiceException s3se) {
-			throw new SystemException(s3se);
+			ReflectionUtil.throwException(s3se);
 		}
 		finally {
 			StreamUtil.cleanUp(is);
@@ -130,7 +130,7 @@ public class S3Store extends BaseStore {
 				logFailedDeletion(companyId, repositoryId, dirName);
 			}
 
-			throw new SystemException(s3se);
+			ReflectionUtil.throwException(s3se);
 		}
 	}
 
@@ -150,7 +150,7 @@ public class S3Store extends BaseStore {
 				logFailedDeletion(companyId, repositoryId, fileName);
 			}
 
-			throw new SystemException(s3se);
+			ReflectionUtil.throwException(s3se);
 		}
 	}
 
@@ -169,7 +169,7 @@ public class S3Store extends BaseStore {
 				logFailedDeletion(companyId, repositoryId, fileName);
 			}
 
-			throw new SystemException(s3se);
+			ReflectionUtil.throwException(s3se);
 		}
 	}
 
@@ -201,7 +201,7 @@ public class S3Store extends BaseStore {
 					companyId, repositoryId, fileName, versionLabel);
 			}
 
-			throw new SystemException(e);
+			return ReflectionUtil.throwException(e);
 		}
 	}
 
@@ -224,7 +224,7 @@ public class S3Store extends BaseStore {
 			return s3Object.getDataInputStream();
 		}
 		catch (ServiceException se) {
-			throw new SystemException(se);
+			return ReflectionUtil.throwException(se);
 		}
 	}
 
@@ -241,7 +241,7 @@ public class S3Store extends BaseStore {
 				return new String[0];
 			}
 
-			throw new SystemException(s3se);
+			return ReflectionUtil.throwException(s3se);
 		}
 	}
 
@@ -261,7 +261,7 @@ public class S3Store extends BaseStore {
 				return new String[0];
 			}
 
-			throw new SystemException(s3se);
+			return ReflectionUtil.throwException(s3se);
 		}
 	}
 
@@ -280,7 +280,7 @@ public class S3Store extends BaseStore {
 			return storageObject.getContentLength();
 		}
 		catch (ServiceException se) {
-			throw new SystemException(se);
+			return ReflectionUtil.throwException(se);
 		}
 	}
 
@@ -313,7 +313,7 @@ public class S3Store extends BaseStore {
 				return false;
 			}
 
-			throw new SystemException(s3se);
+			return ReflectionUtil.throwException(s3se);
 		}
 	}
 
@@ -371,7 +371,7 @@ public class S3Store extends BaseStore {
 					companyId, repositoryId, fileName, e);
 			}
 
-			throw new SystemException(e);
+			ReflectionUtil.throwException(e);
 		}
 		finally {
 			StreamUtil.cleanUp(is);
@@ -433,7 +433,7 @@ public class S3Store extends BaseStore {
 					companyId, repositoryId, fileName);
 			}
 
-			throw new SystemException(e);
+			ReflectionUtil.throwException(e);
 		}
 		finally {
 			StreamUtil.cleanUp(is);
@@ -463,7 +463,7 @@ public class S3Store extends BaseStore {
 					companyId, repositoryId, fileName, versionLabel);
 			}
 
-			throw new SystemException(e);
+			ReflectionUtil.throwException(e);
 		}
 		finally {
 			StreamUtil.cleanUp(is);

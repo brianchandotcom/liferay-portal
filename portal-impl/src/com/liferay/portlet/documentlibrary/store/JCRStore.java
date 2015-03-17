@@ -17,9 +17,9 @@ package com.liferay.portlet.documentlibrary.store;
 import com.liferay.portal.jcr.JCRConstants;
 import com.liferay.portal.jcr.JCRFactory;
 import com.liferay.portal.jcr.JCRFactoryUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -97,7 +97,7 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -166,7 +166,7 @@ public class JCRStore extends BaseStore {
 				version.getName(), VERSION_DEFAULT, false);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -185,7 +185,7 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -221,7 +221,7 @@ public class JCRStore extends BaseStore {
 				logFailedDeletion(companyId, repositoryId, dirName);
 			}
 			else {
-				throw new SystemException(re);
+				ReflectionUtil.throwException(re);
 			}
 		}
 		finally {
@@ -276,7 +276,7 @@ public class JCRStore extends BaseStore {
 			return;
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -327,7 +327,7 @@ public class JCRStore extends BaseStore {
 			return;
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -352,7 +352,7 @@ public class JCRStore extends BaseStore {
 			logFailedDeletion(companyId, repositoryId, fileName);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -417,7 +417,7 @@ public class JCRStore extends BaseStore {
 			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -453,7 +453,7 @@ public class JCRStore extends BaseStore {
 			return binary.getStream();
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			return ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -488,7 +488,7 @@ public class JCRStore extends BaseStore {
 			}
 		}
 		catch (Exception e) {
-			throw new SystemException(e);
+			ReflectionUtil.throwException(e);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -532,7 +532,7 @@ public class JCRStore extends BaseStore {
 			return new String[0];
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -558,7 +558,7 @@ public class JCRStore extends BaseStore {
 			size = contentNode.getProperty(JCRConstants.JCR_DATA).getLength();
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			return ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -588,7 +588,7 @@ public class JCRStore extends BaseStore {
 			return false;
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			return ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -622,7 +622,7 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -682,7 +682,7 @@ public class JCRStore extends BaseStore {
 			throw new NoSuchFileException(companyId, repositoryId, fileName);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -740,7 +740,7 @@ public class JCRStore extends BaseStore {
 			throw new NoSuchFileException(companyId, repositoryId, fileName);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -809,7 +809,7 @@ public class JCRStore extends BaseStore {
 				companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -832,7 +832,7 @@ public class JCRStore extends BaseStore {
 				session, companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -881,7 +881,7 @@ public class JCRStore extends BaseStore {
 				companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 
 		return contentNode;

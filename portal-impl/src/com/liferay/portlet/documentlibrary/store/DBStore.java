@@ -14,13 +14,13 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchContentException;
@@ -161,17 +161,7 @@ public class DBStore extends BaseStore {
 			return blobData.getBinaryStream();
 		}
 		catch (SQLException sqle) {
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("Unable to load data binary stream for file {companyId=");
-			sb.append(companyId);
-			sb.append(", repositoryId=");
-			sb.append(repositoryId);
-			sb.append(", fileName=");
-			sb.append(fileName);
-			sb.append("}");
-
-			throw new SystemException(sb.toString(), sqle);
+			return ReflectionUtil.throwException(sqle);
 		}
 	}
 
@@ -219,19 +209,7 @@ public class DBStore extends BaseStore {
 			return blobData.getBinaryStream();
 		}
 		catch (SQLException sqle) {
-			StringBundler sb = new StringBundler(9);
-
-			sb.append("Unable to load data binary stream for file {companyId=");
-			sb.append(companyId);
-			sb.append(", repositoryId=");
-			sb.append(repositoryId);
-			sb.append(", fileName=");
-			sb.append(fileName);
-			sb.append(", versionLabel=");
-			sb.append(versionLabel);
-			sb.append("}");
-
-			throw new SystemException(sb.toString(), sqle);
+			return ReflectionUtil.throwException(sqle);
 		}
 	}
 
@@ -362,7 +340,7 @@ public class DBStore extends BaseStore {
 			inputStream = new FileInputStream(file);
 		}
 		catch (FileNotFoundException fnfe) {
-			throw new SystemException(fnfe);
+			ReflectionUtil.throwException(fnfe);
 		}
 
 		DLContentLocalServiceUtil.addContent(
@@ -431,7 +409,7 @@ public class DBStore extends BaseStore {
 				bytes = FileUtil.getBytes(inputStream);
 			}
 			catch (IOException ioe) {
-				throw new SystemException(ioe);
+				ReflectionUtil.throwException(ioe);
 			}
 
 			DLContentLocalServiceUtil.addContent(

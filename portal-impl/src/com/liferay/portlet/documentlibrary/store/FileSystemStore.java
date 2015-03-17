@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -81,7 +82,7 @@ public class FileSystemStore extends BaseStore {
 			FileUtil.write(fileNameVersionFile, is);
 		}
 		catch (IOException ioe) {
-			throw new SystemException(ioe);
+			ReflectionUtil.throwException(ioe);
 		}
 	}
 
@@ -111,7 +112,7 @@ public class FileSystemStore extends BaseStore {
 			FileUtil.copyFile(fromFileNameVersionFile, toFileNameVersionFile);
 		}
 		catch (IOException ioe) {
-			throw new SystemException(ioe);
+			ReflectionUtil.throwException(ioe);
 		}
 	}
 
@@ -373,7 +374,7 @@ public class FileSystemStore extends BaseStore {
 			FileUtil.write(fileNameVersionFile, is);
 		}
 		catch (IOException ioe) {
-			throw new SystemException(ioe);
+			ReflectionUtil.throwException(ioe);
 		}
 	}
 

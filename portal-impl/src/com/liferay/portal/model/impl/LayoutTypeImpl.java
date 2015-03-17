@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutType;
+import com.liferay.portal.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.model.LayoutTypeController;
 
 import java.util.Map;
@@ -30,10 +31,12 @@ import java.util.Map;
 public class LayoutTypeImpl implements LayoutType {
 
 	public LayoutTypeImpl(
-		Layout layout, LayoutTypeController layoutTypeController) {
+		Layout layout, LayoutTypeController layoutTypeController,
+		LayoutTypeAccessPolicy layoutTypeAccessPolicy) {
 
 		_layout = layout;
 		_layoutTypeController = layoutTypeController;
+		_layoutTypeAccessPolicy = layoutTypeAccessPolicy;
 	}
 
 	@Override
@@ -49,6 +52,11 @@ public class LayoutTypeImpl implements LayoutType {
 	@Override
 	public Layout getLayout() {
 		return _layout;
+	}
+
+	@Override
+	public LayoutTypeAccessPolicy getLayoutTypeAccessPolicy() {
+		return _layoutTypeAccessPolicy;
 	}
 
 	@Override
@@ -126,6 +134,7 @@ public class LayoutTypeImpl implements LayoutType {
 			"p_v_l_s_g_id=${liferay:pvlsgid}";
 
 	private final Layout _layout;
+	private final LayoutTypeAccessPolicy _layoutTypeAccessPolicy;
 	private final LayoutTypeController _layoutTypeController;
 
 }

@@ -35,6 +35,8 @@ public interface LayoutType extends Serializable {
 
 	public Layout getLayout();
 
+	public LayoutTypeAccessPolicy getLayoutTypeAccessPolicy();
+
 	public LayoutTypeController getLayoutTypeController();
 
 	public UnicodeProperties getTypeSettingsProperties();

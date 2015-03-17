@@ -16,6 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.impl.LayoutTypePortletImpl;
@@ -32,7 +33,11 @@ public class LayoutTypePortletFactoryImpl implements LayoutTypePortletFactory {
 			LayoutTypeControllerTracker.getLayoutTypeController(
 				layout.getType());
 
-		return new LayoutTypePortletImpl(layout, layoutTypeController);
+		LayoutTypeAccessPolicy layoutTypeAccessPolicy =
+			LayoutTypeAccessPolicyTracker.getLayoutTypeAccessPolicy(layout);
+
+		return new LayoutTypePortletImpl(
+			layout, layoutTypeController, layoutTypeAccessPolicy);
 	}
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -242,7 +243,7 @@ public class DDMFormField implements Serializable {
 	private DDMForm _ddmForm;
 	private DDMFormFieldOptions _ddmFormFieldOptions =
 		new DDMFormFieldOptions();
-	private String _indexType;
+	private String _indexType = StringPool.BLANK;
 	private LocalizedValue _label = new LocalizedValue();
 	private boolean _localizable;
 	private boolean _multiple;

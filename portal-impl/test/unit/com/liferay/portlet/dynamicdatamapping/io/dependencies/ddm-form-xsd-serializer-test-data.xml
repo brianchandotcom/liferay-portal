@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US,pt_BR" default-locale="en_US">
-	<dynamic-element dataType="string" localizable="false" multiple="false" name="BooleanField" readOnly="false" showLabel="false" repeatable="false" required="true" type="radio">
+	<dynamic-element dataType="string" indexType="" localizable="false" multiple="false" name="BooleanField" readOnly="false" showLabel="false" repeatable="false" required="true" type="radio">
 		<dynamic-element name="option_1234" type="option" value="Value 1">
 			<meta-data locale="en_US">
 				<entry name="label">Option 1</entry>

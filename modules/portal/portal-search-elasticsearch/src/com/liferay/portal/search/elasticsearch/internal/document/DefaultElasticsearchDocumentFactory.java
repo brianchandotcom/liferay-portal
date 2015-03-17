@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.document;
+package com.liferay.portal.search.elasticsearch.internal.document;
 
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.elasticsearch.document.ElasticsearchDocumentFactory;
 
 import java.io.IOException;
 

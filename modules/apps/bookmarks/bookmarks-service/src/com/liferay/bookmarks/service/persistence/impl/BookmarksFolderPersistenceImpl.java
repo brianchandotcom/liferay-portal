@@ -7199,6 +7199,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		bookmarksFolderImpl.setTreePath(bookmarksFolder.getTreePath());
 		bookmarksFolderImpl.setName(bookmarksFolder.getName());
 		bookmarksFolderImpl.setDescription(bookmarksFolder.getDescription());
+		bookmarksFolderImpl.setLastPublishDate(bookmarksFolder.getLastPublishDate());
 		bookmarksFolderImpl.setStatus(bookmarksFolder.getStatus());
 		bookmarksFolderImpl.setStatusByUserId(bookmarksFolder.getStatusByUserId());
 		bookmarksFolderImpl.setStatusByUserName(bookmarksFolder.getStatusByUserName());

@@ -14,6 +14,8 @@
 
 package com.liferay.journal.web.lar;
 
+import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
+import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
@@ -35,7 +38,6 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -55,6 +57,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Provides the Journal portlet export and import functionality, which is to
@@ -91,6 +95,12 @@ import javax.portlet.PortletPreferences;
  * @see    com.liferay.portal.kernel.lar.PortletDataHandler
  * @see    com.liferay.portlet.journal.lar.JournalCreationStrategy
  */
+@Component(
+	property = {
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
+	},
+	service = PortletDataHandler.class
+)
 public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "journal";
@@ -112,7 +122,8 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 						NAMESPACE, "referenced-content"),
 					new PortletDataHandlerBoolean(
 						NAMESPACE, "version-history",
-						PropsValues.JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT)
+						JournalWebConfigurationValues.
+							PUBLISH_VERSION_HISTORY_BY_DEFAULT)
 				},
 				JournalArticle.class.getName()),
 			new PortletDataHandlerBoolean(
@@ -122,7 +133,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "feeds", true, false, null,
 				JournalFeed.class.getName()));
 		setPublishToLiveByDefault(
-			PropsValues.JOURNAL_PUBLISH_TO_LIVE_BY_DEFAULT);
+			JournalWebConfigurationValues.PUBLISH_TO_LIVE_BY_DEFAULT);
 
 		XStreamAliasRegistryUtil.register(
 			JournalArticleImpl.class, "JournalArticle");

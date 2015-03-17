@@ -16,6 +16,7 @@ package com.liferay.journal.content.web.lar;
 
 import com.liferay.journal.content.web.configuration.JournalContentWebConfigurationValues;
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
+import com.liferay.journal.web.lar.JournalPortletDataHandler;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
@@ -35,7 +36,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.journal.lar.JournalPortletDataHandler;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
@@ -74,9 +74,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Bruno Farache
  * @author Daniel Kocsis
+ * @see    com.liferay.journal.web.lar.JournalPortletDataHandler
  * @see    com.liferay.portal.kernel.lar.PortletDataHandler
  * @see    com.liferay.portlet.journal.lar.JournalCreationStrategy
- * @see    com.liferay.portlet.journal.lar.JournalPortletDataHandler
  */
 @Component(
 	immediate = true,

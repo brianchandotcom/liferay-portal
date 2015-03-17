@@ -23,7 +23,7 @@ public class JournalWebConfigurationValues {
 
 	public static final String CHECK_INTERVAL = GetterUtil.getString(
 		JournalWebConfigurationUtil.get("check.interval"));
-	
+
 	public static final String DEFAULT_DISPLAY_VIEW = GetterUtil.getString(
 		JournalWebConfigurationUtil.get("default.display.view"));
 
@@ -57,5 +57,14 @@ public class JournalWebConfigurationValues {
 		GetterUtil.getBoolean(
 			JournalWebConfigurationUtil.get(
 				"journal.feed.force.autogenerate.id"));
+
+	public static final Boolean PUBLISH_TO_LIVE_BY_DEFAULT =
+		GetterUtil.getBoolean(
+			JournalWebConfigurationUtil.get("publish.to.live.by.default"));
+
+	public static final Boolean PUBLISH_VERSION_HISTORY_BY_DEFAULT =
+		GetterUtil.getBoolean(
+			JournalWebConfigurationUtil.get(
+				"publish.version.history.by.default"));
 
 }

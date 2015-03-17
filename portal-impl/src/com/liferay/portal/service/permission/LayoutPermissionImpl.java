@@ -216,8 +216,7 @@ public class LayoutPermissionImpl
 			return false;
 		}
 
-		if (checkLayoutUpdateable &&
-			!actionId.equals(ActionKeys.CUSTOMIZE) &&
+		if (checkLayoutUpdateable && !actionId.equals(ActionKeys.CUSTOMIZE) &&
 			!actionId.equals(ActionKeys.VIEW) &&
 			(layout instanceof VirtualLayout)) {
 

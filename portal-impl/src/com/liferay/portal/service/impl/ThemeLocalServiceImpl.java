@@ -172,8 +172,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		while (itr.hasNext()) {
 			Theme theme = itr.next();
 
-			if (!theme.isPageTheme() ||
-				!theme.isGroupAvailable(groupId) ||
+			if (!theme.isPageTheme() || !theme.isGroupAvailable(groupId) ||
 				(theme.isWapTheme() != wapTheme)) {
 
 				itr.remove();

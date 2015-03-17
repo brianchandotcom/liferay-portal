@@ -209,8 +209,7 @@ public class AUIUtil {
 
 		if (((dynamicAttributes != null) &&
 			 dynamicAttributes.containsKey(key)) ||
-			((scopedAttributes != null) &&
-			 scopedAttributes.containsKey(key))) {
+			((scopedAttributes != null) && scopedAttributes.containsKey(key))) {
 
 			return request.getAttribute(namespace.concat(key));
 		}

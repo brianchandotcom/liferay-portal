@@ -868,8 +868,7 @@ public class AssetUtil {
 		if (sortField.equals(Field.CREATE_DATE) ||
 			sortField.equals(Field.EXPIRATION_DATE) ||
 			sortField.equals(Field.PUBLISH_DATE) ||
-			sortField.equals("ddm-date") ||
-			sortField.equals("modifiedDate")) {
+			sortField.equals("ddm-date") || sortField.equals("modifiedDate")) {
 
 			sortType = Sort.LONG_TYPE;
 		}

@@ -136,8 +136,7 @@ public class SyncWatchEventProcessor implements Runnable {
 			parentTargetFilePath.toString());
 
 		if ((parentSyncFile == null) ||
-			(!parentSyncFile.isSystem() &&
-			 (parentSyncFile.getTypePK() == 0))) {
+			(!parentSyncFile.isSystem() && (parentSyncFile.getTypePK() == 0))) {
 
 			queueSyncWatchEvent(
 				parentTargetFilePath.toString(), syncWatchEvent);
@@ -264,8 +263,7 @@ public class SyncWatchEventProcessor implements Runnable {
 			parentTargetFilePath.toString());
 
 		if ((parentSyncFile == null) ||
-			(!parentSyncFile.isSystem() &&
-			 (parentSyncFile.getTypePK() == 0))) {
+			(!parentSyncFile.isSystem() && (parentSyncFile.getTypePK() == 0))) {
 
 			queueSyncWatchEvent(
 				parentTargetFilePath.toString(), syncWatchEvent);
@@ -504,8 +502,7 @@ public class SyncWatchEventProcessor implements Runnable {
 			parentTargetFilePath.toString());
 
 		if ((parentSyncFile == null) ||
-			(!parentSyncFile.isSystem() &&
-			 (parentSyncFile.getTypePK() == 0))) {
+			(!parentSyncFile.isSystem() && (parentSyncFile.getTypePK() == 0))) {
 
 			queueSyncWatchEvent(
 				parentTargetFilePath.toString(), syncWatchEvent);

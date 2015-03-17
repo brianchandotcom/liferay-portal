@@ -368,8 +368,7 @@ public class FileEventUtil {
 			parameters.put("-file", null);
 		}
 		else {
-			if ((deltaFilePath != null) &&
-				(sourceVersionId != 0) &&
+			if ((deltaFilePath != null) && (sourceVersionId != 0) &&
 				((Files.size(filePath) / Files.size(deltaFilePath)) >=
 					PropsValues.SYNC_FILE_PATCHING_THRESHOLD_SIZE_RATIO)) {
 

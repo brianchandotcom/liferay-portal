@@ -76,7 +76,8 @@ public class LiferayWorkflowCapability
 				fileEntry.getFileEntryId(), serviceContext);
 
 		if ((serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_PUBLISH) && !keepFileVersionLabel) {
+				WorkflowConstants.ACTION_PUBLISH) &&
+			!keepFileVersionLabel) {
 
 			DLFileVersion latestDLFileVersion =
 				DLFileVersionLocalServiceUtil.getLatestFileVersion(

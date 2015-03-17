@@ -111,8 +111,7 @@ public class StrutsURLEncoder implements URLEncoder {
 
 		String encodedURL = path;
 
-		if (!path.startsWith("//") &&
-			!path.startsWith(_contextPath) &&
+		if (!path.startsWith("//") && !path.startsWith(_contextPath) &&
 			!path.startsWith(_servletMapping)) {
 
 			return encodedURL;

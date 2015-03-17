@@ -291,10 +291,8 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 				String fileName = zipEntry.getName();
 
-				if (!fileName.endsWith(".jar") &&
-					!fileName.endsWith(".war") &&
-					!fileName.endsWith(".xml") &&
-					!fileName.endsWith(".zip") &&
+				if (!fileName.endsWith(".jar") && !fileName.endsWith(".war") &&
+					!fileName.endsWith(".xml") && !fileName.endsWith(".zip") &&
 					!fileName.equals("liferay-marketplace.properties")) {
 
 					continue;

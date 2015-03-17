@@ -69,8 +69,7 @@ public class CacheFilter extends BasePortalFilter {
 		_pattern = GetterUtil.getInteger(
 			filterConfig.getInitParameter("pattern"));
 
-		if ((_pattern != _PATTERN_FRIENDLY) &&
-			(_pattern != _PATTERN_LAYOUT) &&
+		if ((_pattern != _PATTERN_FRIENDLY) && (_pattern != _PATTERN_LAYOUT) &&
 			(_pattern != _PATTERN_RESOURCE)) {
 
 			_log.error("Cache pattern is invalid");

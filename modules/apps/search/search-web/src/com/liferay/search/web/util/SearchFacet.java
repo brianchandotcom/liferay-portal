@@ -28,6 +28,8 @@ public interface SearchFacet {
 
 	public FacetConfiguration getDefaultConfiguration();
 
+	public String getDisplayView();
+
 	public Facet getFacet(
 			SearchContext searchContext, String searchConfiguration)
 		throws Exception;

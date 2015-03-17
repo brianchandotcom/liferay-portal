@@ -61,6 +61,11 @@ public class AssetTagsSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
+	public String getDisplayView() {
+		return "/facets/asset_tags.jsp";
+	}
+
+	@Override
 	public String getTitle() {
 		return "tag";
 	}

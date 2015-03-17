@@ -520,7 +520,9 @@ public class ServiceBuilder {
 		if (!file.exists() || !FileUtil.isSameContent(file, content)) {
 			FileUtil.write(file, content);
 
-			System.out.println("Writing " + file);
+			if (_outputMessagePrinted == false) {
+				System.out.println("Writing " + file);
+			}
 		}
 	}
 
@@ -1888,6 +1890,8 @@ public class ServiceBuilder {
 		String filePath, String content) throws IOException {
 
 		JavaClass finalJavaClass = _getJavaClass(filePath);
+		
+		_outputMessagePrinted = true;
 
 		if (_containsUnnecessaryFullyQualifiedClassNames(finalJavaClass)) {
 			content = _removeUnnecessaryFullyQualifiedClassNames(
@@ -1895,6 +1899,8 @@ public class ServiceBuilder {
 
 			writeFile(new File(filePath), content, _author);
 		}
+
+		_outputMessagePrinted = false;
 	}
 
 	private boolean _containsUnnecessaryFullyQualifiedClassNames(
@@ -5275,6 +5281,7 @@ public class ServiceBuilder {
 	private static Pattern _getterPattern = Pattern.compile(
 		"public .* get.*" + Pattern.quote("(") + "|public boolean is.*" +
 			Pattern.quote("("));
+	private static boolean _outputMessagePrinted = false;
 	private static Pattern _setterPattern = Pattern.compile(
 		"public void set.*" + Pattern.quote("("));
 

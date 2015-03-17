@@ -15,7 +15,6 @@
 package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.runner.util.GetterUtil;
-import com.liferay.poshi.runner.util.ListUtil;
 import com.liferay.poshi.runner.util.StringUtil;
 
 import com.thoughtworks.selenium.Selenium;
@@ -726,8 +725,18 @@ public class WebDriverToSeleniumBridge
 		List<WebElement> allSelectedOptionsWebElements =
 			select.getAllSelectedOptions();
 
-		return StringUtil.split(
-			ListUtil.toString(allSelectedOptionsWebElements, "text"));
+		String[] selectedOptionsWebElements =
+			new String[allSelectedOptionsWebElements.size()];
+
+		for (int i = 0; i < allSelectedOptionsWebElements.size(); i++) {
+			WebElement webElement = allSelectedOptionsWebElements.get(i);
+
+			if (webElement != null) {
+				selectedOptionsWebElements[i] = webElement.getText();
+			}
+		}
+
+		return selectedOptionsWebElements;
 	}
 
 	@Override

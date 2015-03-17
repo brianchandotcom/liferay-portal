@@ -69,7 +69,7 @@ public class ListUtil {
 		StringBuilder sb = new StringBuilder(2 * list.size() - 1);
 
 		for (int i = 0; i < list.size(); i++) {
-			Object value = null;
+			Object value = list.get(i);
 
 			if (value != null) {
 				sb.append(value);

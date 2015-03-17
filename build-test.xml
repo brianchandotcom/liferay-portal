@@ -1525,12 +1525,17 @@ go]]></replacevalue>
 		<get-env-liferay-portal />
 		<get-env-operating-system />
 
-		<get-testcase-property property.name="testray.component.names" />
-		<get-testcase-property property.name="testray.main.component.name" />
-		<get-testcase-property property.name="testray.testcase.description" />
-		<get-testcase-property property.name="testray.testcase.name" />
-		<get-testcase-property property.name="testray.testcase.priority" />
-		<get-testcase-property property.name="testray.testcase.product.edition" />
+		<if>
+			<isset property="test.class" />
+			<then>
+				<get-testcase-property property.name="testray.component.names" />
+				<get-testcase-property property.name="testray.main.component.name" />
+				<get-testcase-property property.name="testray.testcase.description" />
+				<get-testcase-property property.name="testray.testcase.name" />
+				<get-testcase-property property.name="testray.testcase.priority" />
+				<get-testcase-property property.name="testray.testcase.product.edition" />
+			</then>
+		</if>
 
 		<get-testray-components />
 		<get-testray-logs />

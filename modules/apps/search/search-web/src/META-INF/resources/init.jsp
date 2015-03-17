@@ -26,7 +26,6 @@
 
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.json.JSONArray" %><%@
-page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
@@ -53,8 +52,6 @@ page import="com.liferay.portal.kernel.search.facet.ScopeFacet" %><%@
 page import="com.liferay.portal.kernel.search.facet.collector.FacetCollector" %><%@
 page import="com.liferay.portal.kernel.search.facet.collector.TermCollector" %><%@
 page import="com.liferay.portal.kernel.search.facet.config.FacetConfiguration" %><%@
-page import="com.liferay.portal.kernel.search.facet.config.FacetConfigurationUtil" %><%@
-page import="com.liferay.portal.kernel.search.facet.util.FacetFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.search.util.SearchUtil" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
@@ -92,7 +89,7 @@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetCategoryPermission" %><%@
 page import="com.liferay.search.web.constants.SearchPortletKeys" %><%@
 page import="com.liferay.search.web.context.SearchDisplayContext" %><%@
-page import="com.liferay.taglib.aui.ScriptTag" %><%@
+page import="com.liferay.search.web.util.SearchFacet" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.util.PropertyComparator" %>
 

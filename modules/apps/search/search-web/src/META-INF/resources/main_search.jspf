@@ -50,10 +50,14 @@ scopeFacet.setStatic(true);
 
 searchContext.addFacet(scopeFacet);
 
-List<FacetConfiguration> facetConfigurations = FacetConfigurationUtil.load(searchDisplayContext.getSearchConfiguration());
+String searchConfiguration = searchDisplayContext.getSearchConfiguration();
 
-for (FacetConfiguration facetConfiguration : facetConfigurations) {
-	Facet facet = FacetFactoryUtil.create(searchContext, facetConfiguration);
+for (SearchFacet searchFacet : searchDisplayContext.getEnabledSearchFacets()) {
+	if (!searchDisplayContext.isDisplayFacet(searchFacet.getClassName())) {
+		continue;
+	}
+
+	Facet facet = searchFacet.getFacet(searchContext, searchConfiguration);
 
 	if (facet == null) {
 		continue;

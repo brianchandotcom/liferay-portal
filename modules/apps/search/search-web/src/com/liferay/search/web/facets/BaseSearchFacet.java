@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.search.facet.util.FacetFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.web.util.SearchFacet;
 
@@ -26,6 +29,15 @@ import com.liferay.search.web.util.SearchFacet;
  * @author Eudaldo Alonso
  */
 public abstract class BaseSearchFacet implements SearchFacet {
+
+	@Override
+	public Facet getFacet(
+			SearchContext searchContext, String searchConfiguration)
+		throws Exception {
+
+		return FacetFactoryUtil.create(
+			searchContext, getFacetConfiguration(searchConfiguration));
+	}
 
 	@Override
 	public FacetConfiguration getFacetConfiguration() {

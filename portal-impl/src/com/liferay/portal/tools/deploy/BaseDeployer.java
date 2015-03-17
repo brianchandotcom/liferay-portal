@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -2314,10 +2315,32 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		double webXmlVersion = GetterUtil.getDouble(
 			rootElement.attributeValue("version"), 2.3);
 
-		if (!PropsValues.TCK_URL && (webXmlVersion <= 2.3)) {
-			throw new AutoDeployException(
-				webXml.getName() +
-					" must be updated to the Servlet 2.4 specification");
+		if (webXmlVersion <= 2.3) {
+			if (PropsValues.TCK_URL) {
+				Attribute attribute = rootElement.attribute("version");
+
+				if (attribute == null) {
+					rootElement.addAttribute("version", "2.4");
+				}
+				else {
+					attribute.setValue("2.4");
+				}
+
+				content =
+					"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+						rootElement.formattedString();
+
+				document = SAXReaderUtil.read(content);
+
+				rootElement = document.getRootElement();
+
+				webXmlVersion = 2.4;
+			}
+			else {
+				throw new AutoDeployException(
+					webXml.getName() +
+						" must be updated to the Servlet 2.4 specification");
+			}
 		}
 
 		// Plugin context listener

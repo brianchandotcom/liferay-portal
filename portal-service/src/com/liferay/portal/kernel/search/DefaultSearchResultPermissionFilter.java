@@ -61,7 +61,8 @@ public class DefaultSearchResultPermissionFilter
 				document.get(Field.ENTRY_CLASS_PK));
 
 			try {
-				if ((indexer == null) || (indexer.isFilterSearch() &&
+				if ((indexer == null) ||
+					(indexer.isFilterSearch() &&
 					 indexer.hasPermission(
 						 _permissionChecker, entryClassName, entryClassPK,
 						 ActionKeys.VIEW) &&

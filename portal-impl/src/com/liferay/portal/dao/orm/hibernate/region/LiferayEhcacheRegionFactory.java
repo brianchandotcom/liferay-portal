@@ -25,10 +25,15 @@ import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.io.Serializable;
 
@@ -41,6 +46,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.management.MBeanServer;
+
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
@@ -52,6 +59,7 @@ import net.sf.ehcache.hibernate.regions.EhcacheCollectionRegion;
 import net.sf.ehcache.hibernate.regions.EhcacheEntityRegion;
 import net.sf.ehcache.hibernate.regions.EhcacheQueryResultsRegion;
 import net.sf.ehcache.hibernate.regions.EhcacheTimestampsRegion;
+import net.sf.ehcache.management.ManagementService;
 import net.sf.ehcache.util.FailSafeTimer;
 
 import org.hibernate.cache.CacheDataDescription;
@@ -215,14 +223,15 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 			mbeanRegistrationHelper.registerMBean(manager, properties);
 
-			_mBeanRegisteringPortalLifecycle =
-				new MBeanRegisteringPortalLifecycle(manager);
-
-			_mBeanRegisteringPortalLifecycle.registerPortalLifecycle(
-				PortalLifecycle.METHOD_INIT);
-
 			PortalCacheProvider.registerPortalCacheManager(
 				new HibernatePortalCacheManager(manager));
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			_serviceTracker = registry.trackServices(
+				MBeanServer.class, new MBeanServerServiceTrackerCustomizer());
+
+			_serviceTracker.open();
 		}
 		catch (net.sf.ehcache.CacheException ce) {
 			throw new CacheException(ce);
@@ -232,6 +241,10 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 	@Override
 	public void stop() {
 		PortalCacheProvider.unregisterPortalCacheManager(manager.getName());
+
+		_managementService.dispose();
+
+		_serviceTracker.close();
 
 		super.stop();
 	}
@@ -306,7 +319,8 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayEhcacheRegionFactory.class);
 
-	private MBeanRegisteringPortalLifecycle _mBeanRegisteringPortalLifecycle;
+	private ManagementService _managementService;
+	private ServiceTracker<MBeanServer, MBeanServer> _serviceTracker;
 	private boolean _usingDefault;
 
 	private class HibernatePortalCacheManager
@@ -408,6 +422,41 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		private final CacheManager _cacheManager;
 		private final Map<String, PortalCache<Serializable, Serializable>>
 			_portalCaches = new HashMap<>();
+
+	}
+
+	private class MBeanServerServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<MBeanServer, MBeanServer> {
+
+		@Override
+		public MBeanServer addingService(
+			ServiceReference<MBeanServer> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			MBeanServer mBeanServer = registry.getService(serviceReference);
+
+			if (PropsValues.EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED) {
+				_managementService = new ManagementService(
+					manager, mBeanServer, true, true, true, true);
+
+				_managementService.init();
+			}
+
+			return mBeanServer;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<MBeanServer> serviceReference,
+			MBeanServer mBeanServer) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<MBeanServer> serviceReference,
+			MBeanServer mBeanServer) {
+		}
 
 	}
 

@@ -66,7 +66,7 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -94,6 +94,8 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -168,6 +170,13 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 			bookmarksFolderImpl.setDescription(description);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			bookmarksFolderImpl.setLastPublishDate(null);
+		}
+		else {
+			bookmarksFolderImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		bookmarksFolderImpl.setStatus(status);
 		bookmarksFolderImpl.setStatusByUserId(statusByUserId);
 
@@ -205,6 +214,7 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 		treePath = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 		status = objectInput.readInt();
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
@@ -259,6 +269,7 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 			objectOutput.writeUTF(description);
 		}
 
+		objectOutput.writeLong(lastPublishDate);
 		objectOutput.writeInt(status);
 		objectOutput.writeLong(statusByUserId);
 
@@ -285,6 +296,7 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 	public String treePath;
 	public String name;
 	public String description;
+	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

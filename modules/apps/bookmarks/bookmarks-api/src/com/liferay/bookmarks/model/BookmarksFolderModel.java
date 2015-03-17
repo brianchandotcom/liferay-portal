@@ -288,6 +288,20 @@ public interface BookmarksFolderModel extends BaseModel<BookmarksFolder>,
 	public void setDescription(String description);
 
 	/**
+	 * Returns the last publish date of this bookmarks folder.
+	 *
+	 * @return the last publish date of this bookmarks folder
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this bookmarks folder.
+	 *
+	 * @param lastPublishDate the last publish date of this bookmarks folder
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the status of this bookmarks folder.
 	 *
 	 * @return the status of this bookmarks folder

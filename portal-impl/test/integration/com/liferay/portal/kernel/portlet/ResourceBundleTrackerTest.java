@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bundle.resourcebundletracker.TestPortlet;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -71,6 +72,18 @@ public class ResourceBundleTrackerTest {
 	}
 
 	@Test
+	public void testGetResourceBundleFromLanguageUtil() throws Exception {
+		Locale locale = LocaleUtil.fromLanguageId("es_ES");
+
+		Assert.assertNotEquals(
+			"clave de extensión del paquete de recursos",
+			LanguageUtil.get(locale, "resourcebundle-extension-key"));
+		Assert.assertEquals(
+			"resourcebundle-extension-key",
+			LanguageUtil.get(locale, "resourcebundle-extension-key"));
+	}
+
+	@Test
 	public void testGetResourceBundleFromPortletConfig() throws Exception {
 		PortletConfig portletConfig = _portlet.getPortletConfig();
 
@@ -84,6 +97,9 @@ public class ResourceBundleTrackerTest {
 		Assert.assertEquals("prueba", resourceBundle.getString("test"));
 		Assert.assertEquals(
 			"paquete de recursos", resourceBundle.getString("resourcebundle"));
+		Assert.assertEquals(
+			"clave de extensión del paquete de recursos",
+			resourceBundle.getString("resourcebundle-extension-key"));
 	}
 
 	private static GenericPortlet _portlet;

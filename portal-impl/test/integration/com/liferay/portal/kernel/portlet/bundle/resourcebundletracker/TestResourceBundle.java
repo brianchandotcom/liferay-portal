@@ -44,6 +44,9 @@ public class TestResourceBundle extends ResourceBundle {
 		_map.put("a", "un");
 		_map.put("test", "prueba");
 		_map.put("resourcebundle", "paquete de recursos");
+		_map.put(
+			"resourcebundle-extension-key",
+			"clave de extensión del paquete de recursos");
 	}
 
 	@Override

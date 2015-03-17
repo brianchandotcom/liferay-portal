@@ -19,8 +19,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.search.web.constants.SearchPortletKeys;
 import com.liferay.search.web.util.SearchFacet;
 import com.liferay.search.web.util.SearchFacetTracker;
@@ -53,12 +52,32 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 		JSONArray newFacetsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (SearchFacet searchFacet : _searchFacetTracker.getSearchFacets()) {
-			boolean displaySearchFacet = GetterUtil.getBoolean(
-				getParameter(actionRequest, searchFacet.getClassName()));
+			String className = ParamUtil.getString(
+				actionRequest, searchFacet.getClassName() + "className");
+			String displayStyle = ParamUtil.getString(
+				actionRequest, searchFacet.getClassName() + "displayStyle");
+			String fieldName = ParamUtil.getString(
+				actionRequest, searchFacet.getClassName() + "fieldName");
+			String label = ParamUtil.getString(
+				actionRequest, searchFacet.getClassName() + "label");
+			String order = ParamUtil.getString(
+				actionRequest, searchFacet.getClassName() + "order");
+			boolean isStatic = ParamUtil.getBoolean(
+				actionRequest, searchFacet.getClassName() + "static");
+			double weight = ParamUtil.getDouble(
+				actionRequest, searchFacet.getClassName() + "weight");
 
-			if (displaySearchFacet) {
-				newFacetsJSONArray.put(StringPool.BLANK);
-			}
+			JSONObject facetJSONObject = JSONFactoryUtil.createJSONObject();
+
+			facetJSONObject.put("className", className);
+			facetJSONObject.put("displayStyle", displayStyle);
+			facetJSONObject.put("fieldName", fieldName);
+			facetJSONObject.put("label", label);
+			facetJSONObject.put("order", order);
+			facetJSONObject.put("static", isStatic);
+			facetJSONObject.put("weight", weight);
+
+			newFacetsJSONArray.put(facetJSONObject);
 		}
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

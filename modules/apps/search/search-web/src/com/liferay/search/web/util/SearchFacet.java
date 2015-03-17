@@ -26,6 +26,8 @@ public interface SearchFacet {
 
 	public String getClassName();
 
+	public String getConfigurationView();
+
 	public FacetConfiguration getDefaultConfiguration();
 
 	public String getDisplayView();

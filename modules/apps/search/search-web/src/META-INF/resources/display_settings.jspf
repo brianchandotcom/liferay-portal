@@ -14,7 +14,7 @@
  */
 --%>
 
-<div class="basic-configuration">
+<div class="facet-configuration-container">
 
 	<%
 	List<SearchFacet> searchFacets = (List<SearchFacet>)request.getAttribute("searchFacets");
@@ -23,6 +23,19 @@
 	%>
 
 		<aui:input label="<%= searchFacet.getTitle() %>" name='<%= "preferences--" + searchFacet.getClassName() + "--" %>' type="checkbox" value="<%= searchDisplayContext.isDisplayFacet(searchFacet.getClassName()) %>" />
+
+		<div class="facet-configuration">
+			<liferay-ui:toggle-area align="none" defaultShowContent="hide" hideMessage='<%= LanguageUtil.get(request, "configure") %>' id="<%= StringUtil.replace(searchFacet.getClassName(), StringPool.PERIOD, StringPool.UNDERLINE) %>" showMessage='<%= LanguageUtil.get(request, "configure") %>'>
+
+				<%
+				request.setAttribute("facet_configuration.jsp-searchFacet", searchFacet);
+				%>
+
+				<div class="advance-configuration">
+					<liferay-util:include page="/facets/facet_configuration.jsp" servletContext="<%= application %>" />
+				</div>
+			</liferay-ui:toggle-area>
+		</div>
 
 	<%
 	}

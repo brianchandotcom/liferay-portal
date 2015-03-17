@@ -238,8 +238,25 @@
 		padding-top: 0.5em;
 	}
 
-	.options-container {
+	.facet-configuration, .options-container {
 		margin-left: 1.8em;
+	}
+
+	.facet-configuration {
+		margin-bottom: 10px;
+
+		.advance-configuration {
+			background-color: #EEE;
+			border: 1px solid #DEDEDE;
+			margin-top: 10px;
+			padding: 10px;
+		}
+	}
+
+	.facet-configuration-container {
+		.form-group {
+			margin-bottom: 0;
+		}
 	}
 }
 

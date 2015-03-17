@@ -78,8 +78,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>15</portlet-name>
-		<icon>/html/icons/journal.png</icon>
-		<configuration-action-class>com.liferay.journal.web.portlet.action.ConfigurationActionImpl</configuration-action-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.journal.messaging.CheckArticleMessageListener</scheduler-event-listener-class>
 			<trigger>
@@ -89,42 +87,20 @@
 				</simple>
 			</trigger>
 		</scheduler-entry>
-		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-		<friendly-url-mapping>journal</friendly-url-mapping>
-		<friendly-url-routes>com/liferay/portlet/journal/journal-friendly-url-routes.xml</friendly-url-routes>
 		<portlet-data-handler-class>com.liferay.portlet.journal.lar.JournalPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.journal.lar.JournalArticleStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.journal.lar.JournalFeedStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.journal.lar.JournalFolderStagedModelDataHandler</staged-model-data-handler-class>
-		<template-handler>com.liferay.portlet.journal.template.JournalTemplateHandler</template-handler>
 		<social-activity-interpreter-class>com.liferay.portlet.journal.social.JournalArticleActivityInterpreter</social-activity-interpreter-class>
 		<social-activity-interpreter-class>com.liferay.portlet.journal.social.JournalFolderActivityInterpreter</social-activity-interpreter-class>
-		<user-notification-definitions>com/liferay/portlet/journal/journal-user-notification-definitions.xml</user-notification-definitions>
-		<user-notification-handler-class>com.liferay.portlet.journal.notifications.JournalUserNotificationHandler</user-notification-handler-class>
-		<webdav-storage-token>journal</webdav-storage-token>
-		<webdav-storage-class>com.liferay.portlet.journal.webdav.JournalWebDAVStorageImpl</webdav-storage-class>
-		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
-		<control-panel-entry-weight>2.0</control-panel-entry-weight>
 		<asset-renderer-factory>com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory</asset-renderer-factory>
 		<asset-renderer-factory>com.liferay.portlet.journal.asset.JournalFolderAssetRendererFactory</asset-renderer-factory>
 		<atom-collection-adapter>com.liferay.portlet.journal.atom.JournalArticleAtomCollectionProvider</atom-collection-adapter>
 		<custom-attributes-display>com.liferay.portlet.journal.JournalArticleCustomAttributesDisplay</custom-attributes-display>
 		<custom-attributes-display>com.liferay.portlet.journal.JournalFolderCustomAttributesDisplay</custom-attributes-display>
-		<ddm-display>com.liferay.portlet.journal.ddm.JournalDDMDisplay</ddm-display>
 		<trash-handler>com.liferay.portlet.journal.trash.JournalArticleTrashHandler</trash-handler>
 		<trash-handler>com.liferay.portlet.journal.trash.JournalFolderTrashHandler</trash-handler>
 		<workflow-handler>com.liferay.portlet.journal.workflow.JournalArticleWorkflowHandler</workflow-handler>
-		<preferences-unique-per-layout>false</preferences-unique-per-layout>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/journal/css/main.css</header-portlet-css>
-		<header-portlet-javascript>/html/portlet/journal/js/modules.js</header-portlet-javascript>
-		<css-class-wrapper>portlet-journal</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
 		<portlet-name>19</portlet-name>

@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.portlet.action;
 
+import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.PropsValues;
@@ -25,10 +26,20 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Eduardo Garcia
  */
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
+	},
+	service = ConfigurationAction.class
+)
+public class ConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
 	public void postProcess(

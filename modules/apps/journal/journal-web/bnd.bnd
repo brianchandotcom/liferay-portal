@@ -4,8 +4,11 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	${bnd.jsp.support.imports},\
 	*
+Import-Package:\
+	javax.servlet;version='[2.3.0,4.0.0)'
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
 	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
-	@../../../../util-taglib/util-taglib.jar
+	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class

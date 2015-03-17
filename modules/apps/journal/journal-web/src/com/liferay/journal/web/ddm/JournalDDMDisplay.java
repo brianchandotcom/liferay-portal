@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.ddm;
 
+import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -23,12 +24,12 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
+import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
 import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
 import com.liferay.portlet.journal.model.JournalArticle;
 
@@ -37,9 +38,17 @@ import java.util.Set;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo Garcia
  */
+@Component(
+	property = {
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
+	},
+	service = DDMDisplay.class
+)
 public class JournalDDMDisplay extends BaseDDMDisplay {
 
 	@Override
@@ -60,11 +69,10 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), PortletKeys.JOURNAL,
-			PortletRequest.RENDER_PHASE);
+			getControlPanelPlid(liferayPortletRequest),
+			JournalPortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			"mvcPath", "/html/portlet/journal/edit_article.jsp");
+		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter("redirect", redirectURL);
 		portletURL.setParameter("backURL", backURL);
 		portletURL.setParameter(
@@ -101,7 +109,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.JOURNAL;
+		return JournalPortletKeys.JOURNAL;
 	}
 
 	@Override

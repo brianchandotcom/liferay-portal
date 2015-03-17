@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.search;
 
+import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -83,7 +83,7 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 
 		String portletName = portletConfig.getPortletName();
 
-		if (!portletName.equals(PortletKeys.JOURNAL)) {
+		if (!portletName.equals(JournalPortletKeys.JOURNAL)) {
 			displayTerms.setStatus(WorkflowConstants.STATUS_APPROVED);
 			searchTerms.setStatus(WorkflowConstants.STATUS_APPROVED);
 		}
@@ -131,15 +131,18 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 				Validator.isNotNull(orderByType)) {
 
 				preferences.setValue(
-					PortletKeys.JOURNAL, "articles-order-by-col", orderByCol);
+					JournalPortletKeys.JOURNAL, "articles-order-by-col",
+					orderByCol);
 				preferences.setValue(
-					PortletKeys.JOURNAL, "articles-order-by-type", orderByType);
+					JournalPortletKeys.JOURNAL, "articles-order-by-type",
+					orderByType);
 			}
 			else {
 				orderByCol = preferences.getValue(
-					PortletKeys.JOURNAL, "articles-order-by-col", "id");
+					JournalPortletKeys.JOURNAL, "articles-order-by-col", "id");
 				orderByType = preferences.getValue(
-					PortletKeys.JOURNAL, "articles-order-by-type", "asc");
+					JournalPortletKeys.JOURNAL, "articles-order-by-type",
+					"asc");
 			}
 
 			OrderByComparator<JournalArticle> orderByComparator =

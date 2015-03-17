@@ -14,6 +14,9 @@
 
 package com.liferay.journal.web.portlet;
 
+import com.liferay.journal.web.constants.JournalPortletKeys;
+import com.liferay.journal.web.portlet.action.ActionUtil;
+import com.liferay.journal.web.util.JournalRSSUtil;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.diff.CompareVersionsException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -49,7 +52,6 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -62,7 +64,7 @@ import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.journal.ArticleContentException;
 import com.liferay.portlet.journal.ArticleContentSizeException;
 import com.liferay.portlet.journal.ArticleDisplayDateException;
@@ -85,19 +87,17 @@ import com.liferay.portlet.journal.InvalidDDMStructureException;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchFeedException;
 import com.liferay.portlet.journal.NoSuchFolderException;
-import com.liferay.portlet.journal.action.ActionUtil;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
-import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalFeedServiceUtil;
-import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
-import com.liferay.portlet.journal.util.JournalRSSUtil;
+import com.liferay.portlet.journal.service.JournalArticleService;
+import com.liferay.portlet.journal.service.JournalContentSearchLocalService;
+import com.liferay.portlet.journal.service.JournalFeedService;
+import com.liferay.portlet.journal.service.JournalFolderService;
 import com.liferay.portlet.journal.util.JournalUtil;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
@@ -112,6 +112,7 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -129,9 +130,49 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eduardo Garcia
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.css-class-wrapper=portlet-journal",
+		"com.liferay.portlet.control-panel-entry-category=site_administration.content",
+		"com.liferay.portlet.control-panel-entry-weight=2.0",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.friendly-url-mapping=journal",
+		"com.liferay.portlet.friendly-url-routes=com/liferay/journal/web/portlet/route/journal-friendly-url-routes.xml",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.header-portlet-javascript=/js/modules.js",
+		"com.liferay.portlet.icon=/icons/journal.png",
+		"com.liferay.portlet.layout-cacheable=true",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.preferences-unique-per-layout=false",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.scopeable=true",
+		"com.liferay.portlet.use-default-template=true",
+		"com.liferay.portlet.webdav-storage-token=journal",
+		"javax.portlet.display-name=Web Content",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.action.package.prefix=com.liferay.journal.web.portlet.action",
+		"javax.portlet.init-param.config-template=/configuration.jsp",
+		"javax.portlet.init-param.copy-request-parameters=true",
+		"javax.portlet.init-param.single-page-application-cacheable=false",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class JournalPortlet extends MVCPortlet {
 
 	public static final String VERSION_SEPARATOR = "_version_";
@@ -181,7 +222,7 @@ public class JournalPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "deleteFeedIds"));
 
 		for (int i = 0; i < deleteFeedIds.length; i++) {
-			JournalFeedServiceUtil.deleteFeed(groupId, deleteFeedIds[i]);
+			_journalFeedService.deleteFeed(groupId, deleteFeedIds[i]);
 		}
 	}
 
@@ -263,7 +304,7 @@ public class JournalPortlet extends MVCPortlet {
 			JournalArticle.class.getName(), actionRequest);
 
 		for (long folderId : folderIds) {
-			JournalFolderServiceUtil.moveFolder(
+			_journalFolderService.moveFolder(
 				folderId, newFolderId, serviceContext);
 		}
 
@@ -277,7 +318,7 @@ public class JournalPortlet extends MVCPortlet {
 
 		for (String articleId : articleIds) {
 			try {
-				JournalArticleServiceUtil.moveArticle(
+				_journalArticleService.moveArticle(
 					themeDisplay.getScopeGroupId(),
 					HtmlUtil.unescape(articleId), newFolderId, serviceContext);
 			}
@@ -333,7 +374,7 @@ public class JournalPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
 		for (long restoreTrashEntryId : restoreTrashEntryIds) {
-			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
+			_trashEntryService.restoreEntry(restoreTrashEntryId);
 		}
 	}
 
@@ -430,7 +471,7 @@ public class JournalPortlet extends MVCPortlet {
 
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
-		JournalFolderServiceUtil.subscribe(
+		_journalFolderService.subscribe(
 			themeDisplay.getScopeGroupId(), folderId);
 	}
 
@@ -444,7 +485,7 @@ public class JournalPortlet extends MVCPortlet {
 		long ddmStructureId = ParamUtil.getLong(
 			actionRequest, "ddmStructureId");
 
-		JournalArticleServiceUtil.subscribeStructure(
+		_journalArticleService.subscribeStructure(
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			ddmStructureId);
 
@@ -460,7 +501,7 @@ public class JournalPortlet extends MVCPortlet {
 
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
-		JournalFolderServiceUtil.unsubscribe(
+		_journalFolderService.unsubscribe(
 			themeDisplay.getScopeGroupId(), folderId);
 	}
 
@@ -474,7 +515,7 @@ public class JournalPortlet extends MVCPortlet {
 		long ddmStructureId = ParamUtil.getLong(
 			actionRequest, "ddmStructureId");
 
-		JournalArticleServiceUtil.unsubscribeStructure(
+		_journalArticleService.unsubscribeStructure(
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			ddmStructureId);
 
@@ -536,7 +577,7 @@ public class JournalPortlet extends MVCPortlet {
 		String ddmStructureKey = ParamUtil.getString(
 			uploadPortletRequest, "ddmStructureKey");
 
-		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			PortalUtil.getSiteGroupId(groupId),
 			PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey,
 			true);
@@ -643,7 +684,7 @@ public class JournalPortlet extends MVCPortlet {
 
 			// Add article
 
-			article = JournalArticleServiceUtil.addArticle(
+			article = _journalArticleService.addArticle(
 				groupId, folderId, classNameId, classPK, articleId,
 				autoArticleId, titleMap, descriptionMap, content,
 				ddmStructureKey, ddmTemplateKey, layoutUuid, displayDateMonth,
@@ -659,7 +700,7 @@ public class JournalPortlet extends MVCPortlet {
 
 			// Update article
 
-			article = JournalArticleServiceUtil.getArticle(
+			article = _journalArticleService.getArticle(
 				groupId, articleId, version);
 
 			String tempOldUrlTitle = article.getUrlTitle();
@@ -667,7 +708,7 @@ public class JournalPortlet extends MVCPortlet {
 			if (actionName.equals("previewArticle") ||
 				actionName.equals("updateArticle")) {
 
-				article = JournalArticleServiceUtil.updateArticle(
+				article = _journalArticleService.updateArticle(
 					groupId, folderId, articleId, version, titleMap,
 					descriptionMap, content, ddmStructureKey, ddmTemplateKey,
 					layoutUuid, displayDateMonth, displayDateDay,
@@ -758,7 +799,7 @@ public class JournalPortlet extends MVCPortlet {
 
 			// Add feed
 
-			JournalFeedServiceUtil.addFeed(
+			_journalFeedService.addFeed(
 				groupId, feedId, autoFeedId, name, description, ddmStructureKey,
 				ddmTemplateKey, ddmRendererTemplateKey, delta, orderByCol,
 				orderByType, targetLayoutFriendlyUrl, targetPortletId,
@@ -768,7 +809,7 @@ public class JournalPortlet extends MVCPortlet {
 
 			// Update feed
 
-			JournalFeedServiceUtil.updateFeed(
+			_journalFeedService.updateFeed(
 				groupId, feedId, name, description, ddmStructureKey,
 				ddmTemplateKey, ddmRendererTemplateKey, delta, orderByCol,
 				orderByType, targetLayoutFriendlyUrl, targetPortletId,
@@ -797,7 +838,7 @@ public class JournalPortlet extends MVCPortlet {
 
 			// Add folder
 
-			JournalFolderServiceUtil.addFolder(
+			_journalFolderService.addFolder(
 				serviceContext.getScopeGroupId(), parentFolderId, name,
 				description, serviceContext);
 		}
@@ -812,7 +853,7 @@ public class JournalPortlet extends MVCPortlet {
 			int restrinctionType = ParamUtil.getInteger(
 				actionRequest, "restrictionType");
 
-			JournalFolderServiceUtil.updateFolder(
+			_journalFolderService.updateFolder(
 				folderId, parentFolderId, name, description, ddmStructureIds,
 				restrinctionType, mergeWithParentFolder, serviceContext);
 		}
@@ -833,7 +874,7 @@ public class JournalPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalFolder.class.getName(), actionRequest);
 
-		JournalFolderServiceUtil.updateFolder(
+		_journalFolderService.updateFolder(
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, null, null,
 			ddmStructureIds, restrinctionType, false, serviceContext);
@@ -864,7 +905,7 @@ public class JournalPortlet extends MVCPortlet {
 		for (String deleteArticleId : deleteArticleIds) {
 			if (moveToTrash) {
 				JournalArticle article =
-					JournalArticleServiceUtil.moveArticleToTrash(
+					_journalArticleService.moveArticleToTrash(
 						themeDisplay.getScopeGroupId(),
 						HtmlUtil.unescape(deleteArticleId));
 
@@ -900,13 +941,13 @@ public class JournalPortlet extends MVCPortlet {
 
 		for (long deleteFolderId : deleteFolderIds) {
 			if (moveToTrash) {
-				JournalFolder folder =
-					JournalFolderServiceUtil.moveFolderToTrash(deleteFolderId);
+				JournalFolder folder = _journalFolderService.moveFolderToTrash(
+					deleteFolderId);
 
 				trashedModels.add(folder);
 			}
 			else {
-				JournalFolderServiceUtil.deleteFolder(deleteFolderId);
+				_journalFolderService.deleteFolder(deleteFolderId);
 			}
 		}
 
@@ -916,7 +957,7 @@ public class JournalPortlet extends MVCPortlet {
 		for (String deleteArticleId : deleteArticleIds) {
 			if (moveToTrash) {
 				JournalArticle article =
-					JournalArticleServiceUtil.moveArticleToTrash(
+					_journalArticleService.moveArticleToTrash(
 						themeDisplay.getScopeGroupId(),
 						HtmlUtil.unescape(deleteArticleId));
 
@@ -958,13 +999,13 @@ public class JournalPortlet extends MVCPortlet {
 
 		for (long deleteFolderId : deleteFolderIds) {
 			if (moveToTrash) {
-				JournalFolder folder =
-					JournalFolderServiceUtil.moveFolderToTrash(deleteFolderId);
+				JournalFolder folder = _journalFolderService.moveFolderToTrash(
+					deleteFolderId);
 
 				trashedModels.add(folder);
 			}
 			else {
-				JournalFolderServiceUtil.deleteFolder(deleteFolderId);
+				_journalFolderService.deleteFolder(deleteFolderId);
 			}
 		}
 
@@ -1014,11 +1055,10 @@ public class JournalPortlet extends MVCPortlet {
 			actionRequest, "referringPortletResource");
 
 		PortletURLImpl portletURL = new PortletURLImpl(
-			actionRequest, PortletKeys.JOURNAL, themeDisplay.getPlid(),
+			actionRequest, JournalPortletKeys.JOURNAL, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			"mvcPath", "/html/portlet/journal/edit_article.jsp");
+		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter("redirect", redirect, false);
 		portletURL.setParameter(
 			"referringPortletResource", referringPortletResource, false);
@@ -1185,6 +1225,80 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
+	@Reference
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference
+	protected void setJournalArticleService(
+		JournalArticleService journalArticleService) {
+
+		_journalArticleService = journalArticleService;
+	}
+
+	@Reference
+	protected void setJournalContentSearchLocalService(
+		JournalContentSearchLocalService journalContentSearchLocalService) {
+
+		_journalContentSearchLocalService = journalContentSearchLocalService;
+	}
+
+	@Reference
+	protected void setJournalFeedService(
+		JournalFeedService journalFeedService) {
+
+		_journalFeedService = journalFeedService;
+	}
+
+	@Reference
+	protected void setJournalFolderService(
+		JournalFolderService journalFolderService) {
+
+		_journalFolderService = journalFolderService;
+	}
+
+	@Reference
+	protected void setTrashEntryService(TrashEntryService trashEntryService) {
+		_trashEntryService = trashEntryService;
+	}
+
+	protected void unsetDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = null;
+	}
+
+	protected void unsetJournalArticleService(
+		JournalArticleService journalArticleService) {
+
+		_journalArticleService = null;
+	}
+
+	protected void unsetJournalContentSearchLocalService(
+		JournalContentSearchLocalService journalContentSearchLocalService) {
+
+		_journalContentSearchLocalService = null;
+	}
+
+	protected void unsetJournalFeedService(
+		JournalFeedService journalFeedService) {
+
+		_journalFeedService = null;
+	}
+
+	protected void unsetJournalFolderService(
+		JournalFolderService journalFolderService) {
+
+		_journalFolderService = null;
+	}
+
+	protected void unsetTrashEntryService(TrashEntryService trashEntryService) {
+		_trashEntryService = null;
+	}
+
 	protected void updateContentSearch(
 			ActionRequest actionRequest, String portletResource,
 			String articleId)
@@ -1195,11 +1309,18 @@ public class JournalPortlet extends MVCPortlet {
 
 		Layout layout = themeDisplay.getLayout();
 
-		JournalContentSearchLocalServiceUtil.updateContentSearch(
+		_journalContentSearchLocalService.updateContentSearch(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			portletResource, articleId, true);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalPortlet.class);
+
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private JournalArticleService _journalArticleService;
+	private JournalContentSearchLocalService _journalContentSearchLocalService;
+	private JournalFeedService _journalFeedService;
+	private JournalFolderService _journalFolderService;
+	private TrashEntryService _trashEntryService;
 
 }

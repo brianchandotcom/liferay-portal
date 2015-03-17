@@ -14,13 +14,14 @@
 
 package com.liferay.journal.web.portlet.template;
 
+import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
+import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalService;
@@ -34,9 +35,18 @@ import com.liferay.portlet.journal.service.JournalArticleService;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
+	},
+	service = TemplateHandler.class
+)
 public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
 	@Override
@@ -47,7 +57,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
-			PortletKeys.JOURNAL, locale);
+			JournalPortletKeys.JOURNAL, locale);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -60,7 +70,9 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
 	@Override
 	public String getTemplatesHelpPropertyKey() {
-		return PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_CONTENT;
+		return
+			JournalWebConfigurationValues.
+				JOURNAL_ARTICLE_TEMPLATE_LANGUAGE_CONTENT;
 	}
 
 	@Override
@@ -98,6 +110,6 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
 		new DDMTemplateVariableCodeHandler(
-			"com/liferay/portlet/journal/dependencies/template/");
+			"com/liferay/journal/web/portlet/template/dependencies/");
 
 }

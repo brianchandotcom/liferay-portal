@@ -12,29 +12,23 @@
  * details.
  */
 
-package com.liferay.portlet.journal.notification;
+package com.liferay.journal.web.portlet.route;
 
 import com.liferay.journal.web.constants.JournalPortletKeys;
-import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
-import com.liferay.portal.kernel.notifications.UserNotificationHandler;
+import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Iván Zaera
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
 	},
-	service = UserNotificationHandler.class
+	service = FriendlyURLMapper.class
 )
-public class JournalUserNotificationHandler
-	extends BaseModelUserNotificationHandler {
-
-	public JournalUserNotificationHandler() {
-		setPortletId(JournalPortletKeys.JOURNAL);
-	}
-
+public class JournalFriendlyURLMapper extends DefaultFriendlyURLMapper {
 }

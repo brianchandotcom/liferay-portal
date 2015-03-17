@@ -29,7 +29,6 @@
 	<category name="category.finance" />
 	<category name="category.hidden">
 		<portlet id="9" />
-		<portlet id="15" />
 		<portlet id="104" />
 		<portlet id="111" />
 		<portlet id="125" />

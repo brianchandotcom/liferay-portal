@@ -70,8 +70,7 @@ public class CopyArticleActionCommand extends BaseActionCommand {
 					portletSession.getPortletContext();
 
 				PortletRequestDispatcher portletRequestDispatcher =
-					portletContext.getRequestDispatcher(
-						"/html/portlet/journal/error.jsp");
+					portletContext.getRequestDispatcher("/error.jsp");
 
 				portletRequestDispatcher.include(
 					portletRequest, portletResponse);

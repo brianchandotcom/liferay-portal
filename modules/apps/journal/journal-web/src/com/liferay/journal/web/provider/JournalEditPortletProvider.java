@@ -14,23 +14,26 @@
 
 package com.liferay.journal.web.provider;
 
+import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.provider.EditPortletProvider;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.util.PortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Garcia
  */
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
 		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
-	}
+	},
+	service = EditPortletProvider.class
 )
 public class JournalEditPortletProvider implements EditPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.JOURNAL;
+		return JournalPortletKeys.JOURNAL;
 	}
 
 }

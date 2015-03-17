@@ -107,10 +107,10 @@ public class AssetTagsPortletDataHandler extends BasePortletDataHandler {
 			return getExportDataRootElementString(rootElement);
 		}
 
-		ActionableDynamicQuery tagActionableDynamicQuery =
+		ActionableDynamicQuery actionableDynamicQuery =
 			getTagActionableDynamicQuery(portletDataContext);
 
-		tagActionableDynamicQuery.performActions();
+		actionableDynamicQuery.performActions();
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -144,10 +144,10 @@ public class AssetTagsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		ActionableDynamicQuery tagActionableDynamicQuery =
+		ActionableDynamicQuery actionableDynamicQuery =
 			getTagActionableDynamicQuery(portletDataContext);
 
-		tagActionableDynamicQuery.performCount();
+		actionableDynamicQuery.performCount();
 	}
 
 	protected ActionableDynamicQuery getTagActionableDynamicQuery(

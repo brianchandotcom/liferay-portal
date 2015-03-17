@@ -168,6 +168,10 @@ public class SearchUtil {
 		viewContentURL.setPortletMode(PortletMode.VIEW);
 		viewContentURL.setWindowState(WindowState.MAXIMIZED);
 
+		if (Validator.isNull(className) || (classPK <= 0)) {
+			return viewContentURL.toString();
+		}
+
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 			className, classPK);
 

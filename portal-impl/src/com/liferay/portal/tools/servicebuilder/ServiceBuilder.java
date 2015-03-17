@@ -522,6 +522,8 @@ public class ServiceBuilder {
 
 			if (_outputMessagePrinted == false) {
 				System.out.println("Writing " + file);
+
+				_outputMessagePrinted = true;
 			}
 		}
 	}
@@ -1890,8 +1892,6 @@ public class ServiceBuilder {
 		String filePath, String content) throws IOException {
 
 		JavaClass finalJavaClass = _getJavaClass(filePath);
-		
-		_outputMessagePrinted = true;
 
 		if (_containsUnnecessaryFullyQualifiedClassNames(finalJavaClass)) {
 			content = _removeUnnecessaryFullyQualifiedClassNames(
@@ -5226,7 +5226,7 @@ public class ServiceBuilder {
 					String className = importToExclude.substring(
 						importToExclude.lastIndexOf(StringPool.PERIOD) + 1);
 
-					content = StringUtil.replace(
+					content = StringUtil.replaceFirst(
 						content, importToExclude, className, pos);
 				}
 					fromIndex = pos + importToExclude.length();

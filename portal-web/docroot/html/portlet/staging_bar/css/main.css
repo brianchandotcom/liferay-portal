@@ -168,7 +168,7 @@
 
 		.publish-link-container {
 			padding-left: 5px;
-			width: 100%;
+			width: auto;
 
 			&.branching-enabled {
 				bottom: 5px;

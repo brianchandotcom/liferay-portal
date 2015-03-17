@@ -102,6 +102,20 @@ public class StagedAssetTagStagedModelDataHandler
 		return stagedAssetTag.getName();
 	}
 
+	protected ServiceContext createServiceContext(
+		PortletDataContext portletDataContext, StagedAssetTag stagedAssetTag) {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCreateDate(stagedAssetTag.getCreateDate());
+		serviceContext.setModifiedDate(stagedAssetTag.getModifiedDate());
+		serviceContext.setScopeGroupId(portletDataContext.getScopeGroupId());
+
+		return serviceContext;
+	}
+
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
@@ -110,9 +124,6 @@ public class StagedAssetTagStagedModelDataHandler
 
 		Element tagElement = portletDataContext.getExportDataElement(
 			stagedAssetTag);
-
-		portletDataContext.addPermissions(
-			AssetTag.class, stagedAssetTag.getTagId());
 
 		portletDataContext.addClassedModel(
 			tagElement, ExportImportPathUtil.getModelPath(stagedAssetTag),
@@ -128,13 +139,8 @@ public class StagedAssetTagStagedModelDataHandler
 		long userId = portletDataContext.getUserId(
 			stagedAssetTag.getUserUuid());
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setCreateDate(stagedAssetTag.getCreateDate());
-		serviceContext.setModifiedDate(stagedAssetTag.getModifiedDate());
-		serviceContext.setScopeGroupId(portletDataContext.getScopeGroupId());
+		ServiceContext serviceContext = createServiceContext(
+			portletDataContext, stagedAssetTag);
 
 		AssetTag existingAssetTag = fetchStagedModelByUuidAndGroupId(
 			stagedAssetTag.getName(), portletDataContext.getScopeGroupId());

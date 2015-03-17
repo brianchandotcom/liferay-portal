@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.facet.config;
+package com.liferay.search.web.facets;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.search.web.util.SearchFacet;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Raymond Augé
+ * @author Eudaldo Alonso
  */
-public class FacetConfigurationUtil {
+public abstract class BaseSearchFacet implements SearchFacet {
 
 	public static List<FacetConfiguration> load(String configuration) {
 		List<FacetConfiguration> facetConfigurations = new ArrayList<>();
@@ -57,7 +57,6 @@ public class FacetConfigurationUtil {
 			}
 		}
 		catch (Exception e) {
-			_log.error(e, e);
 		}
 
 		return facetConfigurations;
@@ -85,8 +84,5 @@ public class FacetConfigurationUtil {
 
 		return facetConfiguration;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FacetConfigurationUtil.class);
 
 }

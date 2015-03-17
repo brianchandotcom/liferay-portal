@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.impl.PortletFilterImpl;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
@@ -71,15 +70,6 @@ public class InvokerFilterContainerImpl
 
 		_serviceTracker.open();
 
-		PortletApp portletApp = portlet.getPortletApp();
-
-		PortletContextBag portletContextBag = PortletContextBagPool.get(
-			portletApp.getServletContextName());
-
-		if (portletApp.isWARFile() && (portletContextBag == null)) {
-			return;
-		}
-
 		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("javax.portlet.name", rootPortletId);
@@ -121,7 +111,8 @@ public class InvokerFilterContainerImpl
 					new PortletFilterImpl(
 						portletFilterClassName, portletFilterClassName,
 						Collections.<String>emptySet(),
-						Collections.<String, String>emptyMap(), portletApp);
+						Collections.<String, String>emptyMap(),
+						portlet.getPortletApp());
 
 				PortletFilter portletFilter = PortletFilterFactory.create(
 					portletFilterModel, portletContext);

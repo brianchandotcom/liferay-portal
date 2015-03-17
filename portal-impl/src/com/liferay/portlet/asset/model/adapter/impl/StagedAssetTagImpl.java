@@ -268,22 +268,22 @@ public class StagedAssetTagImpl implements StagedAssetTag {
 
 	@Override
 	public CacheModel<AssetTag> toCacheModel() {
-		return null;
+		return _assetTag.toCacheModel();
 	}
 
 	@Override
 	public AssetTag toEscapedModel() {
-		return null;
+		return _assetTag.toEscapedModel();
 	}
 
 	@Override
 	public AssetTag toUnescapedModel() {
-		return null;
+		return _assetTag.toUnescapedModel();
 	}
 
 	@Override
 	public String toXmlString() {
-		return null;
+		return _assetTag.toXmlString();
 	}
 
 	private final AssetTag _assetTag;

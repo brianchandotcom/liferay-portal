@@ -1105,19 +1105,6 @@ public class PortletExporter {
 		return sb.toString();
 	}
 
-	protected String getAssetTagPath(
-		PortletDataContext portletDataContext, long assetCategoryId) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(ExportImportPathUtil.getRootPath(portletDataContext));
-		sb.append("/tags/");
-		sb.append(assetCategoryId);
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
 	protected String getLockPath(
 		PortletDataContext portletDataContext, String className, String key,
 		Lock lock) {

@@ -12,25 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.connection;
+package com.liferay.portal.search.elasticsearch.internal.io;
 
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.client.Client;
+import com.liferay.portal.kernel.util.StringBundler;
+
+import java.io.OutputStream;
 
 /**
  * @author Michael C. Han
  */
-public interface ElasticsearchConnection {
+public class StringOutputStream extends OutputStream {
 
-	public void close();
+	@Override
+	public String toString() {
+		return _sb.toString();
+	}
 
-	public Client getClient();
+	@Override
+	public void write(int b) {
+		_sb.append(b);
+	}
 
-	public ClusterHealthResponse getClusterHealthResponse(
-		long timeout, int nodesCount);
-
-	public OperationMode getOperationMode();
-
-	public void initialize();
+	private final StringBundler _sb = new StringBundler();
 
 }

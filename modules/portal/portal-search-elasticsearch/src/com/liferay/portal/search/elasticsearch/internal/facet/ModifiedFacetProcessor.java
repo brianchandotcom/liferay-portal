@@ -12,25 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.connection;
+package com.liferay.portal.search.elasticsearch.internal.facet;
 
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.client.Client;
+import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Michael C. Han
+ * @author Raymond Augé
  */
-public interface ElasticsearchConnection {
-
-	public void close();
-
-	public Client getClient();
-
-	public ClusterHealthResponse getClusterHealthResponse(
-		long timeout, int nodesCount);
-
-	public OperationMode getOperationMode();
-
-	public void initialize();
-
+@Component(
+	immediate = true,
+	property = {
+		"class.name=com.liferay.portal.kernel.search.facet.ModifiedFacet"
+	},
+	service = FacetProcessor.class
+)
+public class ModifiedFacetProcessor extends RangeFacetProcessor {
 }

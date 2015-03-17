@@ -12,25 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.connection;
-
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.client.Client;
+package com.liferay.portal.search.elasticsearch.internal.util;
 
 /**
  * @author Michael C. Han
  */
-public interface ElasticsearchConnection {
+public class DocumentTypes {
 
-	public void close();
+	public static final String KEYWORD_QUERY = "KeywordQueryDocumentType";
 
-	public Client getClient();
+	public static final String LIFERAY = "LiferayDocumentType";
 
-	public ClusterHealthResponse getClusterHealthResponse(
-		long timeout, int nodesCount);
-
-	public OperationMode getOperationMode();
-
-	public void initialize();
+	public static final String SPELL_CHECK = "SpellCheckDocumentType";
 
 }

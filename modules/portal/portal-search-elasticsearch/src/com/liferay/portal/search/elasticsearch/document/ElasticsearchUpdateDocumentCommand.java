@@ -12,25 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.connection;
+package com.liferay.portal.search.elasticsearch.document;
 
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.client.Client;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+
+import java.util.Collection;
 
 /**
  * @author Michael C. Han
  */
-public interface ElasticsearchConnection {
+public interface ElasticsearchUpdateDocumentCommand {
 
-	public void close();
+	public String updateDocument(
+			String documentType, SearchContext searchContext, Document document,
+			boolean deleteFirst)
+		throws SearchException;
 
-	public Client getClient();
-
-	public ClusterHealthResponse getClusterHealthResponse(
-		long timeout, int nodesCount);
-
-	public OperationMode getOperationMode();
-
-	public void initialize();
+	public void updateDocuments(
+			String documentType, SearchContext searchContext,
+			Collection<Document> documents, boolean deleteFirst)
+		throws SearchException;
 
 }

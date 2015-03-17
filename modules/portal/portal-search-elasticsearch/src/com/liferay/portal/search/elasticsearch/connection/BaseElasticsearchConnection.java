@@ -15,7 +15,6 @@
 package com.liferay.portal.search.elasticsearch.connection;
 
 import com.liferay.portal.kernel.util.PortalRunMode;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 
 import java.util.concurrent.Future;
@@ -75,10 +74,6 @@ public abstract class BaseElasticsearchConnection
 	}
 
 	public String getClusterName() {
-		if (Validator.isNull(_clusterName)) {
-			_clusterName = CLUSTER_NAME;
-		}
-
 		return _clusterName;
 	}
 

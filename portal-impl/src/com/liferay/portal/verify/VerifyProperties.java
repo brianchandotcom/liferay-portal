@@ -413,6 +413,18 @@ public class VerifyProperties extends VerifyProcess {
 			"breadcrumb.display.templates.config", "display.templates.config",
 			"com.liferay.breadcrumb.web"
 		},
+		new String[] {
+			"breadcrumb.show.guest.group", "show.guest.group",
+			"com.liferay.breadcrumb.web"
+		},
+		new String[] {
+			"breadcrumb.show.parent.groups", "show.parent.groups",
+			"com.liferay.breadcrumb.web"
+		},
+		new String[] {
+			"breadcrumb.display.style.default", "ddm.template.key.default",
+			"com.liferay.breadcrumb.web"
+		},
 
 		// CAS
 
@@ -952,10 +964,6 @@ public class VerifyProperties extends VerifyProcess {
 		},
 		new String[] {
 			"amazon.license.3", "amazon.access.key.id"
-		},
-		new String[] {
-			"breadcrumb.display.style.default",
-			"breadcrumb.ddm.template.key.default"
 		},
 		new String[] {
 			"cdn.host", "cdn.host.http"

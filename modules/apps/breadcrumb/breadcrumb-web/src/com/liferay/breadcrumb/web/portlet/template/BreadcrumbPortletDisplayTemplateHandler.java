@@ -22,9 +22,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
@@ -66,8 +63,7 @@ public class BreadcrumbPortletDisplayTemplateHandler
 
 	@Override
 	public String getDefaultTemplateKey() {
-		return GetterUtil.getString(
-			PropsUtil.get(PropsKeys.BREADCRUMB_DDM_TEMPLATE_KEY_DEFAULT));
+		return BreadcrumbConfigurationValues.DDM_TEMPLATE_KEY_DEFAULT;
 	}
 
 	@Override

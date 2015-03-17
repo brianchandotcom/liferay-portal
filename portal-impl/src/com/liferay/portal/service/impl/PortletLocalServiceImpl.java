@@ -1033,7 +1033,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		List<Portlet> portlets = new ArrayList<>();
 
-		String servletContextNameSuffix = servletContextName;
+		String servletContextNameSuffix = null;
 
 		if (Validator.isNotNull(servletContextName)) {
 			servletContextNameSuffix = PortalUtil.getJsSafePortletId(
@@ -1047,15 +1047,13 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				continue;
 			}
 
-			if (Validator.isNotNull(servletContextNameSuffix)) {
-				if (portletId.endsWith(servletContextNameSuffix)) {
-					portlets.add(entry.getValue());
-				}
-			}
-			else {
+			if (servletContextNameSuffix == null) {
 				if (!portletId.contains(PortletConstants.WAR_SEPARATOR)) {
 					portlets.add(entry.getValue());
 				}
+			}
+			else if (portletId.endsWith(servletContextNameSuffix)) {
+				portlets.add(entry.getValue());
 			}
 		}
 

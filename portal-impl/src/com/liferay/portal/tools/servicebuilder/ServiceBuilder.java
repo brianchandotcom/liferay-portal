@@ -1597,14 +1597,10 @@ public class ServiceBuilder {
 		String methodName = method.getName();
 
 		if (methodName.equals("afterPropertiesSet") ||
-			methodName.equals("destroy") ||
-			methodName.equals("equals") ||
-			methodName.equals("getClass") ||
-			methodName.equals("hashCode") ||
-			methodName.equals("notify") ||
-			methodName.equals("notifyAll") ||
-			methodName.equals("toString") ||
-			methodName.equals("wait")) {
+			methodName.equals("destroy") || methodName.equals("equals") ||
+			methodName.equals("getClass") || methodName.equals("hashCode") ||
+			methodName.equals("notify") || methodName.equals("notifyAll") ||
+			methodName.equals("toString") || methodName.equals("wait")) {
 
 			return false;
 		}
@@ -3977,8 +3973,7 @@ public class ServiceBuilder {
 
 					sb.append("DOUBLE");
 				}
-				else if (colType.equals("int") ||
-						 colType.equals("Integer") ||
+				else if (colType.equals("int") || colType.equals("Integer") ||
 						 StringUtil.equalsIgnoreCase(colType, "short")) {
 
 					sb.append("INTEGER");
@@ -4095,8 +4090,7 @@ public class ServiceBuilder {
 
 				sb.append("DOUBLE");
 			}
-			else if (colType.equals("int") ||
-					 colType.equals("Integer") ||
+			else if (colType.equals("int") || colType.equals("Integer") ||
 					 StringUtil.equalsIgnoreCase(colType, "short")) {
 
 				sb.append("INTEGER");

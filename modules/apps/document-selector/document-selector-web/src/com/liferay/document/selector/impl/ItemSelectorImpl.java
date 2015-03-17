@@ -318,8 +318,7 @@ public class ItemSelectorImpl implements ItemSelector {
 			for (Map.Entry<String, ?> entry : properties.entrySet()) {
 				String key = entry.getKey();
 
-				if (key.equals("availableReturnTypes") ||
-					key.equals("class") ||
+				if (key.equals("availableReturnTypes") || key.equals("class") ||
 					key.equals("desiredReturnTypes")) {
 
 					continue;

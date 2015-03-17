@@ -66,8 +66,7 @@ public class DefaultSearchResultPermissionFilter
 						 _permissionChecker, entryClassName, entryClassPK,
 						 ActionKeys.VIEW) &&
 					 indexer.isVisibleRelatedEntry(entryClassPK, status)) ||
-					!indexer.isFilterSearch() ||
-					!indexer.isPermissionAware()) {
+					!indexer.isFilterSearch() || !indexer.isPermissionAware()) {
 
 					docs.add(document);
 					scores.add(hits.score(i));

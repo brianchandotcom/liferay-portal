@@ -124,8 +124,7 @@ public class RuntimeTag extends TagSupport {
 			if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
 					portletId) < 1) ||
-				layout.isTypeControlPanel() ||
-				layout.isTypePanel()) {
+				layout.isTypeControlPanel() || layout.isTypePanel()) {
 
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					layout, portletId);

@@ -450,8 +450,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 	}
 
 	protected boolean isPortletPath(String path) {
-		if ((path != null) &&
-			!path.equals(_PATH_C) &&
+		if ((path != null) && !path.equals(_PATH_C) &&
 			!path.startsWith(_PATH_COMMON) &&
 			!path.contains(_PATH_J_SECURITY_CHECK) &&
 			!path.startsWith(_PATH_PORTAL)) {

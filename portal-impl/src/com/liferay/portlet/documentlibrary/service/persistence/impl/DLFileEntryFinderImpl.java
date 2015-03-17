@@ -797,8 +797,7 @@ public class DLFileEntryFinderImpl
 		StringBundler sb = new StringBundler(7);
 
 		if (ListUtil.isNotEmpty(repositoryIds) ||
-			ListUtil.isNotEmpty(folderIds) ||
-			ArrayUtil.isNotEmpty(mimeTypes)) {
+			ListUtil.isNotEmpty(folderIds) || ArrayUtil.isNotEmpty(mimeTypes)) {
 
 			if (ListUtil.isNotEmpty(repositoryIds)) {
 				sb.append(WHERE_AND);

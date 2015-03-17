@@ -32,8 +32,7 @@ public class EditorUtil {
 		if (langType.equals("css")) {
 			editorMode = "css";
 		}
-		else if (langType.equals("xml") ||
-				 langType.equals("xsl") ||
+		else if (langType.equals("xml") || langType.equals("xsl") ||
 				 langType.equals("xsd")) {
 
 			editorMode = "xml";

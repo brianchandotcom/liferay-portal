@@ -6087,12 +6087,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		for (String key : params.keySet()) {
-			if (!key.equals("inherit") &&
-				!key.equals("usersGroups") &&
-				!key.equals("usersOrgs") &&
-				!key.equals("usersOrgsCount") &&
-				!key.equals("usersRoles") &&
-				!key.equals("usersTeams") &&
+			if (!key.equals("inherit") && !key.equals("usersGroups") &&
+				!key.equals("usersOrgs") && !key.equals("usersOrgsCount") &&
+				!key.equals("usersRoles") && !key.equals("usersTeams") &&
 				!key.equals("usersUserGroups")) {
 
 				return true;

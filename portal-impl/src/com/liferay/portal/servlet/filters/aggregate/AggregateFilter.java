@@ -251,8 +251,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			request, "bundleId",
 			ParamUtil.getString(request, "minifierBundleId"));
 
-		if (Validator.isNull(minifierType) ||
-			Validator.isNull(bundleId) ||
+		if (Validator.isNull(minifierType) || Validator.isNull(bundleId) ||
 			!ArrayUtil.contains(PropsValues.JAVASCRIPT_BUNDLE_IDS, bundleId)) {
 
 			return null;

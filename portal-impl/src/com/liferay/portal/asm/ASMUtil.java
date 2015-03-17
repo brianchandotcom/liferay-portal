@@ -46,8 +46,7 @@ public class ASMUtil {
 		int sort = returnType.getSort();
 
 		if ((sort == Type.BOOLEAN) || (sort == Type.CHAR) ||
-			(sort == Type.BYTE) || (sort == Type.INT) ||
-			(sort == Type.SHORT)) {
+			(sort == Type.BYTE) || (sort == Type.INT) || (sort == Type.SHORT)) {
 
 			methodVisitor.visitInsn(Opcodes.ICONST_0);
 			methodVisitor.visitInsn(Opcodes.IRETURN);

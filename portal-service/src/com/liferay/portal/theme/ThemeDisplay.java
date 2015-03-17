@@ -1527,8 +1527,7 @@ public class ThemeDisplay
 	}
 
 	public void setPathImage(String pathImage) {
-		if (isFacebook() &&
-			!pathImage.startsWith(Http.HTTP_WITH_SLASH) &&
+		if (isFacebook() && !pathImage.startsWith(Http.HTTP_WITH_SLASH) &&
 			!pathImage.startsWith(Http.HTTPS_WITH_SLASH)) {
 
 			pathImage = getPortalURL() + pathImage;

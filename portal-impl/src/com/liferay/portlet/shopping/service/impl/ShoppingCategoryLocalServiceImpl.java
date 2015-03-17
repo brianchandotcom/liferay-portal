@@ -289,8 +289,7 @@ public class ShoppingCategoryLocalServiceImpl
 
 		parentCategoryId = getParentCategoryId(category, parentCategoryId);
 
-		if (mergeWithParentCategory &&
-			(categoryId != parentCategoryId) &&
+		if (mergeWithParentCategory && (categoryId != parentCategoryId) &&
 			(parentCategoryId !=
 				ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID)) {
 

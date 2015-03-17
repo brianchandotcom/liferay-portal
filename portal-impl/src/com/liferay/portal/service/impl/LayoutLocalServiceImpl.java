@@ -413,8 +413,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		boolean addGuestPermissions = false;
 
-		if (!privateLayout ||
-			type.equals(LayoutConstants.TYPE_CONTROL_PANEL) ||
+		if (!privateLayout || type.equals(LayoutConstants.TYPE_CONTROL_PANEL) ||
 			type.equals(LayoutConstants.TYPE_USER_PERSONAL_PANEL) ||
 			group.isLayoutSetPrototype()) {
 
@@ -1339,8 +1338,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				layoutFriendlyURL.getPlid());
 		}
 
-		if ((layout == null) &&
-			friendlyURL.startsWith(StringPool.SLASH) &&
+		if ((layout == null) && friendlyURL.startsWith(StringPool.SLASH) &&
 			Validator.isNumber(friendlyURL.substring(1))) {
 
 			long layoutId = GetterUtil.getLong(friendlyURL.substring(1));

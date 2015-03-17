@@ -721,7 +721,7 @@ public class ShoppingItemLocalServiceImpl
 			}
 
 			long smallImageMaxSize = PrefsPropsUtil.getLong(
-				PropsKeys.SHOPPING_IMAGE_MEDIUM_MAX_SIZE);
+				PropsKeys.SHOPPING_IMAGE_SMALL_MAX_SIZE);
 
 			if ((smallImageMaxSize > 0) &&
 				((smallImageBytes == null) ||

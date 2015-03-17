@@ -54,6 +54,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIfClauseIncorrectLineBreaks() throws Exception {
+		test("IfClauseIncorrectLineBreaks.testjava");
+	}
+
+	@Test
 	public void testIfClauseParentheses() throws Exception {
 		test(
 			"IfClauseParentheses.testjava",

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -56,18 +55,11 @@ public class WikiNodeStagedModelDataHandler
 	}
 
 	@Override
-	public WikiNode fetchStagedModelByUuidAndCompanyId(
+	public List<WikiNode> fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<WikiNode> wikiNodes =
-			WikiNodeLocalServiceUtil.getWikiNodesByUuidAndCompanyId(
-				uuid, companyId);
-
-		if (ListUtil.isEmpty(wikiNodes)) {
-			return null;
-		}
-
-		return wikiNodes.get(0);
+		return WikiNodeLocalServiceUtil.getWikiNodesByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	@Override

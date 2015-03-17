@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
@@ -55,20 +54,13 @@ public class RepositoryEntryStagedModelDataHandler
 	}
 
 	@Override
-	public RepositoryEntry fetchStagedModelByUuidAndCompanyId(
+	public List<RepositoryEntry> fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<RepositoryEntry> entries =
-			RepositoryEntryLocalServiceUtil.
-				getRepositoryEntriesByUuidAndCompanyId(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					new StagedModelModifiedDateComparator<RepositoryEntry>());
-
-		if (ListUtil.isEmpty(entries)) {
-			return null;
-		}
-
-		return entries.get(0);
+		return RepositoryEntryLocalServiceUtil.
+			getRepositoryEntriesByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<RepositoryEntry>());
 	}
 
 	@Override

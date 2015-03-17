@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -63,21 +62,13 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 	}
 
 	@Override
-	public MDRRuleGroupInstance fetchStagedModelByUuidAndCompanyId(
+	public List<MDRRuleGroupInstance> fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<MDRRuleGroupInstance> ruleGroupInstances =
-			MDRRuleGroupInstanceLocalServiceUtil.
-				getMDRRuleGroupInstancesByUuidAndCompanyId(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					new StagedModelModifiedDateComparator
-						<MDRRuleGroupInstance>());
-
-		if (ListUtil.isEmpty(ruleGroupInstances)) {
-			return null;
-		}
-
-		return ruleGroupInstances.get(0);
+		return MDRRuleGroupInstanceLocalServiceUtil.
+			getMDRRuleGroupInstancesByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<MDRRuleGroupInstance>());
 	}
 
 	@Override

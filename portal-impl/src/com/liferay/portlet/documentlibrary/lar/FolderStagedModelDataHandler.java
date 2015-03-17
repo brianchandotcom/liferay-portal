@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -77,19 +76,21 @@ public class FolderStagedModelDataHandler
 	}
 
 	@Override
-	public Folder fetchStagedModelByUuidAndCompanyId(
+	public List<Folder> fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<DLFolder> folders =
+		List<DLFolder> dlFolders =
 			DLFolderLocalServiceUtil.getDLFoldersByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<DLFolder>());
 
-		if (ListUtil.isEmpty(folders)) {
-			return null;
+		List<Folder> folders = new ArrayList<>();
+
+		for (DLFolder dlFolder : dlFolders) {
+			folders.add(new LiferayFolder(dlFolder));
 		}
 
-		return new LiferayFolder(folders.get(0));
+		return folders;
 	}
 
 	@Override

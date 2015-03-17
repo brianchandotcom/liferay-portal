@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -60,19 +59,13 @@ public class DLFileShortcutStagedModelDataHandler
 	}
 
 	@Override
-	public DLFileShortcut fetchStagedModelByUuidAndCompanyId(
+	public List<DLFileShortcut> fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<DLFileShortcut> fileShortcuts =
-			DLFileShortcutLocalServiceUtil.getDLFileShortcutsByUuidAndCompanyId(
+		return DLFileShortcutLocalServiceUtil.
+			getDLFileShortcutsByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<DLFileShortcut>());
-
-		if (ListUtil.isEmpty(fileShortcuts)) {
-			return null;
-		}
-
-		return fileShortcuts.get(0);
 	}
 
 	@Override

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -58,19 +57,12 @@ public class PollsVoteStagedModelDataHandler
 	}
 
 	@Override
-	public PollsVote fetchStagedModelByUuidAndCompanyId(
+	public List<PollsVote> fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<PollsVote> votes =
-			PollsVoteLocalServiceUtil.getPollsVotesByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<PollsVote>());
-
-		if (ListUtil.isEmpty(votes)) {
-			return null;
-		}
-
-		return votes.get(0);
+		return PollsVoteLocalServiceUtil.getPollsVotesByUuidAndCompanyId(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new StagedModelModifiedDateComparator<PollsVote>());
 	}
 
 	@Override

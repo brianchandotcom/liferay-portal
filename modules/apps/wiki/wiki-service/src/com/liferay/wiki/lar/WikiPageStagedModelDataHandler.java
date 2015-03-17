@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -69,19 +68,12 @@ public class WikiPageStagedModelDataHandler
 	}
 
 	@Override
-	public WikiPage fetchStagedModelByUuidAndCompanyId(
+	public List<WikiPage> fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<WikiPage> pages =
-			WikiPageLocalServiceUtil.getWikiPagesByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<WikiPage>());
-
-		if (ListUtil.isEmpty(pages)) {
-			return null;
-		}
-
-		return pages.get(0);
+		return WikiPageLocalServiceUtil.getWikiPagesByUuidAndCompanyId(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new StagedModelModifiedDateComparator<WikiPage>());
 	}
 
 	@Override

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -66,20 +65,13 @@ public class DLFileEntryTypeStagedModelDataHandler
 	}
 
 	@Override
-	public DLFileEntryType fetchStagedModelByUuidAndCompanyId(
+	public List<DLFileEntryType> fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<DLFileEntryType> fileEntryTypes =
-			DLFileEntryTypeLocalServiceUtil.
-				getDLFileEntryTypesByUuidAndCompanyId(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					new StagedModelModifiedDateComparator<DLFileEntryType>());
-
-		if (ListUtil.isEmpty(fileEntryTypes)) {
-			return null;
-		}
-
-		return fileEntryTypes.get(0);
+		return DLFileEntryTypeLocalServiceUtil.
+			getDLFileEntryTypesByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<DLFileEntryType>());
 	}
 
 	@Override

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
@@ -57,19 +56,12 @@ public class MBDiscussionStagedModelDataHandler
 	}
 
 	@Override
-	public MBDiscussion fetchStagedModelByUuidAndCompanyId(
+	public List<MBDiscussion> fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<MBDiscussion> discussions =
-			MBDiscussionLocalServiceUtil.getMBDiscussionsByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<MBDiscussion>());
-
-		if (ListUtil.isEmpty(discussions)) {
-			return null;
-		}
-
-		return discussions.get(0);
+		return MBDiscussionLocalServiceUtil.getMBDiscussionsByUuidAndCompanyId(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new StagedModelModifiedDateComparator<MBDiscussion>());
 	}
 
 	@Override

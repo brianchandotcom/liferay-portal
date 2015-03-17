@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 
@@ -59,19 +58,13 @@ public class PollsQuestionStagedModelDataHandler
 	}
 
 	@Override
-	public PollsQuestion fetchStagedModelByUuidAndCompanyId(
+	public List<PollsQuestion> fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<PollsQuestion> questions =
-			PollsQuestionLocalServiceUtil.getPollsQuestionsByUuidAndCompanyId(
+		return PollsQuestionLocalServiceUtil.
+			getPollsQuestionsByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<PollsQuestion>());
-
-		if (ListUtil.isEmpty(questions)) {
-			return null;
-		}
-
-		return questions.get(0);
 	}
 
 	@Override

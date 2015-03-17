@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -54,19 +53,13 @@ public class JournalFolderStagedModelDataHandler
 	}
 
 	@Override
-	public JournalFolder fetchStagedModelByUuidAndCompanyId(
+	public List<JournalFolder> fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<JournalFolder> folders =
-			JournalFolderLocalServiceUtil.getJournalFoldersByUuidAndCompanyId(
+		return JournalFolderLocalServiceUtil.
+			getJournalFoldersByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<JournalFolder>());
-
-		if (ListUtil.isEmpty(folders)) {
-			return null;
-		}
-
-		return folders.get(0);
 	}
 
 	@Override

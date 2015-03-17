@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -106,19 +105,13 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Override
-	public JournalArticle fetchStagedModelByUuidAndCompanyId(
+	public List<JournalArticle> fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<JournalArticle> articles =
-			JournalArticleLocalServiceUtil.getJournalArticlesByUuidAndCompanyId(
+		return JournalArticleLocalServiceUtil.
+			getJournalArticlesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<JournalArticle>());
-
-		if (ListUtil.isEmpty(articles)) {
-			return null;
-		}
-
-		return articles.get(0);
 	}
 
 	@Override

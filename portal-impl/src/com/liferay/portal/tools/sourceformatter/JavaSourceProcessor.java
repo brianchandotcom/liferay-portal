@@ -314,152 +314,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String formatIfClause(
-			String ifClause, String fileName, int lineCount)
-		throws IOException {
-
-		String ifClauseSingleLine = StringUtil.replace(
-			ifClause,
-			new String[] {
-				StringPool.TAB + StringPool.SPACE, StringPool.TAB,
-				StringPool.OPEN_PARENTHESIS + StringPool.NEW_LINE,
-				StringPool.NEW_LINE
-			},
-			new String[] {
-				StringPool.TAB, StringPool.BLANK, StringPool.OPEN_PARENTHESIS,
-				StringPool.SPACE
-			});
-
-		checkIfClauseParentheses(ifClauseSingleLine, fileName, lineCount);
-
-		return formatIfClause(ifClause);
-	}
-
-	protected String formatIfClause(String ifClause)
-		throws IOException {
-
-		String strippedQuotesIfClause = stripQuotes(ifClause, CharPool.QUOTE);
-
-		if (strippedQuotesIfClause.contains("!(") ||
-			strippedQuotesIfClause.contains("//")) {
-
-			return ifClause;
-		}
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(ifClause));
-
-		String line = null;
-
-		String previousLine = null;
-		int previousLineLength = 0;
-
-		int previousLineCloseParenthesesCount = 0;
-		int previousLineOpenParenthesesCount = 0;
-
-		int baseLeadingWhiteSpace = 0;
-		int level = -1;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			String originalLine = line;
-
-			String trimmedLine = StringUtil.trimLeading(line);
-
-			int x = getIncorrectLineBreakPos(line, previousLine);
-
-			if (x != -1) {
-				String leadingWhitespace = line.substring(
-					0, line.indexOf(trimmedLine));
-
-				return StringUtil.replace(
-					ifClause, line,
-					line.substring(0, x) + "\n" + leadingWhitespace +
-						line.substring(x + 1));
-			}
-
-			line = StringUtil.replace(
-				line, StringPool.TAB, StringPool.FOUR_SPACES);
-
-			String strippedQuotesLine = stripQuotes(
-				trimmedLine, CharPool.QUOTE);
-
-			strippedQuotesLine = stripQuotes(
-				strippedQuotesLine, CharPool.APOSTROPHE);
-
-			int closeParenthesesCount = StringUtil.count(
-				strippedQuotesLine, StringPool.CLOSE_PARENTHESIS);
-			int openParenthesesCount = StringUtil.count(
-				strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
-
-			if ((previousLineLength > 0) &&
-				(line.endsWith("||") || line.endsWith("&&") ||
-				 line.endsWith(") {")) &&
-				(previousLine.endsWith("||") || previousLine.endsWith("&&")) &&
-				(previousLineLength + trimmedLine.length() <
-					_MAX_LINE_LENGTH) &&
-				(openParenthesesCount <= closeParenthesesCount) &&
-				(previousLineCloseParenthesesCount <=
-					previousLineOpenParenthesesCount)) {
-
-				return StringUtil.replace(
-					ifClause, previousLine + "\n" + originalLine,
-					previousLine + StringPool.SPACE + trimmedLine);
-			}
-
-			int leadingWhiteSpace = line.length() - trimmedLine.length();
-
-			if (Validator.isNull(previousLine)) {
-				baseLeadingWhiteSpace =
-					line.indexOf(StringPool.OPEN_PARENTHESIS) + 1;
-			}
-			else if (previousLine.endsWith("|") || previousLine.endsWith("&") ||
-					 previousLine.endsWith("^")) {
-
-				int expectedLeadingWhiteSpace = baseLeadingWhiteSpace + level;
-
-				if (leadingWhiteSpace != expectedLeadingWhiteSpace) {
-					return fixIfClause(
-						ifClause, originalLine,
-						leadingWhiteSpace - expectedLeadingWhiteSpace);
-				}
-			}
-			else {
-				int expectedLeadingWhiteSpace = 0;
-
-				if (previousLine.contains(StringPool.TAB + "else if (")) {
-					expectedLeadingWhiteSpace = baseLeadingWhiteSpace + 3;
-				}
-				else if (previousLine.contains(StringPool.TAB + "if (")) {
-					expectedLeadingWhiteSpace = baseLeadingWhiteSpace + 4;
-				}
-				else if (previousLine.contains(StringPool.TAB + "while (")) {
-					expectedLeadingWhiteSpace = baseLeadingWhiteSpace + 5;
-				}
-
-				if ((expectedLeadingWhiteSpace != 0) &&
-					(leadingWhiteSpace != expectedLeadingWhiteSpace)) {
-
-					return fixIfClause(
-						ifClause, originalLine,
-						leadingWhiteSpace - expectedLeadingWhiteSpace);
-				}
-			}
-
-			if (line.endsWith(") {")) {
-				return ifClause;
-			}
-
-			level = level + openParenthesesCount - closeParenthesesCount;
-
-			previousLine = originalLine;
-			previousLineLength = line.length();
-			previousLineCloseParenthesesCount = closeParenthesesCount;
-			previousLineOpenParenthesesCount = openParenthesesCount;
-		}
-
-		return ifClause;
-	}
-
 	protected void checkLogLevel(String content, String fileName) {
 		if (fileName.contains("Log")) {
 			return;
@@ -1278,6 +1132,152 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				throw new Exception("Unable to parse " + fileName, e);
 			}
 		}
+	}
+
+	protected String formatIfClause(String ifClause)
+		throws IOException {
+
+		String strippedQuotesIfClause = stripQuotes(ifClause, CharPool.QUOTE);
+
+		if (strippedQuotesIfClause.contains("!(") ||
+			strippedQuotesIfClause.contains("//")) {
+
+			return ifClause;
+		}
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(ifClause));
+
+		String line = null;
+
+		String previousLine = null;
+		int previousLineLength = 0;
+
+		int previousLineCloseParenthesesCount = 0;
+		int previousLineOpenParenthesesCount = 0;
+
+		int baseLeadingWhiteSpace = 0;
+		int level = -1;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			String originalLine = line;
+
+			String trimmedLine = StringUtil.trimLeading(line);
+
+			int x = getIncorrectLineBreakPos(line, previousLine);
+
+			if (x != -1) {
+				String leadingWhitespace = line.substring(
+					0, line.indexOf(trimmedLine));
+
+				return StringUtil.replace(
+					ifClause, line,
+					line.substring(0, x) + "\n" + leadingWhitespace +
+						line.substring(x + 1));
+			}
+
+			line = StringUtil.replace(
+				line, StringPool.TAB, StringPool.FOUR_SPACES);
+
+			String strippedQuotesLine = stripQuotes(
+				trimmedLine, CharPool.QUOTE);
+
+			strippedQuotesLine = stripQuotes(
+				strippedQuotesLine, CharPool.APOSTROPHE);
+
+			int closeParenthesesCount = StringUtil.count(
+				strippedQuotesLine, StringPool.CLOSE_PARENTHESIS);
+			int openParenthesesCount = StringUtil.count(
+				strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
+
+			if ((previousLineLength > 0) &&
+				(line.endsWith("||") || line.endsWith("&&") ||
+				 line.endsWith(") {")) &&
+				(previousLine.endsWith("||") || previousLine.endsWith("&&")) &&
+				(previousLineLength + trimmedLine.length() <
+					_MAX_LINE_LENGTH) &&
+				(openParenthesesCount <= closeParenthesesCount) &&
+				(previousLineCloseParenthesesCount <=
+					previousLineOpenParenthesesCount)) {
+
+				return StringUtil.replace(
+					ifClause, previousLine + "\n" + originalLine,
+					previousLine + StringPool.SPACE + trimmedLine);
+			}
+
+			int leadingWhiteSpace = line.length() - trimmedLine.length();
+
+			if (Validator.isNull(previousLine)) {
+				baseLeadingWhiteSpace =
+					line.indexOf(StringPool.OPEN_PARENTHESIS) + 1;
+			}
+			else if (previousLine.endsWith("|") || previousLine.endsWith("&") ||
+					 previousLine.endsWith("^")) {
+
+				int expectedLeadingWhiteSpace = baseLeadingWhiteSpace + level;
+
+				if (leadingWhiteSpace != expectedLeadingWhiteSpace) {
+					return fixIfClause(
+						ifClause, originalLine,
+						leadingWhiteSpace - expectedLeadingWhiteSpace);
+				}
+			}
+			else {
+				int expectedLeadingWhiteSpace = 0;
+
+				if (previousLine.contains(StringPool.TAB + "else if (")) {
+					expectedLeadingWhiteSpace = baseLeadingWhiteSpace + 3;
+				}
+				else if (previousLine.contains(StringPool.TAB + "if (")) {
+					expectedLeadingWhiteSpace = baseLeadingWhiteSpace + 4;
+				}
+				else if (previousLine.contains(StringPool.TAB + "while (")) {
+					expectedLeadingWhiteSpace = baseLeadingWhiteSpace + 5;
+				}
+
+				if ((expectedLeadingWhiteSpace != 0) &&
+					(leadingWhiteSpace != expectedLeadingWhiteSpace)) {
+
+					return fixIfClause(
+						ifClause, originalLine,
+						leadingWhiteSpace - expectedLeadingWhiteSpace);
+				}
+			}
+
+			if (line.endsWith(") {")) {
+				return ifClause;
+			}
+
+			level = level + openParenthesesCount - closeParenthesesCount;
+
+			previousLine = originalLine;
+			previousLineLength = line.length();
+			previousLineCloseParenthesesCount = closeParenthesesCount;
+			previousLineOpenParenthesesCount = openParenthesesCount;
+		}
+
+		return ifClause;
+	}
+
+	protected String formatIfClause(
+			String ifClause, String fileName, int lineCount)
+		throws IOException {
+
+		String ifClauseSingleLine = StringUtil.replace(
+			ifClause,
+			new String[] {
+				StringPool.TAB + StringPool.SPACE, StringPool.TAB,
+				StringPool.OPEN_PARENTHESIS + StringPool.NEW_LINE,
+				StringPool.NEW_LINE
+			},
+			new String[] {
+				StringPool.TAB, StringPool.BLANK, StringPool.OPEN_PARENTHESIS,
+				StringPool.SPACE
+			});
+
+		checkIfClauseParentheses(ifClauseSingleLine, fileName, lineCount);
+
+		return formatIfClause(ifClause);
 	}
 
 	protected String formatIncorrectSyntax(

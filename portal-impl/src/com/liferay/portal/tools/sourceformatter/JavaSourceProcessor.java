@@ -314,7 +314,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String checkIfClause(
+	protected String formatIfClause(
 			String ifClause, String fileName, int lineCount)
 		throws IOException {
 
@@ -332,10 +332,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		checkIfClauseParentheses(ifClauseSingleLine, fileName, lineCount);
 
-		return checkIfClauseTabsAndSpaces(ifClause);
+		return formatIfClause(ifClause);
 	}
 
-	protected String checkIfClauseTabsAndSpaces(String ifClause)
+	protected String formatIfClause(String ifClause)
 		throws IOException {
 
 		String strippedQuotesIfClause = stripQuotes(ifClause, CharPool.QUOTE);
@@ -1647,7 +1647,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					ifClause = ifClause + line + StringPool.NEW_LINE;
 
 					if (line.endsWith(") {")) {
-						String newIfClause = checkIfClause(
+						String newIfClause = formatIfClause(
 							ifClause, fileName, lineCount);
 
 						if (!ifClause.equals(newIfClause) &&

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true, service = SearchFacet.class
 )
-public class AssetTagsSearchFacet implements SearchFacet {
+public class AssetTagsSearchFacet extends BaseSearchFacet {
 
 	@Override
 	public String getClassName() {

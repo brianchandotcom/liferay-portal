@@ -15,54 +15,64 @@
 package com.liferay.search.web.facets;
 
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.web.util.SearchFacet;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Eudaldo Alonso
  */
 public abstract class BaseSearchFacet implements SearchFacet {
 
-	public static List<FacetConfiguration> load(String configuration) {
-		List<FacetConfiguration> facetConfigurations = new ArrayList<>();
-
-		try {
-			if (Validator.isNull(configuration)) {
-				return facetConfigurations;
-			}
-
-			JSONObject configurationJSONObject =
-				JSONFactoryUtil.createJSONObject(configuration);
-
-			JSONArray facetsJSONArray = configurationJSONObject.getJSONArray(
-				"facets");
-
-			if (facetsJSONArray == null) {
-				return facetConfigurations;
-			}
-
-			for (int i = 0; i < facetsJSONArray.length(); i++) {
-				JSONObject facetJSONObject = facetsJSONArray.getJSONObject(i);
-
-				FacetConfiguration facetConfiguration = _toFacetConfiguration(
-					facetJSONObject);
-
-				facetConfigurations.add(facetConfiguration);
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return facetConfigurations;
+	@Override
+	public FacetConfiguration getFacetConfiguration() {
+		return getDefaultConfiguration();
 	}
 
-	private static FacetConfiguration _toFacetConfiguration(
+	@Override
+	public FacetConfiguration getFacetConfiguration(String searchConfiguration)
+		throws JSONException {
+
+		FacetConfiguration facetConfiguration = _getFacetConfiguration(
+			searchConfiguration);
+
+		if (facetConfiguration != null) {
+			return facetConfiguration;
+		}
+
+		return getDefaultConfiguration();
+	}
+
+	private FacetConfiguration _getFacetConfiguration(String configuration)
+		throws JSONException {
+
+		if (Validator.isNull(configuration)) {
+			return null;
+		}
+
+		JSONObject configurationJSONObject = JSONFactoryUtil.createJSONObject(
+			configuration);
+
+		JSONArray facetsJSONArray = configurationJSONObject.getJSONArray(
+			"facets");
+
+		if (facetsJSONArray == null) {
+			return null;
+		}
+
+		for (int i = 0; i < facetsJSONArray.length(); i++) {
+			JSONObject facetJSONObject = facetsJSONArray.getJSONObject(i);
+
+			return _toFacetConfiguration(facetJSONObject);
+		}
+
+		return null;
+	}
+
+	private FacetConfiguration _toFacetConfiguration(
 		JSONObject facetJSONObject) {
 
 		FacetConfiguration facetConfiguration = new FacetConfiguration();

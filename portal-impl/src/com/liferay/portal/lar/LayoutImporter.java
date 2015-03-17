@@ -489,7 +489,7 @@ public class LayoutImporter {
 				"layout", ArrayUtil.toStringArray(portletIds), manifestSummary);
 		}
 
-		// Read asset tags, expando tables, locks, and permissions to make them
+		// Read expando tables, locks, and permissions to make them
 		// available to the data handlers through the portlet data context
 
 		if (importPermissions) {
@@ -507,7 +507,6 @@ public class LayoutImporter {
 			_permissionImporter.readPortletDataPermissions(portletDataContext);
 		}
 
-		_portletImporter.readAssetTags(portletDataContext);
 		_portletImporter.readExpandoTables(portletDataContext);
 		_portletImporter.readLocks(portletDataContext);
 

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.LocalizedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.TrashedModel;
@@ -171,12 +172,35 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				group = group.getParentGroup();
 			}
 
-			if (existingStagedModel == null) {
-				existingStagedModel = fetchStagedModelByUuidAndCompanyId(
-					uuid, originalGroup.getCompanyId());
+			if (existingStagedModel != null) {
+				return existingStagedModel;
 			}
 
-			return existingStagedModel;
+			List<T> existingStagedModels = fetchStagedModelByUuidAndCompanyId(
+				uuid, originalGroup.getCompanyId());
+
+			for (T stagedModel : existingStagedModels) {
+				try {
+					if (stagedModel instanceof GroupedModel) {
+						GroupedModel groupedModel = (GroupedModel)stagedModel;
+
+						group = GroupLocalServiceUtil.getGroup(
+							groupedModel.getGroupId());
+
+						if (!group.isStagingGroup()) {
+							return stagedModel;
+						}
+					}
+					else {
+						return stagedModel;
+					}
+				}
+				catch (PortalException pe) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(pe, pe);
+					}
+				}
+			}
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -187,13 +211,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 					"Unable to fetch missing reference staged model from " +
 						"group " + groupId);
 			}
-
-			return null;
 		}
+
+		return null;
 	}
 
 	@Override
-	public abstract T fetchStagedModelByUuidAndCompanyId(
+	public abstract List<T> fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId);
 
 	@Override

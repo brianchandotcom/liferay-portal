@@ -48,8 +48,8 @@ public class StagedAssetTagStagedModelDataHandlerTest
 
 	@Override
 	protected StagedModel addStagedModel(
-			Group group, Map<String,
-			List<StagedModel>> dependentStagedModelsMap)
+			Group group,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
 		AssetTag tag = AssetTestUtil.addTag(group.getGroupId());

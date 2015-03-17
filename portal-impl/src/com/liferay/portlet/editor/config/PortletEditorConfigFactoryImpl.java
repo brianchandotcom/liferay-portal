@@ -53,74 +53,158 @@ public class PortletEditorConfigFactoryImpl
 		List<PortletEditorConfigContributor> portletEditorConfigContributors =
 			new ArrayList<>();
 
-		List<PortletEditorConfigContributor>
-			portletEditorConfigContributorsByPortletName =
-				_serviceTrackerMap.getService(_getKey(portletName, null));
+		populateEditorConfigByPortletNameAndConfigKey(
+			portletEditorConfigContributors, portletName, editorConfigKey);
 
-		if (ListUtil.isNotEmpty(portletEditorConfigContributorsByPortletName)) {
-			portletEditorConfigContributors.addAll(
-				portletEditorConfigContributorsByPortletName);
-		}
+		populateEditorConfigByPortletName(
+			portletEditorConfigContributors, portletName);
 
-		if (Validator.isNull(editorConfigKey)) {
-			return portletEditorConfigContributors;
-		}
-
-		List<PortletEditorConfigContributor>
-			portletEditorConfigContributorsByConfigKey =
-				_serviceTrackerMap.getService(
-					_getKey(portletName, editorConfigKey));
-
-		if (ListUtil.isNotEmpty(portletEditorConfigContributorsByConfigKey)) {
-			portletEditorConfigContributors.addAll(
-				portletEditorConfigContributorsByConfigKey);
-		}
+		populateEditorConfigByEditorConfigKey(
+			portletEditorConfigContributors, editorConfigKey);
 
 		return portletEditorConfigContributors;
 	}
 
-	private static String _getKey(String portletName, String editorConfigKey) {
+	protected void populateEditorConfigByEditorConfigKey(
+		List<PortletEditorConfigContributor> portletEditorConfigContributors,
+		String editorConfigKey) {
+
 		if (Validator.isNull(editorConfigKey)) {
-			return portletName;
+			return;
 		}
 
-		return portletName.concat(StringPool.PERIOD).concat(editorConfigKey);
+		List<PortletEditorConfigContributor>
+			portletEditorConfigContributorByEditorConfigKey =
+				_editorConfigServiceTrackerMap.getService(editorConfigKey);
+
+		if (ListUtil.isNotEmpty(
+				portletEditorConfigContributorByEditorConfigKey)) {
+
+			portletEditorConfigContributors.addAll(
+				portletEditorConfigContributorByEditorConfigKey);
+		}
+	}
+
+	protected void populateEditorConfigByPortletName(
+		List<PortletEditorConfigContributor> portletEditorConfigContributors,
+		String portletName) {
+
+		if (Validator.isNull(portletName)) {
+			return;
+		}
+
+		List<PortletEditorConfigContributor>
+			portletEditorConfigContributorByPortletName =
+				_portletConfigServiceTrackerMap.getService(portletName);
+
+		if (ListUtil.isNotEmpty(portletEditorConfigContributorByPortletName)) {
+			portletEditorConfigContributors.addAll(
+				portletEditorConfigContributorByPortletName);
+		}
+	}
+
+	protected void populateEditorConfigByPortletNameAndConfigKey(
+		List<PortletEditorConfigContributor> portletEditorConfigContributors,
+		String portletName, String editorConfigKey) {
+
+		List<PortletEditorConfigContributor>
+			portletEditorConfigContributorsByPortletNameAndConfigKey =
+				_portletEditorConfigServiceTrackerMap.getService(
+					portletName + StringPool.PERIOD + editorConfigKey);
+
+		if (ListUtil.isNotEmpty(
+				portletEditorConfigContributorsByPortletNameAndConfigKey)) {
+
+			portletEditorConfigContributors.addAll(
+				portletEditorConfigContributorsByPortletNameAndConfigKey);
+		}
 	}
 
 	private static final
 		ServiceTrackerMap<String, List<PortletEditorConfigContributor>>
-		_serviceTrackerMap = ServiceTrackerCollections.multiValueMap(
-			PortletEditorConfigContributor.class, "(javax.portlet.name=*)",
-			new ServiceReferenceMapper
-				<String, PortletEditorConfigContributor>() {
+		_editorConfigServiceTrackerMap =
+			ServiceTrackerCollections.multiValueMap(
+				PortletEditorConfigContributor.class,
+				"(&(editor.config.key=*)(!(javax.portlet.name=*)))",
+				new ServiceReferenceMapper
+					<String, PortletEditorConfigContributor>() {
 
-			@Override
-			public void map(
-				ServiceReference<PortletEditorConfigContributor>
-					serviceReference,
-				Emitter<String> emitter) {
+				@Override
+				public void map(
+					ServiceReference<PortletEditorConfigContributor>
+						serviceReference,
+					Emitter<String> emitter) {
 
-				List<String> portletNames = StringPlus.asList(
-					serviceReference.getProperty("javax.portlet.name"));
-				List<String> editorConfigKeys = StringPlus.asList(
-					serviceReference.getProperty("editor.config.key"));
+					List<String> editorConfigKeys = StringPlus.asList(
+						serviceReference.getProperty("editor.config.key"));
 
-				for (String portletName : portletNames) {
-					if (editorConfigKeys.isEmpty()) {
-						emitter.emit(_getKey(portletName, null));
+					for (String editorConfigKey : editorConfigKeys) {
+						emitter.emit(editorConfigKey);
 					}
-					else {
+				}
+
+			});
+
+	private static final
+		ServiceTrackerMap<String, List<PortletEditorConfigContributor>>
+		_portletConfigServiceTrackerMap =
+			ServiceTrackerCollections.multiValueMap(
+				PortletEditorConfigContributor.class,
+				"(&(javax.portlet.name=*)(!(editor.config.key=*)))",
+				new ServiceReferenceMapper
+					<String, PortletEditorConfigContributor>() {
+
+				@Override
+				public void map(
+					ServiceReference<PortletEditorConfigContributor>
+						serviceReference,
+					Emitter<String> emitter) {
+
+					List<String> portletNames = StringPlus.asList(
+						serviceReference.getProperty("javax.portlet.name"));
+
+					for (String portletName : portletNames) {
+						emitter.emit(portletName);
+					}
+				}
+
+			});
+
+	private static final
+		ServiceTrackerMap<String, List<PortletEditorConfigContributor>>
+		_portletEditorConfigServiceTrackerMap =
+			ServiceTrackerCollections.multiValueMap(
+				PortletEditorConfigContributor.class,
+				"(&(javax.portlet.name=*)(editor.config.key=*))",
+				new ServiceReferenceMapper
+					<String, PortletEditorConfigContributor>() {
+
+				@Override
+				public void map(
+					ServiceReference<PortletEditorConfigContributor>
+						serviceReference,
+					Emitter<String> emitter) {
+
+					List<String> portletNames = StringPlus.asList(
+						serviceReference.getProperty("javax.portlet.name"));
+					List<String> editorConfigKeys = StringPlus.asList(
+						serviceReference.getProperty("editor.config.key"));
+
+					for (String portletName : portletNames) {
 						for (String editorConfigKey : editorConfigKeys) {
-							emitter.emit(_getKey(portletName, editorConfigKey));
+							emitter.emit(
+								portletName + StringPool.PERIOD +
+									editorConfigKey);
 						}
 					}
 				}
-			}
 
-		});
+			});
 
 	static {
-		_serviceTrackerMap.open();
+		_editorConfigServiceTrackerMap.open();
+		_portletConfigServiceTrackerMap.open();
+		_portletEditorConfigServiceTrackerMap.open();
 	}
 
 }

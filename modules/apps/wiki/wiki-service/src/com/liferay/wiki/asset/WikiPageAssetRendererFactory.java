@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
@@ -33,6 +34,8 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Julio Camarero
  * @author Juan Fernández
@@ -40,6 +43,13 @@ import javax.portlet.WindowStateException;
  * @author Raymond Augé
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {
+		"search.asset.type=com.liferay.wiki.model.WikiPage"
+	},
+	service = AssetRendererFactory.class
+)
 public class WikiPageAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public static final String TYPE = "wiki";

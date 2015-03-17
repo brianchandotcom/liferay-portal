@@ -28,7 +28,7 @@ String folderName = LanguageUtil.get(request, "home");
 if (folder != null) {
 	folderName = folder.getName();
 
-	JournalUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
+	JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 }
 %>
 

@@ -399,7 +399,7 @@ if (workflowEnabled) {
 
 <%
 if (folder != null) {
-	JournalUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
+	JournalPortletUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }
@@ -408,6 +408,6 @@ else {
 		JournalUtil.addPortletBreadcrumbEntries(parentFolderId, request, renderResponse);
 	}
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-folder"), currentURL);
+	JournalPortletUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-folder"), currentURL);
 }
 %>

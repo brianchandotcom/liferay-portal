@@ -32,6 +32,7 @@ page import="com.liferay.journal.web.portlet.action.ActionUtil" %><%@
 page import="com.liferay.journal.web.search.ArticleDisplayTerms" %><%@
 page import="com.liferay.journal.web.search.FeedDisplayTerms" %><%@
 page import="com.liferay.journal.web.search.FeedSearch" %><%@
+page import="com.liferay.journal.web.util.JournalPortletUtil" %><%@
 page import="com.liferay.portal.kernel.xml.Document" %><%@
 page import="com.liferay.portal.kernel.xml.Element" %><%@
 page import="com.liferay.portal.kernel.xml.Node" %><%@

@@ -50,7 +50,7 @@ else {
 	}
 }
 
-OrderByComparator<JournalArticle> orderByComparator = JournalUtil.getArticleOrderByComparator(orderByCol, orderByType);
+OrderByComparator<JournalArticle> orderByComparator = JournalPortletUtil.getArticleOrderByComparator(orderByCol, orderByType);
 
 articleSearchContainer.setOrderByCol(orderByCol);
 articleSearchContainer.setOrderByComparator(orderByComparator);

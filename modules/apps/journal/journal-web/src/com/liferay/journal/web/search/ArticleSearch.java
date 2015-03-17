@@ -15,6 +15,7 @@
 package com.liferay.journal.web.search;
 
 import com.liferay.journal.web.constants.JournalPortletKeys;
+import com.liferay.journal.web.util.JournalPortletUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.util.JournalUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -146,7 +146,7 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 			}
 
 			OrderByComparator<JournalArticle> orderByComparator =
-				JournalUtil.getArticleOrderByComparator(
+				JournalPortletUtil.getArticleOrderByComparator(
 					orderByCol, orderByType);
 
 			setOrderableHeaders(orderableHeaders);

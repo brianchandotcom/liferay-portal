@@ -14,11 +14,11 @@
 
 package com.liferay.journal.web.context;
 
+import com.liferay.journal.web.util.JournalPortletUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.journal.util.JournalUtil;
 
 import javax.portlet.PortletPreferences;
 
@@ -37,7 +37,7 @@ public class JournalDisplayContext {
 
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
-			_displayStyle = JournalUtil.getDisplayStyle(
+			_displayStyle = JournalPortletUtil.getDisplayStyle(
 				_liferayPortletRequest, getDisplayViews());
 		}
 

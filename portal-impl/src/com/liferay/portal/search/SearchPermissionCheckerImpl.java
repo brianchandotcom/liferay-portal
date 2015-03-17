@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.ResourceBlock;
-import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -46,6 +44,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerBag;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.security.permission.ResourceBlockIdsBag;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
@@ -204,27 +203,27 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		boolean[] hasResourcePermissions = null;
 
 		if (ResourceBlockLocalServiceUtil.isSupported(className)) {
-			ResourceBlock resourceBlock =
-				ResourceBlockLocalServiceUtil.getResourceBlock(
-					className, Long.valueOf(classPK));
-
-			ResourceBlockPermissionsContainer
-				resourceBlockPermissionsContainer =
-					ResourceBlockPermissionLocalServiceUtil.
-						getResourceBlockPermissionsContainer(
-							resourceBlock.getResourceBlockId());
+			ResourceBlockIdsBag resourceBlockIdsBag =
+				ResourceBlockLocalServiceUtil.getResourceBlockIdsBag(
+					companyId, groupId, className, roleIdsArray);
 
 			long actionId = ResourceBlockLocalServiceUtil.getActionId(
 				className, ActionKeys.VIEW);
 
+			List<Long> resourceBlockIds =
+				resourceBlockIdsBag.getResourceBlockIds(actionId);
+
 			hasResourcePermissions = new boolean[roleIdsArray.length];
 
-			for (int i = 0; i < roleIdsArray.length; i++) {
-				long actionIds = resourceBlockPermissionsContainer.getActionIds(
-					roleIdsArray[i]);
+			for (long resourceBlockId : resourceBlockIds) {
+				for (int i = 0; i < roleIdsArray.length; i++) {
+					int count =
+						ResourceBlockPermissionLocalServiceUtil.
+							getResourceBlockPermissionsCount(
+								resourceBlockId, roleIdsArray[i]);
 
-				hasResourcePermissions[i] =
-					((actionIds & actionId) == actionId);
+					hasResourcePermissions[i] = (count > 0);
+				}
 			}
 		}
 		else {

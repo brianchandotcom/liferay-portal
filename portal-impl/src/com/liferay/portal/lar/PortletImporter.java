@@ -443,7 +443,7 @@ public class PortletImporter {
 
 		portletDataContext.setManifestSummary(manifestSummary);
 
-		// Read asset tags, expando tables, locks and permissions to make them
+		// Read expando tables, locks and permissions to make them
 		// available to the data handlers through the portlet data context
 
 		Element rootElement = portletDataContext.getImportDataRootElement();

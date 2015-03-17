@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.util;
+package com.liferay.portal.search.elasticsearch.internal.util;
 
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.search.elasticsearch.io.StringOutputStream;
+import com.liferay.portal.search.elasticsearch.internal.io.StringOutputStream;
 
 import java.io.IOException;
 

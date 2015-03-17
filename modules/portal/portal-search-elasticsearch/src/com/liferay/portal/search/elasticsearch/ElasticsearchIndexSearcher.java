@@ -43,7 +43,7 @@ import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectio
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch.internal.facet.CompositeFacetProcessor;
 import com.liferay.portal.search.elasticsearch.internal.facet.ElasticsearchFacetFieldCollector;
-import com.liferay.portal.search.elasticsearch.util.DocumentTypes;
+import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
 
 import java.util.ArrayList;
 import java.util.Collection;

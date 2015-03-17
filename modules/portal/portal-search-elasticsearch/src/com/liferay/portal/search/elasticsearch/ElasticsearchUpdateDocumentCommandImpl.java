@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.document.ElasticsearchDocumentFactory;
-import com.liferay.portal.search.elasticsearch.util.DocumentTypes;
-import com.liferay.portal.search.elasticsearch.util.LogUtil;
+import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
+import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
 
 import java.io.IOException;
 

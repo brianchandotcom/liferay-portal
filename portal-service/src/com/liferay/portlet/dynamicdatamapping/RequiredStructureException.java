@@ -41,6 +41,24 @@ public class RequiredStructureException extends PortalException {
 		return _type;
 	}
 
+	public static class MustNotDeleteReferencedFileEntryType
+		extends RequiredStructureException {
+
+		public MustNotDeleteReferencedFileEntryType(long fileEntryTypeId) {
+			super(
+				String.format(
+					"File entry type %s cannot be deleted because it is " +
+						"referenced by documents",
+					fileEntryTypeId),
+				REFERENCED_STRUCTURE);
+
+			this.fileEntryTypeId = fileEntryTypeId;
+		}
+
+		public long fileEntryTypeId;
+
+	}
+
 	public static class MustNotDeleteReferencedStructure
 		extends RequiredStructureException {
 

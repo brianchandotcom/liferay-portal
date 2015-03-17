@@ -14,6 +14,7 @@
 
 package com.liferay.search.web.util;
 
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 
 /**
@@ -24,6 +25,11 @@ public interface SearchFacet {
 	public String getClassName();
 
 	public FacetConfiguration getDefaultConfiguration();
+
+	public FacetConfiguration getFacetConfiguration();
+
+	public FacetConfiguration getFacetConfiguration(String searchConfiguration)
+		throws JSONException;
 
 	public String getTitle();
 

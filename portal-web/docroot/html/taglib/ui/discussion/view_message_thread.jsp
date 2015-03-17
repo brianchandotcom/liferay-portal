@@ -73,6 +73,11 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 					<%
 					User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
+
+					Date createDate = message.getCreateDate();
+					Date modifiedDate = message.getModifiedDate();
+
+					String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 					%>
 
 					<aui:a href="<%= (messageUser != null) ? messageUser.getDisplayURL(themeDisplay) : null %>">
@@ -85,7 +90,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 					<c:choose>
 						<c:when test="<%= message.getParentMessageId() == rootMessage.getMessageId() %>">
-							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - message.getModifiedDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+							<liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" translateArguments="<%= false %>" />
 						</c:when>
 						<c:otherwise>
 
@@ -130,9 +135,15 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							sb.append("</a>");
 							%>
 
-							<%= LanguageUtil.format(request, "x-ago-in-reply-to-x", new Object[] {LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - message.getModifiedDate().getTime(), true), sb.toString()}, false) %>
+							<%= LanguageUtil.format(request, "x-ago-in-reply-to-x", new Object[] {createDateDescription, sb.toString()}, false) %>
 						</c:otherwise>
 					</c:choose>
+
+					<c:if test="<%= createDate.before(modifiedDate) %>">
+						<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(dateFormatDateTime.format(modifiedDate)) %>');">
+							- <liferay-ui:message key="edited" />
+						</strong>
+					</c:if>
 				</header>
 
 				<%

@@ -207,10 +207,7 @@ public class JournalArticleStagedModelDataHandler
 		long groupId = GetterUtil.getLong(
 			referenceElement.attributeValue("group-id"));
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
-
-		liveGroupId = MapUtil.getLong(groupIds, groupId, liveGroupId);
+		groupId = MapUtil.getLong(groupIds, groupId);
 
 		String articleArticleId = referenceElement.attributeValue("article-id");
 		boolean preloaded = GetterUtil.getBoolean(
@@ -219,7 +216,7 @@ public class JournalArticleStagedModelDataHandler
 		JournalArticle existingArticle = null;
 
 		existingArticle = fetchExistingArticle(
-			uuid, articleResourceUuid, liveGroupId, articleArticleId, null, 0.0,
+			uuid, articleResourceUuid, groupId, articleArticleId, null, 0.0,
 			preloaded);
 
 		Map<String, String> articleArticleIds =
@@ -255,17 +252,14 @@ public class JournalArticleStagedModelDataHandler
 		long groupId = GetterUtil.getLong(
 			referenceElement.attributeValue("group-id"));
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
-
-		liveGroupId = MapUtil.getLong(groupIds, groupId, liveGroupId);
+		groupId = MapUtil.getLong(groupIds, groupId);
 
 		String articleArticleId = referenceElement.attributeValue("article-id");
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
 		JournalArticle existingArticle = fetchExistingArticle(
-			uuid, articleResourceUuid, liveGroupId, articleArticleId, null, 0.0,
+			uuid, articleResourceUuid, groupId, articleArticleId, null, 0.0,
 			preloaded);
 
 		if (existingArticle == null) {

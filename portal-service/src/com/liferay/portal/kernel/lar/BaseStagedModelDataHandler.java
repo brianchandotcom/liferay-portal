@@ -259,15 +259,12 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		long groupId = GetterUtil.getLong(
 			referenceElement.attributeValue("group-id"));
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
-
-		liveGroupId = MapUtil.getLong(groupIds, groupId, liveGroupId);
+		groupId = MapUtil.getLong(groupIds, groupId);
 
 		long classPK = GetterUtil.getLong(
 			referenceElement.attributeValue("class-pk"));
 
-		importMissingReference(portletDataContext, uuid, liveGroupId, classPK);
+		importMissingReference(portletDataContext, uuid, groupId, classPK);
 	}
 
 	@Override
@@ -393,13 +390,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		long groupId = GetterUtil.getLong(
 			referenceElement.attributeValue("group-id"));
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
-
-		liveGroupId = MapUtil.getLong(groupIds, groupId, liveGroupId);
+		groupId = MapUtil.getLong(groupIds, groupId);
 
 		try {
-			return validateMissingReference(uuid, liveGroupId);
+			return validateMissingReference(uuid, groupId);
 		}
 		catch (Exception e) {
 			return false;

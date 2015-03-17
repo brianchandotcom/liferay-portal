@@ -2435,7 +2435,7 @@ public interface PropsKeys {
 
 	public static final String STAGING_DELETE_TEMP_LAR_ON_SUCCESS = "staging.delete.temp.lar.on.success";
 
-	public static final String STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEANUP_CHECK_INTERVAL = "staging.draft.export.import.configuration.cleanup.check.interval";
+	public static final String STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL = "staging.draft.export.import.configuration.check.interval";
 
 	public static final String STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEANUP_COUNT = "staging.draft.export.import.configuration.cleanup.count";
 

@@ -372,7 +372,7 @@
 			<scheduler-event-listener-class>com.liferay.portlet.layoutsadmin.messaging.DraftExportImportConfigurationsMessageListener</scheduler-event-listener-class>
 			<trigger>
 				<simple>
-					<property-key>staging.draft.export.import.configuration.cleanup.check.interval</property-key>
+					<property-key>staging.draft.export.import.configuration.check.interval</property-key>
 					<time-unit>hour</time-unit>
 				</simple>
 			</trigger>

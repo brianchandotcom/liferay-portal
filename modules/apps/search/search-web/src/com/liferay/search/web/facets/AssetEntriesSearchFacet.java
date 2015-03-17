@@ -20,9 +20,17 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.search.web.util.SearchFacet;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eudaldo Alonso
@@ -31,6 +39,10 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, service = SearchFacet.class
 )
 public class AssetEntriesSearchFacet extends BaseSearchFacet {
+
+	public List<AssetRendererFactory> getAssetRendererFactories() {
+		return _assetRendererFactories;
+	}
 
 	@Override
 	public String getClassName() {
@@ -49,14 +61,11 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		jsonArray.put("com.liferay.portal.model.User");
-		jsonArray.put("com.liferay.portlet.blogs.model.BlogsEntry");
-		jsonArray.put("com.liferay.portlet.documentlibrary.model.DLFileEntry");
-		jsonArray.put("com.liferay.portlet.documentlibrary.model.DLFolder");
-		jsonArray.put("com.liferay.portlet.journal.model.JournalArticle");
-		jsonArray.put("com.liferay.portlet.journal.model.JournalFolder");
-		jsonArray.put("com.liferay.portlet.messageboards.model.MBMessage");
-		jsonArray.put("com.liferay.portlet.wiki.model.WikiPage");
+		for (AssetRendererFactory assetRendererFactory :
+				_assetRendererFactories) {
+
+			jsonArray.put(assetRendererFactory.getClassName());
+		}
 
 		jsonObject.put("values", jsonArray);
 
@@ -75,5 +84,26 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 	public String getTitle() {
 		return "asset-type";
 	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(search.asset.type=*)", unbind = "removeAssetRendererFactory"
+	)
+	protected void addAssetRendererFactory(
+		AssetRendererFactory assetRendererFactory) {
+
+		_assetRendererFactories.add(assetRendererFactory);
+	}
+
+	protected void removeAssetRendererFactory(
+		AssetRendererFactory assetRendererFactory) {
+
+		_assetRendererFactories.remove(assetRendererFactory);
+	}
+
+	private final List<AssetRendererFactory> _assetRendererFactories =
+		new CopyOnWriteArrayList<>();
 
 }

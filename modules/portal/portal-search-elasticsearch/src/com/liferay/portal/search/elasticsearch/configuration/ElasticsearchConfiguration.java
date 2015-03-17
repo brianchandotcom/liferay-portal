@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -12,25 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.connection;
+package com.liferay.portal.search.elasticsearch.configuration;
 
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.client.Client;
+import aQute.bnd.annotation.metatype.Meta;
 
 /**
  * @author Michael C. Han
  */
-public interface ElasticsearchConnection {
+@Meta.OCD(
+	id = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration"
+)
+public interface ElasticsearchConfiguration {
 
-	public void close();
+	@Meta.AD(deflt = "LiferayElasticSearch", required = false)
+	public String clusterName();
 
-	public Client getClient();
-
-	public ClusterHealthResponse getClusterHealthResponse(
-		long timeout, int nodesCount);
-
-	public OperationMode getOperationMode();
-
-	public void initialize();
+	@Meta.AD(deflt = "EMBEDDED", required = false)
+	public String operationMode();
 
 }

@@ -14,14 +14,18 @@
 
 package com.liferay.portal.search.elasticsearch.internal.connection;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.connection.BaseElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
+import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.registry.util.StringPlus;
 
@@ -47,10 +51,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
+	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
 	property = {
 		"configFileName=/META-INF/elasticsearch-remote.yml",
-		"service.ranking:Integer=1000",
 		"testConfigFileName=/META-INF/elasticsearch-test.yml"
 	},
 	service = ElasticsearchConnection.class
@@ -60,6 +63,11 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	@Override
 	public void close() {
 		super.close();
+	}
+
+	@Override
+	public OperationMode getOperationMode() {
+		return OperationMode.EMBEDDED;
 	}
 
 	@Override
@@ -74,8 +82,10 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		setClusterName(
-			MapUtil.getString(properties, "clusterName", CLUSTER_NAME));
+		_elasticsearchConfiguration = Configurable.createConfigurable(
+			ElasticsearchConfiguration.class, properties);
+
+		setClusterName(_elasticsearchConfiguration.clusterName());
 		setConfigFileName(MapUtil.getString(properties, "configFileName"));
 		setTestConfigFileName(
 			MapUtil.getString(properties, "testConfigFileName"));
@@ -83,9 +93,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		List<String> transportAddresses = StringPlus.asList(
 			properties.get("transportAddresses"));
 
-		setTransportAddresses(new HashSet<String>(transportAddresses));
-
-		initialize();
+		setTransportAddresses(new HashSet<>(transportAddresses));
 	}
 
 	@Override
@@ -139,6 +147,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteElasticsearchConnection.class);
 
+	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private Set<String> _transportAddresses = new HashSet<>();
 
 }

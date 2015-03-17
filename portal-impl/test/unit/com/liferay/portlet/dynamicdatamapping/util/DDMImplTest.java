@@ -20,6 +20,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -59,8 +60,15 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 		DDMFormLayout ddmFormLayout = _ddmImpl.getDefaultDDMFormLayout(ddmForm);
 
+		List<DDMFormLayoutPage> ddmFormLayoutPages =
+			ddmFormLayout.getDDMFormLayoutPages();
+
+		Assert.assertEquals(1, ddmFormLayoutPages.size());
+
+		DDMFormLayoutPage ddmFormLayoutPage = ddmFormLayoutPages.get(0);
+
 		List<DDMFormLayoutRow> ddmFormLayoutRows =
-			ddmFormLayout.getDDMFormLayoutRows();
+			ddmFormLayoutPage.getDDMFormLayoutRows();
 
 		Assert.assertEquals(2, ddmFormLayoutRows.size());
 

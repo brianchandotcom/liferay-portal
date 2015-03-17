@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatamapping.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Marcellus Tavares
@@ -26,29 +27,42 @@ public class DDMFormLayout {
 	}
 
 	public DDMFormLayout(DDMFormLayout ddmFormLayout) {
-		for (DDMFormLayoutRow ddmFormLayoutRow :
-				ddmFormLayout._ddmFormLayoutRows) {
+		_defaultLocale = ddmFormLayout._defaultLocale;
 
-			addDDMFormLayoutRow(new DDMFormLayoutRow(ddmFormLayoutRow));
+		for (DDMFormLayoutPage ddmFormLayoutPage :
+				ddmFormLayout._ddmFormLayoutPages) {
+
+			addDDMFormLayoutPage(new DDMFormLayoutPage(ddmFormLayoutPage));
 		}
 	}
 
-	public void addDDMFormLayoutRow(DDMFormLayoutRow ddmFormLayoutRow) {
-		_ddmFormLayoutRows.add(ddmFormLayoutRow);
+	public void addDDMFormLayoutPage(DDMFormLayoutPage ddmFormLayoutPage) {
+		_ddmFormLayoutPages.add(ddmFormLayoutPage);
 	}
 
-	public DDMFormLayoutRow getDDMFormLayoutRow(int index) {
-		return _ddmFormLayoutRows.get(index);
+	public DDMFormLayoutPage getDDMFormLayoutPage(int index) {
+		return _ddmFormLayoutPages.get(index);
 	}
 
-	public List<DDMFormLayoutRow> getDDMFormLayoutRows() {
-		return _ddmFormLayoutRows;
+	public List<DDMFormLayoutPage> getDDMFormLayoutPages() {
+		return _ddmFormLayoutPages;
 	}
 
-	public void setDDMFormLayoutRows(List<DDMFormLayoutRow> ddmFormLayoutRows) {
-		_ddmFormLayoutRows = ddmFormLayoutRows;
+	public Locale getDefaultLocale() {
+		return _defaultLocale;
 	}
 
-	private List<DDMFormLayoutRow> _ddmFormLayoutRows = new ArrayList<>();
+	public void setDDMFormLayoutPages(
+		List<DDMFormLayoutPage> ddmFormLayoutPages) {
+
+		_ddmFormLayoutPages = ddmFormLayoutPages;
+	}
+
+	public void setDefaultLocale(Locale defaultLocale) {
+		_defaultLocale = defaultLocale;
+	}
+
+	private List<DDMFormLayoutPage> _ddmFormLayoutPages = new ArrayList<>();
+	private Locale _defaultLocale;
 
 }

@@ -17,11 +17,16 @@ package com.liferay.portlet.dynamicdatamapping.io;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Marcellus Tavares
@@ -33,7 +38,8 @@ public class DDMFormLayoutJSONSerializerImpl
 	public String serialize(DDMFormLayout ddmFormLayout) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		addRows(jsonObject, ddmFormLayout.getDDMFormLayoutRows());
+		addDefaultLanguageId(jsonObject, ddmFormLayout.getDefaultLocale());
+		addPages(jsonObject, ddmFormLayout.getDDMFormLayoutPages());
 
 		return jsonObject.toString();
 	}
@@ -50,6 +56,25 @@ public class DDMFormLayoutJSONSerializerImpl
 		jsonObject.put("columns", jsonArray);
 	}
 
+	protected void addDefaultLanguageId(
+		JSONObject jsonObject, Locale defaultLocale) {
+
+		jsonObject.put(
+			"defaultLanguageId", LocaleUtil.toLanguageId(defaultLocale));
+	}
+
+	protected void addPages(
+		JSONObject jsonObject, List<DDMFormLayoutPage> ddmFormLayoutPages) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (DDMFormLayoutPage ddmFormLayoutPage : ddmFormLayoutPages) {
+			jsonArray.put(toJSONObject(ddmFormLayoutPage));
+		}
+
+		jsonObject.put("pages", jsonArray);
+	}
+
 	protected void addRows(
 		JSONObject jsonObject, List<DDMFormLayoutRow> ddmFormLayoutRows) {
 
@@ -62,11 +87,38 @@ public class DDMFormLayoutJSONSerializerImpl
 		jsonObject.put("rows", jsonArray);
 	}
 
+	protected void addTitle(JSONObject pageJSONObject, LocalizedValue title) {
+		Map<Locale, String> values = title.getValues();
+
+		if (values.isEmpty()) {
+			return;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		for (Locale availableLocale : title.getAvailableLocales()) {
+			jsonObject.put(
+				LocaleUtil.toLanguageId(availableLocale),
+				title.getString(availableLocale));
+		}
+
+		pageJSONObject.put("title", jsonObject);
+	}
+
 	protected JSONObject toJSONObject(DDMFormLayoutColumn ddmFormLayoutColumn) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("fieldName", ddmFormLayoutColumn.getDDMFormFieldName());
 		jsonObject.put("size", ddmFormLayoutColumn.getSize());
+
+		return jsonObject;
+	}
+
+	protected JSONObject toJSONObject(DDMFormLayoutPage ddmFormLayoutPage) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		addTitle(jsonObject, ddmFormLayoutPage.getTitle());
+		addRows(jsonObject, ddmFormLayoutPage.getDDMFormLayoutRows());
 
 		return jsonObject;
 	}

@@ -18,12 +18,17 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Marcellus Tavares
@@ -38,18 +43,12 @@ public class DDMFormLayoutJSONDeserializerImpl
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			serializedDDMFormLayout);
 
-		DDMFormLayout ddmFormLayout = getDDMFormLayout(jsonObject);
-
-		return ddmFormLayout;
-	}
-
-	protected DDMFormLayout getDDMFormLayout(JSONObject jsonObject) {
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
-		List<DDMFormLayoutRow> ddmFormLayoutRows = getDDMFormLayoutRows(
-			jsonObject.getJSONArray("rows"));
-
-		ddmFormLayout.setDDMFormLayoutRows(ddmFormLayoutRows);
+		setDDMFormLayoutDefaultLocale(
+			jsonObject.getString("defaultLanguageId"), ddmFormLayout);
+		setDDMFormLayoutPages(jsonObject.getJSONArray("pages"), ddmFormLayout);
+		setDDMFormLayoutPageTitlesDefaultLocale(ddmFormLayout);
 
 		return ddmFormLayout;
 	}
@@ -78,13 +77,37 @@ public class DDMFormLayoutJSONDeserializerImpl
 		return ddmFormLayoutColumns;
 	}
 
+	protected DDMFormLayoutPage getDDMFormLayoutPage(JSONObject jsonObject) {
+		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
+
+		setDDMFormLayoutPageRows(
+			jsonObject.getJSONArray("rows"), ddmFormLayoutPage);
+		setDDMFormLayoutPageTitle(
+			jsonObject.getJSONObject("title"), ddmFormLayoutPage);
+
+		return ddmFormLayoutPage;
+	}
+
+	protected List<DDMFormLayoutPage> getDDMFormLayoutPages(
+		JSONArray jsonArray) {
+
+		List<DDMFormLayoutPage> ddmFormLayoutPages = new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			DDMFormLayoutPage ddmFormLayoutPage = getDDMFormLayoutPage(
+				jsonArray.getJSONObject(i));
+
+			ddmFormLayoutPages.add(ddmFormLayoutPage);
+		}
+
+		return ddmFormLayoutPages;
+	}
+
 	protected DDMFormLayoutRow getDDMFormLayoutRow(JSONObject jsonObject) {
 		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
 
-		List<DDMFormLayoutColumn> ddmFormLayoutColumns =
-			getDDMFormLayoutColumns(jsonObject.getJSONArray("columns"));
-
-		ddmFormLayoutRow.setDDMFormLayoutColumns(ddmFormLayoutColumns);
+		setDDMFormLayoutRowColumns(
+			jsonObject.getJSONArray("columns"), ddmFormLayoutRow);
 
 		return ddmFormLayoutRow;
 	}
@@ -100,6 +123,85 @@ public class DDMFormLayoutJSONDeserializerImpl
 		}
 
 		return ddmFormLayoutRows;
+	}
+
+	protected LocalizedValue getTitle(JSONObject jsonObject) {
+		if (jsonObject == null) {
+			return null;
+		}
+
+		LocalizedValue title = new LocalizedValue();
+
+		Iterator<String> itr = jsonObject.keys();
+
+		while (itr.hasNext()) {
+			String languageId = itr.next();
+
+			title.addString(
+				LocaleUtil.fromLanguageId(languageId),
+				jsonObject.getString(languageId));
+		}
+
+		return title;
+	}
+
+	protected void setDDMFormLayoutDefaultLocale(
+		String defaultLanguageId, DDMFormLayout ddmFormLayout) {
+
+		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
+
+		ddmFormLayout.setDefaultLocale(defaultLocale);
+	}
+
+	protected void setDDMFormLayoutPageRows(
+		JSONArray jsonArray, DDMFormLayoutPage ddmFormLayoutPage) {
+
+		List<DDMFormLayoutRow> ddmFormLayoutRows = getDDMFormLayoutRows(
+			jsonArray);
+
+		ddmFormLayoutPage.setDDMFormLayoutRows(ddmFormLayoutRows);
+	}
+
+	protected void setDDMFormLayoutPages(
+		JSONArray jsonArray, DDMFormLayout ddmFormLayout) {
+
+		List<DDMFormLayoutPage> ddmFormLayoutPages = getDDMFormLayoutPages(
+			jsonArray);
+
+		ddmFormLayout.setDDMFormLayoutPages(ddmFormLayoutPages);
+	}
+
+	protected void setDDMFormLayoutPageTitle(
+		JSONObject jsonObject, DDMFormLayoutPage ddmFormLayoutPage) {
+
+		LocalizedValue title = getTitle(jsonObject);
+
+		if (title == null) {
+			return;
+		}
+
+		ddmFormLayoutPage.setTitle(title);
+	}
+
+	protected void setDDMFormLayoutPageTitlesDefaultLocale(
+		DDMFormLayout ddmFormLayout) {
+
+		for (DDMFormLayoutPage ddmFormLayoutPage :
+				ddmFormLayout.getDDMFormLayoutPages()) {
+
+			LocalizedValue title = ddmFormLayoutPage.getTitle();
+
+			title.setDefaultLocale(ddmFormLayout.getDefaultLocale());
+		}
+	}
+
+	protected void setDDMFormLayoutRowColumns(
+		JSONArray jsonArray, DDMFormLayoutRow ddmFormLayoutRow) {
+
+		List<DDMFormLayoutColumn> ddmFormLayoutColumns =
+			getDDMFormLayoutColumns(jsonArray);
+
+		ddmFormLayoutRow.setDDMFormLayoutColumns(ddmFormLayoutColumns);
 	}
 
 }

@@ -14,23 +14,30 @@
 
 package com.liferay.portlet.dynamicdatamapping.io;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Marcellus Tavares
  */
+@PrepareForTest({LocaleUtil.class})
 public class DDMFormLayoutJSONSerializerTest extends BaseDDMTestCase {
 
 	@Before
 	public void setUp() {
 		setUpDDMFormLayoutJSONSerializerUtil();
 		setUpJSONFactoryUtil();
+		setUpLocaleUtil();
 	}
 
 	@Test
@@ -49,16 +56,36 @@ public class DDMFormLayoutJSONSerializerTest extends BaseDDMTestCase {
 	protected DDMFormLayout createDDMFormLayout() {
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
-		ddmFormLayout.addDDMFormLayoutRow(
+		ddmFormLayout.setDefaultLocale(LocaleUtil.US);
+
+		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
+			"Page 1", "Pagina 1");
+
+		ddmFormLayoutPage.addDDMFormLayoutRow(
 			createDDMFormLayoutRow(
 				createDDMFormLayoutColumns("text1", "text2")));
-		ddmFormLayout.addDDMFormLayoutRow(
+		ddmFormLayoutPage.addDDMFormLayoutRow(
 			createDDMFormLayoutRow(
 				createDDMFormLayoutColumns("text3", "text4", "text5")));
-		ddmFormLayout.addDDMFormLayoutRow(
+		ddmFormLayoutPage.addDDMFormLayoutRow(
 			createDDMFormLayoutRow(createDDMFormLayoutColumns("text6")));
 
+		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage);
+
 		return ddmFormLayout;
+	}
+
+	protected DDMFormLayoutPage createDDMFormLayoutPage(
+		String enTitle, String ptTitle) {
+
+		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
+
+		LocalizedValue title = ddmFormLayoutPage.getTitle();
+
+		title.addString(LocaleUtil.US, enTitle);
+		title.addString(LocaleUtil.BRAZIL, ptTitle);
+
+		return ddmFormLayoutPage;
 	}
 
 	protected void setUpDDMFormLayoutJSONSerializerUtil() {

@@ -20,22 +20,26 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marcellus Tavares
  */
+@Component(immediate = true, service = DDMFormValidator.class)
 public class DDMFormValidatorImpl implements DDMFormValidator {
 
 	@Override
@@ -43,8 +47,8 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		validateDDMFormLocales(ddmForm);
 
 		validateDDMFormFields(
-			ddmForm.getDDMFormFields(), ddmForm.getAvailableLocales(),
-			ddmForm.getDefaultLocale());
+			ddmForm.getDDMFormFields(), new HashSet<String>(),
+			ddmForm.getAvailableLocales(), ddmForm.getDefaultLocale());
 	}
 
 	protected void validateDDMFormAvailableLocales(
@@ -74,7 +78,8 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		}
 	}
 
-	protected void validateDDMFormFieldName(DDMFormField ddmFormField)
+	protected void validateDDMFormFieldName(
+			DDMFormField ddmFormField, Set<String> ddmFormFieldNames)
 		throws DDMFormValidationException {
 
 		Matcher matcher = _ddmFormFieldNamePattern.matcher(
@@ -82,9 +87,17 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 
 		if (!matcher.matches()) {
 			throw new DDMFormValidationException(
-				"Nonalphanumeric characters were defined for field name " +
+				"Invalid characters were defined for field name " +
 					ddmFormField.getName());
 		}
+
+		if (ddmFormFieldNames.contains(ddmFormField.getName())) {
+			throw new DDMFormValidationException(
+				"The field name " + ddmFormField.getName() +
+					" was defined more than once");
+		}
+
+		ddmFormFieldNames.add(ddmFormField.getName());
 	}
 
 	protected void validateDDMFormFieldOptions(
@@ -142,12 +155,12 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	}
 
 	protected void validateDDMFormFields(
-			List<DDMFormField> ddmFormFields,
+			List<DDMFormField> ddmFormFields, Set<String> ddmFormFieldNames,
 			Set<Locale> ddmFormAvailableLocales, Locale ddmFormDefaultLocale)
 		throws DDMFormValidationException {
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
-			validateDDMFormFieldName(ddmFormField);
+			validateDDMFormFieldName(ddmFormField, ddmFormFieldNames);
 
 			validateDDMFormFieldType(ddmFormField);
 
@@ -169,15 +182,18 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 				ddmFormDefaultLocale);
 
 			validateDDMFormFields(
-				ddmFormField.getNestedDDMFormFields(), ddmFormAvailableLocales,
-				ddmFormDefaultLocale);
+				ddmFormField.getNestedDDMFormFields(), ddmFormFieldNames,
+				ddmFormAvailableLocales, ddmFormDefaultLocale);
 		}
 	}
 
 	protected void validateDDMFormFieldType(DDMFormField ddmFormField)
 		throws DDMFormValidationException {
 
-		if (Validator.isNull(ddmFormField.getType())) {
+		Set<String> fieldTypeNames =
+			DDMFormFieldTypeRegistryUtil.getDDMFormFieldTypeNames();
+
+		if (!fieldTypeNames.contains(ddmFormField.getType())) {
 			throw new DDMFormValidationException(
 				"Invalid type set for field " + ddmFormField.getName());
 		}
@@ -218,6 +234,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	private final String[] _ddmFormFieldIndexTypes = new String[] {
 		StringPool.BLANK, "keyword", "text"
 	};
-	private final Pattern _ddmFormFieldNamePattern = Pattern.compile("\\w+");
+	private final Pattern _ddmFormFieldNamePattern = Pattern.compile(
+		"(\\w|_)+");
 
 }

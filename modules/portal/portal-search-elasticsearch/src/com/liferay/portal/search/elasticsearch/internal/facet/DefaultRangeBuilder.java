@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.facet;
+package com.liferay.portal.search.elasticsearch.internal.facet;
 
 import java.io.IOException;
 

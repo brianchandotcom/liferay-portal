@@ -238,6 +238,11 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			_log.info("Registering portlets for " + servletContextName);
 		}
 
+		PortletContextBag portletContextBag = new PortletContextBag(
+			servletContextName);
+
+		PortletContextBagPool.put(servletContextName, portletContextBag);
+
 		List<Portlet> portlets = PortletLocalServiceUtil.initWAR(
 			servletContextName, servletContext, xmls,
 			hotDeployEvent.getPluginPackage());
@@ -456,10 +461,8 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			ClassLoader classLoader, Portlet portlet)
 		throws Exception {
 
-		PortletContextBag portletContextBag = new PortletContextBag(
+		PortletContextBag portletContextBag = PortletContextBagPool.get(
 			servletContextName);
-
-		PortletContextBagPool.put(servletContextName, portletContextBag);
 
 		PortletApp portletApp = portlet.getPortletApp();
 

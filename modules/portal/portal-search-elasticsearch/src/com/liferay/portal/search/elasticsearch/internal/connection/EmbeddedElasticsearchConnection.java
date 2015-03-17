@@ -14,11 +14,15 @@
 
 package com.liferay.portal.search.elasticsearch.internal.connection;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.connection.BaseElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
+import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 
 import java.util.Map;
@@ -39,6 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
 	immediate = true,
 	property = {
 		"configFileName=/META-INF/elasticsearch-embedded.yml",
@@ -59,6 +64,11 @@ public class EmbeddedElasticsearchConnection
 	}
 
 	@Override
+	public OperationMode getOperationMode() {
+		return OperationMode.EMBEDDED;
+	}
+
+	@Override
 	@Reference
 	public void setIndexFactory(IndexFactory indexFactory) {
 		super.setIndexFactory(indexFactory);
@@ -66,13 +76,13 @@ public class EmbeddedElasticsearchConnection
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		setClusterName(
-			MapUtil.getString(properties, "clusterName", CLUSTER_NAME));
+		_elasticsearchConfiguration = Configurable.createConfigurable(
+			ElasticsearchConfiguration.class, properties);
+
+		setClusterName(_elasticsearchConfiguration.clusterName());
 		setConfigFileName(MapUtil.getString(properties, "configFileName"));
 		setTestConfigFileName(
 			MapUtil.getString(properties, "testConfigFileName"));
-
-		initialize();
 	}
 
 	@Override
@@ -123,6 +133,7 @@ public class EmbeddedElasticsearchConnection
 	private static final Log _log = LogFactoryUtil.getLog(
 		EmbeddedElasticsearchConnection.class);
 
+	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private Node _node;
 
 }

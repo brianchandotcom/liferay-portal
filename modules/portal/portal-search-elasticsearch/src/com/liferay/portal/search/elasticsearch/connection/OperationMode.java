@@ -14,23 +14,11 @@
 
 package com.liferay.portal.search.elasticsearch.connection;
 
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.client.Client;
-
 /**
  * @author Michael C. Han
  */
-public interface ElasticsearchConnection {
+public enum OperationMode {
 
-	public void close();
-
-	public Client getClient();
-
-	public ClusterHealthResponse getClusterHealthResponse(
-		long timeout, int nodesCount);
-
-	public OperationMode getOperationMode();
-
-	public void initialize();
+	EMBEDDED, REMOTE
 
 }

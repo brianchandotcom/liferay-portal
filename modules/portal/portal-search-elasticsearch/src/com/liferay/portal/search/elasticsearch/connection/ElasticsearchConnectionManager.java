@@ -14,23 +14,29 @@
 
 package com.liferay.portal.search.elasticsearch.connection;
 
-import java.util.concurrent.atomic.AtomicReference;
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.ClusterAdminClient;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
 	immediate = true, service = ElasticsearchConnectionManager.class
 )
 public class ElasticsearchConnectionManager {
@@ -42,12 +48,12 @@ public class ElasticsearchConnectionManager {
 	}
 
 	public Client getClient() {
-		if (_elasticsearchConnection.get() == null) {
+		if (getElasticsearchConnection() == null) {
 			throw new IllegalStateException(
 				"Elasticsearch connection not initialized");
 		}
 
-		return _elasticsearchConnection.get().getClient();
+		return getElasticsearchConnection().getClient();
 	}
 
 	public ClusterAdminClient getClusterAdminClient() {
@@ -59,32 +65,63 @@ public class ElasticsearchConnectionManager {
 	public ClusterHealthResponse getClusterHealthResponse(
 		long timeout, int nodesCount) {
 
-		return _elasticsearchConnection.get().getClusterHealthResponse(
+		return getElasticsearchConnection().getClusterHealthResponse(
 			timeout, nodesCount);
 	}
 
 	public ElasticsearchConnection getElasticsearchConnection() {
-		return _elasticsearchConnection.get();
+		return _elasticsearchConnections.get(_operationMode);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MANDATORY,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
+	@Reference(cardinality = ReferenceCardinality.AT_LEAST_ONE)
 	public void setElasticsearchConnection(
 		ElasticsearchConnection elasticsearchConnection) {
 
-		_elasticsearchConnection.set(elasticsearchConnection);
+		_elasticsearchConnections.put(
+			elasticsearchConnection.getOperationMode(),
+			elasticsearchConnection);
 	}
 
 	public void unsetElasticsearchConnection(
 		ElasticsearchConnection elasticsearchConnection) {
 
-		_elasticsearchConnection.set(null);
+		_elasticsearchConnections.remove(
+			elasticsearchConnection.getOperationMode());
+
+		elasticsearchConnection.close();
 	}
 
-	private final AtomicReference<ElasticsearchConnection>
-		_elasticsearchConnection = new AtomicReference<>();
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_elasticsearchConfiguration = Configurable.createConfigurable(
+			ElasticsearchConfiguration.class, properties);
+
+		OperationMode newOperationMode = OperationMode.valueOf(
+			_elasticsearchConfiguration.operationMode());
+
+		if (newOperationMode.equals(_operationMode)) {
+			return;
+		}
+
+		if (_operationMode != null) {
+			ElasticsearchConnection elasticsearchConnection =
+				_elasticsearchConnections.get(_operationMode);
+
+			elasticsearchConnection.close();
+		}
+
+		_operationMode = newOperationMode;
+
+		ElasticsearchConnection newElasticsearchConnection =
+			_elasticsearchConnections.get(_operationMode);
+
+		newElasticsearchConnection.initialize();
+	}
+
+	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
+	private final Map<OperationMode, ElasticsearchConnection>
+		_elasticsearchConnections = new HashMap<>();
+	private OperationMode _operationMode;
 
 }

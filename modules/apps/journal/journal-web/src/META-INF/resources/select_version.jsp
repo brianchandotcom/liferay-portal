@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -24,7 +24,7 @@ String eventName = ParamUtil.getString(request, "eventName", renderResponse.getN
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/html/portlet/journal/select_version.jsp");
+portletURL.setParameter("mvcPath", "/select_version.jsp");
 portletURL.setParameter("redirect", currentURL);
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("articleId", articleId);

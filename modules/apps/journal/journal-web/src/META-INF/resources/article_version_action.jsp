@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
@@ -27,7 +27,7 @@ JournalArticle article = (JournalArticle)row.getObject();
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.VIEW) %>">
 		<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcPath" value="/html/portlet/journal/preview_article_content.jsp" />
+			<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
 			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
 			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
@@ -46,7 +46,7 @@ JournalArticle article = (JournalArticle)row.getObject();
 
 		<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, article.getFolderId(), ActionKeys.ADD_ARTICLE) %>">
 			<portlet:renderURL var="copyURL">
-				<portlet:param name="mvcPath" value="/html/portlet/journal/copy_article.jsp" />
+				<portlet:param name="mvcPath" value="/copy_article.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
 				<portlet:param name="oldArticleId" value="<%= article.getArticleId() %>" />
@@ -76,7 +76,7 @@ JournalArticle article = (JournalArticle)row.getObject();
 	</c:if>
 
 	<portlet:renderURL var="compareVersionURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/html/portlet/journal/select_version.jsp" />
+		<portlet:param name="mvcPath" value="/select_version.jsp" />
 		<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
 		<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 		<portlet:param name="sourceVersion" value="<%= String.valueOf(article.getVersion()) %>" />

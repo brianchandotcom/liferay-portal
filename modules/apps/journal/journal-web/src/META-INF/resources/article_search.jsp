@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long folderId = GetterUtil.getLong((String)liferayPortletRequest.getAttribute("view.jsp-folderId"));
@@ -47,7 +47,7 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 	<aui:fieldset>
 		<aui:input inlineField="<%= true %>" name="<%= ArticleDisplayTerms.CONTENT %>" size="20" type="text" value="<%= displayTerms.getContent() %>" />
 
-		<c:if test="<%= !portletName.equals(PortletKeys.JOURNAL) || ((themeDisplay.getScopeGroupId() == themeDisplay.getCompanyGroupId()) && (Validator.isNotNull(displayTerms.getDDMStructureKey()) || Validator.isNotNull(displayTerms.getDDMTemplateKey()))) %>">
+		<c:if test="<%= !portletName.equals(JournalPortletKeys.JOURNAL) || ((themeDisplay.getScopeGroupId() == themeDisplay.getCompanyGroupId()) && (Validator.isNotNull(displayTerms.getDDMStructureKey()) || Validator.isNotNull(displayTerms.getDDMTemplateKey()))) %>">
 
 			<%
 			List<Group> mySiteGroups = user.getMySiteGroups();
@@ -63,7 +63,7 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 
 				<%
 				for (Group mySiteGroup : mySiteGroups) {
-					if (mySiteGroup.hasStagingGroup() && !mySiteGroup.isStagedRemotely() && mySiteGroup.isStagedPortlet(PortletKeys.JOURNAL)) {
+					if (mySiteGroup.hasStagingGroup() && !mySiteGroup.isStagedRemotely() && mySiteGroup.isStagedPortlet(JournalPortletKeys.JOURNAL)) {
 						mySiteGroup = mySiteGroup.getStagingGroup();
 					}
 				%>
@@ -94,7 +94,7 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 			</aui:select>
 		</c:if>
 
-		<c:if test="<%= portletName.equals(PortletKeys.JOURNAL) %>">
+		<c:if test="<%= portletName.equals(JournalPortletKeys.JOURNAL) %>">
 			<div class="separator"><!-- --></div>
 
 			<aui:select name="<%= ArticleDisplayTerms.STATUS %>" value="<%= displayTerms.getStatus() %>">

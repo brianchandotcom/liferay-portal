@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 JournalFolder folder = (JournalFolder)request.getAttribute("view.jsp-folder");
@@ -33,7 +33,7 @@ List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getJournalFolderStruc
 <aui:nav-item dropdown="<%= true %>" id="addButtonContainer" label="add">
 	<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
 		<portlet:renderURL var="addFolderURL">
-			<portlet:param name="mvcPath" value="/html/portlet/journal/edit_folder.jsp" />
+			<portlet:param name="mvcPath" value="/edit_folder.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 			<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
@@ -53,7 +53,7 @@ List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getJournalFolderStruc
 		%>
 
 			<liferay-portlet:renderURL var="addArticleURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
-				<portlet:param name="mvcPath" value="/html/portlet/journal/edit_article.jsp" />
+				<portlet:param name="mvcPath" value="/edit_article.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />

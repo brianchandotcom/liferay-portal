@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "web-content");
@@ -45,7 +45,7 @@ JournalArticle article = ActionUtil.getArticle(request);
 		portletURL.setParameter("articleId", article.getArticleId());
 		%>
 
-		<liferay-util:include page="/html/portlet/journal/article_header.jsp" />
+		<liferay-util:include page="/article_header.jsp" servletContext="<%= application %>" />
 
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 			<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
@@ -113,7 +113,7 @@ JournalArticle article = ActionUtil.getArticle(request);
 
 					<liferay-ui:search-container-column-jsp
 						cssClass="entry-action"
-						path="/html/portlet/journal/article_version_action.jsp"
+						path="/article_version_action.jsp"
 					/>
 				</liferay-ui:search-container-row>
 
@@ -157,7 +157,7 @@ JournalArticle article = ActionUtil.getArticle(request);
 						},
 						function(event) {
 							<portlet:renderURL var="compareVersionURL">
-								<portlet:param name="mvcPath" value="/html/portlet/journal/compare_versions.jsp" />
+								<portlet:param name="mvcPath" value="/compare_versions.jsp" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
 								<portlet:param name="articleId" value="<%= article.getArticleId() %>" />

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 JournalArticle article = ActionUtil.getArticle(request);
@@ -114,7 +114,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 								<span class="structure-name-label" id="<portlet:namespace />structureNameLabel">
 									<c:choose>
-										<c:when test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
+										<c:when test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, JournalPortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
 											<aui:a href="javascript:;" id="editDDMStructure" label="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>" />
 										</c:when>
 										<c:otherwise>
@@ -150,7 +150,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 									</c:if>
 
 									<c:choose>
-										<c:when test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, scopeGroupId, ddmTemplate, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
+										<c:when test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, scopeGroupId, ddmTemplate, JournalPortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
 											<aui:a href="javascript:;" id="editDDMTemplate" label="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>" />
 										</c:when>
 										<c:otherwise>
@@ -208,7 +208,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 	<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
 	<portlet:param name="closeRedirect" value="<%= currentURL %>" />
 	<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
-	<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL %>" />
+	<portlet:param name="refererPortletName" value="<%= JournalPortletKeys.JOURNAL %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 	<portlet:param name="classPK" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
@@ -218,7 +218,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 	<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 	<portlet:param name="closeRedirect" value="<%= currentURL %>" />
 	<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
-	<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL %>" />
+	<portlet:param name="refererPortletName" value="<%= JournalPortletKeys.JOURNAL %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 	<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
@@ -232,7 +232,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 			'ddm.classNameId': '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 			'ddm.classPK': <%= ddmStructure.getPrimaryKey() %>,
 			'ddm.groupId': <%= groupId %>,
-			'ddm.refererPortletName': '<%= PortletKeys.JOURNAL %>',
+			'ddm.refererPortletName': '<%= JournalPortletKeys.JOURNAL %>',
 			'ddm.resourceClassNameId': '<%= ddmStructure.getClassNameId() %>',
 			'ddm.templateId': <%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>,
 			descriptionInputLocalized: Liferay.component('<portlet:namespace />description'),

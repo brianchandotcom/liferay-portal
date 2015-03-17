@@ -14,12 +14,12 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/html/portlet/journal/view_feeds.jsp");
+portletURL.setParameter("mvcPath", "/view_feeds.jsp");
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -35,7 +35,7 @@ portletURL.setParameter("mvcPath", "/html/portlet/journal/view_feeds.jsp");
 			<aui:nav cssClass="navbar-nav">
 				<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED) %>">
 					<portlet:renderURL var="editFeedURL">
-						<portlet:param name="mvcPath" value="/html/portlet/journal/edit_feed.jsp" />
+						<portlet:param name="mvcPath" value="/edit_feed.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
@@ -63,14 +63,13 @@ portletURL.setParameter("mvcPath", "/html/portlet/journal/view_feeds.jsp");
 				</c:if>
 			</aui:nav>
 
-			<aui:nav-bar-search
-				file="/html/portlet/journal/feed_search.jsp"
-				searchContainer="<%= searchContainer %>"
-			/>
+			<aui:nav-bar-search searchContainer="<%= searchContainer %>">
+				<%@ include file="/feed_search.jsp" %>
+			</aui:nav-bar-search>
 		</aui:nav-bar>
 
 		<liferay-ui:search-container-results>
-			<%@ include file="/html/portlet/journal/feed_search_results.jspf" %>
+			<%@ include file="/feed_search_results.jspf" %>
 		</liferay-ui:search-container-results>
 
 		<c:if test="<%= !results.isEmpty() %>">
@@ -88,7 +87,7 @@ portletURL.setParameter("mvcPath", "/html/portlet/journal/view_feeds.jsp");
 			<%
 			PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("mvcPath", "/html/portlet/journal/edit_feed.jsp");
+			rowURL.setParameter("mvcPath", "/edit_feed.jsp");
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("groupId", String.valueOf(feed.getGroupId()));
 			rowURL.setParameter("feedId", feed.getFeedId());
@@ -114,7 +113,7 @@ portletURL.setParameter("mvcPath", "/html/portlet/journal/view_feeds.jsp");
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/html/portlet/journal/feed_action.jsp"
+				path="/feed_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

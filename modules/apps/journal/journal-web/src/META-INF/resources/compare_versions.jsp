@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -32,7 +32,7 @@ double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="mvcPath" value="/html/portlet/journal/compare_versions.jsp" />
+	<portlet:param name="mvcPath" value="/compare_versions.jsp" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="articleId" value="<%= articleId %>" />

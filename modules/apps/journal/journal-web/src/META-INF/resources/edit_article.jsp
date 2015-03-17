@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs2 = ParamUtil.getString(request, "tabs2");
@@ -115,7 +115,7 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 
 <div class="article-form <%= ((article != null) && !article.isNew()) ? "article-form-edit" : "article-form-add" %>">
 	<c:if test="<%= showHeader %>">
-		<liferay-util:include page="/html/portlet/journal/article_header.jsp" />
+		<liferay-util:include page="/article_header.jsp" servletContext="<%= application %>" />
 	</c:if>
 
 	<aui:form enctype="multipart/form-data" method="post" name="fm2">
@@ -127,11 +127,11 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 	</aui:form>
 
 	<portlet:actionURL var="editArticleActionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-		<portlet:param name="mvcPath" value="/html/portlet/journal/edit_article.jsp" />
+		<portlet:param name="mvcPath" value="/edit_article.jsp" />
 	</portlet:actionURL>
 
 	<portlet:renderURL var="editArticleRenderURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-		<portlet:param name="mvcPath" value="/html/portlet/journal/edit_article.jsp" />
+		<portlet:param name="mvcPath" value="/edit_article.jsp" />
 	</portlet:renderURL>
 
 	<aui:form action="<%= editArticleActionURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm1" onSubmit="event.preventDefault();">
@@ -182,7 +182,7 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 				<c:if test="<%= (article != null) && !article.isNew() %>">
 					<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
 
-					<liferay-util:include page="/html/portlet/journal/article_toolbar.jsp" />
+					<liferay-util:include page="/article_toolbar.jsp" servletContext="<%= application %>" />
 				</c:if>
 
 				<liferay-util:buffer var="htmlTop">
@@ -279,7 +279,7 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 					formName="fm1"
 					htmlBottom="<%= htmlBottom %>"
 					htmlTop="<%= htmlTop %>"
-					jspPath="/html/portlet/journal/article/"
+					jspPath="/article/"
 					showButtons="<%= false %>"
 				/>
 			</div>
@@ -288,7 +288,7 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 </div>
 
 <liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/html/portlet/journal/preview_article_content.jsp" />
+	<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
 
 	<c:if test="<%= (article != null) %>">
 		<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
@@ -300,7 +300,7 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 
 <portlet:renderURL var="editArticleURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="mvcPath" value="/html/portlet/journal/edit_article.jsp" />
+	<portlet:param name="mvcPath" value="/edit_article.jsp" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="articleId" value="<%= articleId %>" />
 	<portlet:param name="version" value="<%= String.valueOf(version) %>" />

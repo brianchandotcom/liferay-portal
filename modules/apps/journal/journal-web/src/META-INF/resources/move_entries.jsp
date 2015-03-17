@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -261,7 +261,7 @@ for (JournalArticle curArticle : articles) {
 					title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
 					<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="mvcPath" value="/html/portlet/journal/select_folder.jsp" />
+						<portlet:param name="mvcPath" value="/select_folder.jsp" />
 						<portlet:param name="folderId" value="<%= String.valueOf(newFolderId) %>" />
 					</portlet:renderURL>
 

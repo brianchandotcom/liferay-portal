@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -25,7 +25,7 @@ JournalFeed feed = (JournalFeed)row.getObject();
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= JournalFeedPermission.contains(permissionChecker, feed, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editFeedURL">
-			<portlet:param name="mvcPath" value="/html/portlet/journal/edit_feed.jsp" />
+			<portlet:param name="mvcPath" value="/edit_feed.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(feed.getGroupId()) %>" />
 			<portlet:param name="feedId" value="<%= feed.getFeedId() %>" />

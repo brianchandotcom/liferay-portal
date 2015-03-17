@@ -71,5 +71,5 @@
 
 <liferay-ui:search-container-column-jsp
 	cssClass="entry-action"
-	path="/html/portlet/journal/folder_action.jsp"
+	path="/folder_action.jsp"
 />

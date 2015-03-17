@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -93,7 +93,7 @@ ResourceURL feedURL = null;
 if (feed != null) {
 	long targetLayoutPlid = PortalUtil.getPlidFromFriendlyURL(feed.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
 
-	feedURL = new PortletURLImpl(request, PortletKeys.JOURNAL, targetLayoutPlid, PortletRequest.RESOURCE_PHASE);
+	feedURL = new PortletURLImpl(request, JournalPortletKeys.JOURNAL, targetLayoutPlid, PortletRequest.RESOURCE_PHASE);
 
 	feedURL.setCacheability(ResourceURL.FULL);
 	feedURL.setParameter("groupId", String.valueOf(groupId));
@@ -103,7 +103,7 @@ if (feed != null) {
 %>
 
 <portlet:actionURL var="editFeedURL">
-	<portlet:param name="mvcPath" value="/html/portlet/journal/edit_feed.jsp" />
+	<portlet:param name="mvcPath" value="/edit_feed.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editFeedURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFeed();" %>'>
@@ -335,7 +335,7 @@ if (feed != null) {
 				},
 				eventName: '<portlet:namespace />selectStructure',
 				groupId: <%= themeDisplay.getSiteGroupId() %>,
-				refererPortletName: '<%= PortletKeys.JOURNAL %>',
+				refererPortletName: '<%= JournalPortletKeys.JOURNAL %>',
 
 				<%
 				Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());

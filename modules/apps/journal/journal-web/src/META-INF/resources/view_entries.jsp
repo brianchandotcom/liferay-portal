@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String currentFolder = ParamUtil.getString(request, "curFolder");
@@ -38,15 +38,15 @@ String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
 if (Validator.isNull(orderByCol)) {
-	orderByCol = portalPreferences.getValue(PortletKeys.JOURNAL, "order-by-col", "modified-date");
-	orderByType = portalPreferences.getValue(PortletKeys.JOURNAL, "order-by-type", "asc");
+	orderByCol = portalPreferences.getValue(JournalPortletKeys.JOURNAL, "order-by-col", "modified-date");
+	orderByType = portalPreferences.getValue(JournalPortletKeys.JOURNAL, "order-by-type", "asc");
 }
 else {
 	boolean saveOrderBy = ParamUtil.getBoolean(request, "saveOrderBy");
 
 	if (saveOrderBy) {
-		portalPreferences.setValue(PortletKeys.JOURNAL, "order-by-col", orderByCol);
-		portalPreferences.setValue(PortletKeys.JOURNAL, "order-by-type", orderByType);
+		portalPreferences.setValue(JournalPortletKeys.JOURNAL, "order-by-col", orderByCol);
+		portalPreferences.setValue(JournalPortletKeys.JOURNAL, "order-by-type", orderByType);
 	}
 }
 
@@ -84,7 +84,7 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms) articleSearchContainer.
 	<aui:input name="<%= ArticleDisplayTerms.DDM_TEMPLATE_KEY %>" type="hidden" value="<%= displayTerms.getDDMTemplateKey() %>" />
 </c:if>
 
-<c:if test="<%= portletName.equals(PortletKeys.JOURNAL) && !((themeDisplay.getScopeGroupId() == themeDisplay.getCompanyGroupId()) && (Validator.isNotNull(displayTerms.getDDMStructureKey()) || Validator.isNotNull(displayTerms.getDDMTemplateKey()))) %>">
+<c:if test="<%= portletName.equals(JournalPortletKeys.JOURNAL) && !((themeDisplay.getScopeGroupId() == themeDisplay.getCompanyGroupId()) && (Validator.isNotNull(displayTerms.getDDMStructureKey()) || Validator.isNotNull(displayTerms.getDDMTemplateKey()))) %>">
 	<aui:input name="groupId" type="hidden" />
 </c:if>
 
@@ -295,7 +295,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 			Object result = results.get(i);
 		%>
 
-			<%@ include file="/html/portlet/journal/cast_result.jspf" %>
+			<%@ include file="/cast_result.jspf" %>
 
 			<c:choose>
 				<c:when test="<%= curArticle != null %>">
@@ -303,7 +303,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					<%
 					PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
-					tempRowURL.setParameter("mvcPath", "/html/portlet/journal/edit_article.jsp");
+					tempRowURL.setParameter("mvcPath", "/edit_article.jsp");
 					tempRowURL.setParameter("redirect", currentURL);
 					tempRowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
 					tempRowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
@@ -318,10 +318,10 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 
 					<c:choose>
 						<c:when test='<%= displayStyle.equals("icon") %>'>
-							<liferay-util:include page="/html/portlet/journal/view_article_icon.jsp" />
+							<liferay-util:include page="/view_article_icon.jsp" servletContext="<%= application %>" />
 						</c:when>
 						<c:otherwise>
-							<liferay-util:include page="/html/portlet/journal/view_article_descriptive.jsp" />
+							<liferay-util:include page="/view_article_descriptive.jsp" servletContext="<%= application %>" />
 						</c:otherwise>
 					</c:choose>
 				</c:when>
@@ -349,10 +349,10 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 
 					<c:choose>
 						<c:when test='<%= displayStyle.equals("icon") %>'>
-							<liferay-util:include page="/html/portlet/journal/view_folder_icon.jsp" />
+							<liferay-util:include page="/view_folder_icon.jsp" servletContext="<%= application %>" />
 						</c:when>
 						<c:otherwise>
-							<liferay-util:include page="/html/portlet/journal/view_folder_descriptive.jsp" />
+							<liferay-util:include page="/view_folder_descriptive.jsp" servletContext="<%= application %>" />
 						</c:otherwise>
 					</c:choose>
 				</c:when>
@@ -409,7 +409,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 						row.setPrimaryKey(HtmlUtil.escape(curArticle.getArticleId()));
 						%>
 
-						<%@ include file="/html/portlet/journal/article_columns.jspf" %>
+						<%@ include file="/article_columns.jspf" %>
 					</c:when>
 					<c:when test="<%= curFolder != null %>">
 
@@ -427,7 +427,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 						row.setPrimaryKey(String.valueOf(curFolder.getPrimaryKey()));
 						%>
 
-						<%@ include file="/html/portlet/journal/folder_columns.jspf" %>
+						<%@ include file="/folder_columns.jspf" %>
 					</c:when>
 				</c:choose>
 

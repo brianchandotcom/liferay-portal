@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String browseBy = ParamUtil.getString(request, "browseBy");
@@ -116,7 +116,7 @@ else {
 						request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 						%>
 
-						<liferay-util:include page="/html/portlet/journal/folder_action.jsp" />
+						<liferay-util:include page="/folder_action.jsp" servletContext="<%= application %>" />
 					</aui:nav-item>
 
 					<portlet:renderURL var="viewRecentArticlesURL">
@@ -251,7 +251,7 @@ else {
 							request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 							%>
 
-							<liferay-util:include page="/html/portlet/journal/folder_action.jsp" />
+							<liferay-util:include page="/folder_action.jsp" servletContext="<%= application %>" />
 						</aui:nav-item>
 
 					<%

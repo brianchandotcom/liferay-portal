@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -58,7 +58,7 @@ else {
 			<c:when test="<%= folder != null %>">
 				<c:if test="<%= JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE) %>">
 					<portlet:renderURL var="editURL">
-						<portlet:param name="mvcPath" value="/html/portlet/journal/edit_folder.jsp" />
+						<portlet:param name="mvcPath" value="/edit_folder.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(folder.getGroupId()) %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
@@ -72,7 +72,7 @@ else {
 					/>
 
 					<portlet:renderURL var="moveURL">
-						<portlet:param name="mvcPath" value="/html/portlet/journal/move_entries.jsp" />
+						<portlet:param name="mvcPath" value="/move_entries.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="folderIds" value="<%= String.valueOf(folder.getFolderId()) %>" />
 					</portlet:renderURL>
@@ -85,7 +85,7 @@ else {
 				</c:if>
 				<c:if test="<%= JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.ADD_FOLDER) %>">
 					<portlet:renderURL var="addFolderURL">
-						<portlet:param name="mvcPath" value="/html/portlet/journal/edit_folder.jsp" />
+						<portlet:param name="mvcPath" value="/edit_folder.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(folder.getGroupId()) %>" />
 						<portlet:param name="parentFolderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
@@ -110,7 +110,7 @@ else {
 
 				<c:if test="<%= workflowEnabled && JournalFolderPermission.contains(permissionChecker, scopeGroupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, ActionKeys.UPDATE) %>">
 					<portlet:renderURL var="editURL">
-						<portlet:param name="mvcPath" value="/html/portlet/journal/edit_folder.jsp" />
+						<portlet:param name="mvcPath" value="/edit_folder.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
@@ -126,7 +126,7 @@ else {
 				</c:if>
 				<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FOLDER) %>">
 					<portlet:renderURL var="addFolderURL">
-						<portlet:param name="mvcPath" value="/html/portlet/journal/edit_folder.jsp" />
+						<portlet:param name="mvcPath" value="/edit_folder.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 						<portlet:param name="parentFolderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />

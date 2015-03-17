@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -336,7 +336,7 @@ if (workflowEnabled) {
 				},
 				eventName: '<portlet:namespace />selectStructure',
 				groupId: <%= scopeGroupId %>,
-				refererPortletName: '<%= PortletKeys.JOURNAL %>',
+				refererPortletName: '<%= JournalPortletKeys.JOURNAL %>',
 				showAncestorScopes: true,
 				struts_action: '/dynamic_data_mapping/select_structure',
 				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'

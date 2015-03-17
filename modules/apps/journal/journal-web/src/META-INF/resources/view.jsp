@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String navigation = ParamUtil.getString(request, "navigation");
@@ -54,7 +54,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 <div id="<portlet:namespace />journalContainer">
 	<aui:row cssClass="lfr-app-column-view">
 		<aui:col cssClass="navigation-pane" width="<%= 25 %>">
-			<liferay-util:include page="/html/portlet/journal/view_folders.jsp" />
+			<liferay-util:include page="/view_folders.jsp" servletContext="<%= application %>" />
 		</aui:col>
 
 		<aui:col cssClass="context-pane" last="<%= true %>" width="<%= 75 %>">
@@ -62,12 +62,12 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 				includeDisplayStyle="<%= true %>"
 				includeSelectAll="<%= showSelectAll %>"
 			>
-				<liferay-util:include page="/html/portlet/journal/toolbar.jsp" />
+				<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 			</liferay-ui:app-view-toolbar>
 
 			<div class="journal-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 				<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
-					<liferay-util:include page="/html/portlet/journal/breadcrumb.jsp" />
+					<liferay-util:include page="/breadcrumb.jsp" servletContext="<%= application %>" />
 				</c:if>
 			</div>
 
@@ -95,10 +95,10 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
 					<c:choose>
 						<c:when test="<%= Validator.isNotNull(keywords) || advancedSearch %>">
-							<liferay-util:include page="/html/portlet/journal/search_resources.jsp" />
+							<liferay-util:include page="/search_resources.jsp" servletContext="<%= application %>" />
 						</c:when>
 						<c:otherwise>
-							<liferay-util:include page="/html/portlet/journal/view_entries.jsp" />
+							<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -133,7 +133,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 					method: 'POST',
 					node: A.one(document.<portlet:namespace />fm)
 				},
-				moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="mvcPath" value="/html/portlet/journal/move_entries.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
+				moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="mvcPath" value="/move_entries.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
 				trashLinkId: '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "_" + PortletKeys.CONTROL_PANEL_MENU + "_portlet_" + PortletProviderUtil.getPortletId(TrashEntry.class.getName(), PortletProvider.Action.VIEW) : StringPool.BLANK %>',
 				updateable: true
 			},

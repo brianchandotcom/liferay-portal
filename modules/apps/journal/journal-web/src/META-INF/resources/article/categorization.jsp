@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");

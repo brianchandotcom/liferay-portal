@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 JournalArticle article = (JournalArticle)request.getAttribute("view_entries.jsp-article");
@@ -41,7 +41,8 @@ String articleImageURL = article.getArticleImageURL(themeDisplay);
 %>
 
 <liferay-ui:app-view-entry
-	actionJsp="/html/portlet/journal/article_action.jsp"
+	actionJsp="/article_action.jsp"
+	actionJspServletContext="<%= application %>"
 	assetCategoryClassName="<%= JournalArticle.class.getName() %>"
 	assetCategoryClassPK="<%= article.getResourcePrimKey() %>"
 	assetTagClassName="<%= JournalArticle.class.getName() %>"

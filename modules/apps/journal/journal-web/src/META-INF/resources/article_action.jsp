@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
@@ -35,7 +35,7 @@ else {
 	<liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>">
 			<portlet:renderURL var="editURL">
-				<portlet:param name="mvcPath" value="/html/portlet/journal/edit_article.jsp" />
+				<portlet:param name="mvcPath" value="/edit_article.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
@@ -54,7 +54,7 @@ else {
 
 		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>">
 			<portlet:renderURL var="moveURL">
-				<portlet:param name="mvcPath" value="/html/portlet/journal/move_entries.jsp" />
+				<portlet:param name="mvcPath" value="/move_entries.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
@@ -88,7 +88,7 @@ else {
 
 		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.VIEW) %>">
 			<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcPath" value="/html/portlet/journal/preview_article_content.jsp" />
+				<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
 				<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
 				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 				<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
@@ -107,7 +107,7 @@ else {
 
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>">
 				<portlet:renderURL var="viewHistoryURL">
-					<portlet:param name="mvcPath" value="/html/portlet/journal/view_article_history.jsp" />
+					<portlet:param name="mvcPath" value="/view_article_history.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
 					<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
@@ -122,7 +122,7 @@ else {
 
 			<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, article.getFolderId(), ActionKeys.ADD_ARTICLE) %>">
 				<portlet:renderURL var="copyURL">
-					<portlet:param name="mvcPath" value="/html/portlet/journal/copy_article.jsp" />
+					<portlet:param name="mvcPath" value="/copy_article.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
 					<portlet:param name="oldArticleId" value="<%= article.getArticleId() %>" />

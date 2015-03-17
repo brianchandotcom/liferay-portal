@@ -14,11 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
-
 <%
-FeedSearch searchContainer = (FeedSearch)request.getAttribute("liferay-ui:search:searchContainer");
-
 FeedDisplayTerms displayTerms = (FeedDisplayTerms)searchContainer.getDisplayTerms();
 %>
 

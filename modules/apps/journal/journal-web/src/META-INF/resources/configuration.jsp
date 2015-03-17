@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", JournalUtil.getEmailFromName(portletPreferences, company.getCompanyId()));

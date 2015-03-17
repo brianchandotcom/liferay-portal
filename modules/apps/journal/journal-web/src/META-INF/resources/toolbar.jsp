@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long folderId = GetterUtil.getLong((String)liferayPortletRequest.getAttribute("view.jsp-folderId"));
@@ -35,7 +35,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			%>
 
 			<c:if test="<%= Validator.isNull(keywords) && !advancedSearch %>">
-				<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
+				<liferay-util:include page="/display_style_buttons.jsp" servletContext="<%= application %>" />
 			</c:if>
 		</aui:nav>
 
@@ -61,9 +61,9 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				<aui:nav-item cssClass="item-remove" href="<%= taglibURL %>" iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>' />
 			</aui:nav-item>
 
-			<liferay-util:include page="/html/portlet/journal/add_button.jsp" />
+			<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 
-			<liferay-util:include page="/html/portlet/journal/sort_button.jsp" />
+			<liferay-util:include page="/sort_button.jsp" servletContext="<%= application %>" />
 
 			<c:if test="<%= !user.isDefaultUser() %>">
 				<aui:nav-item dropdown="<%= true %>" label="manage">
@@ -91,7 +91,9 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			</c:if>
 		</aui:nav>
 
-		<aui:nav-bar-search file="/html/portlet/journal/article_search.jsp" />
+		<aui:nav-bar-search>
+			<liferay-util:include page="/article_search.jsp" servletContext="<%= application %>" />
+		</aui:nav-bar-search>
 	</aui:nav-bar>
 </aui:form>
 
@@ -102,7 +104,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				{
 					id: '<portlet:namespace />openFeedsView',
 					title: '<%= UnicodeLanguageUtil.get(request, "feeds") %>',
-					uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/journal/view_feeds.jsp" /></liferay-portlet:renderURL>'
+					uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/view_feeds.jsp" /></liferay-portlet:renderURL>'
 				}
 			);
 		}
@@ -138,7 +140,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 					}
 				},
 				groupId: <%= scopeGroupId %>,
-				refererPortletName: '<%= PortletKeys.JOURNAL %>',
+				refererPortletName: '<%= JournalPortletKeys.JOURNAL %>',
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
 				showAncestorScopes: true,
 				showManageTemplates: true,
@@ -156,7 +158,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 					destroyOnHide: true
 				},
 				groupId: <%= scopeGroupId %>,
-				refererPortletName: '<%= PortletKeys.JOURNAL %>',
+				refererPortletName: '<%= JournalPortletKeys.JOURNAL %>',
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
 				showAncestorScopes: true,
 				showHeader: false,

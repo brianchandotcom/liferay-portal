@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 JournalFolder folder = (JournalFolder)request.getAttribute("view.jsp-folder");

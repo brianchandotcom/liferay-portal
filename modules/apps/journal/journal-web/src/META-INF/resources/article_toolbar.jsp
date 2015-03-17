@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
@@ -35,7 +35,7 @@ long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 		</c:if>
 
 		<portlet:renderURL var="viewHistoryURL">
-			<portlet:param name="mvcPath" value="/html/portlet/journal/view_article_history.jsp" />
+			<portlet:param name="mvcPath" value="/view_article_history.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />

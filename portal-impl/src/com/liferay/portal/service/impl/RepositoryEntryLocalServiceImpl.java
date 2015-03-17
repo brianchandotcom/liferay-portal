@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.User;
@@ -61,8 +62,52 @@ public class RepositoryEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteRepositoryEntries(
+			long repositoryId, Iterable<String> mappedIds)
+		throws PortalException {
+
+		for (String mappedId : mappedIds) {
+			try {
+				deleteRepositoryEntry(repositoryId, mappedId);
+			}
+			catch (NoSuchRepositoryEntryException nsree) {
+			}
+		}
+	}
+
+	@Override
+	public void deleteRepositoryEntry(long repositoryId, String mappedId)
+		throws PortalException {
+
+		repositoryEntryPersistence.removeByR_M(repositoryId, mappedId);
+	}
+
+	@Override
 	public List<RepositoryEntry> getRepositoryEntries(long repositoryId) {
 		return repositoryEntryPersistence.findByRepositoryId(repositoryId);
+	}
+
+	@Override
+	public RepositoryEntry getRepositoryEntry(
+			long userId, long groupId, long repositoryId, String objectId)
+		throws PortalException {
+
+		RepositoryEntry repositoryEntry = repositoryEntryPersistence.fetchByR_M(
+			repositoryId, objectId);
+
+		if (repositoryEntry != null) {
+			return repositoryEntry;
+		}
+
+		return addRepositoryEntry(
+			userId, groupId, repositoryId, objectId, new ServiceContext());
+	}
+
+	@Override
+	public RepositoryEntry getRepositoryEntry(String uuid, long groupId)
+		throws PortalException {
+
+		return repositoryEntryPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	@Override

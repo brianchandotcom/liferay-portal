@@ -21,6 +21,7 @@ import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 
 /**
  * @author Mika Koivisto
@@ -44,6 +45,9 @@ public interface BaseRepository extends Repository {
 
 	public void setDLAppHelperLocalService(
 		DLAppHelperLocalService dlAppHelperLocalService);
+
+	public void setDLFolderLocalService(
+		DLFolderLocalService dlFolderLocalService);
 
 	public void setGroupId(long groupId);
 

@@ -37,6 +37,7 @@ import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 
 /**
  * @author Adolfo Pérez
@@ -151,6 +152,7 @@ public class LegacyExternalRepositoryFactory implements RepositoryFactory {
 		baseRepository.setCompanyId(repository.getCompanyId());
 		baseRepository.setCompanyLocalService(_companyLocalService);
 		baseRepository.setDLAppHelperLocalService(_dlAppHelperLocalService);
+		baseRepository.setDLFolderLocalService(_dlFolderLocalService);
 		baseRepository.setGroupId(repository.getGroupId());
 		baseRepository.setRepositoryEntryLocalService(
 			_repositoryEntryLocalService);
@@ -171,6 +173,9 @@ public class LegacyExternalRepositoryFactory implements RepositoryFactory {
 
 	@BeanReference(type = DLAppHelperLocalService.class)
 	private DLAppHelperLocalService _dlAppHelperLocalService;
+
+	@BeanReference(type = DLFolderLocalService.class)
+	private DLFolderLocalService _dlFolderLocalService;
 
 	@BeanReference(type = RepositoryEntryLocalService.class)
 	private RepositoryEntryLocalService _repositoryEntryLocalService;

@@ -17,7 +17,6 @@
 	<bean id="com.liferay.portal.service.persistence.ClassNamePersistence" class="com.liferay.portal.service.persistence.impl.ClassNamePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ClusterGroupLocalService" class="com.liferay.portal.service.impl.ClusterGroupLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.ClusterGroupPersistence" class="com.liferay.portal.service.persistence.impl.ClusterGroupPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.service.CMISRepositoryLocalService" class="com.liferay.portal.service.impl.CMISRepositoryLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.CompanyLocalService" class="com.liferay.portal.service.impl.CompanyLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.CompanyService" class="com.liferay.portal.service.impl.CompanyServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.CompanyPersistence" class="com.liferay.portal.service.persistence.impl.CompanyPersistenceImpl" parent="basePersistence" />

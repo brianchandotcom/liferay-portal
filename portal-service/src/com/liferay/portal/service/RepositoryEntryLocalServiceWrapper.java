@@ -76,6 +76,14 @@ public class RepositoryEntryLocalServiceWrapper
 		return _repositoryEntryLocalService.deletePersistedModel(persistedModel);
 	}
 
+	@Override
+	public void deleteRepositoryEntries(long repositoryId,
+		java.lang.Iterable<java.lang.String> mappedIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_repositoryEntryLocalService.deleteRepositoryEntries(repositoryId,
+			mappedIds);
+	}
+
 	/**
 	* Deletes the repository entry from the database. Also notifies the appropriate model listeners.
 	*
@@ -100,6 +108,14 @@ public class RepositoryEntryLocalServiceWrapper
 		long repositoryEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryEntryLocalService.deleteRepositoryEntry(repositoryEntryId);
+	}
+
+	@Override
+	public void deleteRepositoryEntry(long repositoryId,
+		java.lang.String mappedId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_repositoryEntryLocalService.deleteRepositoryEntry(repositoryId,
+			mappedId);
 	}
 
 	@Override
@@ -313,6 +329,21 @@ public class RepositoryEntryLocalServiceWrapper
 		long repositoryEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryEntryLocalService.getRepositoryEntry(repositoryEntryId);
+	}
+
+	@Override
+	public com.liferay.portal.model.RepositoryEntry getRepositoryEntry(
+		long userId, long groupId, long repositoryId, java.lang.String objectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _repositoryEntryLocalService.getRepositoryEntry(userId, groupId,
+			repositoryId, objectId);
+	}
+
+	@Override
+	public com.liferay.portal.model.RepositoryEntry getRepositoryEntry(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _repositoryEntryLocalService.getRepositoryEntry(uuid, groupId);
 	}
 
 	/**

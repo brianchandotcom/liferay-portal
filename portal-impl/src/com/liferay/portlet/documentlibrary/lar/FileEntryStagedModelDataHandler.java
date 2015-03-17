@@ -157,6 +157,22 @@ public class FileEntryStagedModelDataHandler
 	}
 
 	@Override
+	public void restoreStagedModel(
+			PortletDataContext portletDataContext, FileEntry stagedModel)
+		throws PortletDataException {
+
+		try {
+			doRestoreStagedModel(portletDataContext, stagedModel);
+		}
+		catch (PortletDataException pde) {
+			throw pde;
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
+		}
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, FileEntry fileEntry)
 		throws Exception {

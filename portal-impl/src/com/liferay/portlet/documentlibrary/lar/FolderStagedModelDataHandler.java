@@ -109,6 +109,22 @@ public class FolderStagedModelDataHandler
 	}
 
 	@Override
+	public void restoreStagedModel(
+			PortletDataContext portletDataContext, Folder stagedModel)
+		throws PortletDataException {
+
+		try {
+			doRestoreStagedModel(portletDataContext, stagedModel);
+		}
+		catch (PortletDataException pde) {
+			throw pde;
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
+		}
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, Folder folder)
 		throws Exception {

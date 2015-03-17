@@ -24,6 +24,7 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
@@ -205,7 +206,7 @@ public class PortletPreferencesLocalServiceStagingAdvice
 
 		long userId = PrincipalThreadLocal.getUserId();
 
-		if (userId == 0) {
+		if (userId == UserConstants.USER_ID_DEFAULT) {
 			plid = layoutRevision.getLayoutRevisionId();
 		}
 		else {

@@ -363,10 +363,22 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			String originalLine = line;
 
+			String trimmedLine = StringUtil.trimLeading(line);
+
+			int x = getIncorrectLineBreakPos(line, previousLine);
+
+			if (x != -1) {
+				String leadingWhitespace = line.substring(
+					0, line.indexOf(trimmedLine));
+
+				return StringUtil.replace(
+					ifClause, line,
+					line.substring(0, x) + "\n" + leadingWhitespace +
+						line.substring(x + 1));
+			}
+
 			line = StringUtil.replace(
 				line, StringPool.TAB, StringPool.FOUR_SPACES);
-
-			String trimmedLine = StringUtil.trimLeading(line);
 
 			String strippedQuotesLine = stripQuotes(
 				trimmedLine, CharPool.QUOTE);
@@ -2491,6 +2503,52 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return exceptionClassNames;
+	}
+
+	protected int getIncorrectLineBreakPos(String line, String previousLine) {
+		for (int x = line.length();;) {
+			int y = line.lastIndexOf(" || ", x - 1);
+			int z = line.lastIndexOf(" && ", x - 1);
+
+			x = Math.max(y, z);
+
+			if (x == -1) {
+				return x;
+			}
+
+			if (isInsideQuotes(line, x)) {
+				continue;
+			}
+
+			if (Validator.isNotNull(previousLine)) {
+				String linePart1 = stripQuotes(
+					line.substring(0, x), CharPool.QUOTE);
+
+				int closeParenthesesCount = StringUtil.count(
+					linePart1, StringPool.CLOSE_PARENTHESIS);
+				int openParenthesesCount = StringUtil.count(
+					linePart1, StringPool.OPEN_PARENTHESIS);
+
+				if (closeParenthesesCount > openParenthesesCount) {
+					return x + 3;
+				}
+			}
+
+			if (!line.endsWith(" ||") && !line.endsWith(" &&")) {
+				continue;
+			}
+
+			String linePart2 = stripQuotes(line.substring(x), CharPool.QUOTE);
+
+			int closeParenthesesCount = StringUtil.count(
+				linePart2, StringPool.CLOSE_PARENTHESIS);
+			int openParenthesesCount = StringUtil.count(
+				linePart2, StringPool.OPEN_PARENTHESIS);
+
+			if (openParenthesesCount > closeParenthesesCount) {
+				return x + 3;
+			}
+		}
 	}
 
 	protected int getLineLength(String line) {

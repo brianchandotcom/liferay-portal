@@ -12,32 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.connection;
+package com.liferay.portal.search.elasticsearch.internal.connection;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.elasticsearch.connection.BaseElasticsearchConnection;
+import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
-import com.liferay.registry.util.StringPlus;
 
-import java.net.InetAddress;
-
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
+import org.apache.commons.lang.time.StopWatch;
 
 import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.node.Node;
+import org.elasticsearch.node.NodeBuilder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,29 +39,29 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
+	immediate = true,
 	property = {
-		"configFileName=/META-INF/elasticsearch-remote.yml",
-		"service.ranking:Integer=1000",
+		"configFileName=/META-INF/elasticsearch-embedded.yml",
 		"testConfigFileName=/META-INF/elasticsearch-test.yml"
 	},
 	service = ElasticsearchConnection.class
 )
-public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
+public class EmbeddedElasticsearchConnection
+	extends BaseElasticsearchConnection {
 
 	@Override
 	public void close() {
 		super.close();
+
+		if (_node != null) {
+			_node.close();
+		}
 	}
 
 	@Override
 	@Reference
 	public void setIndexFactory(IndexFactory indexFactory) {
 		super.setIndexFactory(indexFactory);
-	}
-
-	public void setTransportAddresses(Set<String> transportAddresses) {
-		_transportAddresses = transportAddresses;
 	}
 
 	@Activate
@@ -78,20 +72,12 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		setTestConfigFileName(
 			MapUtil.getString(properties, "testConfigFileName"));
 
-		List<String> transportAddresses = StringPlus.asList(
-			properties.get("transportAddresses"));
-
-		setTransportAddresses(new HashSet<String>(transportAddresses));
-
 		initialize();
 	}
 
 	@Override
 	protected Client createClient(ImmutableSettings.Builder builder) {
-		if (_transportAddresses.isEmpty()) {
-			throw new IllegalStateException(
-				"There must be at least one transport address");
-		}
+		NodeBuilder nodeBuilder = NodeBuilder.nodeBuilder();
 
 		Class<?> clazz = getClass();
 
@@ -99,34 +85,34 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 		builder.loadFromClasspath(getConfigFileName());
 
-		TransportClient transportClient = new TransportClient(builder);
+		nodeBuilder.settings(builder);
 
-		builder.put("client.transport.sniff", true);
-		builder.put("cluster.name", getClusterName());
+		nodeBuilder.clusterName(getClusterName());
 
-		for (String transportAddress : _transportAddresses) {
-			String[] transportAddressParts = StringUtil.split(
-				transportAddress, StringPool.COLON);
+		_node = nodeBuilder.node();
 
-			try {
-				InetAddress inetAddress = InetAddress.getByName(
-					transportAddressParts[0]);
+		StopWatch stopWatch = new StopWatch();
 
-				int port = GetterUtil.getInteger(transportAddressParts[1]);
+		stopWatch.start();
 
-				transportClient.addTransportAddress(
-					new InetSocketTransportAddress(inetAddress, port));
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to add transport address " + transportAddress,
-						e);
-				}
-			}
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Starting embedded Elasticsearch cluster " + getClusterName());
 		}
 
-		return transportClient;
+		_node.start();
+
+		Client client = _node.client();
+
+		if (_log.isDebugEnabled()) {
+			stopWatch.stop();
+
+			_log.debug(
+				"Finished starting " + getClusterName() + " in " +
+					stopWatch.getTime() + " ms");
+		}
+
+		return client;
 	}
 
 	@Deactivate
@@ -135,8 +121,8 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RemoteElasticsearchConnection.class);
+		EmbeddedElasticsearchConnection.class);
 
-	private Set<String> _transportAddresses = new HashSet<>();
+	private Node _node;
 
 }

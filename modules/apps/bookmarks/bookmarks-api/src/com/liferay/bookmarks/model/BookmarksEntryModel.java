@@ -411,6 +411,20 @@ public interface BookmarksEntryModel extends BaseModel<BookmarksEntry>,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the last publish date of this bookmarks entry.
+	 *
+	 * @return the last publish date of this bookmarks entry
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this bookmarks entry.
+	 *
+	 * @param lastPublishDate the last publish date of this bookmarks entry
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the trash entry created when this bookmarks entry was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this bookmarks entry.
 	 *
 	 * @return the trash entry created when this bookmarks entry was moved to the Recycle Bin

@@ -76,7 +76,7 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 	@Override
 	public void deleteContent(long companyId, long repositoryId,
 		java.lang.String path, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
 		_dlContentLocalService.deleteContent(companyId, repositoryId, path,
 			version);
 	}

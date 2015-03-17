@@ -24,6 +24,15 @@ public class DuplicateDirectoryException extends PortalException {
 	public DuplicateDirectoryException() {
 	}
 
+	public DuplicateDirectoryException(
+		long companyId, long repositoryId, String dirName) {
+
+		super(
+			String.format(
+				"{companyId=%s, repositoryId=%s, dirName=%s}",
+			companyId, repositoryId, dirName));
+	}
+
 	public DuplicateDirectoryException(String msg) {
 		super(msg);
 	}

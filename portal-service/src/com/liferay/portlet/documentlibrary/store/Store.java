@@ -14,7 +14,9 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
+import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.NoSuchFileException;
 
 import java.io.File;
 import java.io.InputStream;
@@ -32,116 +34,109 @@ public interface Store {
 	public static final String VERSION_DEFAULT = "1.0";
 
 	public void addDirectory(long companyId, long repositoryId, String dirName)
-		throws PortalException;
+		throws DuplicateDirectoryException;
 
 	public void addFile(
 			long companyId, long repositoryId, String fileName, byte[] bytes)
-		throws PortalException;
+		throws DuplicateFileException;
 
 	public void addFile(
 			long companyId, long repositoryId, String fileName, File file)
-		throws PortalException;
+		throws DuplicateFileException;
 
 	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
-		throws PortalException;
+		throws DuplicateFileException;
 
 	public void checkRoot(long companyId);
 
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
-		throws PortalException;
+		throws DuplicateFileException, NoSuchFileException;
 
 	public void deleteDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException;
+		long companyId, long repositoryId, String dirName);
 
-	public void deleteFile(long companyId, long repositoryId, String fileName)
-		throws PortalException;
+	public void deleteFile(long companyId, long repositoryId, String fileName);
 
 	public void deleteFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException;
+		long companyId, long repositoryId, String fileName,
+		String versionLabel);
 
 	public File getFile(long companyId, long repositoryId, String fileName)
-		throws PortalException;
+		throws NoSuchFileException;
 
 	public File getFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException;
+		throws NoSuchFileException;
 
 	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName)
-		throws PortalException;
+		throws NoSuchFileException;
 
 	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException;
+		throws NoSuchFileException;
 
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName)
-		throws PortalException;
+		throws NoSuchFileException;
 
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException;
+		throws NoSuchFileException;
 
 	public String[] getFileNames(long companyId, long repositoryId);
 
 	public String[] getFileNames(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException;
+		long companyId, long repositoryId, String dirName);
 
 	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException;
+		throws NoSuchFileException;
 
 	public boolean hasDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException;
+		long companyId, long repositoryId, String dirName);
 
-	public boolean hasFile(long companyId, long repositoryId, String fileName)
-		throws PortalException;
+	public boolean hasFile(long companyId, long repositoryId, String fileName);
 
 	public boolean hasFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException;
+		long companyId, long repositoryId, String fileName,
+		String versionLabel);
 
 	public void move(String srcDir, String destDir);
 
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
 			String fileName)
-		throws PortalException;
+		throws DuplicateFileException, NoSuchFileException;
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
-		throws PortalException;
+		throws DuplicateFileException, NoSuchFileException;
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, byte[] bytes)
-		throws PortalException;
+		throws DuplicateFileException, NoSuchFileException;
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, File file)
-		throws PortalException;
+		throws DuplicateFileException, NoSuchFileException;
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, InputStream is)
-		throws PortalException;
+		throws DuplicateFileException, NoSuchFileException;
 
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
-		throws PortalException;
+		throws DuplicateFileException, NoSuchFileException;
 
 }

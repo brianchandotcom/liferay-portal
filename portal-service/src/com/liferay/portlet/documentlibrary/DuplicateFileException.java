@@ -24,6 +24,43 @@ public class DuplicateFileException extends PortalException {
 	public DuplicateFileException() {
 	}
 
+	public DuplicateFileException(
+		long companyId, long repositoryId, String fileName) {
+
+		super(
+			String.format(
+				"{companyId=%s, repositoryId=%s, fileName=%s}",
+			companyId, repositoryId, fileName));
+	}
+
+	public DuplicateFileException(
+		long companyId, long repositoryId, String fileName, String version) {
+
+		super(
+			String.format(
+				"{companyId=%s, repositoryId=%s, fileName=%s, version=%s}",
+			companyId, repositoryId, fileName, version));
+	}
+
+	public DuplicateFileException(
+		long companyId, long repositoryId, String fileName, String version,
+		Throwable cause) {
+
+		super(
+			String.format(
+				"{companyId=%s, repositoryId=%s, fileName=%s, version=%s}",
+			companyId, repositoryId, fileName, version), cause);
+	}
+
+	public DuplicateFileException(
+		long companyId, long repositoryId, String fileName, Throwable cause) {
+
+		super(
+			String.format(
+				"{companyId=%s, repositoryId=%s, fileName=%s}",
+			companyId, repositoryId, fileName), cause);
+	}
+
 	public DuplicateFileException(String msg) {
 		super(msg);
 	}

@@ -17,17 +17,15 @@ package com.liferay.portlet.documentlibrary.store;
 import com.liferay.portal.jcr.JCRConstants;
 import com.liferay.portal.jcr.JCRFactory;
 import com.liferay.portal.jcr.JCRFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 
 import java.io.InputStream;
@@ -64,7 +62,7 @@ public class JCRStore extends BaseStore {
 
 	@Override
 	public void addDirectory(long companyId, long repositoryId, String dirName)
-		throws PortalException {
+		throws DuplicateDirectoryException {
 
 		Session session = null;
 
@@ -76,7 +74,8 @@ public class JCRStore extends BaseStore {
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
 
 			if (repositoryNode.hasNode(dirName)) {
-				throw new DuplicateDirectoryException(dirName);
+				throw new DuplicateDirectoryException(
+					companyId, repositoryId, dirName);
 			}
 
 			String[] dirNameArray = StringUtil.split(dirName, '/');
@@ -98,7 +97,7 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -108,7 +107,7 @@ public class JCRStore extends BaseStore {
 	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
-		throws PortalException {
+		throws DuplicateFileException {
 
 		Session session = null;
 
@@ -133,7 +132,8 @@ public class JCRStore extends BaseStore {
 			}
 
 			if (repositoryNode.hasNode(fileName)) {
-				throw new DuplicateFileException(fileName);
+				throw new DuplicateFileException(
+					companyId, repositoryId, fileName);
 			}
 
 			Node fileNode = repositoryNode.addNode(
@@ -166,7 +166,7 @@ public class JCRStore extends BaseStore {
 				version.getName(), VERSION_DEFAULT, false);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -185,7 +185,7 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -194,8 +194,7 @@ public class JCRStore extends BaseStore {
 
 	@Override
 	public void deleteDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
+		long companyId, long repositoryId, String dirName) {
 
 		Session session = null;
 
@@ -213,16 +212,16 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			throw new NoSuchDirectoryException(dirName);
+			logFailedDeletion(companyId, repositoryId, dirName);
 		}
 		catch (RepositoryException re) {
 			String message = GetterUtil.getString(re.getMessage());
 
 			if (message.contains("failed to resolve path")) {
-				throw new NoSuchDirectoryException(dirName);
+				logFailedDeletion(companyId, repositoryId, dirName);
 			}
 			else {
-				throw new PortalException(re);
+				ReflectionUtil.throwException(re);
 			}
 		}
 		finally {
@@ -231,9 +230,7 @@ public class JCRStore extends BaseStore {
 	}
 
 	@Override
-	public void deleteFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
+	public void deleteFile(long companyId, long repositoryId, String fileName) {
 		Session session = null;
 
 		// A bug in Jackrabbit requires us to create a dummy node and delete the
@@ -274,10 +271,12 @@ public class JCRStore extends BaseStore {
 			versionHistory.addVersionLabel(version.getName(), "0.0", false);
 		}
 		catch (PathNotFoundException pnfe) {
-			throw new NoSuchFileException(fileName);
+			logFailedDeletion(companyId, repositoryId, fileName);
+
+			return;
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -323,10 +322,12 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			throw new NoSuchFileException(fileName);
+			logFailedDeletion(companyId, repositoryId, fileName);
+
+			return;
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -348,10 +349,10 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			throw new NoSuchFileException(fileName);
+			logFailedDeletion(companyId, repositoryId, fileName);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -360,9 +361,8 @@ public class JCRStore extends BaseStore {
 
 	@Override
 	public void deleteFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
 		Session session = null;
 
@@ -385,9 +385,8 @@ public class JCRStore extends BaseStore {
 				contentNode.getPath());
 
 			if (!versionHistory.hasVersionLabel(versionLabel)) {
-				throw new NoSuchFileException(
-					"{fileName=" + fileName + ", versionLabel=" +
-						versionLabel + "}");
+				logFailedDeletion(
+					companyId, repositoryId, fileName, versionLabel);
 			}
 
 			Version version = versionHistory.getVersionByLabel(versionLabel);
@@ -415,12 +414,10 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			throw new NoSuchFileException(
-				"{fileName=" + fileName + ", versionLabel=" +
-					versionLabel + "}");
+			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -431,7 +428,7 @@ public class JCRStore extends BaseStore {
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException {
+		throws NoSuchFileException {
 
 		Session session = null;
 
@@ -456,7 +453,7 @@ public class JCRStore extends BaseStore {
 			return binary.getStream();
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			return ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -491,7 +488,7 @@ public class JCRStore extends BaseStore {
 			}
 		}
 		catch (Exception e) {
-			throw new SystemException(e);
+			ReflectionUtil.throwException(e);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -502,8 +499,7 @@ public class JCRStore extends BaseStore {
 
 	@Override
 	public String[] getFileNames(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
+		long companyId, long repositoryId, String dirName) {
 
 		List<String> fileNames = new ArrayList<>();
 
@@ -533,10 +529,10 @@ public class JCRStore extends BaseStore {
 			}
 		}
 		catch (PathNotFoundException pnfe) {
-			throw new NoSuchDirectoryException(dirName);
+			return new String[0];
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -547,7 +543,7 @@ public class JCRStore extends BaseStore {
 
 	@Override
 	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException {
+		throws NoSuchFileException {
 
 		long size;
 
@@ -562,7 +558,7 @@ public class JCRStore extends BaseStore {
 			size = contentNode.getProperty(JCRConstants.JCR_DATA).getLength();
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			return ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -592,7 +588,7 @@ public class JCRStore extends BaseStore {
 			return false;
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			return ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -601,9 +597,8 @@ public class JCRStore extends BaseStore {
 
 	@Override
 	public boolean hasFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
 		try {
 			getFileContentNode(companyId, repositoryId, fileName, versionLabel);
@@ -627,7 +622,7 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -638,7 +633,7 @@ public class JCRStore extends BaseStore {
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
 			String fileName)
-		throws PortalException {
+		throws DuplicateFileException, NoSuchFileException {
 
 		Session session = null;
 
@@ -661,7 +656,8 @@ public class JCRStore extends BaseStore {
 			Node newRepositoryNode = getFolderNode(rootNode, newRepositoryId);
 
 			if (newRepositoryNode.hasNode(fileName)) {
-				throw new DuplicateFileException(fileName);
+				throw new DuplicateFileException(
+					companyId, newRepositoryId, fileName);
 			}
 
 			Node fileNode = repositoryNode.getNode(fileName);
@@ -683,10 +679,10 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			throw new NoSuchFileException(fileName);
+			throw new NoSuchFileException(companyId, repositoryId, fileName);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -697,7 +693,7 @@ public class JCRStore extends BaseStore {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
-		throws PortalException {
+		throws DuplicateFileException, NoSuchFileException {
 
 		Session session = null;
 
@@ -718,7 +714,8 @@ public class JCRStore extends BaseStore {
 			}
 
 			if (repositoryNode.hasNode(newFileName)) {
-				throw new DuplicateFileException(newFileName);
+				throw new DuplicateFileException(
+					companyId, repositoryId, newFileName);
 			}
 
 			Node fileNode = repositoryNode.getNode(fileName);
@@ -740,10 +737,10 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			throw new NoSuchFileException(fileName);
+			throw new NoSuchFileException(companyId, repositoryId, fileName);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -754,7 +751,7 @@ public class JCRStore extends BaseStore {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, InputStream is)
-		throws PortalException {
+		throws NoSuchFileException {
 
 		Session session = null;
 
@@ -809,11 +806,10 @@ public class JCRStore extends BaseStore {
 		}
 		catch (PathNotFoundException pnfe) {
 			throw new NoSuchFileException(
-				"{fileName=" + fileName + ", versionLabel=" + versionLabel +
-					"}");
+				companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -823,7 +819,7 @@ public class JCRStore extends BaseStore {
 	protected Node getFileContentNode(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException {
+		throws NoSuchFileException {
 
 		Node contentNode = null;
 
@@ -836,7 +832,7 @@ public class JCRStore extends BaseStore {
 				session, companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -848,7 +844,7 @@ public class JCRStore extends BaseStore {
 	protected Node getFileContentNode(
 			Session session, long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException {
+		throws NoSuchFileException {
 
 		Node contentNode = null;
 
@@ -871,8 +867,7 @@ public class JCRStore extends BaseStore {
 
 				if (!versionHistory.hasVersionLabel(versionLabel)) {
 					throw new NoSuchFileException(
-						"{fileName=" + fileName + ", versionLabel=" +
-							versionLabel + "}");
+						companyId, repositoryId, fileName, versionLabel);
 				}
 
 				Version version = versionHistory.getVersionByLabel(
@@ -883,11 +878,10 @@ public class JCRStore extends BaseStore {
 		}
 		catch (PathNotFoundException pnfe) {
 			throw new NoSuchFileException(
-				"{fileName=" + fileName + ", versionLabel=" +
-					versionLabel + "}");
+				companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (RepositoryException re) {
-			throw new SystemException(re);
+			ReflectionUtil.throwException(re);
 		}
 
 		return contentNode;

@@ -18,12 +18,17 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Marcellus Tavares
@@ -46,10 +51,21 @@ public class DDMFormLayoutJSONDeserializerImpl
 	protected DDMFormLayout getDDMFormLayout(JSONObject jsonObject) {
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
-		List<DDMFormLayoutRow> ddmFormLayoutRows = getDDMFormLayoutRows(
-			jsonObject.getJSONArray("rows"));
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			jsonObject.getString("defaultLanguageId"));
 
-		ddmFormLayout.setDDMFormLayoutRows(ddmFormLayoutRows);
+		ddmFormLayout.setDefaultLocale(defaultLocale);
+
+		List<DDMFormLayoutPage> ddmFormLayoutPages = getDDMFormLayoutPages(
+			jsonObject.getJSONArray("pages"));
+
+		for (DDMFormLayoutPage ddmFormLayoutPage : ddmFormLayoutPages) {
+			LocalizedValue title = ddmFormLayoutPage.getTitle();
+
+			title.setDefaultLocale(defaultLocale);
+		}
+
+		ddmFormLayout.setDDMFormLayoutPages(ddmFormLayoutPages);
 
 		return ddmFormLayout;
 	}
@@ -78,6 +94,35 @@ public class DDMFormLayoutJSONDeserializerImpl
 		return ddmFormLayoutColumns;
 	}
 
+	protected DDMFormLayoutPage getDDMFormLayoutPage(JSONObject jsonObject) {
+		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
+
+		List<DDMFormLayoutRow> ddmFormLayoutRows = getDDMFormLayoutRows(
+			jsonObject.getJSONArray("rows"));
+
+		ddmFormLayoutPage.setDDMFormLayoutRows(ddmFormLayoutRows);
+
+		setTitleValues(
+			jsonObject.getJSONObject("title"), ddmFormLayoutPage.getTitle());
+
+		return ddmFormLayoutPage;
+	}
+
+	protected List<DDMFormLayoutPage> getDDMFormLayoutPages(
+		JSONArray jsonArray) {
+
+		List<DDMFormLayoutPage> ddmFormLayoutPages = new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			DDMFormLayoutPage ddmFormLayoutPage = getDDMFormLayoutPage(
+				jsonArray.getJSONObject(i));
+
+			ddmFormLayoutPages.add(ddmFormLayoutPage);
+		}
+
+		return ddmFormLayoutPages;
+	}
+
 	protected DDMFormLayoutRow getDDMFormLayoutRow(JSONObject jsonObject) {
 		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
 
@@ -100,6 +145,22 @@ public class DDMFormLayoutJSONDeserializerImpl
 		}
 
 		return ddmFormLayoutRows;
+	}
+
+	protected void setTitleValues(JSONObject jsonObject, LocalizedValue title) {
+		if (jsonObject == null) {
+			return;
+		}
+
+		Iterator<String> itr = jsonObject.keys();
+
+		while (itr.hasNext()) {
+			String languageId = itr.next();
+
+			title.addString(
+				LocaleUtil.fromLanguageId(languageId),
+				jsonObject.getString(languageId));
+		}
 	}
 
 }

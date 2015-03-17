@@ -14,10 +14,13 @@
 
 package com.liferay.portlet.dynamicdatamapping.io;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import java.util.List;
 
@@ -25,15 +28,19 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.powermock.core.classloader.annotations.PrepareForTest;
+
 /**
  * @author Marcellus Tavares
  */
+@PrepareForTest({LocaleUtil.class})
 public class DDMFormLayoutJSONDeserializerTest extends BaseDDMTestCase {
 
 	@Before
 	public void setUp() {
 		setUpDDMFormLayoutJSONDeserializerUtil();
 		setUpJSONFactoryUtil();
+		setUpLocaleUtil();
 	}
 
 	@Test
@@ -45,8 +52,18 @@ public class DDMFormLayoutJSONDeserializerTest extends BaseDDMTestCase {
 			DDMFormLayoutJSONDeserializerUtil.deserialize(
 				serializedDDMFormLayout);
 
+		Assert.assertEquals(LocaleUtil.US, ddmFormLayout.getDefaultLocale());
+
+		DDMFormLayoutPage ddmFormLayoutPage =
+			ddmFormLayout.getDDMFormLayoutPage(0);
+
+		LocalizedValue title = ddmFormLayoutPage.getTitle();
+
+		Assert.assertEquals("Page 1", title.getString(LocaleUtil.US));
+		Assert.assertEquals("Pagina 1", title.getString(LocaleUtil.BRAZIL));
+
 		List<DDMFormLayoutRow> ddmFormLayoutRows =
-			ddmFormLayout.getDDMFormLayoutRows();
+			ddmFormLayoutPage.getDDMFormLayoutRows();
 
 		assertEquals(
 			createDDMFormLayoutRow(

@@ -545,7 +545,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		<aui:input label="limit-membership-to-members-of-the-parent-site" name="membershipRestriction" type="checkbox" value="<%= membershipRestriction %>" />
 
 		<%
-		boolean breadcrumbShowParentGroups = PropsValues.BREADCRUMB_SHOW_PARENT_GROUPS;
+		boolean breadcrumbShowParentGroups = true;
 
 		if (typeSettingsProperties != null) {
 			breadcrumbShowParentGroups = PropertiesParamUtil.getBoolean(typeSettingsProperties, request, "breadcrumbShowParentGroups", breadcrumbShowParentGroups);

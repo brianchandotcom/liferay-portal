@@ -133,6 +133,8 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 			liferayPortletURL.setDoAsUserId(doAsUserId);
 		}
 
+		String settingsScope = null;
+
 		if ((portletConfiguration != null) &&
 			portletConfiguration.booleanValue()) {
 
@@ -141,6 +143,8 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 			String portletResource = ParamUtil.getString(
 				request, "portletResource");
 			String previewWidth = ParamUtil.getString(request, "previewWidth");
+			settingsScope = ParamUtil.getString(
+				request, "settingsScope", "portletInstance");
 
 			liferayPortletURL.setParameter(
 				"struts_action", "/portlet_configuration/edit_configuration");
@@ -154,6 +158,13 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 			MapUtil.merge(liferayPortletURL.getParameterMap(), parameterMap);
 
 			liferayPortletURL.setParameters(parameterMap);
+		}
+
+		if ((settingsScope != null) &&
+			((parameterMap == null) ||
+			 (parameterMap.get("settingsScope") == null))) {
+
+			liferayPortletURL.setParameter("settingsScope", settingsScope);
 		}
 
 		liferayPortletURL.setRemovedParameterNames(removedParameterNames);

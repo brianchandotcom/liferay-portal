@@ -7,7 +7,6 @@
 		<dirset dir="asset" includes="*" />
 		<dirset dir="blogs" includes="*" />
 		<dirset dir="bookmarks" includes="*" />
-		<dirset dir="breadcrumb" includes="*" />
 		<dirset dir="comments" includes="*" />
 		<dirset dir="configuration-admin" includes="*" />
 		<dirset dir="currency-converter" includes="*" />
@@ -19,10 +18,8 @@
 		<dirset dir="iframe" includes="*" />
 		<dirset dir="invitation" includes="*" />
 		<dirset dir="journal" includes="*" />
-		<dirset dir="language" includes="*" />
 		<dirset dir="loan-calculator" includes="*" />
 		<dirset dir="message-boards" includes="*" />
-		<dirset dir="navigation" includes="*" />
 		<dirset dir="nested-portlets" includes="*" />
 		<dirset dir="network-utilities" includes="*" />
 		<dirset dir="password-generator" includes="*" />
@@ -32,7 +29,7 @@
 		<dirset dir="rss" includes="*" />
 		<dirset dir="search" includes="*" />
 		<dirset dir="site" includes="*" />
-		<dirset dir="sites-directory" includes="*" />
+		<dirset dir="site-navigation" includes="*" />
 		<dirset dir="social" includes="*" />
 		<dirset dir="translator" includes="*" />
 		<dirset dir="trash" includes="*" />

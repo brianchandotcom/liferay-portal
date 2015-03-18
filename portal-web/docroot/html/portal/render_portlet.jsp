@@ -50,7 +50,7 @@ PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getP
 
 PortletPreferences portletPreferences = null;
 
-PortletPreferences renderPortletPreferences = (PortletPreferences)request.getAttribute("renderPortletPreferences");
+PortletPreferences renderPortletPreferences = (PortletPreferences)request.getAttribute(WebKeys.RENDER_PORTLET_PREFERENCES);
 
 if (renderPortletPreferences == null) {
 	portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);

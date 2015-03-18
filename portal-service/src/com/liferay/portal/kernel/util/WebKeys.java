@@ -174,6 +174,8 @@ public interface WebKeys {
 
 	public static final String RENDER_PORTLET_COLUMN_POS = "RENDER_PORTLET_COLUMN_POS";
 
+	public static final String RENDER_PORTLET_PREFERENCES = "RENDER_PORTLET_PREFERENCES";
+
 	public static final String RENDER_PORTLET_RESOURCE = "RENDER_PORTLET_RESOURCE";
 
 	public static final String SEARCH_CONTAINER = "SEARCH_CONTAINER";

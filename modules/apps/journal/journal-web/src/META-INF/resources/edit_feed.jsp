@@ -133,7 +133,7 @@ if (feed != null) {
 		<c:choose>
 			<c:when test="<%= feed == null %>">
 				<c:choose>
-					<c:when test="<%= PropsValues.JOURNAL_FEED_FORCE_AUTOGENERATE_ID %>">
+					<c:when test="<%= JournalWebConfigurationValues.JOURNAL_FEED_FORCE_AUTOGENERATE_ID %>">
 						<aui:input name="newFeedId" type="hidden" />
 						<aui:input name="autoFeedId" type="hidden" value="<%= true %>" />
 					</c:when>
@@ -149,7 +149,7 @@ if (feed != null) {
 			</c:otherwise>
 		</c:choose>
 
-		<aui:input autoFocus="<%= ((feed != null) && !PropsValues.JOURNAL_FEED_FORCE_AUTOGENERATE_ID && (windowState.equals(WindowState.MAXIMIZED)) || windowState.equals(LiferayWindowState.POP_UP)) %>" cssClass="lfr-input-text-container" name="name" />
+		<aui:input autoFocus="<%= ((feed != null) && !JournalWebConfigurationValues.JOURNAL_FEED_FORCE_AUTOGENERATE_ID && (windowState.equals(WindowState.MAXIMIZED)) || windowState.equals(LiferayWindowState.POP_UP)) %>" cssClass="lfr-input-text-container" name="name" />
 
 		<aui:input cssClass="lfr-textarea-container" name="description" />
 

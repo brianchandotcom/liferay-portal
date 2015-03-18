@@ -123,7 +123,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 	%>
 
 		<c:choose>
-			<c:when test="<%= PropsValues.JOURNAL_ARTICLES_SEARCH_WITH_INDEX %>">
+			<c:when test="<%= JournalWebConfigurationValues.JOURNAL_ARTICLES_SEARCH_WITH_INDEX %>">
 
 				<%
 				SearchContext searchContext = SearchContextFactory.getInstance(request);

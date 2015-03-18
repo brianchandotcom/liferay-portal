@@ -24,8 +24,23 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface ElasticsearchConfiguration {
 
+	@Meta.AD(deflt = "", required = false)
+	public String additionalConfigurations();
+
+	@Meta.AD(deflt = "false", required = false)
+	public boolean clientTransportIgnoreClusterName();
+
+	@Meta.AD(deflt = "5s", required = false)
+	public String clientTransportNodesSamplerInterval();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean clientTransportSniff();
+
 	@Meta.AD(deflt = "LiferayElasticSearch", required = false)
 	public String clusterName();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean httpEnabled();
 
 	@Meta.AD(deflt = "EMBEDDED", required = false)
 	public String operationMode();

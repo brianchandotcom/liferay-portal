@@ -14,7 +14,10 @@
 
 package com.liferay.portal.search.elasticsearch.connection;
 
-import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 
 import java.util.concurrent.Future;
@@ -73,18 +76,6 @@ public abstract class BaseElasticsearchConnection
 		}
 	}
 
-	public String getClusterName() {
-		return _clusterName;
-	}
-
-	public String getConfigFileName() {
-		if (PortalRunMode.isTestMode()) {
-			return _testConfigFileName;
-		}
-
-		return _configFileName;
-	}
-
 	@Override
 	public synchronized void initialize() {
 		if (_client != null) {
@@ -93,23 +84,22 @@ public abstract class BaseElasticsearchConnection
 
 		ImmutableSettings.Builder builder = ImmutableSettings.settingsBuilder();
 
+		loadOptionalDefaultConfigurations(builder);
+
+		if (Validator.isNotNull(
+				elasticsearchConfiguration.additionalConfigurations())) {
+
+			builder.loadFromSource(
+				elasticsearchConfiguration.additionalConfigurations());
+		}
+
+		loadRequiredDefaultConfigurations(builder);
+
 		_client = createClient(builder);
-	}
-
-	public void setClusterName(String clusterName) {
-		_clusterName = clusterName;
-	}
-
-	public void setConfigFileName(String configFileName) {
-		_configFileName = configFileName;
 	}
 
 	public void setIndexFactory(IndexFactory indexFactory) {
 		_indexFactory = indexFactory;
-	}
-
-	public void setTestConfigFileName(String testConfigFileName) {
-		_testConfigFileName = testConfigFileName;
 	}
 
 	protected abstract Client createClient(ImmutableSettings.Builder builder);
@@ -118,14 +108,37 @@ public abstract class BaseElasticsearchConnection
 		return _indexFactory;
 	}
 
+	protected void loadOptionalDefaultConfigurations(
+		ImmutableSettings.Builder builder) {
+
+		try {
+			Class<?> clazz = getClass();
+
+			builder.classLoader(clazz.getClassLoader());
+
+			builder.loadFromClasspath(
+				"/META-INF/elasticsearch-optional-defaults.yml");
+		}
+		catch (Exception e) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Unable to load optional default configurations", e);
+			}
+		}
+	}
+
+	protected abstract void loadRequiredDefaultConfigurations(
+		ImmutableSettings.Builder builder);
+
 	protected void setClient(Client client) {
 		_client = client;
 	}
 
+	protected volatile ElasticsearchConfiguration elasticsearchConfiguration;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseElasticsearchConnection.class);
+
 	private Client _client;
-	private String _clusterName;
-	private String _configFileName;
 	private IndexFactory _indexFactory;
-	private String _testConfigFileName;
 
 }

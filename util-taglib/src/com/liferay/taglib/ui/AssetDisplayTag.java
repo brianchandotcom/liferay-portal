@@ -199,7 +199,7 @@ public class AssetDisplayTag extends IncludeTag {
 		}
 
 		if (Validator.isNull(_page)) {
-			_page = "/html/taglib/ui/asset_diplay/" + _template + ".jsp";
+			_page = "/html/taglib/ui/asset_display/" + _template + ".jsp";
 		}
 
 		AssetRendererFactory assetRendererFactory = _assetRendererFactory;

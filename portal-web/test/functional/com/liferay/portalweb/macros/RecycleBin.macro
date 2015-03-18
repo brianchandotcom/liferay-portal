@@ -120,7 +120,7 @@
 				<execute function="AssertTextEquals" locator1="CPRecyclebin#SUCCESS_MESSAGE_RECYCLE_BIN" value1="${customMaxAgeMsg}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="CPRecyclebin#SUCCESS_MESSAGE_RECYCLE_BIN" value1="Entries that have been in the Recycle Bin for more than 1 month will be automatically deleted. Empty the Recycle Bin" />
+				<execute function="AssertTextEquals" locator1="CPRecyclebin#SUCCESS_MESSAGE_RECYCLE_BIN" value1="Entries that have been in the Recycle Bin for more than 1 month are automatically deleted. Empty the Recycle Bin" />
 			</else>
 		</if>
 

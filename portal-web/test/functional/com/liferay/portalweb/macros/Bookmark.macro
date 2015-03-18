@@ -341,7 +341,7 @@
 		<execute function="Click" locator1="PGBookmarksSubfolder#BOOKMARK_TABLE_DROPDOWN" />
 
 		<execute function="AssertClick" locator1="PGBookmarksSubfolder#FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="AssertTextEquals" locator1="PGBookmarksSubfolder#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGBookmarksSubfolder#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="searchCP">

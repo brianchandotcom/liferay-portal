@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journal.messaging;
+package com.liferay.journal.web.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;

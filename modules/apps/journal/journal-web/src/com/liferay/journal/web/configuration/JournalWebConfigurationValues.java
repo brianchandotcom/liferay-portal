@@ -14,8 +14,45 @@
 
 package com.liferay.journal.web.configuration;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+
 /**
  * @author Eduardo Garcia
  */
 public class JournalWebConfigurationValues {
+
+	public static final String DEFAULT_DISPLAY_VIEW = GetterUtil.getString(
+		JournalWebConfigurationUtil.get("default.display.view"));
+
+	public static String[] DISPLAY_VIEWS = JournalWebConfigurationUtil.getArray(
+		"display.views");
+
+	public static final Boolean JOURNAL_ARTICLE_FORCE_AUTOGENERATE_ID =
+		GetterUtil.getBoolean(
+			JournalWebConfigurationUtil.get(
+				"journal.article.force.autogenerate.id"));
+
+	public static String[] JOURNAL_ARTICLE_FORM_ADD =
+		JournalWebConfigurationUtil.getArray("journal.article.form.add");
+
+	public static String[] JOURNAL_ARTICLE_FORM_DEFAULT_VALUES =
+		JournalWebConfigurationUtil.getArray(
+			"journal.article.form.default.values");
+
+	public static String[] JOURNAL_ARTICLE_FORM_UPDATE =
+		JournalWebConfigurationUtil.getArray("journal.article.form.update");
+
+	public static final String JOURNAL_ARTICLE_TEMPLATE_LANGUAGE_CONTENT =
+		"journal.article.template.language.content";
+
+	public static final boolean JOURNAL_ARTICLES_SEARCH_WITH_INDEX =
+		GetterUtil.getBoolean(
+			JournalWebConfigurationUtil.get(
+				"journal.articles.search.with.index"));
+
+	public static final Boolean JOURNAL_FEED_FORCE_AUTOGENERATE_ID =
+		GetterUtil.getBoolean(
+			JournalWebConfigurationUtil.get(
+				"journal.feed.force.autogenerate.id"));
+
 }

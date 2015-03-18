@@ -1123,14 +1123,6 @@ public interface PropsKeys {
 
 	public static final String JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS = "journal.article.expire.all.versions";
 
-	public static final String JOURNAL_ARTICLE_FORCE_AUTOGENERATE_ID = "journal.article.force.autogenerate.id";
-
-	public static final String JOURNAL_ARTICLE_FORM_ADD = "journal.article.form.add";
-
-	public static final String JOURNAL_ARTICLE_FORM_DEFAULT_VALUES = "journal.article.form.default.values";
-
-	public static final String JOURNAL_ARTICLE_FORM_UPDATE = "journal.article.form.update";
-
 	public static final String JOURNAL_ARTICLE_INDEX_ALL_VERSIONS = "journal.articles.index.all.versions";
 
 	public static final String JOURNAL_ARTICLE_STORAGE_TYPE = "journal.article.storage.type";
@@ -1139,13 +1131,7 @@ public interface PropsKeys {
 
 	public static final String JOURNAL_ARTICLE_VIEW_PERMISSION_CHECK_ENABLED = "journal.article.view.permission.check.enabled";
 
-	public static final String JOURNAL_ARTICLES_SEARCH_WITH_INDEX = "journal.articles.search.with.index";
-
 	public static final String JOURNAL_CHAR_BLACKLIST = "journal.char.blacklist";
-
-	public static final String JOURNAL_DEFAULT_DISPLAY_VIEW = "journal.default.display.view";
-
-	public static final String JOURNAL_DISPLAY_VIEWS = "journal.display.views";
 
 	public static final String JOURNAL_EMAIL_ARTICLE_ADDED_BODY = "journal.email.article.added.body";
 
@@ -1201,8 +1187,6 @@ public interface PropsKeys {
 
 	public static final String JOURNAL_ERROR_TEMPLATE = "journal.error.template";
 
-	public static final String JOURNAL_FEED_FORCE_AUTOGENERATE_ID = "journal.feed.force.autogenerate.id";
-
 	public static final String JOURNAL_FOLDER_ICON_CHECK_COUNT = "journal.folder.icon.check.count";
 
 	public static final String JOURNAL_IMAGE_EXTENSIONS = "journal.image.extensions";
@@ -1216,8 +1200,6 @@ public interface PropsKeys {
 	public static final String JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT = "journal.publish.version.history.by.default";
 
 	public static final String JOURNAL_SYNC_CONTENT_SEARCH_ON_STARTUP = "journal.sync.content.search.on.startup";
-
-	public static final String JOURNAL_TEMPLATE_LANGUAGE_CONTENT = "journal.template.language.content";
 
 	public static final String JOURNAL_TRANSFORMER_LISTENER = "journal.transformer.listener";
 

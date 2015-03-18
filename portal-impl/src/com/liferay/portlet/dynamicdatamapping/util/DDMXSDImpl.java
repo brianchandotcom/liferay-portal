@@ -871,7 +871,7 @@ public class DDMXSDImpl implements DDMXSD {
 
 		if ((fieldReadOnly && Validator.isNotNull(mode) &&
 			 StringUtil.equalsIgnoreCase(
-				mode, DDMTemplateConstants.TEMPLATE_MODE_EDIT)) ||
+				 mode, DDMTemplateConstants.TEMPLATE_MODE_EDIT)) ||
 			readOnly) {
 
 			fieldNamespace = _DEFAULT_READ_ONLY_NAMESPACE;

@@ -215,7 +215,7 @@ public class AssetPublisherPortletDataHandler
 					  anyAssetTypeClassName.equals(
 						  DLFileEntry.class.getName())) ||
 					 name.equals(
-						"classTypeIdsDLFileEntryAssetRendererFactory")) {
+						 "classTypeIdsDLFileEntryAssetRendererFactory")) {
 
 				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences, name,
@@ -227,7 +227,7 @@ public class AssetPublisherPortletDataHandler
 					  anyAssetTypeClassName.equals(
 						  JournalArticle.class.getName())) ||
 					 name.equals(
-						"classTypeIdsJournalArticleAssetRendererFactory")) {
+						 "classTypeIdsJournalArticleAssetRendererFactory")) {
 
 				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences, name,
@@ -409,7 +409,7 @@ public class AssetPublisherPortletDataHandler
 					  anyAssetTypeClassName.equals(
 						  DLFileEntry.class.getName())) ||
 					 name.equals(
-						"classTypeIdsDLFileEntryAssetRendererFactory")) {
+						 "classTypeIdsDLFileEntryAssetRendererFactory")) {
 
 				ExportImportHelperUtil.updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences, name,
@@ -421,7 +421,7 @@ public class AssetPublisherPortletDataHandler
 					  anyAssetTypeClassName.equals(
 						  JournalArticle.class.getName())) ||
 					 name.equals(
-						"classTypeIdsJournalArticleAssetRendererFactory")) {
+						 "classTypeIdsJournalArticleAssetRendererFactory")) {
 
 				ExportImportHelperUtil.updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences, name,

@@ -214,7 +214,7 @@ public class PortletListerImpl implements PortletLister {
 				}
 				else if (!portlet.isInstanceable() &&
 						 _layoutTypePortlet.hasPortletId(
-							portlet.getPortletId())) {
+							 portlet.getPortletId())) {
 
 					portlets.add(portlet);
 				}

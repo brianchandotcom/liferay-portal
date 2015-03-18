@@ -1417,7 +1417,7 @@ public class PortalImpl implements Portal {
 
 		if ((groupFriendlyURL.contains(layoutFriendlyURL) ||
 			 groupFriendlyURL.contains(
-				StringPool.SLASH + layout.getLayoutId())) &&
+				 StringPool.SLASH + layout.getLayoutId())) &&
 			(!layout.isFirstParent() || Validator.isNotNull(parametersURL))) {
 
 			canonicalLayoutFriendlyURL = defaultLayoutFriendlyURL;
@@ -6928,7 +6928,7 @@ public class PortalImpl implements Portal {
 		}
 		else if ((e instanceof NoSuchLayoutException) &&
 				 Validator.isNotNull(
-					PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
+					 PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
 
 			redirect = PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND;
 		}

@@ -111,7 +111,7 @@ public class SSOUtil {
 
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED,
-					PropsValues.OPEN_SSO_AUTH_ENABLED) &&
+				PropsValues.OPEN_SSO_AUTH_ENABLED) &&
 			PropsValues.OPEN_SSO_LOGOUT_ON_SESSION_EXPIRATION) {
 
 			return true;

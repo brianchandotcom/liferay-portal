@@ -106,7 +106,7 @@ public class NetlogonConnectionManagerImpl
 
 		if (!Arrays.equals(
 				serverCredential,
-			netrServerAuthenticate3.getServerCredential())) {
+				netrServerAuthenticate3.getServerCredential())) {
 
 			throw new NtlmLogonException("Session key negotiation failed");
 		}

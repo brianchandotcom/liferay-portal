@@ -60,7 +60,7 @@ public class NtlmAutoLogin extends BaseAutoLogin {
 
 		if (!PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.NTLM_AUTH_ENABLED,
-			_ntlmConfiguration.enabled())) {
+				_ntlmConfiguration.enabled())) {
 
 			return null;
 		}

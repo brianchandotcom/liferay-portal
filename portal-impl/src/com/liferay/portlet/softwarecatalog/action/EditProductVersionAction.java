@@ -80,7 +80,7 @@ public class EditProductVersionAction extends PortletAction {
 					 e instanceof ProductVersionFrameworkVersionException ||
 					 e instanceof ProductVersionNameException ||
 					 e instanceof
-						UnavailableProductVersionDirectDownloadURLException) {
+						 UnavailableProductVersionDirectDownloadURLException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}

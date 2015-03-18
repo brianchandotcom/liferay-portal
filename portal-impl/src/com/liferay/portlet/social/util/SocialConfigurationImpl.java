@@ -83,7 +83,7 @@ public class SocialConfigurationImpl implements SocialConfiguration {
 						((ownerType ==
 							SocialActivityCounterConstants.TYPE_ALL) ||
 						 (ownerType ==
-							activityCounterDefinition.getOwnerType()))) {
+							 activityCounterDefinition.getOwnerType()))) {
 
 						activityCounterNames.add(
 							activityCounterDefinition.getName());

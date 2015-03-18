@@ -134,7 +134,7 @@ public class LiferayWorkflowCapability
 
 		if (dlFileVersion.isApproved() ||
 			(serviceContext.getWorkflowAction() ==
-					WorkflowConstants.ACTION_PUBLISH)) {
+				WorkflowConstants.ACTION_PUBLISH)) {
 
 			return dlFileVersion;
 		}

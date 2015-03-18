@@ -1099,7 +1099,7 @@ public class AssetPublisherUtil {
 			if (!PrefsPropsUtil.getBoolean(
 					layout.getCompanyId(),
 					PropsKeys.
-					SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED)) {
+						SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED)) {
 
 				return false;
 			}

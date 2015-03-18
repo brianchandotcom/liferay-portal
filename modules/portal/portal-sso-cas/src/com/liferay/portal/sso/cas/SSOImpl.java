@@ -91,7 +91,7 @@ public class SSOImpl implements SSO {
 	protected boolean isCASAuthEnabled(long companyId) {
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.CAS_AUTH_ENABLED,
-			_casConfiguration.enabled())) {
+				_casConfiguration.enabled())) {
 
 			return true;
 		}

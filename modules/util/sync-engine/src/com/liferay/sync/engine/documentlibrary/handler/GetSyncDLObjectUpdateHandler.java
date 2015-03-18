@@ -325,7 +325,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			if (isIgnoredFilePath(sourceSyncFile, filePathName) ||
 				((sourceSyncFile != null) &&
 				 (sourceSyncFile.getModifiedTime() ==
-					targetSyncFile.getModifiedTime()))) {
+					 targetSyncFile.getModifiedTime()))) {
 
 				return;
 			}

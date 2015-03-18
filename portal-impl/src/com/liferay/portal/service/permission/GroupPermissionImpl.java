@@ -115,14 +115,14 @@ public class GroupPermissionImpl
 				groupId, Group.class.getName(), groupId,
 				ActionKeys.MANAGE_SUBGROUPS) ||
 			 PortalPermissionUtil.contains(
-				permissionChecker, ActionKeys.ADD_COMMUNITY))) {
+				 permissionChecker, ActionKeys.ADD_COMMUNITY))) {
 
 			return true;
 		}
 		else if (actionId.equals(ActionKeys.ADD_LAYOUT) &&
 				 permissionChecker.hasPermission(
-					groupId, Group.class.getName(), groupId,
-					ActionKeys.MANAGE_LAYOUTS)) {
+					 groupId, Group.class.getName(), groupId,
+					 ActionKeys.MANAGE_LAYOUTS)) {
 
 			return true;
 		}

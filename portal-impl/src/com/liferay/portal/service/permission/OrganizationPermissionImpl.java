@@ -124,7 +124,7 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 
 		while ((organization != null) &&
 			   (organization.getOrganizationId() !=
-					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID)) {
+				   OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID)) {
 
 			if (actionId.equals(ActionKeys.ADD_ORGANIZATION) &&
 				permissionChecker.hasPermission(

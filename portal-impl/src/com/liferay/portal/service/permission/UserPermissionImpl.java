@@ -196,7 +196,7 @@ public class UserPermissionImpl
 								RoleConstants.ORGANIZATION_ADMINISTRATOR,
 								true) &&
 							 !UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-								permissionChecker.getUserId(),
+								 permissionChecker.getUserId(),
 								organizationGroup.getGroupId(),
 								RoleConstants.ORGANIZATION_OWNER, true)) {
 

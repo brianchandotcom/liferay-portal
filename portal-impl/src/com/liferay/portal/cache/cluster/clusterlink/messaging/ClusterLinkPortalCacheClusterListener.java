@@ -82,7 +82,7 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 		else if (portalCacheClusterEventType.equals(
 					PortalCacheClusterEventType.PUT) ||
 				 portalCacheClusterEventType.equals(
-					PortalCacheClusterEventType.UPDATE)) {
+					 PortalCacheClusterEventType.UPDATE)) {
 
 			Serializable key = portalCacheClusterEvent.getElementKey();
 			Serializable value = portalCacheClusterEvent.getElementValue();

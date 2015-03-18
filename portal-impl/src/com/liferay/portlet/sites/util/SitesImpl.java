@@ -835,7 +835,7 @@ public class SitesImpl implements Sites {
 			((companyContentSharingEnabled ==
 				CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT) &&
 			 (groupContentSharingEnabled ==
-				CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE))) {
+				 CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE))) {
 
 			return true;
 		}
@@ -1473,7 +1473,7 @@ public class SitesImpl implements Sites {
 		}
 		else if (!group.isUser() &&
 				 !GroupPermissionUtil.contains(
-					permissionChecker, group, ActionKeys.UPDATE)) {
+					 permissionChecker, group, ActionKeys.UPDATE)) {
 
 			throw new PrincipalException();
 		}

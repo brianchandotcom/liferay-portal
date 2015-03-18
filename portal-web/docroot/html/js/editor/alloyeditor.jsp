@@ -35,7 +35,6 @@ JSONObject editorConfigJSONObject = (data != null) ? (JSONObject)data.get("edito
 JSONObject editorOptionsJSONObject = (data != null) ? (JSONObject)data.get("editorOptions") : null;
 
 String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
-Map<String, String> fileBrowserParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:fileBrowserParams");
 String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
 
@@ -175,9 +174,6 @@ if (showSource) {
 	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
 
 	contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
-
-	String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
-	String languageId = LocaleUtil.toLanguageId(locale);
 	%>
 
 	var alloyEditor;
@@ -186,34 +182,6 @@ if (showSource) {
 		document.getElementById('<%= name %>').setAttribute('contenteditable', true);
 
 		var defaultConfig = {
-			contentsLangDirection: '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>',
-
-			contentsLanguage: '<%= contentsLanguageId.replace("iw_", "he_") %>',
-
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcPath" value="/view.jsp" />
-				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-				<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
-				<portlet:param name="showGroupsSelector" value="true" />
-			</liferay-portlet:renderURL>
-
-			<%
-			if (fileBrowserParamsMap != null) {
-				for (Map.Entry<String, String> entry : fileBrowserParamsMap.entrySet()) {
-					documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
-				}
-			}
-			%>
-
-			filebrowserBrowseUrl: '<%= documentSelectorURL %>',
-			filebrowserFlashBrowseUrl: '<%= documentSelectorURL %>&Type=flash',
-			filebrowserImageBrowseLinkUrl: '<%= documentSelectorURL %>&Type=image',
-			filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image',
-
-			language: '<%= languageId.replace("iw_", "he_") %>',
-
-			srcNode: '#<%= name %>',
-
 			toolbars: {
 				add: ['imageselector'],
 				image: ['left', 'right'],

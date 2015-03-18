@@ -14,9 +14,11 @@
 
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.actioncommandcache.Test2ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.actioncommandcache.TestActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.actioncommandcache.TestActionCommandPortlet;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
@@ -84,6 +86,28 @@ public class ActionCommandCacheTest {
 		Assert.assertEquals(
 			"TEST_ACTION_COMMAND",
 			actionRequest.getAttribute("TEST_ACTION_COMMAND"));
+	}
+
+	@Test
+	public void testProcessActionMultipleActionCommands() throws Exception {
+		MockActionRequest actionRequest = new MockActionRequest();
+
+		StringBuilder actionName = new StringBuilder(3);
+
+		actionName.append(TestActionCommand.TEST_ACTION_COMMAND_NAME);
+		actionName.append(StringPool.COMMA);
+		actionName.append(Test2ActionCommand.TEST_2_ACTION_COMMAND_NAME);
+
+		actionRequest.addParameter(
+			ActionRequest.ACTION_NAME, actionName.toString());
+
+		_portlet.processAction(actionRequest, new MockActionResponse());
+
+		Assert.assertNotNull(
+			actionRequest.getAttribute("TEST_2_ACTION_COMMAND"));
+		Assert.assertEquals(
+			"TEST_2_ACTION_COMMAND",
+			actionRequest.getAttribute("TEST_2_ACTION_COMMAND"));
 	}
 
 	private static GenericPortlet _portlet;

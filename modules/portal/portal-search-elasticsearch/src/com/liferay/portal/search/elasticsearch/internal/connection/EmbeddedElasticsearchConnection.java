@@ -127,6 +127,7 @@ public class EmbeddedElasticsearchConnection
 		builder.put("index.number_of_shards", 1);
 		builder.put("node.client", false);
 		builder.put("node.data", true);
+		builder.put("node.local", elasticsearchConfiguration.nodeLocal());
 		builder.put(
 			"path.data",
 			PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch");
@@ -140,11 +141,6 @@ public class EmbeddedElasticsearchConnection
 			builder.put("index.store.type", "memory");
 			builder.put("index.translog.flush_threshold_ops", "1");
 			builder.put("index.translog.interval", "1ms");
-
-			builder.put("node.local", true);
-		}
-		else {
-			builder.put("node.local", false);
 		}
 	}
 

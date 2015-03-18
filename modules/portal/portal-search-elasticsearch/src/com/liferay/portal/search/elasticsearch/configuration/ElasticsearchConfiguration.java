@@ -42,6 +42,9 @@ public interface ElasticsearchConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean httpEnabled();
 
+	@Meta.AD(deflt = "true", required = false)
+	public String nodeLocal();
+
 	@Meta.AD(deflt = "EMBEDDED", required = false)
 	public String operationMode();
 

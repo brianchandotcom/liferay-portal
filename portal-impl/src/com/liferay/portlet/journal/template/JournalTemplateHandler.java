@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.template;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -55,6 +56,11 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 	@Override
 	public String getResourceName() {
 		return "com.liferay.portlet.journal.template";
+	}
+
+	@Override
+	public String getTemplatesHelpPropertyKey() {
+		return PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_CONTENT;
 	}
 
 	@Override

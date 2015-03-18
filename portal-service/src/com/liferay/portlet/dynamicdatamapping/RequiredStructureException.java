@@ -41,30 +41,16 @@ public class RequiredStructureException extends PortalException {
 		return _type;
 	}
 
-	public static class MustNotDeleteReferencedStructure
+	public static class MustNotDeleteStructureReferencedByStructureLinks
 		extends RequiredStructureException {
 
-		public MustNotDeleteReferencedStructure(long structureId) {
+		public MustNotDeleteStructureReferencedByStructureLinks(
+			long structureId) {
+
 			super(
 				String.format(
-					"Structure %s is required and cannot be deleted.",
-					structureId),
-				REFERENCED_STRUCTURE);
-
-			this.structureId = structureId;
-		}
-
-		public long structureId;
-
-	}
-
-	public static class MustNotDeleteReferencedStructureLink
-		extends RequiredStructureException {
-
-		public MustNotDeleteReferencedStructureLink(long structureId) {
-			super(
-				String.format(
-					"Structure link %s is required and cannot be deleted.",
+					"Structure %s cannot be deleted because it is " +
+						"referenced by one or more structure links",
 					structureId),
 				REFERENCED_STRUCTURE_LINK);
 
@@ -81,10 +67,28 @@ public class RequiredStructureException extends PortalException {
 		public MustNotDeleteStructureReferencedByTemplates(long structureId) {
 			super(
 				String.format(
-					"Structure %s is referenced by templates and cannot be " +
-							"deleted.",
+					"Structure %s cannot be deleted because it is " +
+						"referenced by one or more templates",
 					structureId),
 				REFERENCED_TEMPLATE);
+
+			this.structureId = structureId;
+		}
+
+		public long structureId;
+
+	}
+
+	public static class MustNotDeleteStructureThatHasChild
+		extends RequiredStructureException {
+
+		public MustNotDeleteStructureThatHasChild(long structureId) {
+			super(
+				String.format(
+					"Structure %s cannot be deleted because it has child " +
+						"structures",
+					structureId),
+				REFERENCED_STRUCTURE);
 
 			this.structureId = structureId;
 		}

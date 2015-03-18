@@ -1,21 +1,12 @@
 #
-# See http://elasticsearch.org/guide/en/elasticsearch/reference/current/setup-configuration.html
+# See http://elasticsearch.org/guide/en/elasticsearch/reference/current/setupconfiguration.html
 # for more information.
 #
-
-cluster.name: LiferayElasticSearchTest
-
-http.enabled: true
 
 index.indexing.slowlog.threshold.index.debug: 2s
 index.indexing.slowlog.threshold.index.info: 5s
 index.indexing.slowlog.threshold.index.trace: 500ms
 index.indexing.slowlog.threshold.index.warn: 10s
-
-index.number_of_shards: 1
-index.number_of_replicas: 0
-
-index.refresh_interval: 1ms
 
 index.search.slowlog.threshold.fetch.debug: 500ms
 index.search.slowlog.threshold.fetch.info: 800ms
@@ -27,11 +18,6 @@ index.search.slowlog.threshold.query.info: 5s
 index.search.slowlog.threshold.query.trace: 500ms
 index.search.slowlog.threshold.query.warn: 10s
 
-index.store.type: memory
-
-index.translog.flush_threshold_ops: 1
-index.translog.interval: 1ms
-
 monitor.jvm.gc.old.debug: 2s
 monitor.jvm.gc.old.info: 5s
 monitor.jvm.gc.old.warn: 10s
@@ -39,11 +25,3 @@ monitor.jvm.gc.old.warn: 10s
 monitor.jvm.gc.young.debug: 400ms
 monitor.jvm.gc.young.info: 700ms
 monitor.jvm.gc.young.warn: 1000ms
-
-node.client: false
-node.data: true
-node.local: true
-
-path.data: ${liferay.home}/data/elasticsearch
-path.logs: ${liferay.home}/logs
-path.work: ${java.io.tmpdir}

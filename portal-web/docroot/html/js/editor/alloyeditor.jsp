@@ -158,7 +158,9 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 <%
 String modules = "liferay-alloy-editor";
 
-if (Validator.isNotNull(data) && Validator.isNotNull(data.get("uploadURL"))) {
+String uploadURL = editorOptionsJSONObject.getString("uploadURL");
+
+if (Validator.isNotNull(data) && Validator.isNotNull(uploadURL)) {
 	modules += ",liferay-editor-image-uploader";
 }
 
@@ -225,11 +227,11 @@ if (showSource) {
 
 		var plugins = [];
 
-		<c:if test='<%= Validator.isNotNull(data) && Validator.isNotNull(data.get("uploadURL")) %>'>
+		<c:if test="<%= Validator.isNotNull(data) && Validator.isNotNull(uploadURL) %>">
 			plugins.push(
 				{
 					cfg: {
-						uploadUrl: '<%= data.get("uploadURL") %>'
+						uploadUrl: '<%= uploadURL %>'
 					},
 					fn: A.Plugin.LiferayBlogsUploader
 				}

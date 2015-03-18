@@ -5216,14 +5216,17 @@ public class ServiceBuilder {
 				int endPos = pos + importToExclude.length();
 				String charAfter = content.substring(endPos, endPos + 1);
 
-				if (content.length() > endPos && !charAfter.matches("[a-zA-Z;]")) {
+				if ((content.length() > endPos) &&
+					!charAfter.matches("[a-zA-Z;]")) {
+
 					String className = importToExclude.substring(
 						importToExclude.lastIndexOf(StringPool.PERIOD) + 1);
 
 					content = StringUtil.replaceFirst(
 						content, importToExclude, className, pos);
 				}
-					fromIndex = pos + importToExclude.length();
+
+				fromIndex = pos + importToExclude.length();
 			}
 		}
 

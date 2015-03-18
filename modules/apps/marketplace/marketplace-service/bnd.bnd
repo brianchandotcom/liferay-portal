@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Marketplace Service
 Bundle-SymbolicName: com.liferay.marketplace.service
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.marketplace.util
 Include-Resource: classes
 Liferay-Service: true
 Require-Capability:\

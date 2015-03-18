@@ -17,6 +17,7 @@ package com.liferay.productivity.center.layout;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.DefaultLayoutTypeAccessPolicyImpl;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.model.Portlet;
 
@@ -28,7 +29,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true, property = {"layout.type=user_personal_panel"},
+	immediate = true,
+	property = {"layout.type=" + LayoutConstants.TYPE_USER_PERSONAL_PANEL},
 	service = LayoutTypeAccessPolicy.class
 )
 public class UserPersonalPanelLayoutTypeAccessPolicy

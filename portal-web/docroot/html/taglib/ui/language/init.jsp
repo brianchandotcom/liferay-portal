@@ -26,7 +26,9 @@ String formName = (String)request.getAttribute("liferay-ui:language:formName");
 String formAction = (String)request.getAttribute("liferay-ui:language:formAction");
 
 if (Validator.isNull(formAction)) {
-	formAction = themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" + themeDisplay.getPlid() + "&redirect=" + currentURL;
+	formAction = themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" + themeDisplay.getPlid();
+
+	formAction = HttpUtil.setParameter(formAction, "redirect", PortalUtil.getCurrentURL(request));
 }
 
 boolean displayCurrentLocale = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:language:displayCurrentLocale"), true);

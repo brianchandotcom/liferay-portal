@@ -30,8 +30,6 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 /**
  * @author Michael C. Han
@@ -149,14 +147,14 @@ public class UserAssetRenderer extends BaseAssetRenderer {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse,
+			PortletRequest portletRequest, PortletResponse portletResponse,
 			String template)
 		throws Exception {
 
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
-			renderRequest.setAttribute(WebKeys.USER, _user);
+			portletRequest.setAttribute(WebKeys.USER, _user);
 
 			return "/html/portlet/directory/asset/abstract.jsp";
 		}

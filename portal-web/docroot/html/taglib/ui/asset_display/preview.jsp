@@ -14,11 +14,11 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/html/taglib/ui/asset_display/init.jsp" %>
 
 <%
-AssetEntry assetEntry = (AssetEntry)request.getAttribute("add_panel.jsp-assetEntry");
-AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("add_panel.jsp-assetRenderer");
+AssetEntry assetEntry = (AssetEntry)request.getAttribute("liferay-ui:asset-display:assetEntry");
+AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASSET_RENDERER);
 %>
 
 <div class="asset-preview">

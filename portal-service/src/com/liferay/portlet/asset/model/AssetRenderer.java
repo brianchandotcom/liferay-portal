@@ -39,6 +39,8 @@ public interface AssetRenderer extends Renderer {
 
 	public static final String TEMPLATE_FULL_CONTENT = "full_content";
 
+	public static final String TEMPLATE_PREVIEW = "preview";
+
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
@@ -65,6 +67,10 @@ public interface AssetRenderer extends Renderer {
 
 	public String getNewName(String oldName, String token);
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String getPreviewPath(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception;

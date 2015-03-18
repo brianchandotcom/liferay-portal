@@ -33,8 +33,6 @@ import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 /**
  * @author Zsolt Berentey
@@ -94,7 +92,7 @@ public class MBThreadTrashRenderer extends BaseTrashRenderer {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse,
+			PortletRequest portletRequest, PortletResponse portletResponse,
 			String template)
 		throws Exception {
 
@@ -103,26 +101,26 @@ public class MBThreadTrashRenderer extends BaseTrashRenderer {
 				_rootMessage.getMessageId(), WorkflowConstants.STATUS_ANY,
 				MBThreadConstants.THREAD_VIEW_TREE, false);
 
-		renderRequest.setAttribute(
+		portletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_MESSAGE, messageDisplay);
 
 		MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 
-		renderRequest.setAttribute(
+		portletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-		renderRequest.setAttribute(
+		portletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY,
 			messageDisplay.getCategory());
-		renderRequest.setAttribute(
+		portletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE,
 			treeWalker.getRoot());
-		renderRequest.setAttribute(
+		portletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(0));
-		renderRequest.setAttribute(
+		portletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.FALSE);
-		renderRequest.setAttribute(
+		portletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, _rootMessage);
-		renderRequest.setAttribute(
+		portletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD,
 			messageDisplay.getThread());
 

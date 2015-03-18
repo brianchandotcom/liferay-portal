@@ -34,8 +34,6 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
 /**
@@ -203,12 +201,12 @@ public class BookmarksEntryAssetRenderer
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse,
+			PortletRequest portletRequest, PortletResponse portletResponse,
 			String template)
 		throws Exception {
 
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			renderRequest.setAttribute(
+			portletRequest.setAttribute(
 				BookmarksWebKeys.BOOKMARKS_ENTRY, _entry);
 
 			return "/html/portlet/bookmarks/asset/" + template + ".jsp";

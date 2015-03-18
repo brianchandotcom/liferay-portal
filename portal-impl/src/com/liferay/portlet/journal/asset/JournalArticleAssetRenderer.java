@@ -55,8 +55,6 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 /**
  * @author Julio Camarero
@@ -410,14 +408,14 @@ public class JournalArticleAssetRenderer
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse,
+			PortletRequest portletRequest, PortletResponse portletResponse,
 			String template)
 		throws Exception {
 
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
-			renderRequest.setAttribute(WebKeys.JOURNAL_ARTICLE, _article);
+			portletRequest.setAttribute(WebKeys.JOURNAL_ARTICLE, _article);
 
 			return "/html/portlet/journal/asset/" + template + ".jsp";
 		}

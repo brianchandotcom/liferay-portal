@@ -26,7 +26,7 @@ portletURL.setParameter("struts_action", "/document_library/view_file_entry_type
 	<liferay-util:param name="includeBasicFileEntryType" value="<%= Boolean.FALSE.toString() %>" />
 </liferay-util:include>
 
-<liferay-ui:error exception="<%= RequiredStructureException.class %>" message="cannot-delete-a-document-type-that-is-presently-used-by-one-or-more-documents" />
+<liferay-ui:error exception="<%= RequiredFileEntryTypeException.class %>" message="cannot-delete-a-document-type-that-is-presently-used-by-one-or-more-documents" />
 
 <div class="separator"></div>
 

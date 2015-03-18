@@ -32,7 +32,8 @@ public class PortletEditorConfigImpl implements PortletEditorConfig {
 
 	public PortletEditorConfigImpl(
 		List<PortletEditorConfigContributor> portletEditorConfigContributors,
-		Map<String, Object> inputEditorTaglibAttributes, ThemeDisplay themeDisplay,
+		Map<String, Object> inputEditorTaglibAttributes,
+		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_portletEditorConfigContributors = portletEditorConfigContributors;
@@ -65,12 +66,9 @@ public class PortletEditorConfigImpl implements PortletEditorConfig {
 			PortletEditorConfigContributor portletEditorConfigContributor =
 				iterator.next();
 
-			JSONObject configJSONObject =
-				portletEditorConfigContributor.getConfigJSONObject(
-					inputEditorTaglibAttributes, themeDisplay,
-					liferayPortletResponse);
-
-			_configJSONObject.merge(configJSONObject);
+			portletEditorConfigContributor.populateConfigJSONObject(
+				_configJSONObject, inputEditorTaglibAttributes, themeDisplay,
+				liferayPortletResponse);
 		}
 
 		return _configJSONObject;
@@ -88,12 +86,9 @@ public class PortletEditorConfigImpl implements PortletEditorConfig {
 			PortletEditorConfigContributor portletEditorConfigContributor =
 				iterator.next();
 
-			JSONObject optionsJSONObject =
-				portletEditorConfigContributor.getOptionsJSONObject(
-					inputEditorTaglibAttributes, themeDisplay,
-					liferayPortletResponse);
-
-			_optionsJSONObject.merge(optionsJSONObject);
+			portletEditorConfigContributor.populateOptionsJSONObject(
+				_optionsJSONObject, inputEditorTaglibAttributes, themeDisplay,
+				liferayPortletResponse);
 		}
 
 		return _optionsJSONObject;

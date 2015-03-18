@@ -97,9 +97,7 @@ public class PortletEditorConfigFactoryImpl
 			curPortletEditorConfigContributors =
 				_editorConfigServiceTrackerMap.getService(key);
 
-		if (ListUtil.isNotEmpty(
-				curPortletEditorConfigContributors)) {
-
+		if (ListUtil.isNotEmpty(curPortletEditorConfigContributors)) {
 			portletEditorConfigContributors.addAll(
 				curPortletEditorConfigContributors);
 		}
@@ -146,7 +144,7 @@ public class PortletEditorConfigFactoryImpl
 						serviceReference,
 					Emitter<String> emitter) {
 
-					List<String> portletNames= StringPlus.asList(
+					List<String> portletNames = StringPlus.asList(
 						serviceReference.getProperty("javax.portlet.name"));
 
 					if (portletNames.isEmpty()) {

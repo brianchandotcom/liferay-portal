@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.editor.config.PortletEditorConfigContributor;
 
-import org.osgi.service.component.annotations.Component;
-
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
@@ -38,15 +38,13 @@ import java.util.Map;
 public class BlogsPortletCoverImageCaptionEditorConfigContributor
 	implements PortletEditorConfigContributor {
 
-	public JSONObject getConfigJSONObject(
-		Map<String, Object> inputEditorTaglibAttributes,
+	public void populateConfigJSONObject(
+		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		JSONObject editorConfigJSONObject = JSONFactoryUtil.createJSONObject();
-
-		editorConfigJSONObject.put("allowedContent", "a");
-		editorConfigJSONObject.put("disallowedContent", "br");
+		jsonObject.put("allowedContent", "a");
+		jsonObject.put("disallowedContent", "br");
 
 		JSONObject toolbarJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -59,21 +57,15 @@ public class BlogsPortletCoverImageCaptionEditorConfigContributor
 		catch (JSONException jsone) {
 		}
 
-		editorConfigJSONObject.put("toolbars", toolbarJSONObject);
-
-		return editorConfigJSONObject;
+		jsonObject.put("toolbars", toolbarJSONObject);
 	}
 
-	public JSONObject getOptionsJSONObject(
-		Map<String, Object> inputEditorTaglibAttributes,
+	public void populateOptionsJSONObject(
+		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		JSONObject editorOptionsJSONObject = JSONFactoryUtil.createJSONObject();
-
-		editorOptionsJSONObject.put("textMode", Boolean.TRUE);
-
-		return editorOptionsJSONObject;
+		jsonObject.put("textMode", Boolean.TRUE);
 	}
 
 }

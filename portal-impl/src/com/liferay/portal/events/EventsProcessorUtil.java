@@ -89,10 +89,10 @@ public class EventsProcessorUtil {
 		_instance._unregisterEvent(key, event);
 	}
 
-	private EventsProcessorUtil() {
+	protected EventsProcessorUtil() {
 	}
 
-	private Collection<LifecycleAction> _getLifecycleActions(String key) {
+	protected Collection<LifecycleAction> _getLifecycleActions(String key) {
 		Collection<LifecycleAction> lifecycleActions = _lifecycleActions.get(
 			key);
 
@@ -110,7 +110,7 @@ public class EventsProcessorUtil {
 		return lifecycleActions;
 	}
 
-	private void _process(
+	protected void _process(
 			String key, String[] classes, LifecycleEvent lifecycleEvent)
 		throws ActionException {
 
@@ -140,21 +140,21 @@ public class EventsProcessorUtil {
 		}
 	}
 
-	private void _processEvent(
+	protected void _processEvent(
 			LifecycleAction lifecycleAction, LifecycleEvent lifecycleEvent)
 		throws ActionException {
 
 		lifecycleAction.processLifecycleEvent(lifecycleEvent);
 	}
 
-	private void _registerEvent(String key, Object event) {
+	protected void _registerEvent(String key, Object event) {
 		Collection<LifecycleAction> lifecycleActions =
 			_instance._getLifecycleActions(key);
 
 		lifecycleActions.add((LifecycleAction)event);
 	}
 
-	private void _unregisterEvent(String key, Object event) {
+	protected void _unregisterEvent(String key, Object event) {
 		Collection<LifecycleAction> lifecycleActions =
 			_instance._getLifecycleActions(key);
 

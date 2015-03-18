@@ -56,6 +56,7 @@ Include-Resource:\
 	@../../../../lib/portal/oro.jar,\
 	@../../../../lib/portal/oscache.jar,\
 	@../../../../lib/portal/stringtemplate.jar,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class

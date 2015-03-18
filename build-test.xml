@@ -1684,6 +1684,20 @@ go]]></replacevalue>
 				<replaceregexp
 					file="@{file.name}"
 					flags="g"
+					match="(.*classname=&quot;\S+\.(\w+).*name=&quot;(\w+)[\s\S]+?)(\$\{testray\.testcase\.name\})"
+					replace="\1\2#\3"
+				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
+					match="\$\{testray\.testcase\.name\}"
+					replace="${testray.main.component.name}"
+				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
 					match="\&gt;[\n\s]*\&lt;"
 					replace="\&gt;${line.separator}\&lt;"
 				/>

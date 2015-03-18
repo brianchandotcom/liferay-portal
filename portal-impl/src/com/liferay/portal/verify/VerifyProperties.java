@@ -535,7 +535,7 @@ public class VerifyProperties extends VerifyProcess {
 
 		new String[] {
 			"language.display.templates.config", "display.templates.config",
-			"com.liferay.language.web"
+			"com.liferay.site.navigation.language.web"
 		},
 
 		// LDAP

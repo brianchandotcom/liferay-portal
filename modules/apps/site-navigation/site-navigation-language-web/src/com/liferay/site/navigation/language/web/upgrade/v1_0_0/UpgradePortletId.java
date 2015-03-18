@@ -12,14 +12,21 @@
  * details.
  */
 
-package com.liferay.language.web.constants;
+package com.liferay.site.navigation.language.web.upgrade.v1_0_0;
+
+import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
 
 /**
  * @author Eudaldo Alonso
  */
-public class LanguagePortletKeys {
+public class UpgradePortletId
+	extends com.liferay.portal.upgrade.util.UpgradePortletId {
 
-	public static final String LANGUAGE =
-		"com_liferay_language_web_portlet_LanguagePortlet";
+	@Override
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"82", LanguagePortletKeys.LANGUAGE}
+		};
+	}
 
 }

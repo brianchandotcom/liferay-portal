@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.language.web.upgrade.v1_0_0;
+package com.liferay.site.navigation.language.web.upgrade.v1_0_0;
 
-import com.liferay.language.web.constants.LanguagePortletKeys;
+import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;

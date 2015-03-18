@@ -12,22 +12,14 @@
  * details.
  */
 
-package com.liferay.language.web.portlet.action;
-
-import com.liferay.language.web.constants.LanguagePortletKeys;
-import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.site.navigation.language.web.constants;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	property = {
-		"javax.portlet.name=" + LanguagePortletKeys.LANGUAGE
-	},
-	service = ConfigurationAction.class
-)
-public class LanguageConfigurationAction extends DefaultConfigurationAction {
+public class LanguagePortletKeys {
+
+	public static final String LANGUAGE =
+		"com_liferay_language_web_portlet_LanguagePortlet";
+
 }

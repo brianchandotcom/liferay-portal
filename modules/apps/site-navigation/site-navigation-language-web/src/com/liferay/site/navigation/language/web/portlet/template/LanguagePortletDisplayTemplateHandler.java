@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.language.web.portlet.template;
+package com.liferay.site.navigation.language.web.portlet.template;
 
-import com.liferay.language.web.configuration.LanguageWebConfigurationValues;
-import com.liferay.language.web.constants.LanguagePortletKeys;
+import com.liferay.site.navigation.language.web.configuration.LanguageWebConfigurationValues;
+import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;

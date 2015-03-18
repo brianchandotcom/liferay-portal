@@ -12,21 +12,16 @@
  * details.
  */
 
-package com.liferay.language.web.upgrade.v1_0_0;
+package com.liferay.site.navigation.language.web.configuration;
 
-import com.liferay.language.web.constants.LanguagePortletKeys;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Eudaldo Alonso
  */
-public class UpgradePortletId
-	extends com.liferay.portal.upgrade.util.UpgradePortletId {
+public class LanguageWebConfigurationValues {
 
-	@Override
-	protected String[][] getRenamePortletIdsArray() {
-		return new String[][] {
-			new String[] {"82", LanguagePortletKeys.LANGUAGE}
-		};
-	}
+	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
+		LanguageWebConfigurationUtil.get("display.templates.config"));
 
 }

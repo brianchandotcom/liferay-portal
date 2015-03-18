@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.language.web.portlet;
+package com.liferay.site.navigation.language.web.portlet;
 
-import com.liferay.language.web.upgrade.LanguageWebUpgrade;
+import com.liferay.site.navigation.language.web.upgrade.LanguageWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;

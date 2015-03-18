@@ -12,16 +12,22 @@
  * details.
  */
 
-package com.liferay.language.web.configuration;
+package com.liferay.site.navigation.language.web.portlet.action;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
-public class LanguageWebConfigurationValues {
-
-	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		LanguageWebConfigurationUtil.get("display.templates.config"));
-
+@Component(
+	property = {
+		"javax.portlet.name=" + LanguagePortletKeys.LANGUAGE
+	},
+	service = ConfigurationAction.class
+)
+public class LanguageConfigurationAction extends DefaultConfigurationAction {
 }

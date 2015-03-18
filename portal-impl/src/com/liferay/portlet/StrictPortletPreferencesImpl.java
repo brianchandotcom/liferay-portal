@@ -38,14 +38,6 @@ public class StrictPortletPreferencesImpl
 		_companyId = companyId;
 	}
 
-	public StrictPortletPreferencesImpl(
-		String xml, Map<String, Preference > preferences) {
-
-		super(xml, preferences);
-
-		_companyId = 0;
-	}
-
 	@Override
 	public Object clone() {
 		return new StrictPortletPreferencesImpl(

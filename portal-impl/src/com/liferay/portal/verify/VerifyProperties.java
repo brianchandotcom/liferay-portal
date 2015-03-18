@@ -411,19 +411,19 @@ public class VerifyProperties extends VerifyProcess {
 
 		new String[] {
 			"breadcrumb.display.style.default", "ddm.template.key.default",
-			"com.liferay.breadcrumb.web"
+			"com.liferay.site.navigation.breadcrumb.web"
 		},
 		new String[] {
 			"breadcrumb.display.templates.config", "display.templates.config",
-			"com.liferay.breadcrumb.web"
+			"com.liferay.site.navigation.breadcrumb.web"
 		},
 		new String[] {
 			"breadcrumb.show.guest.group", "show.guest.group",
-			"com.liferay.breadcrumb.web"
+			"com.liferay.site.navigation.breadcrumb.web"
 		},
 		new String[] {
 			"breadcrumb.show.parent.groups", "show.parent.groups",
-			"com.liferay.breadcrumb.web"
+			"com.liferay.site.navigation.breadcrumb.web"
 		},
 
 		// CAS

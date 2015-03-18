@@ -12,23 +12,14 @@
  * details.
  */
 
-package com.liferay.breadcrumb.web.portlet.action;
-
-import com.liferay.breadcrumb.web.constants.BreadcrumbPortletKeys;
-import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.site.navigation.breadcrumb.web.constants;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + BreadcrumbPortletKeys.BREADCRUMB
-	},
-	service = ConfigurationAction.class
-)
-public class BreadcrumbConfigurationAction extends DefaultConfigurationAction {
+public class BreadcrumbPortletKeys {
+
+	public static final String BREADCRUMB =
+		"com_liferay_breadcrumb_web_portlet_BreadcrumbPortlet";
+
 }

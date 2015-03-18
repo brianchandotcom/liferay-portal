@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.breadcrumb.web.upgrade;
+package com.liferay.site.navigation.breadcrumb.web.upgrade;
 
-import com.liferay.breadcrumb.web.upgrade.v1_0_0.UpgradePortletPreferences;
+import com.liferay.site.navigation.breadcrumb.web.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -57,7 +57,7 @@ public class BreadcrumbWebUpgrade {
 		upgradeProcesses.add(new UpgradePortletPreferences());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.breadcrumb.web", upgradeProcesses, 1, 1, false);
+			"com.liferay.site.navigation.breadcrumb.web", upgradeProcesses, 1, 1, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

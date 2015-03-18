@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.breadcrumb.web.portlet.template;
+package com.liferay.site.navigation.breadcrumb.web.portlet.template;
 
-import com.liferay.breadcrumb.web.configuration.BreadcrumbConfigurationValues;
-import com.liferay.breadcrumb.web.constants.BreadcrumbPortletKeys;
+import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbConfigurationValues;
+import com.liferay.site.navigation.breadcrumb.web.constants.BreadcrumbPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;

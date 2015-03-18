@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.breadcrumb.web.portlet;
+package com.liferay.site.navigation.breadcrumb.web.portlet;
 
-import com.liferay.breadcrumb.web.upgrade.BreadcrumbWebUpgrade;
+import com.liferay.site.navigation.breadcrumb.web.upgrade.BreadcrumbWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.breadcrumb.web.configuration;
+package com.liferay.site.navigation.breadcrumb.web.configuration;
 
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;

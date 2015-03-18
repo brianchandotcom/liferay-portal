@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.breadcrumb.web.upgrade.v1_0_0;
+package com.liferay.site.navigation.breadcrumb.web.upgrade.v1_0_0;
 
-import com.liferay.breadcrumb.web.constants.BreadcrumbPortletKeys;
+import com.liferay.site.navigation.breadcrumb.web.constants.BreadcrumbPortletKeys;
 
 /**
  * @author Julio Camarero

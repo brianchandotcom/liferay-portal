@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Site Navigation Breadcrumb Web
 Bundle-SymbolicName: com.liferay.site.navigation.breadcrumb.web
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.breadcrumb.web.constants
+Export-Package: com.liferay.site.navigation.breadcrumb.web.constants
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources

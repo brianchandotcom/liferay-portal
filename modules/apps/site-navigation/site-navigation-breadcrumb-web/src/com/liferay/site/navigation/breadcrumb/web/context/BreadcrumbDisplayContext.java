@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.breadcrumb.web.context;
+package com.liferay.site.navigation.breadcrumb.web.context;
 
-import com.liferay.breadcrumb.web.configuration.BreadcrumbConfigurationValues;
+import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbConfigurationValues;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;

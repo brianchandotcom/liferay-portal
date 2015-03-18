@@ -254,6 +254,14 @@ public class PortletPreferencesFactoryUtil {
 			layout, portletId);
 	}
 
+	public static PortletPreferences strictFromXML(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, String xml) {
+
+		return getPortletPreferencesFactory().strictFromXML(
+			companyId, ownerId, ownerType, plid, portletId, xml);
+	}
+
 	public static String toXML(PortalPreferences portalPreferences) {
 		return getPortletPreferencesFactory().toXML(portalPreferences);
 	}

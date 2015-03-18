@@ -623,6 +623,23 @@ public class PortletPreferencesFactoryImpl
 	}
 
 	@Override
+	public StrictPortletPreferencesImpl strictFromXML(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, String xml) {
+
+		try {
+			Map<String, Preference> preferencesMap = toPreferencesMap(xml);
+
+			return new StrictPortletPreferencesImpl(
+				companyId, ownerId, ownerType, plid, portletId, xml,
+				preferencesMap);
+		}
+		catch (SystemException se) {
+			throw se;
+		}
+	}
+
+	@Override
 	public String toXML(PortalPreferences portalPreferences) {
 		PortalPreferencesImpl portalPreferencesImpl = null;
 

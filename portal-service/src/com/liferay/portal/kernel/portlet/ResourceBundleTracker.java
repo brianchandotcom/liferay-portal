@@ -96,7 +96,7 @@ public class ResourceBundleTracker implements Closeable {
 		_serviceTracker.close();
 	}
 
-	public ResourceBundle getResouceBundle(String languageId) {
+	public ResourceBundle getResourceBundle(String languageId) {
 		if (languageId == null) {
 			languageId = StringPool.BLANK;
 		}

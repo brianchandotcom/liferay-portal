@@ -64,6 +64,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CATEGORY-->
+<tr>
+	<td>CATEGORY_HEADER</td>
+	<td>//span[@class='taglib-asset-categories-summary']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_LINKS</td>
+	<td>//div[@class='kb-article-assets']/span/a[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--RELATED_ASSETS-->
 <tr>
 	<td>RELATED_ASSETS_HEADER</td>

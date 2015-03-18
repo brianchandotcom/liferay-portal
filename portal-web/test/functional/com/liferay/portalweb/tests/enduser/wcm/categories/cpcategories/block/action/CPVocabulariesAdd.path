@@ -85,6 +85,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSOCIATED_ASSET_TYPES_REQUIRED_CHECKBOX</td>
+	<td>//input[contains(@id,'required0') and @type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSOCIATED_ASSET_TYPES_ADD_BUTTON</td>
 	<td>//button[contains(@class,'add-row')]</td>
 	<td></td>

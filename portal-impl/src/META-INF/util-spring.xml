@@ -1118,6 +1118,9 @@
 			<bean class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.journal.lar.JournalArticleStagedModelDataHandler" class="com.liferay.portlet.journal.lar.JournalArticleStagedModelDataHandler" />
+	<bean id="com.liferay.portlet.journal.lar.JournalFeedStagedModelDataHandler" class="com.liferay.portlet.journal.lar.JournalFeedStagedModelDataHandler" />
+	<bean id="com.liferay.portlet.journal.lar.JournalFolderStagedModelDataHandler" class="com.liferay.portlet.journal.lar.JournalFolderStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalArticlePermission" class="com.liferay.portlet.journal.service.permission.JournalArticlePermission" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalFeedPermission" class="com.liferay.portlet.journal.service.permission.JournalFeedPermission" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalFolderPermission" class="com.liferay.portlet.journal.service.permission.JournalFolderPermission" />

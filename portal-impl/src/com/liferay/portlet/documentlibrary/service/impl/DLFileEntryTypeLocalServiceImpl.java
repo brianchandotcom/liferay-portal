@@ -197,8 +197,9 @@ public class DLFileEntryTypeLocalServiceImpl
 		if (dlFileEntryPersistence.countByFileEntryTypeId(
 				dlFileEntryType.getFileEntryTypeId()) > 0) {
 
-			throw new RequiredStructureException(
-				RequiredStructureException.REFERENCED_STRUCTURE);
+			throw new RequiredStructureException.
+				MustNotDeleteReferencedFileEntryType(
+					dlFileEntryType.getFileEntryTypeId());
 		}
 
 		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(

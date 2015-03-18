@@ -71,18 +71,6 @@ public class ResourceBundleTrackerTest {
 	}
 
 	@Test
-	public void testGetResourceBundleFromLanguageUtil() throws Exception {
-		Locale locale = LocaleUtil.fromLanguageId("es_ES");
-
-		Assert.assertNotEquals(
-			"clave de extensión del paquete de recursos",
-			LanguageUtil.get(locale, "resourcebundle-extension-key"));
-		Assert.assertEquals(
-			"resourcebundle-extension-key",
-			LanguageUtil.get(locale, "resourcebundle-extension-key"));
-	}
-
-	@Test
 	public void testGetResourceBundleFromPortletConfig() throws Exception {
 		PortletConfig portletConfig = _portlet.getPortletConfig();
 

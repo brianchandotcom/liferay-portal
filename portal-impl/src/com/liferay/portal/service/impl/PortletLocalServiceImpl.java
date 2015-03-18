@@ -481,7 +481,15 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	@Skip
 	public PortletApp getPortletApp(String servletContextName) {
-		return _getPortletApp(servletContextName);
+		PortletApp portletApp = _portletApps.get(servletContextName);
+
+		if (portletApp == null) {
+			portletApp = new PortletAppImpl(servletContextName);
+
+			_portletApps.put(servletContextName, portletApp);
+		}
+
+		return portletApp;
 	}
 
 	@Override
@@ -527,7 +535,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			portlet = new PortletImpl(CompanyConstants.SYSTEM, portletId);
 
-			PortletApp portletApp = _getPortletApp(StringPool.BLANK);
+			PortletApp portletApp = getPortletApp(StringPool.BLANK);
 
 			portlet.setPortletApp(portletApp);
 
@@ -701,7 +709,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		_portletIdsByStrutsPath.clear();
 
 		try {
-			PortletApp portletApp = _getPortletApp(StringPool.BLANK);
+			PortletApp portletApp = getPortletApp(StringPool.BLANK);
 
 			portletApp.setServletContext(servletContext);
 
@@ -855,7 +863,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			// Sprite images
 
-			PortletApp portletApp = _getPortletApp(servletContextName);
+			PortletApp portletApp = getPortletApp(servletContextName);
 
 			_setSpriteImages(servletContext, portletApp, "/icons/");
 
@@ -951,18 +959,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		return portlet;
 	}
 
-	private PortletApp _getPortletApp(String servletContextName) {
-		PortletApp portletApp = _portletApps.get(servletContextName);
-
-		if (portletApp == null) {
-			portletApp = new PortletAppImpl(servletContextName);
-
-			_portletApps.put(servletContextName, portletApp);
-		}
-
-		return portletApp;
-	}
-
 	private String _getPortletId(String securityPath) {
 		if (_portletIdsByStrutsPath.isEmpty()) {
 			for (Portlet portlet : _portletsMap.values()) {
@@ -1005,13 +1001,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		String portletName, String servletContextName,
 		Map<String, Portlet> portletsMap) {
 
-		List<Portlet> portlets = null;
-
 		int pos = portletName.indexOf(CharPool.STAR);
 
 		if (pos == -1) {
-			portlets = new ArrayList<>();
-
 			String portletId = portletName;
 
 			if (Validator.isNotNull(servletContextName)) {
@@ -1024,39 +1016,24 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			Portlet portlet = portletsMap.get(portletId);
 
-			if (portlet != null) {
-				portlets.add(portlet);
+			if (portlet == null) {
+				return Collections.emptyList();
 			}
 
-			return portlets;
+			return Collections.singletonList(portlet);
 		}
 
-		String portletNamePrefix = portletName.substring(0, pos);
-
-		portlets = _getPortletsByServletContextName(
-			servletContextName, portletsMap);
-
-		Iterator<Portlet> itr = portlets.iterator();
-
-		while (itr.hasNext()) {
-			Portlet portlet = itr.next();
-
-			String portletId = portlet.getPortletId();
-
-			if (!portletId.startsWith(portletNamePrefix)) {
-				itr.remove();
-			}
-		}
-
-		return portlets;
+		return _getPortletsByServletContextName(
+			servletContextName, portletName.substring(0, pos), portletsMap);
 	}
 
 	private List<Portlet> _getPortletsByServletContextName(
-		String servletContextName, Map<String, Portlet> portletsMap) {
+		String servletContextName, String portletNamePrefix,
+		Map<String, Portlet> portletsMap) {
 
 		List<Portlet> portlets = new ArrayList<>();
 
-		String servletContextNameSuffix = servletContextName;
+		String servletContextNameSuffix = null;
 
 		if (Validator.isNotNull(servletContextName)) {
 			servletContextNameSuffix = PortalUtil.getJsSafePortletId(
@@ -1065,17 +1042,18 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		for (Map.Entry<String, Portlet> entry : portletsMap.entrySet()) {
 			String portletId = entry.getKey();
-			Portlet portlet = entry.getValue();
 
-			if (Validator.isNotNull(servletContextNameSuffix)) {
-				if (portletId.endsWith(servletContextNameSuffix)) {
-					portlets.add(portlet);
+			if (!portletId.startsWith(portletNamePrefix)) {
+				continue;
+			}
+
+			if (servletContextNameSuffix == null) {
+				if (!portletId.contains(PortletConstants.WAR_SEPARATOR)) {
+					portlets.add(entry.getValue());
 				}
 			}
-			else {
-				if (!portletId.contains(PortletConstants.WAR_SEPARATOR)) {
-					portlets.add(portlet);
-				}
+			else if (portletId.endsWith(servletContextNameSuffix)) {
+				portlets.add(entry.getValue());
 			}
 		}
 
@@ -1830,7 +1808,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		Element rootElement = document.getRootElement();
 
-		PortletApp portletApp = _getPortletApp(servletContextName);
+		PortletApp portletApp = getPortletApp(servletContextName);
 
 		Map<String, String> roleMappers = new HashMap<>();
 
@@ -2166,7 +2144,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		Element rootElement = document.getRootElement();
 
-		PortletApp portletApp = _getPortletApp(servletContextName);
+		PortletApp portletApp = getPortletApp(servletContextName);
 
 		portletApp.addServletURLPatterns(servletURLPatterns);
 		portletApp.setServletContext(servletContext);
@@ -2297,21 +2275,21 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			String filterName = filterMappingElement.elementText("filter-name");
 
+			PortletFilter portletFilter = portletApp.getPortletFilter(
+				filterName);
+
+			if (portletFilter == null) {
+				_log.error(
+					"Filter mapping references unknown filter name " +
+						filterName);
+
+				continue;
+			}
+
 			for (Element portletNameElement :
 					filterMappingElement.elements("portlet-name")) {
 
 				String portletName = portletNameElement.getTextTrim();
-
-				PortletFilter portletFilter = portletApp.getPortletFilter(
-					filterName);
-
-				if (portletFilter == null) {
-					_log.error(
-						"Filter mapping references unknown filter name " +
-							filterName);
-
-					continue;
-				}
 
 				List<Portlet> portletModels = _getPortletsByPortletName(
 					portletName, servletContextName, portletsMap);

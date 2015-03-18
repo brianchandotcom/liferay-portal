@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Navigation Web
-Bundle-SymbolicName: com.liferay.navigation.web
+Bundle-Name: Liferay Site Navigation Menu Web
+Bundle-SymbolicName: com.liferay.site.navigation.menu.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\

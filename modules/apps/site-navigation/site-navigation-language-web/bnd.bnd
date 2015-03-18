@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Language Web
-Bundle-SymbolicName: com.liferay.language.web
+Bundle-Name: Liferay Site Navigation Language Web
+Bundle-SymbolicName: com.liferay.site.navigation.language.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\

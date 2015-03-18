@@ -25,8 +25,8 @@
 
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@ page import="com.liferay.navigation.web.configuration.NavigationWebConfigurationUtil" %><%@
-page import="com.liferay.navigation.web.configuration.NavigationWebConfigurationValues" %><%@
+<%@ page import="com.liferay.site.navigation.menu.web.configuration.NavigationWebConfigurationUtil" %><%@
+page import="com.liferay.site.navigation.menu.web.configuration.NavigationWebConfigurationValues" %><%@
 page import="com.liferay.portal.kernel.configuration.Filter" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.navigation.web.configuration;
+package com.liferay.site.navigation.menu.web.configuration;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 

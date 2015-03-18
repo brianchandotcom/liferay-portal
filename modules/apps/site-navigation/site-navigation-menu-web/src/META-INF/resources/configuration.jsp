@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.site.navigation.menu.web.configuration.NavigationWebConfigurationValues" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -33,7 +35,7 @@
 					<optgroup label="<liferay-ui:message key="predefined" />">
 
 						<%
-						for (String displayStyleOption : NavigationWebConfigurationValues.DISPLAY_STYLE_OPTIONS) {
+						for (String displayStyleOption : com.liferay.site.navigation.menu.web.configuration.NavigationWebConfigurationValues.DISPLAY_STYLE_OPTIONS) {
 						%>
 
 							<aui:option label="<%= displayStyleOption %>" selected="<%= displayStyle.equals(displayStyleOption) %>" />

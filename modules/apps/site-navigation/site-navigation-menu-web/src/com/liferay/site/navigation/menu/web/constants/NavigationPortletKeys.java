@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.navigation.web.constants;
+package com.liferay.site.navigation.menu.web.constants;
 
 /**
  * @author Eudaldo Alonso

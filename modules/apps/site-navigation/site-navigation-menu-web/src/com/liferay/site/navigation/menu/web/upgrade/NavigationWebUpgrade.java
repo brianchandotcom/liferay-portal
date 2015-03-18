@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.navigation.web.upgrade;
+package com.liferay.site.navigation.menu.web.upgrade;
 
-import com.liferay.navigation.web.constants.NavigationPortletKeys;
+import com.liferay.site.navigation.menu.web.constants.NavigationPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -59,7 +59,7 @@ public class NavigationWebUpgrade {
 		};
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.navigation.web",
+			"com.liferay.site.navigation.menu.web",
 			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}

@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.navigation.web.portlet;
+package com.liferay.site.navigation.menu.web.portlet;
 
-import com.liferay.navigation.web.upgrade.NavigationWebUpgrade;
+import com.liferay.site.navigation.menu.web.upgrade.NavigationWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
+import com.liferay.site.navigation.menu.web.upgrade.NavigationWebUpgrade;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

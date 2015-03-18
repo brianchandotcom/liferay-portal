@@ -53,7 +53,7 @@ public class StagedAssetTagStagedModelDataHandler
 	}
 
 	@Override
-	public StagedAssetTag fetchStagedModelByUuidAndCompanyId(
+	public List<StagedAssetTag> fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		DynamicQuery dynamicQuery = AssetTagLocalServiceUtil.dynamicQuery();
@@ -74,7 +74,7 @@ public class StagedAssetTagStagedModelDataHandler
 		}
 
 		return ModelAdapterUtil.adapt(
-			assetTags.get(0), AssetTag.class, StagedAssetTag.class);
+			assetTags, AssetTag.class, StagedAssetTag.class);
 	}
 
 	@Override

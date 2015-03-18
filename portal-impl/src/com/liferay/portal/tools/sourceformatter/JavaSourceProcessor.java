@@ -952,6 +952,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixIfClause(String ifClause, String line, int delta) {
+		if (StringUtil.count(ifClause, line) > 1) {
+			return ifClause;
+		}
+
 		String newLine = line;
 
 		String whiteSpace = StringPool.BLANK;
@@ -1134,9 +1138,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String formatIfClause(String ifClause)
-		throws IOException {
-
+	protected String formatIfClause(String ifClause) throws IOException {
 		String strippedQuotesIfClause = stripQuotes(ifClause, CharPool.QUOTE);
 
 		if (strippedQuotesIfClause.contains("!(") ||
@@ -1154,9 +1156,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int previousLineLength = 0;
 
 		int previousLineCloseParenthesesCount = 0;
+		int previousLineLeadingWhiteSpace = 0;
 		int previousLineOpenParenthesesCount = 0;
 
 		int baseLeadingWhiteSpace = 0;
+		int insideMethodCallExpectedWhiteSpace = 0;
 		int level = -1;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
@@ -1235,9 +1239,31 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					expectedLeadingWhiteSpace = baseLeadingWhiteSpace + 5;
 				}
 
-				if ((expectedLeadingWhiteSpace != 0) &&
-					(leadingWhiteSpace != expectedLeadingWhiteSpace)) {
+				if (previousLine.endsWith(StringPool.COMMA) &&
+					(insideMethodCallExpectedWhiteSpace > 0)) {
 
+					if (previousLineCloseParenthesesCount >
+							previousLineOpenParenthesesCount) {
+
+						insideMethodCallExpectedWhiteSpace -= 4;
+					}
+
+					expectedLeadingWhiteSpace =
+						insideMethodCallExpectedWhiteSpace;
+				}
+				else {
+					if (expectedLeadingWhiteSpace == 0) {
+						expectedLeadingWhiteSpace =
+							previousLineLeadingWhiteSpace + 4;
+					}
+
+					if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
+						insideMethodCallExpectedWhiteSpace =
+							expectedLeadingWhiteSpace;
+					}
+				}
+
+				if (leadingWhiteSpace != expectedLeadingWhiteSpace) {
 					return fixIfClause(
 						ifClause, originalLine,
 						leadingWhiteSpace - expectedLeadingWhiteSpace);
@@ -1252,7 +1278,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			previousLine = originalLine;
 			previousLineLength = line.length();
+
 			previousLineCloseParenthesesCount = closeParenthesesCount;
+			previousLineLeadingWhiteSpace = leadingWhiteSpace;
 			previousLineOpenParenthesesCount = openParenthesesCount;
 		}
 

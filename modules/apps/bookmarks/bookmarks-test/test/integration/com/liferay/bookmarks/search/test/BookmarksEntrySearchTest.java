@@ -143,7 +143,9 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 			folderId = folder.getFolderId();
 		}
 
-		return BookmarksTestUtil.addEntry(folderId, true, serviceContext);
+		return BookmarksTestUtil.addEntry(
+			folderId, true, serviceContext.isAddGroupPermissions(),
+			serviceContext.isAddGuestPermissions(), serviceContext);
 	}
 
 	@Override
@@ -171,8 +173,11 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
+		serviceContext.setScopeGroupId(group.getGroupId());
+
 		return BookmarksTestUtil.addFolder(
-			group.getGroupId(), RandomTestUtil.randomString());
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	@Override

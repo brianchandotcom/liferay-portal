@@ -53,7 +53,8 @@ public class BookmarksTestUtil {
 	}
 
 	public static BookmarksEntry addEntry(
-			long folderId, boolean approved, ServiceContext serviceContext)
+			long folderId, boolean approved, boolean addGroupPermissions,
+			boolean addGuestPermissions, ServiceContext serviceContext)
 		throws Exception {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
@@ -67,8 +68,8 @@ public class BookmarksTestUtil {
 
 			serviceContext = (ServiceContext)serviceContext.clone();
 
-			serviceContext.setAddGroupPermissions(true);
-			serviceContext.setAddGuestPermissions(true);
+			serviceContext.setAddGroupPermissions(addGroupPermissions);
+			serviceContext.setAddGuestPermissions(addGuestPermissions);
 
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
@@ -94,6 +95,13 @@ public class BookmarksTestUtil {
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
+	}
+
+	public static BookmarksEntry addEntry(
+			long folderId, boolean approved, ServiceContext serviceContext)
+		throws Exception {
+
+		return addEntry(folderId, approved, true, true, serviceContext);
 	}
 
 	public static BookmarksFolder addFolder(

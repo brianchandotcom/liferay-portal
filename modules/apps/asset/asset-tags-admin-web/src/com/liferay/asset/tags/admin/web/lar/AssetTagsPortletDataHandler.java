@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.adapter.ModelAdapterUtil;
-import com.liferay.portlet.asset.adapter.StagedAssetTag;
 import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.model.adapter.StagedAssetTag;
 import com.liferay.portlet.asset.model.adapter.impl.StagedAssetTagImpl;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 

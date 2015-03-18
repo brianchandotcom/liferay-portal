@@ -61,6 +61,14 @@ public class AssetVocabularyStagedModelDataHandler
 	}
 
 	@Override
+	public AssetVocabulary fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return AssetVocabularyLocalServiceUtil.
+			fetchAssetVocabularyByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
 	public List<AssetVocabulary> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -68,14 +76,6 @@ public class AssetVocabularyStagedModelDataHandler
 			getAssetVocabulariesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<AssetVocabulary>());
-	}
-
-	@Override
-	public AssetVocabulary fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return AssetVocabularyLocalServiceUtil.
-			fetchAssetVocabularyByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override

@@ -53,6 +53,21 @@ public class StagedAssetTagStagedModelDataHandler
 	}
 
 	@Override
+	public StagedAssetTag fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		try {
+			AssetTag assetTag = AssetTagLocalServiceUtil.getTag(groupId, uuid);
+
+			return ModelAdapterUtil.adapt(
+				assetTag, AssetTag.class, StagedAssetTag.class);
+		}
+		catch (PortalException e) {
+			return null;
+		}
+	}
+
+	@Override
 	public List<StagedAssetTag> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -75,21 +90,6 @@ public class StagedAssetTagStagedModelDataHandler
 
 		return ModelAdapterUtil.adapt(
 			assetTags, AssetTag.class, StagedAssetTag.class);
-	}
-
-	@Override
-	public StagedAssetTag fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		try {
-			AssetTag assetTag = AssetTagLocalServiceUtil.getTag(groupId, uuid);
-
-			return ModelAdapterUtil.adapt(
-				assetTag, AssetTag.class, StagedAssetTag.class);
-		}
-		catch (PortalException e) {
-			return null;
-		}
 	}
 
 	@Override

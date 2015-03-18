@@ -60,6 +60,14 @@ public class BookmarksFolderStagedModelDataHandler
 	}
 
 	@Override
+	public BookmarksFolder fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return BookmarksFolderLocalServiceUtil.
+			fetchBookmarksFolderByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
 	public List<BookmarksFolder> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -67,14 +75,6 @@ public class BookmarksFolderStagedModelDataHandler
 			getBookmarksFoldersByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<BookmarksFolder>());
-	}
-
-	@Override
-	public BookmarksFolder fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return BookmarksFolderLocalServiceUtil.
-			fetchBookmarksFolderByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override

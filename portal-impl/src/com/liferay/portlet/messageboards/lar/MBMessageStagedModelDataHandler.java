@@ -74,20 +74,20 @@ public class MBMessageStagedModelDataHandler
 	}
 
 	@Override
+	public MBMessage fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return MBMessageLocalServiceUtil.fetchMBMessageByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	public List<MBMessage> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return MBMessageLocalServiceUtil.getMBMessagesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<MBMessage>());
-	}
-
-	@Override
-	public MBMessage fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return MBMessageLocalServiceUtil.fetchMBMessageByUuidAndGroupId(
-			uuid, groupId);
 	}
 
 	@Override

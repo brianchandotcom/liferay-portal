@@ -60,20 +60,20 @@ public class DDMStructureStagedModelDataHandler
 	}
 
 	@Override
+	public DDMStructure fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	public List<DDMStructure> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return DDMStructureLocalServiceUtil.getDDMStructuresByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<DDMStructure>());
-	}
-
-	@Override
-	public DDMStructure fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
-			uuid, groupId);
 	}
 
 	@Override

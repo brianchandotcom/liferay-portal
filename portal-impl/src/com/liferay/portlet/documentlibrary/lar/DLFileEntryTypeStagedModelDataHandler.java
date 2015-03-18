@@ -65,6 +65,14 @@ public class DLFileEntryTypeStagedModelDataHandler
 	}
 
 	@Override
+	public DLFileEntryType fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return DLFileEntryTypeLocalServiceUtil.
+			fetchDLFileEntryTypeByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
 	public List<DLFileEntryType> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -72,14 +80,6 @@ public class DLFileEntryTypeStagedModelDataHandler
 			getDLFileEntryTypesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<DLFileEntryType>());
-	}
-
-	@Override
-	public DLFileEntryType fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return DLFileEntryTypeLocalServiceUtil.
-			fetchDLFileEntryTypeByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override

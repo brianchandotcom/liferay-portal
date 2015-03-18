@@ -59,20 +59,20 @@ public class RepositoryStagedModelDataHandler
 	}
 
 	@Override
+	public Repository fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return RepositoryLocalServiceUtil.fetchRepositoryByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	public List<Repository> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return RepositoryLocalServiceUtil.getRepositoriesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<Repository>());
-	}
-
-	@Override
-	public Repository fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return RepositoryLocalServiceUtil.fetchRepositoryByUuidAndGroupId(
-			uuid, groupId);
 	}
 
 	@Override

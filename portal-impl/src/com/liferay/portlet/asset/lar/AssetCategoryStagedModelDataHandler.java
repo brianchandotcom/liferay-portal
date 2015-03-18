@@ -66,6 +66,14 @@ public class AssetCategoryStagedModelDataHandler
 	}
 
 	@Override
+	public AssetCategory fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return AssetCategoryLocalServiceUtil.fetchAssetCategoryByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	public List<AssetCategory> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -73,14 +81,6 @@ public class AssetCategoryStagedModelDataHandler
 			getAssetCategoriesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<AssetCategory>());
-	}
-
-	@Override
-	public AssetCategory fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return AssetCategoryLocalServiceUtil.fetchAssetCategoryByUuidAndGroupId(
-			uuid, groupId);
 	}
 
 	@Override

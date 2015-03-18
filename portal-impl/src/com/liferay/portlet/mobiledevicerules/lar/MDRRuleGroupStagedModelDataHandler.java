@@ -47,20 +47,20 @@ public class MDRRuleGroupStagedModelDataHandler
 	}
 
 	@Override
+	public MDRRuleGroup fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return MDRRuleGroupLocalServiceUtil.fetchMDRRuleGroupByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	public List<MDRRuleGroup> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return MDRRuleGroupLocalServiceUtil.getMDRRuleGroupsByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<MDRRuleGroup>());
-	}
-
-	@Override
-	public MDRRuleGroup fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return MDRRuleGroupLocalServiceUtil.fetchMDRRuleGroupByUuidAndGroupId(
-			uuid, groupId);
 	}
 
 	@Override

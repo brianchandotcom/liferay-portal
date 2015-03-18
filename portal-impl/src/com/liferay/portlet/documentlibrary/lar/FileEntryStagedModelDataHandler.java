@@ -95,6 +95,19 @@ public class FileEntryStagedModelDataHandler
 	}
 
 	@Override
+	public FileEntry fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		try {
+			return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+				uuid, groupId);
+		}
+		catch (PortalException pe) {
+			return null;
+		}
+	}
+
+	@Override
 	public List<FileEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -110,19 +123,6 @@ public class FileEntryStagedModelDataHandler
 		}
 
 		return fileEntries;
-	}
-
-	@Override
-	public FileEntry fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		try {
-			return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-				uuid, groupId);
-		}
-		catch (PortalException pe) {
-			return null;
-		}
 	}
 
 	@Override

@@ -53,20 +53,20 @@ public class MBCategoryStagedModelDataHandler
 	}
 
 	@Override
+	public MBCategory fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return MBCategoryLocalServiceUtil.fetchMBCategoryByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	public List<MBCategory> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return MBCategoryLocalServiceUtil.getMBCategoriesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<MBCategory>());
-	}
-
-	@Override
-	public MBCategory fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return MBCategoryLocalServiceUtil.fetchMBCategoryByUuidAndGroupId(
-			uuid, groupId);
 	}
 
 	@Override

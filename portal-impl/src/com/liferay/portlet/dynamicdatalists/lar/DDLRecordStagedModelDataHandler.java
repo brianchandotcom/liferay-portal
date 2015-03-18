@@ -60,20 +60,20 @@ public class DDLRecordStagedModelDataHandler
 	}
 
 	@Override
+	public DDLRecord fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return DDLRecordLocalServiceUtil.fetchDDLRecordByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	public List<DDLRecord> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return DDLRecordLocalServiceUtil.getDDLRecordsByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<DDLRecord>());
-	}
-
-	@Override
-	public DDLRecord fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return DDLRecordLocalServiceUtil.fetchDDLRecordByUuidAndGroupId(
-			uuid, groupId);
 	}
 
 	@Override

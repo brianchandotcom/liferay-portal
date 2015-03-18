@@ -68,20 +68,20 @@ public class WikiPageStagedModelDataHandler
 	}
 
 	@Override
+	public WikiPage fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return WikiPageLocalServiceUtil.fetchWikiPageByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	public List<WikiPage> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return WikiPageLocalServiceUtil.getWikiPagesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<WikiPage>());
-	}
-
-	@Override
-	public WikiPage fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return WikiPageLocalServiceUtil.fetchWikiPageByUuidAndGroupId(
-			uuid, groupId);
 	}
 
 	@Override

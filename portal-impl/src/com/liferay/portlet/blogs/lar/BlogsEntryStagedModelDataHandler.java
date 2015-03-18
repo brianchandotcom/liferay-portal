@@ -70,20 +70,20 @@ public class BlogsEntryStagedModelDataHandler
 	}
 
 	@Override
+	public BlogsEntry fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return BlogsEntryLocalServiceUtil.fetchBlogsEntryByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	public List<BlogsEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return BlogsEntryLocalServiceUtil.getBlogsEntriesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<BlogsEntry>());
-	}
-
-	@Override
-	public BlogsEntry fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return BlogsEntryLocalServiceUtil.fetchBlogsEntryByUuidAndGroupId(
-			uuid, groupId);
 	}
 
 	@Override

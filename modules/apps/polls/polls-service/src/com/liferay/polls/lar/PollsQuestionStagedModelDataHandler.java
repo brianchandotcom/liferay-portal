@@ -58,6 +58,14 @@ public class PollsQuestionStagedModelDataHandler
 	}
 
 	@Override
+	public PollsQuestion fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return PollsQuestionLocalServiceUtil.fetchPollsQuestionByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	public List<PollsQuestion> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -65,14 +73,6 @@ public class PollsQuestionStagedModelDataHandler
 			getPollsQuestionsByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<PollsQuestion>());
-	}
-
-	@Override
-	public PollsQuestion fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return PollsQuestionLocalServiceUtil.fetchPollsQuestionByUuidAndGroupId(
-			uuid, groupId);
 	}
 
 	@Override

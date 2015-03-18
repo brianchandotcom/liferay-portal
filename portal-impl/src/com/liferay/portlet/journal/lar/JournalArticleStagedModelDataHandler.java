@@ -105,6 +105,14 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Override
+	public JournalArticle fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return JournalArticleLocalServiceUtil.
+			fetchJournalArticleByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
 	public List<JournalArticle> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -112,14 +120,6 @@ public class JournalArticleStagedModelDataHandler
 			getJournalArticlesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<JournalArticle>());
-	}
-
-	@Override
-	public JournalArticle fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return JournalArticleLocalServiceUtil.
-			fetchJournalArticleByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override

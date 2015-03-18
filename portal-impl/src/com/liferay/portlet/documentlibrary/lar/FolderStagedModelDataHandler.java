@@ -76,6 +76,11 @@ public class FolderStagedModelDataHandler
 	}
 
 	@Override
+	public Folder fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
+		return FolderUtil.fetchByUUID_R(uuid, groupId);
+	}
+
+	@Override
 	public List<Folder> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -91,11 +96,6 @@ public class FolderStagedModelDataHandler
 		}
 
 		return folders;
-	}
-
-	@Override
-	public Folder fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
-		return FolderUtil.fetchByUUID_R(uuid, groupId);
 	}
 
 	@Override

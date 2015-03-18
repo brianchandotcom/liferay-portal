@@ -55,19 +55,19 @@ public class WikiNodeStagedModelDataHandler
 	}
 
 	@Override
-	public List<WikiNode> fetchStagedModelsByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		return WikiNodeLocalServiceUtil.getWikiNodesByUuidAndCompanyId(
-			uuid, companyId);
-	}
-
-	@Override
 	public WikiNode fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return WikiNodeLocalServiceUtil.fetchWikiNodeByUuidAndGroupId(
 			uuid, groupId);
+	}
+
+	@Override
+	public List<WikiNode> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return WikiNodeLocalServiceUtil.getWikiNodesByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	@Override

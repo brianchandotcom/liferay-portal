@@ -50,6 +50,14 @@ public class LayoutFriendlyURLStagedModelDataHandler
 	}
 
 	@Override
+	public LayoutFriendlyURL fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return LayoutFriendlyURLLocalServiceUtil.
+			fetchLayoutFriendlyURLByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
 	public List<LayoutFriendlyURL> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -57,14 +65,6 @@ public class LayoutFriendlyURLStagedModelDataHandler
 			getLayoutFriendlyURLsByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<LayoutFriendlyURL>());
-	}
-
-	@Override
-	public LayoutFriendlyURL fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return LayoutFriendlyURLLocalServiceUtil.
-			fetchLayoutFriendlyURLByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override

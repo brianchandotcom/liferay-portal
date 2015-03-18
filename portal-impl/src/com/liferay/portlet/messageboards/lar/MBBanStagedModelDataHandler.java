@@ -50,17 +50,17 @@ public class MBBanStagedModelDataHandler
 	}
 
 	@Override
+	public MBBan fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
+		return MBBanLocalServiceUtil.fetchMBBanByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
 	public List<MBBan> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return MBBanLocalServiceUtil.getMBBansByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<MBBan>());
-	}
-
-	@Override
-	public MBBan fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
-		return MBBanLocalServiceUtil.fetchMBBanByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override

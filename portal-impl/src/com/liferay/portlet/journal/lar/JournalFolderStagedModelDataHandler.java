@@ -53,6 +53,14 @@ public class JournalFolderStagedModelDataHandler
 	}
 
 	@Override
+	public JournalFolder fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return JournalFolderLocalServiceUtil.fetchJournalFolderByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	public List<JournalFolder> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -60,14 +68,6 @@ public class JournalFolderStagedModelDataHandler
 			getJournalFoldersByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<JournalFolder>());
-	}
-
-	@Override
-	public JournalFolder fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return JournalFolderLocalServiceUtil.fetchJournalFolderByUuidAndGroupId(
-			uuid, groupId);
 	}
 
 	@Override

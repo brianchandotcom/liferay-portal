@@ -225,13 +225,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	}
 
 	@Override
-	public abstract List<T> fetchStagedModelsByUuidAndCompanyId(
-		String uuid, long companyId);
-
-	@Override
 	public T fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
 		return null;
 	}
+
+	@Override
+	public abstract List<T> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId);
 
 	@Override
 	public abstract String[] getClassNames();

@@ -19,6 +19,8 @@
 	<%
 	List<SearchFacet> searchFacets = (List<SearchFacet>)request.getAttribute("searchFacets");
 
+	searchFacets = ListUtil.sort(searchFacets, new PropertyComparator("facetConfiguration.weight", false, false));
+
 	for (SearchFacet searchFacet : searchFacets) {
 	%>
 

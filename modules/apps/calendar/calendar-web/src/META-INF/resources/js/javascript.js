@@ -1145,6 +1145,7 @@ AUI.add(
 						var node = instance.get('node');
 
 						node.toggleClass('calendar-portlet-event-approved', val === CalendarWorkflow.STATUS_APPROVED);
+						node.toggleClass('calendar-portlet-event-draft', val === CalendarWorkflow.STATUS_DRAFT);
 						node.toggleClass('calendar-portlet-event-maybe', val === CalendarWorkflow.STATUS_MAYBE);
 						node.toggleClass('calendar-portlet-event-pending', val === CalendarWorkflow.STATUS_PENDING);
 					}
@@ -1310,7 +1311,7 @@ AUI.add(
 					CalendarUtil.getEvents(
 						instance.getLoadStartDate(activeView),
 						instance.getLoadEndDate(activeView),
-						[CalendarWorkflow.STATUS_APPROVED, CalendarWorkflow.STATUS_MAYBE, CalendarWorkflow.STATUS_PENDING],
+						[CalendarWorkflow.STATUS_APPROVED, CalendarWorkflow.STATUS_DRAFT, CalendarWorkflow.STATUS_MAYBE, CalendarWorkflow.STATUS_PENDING],
 						function(calendarBookings) {
 							if (filterCalendarBookings) {
 								calendarBookings = calendarBookings.filter(filterCalendarBookings);

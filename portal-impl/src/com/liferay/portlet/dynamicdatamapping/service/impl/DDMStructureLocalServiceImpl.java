@@ -466,7 +466,7 @@ public class DDMStructureLocalServiceImpl
 					structure.getStructureId()) > 0) {
 
 				throw new RequiredStructureException.
-					MustNotDeleteReferencedStructureLink(
+					MustNotDeleteStructureReferencedByStructureLinks(
 						structure.getStructureId());
 			}
 
@@ -474,7 +474,7 @@ public class DDMStructureLocalServiceImpl
 					structure.getStructureId()) > 0) {
 
 				throw new RequiredStructureException.
-					MustNotDeleteReferencedStructure(
+					MustNotDeleteStructureThatHasChild(
 						structure.getStructureId());
 			}
 

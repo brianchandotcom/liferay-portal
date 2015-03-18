@@ -952,36 +952,40 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixIfClause(String ifClause, String line, int delta) {
+		if (StringUtil.count(ifClause, line) > 1) {
+			return ifClause;
+		}
+
 		String newLine = line;
 
-		String whiteSpace = StringPool.BLANK;
-		int whiteSpaceLength = Math.abs(delta);
+		String whitespace = StringPool.BLANK;
+		int whitespaceLength = Math.abs(delta);
 
-		while (whiteSpaceLength > 0) {
-			if (whiteSpaceLength >= 4) {
-				whiteSpace += StringPool.TAB;
+		while (whitespaceLength > 0) {
+			if (whitespaceLength >= 4) {
+				whitespace += StringPool.TAB;
 
-				whiteSpaceLength -= 4;
+				whitespaceLength -= 4;
 			}
 			else {
-				whiteSpace += StringPool.SPACE;
+				whitespace += StringPool.SPACE;
 
-				whiteSpaceLength -= 1;
+				whitespaceLength -= 1;
 			}
 		}
 
 		if (delta > 0) {
-			if (!line.contains(StringPool.TAB + whiteSpace)) {
+			if (!line.contains(StringPool.TAB + whitespace)) {
 				newLine = StringUtil.replaceLast(
 					newLine, StringPool.TAB, StringPool.FOUR_SPACES);
 			}
 
 			newLine = StringUtil.replaceLast(
-				newLine, StringPool.TAB + whiteSpace, StringPool.TAB);
+				newLine, StringPool.TAB + whitespace, StringPool.TAB);
 		}
 		else {
 			newLine = StringUtil.replaceLast(
-				newLine, StringPool.TAB, StringPool.TAB + whiteSpace);
+				newLine, StringPool.TAB, StringPool.TAB + whitespace);
 		}
 
 		newLine = StringUtil.replaceLast(
@@ -1134,9 +1138,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String formatIfClause(String ifClause)
-		throws IOException {
-
+	protected String formatIfClause(String ifClause) throws IOException {
 		String strippedQuotesIfClause = stripQuotes(ifClause, CharPool.QUOTE);
 
 		if (strippedQuotesIfClause.contains("!(") ||
@@ -1154,9 +1156,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int previousLineLength = 0;
 
 		int previousLineCloseParenthesesCount = 0;
+		int previousLineLeadingWhitespace = 0;
 		int previousLineOpenParenthesesCount = 0;
 
-		int baseLeadingWhiteSpace = 0;
+		int baseLeadingWhitespace = 0;
+		int insideMethodCallExpectedWhitespace = 0;
 		int level = -1;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
@@ -1205,42 +1209,64 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					previousLine + StringPool.SPACE + trimmedLine);
 			}
 
-			int leadingWhiteSpace = line.length() - trimmedLine.length();
+			int leadingWhitespace = line.length() - trimmedLine.length();
 
 			if (Validator.isNull(previousLine)) {
-				baseLeadingWhiteSpace =
+				baseLeadingWhitespace =
 					line.indexOf(StringPool.OPEN_PARENTHESIS) + 1;
 			}
 			else if (previousLine.endsWith("|") || previousLine.endsWith("&") ||
 					 previousLine.endsWith("^")) {
 
-				int expectedLeadingWhiteSpace = baseLeadingWhiteSpace + level;
+				int expectedLeadingWhitespace = baseLeadingWhitespace + level;
 
-				if (leadingWhiteSpace != expectedLeadingWhiteSpace) {
+				if (leadingWhitespace != expectedLeadingWhitespace) {
 					return fixIfClause(
 						ifClause, originalLine,
-						leadingWhiteSpace - expectedLeadingWhiteSpace);
+						leadingWhitespace - expectedLeadingWhitespace);
 				}
 			}
 			else {
-				int expectedLeadingWhiteSpace = 0;
+				int expectedLeadingWhitespace = 0;
 
 				if (previousLine.contains(StringPool.TAB + "else if (")) {
-					expectedLeadingWhiteSpace = baseLeadingWhiteSpace + 3;
+					expectedLeadingWhitespace = baseLeadingWhitespace + 3;
 				}
 				else if (previousLine.contains(StringPool.TAB + "if (")) {
-					expectedLeadingWhiteSpace = baseLeadingWhiteSpace + 4;
+					expectedLeadingWhitespace = baseLeadingWhitespace + 4;
 				}
 				else if (previousLine.contains(StringPool.TAB + "while (")) {
-					expectedLeadingWhiteSpace = baseLeadingWhiteSpace + 5;
+					expectedLeadingWhitespace = baseLeadingWhitespace + 5;
 				}
 
-				if ((expectedLeadingWhiteSpace != 0) &&
-					(leadingWhiteSpace != expectedLeadingWhiteSpace)) {
+				if (previousLine.endsWith(StringPool.COMMA) &&
+					(insideMethodCallExpectedWhitespace > 0)) {
 
+					if (previousLineCloseParenthesesCount >
+							previousLineOpenParenthesesCount) {
+
+						insideMethodCallExpectedWhitespace -= 4;
+					}
+
+					expectedLeadingWhitespace =
+						insideMethodCallExpectedWhitespace;
+				}
+				else {
+					if (expectedLeadingWhitespace == 0) {
+						expectedLeadingWhitespace =
+							previousLineLeadingWhitespace + 4;
+					}
+
+					if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
+						insideMethodCallExpectedWhitespace =
+							expectedLeadingWhitespace;
+					}
+				}
+
+				if (leadingWhitespace != expectedLeadingWhitespace) {
 					return fixIfClause(
 						ifClause, originalLine,
-						leadingWhiteSpace - expectedLeadingWhiteSpace);
+						leadingWhitespace - expectedLeadingWhitespace);
 				}
 			}
 
@@ -1252,7 +1278,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			previousLine = originalLine;
 			previousLineLength = line.length();
+
 			previousLineCloseParenthesesCount = closeParenthesesCount;
+			previousLineLeadingWhitespace = leadingWhitespace;
 			previousLineOpenParenthesesCount = openParenthesesCount;
 		}
 
@@ -2487,6 +2515,77 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return null;
 	}
 
+	protected int getIfClauseLineBreakPos(String line) {
+		int x = line.lastIndexOf(" || ", _MAX_LINE_LENGTH - 3);
+		int y = line.lastIndexOf(" && ", _MAX_LINE_LENGTH - 3);
+
+		int z = Math.max(x, y);
+
+		if (z != -1) {
+			return z + 3;
+		}
+
+		if (!line.endsWith(" ||") && !line.endsWith(" &&") &&
+			!line.endsWith(") {")) {
+
+			return -1;
+		}
+
+		x = line.indexOf("= ");
+
+		if (x != -1) {
+			return x + 1;
+		}
+
+		x = line.indexOf("> ");
+
+		if (x != -1) {
+			return x + 1;
+		}
+
+		x = line.indexOf("< ");
+
+		if (x != -1) {
+			return x + 1;
+		}
+
+		for (x = _MAX_LINE_LENGTH + 1;;) {
+			x = line.lastIndexOf(StringPool.COMMA_AND_SPACE, x - 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			String linePart = line.substring(0, x);
+
+			if (StringUtil.count(linePart, StringPool.CLOSE_PARENTHESIS) ==
+					StringUtil.count(linePart, StringPool.OPEN_PARENTHESIS)) {
+
+				return x + 1;
+			}
+		}
+
+		for (x = 0;;) {
+			x = line.indexOf(StringPool.OPEN_PARENTHESIS, x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			if (Character.isLetterOrDigit(line.charAt(x - 1))) {
+				return x + 1;
+			}
+		}
+
+		x = line.indexOf(StringPool.PERIOD);
+
+		if (x != -1) {
+			return x + 1;
+		}
+
+		return -1;
+	}
+
 	protected List<String> getImportedExceptionClassNames(
 		JavaDocBuilder javaDocBuilder) {
 
@@ -2855,11 +2954,28 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				return StringUtil.replace(
 					content, "\n" + line + "\n",
-					"\n" + firstLine + "\n" + secondLine + "\n" + "\n");
+					"\n" + firstLine + "\n" + secondLine + "\n\n");
 			}
 		}
 
-		return null;
+		int i = getIfClauseLineBreakPos(line);
+
+		if (i == -1) {
+			return null;
+		}
+
+		String firstLine = line.substring(0, i);
+		String secondLine = indent + line.substring(i);
+
+		if (secondLine.endsWith(") {")) {
+			return StringUtil.replace(
+				content, "\n" + line + "\n",
+				"\n" + firstLine + "\n" + secondLine + "\n\n");
+		}
+
+		return StringUtil.replace(
+			content, "\n" + line + "\n",
+			"\n" + firstLine + "\n" + secondLine + "\n");
 	}
 
 	protected boolean isAnnotationParameter(String content, String line) {

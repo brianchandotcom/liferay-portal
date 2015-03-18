@@ -77,7 +77,7 @@ public class TokenAutoLogin extends BaseAutoLogin {
 
 		if (!PrefsPropsUtil.getBoolean(
 				companyId, TokenPropsKeys.ENABLED,
-			_tokenConfiguration.enabled())) {
+				_tokenConfiguration.enabled())) {
 
 			return null;
 		}

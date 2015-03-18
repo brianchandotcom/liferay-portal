@@ -366,9 +366,9 @@ public class ThemeUtil {
 
 		if (Validator.isNotNull(portletId)) {
 			if (PortletConstants.hasInstanceId(portletId) &&
-				(checkResourceExists = !
-				TemplateResourceLoaderUtil.hasTemplateResource(
-					TemplateConstants.LANG_TYPE_VM, resourcePath))) {
+				(checkResourceExists !=
+					TemplateResourceLoaderUtil.hasTemplateResource(
+						TemplateConstants.LANG_TYPE_VM, resourcePath))) {
 
 				String rootPortletId = PortletConstants.getRootPortletId(
 					portletId);
@@ -378,9 +378,9 @@ public class ThemeUtil {
 			}
 
 			if (checkResourceExists &&
-				(checkResourceExists = !
-				TemplateResourceLoaderUtil.hasTemplateResource(
-					TemplateConstants.LANG_TYPE_VM, resourcePath))) {
+				(checkResourceExists !=
+					TemplateResourceLoaderUtil.hasTemplateResource(
+						TemplateConstants.LANG_TYPE_VM, resourcePath))) {
 
 				resourcePath = theme.getResourcePath(
 					servletContext, null, page);

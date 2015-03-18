@@ -80,7 +80,7 @@ public class CASFilter extends BaseFilter {
 
 			if (PrefsPropsUtil.getBoolean(
 					companyId, PropsKeys.CAS_AUTH_ENABLED,
-				_casConfiguration.enabled())) {
+					_casConfiguration.enabled())) {
 
 				return true;
 			}

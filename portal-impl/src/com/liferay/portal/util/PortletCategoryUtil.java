@@ -83,13 +83,13 @@ public class PortletCategoryUtil {
 					}
 					else if (layout.isTypePanel() &&
 							 panelSelectedPortletIds.contains(
-									portlet.getRootPortletId())) {
+								 portlet.getRootPortletId())) {
 
 						portletIds.add(portlet.getPortletId());
 					}
 					else if (layout.isTypePanel() &&
 							 !panelSelectedPortletIds.contains(
-									portlet.getRootPortletId())) {
+								 portlet.getRootPortletId())) {
 					}
 					else if (!PortletPermissionUtil.contains(
 								permissionChecker, layout, portlet,
@@ -97,7 +97,7 @@ public class PortletCategoryUtil {
 					}
 					else if (!portlet.isInstanceable() &&
 							 layoutTypePortlet.hasPortletId(
-									portlet.getPortletId())) {
+								 portlet.getPortletId())) {
 
 						portletIds.add(portlet.getPortletId());
 					}

@@ -194,7 +194,7 @@ public class DefaultLDAPSettings implements LDAPSettings {
 
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_EXPORT_ENABLED,
-			defaultLDAPExportEnabled)) {
+				defaultLDAPExportEnabled)) {
 
 			return true;
 		}
@@ -210,7 +210,7 @@ public class DefaultLDAPSettings implements LDAPSettings {
 
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_EXPORT_GROUP_ENABLED,
-			defaultLDAPExportGroupEnabled)) {
+				defaultLDAPExportGroupEnabled)) {
 
 			return true;
 		}
@@ -225,7 +225,7 @@ public class DefaultLDAPSettings implements LDAPSettings {
 
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_IMPORT_ENABLED,
-			defaultLDAPImportEnabled)) {
+				defaultLDAPImportEnabled)) {
 
 			return true;
 		}
@@ -238,7 +238,7 @@ public class DefaultLDAPSettings implements LDAPSettings {
 	public boolean isImportOnStartup(long companyId) {
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_IMPORT_ON_STARTUP,
-			_ldapConfiguration.importOnStartup())) {
+				_ldapConfiguration.importOnStartup())) {
 
 			return true;
 		}
@@ -254,7 +254,7 @@ public class DefaultLDAPSettings implements LDAPSettings {
 
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_PASSWORD_POLICY_ENABLED,
-			defaultLDAPPasswordPolicyEnabled)) {
+				defaultLDAPPasswordPolicyEnabled)) {
 
 			return true;
 		}

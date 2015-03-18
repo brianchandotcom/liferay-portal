@@ -244,7 +244,7 @@ public class DefaultLayoutTypeAccessPolicyImpl
 
 		if (AuthTokenUtil.isValidPortletInvocationToken(
 				request, layout.getPlid(), portletId, strutsAction,
-			requestPortletAuthenticationToken)) {
+				requestPortletAuthenticationToken)) {
 
 			return true;
 		}
@@ -328,8 +328,7 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			long layoutPrototypeId = group.getClassPK();
 
 			if (LayoutPrototypePermissionUtil.contains(
-					permissionChecker, layoutPrototypeId,
-				ActionKeys.UPDATE)) {
+					permissionChecker, layoutPrototypeId, ActionKeys.UPDATE)) {
 
 				return true;
 			}
@@ -339,7 +338,7 @@ public class DefaultLayoutTypeAccessPolicyImpl
 
 			if (LayoutSetPrototypePermissionUtil.contains(
 					permissionChecker, layoutSetPrototypeId,
-				ActionKeys.UPDATE)) {
+					ActionKeys.UPDATE)) {
 
 				return true;
 			}

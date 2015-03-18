@@ -599,8 +599,8 @@ public class LayoutTypePortletImpl
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 				portletId) > 0) ||
 			 (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_USER, layout.getPlid(),
-				portletId) > 0))) {
+				 PortletKeys.PREFS_OWNER_TYPE_USER, layout.getPlid(),
+				 portletId) > 0))) {
 
 			return true;
 		}

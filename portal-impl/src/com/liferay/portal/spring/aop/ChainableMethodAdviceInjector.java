@@ -52,7 +52,7 @@ public class ChainableMethodAdviceInjector {
 
 		while ((parentChainableMethodAdvice != null) &&
 			   (parentChainableMethodAdvice.nextMethodInterceptor !=
-					_childMethodInterceptor)) {
+				   _childMethodInterceptor)) {
 
 			MethodInterceptor methodInterceptor =
 				parentChainableMethodAdvice.nextMethodInterceptor;

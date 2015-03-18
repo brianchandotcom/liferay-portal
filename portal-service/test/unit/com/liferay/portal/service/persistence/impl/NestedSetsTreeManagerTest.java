@@ -545,8 +545,8 @@ public class NestedSetsTreeManagerTest {
 				while (((previousSimpleNestedSetsTreeNode = deque.peek()) !=
 							null) &&
 					   ((nestedSetsTreeNodeRight + 1) ==
-							previousSimpleNestedSetsTreeNode.
-								getNestedSetsTreeNodeRight())) {
+						   previousSimpleNestedSetsTreeNode.
+							   getNestedSetsTreeNodeRight())) {
 
 					sb.append(StringPool.COMMA_AND_SPACE);
 					sb.append(

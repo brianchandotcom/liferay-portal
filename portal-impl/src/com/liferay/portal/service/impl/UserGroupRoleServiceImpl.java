@@ -158,7 +158,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 			}
 			else if ((role.getType() == RoleConstants.TYPE_SITE) &&
 					 !SiteMembershipPolicyUtil.isRoleProtected(
-						getPermissionChecker(), userId, groupId, roleId)) {
+						 getPermissionChecker(), userId, groupId, roleId)) {
 
 					filteredSiteUserGroupRoles.add(userGroupRole);
 			}

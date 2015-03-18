@@ -299,7 +299,7 @@ public abstract class FindAction extends Action {
 			(group.getParentGroupId() == layout.getGroupId()) ||
 			(layout.isPrivateLayout() &&
 			 !SitesUtil.isUserGroupLayoutSetViewable(
-				permissionChecker, layout.getGroup()))) {
+				 permissionChecker, layout.getGroup()))) {
 
 			return layout;
 		}

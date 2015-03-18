@@ -32,13 +32,15 @@ public class PortletEditorConfigImpl implements PortletEditorConfig {
 
 	public PortletEditorConfigImpl(
 		List<PortletEditorConfigContributor> portletEditorConfigContributors,
-		ThemeDisplay themeDisplay,
+		Map<String, Object> inputEditorTaglibAttributes, ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_portletEditorConfigContributors = portletEditorConfigContributors;
 
-		_populateConfigJSONObject(themeDisplay, liferayPortletResponse);
-		_populateOptionsJSONObject(themeDisplay, liferayPortletResponse);
+		_populateConfigJSONObject(
+			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
+		_populateOptionsJSONObject(
+			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
 	}
 
 	@Override
@@ -52,6 +54,7 @@ public class PortletEditorConfigImpl implements PortletEditorConfig {
 	}
 
 	private JSONObject _populateConfigJSONObject(
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
@@ -64,7 +67,8 @@ public class PortletEditorConfigImpl implements PortletEditorConfig {
 
 			JSONObject configJSONObject =
 				portletEditorConfigContributor.getConfigJSONObject(
-					themeDisplay, liferayPortletResponse);
+					inputEditorTaglibAttributes, themeDisplay,
+					liferayPortletResponse);
 
 			_configJSONObject.merge(configJSONObject);
 		}
@@ -73,6 +77,7 @@ public class PortletEditorConfigImpl implements PortletEditorConfig {
 	}
 
 	private JSONObject _populateOptionsJSONObject(
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
@@ -85,7 +90,8 @@ public class PortletEditorConfigImpl implements PortletEditorConfig {
 
 			JSONObject optionsJSONObject =
 				portletEditorConfigContributor.getOptionsJSONObject(
-					themeDisplay, liferayPortletResponse);
+					inputEditorTaglibAttributes, themeDisplay,
+					liferayPortletResponse);
 
 			_optionsJSONObject.merge(optionsJSONObject);
 		}

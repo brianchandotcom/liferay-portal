@@ -28,6 +28,7 @@ import com.liferay.registry.util.StringPlus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sergio González
@@ -37,6 +38,7 @@ public class PortletEditorConfigFactoryImpl
 
 	public PortletEditorConfig getPortletEditorConfig(
 		String portletName, String editorConfigKey, String editorImpl,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
@@ -45,8 +47,8 @@ public class PortletEditorConfigFactoryImpl
 				portletName, editorConfigKey, editorImpl);
 
 		return new PortletEditorConfigImpl(
-			portletEditorConfigContributors, themeDisplay,
-			liferayPortletResponse);
+			portletEditorConfigContributors, inputEditorTaglibAttributes,
+			themeDisplay, liferayPortletResponse);
 	}
 
 	protected List<PortletEditorConfigContributor>

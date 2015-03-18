@@ -2515,6 +2515,77 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return null;
 	}
 
+	protected int getIfClauseLineBreakPos(String line) {
+		int x = line.lastIndexOf(" || ", _MAX_LINE_LENGTH - 3);
+		int y = line.lastIndexOf(" && ", _MAX_LINE_LENGTH - 3);
+
+		int z = Math.max(x, y);
+
+		if (z != -1) {
+			return z + 3;
+		}
+
+		if (!line.endsWith(" ||") && !line.endsWith(" &&") &&
+			!line.endsWith(") {")) {
+
+			return -1;
+		}
+
+		x = line.indexOf("= ");
+
+		if (x != -1) {
+			return x + 1;
+		}
+
+		x = line.indexOf("> ");
+
+		if (x != -1) {
+			return x + 1;
+		}
+
+		x = line.indexOf("< ");
+
+		if (x != -1) {
+			return x + 1;
+		}
+
+		for (x = _MAX_LINE_LENGTH + 1;;) {
+			x = line.lastIndexOf(StringPool.COMMA_AND_SPACE, x - 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			String linePart = line.substring(0, x);
+
+			if (StringUtil.count(linePart, StringPool.CLOSE_PARENTHESIS) ==
+					StringUtil.count(linePart, StringPool.OPEN_PARENTHESIS)) {
+
+				return x + 1;
+			}
+		}
+
+		for (x = 0;;) {
+			x = line.indexOf(StringPool.OPEN_PARENTHESIS, x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			if (Character.isLetterOrDigit(line.charAt(x - 1))) {
+				return x + 1;
+			}
+		}
+
+		x = line.indexOf(StringPool.PERIOD);
+
+		if (x != -1) {
+			return x + 1;
+		}
+
+		return -1;
+	}
+
 	protected List<String> getImportedExceptionClassNames(
 		JavaDocBuilder javaDocBuilder) {
 
@@ -2887,7 +2958,24 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		return null;
+		int i = getIfClauseLineBreakPos(line);
+
+		if (i == -1) {
+			return null;
+		}
+
+		String firstLine = line.substring(0, i);
+		String secondLine = indent + line.substring(i);
+
+		if (secondLine.endsWith(") {")) {
+			return StringUtil.replace(
+				content, "\n" + line + "\n",
+				"\n" + firstLine + "\n" + secondLine + "\n\n");
+		}
+
+		return StringUtil.replace(
+			content, "\n" + line + "\n",
+			"\n" + firstLine + "\n" + secondLine + "\n");
 	}
 
 	protected boolean isAnnotationParameter(String content, String line) {

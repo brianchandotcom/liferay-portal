@@ -137,7 +137,7 @@ public class RuntimeTag extends TagSupport {
 
 			PortletPreferences renderPortletPreferences =
 				getRenderPortletPreferences(
-					themeDisplay, portlet, settingsScope, defaultPreferences);
+					themeDisplay, settingsScope, portlet, defaultPreferences);
 
 			if (renderPortletPreferences != null) {
 				request.setAttribute(
@@ -255,7 +255,7 @@ public class RuntimeTag extends TagSupport {
 	}
 
 	protected static PortletPreferences getRenderPortletPreferences(
-		ThemeDisplay themeDisplay, Portlet portlet, String settingsScope,
+		ThemeDisplay themeDisplay, String settingsScope, Portlet portlet,
 		String defaultPreferences) {
 
 		PortletPreferencesIds portletPreferencesIds =

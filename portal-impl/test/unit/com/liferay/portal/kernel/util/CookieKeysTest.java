@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.registry.Registry;

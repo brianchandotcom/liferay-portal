@@ -72,9 +72,7 @@ public class SettingsFactoryUtil {
 		return getSettingsFactory().getServerSettings(settingsId);
 	}
 
-	public static SettingsDescriptor<?> getSettingsDescriptor(
-		String settingsId) {
-
+	public static SettingsDescriptor getSettingsDescriptor(String settingsId) {
 		return getSettingsFactory().getSettingsDescriptor(settingsId);
 	}
 
@@ -85,7 +83,7 @@ public class SettingsFactoryUtil {
 	}
 
 	public static void registerSettingsMetadata(
-		Class<?> settingsClass, Object serviceConfigurationBean,
+		Class<?> settingsClass, Object configurationBean,
 		FallbackKeys fallbackKeys) {
 
 		getSettingsFactory().registerSettingsMetadata(

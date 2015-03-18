@@ -18,7 +18,7 @@
 <%
 WikiPage wikiPage = (WikiPage)request.getAttribute("edit_page.jsp-wikiPage");
 
-String format = BeanParamUtil.getString(wikiPage, request, "format", wikiGroupServiceSettings.getDefaultFormat());
+String format = BeanParamUtil.getString(wikiPage, request, "format", wikiGroupServiceSettings.defaultFormat());
 
 String content = BeanParamUtil.getString(wikiPage, request, "content");
 

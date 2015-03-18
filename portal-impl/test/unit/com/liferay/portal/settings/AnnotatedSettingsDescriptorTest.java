@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.settings;
+package com.liferay.portal.settings;
+
+import com.liferay.portal.kernel.settings.Settings;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,11 +27,11 @@ import org.testng.Assert;
 /**
  * @author Iván Zaera
  */
-public class SettingsDescriptorTest {
+public class AnnotatedSettingsDescriptorTest {
 
 	@Test
 	public void testGetAllKeys() {
-		Set<String> allKeys = _settingsDescriptor.getAllKeys();
+		Set<String> allKeys = _annotatedSettingsDescriptor.getAllKeys();
 
 		Collection<String> expectedAllKeys = Arrays.asList(
 			"boolean", "long", "string", "stringArray1", "stringArray2",
@@ -41,7 +43,8 @@ public class SettingsDescriptorTest {
 
 	@Test
 	public void testGetMultiValuedKeys() {
-		Set<String> multiValuedKeys = _settingsDescriptor.getMultiValuedKeys();
+		Set<String> multiValuedKeys =
+			_annotatedSettingsDescriptor.getMultiValuedKeys();
 
 		Collection<String> expectedMultiValuedKeys = Arrays.asList(
 			"stringArray1", "stringArray2");
@@ -53,7 +56,7 @@ public class SettingsDescriptorTest {
 
 	@Test
 	public void testGetSettingsIds() {
-		Set<String> settingsIds = _settingsDescriptor.getSettingsIds();
+		Set<String> settingsIds = _annotatedSettingsDescriptor.getSettingsIds();
 
 		Collection<String> expectedSettingsIds = Arrays.asList(
 			"settingsId.1", "settingsId.2");
@@ -97,7 +100,7 @@ public class SettingsDescriptorTest {
 
 	}
 
-	private final SettingsDescriptor<MockSettings> _settingsDescriptor =
-		new SettingsDescriptor<>(MockSettings.class);
+	private final AnnotatedSettingsDescriptor _annotatedSettingsDescriptor =
+		new AnnotatedSettingsDescriptor(MockSettings.class);
 
 }

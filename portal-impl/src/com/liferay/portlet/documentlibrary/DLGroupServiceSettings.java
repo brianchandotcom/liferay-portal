@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portlet.documentlibrary.util.DLConstants;
 
@@ -68,7 +70,9 @@ public class DLGroupServiceSettings implements GroupServiceSettings {
 		LocalizedValuesMap emailFileEntryAddedBody =
 			getEmailFileEntryAddedBody();
 
-		return emailFileEntryAddedBody.getLocalizationXml();
+		return emailFileEntryAddedBody.getLocalizationXml(
+			"emailFileEntryAdded", LocaleUtil.getSiteDefault(),
+			LanguageUtil.getAvailableLocales());
 	}
 
 	public LocalizedValuesMap getEmailFileEntryAddedSubject() {
@@ -81,7 +85,9 @@ public class DLGroupServiceSettings implements GroupServiceSettings {
 		LocalizedValuesMap emailFileEntryAddedSubject =
 			getEmailFileEntryAddedSubject();
 
-		return emailFileEntryAddedSubject.getLocalizationXml();
+		return emailFileEntryAddedSubject.getLocalizationXml(
+			"emailFileEntryAddedSubject", LocaleUtil.getSiteDefault(),
+			LanguageUtil.getAvailableLocales());
 	}
 
 	public LocalizedValuesMap getEmailFileEntryUpdatedBody() {
@@ -94,7 +100,9 @@ public class DLGroupServiceSettings implements GroupServiceSettings {
 		LocalizedValuesMap emailFileEntryUpdatedBody =
 			getEmailFileEntryUpdatedBody();
 
-		return emailFileEntryUpdatedBody.getLocalizationXml();
+		return emailFileEntryUpdatedBody.getLocalizationXml(
+			"emailFileEntryUpdatedBody", LocaleUtil.getSiteDefault(),
+			LanguageUtil.getAvailableLocales());
 	}
 
 	public LocalizedValuesMap getEmailFileEntryUpdatedSubject() {
@@ -107,7 +115,9 @@ public class DLGroupServiceSettings implements GroupServiceSettings {
 		LocalizedValuesMap emailFileEntryUpdatedSubject =
 			getEmailFileEntryUpdatedSubject();
 
-		return emailFileEntryUpdatedSubject.getLocalizationXml();
+		return emailFileEntryUpdatedSubject.getLocalizationXml(
+			"emailFileEntryUpdatedSubject", LocaleUtil.getSiteDefault(),
+			LanguageUtil.getAvailableLocales());
 	}
 
 	public String getEmailFromAddress() {

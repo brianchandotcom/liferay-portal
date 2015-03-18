@@ -82,6 +82,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DATABASE_DEFAULT_LABEL</td>
+	<td>//div[@id='defaultDatabaseOptions']/p/strong[contains(text(),'Default Database (Hypersonic)')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_DEFAULT_DESCRIPTION</td>
+	<td>//div[@id='defaultDatabaseOptions']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DATABASE_CHANGE_LINK</td>
 	<td>//a[@id='customDatabaseOptionsLink']</td>
 	<td></td>

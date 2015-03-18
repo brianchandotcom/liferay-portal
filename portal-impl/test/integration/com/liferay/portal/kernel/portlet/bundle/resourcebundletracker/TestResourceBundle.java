@@ -19,7 +19,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,16 +28,13 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + TestPortlet.PORTLET_NAME, "language.id=es_ES",
-		"service.ranking:Integer=" + Integer.MAX_VALUE
+		"javax.portlet.name=" + TestPortlet.PORTLET_NAME, "language.id=es_ES"
 	},
 	service = ResourceBundle.class
 )
 public class TestResourceBundle extends ResourceBundle {
 
 	public TestResourceBundle() {
-		_map = new HashMap<>();
-
 		_map.put("this", "esto");
 		_map.put("is", "es");
 		_map.put("a", "un");
@@ -51,9 +47,7 @@ public class TestResourceBundle extends ResourceBundle {
 
 	@Override
 	public Enumeration<String> getKeys() {
-		Set<String> keys = _map.keySet();
-
-		return Collections.enumeration(keys);
+		return Collections .enumeration(_map.keySet());
 	}
 
 	@Override
@@ -66,6 +60,6 @@ public class TestResourceBundle extends ResourceBundle {
 		return _map.get(key);
 	}
 
-	private final Map<String, String> _map;
+	private final Map<String, String> _map = new HashMap<>();
 
 }

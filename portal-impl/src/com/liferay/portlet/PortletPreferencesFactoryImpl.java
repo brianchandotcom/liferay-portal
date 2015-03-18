@@ -123,14 +123,6 @@ public class PortletPreferencesFactoryImpl
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(), layout,
 			portletId, false);
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesLocalServiceUtil.fetchPreferences(
-				portletPreferencesIds);
-
-		if (portletPreferences != null) {
-			return;
-		}
-
 		PortletPreferencesLocalServiceUtil.getPreferences(
 			portletPreferencesIds);
 	}

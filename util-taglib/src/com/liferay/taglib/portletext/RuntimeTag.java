@@ -141,10 +141,11 @@ public class RuntimeTag extends TagSupport {
 
 			if (renderPortletPreferences != null) {
 				request.setAttribute(
-					"renderPortletPreferences", renderPortletPreferences);
+					WebKeys.RENDER_PORTLET_PREFERENCES,
+					renderPortletPreferences);
 			}
 
-			request.setAttribute("settingsScope", settingsScope);
+			request.setAttribute(WebKeys.SETTINGS_SCOPE, settingsScope);
 			request.setAttribute(WebKeys.PORTLET_DECORATE, false);
 
 			JSONObject jsonObject = null;

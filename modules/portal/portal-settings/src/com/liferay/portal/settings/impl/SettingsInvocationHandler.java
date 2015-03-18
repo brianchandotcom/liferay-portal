@@ -40,7 +40,8 @@ public class SettingsInvocationHandler<S, C> implements InvocationHandler {
 	@SuppressWarnings("unchecked")
 	public S createProxy() {
 		return (S)ProxyUtil.newProxyInstance(
-			_settingsClass.getClassLoader(), new Class[]{_settingsClass}, this);
+			_settingsClass.getClassLoader(), new Class[] {_settingsClass},
+			this);
 	}
 
 	@Override

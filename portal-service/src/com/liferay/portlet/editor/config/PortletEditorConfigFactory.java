@@ -23,7 +23,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 public interface PortletEditorConfigFactory {
 
 	public PortletEditorConfig getPortletEditorConfig(
-		String portletName, String editorConfigKey, ThemeDisplay themeDisplay,
+		String portletName, String editorConfigKey, String editorImpl,
+		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse);
 
 }

@@ -219,8 +219,8 @@ public class InputEditorTag extends IncludeTag {
 
 			PortletEditorConfig portletEditorConfig =
 				PortletEditorConfigFactoryUtil.getPortletEditorConfig(
-					portlet.getPortletId(), _configKey, themeDisplay,
-					portletResponse);
+					portlet.getPortletId(), _configKey, _editorImpl,
+					themeDisplay, portletResponse);
 
 			Map<String, Object> data = portletEditorConfig.getData();
 

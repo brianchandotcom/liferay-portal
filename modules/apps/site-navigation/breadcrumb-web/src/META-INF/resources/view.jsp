@@ -14,12 +14,14 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/META-INF/resources/init.jsp" %>
 
-<%
-Locale[] locales = LocaleUtil.fromLanguageIds(languageIds);
-%>
-
-<liferay-ui:ddm-template-renderer className="<%= Locale.class.getName() %>" displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= ListUtil.fromArray(locales) %>">
-	<liferay-ui:language displayCurrentLocale="<%= displayCurrentLocale %>" displayStyle="<%= displayStyle %>" languageIds="<%= languageIds %>" />
-</liferay-ui:ddm-template-renderer>
+<liferay-ui:breadcrumb
+	ddmTemplateGroupId="<%= breadcrumbDisplayContext.getDisplayStyleGroupId() %>"
+	ddmTemplateKey="<%= breadcrumbDisplayContext.getDDMTemplateKey() %>"
+	showCurrentGroup="<%= breadcrumbDisplayContext.isShowCurrentGroup() %>"
+	showGuestGroup="<%= breadcrumbDisplayContext.isShowGuestGroup() %>"
+	showLayout="<%= breadcrumbDisplayContext.isShowLayout() %>"
+	showParentGroups="<%= breadcrumbDisplayContext.isShowParentGroups() %>"
+	showPortletBreadcrumb="<%= breadcrumbDisplayContext.isShowPortletBreadcrumb() %>"
+/>

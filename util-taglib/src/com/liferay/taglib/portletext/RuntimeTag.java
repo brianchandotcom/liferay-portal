@@ -14,7 +14,6 @@
 
 package com.liferay.taglib.portletext;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -256,9 +255,8 @@ public class RuntimeTag extends TagSupport {
 	}
 
 	protected static PortletPreferences getRenderPortletPreferences(
-			ThemeDisplay themeDisplay, Portlet portlet, String settingsScope,
-			String defaultPreferences)
-		throws PortalException {
+		ThemeDisplay themeDisplay, Portlet portlet, String settingsScope,
+		String defaultPreferences) {
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(

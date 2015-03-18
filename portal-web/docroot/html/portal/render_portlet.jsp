@@ -50,7 +50,7 @@ PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getP
 
 PortletPreferences portletPreferences = null;
 
-PortletPreferences renderPortletPreferences = (PortletPreferences)request.getAttribute("renderPortletPreferences");
+PortletPreferences renderPortletPreferences = (PortletPreferences)request.getAttribute(WebKeys.RENDER_PORTLET_PREFERENCES);
 
 if (renderPortletPreferences == null) {
 	portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);
@@ -429,7 +429,7 @@ urlConfiguration.setEscapeXml(false);
 if (portlet.getConfigurationActionInstance() != null) {
 	urlConfiguration.setParameter("struts_action", "/portlet_configuration/edit_configuration");
 
-	String settingsScope = (String)request.getAttribute("settingsScope");
+	String settingsScope = (String)request.getAttribute(WebKeys.SETTINGS_SCOPE);
 
 	if (Validator.isNotNull(settingsScope)) {
 		urlConfiguration.setParameter("settingsScope", settingsScope);

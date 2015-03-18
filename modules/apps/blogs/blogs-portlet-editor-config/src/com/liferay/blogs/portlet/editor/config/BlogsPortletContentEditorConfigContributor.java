@@ -14,17 +14,16 @@
 
 package com.liferay.blogs.portlet.editor.config;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.editor.config.PortletEditorConfigContributor;
 
+import java.util.Map;
+
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
-
-import java.util.Map;
 
 /**
  * @author Sergio González
@@ -38,22 +37,16 @@ import java.util.Map;
 public class BlogsPortletContentEditorConfigContributor
 	implements PortletEditorConfigContributor {
 
-	public JSONObject getConfigJSONObject(
-		Map<String, Object> inputEditorTaglibAttributes,
+	public void populateConfigJSONObject(
+		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
-
-		JSONObject editorConfigJSONObject = JSONFactoryUtil.createJSONObject();
-
-		return editorConfigJSONObject;
 	}
 
-	public JSONObject getOptionsJSONObject(
-		Map<String, Object> inputEditorTaglibAttributes,
+	public void populateOptionsJSONObject(
+		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
-
-		JSONObject editorOptionsJSONObject = JSONFactoryUtil.createJSONObject();
 
 		PortletURL uploadEditorImageURL =
 			liferayPortletResponse.createActionURL();
@@ -61,9 +54,7 @@ public class BlogsPortletContentEditorConfigContributor
 		uploadEditorImageURL.setParameter(
 			"struts_action", "/blogs/upload_editor_image");
 
-		editorOptionsJSONObject.put("uploadURL", uploadEditorImageURL);
-
-		return editorOptionsJSONObject;
+		jsonObject.put("uploadURL", uploadEditorImageURL.toString());
 	}
 
 }

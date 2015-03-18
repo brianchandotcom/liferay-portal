@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 )
 public class SearchFacetTracker {
 
-	public List<SearchFacet> getSearchFacets() {
+	public static List<SearchFacet> getSearchFacets() {
 		return _searchFacets;
 	}
 
@@ -49,7 +49,7 @@ public class SearchFacetTracker {
 		_searchFacets.remove(searchFacet);
 	}
 
-	private final List<SearchFacet> _searchFacets =
+	private static final List<SearchFacet> _searchFacets =
 		new CopyOnWriteArrayList<>();
 
 }

@@ -45,8 +45,6 @@ public interface JSONObject extends Externalizable {
 
 	public long getLong(String key, long defaultValue);
 
-	public Object getObject(String key);
-
 	public String getString(String key);
 
 	public String getString(String key, String defaultValue);
@@ -58,8 +56,6 @@ public interface JSONObject extends Externalizable {
 	public Iterator<String> keys();
 
 	public int length();
-
-	public JSONObject merge(JSONObject jsonObject);
 
 	public JSONArray names();
 
@@ -76,8 +72,6 @@ public interface JSONObject extends Externalizable {
 	public JSONObject put(String key, JSONObject value);
 
 	public JSONObject put(String key, long value);
-
-	public JSONObject put(String key, Object value);
 
 	public JSONObject put(String key, String value);
 

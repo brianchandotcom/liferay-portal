@@ -37,15 +37,6 @@ public class UnmodifiableJSONObjectImpl extends JSONObjectImpl {
 	}
 
 	@Override
-	public JSONObject merge(JSONObject jsonObject) {
-		if (_log.isWarnEnabled()) {
-			_log.warn("Modifications are unsupported");
-		}
-
-		return this;
-	}
-
-	@Override
 	public JSONObject put(String key, boolean value) {
 		if (_log.isWarnEnabled()) {
 			_log.warn("Modifications are unsupported");
@@ -101,15 +92,6 @@ public class UnmodifiableJSONObjectImpl extends JSONObjectImpl {
 
 	@Override
 	public JSONObject put(String key, long value) {
-		if (_log.isWarnEnabled()) {
-			_log.warn("Modifications are unsupported");
-		}
-
-		return this;
-	}
-
-	@Override
-	public JSONObject put(String key, Object value) {
 		if (_log.isWarnEnabled()) {
 			_log.warn("Modifications are unsupported");
 		}

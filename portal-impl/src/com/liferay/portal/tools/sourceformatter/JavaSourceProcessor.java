@@ -958,34 +958,34 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String newLine = line;
 
-		String whiteSpace = StringPool.BLANK;
-		int whiteSpaceLength = Math.abs(delta);
+		String whitespace = StringPool.BLANK;
+		int whitespaceLength = Math.abs(delta);
 
-		while (whiteSpaceLength > 0) {
-			if (whiteSpaceLength >= 4) {
-				whiteSpace += StringPool.TAB;
+		while (whitespaceLength > 0) {
+			if (whitespaceLength >= 4) {
+				whitespace += StringPool.TAB;
 
-				whiteSpaceLength -= 4;
+				whitespaceLength -= 4;
 			}
 			else {
-				whiteSpace += StringPool.SPACE;
+				whitespace += StringPool.SPACE;
 
-				whiteSpaceLength -= 1;
+				whitespaceLength -= 1;
 			}
 		}
 
 		if (delta > 0) {
-			if (!line.contains(StringPool.TAB + whiteSpace)) {
+			if (!line.contains(StringPool.TAB + whitespace)) {
 				newLine = StringUtil.replaceLast(
 					newLine, StringPool.TAB, StringPool.FOUR_SPACES);
 			}
 
 			newLine = StringUtil.replaceLast(
-				newLine, StringPool.TAB + whiteSpace, StringPool.TAB);
+				newLine, StringPool.TAB + whitespace, StringPool.TAB);
 		}
 		else {
 			newLine = StringUtil.replaceLast(
-				newLine, StringPool.TAB, StringPool.TAB + whiteSpace);
+				newLine, StringPool.TAB, StringPool.TAB + whitespace);
 		}
 
 		newLine = StringUtil.replaceLast(
@@ -1156,11 +1156,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int previousLineLength = 0;
 
 		int previousLineCloseParenthesesCount = 0;
-		int previousLineLeadingWhiteSpace = 0;
+		int previousLineLeadingWhitespace = 0;
 		int previousLineOpenParenthesesCount = 0;
 
-		int baseLeadingWhiteSpace = 0;
-		int insideMethodCallExpectedWhiteSpace = 0;
+		int baseLeadingWhitespace = 0;
+		int insideMethodCallExpectedWhitespace = 0;
 		int level = -1;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
@@ -1209,64 +1209,64 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					previousLine + StringPool.SPACE + trimmedLine);
 			}
 
-			int leadingWhiteSpace = line.length() - trimmedLine.length();
+			int leadingWhitespace = line.length() - trimmedLine.length();
 
 			if (Validator.isNull(previousLine)) {
-				baseLeadingWhiteSpace =
+				baseLeadingWhitespace =
 					line.indexOf(StringPool.OPEN_PARENTHESIS) + 1;
 			}
 			else if (previousLine.endsWith("|") || previousLine.endsWith("&") ||
 					 previousLine.endsWith("^")) {
 
-				int expectedLeadingWhiteSpace = baseLeadingWhiteSpace + level;
+				int expectedLeadingWhitespace = baseLeadingWhitespace + level;
 
-				if (leadingWhiteSpace != expectedLeadingWhiteSpace) {
+				if (leadingWhitespace != expectedLeadingWhitespace) {
 					return fixIfClause(
 						ifClause, originalLine,
-						leadingWhiteSpace - expectedLeadingWhiteSpace);
+						leadingWhitespace - expectedLeadingWhitespace);
 				}
 			}
 			else {
-				int expectedLeadingWhiteSpace = 0;
+				int expectedLeadingWhitespace = 0;
 
 				if (previousLine.contains(StringPool.TAB + "else if (")) {
-					expectedLeadingWhiteSpace = baseLeadingWhiteSpace + 3;
+					expectedLeadingWhitespace = baseLeadingWhitespace + 3;
 				}
 				else if (previousLine.contains(StringPool.TAB + "if (")) {
-					expectedLeadingWhiteSpace = baseLeadingWhiteSpace + 4;
+					expectedLeadingWhitespace = baseLeadingWhitespace + 4;
 				}
 				else if (previousLine.contains(StringPool.TAB + "while (")) {
-					expectedLeadingWhiteSpace = baseLeadingWhiteSpace + 5;
+					expectedLeadingWhitespace = baseLeadingWhitespace + 5;
 				}
 
 				if (previousLine.endsWith(StringPool.COMMA) &&
-					(insideMethodCallExpectedWhiteSpace > 0)) {
+					(insideMethodCallExpectedWhitespace > 0)) {
 
 					if (previousLineCloseParenthesesCount >
 							previousLineOpenParenthesesCount) {
 
-						insideMethodCallExpectedWhiteSpace -= 4;
+						insideMethodCallExpectedWhitespace -= 4;
 					}
 
-					expectedLeadingWhiteSpace =
-						insideMethodCallExpectedWhiteSpace;
+					expectedLeadingWhitespace =
+						insideMethodCallExpectedWhitespace;
 				}
 				else {
-					if (expectedLeadingWhiteSpace == 0) {
-						expectedLeadingWhiteSpace =
-							previousLineLeadingWhiteSpace + 4;
+					if (expectedLeadingWhitespace == 0) {
+						expectedLeadingWhitespace =
+							previousLineLeadingWhitespace + 4;
 					}
 
 					if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
-						insideMethodCallExpectedWhiteSpace =
-							expectedLeadingWhiteSpace;
+						insideMethodCallExpectedWhitespace =
+							expectedLeadingWhitespace;
 					}
 				}
 
-				if (leadingWhiteSpace != expectedLeadingWhiteSpace) {
+				if (leadingWhitespace != expectedLeadingWhitespace) {
 					return fixIfClause(
 						ifClause, originalLine,
-						leadingWhiteSpace - expectedLeadingWhiteSpace);
+						leadingWhitespace - expectedLeadingWhitespace);
 				}
 			}
 
@@ -1280,7 +1280,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			previousLineLength = line.length();
 
 			previousLineCloseParenthesesCount = closeParenthesesCount;
-			previousLineLeadingWhiteSpace = leadingWhiteSpace;
+			previousLineLeadingWhitespace = leadingWhitespace;
 			previousLineOpenParenthesesCount = openParenthesesCount;
 		}
 

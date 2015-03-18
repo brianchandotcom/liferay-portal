@@ -1569,8 +1569,6 @@ go]]></replacevalue>
 			<![CDATA[
 				<properties>
 					<property name="testray.component.names" value="${testray.component.names}" />
-					<property name="testray.logs.console" value="${testray.logs.console}" />
-					<property name="testray.logs.report" value="${testray.logs.report}" />
 					<property name="testray.main.component.name" value="${testray.main.component.name}" />
 					<property name="testray.team.name" value="${testray.team.name}" />
 					<property name="testray.testcase.description" value="${testray.testcase.description}" />

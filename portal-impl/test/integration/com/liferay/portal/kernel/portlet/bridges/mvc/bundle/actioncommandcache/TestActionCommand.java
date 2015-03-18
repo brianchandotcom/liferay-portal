@@ -28,13 +28,15 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + TestActionCommandPortlet.PORTLET_NAME,
 		"action.command.name=" + TestActionCommand.TEST_ACTION_COMMAND_NAME,
-		"service.ranking:Integer=" + Integer.MAX_VALUE
+		"javax.portlet.name=" + TestActionCommandPortlet.PORTLET_NAME
 	},
 	service = ActionCommand.class
 )
 public class TestActionCommand implements ActionCommand {
+
+	public static final String TEST_ACTION_COMMAND_ATTRIBUTE =
+		"TEST_ACTION_COMMAND_ATTRIBUTE";
 
 	public static final String TEST_ACTION_COMMAND_NAME =
 		"TEST_ACTION_COMMAND_NAME";
@@ -45,7 +47,7 @@ public class TestActionCommand implements ActionCommand {
 		throws PortletException {
 
 		portletRequest.setAttribute(
-			"TEST_ACTION_COMMAND", "TEST_ACTION_COMMAND");
+			TEST_ACTION_COMMAND_ATTRIBUTE, TEST_ACTION_COMMAND_ATTRIBUTE);
 
 		return true;
 	}

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.actioncommandcache.Test2ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.actioncommandcache.TestActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.actioncommandcache.TestActionCommand2;
 import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.actioncommandcache.TestActionCommandPortlet;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringPool;
@@ -82,10 +82,13 @@ public class ActionCommandCacheTest {
 
 		_portlet.processAction(actionRequest, new MockActionResponse());
 
-		Assert.assertNotNull(actionRequest.getAttribute("TEST_ACTION_COMMAND"));
+		Assert.assertNotNull(
+			actionRequest.getAttribute(
+				TestActionCommand.TEST_ACTION_COMMAND_ATTRIBUTE));
 		Assert.assertEquals(
-			"TEST_ACTION_COMMAND",
-			actionRequest.getAttribute("TEST_ACTION_COMMAND"));
+			TestActionCommand.TEST_ACTION_COMMAND_ATTRIBUTE,
+			actionRequest.getAttribute(
+				TestActionCommand.TEST_ACTION_COMMAND_ATTRIBUTE));
 	}
 
 	@Test
@@ -96,7 +99,7 @@ public class ActionCommandCacheTest {
 
 		actionName.append(TestActionCommand.TEST_ACTION_COMMAND_NAME);
 		actionName.append(StringPool.COMMA);
-		actionName.append(Test2ActionCommand.TEST_2_ACTION_COMMAND_NAME);
+		actionName.append(TestActionCommand2.TEST_ACTION_COMMAND_NAME);
 
 		actionRequest.addParameter(
 			ActionRequest.ACTION_NAME, actionName.toString());
@@ -104,10 +107,20 @@ public class ActionCommandCacheTest {
 		_portlet.processAction(actionRequest, new MockActionResponse());
 
 		Assert.assertNotNull(
-			actionRequest.getAttribute("TEST_2_ACTION_COMMAND"));
+			actionRequest.getAttribute(
+				TestActionCommand.TEST_ACTION_COMMAND_ATTRIBUTE));
 		Assert.assertEquals(
-			"TEST_2_ACTION_COMMAND",
-			actionRequest.getAttribute("TEST_2_ACTION_COMMAND"));
+			TestActionCommand.TEST_ACTION_COMMAND_ATTRIBUTE,
+			actionRequest.getAttribute(
+				TestActionCommand.TEST_ACTION_COMMAND_ATTRIBUTE));
+
+		Assert.assertNotNull(
+			actionRequest.getAttribute(
+				TestActionCommand2.TEST_ACTION_COMMAND_ATTRIBUTE));
+		Assert.assertEquals(
+			TestActionCommand2.TEST_ACTION_COMMAND_ATTRIBUTE,
+			actionRequest.getAttribute(
+				TestActionCommand2.TEST_ACTION_COMMAND_ATTRIBUTE));
 	}
 
 	private static GenericPortlet _portlet;

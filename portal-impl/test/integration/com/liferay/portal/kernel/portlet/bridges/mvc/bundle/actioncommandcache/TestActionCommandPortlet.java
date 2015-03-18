@@ -26,9 +26,9 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + TestActionCommandPortlet.PORTLET_NAME,
 		"javax.portlet.init-param.action.package.prefix=" +
-			TestActionCommandPortlet.ACTION_PACKAGE_PREFIX
+			TestActionCommandPortlet.ACTION_PACKAGE_PREFIX,
+		"javax.portlet.name=" + TestActionCommandPortlet.PORTLET_NAME
 	},
 	service = Portlet.class
 )

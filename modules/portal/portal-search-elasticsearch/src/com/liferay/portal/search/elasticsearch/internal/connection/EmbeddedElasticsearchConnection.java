@@ -130,7 +130,6 @@ public class EmbeddedElasticsearchConnection
 
 		builder.put("node.client", false);
 		builder.put("node.data", true);
-		builder.put("node.local", false);
 
 		builder.put(
 			"path.data",
@@ -145,6 +144,11 @@ public class EmbeddedElasticsearchConnection
 			builder.put("index.store.type", "memory");
 			builder.put("index.translog.flush_threshold_ops", "1");
 			builder.put("index.translog.interval", "1ms");
+
+			builder.put("node.local", true);
+		}
+		else {
+			builder.put("node.local", false);
 		}
 	}
 

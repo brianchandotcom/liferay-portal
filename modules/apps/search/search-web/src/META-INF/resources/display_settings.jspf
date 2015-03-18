@@ -17,7 +17,7 @@
 <div class="facet-configuration-container">
 
 	<%
-	List<SearchFacet> searchFacets = (List<SearchFacet>)request.getAttribute("searchFacets");
+	List<SearchFacet> searchFacets = ListUtil.copy(SearchFacetTracker.getSearchFacets());
 
 	searchFacets = ListUtil.sort(searchFacets, new PropertyComparator("facetConfiguration.weight", false, false));
 

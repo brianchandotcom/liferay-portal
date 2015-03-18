@@ -227,8 +227,8 @@ public class ImportLayoutsAction extends PortletAction {
 					WebKeys.UPLOAD_EXCEPTION);
 
 			if ((uploadException != null) &&
-				(uploadException.getCause()
-					instanceof FileUploadBase.IOFileUploadException)) {
+				(uploadException.getCause() instanceof
+					FileUploadBase.IOFileUploadException)) {
 
 				// Cancelled a temporary upload
 

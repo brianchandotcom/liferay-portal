@@ -19,9 +19,11 @@ import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.connection.BaseElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
@@ -51,10 +53,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
-	property = {
-		"configFileName=/META-INF/elasticsearch-remote.yml",
-		"testConfigFileName=/META-INF/elasticsearch-test.yml"
-	},
 	service = ElasticsearchConnection.class
 )
 public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
@@ -81,13 +79,8 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_elasticsearchConfiguration = Configurable.createConfigurable(
+		elasticsearchConfiguration = Configurable.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
-
-		setClusterName(_elasticsearchConfiguration.clusterName());
-		setConfigFileName(MapUtil.getString(properties, "configFileName"));
-		setTestConfigFileName(
-			MapUtil.getString(properties, "testConfigFileName"));
 
 		List<String> transportAddresses = StringPlus.asList(
 			properties.get("transportAddresses"));
@@ -102,16 +95,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 				"There must be at least one transport address");
 		}
 
-		Class<?> clazz = getClass();
-
-		builder.classLoader(clazz.getClassLoader());
-
-		builder.loadFromClasspath(getConfigFileName());
-
 		TransportClient transportClient = new TransportClient(builder);
-
-		builder.put("client.transport.sniff", true);
-		builder.put("cluster.name", getClusterName());
 
 		for (String transportAddress : _transportAddresses) {
 			String[] transportAddressParts = StringUtil.split(
@@ -143,10 +127,37 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		close();
 	}
 
+	@Override
+	protected void loadRequiredDefaultConfigurations(
+		ImmutableSettings.Builder builder) {
+
+		builder.put(
+			"client.transport.ignore_cluster_name",
+			elasticsearchConfiguration.clientTransportIgnoreClusterName());
+		builder.put(
+			"client.transport.nodes_sampler_interval",
+			elasticsearchConfiguration.clientTransportNodesSamplerInterval());
+		builder.put(
+			"client.transport.sniff",
+			elasticsearchConfiguration.clientTransportSniff());
+
+		builder.put("cluster.name", elasticsearchConfiguration.clusterName());
+
+		builder.put("http.enabled", false);
+
+		builder.put("node.client", true);
+		builder.put("node.data", false);
+		builder.put("node.local", false);
+
+		builder.put(
+			"path.logs", PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/logs");
+		builder.put(
+			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteElasticsearchConnection.class);
 
-	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private Set<String> _transportAddresses = new HashSet<>();
 
 }

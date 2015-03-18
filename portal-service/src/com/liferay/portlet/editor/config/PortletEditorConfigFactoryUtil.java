@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.theme.ThemeDisplay;
 
+import java.util.Map;
+
 /**
  * @author Sergio González
  */
@@ -25,12 +27,13 @@ public class PortletEditorConfigFactoryUtil {
 
 	public static PortletEditorConfig getPortletEditorConfig(
 		String portletName, String editorConfigKey, String editorImpl,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		return getPortletEditorConfigFactory().getPortletEditorConfig(
-			portletName, editorConfigKey, editorImpl, themeDisplay,
-			liferayPortletResponse);
+			portletName, editorConfigKey, editorImpl,
+			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
 	}
 
 	public static PortletEditorConfigFactory getPortletEditorConfigFactory() {

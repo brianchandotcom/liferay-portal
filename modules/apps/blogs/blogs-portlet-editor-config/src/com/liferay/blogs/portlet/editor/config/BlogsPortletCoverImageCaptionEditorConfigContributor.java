@@ -24,6 +24,8 @@ import com.liferay.portlet.editor.config.PortletEditorConfigContributor;
 
 import org.osgi.service.component.annotations.Component;
 
+import java.util.Map;
+
 /**
  * @author Sergio González
  */
@@ -37,6 +39,7 @@ public class BlogsPortletCoverImageCaptionEditorConfigContributor
 	implements PortletEditorConfigContributor {
 
 	public JSONObject getConfigJSONObject(
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
@@ -62,6 +65,7 @@ public class BlogsPortletCoverImageCaptionEditorConfigContributor
 	}
 
 	public JSONObject getOptionsJSONObject(
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 

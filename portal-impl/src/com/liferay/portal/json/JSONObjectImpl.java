@@ -150,11 +150,6 @@ public class JSONObjectImpl implements JSONObject {
 	}
 
 	@Override
-	public Object getObject(String key) {
-		return _jsonObject.opt(key);
-	}
-
-	@Override
 	public String getString(String key) {
 		return _jsonObject.optString(key);
 	}
@@ -182,26 +177,6 @@ public class JSONObjectImpl implements JSONObject {
 	@Override
 	public int length() {
 		return _jsonObject.length();
-	}
-
-	@Override
-	public JSONObject merge(JSONObject jsonObject) {
-		Iterator<String> itr = jsonObject.keys();
-
-		while (itr.hasNext()) {
-			String key = itr.next();
-
-			try {
-				_jsonObject.put(key, jsonObject.getObject(key));
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
-				}
-			}
-		}
-
-		return this;
 	}
 
 	@Override
@@ -295,20 +270,6 @@ public class JSONObjectImpl implements JSONObject {
 
 	@Override
 	public JSONObject put(String key, long value) {
-		try {
-			_jsonObject.put(key, value);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-		}
-
-		return this;
-	}
-
-	@Override
-	public JSONObject put(String key, Object value) {
 		try {
 			_jsonObject.put(key, value);
 		}

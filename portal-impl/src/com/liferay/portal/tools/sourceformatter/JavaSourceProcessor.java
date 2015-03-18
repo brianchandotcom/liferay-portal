@@ -2954,7 +2954,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				return StringUtil.replace(
 					content, "\n" + line + "\n",
-					"\n" + firstLine + "\n" + secondLine + "\n" + "\n");
+					"\n" + firstLine + "\n" + secondLine + "\n\n");
 			}
 		}
 

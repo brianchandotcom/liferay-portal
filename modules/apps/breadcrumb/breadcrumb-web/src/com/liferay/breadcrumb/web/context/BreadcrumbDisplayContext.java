@@ -14,6 +14,7 @@
 
 package com.liferay.breadcrumb.web.context;
 
+import com.liferay.breadcrumb.web.configuration.BreadcrumbConfigurationValues;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 
 import javax.portlet.PortletPreferences;
@@ -112,7 +112,7 @@ public class BreadcrumbDisplayContext {
 
 		_showGuestGroup = PrefsParamUtil.getBoolean(
 			_portletPreferences, _request, "showGuestGroup",
-			PropsValues.BREADCRUMB_SHOW_GUEST_GROUP);
+			BreadcrumbConfigurationValues.SHOW_GUEST_GROUP);
 
 		return _showGuestGroup;
 	}
@@ -152,7 +152,7 @@ public class BreadcrumbDisplayContext {
 
 			_showParentGroups = GetterUtil.getBoolean(
 				group.getTypeSettingsProperty("breadcrumbShowParentGroups"),
-				PropsValues.BREADCRUMB_SHOW_PARENT_GROUPS);
+				BreadcrumbConfigurationValues.SHOW_PARENT_GROUPS);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

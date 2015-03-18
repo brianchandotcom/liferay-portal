@@ -60,7 +60,7 @@ public class DDLRecordStagedModelDataHandler
 	}
 
 	@Override
-	public List<DDLRecord> fetchStagedModelByUuidAndCompanyId(
+	public List<DDLRecord> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return DDLRecordLocalServiceUtil.getDDLRecordsByUuidAndCompanyId(

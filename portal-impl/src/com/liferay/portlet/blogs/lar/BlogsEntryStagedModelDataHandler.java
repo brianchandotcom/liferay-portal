@@ -70,7 +70,7 @@ public class BlogsEntryStagedModelDataHandler
 	}
 
 	@Override
-	public List<BlogsEntry> fetchStagedModelByUuidAndCompanyId(
+	public List<BlogsEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return BlogsEntryLocalServiceUtil.getBlogsEntriesByUuidAndCompanyId(

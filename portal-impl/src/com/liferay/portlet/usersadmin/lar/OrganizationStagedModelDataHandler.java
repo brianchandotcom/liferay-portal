@@ -74,7 +74,7 @@ public class OrganizationStagedModelDataHandler
 	}
 
 	@Override
-	public List<Organization> fetchStagedModelByUuidAndCompanyId(
+	public List<Organization> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		List<Organization> organizations = new ArrayList<>();

@@ -60,7 +60,7 @@ public class BookmarksFolderStagedModelDataHandler
 	}
 
 	@Override
-	public List<BookmarksFolder> fetchStagedModelByUuidAndCompanyId(
+	public List<BookmarksFolder> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return BookmarksFolderLocalServiceUtil.

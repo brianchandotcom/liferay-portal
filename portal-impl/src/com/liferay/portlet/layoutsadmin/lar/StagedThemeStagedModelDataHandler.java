@@ -40,7 +40,7 @@ public class StagedThemeStagedModelDataHandler
 	}
 
 	@Override
-	public List<StagedTheme> fetchStagedModelByUuidAndCompanyId(
+	public List<StagedTheme> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return Collections.emptyList();

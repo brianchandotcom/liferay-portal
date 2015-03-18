@@ -65,7 +65,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 	}
 
 	@Override
-	public List<DLFileEntryType> fetchStagedModelByUuidAndCompanyId(
+	public List<DLFileEntryType> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return DLFileEntryTypeLocalServiceUtil.

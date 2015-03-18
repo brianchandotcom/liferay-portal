@@ -59,7 +59,7 @@ public class DLFileShortcutStagedModelDataHandler
 	}
 
 	@Override
-	public List<DLFileShortcut> fetchStagedModelByUuidAndCompanyId(
+	public List<DLFileShortcut> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return DLFileShortcutLocalServiceUtil.

@@ -57,7 +57,7 @@ public class PollsVoteStagedModelDataHandler
 	}
 
 	@Override
-	public List<PollsVote> fetchStagedModelByUuidAndCompanyId(
+	public List<PollsVote> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return PollsVoteLocalServiceUtil.getPollsVotesByUuidAndCompanyId(

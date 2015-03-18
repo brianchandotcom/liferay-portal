@@ -68,7 +68,7 @@ public class WikiPageStagedModelDataHandler
 	}
 
 	@Override
-	public List<WikiPage> fetchStagedModelByUuidAndCompanyId(
+	public List<WikiPage> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return WikiPageLocalServiceUtil.getWikiPagesByUuidAndCompanyId(

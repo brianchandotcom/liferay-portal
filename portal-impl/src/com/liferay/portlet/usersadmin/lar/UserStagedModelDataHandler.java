@@ -49,7 +49,7 @@ public class UserStagedModelDataHandler
 	}
 
 	@Override
-	public List<User> fetchStagedModelByUuidAndCompanyId(
+	public List<User> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		List<User> users = new ArrayList<>();

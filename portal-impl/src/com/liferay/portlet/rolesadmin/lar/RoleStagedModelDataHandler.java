@@ -73,7 +73,7 @@ public class RoleStagedModelDataHandler
 	}
 
 	@Override
-	public List<Role> fetchStagedModelByUuidAndCompanyId(
+	public List<Role> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		List<Role> roles = new ArrayList<>();

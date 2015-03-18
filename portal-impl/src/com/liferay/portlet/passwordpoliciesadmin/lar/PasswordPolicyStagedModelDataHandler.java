@@ -54,7 +54,7 @@ public class PasswordPolicyStagedModelDataHandler
 	}
 
 	@Override
-	public List<PasswordPolicy> fetchStagedModelByUuidAndCompanyId(
+	public List<PasswordPolicy> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		List<PasswordPolicy> passwordPolicies = new ArrayList<>();

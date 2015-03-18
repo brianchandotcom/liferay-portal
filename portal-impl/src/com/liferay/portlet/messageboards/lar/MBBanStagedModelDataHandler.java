@@ -50,7 +50,7 @@ public class MBBanStagedModelDataHandler
 	}
 
 	@Override
-	public List<MBBan> fetchStagedModelByUuidAndCompanyId(
+	public List<MBBan> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return MBBanLocalServiceUtil.getMBBansByUuidAndCompanyId(

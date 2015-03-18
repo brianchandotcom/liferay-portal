@@ -69,7 +69,7 @@ public class DDMTemplateStagedModelDataHandler
 	}
 
 	@Override
-	public List<DDMTemplate> fetchStagedModelByUuidAndCompanyId(
+	public List<DDMTemplate> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return DDMTemplateLocalServiceUtil.getDDMTemplatesByUuidAndCompanyId(

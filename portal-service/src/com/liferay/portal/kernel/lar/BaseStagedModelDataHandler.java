@@ -181,7 +181,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				return existingStagedModel;
 			}
 
-			List<T> existingStagedModels = fetchStagedModelByUuidAndCompanyId(
+			List<T> existingStagedModels = fetchStagedModelsByUuidAndCompanyId(
 				uuid, originalGroup.getCompanyId());
 
 			for (T stagedModel : existingStagedModels) {
@@ -225,7 +225,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	}
 
 	@Override
-	public abstract List<T> fetchStagedModelByUuidAndCompanyId(
+	public abstract List<T> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId);
 
 	@Override

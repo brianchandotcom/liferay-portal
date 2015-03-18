@@ -53,7 +53,7 @@ public class JournalFolderStagedModelDataHandler
 	}
 
 	@Override
-	public List<JournalFolder> fetchStagedModelByUuidAndCompanyId(
+	public List<JournalFolder> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return JournalFolderLocalServiceUtil.

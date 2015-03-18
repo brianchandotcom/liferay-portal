@@ -66,7 +66,7 @@ public class AssetCategoryStagedModelDataHandler
 	}
 
 	@Override
-	public List<AssetCategory> fetchStagedModelByUuidAndCompanyId(
+	public List<AssetCategory> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return AssetCategoryLocalServiceUtil.

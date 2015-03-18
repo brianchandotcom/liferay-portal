@@ -51,7 +51,7 @@ public class EmailAddressStagedModelDataHandler
 	}
 
 	@Override
-	public List<EmailAddress> fetchStagedModelByUuidAndCompanyId(
+	public List<EmailAddress> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		List<EmailAddress> emailAddresses = new ArrayList<>();

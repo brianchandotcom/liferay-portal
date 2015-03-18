@@ -54,7 +54,7 @@ public class RepositoryEntryStagedModelDataHandler
 	}
 
 	@Override
-	public List<RepositoryEntry> fetchStagedModelByUuidAndCompanyId(
+	public List<RepositoryEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return RepositoryEntryLocalServiceUtil.

@@ -61,7 +61,7 @@ public class AssetVocabularyStagedModelDataHandler
 	}
 
 	@Override
-	public List<AssetVocabulary> fetchStagedModelByUuidAndCompanyId(
+	public List<AssetVocabulary> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return AssetVocabularyLocalServiceUtil.

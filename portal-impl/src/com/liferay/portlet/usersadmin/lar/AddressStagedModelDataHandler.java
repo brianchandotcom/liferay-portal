@@ -66,7 +66,7 @@ public class AddressStagedModelDataHandler
 	}
 
 	@Override
-	public List<Address> fetchStagedModelByUuidAndCompanyId(
+	public List<Address> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		List<Address> addresses = new ArrayList<>();

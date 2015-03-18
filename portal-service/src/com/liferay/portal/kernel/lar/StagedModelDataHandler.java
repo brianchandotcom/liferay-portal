@@ -38,7 +38,7 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 
 	public T fetchMissingReference(String uuid, long groupId);
 
-	public List<T> fetchStagedModelByUuidAndCompanyId(
+	public List<T> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId);
 
 	public T fetchStagedModelByUuidAndGroupId(String uuid, long groupId);

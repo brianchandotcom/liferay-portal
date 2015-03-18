@@ -50,7 +50,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 	}
 
 	@Override
-	public List<LayoutFriendlyURL> fetchStagedModelByUuidAndCompanyId(
+	public List<LayoutFriendlyURL> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return LayoutFriendlyURLLocalServiceUtil.

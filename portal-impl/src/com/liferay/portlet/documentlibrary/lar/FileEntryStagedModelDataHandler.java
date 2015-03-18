@@ -95,7 +95,7 @@ public class FileEntryStagedModelDataHandler
 	}
 
 	@Override
-	public List<FileEntry> fetchStagedModelByUuidAndCompanyId(
+	public List<FileEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		List<DLFileEntry> dlFileEntries =

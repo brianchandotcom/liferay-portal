@@ -116,7 +116,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	@Override
-	public List<Layout> fetchStagedModelByUuidAndCompanyId(
+	public List<Layout> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return LayoutLocalServiceUtil.getLayoutsByUuidAndCompanyId(
@@ -839,7 +839,7 @@ public class LayoutStagedModelDataHandler
 			}
 
 			if (layout == null) {
-				List<Layout> layouts = fetchStagedModelByUuidAndCompanyId(
+				List<Layout> layouts = fetchStagedModelsByUuidAndCompanyId(
 					uuid, originalGroup.getCompanyId());
 
 				if (ListUtil.isEmpty(layouts)) {

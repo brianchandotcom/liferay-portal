@@ -53,7 +53,7 @@ public class MBCategoryStagedModelDataHandler
 	}
 
 	@Override
-	public List<MBCategory> fetchStagedModelByUuidAndCompanyId(
+	public List<MBCategory> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return MBCategoryLocalServiceUtil.getMBCategoriesByUuidAndCompanyId(

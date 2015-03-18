@@ -52,7 +52,7 @@ public class UserGroupStagedModelDataHandler
 	}
 
 	@Override
-	public List<UserGroup> fetchStagedModelByUuidAndCompanyId(
+	public List<UserGroup> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		List<UserGroup> userGroups = new ArrayList<>();

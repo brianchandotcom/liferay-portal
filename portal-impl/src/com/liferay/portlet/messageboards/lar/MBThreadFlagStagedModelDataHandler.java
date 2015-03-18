@@ -59,7 +59,7 @@ public class MBThreadFlagStagedModelDataHandler
 	}
 
 	@Override
-	public List<MBThreadFlag> fetchStagedModelByUuidAndCompanyId(
+	public List<MBThreadFlag> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return MBThreadFlagLocalServiceUtil.getMBThreadFlagsByUuidAndCompanyId(

@@ -47,7 +47,7 @@ public class MDRRuleGroupStagedModelDataHandler
 	}
 
 	@Override
-	public List<MDRRuleGroup> fetchStagedModelByUuidAndCompanyId(
+	public List<MDRRuleGroup> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return MDRRuleGroupLocalServiceUtil.getMDRRuleGroupsByUuidAndCompanyId(

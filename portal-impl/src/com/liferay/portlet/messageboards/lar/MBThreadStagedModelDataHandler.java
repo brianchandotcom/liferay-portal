@@ -43,7 +43,7 @@ public class MBThreadStagedModelDataHandler
 	}
 
 	@Override
-	public List<MBThread> fetchStagedModelByUuidAndCompanyId(
+	public List<MBThread> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return MBThreadLocalServiceUtil.getMBThreadsByUuidAndCompanyId(

@@ -55,7 +55,7 @@ public class RatingsEntryStagedModelDataHandler
 	}
 
 	@Override
-	public List<RatingsEntry> fetchStagedModelByUuidAndCompanyId(
+	public List<RatingsEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		List<RatingsEntry> ratingsEntries = new ArrayList<>();

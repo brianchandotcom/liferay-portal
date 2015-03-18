@@ -60,7 +60,7 @@ public class MDRActionStagedModelDataHandler
 	}
 
 	@Override
-	public List<MDRAction> fetchStagedModelByUuidAndCompanyId(
+	public List<MDRAction> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return MDRActionLocalServiceUtil.getMDRActionsByUuidAndCompanyId(

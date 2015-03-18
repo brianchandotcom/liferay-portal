@@ -53,7 +53,7 @@ public class WebsiteStagedModelDataHandler
 	}
 
 	@Override
-	public List<Website> fetchStagedModelByUuidAndCompanyId(
+	public List<Website> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		List<Website> websites = new ArrayList<>();

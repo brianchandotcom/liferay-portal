@@ -105,7 +105,7 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Override
-	public List<JournalArticle> fetchStagedModelByUuidAndCompanyId(
+	public List<JournalArticle> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return JournalArticleLocalServiceUtil.

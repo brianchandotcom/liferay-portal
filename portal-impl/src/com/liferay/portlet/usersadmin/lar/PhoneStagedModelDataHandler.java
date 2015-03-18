@@ -52,7 +52,7 @@ public class PhoneStagedModelDataHandler
 	}
 
 	@Override
-	public List<Phone> fetchStagedModelByUuidAndCompanyId(
+	public List<Phone> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		List<Phone> phones = new ArrayList<>();

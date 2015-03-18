@@ -56,7 +56,7 @@ public class MBDiscussionStagedModelDataHandler
 	}
 
 	@Override
-	public List<MBDiscussion> fetchStagedModelByUuidAndCompanyId(
+	public List<MBDiscussion> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return MBDiscussionLocalServiceUtil.getMBDiscussionsByUuidAndCompanyId(

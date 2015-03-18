@@ -60,7 +60,7 @@ public class LayoutPrototypeStagedModelDataHandler
 	}
 
 	@Override
-	public List<LayoutPrototype> fetchStagedModelByUuidAndCompanyId(
+	public List<LayoutPrototype> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		List<LayoutPrototype> layoutPrototypes = new ArrayList<>();

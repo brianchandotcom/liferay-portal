@@ -76,7 +76,7 @@ public class FolderStagedModelDataHandler
 	}
 
 	@Override
-	public List<Folder> fetchStagedModelByUuidAndCompanyId(
+	public List<Folder> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		List<DLFolder> dlFolders =

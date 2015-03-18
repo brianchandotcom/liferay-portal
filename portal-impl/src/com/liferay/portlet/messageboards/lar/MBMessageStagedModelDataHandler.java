@@ -74,7 +74,7 @@ public class MBMessageStagedModelDataHandler
 	}
 
 	@Override
-	public List<MBMessage> fetchStagedModelByUuidAndCompanyId(
+	public List<MBMessage> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return MBMessageLocalServiceUtil.getMBMessagesByUuidAndCompanyId(

@@ -60,7 +60,7 @@ public class DDMStructureStagedModelDataHandler
 	}
 
 	@Override
-	public List<DDMStructure> fetchStagedModelByUuidAndCompanyId(
+	public List<DDMStructure> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return DDMStructureLocalServiceUtil.getDDMStructuresByUuidAndCompanyId(

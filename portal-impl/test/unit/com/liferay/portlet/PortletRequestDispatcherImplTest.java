@@ -204,25 +204,25 @@ public class PortletRequestDispatcherImplTest {
 	private class TestRequestDispatcher implements RequestDispatcher {
 
 		public void assertPropogatedInformation(
-			PortletServletRequest portletServletRequest) {
+			HttpServletRequest httpServletRequest) {
 
-			Assert.assertEquals(_pathInfo, portletServletRequest.getPathInfo());
+			Assert.assertEquals(_pathInfo, httpServletRequest.getPathInfo());
 			Assert.assertEquals(
-				_queryString, portletServletRequest.getQueryString());
+				_queryString, httpServletRequest.getQueryString());
 			Assert.assertEquals(
-				_requestURI, portletServletRequest.getRequestURI());
+				_requestURI, httpServletRequest.getRequestURI());
 			Assert.assertEquals(
-				_servletPath, portletServletRequest.getServletPath());
+				_servletPath, httpServletRequest.getServletPath());
 		}
 
 		@Override
 		public void forward(ServletRequest request, ServletResponse response) {
-			assertPropogatedInformation((PortletServletRequest)request);
+			assertPropogatedInformation((HttpServletRequest)request);
 		}
 
 		@Override
 		public void include(ServletRequest request, ServletResponse response) {
-			assertPropogatedInformation((PortletServletRequest)request);
+			assertPropogatedInformation((HttpServletRequest)request);
 		}
 
 		private TestRequestDispatcher(

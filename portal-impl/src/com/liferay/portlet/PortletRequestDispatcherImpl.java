@@ -121,21 +121,61 @@ public class PortletRequestDispatcherImpl
 		include((PortletRequest)renderRequest, (PortletResponse)renderResponse);
 	}
 
+	protected void checkCalledFlushBuffer(
+		boolean include, PortletResponse portletResponse) {
+
+		if (!include && (portletResponse instanceof MimeResponseImpl)) {
+			MimeResponseImpl mimeResponseImpl =
+				(MimeResponseImpl)portletResponse;
+
+			if (mimeResponseImpl.isCalledFlushBuffer()) {
+				throw new IllegalStateException();
+			}
+		}
+	}
+
+	protected HttpServletRequest createDynamicRequest(
+		Map<String, String[]> queryParams, HttpServletRequest request,
+		PortletRequestImpl portletRequestImpl) {
+
+		DynamicServletRequest dynamicRequest;
+
+		if (portletRequestImpl.isPrivateRequestAttributes()) {
+			String portletNamespace = PortalUtil.getPortletNamespace(
+				portletRequestImpl.getPortletName());
+
+			dynamicRequest = new NamespaceServletRequest(
+				request, portletNamespace, portletNamespace);
+		}
+		else {
+			dynamicRequest = new DynamicServletRequest(request);
+		}
+
+		for (Map.Entry<String, String[]> entry : queryParams.entrySet()) {
+			String name = entry.getKey();
+			String[] values = entry.getValue();
+
+			String[] oldValues = dynamicRequest.getParameterValues(name);
+
+			if (oldValues == null) {
+				dynamicRequest.setParameterValues(name, values);
+			}
+			else {
+				String[] newValues = ArrayUtil.append(values, oldValues);
+
+				dynamicRequest.setParameterValues(name, newValues);
+			}
+		}
+
+		return dynamicRequest;
+	}
+
 	protected void dispatch(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			boolean strutsURLEncoder, boolean include)
 		throws IOException, PortletException {
 
-		if (!include) {
-			if (portletResponse instanceof MimeResponseImpl) {
-				MimeResponseImpl mimeResponseImpl =
-					(MimeResponseImpl)portletResponse;
-
-				if (mimeResponseImpl.isCalledFlushBuffer()) {
-					throw new IllegalStateException();
-				}
-			}
-		}
+		checkCalledFlushBuffer(include, portletResponse);
 
 		PortletRequestImpl portletRequestImpl =
 			PortletRequestImpl.getPortletRequestImpl(portletRequest);
@@ -166,73 +206,11 @@ public class PortletRequestDispatcherImpl
 				pathNoQueryString = _path.substring(0, pos);
 				queryString = _path.substring(pos + 1);
 
-				Map<String, String[]> queryParams = new HashMap<>();
+				Map<String, String[]> queryParams = extractQueryParameters(
+					queryString);
 
-				String[] queryParamsArray = StringUtil.split(
-					queryString, CharPool.AMPERSAND);
-
-				for (String element : queryParamsArray) {
-					String[] nameValuePair = StringUtil.split(
-						element, CharPool.EQUAL);
-
-					String name = nameValuePair[0];
-					String value = StringPool.BLANK;
-
-					if (nameValuePair.length == 2) {
-						value = nameValuePair[1];
-					}
-
-					String[] values = queryParams.get(name);
-
-					if (values == null) {
-						queryParams.put(name, new String[] {value});
-					}
-					else {
-						String[] newValues = new String[values.length + 1];
-
-						System.arraycopy(
-							values, 0, newValues, 0, values.length);
-
-						newValues[newValues.length - 1] = value;
-
-						queryParams.put(name, newValues);
-					}
-				}
-
-				DynamicServletRequest dynamicRequest = null;
-
-				if (portletRequestImpl.isPrivateRequestAttributes()) {
-					String portletNamespace = PortalUtil.getPortletNamespace(
-						portletRequestImpl.getPortletName());
-
-					dynamicRequest = new NamespaceServletRequest(
-						request, portletNamespace, portletNamespace);
-				}
-				else {
-					dynamicRequest = new DynamicServletRequest(request);
-				}
-
-				for (Map.Entry<String, String[]> entry :
-						queryParams.entrySet()) {
-
-					String name = entry.getKey();
-					String[] values = entry.getValue();
-
-					String[] oldValues = dynamicRequest.getParameterValues(
-						name);
-
-					if (oldValues == null) {
-						dynamicRequest.setParameterValues(name, values);
-					}
-					else {
-						String[] newValues = ArrayUtil.append(
-							values, oldValues);
-
-						dynamicRequest.setParameterValues(name, newValues);
-					}
-				}
-
-				request = dynamicRequest;
+				request = createDynamicRequest(
+					queryParams, request, portletRequestImpl);
 			}
 
 			Portlet portlet = portletRequestImpl.getPortlet();
@@ -316,6 +294,41 @@ public class PortletRequestDispatcherImpl
 
 			throw new PortletException(se);
 		}
+	}
+
+	protected Map<String, String[]> extractQueryParameters(String queryString) {
+		Map<String, String[]> queryParams = new HashMap<>();
+
+		String[] queryParamsArray = StringUtil.split(
+			queryString, CharPool.AMPERSAND);
+
+		for (String element : queryParamsArray) {
+			String[] nameValuePair = StringUtil.split(element, CharPool.EQUAL);
+
+			String name = nameValuePair[0];
+			String value = StringPool.BLANK;
+
+			if (nameValuePair.length == 2) {
+				value = nameValuePair[1];
+			}
+
+			String[] values = queryParams.get(name);
+
+			if (values == null) {
+				queryParams.put(name, new String[] {value});
+			}
+			else {
+				String[] newValues = new String[values.length + 1];
+
+				System.arraycopy(values, 0, newValues, 0, values.length);
+
+				newValues[newValues.length - 1] = value;
+
+				queryParams.put(name, newValues);
+			}
+		}
+
+		return queryParams;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

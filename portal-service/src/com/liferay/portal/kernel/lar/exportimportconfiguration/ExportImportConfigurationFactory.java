@@ -123,10 +123,10 @@ public class ExportImportConfigurationFactory {
 	}
 
 	public static ExportImportConfiguration
-		buildDefaultRemotePublishingExportImportConfiguration(
-			User user, long sourceGroupId, boolean privateLayout,
-			String remoteAddress, int remotePort, String remotePathContext,
-			boolean secureConnection, long remoteGroupId)
+			buildDefaultRemotePublishingExportImportConfiguration(
+				User user, long sourceGroupId, boolean privateLayout,
+				String remoteAddress, int remotePort, String remotePathContext,
+				boolean secureConnection, long remoteGroupId)
 		throws PortalException {
 
 		return buildDefaultRemotePublishingExportImportConfiguration(

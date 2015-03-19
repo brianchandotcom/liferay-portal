@@ -23,13 +23,10 @@ import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 
-import java.io.IOException;
-
 import java.util.Collections;
 import java.util.Set;
 
 import javax.portlet.PortletContext;
-import javax.portlet.PortletException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletRequest;
@@ -82,120 +79,83 @@ public class PortletRequestDispatcherImplTest {
 	}
 
 	@Test
-	public void testInclude() throws IOException, PortletException {
-		TestRequestDispatcher requestDispatcher = new TestRequestDispatcher(
-			"/testPath", null, "/testPath", "");
-
+	public void testInclude() throws Exception {
 		PortletRequestDispatcherImpl portletRequestDispatcher =
 			new PortletRequestDispatcherImpl(
-				requestDispatcher, true, _portletContext, "/testPath");
+				new TestRequestDispatcher("/testPath", null, "/testPath", ""),
+				true, _portletContext, "/testPath");
 
-		TestPortletRequest request = new TestPortletRequest(_portlet);
-		TestPortletResponse response = new TestPortletResponse();
-
-		portletRequestDispatcher.include(request, response);
+		portletRequestDispatcher.include(
+			new TestPortletRequest(_portlet), new TestPortletResponse());
 	}
 
 	@Test
-	public void testIncludeAlternateContextPath()
-		throws IOException, PortletException {
-
-		TestRequestDispatcher requestDispatcher = new TestRequestDispatcher(
-			"/testPath", null, "/test/testPath", "");
-
+	public void testIncludeAlternateContextPath() throws Exception {
 		PortletRequestDispatcherImpl portletRequestDispatcher =
 			new PortletRequestDispatcherImpl(
-				requestDispatcher, true, _portletContext, "/testPath");
+				new TestRequestDispatcher(
+					"/testPath", null, "/test/testPath", ""),
+				true, _portletContext, "/testPath");
 
-		TestPortletRequest request = new TestPortletRequest("/test", _portlet);
-		TestPortletResponse response = new TestPortletResponse();
-
-		portletRequestDispatcher.include(request, response);
+		portletRequestDispatcher.include(
+			new TestPortletRequest("/test", _portlet),
+			new TestPortletResponse());
 	}
 
 	@Test
-	public void testIncludeNoPath() throws IOException, PortletException {
-		TestRequestDispatcher requestDispatcher = new TestRequestDispatcher(
-			null, null, "", "");
-
+	public void testIncludeNoPath() throws Exception {
 		PortletRequestDispatcherImpl portletRequestDispatcher =
 			new PortletRequestDispatcherImpl(
-				requestDispatcher, true, _portletContext);
+				new TestRequestDispatcher(null, null, "", ""), true,
+				_portletContext);
 
-		TestPortletRequest request = new TestPortletRequest(_portlet);
-		TestPortletResponse response = new TestPortletResponse();
-
-		portletRequestDispatcher.include(request, response);
+		portletRequestDispatcher.include(
+			new TestPortletRequest(_portlet), new TestPortletResponse());
 	}
 
 	@Test
-	public void testIncludeWithQueryParams()
-		throws IOException, PortletException {
-
-		TestRequestDispatcher requestDispatcher = new TestRequestDispatcher(
-			"/moreTestPath", "testName=&testname=testvalue&testname=testvalue2",
-			"/testPath/moreTestPath", "/testPath");
-
+	public void testIncludeWithQueryParams() throws Exception {
 		PortletRequestDispatcherImpl portletRequestDispatcher =
 			new PortletRequestDispatcherImpl(
-				requestDispatcher, true, _portletContext,
+				new TestRequestDispatcher(
+					"/moreTestPath",
+					"testName=&testname=testvalue&testname=testvalue2",
+					"/testPath/moreTestPath", "/testPath"),
+				true, _portletContext,
 				"/testPath/moreTestPath?testName=&testname=testvalue&" +
 					"testname=testvalue2");
 
-		TestPortletRequest request = new TestPortletRequest(_portlet);
-		TestPortletResponse response = new TestPortletResponse();
-
-		portletRequestDispatcher.include(request, response);
+		portletRequestDispatcher.include(
+			new TestPortletRequest(_portlet), new TestPortletResponse());
 	}
 
 	@Test
-	public void testIncludeWithUnmatchedPath()
-		throws IOException, PortletException {
-
-		TestRequestDispatcher requestDispatcher = new TestRequestDispatcher(
-			"/unmatchedPath", null, "/unmatchedPath", "");
-
+	public void testIncludeWithUnmatchedPath() throws Exception {
 		PortletRequestDispatcherImpl portletRequestDispatcher =
 			new PortletRequestDispatcherImpl(
-				requestDispatcher, true, _portletContext, "/unmatchedPath");
+				new TestRequestDispatcher(
+					"/unmatchedPath", null, "/unmatchedPath", ""),
+				true, _portletContext, "/unmatchedPath");
 
-		TestPortletRequest request = new TestPortletRequest(_portlet);
-		TestPortletResponse response = new TestPortletResponse();
-
-		portletRequestDispatcher.include(request, response);
+		portletRequestDispatcher.include(
+			new TestPortletRequest(_portlet), new TestPortletResponse());
 	}
 
 	@Test
-	public void testIncludeWithUnrecognizedSeparator()
-		throws IOException, PortletException {
-
-		TestRequestDispatcher requestDispatcher = new TestRequestDispatcher(
-			"/testPath|", null, "/testPath|", "");
-
+	public void testIncludeWithUnrecognizedSeparator() throws Exception {
 		PortletRequestDispatcherImpl portletRequestDispatcher =
 			new PortletRequestDispatcherImpl(
-				requestDispatcher, true, _portletContext, "/testPath|");
+				new TestRequestDispatcher("/testPath|", null, "/testPath|", ""),
+				true, _portletContext, "/testPath|");
 
-		TestPortletRequest request = new TestPortletRequest(_portlet);
-		TestPortletResponse response = new TestPortletResponse();
-
-		portletRequestDispatcher.include(request, response);
+		portletRequestDispatcher.include(
+			new TestPortletRequest(_portlet), new TestPortletResponse());
 	}
 
 	private static Portlet _portlet;
 	private static PortletContext _portletContext;
 
 	private class TestPortletRequest extends RenderRequestImpl {
-
-		public TestPortletRequest(Portlet portlet) {
-			_contextPath = StringPool.SLASH;
-			_portlet = portlet;
-		}
-
-		public TestPortletRequest(String contextPath, Portlet portlet) {
-			_contextPath = contextPath;
-			_portlet = portlet;
-		}
 
 		@Override
 		public String getContextPath() {
@@ -215,6 +175,15 @@ public class PortletRequestDispatcherImplTest {
 		@Override
 		public boolean isPrivateRequestAttributes() {
 			return false;
+		}
+
+		private TestPortletRequest(Portlet portlet) {
+			this(StringPool.SLASH, portlet);
+		}
+
+		private TestPortletRequest(String contextPath, Portlet portlet) {
+			_contextPath = contextPath;
+			_portlet = portlet;
 		}
 
 		private final String _contextPath;
@@ -242,27 +211,17 @@ public class PortletRequestDispatcherImplTest {
 
 	private class TestRequestDispatcher implements RequestDispatcher {
 
-		public TestRequestDispatcher(
-			String expectedPathInfo, String expectedQueryString,
-			String expectedRequestURI, String expectedServletPath) {
-
-			pathInfo = expectedPathInfo;
-			queryString = expectedQueryString;
-			requestURI = expectedRequestURI;
-			servletPath = expectedServletPath;
-		}
-
 		public void assertPropogatedInformation(
 			PortletServletRequest portletServletRequest,
 			PortletServletResponse portletServletResponse) {
 
-			Assert.assertEquals(portletServletRequest.getPathInfo(), pathInfo);
+			Assert.assertEquals(portletServletRequest.getPathInfo(), _pathInfo);
 			Assert.assertEquals(
-				portletServletRequest.getQueryString(), queryString);
+				portletServletRequest.getQueryString(), _queryString);
 			Assert.assertEquals(
-				portletServletRequest.getRequestURI(), requestURI);
+				portletServletRequest.getRequestURI(), _requestURI);
 			Assert.assertEquals(
-				portletServletRequest.getServletPath(), servletPath);
+				portletServletRequest.getServletPath(), _servletPath);
 		}
 
 		@Override
@@ -279,10 +238,20 @@ public class PortletRequestDispatcherImplTest {
 				(PortletServletResponse)response);
 		}
 
-		private final String pathInfo;
-		private final String queryString;
-		private final String requestURI;
-		private final String servletPath;
+		private TestRequestDispatcher(
+			String pathInfo, String queryString, String requestURI,
+			String servletPath) {
+
+			_pathInfo = pathInfo;
+			_queryString = queryString;
+			_requestURI = requestURI;
+			_servletPath = servletPath;
+		}
+
+		private final String _pathInfo;
+		private final String _queryString;
+		private final String _requestURI;
+		private final String _servletPath;
 
 	}
 

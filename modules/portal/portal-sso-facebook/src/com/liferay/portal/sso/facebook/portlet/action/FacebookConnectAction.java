@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.login.action;
+package com.liferay.portal.sso.facebook.portlet.action;
 
 import com.liferay.portal.kernel.facebook.FacebookConnectUtil;
 import com.liferay.portal.kernel.json.JSONObject;

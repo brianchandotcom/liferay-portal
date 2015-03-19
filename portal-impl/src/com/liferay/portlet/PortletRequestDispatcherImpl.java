@@ -118,7 +118,7 @@ public class PortletRequestDispatcherImpl
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		include((PortletRequest)renderRequest, (PortletResponse)renderResponse);
+		dispatch(renderRequest, renderResponse, false, true);
 	}
 
 	protected void checkCalledFlushBuffer(

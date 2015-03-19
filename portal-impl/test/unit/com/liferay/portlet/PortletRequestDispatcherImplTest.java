@@ -215,13 +215,13 @@ public class PortletRequestDispatcherImplTest {
 			PortletServletRequest portletServletRequest,
 			PortletServletResponse portletServletResponse) {
 
-			Assert.assertEquals(portletServletRequest.getPathInfo(), _pathInfo);
+			Assert.assertEquals(_pathInfo, portletServletRequest.getPathInfo());
 			Assert.assertEquals(
-				portletServletRequest.getQueryString(), _queryString);
+				_queryString, portletServletRequest.getQueryString());
 			Assert.assertEquals(
-				portletServletRequest.getRequestURI(), _requestURI);
+				_requestURI, portletServletRequest.getRequestURI());
 			Assert.assertEquals(
-				portletServletRequest.getServletPath(), _servletPath);
+				_servletPath, portletServletRequest.getServletPath());
 		}
 
 		@Override

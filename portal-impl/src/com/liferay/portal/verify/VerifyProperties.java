@@ -466,6 +466,41 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.currency.converter.web"
 		},
 
+		// Facebook Connect SSO
+
+		new String[] {
+			"facebook.connect.auth.enabled", "enabled",
+			"com.liferay.portal.sso.facebook"
+		},
+		new String[] {
+			"facebook.connect.app.id", "app.id",
+			"com.liferay.portal.sso.facebook"
+		},
+		new String[] {
+			"facebook.connect.app.secret", "app.secret",
+			"com.liferay.portal.sso.facebook"
+		},
+		new String[] {
+			"facebook.connect.graph.url", "graph.url",
+			"com.liferay.portal.sso.facebook"
+		},
+		new String[] {
+			"facebook.connect.oauth.auth.url", "oauth.auth.url",
+			"com.liferay.portal.sso.facebook"
+		},
+		new String[] {
+			"facebook.connect.oauth.redirect.url", "oauth.redirect.url",
+			"com.liferay.portal.sso.facebook"
+		},
+		new String[] {
+			"facebook.connect.oauth.token.url", "oauth.token.url",
+			"com.liferay.portal.sso.facebook"
+		},
+		new String[] {
+			"facebook.connect.verified.account.required",
+			"verified.account.required", "com.liferay.portal.sso.facebook"
+		},
+
 		// FreeMarker Engine
 
 		new String[] {

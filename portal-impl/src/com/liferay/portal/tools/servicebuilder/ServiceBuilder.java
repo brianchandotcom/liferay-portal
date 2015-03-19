@@ -1885,16 +1885,16 @@ public class ServiceBuilder {
 	}
 
 	private void _checkForUnnecessaryFullyQualifiedClassNames(
-			String filePath, String content)
+			File file, String content)
 		throws IOException {
 
-		JavaClass finalJavaClass = _getJavaClass(filePath);
+		JavaClass finalJavaClass = _getJavaClass(file.getPath());
 
 		if (_containsUnnecessaryFullyQualifiedClassNames(finalJavaClass)) {
 			content = _removeUnnecessaryFullyQualifiedClassNames(
 				finalJavaClass, content);
 
-			writeFile(new File(filePath), content, _author);
+			writeFile(file, content, _author);
 		}
 	}
 
@@ -2118,14 +2118,12 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String modelFilePath =
-			_serviceOutputPath + "/model/" + entity.getName() + ".java";
-
-		File modelFile = new File(modelFilePath);
+		File modelFile = new File(
+			_serviceOutputPath + "/model/" + entity.getName() + ".java");
 
 		writeFile(modelFile, content, _author);
 
-		_checkForUnnecessaryFullyQualifiedClassNames(modelFilePath, content);
+		_checkForUnnecessaryFullyQualifiedClassNames(modelFile, content);
 	}
 
 	private void _createExtendedModelBaseImpl(Entity entity) throws Exception {
@@ -2554,14 +2552,12 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String modelFilePath =
-			_serviceOutputPath + "/model/" + entity.getName() + "Wrapper.java";
-
-		File modelFile = new File(modelFilePath);
+		File modelFile = new File(
+			_serviceOutputPath + "/model/" + entity.getName() + "Wrapper.java");
 
 		writeFile(modelFile, content, _author);
 
-		_checkForUnnecessaryFullyQualifiedClassNames(modelFilePath, content);
+		_checkForUnnecessaryFullyQualifiedClassNames(modelFile, content);
 	}
 
 	private void _createPersistence(Entity entity) throws Exception {
@@ -2580,15 +2576,13 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String ejbFilePath =
+		File ejbFile = new File(
 			_serviceOutputPath + "/service/persistence/" + entity.getName() +
-			"Persistence.java";
-
-		File ejbFile = new File(ejbFilePath);
+				"Persistence.java");
 
 		writeFile(ejbFile, content, _author);
 
-		_checkForUnnecessaryFullyQualifiedClassNames(ejbFilePath, content);
+		_checkForUnnecessaryFullyQualifiedClassNames(ejbFile, content);
 	}
 
 	private void _createPersistenceImpl(Entity entity) throws Exception {
@@ -2668,15 +2662,13 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String ejbFilePath =
+		File ejbFile = new File(
 			_serviceOutputPath + "/service/persistence/" + entity.getName() +
-			"Util.java";
-
-		File ejbFile = new File(ejbFilePath);
+				"Util.java");
 
 		writeFile(ejbFile, content, _author);
 
-		_checkForUnnecessaryFullyQualifiedClassNames(ejbFilePath, content);
+		_checkForUnnecessaryFullyQualifiedClassNames(ejbFile, content);
 	}
 
 	private void _createPool(Entity entity) {
@@ -2889,11 +2881,13 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/" + entity.getName() +
 			_getSessionTypeName(sessionType) + "Service.java";
 
-		File ejbFile = new File(ejbFilePath);
+		File ejbFile = new File(
+			_serviceOutputPath + "/service/" + entity.getName() +
+				_getSessionTypeName(sessionType) + "Service.java");
 
 		writeFile(ejbFile, content, _author);
 
-		_checkForUnnecessaryFullyQualifiedClassNames(ejbFilePath, content);
+		_checkForUnnecessaryFullyQualifiedClassNames(ejbFile, content);
 	}
 
 	private void _createServiceBaseImpl(Entity entity, int sessionType)
@@ -3195,15 +3189,13 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String ejbFilePath =
+		File ejbFile = new File(
 			_outputPath + "/service/http/" + entity.getName() +
-			"ServiceSoap.java";
-
-		File ejbFile = new File(ejbFilePath);
+				"ServiceSoap.java");
 
 		writeFile(ejbFile, content, _author);
 
-		_checkForUnnecessaryFullyQualifiedClassNames(ejbFilePath, content);
+		_checkForUnnecessaryFullyQualifiedClassNames(ejbFile, content);
 	}
 
 	private void _createServiceUtil(Entity entity, int sessionType)
@@ -3227,15 +3219,13 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String ejbFilePath =
+		File ejbFile = new File(
 			_serviceOutputPath + "/service/" + entity.getName() +
-			_getSessionTypeName(sessionType) + "ServiceUtil.java";
-
-		File ejbFile = new File(ejbFilePath);
+				_getSessionTypeName(sessionType) + "ServiceUtil.java");
 
 		writeFile(ejbFile, content, _author);
 
-		_checkForUnnecessaryFullyQualifiedClassNames(ejbFilePath, content);
+		_checkForUnnecessaryFullyQualifiedClassNames(ejbFile, content);
 	}
 
 	private void _createServiceWrapper(Entity entity, int sessionType)
@@ -3259,15 +3249,13 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String ejbFilePath =
+		File ejbFile = new File(
 			_serviceOutputPath + "/service/" + entity.getName() +
-			_getSessionTypeName(sessionType) + "ServiceWrapper.java";
-
-		File ejbFile = new File(ejbFilePath);
+				_getSessionTypeName(sessionType) + "ServiceWrapper.java");
 
 		writeFile(ejbFile, content, _author);
 
-		_checkForUnnecessaryFullyQualifiedClassNames(ejbFilePath, content);
+		_checkForUnnecessaryFullyQualifiedClassNames(ejbFile, content);
 	}
 
 	private void _createSpringXml() throws Exception {
@@ -4266,14 +4254,9 @@ public class ServiceBuilder {
 	}
 
 	private JavaClass _getJavaClass(String fileName) throws IOException {
-		int pos = fileName.indexOf(_implDir + "/");
+		fileName = StringUtil.replace(fileName, "\\", "/");
 
-		if (pos != -1) {
-			pos += _implDir.length();
-		}
-		else {
-			pos = fileName.indexOf(_apiDir + "/") + _apiDir.length();
-		}
+		int pos = fileName.lastIndexOf("/src/") + 4;
 
 		String srcFile = fileName.substring(pos + 1);
 		String className = StringUtil.replace(

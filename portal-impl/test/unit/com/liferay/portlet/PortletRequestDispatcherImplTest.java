@@ -49,30 +49,6 @@ public class PortletRequestDispatcherImplTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_portlet = new PortletImpl() {
-
-			@Override
-			public PortletApp getPortletApp() {
-				return new PortletAppImpl(StringPool.BLANK) {
-
-					@Override
-					public Set<String> getServletURLPatterns() {
-						return Collections.singleton("/testPath/*");
-					}
-
-				};
-			}
-
-			@Override
-			public URLEncoder getURLEncoderInstance() {
-				return null;
-			}
-
-		};
-
-		_portletContext = new PortletContextImpl(
-			_portlet, new MockServletContext());
-
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(new PortalImpl());
@@ -152,8 +128,29 @@ public class PortletRequestDispatcherImplTest {
 			new TestPortletRequest(_portlet), new TestPortletResponse());
 	}
 
-	private static Portlet _portlet;
-	private static PortletContext _portletContext;
+	private static final Portlet _portlet = new PortletImpl() {
+
+		@Override
+		public PortletApp getPortletApp() {
+			return new PortletAppImpl(StringPool.BLANK) {
+
+				@Override
+				public Set<String> getServletURLPatterns() {
+					return Collections.singleton("/testPath/*");
+				}
+
+			};
+		}
+
+		@Override
+		public URLEncoder getURLEncoderInstance() {
+			return null;
+		}
+
+	};
+
+	private static final PortletContext _portletContext =
+		new PortletContextImpl(_portlet, new MockServletContext());
 
 	private class TestPortletRequest extends RenderRequestImpl {
 

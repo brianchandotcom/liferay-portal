@@ -18,7 +18,6 @@ import com.liferay.portal.cache.key.HashCodeCacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.minifier.GoogleJavaScriptMinifier;
 import com.liferay.portal.minifier.MinifierUtil;
 
@@ -44,7 +43,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Shuyang Zhou
  * @author Miguel Pastor
  */
-@PrepareForTest({CacheKeyGeneratorUtil.class, PropsUtil.class})
+@PrepareForTest({CacheKeyGeneratorUtil.class})
 @RunWith(PowerMockRunner.class)
 public class StripFilterTest extends PowerMockito {
 

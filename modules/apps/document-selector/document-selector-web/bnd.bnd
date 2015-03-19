@@ -2,54 +2,6 @@ Bundle-Name: Liferay Document Selector Web
 Bundle-SymbolicName: com.liferay.document.selector.web
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.document.selector
-Import-Package:\
-	com.liferay.portal,\
-	com.liferay.portal.kernel.bean,\
-	com.liferay.portal.kernel.configuration,\
-	com.liferay.portal.kernel.language,\
-	com.liferay.portal.kernel.log,\
-	com.liferay.portal.kernel.portlet,\
-	com.liferay.portal.kernel.repository.model,\
-	com.liferay.portal.kernel.search,\
-	com.liferay.portal.kernel.upload,\
-	com.liferay.portal.kernel.util,\
-	com.liferay.portal.kernel.workflow,\
-	com.liferay.portal.model,\
-	com.liferay.portal.security.permission,\
-	com.liferay.portal.service,\
-	com.liferay.portal.upload,\
-	com.liferay.portal.util,\
-	\
-	com.liferay.portlet,\
-	com.liferay.portlet.asset,\
-	com.liferay.portlet.asset.model,\
-	com.liferay.portlet.documentlibrary,\
-	com.liferay.portlet.documentlibrary.antivirus,\
-	com.liferay.portlet.documentlibrary.model,\
-	com.liferay.portlet.documentlibrary.service,\
-	com.liferay.portlet.documentlibrary.service.permission,\
-	com.liferay.portlet.documentlibrary.util,\
-	com.liferay.portlet.dynamicdatamapping.model,\
-	com.liferay.portlet.dynamicdatamapping.storage,\
-	com.liferay.portlet.dynamicdatamapping.util,\
-	com.liferay.portlet.journal.search,\
-	com.liferay.portlet.layoutsadmin.context,\
-	com.liferay.wiki.model,\
-	com.liferay.wiki.service,\
-	\
-	javax.portlet,\
-	javax.portlet.filter,\
-	javax.servlet,\
-	javax.servlet.http,\
-	*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources
-Require-Capability:\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ddm))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/portlet))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/theme))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/util))"

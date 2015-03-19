@@ -17,12 +17,7 @@ Import-Package:\
 	com.liferay.portal.servlet.filters.dynamiccss,\
 	com.liferay.portal.webserver,\
 	com.liferay.portlet,\
-	javax.portlet,\
-	javax.servlet,\
-	javax.servlet.http,\
 	*
-Require-Capability:\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))"
 Web-ContextPath: /ip-geocoder-sample-web
 
 -donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)

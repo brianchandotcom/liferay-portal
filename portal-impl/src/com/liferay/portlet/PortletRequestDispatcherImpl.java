@@ -157,14 +157,11 @@ public class PortletRequestDispatcherImpl
 
 			String[] oldValues = dynamicRequest.getParameterValues(name);
 
-			if (oldValues == null) {
-				dynamicRequest.setParameterValues(name, values);
+			if (oldValues != null) {
+				values = ArrayUtil.append(values, oldValues);
 			}
-			else {
-				String[] newValues = ArrayUtil.append(values, oldValues);
 
-				dynamicRequest.setParameterValues(name, newValues);
-			}
+			dynamicRequest.setParameterValues(name, values);
 		}
 
 		return dynamicRequest;
@@ -184,8 +181,6 @@ public class PortletRequestDispatcherImpl
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			portletResponse);
 
 		request.setAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST, portletRequest);
@@ -206,11 +201,9 @@ public class PortletRequestDispatcherImpl
 				pathNoQueryString = _path.substring(0, pos);
 				queryString = _path.substring(pos + 1);
 
-				Map<String, String[]> queryParams = extractQueryParameters(
-					queryString);
-
 				request = createDynamicRequest(
-					queryParams, request, portletRequestImpl);
+					extractQueryParameters(queryString), request,
+					portletRequestImpl);
 			}
 
 			Portlet portlet = portletRequestImpl.getPortlet();
@@ -257,7 +250,9 @@ public class PortletRequestDispatcherImpl
 			servletPath, _named, include);
 
 		PortletServletResponse portletServletResponse =
-			new PortletServletResponse(response, portletResponse, include);
+			new PortletServletResponse(
+				PortalUtil.getHttpServletResponse(portletResponse),
+				portletResponse, include);
 
 		URLEncoder urlEncoder = _portlet.getURLEncoderInstance();
 
@@ -299,10 +294,9 @@ public class PortletRequestDispatcherImpl
 	protected Map<String, String[]> extractQueryParameters(String queryString) {
 		Map<String, String[]> queryParams = new HashMap<>();
 
-		String[] queryParamsArray = StringUtil.split(
-			queryString, CharPool.AMPERSAND);
+		for (String element : StringUtil.split(
+				queryString, CharPool.AMPERSAND)) {
 
-		for (String element : queryParamsArray) {
 			String[] nameValuePair = StringUtil.split(element, CharPool.EQUAL);
 
 			String name = nameValuePair[0];

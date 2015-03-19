@@ -55,12 +55,9 @@ public class PortletRequestDispatcherImplTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		Class<?> clazz = PortletRequestDispatcherImplTest.class;
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
 		final PortletApp portletApp = (PortletApp)ProxyUtil.newProxyInstance(
-			classLoader, new Class<?>[] {PortletApp.class},
+			PortletApp.class.getClassLoader(),
+			new Class<?>[] {PortletApp.class},
 			new InvocationHandler() {
 
 				@Override
@@ -83,7 +80,7 @@ public class PortletRequestDispatcherImplTest {
 			});
 
 		_portlet = (Portlet)ProxyUtil.newProxyInstance(
-			classLoader, new Class<?>[] {Portlet.class},
+			Portlet.class.getClassLoader(), new Class<?>[] {Portlet.class},
 			new InvocationHandler() {
 
 				@Override
@@ -102,7 +99,8 @@ public class PortletRequestDispatcherImplTest {
 			});
 
 		_portletContext = (LiferayPortletContext)ProxyUtil.newProxyInstance(
-			classLoader, new Class<?>[] {LiferayPortletContext.class},
+			LiferayPortletContext.class.getClassLoader(),
+			new Class<?>[] {LiferayPortletContext.class},
 			new InvocationHandler() {
 
 				@Override

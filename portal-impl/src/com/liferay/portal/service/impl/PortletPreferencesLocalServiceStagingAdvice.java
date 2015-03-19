@@ -220,7 +220,11 @@ public class PortletPreferencesLocalServiceStagingAdvice
 			PortletPreferencesIds portletPreferencesIds =
 				(PortletPreferencesIds)arguments[0];
 
-			portletPreferencesIds.setPlid(plid);
+			arguments[0] = new PortletPreferencesIds(
+				portletPreferencesIds.getCompanyId(),
+				portletPreferencesIds.getOwnerId(),
+				portletPreferencesIds.getOwnerType(), plid,
+				portletPreferencesIds.getPortletId());
 		}
 		else {
 			arguments[3] = plid;

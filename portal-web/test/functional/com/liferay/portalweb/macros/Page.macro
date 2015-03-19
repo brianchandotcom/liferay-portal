@@ -38,9 +38,7 @@
 		</for>
 	</command>
 
-	<command name="addPG">
-		<description message="Add a page called ${pageName}." />
-
+	<command name="addPG" summary="Add a page named '${pageName}'">
 		<if>
 			<isset var="nodePort" />
 			<then>
@@ -313,9 +311,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoContentCP">
-		<description message="Navigate to Site Administration > Content > ${portletName}." />
-
+	<command name="gotoContentCP" summary="Navigate to Admin > Site Administration > Content > ${portletName}">
 		<execute macro="Page#gotoCmdCP">
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_CONTENT" />
 			<var name="portletCategoryName" value="Content" />
@@ -402,9 +398,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoPG">
-		<description message="Navigate to the page named ${pageName}." />
-
+	<command name="gotoPG" summary="Navigate to the page named '${pageName}'">
 		<if>
 			<isset var="nodePort" />
 			<then>
@@ -571,9 +565,7 @@
 		</if>
 	</command>
 
-	<command name="tearDownPG">
-		<description message="Delete all pages except the Welcome Page." />
-
+	<command name="tearDownPG" summary="Delete all pages except the Welcome Page">
 		<execute macro="Page#openURL" />
 
 		<while>

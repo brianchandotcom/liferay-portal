@@ -874,11 +874,6 @@
 			<forward name="portlet.login.login" path="portlet.login.login" />
 		</action>
 
-		<action path="/login/facebook_connect_oauth" type="com.liferay.portlet.login.action.FacebookConnectAction">
-			<forward name="portlet.login.login" path="portlet.login.login" />
-			<forward name="portlet.login.update_account" path="portlet.login.update_account" />
-		</action>
-
 		<action path="/login/forgot_password" type="com.liferay.portlet.login.action.ForgotPasswordAction">
 			<forward name="portlet.login.forgot_password" path="portlet.login.forgot_password" />
 			<forward name="portlet.login.login" path="portlet.login.login" />

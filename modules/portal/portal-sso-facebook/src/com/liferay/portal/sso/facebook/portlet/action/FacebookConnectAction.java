@@ -14,15 +14,19 @@
 
 package com.liferay.portal.sso.facebook.portlet.action;
 
-import com.liferay.portal.kernel.facebook.FacebookConnectUtil;
+import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
@@ -30,68 +34,56 @@ import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.struts.ActionConstants;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Wilson Man
  * @author Sergio González
  * @author Mika Koivisto
  */
-public class FacebookConnectAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"path=/login/facebook_connect_oauth",
+		"portlet.login.login=portlet.login.login",
+		"portlet.login.update_account=portlet.login.update_account",
+		"/common/referer_jsp.jsp=/common/referer_jsp.jsp"
+	},
+	service = StrutsAction.class
+)
+public class FacebookConnectAction extends BaseStrutsAction {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (!FacebookConnectUtil.isEnabled(themeDisplay.getCompanyId())) {
-			return actionMapping.findForward("portlet.login.login");
-		}
-
-		return actionMapping.findForward("portlet.login.facebook_login");
-	}
-
-	@Override
-	public ActionForward strutsExecute(
-			ActionMapping actionMapping, ActionForm actionForm,
+	public String execute(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!FacebookConnectUtil.isEnabled(themeDisplay.getCompanyId())) {
+		if (!_facebookConnect.isEnabled(themeDisplay.getCompanyId())) {
 			throw new PrincipalException();
-		}
+			}
 
 		HttpSession session = request.getSession();
 
@@ -99,7 +91,7 @@ public class FacebookConnectAction extends PortletAction {
 
 		String code = ParamUtil.getString(request, "code");
 
-		String token = FacebookConnectUtil.getAccessToken(
+		String token = _facebookConnect.getAccessToken(
 			themeDisplay.getCompanyId(), redirect, code);
 
 		if (Validator.isNotNull(token)) {
@@ -115,13 +107,27 @@ public class FacebookConnectAction extends PortletAction {
 			}
 		}
 		else {
-			return actionMapping.findForward(
-				ActionConstants.COMMON_REFERER_JSP);
+			return _forwardsMap.get("/common/referer_jsp.jsp");
 		}
 
 		response.sendRedirect(redirect);
 
 		return null;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_forwardsMap.put(
+			"portlet.login.login",
+			GetterUtil.getString(properties, "portlet.login.login"));
+
+		_forwardsMap.put(
+			"portlet.login.update_account",
+			GetterUtil.getString(properties, "portlet.login.update_account"));
+
+		_forwardsMap.put(
+			"/common/referer_jsp.jsp",
+			GetterUtil.getString(properties, "/common/referer_jsp.jsp"));
 	}
 
 	protected User addUser(
@@ -212,11 +218,16 @@ public class FacebookConnectAction extends PortletAction {
 		response.sendRedirect(portletURL.toString());
 	}
 
+	@Reference
+	protected void setFacebookConnect(FacebookConnect facebookConnect) {
+		_facebookConnect = facebookConnect;
+	}
+
 	protected User setFacebookCredentials(
 			HttpSession session, long companyId, String token)
 		throws Exception {
 
-		JSONObject jsonObject = FacebookConnectUtil.getGraphResources(
+		JSONObject jsonObject = _facebookConnect.getGraphResources(
 			companyId, "/me", token,
 			"id,email,first_name,last_name,gender");
 
@@ -226,7 +237,7 @@ public class FacebookConnectAction extends PortletAction {
 			return null;
 		}
 
-		if (FacebookConnectUtil.isVerifiedAccountRequired(companyId) &&
+		if (_facebookConnect.isVerifiedAccountRequired(companyId) &&
 			!jsonObject.getBoolean("verified")) {
 
 			return null;
@@ -283,6 +294,45 @@ public class FacebookConnectAction extends PortletAction {
 		}
 
 		return user;
+	}
+
+	protected String strutsExecute(
+			HttpServletRequest request, HttpServletResponse response,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (!_facebookConnect.isEnabled(themeDisplay.getCompanyId())) {
+			throw new PrincipalException();
+		}
+
+		HttpSession session = request.getSession();
+
+		String redirect = ParamUtil.getString(request, "redirect");
+
+		String code = ParamUtil.getString(request, "code");
+
+		String token = _facebookConnect.getAccessToken(
+			themeDisplay.getCompanyId(), redirect, code);
+
+		if (Validator.isNotNull(token)) {
+			User user = setFacebookCredentials(
+				session, themeDisplay.getCompanyId(), token);
+
+			if ((user != null) &&
+				(user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
+
+				redirectUpdateAccount(request, response, user);
+
+				return null;
+			}
+		}
+		else {
+			return _forwardsMap.get("/common/referer_jsp.jsp");
+		}
+
+		response.sendRedirect(redirect);
+
+		return null;
 	}
 
 	protected User updateUser(User user, JSONObject jsonObject)
@@ -344,5 +394,8 @@ public class FacebookConnectAction extends PortletAction {
 			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,
 			serviceContext);
 	}
+
+	private FacebookConnect _facebookConnect;
+	private final Map<String, String> _forwardsMap = new HashMap<>();
 
 }

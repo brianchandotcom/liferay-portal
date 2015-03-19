@@ -14,34 +14,43 @@
 
 package com.liferay.portal.sso.facebook;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.facebook.FacebookConnect;
-import com.liferay.portal.kernel.facebook.FacebookConnectUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.sso.facebook.configuration.FacebookConfiguration;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+
 /**
  * @author Wilson Man
  * @author Mika Koivisto
  */
-@DoPrivileged
+@Component(
+	configurationPid = "com.liferay.portal.sso.facebook.configuration.FacebookConfiguration",
+	immediate = true, service = FacebookConnect.class
+)
 public class FacebookConnectImpl implements FacebookConnect {
 
 	@Override
@@ -50,7 +59,7 @@ public class FacebookConnectImpl implements FacebookConnect {
 			getAccessTokenURL(companyId), "client_id", getAppId(companyId));
 
 		url = HttpUtil.addParameter(
-			url, "redirect_uri", FacebookConnectUtil.getRedirectURL(companyId));
+			url, "redirect_uri", getRedirectURL(companyId));
 
 		String facebookConnectRedirectURL = getRedirectURL(companyId);
 
@@ -97,28 +106,28 @@ public class FacebookConnectImpl implements FacebookConnect {
 	public String getAccessTokenURL(long companyId) {
 		return PrefsPropsUtil.getString(
 			companyId, PropsKeys.FACEBOOK_CONNECT_OAUTH_TOKEN_URL,
-			PropsValues.FACEBOOK_CONNECT_OAUTH_TOKEN_URL);
+			_facebookConfiguration.oauthTokenURL());
 	}
 
 	@Override
 	public String getAppId(long companyId) {
 		return PrefsPropsUtil.getString(
 			companyId, PropsKeys.FACEBOOK_CONNECT_APP_ID,
-			PropsValues.FACEBOOK_CONNECT_APP_ID);
+			_facebookConfiguration.appId());
 	}
 
 	@Override
 	public String getAppSecret(long companyId) {
 		return PrefsPropsUtil.getString(
 			companyId, PropsKeys.FACEBOOK_CONNECT_APP_SECRET,
-			PropsValues.FACEBOOK_CONNECT_APP_SECRET);
+			_facebookConfiguration.appSecret());
 	}
 
 	@Override
 	public String getAuthURL(long companyId) {
 		return PrefsPropsUtil.getString(
 			companyId, PropsKeys.FACEBOOK_CONNECT_OAUTH_AUTH_URL,
-			PropsValues.FACEBOOK_CONNECT_OAUTH_AUTH_URL);
+			_facebookConfiguration.oauthAuthURL());
 	}
 
 	@Override
@@ -155,7 +164,7 @@ public class FacebookConnectImpl implements FacebookConnect {
 	public String getGraphURL(long companyId) {
 		return PrefsPropsUtil.getString(
 			companyId, PropsKeys.FACEBOOK_CONNECT_GRAPH_URL,
-			PropsValues.FACEBOOK_CONNECT_GRAPH_URL);
+			_facebookConfiguration.graphURL());
 	}
 
 	@Override
@@ -189,24 +198,33 @@ public class FacebookConnectImpl implements FacebookConnect {
 	public String getRedirectURL(long companyId) {
 		return PrefsPropsUtil.getString(
 			companyId, PropsKeys.FACEBOOK_CONNECT_OAUTH_REDIRECT_URL,
-			PropsValues.FACEBOOK_CONNECT_OAUTH_REDIRECT_URL);
+			_facebookConfiguration.oauthRedirectURL());
 	}
 
 	@Override
 	public boolean isEnabled(long companyId) {
 		return PrefsPropsUtil.getBoolean(
 			companyId, PropsKeys.FACEBOOK_CONNECT_AUTH_ENABLED,
-			PropsValues.FACEBOOK_CONNECT_AUTH_ENABLED);
+			_facebookConfiguration.enabled());
 	}
 
 	@Override
 	public boolean isVerifiedAccountRequired(long companyId) {
 		return PrefsPropsUtil.getBoolean(
 			companyId, PropsKeys.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED,
-			PropsValues.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED);
+			_facebookConfiguration.verifiedAccountRequired());
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_facebookConfiguration = Configurable.createConfigurable(
+			FacebookConfiguration.class, properties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FacebookConnectImpl.class);
+
+	private volatile FacebookConfiguration _facebookConfiguration;
 
 }

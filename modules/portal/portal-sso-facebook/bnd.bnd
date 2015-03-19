@@ -1,8 +1,7 @@
-Bundle-Name: Liferay Portal Facebook SSO
+Bundle-Name: Liferay Portal SSO Facebook
 Bundle-SymbolicName: com.liferay.portal.sso.facebook
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
-	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
-
--metatype: *
+	META-INF/resources=src/META-INF/resources
+Web-ContextPath: /portal-sso-facebook

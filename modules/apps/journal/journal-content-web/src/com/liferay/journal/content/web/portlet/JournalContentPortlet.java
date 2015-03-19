@@ -177,7 +177,7 @@ public class JournalContentPortlet extends MVCPortlet {
 
 	protected void initLogger(ClassLoader classLoader) {
 		Log4JUtil.configureLog4J(
-			classLoader.getResource("META-INF/portlet-log4j.xml"));
+			classLoader.getResource("META-INF/portal-log4j.xml"));
 	}
 
 	@Reference

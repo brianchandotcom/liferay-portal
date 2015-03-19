@@ -2877,10 +2877,6 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String ejbFilePath =
-			_serviceOutputPath + "/service/" + entity.getName() +
-			_getSessionTypeName(sessionType) + "Service.java";
-
 		File ejbFile = new File(
 			_serviceOutputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "Service.java");

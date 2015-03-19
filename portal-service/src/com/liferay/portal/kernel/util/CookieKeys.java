@@ -93,9 +93,6 @@ public class CookieKeys {
 		cookie.setValue(encodedValue);
 		cookie.setVersion(0);
 
-		// Setting a cookie will cause the TCK to lose its ability to track
-		// sessions
-
 		response.addCookie(cookie);
 	}
 

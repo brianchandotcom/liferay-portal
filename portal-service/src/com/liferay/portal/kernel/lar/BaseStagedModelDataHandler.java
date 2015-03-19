@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
@@ -181,11 +181,12 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			for (T stagedModel : existingStagedModels) {
 				try {
-					if (stagedModel instanceof GroupedModel) {
-						GroupedModel groupedModel = (GroupedModel)stagedModel;
+					if (stagedModel instanceof StagedGroupedModel) {
+						StagedGroupedModel stagedGroupedModel =
+							(StagedGroupedModel)stagedModel;
 
 						group = GroupLocalServiceUtil.getGroup(
-							groupedModel.getGroupId());
+							stagedGroupedModel.getGroupId());
 
 						if (!group.isStagingGroup()) {
 							return stagedModel;

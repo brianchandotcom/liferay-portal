@@ -3668,11 +3668,6 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 					<param name="test.app.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.tomcat.zip.url}" />
 				</antcall>
-
-				<replace file="${app.server.tomcat.bin.dir}/setenv${file.suffix.bat}">
-					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
-					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
-				</replace>
 			</then>
 			<else>
 				<ant antfile="build-dist.xml" target="build-dist-tomcat" inheritAll="false" />
@@ -3680,11 +3675,6 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 				<setup-testable-tomcat />
 
 				<antcall target="prepare-portal-ext-properties" />
-
-				<replace file="${app.server.tomcat.bin.dir}/setenv${file.suffix.bat}">
-					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
-					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
-				</replace>
 			</else>
 		</if>
 
@@ -3717,6 +3707,8 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 				</then>
 			</elseif>
 		</if>
+
+		<antcall target="prepare-test-bundle-memory-allocations" />
 
 		<if>
 			<matches pattern="http" string="${test.build.license.xml.zip.url}" />
@@ -3938,6 +3930,194 @@ plugins.includes=marketplace-portlet</echo>
 
 				<delete file="liferay-portal-dependencies.zip" />
 			</else>
+		</if>
+	</target>
+
+	<target name="prepare-test-bundle-memory-allocations">
+		<if>
+			<available file="${app.server.geronimo.bin.dir}/setenv${file.suffix.bat}" />
+			<then>
+				<replace file="${app.server.geronimo.bin.dir}/setenv${file.suffix.bat}">
+					<replacetoken><![CDATA[-Xmx1024m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.glassfish.instance.dir}/config/domain.xml" />
+			<then>
+				<replace file="${app.server.glassfish.instance.dir}/config/domain.xml">
+					<replacetoken><![CDATA[<jvm-options>-Xmx1024m</jvm-options>]]></replacetoken>
+					<replacevalue><![CDATA[<jvm-options>-Xmx2048m</jvm-options>]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.jboss.bin.dir}/standalone.conf" />
+			<then>
+				<replace file="${app.server.jboss.bin.dir}/standalone.conf">
+					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.jboss.bin.dir}/standalone.conf.bat" />
+			<then>
+				<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
+					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.parent.dir}/jboss-eap-6.1/bin/standalone.conf" />
+			<then>
+				<replace file="${app.server.parent.dir}/jboss-eap-6.1/bin/standalone.conf">
+					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.parent.dir}/jboss-eap-6.1/bin/standalone.conf.bat" />
+			<then>
+				<replace file="${app.server.parent.dir}/jboss-eap-6.1/bin/standalone.conf.bat">
+					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.jetty.bin.dir}/run${file.suffix.bat}" />
+			<then>
+				<replace file="${app.server.jetty.bin.dir}/run${file.suffix.bat}">
+					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.jonas.bin.dir}/setenv" />
+			<then>
+				<replace file="${app.server.jonas.bin.dir}/setenv">
+					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.jonas.bin.dir}/setenv.bat" />
+			<then>
+				<replace file="${app.server.jonas.bin.dir}/setenv.bat">
+					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.resin.dir}/conf/resin.properties" />
+			<then>
+				<replace file="${app.server.resin.dir}/conf/resin.properties">
+					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.parent.dir}/tomcat-7.0.39/bin/setenv${file.suffix.bat}" />
+			<then>
+				<replace file="${app.server.parent.dir}/tomcat-7.0.39/bin/setenv${file.suffix.bat}">
+					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.tcat.admin.bin.dir}/setenv${file.suffix.bat}" />
+			<then>
+				<replace file="${app.server.tcat.admin.bin.dir}/setenv${file.suffix.bat}">
+					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.tcat.agent.bin.dir}/setenv${file.suffix.bat}" />
+			<then>
+				<replace file="${app.server.tcat.agent.bin.dir}/setenv${file.suffix.bat}">
+					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.tcserver.bin.dir}/setenv${file.suffix.bat}" />
+			<then>
+				<replace file="${app.server.tcserver.bin.dir}/setenv${file.suffix.bat}">
+					<replacetoken><![CDATA[-Xmx1024M]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048M]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.tcserver.dir}/liferay/conf/wrapper.conf" />
+			<then>
+				<replace file="${app.server.tcserver.dir}/liferay/conf/wrapper.conf">
+					<replacetoken><![CDATA[-Xmx1024M]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048M]]></replacevalue>
+				</replace>
+
+				<replace file="${app.server.tcserver.dir}/liferay/conf/wrapper.conf">
+					<replacetoken><![CDATA[-XX:MaxPermSize=256m]]></replacetoken>
+					<replacevalue><![CDATA[-XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.tomcat.bin.dir}/setenv${file.suffix.bat}" />
+			<then>
+				<replace file="${app.server.tomcat.bin.dir}/setenv${file.suffix.bat}">
+					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.weblogic.instance.dir}/startWebLogic${file.suffix.cmd}" />
+			<then>
+				<replace file="${app.server.weblogic.instance.dir}/startWebLogic${file.suffix.cmd}">
+					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
+
+		<if>
+			<available file="${app.server.weblogic.instance.dir}/stopWebLogic${file.suffix.cmd}" />
+			<then>
+				<replace file="${app.server.weblogic.instance.dir}/stopWebLogic${file.suffix.cmd}">
+					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
+					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
 		</if>
 	</target>
 

@@ -103,7 +103,7 @@
 		<execute function="Select" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_SELECT" value1="${vocabularyAssociatedAssetType}" />
 
 		<if>
-			<equals arg1="${requiredCheckbox}" arg2="True" />
+			<equals arg1="${requiredCheckbox}" arg2="true" />
 			<then>
 				<execute function="Check" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_REQUIRED_CHECKBOX" />
 			</then>

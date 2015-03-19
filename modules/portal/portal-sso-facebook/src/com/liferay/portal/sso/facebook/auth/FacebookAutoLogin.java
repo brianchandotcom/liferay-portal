@@ -12,24 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.sso.facebook.auth;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.facebook.FacebookConnectUtil;
+import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.AutoLogin;
+import com.liferay.portal.security.auth.BaseAutoLogin;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.sso.facebook.constants.FacebookConnectWebKeys;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Wilson Man
  */
+@Component(immediate = true, service = AutoLogin.class)
 public class FacebookAutoLogin extends BaseAutoLogin {
 
 	@Override
@@ -39,7 +46,7 @@ public class FacebookAutoLogin extends BaseAutoLogin {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		if (!FacebookConnectUtil.isEnabled(companyId)) {
+		if (!_facebookConnect.isEnabled(companyId)) {
 			return null;
 		}
 
@@ -74,7 +81,8 @@ public class FacebookAutoLogin extends BaseAutoLogin {
 		}
 		else {
 			long facebookId = GetterUtil.getLong(
-				(String)session.getAttribute(WebKeys.FACEBOOK_USER_ID));
+				(String)session.getAttribute(
+					FacebookConnectWebKeys.FACEBOOK_USER_ID));
 
 			if (facebookId > 0) {
 				return UserLocalServiceUtil.getUserByFacebookId(
@@ -84,5 +92,12 @@ public class FacebookAutoLogin extends BaseAutoLogin {
 
 		return null;
 	}
+
+	@Reference
+	protected void setFacebookConnect(FacebookConnect facebookConnect) {
+		_facebookConnect = facebookConnect;
+	}
+
+	private FacebookConnect _facebookConnect;
 
 }

@@ -21,6 +21,14 @@
   <artifactId>eclipse-platform-parent</artifactId>
   <version>4.5.0-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <!--
+     See maven-enforcer-plugin configuration to actually break the build if
+     run with older maven.
+     prerequisites section is kept for now as even if it doesn't break the build, it
+     is used by other plugins like versions-maven-plugin which check and warn
+     for using plugins with older than they require Maven version.
+     If version number changed in one place, be sure to change in the other.
+  -->
   <prerequisites>
     <maven>3.1.1</maven>
   </prerequisites>
@@ -55,10 +63,17 @@
     <releaseNumberSDK>4.5</releaseNumberSDK>
     <releaseNumberPlatform>4.5</releaseNumberPlatform>
 
+    <!-- using snapshot, or locally built (forked) snapshot version for bug 461207 and bug 431116-->
+    <tycho.version>0.23.0-SNAPSHOT</tycho.version>
+    <tycho-extras.version>0.23.0-SNAPSHOT</tycho-extras.version>
 
+    <!-- For using released 22 
     <tycho.version>0.22.0</tycho.version>
     <tycho-extras.version>0.22.0</tycho-extras.version>
+	-->
+
     <cbi-plugins.version>1.1.1</cbi-plugins.version>
+
     <!--
       The tycho-eclipserun-plugin will create its instance of Eclipse from this
       'eclipiserun-repo' repository, such as for computing .api-descriptions.
@@ -73,19 +88,22 @@
       a copy of the EMF features and ECF features into our own repository. This is required since we merely "require" EMF (not "include" it).
       And, of course, in the PDE target file, the URL is expected to be the actual URL, not a variable.
     -->
-    <emf-repo.url>http://download.eclipse.org/modeling/emf/emf/updates/2.11milestones/base/S201501230347/</emf-repo.url>
+    <emf-repo.url>http://download.eclipse.org/modeling/emf/emf/updates/2.11milestones/base/S201503180449/</emf-repo.url>
 
-    <ecf-repo.url>http://download.eclipse.org/rt/ecf/3.9.2/site.p2/</ecf-repo.url>
+    <ecf-repo.url>http://download.eclipse.org/rt/ecf/3.9.3/site.p2/</ecf-repo.url>
 
+    <!-- using snapshot repo for Tycho 0.23.0-SNAPSHOT, such as for bug 461207 -->
+    <!-- Does it hurt to always leave snapshot repo here? Even if not used? -->
+    <tycho-snapshot-repo.url>https://repo.eclipse.org/content/repositories/tycho-snapshots/</tycho-snapshot-repo.url>
     <tycho-repo.url>https://oss.sonatype.org/content/repositories/public/</tycho-repo.url>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <cbi-jdt-repo.url>https://repo.eclipse.org/content/repositories/eclipse-staging/</cbi-jdt-repo.url>
-    <cbi-jdt-version>3.11.0.v20150118-1315</cbi-jdt-version>
-    
-    <!-- 
-        This jetty-version is used by the help system in building the JSPs, 
-        and should change when ever our "shipped" version of Jetty changes. 
+    <cbi-jdt-version>3.11.0.v20150126-2015</cbi-jdt-version>
+
+    <!--
+        This jetty-version is used by the help system in building the JSPs,
+        and should change when ever our "shipped" version of Jetty changes.
      -->
     <jetty-version>9.2.5.v20141112</jetty-version>
 
@@ -138,7 +156,18 @@
     </snapshotRepository>
   </distributionManagement>
   <pluginRepositories>
-   
+
+    <pluginRepository>
+      <id>tycho-snapshots</id>
+      <url>${tycho-snapshot-repo.url}</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+
     <pluginRepository>
       <id>tycho</id>
       <url>${tycho-repo.url}</url>
@@ -324,7 +353,34 @@
           </execution>
         </executions>
       </plugin>
-
+      <plugin>
+        <!--
+           This maven-enforcer-plugin configuration to actually break the build if
+           run with older maven.
+           prerequisites section is kept for now as even if it doesn't break the build, it
+           is used by other plugins like versions-maven-plugin which check and warn
+           for using plugins with older than they require Maven version.
+           If version number changed in one place, be sure to change in the other.
+        -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>1.4</version>
+        <executions>
+          <execution>
+            <id>enforce-maven</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>3.1.1</version>
+                </requireMavenVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
     <pluginManagement>
       <plugins>
@@ -358,9 +414,14 @@
               <args>-encoding</args>
               <args>${project.build.sourceEncoding}</args>
               <args>-proceedOnError</args>
+              <!-- Use this form, for Tycho 22 or less.
               <args>-log</args>
               <args>${project.build.directory}/@dot.xml</args>
+              -->
             </compilerArgs>
+            <!-- Use this form for Tycho 23 or greater -->
+            <log>xml</log>
+            <logDirectory>${project.build.directory}/compilelogs</logDirectory>
             <showWarnings>true</showWarnings>
             <excludeResources>
               <exclude>**/package.html</exclude>
@@ -698,7 +759,7 @@
               </repositories>
               <!-- this is to fix some lucene 3.x compatibility issue -->
               <argLine>-Dhelp.lucene.tokenizer=standard</argLine>
-              <!-- actuall indexer call -->
+              <!-- actual indexer call -->
               <appArgLine>-data target/apibuild-workspace -application org.eclipse.ant.core.antRunner -buildfile target/.apibuild.xml</appArgLine>
               <dependencies>
                 <!-- list of bundles that we need -->

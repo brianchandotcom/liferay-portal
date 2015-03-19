@@ -38,7 +38,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Setupwizard#FINISH_CONFIGURATION_BUTTON" value1="Finish Configuration" />
+		<execute function="AssertClick" locator1="Setupwizard#FINISH_CONFIGURATION_BUTTON" value1="Finish Configuration" />
 
 		<execute function="AssertTextEquals" locator1="SetupwizardFinishconfiguration#SUCCESS_MESSAGE" value1="Your configuration was saved successfully." />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SetupwizardFinishconfiguration#CONFIGURATION_SAVE_MESSAGE" value1="The configuration was saved in" />

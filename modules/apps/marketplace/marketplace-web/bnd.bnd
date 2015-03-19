@@ -5,13 +5,15 @@ Import-Package: \
 	com.liferay.marketplace.model,\
 	com.liferay.marketplace.service,\
 	com.liferay.marketplace.service.persistence,\
-	com.liferay.marketplace.util,\
+	com.liferay.marketplace.util.*,\
 	\
 	com.liferay.portal.kernel.bean,\
+	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.lar,\
 	com.liferay.portal.kernel.log,\
 	com.liferay.portal.kernel.messaging,\
+	com.liferay.portal.kernel.plugin,\
 	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.servlet.*,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
@@ -30,10 +32,8 @@ Import-Package: \
 	javax.servlet,\
 	javax.servlet.http
 Include-Resource:\
-	WEB-INF/classes/=@docroot/WEB-INF/classes,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/portlet/PortletProps.class
-Private-Package: com.liferay.portal.license.util
 Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\

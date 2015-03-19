@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -67,27 +66,21 @@ public class AssetCategoryStagedModelDataHandler
 	}
 
 	@Override
-	public AssetCategory fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<AssetCategory> categories =
-			AssetCategoryLocalServiceUtil.getAssetCategoriesByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<AssetCategory>());
-
-		if (ListUtil.isEmpty(categories)) {
-			return null;
-		}
-
-		return categories.get(0);
-	}
-
-	@Override
 	public AssetCategory fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return AssetCategoryLocalServiceUtil.fetchAssetCategoryByUuidAndGroupId(
 			uuid, groupId);
+	}
+
+	@Override
+	public List<AssetCategory> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return AssetCategoryLocalServiceUtil.
+			getAssetCategoriesByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<AssetCategory>());
 	}
 
 	@Override

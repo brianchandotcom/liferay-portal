@@ -25,6 +25,9 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Daniela Zapata Riesco
  */
@@ -40,8 +43,10 @@ public class PasswordPolicyStagedModelDataHandler
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		PasswordPolicy passwordPolicy = fetchStagedModelByUuidAndCompanyId(
-			uuid, group.getCompanyId());
+		PasswordPolicy passwordPolicy =
+			PasswordPolicyLocalServiceUtil.
+				fetchPasswordPolicyByUuidAndCompanyId(
+					uuid, group.getCompanyId());
 
 		if (passwordPolicy != null) {
 			PasswordPolicyLocalServiceUtil.deletePasswordPolicy(passwordPolicy);
@@ -49,11 +54,16 @@ public class PasswordPolicyStagedModelDataHandler
 	}
 
 	@Override
-	public PasswordPolicy fetchStagedModelByUuidAndCompanyId(
+	public List<PasswordPolicy> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return PasswordPolicyLocalServiceUtil.
-			fetchPasswordPolicyByUuidAndCompanyId(uuid, companyId);
+		List<PasswordPolicy> passwordPolicies = new ArrayList<>();
+
+		passwordPolicies.add(
+			PasswordPolicyLocalServiceUtil.
+				fetchPasswordPolicyByUuidAndCompanyId(uuid, companyId));
+
+		return passwordPolicies;
 	}
 
 	@Override
@@ -88,8 +98,10 @@ public class PasswordPolicyStagedModelDataHandler
 			passwordPolicy);
 
 		PasswordPolicy existingPasswordPolicy =
-			fetchStagedModelByUuidAndCompanyId(
-				passwordPolicy.getUuid(), portletDataContext.getCompanyId());
+			PasswordPolicyLocalServiceUtil.
+				fetchPasswordPolicyByUuidAndCompanyId(
+					passwordPolicy.getUuid(),
+					portletDataContext.getCompanyId());
 
 		if (existingPasswordPolicy == null) {
 			existingPasswordPolicy =

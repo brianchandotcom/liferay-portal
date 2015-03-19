@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -70,27 +69,20 @@ public class DDMTemplateStagedModelDataHandler
 	}
 
 	@Override
-	public DDMTemplate fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<DDMTemplate> templates =
-			DDMTemplateLocalServiceUtil.getDDMTemplatesByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<DDMTemplate>());
-
-		if (ListUtil.isEmpty(templates)) {
-			return null;
-		}
-
-		return templates.get(0);
-	}
-
-	@Override
 	public DDMTemplate fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
 			uuid, groupId);
+	}
+
+	@Override
+	public List<DDMTemplate> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return DDMTemplateLocalServiceUtil.getDDMTemplatesByUuidAndCompanyId(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new StagedModelModifiedDateComparator<DDMTemplate>());
 	}
 
 	@Override

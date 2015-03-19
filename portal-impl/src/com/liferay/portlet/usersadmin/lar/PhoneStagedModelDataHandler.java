@@ -25,6 +25,9 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.PhoneLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author David Mendez Gonzalez
  */
@@ -40,7 +43,7 @@ public class PhoneStagedModelDataHandler
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		Phone phone = fetchStagedModelByUuidAndCompanyId(
+		Phone phone = PhoneLocalServiceUtil.fetchPhoneByUuidAndCompanyId(
 			uuid, group.getCompanyId());
 
 		if (phone != null) {
@@ -49,11 +52,16 @@ public class PhoneStagedModelDataHandler
 	}
 
 	@Override
-	public Phone fetchStagedModelByUuidAndCompanyId(
+	public List<Phone> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return PhoneLocalServiceUtil.fetchPhoneByUuidAndCompanyId(
-			uuid, companyId);
+		List<Phone> phones = new ArrayList<>();
+
+		phones.add(
+			PhoneLocalServiceUtil.fetchPhoneByUuidAndCompanyId(
+				uuid, companyId));
+
+		return phones;
 	}
 
 	@Override
@@ -82,8 +90,9 @@ public class PhoneStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			phone);
 
-		Phone existingPhone = fetchStagedModelByUuidAndCompanyId(
-			phone.getUuid(), portletDataContext.getCompanyId());
+		Phone existingPhone =
+			PhoneLocalServiceUtil.fetchPhoneByUuidAndCompanyId(
+				phone.getUuid(), portletDataContext.getCompanyId());
 
 		Phone importedPhone = null;
 

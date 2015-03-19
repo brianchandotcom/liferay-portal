@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -68,6 +67,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -95,22 +95,6 @@ public class FileEntryStagedModelDataHandler
 	}
 
 	@Override
-	public FileEntry fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<DLFileEntry> fileEntries =
-			DLFileEntryLocalServiceUtil.getDLFileEntriesByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<DLFileEntry>());
-
-		if (ListUtil.isEmpty(fileEntries)) {
-			return null;
-		}
-
-		return new LiferayFileEntry(fileEntries.get(0));
-	}
-
-	@Override
 	public FileEntry fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
@@ -121,6 +105,24 @@ public class FileEntryStagedModelDataHandler
 		catch (PortalException pe) {
 			return null;
 		}
+	}
+
+	@Override
+	public List<FileEntry> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		List<DLFileEntry> dlFileEntries =
+			DLFileEntryLocalServiceUtil.getDLFileEntriesByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<DLFileEntry>());
+
+		List<FileEntry> fileEntries = new ArrayList<>();
+
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			fileEntries.add(new LiferayFileEntry(dlFileEntry));
+		}
+
+		return fileEntries;
 	}
 
 	@Override
@@ -151,6 +153,22 @@ public class FileEntryStagedModelDataHandler
 		}
 		finally {
 			DLProcessorThreadLocal.setEnabled(dlProcessorEnabled);
+		}
+	}
+
+	@Override
+	public void restoreStagedModel(
+			PortletDataContext portletDataContext, FileEntry stagedModel)
+		throws PortletDataException {
+
+		try {
+			doRestoreStagedModel(portletDataContext, stagedModel);
+		}
+		catch (PortletDataException pde) {
+			throw pde;
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
 		}
 	}
 

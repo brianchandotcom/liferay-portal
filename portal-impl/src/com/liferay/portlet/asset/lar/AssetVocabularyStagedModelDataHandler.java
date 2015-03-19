@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -62,28 +61,21 @@ public class AssetVocabularyStagedModelDataHandler
 	}
 
 	@Override
-	public AssetVocabulary fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<AssetVocabulary> vocabularies =
-			AssetVocabularyLocalServiceUtil.
-				getAssetVocabulariesByUuidAndCompanyId(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					new StagedModelModifiedDateComparator<AssetVocabulary>());
-
-		if (ListUtil.isEmpty(vocabularies)) {
-			return null;
-		}
-
-		return vocabularies.get(0);
-	}
-
-	@Override
 	public AssetVocabulary fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return AssetVocabularyLocalServiceUtil.
 			fetchAssetVocabularyByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public List<AssetVocabulary> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return AssetVocabularyLocalServiceUtil.
+			getAssetVocabulariesByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<AssetVocabulary>());
 	}
 
 	@Override

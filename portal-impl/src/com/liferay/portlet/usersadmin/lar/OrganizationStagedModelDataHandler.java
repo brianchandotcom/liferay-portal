@@ -64,8 +64,9 @@ public class OrganizationStagedModelDataHandler
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		Organization organization = fetchStagedModelByUuidAndCompanyId(
-			uuid, group.getCompanyId());
+		Organization organization =
+			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
+				uuid, group.getCompanyId());
 
 		if (organization != null) {
 			OrganizationLocalServiceUtil.deleteOrganization(organization);
@@ -73,11 +74,16 @@ public class OrganizationStagedModelDataHandler
 	}
 
 	@Override
-	public Organization fetchStagedModelByUuidAndCompanyId(
+	public List<Organization> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
-			uuid, companyId);
+		List<Organization> organizations = new ArrayList<>();
+
+		organizations.add(
+			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
+				uuid, companyId));
+
+		return organizations;
 	}
 
 	@Override
@@ -150,8 +156,9 @@ public class OrganizationStagedModelDataHandler
 
 		serviceContext.setUserId(userId);
 
-		Organization existingOrganization = fetchStagedModelByUuidAndCompanyId(
-			organization.getUuid(), portletDataContext.getGroupId());
+		Organization existingOrganization =
+			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
+				organization.getUuid(), portletDataContext.getGroupId());
 
 		if (existingOrganization == null) {
 			existingOrganization =

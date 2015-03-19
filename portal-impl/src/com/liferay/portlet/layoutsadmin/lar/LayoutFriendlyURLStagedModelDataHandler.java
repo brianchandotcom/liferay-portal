@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
@@ -51,28 +50,21 @@ public class LayoutFriendlyURLStagedModelDataHandler
 	}
 
 	@Override
-	public LayoutFriendlyURL fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<LayoutFriendlyURL> friendlyURLs =
-			LayoutFriendlyURLLocalServiceUtil.
-				getLayoutFriendlyURLsByUuidAndCompanyId(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					new StagedModelModifiedDateComparator<LayoutFriendlyURL>());
-
-		if (ListUtil.isEmpty(friendlyURLs)) {
-			return null;
-		}
-
-		return friendlyURLs.get(0);
-	}
-
-	@Override
 	public LayoutFriendlyURL fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return LayoutFriendlyURLLocalServiceUtil.
 			fetchLayoutFriendlyURLByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public List<LayoutFriendlyURL> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return LayoutFriendlyURLLocalServiceUtil.
+			getLayoutFriendlyURLsByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<LayoutFriendlyURL>());
 	}
 
 	@Override

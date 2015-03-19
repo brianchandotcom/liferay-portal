@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -61,28 +60,21 @@ public class BookmarksFolderStagedModelDataHandler
 	}
 
 	@Override
-	public BookmarksFolder fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<BookmarksFolder> folders =
-			BookmarksFolderLocalServiceUtil.
-				getBookmarksFoldersByUuidAndCompanyId(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					new StagedModelModifiedDateComparator<BookmarksFolder>());
-
-		if (ListUtil.isEmpty(folders)) {
-			return null;
-		}
-
-		return folders.get(0);
-	}
-
-	@Override
 	public BookmarksFolder fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return BookmarksFolderLocalServiceUtil.
 			fetchBookmarksFolderByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public List<BookmarksFolder> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return BookmarksFolderLocalServiceUtil.
+			getBookmarksFoldersByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<BookmarksFolder>());
 	}
 
 	@Override

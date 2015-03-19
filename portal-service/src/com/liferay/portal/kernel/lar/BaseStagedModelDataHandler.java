@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
@@ -45,6 +46,7 @@ import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -148,7 +150,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		T existingStagedModel = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
-		if (existingStagedModel != null) {
+		if ((existingStagedModel != null) &&
+			!isStagedModelInTrash(existingStagedModel)) {
+
 			return existingStagedModel;
 		}
 
@@ -171,12 +175,40 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				group = group.getParentGroup();
 			}
 
-			if (existingStagedModel == null) {
-				existingStagedModel = fetchStagedModelByUuidAndCompanyId(
-					uuid, originalGroup.getCompanyId());
+			if ((existingStagedModel != null) &&
+				!isStagedModelInTrash(existingStagedModel)) {
+
+				return existingStagedModel;
 			}
 
-			return existingStagedModel;
+			List<T> existingStagedModels = fetchStagedModelsByUuidAndCompanyId(
+				uuid, originalGroup.getCompanyId());
+
+			for (T stagedModel : existingStagedModels) {
+				try {
+					if (stagedModel instanceof StagedGroupedModel) {
+						StagedGroupedModel stagedGroupedModel =
+							(StagedGroupedModel)stagedModel;
+
+						group = GroupLocalServiceUtil.getGroup(
+							stagedGroupedModel.getGroupId());
+
+						if (!group.isStagingGroup() &&
+							!isStagedModelInTrash(stagedModel)) {
+
+							return stagedModel;
+						}
+					}
+					else if (!isStagedModelInTrash(stagedModel)) {
+						return stagedModel;
+					}
+				}
+				catch (PortalException pe) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(pe, pe);
+					}
+				}
+			}
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -187,19 +219,19 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 					"Unable to fetch missing reference staged model from " +
 						"group " + groupId);
 			}
-
-			return null;
 		}
-	}
 
-	@Override
-	public abstract T fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId);
+		return null;
+	}
 
 	@Override
 	public T fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
 		return null;
 	}
+
+	@Override
+	public abstract List<T> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId);
 
 	@Override
 	public abstract String[] getClassNames();
@@ -323,9 +355,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				localizedModel.prepareLocalizedFieldsForImport();
 			}
 
-			if (stagedModel instanceof TrashedModel) {
-				restoreStagedModel(portletDataContext, stagedModel);
-			}
+			restoreStagedModel(portletDataContext, stagedModel);
 
 			importAssetCategories(portletDataContext, stagedModel);
 			importAssetTags(portletDataContext, stagedModel);
@@ -373,7 +403,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		throws PortletDataException {
 
 		try {
-			doRestoreStagedModel(portletDataContext, stagedModel);
+			if (stagedModel instanceof TrashedModel) {
+				doRestoreStagedModel(portletDataContext, stagedModel);
+			}
 		}
 		catch (PortletDataException pde) {
 			throw pde;
@@ -709,6 +741,23 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, stagedModel, className, classPK);
 		}
+	}
+
+	protected boolean isStagedModelInTrash(T stagedModel) {
+		String className = ExportImportClassedModelUtil.getClassName(
+			stagedModel);
+		long classPK = ExportImportClassedModelUtil.getClassPK(stagedModel);
+
+		try {
+			return TrashUtil.isInTrash(className, classPK);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return false;
 	}
 
 	protected void validateExport(

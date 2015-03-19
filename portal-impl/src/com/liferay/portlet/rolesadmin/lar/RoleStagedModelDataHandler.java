@@ -45,6 +45,7 @@ import com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,7 +64,7 @@ public class RoleStagedModelDataHandler
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		Role role = fetchStagedModelByUuidAndCompanyId(
+		Role role = RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(
 			uuid, group.getCompanyId());
 
 		if (role != null) {
@@ -72,11 +73,15 @@ public class RoleStagedModelDataHandler
 	}
 
 	@Override
-	public Role fetchStagedModelByUuidAndCompanyId(
+	public List<Role> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(
-			uuid, companyId);
+		List<Role> roles = new ArrayList<>();
+
+		roles.add(
+			RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(uuid, companyId));
+
+		return roles;
 	}
 
 	@Override
@@ -169,7 +174,7 @@ public class RoleStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			role);
 
-		Role existingRole = fetchStagedModelByUuidAndCompanyId(
+		Role existingRole = RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(
 			role.getUuid(), portletDataContext.getCompanyId());
 
 		if (existingRole == null) {

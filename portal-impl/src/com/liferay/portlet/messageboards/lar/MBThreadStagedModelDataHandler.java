@@ -17,7 +17,6 @@ package com.liferay.portlet.messageboards.lar;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 
@@ -44,26 +43,19 @@ public class MBThreadStagedModelDataHandler
 	}
 
 	@Override
-	public MBThread fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<MBThread> threads =
-			MBThreadLocalServiceUtil.getMBThreadsByUuidAndCompanyId(
-				uuid, companyId);
-
-		if (ListUtil.isEmpty(threads)) {
-			return null;
-		}
-
-		return threads.get(0);
-	}
-
-	@Override
 	public MBThread fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return MBThreadLocalServiceUtil.fetchMBThreadByUuidAndGroupId(
 			uuid, groupId);
+	}
+
+	@Override
+	public List<MBThread> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return MBThreadLocalServiceUtil.getMBThreadsByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	@Override

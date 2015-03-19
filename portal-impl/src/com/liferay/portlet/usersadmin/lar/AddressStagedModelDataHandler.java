@@ -25,6 +25,9 @@ import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author David Mendez Gonzalez
  */
@@ -40,8 +43,9 @@ public class AddressStagedModelDataHandler
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		Address address = fetchStagedModelByUuidAndCompanyId(
-			uuid, group.getCompanyId());
+		Address address =
+			AddressLocalServiceUtil.fetchAddressByUuidAndCompanyId(
+				uuid, group.getCompanyId());
 
 		if (address != null) {
 			AddressLocalServiceUtil.deleteAddress(address);
@@ -62,11 +66,16 @@ public class AddressStagedModelDataHandler
 	}
 
 	@Override
-	public Address fetchStagedModelByUuidAndCompanyId(
+	public List<Address> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return AddressLocalServiceUtil.fetchAddressByUuidAndCompanyId(
-			uuid, companyId);
+		List<Address> addresses = new ArrayList<>();
+
+		addresses.add(
+			AddressLocalServiceUtil.fetchAddressByUuidAndCompanyId(
+				uuid, companyId));
+
+		return addresses;
 	}
 
 	@Override
@@ -84,8 +93,9 @@ public class AddressStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			address);
 
-		Address existingAddress = fetchStagedModelByUuidAndCompanyId(
-			address.getUuid(), portletDataContext.getCompanyId());
+		Address existingAddress =
+			AddressLocalServiceUtil.fetchAddressByUuidAndCompanyId(
+				address.getUuid(), portletDataContext.getCompanyId());
 
 		Address importedAddress = null;
 

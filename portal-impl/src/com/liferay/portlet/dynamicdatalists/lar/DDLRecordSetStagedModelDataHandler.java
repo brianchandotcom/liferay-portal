@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -55,27 +54,20 @@ public class DDLRecordSetStagedModelDataHandler
 	}
 
 	@Override
-	public DDLRecordSet fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<DDLRecordSet> recordSets =
-			DDLRecordSetLocalServiceUtil.getDDLRecordSetsByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<DDLRecordSet>());
-
-		if (ListUtil.isEmpty(recordSets)) {
-			return null;
-		}
-
-		return recordSets.get(0);
-	}
-
-	@Override
 	public DDLRecordSet fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return DDLRecordSetLocalServiceUtil.fetchDDLRecordSetByUuidAndGroupId(
 			uuid, groupId);
+	}
+
+	@Override
+	public List<DDLRecordSet> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return DDLRecordSetLocalServiceUtil.getDDLRecordSetsByUuidAndCompanyId(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new StagedModelModifiedDateComparator<DDLRecordSet>());
 	}
 
 	@Override

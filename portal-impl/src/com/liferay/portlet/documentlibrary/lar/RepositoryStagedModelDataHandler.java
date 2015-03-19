@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
@@ -60,27 +59,20 @@ public class RepositoryStagedModelDataHandler
 	}
 
 	@Override
-	public Repository fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<Repository> repositories =
-			RepositoryLocalServiceUtil.getRepositoriesByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<Repository>());
-
-		if (ListUtil.isEmpty(repositories)) {
-			return null;
-		}
-
-		return repositories.get(0);
-	}
-
-	@Override
 	public Repository fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return RepositoryLocalServiceUtil.fetchRepositoryByUuidAndGroupId(
 			uuid, groupId);
+	}
+
+	@Override
+	public List<Repository> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return RepositoryLocalServiceUtil.getRepositoriesByUuidAndCompanyId(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new StagedModelModifiedDateComparator<Repository>());
 	}
 
 	@Override

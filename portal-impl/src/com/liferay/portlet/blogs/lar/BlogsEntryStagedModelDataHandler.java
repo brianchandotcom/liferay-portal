@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -71,27 +70,20 @@ public class BlogsEntryStagedModelDataHandler
 	}
 
 	@Override
-	public BlogsEntry fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<BlogsEntry> entries =
-			BlogsEntryLocalServiceUtil.getBlogsEntriesByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<BlogsEntry>());
-
-		if (ListUtil.isEmpty(entries)) {
-			return null;
-		}
-
-		return entries.get(0);
-	}
-
-	@Override
 	public BlogsEntry fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return BlogsEntryLocalServiceUtil.fetchBlogsEntryByUuidAndGroupId(
 			uuid, groupId);
+	}
+
+	@Override
+	public List<BlogsEntry> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return BlogsEntryLocalServiceUtil.getBlogsEntriesByUuidAndCompanyId(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new StagedModelModifiedDateComparator<BlogsEntry>());
 	}
 
 	@Override

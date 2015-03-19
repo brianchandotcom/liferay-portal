@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -51,23 +50,17 @@ public class MBBanStagedModelDataHandler
 	}
 
 	@Override
-	public MBBan fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<MBBan> bans = MBBanLocalServiceUtil.getMBBansByUuidAndCompanyId(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new StagedModelModifiedDateComparator<MBBan>());
-
-		if (ListUtil.isEmpty(bans)) {
-			return null;
-		}
-
-		return bans.get(0);
+	public MBBan fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
+		return MBBanLocalServiceUtil.fetchMBBanByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
-	public MBBan fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
-		return MBBanLocalServiceUtil.fetchMBBanByUuidAndGroupId(uuid, groupId);
+	public List<MBBan> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return MBBanLocalServiceUtil.getMBBansByUuidAndCompanyId(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new StagedModelModifiedDateComparator<MBBan>());
 	}
 
 	@Override

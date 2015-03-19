@@ -26,6 +26,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,8 +45,9 @@ public class RatingsEntryStagedModelDataHandler
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		RatingsEntry entry = fetchStagedModelByUuidAndCompanyId(
-			uuid, group.getCompanyId());
+		RatingsEntry entry =
+			RatingsEntryLocalServiceUtil.fetchRatingsEntryByUuidAndCompanyId(
+				uuid, group.getCompanyId());
 
 		if (entry != null) {
 			RatingsEntryLocalServiceUtil.deleteRatingsEntry(entry);
@@ -52,11 +55,16 @@ public class RatingsEntryStagedModelDataHandler
 	}
 
 	@Override
-	public RatingsEntry fetchStagedModelByUuidAndCompanyId(
+	public List<RatingsEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return RatingsEntryLocalServiceUtil.fetchRatingsEntryByUuidAndCompanyId(
-			uuid, companyId);
+		List<RatingsEntry> ratingsEntries = new ArrayList<>();
+
+		ratingsEntries.add(
+			RatingsEntryLocalServiceUtil.fetchRatingsEntryByUuidAndCompanyId(
+				uuid, companyId));
+
+		return ratingsEntries;
 	}
 
 	@Override

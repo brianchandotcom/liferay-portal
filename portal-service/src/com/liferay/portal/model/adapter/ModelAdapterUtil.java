@@ -20,10 +20,39 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Mate Thurzo
  */
 public class ModelAdapterUtil {
+
+	public static <T, V> List<V> adapt(
+		List<T> adapteeModels, Class<T> adapteeModelClass,
+		Class<V> adaptedModelClass) {
+
+		List<V> adaptedModels = new ArrayList<>();
+
+		for (T adapteeModel : adapteeModels) {
+			adaptedModels.add(
+				adapt(adapteeModel, adapteeModelClass, adaptedModelClass));
+		}
+
+		return adaptedModels;
+	}
+
+	public static <T, V> List<V> adapt(
+		List<T> adapteeModels, Class<V> adaptedModelClass) {
+
+		List<V> adaptedModels = new ArrayList<>();
+
+		for (T adapteeModel : adapteeModels) {
+			adaptedModels.add(adapt(adapteeModel, adaptedModelClass));
+		}
+
+		return adaptedModels;
+	}
 
 	public static <T, V> V adapt(
 		T adapteeModel, Class<T> adapteeModelClass,

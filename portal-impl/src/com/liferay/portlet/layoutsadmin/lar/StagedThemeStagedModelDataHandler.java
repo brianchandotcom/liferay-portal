@@ -23,6 +23,7 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.adapter.StagedTheme;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,10 +40,10 @@ public class StagedThemeStagedModelDataHandler
 	}
 
 	@Override
-	public StagedTheme fetchStagedModelByUuidAndCompanyId(
+	public List<StagedTheme> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override

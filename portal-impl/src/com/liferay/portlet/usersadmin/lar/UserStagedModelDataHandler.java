@@ -22,6 +22,9 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Daniel Kocsis
  */
@@ -37,7 +40,7 @@ public class UserStagedModelDataHandler
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		User user = fetchStagedModelByUuidAndCompanyId(
+		User user = UserLocalServiceUtil.fetchUserByUuidAndCompanyId(
 			uuid, group.getCompanyId());
 
 		if (user != null) {
@@ -46,11 +49,15 @@ public class UserStagedModelDataHandler
 	}
 
 	@Override
-	public User fetchStagedModelByUuidAndCompanyId(
+	public List<User> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return UserLocalServiceUtil.fetchUserByUuidAndCompanyId(
-			uuid, companyId);
+		List<User> users = new ArrayList<>();
+
+		users.add(
+			UserLocalServiceUtil.fetchUserByUuidAndCompanyId(uuid, companyId));
+
+		return users;
 	}
 
 	@Override

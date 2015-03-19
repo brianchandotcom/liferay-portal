@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
@@ -48,27 +47,20 @@ public class MDRRuleGroupStagedModelDataHandler
 	}
 
 	@Override
-	public MDRRuleGroup fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<MDRRuleGroup> ruleGroups =
-			MDRRuleGroupLocalServiceUtil.getMDRRuleGroupsByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<MDRRuleGroup>());
-
-		if (ListUtil.isEmpty(ruleGroups)) {
-			return null;
-		}
-
-		return ruleGroups.get(0);
-	}
-
-	@Override
 	public MDRRuleGroup fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return MDRRuleGroupLocalServiceUtil.fetchMDRRuleGroupByUuidAndGroupId(
 			uuid, groupId);
+	}
+
+	@Override
+	public List<MDRRuleGroup> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return MDRRuleGroupLocalServiceUtil.getMDRRuleGroupsByUuidAndCompanyId(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new StagedModelModifiedDateComparator<MDRRuleGroup>());
 	}
 
 	@Override

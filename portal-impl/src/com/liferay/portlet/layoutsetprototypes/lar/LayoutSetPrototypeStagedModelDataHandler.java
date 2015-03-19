@@ -45,6 +45,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,11 +74,16 @@ public class LayoutSetPrototypeStagedModelDataHandler
 	}
 
 	@Override
-	public LayoutSetPrototype fetchStagedModelByUuidAndCompanyId(
+	public List<LayoutSetPrototype> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return LayoutSetPrototypeLocalServiceUtil.
-			fetchLayoutSetPrototypeByUuidAndCompanyId(uuid, companyId);
+		List<LayoutSetPrototype> layoutSetPrototypes = new ArrayList<>();
+
+		layoutSetPrototypes.add(
+			LayoutSetPrototypeLocalServiceUtil.
+				fetchLayoutSetPrototypeByUuidAndCompanyId(uuid, companyId));
+
+		return layoutSetPrototypes;
 	}
 
 	@Override
@@ -129,9 +135,10 @@ public class LayoutSetPrototypeStagedModelDataHandler
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			LayoutSetPrototype existingLayoutSetPrototype =
-				fetchStagedModelByUuidAndCompanyId(
-					layoutSetPrototype.getUuid(),
-					portletDataContext.getCompanyId());
+				LayoutSetPrototypeLocalServiceUtil.
+					fetchLayoutSetPrototypeByUuidAndCompanyId(
+						layoutSetPrototype.getUuid(),
+						portletDataContext.getCompanyId());
 
 			if (existingLayoutSetPrototype == null) {
 				serviceContext.setUuid(layoutSetPrototype.getUuid());

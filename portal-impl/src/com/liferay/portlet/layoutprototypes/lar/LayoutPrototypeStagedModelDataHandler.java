@@ -29,6 +29,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,8 +48,10 @@ public class LayoutPrototypeStagedModelDataHandler
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		LayoutPrototype layoutPrototype = fetchStagedModelByUuidAndCompanyId(
-			uuid, group.getCompanyId());
+		LayoutPrototype layoutPrototype =
+			LayoutPrototypeLocalServiceUtil.
+				fetchLayoutPrototypeByUuidAndCompanyId(
+					uuid, group.getCompanyId());
 
 		if (layoutPrototype != null) {
 			LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(
@@ -57,11 +60,16 @@ public class LayoutPrototypeStagedModelDataHandler
 	}
 
 	@Override
-	public LayoutPrototype fetchStagedModelByUuidAndCompanyId(
+	public List<LayoutPrototype> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return LayoutPrototypeLocalServiceUtil.
-			fetchLayoutPrototypeByUuidAndCompanyId(uuid, companyId);
+		List<LayoutPrototype> layoutPrototypes = new ArrayList<>();
+
+		layoutPrototypes.add(
+			LayoutPrototypeLocalServiceUtil.
+				fetchLayoutPrototypeByUuidAndCompanyId(uuid, companyId));
+
+		return layoutPrototypes;
 	}
 
 	@Override
@@ -109,9 +117,10 @@ public class LayoutPrototypeStagedModelDataHandler
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			LayoutPrototype existingLayoutPrototype =
-				fetchStagedModelByUuidAndCompanyId(
-					layoutPrototype.getUuid(),
-					portletDataContext.getCompanyId());
+				LayoutPrototypeLocalServiceUtil.
+					fetchLayoutPrototypeByUuidAndCompanyId(
+						layoutPrototype.getUuid(),
+						portletDataContext.getCompanyId());
 
 			if (existingLayoutPrototype == null) {
 				serviceContext.setUuid(layoutPrototype.getUuid());

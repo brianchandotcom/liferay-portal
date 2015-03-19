@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -54,27 +53,20 @@ public class MBCategoryStagedModelDataHandler
 	}
 
 	@Override
-	public MBCategory fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<MBCategory> categories =
-			MBCategoryLocalServiceUtil.getMBCategoriesByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<MBCategory>());
-
-		if (ListUtil.isEmpty(categories)) {
-			return null;
-		}
-
-		return categories.get(0);
-	}
-
-	@Override
 	public MBCategory fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return MBCategoryLocalServiceUtil.fetchMBCategoryByUuidAndGroupId(
 			uuid, groupId);
+	}
+
+	@Override
+	public List<MBCategory> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return MBCategoryLocalServiceUtil.getMBCategoriesByUuidAndCompanyId(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new StagedModelModifiedDateComparator<MBCategory>());
 	}
 
 	@Override

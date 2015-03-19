@@ -22,6 +22,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.adapter.StagedGroup;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +45,7 @@ public class StagedGroupStagedModelDataHandler
 	public List<StagedGroup> fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override

@@ -3697,8 +3697,8 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 			</and>
 			<then>
 				<antcall target="prepare-test-bundle">
-					<param name="app.server.lib.global.dir" value="${app.server.tcserver.lib.global.dir}" />
-					<param name="app.server.portal.dir" value="${app.server.tcserver.portal.dir}" />
+					<param name="app.server.lib.global.dir" value="${app.server.weblogic.lib.global.dir}" />
+					<param name="app.server.portal.dir" value="${app.server.weblogic.portal.dir}" />
 					<param name="app.server.type" value="weblogic" />
 				</antcall>
 			</then>

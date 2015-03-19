@@ -586,6 +586,11 @@
 	<td>Site Administration Navigation</td>
 </tr>
 <tr>
+	<td>SITE_ADMINISTRATION_PORTLET_TITLE</td>
+	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMINISTRATION_USERS</td>
 	<td>//div[@id='panel-manage-site_administration.users']/div</td>
 	<td></td>

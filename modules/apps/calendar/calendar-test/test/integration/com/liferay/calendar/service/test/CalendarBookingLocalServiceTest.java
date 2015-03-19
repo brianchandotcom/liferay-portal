@@ -304,6 +304,50 @@ public class CalendarBookingLocalServiceTest {
 			WorkflowConstants.STATUS_DRAFT, calendarBooking.getStatus());
 	}
 
+	@Test
+	public void testUpdateCalendarBookingWorkflowActionSaveDraftAfterPublish()
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(_user.getCompanyId());
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				_user.getUserId(), serviceContext);
+		Calendar calendar = calendarResource.getDefaultCalendar();
+
+		long startDate = DateUtil.newTime();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_user.getUserId(), calendar.getCalendarId(), new long[0],
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startDate, startDate + 36000000,
+				false, null, 0, null, 0, null, serviceContext);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
+			_user.getUserId(), calendarBooking.getCalendarBookingId(),
+			calendar.getCalendarId(), new long[0],
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(), startDate, startDate + 36000000,
+			false, null, 0, null, 0, null, RandomTestUtil.randomInt(),
+			serviceContext);
+
+		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
+			calendarBooking.getCalendarBookingId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, calendarBooking.getStatus());
+	}
+
 	protected ServiceContext createServiceContext() {
 		ServiceContext serviceContext = new ServiceContext();
 

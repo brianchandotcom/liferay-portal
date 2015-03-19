@@ -29,13 +29,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_SELECT</td>
-	<td>//button[@title='Select Vocabulary Name']</td>
+	<td>CATEGORY</td>
+	<td>//div[contains(@class,'categoriesselector')]/ul/li/span[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY</td>
-	<td>//div[contains(@class,'categoriesselector')]/ul/li/span[contains(.,'${key_categoryName}')]</td>
+	<td>VOCABULARY</td>
+	<td>//span[@class='field-content']/label</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,8 +45,8 @@
 </tr>
 <!--CATEGORIES_WINDOW-->
 <tr>
-	<td>CATEGORIES_WINDOW_CATEGORY_CHECKBOX</td>
-	<td>//div[contains(@class,'tree-node')]/span[contains(@class,'checkbox')]/following-sibling::span[contains(.,'${key_categoryName}')]</td>
+	<td>CATEGORIES_WINDOW_CATEGORY_CHECK_ICON</td>
+	<td>//div[contains(.,'${key_categoryName}')]/span[contains(@class,'checkbox-container')]</td>
 	<td></td>
 </tr>
 <tr>

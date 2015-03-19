@@ -33,6 +33,37 @@
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MOVE_BUTTON</td>
+	<td>//button[contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOCABULARY_SELECT</td>
+	<td>//div[contains(@class,'select-wrapper')]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_SELECT_BUTTON</td>
+	<td>//button[contains(.,'Select ${key_vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MOVE_CATEGORIES_CATEGORY-->
+<tr>
+	<td>MOVE_CATEGORIES_CATEGORY_CHECK_ICON</td>
+	<td>//div[contains(.,'${key_categoryName}')]/span[contains(@class,'checkbox-container')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_CATEGORIES_CATEGORY_CLOSE_BUTTON</td>
+	<td>//button[contains(@class,'close')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

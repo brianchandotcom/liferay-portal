@@ -238,7 +238,7 @@ public class PortletRequestDispatcherImpl
 				}
 			}
 
-			if ((pathInfo == null) && (servletPath == null)) {
+			if (pathInfo == null) {
 				pathInfo = pathNoQueryString;
 			}
 

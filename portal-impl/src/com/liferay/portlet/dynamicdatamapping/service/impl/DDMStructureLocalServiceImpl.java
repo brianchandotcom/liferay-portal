@@ -465,15 +465,17 @@ public class DDMStructureLocalServiceImpl
 			if (ddmStructureLinkPersistence.countByStructureId(
 					structure.getStructureId()) > 0) {
 
-				throw new RequiredStructureException(
-					RequiredStructureException.REFERENCED_STRUCTURE_LINK);
+				throw new RequiredStructureException.
+					MustNotDeleteStructureReferencedByStructureLinks(
+						structure.getStructureId());
 			}
 
 			if (ddmStructurePersistence.countByParentStructureId(
 					structure.getStructureId()) > 0) {
 
-				throw new RequiredStructureException(
-					RequiredStructureException.REFERENCED_STRUCTURE);
+				throw new RequiredStructureException.
+					MustNotDeleteStructureThatHasChild(
+						structure.getStructureId());
 			}
 
 			long classNameId = classNameLocalService.getClassNameId(
@@ -483,8 +485,9 @@ public class DDMStructureLocalServiceImpl
 					structure.getGroupId(), classNameId,
 					structure.getPrimaryKey()) > 0) {
 
-				throw new RequiredStructureException(
-					RequiredStructureException.REFERENCED_TEMPLATE);
+				throw new RequiredStructureException.
+					MustNotDeleteStructureReferencedByTemplates(
+						structure.getStructureId());
 			}
 		}
 

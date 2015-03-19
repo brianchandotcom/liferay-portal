@@ -63,7 +63,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 %>
 
 <liferay-ui:error exception="<%= RequiredTemplateException.class %>">
-	<liferay-ui:message key="required-templates-could-not-be-deleted.-they-are-referenced-by-web-content" />
+	<liferay-ui:message key="required-templates-could-not-be-deleted-they-are-referenced-by-web-content" />
 </liferay-ui:error>
 
 <c:if test="<%= showHeader %>">

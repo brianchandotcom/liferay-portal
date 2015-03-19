@@ -28,21 +28,9 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("tabs1", tabs1);
 %>
 
-<liferay-ui:error exception="<%= RequiredStructureException.class %>">
-
-	<%
-	RequiredStructureException rse = (RequiredStructureException)errorException;
-	%>
-
-	<c:choose>
-		<c:when test="<%= rse.getType() == RequiredStructureException.REFERENCED_TEMPLATE %>">
-			<liferay-ui:message key="required-structures-could-not-be-deleted.-they-are-referenced-by-templates" />
-		</c:when>
-		<c:otherwise>
-			<liferay-ui:message key="required-structures-could-not-be-deleted" />
-		</c:otherwise>
-	</c:choose>
-</liferay-ui:error>
+<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByStructureLinks.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-structure-links" />
+<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByTemplates.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-templates" />
+<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureThatHasChild.class %>" message="the-structure-cannot-be-deleted-because-it-has-one-or-more-substructures" />
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

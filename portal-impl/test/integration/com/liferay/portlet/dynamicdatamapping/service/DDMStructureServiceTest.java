@@ -206,21 +206,21 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 				structure.getStructureId()));
 	}
 
-	@Test
+	@Test(
+		expected =
+			RequiredStructureException.
+				MustNotDeleteStructureReferencedByTemplates.class
+	)
 	public void testDeleteStructureReferencedByTemplates() throws Exception {
 		DDMStructure structure = addStructure(_CLASS_NAME_ID, "Test Structure");
 
 		addDisplayTemplate(structure.getPrimaryKey(), "Test Display Template");
 		addFormTemplate(structure.getPrimaryKey(), "Test Form Template");
 
-		try {
-			DDMStructureLocalServiceUtil.deleteStructure(
-				structure.getStructureId());
+		DDMStructureLocalServiceUtil.deleteStructure(
+			structure.getStructureId());
 
-			Assert.fail();
-		}
-		catch (RequiredStructureException rse) {
-		}
+		Assert.fail();
 	}
 
 	@Test

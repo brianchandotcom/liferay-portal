@@ -1297,8 +1297,6 @@ public interface PropsKeys {
 
 	public static final String LAYOUT_REMEMBER_MAXIMIZED_WINDOW_STATE = "layout.remember.maximized.window.state";
 
-	public static final String LAYOUT_RESET_PORTLET_IDS = "layout.reset.portlet.ids";
-
 	public static final String LAYOUT_SET_FORM_UPDATE = "layout.set.form.update";
 
 	public static final String LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD = "layout.set.prototype.merge.fail.threshold";

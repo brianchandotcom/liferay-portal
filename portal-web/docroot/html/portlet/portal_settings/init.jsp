@@ -19,10 +19,11 @@
 <%@ page import="com.liferay.portal.AccountNameException" %><%@
 page import="com.liferay.portal.CompanyMxException" %><%@
 page import="com.liferay.portal.CompanyVirtualHostException" %><%@
-page import="com.liferay.portal.kernel.facebook.FacebookConnectUtil" %><%@
+page import="com.liferay.portal.facebook.FacebookConnectUtil" %><%@
 page import="com.liferay.portal.kernel.ldap.DuplicateLDAPServerNameException" %><%@
 page import="com.liferay.portal.kernel.ldap.LDAPFilterException" %><%@
 page import="com.liferay.portal.kernel.ldap.LDAPServerNameException" %><%@
+page import="com.liferay.portal.kernel.ldap.LDAPUtil" %><%@
 page import="com.liferay.portal.security.ldap.LDAPSettingsUtil" %><%@
 page import="com.liferay.portal.security.ldap.PortalLDAPUtil" %><%@
 page import="com.liferay.portal.security.sso.OpenSSOUtil" %><%@
@@ -30,8 +31,7 @@ page import="com.liferay.portlet.ratings.display.context.CompanyPortletRatingsDe
 page import="com.liferay.portlet.ratings.display.context.PortletRatingsDefinitionDisplayContextHelper" %><%@
 page import="com.liferay.portlet.social.util.SocialInteractionsConfiguration" %><%@
 page import="com.liferay.portlet.social.util.SocialInteractionsConfigurationUtil" %><%@
-page import="com.liferay.portlet.social.util.SocialRelationTypesUtil" %><%@
-page import="com.liferay.util.ldap.LDAPUtil" %>
+page import="com.liferay.portlet.social.util.SocialRelationTypesUtil" %>
 
 <%@ page import="java.net.HttpURLConnection" %><%@
 page import="java.net.MalformedURLException" %><%@

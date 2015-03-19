@@ -27,6 +27,8 @@ import java.util.Collections;
 import java.util.Set;
 
 import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletRequest;
@@ -61,8 +63,7 @@ public class PortletRequestDispatcherImplTest {
 				new TestRequestDispatcher("/testPath", null, "/testPath", ""),
 				true, _portletContext, "/testPath");
 
-		portletRequestDispatcher.include(
-			new TestPortletRequest(_portlet), new TestPortletResponse());
+		portletRequestDispatcher.include(_portletRequest, _portletResponse);
 	}
 
 	@Test
@@ -74,8 +75,7 @@ public class PortletRequestDispatcherImplTest {
 				true, _portletContext, "/testPath");
 
 		portletRequestDispatcher.include(
-			new TestPortletRequest("/test", _portlet),
-			new TestPortletResponse());
+			new TestPortletRequest("/test", _portlet), _portletResponse);
 	}
 
 	@Test
@@ -85,8 +85,7 @@ public class PortletRequestDispatcherImplTest {
 				new TestRequestDispatcher(null, null, "", ""), true,
 				_portletContext);
 
-		portletRequestDispatcher.include(
-			new TestPortletRequest(_portlet), new TestPortletResponse());
+		portletRequestDispatcher.include(_portletRequest, _portletResponse);
 	}
 
 	@Test
@@ -101,8 +100,7 @@ public class PortletRequestDispatcherImplTest {
 				"/testPath/moreTestPath?testName=&testname=testvalue&" +
 					"testname=testvalue2");
 
-		portletRequestDispatcher.include(
-			new TestPortletRequest(_portlet), new TestPortletResponse());
+		portletRequestDispatcher.include(_portletRequest, _portletResponse);
 	}
 
 	@Test
@@ -113,8 +111,7 @@ public class PortletRequestDispatcherImplTest {
 					"/unmatchedPath", null, "/unmatchedPath", ""),
 				true, _portletContext, "/unmatchedPath");
 
-		portletRequestDispatcher.include(
-			new TestPortletRequest(_portlet), new TestPortletResponse());
+		portletRequestDispatcher.include(_portletRequest, _portletResponse);
 	}
 
 	@Test
@@ -124,8 +121,7 @@ public class PortletRequestDispatcherImplTest {
 				new TestRequestDispatcher("/testPath|", null, "/testPath|", ""),
 				true, _portletContext, "/testPath|");
 
-		portletRequestDispatcher.include(
-			new TestPortletRequest(_portlet), new TestPortletResponse());
+		portletRequestDispatcher.include(_portletRequest, _portletResponse);
 	}
 
 	private static final Portlet _portlet = new PortletImpl() {
@@ -151,8 +147,29 @@ public class PortletRequestDispatcherImplTest {
 
 	private static final PortletContext _portletContext =
 		new PortletContextImpl(_portlet, new MockServletContext());
+	private static final PortletRequest _portletRequest =
+		new TestPortletRequest(StringPool.SLASH, _portlet);
 
-	private class TestPortletRequest extends RenderRequestImpl {
+	private static final PortletResponse _portletResponse =
+		new RenderResponseImpl() {
+
+			@Override
+			public HttpServletResponse getHttpServletResponse() {
+				return new MockHttpServletResponse();
+			}
+
+			@Override
+			public boolean isCalledFlushBuffer() {
+				return false;
+			}
+
+			@Override
+			public void setURLEncoder(URLEncoder urlEncoder) {
+			}
+
+		};
+
+	private static class TestPortletRequest extends RenderRequestImpl {
 
 		@Override
 		public String getContextPath() {
@@ -174,10 +191,6 @@ public class PortletRequestDispatcherImplTest {
 			return false;
 		}
 
-		private TestPortletRequest(Portlet portlet) {
-			this(StringPool.SLASH, portlet);
-		}
-
 		private TestPortletRequest(String contextPath, Portlet portlet) {
 			_contextPath = contextPath;
 			_portlet = portlet;
@@ -185,24 +198,6 @@ public class PortletRequestDispatcherImplTest {
 
 		private final String _contextPath;
 		private final Portlet _portlet;
-
-	}
-
-	private class TestPortletResponse extends RenderResponseImpl {
-
-		@Override
-		public HttpServletResponse getHttpServletResponse() {
-			return new MockHttpServletResponse();
-		}
-
-		@Override
-		public boolean isCalledFlushBuffer() {
-			return false;
-		}
-
-		@Override
-		public void setURLEncoder(URLEncoder urlEncoder) {
-		}
 
 	}
 

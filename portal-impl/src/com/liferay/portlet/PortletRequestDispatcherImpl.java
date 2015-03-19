@@ -93,14 +93,7 @@ public class PortletRequestDispatcherImpl
 			throw new IllegalStateException("Response is already committed");
 		}
 
-		try {
-			dispatch(portletRequest, portletResponse, false, false);
-		}
-		catch (ServletException se) {
-			_log.error(se, se);
-
-			throw new PortletException(se);
-		}
+		dispatch(portletRequest, portletResponse, false, false);
 	}
 
 	@Override
@@ -108,14 +101,7 @@ public class PortletRequestDispatcherImpl
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws IOException, PortletException {
 
-		try {
-			dispatch(portletRequest, portletResponse, false, true);
-		}
-		catch (ServletException se) {
-			_log.error(se, se);
-
-			throw new PortletException(se);
-		}
+		dispatch(portletRequest, portletResponse, false, true);
 	}
 
 	@Override
@@ -124,14 +110,7 @@ public class PortletRequestDispatcherImpl
 			boolean strutsURLEncoder)
 		throws IOException, PortletException {
 
-		try {
-			dispatch(portletRequest, portletResponse, strutsURLEncoder, true);
-		}
-		catch (ServletException se) {
-			_log.error(se, se);
-
-			throw new PortletException(se);
-		}
+		dispatch(portletRequest, portletResponse, strutsURLEncoder, true);
 	}
 
 	@Override
@@ -139,20 +118,13 @@ public class PortletRequestDispatcherImpl
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		try {
-			dispatch(renderRequest, renderResponse, false, true);
-		}
-		catch (ServletException se) {
-			_log.error(se, se);
-
-			throw new PortletException(se);
-		}
+		include((PortletRequest)renderRequest, (PortletResponse)renderResponse);
 	}
 
 	protected void dispatch(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			boolean strutsURLEncoder, boolean include)
-		throws IOException, ServletException {
+		throws IOException, PortletException {
 
 		if (!include) {
 			if (portletResponse instanceof MimeResponseImpl) {
@@ -329,13 +301,20 @@ public class PortletRequestDispatcherImpl
 			portletResponseImpl.setURLEncoder(strutsURLEncoderObj);
 		}
 
-		if (include) {
-			_requestDispatcher.include(
-				portletServletRequest, portletServletResponse);
+		try {
+			if (include) {
+				_requestDispatcher.include(
+					portletServletRequest, portletServletResponse);
+			}
+			else {
+				_requestDispatcher.forward(
+					portletServletRequest, portletServletResponse);
+			}
 		}
-		else {
-			_requestDispatcher.forward(
-				portletServletRequest, portletServletResponse);
+		catch (ServletException se) {
+			_log.error(se, se);
+
+			throw new PortletException(se);
 		}
 	}
 

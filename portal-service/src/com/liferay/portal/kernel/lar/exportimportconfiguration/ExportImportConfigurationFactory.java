@@ -123,10 +123,10 @@ public class ExportImportConfigurationFactory {
 	}
 
 	public static ExportImportConfiguration
-		buildDefaultRemotePublishingExportImportConfiguration(
-			User user, long sourceGroupId, boolean privateLayout,
-			String remoteAddress, int remotePort, String remotePathContext,
-			boolean secureConnection, long remoteGroupId)
+			buildDefaultRemotePublishingExportImportConfiguration(
+				User user, long sourceGroupId, boolean privateLayout,
+				String remoteAddress, int remotePort, String remotePathContext,
+				boolean secureConnection, long remoteGroupId)
 		throws PortalException {
 
 		return buildDefaultRemotePublishingExportImportConfiguration(
@@ -149,6 +149,9 @@ public class ExportImportConfigurationFactory {
 		Map<String, String[]> parameterMap) {
 
 		parameterMap.put(
+			PortletDataHandlerKeys.DELETIONS,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
 			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
 			new String[] {Boolean.FALSE.toString()});
 		parameterMap.put(
@@ -156,6 +159,12 @@ public class ExportImportConfigurationFactory {
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.LOGO,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA_ALL,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			ExportImportDateUtil.RANGE,

@@ -19,7 +19,7 @@ import com.liferay.sync.engine.documentlibrary.util.ServerEventUtil;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.session.SessionManager;
-import com.liferay.sync.engine.util.FileUtil;
+import com.liferay.sync.engine.util.FileKeyUtil;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -125,7 +125,9 @@ public class SyncAccountModelListener implements ModelListener<SyncAccount> {
 				SyncFile syncFile = SyncFileService.fetchSyncFile(
 					syncAccount.getFilePathName());
 
-				if (FileUtil.getFileKey(filePath) == syncFile.getSyncFileId()) {
+				if (FileKeyUtil.hasFileKey(
+						filePath, syncFile.getSyncFileId())) {
+
 					syncAccount.setActive(true);
 					syncAccount.setUiEvent(SyncAccount.UI_EVENT_NONE);
 

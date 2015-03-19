@@ -40,46 +40,8 @@ public class FileLockRetryUtil {
 				Iterator<PathCallable> iterator = _pathCallables.iterator();
 
 				while (iterator.hasNext()) {
-					PathCallable pathCallable = iterator.next();
-
-					FileChannel fileChannel = null;
-
-					FileLock fileLock = null;
-
-					try {
-						Path filePath = pathCallable.getPath();
-
-						if (Files.notExists(filePath)) {
-							iterator.remove();
-
-							continue;
-						}
-
-						if (Files.isDirectory(filePath)) {
-							pathCallable.call();
-
-							iterator.remove();
-						}
-						else {
-							fileChannel = FileChannel.open(
-								filePath, StandardOpenOption.READ,
-								StandardOpenOption.WRITE);
-
-							fileLock = FileUtil.getFileLock(fileChannel);
-						}
-
-						if (fileLock != null) {
-							pathCallable.call();
-
-							iterator.remove();
-						}
-					}
-					catch (Exception e) {
-					}
-					finally {
-						FileUtil.releaseFileLock(fileLock);
-
-						StreamUtil.cleanUp(fileChannel);
+					if (processPathCallable(iterator.next())) {
+						iterator.remove();
 					}
 				}
 			}
@@ -90,8 +52,52 @@ public class FileLockRetryUtil {
 			runnable, 0, 5, TimeUnit.SECONDS);
 	}
 
+	public static boolean processPathCallable(PathCallable pathCallable) {
+		FileChannel fileChannel = null;
+
+		FileLock fileLock = null;
+
+		try {
+			Path filePath = pathCallable.getPath();
+
+			if (Files.notExists(filePath)) {
+				return true;
+			}
+
+			if (Files.isDirectory(filePath)) {
+				pathCallable.call();
+
+				return true;
+			}
+			else {
+				fileChannel = FileChannel.open(
+					filePath, StandardOpenOption.READ,
+					StandardOpenOption.WRITE);
+
+				fileLock = FileUtil.getFileLock(fileChannel);
+			}
+
+			if (fileLock != null) {
+				pathCallable.call();
+
+				return true;
+			}
+		}
+		catch (Exception e) {
+		}
+		finally {
+			FileUtil.releaseFileLock(fileLock);
+
+			StreamUtil.cleanUp(fileChannel);
+		}
+
+		return false;
+	}
+
 	public static void registerPathCallable(PathCallable pathCallable) {
-		_pathCallables.add(pathCallable);
+		if (!processPathCallable(pathCallable)) {
+			_pathCallables.add(pathCallable);
+		}
 	}
 
 	public static void shutdown() {

@@ -127,7 +127,7 @@ public class EmbeddedElasticsearchConnection
 		builder.put("index.number_of_shards", 1);
 		builder.put("node.client", false);
 		builder.put("node.data", true);
-		builder.put("node.local", elasticsearchConfiguration.nodeLocal());
+		builder.put("node.local", true);
 		builder.put(
 			"path.data",
 			PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch");

@@ -144,7 +144,6 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		builder.put("http.enabled", false);
 		builder.put("node.client", true);
 		builder.put("node.data", false);
-		builder.put("node.local", elasticsearchConfiguration.nodeLocal());
 		builder.put(
 			"path.logs", PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/logs");
 		builder.put(

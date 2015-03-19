@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -41,10 +40,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletRequestImpl;
 import com.liferay.portlet.RenderParametersPool;
 import com.liferay.portlet.login.util.LoginUtil;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -63,13 +58,6 @@ import org.apache.struts.action.ActionMapping;
  * @author Shuyang Zhou
  */
 public class LayoutAction extends Action {
-
-	public LayoutAction() {
-		_layoutResetPortletIds = new HashSet<>(
-			Arrays.asList(PropsValues.LAYOUT_RESET_PORTLET_IDS));
-
-		_layoutResetPortletIds.add(StringPool.BLANK);
-	}
 
 	@Override
 	public ActionForward execute(
@@ -280,9 +268,8 @@ public class LayoutAction extends Action {
 			String portletId = ParamUtil.getString(request, "p_p_id");
 
 			if (!PropsValues.TCK_URL && resetLayout &&
-				(_layoutResetPortletIds.contains(portletId) ||
-				 ((previousLayout != null) &&
-				  (layout.getPlid() != previousLayout.getPlid())))) {
+				(previousLayout != null) &&
+				(layout.getPlid() != previousLayout.getPlid())) {
 
 				// Always clear render parameters on a layout url, but do not
 				// clear on portlet urls invoked on the same layout
@@ -358,7 +345,5 @@ public class LayoutAction extends Action {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LayoutAction.class);
-
-	private final Set<String> _layoutResetPortletIds;
 
 }

@@ -14,21 +14,18 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.kernel.portlet.LiferayPortletContext;
 import com.liferay.portal.kernel.servlet.URLEncoder;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
+import com.liferay.portal.model.impl.PortletAppImpl;
+import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
 
 import javax.portlet.PortletContext;
@@ -46,6 +43,7 @@ import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author William Newbury
@@ -54,68 +52,29 @@ public class PortletRequestDispatcherImplTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		final PortletApp portletApp = (PortletApp)ProxyUtil.newProxyInstance(
-			PortletApp.class.getClassLoader(),
-			new Class<?>[] {PortletApp.class},
-			new InvocationHandler() {
+		_portlet = new PortletImpl() {
 
-				@Override
-				public Object invoke(Object proxy, Method method, Object[] args)
-					throws Throwable {
+			@Override
+			public PortletApp getPortletApp() {
+				return new PortletAppImpl(StringPool.BLANK) {
 
-					String methodName = method.getName();
-
-					if (methodName.equals("getServletURLPatterns")) {
-						Set<String> servletUrlPatterns = new HashSet<>();
-
-						servletUrlPatterns.add("/testPath/*");
-
-						return servletUrlPatterns;
+					@Override
+					public Set<String> getServletURLPatterns() {
+						return Collections.singleton("/testPath/*");
 					}
 
-					return null;
-				}
+				};
+			}
 
-			});
+			@Override
+			public URLEncoder getURLEncoderInstance() {
+				return null;
+			}
 
-		_portlet = (Portlet)ProxyUtil.newProxyInstance(
-			Portlet.class.getClassLoader(), new Class<?>[] {Portlet.class},
-			new InvocationHandler() {
+		};
 
-				@Override
-				public Object invoke(Object proxy, Method method, Object[] args)
-					throws Throwable {
-
-					String methodName = method.getName();
-
-					if (methodName.equals("getPortletApp")) {
-						return portletApp;
-					}
-
-					return null;
-				}
-
-			});
-
-		_portletContext = (LiferayPortletContext)ProxyUtil.newProxyInstance(
-			LiferayPortletContext.class.getClassLoader(),
-			new Class<?>[] {LiferayPortletContext.class},
-			new InvocationHandler() {
-
-				@Override
-				public Object invoke(Object proxy, Method method, Object[] args)
-					throws Throwable {
-
-					String methodName = method.getName();
-
-					if (methodName.equals("getPortlet")) {
-						return _portlet;
-					}
-
-					return null;
-				}
-
-			});
+		_portletContext = new PortletContextImpl(
+			_portlet, new MockServletContext());
 
 		PortalUtil portalUtil = new PortalUtil();
 

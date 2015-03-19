@@ -69,7 +69,7 @@
 									<portlet:param name="active" value="<%= String.valueOf(true) %>" />
 								</liferay-portlet:actionURL>
 
-								<a class="btn btn-mini btn-danger activate" href="<%= activateURL %>"><liferay-ui:message key="inactive" /></a>
+								<a class="activate btn btn-danger btn-mini" href="<%= activateURL %>"><liferay-ui:message key="inactive" /></a>
 							</c:otherwise>
 						</c:choose>
 					</td>
@@ -140,7 +140,7 @@
 									<portlet:param name="active" value="<%= String.valueOf(true) %>" />
 								</liferay-portlet:actionURL>
 
-								<a class="btn btn-mini btn-danger activate" href="<%= activateURL %>"><liferay-ui:message key="inactive" /></a>
+								<a class="activate btn btn-danger btn-mini" href="<%= activateURL %>"><liferay-ui:message key="inactive" /></a>
 							</c:otherwise>
 						</c:choose>
 					</td>
@@ -182,7 +182,7 @@
 									<portlet:param name="active" value="<%= String.valueOf(true) %>" />
 								</liferay-portlet:actionURL>
 
-								<a class="btn btn-mini btn-danger activate" href="<%= activateURL %>"><liferay-ui:message key="inactive" /></a>
+								<a class="activate btn btn-danger btn-mini" href="<%= activateURL %>"><liferay-ui:message key="inactive" /></a>
 							</c:otherwise>
 						</c:choose>
 					</td>

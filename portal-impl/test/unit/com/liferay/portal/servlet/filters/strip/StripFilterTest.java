@@ -18,7 +18,6 @@ import com.liferay.portal.cache.key.HashCodeCacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.minifier.GoogleJavaScriptMinifier;
 import com.liferay.portal.minifier.MinifierUtil;
@@ -32,7 +31,6 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -49,17 +47,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @PrepareForTest({CacheKeyGeneratorUtil.class, PropsUtil.class})
 @RunWith(PowerMockRunner.class)
 public class StripFilterTest extends PowerMockito {
-
-	@Before
-	public void setUp() {
-		mockStatic(PropsUtil.class);
-
-		when(
-			PropsUtil.get(PropsKeys.TCK_URL)
-		).thenReturn(
-			PropsKeys.TCK_URL
-		);
-	}
 
 	@Test
 	public void testHasMarker() {

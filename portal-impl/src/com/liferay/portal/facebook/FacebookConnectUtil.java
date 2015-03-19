@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.facebook;
+package com.liferay.portal.facebook;
 
 import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.registry.Registry;

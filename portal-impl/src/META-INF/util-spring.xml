@@ -142,11 +142,6 @@
 			<bean class="com.liferay.portal.expression.ExpressionFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.facebook.FacebookConnectUtil" class="com.liferay.portal.kernel.facebook.FacebookConnectUtil">
-		<property name="facebookConnect">
-			<bean class="com.liferay.portal.facebook.FacebookConnectImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.image.GhostscriptUtil" class="com.liferay.portal.kernel.image.GhostscriptUtil">
 		<property name="ghostscript">
 			<bean class="com.liferay.portal.image.GhostscriptImpl" />
@@ -594,7 +589,6 @@
 	<bean id="com.liferay.portal.security.auth.DigestAuthenticationAuthVerifier" class="com.liferay.portal.security.auth.DigestAuthenticationAuthVerifier" />
 	<bean id="com.liferay.portal.security.auth.EmailAddressGeneratorFactory" class="com.liferay.portal.security.auth.EmailAddressGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.EmailAddressValidatorFactory" class="com.liferay.portal.security.auth.EmailAddressValidatorFactory" />
-	<bean id="com.liferay.portal.security.auth.FacebookAutoLogin" class="com.liferay.portal.security.auth.FacebookAutoLogin" />
 	<bean id="com.liferay.portal.security.auth.FamilyNameFirstFullNameGenerator" class="com.liferay.portal.security.auth.FamilyNameFirstFullNameGenerator" />
 	<bean id="com.liferay.portal.security.auth.FullNameGeneratorFactory" class="com.liferay.portal.security.auth.FullNameGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.FullNameValidatorFactory" class="com.liferay.portal.security.auth.FullNameValidatorFactory" />

@@ -29,29 +29,29 @@ import java.util.List;
 public class ModelAdapterUtil {
 
 	public static <T, V> List<V> adapt(
-		List<T> adapteeModelList, Class<T> adapteeModelClass,
+		List<T> adapteeModels, Class<T> adapteeModelClass,
 		Class<V> adaptedModelClass) {
 
-		List<V> adaptedModelList = new ArrayList<>();
+		List<V> adaptedModels = new ArrayList<>();
 
-		for (T adapteeModel : adapteeModelList) {
-			adaptedModelList.add(
+		for (T adapteeModel : adapteeModels) {
+			adaptedModels.add(
 				adapt(adapteeModel, adapteeModelClass, adaptedModelClass));
 		}
 
-		return adaptedModelList;
+		return adaptedModels;
 	}
 
 	public static <T, V> List<V> adapt(
-		List<T> adapteeModelList, Class<V> adaptedModelClass) {
+		List<T> adapteeModels, Class<V> adaptedModelClass) {
 
-		List<V> adaptedModelList = new ArrayList<>();
+		List<V> adaptedModels = new ArrayList<>();
 
-		for (T adapteeModel : adapteeModelList) {
-			adaptedModelList.add(adapt(adapteeModel, adaptedModelClass));
+		for (T adapteeModel : adapteeModels) {
+			adaptedModels.add(adapt(adapteeModel, adaptedModelClass));
 		}
 
-		return adaptedModelList;
+		return adaptedModels;
 	}
 
 	public static <T, V> V adapt(

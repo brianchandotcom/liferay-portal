@@ -1885,7 +1885,8 @@ public class ServiceBuilder {
 	}
 
 	private void _checkForUnnecessaryFullyQualifiedClassNames(
-		String filePath, String content) throws IOException {
+			String filePath, String content)
+		throws IOException {
 
 		JavaClass finalJavaClass = _getJavaClass(filePath);
 
@@ -1898,7 +1899,8 @@ public class ServiceBuilder {
 	}
 
 	private boolean _containsUnnecessaryFullyQualifiedClassNames(
-		JavaClass javaClass) throws IOException {
+			JavaClass javaClass)
+		throws IOException {
 
 		JavaSource javaSource = javaClass.getSource();
 		String[] javaImports = javaSource.getImports();
@@ -2116,8 +2118,8 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String modelFilePath = _serviceOutputPath + "/model/" +
-			entity.getName() + ".java";
+		String modelFilePath =
+			_serviceOutputPath + "/model/" + entity.getName() + ".java";
 
 		File modelFile = new File(modelFilePath);
 
@@ -2552,8 +2554,8 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String modelFilePath = _serviceOutputPath + "/model/" +
-			entity.getName() + "Wrapper.java";
+		String modelFilePath =
+			_serviceOutputPath + "/model/" + entity.getName() + "Wrapper.java";
 
 		File modelFile = new File(modelFilePath);
 
@@ -2578,8 +2580,9 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String ejbFilePath = _serviceOutputPath + "/service/persistence/" +
-			entity.getName() + "Persistence.java";
+		String ejbFilePath =
+			_serviceOutputPath + "/service/persistence/" + entity.getName() +
+			"Persistence.java";
 
 		File ejbFile = new File(ejbFilePath);
 
@@ -2665,8 +2668,9 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String ejbFilePath = _serviceOutputPath + "/service/persistence/" +
-			entity.getName() + "Util.java";
+		String ejbFilePath =
+			_serviceOutputPath + "/service/persistence/" + entity.getName() +
+			"Util.java";
 
 		File ejbFile = new File(ejbFilePath);
 
@@ -2881,9 +2885,9 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String ejbFilePath = _serviceOutputPath + "/service/" +
-			entity.getName() + _getSessionTypeName(sessionType) +
-			"Service.java";
+		String ejbFilePath =
+			_serviceOutputPath + "/service/" + entity.getName() +
+			_getSessionTypeName(sessionType) + "Service.java";
 
 		File ejbFile = new File(ejbFilePath);
 
@@ -3191,7 +3195,8 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String ejbFilePath = _outputPath + "/service/http/" + entity.getName() +
+		String ejbFilePath =
+			_outputPath + "/service/http/" + entity.getName() +
 			"ServiceSoap.java";
 
 		File ejbFile = new File(ejbFilePath);
@@ -3222,9 +3227,9 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String ejbFilePath = _serviceOutputPath + "/service/" +
-			entity.getName() + _getSessionTypeName(sessionType) +
-			"ServiceUtil.java";
+		String ejbFilePath =
+			_serviceOutputPath + "/service/" + entity.getName() +
+			_getSessionTypeName(sessionType) + "ServiceUtil.java";
 
 		File ejbFile = new File(ejbFilePath);
 
@@ -3254,9 +3259,9 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String ejbFilePath = _serviceOutputPath + "/service/" +
-			entity.getName() + _getSessionTypeName(sessionType) +
-			"ServiceWrapper.java";
+		String ejbFilePath =
+			_serviceOutputPath + "/service/" + entity.getName() +
+			_getSessionTypeName(sessionType) + "ServiceWrapper.java";
 
 		File ejbFile = new File(ejbFilePath);
 
@@ -5216,14 +5221,17 @@ public class ServiceBuilder {
 				int endPos = pos + importToExclude.length();
 				String charAfter = content.substring(endPos, endPos + 1);
 
-				if (content.length() > endPos && !charAfter.matches("[a-zA-Z;]")) {
+				if ((content.length() > endPos) &&
+					!charAfter.matches("[a-zA-Z;]")) {
+
 					String className = importToExclude.substring(
 						importToExclude.lastIndexOf(StringPool.PERIOD) + 1);
 
 					content = StringUtil.replaceFirst(
 						content, importToExclude, className, pos);
 				}
-					fromIndex = pos + importToExclude.length();
+
+				fromIndex = pos + importToExclude.length();
 			}
 		}
 

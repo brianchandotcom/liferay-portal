@@ -204,8 +204,7 @@ public class PortletRequestDispatcherImplTest {
 	private class TestRequestDispatcher implements RequestDispatcher {
 
 		public void assertPropogatedInformation(
-			PortletServletRequest portletServletRequest,
-			PortletServletResponse portletServletResponse) {
+			PortletServletRequest portletServletRequest) {
 
 			Assert.assertEquals(_pathInfo, portletServletRequest.getPathInfo());
 			Assert.assertEquals(
@@ -218,16 +217,12 @@ public class PortletRequestDispatcherImplTest {
 
 		@Override
 		public void forward(ServletRequest request, ServletResponse response) {
-			assertPropogatedInformation(
-				(PortletServletRequest)request,
-				(PortletServletResponse)response);
+			assertPropogatedInformation((PortletServletRequest)request);
 		}
 
 		@Override
 		public void include(ServletRequest request, ServletResponse response) {
-			assertPropogatedInformation(
-				(PortletServletRequest)request,
-				(PortletServletResponse)response);
+			assertPropogatedInformation((PortletServletRequest)request);
 		}
 
 		private TestRequestDispatcher(

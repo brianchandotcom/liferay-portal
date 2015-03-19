@@ -41,8 +41,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationTargetException;
 
-import java.net.InetAddress;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -179,15 +177,9 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 		List<ObjectValuePair<Serializable, Address>> unicastMessages =
 			TestClusterChannel.getUnicastMessages();
 
-		Address newAddress = new TestAddress("test.address");
-		ClusterNode newClusterNode = new ClusterNode(
-			"test.cluster.node", InetAddress.getLoopbackAddress());
-
-		clusterExecutorImpl.memberJoined(newAddress, newClusterNode);
-
 		clusterExecutorImpl.execute(
 			ClusterRequest.createUnicastRequest(
-				StringPool.BLANK, newClusterNode.getClusterNodeId()));
+				StringPool.BLANK, StringPool.BLANK));
 
 		Assert.assertTrue(multicastMessages.isEmpty());
 		Assert.assertTrue(unicastMessages.isEmpty());
@@ -287,14 +279,23 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 		Assert.assertTrue(multicastMessages.isEmpty());
 		Assert.assertTrue(unicastMessages.isEmpty());
 
-		Address newAddress = new TestAddress("test.address");
-		ClusterNode newClusterNode = new ClusterNode(
-			"test.cluster.node", InetAddress.getLoopbackAddress());
+		ClusterExecutorImpl newClusterExecutorImpl = getClusterExecutorImpl();
 
-		clusterExecutorImpl.memberJoined(newAddress, newClusterNode);
+		Assert.assertEquals(1, multicastMessages.size());
+		Assert.assertTrue(unicastMessages.isEmpty());
+
+		Serializable serializable = multicastMessages.get(0);
+
+		clusterExecutorImpl.handleReceivedClusterRequest(
+			(ClusterRequest)serializable);
+
+		TestClusterChannel.clearAllMessages();
+
+		ClusterNode newClusterNode =
+			newClusterExecutorImpl.getLocalClusterNode();
 
 		clusterRequest = ClusterRequest.createUnicastRequest(
-			clusterRequest, newClusterNode.getClusterNodeId());
+			StringPool.BLANK, newClusterNode.getClusterNodeId());
 
 		clusterExecutorImpl.execute(clusterRequest);
 
@@ -305,7 +306,6 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 			unicastMessages.get(0);
 
 		Assert.assertEquals(clusterRequest, receivedMessage.getKey());
-		Assert.assertEquals(newAddress, receivedMessage.getValue());
 	}
 
 	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})

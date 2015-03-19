@@ -39,7 +39,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.uuid.PortalUUIDImpl;
 
-import java.net.InetAddress;
+import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.List;
@@ -88,7 +88,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		MockClusterExecutor mockClusterExecutor = new MockClusterExecutor(true);
 
-		mockClusterExecutor.addClusterNodeId(_OTHER_CLUSTER_NODE_ID);
+		String otherClusterNodeId = mockClusterExecutor.addClusterNode();
 
 		clusterMasterExecutorImpl.setClusterExecutor(mockClusterExecutor);
 
@@ -108,7 +108,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		// Test 2, cluster event listener is invoked when lock is changed
 
-		_mockLockLocalService.setLock(_OTHER_CLUSTER_NODE_ID);
+		_mockLockLocalService.setLock(otherClusterNodeId);
 
 		clusterEventListener.processClusterEvent(null);
 
@@ -371,7 +371,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		MockClusterExecutor mockClusterExecutor = new MockClusterExecutor(true);
 
-		mockClusterExecutor.addClusterNodeId(_OTHER_CLUSTER_NODE_ID);
+		String otherClusterNodeId = mockClusterExecutor.addClusterNode();
 
 		clusterMasterExecutorImpl.setClusterExecutor(mockClusterExecutor);
 
@@ -386,7 +386,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		clusterMasterExecutorImpl.registerClusterMasterTokenTransitionListener(
 			mockClusterMasterTokenTransitionListener);
 
-		_mockLockLocalService.setLock(_OTHER_CLUSTER_NODE_ID);
+		_mockLockLocalService.setLock(otherClusterNodeId);
 
 		clusterMasterExecutorImpl.getMasterClusterNodeId();
 
@@ -426,7 +426,9 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 				JDKLoggerTestUtil.configureJDKLogger(
 					ClusterMasterExecutorImpl.class.getName(), Level.INFO)) {
 
-			_mockLockLocalService.setLock(_OTHER_CLUSTER_NODE_ID);
+			String otherClusterNodeId = "otherClusterNodeId";
+
+			_mockLockLocalService.setLock(otherClusterNodeId);
 
 			Assert.assertEquals(
 				mockClusterExecutor.getLocalClusterNodeId(),
@@ -439,7 +441,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"Lock currently held by " + _OTHER_CLUSTER_NODE_ID,
+				"Lock currently held by " + otherClusterNodeId,
 				logRecord.getMessage());
 
 			logRecord = logRecords.get(1);
@@ -530,9 +532,9 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		MockClusterExecutor mockClusterExecutor = new MockClusterExecutor(true);
 
-		mockClusterExecutor.addClusterNodeId(_OTHER_CLUSTER_NODE_ID);
+		String otherClusterNodeId = mockClusterExecutor.addClusterNode();
 
-		_mockLockLocalService.setLock(_OTHER_CLUSTER_NODE_ID);
+		_mockLockLocalService.setLock(otherClusterNodeId);
 
 		Assert.assertNotNull(_mockLockLocalService.getLock());
 
@@ -593,9 +595,6 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 	private static final MethodHandler _BAD_METHOD_HANDLER = new MethodHandler(
 		new MethodKey());
 
-	private static final String _OTHER_CLUSTER_NODE_ID =
-		"OTHER_CLUSTER_NODE_ID";
-
 	private static final MethodKey _TEST_METHOD = new MethodKey(
 		TestBean.class, "testMethod1", String.class);
 
@@ -604,11 +603,22 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 	private static class MockClusterExecutor extends ClusterExecutorImpl {
 
-		public void addClusterNodeId(String clusterNodeId) {
-			memberJoined(
-				new TestAddress(clusterNodeId),
-				new ClusterNode(
-					clusterNodeId, InetAddress.getLoopbackAddress()));
+		public String addClusterNode() {
+			if (!_enabled) {
+				return null;
+			}
+
+			TestClusterChannel.clearAllMessages();
+
+			MockClusterExecutor newMockClusterExecutor =
+				new MockClusterExecutor(true);
+
+			List<Serializable> messages =
+				TestClusterChannel.getMulticastMessages();
+
+			handleReceivedClusterRequest((ClusterRequest)messages.get(0));
+
+			return newMockClusterExecutor.getLocalClusterNodeId();
 		}
 
 		@Override
@@ -646,8 +656,6 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 			setClusterChannelFactory(new TestClusterChannelFactory());
 
 			initialize();
-
-			TestClusterChannel.reset();
 		}
 
 		private final boolean _enabled;

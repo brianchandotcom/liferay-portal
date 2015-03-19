@@ -75,15 +75,11 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 
 		try {
 			if (messagePayload instanceof ClusterRequest) {
-				ClusterRequest clusterRequest = (ClusterRequest)messagePayload;
-
-				processClusterRequest(clusterRequest, srcAddress);
+				processClusterRequest(
+					(ClusterRequest)messagePayload, srcAddress);
 			}
 			else if (messagePayload instanceof ClusterNodeResponse) {
-				ClusterNodeResponse clusterNodeResponse =
-					(ClusterNodeResponse)messagePayload;
-
-				processClusterResponse(clusterNodeResponse, srcAddress);
+				processClusterResponse((ClusterNodeResponse)messagePayload);
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(
@@ -101,27 +97,8 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 	protected void processClusterRequest(
 		ClusterRequest clusterRequest, Address sourceAddress) {
 
-		Serializable responsePayload = null;
-
-		Serializable requestPayload = clusterRequest.getPayload();
-
-		if (requestPayload instanceof ClusterNode) {
-			boolean newMember = _clusterExecutorImpl.memberJoined(
-				sourceAddress, (ClusterNode)requestPayload);
-
-			if (newMember) {
-				responsePayload = ClusterRequest.createMulticastRequest(
-					_clusterExecutorImpl.getLocalClusterNode(), true);
-			}
-		}
-		else {
-			ClusterNodeResponse clusterNodeResponse =
-				_clusterExecutorImpl.executeClusterRequest(clusterRequest);
-
-			if (!clusterRequest.isFireAndForget()) {
-				responsePayload = clusterNodeResponse;
-			}
-		}
+		Serializable responsePayload =
+			_clusterExecutorImpl.handleReceivedClusterRequest(clusterRequest);
 
 		if (responsePayload == null) {
 			return;
@@ -139,7 +116,7 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 	}
 
 	protected void processClusterResponse(
-		ClusterNodeResponse clusterNodeResponse, Address sourceAddress) {
+		ClusterNodeResponse clusterNodeResponse) {
 
 		String uuid = clusterNodeResponse.getUuid();
 

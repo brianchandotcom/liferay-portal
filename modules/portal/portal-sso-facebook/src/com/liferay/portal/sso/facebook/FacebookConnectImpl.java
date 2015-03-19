@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.sso.facebook.configuration.FacebookConfiguration;
+import com.liferay.portal.sso.facebook.constants.FacebookConnectWebKeys;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.WebKeys;
 
 import java.util.Map;
 
@@ -177,7 +177,7 @@ public class FacebookConnectImpl implements FacebookConnect {
 		HttpSession session = request.getSession();
 
 		String facebookId = (String)session.getAttribute(
-			WebKeys.FACEBOOK_USER_ID);
+			FacebookConnectWebKeys.FACEBOOK_USER_ID);
 
 		if (Validator.isNull(facebookId)) {
 			return null;
@@ -186,7 +186,7 @@ public class FacebookConnectImpl implements FacebookConnect {
 		long companyId = PortalUtil.getCompanyId(request);
 
 		String token = (String)session.getAttribute(
-			WebKeys.FACEBOOK_ACCESS_TOKEN);
+			FacebookConnectWebKeys.FACEBOOK_ACCESS_TOKEN);
 
 		JSONObject jsonObject = getGraphResources(
 			companyId, "/me", token, "id,picture");

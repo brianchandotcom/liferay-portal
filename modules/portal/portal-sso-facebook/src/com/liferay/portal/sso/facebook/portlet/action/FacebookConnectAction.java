@@ -34,6 +34,7 @@ import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.sso.facebook.constants.FacebookConnectWebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -248,7 +249,8 @@ public class FacebookConnectAction extends BaseStrutsAction {
 		long facebookId = jsonObject.getLong("id");
 
 		if (facebookId > 0) {
-			session.setAttribute(WebKeys.FACEBOOK_ACCESS_TOKEN, token);
+			session.setAttribute(
+				FacebookConnectWebKeys.FACEBOOK_ACCESS_TOKEN, token);
 
 			user = UserLocalServiceUtil.fetchUserByFacebookId(
 				companyId, facebookId);
@@ -257,7 +259,8 @@ public class FacebookConnectAction extends BaseStrutsAction {
 				(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
 
 				session.setAttribute(
-					WebKeys.FACEBOOK_USER_ID, String.valueOf(facebookId));
+					FacebookConnectWebKeys.FACEBOOK_USER_ID,
+					String.valueOf(facebookId));
 			}
 		}
 

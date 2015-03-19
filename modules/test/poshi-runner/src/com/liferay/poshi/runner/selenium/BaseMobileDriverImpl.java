@@ -179,6 +179,11 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public void assertPartialConfirmation(String pattern) throws Exception {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void assertPartialText(String locator, String pattern)
 		throws Exception {
 

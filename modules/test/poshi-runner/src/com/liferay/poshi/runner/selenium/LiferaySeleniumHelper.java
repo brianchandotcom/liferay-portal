@@ -463,6 +463,19 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	public static void assertPartialConfirmation(
+			LiferaySelenium liferaySelenium, String pattern)
+		throws Exception {
+
+		String confirmation = liferaySelenium.getConfirmation();
+
+		if (!confirmation.contains(pattern)) {
+			throw new Exception(
+				"\"" + confirmation + "\" does not contain \"" + pattern +
+					"\"");
+		}
+	}
+
 	public static void assertPartialText(
 			LiferaySelenium liferaySelenium, String locator, String pattern)
 		throws Exception {

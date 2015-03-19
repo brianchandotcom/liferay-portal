@@ -1,26 +1,8 @@
 Bundle-Name: Liferay Social Networking Web
 Bundle-SymbolicName: com.liferay.social.networking.web
 Bundle-Version: 1.0.0
-Import-Package:\
-	com.liferay.ip.geocoder,\
-	com.liferay.portal.util.comparator,\
-	com.liferay.portlet.blogs.model,\
-	com.liferay.portlet.blogs.service,\
-	com.liferay.portlet.messageboards.service,\
-	com.liferay.social.networking.constants,\
-	com.liferay.social.networking.exception,\
-	com.liferay.social.networking.friends.social,\
-	com.liferay.social.networking.members.social,\
-	com.liferay.social.networking.wall.social,\
-	*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class
-Require-Capability:\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/portlet))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/theme))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))"

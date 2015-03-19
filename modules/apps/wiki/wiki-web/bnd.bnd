@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Wiki Web
 Bundle-SymbolicName: com.liferay.wiki.web
 Bundle-Version: 1.0.0
-Import-Package: \
+Import-Package:\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.exception,\
@@ -55,11 +55,6 @@ Import-Package: \
 	org.apache.struts.config,\
 	org.apache.struts.config.*,\
 	org.apache.struts.util,\
-	\
-	javax.portlet,\
-	javax.portlet.filter,\
-	javax.servlet,\
-	javax.servlet.http,\
 	*
 Include-Resource:\
 	WEB-INF/classes/META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
@@ -68,14 +63,6 @@ Include-Resource:\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/RSSUtil.class,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/portlet/PortletProps.class
-Require-Capability:\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/portlet))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/security))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/theme))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))",\
-	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/util))"
 Web-ContextPath: /wiki-web
 
 -donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)

@@ -1,0 +1,100 @@
+<html>
+<head>
+<title>PageTemplates</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PageTemplates</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PageTemplates</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVE_CHECKBOX</td>
+	<td>//input[contains(@id,'active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPEN_PAGE_TEMPLATE</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(@class,'field-wrapper')]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGE_TEMPLATE_TABLE-->
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_pageTemplateName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_NAME_1</td>
+	<td>xpath=(//tr/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_NAME_2</td>
+	<td>xpath=(//tr/td[1]/a)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_NAME_3</td>
+	<td>xpath=(//tr/td[1]/a)[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_NAME_4</td>
+	<td>xpath=(//tr/td[1]/a)[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_DESCRITPION</td>
+	<td>//tr[contains(.,'${key_pageTemplateName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_DESCRITPION_1</td>
+	<td>xpath=(//tr/td[2])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_DESCRIPTION_2</td>
+	<td>xpath=(//tr/td[2])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_DESCRIPTION_3</td>
+	<td>xpath=(//tr/td[2])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_ACTIVE</td>
+	<td>//tr[contains(.,'${key_pageTemplateName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_pageTemplateName}')]/td[4]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_ACTIONS_4</td>
+	<td>xpath=(//tr/td[4]/div/a)[4]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

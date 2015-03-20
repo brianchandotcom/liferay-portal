@@ -69,7 +69,7 @@ import org.junit.Test;
  * @author Sampsa Sohlman
  * @author Shuyang Zhou
  */
-@Sync
+@Sync(cleanTransaction = true)
 public class TrashEntryLocalServiceCheckEntriesTest {
 
 	@ClassRule

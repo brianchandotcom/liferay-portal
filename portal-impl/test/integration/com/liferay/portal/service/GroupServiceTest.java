@@ -74,7 +74,7 @@ import org.junit.Test;
  * @author Roberto Díaz
  * @author Sergio González
  */
-@Sync
+@Sync(cleanTransaction = true)
 public class GroupServiceTest {
 
 	@ClassRule

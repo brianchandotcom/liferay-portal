@@ -167,10 +167,23 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 		String friendlyURL = originalFriendlyURL;
 
-		if (Validator.isNotNull(contextPath) &&
-			friendlyURL.contains(contextPath)) {
+		friendlyURL = StringUtil.replace(
+			friendlyURL, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
-			friendlyURL = friendlyURL.substring(contextPath.length());
+		if (!friendlyURL.equals(StringPool.SLASH) &&
+			Validator.isNotNull(contextPath)) {
+
+			String proxyPath = PortalUtil.getPathProxy();
+
+			if (Validator.isNotNull(proxyPath) &&
+				contextPath.startsWith(proxyPath)) {
+
+				contextPath = contextPath.substring(proxyPath.length());
+			}
+
+			if (friendlyURL.startsWith(contextPath)) {
+				friendlyURL = friendlyURL.substring(contextPath.length());
+			}
 		}
 
 		int pos = friendlyURL.indexOf(StringPool.SEMICOLON);
@@ -178,9 +191,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 		if (pos != -1) {
 			friendlyURL = friendlyURL.substring(0, pos);
 		}
-
-		friendlyURL = StringUtil.replace(
-			friendlyURL, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
 		String i18nLanguageId = null;
 

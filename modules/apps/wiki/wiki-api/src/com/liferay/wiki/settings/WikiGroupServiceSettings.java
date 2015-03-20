@@ -15,104 +15,13 @@
 package com.liferay.wiki.settings;
 
 import com.liferay.portal.kernel.settings.GroupServiceSettings;
-import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.wiki.constants.WikiConstants;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 
 /**
  * @author Iván Zaera
  */
-@Settings.Config(settingsIds = WikiConstants.SERVICE_NAME)
-public class WikiGroupServiceSettings implements GroupServiceSettings {
-
-	public WikiGroupServiceSettings(Settings settings) {
-		_typedSettings = new TypedSettings(settings);
-	}
-
-	public String getDefaultFormat() {
-		return _typedSettings.getValue("defaultFormat");
-	}
-
-	public String getEmailFromAddress() {
-		return _typedSettings.getValue("emailFromAddress");
-	}
-
-	public String getEmailFromName() {
-		return _typedSettings.getValue("emailFromName");
-	}
-
-	public LocalizedValuesMap getEmailPageAddedBody() {
-		return _typedSettings.getLocalizedValuesMap("emailPageAddedBody");
-	}
-
-	@Settings.Property(ignore = true)
-	public String getEmailPageAddedBodyXml() {
-		LocalizedValuesMap emailPageAddedBodyMap = getEmailPageAddedBody();
-
-		return emailPageAddedBodyMap.getLocalizationXml();
-	}
-
-	public LocalizedValuesMap getEmailPageAddedSubject() {
-		return _typedSettings.getLocalizedValuesMap("emailPageAddedSubject");
-	}
-
-	@Settings.Property(ignore = true)
-	public String getEmailPageAddedSubjectXml() {
-		LocalizedValuesMap emailPageAddedSubjectMap =
-			getEmailPageAddedSubject();
-
-		return emailPageAddedSubjectMap.getLocalizationXml();
-	}
-
-	public LocalizedValuesMap getEmailPageUpdatedBody() {
-		return _typedSettings.getLocalizedValuesMap("emailPageUpdatedBody");
-	}
-
-	@Settings.Property(ignore = true)
-	public String getEmailPageUpdatedBodyXml() {
-		LocalizedValuesMap emailPageUpdatedBodyMap = getEmailPageUpdatedBody();
-
-		return emailPageUpdatedBodyMap.getLocalizationXml();
-	}
-
-	public LocalizedValuesMap getEmailPageUpdatedSubject() {
-		return _typedSettings.getLocalizedValuesMap("emailPageUpdatedSubject");
-	}
-
-	@Settings.Property(ignore = true)
-	public String getEmailPageUpdatedSubjectXml() {
-		LocalizedValuesMap emailPageUpdatedSubjectMap =
-			getEmailPageUpdatedSubject();
-
-		return emailPageUpdatedSubjectMap.getLocalizationXml();
-	}
-
-	@Settings.Property(name = "rssAbstractLength")
-	public int getRSSAbstractLength() {
-		return _typedSettings.getIntegerValue("rssAbstractLength");
-	}
-
-	public boolean isEmailPageAddedEnabled() {
-		return _typedSettings.getBooleanValue("emailPageAddedEnabled");
-	}
-
-	public boolean isEmailPageUpdatedEnabled() {
-		return _typedSettings.getBooleanValue("emailPageUpdatedEnabled");
-	}
-
-	public boolean isPageCommentsEnabled() {
-		return _typedSettings.getBooleanValue("pageCommentsEnabled");
-	}
-
-	public boolean isPageMinorEditAddSocialActivity() {
-		return _typedSettings.getBooleanValue("pageMinorEditAddSocialActivity");
-	}
-
-	public boolean isPageMinorEditSendMail() {
-		return _typedSettings.getBooleanValue("pageMinorEditSendEmail");
-	}
-
-	private final TypedSettings _typedSettings;
-
+public interface WikiGroupServiceSettings
+	extends GroupServiceSettings, WikiGroupServiceConfiguration,
+		WikiGroupServiceSettingsExtra
+{
 }

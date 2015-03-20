@@ -15,15 +15,12 @@
 package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.Serializable;
-
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -32,63 +29,45 @@ import javax.xml.stream.XMLStreamWriter;
 /**
  * @author Iván Zaera
  */
-public class LocalizedValuesMap implements Map<Locale, String>, Serializable {
+public class LocalizedValuesMap {
 
-	public LocalizedValuesMap(
-		String key, Locale defaultLocale, Locale... availableLocales) {
-
-		_key = key;
-		_defaultLocale = defaultLocale;
-		_availableLocales = availableLocales;
+	public LocalizedValuesMap() {
+		this(null);
 	}
 
-	@Override
-	public void clear() {
-		_map.clear();
+	public LocalizedValuesMap(String defaultValue) {
+		_defaultValue = defaultValue;
 	}
 
-	@Override
-	public boolean containsKey(Object key) {
-		return _map.containsKey(key);
-	}
+	public String get(Locale locale) {
+		String value = _values.get(locale);
 
-	@Override
-	public boolean containsValue(Object value) {
-		return _map.containsValue(value);
-	}
+		if (value == null) {
+			value = _defaultValue;
+		}
 
-	@Override
-	public Set<Map.Entry<Locale, String>> entrySet() {
-		return _map.entrySet();
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		return _map.equals(object);
-	}
-
-	@Override
-	public String get(Object key) {
-		return _map.get(key);
-	}
-
-	public Locale[] getAvailableLocales() {
-		return _availableLocales;
-	}
-
-	public Locale getDefaultLocale() {
-		return _defaultLocale;
+		return value;
 	}
 
 	public String getDefaultValue() {
-		return get(_defaultLocale);
+		return _defaultValue;
 	}
 
-	public String getKey() {
-		return _key;
+	public Map<Locale, String> getLocalizationMap() {
+		HashMap<Locale, String> map = new HashMap<>(_values);
+
+		Locale locale = LocaleUtil.getDefault();
+
+		if (map.get(locale) == null) {
+			map.put(locale, getDefaultValue());
+		}
+
+		return map;
 	}
 
-	public String getLocalizationXml() {
+	public String getLocalizationXml(
+		String key, Locale defaultLocale, Locale[] availableLocales) {
+
 		XMLStreamWriter xmlStreamWriter = null;
 
 		try {
@@ -104,15 +83,15 @@ public class LocalizedValuesMap implements Map<Locale, String>, Serializable {
 			xmlStreamWriter.writeStartElement("root");
 
 			xmlStreamWriter.writeAttribute(
-				"available-locales", StringUtil.merge(_availableLocales));
+				"available-locales", StringUtil.merge(availableLocales));
 			xmlStreamWriter.writeAttribute(
-				"default-locale", _defaultLocale.toString());
+				"default-locale", defaultLocale.toString());
 
-			for (Locale locale : _availableLocales) {
+			for (Locale locale : availableLocales) {
 				String value = get(locale);
 
 				if (value != null) {
-					xmlStreamWriter.writeStartElement(_key);
+					xmlStreamWriter.writeStartElement(key);
 
 					xmlStreamWriter.writeAttribute(
 						"language-id", locale.toString());
@@ -137,44 +116,8 @@ public class LocalizedValuesMap implements Map<Locale, String>, Serializable {
 		}
 	}
 
-	@Override
-	public int hashCode() {
-		return _map.hashCode();
-	}
-
-	@Override
-	public boolean isEmpty() {
-		return _map.isEmpty();
-	}
-
-	@Override
-	public Set<Locale> keySet() {
-		return _map.keySet();
-	}
-
-	@Override
-	public String put(Locale key, String value) {
-		return _map.put(key, value);
-	}
-
-	@Override
-	public void putAll(Map<? extends Locale, ? extends String> map) {
-		_map.putAll(map);
-	}
-
-	@Override
-	public String remove(Object key) {
-		return _map.remove(key);
-	}
-
-	@Override
-	public int size() {
-		return _map.size();
-	}
-
-	@Override
-	public Collection<String> values() {
-		return _map.values();
+	public void put(Locale locale, String value) {
+		_values.put(locale, value);
 	}
 
 	private void _close(XMLStreamWriter xmlStreamWriter) {
@@ -187,9 +130,7 @@ public class LocalizedValuesMap implements Map<Locale, String>, Serializable {
 		}
 	}
 
-	private final Locale[] _availableLocales;
-	private final Locale _defaultLocale;
-	private final String _key;
-	private final Map<Locale, String> _map = new HashMap<>();
+	private final String _defaultValue;
+	private final Map<Locale, String> _values = new HashMap<>();
 
 }

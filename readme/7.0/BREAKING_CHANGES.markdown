@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `68d6f19`.*
+*This document has been reviewed through commit `9447c53`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1061,6 +1061,48 @@ specified by a constant from the class `DLProcessorConstants`.
 
 ---------------------------------------
 
+### Changed the Usage of the `liferay-ui:restore-entry` Tag
+- **Date:** 2015-Mar-01
+- **JIRA Ticket:** LPS-54106
+
+#### What changed?
+
+The usage of the taglib tag `liferay-ui:restore-entry` serves a different
+purpose now. It renders the UI to restore elements from the Recycle Bin.
+
+#### Who is affected?
+
+This affects developers using the tag `liferay-ui:restore-entry`.
+
+#### How should I update my code?
+
+You should replace your calls to the tag with code like the listing below:
+
+    <aui:script use="liferay-restore-entry">
+        new Liferay.RestoreEntry(
+        {
+                checkEntryURL: '<%= checkEntryURL.toString() %>',
+                duplicateEntryURL: '<%= duplicateEntryURL.toString() %>',
+                namespace: '<portlet:namespace />'
+            }
+        );
+    </aui:script>
+
+In the above code, the `checkEntryURL` should be an `ActionURL` of your portlet,
+which checks whether the current entry can be restored from the Recycle Bin. The
+`duplicateEntryURL` should be a `RenderURL` of your portlet, that renders the UI
+to restore the entry, resolving any existing conflicts. In order to generate
+that URL, you can use the tag `liferay-ui:restore-entry`, which has been
+refactored for this usage.
+
+#### Why was this change made?
+
+This change allows the Trash portlet to be an independent module. Its actions
+and views are no longer used by the tag; they are now the responsability of
+each plugin.
+
+---------------------------------------
+
 ### Added Required Parameter `resourceClassNameId` for DDM Template Search Operations
 - **Date:** 2015-Mar-03
 - **JIRA Ticket:** LPS-52990
@@ -1087,147 +1129,104 @@ template is an ADT template, the `resourceClassNameId` points to the
 
 #### Why was this change made?
 
-This change was made in order to implement model resource permissions for
-DDM templates, such as `VIEW`, `DELETE`, `PERMISSIONS`, and `UPDATE`.
+This change was made in order to implement model resource permissions for DDM
+templates, such as `VIEW`, `DELETE`, `PERMISSIONS`, and `UPDATE`.
 
 ---------------------------------------
 
-### Taglib <liferay-ui:restore-entry /> has changed its usage
-- **Date:** 2015-Mar-1
-- **JIRA Ticket:** LPS-54106
-
-#### What changed?
-
-The usage of this taglib serves a different purpose now. Now it renders the UI
-to restore elements from the Recycle Bin.
-
-#### Who is affected?
-
-Anyone using the taglib liferay-ui:restore-entry.
-
-#### How should I update my code?
-
-You need to replace the call to your taglib with this code. The CheckEntryURL
-should be an ActionURL of your portlet which checks if the current entry can
-be restored form the Recycle Bin. The duplicateEntryURL should be a RenderURL of
-your portlet that renders the UI to restore the entry resolving the conflicts
-(if they exist). In order to generate that URL you can use the taglib
-<liferay-ui:restore-entry /> which has been refactored for this usage.
-
-```
-<aui:script use="liferay-restore-entry">
-	new Liferay.RestoreEntry(
-	{
-			checkEntryURL: '<%= checkEntryURL.toString() %>',
-			duplicateEntryURL: '<%= duplicateEntryURL.toString() %>',
-			namespace: '<portlet:namespace />'
-		}
-	);
-</aui:script>
-```
-
-#### Why was this change made?
-
-This change allows the Trash Portlet to be an independent module. Its actions
-and views are not used anymore by the taglib and they are now responsability of
-each plugin.
-
----------------------------------------
-
-### Display Styles for the Breadcrumb Portlet have been replaced by ADT
+### Replaced the Breadcrumb Portlet's Display Styles with ADTs
 - **Date:** 2015-Mar-12
-- **JIRA Ticket:** LPS-54106
+- **JIRA Ticket:** LPS-53577
 
 #### What changed?
 
-The custom display styles of the breadcrumb tag added using JSPs won't work
-anymore. They have been replaced by Application Display Templates.
-
+The custom display styles of the breadcrumb tag added using JSPs no longer work.
+They have been replaced by Application Display Templates (ADT).
 
 #### Who is affected?
 
-Anyone using the properties.
+This affects developers that use the following properties:
 
-```
-breadcrumb.display.style.default=horizontal
+    breadcrumb.display.style.default=horizontal
 
-
-breadcrumb.display.style.options=horizontal,vertical
-```
-
+    breadcrumb.display.style.options=horizontal,vertical
 
 #### How should I update my code?
 
-You need to convert your jsps with custom styles for the breadcrumb with
-Application Display Templates (ADT) for the breadcrumb and use those. ADT can be
-created from the UI of the portal in Site Settings >>
-Application Display Tempaltes or also programatically.
-
+To style the Breadcrumb portlet, you should use ADTs instead of using custom
+styles in your JSPs. ADTs can be created from the UI of the portal by navigating
+to *Site Settings* &rarr; *Application Display Templates*. ADTs can also be
+created programatically.
 
 #### Why was this change made?
 
-Application Display Templates provide more flexibility that JSPs since coding
-is not needed to change the look and feel of your application.
+ADTs allow you to change an application's look and feel without changing its JSP
+code.
 
 ---------------------------------------
 
-### Taglib `liferay-ui:ddm-template-selector` has changed its usage
+### Changed Usage of the `liferay-ui:ddm-template-selector` Tag
 - **Date:** 2015-Mar-16
 - **JIRA Ticket:** LPS-53790
 
 #### What changed?
 
-The attribute `classNameId` of the mentioned taglib has changed to className.
-
+The attribute `classNameId` of the `liferay-ui:ddm-template-selector` taglib tag
+has been renamed `className`.
 
 #### Who is affected?
 
-Anyone using the `liferay-ui:ddm-template-selector` taglib.
-
+This affects developers using the `liferay-ui:ddm-template-selector` tag.
 
 #### How should I update my code?
 
-Use the className instead of the classNameId.
-
+In your `liferay-ui:ddm-template-selector` tags, rename the `classNameId`
+attribute to `className`.
 
 #### Why was this change made?
 
-To simplify the usage of this taglib.
+Application Display Templates were being referenced by their UUID, which was
+usually not known by the developer. Referencing all DDM templates by their class
+name simplifies using this tag.
 
 ---------------------------------------
 
-### Preview of assets has changed its usage
+### Changed the Usage of Asset Preview
 - **Date:** 2015-Mar-16
 - **JIRA Ticket:** LPS-53972
 
 #### What changed?
 
-The way assets are being previewed. Now, a taglib should be used instead of
-directly including the JSP referenced by assetRenderer.getPreviewPath.
+Instead of directly including the JSP referenced by the `AssetRenderer`'s
+`getPreviewPath` method to preview an asset, you now use a taglib tag.
 
 #### Who is affected?
 
-This affects developers who have written code that directly calls the
-assetRenderer.getPreviewPath method. E.g:
-
-<liferay-util:include
-	page="<%= assetRenderer.getPreviewPath(liferayPortletRequest, liferayPortletResponse) %>"
-	portletId="<%= assetRendererFactory.getPortletId() %>"
-	servletContext="<%= application %>"
-/>
+This affects developers who have written code that directly calls an
+`AssetRenderer`'s `getPreviewPath` method to preview an asset.
 
 #### How should I update my code?
 
-You need to replace the call to include the preview JSP with the taglib
-liferay-ui:asset-display passing the parameter template as "preview".
+JSP code that previews an asset by calling an `AssetRenderer`'s `getPreviewPath`
+method, such as in the example code below, must be replaced:
 
-```
-<liferay-ui:asset-display
-	assetEntry="<%= assetEntry %>"
-	template="<%= AssetRenderer.TEMPLATE_PREVIEW %>"
-/>
-```
+    <liferay-util:include
+        page="<%= assetRenderer.getPreviewPath(liferayPortletRequest, liferayPortletResponse) %>"
+        portletId="<%= assetRendererFactory.getPortletId() %>"
+        servletContext="<%= application %>"
+    />
+
+To preview an asset, you should instead use the `liferay-ui:asset-display` tag,
+passing it an instance of the asset entry and an asset renderer preview
+template. Here's an example of using the tag:
+
+    <liferay-ui:asset-display
+        assetEntry="<%= assetEntry %>"
+        template="<%= AssetRenderer.TEMPLATE_PREVIEW %>"
+    />
 
 #### Why was this change made?
 
-To simplify the usage of the functionality.
+This change simplifies using asset previews.
+
+---------------------------------------

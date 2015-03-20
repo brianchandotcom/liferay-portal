@@ -73,8 +73,6 @@ if (Validator.isNull(apiKey)) {
 }
 %>
 
-<script src="http://maps.googleapis.com/maps/api/js?key=<%= apiKey %>&language=<%= themeDisplay.getLanguageId() %>&sensor=false" type="text/javascript"></script>
-
 <aui:script>
 	function <portlet:namespace />initMap() {
 		var maximized = <%= windowState.equals(WindowState.MAXIMIZED) ? true : false %>;
@@ -179,6 +177,18 @@ if (Validator.isNull(apiKey)) {
 		%>
 
 	}
+</aui:script>
 
-	google.maps.event.addDomListener(window, 'load', <portlet:namespace />initMap);
+<aui:script use="aui-base">
+	A.on(
+		'load',
+		function() {
+			var script = document.createElement('script');
+
+			script.type = 'text/javascript';
+			script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&language=<%= themeDisplay.getLanguageId() %>&sensor=false&callback=<portlet:namespace />initMap';
+
+			document.body.appendChild(script);
+		}
+	);
 </aui:script>

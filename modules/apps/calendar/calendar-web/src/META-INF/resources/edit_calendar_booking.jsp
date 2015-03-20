@@ -336,6 +336,10 @@ for (long otherCalendarId : otherCalendarIds) {
 
 	<aui:button-row>
 
+		<div class="alert alert-info <%= (hasWorkflowDefinitionLink && approved) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />approvalProcessAlert">
+			<%= LanguageUtil.format(request, "this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again", ResourceActionsUtil.getModelResource(locale, CalendarBooking.class.getName()), false) %>
+		</div>
+
 		<%
 		String publishButtonLabel = "publish";
 

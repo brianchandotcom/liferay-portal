@@ -20,7 +20,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.ModifiedFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.search.web.util.SearchFacet;
+
+import javax.portlet.ActionRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,6 +39,11 @@ public class ModifiedSearchFacet extends BaseSearchFacet {
 	@Override
 	public String getClassName() {
 		return ModifiedSearchFacet.class.getName();
+	}
+
+	@Override
+	public String getConfigurationView() {
+		return "/facets/configuration/modified.jsp";
 	}
 
 	@Override
@@ -74,6 +83,40 @@ public class ModifiedSearchFacet extends BaseSearchFacet {
 	@Override
 	public String getDisplayView() {
 		return "/facets/view/modified.jsp";
+	}
+
+	@Override
+	public JSONObject getJSONData(ActionRequest actionRequest) {
+		JSONObject data = JSONFactoryUtil.createJSONObject();
+
+		int frequencyThreshold = ParamUtil.getInteger(
+			actionRequest, getClassName() + "frequencyThreshold", 1);
+
+		data.put("frequencyThreshold", frequencyThreshold);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		String[] rangesIndexes = StringUtil.split(
+			ParamUtil.getString(
+				actionRequest, getClassName() + "rangesIndexes"));
+
+		for (String rangesIndex : rangesIndexes) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			String label = ParamUtil.getString(
+				actionRequest, getClassName() + "label_" + rangesIndex);
+			String range = ParamUtil.getString(
+				actionRequest, getClassName() + "range_" + rangesIndex);
+
+			jsonObject.put("label", label);
+			jsonObject.put("range", range);
+
+			jsonArray.put(jsonObject);
+		}
+
+		data.put("ranges", jsonArray);
+
+		return data;
 	}
 
 	@Override

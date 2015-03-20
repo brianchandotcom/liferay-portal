@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.search.web.util.SearchFacet;
+
+import javax.portlet.ActionRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,6 +37,11 @@ public class AssetCategoriesSearchFacet extends BaseSearchFacet {
 	@Override
 	public String getClassName() {
 		return AssetCategoriesSearchFacet.class.getName();
+	}
+
+	@Override
+	public String getConfigurationView() {
+		return "/facets/configuration/asset_categories.jsp";
 	}
 
 	@Override
@@ -63,6 +71,27 @@ public class AssetCategoriesSearchFacet extends BaseSearchFacet {
 	@Override
 	public String getDisplayView() {
 		return "/facets/view/asset_categories.jsp";
+	}
+
+	@Override
+	public JSONObject getJSONData(ActionRequest actionRequest) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		String displayStyle = ParamUtil.getString(
+			actionRequest, getClassName() + "displayStyle", "list");
+		int frequencyThreshold = ParamUtil.getInteger(
+			actionRequest, getClassName() + "frequencyThreshold", 1);
+		int maxTerms = ParamUtil.getInteger(
+			actionRequest, getClassName() + "maxTerms", 10);
+		boolean showAssetCount = ParamUtil.getBoolean(
+			actionRequest, getClassName() + "showAssetCount", true);
+
+		jsonObject.put("displayStyle", displayStyle);
+		jsonObject.put("frequencyThreshold", frequencyThreshold);
+		jsonObject.put("maxTerms", maxTerms);
+		jsonObject.put("showAssetCount", showAssetCount);
+
+		return jsonObject;
 	}
 
 	@Override

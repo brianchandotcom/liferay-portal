@@ -20,11 +20,16 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.search.web.util.SearchFacet;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import javax.portlet.ActionRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,6 +55,11 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
+	public String getConfigurationView() {
+		return "/facets/configuration/asset_entries.jsp";
+	}
+
+	@Override
 	public FacetConfiguration getDefaultConfiguration() {
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
@@ -59,15 +69,13 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 
 		jsonObject.put("frequencyThreshold", 1);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray assetTypesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		for (AssetRendererFactory assetRendererFactory :
-				_assetRendererFactories) {
-
-			jsonArray.put(assetRendererFactory.getClassName());
+		for (String assetType : getAssetTypes()) {
+			assetTypesJSONArray.put(assetType);
 		}
 
-		jsonObject.put("values", jsonArray);
+		jsonObject.put("values", assetTypesJSONArray);
 
 		facetConfiguration.setDataJSONObject(jsonObject);
 		facetConfiguration.setDisplayStyle("asset_entries");
@@ -86,6 +94,31 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
+	public JSONObject getJSONData(ActionRequest actionRequest) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		int frequencyThreshold = ParamUtil.getInteger(
+			actionRequest, getClassName() + "frequencyThreshold", 1);
+		String[] assetTypes = StringUtil.split(
+			ParamUtil.getString(actionRequest, getClassName() + "assetTypes"));
+
+		JSONArray assetTypesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		if (ArrayUtil.isEmpty(assetTypes)) {
+			assetTypes = getAssetTypes();
+		}
+
+		for (String assetType : assetTypes) {
+			assetTypesJSONArray.put(assetType);
+		}
+
+		jsonObject.put("frequencyThreshold", frequencyThreshold);
+		jsonObject.put("values", assetTypesJSONArray);
+
+		return jsonObject;
+	}
+
+	@Override
 	public String getTitle() {
 		return "asset-type";
 	}
@@ -100,6 +133,19 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 		AssetRendererFactory assetRendererFactory) {
 
 		_assetRendererFactories.add(assetRendererFactory);
+	}
+
+	protected String[] getAssetTypes() {
+		String[] assetTypes = new String[_assetRendererFactories.size()];
+
+		for (int i = 0; i < _assetRendererFactories.size(); i++) {
+			AssetRendererFactory assetRendererFactory =
+				_assetRendererFactories.get(i);
+
+			assetTypes[i] = assetRendererFactory.getClassName();
+		}
+
+		return assetTypes;
 	}
 
 	protected void removeAssetRendererFactory(

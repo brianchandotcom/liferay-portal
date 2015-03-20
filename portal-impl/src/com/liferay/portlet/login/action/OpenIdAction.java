@@ -23,11 +23,13 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -64,7 +66,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import org.openid4java.OpenIDException;
+import org.openid4java.consumer.ConsumerException;
 import org.openid4java.consumer.ConsumerManager;
+import org.openid4java.consumer.InMemoryConsumerAssociationStore;
+import org.openid4java.consumer.InMemoryNonceVerifier;
 import org.openid4java.consumer.VerificationResult;
 import org.openid4java.discovery.DiscoveryInformation;
 import org.openid4java.discovery.Identifier;
@@ -84,6 +89,10 @@ import org.openid4java.message.sreg.SRegResponse;
  * @author Jorge Ferrer
  */
 public class OpenIdAction extends PortletAction {
+
+	public OpenIdAction() {
+		_initialize();
+	}
 
 	@Override
 	public void processAction(
@@ -187,9 +196,37 @@ public class OpenIdAction extends PortletAction {
 		return _OPEN_ID_PROVIDER_DEFAULT;
 	}
 
+	protected String getScreenName(String openId) {
+		String result = normalize(openId);
+
+		if (result.startsWith(Http.HTTP_WITH_SLASH)) {
+			result = result.substring(Http.HTTP_WITH_SLASH.length());
+		}
+
+		if (result.startsWith(Http.HTTPS_WITH_SLASH)) {
+			result = result.substring(Http.HTTPS_WITH_SLASH.length());
+		}
+
+		result = StringUtil.replace(
+			result, new String[] {StringPool.SLASH, StringPool.UNDERLINE},
+			new String[] {StringPool.PERIOD, StringPool.PERIOD});
+
+		return result;
+	}
+
 	@Override
 	protected boolean isCheckMethodOnProcessAction() {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
+	}
+
+	protected String normalize(String identity) {
+		String result = identity;
+
+		if (result.endsWith(StringPool.SLASH)) {
+			result = result.substring(0, result.length() - 1);
+		}
+
+		return result;
 	}
 
 	protected String readOpenIdResponse(
@@ -204,8 +241,6 @@ public class OpenIdAction extends PortletAction {
 
 		HttpSession session = request.getSession();
 
-		ConsumerManager consumerManager = OpenIdUtil.getConsumerManager();
-
 		ParameterList parameterList = new ParameterList(
 			request.getParameterMap());
 
@@ -218,7 +253,7 @@ public class OpenIdAction extends PortletAction {
 
 		String receivingURL = ParamUtil.getString(request, "openid.return_to");
 
-		VerificationResult verificationResult = consumerManager.verify(
+		VerificationResult verificationResult = _manager.verify(
 			receivingURL, parameterList, discoveryInformation);
 
 		Identifier identifier = verificationResult.getVerifiedId();
@@ -311,7 +346,7 @@ public class OpenIdAction extends PortletAction {
 			}
 		}
 
-		String openId = OpenIdUtil.normalize(authSuccess.getIdentity());
+		String openId = normalize(authSuccess.getIdentity());
 
 		User user = UserLocalServiceUtil.fetchUserByOpenId(
 			themeDisplay.getCompanyId(), openId);
@@ -404,15 +439,13 @@ public class OpenIdAction extends PortletAction {
 		portletURL.setParameter(Constants.CMD, Constants.READ);
 		portletURL.setParameter("struts_action", "/login/open_id");
 
-		ConsumerManager manager = OpenIdUtil.getConsumerManager();
+		List<DiscoveryInformation> discoveries = _manager.discover(openId);
 
-		List<DiscoveryInformation> discoveries = manager.discover(openId);
-
-		DiscoveryInformation discovered = manager.associate(discoveries);
+		DiscoveryInformation discovered = _manager.associate(discoveries);
 
 		session.setAttribute(WebKeys.OPEN_ID_DISCO, discovered);
 
-		AuthRequest authRequest = manager.authenticate(
+		AuthRequest authRequest = _manager.authenticate(
 			discovered, portletURL.toString(), themeDisplay.getPortalURL());
 
 		if (UserLocalServiceUtil.fetchUserByOpenId(
@@ -423,7 +456,7 @@ public class OpenIdAction extends PortletAction {
 			return;
 		}
 
-		String screenName = OpenIdUtil.getScreenName(openId);
+		String screenName = getScreenName(openId);
 
 		User user = UserLocalServiceUtil.fetchUserByScreenName(
 			themeDisplay.getCompanyId(), screenName);
@@ -483,6 +516,21 @@ public class OpenIdAction extends PortletAction {
 		return null;
 	}
 
+	private void _initialize() {
+		try {
+			if (_manager == null) {
+				_manager = new ConsumerManager();
+
+				_manager.setAssociations(
+					new InMemoryConsumerAssociationStore());
+				_manager.setNonceVerifier(new InMemoryNonceVerifier(5000));
+			}
+		}
+		catch (ConsumerException ce) {
+			_log.error(ce.getMessage());
+		}
+	}
+
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
 
 	private static final String _OPEN_ID_AX_ATTR_EMAIL = "email";
@@ -502,5 +550,7 @@ public class OpenIdAction extends PortletAction {
 	private static final String _OPEN_ID_SREG_ATTR_FULLNAME = "fullname";
 
 	private static final Log _log = LogFactoryUtil.getLog(OpenIdAction.class);
+
+	private ConsumerManager _manager;
 
 }

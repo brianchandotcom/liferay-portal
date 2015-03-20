@@ -142,7 +142,8 @@ public class PACLAggregateTest {
 			"-D" + PropsKeys.LIFERAY_LIB_PORTAL_DIR + "=" +
 				PropsValues.LIFERAY_LIB_PORTAL_DIR);
 		arguments.add(
-			"-D" + PropsKeys.MODULE_FRAMEWORK_PROPERTIES + _OSGI_CONSOLE);
+			"-Dportal:" + PropsKeys.MODULE_FRAMEWORK_PROPERTIES +
+				_OSGI_CONSOLE);
 
 		builder.setArguments(arguments);
 		builder.setBootstrapClassPath(System.getProperty("java.class.path"));

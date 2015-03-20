@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.login.action;
+package com.liferay.portal.sso.openid.portlet.action;
 
 import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.kernel.configuration.Filter;

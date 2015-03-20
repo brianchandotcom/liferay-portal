@@ -15,7 +15,6 @@
 package com.liferay.portlet.shopping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
@@ -661,14 +660,12 @@ public class ShoppingOrderLocalServiceImpl
 
 		if (bodyLocalizedValuesMap != null) {
 			subscriptionSender.setLocalizedBodyMap(
-				bodyLocalizedValuesMap.getLocalizationMap(
-					LanguageUtil.getAvailableLocales()));
+				bodyLocalizedValuesMap.getLocalizationMap());
 		}
 
 		if (subjectLocalizedValuesMap != null) {
 			subscriptionSender.setLocalizedSubjectMap(
-				subjectLocalizedValuesMap.getLocalizationMap(
-					LanguageUtil.getAvailableLocales()));
+				subjectLocalizedValuesMap.getLocalizationMap());
 		}
 
 		subscriptionSender.setMailId("shopping_order", order.getOrderId());

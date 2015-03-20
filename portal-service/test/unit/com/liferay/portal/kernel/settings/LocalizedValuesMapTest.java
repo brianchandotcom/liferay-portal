@@ -49,16 +49,15 @@ public class LocalizedValuesMapTest {
 
 	@Test
 	public void testGetLocalizationMap() {
-		Map<Locale, String> map = _localizedValuesMap.getLocalizationMap(
-			_locales);
+		Map<Locale, String> map = _localizedValuesMap.getLocalizationMap();
 
-		Assert.assertEquals(_locales.length, map.size());
+		Assert.assertEquals(_AVAILABLE_LOCALES.length, map.size());
 
 		for (Locale locale : _AVAILABLE_LOCALES) {
 			Assert.assertEquals("value " + locale.toString(), map.get(locale));
 		}
 
-		Assert.assertEquals(_DEFAULT_VALUE, map.get(_UNAVAILABLE_LOCALE));
+		Assert.assertEquals(null, map.get(_UNAVAILABLE_LOCALE));
 	}
 
 	@Test
@@ -76,6 +75,21 @@ public class LocalizedValuesMapTest {
 					"<key language-id=\"pt_BR\">defaultValue</key>" +
 				"</root>",
 			xml);
+	}
+
+	@Test
+	public void testLocalizationMapReturnsDefaultValueForDefaultLocale() {
+		_localizedValuesMap = new LocalizedValuesMap(_DEFAULT_VALUE);
+
+		LocaleUtil.setDefault(
+			_DEFAULT_LOCALE.getLanguage(), _DEFAULT_LOCALE.getCountry(),
+			_DEFAULT_LOCALE.getVariant());
+
+		Map<Locale, String> localizationMap =
+			_localizedValuesMap.getLocalizationMap();
+
+		Assert.assertEquals(
+			_DEFAULT_VALUE, localizationMap.get(_DEFAULT_LOCALE));
 	}
 
 	private static final Locale[] _AVAILABLE_LOCALES = {

@@ -3114,14 +3114,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		if (bodyLocalizedValuesMap != null) {
 			subscriptionSender.setLocalizedBodyMap(
-				bodyLocalizedValuesMap.getLocalizationMap(
-					LanguageUtil.getAvailableLocales()));
+				bodyLocalizedValuesMap.getLocalizationMap());
 		}
 
 		if (subjectLocalizedValuesMap != null) {
 			subscriptionSender.setLocalizedSubjectMap(
-				subjectLocalizedValuesMap.getLocalizationMap(
-					LanguageUtil.getAvailableLocales()));
+				subjectLocalizedValuesMap.getLocalizationMap());
 		}
 
 		subscriptionSender.setMailId(

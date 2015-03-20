@@ -1870,12 +1870,10 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		Map<Locale, String> localizedSubjectMap =
-			subjectLocalizedValuesMap.getLocalizationMap(
-				LanguageUtil.getAvailableLocales());
+			subjectLocalizedValuesMap.getLocalizationMap();
 
 		Map<Locale, String> localizedBodyMap =
-			bodyLocalizedValuesMap.getLocalizationMap(
-				LanguageUtil.getAvailableLocales());
+			bodyLocalizedValuesMap.getLocalizationMap();
 
 		FileEntry fileEntry = fileVersion.getFileEntry();
 

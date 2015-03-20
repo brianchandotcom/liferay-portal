@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
@@ -52,11 +53,13 @@ public class LocalizedValuesMap {
 		return _defaultValue;
 	}
 
-	public Map<Locale, String> getLocalizationMap(Locale[] availableLocales) {
-		Map<Locale, String> map = new HashMap<>();
+	public Map<Locale, String> getLocalizationMap() {
+		HashMap<Locale, String> map = new HashMap<>(_values);
 
-		for (Locale locale : availableLocales) {
-			map.put(locale, get(locale));
+		Locale locale = LocaleUtil.getDefault();
+
+		if (map.get(locale) == null) {
+			map.put(locale, getDefaultValue());
 		}
 
 		return map;

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
@@ -2247,14 +2246,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (bodyLocalizedValuesMap != null) {
 			subscriptionSenderPrototype.setLocalizedBodyMap(
-				bodyLocalizedValuesMap.getLocalizationMap(
-					LanguageUtil.getAvailableLocales()));
+				bodyLocalizedValuesMap.getLocalizationMap());
 		}
 
 		if (subjectLocalizedValuesMap != null) {
 			subscriptionSenderPrototype.setLocalizedSubjectMap(
-				subjectLocalizedValuesMap.getLocalizationMap(
-					LanguageUtil.getAvailableLocales()));
+				subjectLocalizedValuesMap.getLocalizationMap());
 		}
 
 		Date modifiedDate = message.getModifiedDate();

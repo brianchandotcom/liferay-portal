@@ -15,8 +15,20 @@
 package com.liferay.portal.kernel.test.util;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.ResourceBlockPermission;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Alberto Chaparro
@@ -40,6 +52,41 @@ public class ResourceBlockPermissionTestUtil {
 
 		return ResourceBlockPermissionLocalServiceUtil.
 			addResourceBlockPermission(resourceBlockPermission);
+	}
+
+	public static void removeResourceBlockPermissions(
+			long companyId, long groupId, String portletResource,
+			String resourceName, long classPK, String[] roleNames,
+			List<String> actionIds)
+		throws PortalException {
+
+		List<String> actionsList = ResourceActionsUtil.getResourceActions(
+			portletResource, resourceName);
+
+		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
+
+		for (String roleName : roleNames) {
+			Role role = RoleLocalServiceUtil.getRole(
+				TestPropsValues.getCompanyId(), roleName);
+
+			List<String> roleActions = ListUtil.copy(actionsList);
+
+			if (roleName.equals(RoleConstants.GUEST)) {
+				List<String> unsupportedActionIds =
+					ResourceActionsUtil.getResourceGuestUnsupportedActions(
+						resourceName, resourceName);
+
+				roleActions.removeAll(unsupportedActionIds);
+			}
+
+			roleActions.removeAll(actionIds);
+
+			roleIdsToActionIds.put(
+				role.getRoleId(), ArrayUtil.toStringArray(roleActions));
+		}
+
+		ResourceBlockLocalServiceUtil.setIndividualScopePermissions(
+			companyId, groupId, resourceName, classPK, roleIdsToActionIds);
 	}
 
 }

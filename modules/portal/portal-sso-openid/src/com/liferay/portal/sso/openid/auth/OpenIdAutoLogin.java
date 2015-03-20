@@ -14,20 +14,25 @@
 
 package com.liferay.portal.sso.openid.auth;
 
+import com.liferay.portal.kernel.openid.OpenId;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.AutoLogin;
 import com.liferay.portal.security.auth.BaseAutoLogin;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.OpenIdUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jorge Ferrer
  */
+@Component(immediate = true, service = AutoLogin.class)
 public class OpenIdAutoLogin extends BaseAutoLogin {
 
 	@Override
@@ -37,7 +42,7 @@ public class OpenIdAutoLogin extends BaseAutoLogin {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		if (!OpenIdUtil.isEnabled(companyId)) {
+		if (!_openId.isEnabled(companyId)) {
 			return null;
 		}
 
@@ -61,5 +66,12 @@ public class OpenIdAutoLogin extends BaseAutoLogin {
 
 		return credentials;
 	}
+
+	@Reference
+	protected void setOpenId(OpenId openId) {
+		_openId = openId;
+	}
+
+	private OpenId _openId;
 
 }

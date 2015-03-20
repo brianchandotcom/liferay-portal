@@ -31,7 +31,7 @@
 			<condition function="IsElementPresent" locator1="CPKnowledgebaseadminTemplates#TEMPLATE_TABLE_CHECKBOX_ALL" />
 			<then>
 				<execute function="Check" locator1="CPKnowledgebaseadminTemplates#TEMPLATE_TABLE_CHECKBOX_ALL" />
-				<execute function="AssertClick" locator1="CPKnowledgebaseadminTemplates#DELETE_BUTTON" value1="Delete" />
+				<execute function="AssertClickNoError" locator1="CPKnowledgebaseadminTemplates#DELETE_BUTTON" value1="Delete" />
 				<execute function="Confirm" locator1="CPKnowledgebaseadminTemplates#CONFIRMATION" value1="Are you sure you want to delete the selected templates?" />
 				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminTemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>

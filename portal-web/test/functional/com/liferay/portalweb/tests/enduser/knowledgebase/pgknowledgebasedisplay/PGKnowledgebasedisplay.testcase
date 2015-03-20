@@ -35,7 +35,6 @@
 		<execute macro="KBArticle#addCP">
 			<var name="kbArticleContent" value="" />
 			<var name="kbArticleInvalidContent" value="true" />
-			<var name="kbArticleSection" value="Application Server" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
@@ -93,10 +92,8 @@
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
-		<execute macro="KBArticle#addCP">
+		<execute macro="KBArticle#addCPWithInvalidTitle">
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleInvalidTitle" value="true" />
-			<var name="kbArticleSection" value="Application Server" />
 			<var name="kbArticleTitle" value="" />
 		</execute>
 
@@ -224,7 +221,6 @@
 
 		<execute macro="KBArticle#addCP">
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleSection" value="Development" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
@@ -294,7 +290,6 @@
 
 		<execute macro="KBArticle#addCP">
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleSection" value="Development" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
@@ -313,7 +308,6 @@
 
 		<execute macro="KBArticle#editPGViaKBDisplay">
 			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edit" />
-			<var name="kbArticleSectionEdit" value="Development" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 			<var name="kbArticleTitleEdit" value="Knowledge Base Article Title Edit" />
 		</execute>

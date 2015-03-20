@@ -194,6 +194,8 @@ import com.liferay.portlet.RenderResponseImpl;
 import com.liferay.portlet.StateAwareResponseImpl;
 import com.liferay.portlet.UserAttributes;
 import com.liferay.portlet.admin.util.OmniadminUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -205,7 +207,6 @@ import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.journal.NoSuchFeedException;
-import com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolder;
@@ -2831,9 +2832,13 @@ public class PortalImpl implements Portal {
 
 		actualParams.put(
 			namespace + "mvcPath", new String[] {"/view_content.jsp"});
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				JournalArticle.class.getName());
+
 		actualParams.put(
-			namespace + "type",
-			new String[] {JournalArticleAssetRendererFactory.TYPE});
+			namespace + "type", new String[] {assetRendererFactory.getType()});
 		actualParams.put(
 			namespace + "urlTitle",
 			new String[] {journalArticle.getUrlTitle()});

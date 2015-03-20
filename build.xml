@@ -288,14 +288,17 @@
 
 	<target name="deploy" depends="setup-sdk">
 		<if>
-			<or>
-				<equals arg1="${app.server.type}" arg2="glassfish" />
-				<equals arg1="${app.server.type}" arg2="websphere" />
-			</or>
+			<equals arg1="${app.server.type}" arg2="glassfish" />
 			<then>
-				<delete dir="${app.server.portal.dir}" />
-				<delete file="${app.server.portal.dir}" />
+				<delete file="${app.server.glassfish.portal.war.dir}" />
 			</then>
+			<elseif>
+				<equals arg1="${app.server.type}" arg2="websphere" />
+				<then>
+					<delete dir="${app.server.portal.dir}" />
+					<delete file="${app.server.portal.dir}" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -428,6 +431,24 @@
 				>
 					org.apache.geronimo.specs/geronimo-el_1.0_spec/1.0.2/jar=org.apache.geronimo.specs/geronimo-el_2.2_spec/1.0.3/jar
 				</concat>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="glassfish" />
+			<then>
+				<tstamp>
+					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+				</tstamp>
+
+				<jar
+					basedir="${app.server.portal.dir}"
+					jarfile="${tstamp.value}"
+				/>
+
+				<delete dir="${app.server.portal.dir}" />
+
+				<move file="${tstamp.value}" tofile="${app.server.glassfish.portal.war.dir}" />
 			</then>
 		</if>
 
@@ -569,10 +590,7 @@
 		</if>
 
 		<if>
-			<or>
-				<equals arg1="${app.server.type}" arg2="glassfish" />
-				<equals arg1="${app.server.type}" arg2="websphere" />
-			</or>
+			<equals arg1="${app.server.type}" arg2="websphere" />
 			<then>
 				<tstamp>
 					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
@@ -586,12 +604,7 @@
 				<delete dir="${app.server.portal.dir}" />
 
 				<move file="${tstamp.value}" tofile="${app.server.portal.dir}" />
-			</then>
-		</if>
 
-		<if>
-			<equals arg1="${app.server.type}" arg2="websphere" />
-			<then>
 				<ant dir="support-websphere" target="deploy" inheritAll="false" />
 			</then>
 		</if>
@@ -604,7 +617,7 @@
 				<equals arg1="${app.server.type}" arg2="glassfish" />
 			</and>
 			<then>
-				<war destfile="${app.server.glassfish.portal.dir}" update="true">
+				<war destfile="${app.server.glassfish.portal.war.dir}" update="true">
 					<classes dir="portal-impl/src" includes="portal-*.properties,system-*.properties" />
 				</war>
 			</then>

@@ -1,4 +1,4 @@
-create table App (
+create table Marketplace_App (
 	uuid_ VARCHAR(75) null,
 	appId LONG not null primary key,
 	companyId LONG,
@@ -14,7 +14,7 @@ create table App (
 	version VARCHAR(75) null
 );
 
-create table Module (
+create table Marketplace_Module (
 	uuid_ VARCHAR(75) null,
 	moduleId LONG not null primary key,
 	appId LONG,

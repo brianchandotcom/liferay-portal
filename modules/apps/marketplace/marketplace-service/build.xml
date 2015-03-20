@@ -13,7 +13,7 @@
 	<target name="build-service">
 		<build-service
 			service.api.dir="../marketplace-api/src"
-			service.auto.namespace.tables="false"
+			service.auto.namespace.tables="true"
 			service.hbm.file.name="module-hbm.xml"
 			service.spring.file.name="module-spring.xml"
 			service.sql.dir="src/META-INF/sql"

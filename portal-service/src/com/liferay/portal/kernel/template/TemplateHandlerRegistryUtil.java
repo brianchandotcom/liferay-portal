@@ -153,7 +153,7 @@ public class TemplateHandlerRegistryUtil {
 				templateHandler.getClassName(), templateHandler);
 
 			try {
-				addTemplate(templateHandler);
+				_addTemplate(templateHandler);
 			}
 			catch (Exception e) {
 				_log.error(
@@ -183,7 +183,7 @@ public class TemplateHandlerRegistryUtil {
 			_templateHandlers.remove(templateHandler.getClassName());
 		}
 
-		protected void addTemplate(TemplateHandler templateHandler)
+		private void _addTemplate(TemplateHandler templateHandler)
 			throws Exception {
 
 			long companyId = PortalUtil.getDefaultCompanyId();
@@ -191,8 +191,6 @@ public class TemplateHandlerRegistryUtil {
 			ServiceContext serviceContext = new ServiceContext();
 
 			Group group = GroupLocalServiceUtil.getCompanyGroup(companyId);
-
-			long groupId = group.getGroupId();
 
 			serviceContext.setScopeGroupId(group.getGroupId());
 
@@ -212,16 +210,17 @@ public class TemplateHandlerRegistryUtil {
 
 				DDMTemplate ddmTemplate =
 					DDMTemplateLocalServiceUtil.fetchTemplate(
-						groupId, classNameId, templateKey);
+						group.getGroupId(), classNameId, templateKey);
 
 				if (ddmTemplate != null) {
 					continue;
 				}
 
-				Map<Locale, String> nameMap = getLocalizationMap(
-					groupId, templateElement.elementText("name"));
-				Map<Locale, String> descriptionMap = getLocalizationMap(
-					groupId, templateElement.elementText("description"));
+				Map<Locale, String> nameMap = _getLocalizationMap(
+					group.getGroupId(), templateElement.elementText("name"));
+				Map<Locale, String> descriptionMap = _getLocalizationMap(
+					group.getGroupId(),
+					templateElement.elementText("description"));
 				String language = templateElement.elementText("language");
 				String scriptFileName = templateElement.elementText(
 					"script-file");
@@ -236,7 +235,7 @@ public class TemplateHandlerRegistryUtil {
 					templateElement.elementText("cacheable"));
 
 				DDMTemplateLocalServiceUtil.addTemplate(
-					userId, groupId, classNameId, 0,
+					userId, group.getGroupId(), classNameId, 0,
 					PortalUtil.getClassNameId(PortletDisplayTemplate.class),
 					templateKey, nameMap, descriptionMap,
 					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null, language,
@@ -244,7 +243,7 @@ public class TemplateHandlerRegistryUtil {
 			}
 		}
 
-		protected Map<Locale, String> getLocalizationMap(
+		private Map<Locale, String> _getLocalizationMap(
 			long groupId, String key) {
 
 			Map<Locale, String> map = new HashMap<>();

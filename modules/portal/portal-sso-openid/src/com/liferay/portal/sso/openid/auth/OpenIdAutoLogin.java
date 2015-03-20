@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.sso.openid.auth;
 
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.BaseAutoLogin;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.OpenIdUtil;
 import com.liferay.portal.util.PortalUtil;

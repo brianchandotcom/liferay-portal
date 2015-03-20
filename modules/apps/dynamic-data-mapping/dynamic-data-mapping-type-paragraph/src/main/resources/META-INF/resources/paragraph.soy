@@ -1,0 +1,15 @@
+{namespace ddm}
+
+/**
+ * Prints the DDM form paragraph field.
+ *
+ * @param dir
+ * @param name
+ * @param text
+ * @param visible
+ */
+{template .paragraph}
+	<div class="form-group form-inline{$visible ? '' : ' hide'}" data-fieldname="{$name}">
+		<p dir="{$dir}">{$text}</p>
+	</div>
+{/template}

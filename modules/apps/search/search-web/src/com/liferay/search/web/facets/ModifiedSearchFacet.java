@@ -73,7 +73,7 @@ public class ModifiedSearchFacet extends BaseSearchFacet {
 
 	@Override
 	public String getDisplayView() {
-		return "/facets/modified.jsp";
+		return "/facets/view/modified.jsp";
 	}
 
 	@Override

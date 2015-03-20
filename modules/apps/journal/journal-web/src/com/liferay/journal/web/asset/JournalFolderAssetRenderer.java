@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.asset;
 
+import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -160,11 +160,10 @@ public class JournalFolderAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), PortletKeys.JOURNAL,
-			PortletRequest.RENDER_PHASE);
+			getControlPanelPlid(liferayPortletRequest),
+			JournalPortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			"mvcPath", "/html/portlet/journal/edit_folder.jsp");
+		portletURL.setParameter("mvcPath", "/edit_folder.jsp");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 
@@ -182,8 +181,7 @@ public class JournalFolderAssetRenderer
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
-		portletURL.setParameter(
-			"mvcPath", "/html/portlet/journal/asset/folder_full_content.jsp");
+		portletURL.setParameter("mvcPath", "/asset/folder_full_content.jsp");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 		portletURL.setWindowState(windowState);
@@ -246,7 +244,7 @@ public class JournalFolderAssetRenderer
 		throws Exception {
 
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			return "/html/portlet/journal/asset/folder_" + template + ".jsp";
+			return "/asset/folder_" + template + ".jsp";
 		}
 		else {
 			return null;

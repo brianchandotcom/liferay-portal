@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.asset;
 
+import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -22,8 +23,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseDDMStructureClassTypeReader;
 import com.liferay.portlet.asset.model.ClassTypeReader;
@@ -45,19 +46,30 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Julio Camarero
  * @author Juan Fernández
  * @author Raymond Augé
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
+	},
+	service = AssetRendererFactory.class
+)
 public class JournalArticleAssetRendererFactory
 	extends BaseAssetRendererFactory {
 
 	public static final String TYPE = "content";
 
 	public JournalArticleAssetRendererFactory() {
+		setClassName(JournalArticle.class.getName());
 		setLinkable(true);
+		setPortletId(JournalPortletKeys.JOURNAL);
 		setSupportsClassTypes(true);
 	}
 
@@ -145,10 +157,9 @@ public class JournalArticleAssetRendererFactory
 		LiferayPortletResponse liferayPortletResponse) {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
-			PortletKeys.JOURNAL);
+			JournalPortletKeys.JOURNAL);
 
-		portletURL.setParameter(
-			"mvcPath", "/html/portlet/journal/edit_article.jsp");
+		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 
 		return portletURL;
 	}
@@ -160,7 +171,7 @@ public class JournalArticleAssetRendererFactory
 
 		LiferayPortletURL liferayPortletURL =
 			liferayPortletResponse.createLiferayPortletURL(
-				PortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
+				JournalPortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
 
 		try {
 			liferayPortletURL.setWindowState(windowState);

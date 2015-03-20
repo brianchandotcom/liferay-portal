@@ -14,13 +14,14 @@
 
 package com.liferay.journal.web.asset;
 
+import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
@@ -31,9 +32,18 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Alexander Chow
  */
+@Component(
+	immediate = true,
+	property = {
+		"model.class.name=com.liferay.portlet.journal.model.JournalFolder"
+	},
+	service = AssetRendererFactory.class
+)
 public class JournalFolderAssetRendererFactory
 	extends BaseAssetRendererFactory {
 
@@ -41,6 +51,8 @@ public class JournalFolderAssetRendererFactory
 
 	public JournalFolderAssetRendererFactory() {
 		setCategorizable(false);
+		setClassName(JournalFolder.class.getName());
+		setPortletId(JournalPortletKeys.JOURNAL);
 	}
 
 	@Override
@@ -79,7 +91,7 @@ public class JournalFolderAssetRendererFactory
 
 		LiferayPortletURL liferayPortletURL =
 			liferayPortletResponse.createLiferayPortletURL(
-				PortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
+				JournalPortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
 
 		try {
 			liferayPortletURL.setWindowState(windowState);

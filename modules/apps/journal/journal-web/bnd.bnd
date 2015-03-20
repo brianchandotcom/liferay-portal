@@ -5,6 +5,7 @@ Import-Package:\
 	${bnd.jsp.support.imports},\
 	*
 Export-Package:\
+	com.liferay.journal.web.asset.*,\
 	com.liferay.journal.web.lar.*
 Import-Package:\
 	javax.servlet;version='[2.3.0,4.0.0)'

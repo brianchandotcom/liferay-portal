@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.asset;
 
+import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -33,7 +34,6 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -128,7 +128,7 @@ public class JournalArticleAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.JOURNAL;
+		return JournalPortletKeys.JOURNAL;
 	}
 
 	@Override
@@ -202,11 +202,10 @@ public class JournalArticleAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), PortletKeys.JOURNAL,
-			PortletRequest.RENDER_PHASE);
+			getControlPanelPlid(liferayPortletRequest),
+			JournalPortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			"mvcPath", "/html/portlet/journal/edit_article.jsp");
+		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter(
 			"groupId", String.valueOf(_article.getGroupId()));
 		portletURL.setParameter("articleId", _article.getArticleId());
@@ -223,8 +222,8 @@ public class JournalArticleAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), PortletKeys.JOURNAL,
-			PortletRequest.ACTION_PHASE);
+			getControlPanelPlid(liferayPortletRequest),
+			JournalPortletKeys.JOURNAL, PortletRequest.ACTION_PHASE);
 
 		portletURL.setParameter(ActionRequest.ACTION_NAME, "exportArticle");
 		portletURL.setParameter(
@@ -246,8 +245,8 @@ public class JournalArticleAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), PortletKeys.JOURNAL,
-			PortletRequest.RENDER_PHASE);
+			getControlPanelPlid(liferayPortletRequest),
+			JournalPortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
 
 		JournalArticle previousApprovedArticle =
 			JournalArticleLocalServiceUtil.getPreviousApprovedArticle(_article);
@@ -256,8 +255,7 @@ public class JournalArticleAssetRenderer
 			return null;
 		}
 
-		portletURL.setParameter(
-			"mvcPath", "/html/portlet/journal/compare_versions.jsp");
+		portletURL.setParameter("mvcPath", "/compare_versions.jsp");
 		portletURL.setParameter(
 			"groupId", String.valueOf(_article.getGroupId()));
 		portletURL.setParameter("articleId", _article.getArticleId());
@@ -417,7 +415,7 @@ public class JournalArticleAssetRenderer
 
 			portletRequest.setAttribute(WebKeys.JOURNAL_ARTICLE, _article);
 
-			return "/html/portlet/journal/asset/" + template + ".jsp";
+			return "/asset/" + template + ".jsp";
 		}
 		else {
 			return null;

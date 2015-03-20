@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.social;
 
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -33,6 +34,11 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
  * @author Roberto Diaz
  * @author Zsolt Berentey
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
+	}
+)
 public class JournalArticleActivityInterpreter
 	extends BaseSocialActivityInterpreter {
 

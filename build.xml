@@ -120,13 +120,6 @@
 			<delete dir="test-results" />
 
 			<if>
-				<equals arg1="${app.server.type}" arg2="glassfish" />
-				<then>
-					<delete dir="${app.server.instance.dir}/applications/liferay-portal" />
-				</then>
-			</if>
-
-			<if>
 				<equals arg1="${app.server.type}" arg2="resin" />
 				<then>
 					<ant dir="support-resin" target="clean" inheritAll="false" />

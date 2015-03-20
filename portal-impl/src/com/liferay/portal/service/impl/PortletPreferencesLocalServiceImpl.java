@@ -350,9 +350,16 @@ public class PortletPreferencesLocalServiceImpl
 				(Validator.isNull(defaultPreferences) ||
 				 ((portlet != null) && portlet.isUndeployedPortlet()))) {
 
+				if (portlet == null) {
+					defaultPreferences = PortletConstants.DEFAULT_PREFERENCES;
+				}
+				else {
+					defaultPreferences = portlet.getDefaultPreferences();
+				}
+
 				return PortletPreferencesFactoryUtil.strictFromXML(
 					companyId, ownerId, ownerType, plid, portletId,
-					portlet.getDefaultPreferences());
+					defaultPreferences);
 			}
 
 			portletPreferences =

@@ -61,7 +61,7 @@ public class UserSearchFacet extends BaseSearchFacet {
 
 	@Override
 	public String getDisplayView() {
-		return "/facets/users.jsp";
+		return "/facets/view/users.jsp";
 	}
 
 	@Override

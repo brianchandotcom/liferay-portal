@@ -82,7 +82,7 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 
 	@Override
 	public String getDisplayView() {
-		return "/facets/asset_entries.jsp";
+		return "/facets/view/asset_entries.jsp";
 	}
 
 	@Override

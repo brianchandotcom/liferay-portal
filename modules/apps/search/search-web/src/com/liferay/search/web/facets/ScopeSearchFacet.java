@@ -61,7 +61,7 @@ public class ScopeSearchFacet extends BaseSearchFacet {
 
 	@Override
 	public String getDisplayView() {
-		return "/facets/scopes.jsp";
+		return "/facets/view/scopes.jsp";
 	}
 
 	@Override

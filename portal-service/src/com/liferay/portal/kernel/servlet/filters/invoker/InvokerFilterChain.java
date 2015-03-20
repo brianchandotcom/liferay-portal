@@ -101,6 +101,9 @@ public class InvokerFilterChain implements FilterChain {
 					catch (ServletException se) {
 						throw se;
 					}
+					catch (RuntimeException re) {
+						throw re;
+					}
 					catch (Exception e) {
 						throw new ServletException(e);
 					}

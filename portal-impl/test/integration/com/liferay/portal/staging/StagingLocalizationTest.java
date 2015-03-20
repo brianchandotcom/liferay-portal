@@ -54,7 +54,7 @@ import org.junit.Test;
 /**
  * @author Daniel Kocsis
  */
-@Sync
+@Sync(cleanTransaction = true)
 public class StagingLocalizationTest {
 
 	@ClassRule

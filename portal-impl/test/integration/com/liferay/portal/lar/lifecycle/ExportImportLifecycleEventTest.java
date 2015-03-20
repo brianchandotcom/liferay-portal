@@ -57,7 +57,7 @@ import org.powermock.api.mockito.PowerMockito;
 /**
  * @author Daniel Kocsis
  */
-@Sync
+@Sync(cleanTransaction = true)
 public class ExportImportLifecycleEventTest extends PowerMockito {
 
 	@ClassRule

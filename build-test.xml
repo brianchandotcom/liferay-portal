@@ -2124,9 +2124,11 @@ ${marketplace.portlet.properties}</echo>
 						<property name="testcase.element"><![CDATA[<testcase classname="${test.class.name}" name="${test.method.name}" time="0.00" />]]></property>
 					</then>
 					<else>
-						<property name="testcase.element"><![CDATA[<testcase classname="${test.class.name}" name="${test.method.name}" time="0.00">
-		<failure message="Jenkins failure prior to running test.">Jenkins failure prior to running test.</failure>
-	</testcase>]]></property>
+						<property name="testcase.element"><![CDATA[
+							<testcase classname="${test.class.name}" name="${test.method.name}" time="0.00">
+								<failure message="Jenkins failure prior to running test.">Jenkins failure prior to running test.</failure>
+							</testcase>
+						]]></property>
 					</else>
 				</if>
 

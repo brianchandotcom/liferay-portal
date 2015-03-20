@@ -25,9 +25,18 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
+		"com.liferay.portlet.friendly-url-routes=com/liferay/asset/tags/admin/web/portlet/route/asset-tags-admin-friendly-url-routes.xml",
 		"javax.portlet.name=" + AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN
 	},
 	service = FriendlyURLMapper.class
 )
 public class AssetTagsAdminFriendlyURLMapper extends DefaultFriendlyURLMapper {
+
+	@Override
+	public String getMapping() {
+		return _MAPPING;
+	}
+
+	private static final String _MAPPING = "tags_admin";
+
 }

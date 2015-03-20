@@ -30,8 +30,6 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-asset-tags-navigation",
 		"com.liferay.portlet.display-category=category.cms",
-		"com.liferay.portlet.friendly-url-mapping=tag",
-		"com.liferay.portlet.friendly-url-routes=com/liferay/asset/tags/navigation/web/portlet/route/asset-tags-navigation-friendly-url-routes.xml",
 		"com.liferay.portlet.icon=/icons/asset_tags_navigation.png",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.layout-cacheable=true",

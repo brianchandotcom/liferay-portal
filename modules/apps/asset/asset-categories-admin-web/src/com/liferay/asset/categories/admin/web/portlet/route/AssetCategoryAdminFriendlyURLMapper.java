@@ -25,10 +25,19 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
+		"com.liferay.portlet.friendly-url-routes=com/liferay/asset/categories/admin/web/portlet/route/asset-category-admin-friendly-url-routes.xml",
 		"javax.portlet.name=" + AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN
 	},
 	service = FriendlyURLMapper.class
 )
 public class AssetCategoryAdminFriendlyURLMapper
 	extends DefaultFriendlyURLMapper {
+
+	@Override
+	public String getMapping() {
+		return _MAPPING;
+	}
+
+	private static final String _MAPPING = "categories_admin";
+
 }

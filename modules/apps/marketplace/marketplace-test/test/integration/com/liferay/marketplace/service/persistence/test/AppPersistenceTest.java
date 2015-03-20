@@ -271,11 +271,11 @@ public class AppPersistenceTest {
 	}
 
 	protected OrderByComparator<App> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("App", "uuid", true,
-			"appId", true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "remoteAppId", true,
-			"title", true, "description", true, "category", true, "iconURL",
-			true, "version", true);
+		return OrderByComparatorFactoryUtil.create("Marketplace_App", "uuid",
+			true, "appId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "remoteAppId",
+			true, "title", true, "description", true, "category", true,
+			"iconURL", true, "version", true);
 	}
 
 	@Test

@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.model.PersistedModel;
 
 /**
- * The extended model interface for the Module service. Represents a row in the &quot;Module&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the Module service. Represents a row in the &quot;Marketplace_Module&quot; database table, with each column mapped to a property of this class.
  *
  * @author Ryan Park
  * @see ModuleModel

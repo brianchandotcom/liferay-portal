@@ -265,9 +265,10 @@ public class ModulePersistenceTest {
 	}
 
 	protected OrderByComparator<Module> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Module", "uuid", true,
-			"moduleId", true, "appId", true, "bundleSymbolicName", true,
-			"bundleVersion", true, "contextName", true);
+		return OrderByComparatorFactoryUtil.create("Marketplace_Module",
+			"uuid", true, "moduleId", true, "appId", true,
+			"bundleSymbolicName", true, "bundleVersion", true, "contextName",
+			true);
 	}
 
 	@Test

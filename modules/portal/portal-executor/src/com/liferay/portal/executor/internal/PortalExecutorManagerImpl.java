@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.executor;
+package com.liferay.portal.executor.internal;
 
 import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;

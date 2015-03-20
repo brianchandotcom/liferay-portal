@@ -192,16 +192,10 @@ public class FreeMarkerTemplateTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			if (e instanceof TemplateException) {
-				String message = e.getMessage();
+		catch (TemplateException te) {
+			String message = te.getMessage();
 
-				Assert.assertTrue(message.contains(_WRONG_TEMPLATE_ID));
-
-				return;
-			}
-
-			Assert.fail();
+			Assert.assertTrue(message.contains(_WRONG_TEMPLATE_ID));
 		}
 	}
 
@@ -279,16 +273,10 @@ public class FreeMarkerTemplateTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			if (e instanceof TemplateException) {
-				String message = e.getMessage();
+		catch (TemplateException e) {
+			String message = e.getMessage();
 
-				Assert.assertTrue(message.contains(_WRONG_ERROR_TEMPLATE_ID));
-
-				return;
-			}
-
-			Assert.fail();
+			Assert.assertTrue(message.contains(_WRONG_ERROR_TEMPLATE_ID));
 		}
 	}
 

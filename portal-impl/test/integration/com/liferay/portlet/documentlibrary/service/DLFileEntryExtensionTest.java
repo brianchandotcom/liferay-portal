@@ -262,16 +262,10 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 		FileEntry fileEntry = addFileEntry(_FILE_NAME, _FILE_NAME);
 
-		try {
-			FileEntry tempFileEntry = addFileEntry(
-				_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME);
+		FileEntry tempFileEntry = addFileEntry(
+			_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME);
 
-			DLAppLocalServiceUtil.deleteFileEntry(
-				tempFileEntry.getFileEntryId());
-		}
-		catch (DuplicateFileException dfe) {
-			Assert.fail("Unable to create" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
-		}
+		DLAppLocalServiceUtil.deleteFileEntry(tempFileEntry.getFileEntryId());
 
 		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
 
@@ -279,15 +273,9 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 		fileEntry = addFileEntry(_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME);
 
-		try {
-			FileEntry tempFileEntry = addFileEntry(_FILE_NAME, _FILE_NAME);
+		tempFileEntry = addFileEntry(_FILE_NAME, _FILE_NAME);
 
-			DLAppLocalServiceUtil.deleteFileEntry(
-				tempFileEntry.getFileEntryId());
-		}
-		catch (DuplicateFileException dfe) {
-			Assert.fail("Unable to create" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
-		}
+		DLAppLocalServiceUtil.deleteFileEntry(tempFileEntry.getFileEntryId());
 
 		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
 	}

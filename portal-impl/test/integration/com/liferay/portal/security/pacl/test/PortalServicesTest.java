@@ -52,12 +52,7 @@ public class PortalServicesTest {
 
 	@Test
 	public void test2() throws Exception {
-		try {
-			GroupLocalServiceUtil.getGroup(TestPropsValues.getGroupId());
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		GroupLocalServiceUtil.getGroup(TestPropsValues.getGroupId());
 	}
 
 	@Test

@@ -132,17 +132,10 @@ public class BlogsEntryLocalServiceTest {
 	public void testGetDiscussionMessageDisplay() throws Exception {
 		BlogsEntry entry = addEntry(false);
 
-		try {
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				BlogsEntry.class.getName(), entry.getEntryId(),
-				WorkflowConstants.STATUS_ANY);
-		}
-		catch (Exception e) {
-			Assert.fail(
-				"The initial discussion does not exist for entry " +
-					entry.getEntryId());
-		}
+		MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			BlogsEntry.class.getName(), entry.getEntryId(),
+			WorkflowConstants.STATUS_ANY);
 	}
 
 	@Test

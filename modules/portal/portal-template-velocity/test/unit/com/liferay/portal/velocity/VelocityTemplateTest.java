@@ -263,16 +263,10 @@ public class VelocityTemplateTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			if (e instanceof TemplateException) {
-				String message = e.getMessage();
+		catch (TemplateException e) {
+			String message = e.getMessage();
 
-				Assert.assertTrue(message.contains(_WRONG_TEMPLATE_ID));
-
-				return;
-			}
-
-			Assert.fail();
+			Assert.assertTrue(message.contains(_WRONG_TEMPLATE_ID));
 		}
 	}
 
@@ -346,16 +340,10 @@ public class VelocityTemplateTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			if (e instanceof TemplateException) {
-				String message = e.getMessage();
+		catch (TemplateException e) {
+			String message = e.getMessage();
 
-				Assert.assertTrue(message.contains(_WRONG_ERROR_TEMPLATE_ID));
-
-				return;
-			}
-
-			Assert.fail();
+			Assert.assertTrue(message.contains(_WRONG_ERROR_TEMPLATE_ID));
 		}
 	}
 

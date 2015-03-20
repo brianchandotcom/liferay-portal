@@ -37,18 +37,13 @@ public class ScreenNameGeneratorFactoryTest {
 			new SyntheticBundleRule("bundle.screennamegeneratorfactory"));
 
 	@Test
-	public void testGenerate() {
-		try {
-			ScreenNameGenerator screenNameGenerator =
-				ScreenNameGeneratorFactory.getInstance();
+	public void testGenerate() throws Exception {
+		ScreenNameGenerator screenNameGenerator =
+			ScreenNameGeneratorFactory.getInstance();
 
-			Assert.assertEquals(
-				"1-1", screenNameGenerator.generate(
-					1, 1, "test@screenamegeneratorfactorytest.com"));
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(
+			"1-1", screenNameGenerator.generate(
+				1, 1, "test@screenamegeneratorfactorytest.com"));
 	}
 
 }

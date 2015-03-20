@@ -40,7 +40,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.NoSuchContentException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -148,13 +147,8 @@ public class ConvertDocumentLibraryTest {
 		try {
 			_convertProcess.convert();
 
-			try {
-				DLContentLocalServiceUtil.getContent(
-					0, 0, image.getImageId() + ".jpg");
-			}
-			catch (NoSuchContentException nsce) {
-				Assert.fail();
-			}
+			DLContentLocalServiceUtil.getContent(
+				0, 0, image.getImageId() + ".jpg");
 		}
 		finally {
 			ImageLocalServiceUtil.deleteImage(image);
@@ -173,16 +167,11 @@ public class ConvertDocumentLibraryTest {
 
 		Assert.assertTrue(title.endsWith(".docx"));
 
-		try {
-			DLContentLocalServiceUtil.getContent(
-				dlFileEntry.getCompanyId(),
-				DLFolderConstants.getDataRepositoryId(
-					dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
-				dlFileEntry.getName());
-		}
-		catch (NoSuchContentException nsce) {
-			Assert.fail();
-		}
+		DLContentLocalServiceUtil.getContent(
+			dlFileEntry.getCompanyId(),
+			DLFolderConstants.getDataRepositoryId(
+				dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
+			dlFileEntry.getName());
 	}
 
 	@Test
@@ -311,16 +300,11 @@ public class ConvertDocumentLibraryTest {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		try {
-			DLContentLocalServiceUtil.getContent(
-				dlFileEntry.getCompanyId(),
-				DLFolderConstants.getDataRepositoryId(
-					dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
-				dlFileEntry.getName());
-		}
-		catch (NoSuchContentException nsce) {
-			Assert.fail();
-		}
+		DLContentLocalServiceUtil.getContent(
+			dlFileEntry.getCompanyId(),
+			DLFolderConstants.getDataRepositoryId(
+				dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
+			dlFileEntry.getName());
 	}
 
 	private ConvertProcess _convertProcess;

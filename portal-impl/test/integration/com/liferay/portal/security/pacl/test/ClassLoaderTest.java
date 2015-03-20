@@ -84,61 +84,36 @@ public class ClassLoaderTest {
 
 	@Test
 	public void testGet3() throws Exception {
-		try {
-			User defaultUser = UserLocalServiceUtil.getDefaultUser(
-				TestPropsValues.getCompanyId());
+		User defaultUser = UserLocalServiceUtil.getDefaultUser(
+			TestPropsValues.getCompanyId());
 
-			defaultUser.toEscapedModel();
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		defaultUser.toEscapedModel();
 	}
 
 	@Test
 	public void testGet4() throws Exception {
-		try {
-			BeanPropertyTest.class.getClassLoader();
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		BeanPropertyTest.class.getClassLoader();
 	}
 
 	@Test
 	public void testGet5() throws Exception {
-		try {
-			Class<?> clazz = getClass();
+		Class<?> clazz = getClass();
 
-			clazz.getClassLoader();
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		clazz.getClassLoader();
 	}
 
 	@Test
 	public void testGet6() throws Exception {
-		try {
-			Object.class.getClassLoader();
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		Object.class.getClassLoader();
 	}
 
 	@Test
 	public void testGet7() throws Exception {
-		try {
-			Object object = new Object();
+		Object object = new Object();
 
-			Class<?> clazz = object.getClass();
+		Class<?> clazz = object.getClass();
 
-			clazz.getClassLoader();
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		clazz.getClassLoader();
 	}
 
 	@Test
@@ -180,12 +155,7 @@ public class ClassLoaderTest {
 
 	@Test
 	public void testGet11() throws Exception {
-		try {
-			PortalRuntimePermission.checkGetClassLoader("flash-portlet");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		PortalRuntimePermission.checkGetClassLoader("flash-portlet");
 	}
 
 	@Test
@@ -234,12 +204,7 @@ public class ClassLoaderTest {
 
 	@Test
 	public void testGet16() throws Exception {
-		try {
-			PortletClassLoaderUtil.getClassLoader("1_WAR_flashportlet");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		PortletClassLoaderUtil.getClassLoader("1_WAR_flashportlet");
 	}
 
 	@Test
@@ -255,12 +220,7 @@ public class ClassLoaderTest {
 
 	@Test
 	public void testGet18() throws Exception {
-		try {
-			PortletClassLoaderUtil.getClassLoader("flash-portlet");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		PortletClassLoaderUtil.getClassLoader("flash-portlet");
 	}
 
 	@Test

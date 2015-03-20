@@ -54,76 +54,65 @@ public class RatingsDataTransformerUtilTest {
 	}
 
 	@Test
-	public void testTransformCompanyRatingsData() {
+	public void testTransformCompanyRatingsData() throws Exception {
 		_atomicState.reset();
 
-		try {
-			PortletPreferences oldPortletPreferences =
-				new PortletPreferencesImpl();
+		PortletPreferences oldPortletPreferences = new PortletPreferencesImpl();
 
-			oldPortletPreferences.setValue(
-				"com.liferay.portlet.blogs.model.BlogsEntry_RatingsType",
-				"like");
-			oldPortletPreferences.setValue(
-				"com.liferay.bookmarks.model.BookmarksEntry_RatingsType",
-				"like");
-			oldPortletPreferences.setValue(
-				"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
-					"_RatingsType",
-				"like");
-			oldPortletPreferences.setValue(
-				"com.liferay.portlet.journal.model.JournalArticle_RatingsType",
-				"like");
-			oldPortletPreferences.setValue(
-				"com.liferay.portlet.messageboards.model.MBDiscussion" +
-					"_RatingsType",
-				"like");
-			oldPortletPreferences.setValue(
-				"com.liferay.portlet.messageboards.model.MBMessage_RatingsType",
-				"like");
-			oldPortletPreferences.setValue(
-				"com.liferay.wiki.model.WikiPage_RatingsType", "like");
+		oldPortletPreferences.setValue(
+			"com.liferay.portlet.blogs.model.BlogsEntry_RatingsType", "like");
+		oldPortletPreferences.setValue(
+			"com.liferay.bookmarks.model.BookmarksEntry_RatingsType", "like");
+		oldPortletPreferences.setValue(
+			"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
+				"_RatingsType",
+			"like");
+		oldPortletPreferences.setValue(
+			"com.liferay.portlet.journal.model.JournalArticle_RatingsType",
+			"like");
+		oldPortletPreferences.setValue(
+			"com.liferay.portlet.messageboards.model.MBDiscussion" +
+				"_RatingsType",
+			"like");
+		oldPortletPreferences.setValue(
+			"com.liferay.portlet.messageboards.model.MBMessage_RatingsType",
+			"like");
+		oldPortletPreferences.setValue(
+			"com.liferay.wiki.model.WikiPage_RatingsType", "like");
 
-			UnicodeProperties unicodeProperties = new UnicodeProperties();
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-			unicodeProperties.setProperty(
-				"com.liferay.portlet.blogs.model.BlogsEntry_RatingsType",
-				"stars");
-			unicodeProperties.setProperty(
-				"com.liferay.bookmarks.model.BookmarksEntry_RatingsType",
-				"stars");
-			unicodeProperties.setProperty(
-				"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
-					"_RatingsType",
-				"stars");
-			unicodeProperties.setProperty(
-				"com.liferay.portlet.journal.model.JournalArticle_RatingsType",
-				"stars");
-			unicodeProperties.setProperty(
-				"com.liferay.portlet.messageboards.model.MBDiscussion" +
-					"_RatingsType",
-				"stars");
-			unicodeProperties.setProperty(
-				"com.liferay.portlet.messageboards.model.MBMessage_RatingsType",
-				"stars");
-			unicodeProperties.setProperty(
-				"com.liferay.wiki.model.WikiPage_RatingsType", "stars");
+		unicodeProperties.setProperty(
+			"com.liferay.portlet.blogs.model.BlogsEntry_RatingsType", "stars");
+		unicodeProperties.setProperty(
+			"com.liferay.bookmarks.model.BookmarksEntry_RatingsType", "stars");
+		unicodeProperties.setProperty(
+			"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
+				"_RatingsType",
+			"stars");
+		unicodeProperties.setProperty(
+			"com.liferay.portlet.journal.model.JournalArticle_RatingsType",
+			"stars");
+		unicodeProperties.setProperty(
+			"com.liferay.portlet.messageboards.model.MBDiscussion" +
+				"_RatingsType",
+			"stars");
+		unicodeProperties.setProperty(
+			"com.liferay.portlet.messageboards.model.MBMessage_RatingsType",
+			"stars");
+		unicodeProperties.setProperty(
+			"com.liferay.wiki.model.WikiPage_RatingsType", "stars");
 
-			RatingsDataTransformerUtil.transformCompanyRatingsData(
-				1, oldPortletPreferences, unicodeProperties);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		RatingsDataTransformerUtil.transformCompanyRatingsData(
+			1, oldPortletPreferences, unicodeProperties);
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
-	public void testTransformGroupRatingsData() {
+	public void testTransformGroupRatingsData() throws Exception {
 		_atomicState.reset();
 
-		try {
 			UnicodeProperties oldUnicodeProperties = new UnicodeProperties();
 
 			oldUnicodeProperties.setProperty(
@@ -176,10 +165,6 @@ public class RatingsDataTransformerUtilTest {
 
 			RatingsDataTransformerUtil.transformGroupRatingsData(
 				1, oldUnicodeProperties, unicodeProperties);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
 
 		Assert.assertTrue(_atomicState.isSet());
 	}

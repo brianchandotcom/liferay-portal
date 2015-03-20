@@ -44,12 +44,7 @@ public class SearchEngineTest {
 
 	@Test
 	public void test2() throws Exception {
-		try {
-			SearchEngineUtil.getSearchEngine("SYSTEM_ENGINE");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		SearchEngineUtil.getSearchEngine("SYSTEM_ENGINE");
 	}
 
 }

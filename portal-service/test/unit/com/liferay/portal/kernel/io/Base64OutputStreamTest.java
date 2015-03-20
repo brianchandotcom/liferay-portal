@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -142,15 +143,12 @@ public class Base64OutputStreamTest {
 	}
 
 	@Test
-	public void testGetChar() {
+	public void testGetChar() throws IOException {
 		try (Base64OutputStream base64OutputStream = new Base64OutputStream(
 				new ByteArrayOutputStream())) {
 
 			Assert.assertEquals('A', base64OutputStream.getChar(0));
 			Assert.assertEquals('?', base64OutputStream.getChar(64));
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
 		}
 	}
 

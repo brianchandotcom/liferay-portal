@@ -78,6 +78,26 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT));
 		removeDefaultValue(
 			portletRequest, portletPreferences,
+			"emailArticleMovedFromFolderBody_" + languageId,
+			ContentUtil.get(
+				PropsValues.JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleMovedFromFolderSubject_" + languageId,
+			ContentUtil.get(
+				PropsValues.JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_SUBJECT));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleMovedToFolderBody_" + languageId,
+			ContentUtil.get(
+				PropsValues.JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleMovedToFolderSubject_" + languageId,
+			ContentUtil.get(
+				PropsValues.JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_SUBJECT));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
 			"emailArticleReviewBody_" + languageId,
 			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_REVIEW_BODY));
 		removeDefaultValue(

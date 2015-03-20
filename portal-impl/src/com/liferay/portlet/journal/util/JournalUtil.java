@@ -837,6 +837,70 @@ public class JournalUtil {
 			PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT);
 	}
 
+	public static Map<Locale, String> getEmailArticleMovedFromFolderBodyMap(
+		PortletPreferences preferences) {
+
+		return LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleMovedFromFolderBody",
+			PropsKeys.JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_BODY);
+	}
+
+	public static boolean getEmailArticleMovedFromFolderEnabled(
+		PortletPreferences preferences) {
+
+		String emailArticleMovedFromFolderEnabled = preferences.getValue(
+			"emailArticleMovedFromFolderEnabled", StringPool.BLANK);
+
+		if (Validator.isNotNull(emailArticleMovedFromFolderEnabled)) {
+			return GetterUtil.getBoolean(emailArticleMovedFromFolderEnabled);
+		}
+		else {
+			return GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_ENABLED));
+		}
+	}
+
+	public static Map<Locale, String> getEmailArticleMovedFromFolderSubjectMap(
+		PortletPreferences preferences) {
+
+		return LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleMovedFromFolderBody",
+			PropsKeys.JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_SUBJECT);
+	}
+
+	public static Map<Locale, String> getEmailArticleMovedToFolderBodyMap(
+		PortletPreferences preferences) {
+
+		return LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleMovedToFolderBody",
+			PropsKeys.JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_BODY);
+	}
+
+	public static boolean getEmailArticleMovedToFolderEnabled(
+		PortletPreferences preferences) {
+
+		String emailArticleMovedToFolderEnabled = preferences.getValue(
+			"emailArticleMovedToFolderEnabled", StringPool.BLANK);
+
+		if (Validator.isNotNull(emailArticleMovedToFolderEnabled)) {
+			return GetterUtil.getBoolean(emailArticleMovedToFolderEnabled);
+		}
+		else {
+			return GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_ENABLED));
+		}
+	}
+
+	public static Map<Locale, String> getEmailArticleMovedToFolderSubjectMap(
+		PortletPreferences preferences) {
+
+		return LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleMovedToFolderBody",
+			PropsKeys.JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_SUBJECT);
+	}
+
 	public static Map<Locale, String> getEmailArticleReviewBodyMap(
 		PortletPreferences preferences) {
 

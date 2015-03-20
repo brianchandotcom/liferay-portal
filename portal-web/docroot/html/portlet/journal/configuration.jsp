@@ -30,7 +30,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<%
-	String tabs1Names = "email-from,web-content-added-email,web-content-review-email,web-content-updated-email";
+	String tabs1Names = "email-from,web-content-added-email,web-content-moved-from-folder-email,web-content-moved-to-folder-email,web-content-review-email,web-content-updated-email";
 
 	if (WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLinksCount(themeDisplay.getCompanyId(), scopeGroupId, JournalFolder.class.getName()) > 0) {
 		tabs1Names = tabs1Names.concat(",web-content-approval-denied-email,web-content-approval-granted-email,web-content-approval-requested-email");
@@ -75,6 +75,26 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailArticleAddedEnabled--", JournalUtil.getEmailArticleAddedEnabled(portletPreferences)) %>'
 				emailParam="emailArticleAdded"
 				emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailArticleAddedSubject", "preferences", ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_ADDED_SUBJECT)) %>'
+			/>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
+			<liferay-ui:email-notification-settings
+				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailArticleMovedFromFolderBody", "preferences", ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_BODY)) %>'
+				emailDefinitionTerms="<%= emailDefinitionTerms %>"
+				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailArticleMovedFromFolderEnabled--", JournalUtil.getEmailArticleMovedFromFolderEnabled(portletPreferences)) %>'
+				emailParam="emailArticleMovedFromFolder"
+				emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailArticleMovedFromFolderSubject", "preferences", ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_SUBJECT)) %>'
+			/>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
+			<liferay-ui:email-notification-settings
+				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailArticleMovedToFolderBody", "preferences", ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_BODY)) %>'
+				emailDefinitionTerms="<%= emailDefinitionTerms %>"
+				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailArticleMovedToFolderEnabled--", JournalUtil.getEmailArticleMovedToFolderEnabled(portletPreferences)) %>'
+				emailParam="emailArticleMovedToFolder"
+				emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailArticleMovedToFolderSubject", "preferences", ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_SUBJECT)) %>'
 			/>
 		</liferay-ui:section>
 

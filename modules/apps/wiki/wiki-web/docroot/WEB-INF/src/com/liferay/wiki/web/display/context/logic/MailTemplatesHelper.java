@@ -102,10 +102,10 @@ public class MailTemplatesHelper {
 					"previous-version"));
 		definitionTerms.put(
 			"[$FROM_ADDRESS$]",
-			HtmlUtil.escape(_wikiGroupServiceSettings.getEmailFromAddress()));
+			HtmlUtil.escape(_wikiGroupServiceSettings.emailFromAddress()));
 		definitionTerms.put(
 			"[$FROM_NAME$]",
-			HtmlUtil.escape(_wikiGroupServiceSettings.getEmailFromName()));
+			HtmlUtil.escape(_wikiGroupServiceSettings.emailFromName()));
 		definitionTerms.put(
 			"[$NODE_NAME$]",
 			LanguageUtil.get(

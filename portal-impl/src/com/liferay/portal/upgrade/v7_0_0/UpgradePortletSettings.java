@@ -18,20 +18,15 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v7_0_0.util.PortletPreferencesRow;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.blogs.BlogsGroupServiceSettings;
-import com.liferay.portlet.blogs.BlogsPortletInstanceSettings;
 import com.liferay.portlet.blogs.util.BlogsConstants;
-import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
-import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.util.DLConstants;
-import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.util.MBConstants;
-import com.liferay.portlet.shopping.ShoppingGroupServiceSettings;
 import com.liferay.portlet.shopping.util.ShoppingConstants;
 
 import java.sql.Connection;
@@ -45,6 +40,10 @@ import java.util.Enumeration;
  * @author Iván Zaera
  */
 public class UpgradePortletSettings extends UpgradeProcess {
+
+	public UpgradePortletSettings(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
 
 	protected void addPortletPreferences(
 			PortletPreferencesRow portletPreferencesRow)
@@ -137,30 +136,25 @@ public class UpgradePortletSettings extends UpgradeProcess {
 
 		upgradeMainPortlet(
 			PortletKeys.BLOGS, BlogsConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP,
-			BlogsPortletInstanceSettings.class,
-			BlogsGroupServiceSettings.class);
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, true);
 		upgradeMainPortlet(
 			PortletKeys.DOCUMENT_LIBRARY, DLConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, DLPortletInstanceSettings.class,
-			DLGroupServiceSettings.class);
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, true);
 		upgradeMainPortlet(
 			PortletKeys.MESSAGE_BOARDS, MBConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, null,
-			MBGroupServiceSettings.class);
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, false);
 		upgradeMainPortlet(
 			PortletKeys.SHOPPING, ShoppingConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, null,
-			ShoppingGroupServiceSettings.class);
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, false);
 
 		// Display portlets
 
 		upgradeDisplayPortlet(
-			PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, DLGroupServiceSettings.class);
+			PortletKeys.DOCUMENT_LIBRARY_DISPLAY, DLConstants.SERVICE_NAME,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
 		upgradeDisplayPortlet(
-			PortletKeys.MEDIA_GALLERY_DISPLAY,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, DLGroupServiceSettings.class);
+			PortletKeys.MEDIA_GALLERY_DISPLAY, DLConstants.SERVICE_NAME,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
 	}
 
 	protected long getGroupId(long plid) throws Exception {
@@ -210,7 +204,7 @@ public class UpgradePortletSettings extends UpgradeProcess {
 
 	protected void resetPortletPreferencesValues(
 			String portletId, int ownerType,
-			SettingsDescriptor<?> settingsDescriptor)
+			SettingsDescriptor settingsDescriptor)
 		throws Exception {
 
 		ResultSet rs = null;
@@ -282,7 +276,7 @@ public class UpgradePortletSettings extends UpgradeProcess {
 	}
 
 	protected void upgradeDisplayPortlet(
-			String portletId, int ownerType, Class<?> serviceSettingsClass)
+			String portletId, String serviceName, int ownerType)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
@@ -293,8 +287,8 @@ public class UpgradePortletSettings extends UpgradeProcess {
 			_log.debug("Delete service keys from portlet settings");
 		}
 
-		SettingsDescriptor<?> settingsDescriptor = new SettingsDescriptor<>(
-			serviceSettingsClass);
+		SettingsDescriptor settingsDescriptor =
+			_settingsFactory.getSettingsDescriptor(serviceName);
 
 		resetPortletPreferencesValues(portletId, ownerType, settingsDescriptor);
 
@@ -305,8 +299,7 @@ public class UpgradePortletSettings extends UpgradeProcess {
 
 	protected void upgradeMainPortlet(
 			String portletId, String serviceName, int ownerType,
-			Class<?> portletInstanceSettingsClass,
-			Class<?> serviceSettingsClass)
+			boolean resetPortletInstancePreferences)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
@@ -315,9 +308,9 @@ public class UpgradePortletSettings extends UpgradeProcess {
 
 		copyPortletSettingsAsServiceSettings(portletId, ownerType, serviceName);
 
-		if (portletInstanceSettingsClass != null) {
-			SettingsDescriptor<?> portletInstanceSettingsDescriptor =
-				new SettingsDescriptor<>(portletInstanceSettingsClass);
+		if (resetPortletInstancePreferences) {
+			SettingsDescriptor portletInstanceSettingsDescriptor =
+				_settingsFactory.getSettingsDescriptor(portletId);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -333,8 +326,8 @@ public class UpgradePortletSettings extends UpgradeProcess {
 			_log.debug("Delete service keys from portlet settings");
 		}
 
-		SettingsDescriptor<?> serviceSettingsDescriptor =
-			new SettingsDescriptor<>(serviceSettingsClass);
+		SettingsDescriptor serviceSettingsDescriptor =
+			_settingsFactory.getSettingsDescriptor(serviceName);
 
 		resetPortletPreferencesValues(
 			portletId, ownerType, serviceSettingsDescriptor);
@@ -355,5 +348,7 @@ public class UpgradePortletSettings extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradePortletSettings.class);
+
+	private final SettingsFactory _settingsFactory;
 
 }

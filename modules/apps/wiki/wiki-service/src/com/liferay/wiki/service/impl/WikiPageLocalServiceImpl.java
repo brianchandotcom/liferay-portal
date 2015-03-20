@@ -224,7 +224,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			_groupServiceSettingsProvider.getGroupServiceSettings(
 				node.getGroupId());
 
-		if (wikiGroupServiceSettings.isPageCommentsEnabled()) {
+		if (wikiGroupServiceSettings.pageCommentsEnabled()) {
 			mbMessageLocalService.addDiscussionMessage(
 				userId, page.getUserName(), page.getGroupId(),
 				WikiPage.class.getName(), resourcePrimKey,
@@ -252,7 +252,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			_groupServiceSettingsProvider.getGroupServiceSettings(
 				node.getGroupId());
 
-		String format = wikiGroupServiceSettings.getDefaultFormat();
+		String format = wikiGroupServiceSettings.defaultFormat();
 
 		boolean head = false;
 		String parentTitle = null;
@@ -2102,7 +2102,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
 				(page.getVersion() == WikiPageConstants.VERSION_DEFAULT) &&
 				(!page.isMinorEdit() ||
-				 wikiGroupServiceSettings.isPageMinorEditAddSocialActivity())) {
+				 wikiGroupServiceSettings.pageMinorEditAddSocialActivity())) {
 
 				JSONObject extraDataJSONObject =
 					JSONFactoryUtil.createJSONObject();
@@ -2120,7 +2120,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			if (NotificationThreadLocal.isEnabled() &&
 				(!page.isMinorEdit() ||
-				 wikiGroupServiceSettings.isPageMinorEditSendMail())) {
+				 wikiGroupServiceSettings.pageMinorEditSendEmail())) {
 
 				notifySubscribers(
 					userId, page,
@@ -3025,10 +3025,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			update = true;
 		}
 
-		if (!update && wikiGroupServiceSettings.isEmailPageAddedEnabled()) {
+		if (!update && wikiGroupServiceSettings.emailPageAddedEnabled()) {
 		}
-		else if (update &&
-				 wikiGroupServiceSettings.isEmailPageUpdatedEnabled()) {
+		else if (update && wikiGroupServiceSettings.emailPageUpdatedEnabled()) {
 		}
 		else {
 			return;
@@ -3066,23 +3065,23 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		String pageTitle = page.getTitle();
 
-		String fromName = wikiGroupServiceSettings.getEmailFromName();
-		String fromAddress = wikiGroupServiceSettings.getEmailFromAddress();
+		String fromName = wikiGroupServiceSettings.emailFromName();
+		String fromAddress = wikiGroupServiceSettings.emailFromAddress();
 
 		LocalizedValuesMap subjectLocalizedValuesMap = null;
 		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (update) {
 			subjectLocalizedValuesMap =
-				wikiGroupServiceSettings.getEmailPageUpdatedSubject();
+				wikiGroupServiceSettings.emailPageUpdatedSubject();
 			bodyLocalizedValuesMap =
-				wikiGroupServiceSettings.getEmailPageUpdatedBody();
+				wikiGroupServiceSettings.emailPageUpdatedBody();
 		}
 		else {
 			subjectLocalizedValuesMap =
-				wikiGroupServiceSettings.getEmailPageAddedSubject();
+				wikiGroupServiceSettings.emailPageAddedSubject();
 			bodyLocalizedValuesMap =
-				wikiGroupServiceSettings.getEmailPageAddedBody();
+				wikiGroupServiceSettings.emailPageAddedBody();
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
@@ -3112,8 +3111,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		subscriptionSender.setEntryURL(pageURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setLocalizedBodyMap(bodyLocalizedValuesMap);
-		subscriptionSender.setLocalizedSubjectMap(subjectLocalizedValuesMap);
+
+		if (bodyLocalizedValuesMap != null) {
+			subscriptionSender.setLocalizedBodyMap(
+				bodyLocalizedValuesMap.getLocalizationMap());
+		}
+
+		if (subjectLocalizedValuesMap != null) {
+			subscriptionSender.setLocalizedSubjectMap(
+				subjectLocalizedValuesMap.getLocalizationMap());
+		}
+
 		subscriptionSender.setMailId(
 			"wiki_page", page.getNodeId(), page.getPageId());
 
@@ -3298,7 +3306,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				node.getGroupId());
 
 		if (!page.isMinorEdit() ||
-			wikiGroupServiceSettings.isPageMinorEditAddSocialActivity()) {
+			wikiGroupServiceSettings.pageMinorEditAddSocialActivity()) {
 
 			if (oldPage.getVersion() == newVersion) {
 				SocialActivity lastSocialActivity =

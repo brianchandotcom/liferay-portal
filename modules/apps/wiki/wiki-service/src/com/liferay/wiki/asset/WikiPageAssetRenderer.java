@@ -93,7 +93,7 @@ public class WikiPageAssetRenderer
 
 	@Override
 	public String getDiscussionPath() {
-		if (_wikiGroupServiceSettings.isPageCommentsEnabled()) {
+		if (_wikiGroupServiceSettings.pageCommentsEnabled()) {
 			return "edit_page_discussion";
 		}
 		else {

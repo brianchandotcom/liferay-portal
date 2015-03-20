@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.definition.SettingsDefinition;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.Group;
@@ -74,12 +75,11 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		Settings portalPropertiesSettings = getPortalPropertiesSettings();
 
-		Settings serviceConfigurationBeanSettings =
-			getServiceConfigurationBeanSettings(
-				serviceName, portalPropertiesSettings);
+		Settings configurationBeanSettings = getConfigurationBeanSettings(
+			serviceName, portalPropertiesSettings);
 
 		Settings portalPreferencesSettings = getPortalPreferencesSettings(
-			companyId, serviceConfigurationBeanSettings);
+			companyId, configurationBeanSettings);
 
 		Settings companyPortletPreferencesSettings =
 			getCompanyPortletPreferencesSettings(
@@ -97,12 +97,11 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		Settings portalPropertiesSettings = getPortalPropertiesSettings();
 
-		Settings serviceConfigurationBeanSettings =
-			getServiceConfigurationBeanSettings(
-				serviceName, portalPropertiesSettings);
+		Settings configurationBeanSettings = getConfigurationBeanSettings(
+			serviceName, portalPropertiesSettings);
 
 		Settings portalPreferencesSettings = getPortalPreferencesSettings(
-			companyId, serviceConfigurationBeanSettings);
+			companyId, configurationBeanSettings);
 
 		Settings companyPortletPreferencesSettings =
 			getCompanyPortletPreferencesSettings(
@@ -163,12 +162,11 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		Settings portalPropertiesSettings = getPortalPropertiesSettings();
 
-		Settings serviceConfigurationBeanSettings =
-			getServiceConfigurationBeanSettings(
-				portletId, portalPropertiesSettings);
+		Settings configurationBeanSettings = getConfigurationBeanSettings(
+			portletId, portalPropertiesSettings);
 
 		Settings portalPreferencesSettings = getPortalPreferencesSettings(
-			companyId, serviceConfigurationBeanSettings);
+			companyId, configurationBeanSettings);
 
 		Settings companyPortletPreferencesSettings =
 			getCompanyPortletPreferencesSettings(
@@ -191,41 +189,46 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	public Settings getServerSettings(String settingsId) {
 		Settings portalPropertiesSettings = getPortalPropertiesSettings();
 
-		return getServiceConfigurationBeanSettings(
+		return getConfigurationBeanSettings(
 			settingsId, portalPropertiesSettings);
 	}
 
 	@Override
-	public SettingsDescriptor<?> getSettingsDescriptor(String settingsId) {
+	public SettingsDescriptor getSettingsDescriptor(String settingsId) {
 		settingsId = PortletConstants.getRootPortletId(settingsId);
 
 		return _settingsDescriptors.get(settingsId);
 	}
 
 	@Override
+	public void registerSettingsDefinition(
+		SettingsDefinition settingsDefinition, Object configurationBean) {
+
+		SettingsDescriptor settingsDescriptor =
+			new SettingsDefinitionSettingsDescriptor(settingsDefinition);
+
+		_register(settingsDescriptor, configurationBean, null);
+	}
+
+	@Override
 	public void registerSettingsMetadata(
-		Class<?> settingsClass, Object serviceConfigurationBean,
+		Class<?> settingsClass, Object configurationBean,
 		FallbackKeys fallbackKeys) {
 
-		SettingsDescriptor<?> settingsDescriptor = new SettingsDescriptor<>(
+		SettingsDescriptor settingsDescriptor = new AnnotatedSettingsDescriptor(
 			settingsClass);
 
-		for (String settingsId : settingsDescriptor.getSettingsIds()) {
-			_settingsDescriptors.put(settingsId, settingsDescriptor);
+		_register(settingsDescriptor, configurationBean, fallbackKeys);
+	}
 
-			if (fallbackKeys != null) {
-				_fallbackKeysMap.put(settingsId, fallbackKeys);
-			}
+	@Override
+	public void unregisterSettingsDefinition(
+		SettingsDefinition settingsDefinition) {
 
-			if (serviceConfigurationBean != null) {
-				_serviceConfigurationBeans.put(
-					settingsId, serviceConfigurationBean);
-			}
+		SettingsDescriptor settingsDescriptor =
+			new SettingsDefinitionSettingsDescriptor(settingsDefinition);
 
-			_resourceManagers.put(
-				settingsId,
-				new ClassLoaderResourceManager(settingsClass.getClassLoader()));
-		}
+		_unregister(settingsDescriptor);
 	}
 
 	protected Settings applyFallbackKeys(String settingsId, Settings settings) {
@@ -369,29 +372,66 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		return _resourceManagers.get(settingsId);
 	}
 
-	private Object getServiceConfigurationBean(String settingsId) {
+	private void _register(
+		SettingsDescriptor settingsDescriptor, Object configurationBean,
+		FallbackKeys fallbackKeys) {
+
+		for (String settingsId : settingsDescriptor.getSettingsIds()) {
+			_settingsDescriptors.put(settingsId, settingsDescriptor);
+
+			if (configurationBean != null) {
+				_configurationBeans.put(settingsId, configurationBean);
+			}
+
+			if (fallbackKeys != null) {
+				_fallbackKeysMap.put(settingsId, fallbackKeys);
+			}
+
+			Class<?> settingsClass = settingsDescriptor.getSettingsClass();
+
+			_resourceManagers.put(
+				settingsId,
+				new ClassLoaderResourceManager(settingsClass.getClassLoader()));
+		}
+	}
+
+	private void _unregister(SettingsDescriptor settingsDescriptor) {
+		for (String settingsId : settingsDescriptor.getSettingsIds()) {
+			_fallbackKeysMap.remove(settingsId);
+
+			_portletPropertiesMap.remove(settingsId);
+
+			_resourceManagers.remove(settingsId);
+
+			_configurationBeans.remove(settingsId);
+
+			_settingsDescriptors.put(settingsId, settingsDescriptor);
+		}
+	}
+
+	private Object getConfigurationBean(String settingsId) {
 		settingsId = PortletConstants.getRootPortletId(settingsId);
 
-		return _serviceConfigurationBeans.get(settingsId);
+		return _configurationBeans.get(settingsId);
 	}
 
-	private Settings getServiceConfigurationBeanSettings(
+	private Settings getConfigurationBeanSettings(
 		String settingsId, Settings parentSettings) {
 
-		return new ServiceConfigurationBeanSettings(
+		return new ConfigurationBeanSettings(
 			new LocationVariableResolver(getResourceManager(settingsId), this),
-			getServiceConfigurationBean(settingsId), parentSettings);
+			getConfigurationBean(settingsId), parentSettings);
 	}
 
+	private final ConcurrentMap<String, Object> _configurationBeans =
+		new ConcurrentHashMap<>();
 	private final ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =
 		new ConcurrentHashMap<>();
 	private final Map<String, Properties> _portletPropertiesMap =
 		new ConcurrentHashMap<>();
 	private final ConcurrentMap<String, ResourceManager> _resourceManagers =
 		new ConcurrentHashMap<>();
-	private final ConcurrentMap<String, Object> _serviceConfigurationBeans =
-		new ConcurrentHashMap<>();
-	private final Map<String, SettingsDescriptor<?>> _settingsDescriptors =
+	private final Map<String, SettingsDescriptor> _settingsDescriptors =
 		new ConcurrentHashMap<>();
 
 }

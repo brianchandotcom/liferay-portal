@@ -2243,9 +2243,16 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSenderPrototype.setFrom(fromAddress, fromName);
 		subscriptionSenderPrototype.setHtmlFormat(htmlFormat);
 		subscriptionSenderPrototype.setInReplyTo(inReplyTo);
-		subscriptionSenderPrototype.setLocalizedBodyMap(bodyLocalizedValuesMap);
-		subscriptionSenderPrototype.setLocalizedSubjectMap(
-			subjectLocalizedValuesMap);
+
+		if (bodyLocalizedValuesMap != null) {
+			subscriptionSenderPrototype.setLocalizedBodyMap(
+				bodyLocalizedValuesMap.getLocalizationMap());
+		}
+
+		if (subjectLocalizedValuesMap != null) {
+			subscriptionSenderPrototype.setLocalizedSubjectMap(
+				subjectLocalizedValuesMap.getLocalizationMap());
+		}
 
 		Date modifiedDate = message.getModifiedDate();
 

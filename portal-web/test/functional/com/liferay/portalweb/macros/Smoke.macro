@@ -20,16 +20,34 @@
 			<var name="portletName" value="Hello World" />
 		</execute>
 
+		<execute macro="Portlet#viewTitle">
+			<var name="portletName" value="Hello World" />
+		</execute>
+
+		<execute macro="Portlet#viewBody">
+			<var name="portletBody" value="Welcome to Liferay Portal" />
+			<var name="portletName" value="Hello World" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page1" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="Hello World" />
+		<execute macro="Portlet#viewTitle">
+			<var name="portletName" value="Hello World" />
+		</execute>
+
+		<execute macro="Portlet#viewBody">
+			<var name="portletBody" value="Welcome to Liferay Portal" />
+			<var name="portletName" value="Hello World" />
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="CPBlogs#PORTLET_TITLE" value1="Blogs" />
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="Blogs" />
+		</execute>
 	</command>
 </definition>

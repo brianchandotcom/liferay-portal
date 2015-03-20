@@ -1,6 +1,5 @@
 <definition component-name="portal-user-interface">
 	<property name="mobile.device.enabled" value="true" />
-	<property name="mobile.device.type" value="asus.nexus7.android4_3.safari7" />
 	<property name="testray.main.component.name" value="Mobile Web" />
 	<property name="testray.component.names" value="Mobile Web" />
 

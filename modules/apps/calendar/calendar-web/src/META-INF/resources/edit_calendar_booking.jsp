@@ -668,6 +668,15 @@ for (long otherCalendarId : otherCalendarIds) {
 				<portlet:namespace />calendarListPending.add(calendar);
 
 				defaultCalendarId = calendarId;
+
+				if (calendar.hasWorkflowDefinitionLink) {
+					A.one('#<portlet:namespace />approvalProcessAlert').toggleClass('hide', <%= !approved %>);
+					A.one('#<portlet:namespace />publishButton').setContent('<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "submit-for-publication")) %>');
+				}
+				else {
+					A.one('#<portlet:namespace />approvalProcessAlert').toggleClass('hide', true);
+					A.one('#<portlet:namespace />publishButton').setContent('<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "publish")) %>');
+				}
 			}
 		);
 

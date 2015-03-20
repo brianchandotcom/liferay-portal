@@ -2694,7 +2694,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/liferay-icu4j.jar</file-name>
-				<version>4.0.1</version>
+				<version>4.1.1</version>
 				<project-name>ICU4J</project-name>
 				<project-url>http://www.icu-project.org</project-url>
 				<licenses>
@@ -2705,7 +2705,7 @@
 					</license>
 				</licenses>
 				<comments>
-					See LPS-1907 and LPS-36663.
+					See LPS-1907, LPS-36663 and LPS-54422.
 				</comments>
 			</library>
 			<library>

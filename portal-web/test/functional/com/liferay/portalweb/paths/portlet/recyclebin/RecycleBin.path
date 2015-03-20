@@ -1,0 +1,142 @@
+<html>
+<head>
+<title>RecycleBin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RecycleBin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>RecycleBin</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE_CONTENT</td>
+	<td>//div[@class='portlet-body']/div[contains(.,'${key_assetType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE_RESTORE_LOCATION</td>
+	<td>//div[@class='portlet-body']/div/em[2]/a[contains(.,'${key_assetRestoreLocation}')] </td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
+	<td>//form[@id='_182_emptyForm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMPTY_RECYCLE_BIN</td>
+	<td>//a[@id='_182_empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_TOOLBAR</td>
+	<td>//ul[contains(@class,'nav-tabs')]//li/a[contains(.,'Staging')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIVE_TOOLBAR</td>
+	<td>//ul[contains(@class,'nav-tabs')]//li/a[contains(.,'Live')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECYCLE_BIN_TABLE-->
+<tr>
+	<td>RECYCLE_BIN_TABLE_NAME</td>
+	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[1]/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_TABLE_TYPE</td>
+	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_TABLE_REMOVED_DATE</td>
+	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_TABLE_REMOVED_BY</td>
+	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_TABLE_ACTIONS</td>
+	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[5]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECYCLE_BIN_WARNING-->
+<tr>
+	<td>RECYCLE_BIN_WARNING_MESSAGE</td>
+	<td>//div[contains(@class,'alert-warning')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_WARNING_OVERWRITE_RADIO</td>
+	<td>//input[@id='_182_override']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_WARNING_KEEP_AND_RENAME_RADIO</td>
+	<td>//input[@id='_182_rename']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_WARNING_KEEP_AND_RENAME_FIELD</td>
+	<td>//input[@id='_182_newName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECYCLE_BIN_FOLDER-->
+<tr>
+	<td>RECYCLE_BIN_FOLDER_DOCUMENT_NAME</td>
+	<td>//div[@id='_182_trashRenderersSearchContainer']//tr[contains(.,'${key_assetName}')]/td/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_FOLDER_ACTIONS</td>
+	<td>//div[@id='_182_trashRenderersSearchContainer']//tr[contains(.,'${key_assetName}')]/td/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_FOLDER_WARNING_IFRAME</td>
+	<td>//iframe[@id='_182_selectContainer_iframe_']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_FOLDER_WARNING_INFO</td>
+	<td>//div[contains(@class,'alert-block')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_FOLDER_WARNING_CHOOSE_THIS_FOLDER_BUTTON</td>
+	<td>//button[contains(.,'Choose This Folder')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

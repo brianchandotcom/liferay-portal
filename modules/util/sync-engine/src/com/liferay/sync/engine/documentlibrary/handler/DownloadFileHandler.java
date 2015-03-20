@@ -24,6 +24,7 @@ import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.session.Session;
 import com.liferay.sync.engine.session.SessionManager;
+import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
 import com.liferay.sync.engine.util.StreamUtil;
@@ -181,7 +182,7 @@ public class DownloadFileHandler extends BaseHandler {
 				syncFile.setUiEvent(SyncFile.UI_EVENT_DOWNLOADED_NEW);
 			}
 
-			FileUtil.writeFileKey(
+			FileKeyUtil.writeFileKey(
 				tempFilePath, String.valueOf(syncFile.getSyncFileId()));
 
 			FileUtil.setModifiedTime(tempFilePath, syncFile.getModifiedTime());

@@ -26,6 +26,7 @@ import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
+import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
 import com.liferay.sync.engine.util.SyncEngineUtil;
@@ -127,7 +128,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 			SyncFileService.update(syncFile);
 
-			FileUtil.writeFileKey(
+			FileKeyUtil.writeFileKey(
 				filePath, String.valueOf(syncFile.getSyncFileId()));
 		}
 		else {
@@ -273,7 +274,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 			sourceSyncFile.setState(SyncFile.STATE_SYNCED);
 
-			FileUtil.writeFileKey(
+			FileKeyUtil.writeFileKey(
 				targetFilePath, String.valueOf(sourceSyncFile.getSyncFileId()));
 		}
 		else {
@@ -461,7 +462,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 				SyncFileService.update(sourceSyncFile);
 
-				FileUtil.writeFileKey(
+				FileKeyUtil.writeFileKey(
 					targetFilePath,
 					String.valueOf(sourceSyncFile.getSyncFileId()));
 			}

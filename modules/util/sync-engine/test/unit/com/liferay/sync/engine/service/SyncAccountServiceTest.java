@@ -15,29 +15,55 @@
 package com.liferay.sync.engine.service;
 
 import com.liferay.sync.engine.BaseTestCase;
+import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
+import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.test.SyncFileTestUtil;
 import com.liferay.sync.engine.util.test.SyncSiteTestUtil;
 
+import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Shinn Lok
  */
+@PrepareForTest(FileUtil.class)
+@RunWith(PowerMockRunner.class)
 public class SyncAccountServiceTest extends BaseTestCase {
 
 	@Test
 	public void testAddAccount() throws Exception {
-		syncAccount = SyncAccountService.fetchSyncAccount(
-			syncAccount.getSyncAccountId());
+		String targetFilePathName = FileUtil.getFilePathName(
+			System.getProperty("user.home"), "liferay-sync-test3");
 
-		Assert.assertNotNull(syncAccount);
+		SyncAccount syncAccount2 = SyncAccountService.addSyncAccount(
+			targetFilePathName, "test3@liferay.com", 1, "test", 5, null, null,
+			false, "http://localhost:8080");
+
+		syncAccount2 = SyncAccountService.fetchSyncAccount(
+			syncAccount2.getSyncAccountId());
+
+		Assert.assertNotNull(syncAccount2);
+
+		SyncFile syncFile = SyncFileService.fetchSyncFile(targetFilePathName);
+
+		Assert.assertTrue(
+			FileKeyUtil.hasFileKey(
+				Paths.get(targetFilePathName), syncFile.getSyncFileId()));
+
+		SyncAccountService.deleteSyncAccount(syncAccount2.getSyncAccountId());
 	}
 
 	@Test
@@ -73,6 +99,36 @@ public class SyncAccountServiceTest extends BaseTestCase {
 			syncFile.getFilePathName());
 
 		Files.deleteIfExists(Paths.get(targetFilePathName));
+	}
+
+	@Test
+	public void testUpdateSyncAccountSyncFile() throws Exception {
+		String targetFilePathName = FileUtil.getFilePathName(
+			System.getProperty("user.home"), "liferay-sync-test2");
+
+		PowerMockito.stub(
+			PowerMockito.method(
+				FileUtil.class, "moveFile", Path.class, Path.class,
+				Boolean.class)
+		).toThrow(
+
+			// DirectoryNotEmptyException is thrown when a file is moved across
+			// file system drives. For cleaner tests, we can just simulate this
+			// behavior by mocking it.
+
+			new DirectoryNotEmptyException(targetFilePathName)
+		);
+
+		SyncAccountService.updateSyncAccountSyncFile(
+			Paths.get(targetFilePathName), syncAccount.getSyncAccountId(),
+			true);
+
+		SyncFile syncFile = SyncFileService.fetchSyncFile(targetFilePathName);
+
+		Assert.assertTrue(
+			FileKeyUtil.hasFileKey(
+				Paths.get(syncFile.getFilePathName()),
+				syncFile.getSyncFileId()));
 	}
 
 }

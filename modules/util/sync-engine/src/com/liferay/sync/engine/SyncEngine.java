@@ -37,6 +37,7 @@ import com.liferay.sync.engine.service.SyncWatchEventService;
 import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
 import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
 import com.liferay.sync.engine.util.ConnectionRetryUtil;
+import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileLockRetryUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.LoggerUtil;
@@ -176,7 +177,7 @@ public class SyncEngine {
 		SyncFile syncFile = SyncFileService.fetchSyncFile(
 			syncAccount.getFilePathName());
 
-		if (FileUtil.getFileKey(filePath) != syncFile.getSyncFileId()) {
+		if (!FileKeyUtil.hasFileKey(filePath, syncFile.getSyncFileId())) {
 			syncAccount.setActive(false);
 			syncAccount.setUiEvent(
 				SyncAccount.UI_EVENT_SYNC_ACCOUNT_FOLDER_MISSING);

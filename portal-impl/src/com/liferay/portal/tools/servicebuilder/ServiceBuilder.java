@@ -1884,6 +1884,40 @@ public class ServiceBuilder {
 		}
 	}
 
+	private void _checkForUnnecessaryFullyQualifiedClassNames(
+			File file, String content)
+		throws IOException {
+
+		JavaClass finalJavaClass = _getJavaClass(file.getPath());
+
+		if (_containsUnnecessaryFullyQualifiedClassNames(finalJavaClass)) {
+			content = _removeUnnecessaryFullyQualifiedClassNames(
+				finalJavaClass, content);
+
+			writeFile(file, content, _author);
+		}
+	}
+
+	private boolean _containsUnnecessaryFullyQualifiedClassNames(
+			JavaClass javaClass)
+		throws IOException {
+
+		JavaSource javaSource = javaClass.getSource();
+		String[] javaImports = javaSource.getImports();
+
+		for (String importToExclude : javaImports) {
+			String content = javaSource.toString();
+			int pos = content.indexOf(importToExclude);
+			int secondPos = content.indexOf(importToExclude, pos + 1);
+
+			if (secondPos != -1) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _createActionableDynamicQuery(Entity entity) throws Exception {
 		if (_osgiModule) {
 			return;
@@ -2088,6 +2122,8 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/model/" + entity.getName() + ".java");
 
 		writeFile(modelFile, content, _author);
+
+		_checkForUnnecessaryFullyQualifiedClassNames(modelFile, content);
 	}
 
 	private void _createExtendedModelBaseImpl(Entity entity) throws Exception {
@@ -2520,6 +2556,8 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/model/" + entity.getName() + "Wrapper.java");
 
 		writeFile(modelFile, content, _author);
+
+		_checkForUnnecessaryFullyQualifiedClassNames(modelFile, content);
 	}
 
 	private void _createPersistence(Entity entity) throws Exception {
@@ -2543,6 +2581,8 @@ public class ServiceBuilder {
 				"Persistence.java");
 
 		writeFile(ejbFile, content, _author);
+
+		_checkForUnnecessaryFullyQualifiedClassNames(ejbFile, content);
 	}
 
 	private void _createPersistenceImpl(Entity entity) throws Exception {
@@ -2627,6 +2667,8 @@ public class ServiceBuilder {
 				"Util.java");
 
 		writeFile(ejbFile, content, _author);
+
+		_checkForUnnecessaryFullyQualifiedClassNames(ejbFile, content);
 	}
 
 	private void _createPool(Entity entity) {
@@ -2840,6 +2882,8 @@ public class ServiceBuilder {
 				_getSessionTypeName(sessionType) + "Service.java");
 
 		writeFile(ejbFile, content, _author);
+
+		_checkForUnnecessaryFullyQualifiedClassNames(ejbFile, content);
 	}
 
 	private void _createServiceBaseImpl(Entity entity, int sessionType)
@@ -3146,6 +3190,8 @@ public class ServiceBuilder {
 				"ServiceSoap.java");
 
 		writeFile(ejbFile, content, _author);
+
+		_checkForUnnecessaryFullyQualifiedClassNames(ejbFile, content);
 	}
 
 	private void _createServiceUtil(Entity entity, int sessionType)
@@ -3174,6 +3220,8 @@ public class ServiceBuilder {
 				_getSessionTypeName(sessionType) + "ServiceUtil.java");
 
 		writeFile(ejbFile, content, _author);
+
+		_checkForUnnecessaryFullyQualifiedClassNames(ejbFile, content);
 	}
 
 	private void _createServiceWrapper(Entity entity, int sessionType)
@@ -3202,6 +3250,8 @@ public class ServiceBuilder {
 				_getSessionTypeName(sessionType) + "ServiceWrapper.java");
 
 		writeFile(ejbFile, content, _author);
+
+		_checkForUnnecessaryFullyQualifiedClassNames(ejbFile, content);
 	}
 
 	private void _createSpringXml() throws Exception {
@@ -4200,16 +4250,10 @@ public class ServiceBuilder {
 	}
 
 	private JavaClass _getJavaClass(String fileName) throws IOException {
-		int pos = fileName.indexOf(_implDir + "/");
+		fileName = StringUtil.replace(fileName, "\\", "/");
 
-		if (pos != -1) {
-			pos += _implDir.length();
-		}
-		else {
-			pos = fileName.indexOf(_apiDir + "/") + _apiDir.length();
-		}
+		String srcFile = fileName.substring(fileName.lastIndexOf("/src/") + 5);
 
-		String srcFile = fileName.substring(pos + 1);
 		String className = StringUtil.replace(
 			srcFile.substring(0, srcFile.length() - 5), "/", ".");
 
@@ -5139,6 +5183,37 @@ public class ServiceBuilder {
 		FileUtil.delete(
 			_serviceOutputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceWrapper.java");
+	}
+
+	private String _removeUnnecessaryFullyQualifiedClassNames(
+		JavaClass javaClass, String content) {
+
+		JavaSource javaSource = javaClass.getSource();
+		String[] javaImports = javaSource.getImports();
+
+		for (String importToExclude : javaImports) {
+			int fromIndex = 0;
+			int pos = content.indexOf(importToExclude, fromIndex);
+
+			for (; pos > -1; pos = content.indexOf(importToExclude, fromIndex)) {
+				int endPos = pos + importToExclude.length();
+				String charAfter = content.substring(endPos, endPos + 1);
+
+				if ((content.length() > endPos) &&
+					!charAfter.matches("[a-zA-Z;]")) {
+
+					String className = importToExclude.substring(
+						importToExclude.lastIndexOf(StringPool.PERIOD) + 1);
+
+					content = StringUtil.replaceFirst(
+						content, importToExclude, className, pos);
+				}
+
+				fromIndex = pos + importToExclude.length();
+			}
+		}
+
+		return content;
 	}
 
 	private void _resolveEntity(Entity entity) throws Exception {

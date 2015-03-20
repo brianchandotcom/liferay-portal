@@ -45,6 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -216,18 +217,19 @@ public class TemplateHandlerRegistryUtil {
 					continue;
 				}
 
+				Class<?> clazz = templateHandler.getClass();
+
+				ClassLoader classLoader = clazz.getClassLoader();
+
 				Map<Locale, String> nameMap = _getLocalizationMap(
-					group.getGroupId(), templateElement.elementText("name"));
+					classLoader, group.getGroupId(),
+					templateElement.elementText("name"));
 				Map<Locale, String> descriptionMap = _getLocalizationMap(
-					group.getGroupId(),
+					classLoader, group.getGroupId(),
 					templateElement.elementText("description"));
 				String language = templateElement.elementText("language");
 				String scriptFileName = templateElement.elementText(
 					"script-file");
-
-				Class<?> clazz = templateHandler.getClass();
-
-				ClassLoader classLoader = clazz.getClassLoader();
 
 				String script = StringUtil.read(classLoader, scriptFileName);
 
@@ -244,14 +246,17 @@ public class TemplateHandlerRegistryUtil {
 		}
 
 		private Map<Locale, String> _getLocalizationMap(
-			long groupId, String key) {
+			ClassLoader classLoader, long groupId, String key) {
 
 			Map<Locale, String> map = new HashMap<>();
 
 			Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
 
 			for (Locale locale : locales) {
-				map.put(locale, LanguageUtil.get(locale, key));
+				ResourceBundle resourceBundle = ResourceBundle.getBundle(
+					"content.Language", locale, classLoader);
+
+				map.put(locale, LanguageUtil.get(resourceBundle, key));
 			}
 
 			return map;

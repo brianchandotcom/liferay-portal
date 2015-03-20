@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Marketplace Web
 Bundle-SymbolicName: com.liferay.marketplace.web
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.license.util
 Import-Package: \
 	com.liferay.marketplace.model,\
 	com.liferay.marketplace.service,\

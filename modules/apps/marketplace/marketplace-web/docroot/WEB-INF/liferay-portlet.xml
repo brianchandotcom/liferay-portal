@@ -4,7 +4,7 @@
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>1</portlet-name>
-		<icon>/html/portlet/store/icon.png</icon>
+		<icon>/html/icons/store.png</icon>
 		<control-panel-entry-category>marketplace</control-panel-entry-category>
 		<control-panel-entry-weight>2.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.marketplace.web.store.portlet.StoreControlPanelEntry</control-panel-entry-class>
@@ -20,7 +20,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>2</portlet-name>
-		<icon>/my_marketplace/icon.png</icon>
+		<icon>/html/icons/my_marketplace.png</icon>
 		<control-panel-entry-category>marketplace</control-panel-entry-category>
 		<control-panel-entry-weight>3.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.marketplace.web.store.portlet.StoreControlPanelEntry</control-panel-entry-class>
@@ -37,7 +37,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>3</portlet-name>
-		<icon>/html/portlet/app_manager/icon.png</icon>
+		<icon>/html/icons/app_manager.png</icon>
 		<control-panel-entry-category>marketplace</control-panel-entry-category>
 		<control-panel-entry-weight>1.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.marketplace.web.appmanager.portlet.AppManagerControlPanelEntry</control-panel-entry-class>

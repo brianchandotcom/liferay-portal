@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.model.PersistedModel;
 
 /**
- * The extended model interface for the App service. Represents a row in the &quot;App&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the App service. Represents a row in the &quot;Marketplace_App&quot; database table, with each column mapped to a property of this class.
  *
  * @author Ryan Park
  * @see AppModel

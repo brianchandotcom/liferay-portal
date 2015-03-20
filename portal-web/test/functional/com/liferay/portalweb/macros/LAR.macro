@@ -138,7 +138,10 @@
 
 					<execute function="Uncheck" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
 				</for>
-			</then>os
+			</then>
+		</if>
+
+		<if>
 			<isset var="checkContentNameList" />
 			<then>
 				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_RADIO" />

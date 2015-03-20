@@ -80,8 +80,6 @@
 		<portlet-name>15</portlet-name>
 		<social-activity-interpreter-class>com.liferay.portlet.journal.social.JournalArticleActivityInterpreter</social-activity-interpreter-class>
 		<social-activity-interpreter-class>com.liferay.portlet.journal.social.JournalFolderActivityInterpreter</social-activity-interpreter-class>
-		<asset-renderer-factory>com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory</asset-renderer-factory>
-		<asset-renderer-factory>com.liferay.portlet.journal.asset.JournalFolderAssetRendererFactory</asset-renderer-factory>
 		<atom-collection-adapter>com.liferay.portlet.journal.atom.JournalArticleAtomCollectionProvider</atom-collection-adapter>
 		<custom-attributes-display>com.liferay.portlet.journal.JournalArticleCustomAttributesDisplay</custom-attributes-display>
 		<custom-attributes-display>com.liferay.portlet.journal.JournalFolderCustomAttributesDisplay</custom-attributes-display>

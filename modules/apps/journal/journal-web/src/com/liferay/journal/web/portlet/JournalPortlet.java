@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.portlet;
 
+import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.journal.web.portlet.action.ActionUtil;
 import com.liferay.journal.web.util.JournalRSSUtil;
@@ -87,7 +88,6 @@ import com.liferay.portlet.journal.InvalidDDMStructureException;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchFeedException;
 import com.liferay.portlet.journal.NoSuchFolderException;
-import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.JournalFolder;

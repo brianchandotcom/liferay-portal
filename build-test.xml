@@ -1664,7 +1664,14 @@ go]]></replacevalue>
 				<replaceregexp
 					file="@{file.name}"
 					match="&lt;testcase[^&gt;]*&gt;"
-					replace="${test.suite.properties}\0${test.case.attachments}${line.separator}${test.case.properties}"
+					replace="${test.suite.properties}\0"
+				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
+					match="&lt;testcase[^&gt;]*&gt;"
+					replace="\0${test.case.attachments}${line.separator}${test.case.properties}"
 				/>
 
 				<replaceregexp

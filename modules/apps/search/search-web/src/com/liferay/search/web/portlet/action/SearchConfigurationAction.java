@@ -74,6 +74,8 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 			facetJSONObject.put("fieldName", fieldName);
 			facetJSONObject.put("label", label);
 			facetJSONObject.put("order", order);
+			facetJSONObject.put(
+				"searchFacetClassName", searchFacet.getClassName());
 			facetJSONObject.put("static", isStatic);
 			facetJSONObject.put("weight", weight);
 

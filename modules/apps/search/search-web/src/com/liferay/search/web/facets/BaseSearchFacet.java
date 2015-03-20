@@ -84,6 +84,13 @@ public abstract class BaseSearchFacet implements SearchFacet {
 		for (int i = 0; i < facetsJSONArray.length(); i++) {
 			JSONObject facetJSONObject = facetsJSONArray.getJSONObject(i);
 
+			String searchFacetClassName = facetJSONObject.getString(
+				"searchFacetClassName");
+
+			if (!searchFacetClassName.equals(getClassName())) {
+				continue;
+			}
+
 			return _toFacetConfiguration(facetJSONObject);
 		}
 

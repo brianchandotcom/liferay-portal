@@ -1312,9 +1312,14 @@
 				app.server.bundle.index="@{app.server.bundle.index}"
 			/>
 
-			<antcall target="clean-up-logs" />
+			<if>
+				<equals arg1="@{app.server.bundle.index}" arg2="0" />
+				<then>
+					<antcall target="clean-up-logs" />
 
-			<record action="start" name="log" />
+					<record action="start" name="log" />
+				</then>
+			</if>
 
 			<exec dir="${test.app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
 				<arg line="${app.server.stop.executable.arg.line}" />

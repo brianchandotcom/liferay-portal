@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>SiteTemplates</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SiteTemplates</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SiteTemplates</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVE_CHECKBOX</td>
+	<td>//input[contains(@id,'active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALLOW_SITE_ADMIN_MODIFY_PAGES_CHECKBOX</td>
+	<td>//input[@id='_149_layoutsUpdateable']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPEN_SITE_TEMPLATE</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(@class,'field-wrapper')]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TEMPLATE_NAME</td>
+	<td>//h1[contains(.,'${key_siteTemplateName}')]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONFIGURATION-->
+<tr>
+	<td>CONFIGURATION</td>
+	<td>//div[@data-persist-id='panel-manage-site_administration.configuration']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_SITE_TEMPLATE_SETTINGS</td>
+	<td>//li[contains(.,'Site Template Settings')]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_APPLICATION_DISPLAY_TEMPLATES</td>
+	<td>//li[contains(.,'Application Display Templates')]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_MOBILE_DEVICE_FAMILIES</td>
+	<td>//li[contains(.,'Mobile Device Families')]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_TEMPLATE_TABLE-->
+<tr>
+	<td>SITE_TEMPLATE_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_siteTemplateName}')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TEMPLATE_TABLE_NAME_1</td>
+	<td>xpath=(//tr/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TEMPLATE_TABLE_NAME_2</td>
+	<td>xpath=(//tr/td[1]/a)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TEMPLATE_TABLE_NAME_3</td>
+	<td>xpath=(//tr/td[1]/a)[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TEMPLATE_TABLE_DESCRITPION</td>
+	<td>//tr[contains(.,'${key_siteTemplateName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TEMPLATE_TABLE_DESCRITPION_1</td>
+	<td>xpath=(//tr/td[2])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TEMPLATE_TABLE_DESCRIPTION_2</td>
+	<td>xpath=(//tr/td[2])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TEMPLATE_TABLE_ACTIVE</td>
+	<td>//tr[contains(.,'${key_siteTemplateName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TEMPLATE_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_siteTemplateName}')]/td[4]/div/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

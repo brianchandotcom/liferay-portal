@@ -15,9 +15,12 @@
 package com.liferay.search.web.util;
 
 import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+
+import javax.portlet.ActionRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -40,6 +43,8 @@ public interface SearchFacet {
 
 	public FacetConfiguration getFacetConfiguration(String searchConfiguration)
 		throws JSONException;
+
+	public JSONObject getJSONData(ActionRequest actionRequest);
 
 	public String getTitle();
 

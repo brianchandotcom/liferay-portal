@@ -70,6 +70,7 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 			JSONObject facetJSONObject = JSONFactoryUtil.createJSONObject();
 
 			facetJSONObject.put("className", className);
+			facetJSONObject.put("data", searchFacet.getJSONData(actionRequest));
 			facetJSONObject.put("displayStyle", displayStyle);
 			facetJSONObject.put("fieldName", fieldName);
 			facetJSONObject.put("label", label);

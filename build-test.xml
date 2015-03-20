@@ -1657,6 +1657,13 @@ go]]></replacevalue>
 				<replaceregexp
 					file="@{file.name}"
 					flags="g"
+					match="&lt;testcase[^&lt;]*?&lt;skipped[\s\S]*?testcase&gt;"
+					replace=""
+				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
 					match="(\s*\&lt;testcase[^/\n]*)/&gt;"
 					replace="\1&gt;${line.separator}&lt;/testcase&gt;"
 				/>

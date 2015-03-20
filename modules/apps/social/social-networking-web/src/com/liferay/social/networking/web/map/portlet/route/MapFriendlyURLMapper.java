@@ -24,8 +24,19 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	property = {"javax.portlet.name=" + SocialNetworkingPortletKeys.MAP},
+	property = {
+		"com.liferay.portlet.friendly-url-routes=com/liferay/social/networking/web/map/portlet/route/map-friendly-url-routes.xml",
+		"javax.portlet.name=" + SocialNetworkingPortletKeys.MAP
+	},
 	service = FriendlyURLMapper.class
 )
 public class MapFriendlyURLMapper extends DefaultFriendlyURLMapper {
+
+	@Override
+	public String getMapping() {
+		return _MAPPING;
+	}
+
+	private static final String _MAPPING = "map";
+
 }

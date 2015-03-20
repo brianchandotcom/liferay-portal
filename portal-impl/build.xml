@@ -204,52 +204,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<ant dir="../sql" target="build-db" />
 	</target>
 
-	<target name="build-icu4j-jar">
-		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-		</tstamp>
-
-		<unzip dest="${tstamp.value}" src="${project.dir}/tools/icu4j/icu4j-4_0_1-src.jar" />
-
-		<patch
-			dir="${tstamp.value}"
-			patchfile="${project.dir}/tools/icu4j/LPS-36663.patch"
-			strip="1"
-		/>
-
-		<move file="${tstamp.value}/src/com/ibm" todir="${tstamp.value}/src/com/liferay" />
-
-		<replace dir="${tstamp.value}" includes="build.xml,**/*.java,**/*.properties">
-			<replacefilter token="com.ibm" value="com.liferay.ibm" />
-			<replacefilter token="com/ibm" value="com/liferay/ibm" />
-		</replace>
-
-		<replace file="${tstamp.value}/build.xml">
-			<replacetoken><![CDATA[<unjar src="${icudatajar.file}" dest="${build.dir}" />]]></replacetoken>
-			<replacevalue><![CDATA[<unjar src="${icudatajar.file}" dest="${build.dir}" />
-	<move file="classes/com/ibm" todir="classes/com/liferay" />]]></replacevalue>
-		</replace>
-
-		<!--
-		Use exec because of a bug with com.liferay.ibm.icu.dev.tool.index.IndexGenerator
-		not picking up the correct base directory.
-
-		<ant dir="${tstamp.value}" target="core" inheritAll="false" />
-		<ant dir="${tstamp.value}" target="jar" inheritAll="false" />-->
-
-		<exec dir="${tstamp.value}" executable="/bin/sh" os="${os.unix}">
-			<arg line="-c 'ant core jar'" />
-		</exec>
-
-		<exec dir="${tstamp.value}" executable="cmd.exe" os="${os.windows}">
-			<arg line="/c ant core jar" />
-		</exec>
-
-		<move file="${tstamp.value}/icu4j.jar" tofile="${project.dir}/lib/portal/liferay-icu4j.jar.new" />
-
-		<delete dir="${tstamp.value}" />
-	</target>
-
 	<target name="build-iw">
 		<java
 			classname="com.liferay.portal.tools.InstanceWrapperBuilder"

@@ -4,7 +4,9 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.polls.lar,\
 	com.liferay.polls.service.configuration.configurator
-Include-Resource: classes
+Include-Resource:\
+	classes,\
+	META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd
 Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\

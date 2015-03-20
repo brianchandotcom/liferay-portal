@@ -17,7 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
-		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
+	   <dependency name="org.eclipse.osgi" org="org.eclipse.osgi" rev="3.10.100-SNAPSHOT" />
+	   <dependency name="slf4j-api" org="org.slf4j" rev="1.7.2" />
 	</dependencies>
 </ivy-module>

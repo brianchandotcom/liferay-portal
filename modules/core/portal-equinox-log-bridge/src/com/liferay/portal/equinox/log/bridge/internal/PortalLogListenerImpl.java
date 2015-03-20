@@ -1,0 +1,103 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.equinox.log.bridge.internal;
+
+import org.eclipse.equinox.log.ExtendedLogEntry;
+import org.eclipse.equinox.log.SynchronousLogListener;
+import org.eclipse.osgi.framework.log.FrameworkLogEntry;
+
+import org.osgi.framework.Bundle;
+import org.osgi.service.log.LogEntry;
+import org.osgi.service.log.LogService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * @author Raymond Augé
+ * @author Kamesh Sampath
+ */
+public class PortalLogListenerImpl implements SynchronousLogListener {
+
+	@Override
+	public void logged(LogEntry logEntry) {
+		if (!(logEntry instanceof ExtendedLogEntry)) {
+			return;
+		}
+
+		ExtendedLogEntry extendedLogEntry = (ExtendedLogEntry)logEntry;
+
+		Object context = extendedLogEntry.getContext();
+
+		if (context instanceof FrameworkLogEntry) {
+			FrameworkLogEntry frameworkLogEntry = (FrameworkLogEntry)context;
+
+			_log(
+				frameworkLogEntry.getEntry(), frameworkLogEntry.getSeverity(),
+				frameworkLogEntry.getMessage(), frameworkLogEntry.getContext(),
+				frameworkLogEntry.getThrowable());
+
+			FrameworkLogEntry[] children = frameworkLogEntry.getChildren();
+
+			if ((children != null) && (children.length > 0)) {
+				for (FrameworkLogEntry curFrameworkLogEntry : children) {
+					_log(
+						curFrameworkLogEntry.getEntry(),
+						curFrameworkLogEntry.getSeverity(),
+						curFrameworkLogEntry.getMessage(),
+						curFrameworkLogEntry.getContext(),
+						curFrameworkLogEntry.getThrowable());
+				}
+			}
+
+			return;
+		}
+
+		Bundle bundle = extendedLogEntry.getBundle();
+
+		_log(
+			bundle.getSymbolicName(), extendedLogEntry.getLevel(),
+			extendedLogEntry.getMessage(), context,
+			extendedLogEntry.getException());
+	}
+
+	private synchronized void _log(
+		String category, int level, String message, Object context,
+		Throwable throwable) {
+
+		if (context == null) {
+			context = "";
+		}
+
+		Logger log = LoggerFactory.getLogger(
+			"osgi.logging.".concat(category.replace('.', '_')));
+
+		if ((level == LogService.LOG_DEBUG) && log.isDebugEnabled()) {
+			log.debug(_FORMAT, message, context, throwable);
+		}
+		else if ((level == LogService.LOG_ERROR) && log.isErrorEnabled()) {
+			log.error(_FORMAT, message, context, throwable);
+		}
+		else if ((level == LogService.LOG_INFO) && log.isInfoEnabled()) {
+			log.info(_FORMAT, message, context, throwable);
+		}
+		else if ((level == LogService.LOG_WARNING) && log.isWarnEnabled()) {
+			log.warn(_FORMAT, message, context, throwable);
+		}
+	}
+
+	private static final String _FORMAT = "{} {}";
+
+}

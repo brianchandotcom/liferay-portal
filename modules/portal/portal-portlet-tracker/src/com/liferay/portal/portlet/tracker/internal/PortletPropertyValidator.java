@@ -70,8 +70,6 @@ public class PortletPropertyValidator {
 			"com.liferay.portlet.footer-portal-javascript",
 			"com.liferay.portlet.footer-portlet-css",
 			"com.liferay.portlet.footer-portlet-javascript",
-			"com.liferay.portlet.friendly-url-mapping",
-			"com.liferay.portlet.friendly-url-routes",
 			"com.liferay.portlet.header-portal-css",
 			"com.liferay.portlet.header-portal-javascript",
 			"com.liferay.portlet.header-portlet-css",

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
@@ -1890,14 +1889,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (bodyLocalizedValuesMap != null) {
 			subscriptionSender.setLocalizedBodyMap(
-				bodyLocalizedValuesMap.getLocalizationMap(
-					LanguageUtil.getAvailableLocales()));
+				bodyLocalizedValuesMap.getLocalizationMap());
 		}
 
 		if (subjectLocalizedValuesMap != null) {
 			subscriptionSender.setLocalizedSubjectMap(
-				subjectLocalizedValuesMap.getLocalizationMap(
-					LanguageUtil.getAvailableLocales()));
+				subjectLocalizedValuesMap.getLocalizationMap());
 		}
 
 		subscriptionSender.setMailId("blogs_entry", entry.getEntryId());

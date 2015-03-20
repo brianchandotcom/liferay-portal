@@ -52,14 +52,8 @@ public class LocalizedValuesMap {
 		return _defaultValue;
 	}
 
-	public Map<Locale, String> getLocalizationMap(Locale[] availableLocales) {
-		Map<Locale, String> map = new HashMap<>();
-
-		for (Locale locale : availableLocales) {
-			map.put(locale, get(locale));
-		}
-
-		return map;
+	public Map<Locale, String> getLocalizationMap() {
+		return new HashMap<>(_values);
 	}
 
 	public String getLocalizationXml(

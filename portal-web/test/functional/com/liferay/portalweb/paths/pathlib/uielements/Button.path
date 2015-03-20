@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD</td>
+	<td>//a[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CANCEL</td>
 	<td>//a[contains(@id,'cancel') and contains(@class,'btn')]</td>
 	<td></td>

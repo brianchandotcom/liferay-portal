@@ -68,7 +68,7 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 			{ "bundleVersion", Types.VARCHAR },
 			{ "contextName", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Marketplace_Module (uuid_ VARCHAR(75) null,moduleId LONG not null primary key,appId LONG,bundleSymbolicName VARCHAR(75) null,bundleVersion VARCHAR(75) null,contextName VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Marketplace_Module (uuid_ VARCHAR(75) null,moduleId LONG not null primary key,appId LONG,bundleSymbolicName VARCHAR(500) null,bundleVersion VARCHAR(75) null,contextName VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Marketplace_Module";
 	public static final String ORDER_BY_JPQL = " ORDER BY module.moduleId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Marketplace_Module.moduleId ASC";

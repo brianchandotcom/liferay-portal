@@ -102,6 +102,13 @@
 		</if>
 
 		<if>
+			<isset var="categoryName" />
+			<then>
+				<execute macro="KBArticle#selectCategoryCP" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${kbWorkflowAction}" arg2="Submit for Publication" />
 			<then>
 				<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
@@ -129,6 +136,13 @@
 				<then>
 					<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_1" value1="Your request failed to complete." />
 					<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_2" value1="Please enter a unique friendly URL." />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${kbMissingRequiredCategory}" arg2="true" />
+				<then>
+					<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_1" value1="Your request failed to complete." />
+					<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_2" value1="Please select at least one category for ${vocabularyName}." />
 				</then>
 			</elseif>
 			<else>
@@ -665,6 +679,23 @@
 		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${kbArticleAttachment}" />
 	</command>
 
+	<command name="selectCategoryCP">
+		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="CPKnowledgebaseadminAddarticle#CATEGORIZATION_HEADER_EXPANDED" />
+			<then>
+				<execute function="Click" locator1="CPKnowledgebaseadminAddarticle#CATEGORIZATION_HEADER_COLLAPSED" />
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#CATEGORIZATION_SELECT_BUTTON" value1="Select" />
+		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#CATEGORIES_CATEGORY_UNSELECTED" value1="${categoryName}" />
+		<execute function="AssertElementPresent" locator1="CPKnowledgebaseadminAddarticle#CATEGORIES_CATEGORY_SELECTED" value1="${categoryName}" />
+		<execute function="Click" locator1="CPKnowledgebaseadminAddarticle#CATEGORIES_CLOSE_BUTTON" />
+	</command>
+
 	<command name="selectParentArticleCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
@@ -933,6 +964,16 @@
 
 				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#RELATED_ASSETS_HEADER" value1="Related Assets:" />
 				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="categoryName" />
+			<then>
+				<var name="key_categoryName" value="${categoryName}" />
+
+				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#CATEGORY_HEADER" value1="${vocabularyName}: ${categoryName}" />
+				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#CATEGORY_LINKS" value1="${categoryName}" />
 			</then>
 		</if>
 	</command>

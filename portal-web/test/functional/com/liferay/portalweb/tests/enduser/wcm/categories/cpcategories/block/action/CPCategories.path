@@ -69,8 +69,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VOCABULARIES_BREADCRUMB_LINK</td>
-	<td>//div[contains(@class,'breadcrumb')]/ul/li/a</td>
+	<td>BACK_BUTTON</td>
+	<td>//a[contains(@id,'AssetCategoriesAdminPortlet_TabsBack')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -342,7 +342,16 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public PortletPreferences getPreferences() {
-		return DoPrivilegedUtil.wrap(new PortletPreferencesPrivilegedAction());
+		String lifecycle = getLifecycle();
+
+		if (lifecycle.equals(PortletRequest.RENDER_PHASE) &&
+			PropsValues.PORTLET_PREFERENCES_STRICT_STORE) {
+
+			return DoPrivilegedUtil.wrap(
+				new PortletPreferencesPrivilegedAction());
+		}
+
+		return getPreferencesImpl();
 	}
 
 	public PortletPreferencesImpl getPreferencesImpl() {
@@ -979,8 +988,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 		@Override
 		public PortletPreferences run() {
-			return new PortletPreferencesWrapper(
-				getPreferencesImpl(), getLifecycle());
+			return new PortletPreferencesWrapper(getPreferencesImpl());
 		}
 
 	}

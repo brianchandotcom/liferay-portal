@@ -124,8 +124,8 @@ public class PortletPreferencesWrapper
 
 	@Override
 	public void store() throws IOException, ValidatorException {
-		if (PropsValues.TCK_URL &&
-			_lifecycle.equals(PortletRequest.RENDER_PHASE)) {
+		if (_lifecycle.equals(PortletRequest.RENDER_PHASE) &&
+			PropsValues.PORTLET_PREFERENCES_STRICT_STORE) {
 
 			// PLT.17.1, clv
 

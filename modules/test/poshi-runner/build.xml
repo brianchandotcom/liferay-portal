@@ -10,9 +10,9 @@
 
 	<target name="prepare-poshi-runner" depends="compile">
 		<echo file="classes/poshi-runner-ext.properties">
-			test.class.command.name=${test.case.name}
-
 			test.basedir=../../../portal-web/test/functional/com/liferay/portalweb/
+
+			test.name=${test.name}
 		</echo>
 	</target>
 
@@ -42,7 +42,7 @@
 	</target>
 
 	<target name="start-poshi-runner" depends="prepare-poshi-runner,prepare-sikuli">
-		<fail message="Please set the property ${test.case.name}." unless="test.case.name" />
+		<fail message="Please set the property ${test.name}." unless="test.name" />
 
 		<mkdir dir="test-results" />
 

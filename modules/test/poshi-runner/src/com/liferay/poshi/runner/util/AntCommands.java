@@ -53,7 +53,7 @@ public class AntCommands implements Callable<Void> {
 			sb.append(" ");
 			sb.append(_target);
 			sb.append(" -Dtest.ant.launched.by.selenium=true -Dtest.class=");
-			sb.append(PropsValues.TEST_CLASS_COMMAND_NAME);
+			sb.append(PropsValues.TEST_NAME);
 		}
 		else {
 			runtime.exec("cmd /c cd " + _liferaySelenium.getProjectDirName());
@@ -63,7 +63,7 @@ public class AntCommands implements Callable<Void> {
 			sb.append(" ");
 			sb.append(_target);
 			sb.append(" -Dtest.ant.launched.by.selenium=true -Dtest.class=");
-			sb.append(PropsValues.TEST_CLASS_COMMAND_NAME);
+			sb.append(PropsValues.TEST_NAME);
 		}
 
 		Process process = runtime.exec(sb.toString());

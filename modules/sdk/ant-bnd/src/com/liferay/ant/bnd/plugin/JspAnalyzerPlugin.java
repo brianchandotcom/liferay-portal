@@ -61,6 +61,8 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 
 		Set<String> keys = new HashSet<String>(resources.keySet());
 
+		boolean matches = false;
+
 		for (String key : keys) {
 			for (Instruction instruction : instructions.keySet()) {
 				if (instruction.matches(key)) {
@@ -75,6 +77,22 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 
 					addPackageImports(analyzer, jsp);
 					addTaglibRequirements(analyzer, jsp);
+
+					matches = true;
+				}
+			}
+		}
+
+		if (matches) {
+			Packages packages = analyzer.getReferred();
+
+			for (String packageName : _REQUIRED_PACKAGES) {
+				PackageRef packageRef = analyzer.getPackageRef(packageName);
+
+				Matcher matcher = _packagePattern.matcher(packageRef.getFQN());
+
+				if (matcher.matches() && !packages.containsKey(packageRef)) {
+					packages.put(packageRef, new Attrs());
 				}
 			}
 		}
@@ -227,6 +245,10 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		"http://java.sun.com/jsp/jstl/core", "http://java.sun.com/jsp/jstl/fmt",
 		"http://java.sun.com/jsp/jstl/functions",
 		"http://java.sun.com/jsp/jstl/sql", "http://java.sun.com/jsp/jstl/xml"
+	};
+
+	private static final String[] _REQUIRED_PACKAGES = new String[] {
+		"javax.servlet", "javax.servlet.http"
 	};
 
 	private static final Pattern _packagePattern = Pattern.compile(

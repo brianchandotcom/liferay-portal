@@ -83,7 +83,9 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		_jspBundle = FrameworkUtil.getBundle(
 			com.liferay.portal.servlet.jsp.compiler.JspServlet.class);
 
-		_logger = new Logger(_jspBundle.getBundleContext());
+		_jspBundleContext = _jspBundle.getBundleContext();
+
+		_logger = new Logger(_jspBundleContext);
 
 		ServletContext servletContext =
 			jspCompilationContext.getServletContext();
@@ -102,7 +104,6 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		_bundle = _allParticipatingBundles[0];
 
-		_bundleContext = _bundle.getBundleContext();
 		_resourceResolver = new JspResourceResolver(
 			_bundle, _jspBundle, _logger);
 
@@ -297,9 +298,9 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		tldMappings = new HashMap<>();
 
 		ServiceReference<SAXParserFactory> saxParserFactoryServiceReference =
-			_bundleContext.getServiceReference(SAXParserFactory.class);
+			_jspBundleContext.getServiceReference(SAXParserFactory.class);
 
-		SAXParserFactory saxParserFactory = _bundleContext.getService(
+		SAXParserFactory saxParserFactory = _jspBundleContext.getService(
 			saxParserFactoryServiceReference);
 
 		saxParserFactory.setNamespaceAware(false);
@@ -372,9 +373,9 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;
-	private BundleContext _bundleContext;
 	private final List<File> _classPath = new ArrayList<>();
 	private Bundle _jspBundle;
+	private BundleContext _jspBundleContext;
 	private Logger _logger;
 	private ResourceResolver _resourceResolver;
 

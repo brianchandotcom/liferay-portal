@@ -296,6 +296,15 @@ public abstract class StateAwareResponseImpl
 		_calledSetRenderParameter = false;
 	}
 
+	protected void reset() {
+		_calledSetRenderParameter = false;
+		_events.clear();
+		_params.clear();
+		_portletMode = null;
+		_redirectLocation = null;
+		_windowState = null;
+	}
+
 	protected boolean setPublicRenderParameter(String name, String[] values) {
 		Portlet portlet = getPortlet();
 

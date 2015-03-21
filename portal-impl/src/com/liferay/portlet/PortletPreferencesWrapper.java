@@ -124,24 +124,16 @@ public class PortletPreferencesWrapper
 
 	@Override
 	public void store() throws IOException, ValidatorException {
-		if (PropsValues.TCK_URL) {
+		if (PropsValues.TCK_URL &&
+			_lifecycle.equals(PortletRequest.RENDER_PHASE)) {
 
-			// Be strict to pass the TCK
+			// PLT.17.1, clv
 
-			if (_lifecycle.equals(PortletRequest.ACTION_PHASE)) {
-				_portletPreferences.store();
-			}
-			else {
-				throw new IllegalStateException(
-					"Preferences cannot be stored inside a render call");
-			}
+			throw new IllegalStateException(
+				"Preferences cannot be stored inside a render call");
 		}
-		else {
 
-			// Relax so that poorly written portlets can still work
-
-			_portletPreferences.store();
-		}
+		_portletPreferences.store();
 	}
 
 	private final String _lifecycle;

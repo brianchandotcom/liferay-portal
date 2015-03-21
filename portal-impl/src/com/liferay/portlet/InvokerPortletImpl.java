@@ -347,13 +347,27 @@ public class InvokerPortletImpl
 	@Override
 	public void processEvent(
 			EventRequest eventRequest, EventResponse eventResponse)
-		throws IOException, PortletException {
+		throws IOException {
 
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
 
-		invokeEvent(eventRequest, eventResponse);
+		try {
+			invokeEvent(eventRequest, eventResponse);
+		}
+		catch (PortletException pe) {
+
+			// PLT.15.2.6, cxlvi
+
+			StateAwareResponseImpl stateAwareResponseImpl =
+				(StateAwareResponseImpl)eventResponse;
+
+			stateAwareResponseImpl.reset();
+
+			eventRequest.setAttribute(
+				_portletId + PortletException.class.getName(), pe);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

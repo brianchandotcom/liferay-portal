@@ -12,22 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.sso.openid.configuration;
-
-import aQute.bnd.annotation.metatype.Meta;
+package com.liferay.portal.sso.openid.constants;
 
 /**
  * @author Michael C. Han
  */
-@Meta.OCD(
-	id = "com.liferay.portal.sso.openid.configuration.OpenIdConfiguration"
-)
-public interface OpenIdConfiguration {
+public interface OpenIdWebKeys {
 
-	@Meta.AD(deflt = "true", required = false)
-	public boolean enabled();
-
-	@Meta.AD(deflt = "yahoo", required = false)
-	public String openIdProviders();
+	public static final String OPEN_ID_DISCO = "openid-disco";
 
 }

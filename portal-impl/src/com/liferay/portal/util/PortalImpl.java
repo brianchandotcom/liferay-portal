@@ -5197,7 +5197,11 @@ public class PortalImpl implements Portal {
 			return 0;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if (group == null) {
+			return 0;
+		}
 
 		long siteGroupId = groupId;
 
@@ -7578,7 +7582,11 @@ public class PortalImpl implements Portal {
 
 		long siteGroupId = getSiteGroupId(groupId);
 
-		Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
+		Group siteGroup = GroupLocalServiceUtil.fetchGroup(siteGroupId);
+
+		if (siteGroup == null) {
+			return groups;
+		}
 
 		for (Group group : siteGroup.getAncestors()) {
 			if (checkContentSharingWithChildrenEnabled &&

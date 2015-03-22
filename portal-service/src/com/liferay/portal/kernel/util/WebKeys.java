@@ -103,6 +103,10 @@ public interface WebKeys {
 	@Deprecated
 	public static final String LIFERAY_SHARED_VISITED_GROUP_ID_RECENT = "LIFERAY_SHARED_VISITED_GROUP_ID_RECENT";
 
+	public static final String OPEN_ID_LOGIN = "OPEN_ID_LOGIN";
+
+	public static final String OPEN_ID_LOGIN_PENDING = "OPEN_ID_LOGIN_PENDING";
+
 	public static final String OSGI_BUNDLE = "OSGI_BUNDLE";
 
 	@Distributed(direction = Direction.RESPONSE)

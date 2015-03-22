@@ -277,8 +277,6 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String NOTES_LIST = "NOTES_LIST";
 
-	public static final String OPEN_ID_DISCO = "openid-disco";
-
 	public static final String ORG_LABOR = "ORG_LABOR";
 
 	public static final String ORGANIZATION = "ORGANIZATION";

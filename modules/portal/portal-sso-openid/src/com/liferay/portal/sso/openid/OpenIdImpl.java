@@ -30,7 +30,10 @@ import org.osgi.service.component.annotations.Modified;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = OpenId.class)
+@Component(
+	configurationPid = "com.liferay.portal.sso.openid.configuration.OpenIdConfiguration",
+	immediate = true, service = OpenId.class
+)
 public class OpenIdImpl implements OpenId {
 
 	@Override

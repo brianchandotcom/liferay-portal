@@ -14,12 +14,18 @@
 
 package com.liferay.portal.sso.openid.portlet.action;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.openid.OpenId;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.struts.BaseStrutsPortletAction;
+import com.liferay.portal.kernel.struts.StrutsPortletAction;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -27,28 +33,28 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.sso.openid.configuration.OpenIdConfiguration;
+import com.liferay.portal.sso.openid.constants.OpenIdWebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.OpenIdUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.ActionResponseImpl;
 
 import java.net.URL;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -61,12 +67,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 import org.openid4java.OpenIDException;
-import org.openid4java.consumer.ConsumerException;
 import org.openid4java.consumer.ConsumerManager;
 import org.openid4java.consumer.InMemoryConsumerAssociationStore;
 import org.openid4java.consumer.InMemoryNonceVerifier;
@@ -84,19 +85,28 @@ import org.openid4java.message.sreg.SRegMessage;
 import org.openid4java.message.sreg.SRegRequest;
 import org.openid4java.message.sreg.SRegResponse;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-public class OpenIdAction extends PortletAction {
-
-	public OpenIdAction() {
-		_initialize();
-	}
+@Component(
+	configurationPid = "com.liferay.portal.sso.openid.configuration.OpenIdConfiguration",
+	immediate = true,
+	property = {
+		"path=/login/open_id", "portlet.login.login=portlet.login.login",
+		"portlet.login.open_id=portlet.login.open_id"
+	},
+	service = StrutsPortletAction.class
+)
+public class OpenIdAction extends BaseStrutsPortletAction {
 
 	@Override
 	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws Exception {
@@ -104,7 +114,7 @@ public class OpenIdAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!OpenIdUtil.isEnabled(themeDisplay.getCompanyId())) {
+		if (!_openId.isEnabled(themeDisplay.getCompanyId())) {
 			throw new PrincipalException();
 		}
 
@@ -119,13 +129,15 @@ public class OpenIdAction extends PortletAction {
 		try {
 			if (cmd.equals(Constants.READ)) {
 				String redirect = readOpenIdResponse(
-					themeDisplay, actionRequest, actionResponse);
+					themeDisplay, actionRequest);
 
 				if (Validator.isNull(redirect)) {
 					redirect = themeDisplay.getURLSignIn();
 				}
 
-				sendRedirect(actionRequest, actionResponse, redirect);
+				redirect = PortalUtil.escapeRedirect(redirect);
+
+				actionResponse.sendRedirect(redirect);
 			}
 			else {
 				sendOpenIdRequest(themeDisplay, actionRequest, actionResponse);
@@ -155,8 +167,7 @@ public class OpenIdAction extends PortletAction {
 	}
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
+	public String render(
 			PortletConfig portletConfig, RenderRequest renderRequest,
 			RenderResponse renderResponse)
 		throws Exception {
@@ -164,13 +175,41 @@ public class OpenIdAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!OpenIdUtil.isEnabled(themeDisplay.getCompanyId())) {
-			return actionMapping.findForward("portlet.login.login");
+		if (!_openId.isEnabled(themeDisplay.getCompanyId())) {
+			return _forwards.get("portlet.login.login");
 		}
 
 		renderResponse.setTitle(themeDisplay.translate("open-id"));
 
-		return actionMapping.findForward("portlet.login.open_id");
+		return _forwards.get("portlet.login.open_id");
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_forwards.put(
+			"/common/referer_jsp.jsp",
+			GetterUtil.getString(properties, "/common/referer_jsp.jsp"));
+		_forwards.put(
+			"portlet.login.login",
+			GetterUtil.getString(properties, "portlet.login.login"));
+		_forwards.put(
+			"portlet.login.open_id",
+			GetterUtil.getString(properties, "portlet.login.open_id"));
+
+		_openIdConfiguration = Configurable.createConfigurable(
+			OpenIdConfiguration.class, properties);
+
+		try {
+			_manager = new ConsumerManager();
+
+			_manager.setAssociations(new InMemoryConsumerAssociationStore());
+			_manager.setNonceVerifier(new InMemoryNonceVerifier(5000));
+		}
+		catch (Exception e) {
+			throw new IllegalStateException(
+				"Unable to start consumer manager", e);
+		}
 	}
 
 	protected String getFirstValue(List<String> values) {
@@ -184,7 +223,10 @@ public class OpenIdAction extends PortletAction {
 	protected String getOpenIdProvider(URL endpointURL) {
 		String hostName = endpointURL.getHost();
 
-		for (String openIdProvider : PropsValues.OPEN_ID_PROVIDERS) {
+		String[] openIdProviders = StringUtil.split(
+			_openIdConfiguration.openIdProviders());
+
+		for (String openIdProvider : openIdProviders) {
 			String openIdURLString = PropsUtil.get(
 				PropsKeys.OPEN_ID_URL, new Filter(openIdProvider));
 
@@ -214,11 +256,6 @@ public class OpenIdAction extends PortletAction {
 		return result;
 	}
 
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
-	}
-
 	protected String normalize(String identity) {
 		String result = identity;
 
@@ -230,8 +267,7 @@ public class OpenIdAction extends PortletAction {
 	}
 
 	protected String readOpenIdResponse(
-			ThemeDisplay themeDisplay, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+			ThemeDisplay themeDisplay, ActionRequest actionRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
@@ -245,7 +281,8 @@ public class OpenIdAction extends PortletAction {
 			request.getParameterMap());
 
 		DiscoveryInformation discoveryInformation =
-			(DiscoveryInformation)session.getAttribute(WebKeys.OPEN_ID_DISCO);
+			(DiscoveryInformation)session.getAttribute(
+				OpenIdWebKeys.OPEN_ID_DISCO);
 
 		if (discoveryInformation == null) {
 			return null;
@@ -352,8 +389,7 @@ public class OpenIdAction extends PortletAction {
 			themeDisplay.getCompanyId(), openId);
 
 		if (user != null) {
-			session.setAttribute(
-				WebKeys.OPEN_ID_LOGIN, new Long(user.getUserId()));
+			session.setAttribute(WebKeys.OPEN_ID_LOGIN, user.getUserId());
 
 			return null;
 		}
@@ -412,7 +448,7 @@ public class OpenIdAction extends PortletAction {
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
-		session.setAttribute(WebKeys.OPEN_ID_LOGIN, new Long(user.getUserId()));
+		session.setAttribute(WebKeys.OPEN_ID_LOGIN, user.getUserId());
 
 		return null;
 	}
@@ -428,12 +464,12 @@ public class OpenIdAction extends PortletAction {
 			actionResponse);
 		HttpSession session = request.getSession();
 
-		ActionResponseImpl actionResponseImpl =
-			(ActionResponseImpl)actionResponse;
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(actionResponse);
 
 		String openId = ParamUtil.getString(actionRequest, "openId");
 
-		PortletURL portletURL = actionResponseImpl.createActionURL();
+		PortletURL portletURL = liferayPortletResponse.createActionURL();
 
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 		portletURL.setParameter(Constants.CMD, Constants.READ);
@@ -443,7 +479,7 @@ public class OpenIdAction extends PortletAction {
 
 		DiscoveryInformation discovered = _manager.associate(discoveries);
 
-		session.setAttribute(WebKeys.OPEN_ID_DISCO, discovered);
+		session.setAttribute(OpenIdWebKeys.OPEN_ID_DISCO, discovered);
 
 		AuthRequest authRequest = _manager.authenticate(
 			discovered, portletURL.toString(), themeDisplay.getPortalURL());
@@ -497,6 +533,11 @@ public class OpenIdAction extends PortletAction {
 		response.sendRedirect(authRequest.getDestinationUrl(true));
 	}
 
+	@Reference
+	protected void setOpenId(OpenId openId) {
+		_openId = openId;
+	}
+
 	protected String[] splitFullName(String fullName) {
 		if (Validator.isNull(fullName)) {
 			return null;
@@ -516,23 +557,6 @@ public class OpenIdAction extends PortletAction {
 		return null;
 	}
 
-	private void _initialize() {
-		try {
-			if (_manager == null) {
-				_manager = new ConsumerManager();
-
-				_manager.setAssociations(
-					new InMemoryConsumerAssociationStore());
-				_manager.setNonceVerifier(new InMemoryNonceVerifier(5000));
-			}
-		}
-		catch (ConsumerException ce) {
-			_log.error(ce.getMessage());
-		}
-	}
-
-	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
-
 	private static final String _OPEN_ID_AX_ATTR_EMAIL = "email";
 
 	private static final String _OPEN_ID_AX_ATTR_FIRST_NAME = "firstname";
@@ -551,6 +575,9 @@ public class OpenIdAction extends PortletAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(OpenIdAction.class);
 
+	private final Map<String, String> _forwards = new HashMap<>();
 	private ConsumerManager _manager;
+	private OpenId _openId;
+	private volatile OpenIdConfiguration _openIdConfiguration;
 
 }

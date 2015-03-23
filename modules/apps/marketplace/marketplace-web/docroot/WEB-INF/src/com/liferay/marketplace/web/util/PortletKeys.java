@@ -19,8 +19,8 @@ package com.liferay.marketplace.web.util;
  */
 public class PortletKeys extends com.liferay.portal.util.PortletKeys {
 
-	public static final String MY_MARKETPLACE = "2_WAR_marketplaceportlet";
+	public static final String MY_MARKETPLACE = "2_WAR_marketplaceweb";
 
-	public static final String STORE = "1_WAR_marketplaceportlet";
+	public static final String STORE = "1_WAR_marketplaceweb";
 
 }

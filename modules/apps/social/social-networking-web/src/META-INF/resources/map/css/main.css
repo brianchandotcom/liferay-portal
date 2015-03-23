@@ -1,0 +1,9 @@
+.social-networking-portlet-map {
+	.default-map .lfr-map {
+		min-height: 190px;
+	}
+
+	.maximized-map .lfr-map {
+		min-height: 600px;
+	}
+}

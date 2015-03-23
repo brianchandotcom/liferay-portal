@@ -19,12 +19,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.struts.ActionConstants;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -35,53 +35,21 @@ import com.liferay.wiki.service.WikiPageServiceUtil;
 
 import java.io.InputStream;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
-public class GetPageAttachmentAction extends PortletAction {
+@Component(
+	property = "path=/wiki/get_page_attachment", service = StrutsAction.class
+)
+public class GetPageAttachmentAction extends BaseStrutsAction {
 
 	@Override
-	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			resourceRequest);
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			resourceResponse);
-
-		try {
-			long nodeId = ParamUtil.getLong(resourceRequest, "nodeId");
-			String title = ParamUtil.getString(resourceRequest, "title");
-			String fileName = ParamUtil.getString(resourceRequest, "fileName");
-			int status = ParamUtil.getInteger(
-				resourceRequest, "status", WorkflowConstants.STATUS_APPROVED);
-
-			getFile(nodeId, title, fileName, status, request, response);
-
-			setForward(resourceRequest, ActionConstants.COMMON_NULL);
-		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
-		}
-	}
-
-	@Override
-	public ActionForward strutsExecute(
-			ActionMapping actionMapping, ActionForm actionForm,
+	public String execute(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
@@ -149,13 +117,6 @@ public class GetPageAttachmentAction extends PortletAction {
 			request, response, fileName, is, fileEntry.getSize(),
 			fileEntry.getMimeType());
 	}
-
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
-	}
-
-	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetPageAttachmentAction.class);

@@ -114,6 +114,10 @@ public class CookieKeys {
 	public static String getCookie(
 		HttpServletRequest request, String name, boolean toUpperCase) {
 
+		if (!_SESSION_ENABLE_PERSISTENT_COOKIES) {
+			return null;
+		}
+
 		String value = _get(request, name, toUpperCase);
 
 		if ((value == null) || !isEncodedCookie(name)) {

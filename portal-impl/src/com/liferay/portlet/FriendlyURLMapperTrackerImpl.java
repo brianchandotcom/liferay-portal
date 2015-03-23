@@ -126,11 +126,24 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 				serviceReference);
 
 			try {
-				friendlyURLMapper.setMapping(_portlet.getFriendlyURLMapping());
+				if (Validator.isNotNull(_portlet.getFriendlyURLMapping())) {
+					friendlyURLMapper.setMapping(
+						_portlet.getFriendlyURLMapping());
+				}
+
 				friendlyURLMapper.setPortletId(_portlet.getPortletId());
 				friendlyURLMapper.setPortletInstanceable(
 					_portlet.isInstanceable());
-				friendlyURLMapper.setRouter(newFriendlyURLRouter());
+
+				String friendlyURLRoutes = (String)serviceReference.getProperty(
+					"com.liferay.portlet.friendly-url-routes");
+
+				if (Validator.isNotNull(_portlet.getFriendlyURLRoutes())) {
+					friendlyURLRoutes = _portlet.getFriendlyURLRoutes();
+				}
+
+				friendlyURLMapper.setRouter(
+					newFriendlyURLRouter(friendlyURLRoutes));
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -157,8 +170,10 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 			registry.ungetService(serviceReference);
 		}
 
-		protected Router newFriendlyURLRouter() throws Exception {
-			if (Validator.isNull(_portlet.getFriendlyURLRoutes())) {
+		protected Router newFriendlyURLRouter(String friendlyURLRoutes)
+			throws Exception {
+
+			if (Validator.isNull(friendlyURLRoutes)) {
 				return null;
 			}
 
@@ -166,8 +181,7 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 
 			ClassLoader classLoader = getClassLoader();
 
-			String xml = StringUtil.read(
-				classLoader, _portlet.getFriendlyURLRoutes());
+			String xml = StringUtil.read(classLoader, friendlyURLRoutes);
 
 			Document document = SAXReaderUtil.read(xml, true);
 

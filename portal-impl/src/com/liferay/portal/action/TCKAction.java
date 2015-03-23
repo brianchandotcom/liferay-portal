@@ -22,10 +22,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortlet;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -97,7 +99,22 @@ public class TCKAction extends Action {
 			LayoutTypePortlet layoutType =
 				(LayoutTypePortlet)layout.getLayoutType();
 
-			for (String portletId : portletIds) {
+			for (int i = 0; i < portletIds.length; i++) {
+				String portletId = portletIds[i];
+
+				// Have to update render weight for portlets both in company and
+				// global pools, as company pool holds portlet clones from
+				// global pool.
+
+				Portlet portlet = PortletLocalServiceUtil.getPortletById(
+					layout.getCompanyId(), portletId);
+
+				portlet.setRenderWeight(portletIds.length - i);
+
+				portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+				portlet.setRenderWeight(portletIds.length - i);
+
 				layoutType.addPortletId(userId, portletId, false);
 
 				String rootPortletId = PortletConstants.getRootPortletId(

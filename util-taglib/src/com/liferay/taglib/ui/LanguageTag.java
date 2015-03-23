@@ -15,16 +15,26 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -104,6 +114,56 @@ public class LanguageTag extends IncludeTag {
 		_name = "languageId";
 	}
 
+	protected List<LanguageEntry> getLanguageEntries(
+		Locale[] locales, Locale currentLocale, boolean displayCurrentLocale,
+		String formAction, String parameterName) {
+
+		Map langCounts = new HashMap();
+
+		for (Locale locale : locales) {
+			Integer count = (Integer)langCounts.get(locale.getLanguage());
+
+			if (count == null) {
+				count = new Integer(1);
+			}
+			else {
+				count = new Integer(count.intValue() + 1);
+			}
+
+			langCounts.put(locale.getLanguage(), count);
+		}
+
+		Set<String> duplicateLanguages = new HashSet<>();
+
+		for (Locale locale : locales) {
+			Integer count = (Integer)langCounts.get(locale.getLanguage());
+
+			if (count.intValue() != 1) {
+				duplicateLanguages.add(locale.getLanguage());
+			}
+		}
+
+		List<LanguageEntry> languageEntries = new ArrayList<>();
+
+		for (Locale locale : locales) {
+			String url = null;
+
+			if (!LocaleUtil.equals(locale, currentLocale)) {
+				url = HttpUtil.addParameter(
+					formAction, parameterName, LocaleUtil.toLanguageId(locale));
+			}
+			else if (!displayCurrentLocale) {
+				continue;
+			}
+
+			languageEntries.add(
+				new LanguageEntry(
+					duplicateLanguages, currentLocale, locale, url));
+		}
+
+		return languageEntries;
+	}
+
 	@Override
 	protected String getPage() {
 		return _PAGE;
@@ -123,16 +183,27 @@ public class LanguageTag extends IncludeTag {
 
 		request.setAttribute(
 			"liferay-ui:language:displayStyle", String.valueOf(displayStyle));
-		request.setAttribute("liferay-ui:language:formAction", _formAction);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String formAction = _formAction;
+
+		if (Validator.isNull(formAction)) {
+			formAction = themeDisplay.getPathMain() +
+				"/portal/update_language?p_l_id=" + themeDisplay.getPlid();
+
+			formAction = HttpUtil.setParameter(
+				formAction, "redirect", PortalUtil.getCurrentURL(request));
+		}
+
+		request.setAttribute("liferay-ui:language:formAction", formAction);
 		request.setAttribute("liferay-ui:language:formName", _formName);
 		request.setAttribute("liferay-ui:language:languageId", _languageId);
 
 		Locale[] locales = null;
 
 		if (ArrayUtil.isEmpty(_languageIds)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 			locales = LanguageUtil.getAvailableLocales(
 				themeDisplay.getSiteGroupId());
 		}
@@ -142,6 +213,12 @@ public class LanguageTag extends IncludeTag {
 
 		request.setAttribute("liferay-ui:language:locales", locales);
 		request.setAttribute("liferay-ui:language:name", _name);
+
+		request.setAttribute(
+			"liferay-ui:language:languageEntries",
+			getLanguageEntries(
+				locales, themeDisplay.getLocale(), _displayCurrentLocale,
+				formAction, _name));
 	}
 
 	private static final String _DISPLAY_STYLE = GetterUtil.getString(

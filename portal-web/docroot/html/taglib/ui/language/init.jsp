@@ -16,6 +16,8 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
+<%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry" %>
+
 <%
 if (Validator.isNull(namespace)) {
 	namespace = PortalUtil.generateRandomKey(request, "taglib_ui_language_page") + StringPool.UNDERLINE;
@@ -25,39 +27,11 @@ String formName = (String)request.getAttribute("liferay-ui:language:formName");
 
 String formAction = (String)request.getAttribute("liferay-ui:language:formAction");
 
-if (Validator.isNull(formAction)) {
-	formAction = themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" + themeDisplay.getPlid();
-	formAction = HttpUtil.setParameter(formAction, "redirect", PortalUtil.getCurrentURL(request));
-}
-
 boolean displayCurrentLocale = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:language:displayCurrentLocale"), true);
 String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:language:displayStyle"));
 String languageId = GetterUtil.getString((String)request.getAttribute("liferay-ui:language:languageId"), LocaleUtil.toLanguageId(locale));
 Locale[] locales = (Locale[])request.getAttribute("liferay-ui:language:locales");
 String name = (String)request.getAttribute("liferay-ui:language:name");
 
-Map langCounts = new HashMap();
-
-for (int i = 0; i < locales.length; i++) {
-	Integer count = (Integer)langCounts.get(locales[i].getLanguage());
-
-	if (count == null) {
-		count = new Integer(1);
-	}
-	else {
-		count = new Integer(count.intValue() + 1);
-	}
-
-	langCounts.put(locales[i].getLanguage(), count);
-}
-
-Set<String> duplicateLanguages = new HashSet<String>();
-
-for (int i = 0; i < locales.length; i++) {
-	Integer count = (Integer)langCounts.get(locales[i].getLanguage());
-
-	if (count.intValue() != 1) {
-		duplicateLanguages.add(locales[i].getLanguage());
-	}
-}
+List<LanguageEntry> languageEntries = (List<LanguageEntry>)request.getAttribute("liferay-ui:language:languageEntries");
 %>

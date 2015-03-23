@@ -49,12 +49,9 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.net.URL;
-
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
-
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -79,13 +76,14 @@ import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.startlevel.FrameworkStartLevel;
-
+import org.osgi.framework.wiring.BundleRevision;
 import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.context.ApplicationContext;
 
 /**
  * @author Raymond Augé
  * @author Miguel Pastor
+ * @author Kamesh Sampath
  */
 public class ModuleFrameworkImpl implements ModuleFramework {
 
@@ -757,15 +755,13 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private boolean _isFragmentBundle(Bundle bundle) {
-		Dictionary<String, String> headers = bundle.getHeaders();
-
-		String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
-
-		if (fragmentHost == null) {
+		if((bundle.adapt(BundleRevision.class).getTypes() &
+				BundleRevision.TYPE_FRAGMENT) == 0 ) {
+			return true;
+		}
+		else {
 			return false;
 		}
-
-		return true;
 	}
 
 	private boolean _isIgnoredInterface(String interfaceClassName) {

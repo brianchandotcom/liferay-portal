@@ -1,0 +1,144 @@
+<definition component-name="portal-security">
+	<property name="testray.main.component.name" value="Security" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="PortalSettings#tearDownAuthenticationCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="NoGuestRoleFromWCDArticleHistoryURL" priority="5">
+		<var name="url" value="http://localhost:8080/web/guest/home?&amp;p_p_id=15&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_p_mode=view&amp;_15_struts_action=%2Fjournal%2Fview_article_history&amp;_15_groupId=10180&amp;_15_articleId=" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="pageName" value="Web Content Display Page" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute function="Click" locator1="PGWebcontentdisplay#EDIT_WEB_CONTENT" />
+
+		<execute function="SelectFrame" locator1="PGWebcontentdisplayEditwebcontent#WEB_CONTENT_IFRAME" />
+
+		<var locator="PGWebcontentdisplayEditwebcontent#ARTICLE_ID" name="articleID" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute function="Open" locator1="${url}${articleID}" />
+
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
+	</command>
+
+	<command name="ValidateBeanIdentifierUserPermissions" priority="4">
+		<var name="url" value="http://localhost:8080/c/portal/json_service?serviceClassName=com.liferay.portal.service.AccountServiceUtil&amp;serviceMethodName=getBeanIdentifier&amp;p_auth=" />
+
+		<execute macro="Api#gotoPAuthURL" />
+
+		<execute function="Pause" locator1="1000" />
+		<execute function="AssertElementNotPresent" locator1="Jsonwebservices#SECURITY_TEST_PAGE_POPULATED" />
+	</command>
+
+	<command known-issues="LPS-49848" name="ValidateCannotStealAdminAccount" priority="5">
+		<var name="url" value="http://localhost:8080/c/portal/json_service?serviceClassName=com.liferay.portal.service.UserServiceUtil&amp;serviceMethodName=updateStatus&amp;serviceParameters=[userId,status]&amp;userId=10202&amp;status=6&amp;p_auth=" />
+
+		<execute macro="Api#gotoPAuthURL" />
+
+		<execute function="AssertTextEquals" locator1="Jsonwebservices#SECURITY_TEST_PAGE_BODY" value1="{&quot;message&quot;:&quot;com.liferay.portal.security.auth.PrincipalException&quot;,&quot;exception&quot;:&quot;com.liferay.portal.security.auth.PrincipalException&quot;}" />
+
+		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="Jsonwebservices#SECURITY_TEST_PAGE_BODY" value1="companyId" />
+	</command>
+
+	<command name="ValidateForwardURLPG" priority="4">
+		<property name="custom.properties" value="virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}" />
+
+		<execute function="Open" locator1="http://localhost:8080/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com" />
+		<execute function="Pause" locator1="3000" />
+
+		<var name="key_pageName" value="Welcome" />
+
+		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />
+
+		<execute function="AssertTextEquals#assertText" locator1="PGHelloworld#PORTLET_TITLE" value1="Hello World" />
+		<execute function="AssertElementPresent" locator1="PGHelloworld#PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test" />
+		</execute>
+
+		<execute function="Open" locator1="http://localhost:8080/html/common/forward_jsp.jsp?FORWARD_URL=http://localhost:8080/web/guest/test" />
+
+		<var name="key_pageName" value="Test" />
+
+		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Test" />
+	</command>
+
+	<command known-issues="LPS-44790" name="ViewExternalWebappsPG" priority="5">
+		<property name="portlet.plugins.includes" value="opensocial-portlet" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="External Webapps Test Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="External Webapps Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="OpenSocial Gadget" />
+		</execute>
+
+		<execute macro="OpensocialGadget#addPG">
+			<var name="opensocialGadgetURL" value="http://www.labpixies.com/campaigns/todo/todo.xml" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="External Webapps Test Page" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="PGOpensocialgadget#PORTLET_TITLE" value1="To-Do List" />
+	</command>
+
+	<command known-issues="LPS-47697" name="ViewUpdateUserViaJSONWS" priority="5">
+		<property name="custom.properties" value="company.security.strangers.verify=true" />
+
+		<execute macro="Api#apiJsonwsUserView" />
+
+		<execute macro="Api#editJsonwsUserView">
+			<var name="userBirthdayDay" value="24" />
+			<var name="userBirthdayMonth" value="10" />
+			<var name="userBirthdayYear" value="1984" />
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userFacebookId" value="0" />
+			<var name="userFirstName" value="test1" />
+			<var name="userId" value="10205" />
+			<var name="userLastName" value="test1" />
+			<var name="userPrefixId" value="0" />
+			<var name="userScreenName" value="test1" />
+			<var name="userSuffixId" value="0" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewCP">
+			<var name="userScreenName" value="test1" />
+		</execute>
+
+		<execute function="AssertValue" locator1="CPUsersandorganizationsUser#DETAILS_USER_ID_FIELD" value1="${userId}" />
+		<execute function="AssertSelectedLabel" locator1="CPUsersandorganizationsUser#DETAILS_GENDER_SELECT" value1="Male" />
+		<execute function="AssertValue" locator1="CPUsersandorganizationsUser#DETAILS_BIRTHDAY_FIELD" value1="${userBirthdayMonth}/${userBirthdayDay}/${userBirthdayYear}" />
+	</command>
+</definition>

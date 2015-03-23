@@ -1,6 +1,6 @@
 <definition component-name="portal-deployment">
 	<property name="setup.wizard.enabled" value="true" />
-	<property name="testray.main.component.name" value="Deployment" />
+	<property name="testray.main.component.name" value="Setup Wizard" />
 
 	<command name="SetupWizardDefaultConfigurationWithoutSampleData" priority="5">
 		<var name="administratorFirstName" value="Test" />

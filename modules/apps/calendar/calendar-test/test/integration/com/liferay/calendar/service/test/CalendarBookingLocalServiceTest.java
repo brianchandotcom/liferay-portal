@@ -25,6 +25,7 @@ import com.liferay.calendar.recurrence.PositionalWeekday;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -40,6 +41,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -181,6 +183,110 @@ public class CalendarBookingLocalServiceTest {
 			calendarBookingId);
 
 		Assert.assertNull(calendarBooking);
+	}
+
+	@Test
+	public void testMovedToTrashEventResultsInMovedToTrashChildren()
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(_user.getCompanyId());
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				_user.getUserId(), serviceContext);
+		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
+			_user.getUserId(), _user.getGroupId(),
+			calendarResource.getCalendarResourceId(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
+			false, false, serviceContext);
+
+		long startDate = DateUtil.newTime();
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_user.getUserId(), calendar.getCalendarId(),
+				new long[] { invitedCalendar.getCalendarId() },
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startDate, startDate + 36000000,
+				false, null, 0, null, 0, null, serviceContext);
+
+		CalendarBooking childCalendarBooking = getChildCalendarBooking(
+			calendarBooking);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, childCalendarBooking.getStatus());
+
+		CalendarBookingLocalServiceUtil.moveCalendarBookingToTrash(
+			_user.getUserId(), calendarBooking);
+
+		childCalendarBooking = getChildCalendarBooking(calendarBooking);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_IN_TRASH,
+			childCalendarBooking.getStatus());
+	}
+
+	@Test
+	public void testRestoredFromTrashEventResultsInRestoredFromTrashChildren()
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(_user.getCompanyId());
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				_user.getUserId(), serviceContext);
+		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
+			_user.getUserId(), _user.getGroupId(),
+			calendarResource.getCalendarResourceId(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
+			false, false, serviceContext);
+
+		long startDate = DateUtil.newTime();
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_user.getUserId(), calendar.getCalendarId(),
+				new long[] { invitedCalendar.getCalendarId() },
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startDate, startDate + 36000000,
+				false, null, 0, null, 0, null, serviceContext);
+
+		CalendarBooking childCalendarBooking = getChildCalendarBooking(
+			calendarBooking);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, childCalendarBooking.getStatus());
+
+		CalendarBookingLocalServiceUtil.moveCalendarBookingToTrash(
+			_user.getUserId(), calendarBooking);
+
+		childCalendarBooking = getChildCalendarBooking(calendarBooking);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_IN_TRASH,
+			childCalendarBooking.getStatus());
+
+		CalendarBookingLocalServiceUtil.restoreCalendarBookingFromTrash(
+			_user.getUserId(), calendarBooking.getCalendarBookingId());
+
+		childCalendarBooking = getChildCalendarBooking(calendarBooking);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, childCalendarBooking.getStatus());
 	}
 
 	@Test(expected = CalendarBookingRecurrenceException.class)
@@ -354,6 +460,20 @@ public class CalendarBookingLocalServiceTest {
 		serviceContext.setCompanyId(_user.getCompanyId());
 
 		return serviceContext;
+	}
+
+	protected CalendarBooking getChildCalendarBooking(
+		CalendarBooking calendarBooking) {
+
+		List<CalendarBooking> childCalendarBookings =
+			calendarBooking.getChildCalendarBookings();
+		CalendarBooking childCalendarBooking = childCalendarBookings.get(0);
+
+		if (childCalendarBooking.isMasterBooking()) {
+			childCalendarBooking = childCalendarBookings.get(1);
+		}
+
+		return childCalendarBooking;
 	}
 
 	private User _user;

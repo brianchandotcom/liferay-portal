@@ -1514,53 +1514,72 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a navigable form for multiple section forms. The navigation default is a side navigation box with links to each section but can be configured to either a progressive step navigation positioned above the form or vertically stacked accordion style sections that expand when clicked.</description>
 		<name>form-navigator</name>
 		<tag-class>com.liferay.taglib.ui.FormNavigatorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Sets the url for the form cancel button.</description>
 			<name>backURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>String</type>
 		</attribute>
 		<attribute>
+			<description>Sets the name of each category in the form.</description>
 			<name>categoryNames</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>String[]</type>
 		</attribute>
 		<attribute>
+			<description>Sets the name of each section within a category.</description>
 			<name>categorySections</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>String[][]</type>
 		</attribute>
 		<attribute>
+			<description>Sets what type of navigation will be used. Options are <![CDATA[<code>steps</code>]]> and <![CDATA[<code>panel</code>]]>. The default display style is side navigation.</description>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>String</type>
 		</attribute>
 		<attribute>
+			<description>Sets the name of the form.</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>String</type>
 		</attribute>
 		<attribute>
+			<description>Sets any HTML to append the navigator. Examples include alternate form buttons, form instructions, or information about the form.</description>
 			<name>htmlBottom</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>String</type>
 		</attribute>
 		<attribute>
+			<description>Sets any HTML to prepend the navigator.</description>
 			<name>htmlTop</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>String</type>
 		</attribute>
 		<attribute>
+			<description>Sets the path to the formSection.jsp files folder <![CDATA[<code>/path/to/jsp/folder/</code>]]>.</description>
 			<name>jspPath</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>String</type>
 		</attribute>
 		<attribute>
+			<description>Sets whether to show the <![CDATA[<code>Submit</code>]]> and <![CDATA[<code>Cancel</code>]]> buttons. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>showButtons</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 	</tag>
 	<tag>

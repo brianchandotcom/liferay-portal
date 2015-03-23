@@ -19,19 +19,10 @@
 <%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry" %>
 
 <%
-if (Validator.isNull(namespace)) {
-	namespace = PortalUtil.generateRandomKey(request, "taglib_ui_language_page") + StringPool.UNDERLINE;
-}
-
 String formName = (String)request.getAttribute("liferay-ui:language:formName");
-
 String formAction = (String)request.getAttribute("liferay-ui:language:formAction");
-
-boolean displayCurrentLocale = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:language:displayCurrentLocale"), true);
 String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:language:displayStyle"));
-String languageId = GetterUtil.getString((String)request.getAttribute("liferay-ui:language:languageId"), LocaleUtil.toLanguageId(locale));
-Locale[] locales = (Locale[])request.getAttribute("liferay-ui:language:locales");
-String name = (String)request.getAttribute("liferay-ui:language:name");
-
+long displayStyleGroupId = GetterUtil.getLong(request.getAttribute("liferay-ui:language:displayStyleGroupId"));
 List<LanguageEntry> languageEntries = (List<LanguageEntry>)request.getAttribute("liferay-ui:language:languageEntries");
+String name = (String)request.getAttribute("liferay-ui:language:name");
 %>

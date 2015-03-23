@@ -16,6 +16,7 @@ package com.liferay.site.navigation.language.web.portlet.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
@@ -81,7 +82,7 @@ public class LanguagePortletDisplayTemplateHandler
 
 		templateVariableGroup.addCollectionVariable(
 			"languages", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"language", Locale.class, "curLanguage", "displayName");
+			"language", LanguageEntry.class, "curLanguage", "longDisplayName");
 
 		String[] restrictedVariables = getRestrictedVariables(language);
 

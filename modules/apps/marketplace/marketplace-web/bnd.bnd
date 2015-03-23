@@ -18,6 +18,7 @@ Import-Package: \
 	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.servlet.*,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
+	com.liferay.portal.kernel.upgrade,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.kernel.xml,\
 	com.liferay.portal.model,\
@@ -27,6 +28,7 @@ Import-Package: \
 	com.liferay.portal.util,\
 	\
 	com.liferay.portlet,\
+	com.liferay.portlet.expando,\
 	com.liferay.portlet.expando.model,\
 	*
 Include-Resource:\

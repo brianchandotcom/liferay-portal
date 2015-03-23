@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.marketplace.hook.upgrade.v1_0_1;
+package com.liferay.marketplace.upgrade.v1_0_1;
 
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.ModuleLocalServiceUtil;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.marketplace.hook.upgrade.v1_0_0;
+package com.liferay.marketplace.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -64,11 +64,11 @@ public class UpgradeExpando extends UpgradeProcess {
 		ExpandoColumn newExpandoColumn =
 			ExpandoColumnLocalServiceUtil.getColumn(
 				companyId, User.class.getName(), expandoTable.getName(),
-				"clientId");
+				"clientID");
 
 		if (newExpandoColumn == null) {
 			newExpandoColumn = ExpandoColumnLocalServiceUtil.updateColumn(
-				oldExpandoColumn.getColumnId(), "clientId",
+				oldExpandoColumn.getColumnId(), "clientID",
 				ExpandoColumnConstants.STRING);
 		}
 

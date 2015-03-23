@@ -1,7 +1,5 @@
 #macro (breadcrumbs $control_panel)
-	#set ($breadcrumb_tag = $theme.getBreadcrumbTag())
-
-	$breadcrumb_tag.runTag()
+	$theme.runtime("com_liferay_site_navigation_breadcrumb_web_portlet_BreadcrumbPortlet")
 #end
 
 #macro (css $file_name)

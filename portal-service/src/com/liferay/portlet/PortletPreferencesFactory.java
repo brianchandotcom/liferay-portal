@@ -103,6 +103,10 @@ public interface PortletPreferencesFactory {
 			boolean modeEditGuest)
 		throws PortalException;
 
+	public PortletPreferencesIds getPortletPreferencesIds(
+		long companyId, long siteGroupId, long plid, String portletId,
+		String settingsScope);
+
 	public PortletPreferences getPortletSetup(
 			HttpServletRequest request, String portletId)
 		throws PortalException;

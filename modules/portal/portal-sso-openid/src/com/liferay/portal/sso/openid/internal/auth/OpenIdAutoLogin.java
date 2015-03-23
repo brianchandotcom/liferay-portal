@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.sso.openid.auth;
+package com.liferay.portal.sso.openid.internal.auth;
 
 import com.liferay.portal.kernel.openid.OpenId;
 import com.liferay.portal.kernel.util.WebKeys;

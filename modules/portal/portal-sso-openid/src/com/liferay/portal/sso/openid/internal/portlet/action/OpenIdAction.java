@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.sso.openid.portlet.action;
+package com.liferay.portal.sso.openid.internal.portlet.action;
 
 import aQute.bnd.annotation.metatype.Configurable;
 

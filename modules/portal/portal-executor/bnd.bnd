@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Executor
+Bundle-SymbolicName: com.liferay.portal.executor
+Bundle-Version: 1.0.0
+Include-Resource: classes

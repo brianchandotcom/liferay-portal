@@ -223,7 +223,8 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 				configuration, classLoader,
 				PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
 
-		_portalCacheConfigurator.reconfigureHibernateCache(
+		_portalCacheConfigurator.reconfigureCaches(
+			classLoader,
 			getPortalCacheConfigurationURL(
 				configuration, classLoader,
 				PropsKeys.NET_SF_EHCACHE_CONFIGURATION_RESOURCE_NAME));

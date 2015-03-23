@@ -15,8 +15,6 @@
 package com.liferay.portal.cache.configurator.impl;
 
 import com.liferay.portal.cache.configurator.PortalCacheConfigurator;
-import com.liferay.portal.dao.orm.hibernate.region.LiferayEhcacheRegionFactory;
-import com.liferay.portal.dao.orm.hibernate.region.SingletonLiferayEhcacheRegionFactory;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.log.Log;
@@ -79,18 +77,6 @@ public class PortalCacheConfiguratorImpl implements PortalCacheConfigurator {
 
 	@Override
 	public void reconfigureHibernateCache(URL url) {
-		if (Validator.isNull(url)) {
-			return;
-		}
-
-		LiferayEhcacheRegionFactory liferayEhcacheRegionFactory =
-			SingletonLiferayEhcacheRegionFactory.getInstance();
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Reconfiguring Hibernate caches using " + url);
-		}
-
-		liferayEhcacheRegionFactory.reconfigureCaches(url);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -140,29 +140,6 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		return timestampsRegion;
 	}
 
-	public void reconfigureCaches(URL cacheConfigFile) {
-		if (manager == null) {
-			return;
-		}
-
-		synchronized (manager) {
-			Configuration configuration =
-				EhcacheConfigurationUtil.getConfiguration(
-					cacheConfigFile, true, _usingDefault);
-
-			Map<String, CacheConfiguration> cacheConfigurations =
-				configuration.getCacheConfigurations();
-
-			for (CacheConfiguration cacheConfiguration :
-					cacheConfigurations.values()) {
-
-				Ehcache ehcache = new Cache(cacheConfiguration);
-
-				reconfigureCache(ehcache);
-			}
-		}
-	}
-
 	@Override
 	public void start(Settings settings, Properties properties)
 		throws CacheException {
@@ -328,6 +305,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 		public HibernatePortalCacheManager(CacheManager cacheManager) {
 			_cacheManager = cacheManager;
+			_name = cacheManager.getName();
 		}
 
 		@Override
@@ -382,7 +360,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 		@Override
 		public String getName() {
-			return _cacheManager.getName();
+			return _name;
 		}
 
 		@Override
@@ -392,7 +370,39 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 		@Override
 		public void reconfigureCaches(URL configurationURL) {
-			throw new UnsupportedOperationException();
+			if (Validator.isNull(configurationURL)) {
+				return;
+			}
+
+			if (manager == null) {
+				return;
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Reconfiguring Hibernate caches using " + configurationURL);
+			}
+
+			Configuration configuration =
+				EhcacheConfigurationUtil.getConfiguration(
+					configurationURL, true, _usingDefault);
+
+			if (!_name.equals(configuration.getName())) {
+				return;
+			}
+
+			synchronized (manager) {
+				Map<String, CacheConfiguration> cacheConfigurations =
+					configuration.getCacheConfigurations();
+
+				for (CacheConfiguration cacheConfiguration :
+						cacheConfigurations.values()) {
+
+					Ehcache ehcache = new Cache(cacheConfiguration);
+
+					reconfigureCache(ehcache);
+				}
+			}
 		}
 
 		@Override
@@ -420,6 +430,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		}
 
 		private final CacheManager _cacheManager;
+		private final String _name;
 		private final Map<String, PortalCache<Serializable, Serializable>>
 			_portalCaches = new HashMap<>();
 

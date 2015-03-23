@@ -222,11 +222,13 @@ public class CalendarBookingLocalServiceImpl
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
-			userId, CalendarBooking.class.getName(),
-			calendarBooking.getCalendarBookingId(), calendarBooking,
-			serviceContext);
+		if (calendarBooking.isMasterBooking()) {
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
+				userId, CalendarBooking.class.getName(),
+				calendarBooking.getCalendarBookingId(), calendarBooking,
+				serviceContext);
+		}
 
 		return calendarBooking;
 	}
@@ -856,11 +858,13 @@ public class CalendarBookingLocalServiceImpl
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
-			userId, CalendarBooking.class.getName(),
-			calendarBooking.getCalendarBookingId(), calendarBooking,
-			serviceContext);
+		if (calendarBooking.isMasterBooking()) {
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
+				userId, CalendarBooking.class.getName(),
+				calendarBooking.getCalendarBookingId(), calendarBooking,
+				serviceContext);
+		}
 
 		return calendarBooking;
 	}

@@ -3,10 +3,10 @@
 /**
  * Prints the DDM form text field.
  *
+ * @param childElementsHTML
  * @param dir
  * @param label
  * @param name
- * @param renderedNestedDDMFormFields
  * @param value
  */
 {template .text}
@@ -17,6 +17,6 @@
 
 		 <input class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" type="text" value="{$value}">
 
-		{$renderedNestedDDMFormFields}
+		{$childElementsHTML}
 	</div>
 {/template}

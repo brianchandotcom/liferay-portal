@@ -69,6 +69,7 @@ public class DDMFormRendererHelper {
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
+		ddmFormFieldRenderingContext.setChildElementsHTML(StringPool.BLANK);
 		ddmFormFieldRenderingContext.setHttpServletRequest(
 			_ddmFormRenderingContext.getHttpServletRequest());
 		ddmFormFieldRenderingContext.setHttpServletResponse(
@@ -79,8 +80,6 @@ public class DDMFormRendererHelper {
 		ddmFormFieldRenderingContext.setName(StringPool.BLANK);
 		ddmFormFieldRenderingContext.setPortletNamespace(
 			_ddmFormRenderingContext.getPortletNamespace());
-		ddmFormFieldRenderingContext.setRenderedNestedDDMFormFields(
-			StringPool.BLANK);
 		ddmFormFieldRenderingContext.setValue(StringPool.BLANK);
 
 		return ddmFormFieldRenderingContext;
@@ -193,12 +192,12 @@ public class DDMFormRendererHelper {
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			createDDMFormFieldRenderingContext();
 
+		setDDMFormFieldRenderingContextChildElementsHTML(
+			sb.toString(), ddmFormFieldRenderingContext);
 		setDDMFormFieldRenderingContextLabel(
 			ddmFormField.getLabel(), ddmFormFieldRenderingContext);
 		setDDMFormFieldRenderingContextName(
 			ddmFormFieldParameterName, ddmFormFieldRenderingContext);
-		setDDMFormFieldRenderingContextRenderedNestedDDMFormFields(
-			sb.toString(), ddmFormFieldRenderingContext);
 
 		return renderDDMFormField(ddmFormField, ddmFormFieldRenderingContext);
 	}
@@ -245,10 +244,10 @@ public class DDMFormRendererHelper {
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			createDDMFormFieldRenderingContext();
 
+		setDDMFormFieldRenderingContextChildElementsHTML(
+			sb.toString(), ddmFormFieldRenderingContext);
 		setDDMFormFieldRenderingContextName(
 			ddmFormFieldParameterName, ddmFormFieldRenderingContext);
-		setDDMFormFieldRenderingContextRenderedNestedDDMFormFields(
-			sb.toString(), ddmFormFieldRenderingContext);
 
 		return renderDDMFormFieldValue(
 			ddmFormFieldValue, ddmFormFieldRenderingContext);
@@ -273,6 +272,13 @@ public class DDMFormRendererHelper {
 		return sb.toString();
 	}
 
+	protected void setDDMFormFieldRenderingContextChildElementsHTML(
+		String childElementsHTML,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		ddmFormFieldRenderingContext.setChildElementsHTML(childElementsHTML);
+	}
+
 	protected void setDDMFormFieldRenderingContextLabel(
 		LocalizedValue label,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
@@ -295,14 +301,6 @@ public class DDMFormRendererHelper {
 			ddmFormFieldParameterName);
 
 		ddmFormFieldRenderingContext.setName(name);
-	}
-
-	protected void setDDMFormFieldRenderingContextRenderedNestedDDMFormFields(
-		String renderedNestedDDMFormFields,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
-
-		ddmFormFieldRenderingContext.setRenderedNestedDDMFormFields(
-			renderedNestedDDMFormFields);
 	}
 
 	protected void setDDMFormFieldRenderingContextValue(

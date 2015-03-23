@@ -77,12 +77,12 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 
 		Locale locale = ddmFormFieldRenderingContext.getLocale();
 
+		template.put(
+			"childElementsHTML",
+			ddmFormFieldRenderingContext.getChildElementsHTML());
 		template.put("dir", LanguageUtil.get(locale, "lang.dir"));
 		template.put("label", ddmFormFieldRenderingContext.getLabel());
 		template.put("name", ddmFormFieldRenderingContext.getName());
-		template.put(
-			"renderedNestedDDMFormFields",
-			ddmFormFieldRenderingContext.getRenderedNestedDDMFormFields());
 		template.put("value", ddmFormFieldRenderingContext.getValue());
 	}
 

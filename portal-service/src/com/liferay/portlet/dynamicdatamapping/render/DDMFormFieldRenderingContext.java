@@ -27,6 +27,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DDMFormFieldRenderingContext {
 
+	public String getChildElementsHTML() {
+		return _childElementsHTML;
+	}
+
 	public Fields getFields() {
 		return _fields;
 	}
@@ -63,10 +67,6 @@ public class DDMFormFieldRenderingContext {
 		return _portletNamespace;
 	}
 
-	public String getRenderedNestedDDMFormFields() {
-		return _renderedNestedDDMFormFields;
-	}
-
 	public String getValue() {
 		return _value;
 	}
@@ -77,6 +77,10 @@ public class DDMFormFieldRenderingContext {
 
 	public boolean isShowEmptyFieldLabel() {
 		return _showEmptyFieldLabel;
+	}
+
+	public void setChildElementsHTML(String childElementsHTML) {
+		_childElementsHTML = childElementsHTML;
 	}
 
 	public void setField(Field field) {
@@ -129,12 +133,6 @@ public class DDMFormFieldRenderingContext {
 		_readOnly = readOnly;
 	}
 
-	public void setRenderedNestedDDMFormFields(
-		String renderedNestedDDMFormFields) {
-
-		_renderedNestedDDMFormFields = renderedNestedDDMFormFields;
-	}
-
 	public void setShowEmptyFieldLabel(boolean showEmptyFieldLabel) {
 		_showEmptyFieldLabel = showEmptyFieldLabel;
 	}
@@ -143,6 +141,7 @@ public class DDMFormFieldRenderingContext {
 		_value = value;
 	}
 
+	private String _childElementsHTML;
 	private Fields _fields;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
@@ -153,7 +152,6 @@ public class DDMFormFieldRenderingContext {
 	private String _namespace;
 	private String _portletNamespace;
 	private boolean _readOnly;
-	private String _renderedNestedDDMFormFields;
 	private boolean _showEmptyFieldLabel;
 	private String _value;
 

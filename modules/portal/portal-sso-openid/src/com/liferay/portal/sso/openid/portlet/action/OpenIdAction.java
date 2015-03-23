@@ -106,6 +106,11 @@ import org.osgi.service.component.annotations.Reference;
 public class OpenIdAction extends BaseStrutsPortletAction {
 
 	@Override
+	public boolean isCheckMethodOnProcessAction() {
+		return false;
+	}
+
+	@Override
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)

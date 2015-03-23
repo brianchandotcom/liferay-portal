@@ -46,7 +46,7 @@
 
 		<mkdir dir="test-results" />
 
-		<junit printsummary="on" showoutput="true">
+		<junit fork="true" printsummary="on" showoutput="true">
 			<classpath refid="plugin.classpath" />
 			<formatter type="brief" usefile="false" />
 			<formatter type="xml" />

@@ -222,8 +222,8 @@ public class LayoutStagingBackgroundTaskExecutor
 				if (PropsValues.STAGING_DELETE_TEMP_LAR_ON_FAILURE) {
 					FileUtil.delete(file);
 				}
-				else if (file != null) {
-					_log.error(
+				else if ((file != null) && _log.isDebugEnabled()) {
+					_log.debug(
 						"Temporary LAR file is kept at " +
 							file.getAbsolutePath());
 				}
@@ -234,8 +234,8 @@ public class LayoutStagingBackgroundTaskExecutor
 			if (PropsValues.STAGING_DELETE_TEMP_LAR_ON_SUCCESS) {
 				FileUtil.delete(file);
 			}
-			else if (file != null) {
-				_log.error(
+			else if ((file != null) && _log.isDebugEnabled()) {
+				_log.debug(
 					"Temporary LAR file is kept at " + file.getAbsolutePath());
 			}
 

@@ -291,10 +291,10 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Staging Test Page" />
+		<execute macro="Page#gotoPagesCP">
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="Site Name" />
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -354,10 +354,10 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Staging Test Page" />
+		<execute macro="Page#gotoPagesCP">
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="Site Name" />
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -632,6 +632,11 @@
 			<var name="portletName" value="${portletName} Custom" />
 		</execute>
 
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
 		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#configurePublishToLive">
@@ -839,6 +844,11 @@
 			<var name="postCount" value="1" />
 		</execute>
 
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
 		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#configurePublishToLive">
@@ -920,6 +930,11 @@
 		<execute macro="BlogsAggregatorPortlet#viewBlogsEntryViaBAPortletPG">
 			<var name="viewEntryTitle" value="Blogs Entry Title 1" />
 			<var name="viewNoEntryTitle" value="Blogs Entry Title 2" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />
@@ -1223,10 +1238,10 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoPagesCP">
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -1251,10 +1266,10 @@
 
 		<execute macro="DMPortlet#viewDefaultPG" />
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoPagesCP">
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -1838,6 +1853,11 @@
 
 		<execute macro="Page#deletePG">
 			<var name="pageName" value="Wiki" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />
@@ -2552,6 +2572,11 @@
 
 		<execute macro="Page#viewCustomLogoPG" />
 
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
 		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#configurePublishToLive">
@@ -2808,10 +2833,10 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Staging Test Page 2" />
+		<execute macro="Page#gotoPagesCP">
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -3032,6 +3057,11 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
 		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#configurePublishToLive">
@@ -3201,6 +3231,11 @@
 
 		<execute macro="Portlet#deletePG">
 			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />
@@ -3475,9 +3510,10 @@
 
 		<execute function="AssertElementNotPresent" locator1="StagingPublishtolivenow#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
+		<execute macro="Page#gotoPagesCP">
+			<var name="pageStaging" value="true" />
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -3822,10 +3858,10 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page 1" />
+		<execute macro="Page#gotoPagesCP">
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="Site Name" />
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 

@@ -1,0 +1,29 @@
+/* ---------- Main content body ---------- */
+
+.portal-iframe #main-content {
+	width: 100%;
+}
+
+/* ---------- Separator ---------- */
+
+.separator {
+	border-top: 1px dotted #BFBFBF;
+}
+
+/* ---------- Status ---------- */
+
+.entry-status {
+	border-left: 4px solid transparent;
+}
+
+span.alert {
+	display: inline-block;
+}
+
+/* ---------- Update manager ---------- */
+
+.update-available {
+	margin-top: 10px;
+	padding: 2px;
+	text-align: left;
+}

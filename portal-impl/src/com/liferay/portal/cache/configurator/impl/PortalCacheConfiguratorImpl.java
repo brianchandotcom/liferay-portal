@@ -75,10 +75,6 @@ public class PortalCacheConfiguratorImpl implements PortalCacheConfigurator {
 		}
 	}
 
-	@Override
-	public void reconfigureHibernateCache(URL url) {
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalCacheConfiguratorImpl.class);
 

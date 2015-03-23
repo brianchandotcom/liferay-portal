@@ -29,10 +29,6 @@ public class PortalCacheConfiguratorUtil {
 		_portalCacheConfigurator.reconfigureCaches(classLoader, url);
 	}
 
-	public static void reconfigureHibernateCache(URL url) {
-		_portalCacheConfigurator.reconfigureHibernateCache(url);
-	}
-
 	public void setPortalCacheConfigurator(
 		PortalCacheConfigurator portalCacheConfigurator) {
 

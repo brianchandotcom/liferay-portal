@@ -12,11 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache;
+package com.liferay.portal.dao.orm.hibernate.region;
 
-import com.liferay.portal.cache.cluster.EhcachePortalCacheClusterReplicatorFactory;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.AdviseWith;
@@ -40,7 +37,6 @@ import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -49,12 +45,6 @@ import org.junit.Test;
  */
 @NewEnv(type = NewEnv.Type.CLASSLOADER)
 public class EhcacheConfigurationUtilTest {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {
@@ -71,101 +61,55 @@ public class EhcacheConfigurationUtilTest {
 	@Test
 	public void testBootstrapDisabled() {
 		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, false);
+			_configurationURL, false);
 
 		_assertBootStrap(configuration, false);
 
 		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, true);
+			_configurationURL, true);
 
 		_assertBootStrap(configuration, false);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, false);
-
-		_assertBootStrap(configuration, false);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, true);
-
-		_assertBootStrap(configuration, false);
-	}
-
-	@AdviseWith(adviceClasses = {EnableEhcacheBootstrapAdvice.class})
-	@Test
-	public void testBootstrapEnabled() {
-		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, false);
-
-		_assertBootStrap(configuration, true);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, true);
-
-		_assertBootStrap(configuration, true);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, false);
-
-		_assertBootStrap(configuration, true);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, true);
-
-		_assertBootStrap(configuration, true);
-	}
-
-	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
-	@Test
-	public void testClusterDisabled() {
-		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, false);
-
-		_assertListenerConfigsEquals(_configuration, configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, true);
-
-		_assertListenerConfigsEquals(_configuration, configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, false);
-
-		_assertNoDefaultReplicatorConfigs(configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, true);
-
-		_assertNoListenerConfigs(configuration);
 	}
 
 	@AdviseWith(
 		adviceClasses = {
-			EnableClusterLinkAdvice.class,
+			DisableClusterLinkAdvice.class, EnableEhcacheBootstrapAdvice.class
+		}
+	)
+	@Test
+	public void testClusterDisabled() {
+		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false);
+
+		_assertNoDefaultReplicatorConfigs(configuration);
+		_assertBootStrap(configuration, false);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true);
+
+		_assertNoListenerConfigs(configuration);
+		_assertBootStrap(configuration, false);
+	}
+
+	@AdviseWith(
+		adviceClasses = {
+			EnableClusterLinkAdvice.class, EnableEhcacheBootstrapAdvice.class,
 			DisableClusterLinkReplicateAdvice.class
 		}
 	)
 	@Test
 	public void testClusterEnabled1() {
 		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, false);
+			_configurationURL, false);
 
 		_assertListenerConfigsEquals(_configuration, configuration);
+		_assertBootStrap(configuration, true);
 
 		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, true);
+			_configurationURL, true);
 
 		_assertListenerConfigsEquals(_configuration, configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, false);
-
-		_assertListenerConfigsEquals(_configuration, configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, true);
-
-		_assertListenerConfigsEquals(_configuration, configuration);
+		_assertBootStrap(configuration, true);
 	}
 
 	@AdviseWith(
@@ -177,22 +121,12 @@ public class EhcacheConfigurationUtilTest {
 	@Test
 	public void testClusterEnabled2() {
 		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, false);
-
-		_assertListenerConfigsEquals(_configuration, configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, true);
-
-		_assertListenerConfigsEquals(_configuration, configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, false);
+			_configurationURL, false);
 
 		_assertClusterLinkReplicatorConfigs(configuration, false);
 
 		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, true);
+			_configurationURL, true);
 
 		_assertClusterLinkReplicatorConfigs(configuration, true);
 	}
@@ -201,17 +135,12 @@ public class EhcacheConfigurationUtilTest {
 	@Test
 	public void testMisc() {
 		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
-			"WrongConfigurationPath");
+			"WrongConfigurationPath", false);
 
 		Assert.assertNull(configuration);
 
 		configuration = EhcacheConfigurationUtil.getConfiguration(
 			StringPool.BLANK, true);
-
-		Assert.assertNull(configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			StringPool.BLANK, true, true);
 
 		Assert.assertNull(configuration);
 
@@ -221,17 +150,16 @@ public class EhcacheConfigurationUtilTest {
 		Assert.assertNotNull(configurationURL);
 
 		configuration = EhcacheConfigurationUtil.getConfiguration(
-			configurationURL);
-
-		Assert.assertNotNull(configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
 			configurationURL, true);
 
 		Assert.assertNotNull(configuration);
 
 		new EhcacheConfigurationUtil();
 	}
+
+	@Rule
+	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
+		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	public static class DisableClusterLinkAdvice {

@@ -36,7 +36,7 @@ import org.junit.runners.Parameterized.Parameters;
 public class PoshiRunner {
 
 	@Parameters(name = "{0}")
-	public static List<String> getList() throws Exception {
+	public static List<String> getList() throws PoshiRunnerException {
 		List<String> classCommandNames = new ArrayList<>();
 
 		String testName = PropsValues.TEST_NAME;
@@ -61,7 +61,7 @@ public class PoshiRunner {
 		return classCommandNames;
 	}
 
-	public PoshiRunner(String classCommandName) throws Exception {
+	public PoshiRunner(String classCommandName) throws PoshiRunnerException {
 		SeleniumUtil.startSelenium();
 
 		System.out.println("\nRunning " + classCommandName);
@@ -84,7 +84,7 @@ public class PoshiRunner {
 	}
 
 	private void _runClassCommandName(String classCommandName)
-		throws Exception {
+		throws PoshiRunnerException {
 
 		Element rootElement = PoshiRunnerContext.getTestcaseRootElement(
 			_testClassName);
@@ -114,15 +114,15 @@ public class PoshiRunner {
 		}
 	}
 
-	private void _runCommand() throws Exception {
+	private void _runCommand() throws PoshiRunnerException {
 		_runClassCommandName(_testClassCommandName);
 	}
 
-	private void _runSetUp() throws Exception {
+	private void _runSetUp() throws PoshiRunnerException {
 		_runClassCommandName(_testClassName + "#set-up");
 	}
 
-	private void _runTearDown() throws Exception {
+	private void _runTearDown() throws PoshiRunnerException {
 		try {
 			_runClassCommandName(_testClassName + "#tear-down");
 		}

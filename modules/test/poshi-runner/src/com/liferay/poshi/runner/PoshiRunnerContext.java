@@ -62,7 +62,9 @@ public class PoshiRunnerContext {
 		return _commandElements.get("action#" + classCommandName);
 	}
 
-	public static int getActionLocatorCount(String classCommandName) {
+	public static int getActionLocatorCount(String classCommandName)
+		throws PoshiRunnerException {
+
 		String commandName =
 			PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
 				classCommandName);
@@ -83,7 +85,9 @@ public class PoshiRunnerContext {
 		return _commandElements.get("function#" + classCommandName);
 	}
 
-	public static int getFunctionLocatorCount(String className) {
+	public static int getFunctionLocatorCount(String className)
+		throws PoshiRunnerException {
+
 		return _functionLocatorCounts.get(className);
 	}
 
@@ -143,7 +147,7 @@ public class PoshiRunnerContext {
 	}
 
 	private static void _readPathFile(String filePath, String className)
-		throws Exception {
+		throws PoshiRunnerException {
 
 		Element rootElement = PoshiRunnerGetterUtil.getRootElementFromFilePath(
 			filePath);
@@ -191,7 +195,7 @@ public class PoshiRunnerContext {
 		}
 	}
 
-	private static void _readPoshiFiles() throws Exception {
+	private static void _readPoshiFiles() throws PoshiRunnerException {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(_BASE_DIR);
@@ -286,7 +290,7 @@ public class PoshiRunnerContext {
 		}
 	}
 
-	private static void _readSeleniumFiles() throws Exception {
+	private static void _readSeleniumFiles() throws PoshiRunnerException {
 		String[] fileNames = {
 			"LiferaySelenium.java", "WebDriverToSeleniumBridge.java"
 		};
@@ -298,29 +302,34 @@ public class PoshiRunnerContext {
 				filePath = filePath.replace("/", "\\");
 			}
 
-			String content = FileUtil.read(filePath + fileName);
+			try {
+				String content = FileUtil.read(filePath + fileName);
 
-			Matcher matcher = _pattern.matcher(content);
+				Matcher matcher = _pattern.matcher(content);
 
-			while (matcher.find()) {
-				String methodSignature = matcher.group();
+				while (matcher.find()) {
+					String methodSignature = matcher.group();
 
-				int x = methodSignature.indexOf(" ", 7);
-				int y = methodSignature.indexOf("(");
+					int x = methodSignature.indexOf(" ", 7);
+					int y = methodSignature.indexOf("(");
 
-				String commandName = methodSignature.substring(x + 1, y);
+					String commandName = methodSignature.substring(x + 1, y);
 
-				int parameterCount = 0;
+					int parameterCount = 0;
 
-				int z = methodSignature.indexOf(")");
+					int z = methodSignature.indexOf(")");
 
-				String parameters = methodSignature.substring(y + 1, z);
+					String parameters = methodSignature.substring(y + 1, z);
 
-				if (!parameters.equals("")) {
-					parameterCount = StringUtil.count(parameters, ",") + 1;
+					if (!parameters.equals("")) {
+						parameterCount = StringUtil.count(parameters, ",") + 1;
+					}
+
+					_seleniumParameterCounts.put(commandName, parameterCount);
 				}
-
-				_seleniumParameterCounts.put(commandName, parameterCount);
+			}
+			catch (Exception e) {
+				throw new PoshiRunnerException(e);
 			}
 		}
 

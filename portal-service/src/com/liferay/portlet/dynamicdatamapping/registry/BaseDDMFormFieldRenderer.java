@@ -21,12 +21,13 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderingContext;
 
 import java.io.Writer;
+
+import java.net.URL;
 
 import java.util.Locale;
 
@@ -42,9 +43,9 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 		throws PortalException {
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_SOY, templateResource, false);
+			getTemplateLanguage(), getTemplateResource(), false);
 
-		template.put(TemplateConstants.NAMESPACE, templateNamespace);
+		template.put(TemplateConstants.NAMESPACE, getTemplateNamespace());
 
 		populateRequiredContext(
 			template, ddmFormField, ddmFormFieldRenderingContext);
@@ -55,16 +56,14 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 		return render(template);
 	}
 
-	protected String getFieldNameSuffix(String instanceId) {
-		return _INSTANCE_SEPARATOR.concat(instanceId);
-	}
+	protected TemplateResource getTemplateResource(String templatePath) {
+		Class<?> clazz = getClass();
 
-	protected String getFieldQualifiedName(
-		String fieldName, String instanceId) {
+		ClassLoader classLoader = clazz.getClassLoader();
 
-		String fieldNameSuffix = getFieldNameSuffix(instanceId);
+		URL templateURL = classLoader.getResource(templatePath);
 
-		return fieldName.concat(fieldNameSuffix);
+		return new URLTemplateResource(templateURL.getPath(), templateURL);
 	}
 
 	protected void populateOptionalContext(
@@ -78,23 +77,13 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 
 		Locale locale = ddmFormFieldRenderingContext.getLocale();
 
-		String fieldName = ddmFormField.getName();
-
-		String instanceId = StringUtil.randomString();
-
 		template.put("dir", LanguageUtil.get(locale, "lang.dir"));
-		template.put("fieldName", ddmFormField.getName());
+		template.put("label", ddmFormFieldRenderingContext.getLabel());
+		template.put("name", ddmFormFieldRenderingContext.getName());
 		template.put(
-			"fieldQualifiedName", getFieldQualifiedName(fieldName, instanceId));
-		template.put("fieldNameSuffix", getFieldNameSuffix(instanceId));
-
-		LocalizedValue label = ddmFormField.getLabel();
-
-		template.put("fieldLabel", label.getString(locale));
-
-		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
-
-		template.put("fieldValue", predefinedValue.getString(locale));
+			"renderedNestedDDMFormFields",
+			ddmFormFieldRenderingContext.getRenderedNestedDDMFormFields());
+		template.put("value", ddmFormFieldRenderingContext.getValue());
 	}
 
 	protected String render(Template template) throws PortalException {
@@ -104,10 +93,5 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 
 		return writer.toString();
 	}
-
-	protected String templateNamespace;
-	protected TemplateResource templateResource;
-
-	private static final String _INSTANCE_SEPARATOR = "_INSTANCE_";
 
 }

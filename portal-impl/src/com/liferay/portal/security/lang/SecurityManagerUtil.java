@@ -141,10 +141,7 @@ public class SecurityManagerUtil {
 		DEFAULT, LIFERAY;
 
 		public static PortalSecurityManagerStrategy parse(String value) {
-			if (PropsValues.TCK_URL) {
-				return DEFAULT;
-			}
-			else if (value.equals("liferay")) {
+			if (value.equals("liferay")) {
 				return LIFERAY;
 			}
 

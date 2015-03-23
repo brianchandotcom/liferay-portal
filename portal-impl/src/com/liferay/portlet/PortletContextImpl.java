@@ -141,7 +141,7 @@ public class PortletContextImpl implements LiferayPortletContext {
 		try {
 			requestDispatcher = _servletContext.getRequestDispatcher(path);
 		}
-		catch (IllegalArgumentException iae) {
+		catch (Throwable cause) {
 			return null;
 		}
 

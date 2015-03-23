@@ -14,6 +14,8 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
@@ -30,9 +32,11 @@ import java.lang.reflect.Field;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
@@ -147,6 +151,57 @@ public class LocalizationImplTest {
 		Assert.assertEquals(
 			"The default language ids from Document and XML don't match",
 			languageIdsFromDoc, languageIdsFromXml);
+	}
+
+	@Test
+	public void testGetLocalizationMapWithNoValues() {
+		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap(
+			"defaultValue");
+
+		Map<Locale, String> map = LocalizationUtil.getMap(localizedValuesMap);
+
+		Assert.assertEquals(1, map.size());
+
+		Assert.assertEquals("defaultValue", map.get(LocaleUtil.getDefault()));
+	}
+
+	@Test
+	public void testGetLocalizationMapWithTwoValues() {
+		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap(
+			"defaultValue");
+
+		localizedValuesMap.put(LocaleUtil.GERMANY, _GERMAN_HELLO);
+		localizedValuesMap.put(LocaleUtil.US, _ENGLISH_HELLO);
+
+		Set<Locale> locales = new HashSet<>(
+			Arrays.asList(
+				LocaleUtil.getDefault(), LocaleUtil.GERMANY, LocaleUtil.US));
+
+		Map<Locale, String> map = LocalizationUtil.getMap(localizedValuesMap);
+
+		Assert.assertEquals(locales.size(), map.size());
+
+		Assert.assertEquals(_GERMAN_HELLO, map.get(LocaleUtil.GERMANY));
+		Assert.assertEquals(_ENGLISH_HELLO, map.get(LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetLocalizationXml() {
+		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap(
+			"defaultValue");
+
+		String xml = LocalizationUtil.getXml(localizedValuesMap, "key");
+
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			Assert.assertTrue(
+				"Key for " +locale + "included in XML",
+				xml.contains(
+					"<key language-id=\"" + locale + "\">defaultValue</key>"));
+		}
+
+		Assert.assertTrue(
+			"Default locale included in XML",
+			xml.contains("default-locale=\"" + LocaleUtil.getDefault() + "\""));
 	}
 
 	@Test

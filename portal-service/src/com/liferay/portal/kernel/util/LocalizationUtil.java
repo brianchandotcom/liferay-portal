@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.xml.Document;
 
@@ -224,6 +225,12 @@ public class LocalizationUtil {
 			portletRequest, parameter);
 	}
 
+	public static Map<Locale, String> getMap(
+		LocalizedValuesMap localizedValuesMap) {
+
+		return getLocalization().getMap(localizedValuesMap);
+	}
+
 	public static List<Locale> getModifiedLocales(
 		Map<Locale, String> oldMap, Map<Locale, String> newMap) {
 
@@ -310,6 +317,12 @@ public class LocalizationUtil {
 
 		return getLocalization().getSettingsValues(
 			settings, key, languageId, useDefault);
+	}
+
+	public static String getXml(
+		LocalizedValuesMap localizedValuesMap, String key) {
+
+		return getLocalization().getXml(localizedValuesMap, key);
 	}
 
 	public static String removeLocalization(

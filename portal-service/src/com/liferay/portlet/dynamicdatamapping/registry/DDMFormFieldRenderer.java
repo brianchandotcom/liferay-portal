@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.registry;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderingContext;
 
@@ -22,6 +23,12 @@ import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderingContex
  * @author Pablo Carvalho
  */
 public interface DDMFormFieldRenderer {
+
+	public String getTemplateLanguage();
+
+	public String getTemplateNamespace();
+
+	public TemplateResource getTemplateResource();
 
 	public String render(
 			DDMFormField ddmFormField,

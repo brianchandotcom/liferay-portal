@@ -41,6 +41,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.randomizerbumpers.BBCodeRandomizerBumper;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
@@ -489,7 +490,8 @@ public abstract class BaseSearchTestCase {
 			searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId(), searchContext));
 
-		String updatedKeywords = RandomTestUtil.randomString();
+		String updatedKeywords = RandomTestUtil.randomString(
+			BBCodeRandomizerBumper.INSTANCE);
 
 		baseModel = updateBaseModel(baseModel, updatedKeywords, serviceContext);
 

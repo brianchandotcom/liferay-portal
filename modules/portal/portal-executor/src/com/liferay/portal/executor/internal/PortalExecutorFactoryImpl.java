@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Modified;
 	immediate = true,
 	property = {
 		"allowCoreThreadTimeout=true", "corePoolSize=0", "keepAliveTime=60",
-		"maxPoolSize=10", "maxQueueSize=0x7fffffff",
+		"maxPoolSize=10",
 		"rejectedExecutionHandler=com.liferay.portal.kernel.concurrent.AbortPolicy",
 		"threadPoolHandler=com.liferay.portal.kernel.concurrent.ClearThreadLocalThreadPoolHandler",
 		"timeUnit=SECONDS"
@@ -121,7 +121,8 @@ public class PortalExecutorFactoryImpl implements PortalExecutorFactory {
 				"Max pool size is less than core pool size");
 		}
 
-		_maxQueueSize = GetterUtil.getInteger(properties.get("maxQueueSize"));
+		_maxQueueSize = GetterUtil.getInteger(
+			properties.get("maxQueueSize"), Integer.MAX_VALUE);
 
 		if (_maxQueueSize <= 0) {
 			throw new IllegalArgumentException(

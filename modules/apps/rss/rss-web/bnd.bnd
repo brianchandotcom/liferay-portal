@@ -1,6 +1,11 @@
 Bundle-Name: Liferay RSS Web
 Bundle-SymbolicName: com.liferay.rss.web
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.sun.syndication,\
+	com.sun.syndication.feed,\
+	com.sun.syndication.feed.module,\
+	*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\

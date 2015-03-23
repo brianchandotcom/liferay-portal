@@ -12,10 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache;
+package com.liferay.portal.dao.orm.hibernate.region;
 
-import com.liferay.portal.dao.orm.hibernate.region.EhcachePortalCacheClusterReplicatorFactory;
-import com.liferay.portal.dao.orm.hibernate.region.EhcacheStreamBootstrapCacheLoaderFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;

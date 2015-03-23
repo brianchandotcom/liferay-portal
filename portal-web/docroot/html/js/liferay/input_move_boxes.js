@@ -135,7 +135,30 @@ AUI.add(
 					},
 
 					_moveItem: function(from, to, sort) {
-						Util.moveItem(from, to, sort);
+						from = A.one(from);
+						to = A.one(to);
+
+						var selectedIndex = from.get('selectedIndex');
+
+						var selectedOption;
+
+						if (selectedIndex >= 0) {
+							var options = from.all('option');
+
+							selectedOption = options.item(selectedIndex);
+
+							options.each(
+								function(item, index) {
+									if (item.get('selected')) {
+										to.append(item);
+									}
+								}
+							);
+						}
+
+						if (selectedOption && selectedOption.text() !== '' && sort === true) {
+							Util.sortBox(to);
+						}
 
 						Liferay.fire(
 							NAME + ':moveItem',

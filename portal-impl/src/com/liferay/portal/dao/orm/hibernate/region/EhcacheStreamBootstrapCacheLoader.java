@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.cache.bootstrap;
+package com.liferay.portal.dao.orm.hibernate.region;
 
+import com.liferay.portal.cache.bootstrap.ClusterLinkBootstrapLoaderHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;

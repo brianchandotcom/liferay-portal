@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.ehcache;
 
-import com.liferay.portal.cache.bootstrap.EhcacheStreamBootstrapCacheLoaderFactory;
+import com.liferay.portal.dao.orm.hibernate.region.EhcacheStreamBootstrapCacheLoaderFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;

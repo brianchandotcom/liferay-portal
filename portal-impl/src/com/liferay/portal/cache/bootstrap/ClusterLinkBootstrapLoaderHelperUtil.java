@@ -88,50 +88,11 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 		return serverSocket.getLocalSocketAddress();
 	}
 
-	public static synchronized void start() {
-		if (!_started) {
-			_started = true;
-		}
-
-		if (_deferredPortalCaches.isEmpty()) {
-			return;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Loading deferred caches");
-		}
-
-		try {
-			for (Map.Entry<String, List<String>> entry :
-					_deferredPortalCaches.entrySet()) {
-
-				List<String> portalCacheNames = entry.getValue();
-
-				if (portalCacheNames.isEmpty()) {
-					continue;
-				}
-
-				loadCachesFromCluster(
-					entry.getKey(),
-					portalCacheNames.toArray(
-						new String[portalCacheNames.size()]));
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to load cache data from the cluster", e);
-			}
-		}
-		finally {
-			_deferredPortalCaches.clear();
-		}
-	}
-
-	protected static boolean isSkipped() {
+	public static boolean isSkipped() {
 		return _skipBootstrapLoaderThreadLocal.get();
 	}
 
-	protected static void loadCachesFromCluster(
+	public static void loadCachesFromCluster(
 			String portalCacheManagerName, String ... portalCacheNames)
 		throws Exception {
 
@@ -290,6 +251,45 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 			if (socket != null) {
 				socket.close();
 			}
+		}
+	}
+
+	public static synchronized void start() {
+		if (!_started) {
+			_started = true;
+		}
+
+		if (_deferredPortalCaches.isEmpty()) {
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Loading deferred caches");
+		}
+
+		try {
+			for (Map.Entry<String, List<String>> entry :
+					_deferredPortalCaches.entrySet()) {
+
+				List<String> portalCacheNames = entry.getValue();
+
+				if (portalCacheNames.isEmpty()) {
+					continue;
+				}
+
+				loadCachesFromCluster(
+					entry.getKey(),
+					portalCacheNames.toArray(
+						new String[portalCacheNames.size()]));
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to load cache data from the cluster", e);
+			}
+		}
+		finally {
+			_deferredPortalCaches.clear();
 		}
 	}
 

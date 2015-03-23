@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"com.liferay.portlet.friendly-url-routes=com/liferay/social/networking/web/meetups/portlet/route/meetups-friendly-url-routes.xml",
+		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/meetups-routes.xml",
 		"javax.portlet.name=" + SocialNetworkingPortletKeys.MEETUPS
 	},
 	service = FriendlyURLMapper.class

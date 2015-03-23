@@ -262,7 +262,7 @@
 		Liferay.AUI = {
 
 			<%
-			long javaScriptLastModified = ServletContextUtil.getLastModified(application, "/html/js/", true);
+			long javaScriptLastModified = PortalWebResourcesUtil.getLastModified();
 			%>
 
 			getAvailableLangPath: function() {

@@ -15,7 +15,6 @@
 package com.liferay.portlet.blogs;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -23,7 +22,7 @@ import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portlet.blogs.util.BlogsConstants;
 
@@ -65,11 +64,8 @@ public class BlogsGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailEntryAddedBodyXml() {
-		LocalizedValuesMap emailEntryAddedBodyMap = getEmailEntryAddedBody();
-
-		return emailEntryAddedBodyMap.getLocalizationXml(
-			"emailEntryAddedBody", LocaleUtil.getSiteDefault(),
-			LanguageUtil.getAvailableLocales());
+		return LocalizationUtil.getXml(
+			getEmailEntryAddedBody(), "emailEntryAddedBody");
 	}
 
 	public LocalizedValuesMap getEmailEntryAddedSubject() {
@@ -78,12 +74,8 @@ public class BlogsGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailEntryAddedSubjectXml() {
-		LocalizedValuesMap emailEntryAddedSubjectMap =
-			getEmailEntryAddedSubject();
-
-		return emailEntryAddedSubjectMap.getLocalizationXml(
-			"emailEntryAddedSubject", LocaleUtil.getSiteDefault(),
-			LanguageUtil.getAvailableLocales());
+		return LocalizationUtil.getXml(
+			getEmailEntryAddedSubject(), "emailEntryAddedSubject");
 	}
 
 	public LocalizedValuesMap getEmailEntryUpdatedBody() {
@@ -92,12 +84,8 @@ public class BlogsGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailEntryUpdatedBodyXml() {
-		LocalizedValuesMap emailEntryUpdatedBodyMap =
-			getEmailEntryUpdatedBody();
-
-		return emailEntryUpdatedBodyMap.getLocalizationXml(
-			"emailEntryUpdatedBody", LocaleUtil.getSiteDefault(),
-			LanguageUtil.getAvailableLocales());
+		return LocalizationUtil.getXml(
+			getEmailEntryUpdatedBody(), "emailEntryUpdatedBody");
 	}
 
 	public LocalizedValuesMap getEmailEntryUpdatedSubject() {
@@ -106,12 +94,8 @@ public class BlogsGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailEntryUpdatedSubjectXml() {
-		LocalizedValuesMap emailEntryUpdatedSubjectMap =
-			getEmailEntryUpdatedSubject();
-
-		return emailEntryUpdatedSubjectMap.getLocalizationXml(
-			"emailEntryUpdatedSubject", LocaleUtil.getSiteDefault(),
-			LanguageUtil.getAvailableLocales());
+		return LocalizationUtil.getXml(
+			getEmailEntryUpdatedSubject(), "emailEntryUpdatedSubject");
 	}
 
 	public String getEmailFromAddress() {

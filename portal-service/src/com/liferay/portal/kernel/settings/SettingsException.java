@@ -14,34 +14,26 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.kernel.util.LocaleUtil;
-
-import org.junit.Test;
-
-import org.testng.Assert;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Iván Zaera
  */
-public class LocalizedValuesMapTest {
+public class SettingsException extends PortalException {
 
-	@Test
-	public void testGetReturnsDefaultValueForUnknownLocale() {
-		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap(
-			"defaultValue");
-
-		Assert.assertEquals(
-			"defaultValue", localizedValuesMap.get(LocaleUtil.BRAZIL));
+	public SettingsException() {
 	}
 
-	@Test
-	public void testGetReturnsValueForKnownLocale() {
-		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap(
-			"defaultValue");
+	public SettingsException(String msg) {
+		super(msg);
+	}
 
-		localizedValuesMap.put(LocaleUtil.CANADA, "Hello");
+	public SettingsException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 
-		Assert.assertEquals("Hello", localizedValuesMap.get(LocaleUtil.CANADA));
+	public SettingsException(Throwable cause) {
+		super(cause);
 	}
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.portlet.shopping;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -23,7 +22,7 @@ import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -178,12 +177,8 @@ public class ShoppingGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailOrderConfirmationBodyXml() {
-		LocalizedValuesMap emailOrderConfirmationBodyMap =
-			getEmailOrderConfirmationBody();
-
-		return emailOrderConfirmationBodyMap.getLocalizationXml(
-			"emailOrderConfirmationBody", LocaleUtil.getSiteDefault(),
-			LanguageUtil.getAvailableLocales());
+		return LocalizationUtil.getXml(
+			getEmailOrderConfirmationBody(), "emailOrderConfirmationBody");
 	}
 
 	public LocalizedValuesMap getEmailOrderConfirmationSubject() {
@@ -196,12 +191,9 @@ public class ShoppingGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailOrderConfirmationSubjectXml() {
-		LocalizedValuesMap emailOrderConfirmationSubjectMap =
-			getEmailOrderConfirmationSubject();
-
-		return emailOrderConfirmationSubjectMap.getLocalizationXml(
-			"emailOrderConfirmationSubject", LocaleUtil.getSiteDefault(),
-			LanguageUtil.getAvailableLocales());
+		return LocalizationUtil.getXml(
+			getEmailOrderConfirmationSubject(),
+			"emailOrderConfirmationSubject");
 	}
 
 	public LocalizedValuesMap getEmailOrderShippingBody() {
@@ -210,12 +202,8 @@ public class ShoppingGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailOrderShippingBodyXml() {
-		LocalizedValuesMap emailOrderShippingBodyMap =
-			getEmailOrderShippingBody();
-
-		return emailOrderShippingBodyMap.getLocalizationXml(
-			"emailOrderShippingBody", LocaleUtil.getSiteDefault(),
-			LanguageUtil.getAvailableLocales());
+		return LocalizationUtil.getXml(
+			getEmailOrderShippingBody(), "emailOrderShippingBody");
 	}
 
 	public LocalizedValuesMap getEmailOrderShippingSubject() {
@@ -225,12 +213,8 @@ public class ShoppingGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailOrderShippingSubjectXml() {
-		LocalizedValuesMap emailOrderShippingSubjectMap =
-			getEmailOrderShippingSubject();
-
-		return emailOrderShippingSubjectMap.getLocalizationXml(
-			"emailOrderShippingSubject", LocaleUtil.getSiteDefault(),
-			LanguageUtil.getAvailableLocales());
+		return LocalizationUtil.getXml(
+			getEmailOrderShippingSubject(), "emailOrderShippingSubject");
 	}
 
 	public String[] getInsurance() {

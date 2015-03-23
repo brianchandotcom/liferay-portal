@@ -16,12 +16,11 @@ package com.liferay.bookmarks.settings;
 
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 /**
  * @author Iván Zaera
@@ -39,11 +38,8 @@ public class BookmarksGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailEntryAddedBodyXml() {
-		LocalizedValuesMap emailEntryAddedBody = getEmailEntryAddedBody();
-
-		return emailEntryAddedBody.getLocalizationXml(
-			"emailEntryAddedBody", LocaleUtil.getSiteDefault(),
-			LanguageUtil.getAvailableLocales());
+		return LocalizationUtil.getXml(
+			getEmailEntryAddedBody(), "emailEntryAddedBody");
 	}
 
 	public LocalizedValuesMap getEmailEntryAddedSubject() {
@@ -52,11 +48,8 @@ public class BookmarksGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailEntryAddedSubjectXml() {
-		LocalizedValuesMap emailEntryAddedSubject = getEmailEntryAddedSubject();
-
-		return emailEntryAddedSubject.getLocalizationXml(
-			"emailEntryAddedSubject", LocaleUtil.getSiteDefault(),
-			LanguageUtil.getAvailableLocales());
+		return LocalizationUtil.getXml(
+			getEmailEntryAddedSubject(), "emailEntryAddedSubject");
 	}
 
 	public LocalizedValuesMap getEmailEntryUpdatedBody() {
@@ -65,11 +58,8 @@ public class BookmarksGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailEntryUpdatedBodyXml() {
-		LocalizedValuesMap emailEntryUpdatedBody = getEmailEntryUpdatedBody();
-
-		return emailEntryUpdatedBody.getLocalizationXml(
-			"emailEntryUpdatedBody", LocaleUtil.getSiteDefault(),
-			LanguageUtil.getAvailableLocales());
+		return LocalizationUtil.getXml(
+			getEmailEntryUpdatedBody(), "emailEntryUpdatedBody");
 	}
 
 	public LocalizedValuesMap getEmailEntryUpdatedSubject() {
@@ -78,12 +68,8 @@ public class BookmarksGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailEntryUpdatedSubjectXml() {
-		LocalizedValuesMap emailEntryUpdatedSubject =
-			getEmailEntryUpdatedSubject();
-
-		return emailEntryUpdatedSubject.getLocalizationXml(
-			"emailEntryUpdatedSubject", LocaleUtil.getSiteDefault(),
-			LanguageUtil.getAvailableLocales());
+		return LocalizationUtil.getXml(
+			getEmailEntryUpdatedSubject(), "emailEntryUpdatedSubject");
 	}
 
 	public String getEmailFromAddress() {

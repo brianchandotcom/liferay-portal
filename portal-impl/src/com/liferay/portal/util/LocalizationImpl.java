@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -593,6 +594,19 @@ public class LocalizationImpl implements Localization {
 		return getLocalizationMap(portletRequest, parameter);
 	}
 
+	@Override
+	public Map<Locale, String> getMap(LocalizedValuesMap localizedValuesMap) {
+		Map<Locale, String> map = localizedValuesMap.getValues();
+
+		Locale locale = LocaleUtil.getDefault();
+
+		if (map.get(locale) == null) {
+			map.put(locale, localizedValuesMap.getDefaultValue());
+		}
+
+		return map;
+	}
+
 	/**
 	 * @deprecated As of 7.0.0
 	 */
@@ -717,6 +731,61 @@ public class LocalizationImpl implements Localization {
 		}
 
 		return values;
+	}
+
+	@Override
+	public String getXml(LocalizedValuesMap localizedValuesMap, String key) {
+		XMLStreamWriter xmlStreamWriter = null;
+
+		try {
+			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+			XMLOutputFactory xmlOutputFactory = XMLOutputFactory.newInstance();
+
+			xmlStreamWriter = xmlOutputFactory.createXMLStreamWriter(
+				unsyncStringWriter);
+
+			xmlStreamWriter.writeStartDocument();
+
+			xmlStreamWriter.writeStartElement("root");
+
+			Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+			xmlStreamWriter.writeAttribute(
+				"available-locales", StringUtil.merge(availableLocales));
+
+			Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+			xmlStreamWriter.writeAttribute(
+				"default-locale", defaultLocale.toString());
+
+			for (Locale locale : availableLocales) {
+				String value = localizedValuesMap.get(locale);
+
+				if (value != null) {
+					xmlStreamWriter.writeStartElement(key);
+
+					xmlStreamWriter.writeAttribute(
+						"language-id", locale.toString());
+
+					xmlStreamWriter.writeCharacters(value);
+
+					xmlStreamWriter.writeEndElement();
+				}
+			}
+
+			xmlStreamWriter.writeEndElement();
+
+			xmlStreamWriter.writeEndDocument();
+
+			return unsyncStringWriter.toString();
+		}
+		catch (XMLStreamException xmlse) {
+			throw new RuntimeException(xmlse);
+		}
+		finally {
+			_close(xmlStreamWriter);
+		}
 	}
 
 	@Override
@@ -1072,6 +1141,16 @@ public class LocalizationImpl implements Localization {
 		}
 
 		return xml;
+	}
+
+	private void _close(XMLStreamWriter xmlStreamWriter) {
+		if (xmlStreamWriter != null) {
+			try {
+				xmlStreamWriter.close();
+			}
+			catch (XMLStreamException xmlse) {
+			}
+		}
 	}
 
 	private void _copyNonExempt(

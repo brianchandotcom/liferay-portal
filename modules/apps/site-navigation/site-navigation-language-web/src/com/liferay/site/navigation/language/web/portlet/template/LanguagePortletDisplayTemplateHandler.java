@@ -46,7 +46,7 @@ public class LanguagePortletDisplayTemplateHandler
 
 	@Override
 	public String getClassName() {
-		return Locale.class.getName();
+		return LanguageEntry.class.getName();
 	}
 
 	@Override

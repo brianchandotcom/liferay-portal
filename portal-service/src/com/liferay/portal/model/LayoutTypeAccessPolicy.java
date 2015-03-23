@@ -17,12 +17,14 @@ package com.liferay.portal.model;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 
+import java.io.Serializable;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Adolfo Pérez
  */
-public interface LayoutTypeAccessPolicy {
+public interface LayoutTypeAccessPolicy extends Serializable {
 
 	public void checkAccessAllowedToPortlet(
 			HttpServletRequest request, Layout layout, Portlet portlet)

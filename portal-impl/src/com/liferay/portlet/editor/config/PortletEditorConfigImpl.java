@@ -45,6 +45,11 @@ public class PortletEditorConfigImpl implements PortletEditorConfig {
 	}
 
 	@Override
+	public JSONObject getConfigJSONObject() {
+		return _configJSONObject;
+	}
+
+	@Override
 	public Map<String, Object> getData() {
 		Map<String, Object> coverImageCaptionEditorData = new HashMap<>();
 
@@ -52,6 +57,11 @@ public class PortletEditorConfigImpl implements PortletEditorConfig {
 		coverImageCaptionEditorData.put("editorOptions", _optionsJSONObject);
 
 		return coverImageCaptionEditorData;
+	}
+
+	@Override
+	public JSONObject getOptionsJSONObject() {
+		return _optionsJSONObject;
 	}
 
 	private JSONObject _populateConfigJSONObject(

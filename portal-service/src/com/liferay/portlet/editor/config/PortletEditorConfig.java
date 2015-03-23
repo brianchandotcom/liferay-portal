@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.editor.config;
 
+import com.liferay.portal.kernel.json.JSONObject;
+
 import java.util.Map;
 
 /**
@@ -21,6 +23,10 @@ import java.util.Map;
  */
 public interface PortletEditorConfig {
 
+	public JSONObject getConfigJSONObject();
+
 	public Map<String, Object> getData();
+
+	public JSONObject getOptionsJSONObject();
 
 }

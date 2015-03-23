@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -45,7 +46,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = "path=/wiki/get_page_attachment", service = StrutsAction.class
 )
-public class GetPageAttachmentAction implements StrutsAction {
+public class GetPageAttachmentAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(
@@ -77,15 +78,6 @@ public class GetPageAttachmentAction implements StrutsAction {
 
 			return null;
 		}
-	}
-
-	@Override
-	public String execute(
-			StrutsAction originalStrutsAction, HttpServletRequest request,
-			HttpServletResponse response)
-		throws Exception {
-
-		return execute(request, response);
 	}
 
 	protected void getFile(

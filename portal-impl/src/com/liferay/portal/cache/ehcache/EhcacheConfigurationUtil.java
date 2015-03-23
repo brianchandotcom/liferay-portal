@@ -15,6 +15,7 @@
 package com.liferay.portal.cache.ehcache;
 
 import com.liferay.portal.cache.cluster.EhcachePortalCacheClusterReplicatorFactory;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
@@ -143,7 +144,14 @@ public class EhcacheConfigurationUtil {
 				cacheEventListenerConfigurations.remove(
 					cacheEventListenerFactoryConfiguration);
 
-				return cacheEventListenerFactoryConfiguration.getProperties();
+				String properties =
+					cacheEventListenerFactoryConfiguration.getProperties();
+
+				if (properties == null) {
+					properties = StringPool.BLANK;
+				}
+
+				return properties;
 			}
 		}
 
@@ -180,6 +188,10 @@ public class EhcacheConfigurationUtil {
 	private static void _enableClusterLinkReplication(
 		CacheConfiguration cacheConfiguration,
 		String cacheEventListenerProperties) {
+
+		if (cacheEventListenerProperties.equals(StringPool.BLANK)) {
+			cacheEventListenerProperties = null;
+		}
 
 		CacheEventListenerFactoryConfiguration
 			cacheEventListenerFactoryConfiguration =

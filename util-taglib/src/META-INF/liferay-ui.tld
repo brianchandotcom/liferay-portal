@@ -907,13 +907,16 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates an image captcha with a corresponding verification input</description>
 		<name>captcha</name>
 		<tag-class>com.liferay.taglib.ui.CaptchaTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Sets the source url for the captcha image</description>
 			<name>url</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>String</type>
 		</attribute>
 	</tag>
 	<tag>

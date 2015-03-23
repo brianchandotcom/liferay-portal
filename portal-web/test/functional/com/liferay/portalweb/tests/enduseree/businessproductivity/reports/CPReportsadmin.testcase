@@ -1,7 +1,7 @@
 <definition component-name="portal-business-productivity-ee">
 	<property name="portlet.plugins.includes" value="reports-portlet" />
-	<property name="web.plugins.includes" value="jasperreports-web" />
 	<property name="testray.main.component.name" value="Reports" />
+	<property name="web.plugins.includes" value="jasperreports-web" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

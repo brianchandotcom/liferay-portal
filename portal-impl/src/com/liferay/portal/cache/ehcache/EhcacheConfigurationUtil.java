@@ -42,18 +42,8 @@ import net.sf.ehcache.config.FactoryConfiguration;
  */
 public class EhcacheConfigurationUtil {
 
-	public static Configuration getConfiguration(String configurationPath) {
-		return getConfiguration(configurationPath, false);
-	}
-
 	public static Configuration getConfiguration(
-		String configurationPath, boolean clusterAware) {
-
-		return getConfiguration(configurationPath, clusterAware, false);
-	}
-
-	public static Configuration getConfiguration(
-		String configurationPath, boolean clusterAware, boolean usingDefault) {
+		String configurationPath, boolean usingDefault) {
 
 		if (Validator.isNull(configurationPath)) {
 			return null;
@@ -62,21 +52,11 @@ public class EhcacheConfigurationUtil {
 		URL configurationURL = EhcacheConfigurationUtil.class.getResource(
 			configurationPath);
 
-		return getConfiguration(configurationURL, clusterAware, usingDefault);
-	}
-
-	public static Configuration getConfiguration(URL configurationURL) {
-		return getConfiguration(configurationURL, false);
+		return getConfiguration(configurationURL, usingDefault);
 	}
 
 	public static Configuration getConfiguration(
-		URL configurationURL, boolean clusterAware) {
-
-		return getConfiguration(configurationURL, clusterAware, false);
-	}
-
-	public static Configuration getConfiguration(
-		URL configurationURL, boolean clusterAware, boolean usingDefault) {
+		URL configurationURL, boolean usingDefault) {
 
 		if (configurationURL == null) {
 			return null;
@@ -92,9 +72,8 @@ public class EhcacheConfigurationUtil {
 			_clearBootstrapCacheLoaderConfigurations(cacheConfigurations);
 		}
 
-		if (!clusterAware ||
-			(PropsValues.CLUSTER_LINK_ENABLED &&
-			 !PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED)) {
+		if (PropsValues.CLUSTER_LINK_ENABLED &&
+			!PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
 
 			return configuration;
 		}

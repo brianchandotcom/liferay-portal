@@ -169,7 +169,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 					_DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE);
 
 				configuration = EhcacheConfigurationUtil.getConfiguration(
-					configurationPath, true, _usingDefault);
+					configurationPath, _usingDefault);
 			}
 
 			/*Object transactionManager =
@@ -478,7 +478,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 			Configuration configuration =
 				EhcacheConfigurationUtil.getConfiguration(
-					configurationURL, true, _usingDefault);
+					configurationURL, _usingDefault);
 
 			if (!_name.equals(configuration.getName())) {
 				return;

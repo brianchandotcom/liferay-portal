@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -141,10 +141,11 @@ public class FindActionTest {
 
 		preferenceMap.put("assetLinkBehavior", new String[] {"viewInPortlet"});
 
-		_testPortletId =
-			com.liferay.portlet.util.test.PortletKeys.TEST +
-				PortletConstants.INSTANCE_SEPARATOR +
-					RandomTestUtil.randomString();
+		PortletInstance portletInstance = new PortletInstance(
+			com.liferay.portlet.util.test.PortletKeys.TEST,
+			RandomTestUtil.randomString());
+
+		_testPortletId = portletInstance.toString();
 
 		LayoutTestUtil.addPortletToLayout(
 			TestPropsValues.getUserId(), _assetLayout, _testPortletId,

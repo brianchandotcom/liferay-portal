@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 
@@ -59,7 +60,9 @@ public class UpgradePortletId extends UpgradeProcess {
 		String[] uninstanceablePortletIds = getUninstanceablePortletIds();
 
 		for (String portletId : uninstanceablePortletIds) {
-			if (portletId.contains(PortletConstants.INSTANCE_SEPARATOR)) {
+			PortletInstance portletInstance = new PortletInstance(portletId);
+
+			if (portletInstance.hasInstanceId()) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Portlet " + portletId + " is already instanceable");
@@ -70,12 +73,15 @@ public class UpgradePortletId extends UpgradeProcess {
 
 			String instanceId = PortletConstants.generateInstanceId();
 
-			String newPortletId = PortletConstants.assemblePortletId(
+			PortletInstance newPortletInstance = new PortletInstance(
 				portletId, instanceId);
 
-			updateResourcePermission(portletId, newPortletId, false);
-			updateInstanceablePortletPreferences(portletId, newPortletId);
-			updateLayouts(portletId, newPortletId, true);
+			String newPortletInstanceId = newPortletInstance.toString();
+
+			updateResourcePermission(portletId, newPortletInstanceId, false);
+			updateInstanceablePortletPreferences(
+				portletId, newPortletInstanceId);
+			updateLayouts(portletId, newPortletInstanceId, true);
 		}
 	}
 

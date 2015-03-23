@@ -37,7 +37,7 @@ import com.liferay.portal.lar.test.BasePortletExportImportTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -89,8 +89,11 @@ public class AssetPublisherExportImportTest
 
 	@Override
 	public String getPortletId() throws Exception {
-		return AssetPublisherPortletKeys.ASSET_PUBLISHER +
-			PortletConstants.INSTANCE_SEPARATOR + RandomTestUtil.randomString();
+		PortletInstance portletInstance = new PortletInstance(
+			AssetPublisherPortletKeys.ASSET_PUBLISHER,
+			RandomTestUtil.randomString());
+
+		return portletInstance.toString();
 	}
 
 	@Before

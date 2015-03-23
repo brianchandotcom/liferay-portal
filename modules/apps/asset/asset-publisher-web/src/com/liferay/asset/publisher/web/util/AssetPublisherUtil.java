@@ -50,6 +50,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
@@ -294,12 +295,11 @@ public class AssetPublisherUtil {
 					Property property = PropertyFactoryUtil.forName(
 						"portletId");
 
-					String portletId =
-						AssetPublisherPortletKeys.ASSET_PUBLISHER +
-							PortletConstants.INSTANCE_SEPARATOR +
-								StringPool.PERCENT;
+					PortletInstance portletInstance = new PortletInstance(
+						AssetPublisherPortletKeys.ASSET_PUBLISHER,
+						StringPool.PERCENT);
 
-					dynamicQuery.add(property.like(portletId));
+					dynamicQuery.add(property.like(portletInstance.toString()));
 				}
 
 			});

@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.layoutconfiguration.util.xml.PortletLogic;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -188,11 +188,10 @@ public class JournalContentPortletLayoutListener
 		String instanceId = rootElement.attributeValue("instance");
 		String portletId = rootElement.attributeValue("name");
 
-		if (Validator.isNotNull(instanceId)) {
-			portletId += PortletConstants.INSTANCE_SEPARATOR + instanceId;
-		}
+		PortletInstance portletInstance = new PortletInstance(
+			portletId, instanceId);
 
-		return portletId;
+		return portletInstance.toString();
 	}
 
 	protected String[] getRuntimePortletIds(

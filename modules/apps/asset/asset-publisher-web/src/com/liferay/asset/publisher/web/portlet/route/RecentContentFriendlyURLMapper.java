@@ -23,12 +23,20 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = {
+		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
 		"javax.portlet.name=" + AssetPublisherPortletKeys.RECENT_CONTENT
 	},
 	service = FriendlyURLMapper.class
 )
 public class RecentContentFriendlyURLMapper
 	extends AssetPublisherFriendlyURLMapper {
+
+	@Override
+	public String getMapping() {
+		return _MAPPING;
+	}
+
+	private static final String _MAPPING = "recent_content";
+
 }

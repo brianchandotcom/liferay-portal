@@ -132,27 +132,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		}
 	}
 
-	protected PortletItem getPortletItem(
-			long groupId, String portletId, String name)
-		throws PortalException {
-
-		PortletItem portletItem;
-
-		try {
-			portletItem = PortletItemLocalServiceUtil.getPortletItem(
-				groupId, name, portletId, PortletPreferences.class.getName());
-		}
-		catch (NoSuchPortletItemException nspie) {
-			long userId = PrincipalThreadLocal.getUserId();
-
-			portletItem = PortletItemLocalServiceUtil.updatePortletItem(
-				userId, groupId, name, portletId,
-				PortletPreferences.class.getName());
-		}
-
-		return portletItem;
-	}
-
 	@Override
 	public List<ArchivedSettings> getPortletInstanceArchivedSettingsList(
 		long groupId, String portletId) {
@@ -364,6 +343,27 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		return new PortletPreferencesSettings(
 			getPortletInstancePortletPreferences(layout, portletId),
 			parentSettings);
+	}
+
+	protected PortletItem getPortletItem(
+			long groupId, String portletId, String name)
+		throws PortalException {
+
+		PortletItem portletItem;
+
+		try {
+			portletItem = PortletItemLocalServiceUtil.getPortletItem(
+				groupId, name, portletId, PortletPreferences.class.getName());
+		}
+		catch (NoSuchPortletItemException nspie) {
+			long userId = PrincipalThreadLocal.getUserId();
+
+			portletItem = PortletItemLocalServiceUtil.updatePortletItem(
+				userId, groupId, name, portletId,
+				PortletPreferences.class.getName());
+		}
+
+		return portletItem;
 	}
 
 	protected Properties getPortletProperties(String serviceName) {

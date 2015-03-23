@@ -14,18 +14,17 @@
 
 package com.liferay.dynamic.data.mapping.type;
 
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portlet.dynamicdatamapping.registry.BaseDDMFormFieldRenderer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldRenderer;
-
-import java.net.URL;
 
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Marcellus Tavares
@@ -38,24 +37,33 @@ import org.osgi.service.component.annotations.Component;
 )
 public class TextDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 
+	@Override
+	public String getTemplateLanguage() {
+		return TemplateConstants.LANG_TYPE_SOY;
+	}
+
+	@Override
+	public String getTemplateNamespace() {
+		return "ddm.text";
+	}
+
+	@Override
+	public TemplateResource getTemplateResource() {
+		return _templateResource;
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		String templatePath = MapUtil.getString(properties, "templatePath");
 
-		TemplateResource templateResource = getTemplateResource(templatePath);
-
-		this.templateNamespace = "ddm.text";
-		this.templateResource = templateResource;
+		_templateResource = getTemplateResource(templatePath);
 	}
 
-	protected TemplateResource getTemplateResource(String templatePath) {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		URL templateURL = classLoader.getResource(templatePath);
-
-		return new URLTemplateResource(templateURL.getPath(), templateURL);
+	@Deactivate
+	protected void deactivate() {
+		_templateResource = null;
 	}
+
+	private TemplateResource _templateResource;
 
 }

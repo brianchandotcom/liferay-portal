@@ -27,6 +27,8 @@ import javax.portlet.ResourceResponse;
  */
 public interface StrutsPortletAction {
 
+	public boolean isCheckMethodOnProcessAction();
+
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)

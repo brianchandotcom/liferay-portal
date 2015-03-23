@@ -28,6 +28,11 @@ import javax.portlet.ResourceResponse;
 public class BaseStrutsPortletAction implements StrutsPortletAction {
 
 	@Override
+	public boolean isCheckMethodOnProcessAction() {
+		return _CHECK_METHOD_ON_PROCESS_ACTION;
+	}
+
+	@Override
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
@@ -79,5 +84,7 @@ public class BaseStrutsPortletAction implements StrutsPortletAction {
 
 		serveResource(portletConfig, resourceRequest, resourceResponse);
 	}
+
+	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = true;
 
 }

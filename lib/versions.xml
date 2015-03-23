@@ -3324,8 +3324,7 @@
 					</license>
 				</licenses>
 				<comments>
-					This includes missing OSGi headers. See Lata from nodes,
-#    aggregating results, etc.PS-49575.
+					This includes missing OSGi headers. See LPS-49575.
 				</comments>
 			</library>
 			<library>

@@ -397,13 +397,13 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	private void _unregister(SettingsDescriptor settingsDescriptor) {
 		for (String settingsId : settingsDescriptor.getSettingsIds()) {
+			_configurationBeans.remove(settingsId);
+
 			_fallbackKeysMap.remove(settingsId);
 
 			_portletPropertiesMap.remove(settingsId);
 
 			_resourceManagers.remove(settingsId);
-
-			_configurationBeans.remove(settingsId);
 
 			_settingsDescriptors.put(settingsId, settingsDescriptor);
 		}

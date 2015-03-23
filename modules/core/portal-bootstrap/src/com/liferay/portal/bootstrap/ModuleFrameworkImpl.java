@@ -757,10 +757,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private boolean _isFragmentBundle(Bundle bundle) {
 		if((bundle.adapt(BundleRevision.class).getTypes() &
 				BundleRevision.TYPE_FRAGMENT) == 0 ) {
-			return true;
+			return false;
 		}
 		else {
-			return false;
+			return true;
 		}
 	}
 

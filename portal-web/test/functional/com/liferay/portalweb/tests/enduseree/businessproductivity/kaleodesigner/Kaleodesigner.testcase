@@ -1,7 +1,7 @@
 <definition component-name="portal-business-productivity-ee">
 	<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet" />
 	<property name="web.plugins.includes" value="kaleo-web" />
-	<property name="testray.main.component.name" value="Business Productivity" />
+	<property name="testray.main.component.name" value="Kaleo Designer" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

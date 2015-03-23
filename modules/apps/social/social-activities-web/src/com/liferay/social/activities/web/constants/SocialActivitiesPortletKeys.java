@@ -20,6 +20,6 @@ package com.liferay.social.activities.web.constants;
 public class SocialActivitiesPortletKeys {
 
 	public static final String SOCIAL_ACTIVITIES =
-		"com_liferay_amazon_rankings_web_portlet_AmazonRankingsPortlet";
+		"com_liferay_social_activities_web_portlet_SocialActivitiesPortlet";
 
 }

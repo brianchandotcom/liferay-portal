@@ -149,30 +149,20 @@ public class PluginSettingPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() {
-		try {
-			_persistence.countByCompanyId(RandomTestUtil.nextLong());
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
-			_persistence.countByCompanyId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
-	public void testCountByC_I_T() {
-		try {
-			_persistence.countByC_I_T(RandomTestUtil.nextLong(),
-				StringPool.BLANK, StringPool.BLANK);
+	public void testCountByC_I_T() throws Exception {
+		_persistence.countByC_I_T(RandomTestUtil.nextLong(), StringPool.BLANK,
+			StringPool.BLANK);
 
-			_persistence.countByC_I_T(0L, StringPool.NULL, StringPool.NULL);
+		_persistence.countByC_I_T(0L, StringPool.NULL, StringPool.NULL);
 
-			_persistence.countByC_I_T(0L, (String)null, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_I_T(0L, (String)null, (String)null);
 	}
 
 	@Test
@@ -200,13 +190,8 @@ public class PluginSettingPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<PluginSetting> getOrderByComparator() {

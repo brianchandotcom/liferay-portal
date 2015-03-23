@@ -162,55 +162,35 @@ public class AssetCategoryPropertyPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() {
-		try {
-			_persistence.countByCompanyId(RandomTestUtil.nextLong());
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
-			_persistence.countByCompanyId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
-	public void testCountByCategoryId() {
-		try {
-			_persistence.countByCategoryId(RandomTestUtil.nextLong());
+	public void testCountByCategoryId() throws Exception {
+		_persistence.countByCategoryId(RandomTestUtil.nextLong());
 
-			_persistence.countByCategoryId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByCategoryId(0L);
 	}
 
 	@Test
-	public void testCountByC_K() {
-		try {
-			_persistence.countByC_K(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByC_K() throws Exception {
+		_persistence.countByC_K(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByC_K(0L, StringPool.NULL);
+		_persistence.countByC_K(0L, StringPool.NULL);
 
-			_persistence.countByC_K(0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_K(0L, (String)null);
 	}
 
 	@Test
-	public void testCountByCA_K() {
-		try {
-			_persistence.countByCA_K(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByCA_K() throws Exception {
+		_persistence.countByCA_K(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByCA_K(0L, StringPool.NULL);
+		_persistence.countByCA_K(0L, StringPool.NULL);
 
-			_persistence.countByCA_K(0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByCA_K(0L, (String)null);
 	}
 
 	@Test
@@ -239,13 +219,8 @@ public class AssetCategoryPropertyPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<AssetCategoryProperty> getOrderByComparator() {

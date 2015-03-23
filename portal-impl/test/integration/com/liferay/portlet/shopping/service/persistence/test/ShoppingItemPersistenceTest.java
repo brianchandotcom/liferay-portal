@@ -262,66 +262,41 @@ public class ShoppingItemPersistenceTest {
 	}
 
 	@Test
-	public void testCountBySmallImageId() {
-		try {
-			_persistence.countBySmallImageId(RandomTestUtil.nextLong());
+	public void testCountBySmallImageId() throws Exception {
+		_persistence.countBySmallImageId(RandomTestUtil.nextLong());
 
-			_persistence.countBySmallImageId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countBySmallImageId(0L);
 	}
 
 	@Test
-	public void testCountByMediumImageId() {
-		try {
-			_persistence.countByMediumImageId(RandomTestUtil.nextLong());
+	public void testCountByMediumImageId() throws Exception {
+		_persistence.countByMediumImageId(RandomTestUtil.nextLong());
 
-			_persistence.countByMediumImageId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByMediumImageId(0L);
 	}
 
 	@Test
-	public void testCountByLargeImageId() {
-		try {
-			_persistence.countByLargeImageId(RandomTestUtil.nextLong());
+	public void testCountByLargeImageId() throws Exception {
+		_persistence.countByLargeImageId(RandomTestUtil.nextLong());
 
-			_persistence.countByLargeImageId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByLargeImageId(0L);
 	}
 
 	@Test
-	public void testCountByG_C() {
-		try {
-			_persistence.countByG_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByG_C() throws Exception {
+		_persistence.countByG_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByG_C(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_C(0L, 0L);
 	}
 
 	@Test
-	public void testCountByC_S() {
-		try {
-			_persistence.countByC_S(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByC_S() throws Exception {
+		_persistence.countByC_S(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByC_S(0L, StringPool.NULL);
+		_persistence.countByC_S(0L, StringPool.NULL);
 
-			_persistence.countByC_S(0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_S(0L, (String)null);
 	}
 
 	@Test
@@ -348,13 +323,8 @@ public class ShoppingItemPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<ShoppingItem> getOrderByComparator() {

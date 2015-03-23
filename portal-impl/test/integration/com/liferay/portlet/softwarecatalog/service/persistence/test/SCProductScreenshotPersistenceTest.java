@@ -148,52 +148,32 @@ public class SCProductScreenshotPersistenceTest {
 	}
 
 	@Test
-	public void testCountByProductEntryId() {
-		try {
-			_persistence.countByProductEntryId(RandomTestUtil.nextLong());
+	public void testCountByProductEntryId() throws Exception {
+		_persistence.countByProductEntryId(RandomTestUtil.nextLong());
 
-			_persistence.countByProductEntryId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByProductEntryId(0L);
 	}
 
 	@Test
-	public void testCountByThumbnailId() {
-		try {
-			_persistence.countByThumbnailId(RandomTestUtil.nextLong());
+	public void testCountByThumbnailId() throws Exception {
+		_persistence.countByThumbnailId(RandomTestUtil.nextLong());
 
-			_persistence.countByThumbnailId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByThumbnailId(0L);
 	}
 
 	@Test
-	public void testCountByFullImageId() {
-		try {
-			_persistence.countByFullImageId(RandomTestUtil.nextLong());
+	public void testCountByFullImageId() throws Exception {
+		_persistence.countByFullImageId(RandomTestUtil.nextLong());
 
-			_persistence.countByFullImageId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByFullImageId(0L);
 	}
 
 	@Test
-	public void testCountByP_P() {
-		try {
-			_persistence.countByP_P(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextInt());
+	public void testCountByP_P() throws Exception {
+		_persistence.countByP_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
-			_persistence.countByP_P(0L, 0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByP_P(0L, 0);
 	}
 
 	@Test
@@ -221,13 +201,8 @@ public class SCProductScreenshotPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<SCProductScreenshot> getOrderByComparator() {

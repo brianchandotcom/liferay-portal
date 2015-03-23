@@ -47,6 +47,11 @@ public class EditorConfigImpl implements EditorConfig {
 	}
 
 	@Override
+	public JSONObject getConfigJSONObject() {
+		return _configJSONObject;
+	}
+
+	@Override
 	public Map<String, Object> getData() {
 		Map<String, Object> data = new HashMap<>();
 
@@ -54,6 +59,11 @@ public class EditorConfigImpl implements EditorConfig {
 		data.put("editorOptions", _optionsJSONObject);
 
 		return data;
+	}
+
+	@Override
+	public JSONObject getOptionsJSONObject() {
+		return _optionsJSONObject;
 	}
 
 	private JSONObject _populateConfigJSONObject(

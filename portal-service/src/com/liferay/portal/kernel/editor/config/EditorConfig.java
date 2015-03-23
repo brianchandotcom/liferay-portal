@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.editor.config;
 
+import com.liferay.portal.kernel.json.JSONObject;
+
 import java.util.Map;
 
 /**
@@ -21,6 +23,10 @@ import java.util.Map;
  */
 public interface EditorConfig {
 
+	public JSONObject getConfigJSONObject();
+
 	public Map<String, Object> getData();
+
+	public JSONObject getOptionsJSONObject();
 
 }

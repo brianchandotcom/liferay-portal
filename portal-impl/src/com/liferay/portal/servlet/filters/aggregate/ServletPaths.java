@@ -16,7 +16,6 @@ package com.liferay.portal.servlet.filters.aggregate;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -65,13 +64,6 @@ public class ServletPaths {
 		}
 
 		_servletContext = servletContext;
-
-		String rootPath = ServletContextUtil.getRootPath(_servletContext);
-
-		if (resourcePath.startsWith(rootPath)) {
-			resourcePath = resourcePath.substring(rootPath.length());
-		}
-
 		_resourcePath = resourcePath;
 	}
 

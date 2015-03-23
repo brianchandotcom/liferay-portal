@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.sso.openid.configuration;
+package com.liferay.portal.sso.openid;
 
-import aQute.bnd.annotation.metatype.Meta;
+import java.net.URL;
+
+import java.util.Collection;
 
 /**
  * @author Michael C. Han
  */
-@Meta.OCD(
-	id = "com.liferay.portal.sso.openid.configuration.OpenIdConfiguration"
-)
-public interface OpenIdConfiguration {
+public interface OpenIdProviderRegistry {
 
-	@Meta.AD(deflt = "true", required = false)
-	public boolean enabled();
+	public static final String DEFAULT_OPEN_ID_PROVIDER_NAME = "default";
+
+	public OpenIdProvider getOpenIdProvider(String name);
+
+	public OpenIdProvider getOpenIdProvider(URL url);
+
+	public Collection<String> getOpenIdProviderNames();
 
 }

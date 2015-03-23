@@ -17,7 +17,7 @@ package com.liferay.portal.sso.openid.internal.portlet.action;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.UserEmailAddressException;
-import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.openid.OpenId;
@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,12 +41,12 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.sso.openid.OpenIdProvider;
+import com.liferay.portal.sso.openid.OpenIdProviderRegistry;
 import com.liferay.portal.sso.openid.configuration.OpenIdConfiguration;
 import com.liferay.portal.sso.openid.constants.OpenIdWebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-
-import java.net.URL;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -189,6 +187,13 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 		return _forwards.get("portlet.login.open_id");
 	}
 
+	@Reference
+	public void setOpenIdProviderRegistry(
+		OpenIdProviderRegistry openIdProviderRegistry) {
+
+		_openIdProviderRegistry = openIdProviderRegistry;
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -223,24 +228,6 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 		}
 
 		return values.get(0);
-	}
-
-	protected String getOpenIdProvider(URL endpointURL) {
-		String hostName = endpointURL.getHost();
-
-		String[] openIdProviders = StringUtil.split(
-			_openIdConfiguration.openIdProviders());
-
-		for (String openIdProvider : openIdProviders) {
-			String openIdURLString = PropsUtil.get(
-				PropsKeys.OPEN_ID_URL, new Filter(openIdProvider));
-
-			if (hostName.equals(openIdURLString)) {
-				return openIdProvider;
-			}
-		}
-
-		return _OPEN_ID_PROVIDER_DEFAULT;
 	}
 
 	protected String getScreenName(String openId) {
@@ -340,11 +327,11 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 			if (messageExtension instanceof FetchResponse) {
 				FetchResponse fetchResponse = (FetchResponse)messageExtension;
 
-				String openIdProvider = getOpenIdProvider(
-					discoveryInformation.getOPEndpoint());
+				OpenIdProvider openIdProvider =
+					_openIdProviderRegistry.getOpenIdProvider(
+						discoveryInformation.getOPEndpoint());
 
-				String[] openIdAXTypes = PropsUtil.getArray(
-					PropsKeys.OPEN_ID_AX_SCHEMA, new Filter(openIdProvider));
+				String[] openIdAXTypes = openIdProvider.getAxSchema();
 
 				for (String openIdAXType : openIdAXTypes) {
 					if (openIdAXType.equals(_OPEN_ID_AX_ATTR_EMAIL)) {
@@ -512,17 +499,20 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 
 		FetchRequest fetchRequest = FetchRequest.createFetchRequest();
 
-		String openIdProvider = getOpenIdProvider(discovered.getOPEndpoint());
+		OpenIdProvider openIdProvider =
+			_openIdProviderRegistry.getOpenIdProvider(
+				discovered.getOPEndpoint());
 
-		String[] openIdAXTypes = PropsUtil.getArray(
-			PropsKeys.OPEN_ID_AX_SCHEMA, new Filter(openIdProvider));
+		String[] openIdAXTypes = openIdProvider.getAxSchema();
 
 		for (String openIdAXType : openIdAXTypes) {
+			openIdAXType =
+				StringUtil.toUpperCase(openIdAXType.substring(0, 1)).concat(
+					openIdAXType.substring(1, openIdAXType.length()));
+
 			fetchRequest.addAttribute(
 				openIdAXType,
-				PropsUtil.get(
-					_OPEN_ID_AX_TYPE.concat(openIdAXType),
-					new Filter(openIdProvider)),
+				BeanPropertiesUtil.getString(openIdProvider, openIdAXType),
 				true);
 		}
 
@@ -570,10 +560,6 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 
 	private static final String _OPEN_ID_AX_ATTR_LAST_NAME = "lastname";
 
-	private static final String _OPEN_ID_AX_TYPE = "open.id.ax.type.";
-
-	private static final String _OPEN_ID_PROVIDER_DEFAULT = "default";
-
 	private static final String _OPEN_ID_SREG_ATTR_EMAIL = "email";
 
 	private static final String _OPEN_ID_SREG_ATTR_FULLNAME = "fullname";
@@ -584,5 +570,6 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 	private ConsumerManager _manager;
 	private OpenId _openId;
 	private volatile OpenIdConfiguration _openIdConfiguration;
+	private OpenIdProviderRegistry _openIdProviderRegistry;
 
 }

@@ -24,10 +24,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.editor.config.PortletEditorConfigContributor;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
@@ -79,9 +80,10 @@ public class AlloyEditorConfigContributor
 
 		if (fileBrowserParamsMap != null) {
 			for (Map.Entry<String, String> entry :
-				fileBrowserParamsMap.entrySet()) {
+					fileBrowserParamsMap.entrySet()) {
 
-				documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
+				documentSelectorURL.setParameter(
+					entry.getKey(), entry.getValue());
 			}
 		}
 

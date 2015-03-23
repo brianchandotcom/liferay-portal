@@ -50,145 +50,140 @@ else {
 IPGeocoder ipGeocoder = (IPGeocoder)request.getAttribute(SocialNetworkingWebKeys.IP_GEOCODER);
 %>
 
-<c:choose>
-	<c:when test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		<div id="<portlet:namespace />map" style="height: 600px; width: 900px;"></div>
-	</c:when>
-	<c:otherwise>
-		<div id="<portlet:namespace />map" style="height: 190px; width: 190px;"></div>
-
-		<div style="padding-top: 5px;">
-			<a href="<%= PortalUtil.getLayoutURL(layout, themeDisplay) %>/-/map"><liferay-ui:message key="view-larger-map" /> &raquo;</a>
-		</div>
-	</c:otherwise>
-</c:choose>
-
 <%
-String apiKey = GetterUtil.getString(group.getLiveParentTypeSettingsProperty("googleMapsAPIKey"));
+PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
 
-if (Validator.isNull(apiKey)) {
-	PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId());
+String companyMapsAPIProvider = PrefsParamUtil.getString(companyPortletPreferences, request, "mapsAPIProvider", "Google");
+String companyGoogleMapsAPIKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsAPIKey", "");
 
-	apiKey = GetterUtil.getString(companyPortletPreferences.getValue("googleMapsAPIKey", null));
+Group liveGroup = (Group)request.getAttribute("site.liveGroup");
+
+UnicodeProperties groupTypeSettings = null;
+
+if (liveGroup != null) {
+	groupTypeSettings = liveGroup.getTypeSettingsProperties();
+}
+else {
+	groupTypeSettings = new UnicodeProperties();
+}
+
+String groupMapsAPIProvider = PropertiesParamUtil.getString(groupTypeSettings, request, "mapsAPIProvider", companyMapsAPIProvider);
+String groupGoogleMapsAPIKey = PropertiesParamUtil.getString(groupTypeSettings, request, "googleMapsAPIKey", companyGoogleMapsAPIKey);
+
+List<User> users = null;
+
+if (siteProfileMap) {
+	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
+
+	userParams.put("usersGroups", new Long(group.getGroupId()));
+
+	users = UserLocalServiceUtil.search(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams, 0, 50, new UserLoginDateComparator());
+}
+else if (friendsProfileMap) {
+	users = UserLocalServiceUtil.getSocialUsers(user2.getUserId(), SocialRelationConstants.TYPE_BI_FRIEND, 0, 50, new UserLoginDateComparator());
+}
+else if (organizationProfileMap) {
+	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
+
+	userParams.put("usersOrgs", new Long(organization.getOrganizationId()));
+
+	users = UserLocalServiceUtil.search(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams, 0, 50, new UserLoginDateComparator());
+}
+else if (userProfileMap) {
+	users = new ArrayList<User>();
+
+	users.add(user2);
+}
+
+JSONObject featureCollectionJSONObject = JSONFactoryUtil.createJSONObject();
+
+featureCollectionJSONObject.put("type", "FeatureCollection");
+
+JSONArray featureJSONArray = JSONFactoryUtil.createJSONArray();
+
+boolean hasPoints = false;
+
+for (int i = 0; i < users.size(); i++) {
+	User mapUser = users.get(i);
+
+	if (Validator.isNull(mapUser.getLastLoginIP())) {
+		continue;
+	}
+
+	IPInfo ipInfo = ipGeocoder.getIPInfo(mapUser.getLastLoginIP());
+
+	double latitude = ipInfo.getLatitude();
+	double longitude = ipInfo.getLongitude();
+
+	if (ipInfo == null) {
+		continue;
+	}
+
+	hasPoints = true;
+
+	JSONObject featureJSONObject = JSONFactoryUtil.createJSONObject();
+	featureJSONObject.put("type", "Feature");
+
+	JSONObject geometryJSONObject = JSONFactoryUtil.createJSONObject();
+
+	geometryJSONObject.put("type", "Point");
+
+	JSONArray coordinatesJSONArray = JSONFactoryUtil.createJSONArray();
+
+	coordinatesJSONArray.put(longitude);
+	coordinatesJSONArray.put(latitude);
+
+	geometryJSONObject.put("coordinates", coordinatesJSONArray);
+
+	featureJSONObject.put("geometry", geometryJSONObject);
+
+	JSONObject propertiesJSONObject = JSONFactoryUtil.createJSONObject();
+
+	propertiesJSONObject.put("title", mapUser.getFullName());
+
+	featureJSONObject.put("properties", propertiesJSONObject);
+
+	featureJSONArray.put(featureJSONObject);
+}
+
+featureCollectionJSONObject.put("features", featureJSONArray);
+
+double latitude = 0.0;
+double longitude = 0.0;
+
+if (userProfileMap) {
+	IPInfo ipInfo = ipGeocoder.getIPInfo(user2.getLastLoginIP());
+
+	if (ipInfo != null) {
+		latitude = ipInfo.getLatitude();
+		longitude = ipInfo.getLongitude();
+	}
+}
+
+boolean maximized = windowState.equals(WindowState.MAXIMIZED);
+
+int zoom = 0;
+
+if (maximized) {
+	zoom = 2;
+
+	if (userProfileMap) {
+		zoom = 5;
+	}
 }
 %>
 
-<aui:script>
-	function <portlet:namespace />initMap() {
-		var maximized = <%= windowState.equals(WindowState.MAXIMIZED) ? true : false %>;
+<c:choose>
+	<c:when test="<%= hasPoints %>">
+		<liferay-ui:map apiKey="<%= groupGoogleMapsAPIKey %>" controls="MapControls.TYPE, MapControls.ZOOM" latitude="<%= latitude %>" longitude="<%= longitude %>" name="map" points= "<%= featureCollectionJSONObject.toString() %>" provider="<%= groupMapsAPIProvider %>" zoom="<%= zoom %>" />
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:map apiKey="<%= groupGoogleMapsAPIKey %>" controls="MapControls.TYPE, MapControls.ZOOM" latitude="<%= latitude %>" longitude="<%= longitude %>" name="map" provider="<%= groupMapsAPIProvider %>" zoom="<%= zoom %>" />
+	</c:otherwise>
+</c:choose>
 
-		var mapOptions = {
-			center: new google.maps.LatLng(0.0, 0.0),
-			disableDefaultUI: !maximized,
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			zoom: (maximized ? 2 : 0),
-			zoomControl: maximized,
-			zoomControlOptions: {
-				style: google.maps.ZoomControlStyle.LARGE
-			}
-		};
-
-		var map = new google.maps.Map(document.getElementById('<portlet:namespace />map'), mapOptions);
-
-		<%
-		List<User> users = null;
-
-		if (siteProfileMap) {
-			LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-			userParams.put("usersGroups", new Long(group.getGroupId()));
-
-			users = UserLocalServiceUtil.search(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams, 0, 50, new UserLoginDateComparator());
-		}
-		else if (friendsProfileMap) {
-			users = UserLocalServiceUtil.getSocialUsers(user2.getUserId(), SocialRelationConstants.TYPE_BI_FRIEND, 0, 50, new UserLoginDateComparator());
-		}
-		else if (organizationProfileMap) {
-			LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-			userParams.put("usersOrgs", new Long(organization.getOrganizationId()));
-
-			users = UserLocalServiceUtil.search(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams, 0, 50, new UserLoginDateComparator());
-		}
-		else if (userProfileMap) {
-			users = new ArrayList<User>();
-
-			users.add(user2);
-		}
-
-		for (int i = 0; i < users.size(); i++) {
-			User mapUser = users.get(i);
-
-			if (Validator.isNull(mapUser.getLastLoginIP())) {
-				continue;
-			}
-
-			IPInfo ipInfo = ipGeocoder.getIPInfo(mapUser.getLastLoginIP());
-
-			if (ipInfo == null) {
-				continue;
-			}
-
-			float latitude = ipInfo.getLatitude();
-			float longitude = ipInfo.getLongitude();
-
-			if ((latitude == 0) && (longitude == 0)) {
-				continue;
-			}
-		%>
-
-			<c:if test="<%= userProfileMap %>">
-				map.setCenter(new google.maps.LatLng(<%= latitude %>, <%= longitude %>));
-
-				map.setZoom(<%= windowState.equals(WindowState.MAXIMIZED) ? 5 : 0 %>);
-			</c:if>
-
-			var marker<%= i %> = new google.maps.Marker(
-				{
-					position: new google.maps.LatLng(<%= latitude %>, <%= longitude %>),
-					map: map,
-					title: '<%= HtmlUtil.escapeJS(mapUser.getFullName()) %>'
-				}
-			);
-
-			google.maps.event.addListener(
-				marker<%= i %>,
-				'click',
-				function() {
-					<c:choose>
-						<c:when test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-							var infoWindow = new google.maps.InfoWindow(
-								{
-									content: '<center><img alt="<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "user-portrait")) %>" src="<%= mapUser.getPortraitURL(themeDisplay) %>" width="65" /><br /><%= HtmlUtil.escapeJS(HtmlUtil.escape(mapUser.getFullName())) %></center>'
-								}
-							);
-
-							infoWindow.open(map, marker<%= i %>);
-						</c:when>
-						<c:otherwise>
-							location.href = '<%= mapUser.getDisplayURL(themeDisplay) %>/-/map';
-						</c:otherwise>
-					</c:choose>
-				}
-			);
-
-		<%
-		}
-		%>
-
-	}
-</aui:script>
-
-<aui:script use="aui-base">
-	A.on(
-		'load',
-		function() {
-			var script = document.createElement('script');
-
-			script.type = 'text/javascript';
-			script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&language=<%= themeDisplay.getLanguageId() %>&sensor=false&callback=<portlet:namespace />initMap';
-
-			document.body.appendChild(script);
-		}
-	);
-</aui:script>
+<c:if test="<%= !maximized %>">
+	<div style="padding-top: 5px;">
+		<a href="<%= PortalUtil.getLayoutURL(layout, themeDisplay) %>/-/map"><liferay-ui:message key="view-larger-map" /> &raquo;</a>
+	</div>
+</c:if>

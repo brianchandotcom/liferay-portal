@@ -1,5 +1,5 @@
 <definition component-name="portal-collaboration">
-	<property name="testray.main.component.name" value="Collaboration" />
+	<property name="testray.main.component.name" value="Message Boards" />
 
 	<var name="pageName" value="Message Boards Page" />
 	<var name="portletName" value="Message Boards" />

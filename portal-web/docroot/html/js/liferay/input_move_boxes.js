@@ -115,14 +115,6 @@ AUI.add(
 								boxObj.append('<option value="' + item[0] + '">' + item[1] + '</option>');
 							}
 						);
-
-						if (Liferay.Browser.isIe()) {
-							var currentWidth = boxObj.getStyle('width');
-
-							if (currentWidth == 'auto') {
-								boxObj.setStyle('width', 'auto');
-							}
-						}
 					},
 
 					_afterMoveClick: function(event) {

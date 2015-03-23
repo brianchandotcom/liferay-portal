@@ -14,10 +14,10 @@
 
 package com.liferay.wiki.settings.provider;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.model.Layout;
@@ -46,7 +46,7 @@ public class WikiPortletInstanceSettingsProvider
 	@Override
 	public WikiPortletInstanceSettings getPortletInstanceSettings(
 			Layout layout, String portletId)
-		throws PortalException {
+		throws SettingsException {
 
 		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
 			layout, portletId);
@@ -57,7 +57,7 @@ public class WikiPortletInstanceSettingsProvider
 	@Override
 	public WikiPortletInstanceSettings getPortletInstanceSettings(
 			Layout layout, String portletId, Map<String, String[]> parameterMap)
-		throws PortalException {
+		throws SettingsException {
 
 		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
 			layout, portletId);

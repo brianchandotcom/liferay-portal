@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Layout;
 
@@ -39,7 +38,7 @@ public class SettingsFactoryUtil {
 
 	public static Settings getGroupServiceSettings(
 			long groupId, String serviceName)
-		throws PortalException {
+		throws SettingsException {
 
 		return getSettingsFactory().getGroupServiceSettings(
 			groupId, serviceName);
@@ -47,7 +46,7 @@ public class SettingsFactoryUtil {
 
 	public static ArchivedSettings getPortletInstanceArchivedSettings(
 			long groupId, String portletId, String name)
-		throws PortalException {
+		throws SettingsException {
 
 		return getSettingsFactory().getPortletInstanceArchivedSettings(
 			groupId, portletId, name);
@@ -62,7 +61,7 @@ public class SettingsFactoryUtil {
 
 	public static Settings getPortletInstanceSettings(
 			Layout layout, String portletId)
-		throws PortalException {
+		throws SettingsException {
 
 		return getSettingsFactory().getPortletInstanceSettings(
 			layout, portletId);

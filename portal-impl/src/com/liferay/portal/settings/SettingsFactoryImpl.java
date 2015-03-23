@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.settings.PortalSettings;
 import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
+import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.definition.SettingsDefinition;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -91,7 +92,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
 	public Settings getGroupServiceSettings(long groupId, String serviceName)
-		throws PortalException {
+		throws SettingsException {
 
 		long companyId = getCompanyId(groupId);
 
@@ -117,9 +118,25 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	@Override
 	public ArchivedSettings getPortletInstanceArchivedSettings(
 			long groupId, String portletId, String name)
+		throws SettingsException {
+
+		try {
+			PortletItem portletItem = null;
+
+			portletItem = getPortletItem(groupId, portletId, name);
+
+			return new ArchivedSettingsImpl(portletItem);
+		}
+		catch (PortalException pe) {
+			throw new SettingsException(pe);
+		}
+	}
+
+	protected PortletItem getPortletItem(
+			long groupId, String portletId, String name)
 		throws PortalException {
 
-		PortletItem portletItem = null;
+		PortletItem portletItem;
 
 		try {
 			portletItem = PortletItemLocalServiceUtil.getPortletItem(
@@ -133,7 +150,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 				PortletPreferences.class.getName());
 		}
 
-		return new ArchivedSettingsImpl(portletItem);
+		return portletItem;
 	}
 
 	@Override
@@ -156,7 +173,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
 	public Settings getPortletInstanceSettings(Layout layout, String portletId)
-		throws PortalException {
+		throws SettingsException {
 
 		long companyId = getCompanyId(layout.getGroupId());
 
@@ -247,10 +264,15 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		return settings;
 	}
 
-	protected long getCompanyId(long groupId) throws PortalException {
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+	protected long getCompanyId(long groupId) throws SettingsException {
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		return group.getCompanyId();
+			return group.getCompanyId();
+		}
+		catch (PortalException pe) {
+			throw new SettingsException(pe);
+		}
 	}
 
 	protected PortletPreferences getCompanyPortletPreferences(
@@ -271,20 +293,25 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	protected PortletPreferences getGroupPortletPreferences(
 			long groupId, String settingsId)
-		throws PortalException {
+		throws SettingsException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		long companyId = group.getCompanyId();
+			long companyId = group.getCompanyId();
 
-		return PortletPreferencesLocalServiceUtil.getStrictPreferences(
-			companyId, groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0,
-			settingsId);
+			return PortletPreferencesLocalServiceUtil.getStrictPreferences(
+				companyId, groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0,
+				settingsId);
+		}
+		catch (PortalException pe) {
+			throw new SettingsException(pe);
+		}
 	}
 
 	protected Settings getGroupPortletPreferencesSettings(
 			long groupId, String settingsId, Settings parentSettings)
-		throws PortalException {
+		throws SettingsException {
 
 		return new PortletPreferencesSettings(
 			getGroupPortletPreferences(groupId, settingsId), parentSettings);

@@ -14,11 +14,11 @@
 
 package com.liferay.portal.settings.impl;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsProvider;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.settings.definition.SettingsDefinition;
@@ -46,7 +46,7 @@ public class GroupServiceSettingsProviderBuilder
 	}
 
 	@Override
-	public S getGroupServiceSettings(long groupId) throws PortalException {
+	public S getGroupServiceSettings(long groupId) throws SettingsException {
 		Settings settings = _settingsFactory.getGroupServiceSettings(
 			groupId, _getSettingsId());
 
@@ -54,7 +54,7 @@ public class GroupServiceSettingsProviderBuilder
 			return _getSettings(settings);
 		}
 		catch (Exception e) {
-			throw new PortalException(
+			throw new SettingsException(
 				"Unable to create proxy for group service settings", e);
 		}
 	}
@@ -62,7 +62,7 @@ public class GroupServiceSettingsProviderBuilder
 	@Override
 	public S getGroupServiceSettings(
 			long groupId, Map<String, String[]> parameterMap)
-		throws PortalException {
+		throws SettingsException {
 
 		Settings settings = _settingsFactory.getGroupServiceSettings(
 			groupId, _getSettingsId());
@@ -72,7 +72,7 @@ public class GroupServiceSettingsProviderBuilder
 				new ParameterMapSettings(parameterMap, settings));
 		}
 		catch (Exception e) {
-			throw new PortalException(
+			throw new SettingsException(
 				"Unable to create proxy for group service settings", e);
 		}
 	}

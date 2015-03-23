@@ -14,17 +14,26 @@
 
 package com.liferay.portal.kernel.settings;
 
-import java.util.Map;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Iván Zaera
  */
-public interface GroupServiceSettingsProvider<T extends GroupServiceSettings> {
+public class SettingsException extends PortalException {
 
-	public T getGroupServiceSettings(long groupId) throws SettingsException;
+	public SettingsException() {
+	}
 
-	public T getGroupServiceSettings(
-			long groupId, Map<String, String[]> parameterMap)
-		throws SettingsException;
+	public SettingsException(String msg) {
+		super(msg);
+	}
+
+	public SettingsException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public SettingsException(Throwable cause) {
+		super(cause);
+	}
 
 }

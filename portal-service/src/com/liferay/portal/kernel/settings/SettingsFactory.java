@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.definition.SettingsDefinition;
 import com.liferay.portal.model.Layout;
 
@@ -32,17 +31,17 @@ public interface SettingsFactory {
 		long companyId, String serviceName);
 
 	public Settings getGroupServiceSettings(long groupId, String serviceName)
-		throws PortalException;
+		throws SettingsException;
 
 	public ArchivedSettings getPortletInstanceArchivedSettings(
 			long groupId, String portletId, String name)
-		throws PortalException;
+		throws SettingsException;
 
 	public List<ArchivedSettings> getPortletInstanceArchivedSettingsList(
 		long groupId, String portletId);
 
 	public Settings getPortletInstanceSettings(Layout layout, String portletId)
-		throws PortalException;
+		throws SettingsException;
 
 	public Settings getServerSettings(String settingsId);
 

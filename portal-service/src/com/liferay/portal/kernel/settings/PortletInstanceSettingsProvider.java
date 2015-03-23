@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Layout;
 
 import java.util.Map;
@@ -26,10 +25,10 @@ public interface PortletInstanceSettingsProvider
 	<T extends PortletInstanceSettings> {
 
 	public T getPortletInstanceSettings(Layout layout, String portletId)
-		throws PortalException;
+		throws SettingsException;
 
 	public T getPortletInstanceSettings(
 			Layout layout, String portletId, Map<String, String[]> parameterMap)
-		throws PortalException;
+		throws SettingsException;
 
 }

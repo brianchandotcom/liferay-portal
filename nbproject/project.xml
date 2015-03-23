@@ -488,7 +488,6 @@
 				<classpath mode="compile">lib/portal/netcdf.jar</classpath>
 				<classpath mode="compile">lib/portal/netty-all.jar</classpath>
 				<classpath mode="compile">lib/portal/odmg.jar</classpath>
-				<classpath mode="compile">lib/portal/openid4java.jar</classpath>
 				<classpath mode="compile">lib/portal/oro.jar</classpath>
 				<classpath mode="compile">lib/portal/oscache.jar</classpath>
 				<classpath mode="compile">lib/portal/pdfbox.jar</classpath>

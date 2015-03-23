@@ -744,6 +744,46 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.sso.ntlm"
 		},
 
+		// OpenID
+
+		new String[] {
+			"open.id.auth.enabled", "enabled", "com.liferay.portal.sso.openid"
+		},
+		new String[] {
+			"open.id.providers", "providers", "com.liferay.portal.sso.openid"
+		},
+		new String[] {
+			"open.id.ax.schema[default]", "ax.schema",
+			"com.liferay.portal.sso.openid"
+		},
+		new String[] {
+			"open.id.ax.type.email[default]", "ax.type.email",
+			"com.liferay.portal.sso.openid"
+		},
+		new String[] {
+			"open.id.ax.type.firstname[default]", "ax.type.firstname",
+			"com.liferay.portal.sso.openid"
+		},
+		new String[] {
+			"open.id.ax.type.lastname[default]", "ax.type.lastname",
+			"com.liferay.portal.sso.openid"
+		},
+		new String[] {
+			"open.id.ax.schema[yahoo]", "ax.schema",
+			"com.liferay.portal.sso.openid"
+		},
+		new String[] {
+			"open.id.ax.type.email[yahoo]", "ax.type.email",
+			"com.liferay.portal.sso.openid"
+		},
+		new String[] {
+			"open.id.ax.type.fullname[yahoo]", "ax.type.fullname",
+			"com.liferay.portal.sso.openid"
+		},
+		new String[] {
+			"open.id.url[yahoo]", "url", "com.liferay.portal.sso.openid"
+		},
+
 		// OpenSSO
 
 		new String[] {

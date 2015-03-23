@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/login/init.jsp" %>
+package com.liferay.portal.sso.openid.constants;
 
-<liferay-util:dynamic-include key="/html/portlet/login/open_id.jsp" />
+/**
+ * @author Michael C. Han
+ */
+public interface OpenIdWebKeys {
 
-<liferay-util:include page="/html/portlet/login/navigation.jsp" />
+	public static final String OPEN_ID_DISCO = "openid-disco";
+
+	public static final String WINDOW_STATE = "WINDOW_STATE";
+
+}

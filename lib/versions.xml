@@ -3003,19 +3003,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/openid4java.jar</file-name>
-				<version>0.9.5.593</version>
-				<project-name>OpenID 4 Java</project-name>
-				<project-url>http://code.google.com/p/openid4java</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2006-2008 Sxip Identity Corporation</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/oro.jar</file-name>
 				<version>2.0.8</version>
 				<project-name>ORO</project-name>
@@ -3325,7 +3312,8 @@
 					</license>
 				</licenses>
 				<comments>
-					This includes missing OSGi headers. See LPS-49575.
+					This includes missing OSGi headers. See Lata from nodes,
+#    aggregating results, etc.PS-49575.
 				</comments>
 			</library>
 			<library>

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/login/init.jsp" %>
+package com.liferay.portal.sso.openid.configuration;
 
-<liferay-util:dynamic-include key="/html/portlet/login/open_id.jsp" />
+import aQute.bnd.annotation.metatype.Meta;
 
-<liferay-util:include page="/html/portlet/login/navigation.jsp" />
+/**
+ * @author Michael C. Han
+ */
+@Meta.OCD(
+	id = "com.liferay.portal.sso.openid.configuration.OpenIdConfiguration"
+)
+public interface OpenIdConfiguration {
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enabled();
+
+}

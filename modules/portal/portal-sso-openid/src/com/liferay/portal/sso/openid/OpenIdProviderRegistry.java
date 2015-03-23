@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/login/init.jsp" %>
+package com.liferay.portal.sso.openid;
 
-<liferay-util:dynamic-include key="/html/portlet/login/open_id.jsp" />
+import java.net.URL;
 
-<liferay-util:include page="/html/portlet/login/navigation.jsp" />
+import java.util.Collection;
+
+/**
+ * @author Michael C. Han
+ */
+public interface OpenIdProviderRegistry {
+
+	public static final String DEFAULT_OPEN_ID_PROVIDER_NAME = "default";
+
+	public OpenIdProvider getOpenIdProvider(String name);
+
+	public OpenIdProvider getOpenIdProvider(URL url);
+
+	public Collection<String> getOpenIdProviderNames();
+
+}

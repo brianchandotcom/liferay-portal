@@ -44,6 +44,11 @@ public class StrutsPortletActionAdapter extends BaseStrutsPortletAction {
 	}
 
 	@Override
+	public boolean isCheckMethodOnProcessAction() {
+		return _portletAction.isCheckMethodOnProcessAction();
+	}
+
+	@Override
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)

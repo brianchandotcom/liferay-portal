@@ -886,11 +886,6 @@
 
 		<action path="/login/login_redirect" forward="portlet.login.login_redirect" />
 
-		<action path="/login/open_id" type="com.liferay.portlet.login.action.OpenIdAction">
-			<forward name="portlet.login.open_id" path="portlet.login.open_id" />
-			<forward name="portlet.login.login" path="portlet.login.login" />
-		</action>
-
 		<action path="/login/update_account" forward="portlet.login.update_account" />
 
 		<!-- Maps -->

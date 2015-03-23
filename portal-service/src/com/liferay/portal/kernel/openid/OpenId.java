@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/login/init.jsp" %>
+package com.liferay.portal.kernel.openid;
 
-<liferay-util:dynamic-include key="/html/portlet/login/open_id.jsp" />
+/**
+ * @author Michael C. Han
+ */
+public interface OpenId {
 
-<liferay-util:include page="/html/portlet/login/navigation.jsp" />
+	public boolean isEnabled(long companyId);
+
+}

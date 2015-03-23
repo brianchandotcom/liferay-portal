@@ -128,7 +128,7 @@ public class SettingsDefinitionLifecycleHandler<S, C> {
 			Dictionary<String, ?> properties = configuration.getProperties();
 
 			if (properties == null) {
-				properties = _emptDictionary;
+				properties = _emptyDictionary;
 			}
 
 			return properties;
@@ -141,7 +141,7 @@ public class SettingsDefinitionLifecycleHandler<S, C> {
 	private void _registerConfigurationBean() {
 		_configurationBeanServiceRegistration = _bundleContext.registerService(
 			_settingsDefinition.getConfigurationBeanClass(),
-			_configurationBeanBuilder.getConfigurationBean(), _emptDictionary);
+			_configurationBeanBuilder.getConfigurationBean(), _emptyDictionary);
 
 		if (_log.isDebugEnabled()) {
 			String className =
@@ -158,7 +158,7 @@ public class SettingsDefinitionLifecycleHandler<S, C> {
 			@Override
 			public void updated(Dictionary<String, ?> properties) {
 				if (properties == null) {
-					properties = _emptDictionary;
+					properties = _emptyDictionary;
 				}
 
 				_configurationBeanBuilder.updateProperties(properties);
@@ -264,7 +264,7 @@ public class SettingsDefinitionLifecycleHandler<S, C> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SettingsDefinitionLifecycleHandler.class);
 
-	private static final Dictionary<String, ?> _emptDictionary =
+	private static final Dictionary<String, ?> _emptyDictionary =
 		new HashMapDictionary<>();
 
 	private final BundleContext _bundleContext;

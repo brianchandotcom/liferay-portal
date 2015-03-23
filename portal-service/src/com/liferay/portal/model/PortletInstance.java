@@ -24,6 +24,14 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class PortletInstance {
 
+	private static final String _INSTANCE_SEPARATOR = "_INSTANCE_";
+
+	private static final String _USER_SEPARATOR = "_USER_";
+
+	public static final int PORTLET_INSTANCE_KEY_MAX_LENGTH =
+		ModelHintsUtil.getMaxLength(Portlet.class.getName(), "portletId") -
+			_INSTANCE_SEPARATOR.length() + _USER_SEPARATOR.length() + 39;
+
 	public PortletInstance(String portletInstanceId) {
 		this(
 			_getRootPortletId(portletInstanceId), _getUserId(portletInstanceId),
@@ -132,10 +140,6 @@ public class PortletInstance {
 		return GetterUtil.getLong(
 			portletInstance.substring(x + _USER_SEPARATOR.length()));
 	}
-
-	private static final String _INSTANCE_SEPARATOR = "_INSTANCE_";
-
-	private static final String _USER_SEPARATOR = "_USER_";
 
 	private final String _instanceId;
 	private final String _rootPortletId;

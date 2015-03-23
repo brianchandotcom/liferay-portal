@@ -51,7 +51,6 @@ portletURL.setParameter("struts_action", "/layout_prototypes/view");
 		>
 			<liferay-ui:search-container-column-text
 				name="name"
-				orderable="<%= true %>"
 			>
 				<liferay-portlet:renderURL varImpl="rowURL">
 					<portlet:param name="struts_action" value="/layout_prototypes/edit_layout_prototype" />

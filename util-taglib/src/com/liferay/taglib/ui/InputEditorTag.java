@@ -15,11 +15,19 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.editor.EditorUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.editor.config.PortletEditorConfig;
+import com.liferay.portlet.editor.config.PortletEditorConfigFactoryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +43,10 @@ public class InputEditorTag extends IncludeTag {
 
 	public void setAutoCreate(boolean autoCreate) {
 		_autoCreate = autoCreate;
+	}
+
+	public void setConfigKey(String configKey) {
+		_configKey = configKey;
 	}
 
 	public void setConfigParams(Map<String, String> configParams) {
@@ -133,6 +145,7 @@ public class InputEditorTag extends IncludeTag {
 	protected void cleanUp() {
 		_allowBrowseDocuments = true;
 		_autoCreate = true;
+		_configKey = null;
 		_configParams = null;
 		_contents = null;
 		_contentsLanguageId = null;
@@ -165,10 +178,10 @@ public class InputEditorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		if (_contentsLanguageId == null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
+		if (_contentsLanguageId == null) {
 			_contentsLanguageId = themeDisplay.getLanguageId();
 		}
 
@@ -196,7 +209,6 @@ public class InputEditorTag extends IncludeTag {
 			"liferay-ui:input-editor:contentsLanguageId", _contentsLanguageId);
 		request.setAttribute("liferay-ui:input-editor:cssClass", _cssClass);
 		request.setAttribute("liferay-ui:input-editor:cssClasses", cssClasses);
-		request.setAttribute("liferay-ui:input-editor:data", _data);
 		request.setAttribute("liferay-ui:input-editor:editorImpl", editorImpl);
 		request.setAttribute(
 			"liferay-ui:input-editor:fileBrowserParams", _fileBrowserParams);
@@ -226,10 +238,49 @@ public class InputEditorTag extends IncludeTag {
 			String.valueOf(_skipEditorLoading));
 		request.setAttribute("liferay-ui:input-editor:toolbarSet", _toolbarSet);
 		request.setAttribute("liferay-ui:input-editor:width", _width);
+
+		Map<String, Object> attributes = new HashMap<>();
+
+		Enumeration<String> enumeration = request.getAttributeNames();
+
+		while (enumeration.hasMoreElements()) {
+			String attributeName = enumeration.nextElement();
+
+			if (attributeName.startsWith("liferay-ui:input-editor")) {
+				attributes.put(
+					attributeName, request.getAttribute(attributeName));
+			}
+		}
+
+		if (portlet != null) {
+			if (Validator.isNull(_configKey)) {
+				_configKey = _name;
+			}
+
+			LiferayPortletResponse portletResponse =
+				(LiferayPortletResponse)request.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+			PortletEditorConfig portletEditorConfig =
+				PortletEditorConfigFactoryUtil.getPortletEditorConfig(
+					portlet.getPortletId(), _configKey, editorImpl, attributes,
+					themeDisplay, portletResponse);
+
+			Map<String, Object> data = portletEditorConfig.getData();
+
+			if (MapUtil.isNotEmpty(_data)) {
+				MapUtil.merge(_data, data);
+			}
+
+			_data = data;
+		}
+
+		request.setAttribute("liferay-ui:input-editor:data", _data);
 	}
 
 	private boolean _allowBrowseDocuments = true;
 	private boolean _autoCreate = true;
+	private String _configKey;
 	private Map<String, String> _configParams;
 	private String _contents;
 	private String _contentsLanguageId;

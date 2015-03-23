@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journal.search;
+package com.liferay.document.selector.web.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -68,8 +68,9 @@ public class FileEntrySearch extends SearchContainer<FileEntry> {
 
 		this(
 			portletRequest, new FileEntryDisplayTerms(portletRequest),
-			new FileEntrySearchTerms(portletRequest), DEFAULT_CUR_PARAM,
-			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
+			new FileEntrySearchTerms(portletRequest),
+			SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA,
+			iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
 	}
 
 }

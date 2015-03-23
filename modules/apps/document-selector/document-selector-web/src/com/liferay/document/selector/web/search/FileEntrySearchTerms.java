@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journal.search;
+package com.liferay.document.selector.web.search;
 
 import com.liferay.portal.kernel.dao.search.DAOParamUtil;
 import com.liferay.portal.kernel.util.ParamUtil;

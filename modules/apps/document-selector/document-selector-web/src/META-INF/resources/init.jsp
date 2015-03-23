@@ -25,7 +25,9 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.document.selector.web.util.DocumentSelectorUtil" %><%@
+<%@ page import="com.liferay.document.selector.web.search.FileEntryDisplayTerms" %><%@
+page import="com.liferay.document.selector.web.search.FileEntrySearch" %><%@
+page import="com.liferay.document.selector.web.util.DocumentSelectorUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.configuration.Filter" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -90,8 +92,6 @@ page import="com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.storage.Fields" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil" %><%@
-page import="com.liferay.portlet.journal.search.FileEntryDisplayTerms" %><%@
-page import="com.liferay.portlet.journal.search.FileEntrySearch" %><%@
 page import="com.liferay.portlet.layoutsadmin.context.LayoutsAdminDisplayContext" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
 page import="com.liferay.wiki.model.WikiPageResource" %><%@

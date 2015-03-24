@@ -65,7 +65,12 @@ public class SettingsInvocationHandler<S, C> implements InvocationHandler {
 	}
 
 	private Object _invokeSettingsExtra(Method method, Object[] args)
-		throws IllegalAccessException, InvocationTargetException {
+		throws IllegalAccessException, InvocationTargetException,
+			NoSuchMethodException {
+
+		Class<?> clazz = _settingsExtraImplementation.getClass();
+
+		method = clazz.getMethod(method.getName(), method.getParameterTypes());
 
 		return method.invoke(_settingsExtraImplementation, args);
 	}

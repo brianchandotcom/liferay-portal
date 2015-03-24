@@ -57,7 +57,7 @@ public class WikiPortletInstanceSettingsHelper {
 				_wikiRequestHelper.getWikiPortletInstanceSettings();
 
 			_allPermittedNodes = WikiUtil.getNodes(
-				getAllNodes(), wikiPortletInstanceSettings.getHiddenNodes(),
+				getAllNodes(), wikiPortletInstanceSettings.hiddenNodes(),
 				_wikiRequestHelper.getPermissionChecker());
 		}
 
@@ -81,7 +81,7 @@ public class WikiPortletInstanceSettingsHelper {
 		WikiPortletInstanceSettings wikiPortletInstanceSettings =
 			_wikiRequestHelper.getWikiPortletInstanceSettings();
 
-		_visibleNodeNames = wikiPortletInstanceSettings.getVisibleNodes();
+		_visibleNodeNames = wikiPortletInstanceSettings.visibleNodes();
 
 		if (ArrayUtil.isNotEmpty(_visibleNodeNames)) {
 			_allNodes = WikiUtil.orderNodes(_allNodes, _visibleNodeNames);

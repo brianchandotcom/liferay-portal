@@ -83,12 +83,11 @@ public class ActionUtil {
 			portletInstanceSettingsProvider.getPortletInstanceSettings(
 				themeDisplay.getLayout(), portletDisplay.getId());
 
-		String[] visibleNodeNames =
-			wikiPortletInstanceSettings.getVisibleNodes();
+		String[] visibleNodeNames = wikiPortletInstanceSettings.visibleNodes();
 
 		nodes = WikiUtil.orderNodes(nodes, visibleNodeNames);
 
-		String[] hiddenNodes = wikiPortletInstanceSettings.getHiddenNodes();
+		String[] hiddenNodes = wikiPortletInstanceSettings.hiddenNodes();
 		Arrays.sort(hiddenNodes);
 
 		for (WikiNode node : nodes) {

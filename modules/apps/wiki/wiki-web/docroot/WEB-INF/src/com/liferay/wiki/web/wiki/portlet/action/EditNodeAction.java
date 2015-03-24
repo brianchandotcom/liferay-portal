@@ -273,13 +273,13 @@ public class EditNodeAction extends PortletAction {
 			String oldName, String newName)
 		throws Exception {
 
-		String[] hiddenNodes = wikiPortletInstanceSettings.getHiddenNodes();
+		String[] hiddenNodes = wikiPortletInstanceSettings.hiddenNodes();
 
 		ArrayUtil.replace(hiddenNodes, oldName, newName);
 
 		wikiPortletInstanceSettings.setHiddenNodes(hiddenNodes);
 
-		String[] visibleNodes = wikiPortletInstanceSettings.getVisibleNodes();
+		String[] visibleNodes = wikiPortletInstanceSettings.visibleNodes();
 
 		ArrayUtil.replace(visibleNodes, oldName, newName);
 

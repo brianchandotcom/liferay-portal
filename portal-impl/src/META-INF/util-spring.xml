@@ -1085,11 +1085,6 @@
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil">
 		<property name="DDMXML" ref="com.liferay.portlet.dynamicdatamapping.util.DDMXML" />
 	</bean>
-	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil">
-		<property name="DDMXSD">
-			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMXSDImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil" class="com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil">
 		<property name="FieldsToDDMFormValuesConverter">
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterImpl" />

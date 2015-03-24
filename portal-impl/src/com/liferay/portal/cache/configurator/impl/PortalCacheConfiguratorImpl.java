@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.Serializable;
@@ -36,7 +35,7 @@ public class PortalCacheConfiguratorImpl implements PortalCacheConfigurator {
 
 	@Override
 	public void reconfigureCaches(ClassLoader classLoader, URL url) {
-		if (Validator.isNull(url)) {
+		if (url == null) {
 			return;
 		}
 

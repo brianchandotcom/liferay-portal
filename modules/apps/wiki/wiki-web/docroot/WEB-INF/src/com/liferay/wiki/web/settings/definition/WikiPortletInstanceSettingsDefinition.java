@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.wiki.settings.definition;
+package com.liferay.wiki.web.settings.definition;
 
 import com.liferay.portal.kernel.settings.definition.SettingsDefinition;
-import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
-import com.liferay.wiki.constants.WikiConstants;
-import com.liferay.wiki.settings.WikiGroupServiceSettings;
+import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.web.configuration.WikiPortletInstanceConfiguration;
+import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,28 +25,30 @@ import org.osgi.service.component.annotations.Component;
  * @author Iván Zaera
  */
 @Component(immediate = true)
-public class WikiGroupServiceSettingsDefinition
-	implements SettingsDefinition<WikiGroupServiceSettings,
-		WikiGroupServiceConfiguration> {
+public class WikiPortletInstanceSettingsDefinition
+	implements SettingsDefinition<WikiPortletInstanceSettings,
+		WikiPortletInstanceConfiguration> {
 
 	@Override
-	public Class<WikiGroupServiceConfiguration> getConfigurationBeanClass() {
-		return WikiGroupServiceConfiguration.class;
+	public Class<WikiPortletInstanceConfiguration> getConfigurationBeanClass() {
+		return WikiPortletInstanceConfiguration.class;
 	}
 
 	@Override
-	public Class<WikiGroupServiceSettings> getSettingsClass() {
-		return WikiGroupServiceSettings.class;
+	public Class<WikiPortletInstanceSettings> getSettingsClass() {
+		return WikiPortletInstanceSettings.class;
 	}
 
 	@Override
 	public Class<?> getSettingsExtraClass() {
-		return WikiGroupServiceSettingsExtraImpl.class;
+		return WikiPortletInstanceSettingsExtraImpl.class;
 	}
 
 	@Override
 	public String[] getSettingsIds() {
-		return new String[] {WikiConstants.SERVICE_NAME};
+		return new String[] {
+			WikiPortletKeys.WIKI, WikiPortletKeys.WIKI_ADMIN,
+			WikiPortletKeys.WIKI_DISPLAY};
 	}
 
 }

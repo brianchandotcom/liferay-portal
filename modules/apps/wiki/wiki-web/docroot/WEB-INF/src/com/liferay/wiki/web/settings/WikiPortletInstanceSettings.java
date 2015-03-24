@@ -12,23 +12,15 @@
  * details.
  */
 
-package com.liferay.wiki.settings;
+package com.liferay.wiki.web.settings;
 
-import java.io.IOException;
-
-import javax.portlet.ValidatorException;
+import com.liferay.portal.kernel.settings.PortletInstanceSettings;
+import com.liferay.wiki.web.configuration.WikiPortletInstanceConfiguration;
 
 /**
  * @author Iván Zaera
  */
-public interface WikiPortletInstanceSettingsExtra {
-
-	public boolean enableRss();
-
-	public void setHiddenNodes(String[] hiddenNodes);
-
-	public void setVisibleNodes(String[] visibleNodes);
-
-	public void store() throws IOException, ValidatorException;
-
+public interface WikiPortletInstanceSettings
+	extends PortletInstanceSettings, WikiPortletInstanceConfiguration,
+		WikiPortletInstanceSettingsExtra {
 }

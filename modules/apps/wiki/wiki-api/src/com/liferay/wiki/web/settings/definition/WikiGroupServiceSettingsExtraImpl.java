@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.settings.definition;
+package com.liferay.wiki.web.settings.definition;
 
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.LocalizationUtil;

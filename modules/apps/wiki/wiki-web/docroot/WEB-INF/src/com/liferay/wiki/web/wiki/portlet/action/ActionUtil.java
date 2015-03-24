@@ -42,8 +42,8 @@ import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermission;
-import com.liferay.wiki.settings.WikiPortletInstanceSettings;
 import com.liferay.wiki.util.WikiUtil;
+import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
 import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
 
 import java.util.Arrays;

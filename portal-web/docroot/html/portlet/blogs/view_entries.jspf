@@ -20,21 +20,13 @@ boolean showSubscribeButton = BlogsPermission.contains(permissionChecker, scopeG
 %>
 
 <c:if test="<%= showAddEntryButton %>">
-	<aui:nav-bar>
-		<c:if test="<%= showAddEntryButton %>">
-			<aui:nav cssClass="navbar-nav">
-				<c:if test="<%= showAddEntryButton %>">
-					<portlet:renderURL var="editEntryURL">
-						<portlet:param name="struts_action" value="/blogs/edit_entry" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="backURL" value="<%= currentURL %>" />
-					</portlet:renderURL>
+	<portlet:renderURL var="editEntryURL">
+		<portlet:param name="struts_action" value="/blogs/edit_entry" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="backURL" value="<%= currentURL %>" />
+	</portlet:renderURL>
 
-					<aui:nav-item href="<%= editEntryURL %>" iconCssClass="icon-plus" label="add-blog-entry" name="addEntryButton" />
-				</c:if>
-			</aui:nav>
-		</c:if>
-	</aui:nav-bar>
+	<aui:button href="<%= editEntryURL %>" icon="icon-plus" name="addEntryButton" value="add-blog-entry" />
 </c:if>
 
 <div class="subscribe">

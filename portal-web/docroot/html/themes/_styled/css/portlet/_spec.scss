@@ -1,20 +1,12 @@
-/* ---------- Standard styles defined in the JSR 168 ---------- */
-
-/* ---------- Fonts ---------- */
-
-/* ---------- Font attributes for the 'normal' fragment font ---------- */
+/* ---------- Standard styles defined in the JSR 168 specification ---------- */
 
 .portlet-font {
 }
-
-/* ---------- Font attributes similar to the .portlet-font but the color is lighter ---------- */
 
 .portlet-font-dim {
 }
 
 /* ---------- Sections ---------- */
-
-/* ---------- Text in a selected cell range ---------- */
 
 .portlet-section-selected {
 	&, a {
@@ -29,17 +21,11 @@
 	}
 }
 
-/* ---------- Text of a subheading ---------- */
-
 .portlet-section-subheader {
 }
 
-/* ---------- Table or section footnote ---------- */
-
 .portlet-section-footer {
 }
-
-/* ---------- Text that belongs to the table but does not fall in one of the other categories (e.g. explanatory or help text that is associated with the section) ---------- */
 
 .portlet-section-text {
 }
@@ -50,84 +36,54 @@
 	margin: 0;
 }
 
-/* ---------- Text used for the descriptive label of the whole form (not the labels for fields) ---------- */
-
 .portlet-form-label {
 }
-
-/* ---------- Text of the user-input in an input field ---------- */
 
 .portlet-form-input-field {
 }
 
-/* ---------- Text on a button ---------- */
-
 .portlet-form-button {
 }
-
-/* ---------- Text that appears beside a context dependent action icon ---------- */
-
-.portlet-icon-label {
-}
-
-/* ---------- Text that appears beside a 'standard' icon (e.g. Ok, or cancel) ---------- */
-
-.portlet-dlg-icon-label {
-}
-
-/* ---------- Text for a separator of fields (e.g. checkboxes, etc.) ---------- */
 
 .portlet-form-field-label {
 }
 
-/* ---------- Text for a field (not input field, e.g. checkboxes, etc.) ---------- */
-
 .portlet-form-field {
+}
+
+/* ---------- Icons ---------- */
+
+.portlet-icon-label {
+}
+
+.portlet-dlg-icon-label {
 }
 
 /* ---------- Menus ---------- */
 
-/* ---------- General menu settings such as background color, margins, etc. ---------- */
-
 .portlet-menu {
 }
-
-/* ---------- Normal, unselected menu item ---------- */
 
 .portlet-menu-item {
 }
 
-/* ---------- Selected menu item ---------- */
-
 .portlet-menu-item-selected {
 }
-
-/* ---------- Normal, unselected menu item when the mouse hovers over it ---------- */
 
 .portlet-menu-item-hover {
 }
 
-/* ---------- Selected menu item when the mouse hovers over it ---------- */
-
 .portlet-menu-item-hover-selected {
 }
-
-/* ---------- Normal, unselected menu item that has sub-menus ---------- */
 
 .portlet-menu-cascade-item {
 }
 
-/* ---------- Selected sub-menu item that has sub-menus ---------- */
-
 .portlet-menu-cascade-item-selected {
 }
 
-/* ---------- Descriptive text for the menu (e.g. in a help context below the menu) ---------- */
-
 .portlet-menu-description {
 }
-
-/* ---------- Menu caption ---------- */
 
 .portlet-menu-caption {
 }

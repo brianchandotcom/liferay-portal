@@ -196,6 +196,57 @@ public class PortletImporter {
 		return PortletPreferencesFactoryUtil.toXML(portletPreferencesImpl);
 	}
 
+	public void importPortletDataDeletions(
+			long userId, long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, File file)
+		throws Exception {
+
+		ZipReader zipReader = null;
+
+		try {
+			ExportImportThreadLocal.setPortletDataDeletionImportInProcess(true);
+
+			// LAR validation
+
+			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+			zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+			validateFile(layout.getCompanyId(), groupId, portletId, zipReader);
+
+			PortletDataContext portletDataContext = getPortletDataContext(
+				userId, plid, groupId, portletId, parameterMap, file);
+
+			boolean deletePortletData = MapUtil.getBoolean(
+				parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA);
+
+			// Portlet data deletion
+
+			if (deletePortletData) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Deleting portlet data");
+				}
+
+				deletePortletData(portletDataContext);
+			}
+
+			// Deletion system events
+
+			populateDeletionStagedModelTypes(portletDataContext);
+
+			_deletionSystemEventImporter.importDeletionSystemEvents(
+				portletDataContext);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletDataDeletionImportInProcess(
+				false);
+
+			if (zipReader != null) {
+				zipReader.close();
+			}
+		}
+	}
+
 	public void importPortletInfo(
 			long userId, long plid, long groupId, String portletId,
 			Map<String, String[]> parameterMap, File file)
@@ -392,8 +443,6 @@ public class PortletImporter {
 		Map<String, String[]> parameterMap =
 			portletDataContext.getParameterMap();
 
-		boolean deletePortletData = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA);
 		boolean importPermissions = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
 
@@ -475,16 +524,6 @@ public class PortletImporter {
 
 		readExpandoTables(portletDataContext);
 		readLocks(portletDataContext);
-
-		// Delete portlet data
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Deleting portlet data");
-		}
-
-		if (deletePortletData) {
-			deletePortletData(portletDataContext);
-		}
 
 		Element portletDataElement = portletElement.element("portlet-data");
 
@@ -884,6 +923,31 @@ public class PortletImporter {
 
 		PortletPreferencesLocalServiceUtil.updatePortletPreferences(
 			portletPreferences);
+	}
+
+	protected void populateDeletionStagedModelTypes(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDataContext.getCompanyId(),
+			portletDataContext.getPortletId());
+
+		if ((portlet == null) || !portlet.isActive() ||
+			portlet.isUndeployedPortlet()) {
+
+			return;
+		}
+
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
+
+		if (portletDataHandler == null) {
+			return;
+		}
+
+		portletDataContext.addDeletionSystemEventStagedModelTypes(
+			portletDataHandler.getDeletionSystemEventStagedModelTypes());
 	}
 
 	protected void readAssetLinks(PortletDataContext portletDataContext)

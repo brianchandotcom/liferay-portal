@@ -34,6 +34,11 @@ public interface WikiPortletInstanceConfiguration {
 	)
 	public String displayStyle();
 
+	@Meta.AD(
+		deflt = "0", required = false
+	)
+	public long displayStyleGroupId(long defaultDisplayStyleGroupId);
+
 	/**
 	 * Set this to <code>true</code> to enable ratings in Wiki comments.
 	 */
@@ -69,6 +74,11 @@ public interface WikiPortletInstanceConfiguration {
 	public boolean enableRss();
 
 	@Meta.AD(
+		deflt = "", required = false
+	)
+	public String[] hiddenNodes();
+
+	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
 		required = false
 	)
@@ -85,5 +95,10 @@ public interface WikiPortletInstanceConfiguration {
 		required = false
 	)
 	public String rssFeedType();
+
+	@Meta.AD(
+		deflt = "", required = false
+	)
+	public String[] visibleNodes();
 
 }

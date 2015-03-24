@@ -120,13 +120,6 @@
 			<delete dir="test-results" />
 
 			<if>
-				<equals arg1="${app.server.type}" arg2="glassfish" />
-				<then>
-					<delete dir="${app.server.instance.dir}/applications/liferay-portal" />
-				</then>
-			</if>
-
-			<if>
 				<equals arg1="${app.server.type}" arg2="resin" />
 				<then>
 					<ant dir="support-resin" target="clean" inheritAll="false" />
@@ -288,14 +281,17 @@
 
 	<target name="deploy" depends="setup-sdk">
 		<if>
-			<or>
-				<equals arg1="${app.server.type}" arg2="glassfish" />
-				<equals arg1="${app.server.type}" arg2="websphere" />
-			</or>
+			<equals arg1="${app.server.type}" arg2="glassfish" />
 			<then>
-				<delete dir="${app.server.portal.dir}" />
-				<delete file="${app.server.portal.dir}" />
+				<delete file="${app.server.glassfish.portal.war.dir}" />
 			</then>
+			<elseif>
+				<equals arg1="${app.server.type}" arg2="websphere" />
+				<then>
+					<delete dir="${app.server.portal.dir}" />
+					<delete file="${app.server.portal.dir}" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -349,11 +345,11 @@
 				</not>
 			</and>
 			<then>
-				<move file="${app.server.portal.dir}" tofile="${app.server.portal.dir}-tmp" />
+				<move file="${app.server.glassfish.portal.war.dir}" tofile="${app.server.glassfish.portal.war.dir}-tmp" />
 
-				<mkdir dir="${app.server.deploy.dir}/liferay-portal.war" />
+				<mkdir dir="${app.server.portal.dir}" />
 
-				<unzip src="${app.server.portal.dir}-tmp" dest="${app.server.deploy.dir}/liferay-portal.war" />
+				<unzip src="${app.server.glassfish.portal.war.dir}-tmp" dest="${app.server.portal.dir}" />
 			</then>
 		</if>
 
@@ -369,14 +365,14 @@
 
 		<if>
 			<and>
-				<equals arg1="${app.server.type}" arg2="glassfish" />
+				<available file="${app.server.glassfish.portal.war.dir}-tmp" type="file" />
 				<available file="${app.server.portal.dir}" type="dir" />
-				<available file="${app.server.portal.dir}-tmp" type="file" />
+				<equals arg1="${app.server.type}" arg2="glassfish" />
 			</and>
 			<then>
 				<delete dir="${app.server.portal.dir}" />
 
-				<move file="${app.server.portal.dir}-tmp" tofile="${app.server.portal.dir}" />
+				<move file="${app.server.glassfish.portal.war.dir}-tmp" tofile="${app.server.glassfish.portal.war.dir}" />
 			</then>
 		</if>
 
@@ -428,6 +424,24 @@
 				>
 					org.apache.geronimo.specs/geronimo-el_1.0_spec/1.0.2/jar=org.apache.geronimo.specs/geronimo-el_2.2_spec/1.0.3/jar
 				</concat>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="glassfish" />
+			<then>
+				<tstamp>
+					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+				</tstamp>
+
+				<jar
+					basedir="${app.server.portal.dir}"
+					jarfile="${tstamp.value}"
+				/>
+
+				<delete dir="${app.server.portal.dir}" />
+
+				<move file="${tstamp.value}" tofile="${app.server.glassfish.portal.war.dir}" />
 			</then>
 		</if>
 
@@ -569,10 +583,7 @@
 		</if>
 
 		<if>
-			<or>
-				<equals arg1="${app.server.type}" arg2="glassfish" />
-				<equals arg1="${app.server.type}" arg2="websphere" />
-			</or>
+			<equals arg1="${app.server.type}" arg2="websphere" />
 			<then>
 				<tstamp>
 					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
@@ -586,12 +597,7 @@
 				<delete dir="${app.server.portal.dir}" />
 
 				<move file="${tstamp.value}" tofile="${app.server.portal.dir}" />
-			</then>
-		</if>
 
-		<if>
-			<equals arg1="${app.server.type}" arg2="websphere" />
-			<then>
 				<ant dir="support-websphere" target="deploy" inheritAll="false" />
 			</then>
 		</if>
@@ -604,7 +610,7 @@
 				<equals arg1="${app.server.type}" arg2="glassfish" />
 			</and>
 			<then>
-				<war destfile="${app.server.glassfish.portal.dir}" update="true">
+				<war destfile="${app.server.glassfish.portal.war.dir}" update="true">
 					<classes dir="portal-impl/src" includes="portal-*.properties,system-*.properties" />
 				</war>
 			</then>

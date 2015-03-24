@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<ruleset
+		name="java-junit-liferay"
+		xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd"
+		>
+	<description>
+		These rules deal with different problems that can occur with JUnit tests in Liferay.
+	</description>
+	<rule
+			class="com.liferay.pmd.rules.junit.JUnitUseAssertFailPropertly"
+			language="java"
+			message="Don't declare Assert.fail inside a catch statement"
+			name="JUnitUseAssertFailPropertly"
+			since="0.1">
+		<description>
+			Detect when a Assert.fail is used improperly.
+		</description>
+		<priority>3</priority>
+		<example>
+			<![CDATA[
+@Test
+public void testImportUserByScreenName() {
+	try {
+
+		// SOME CODE
+	}
+	catch (Exception e) {
+		Assert.fail();
+	}
+}
+			]]>
+		</example>
+		<example>
+			<![CDATA[
+@Test
+public void testImportUserByScreenName() {
+	Assert.fail();
+}
+			]]>
+		</example>
+	</rule>
+</ruleset>

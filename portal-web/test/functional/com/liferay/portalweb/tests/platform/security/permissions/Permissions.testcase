@@ -1,0 +1,39 @@
+<definition component-name="portal-security">
+	<property name="testray.main.component.name" value="Permissions" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ViewBlogsPortletAsGuestPG" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsPortlet#viewPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsPortlet#viewNoPermissionPG" />
+	</command>
+</definition>

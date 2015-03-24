@@ -1,6 +1,6 @@
 <definition component-name="portal-performance-and-fault-tolerance">
 	<property name="cluster.enabled" value="true" />
-	<property name="testray.main.component.name" value="Platform" />
+	<property name="testray.main.component.name" value="Clustering" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

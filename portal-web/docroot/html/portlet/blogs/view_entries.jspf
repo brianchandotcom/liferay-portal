@@ -14,12 +14,7 @@
  */
 --%>
 
-<%
-boolean showAddEntryButton = BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY);
-boolean showSubscribeButton = BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && (blogsGroupServiceSettings.isEmailEntryAddedEnabled() || blogsGroupServiceSettings.isEmailEntryUpdatedEnabled());
-%>
-
-<c:if test="<%= showAddEntryButton %>">
+<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
 	<portlet:renderURL var="editEntryURL">
 		<portlet:param name="struts_action" value="/blogs/edit_entry" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -43,7 +38,7 @@ boolean showSubscribeButton = BlogsPermission.contains(permissionChecker, scopeG
 		/>
 	</c:if>
 
-	<c:if test="<%= showSubscribeButton %>">
+	<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && (blogsGroupServiceSettings.isEmailEntryAddedEnabled() || blogsGroupServiceSettings.isEmailEntryUpdatedEnabled()) %>">
 		<c:choose>
 			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), BlogsEntry.class.getName(), scopeGroupId) %>">
 				<portlet:actionURL var="unsubscribeURL">

@@ -16,7 +16,9 @@ package com.liferay.portal.cluster;
 
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.executor.PortalExecutorManager;
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -32,16 +34,18 @@ public class BaseClusterTestCase {
 
 	@Before
 	public void setUp() {
-		PortalExecutorManagerUtil portalExecutorManagerUtil =
-			new PortalExecutorManagerUtil();
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+		Registry registry = RegistryUtil.getRegistry();
 
-		portalExecutorManagerUtil.setPortalExecutorManager(
-			new MockPortalExecutorManager());
+		_portalExecutorManager = new MockPortalExecutorManager();
+
+		registry.registerService(
+			PortalExecutorManager.class, _portalExecutorManager);
 	}
 
 	@After
 	public void tearDown() {
-		PortalExecutorManagerUtil.shutdown();
+		_portalExecutorManager.shutdown();
 	}
 
 	@Aspect
@@ -113,5 +117,7 @@ public class BaseClusterTestCase {
 			new ThreadPoolExecutor(10, 10);
 
 	}
+
+	private PortalExecutorManager _portalExecutorManager;
 
 }

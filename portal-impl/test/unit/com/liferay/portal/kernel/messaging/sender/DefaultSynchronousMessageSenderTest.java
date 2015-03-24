@@ -16,10 +16,10 @@ package com.liferay.portal.kernel.messaging.sender;
 
 import com.liferay.portal.dao.orm.common.EntityCacheImpl;
 import com.liferay.portal.dao.orm.common.FinderCacheImpl;
-import com.liferay.portal.executor.PortalExecutorManagerImpl;
+import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
+import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.messaging.DefaultMessageBus;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -31,6 +31,12 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.SerialDestination;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.uuid.PortalUUIDImpl;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -61,11 +67,15 @@ public class DefaultSynchronousMessageSenderTest {
 		_defaultSynchronousMessageSender.setPortalUUID(new PortalUUIDImpl());
 		_defaultSynchronousMessageSender.setTimeout(10000);
 
-		PortalExecutorManagerUtil portalExecutorManagerUtil =
-			new PortalExecutorManagerUtil();
+		_portalExecutorManager = new MockPortalExecutorManager();
 
-		portalExecutorManagerUtil.setPortalExecutorManager(
-			new PortalExecutorManagerImpl());
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+		Registry registry = RegistryUtil.getRegistry();
+
+		_portalExecutorManager = new MockPortalExecutorManager();
+
+		registry.registerService(
+			PortalExecutorManager.class, _portalExecutorManager);
 
 		EntityCacheUtil entityCacheUtil = new EntityCacheUtil();
 
@@ -80,7 +90,7 @@ public class DefaultSynchronousMessageSenderTest {
 	public void tearDown() {
 		_messageBus.shutdown(true);
 
-		PortalExecutorManagerUtil.shutdown(true);
+		_portalExecutorManager.shutdown(true);
 	}
 
 	@Test
@@ -130,6 +140,78 @@ public class DefaultSynchronousMessageSenderTest {
 
 	private DefaultSynchronousMessageSender _defaultSynchronousMessageSender;
 	private MessageBus _messageBus;
+	private MockPortalExecutorManager _portalExecutorManager;
+
+	private class MockPortalExecutorManager implements PortalExecutorManager {
+
+		@Override
+		public ThreadPoolExecutor getPortalExecutor(String name) {
+			return getPortalExecutor(name, false);
+		}
+
+		@Override
+		public ThreadPoolExecutor getPortalExecutor(
+			String name, boolean createIfAbsent) {
+
+			ThreadPoolExecutor threadPoolExecutor = _threadPoolExecutors.get(
+				name);
+
+			if ((threadPoolExecutor == null) && !createIfAbsent) {
+				threadPoolExecutor = _threadPoolExecutor;
+			}
+			else if (threadPoolExecutor == null) {
+				threadPoolExecutor = new ThreadPoolExecutor(1, 1);
+			}
+
+			_threadPoolExecutors.put(name, threadPoolExecutor);
+
+			return threadPoolExecutor;
+		}
+
+		@Override
+		public ThreadPoolExecutor registerPortalExecutor(
+			String name, ThreadPoolExecutor threadPoolExecutor) {
+
+			if (_threadPoolExecutors.containsKey(name)) {
+				return _threadPoolExecutors.get(name);
+			}
+			else {
+				return _threadPoolExecutors.put(name, threadPoolExecutor);
+			}
+		}
+
+		@Override
+		public void shutdown() {
+			shutdown(false);
+		}
+
+		@Override
+		public void shutdown(boolean interrupt) {
+			for (ThreadPoolExecutor threadPoolExecutor :
+					_threadPoolExecutors.values()) {
+
+				if (interrupt) {
+					threadPoolExecutor.shutdownNow();
+				}
+				else {
+					threadPoolExecutor.shutdown();
+				}
+			}
+
+			if (interrupt) {
+				_threadPoolExecutor.shutdownNow();
+			}
+			else {
+				_threadPoolExecutor.shutdown();
+			}
+		}
+
+		private final ThreadPoolExecutor _threadPoolExecutor =
+			new ThreadPoolExecutor(10, 10);
+		private final Map<String, ThreadPoolExecutor> _threadPoolExecutors =
+			new HashMap<>();
+
+	}
 
 	private class ReplayMessageListener implements MessageListener {
 

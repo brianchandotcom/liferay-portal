@@ -105,8 +105,7 @@ public class PoshiRunner {
 
 		if (commandElement != null) {
 			PoshiRunnerStackTraceUtil.pushFilePath(
-				classCommandName, "testcase",
-				commandElement.attributeValue("line-number"));
+				classCommandName, "testcase");
 
 			PoshiRunnerExecutor.parseElement(commandElement);
 

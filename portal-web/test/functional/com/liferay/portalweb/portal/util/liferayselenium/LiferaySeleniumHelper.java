@@ -1032,6 +1032,14 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
+		// LRQA-14442, temporary workaround until Kiyoshi Lee fixes it
+
+		if (line.contains("Framework Event Dispatcher: Equinox Container:")) {
+			if (line.contains("[org_eclipse_equinox_http_servlet")) {
+				return true;
+			}
+		}
+
 		// WCM-202
 
 		if (line.contains("No score point assigners available")) {

@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>PGAnnouncementsManageEntries</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGAnnouncementsManageEntries</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGAnnouncementsManageEntries</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISTRIBUTION_SCOPE_SELECT</td>
+	<td>//select[@id='_84_distributionScope']</td>
+	<td></td>
+</tr>
+<!--ENTRY_TABLE-->
+<tr>
+	<td>ENTRY_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_MODIFIED_DATE</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_DISPLAY_DATE</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_EXPIRATION_DATE</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[6]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_ACTIONS_GENERIC</td>
+	<td>//td[6]/div/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

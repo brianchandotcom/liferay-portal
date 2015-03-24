@@ -19,6 +19,36 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE</td>
+	<td>//input[contains(@id,'84') and contains(@id,'displayDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_TIME</td>
+	<td>//input[contains(@id,'84') and contains(@id,'displayDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_IMMEDIATELY_CHECKBOX</td>
+	<td>//input[contains(@id,'84') and contains(@id,'fmdisplayDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRATION_DATE</td>
+	<td>//input[contains(@id,'expirationDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRATION_DATE_TIME</td>
+	<td>//input[contains(@id,'expirationDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME</td>
 	<td>//input[contains(@id,'name')]</td>
 	<td></td>
@@ -26,6 +56,11 @@
 <tr>
 	<td>TITLE</td>
 	<td>//input[contains(@id,'title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL</td>
+	<td>//input[contains(@id,'url')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,13 +1,18 @@
 <html>
 <head>
-<title>Announcements</title>
+<title>AnnouncementsEditEntry</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Announcements</td></tr>
+<tr><td rowspan="1" colspan="3">AnnouncementsEditEntry</td></tr>
 </thead>
 <tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>AnnouncementsEditEntry</td>
+</tr>
 <tr>
 	<td></td>
 	<td></td>

@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Site Map Web
-Bundle-SymbolicName: com.liferay.site.map.web
+Bundle-Name: Liferay Site Navigation Site Map Web
+Bundle-SymbolicName: com.liferay.site.navigation.site.map.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\

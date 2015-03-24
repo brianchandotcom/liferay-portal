@@ -12,22 +12,16 @@
  * details.
  */
 
-package com.liferay.site.map.web.configuration;
+package com.liferay.site.navigation.site.map.web.configuration;
 
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Eudaldo Alonso
  */
-public class SiteMapWebConfigurationUtil {
+public class SiteMapWebConfigurationValues {
 
-	public static String get(String key) {
-		return _configuration.get(key);
-	}
-
-	private static final Configuration _configuration =
-		ConfigurationFactoryUtil.getConfiguration(
-			SiteMapWebConfigurationUtil.class.getClassLoader(), "portlet");
+	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
+		SiteMapWebConfigurationUtil.get("display.templates.config"));
 
 }

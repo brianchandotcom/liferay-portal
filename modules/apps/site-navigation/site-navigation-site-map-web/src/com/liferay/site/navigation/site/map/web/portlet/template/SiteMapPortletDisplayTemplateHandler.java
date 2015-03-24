@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.map.web.portlet.template;
+package com.liferay.site.navigation.site.map.web.portlet.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
@@ -23,8 +23,8 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
-import com.liferay.site.map.web.configuration.SiteMapWebConfigurationValues;
-import com.liferay.site.map.web.constants.SiteMapPortletKeys;
+import com.liferay.site.navigation.site.map.web.configuration.SiteMapWebConfigurationValues;
+import com.liferay.site.navigation.site.map.web.constants.SiteMapPortletKeys;
 
 import java.util.List;
 import java.util.Locale;

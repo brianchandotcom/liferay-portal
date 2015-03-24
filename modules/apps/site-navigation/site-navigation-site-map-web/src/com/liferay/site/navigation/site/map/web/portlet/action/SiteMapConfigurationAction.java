@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.site.map.web.portlet.action;
+package com.liferay.site.navigation.site.map.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.site.map.web.constants.SiteMapPortletKeys;
+import com.liferay.site.navigation.site.map.web.constants.SiteMapPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

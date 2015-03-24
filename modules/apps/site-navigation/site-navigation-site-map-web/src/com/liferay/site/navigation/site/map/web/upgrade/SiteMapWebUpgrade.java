@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.site.map.web.upgrade;
+package com.liferay.site.navigation.site.map.web.upgrade;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
-import com.liferay.site.map.web.constants.SiteMapPortletKeys;
+import com.liferay.site.navigation.site.map.web.constants.SiteMapPortletKeys;
 
 import java.util.Collections;
 

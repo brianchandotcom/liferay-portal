@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.site.map.web.portlet;
+package com.liferay.site.navigation.site.map.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.site.map.web.upgrade.SiteMapWebUpgrade;
+import com.liferay.site.navigation.site.map.web.upgrade.SiteMapWebUpgrade;
 
 import javax.portlet.Portlet;
 

@@ -89,6 +89,10 @@ public class JSONWebServiceRegistrator {
 			return;
 		}
 
+		if (bean == null) {
+			return;
+		}
+
 		JSONWebService jsonWebService = AnnotationLocator.locate(
 			bean.getClass(), JSONWebService.class);
 

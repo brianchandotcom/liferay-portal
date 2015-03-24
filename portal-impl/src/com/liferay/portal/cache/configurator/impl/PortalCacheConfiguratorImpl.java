@@ -15,53 +15,40 @@
 package com.liferay.portal.cache.configurator.impl;
 
 import com.liferay.portal.cache.configurator.PortalCacheConfigurator;
-import com.liferay.portal.dao.orm.hibernate.region.LiferayEhcacheRegionFactory;
-import com.liferay.portal.dao.orm.hibernate.region.SingletonLiferayEhcacheRegionFactory;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.Serializable;
 
 import java.net.URL;
 
-import java.util.Collection;
-
 /**
  * @author Miguel Pastor
+ * @author Shuyang Zhou
  */
 public class PortalCacheConfiguratorImpl implements PortalCacheConfigurator {
 
 	@Override
-	public void reconfigureCaches(ClassLoader classLoader, URL url)
-		throws Exception {
-
-		if (Validator.isNull(url)) {
+	public void reconfigureCaches(ClassLoader classLoader, URL url) {
+		if (url == null) {
 			return;
 		}
-
-		ClassLoader aggregateClassLoader =
-			AggregateClassLoader.getAggregateClassLoader(
-				new ClassLoader[] {
-					ClassLoaderUtil.getPortalClassLoader(), classLoader
-				});
 
 		ClassLoader contextClassLoader =
 			ClassLoaderUtil.getContextClassLoader();
 
+		ClassLoaderUtil.setContextClassLoader(
+			AggregateClassLoader.getAggregateClassLoader(
+				ClassLoaderUtil.getPortalClassLoader(), classLoader));
+
 		try {
-			ClassLoaderUtil.setContextClassLoader(aggregateClassLoader);
-
-			Collection<PortalCacheManager<? extends Serializable, ?>>
-				portalCacheManagers =
-					PortalCacheProvider.getPortalCacheManagers();
-
 			for (PortalCacheManager<? extends Serializable, ?>
-					portalCacheManager : portalCacheManagers) {
+					portalCacheManager :
+						PortalCacheProvider.getPortalCacheManagers()) {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
@@ -75,22 +62,6 @@ public class PortalCacheConfiguratorImpl implements PortalCacheConfigurator {
 		finally {
 			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 		}
-	}
-
-	@Override
-	public void reconfigureHibernateCache(URL url) {
-		if (Validator.isNull(url)) {
-			return;
-		}
-
-		LiferayEhcacheRegionFactory liferayEhcacheRegionFactory =
-			SingletonLiferayEhcacheRegionFactory.getInstance();
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Reconfiguring Hibernate caches using " + url);
-		}
-
-		liferayEhcacheRegionFactory.reconfigureCaches(url);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

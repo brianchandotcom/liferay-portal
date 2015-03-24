@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cache.cluster;
+package com.liferay.portal.dao.orm.hibernate.region;
 
 import java.util.Properties;
 

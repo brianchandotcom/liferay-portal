@@ -15,9 +15,9 @@
 package com.liferay.portal.dao.orm.hibernate.region;
 
 import com.liferay.portal.cache.ehcache.CacheManagerUtil;
-import com.liferay.portal.cache.ehcache.EhcacheConfigurationUtil;
-import com.liferay.portal.cache.ehcache.EhcachePortalCache;
 import com.liferay.portal.cache.ehcache.ModifiableEhcacheWrapper;
+import com.liferay.portal.kernel.cache.CacheListener;
+import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
@@ -42,6 +42,7 @@ import java.lang.reflect.Field;
 import java.net.URL;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -51,6 +52,7 @@ import javax.management.MBeanServer;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.Configuration;
 import net.sf.ehcache.config.ConfigurationFactory;
@@ -140,29 +142,6 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		return timestampsRegion;
 	}
 
-	public void reconfigureCaches(URL cacheConfigFile) {
-		if (manager == null) {
-			return;
-		}
-
-		synchronized (manager) {
-			Configuration configuration =
-				EhcacheConfigurationUtil.getConfiguration(
-					cacheConfigFile, true, _usingDefault);
-
-			Map<String, CacheConfiguration> cacheConfigurations =
-				configuration.getCacheConfigurations();
-
-			for (CacheConfiguration cacheConfiguration :
-					cacheConfigurations.values()) {
-
-				Ehcache ehcache = new Cache(cacheConfiguration);
-
-				reconfigureCache(ehcache);
-			}
-		}
-	}
-
 	@Override
 	public void start(Settings settings, Properties properties)
 		throws CacheException {
@@ -189,7 +168,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 					_DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE);
 
 				configuration = EhcacheConfigurationUtil.getConfiguration(
-					configurationPath, true, _usingDefault);
+					configurationPath, _usingDefault);
 			}
 
 			/*Object transactionManager =
@@ -323,12 +302,98 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 	private ServiceTracker<MBeanServer, MBeanServer> _serviceTracker;
 	private boolean _usingDefault;
 
+	private class HibernatePortalCache<K extends Serializable, V>
+		implements PortalCache<K, V> {
+
+		@Override
+		public V get(K key) {
+			Element element = _ehcache.get(key);
+
+			if (element == null) {
+				return null;
+			}
+
+			return (V)element.getObjectValue();
+		}
+
+		@Override
+		public List<K> getKeys() {
+			return _ehcache.getKeys();
+		}
+
+		@Override
+		public String getName() {
+			return _ehcache.getName();
+		}
+
+		@Override
+		public PortalCacheManager<K, V> getPortalCacheManager() {
+			return _portalCacheManager;
+		}
+
+		@Override
+		public void put(K key, V value) {
+			_ehcache.put(new Element(key, value));
+		}
+
+		@Override
+		public void put(K key, V value, int timeToLive) {
+			Element element = new Element(key, value);
+
+			if (timeToLive != DEFAULT_TIME_TO_LIVE) {
+				element.setTimeToLive(timeToLive);
+			}
+
+			_ehcache.put(element);
+		}
+
+		@Override
+		public void registerCacheListener(CacheListener<K, V> cacheListener) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void registerCacheListener(
+			CacheListener<K, V> cacheListener,
+			CacheListenerScope cacheListenerScope) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void remove(K key) {
+			_ehcache.remove(key);
+		}
+
+		@Override
+		public void removeAll() {
+			_ehcache.removeAll();
+		}
+
+		@Override
+		public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void unregisterCacheListeners() {
+			throw new UnsupportedOperationException();
+		}
+
+		private HibernatePortalCache(
+			Ehcache ehcache, PortalCacheManager<K, V> portalCacheManager) {
+
+			_ehcache = ehcache;
+			_portalCacheManager = portalCacheManager;
+		}
+
+		private final Ehcache _ehcache;
+		private final PortalCacheManager<K, V> _portalCacheManager;
+
+	}
+
 	private class HibernatePortalCacheManager
 		implements PortalCacheManager<Serializable, Serializable> {
-
-		public HibernatePortalCacheManager(CacheManager cacheManager) {
-			_cacheManager = cacheManager;
-		}
 
 		@Override
 		public void clearAll() {
@@ -359,7 +424,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 					Cache cache = _cacheManager.getCache(name);
 
-					portalCache = new EhcachePortalCache<>(this, cache);
+					portalCache = new HibernatePortalCache<>(cache, this);
 
 					_portalCaches.put(name, portalCache);
 				}
@@ -382,7 +447,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 		@Override
 		public String getName() {
-			return _cacheManager.getName();
+			return _name;
 		}
 
 		@Override
@@ -392,7 +457,37 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 		@Override
 		public void reconfigureCaches(URL configurationURL) {
-			throw new UnsupportedOperationException();
+			if (configurationURL == null) {
+				return;
+			}
+
+			if (manager == null) {
+				return;
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Reconfiguring Hibernate caches using " + configurationURL);
+			}
+
+			Configuration configuration =
+				EhcacheConfigurationUtil.getConfiguration(
+					configurationURL, _usingDefault);
+
+			if (!_name.equals(configuration.getName())) {
+				return;
+			}
+
+			synchronized (manager) {
+				Map<String, CacheConfiguration> cacheConfigurations =
+					configuration.getCacheConfigurations();
+
+				for (CacheConfiguration cacheConfiguration :
+						cacheConfigurations.values()) {
+
+					reconfigureCache(new Cache(cacheConfiguration));
+				}
+			}
 		}
 
 		@Override
@@ -419,7 +514,13 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 			throw new UnsupportedOperationException();
 		}
 
+		private HibernatePortalCacheManager(CacheManager cacheManager) {
+			_cacheManager = cacheManager;
+			_name = cacheManager.getName();
+		}
+
 		private final CacheManager _cacheManager;
+		private final String _name;
 		private final Map<String, PortalCache<Serializable, Serializable>>
 			_portalCaches = new HashMap<>();
 

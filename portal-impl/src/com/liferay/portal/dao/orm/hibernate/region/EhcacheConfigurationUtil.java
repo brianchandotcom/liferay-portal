@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache;
+package com.liferay.portal.dao.orm.hibernate.region;
 
-import com.liferay.portal.cache.cluster.EhcachePortalCacheClusterReplicatorFactory;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
@@ -25,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.ehcache.config.CacheConfiguration;
+import net.sf.ehcache.config.CacheConfiguration.BootstrapCacheLoaderFactoryConfiguration;
 import net.sf.ehcache.config.CacheConfiguration.CacheEventListenerFactoryConfiguration;
 import net.sf.ehcache.config.Configuration;
 import net.sf.ehcache.config.ConfigurationFactory;
@@ -41,18 +41,8 @@ import net.sf.ehcache.config.FactoryConfiguration;
  */
 public class EhcacheConfigurationUtil {
 
-	public static Configuration getConfiguration(String configurationPath) {
-		return getConfiguration(configurationPath, false);
-	}
-
 	public static Configuration getConfiguration(
-		String configurationPath, boolean clusterAware) {
-
-		return getConfiguration(configurationPath, clusterAware, false);
-	}
-
-	public static Configuration getConfiguration(
-		String configurationPath, boolean clusterAware, boolean usingDefault) {
+		String configurationPath, boolean usingDefault) {
 
 		if (Validator.isNull(configurationPath)) {
 			return null;
@@ -61,21 +51,11 @@ public class EhcacheConfigurationUtil {
 		URL configurationURL = EhcacheConfigurationUtil.class.getResource(
 			configurationPath);
 
-		return getConfiguration(configurationURL, clusterAware, usingDefault);
-	}
-
-	public static Configuration getConfiguration(URL configurationURL) {
-		return getConfiguration(configurationURL, false);
+		return getConfiguration(configurationURL, usingDefault);
 	}
 
 	public static Configuration getConfiguration(
-		URL configurationURL, boolean clusterAware) {
-
-		return getConfiguration(configurationURL, clusterAware, false);
-	}
-
-	public static Configuration getConfiguration(
-		URL configurationURL, boolean clusterAware, boolean usingDefault) {
+		URL configurationURL, boolean usingDefault) {
 
 		if (configurationURL == null) {
 			return null;
@@ -91,9 +71,8 @@ public class EhcacheConfigurationUtil {
 			_clearBootstrapCacheLoaderConfigurations(cacheConfigurations);
 		}
 
-		if (!clusterAware ||
-			(PropsValues.CLUSTER_LINK_ENABLED &&
-			 !PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED)) {
+		if (PropsValues.CLUSTER_LINK_ENABLED &&
+			!PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
 
 			return configuration;
 		}
@@ -169,17 +148,54 @@ public class EhcacheConfigurationUtil {
 			String properties = _clearCacheEventListenerConfigurations(
 				cacheConfiguration, usingDefault);
 
-			if ((properties != null) &&
-				PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
+			_enableClusterLinkReplication(cacheConfiguration, properties);
 
-				_enableClusterLinkReplication(cacheConfiguration, properties);
+			FactoryConfiguration factoryConfiguration =
+				cacheConfiguration.
+					getBootstrapCacheLoaderFactoryConfiguration();
+
+			if (factoryConfiguration != null) {
+				cacheConfiguration.addBootstrapCacheLoaderFactory(null);
 			}
+
+			_enableClusterLinkBootstrap(
+				cacheConfiguration, factoryConfiguration);
 		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	private static void _enableClusterLinkBootstrap(
+		CacheConfiguration cacheConfiguration,
+		FactoryConfiguration factoryConfiguration) {
+
+		if ((factoryConfiguration == null) ||
+			!PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
+
+			return;
+		}
+
+		BootstrapCacheLoaderFactoryConfiguration
+			bootstrapCacheLoaderFactoryConfiguration =
+				new BootstrapCacheLoaderFactoryConfiguration();
+
+		bootstrapCacheLoaderFactoryConfiguration.setClass(
+			EhcacheStreamBootstrapCacheLoaderFactory.class.getName());
+		bootstrapCacheLoaderFactoryConfiguration.setProperties(
+			factoryConfiguration.getProperties());
+
+		cacheConfiguration.addBootstrapCacheLoaderFactory(
+			bootstrapCacheLoaderFactoryConfiguration);
 	}
 
 	private static void _enableClusterLinkReplication(
 		CacheConfiguration cacheConfiguration,
 		String cacheEventListenerProperties) {
+
+		if (Validator.isNull(cacheEventListenerProperties) ||
+			!PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
+
+			return;
+		}
 
 		CacheEventListenerFactoryConfiguration
 			cacheEventListenerFactoryConfiguration =

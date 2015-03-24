@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.cache.cluster;
+package com.liferay.portal.dao.orm.hibernate.region;
 
+import com.liferay.portal.cache.cluster.ClusterLinkCacheReplicator;
+import com.liferay.portal.cache.cluster.ClusterReplicationThreadLocal;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheProvider;

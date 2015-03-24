@@ -35,10 +35,6 @@ import org.hibernate.cfg.Settings;
  */
 public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 
-	public static LiferayEhcacheRegionFactory getInstance() {
-		return _liferayEhcacheRegionFactory;
-	}
-
 	public SingletonLiferayEhcacheRegionFactory(Properties properties) {
 		synchronized (this) {
 			_init(properties);

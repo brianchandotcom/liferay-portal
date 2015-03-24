@@ -100,6 +100,7 @@
 	</bean>
 
 	<!-- Server side parallel rendering -->
+
 	<bean class="com.liferay.portal.kernel.executor.PortalExecutorManagerUtil" factory-method="registerPortalExecutor">
 		<constructor-arg name="name">
 			<bean class="com.liferay.portal.kernel.spring.util.ClassNameUtil" factory-method="getClassName">

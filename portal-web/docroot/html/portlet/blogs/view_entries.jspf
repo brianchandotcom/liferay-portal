@@ -14,49 +14,14 @@
  */
 --%>
 
-<%
-boolean showAddEntryButton = BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY);
-boolean showPermissionsButton = BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
-boolean showSubscribeButton = BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && (blogsGroupServiceSettings.isEmailEntryAddedEnabled() || blogsGroupServiceSettings.isEmailEntryUpdatedEnabled());
-showSearch = showSearch && !results.isEmpty();
-%>
+<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
+	<portlet:renderURL var="editEntryURL">
+		<portlet:param name="struts_action" value="/blogs/edit_entry" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="backURL" value="<%= currentURL %>" />
+	</portlet:renderURL>
 
-<c:if test="<%= showAddEntryButton || showPermissionsButton || showSearch %>">
-	<aui:nav-bar>
-		<c:if test="<%= showAddEntryButton || showPermissionsButton %>">
-			<aui:nav cssClass="navbar-nav">
-				<c:if test="<%= showAddEntryButton %>">
-					<portlet:renderURL var="editEntryURL">
-						<portlet:param name="struts_action" value="/blogs/edit_entry" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="backURL" value="<%= currentURL %>" />
-					</portlet:renderURL>
-
-					<aui:nav-item href="<%= editEntryURL %>" label="add-blog-entry" name="addEntryButton" />
-				</c:if>
-
-				<c:if test="<%= showPermissionsButton %>">
-					<liferay-security:permissionsURL
-						modelResource="com.liferay.portlet.blogs"
-						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
-						resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
-						var="permissionsURL"
-						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-					/>
-
-					<aui:nav-item href="<%= permissionsURL %>" label="permissions" title="edit-permissions" useDialog="<%= true %>" />
-				</c:if>
-			</aui:nav>
-		</c:if>
-
-		<c:if test="<%= showSearch %>">
-			<aui:nav-bar-search>
-				<div class="form-search">
-					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords1" name="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
-				</div>
-			</aui:nav-bar-search>
-		</c:if>
-	</aui:nav-bar>
+	<aui:button href="<%= editEntryURL %>" icon="icon-plus" value="add-blog-entry" />
 </c:if>
 
 <div class="subscribe">
@@ -73,7 +38,7 @@ showSearch = showSearch && !results.isEmpty();
 		/>
 	</c:if>
 
-	<c:if test="<%= showSubscribeButton %>">
+	<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && (blogsGroupServiceSettings.isEmailEntryAddedEnabled() || blogsGroupServiceSettings.isEmailEntryUpdatedEnabled()) %>">
 		<c:choose>
 			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), BlogsEntry.class.getName(), scopeGroupId) %>">
 				<portlet:actionURL var="unsubscribeURL">

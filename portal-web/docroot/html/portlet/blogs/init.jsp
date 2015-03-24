@@ -49,12 +49,6 @@ BlogsPortletInstanceSettings blogsPortletInstanceSettings = BlogsPortletInstance
 
 int pageAbstractLength = PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH;
 
-boolean showSearch = false;
-
-if (portletName.equals(PortletKeys.BLOGS_ADMIN)) {
-	showSearch = true;
-}
-
 boolean showEditEntryPermissions = true;
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

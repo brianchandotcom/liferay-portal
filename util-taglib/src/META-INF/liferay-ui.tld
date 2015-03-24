@@ -51,6 +51,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>actionJspServletContext</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>assetCategoryClassName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

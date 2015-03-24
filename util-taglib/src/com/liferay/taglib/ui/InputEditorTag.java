@@ -181,7 +181,20 @@ public class InputEditorTag extends IncludeTag {
 		return configKey;
 	}
 
-	protected String getCssClasses(Portlet portlet) {
+	protected String getContentsLanguageId() {
+		if (_contentsLanguageId == null) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			_contentsLanguageId = themeDisplay.getLanguageId();
+		}
+
+		return _contentsLanguageId;
+	}
+
+	protected String getCssClasses() {
+		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
+
 		String cssClasses = "portlet ";
 
 		if (portlet != null) {
@@ -191,9 +204,8 @@ public class InputEditorTag extends IncludeTag {
 		return cssClasses;
 	}
 
-	protected Map<String, Object> getData(
-		Portlet portlet, ThemeDisplay themeDisplay,
-		HttpServletRequest request) {
+	protected Map<String, Object> getData() {
+		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
 
 		if (portlet == null) {
 			return _data;
@@ -212,13 +224,16 @@ public class InputEditorTag extends IncludeTag {
 			}
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		LiferayPortletResponse portletResponse =
 			(LiferayPortletResponse)request.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		PortletEditorConfig portletEditorConfig =
 			PortletEditorConfigFactoryUtil.getPortletEditorConfig(
-				portlet.getPortletId(), getConfigKey(), getEditorImpl(request),
+				portlet.getPortletId(), getConfigKey(), getEditorImpl(),
 				attributes, themeDisplay, portletResponse);
 
 		Map<String, Object> data = portletEditorConfig.getData();
@@ -230,7 +245,7 @@ public class InputEditorTag extends IncludeTag {
 		return data;
 	}
 
-	protected String getEditorImpl(HttpServletRequest request) {
+	protected String getEditorImpl() {
 		return EditorUtil.getEditorValue(request, _editorImpl);
 	}
 
@@ -241,14 +256,7 @@ public class InputEditorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (_contentsLanguageId == null) {
-			_contentsLanguageId = themeDisplay.getLanguageId();
-		}
-
-		String editorImpl = getEditorImpl(request);
+		String editorImpl = getEditorImpl();
 
 		_page = "/html/js/editor/" + editorImpl + ".jsp";
 
@@ -261,13 +269,11 @@ public class InputEditorTag extends IncludeTag {
 			"liferay-ui:input-editor:configParams", _configParams);
 		request.setAttribute("liferay-ui:input-editor:contents", _contents);
 		request.setAttribute(
-			"liferay-ui:input-editor:contentsLanguageId", _contentsLanguageId);
+			"liferay-ui:input-editor:contentsLanguageId",
+			getContentsLanguageId());
 		request.setAttribute("liferay-ui:input-editor:cssClass", _cssClass);
-
-		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
-
 		request.setAttribute(
-			"liferay-ui:input-editor:cssClasses", getCssClasses(portlet));
+			"liferay-ui:input-editor:cssClasses", getCssClasses());
 		request.setAttribute("liferay-ui:input-editor:editorImpl", editorImpl);
 		request.setAttribute(
 			"liferay-ui:input-editor:fileBrowserParams", _fileBrowserParams);
@@ -298,12 +304,7 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-editor:toolbarSet", _toolbarSet);
 		request.setAttribute("liferay-ui:input-editor:width", _width);
 
-		// Order is important. Data attribute needs to be calculated when all
-		// the other attributes are set to the request.
-
-		request.setAttribute(
-			"liferay-ui:input-editor:data",
-			getData(portlet, themeDisplay, request));
+		request.setAttribute("liferay-ui:input-editor:data", getData());
 	}
 
 	private boolean _allowBrowseDocuments = true;

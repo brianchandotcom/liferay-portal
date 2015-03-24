@@ -72,6 +72,7 @@ import com.liferay.portlet.asset.service.permission.AssetTagPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -396,15 +397,6 @@ public class AssetUtil {
 					"recordSetId", String.valueOf(classTypeId));
 			}
 
-			if (className.equals(DLFileEntry.class.getName())) {
-				addPortletURL.setParameter(Constants.CMD, Constants.ADD);
-				addPortletURL.setParameter(
-					"folderId",
-					String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-				addPortletURL.setParameter(
-					"fileEntryTypeId", String.valueOf(classTypeId));
-			}
-
 			if (className.equals(JournalArticle.class.getName())) {
 				DDMStructure ddmStructure =
 					DDMStructureLocalServiceUtil.getStructure(classTypeId);
@@ -412,6 +404,23 @@ public class AssetUtil {
 				addPortletURL.setParameter(
 					"ddmStructureKey", ddmStructure.getStructureKey());
 			}
+		}
+
+		if (className.equals(DLFileEntry.class.getName())) {
+			addPortletURL.setParameter(Constants.CMD, Constants.ADD);
+			addPortletURL.setParameter(
+				"folderId",
+				String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+			long fileEntryTypeId =
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
+
+			if (classTypeId >= 0) {
+				fileEntryTypeId = classTypeId;
+			}
+
+			addPortletURL.setParameter(
+				"fileEntryTypeId", String.valueOf(fileEntryTypeId));
 		}
 
 		addPortletURL.setPortletMode(PortletMode.VIEW);

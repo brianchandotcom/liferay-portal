@@ -30,6 +30,8 @@ page import="org.openid4java.consumer.ConsumerException" %><%@
 page import="org.openid4java.discovery.DiscoveryException" %><%@
 page import="org.openid4java.message.MessageException" %>
 
+<portlet:defineObjects />
+
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();
 %>

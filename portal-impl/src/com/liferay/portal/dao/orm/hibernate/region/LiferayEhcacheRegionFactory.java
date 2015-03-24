@@ -395,11 +395,6 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 	private class HibernatePortalCacheManager
 		implements PortalCacheManager<Serializable, Serializable> {
 
-		public HibernatePortalCacheManager(CacheManager cacheManager) {
-			_cacheManager = cacheManager;
-			_name = cacheManager.getName();
-		}
-
 		@Override
 		public void clearAll() {
 			throw new UnsupportedOperationException();
@@ -462,7 +457,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 		@Override
 		public void reconfigureCaches(URL configurationURL) {
-			if (Validator.isNull(configurationURL)) {
+			if (configurationURL == null) {
 				return;
 			}
 
@@ -490,9 +485,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 				for (CacheConfiguration cacheConfiguration :
 						cacheConfigurations.values()) {
 
-					Ehcache ehcache = new Cache(cacheConfiguration);
-
-					reconfigureCache(ehcache);
+					reconfigureCache(new Cache(cacheConfiguration));
 				}
 			}
 		}
@@ -519,6 +512,11 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		@Override
 		public void unregisterCacheManagerListeners() {
 			throw new UnsupportedOperationException();
+		}
+
+		private HibernatePortalCacheManager(CacheManager cacheManager) {
+			_cacheManager = cacheManager;
+			_name = cacheManager.getName();
 		}
 
 		private final CacheManager _cacheManager;

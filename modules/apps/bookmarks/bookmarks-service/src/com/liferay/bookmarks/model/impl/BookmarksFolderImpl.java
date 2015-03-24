@@ -28,9 +28,6 @@ import java.util.List;
  */
 public class BookmarksFolderImpl extends BookmarksFolderBaseImpl {
 
-	public BookmarksFolderImpl() {
-	}
-
 	@Override
 	public List<Long> getAncestorFolderIds() throws PortalException {
 		List<Long> ancestorFolderIds = new ArrayList<>();

@@ -150,6 +150,10 @@ public class StagedModelDataHandlerUtil {
 		StagedModelDataHandler<T> stagedModelDataHandler =
 			_getStagedModelDataHandler(stagedModel);
 
+		if (stagedModelDataHandler == null) {
+			return;
+		}
+
 		stagedModelDataHandler.exportStagedModel(
 			portletDataContext, stagedModel);
 	}
@@ -208,6 +212,10 @@ public class StagedModelDataHandlerUtil {
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				stagedModelClassName);
 
+		if (stagedModelDataHandler == null) {
+			return;
+		}
+
 		if (missing) {
 			stagedModelDataHandler.importMissingReference(
 				portletDataContext, referenceElement);
@@ -247,6 +255,10 @@ public class StagedModelDataHandlerUtil {
 			StagedModelDataHandler<?> stagedModelDataHandler =
 				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 					stagedModelClassName);
+
+			if (stagedModelDataHandler == null) {
+				continue;
+			}
 
 			if (missing) {
 				stagedModelDataHandler.importMissingReference(
@@ -293,6 +305,10 @@ public class StagedModelDataHandlerUtil {
 
 		StagedModelDataHandler<T> stagedModelDataHandler =
 			_getStagedModelDataHandler(stagedModel);
+
+		if (stagedModelDataHandler == null) {
+			return;
+		}
 
 		stagedModelDataHandler.importStagedModel(
 			portletDataContext, stagedModel);

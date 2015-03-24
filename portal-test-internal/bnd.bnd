@@ -12,7 +12,6 @@ Export-Package:\
 	com.liferay.portal.util.test,\
 	com.liferay.portal.verify.test,\
 	com.liferay.portlet.asset.util.test,\
-	com.liferay.portlet.journal.util.test,\
 	com.liferay.portlet.notifications.test,\
 	com.liferay.portlet.social.test,\
 	com.liferay.portlet.subscriptions.test,\

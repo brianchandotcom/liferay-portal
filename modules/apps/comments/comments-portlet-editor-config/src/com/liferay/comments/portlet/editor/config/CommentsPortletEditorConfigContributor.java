@@ -58,7 +58,6 @@ public class CommentsPortletEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		jsonObject.put("showSource", Boolean.FALSE);
 		jsonObject.put("textMode", Boolean.FALSE);
 	}
 

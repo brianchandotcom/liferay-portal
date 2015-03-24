@@ -39,6 +39,10 @@ public class DDMFormFieldRenderingContext {
 		return _httpServletResponse;
 	}
 
+	public String getLabel() {
+		return _label;
+	}
+
 	public Locale getLocale() {
 		return _locale;
 	}
@@ -47,12 +51,24 @@ public class DDMFormFieldRenderingContext {
 		return _mode;
 	}
 
+	public String getName() {
+		return _name;
+	}
+
 	public String getNamespace() {
 		return _namespace;
 	}
 
 	public String getPortletNamespace() {
 		return _portletNamespace;
+	}
+
+	public String getRenderedChildElements() {
+		return _renderedChildElements;
+	}
+
+	public String getValue() {
+		return _value;
 	}
 
 	public boolean isReadOnly() {
@@ -85,12 +101,20 @@ public class DDMFormFieldRenderingContext {
 		_httpServletResponse = httpServletResponse;
 	}
 
+	public void setLabel(String label) {
+		_label = label;
+	}
+
 	public void setLocale(Locale locale) {
 		_locale = locale;
 	}
 
 	public void setMode(String mode) {
 		_mode = mode;
+	}
+
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public void setNamespace(String namespace) {
@@ -105,18 +129,30 @@ public class DDMFormFieldRenderingContext {
 		_readOnly = readOnly;
 	}
 
+	public void setRenderedChildElements(String renderedChildElements) {
+		_renderedChildElements = renderedChildElements;
+	}
+
 	public void setShowEmptyFieldLabel(boolean showEmptyFieldLabel) {
 		_showEmptyFieldLabel = showEmptyFieldLabel;
+	}
+
+	public void setValue(String value) {
+		_value = value;
 	}
 
 	private Fields _fields;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private String _label;
 	private Locale _locale;
 	private String _mode;
+	private String _name;
 	private String _namespace;
 	private String _portletNamespace;
 	private boolean _readOnly;
+	private String _renderedChildElements;
 	private boolean _showEmptyFieldLabel;
+	private String _value;
 
 }

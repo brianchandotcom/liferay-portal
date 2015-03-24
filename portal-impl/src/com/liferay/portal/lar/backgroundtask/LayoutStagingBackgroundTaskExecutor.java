@@ -206,6 +206,9 @@ public class LayoutStagingBackgroundTaskExecutor
 
 				markBackgroundTask(_backgroundTaskId, "exported");
 
+				LayoutLocalServiceUtil.importLayoutsDataDeletions(
+					_userId, _targetGroupId, privateLayout, parameterMap, file);
+
 				missingReferences =
 					LayoutLocalServiceUtil.validateImportLayoutsFile(
 						_userId, _targetGroupId, privateLayout, parameterMap,

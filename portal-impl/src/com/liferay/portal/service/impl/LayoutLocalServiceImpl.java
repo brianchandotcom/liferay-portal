@@ -1919,6 +1919,35 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void importLayoutsDataDeletions(
+			long userId, long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, File file)
+		throws PortalException {
+
+		try {
+			LayoutImporter layoutImporter = LayoutImporter.getInstance();
+
+			layoutImporter.importLayoutsDataDeletions(
+				userId, groupId, privateLayout, parameterMap, file);
+		}
+		catch (PortalException pe) {
+			Throwable cause = pe.getCause();
+
+			if (cause instanceof LocaleException) {
+				throw (PortalException)cause;
+			}
+
+			throw pe;
+		}
+		catch (SystemException se) {
+			throw se;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	@Override
 	public long importLayoutsInBackground(
 			long userId, ExportImportConfiguration exportImportConfiguration,
 			File file)
@@ -2004,6 +2033,35 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 		finally {
 			FileUtil.delete(file);
+		}
+	}
+
+	@Override
+	public void importPortletDataDeletions(
+			long userId, long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, File file)
+		throws PortalException {
+
+		try {
+			PortletImporter portletImporter = PortletImporter.getInstance();
+
+			portletImporter.importPortletDataDeletions(
+				userId, plid, groupId, portletId, parameterMap, file);
+		}
+		catch (PortalException pe) {
+			Throwable cause = pe.getCause();
+
+			if (cause instanceof LocaleException) {
+				throw (PortalException)cause;
+			}
+
+			throw pe;
+		}
+		catch (SystemException se) {
+			throw se;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
 		}
 	}
 

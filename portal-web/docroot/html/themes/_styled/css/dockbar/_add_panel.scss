@@ -1,0 +1,86 @@
+.lfr-admin-panel {
+	background-color: #FFF;
+	bottom: 0;
+	left: 0;
+	overflow: auto;
+	padding: 10px;
+	position: fixed;
+	top: 0;
+	z-index: 1100;
+
+	.add-content-menu .content-link {
+		border-color: #488F06;
+		color: #488F06;
+
+		&:active, &:hover {
+			background-color: #488F06;
+			color: #F1FBD1;
+			text-decoration: none;
+		}
+	}
+
+	@include respond-to(phone, tablet) {
+		position: static;
+		width: auto;
+
+		@include respond-to(tablet) {
+			margin: 0;
+		}
+
+		&.lfr-add-panel .add-content-menu .lfr-add-page-toolbar, &.lfr-edit-layout-panel .taglib-form-navigator .button-holder {
+			margin-top: 0;
+			position: static;
+			width: auto;
+		}
+
+		&.lfr-edit-layout-panel {
+			.taglib-form-navigator .panel-group {
+				margin-bottom: 20px;
+			}
+
+			.site-admin-link {
+				padding: 0;
+				position: static;
+			}
+		}
+	}
+
+	.lfr-page-layouts {
+		margin-left: 0;
+	}
+}
+
+.lfr-has-add-content {
+	padding-left: $addContentPanelWidth;
+}
+
+.lfr-has-device-preview {
+	padding-left: $devicePreviewPanelWidth;
+}
+
+.lfr-has-edit-layout {
+	padding-left: $editLayoutPanelWidth;
+}
+
+.lfr-has-add-content, .lfr-has-device-preview, .lfr-has-edit-layout {
+	height: 100%;
+	position: fixed;
+	width: 100%;
+
+	@include prefixer(overflow-scrolling, touch, 'webkit');
+
+	@include respond-to(phone, tablet) {
+		height: auto;
+		padding-left: 0;
+		position: static;
+		width: auto;
+	}
+
+	#wrapper {
+		height: 100%;
+		overflow: auto;
+		width: 100%;
+
+		@include prefixer(overflow-scrolling, touch, 'webkit');
+	}
+}

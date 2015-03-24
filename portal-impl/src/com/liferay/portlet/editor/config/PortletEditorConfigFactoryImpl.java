@@ -36,6 +36,7 @@ import java.util.Map;
 public class PortletEditorConfigFactoryImpl
 	implements PortletEditorConfigFactory {
 
+	@Override
 	public PortletEditorConfig getPortletEditorConfig(
 		String portletName, String editorConfigKey, String editorImpl,
 		Map<String, Object> inputEditorTaglibAttributes,

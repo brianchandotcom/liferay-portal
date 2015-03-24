@@ -162,7 +162,7 @@
 </tr>
 <tr>
 	<td>ARTICLE_NAVIGATION_GENERIC</td>
-	<td>//div[@class='kbarticle-navigation']/ul/li/a</td>
+	<td>//div[@class='kbarticle-navigation']/ul</td>
 	<td></td>
 </tr>
 <tr>
@@ -172,7 +172,7 @@
 </tr>
 <tr>
 	<td>ARTICLE_NAVIGATION_CHILD_GENERIC</td>
-	<td>//div[@class='kbarticle-navigation']/ul/li/ul/li/a</td>
+	<td>//div[@class='kbarticle-navigation']/ul/li/ul</td>
 	<td></td>
 </tr>
 <tr>

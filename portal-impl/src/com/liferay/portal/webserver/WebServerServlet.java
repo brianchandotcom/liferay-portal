@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
-import com.liferay.portal.kernel.servlet.Range;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -1048,7 +1047,7 @@ public class WebServerServlet extends HttpServlet {
 		// Send file
 
 		if (isSupportsRangeHeader(contentType)) {
-			sendFileWithRangeHeader(
+			ServletResponseUtil.sendFileWithRangeHeader(
 				request, response, fileName, inputStream, contentLength,
 				contentType);
 		}
@@ -1083,57 +1082,6 @@ public class WebServerServlet extends HttpServlet {
 		InputStream inputStream = fileEntry.getContentStream();
 
 		ServletResponseUtil.write(response, inputStream, fileEntry.getSize());
-	}
-
-	protected void sendFileWithRangeHeader(
-			HttpServletRequest request, HttpServletResponse response,
-			String fileName, InputStream inputStream, long contentLength,
-			String contentType)
-		throws IOException {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Accepting ranges for the file " + fileName);
-		}
-
-		response.setHeader(
-			HttpHeaders.ACCEPT_RANGES, HttpHeaders.ACCEPT_RANGES_BYTES_VALUE);
-
-		List<Range> ranges = null;
-
-		try {
-			ranges = ServletResponseUtil.getRanges(
-				request, response, contentLength);
-		}
-		catch (IOException ioe) {
-			if (_log.isErrorEnabled()) {
-				_log.error(ioe);
-			}
-
-			response.setHeader(
-				HttpHeaders.CONTENT_RANGE, "bytes */" + contentLength);
-
-			response.sendError(
-				HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE);
-
-			return;
-		}
-
-		if ((ranges == null) || ranges.isEmpty()) {
-			ServletResponseUtil.sendFile(
-				request, response, fileName, inputStream, contentLength,
-				contentType);
-		}
-		else {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Request has range header " +
-						request.getHeader(HttpHeaders.RANGE));
-			}
-
-			ServletResponseUtil.write(
-				request, response, fileName, ranges, inputStream, contentLength,
-				contentType);
-		}
 	}
 
 	protected void sendGroups(

@@ -17,8 +17,6 @@ package com.liferay.portal.webdav.methods;
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.servlet.Range;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.webdav.Resource;
@@ -27,10 +25,7 @@ import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.webdav.methods.Method;
 
-import java.io.IOException;
 import java.io.InputStream;
-
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -79,7 +74,7 @@ public class GetMethodImpl implements Method {
 				is = flashMagicBytesUtilResult.getInputStream();
 
 				try {
-					sendFileWithRangeHeader(
+					ServletResponseUtil.sendFileWithRangeHeader(
 						request, response, fileName, is, resource.getSize(),
 						resource.getContentType());
 				}
@@ -96,57 +91,6 @@ public class GetMethodImpl implements Method {
 		}
 		catch (Exception e) {
 			throw new WebDAVException(e);
-		}
-	}
-
-	protected void sendFileWithRangeHeader(
-			HttpServletRequest request, HttpServletResponse response,
-			String fileName, InputStream inputStream, long contentLength,
-			String contentType)
-		throws IOException {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Accepting ranges for the file " + fileName);
-		}
-
-		response.setHeader(
-			HttpHeaders.ACCEPT_RANGES, HttpHeaders.ACCEPT_RANGES_BYTES_VALUE);
-
-		List<Range> ranges = null;
-
-		try {
-			ranges = ServletResponseUtil.getRanges(
-				request, response, contentLength);
-		}
-		catch (IOException ioe) {
-			if (_log.isErrorEnabled()) {
-				_log.error(ioe);
-			}
-
-			response.setHeader(
-				HttpHeaders.CONTENT_RANGE, "bytes */" + contentLength);
-
-			response.sendError(
-				HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE);
-
-			return;
-		}
-
-		if ((ranges == null) || ranges.isEmpty()) {
-			ServletResponseUtil.sendFile(
-				request, response, fileName, inputStream, contentLength,
-				contentType);
-		}
-		else {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Request has range header " +
-						request.getHeader(HttpHeaders.RANGE));
-			}
-
-			ServletResponseUtil.write(
-				request, response, fileName, ranges, inputStream, contentLength,
-				contentType);
 		}
 	}
 

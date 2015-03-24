@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.comments.portlet.editor.conf;
+package com.liferay.mentions.portlet.editor.conf;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;

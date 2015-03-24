@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.comments.portlet.editor.conf;
+package com.liferay.comments.portlet.editor.config;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.editor.config.PortletEditorConfigContributor;
 
 import java.util.Map;
@@ -30,9 +31,14 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Ambrin Chaudhary
  */
-@Component(property = {"editor.config.key=commentsEditor"})
+@Component(
+	property = {
+		"editor.config.key=commentsEditor",
+		"service.ranking:Integer=0"
+	}
+)
 public class CommentsPortletEditorConfigContributor
 	implements PortletEditorConfigContributor {
 
@@ -41,60 +47,19 @@ public class CommentsPortletEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		JSONObject trigger = JSONFactoryUtil.createJSONObject();
-		trigger.put(
-			"resultFilters", "function(query, results) {return results;}");
-		trigger.put("resultTextLocator", "screenName");
-
-		LiferayPortletURL autoCompleteUserURL =
-			liferayPortletResponse.createResourceURL("1_WAR_mentionsportlet");
-
-		String source =
-			autoCompleteUserURL.toString() + "&" +
-				PortalUtil.getPortletNamespace("1_WAR_mentionsportlet");
-
-		trigger.put("source", source);
-		trigger.put("term", "@");
-		trigger.put("tplReplace", "{mention}");
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append("<div class=\"display-style-3 taglib-user-display\">");
-		sb.append("<span>");
-		sb.append("<span class=\"user-profile-image\" ");
-		sb.append("style=\"background-image: url('{portraitURL}');");
-		sb.append("background-size: 32px 32px; height: 32px; width: 32px;\"");
-		sb.append("</span><span class=\"user-name\">{fullName}</span>");
-		sb.append("<span class=\"user-details\">@{screenName}</span></span>");
-		sb.append("</div>");
-
-		trigger.put("tplResults", sb.toString());
-
-		JSONArray array = JSONFactoryUtil.createJSONArray();
-
-		array.put(trigger);
-
-		JSONObject autoCompleteConfig = JSONFactoryUtil.createJSONObject();
-
-		String extraPlugins = jsonObject.getString("extraPlugins");
-
-		if (Validator.isNotNull(extraPlugins)) {
-			extraPlugins += ",autocomple";
-		}
-		else {
-			extraPlugins = "autocomplete";
-		}
-
-		autoCompleteConfig.put("extraPlugins", extraPlugins);
-		autoCompleteConfig.put("trigger", array);
-
-		jsonObject.put("autocomplete", autoCompleteConfig);
+		jsonObject.put(
+			"allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
+		jsonObject.put(
+			"toolbars", JSONFactoryUtil.createJSONObject());
 	}
 
 	public void populateOptionsJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
+
+		jsonObject.put("showSource", Boolean.FALSE);
+		jsonObject.put("textMode", Boolean.FALSE);
 	}
 
 }

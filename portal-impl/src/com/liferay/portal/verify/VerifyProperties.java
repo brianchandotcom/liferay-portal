@@ -850,7 +850,7 @@ public class VerifyProperties extends VerifyProcess {
 
 		new String[] {
 			"sitemap.display.templates.config", "display.templates.config",
-			"com.liferay.site.map.web"
+			"com.liferay.site.navigation.site.map.web"
 		},
 
 		// Tags Compiler

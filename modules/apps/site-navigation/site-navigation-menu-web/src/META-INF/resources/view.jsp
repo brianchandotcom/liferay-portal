@@ -18,7 +18,7 @@
 
 <liferay-ui:navigation
 	bulletStyle="<%= bulletStyle %>"
-	displayStyleDefinition='<%= NavigationWebConfigurationUtil.getArray("display.style", new Filter(displayStyle)) %>'
+	displayStyleDefinition='<%= NavigationMenuWebConfigurationUtil.getArray("display.style", new Filter(displayStyle)) %>'
 	headerType="<%= headerType %>"
 	includedLayouts="<%= includedLayouts %>"
 	nestedChildren="<%= nestedChildren %>"

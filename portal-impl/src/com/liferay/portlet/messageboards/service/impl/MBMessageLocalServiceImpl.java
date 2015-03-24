@@ -1974,12 +1974,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				"message_boards/view_message/" + message.getMessageId();
 		}
 		else {
-			if (serviceContext.getThemeDisplay() == null) {
-				return PortalUtil.getControlPanelFullURL(
-					serviceContext.getScopeGroupId(),
-					PortletKeys.MESSAGE_BOARDS, null);
-			}
-
 			long controlPanelPlid = PortalUtil.getControlPanelPlid(
 				serviceContext.getCompanyId());
 

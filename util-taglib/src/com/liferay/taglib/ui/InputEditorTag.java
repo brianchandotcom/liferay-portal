@@ -171,6 +171,69 @@ public class InputEditorTag extends IncludeTag {
 		_width = null;
 	}
 
+	protected String getConfigKey() {
+		String configKey = _configKey;
+
+		if (Validator.isNull(configKey)) {
+			configKey = _name;
+		}
+
+		return configKey;
+	}
+
+	protected String getCssClasses(Portlet portlet) {
+		String cssClasses = "portlet ";
+
+		if (portlet != null) {
+			cssClasses += portlet.getCssClassWrapper();
+		}
+
+		return cssClasses;
+	}
+
+	protected Map<String, Object> getData(
+		Portlet portlet, ThemeDisplay themeDisplay,
+		HttpServletRequest request) {
+
+		if (portlet == null) {
+			return _data;
+		}
+
+		Map<String, Object> attributes = new HashMap<>();
+
+		Enumeration<String> enumeration = request.getAttributeNames();
+
+		while (enumeration.hasMoreElements()) {
+			String attributeName = enumeration.nextElement();
+
+			if (attributeName.startsWith("liferay-ui:input-editor")) {
+				attributes.put(
+					attributeName, request.getAttribute(attributeName));
+			}
+		}
+
+		LiferayPortletResponse portletResponse =
+			(LiferayPortletResponse)request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		PortletEditorConfig portletEditorConfig =
+			PortletEditorConfigFactoryUtil.getPortletEditorConfig(
+				portlet.getPortletId(), getConfigKey(), getEditorImpl(request),
+				attributes, themeDisplay, portletResponse);
+
+		Map<String, Object> data = portletEditorConfig.getData();
+
+		if (MapUtil.isNotEmpty(_data)) {
+			MapUtil.merge(_data, data);
+		}
+
+		return data;
+	}
+
+	protected String getEditorImpl(HttpServletRequest request) {
+		return EditorUtil.getEditorValue(request, _editorImpl);
+	}
+
 	@Override
 	protected String getPage() {
 		return _page;
@@ -185,15 +248,7 @@ public class InputEditorTag extends IncludeTag {
 			_contentsLanguageId = themeDisplay.getLanguageId();
 		}
 
-		String cssClasses = "portlet ";
-
-		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
-
-		if (portlet != null) {
-			cssClasses += portlet.getCssClassWrapper();
-		}
-
-		String editorImpl = EditorUtil.getEditorValue(request, _editorImpl);
+		String editorImpl = getEditorImpl(request);
 
 		_page = "/html/js/editor/" + editorImpl + ".jsp";
 
@@ -208,7 +263,11 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:input-editor:contentsLanguageId", _contentsLanguageId);
 		request.setAttribute("liferay-ui:input-editor:cssClass", _cssClass);
-		request.setAttribute("liferay-ui:input-editor:cssClasses", cssClasses);
+
+		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
+
+		request.setAttribute(
+			"liferay-ui:input-editor:cssClasses", getCssClasses(portlet));
 		request.setAttribute("liferay-ui:input-editor:editorImpl", editorImpl);
 		request.setAttribute(
 			"liferay-ui:input-editor:fileBrowserParams", _fileBrowserParams);
@@ -239,43 +298,12 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-editor:toolbarSet", _toolbarSet);
 		request.setAttribute("liferay-ui:input-editor:width", _width);
 
-		Map<String, Object> attributes = new HashMap<>();
+		// Order is important. Data attribute needs to be calculated when all
+		// the other attributes are set to the request.
 
-		Enumeration<String> enumeration = request.getAttributeNames();
-
-		while (enumeration.hasMoreElements()) {
-			String attributeName = enumeration.nextElement();
-
-			if (attributeName.startsWith("liferay-ui:input-editor")) {
-				attributes.put(
-					attributeName, request.getAttribute(attributeName));
-			}
-		}
-
-		if (portlet != null) {
-			if (Validator.isNull(_configKey)) {
-				_configKey = _name;
-			}
-
-			LiferayPortletResponse portletResponse =
-				(LiferayPortletResponse)request.getAttribute(
-					JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-			PortletEditorConfig portletEditorConfig =
-				PortletEditorConfigFactoryUtil.getPortletEditorConfig(
-					portlet.getPortletId(), _configKey, editorImpl, attributes,
-					themeDisplay, portletResponse);
-
-			Map<String, Object> data = portletEditorConfig.getData();
-
-			if (MapUtil.isNotEmpty(_data)) {
-				MapUtil.merge(_data, data);
-			}
-
-			_data = data;
-		}
-
-		request.setAttribute("liferay-ui:input-editor:data", _data);
+		request.setAttribute(
+			"liferay-ui:input-editor:data",
+			getData(portlet, themeDisplay, request));
 	}
 
 	private boolean _allowBrowseDocuments = true;

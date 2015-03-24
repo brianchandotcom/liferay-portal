@@ -961,11 +961,6 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil" class="com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil">
-		<property name="DDMFormXSDSerializer">
-			<bean class="com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil" class="com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil">
 		<property name="DDMFormFieldTypeRegistry">
 			<bean class="com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryImpl" />
@@ -1077,11 +1072,6 @@
 	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil">
 		<property name="DDMXML" ref="com.liferay.portlet.dynamicdatamapping.util.DDMXML" />
-	</bean>
-	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil">
-		<property name="DDMXSD">
-			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMXSDImpl" />
-		</property>
 	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil" class="com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil">
 		<property name="FieldsToDDMFormValuesConverter">

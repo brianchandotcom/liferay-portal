@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
@@ -27,6 +28,8 @@ import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.Serializable;
+
+import javax.portlet.ActionRequest;
 
 /**
  * @author Eduardo Lundgren
@@ -44,6 +47,24 @@ public class DDMUtil {
 		throws PortalException {
 
 		return getDDM().getDDMDisplay(classNameId);
+	}
+
+	public static DDMForm getDDMForm(ActionRequest actionRequest)
+		throws PortalException {
+
+		return getDDM().getDDMForm(actionRequest);
+	}
+
+	public static DDMForm getDDMForm(long classNameId, long classPK)
+		throws PortalException {
+
+		return getDDM().getDDMForm(classNameId, classPK);
+	}
+
+	public static JSONArray getDDMFormFieldsJSONArray(
+		DDMStructure ddmStructure, String script) {
+
+		return getDDM().getDDMFormFieldsJSONArray(ddmStructure, script);
 	}
 
 	public static DDMPermissionHandler getDDMPermissionHandler(

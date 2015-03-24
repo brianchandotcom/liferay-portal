@@ -16,8 +16,8 @@ package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -46,7 +46,7 @@ public class DDMFormTemplateSynchonizer {
 
 	public void synchronize() throws PortalException {
 		for (DDMTemplate ddmTemplate : getDDMFormTemplates()) {
-			DDMForm templateDDMForm = DDMFormXSDDeserializerUtil.deserialize(
+			DDMForm templateDDMForm = DDMFormJSONDeserializerUtil.deserialize(
 				ddmTemplate.getScript());
 
 			synchronizeDDMFormFields(
@@ -110,12 +110,6 @@ public class DDMFormTemplateSynchonizer {
 		return _ddmFormTemplates;
 	}
 
-	protected String serializeDDMForm(DDMForm templateDDMForm) {
-		String script = DDMFormXSDSerializerUtil.serialize(templateDDMForm);
-
-		return DDMXMLUtil.formatXML(script);
-	}
-
 	protected void synchronizeDDMFormFieldRequiredProperty(
 		DDMFormField structureDDMFormField, DDMFormField templateDDMFormField,
 		String templateMode) {
@@ -164,7 +158,7 @@ public class DDMFormTemplateSynchonizer {
 	protected void updateDDMTemplate(
 		DDMTemplate ddmTemplate, DDMForm templateDDMForm) {
 
-		String script = serializeDDMForm(templateDDMForm);
+		String script = DDMFormJSONSerializerUtil.serialize(templateDDMForm);
 
 		ddmTemplate.setScript(script);
 

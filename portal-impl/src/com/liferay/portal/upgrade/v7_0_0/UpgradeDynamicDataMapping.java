@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.upgrade.v7_0_0.util.DDMContentTable;
 import com.liferay.portal.upgrade.v7_0_0.util.DDMStructureTable;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormLayoutJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
@@ -173,52 +174,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected void addStructureVersionsAndLayouts() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select * from DDMStructure");
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long structureId = rs.getLong("structureId");
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-				String name = rs.getString("name");
-				String description = rs.getString("description");
-				String definition = rs.getString("definition");
-				String storageType = rs.getString("storageType");
-				int type = rs.getInt("type_");
-
-				long structureVersionId = increment();
-
-				addStructureVersion(
-					structureVersionId, groupId, companyId, userId, userName,
-					modifiedDate, structureId, name, description, definition,
-					storageType, type);
-
-				String ddmFormLayoutDefinition =
-					getDefaultDDMFormLayoutDefinition(structureId);
-
-				addStructureLayout(
-					PortalUUIDUtil.generate(), increment(), groupId, companyId,
-					userId, userName, modifiedDate, modifiedDate,
-					structureVersionId, ddmFormLayoutDefinition);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
 	protected void addTemplateVersion(
 			long templateVersionId, long groupId, long companyId, long userId,
 			String userName, Timestamp createDate, long templateId, String name,
@@ -269,41 +224,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected void addTemplateVersions() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select * from DDMTemplate");
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long templateId = rs.getLong("templateId");
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-				String name = rs.getString("name");
-				String description = rs.getString("description");
-				String language = rs.getString("language");
-				String script = rs.getString("script");
-
-				addTemplateVersion(
-					increment(), groupId, companyId, userId, userName,
-					modifiedDate, templateId, name, description, language,
-					script);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		try {
@@ -326,13 +246,19 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				DDMStructureTable.TABLE_SQL_ADD_INDEXES);
 		}
 
-		addStructureVersionsAndLayouts();
-		addTemplateVersions();
+		upgradeStructuresAndAddStructureVersionsAndLayouts();
+		upgradeTemplatesAndAddTemplateVersions();
 
 		upgradeXMLStorageAdapter();
 	}
 
 	protected DDMForm getDDMForm(long structureId) throws Exception {
+		DDMForm ddmForm = _ddmFormMap.get(structureId);
+
+		if (ddmForm != null) {
+			return ddmForm;
+		}
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -352,8 +278,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				long parentStructureId = rs.getLong("parentStructureId");
 				String definition = rs.getString("definition");
 
-				DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
-					definition);
+				ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
 
 				if (parentStructureId > 0) {
 					DDMForm parentDDMForm = getDDMForm(parentStructureId);
@@ -363,6 +288,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 					ddmFormFields.addAll(parentDDMForm.getDDMFormFields());
 				}
+
+				_ddmFormMap.put(structureId, ddmForm);
 
 				return ddmForm;
 			}
@@ -382,15 +309,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		return DDMFormLayoutJSONSerializerUtil.serialize(ddmFormLayout);
 	}
 
-	protected String getDefaultDDMFormLayoutDefinition(long structureId)
-		throws Exception {
-
-		DDMForm ddmForm = getDDMForm(structureId);
-
-		return getDefaultDDMFormLayoutDefinition(ddmForm);
-	}
-
-	protected String toJSON(DDMForm ddmForm, String xml)
+	protected String toJSONContent(DDMForm ddmForm, String xml)
 		throws PortalException {
 
 		DDMFormValuesXSDDeserializer ddmFormValuesXSDDeserializer =
@@ -400,6 +319,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			ddmForm, xml);
 
 		return DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
+	}
+
+	protected String toJSONDefinition(DDMForm ddmForm) throws Exception {
+		return DDMFormJSONSerializerUtil.serialize(ddmForm);
 	}
 
 	protected void updateContent(DDMForm ddmForm, long contentId)
@@ -422,7 +345,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			if (rs.next()) {
 				String xml = rs.getString("data_");
 
-				updateContent(contentId, toJSON(ddmForm, xml));
+				updateContent(contentId, toJSONContent(ddmForm, xml));
 			}
 		}
 		finally {
@@ -465,6 +388,164 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				"storageType = 'xml'");
 	}
 
+	protected void upgradeStructureDefinition(
+			long structureId, String definition)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update DDMStructure set definition = ? where structureId = ?");
+
+			ps.setString(1, definition);
+			ps.setLong(2, structureId);
+
+			ps.executeUpdate();
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to upgrade dynamic data mapping structure with " +
+					"structure ID " + structureId);
+
+			throw e;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void upgradeStructuresAndAddStructureVersionsAndLayouts()
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement("select * from DDMStructure");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long structureId = rs.getLong("structureId");
+				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				long userId = rs.getLong("userId");
+				String userName = rs.getString("userName");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+				String name = rs.getString("name");
+				String description = rs.getString("description");
+				String storageType = rs.getString("storageType");
+				int type = rs.getInt("type_");
+
+				DDMForm ddmForm = getDDMForm(structureId);
+
+				String definition = toJSONDefinition(ddmForm);
+
+				upgradeStructureDefinition(structureId, definition);
+
+				long structureVersionId = increment();
+
+				addStructureVersion(
+					structureVersionId, groupId, companyId, userId, userName,
+					modifiedDate, structureId, name, description, definition,
+					storageType, type);
+
+				String ddmFormLayoutDefinition =
+					getDefaultDDMFormLayoutDefinition(ddmForm);
+
+				addStructureLayout(
+					PortalUUIDUtil.generate(), increment(), groupId, companyId,
+					userId, userName, modifiedDate, modifiedDate,
+					structureVersionId, ddmFormLayoutDefinition);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void upgradeTemplatesAndAddTemplateVersions() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement("select * from DDMTemplate");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long templateId = rs.getLong("templateId");
+				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				long userId = rs.getLong("userId");
+				String userName = rs.getString("userName");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+				String name = rs.getString("name");
+				String description = rs.getString("description");
+				String language = rs.getString("language");
+				String script = rs.getString("script");
+
+				if (language.equals("xsd")) {
+					DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
+						script);
+
+					script = toJSONDefinition(ddmForm);
+
+					upgradeTemplateScript(templateId, script);
+				}
+
+				addTemplateVersion(
+					increment(), groupId, companyId, userId, userName,
+					modifiedDate, templateId, name, description, language,
+					script);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void upgradeTemplateScript(long templateId, String script)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update DDMTemplate set language = ?, script = ? where " +
+					"templateId = ?");
+
+			ps.setString(1, "json");
+			ps.setString(2, script);
+			ps.setLong(3, templateId);
+
+			ps.executeUpdate();
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to upgrade dynamic data mapping template with " +
+					"template ID " + templateId);
+
+			throw e;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
 	protected void upgradeXMLStorageAdapter() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -488,19 +569,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			Map<Long, DDMForm> ddmFormMap = new HashMap<>();
-
 			while (rs.next()) {
 				long structureId = rs.getLong("structureId");
 				long classPK = rs.getLong("classPK");
 
-				DDMForm ddmForm = ddmFormMap.get(structureId);
-
-				if (ddmForm == null) {
-					ddmForm = getDDMForm(structureId);
-
-					ddmFormMap.put(structureId, ddmForm);
-				}
+				DDMForm ddmForm = getDDMForm(structureId);
 
 				updateContent(ddmForm, classPK);
 			}
@@ -515,6 +588,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeDynamicDataMapping.class);
+
+	private final Map<Long, DDMForm> _ddmFormMap = new HashMap<>();
 
 	private class DDMFormValuesXSDDeserializer {
 

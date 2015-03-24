@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -52,10 +52,11 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormXSDSerializerUtil();
-		setUpDDMFormXSDDeserializerUtil();
+		setUpDDMFormJSONSerializerUtil();
+		setUpDDMFormJSONDeserializerUtil();
 		setUpDDMStructureLocalServiceUtil();
 		setUpDDMTemplateLocalServiceUtil();
+		setUpJSONFactoryUtil();
 		setUpLocaleUtil();
 		setUpHtmlUtil();
 		setUpPropsUtil();
@@ -150,12 +151,12 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		_createDDMTemplate = createTemplate(
 			RandomTestUtil.randomLong(), "Test Create Mode Form Template",
 			DDMTemplateConstants.TEMPLATE_MODE_CREATE,
-			DDMFormXSDSerializerUtil.serialize(ddmForm));
+			DDMFormJSONSerializerUtil.serialize(ddmForm));
 
 		_editDDMTemplate = createTemplate(
 			RandomTestUtil.randomLong(), "Test Edit Mode Form Template",
 			DDMTemplateConstants.TEMPLATE_MODE_EDIT,
-			DDMFormXSDSerializerUtil.serialize(ddmForm));
+			DDMFormJSONSerializerUtil.serialize(ddmForm));
 	}
 
 	protected DDMFormField createTextDDMFormField(
@@ -177,7 +178,7 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 			DDMTemplate ddmTemplate)
 		throws Exception {
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
+		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(
 			ddmTemplate.getScript());
 
 		return ddmForm.getDDMFormFieldsMap(true);
@@ -299,7 +300,8 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		protected void updateDDMTemplate(
 			DDMTemplate ddmTemplate, DDMForm templateDDMForm) {
 
-			String script = DDMFormXSDSerializerUtil.serialize(templateDDMForm);
+			String script = DDMFormJSONSerializerUtil.serialize(
+				templateDDMForm);
 
 			ddmTemplate.setScript(script);
 

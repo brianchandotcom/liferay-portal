@@ -53,7 +53,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 <%@ include file="/html/portlet/dynamic_data_lists/custom_spreadsheet_editors.jspf" %>
 
 <aui:script use="liferay-portlet-dynamic-data-lists">
-	var structure = <%= DDMXSDUtil.getJSONArray(ddmStructure.getDefinition()) %>;
+	var structure = <%= DDMUtil.getDDMFormFieldsJSONArray(ddmStructure, ddmStructure.getDefinition()) %>;
 	var columns = Liferay.SpreadSheet.buildDataTableColumns(<%= DDLUtil.getRecordSetJSONArray(recordSet) %>, structure, <%= editable %>);
 
 	var ignoreEmptyRecordsNumericSort = function(recA, recB, desc, field) {

@@ -603,6 +603,11 @@ public class PoshiRunnerExecutor {
 					PoshiRunnerVariablesUtil.replaceCommandVars(
 						element.attributeValue("method"));
 
+				if (classCommandName.startsWith("TestPropsUtil")) {
+					classCommandName = classCommandName.replace(
+						"TestPropsUtil", "PropsUtil");
+				}
+
 				varValue = PoshiRunnerGetterUtil.getVarMethodValue(
 					classCommandName);
 			}

@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REQUIRED_CHECKBOX</td>
+	<td>//input[contains(@id,'required')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

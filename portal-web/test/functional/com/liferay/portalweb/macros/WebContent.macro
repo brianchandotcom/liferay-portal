@@ -232,6 +232,21 @@
 		<execute function="AssertTextEquals" locator1="CPWebcontent#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="addFailWithoutRequiredCategoryAssetTypeCP">
+		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
+		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+
+		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="Web Content Title" />
+		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="Web Content Content" />
+
+		<execute function="AssertTextEquals" locator1="CPWebcontentCategorization#VOCABULARY" value1="${vocabularyName} (Required)" />
+
+		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#PUBLISH_BUTTON" value1="Publish" />
+
+		<execute function="AssertTextEquals" locator1="CPWebcontent#ALERT_MESSAGE" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals" locator1="CPWebcontent#CATEGORY_ALERT_MESSAGE" value1="Please select at least one category for ${vocabularyName}." />
+	</command>
+
 	<command name="addNullCP">
 		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
 		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
@@ -559,7 +574,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertClick" locator1="CPWebcontentCategorization#CATEGORY_SELECT" value1="Select" />
-		<execute function="Click" locator1="CPWebcontentCategorization#CATEGORIES_WINDOW_CATEGORY_CHECKBOX" />
+		<execute function="Click" locator1="CPWebcontentCategorization#CATEGORIES_WINDOW_CATEGORY_CHECK_ICON" />
 		<execute function="Click" locator1="CPWebcontentCategorization#CATEGORIES_WINDOW_CLOSE_BUTTON" />
 		<execute function="AssertTextEquals" locator1="CPWebcontentCategorization#CATEGORY" value1="${categoryName}" />
 
@@ -615,6 +630,30 @@
 				<execute function="AssertTextEquals" locator1="PGWebcontentdisplay#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 			</else>
 		</if>
+	</command>
+
+	<command name="addWithMultipleCategories">
+		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
+		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+
+		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
+		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
+		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#MENU_CATEGORIZATION" value1="Categorization" />
+
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute function="AssertClick" locator1="CPWebcontentCategorization#CATEGORY_SELECT" value1="Select" />
+
+		<for list="${categoryNameList}" param="categoryName">
+			<var name="key_categoryName" value="${categoryName}" />
+
+			<execute function="Click" locator1="CPWebcontentCategorization#CATEGORIES_WINDOW_CATEGORY_CHECK_ICON" />
+		</for>
+
+		<execute function="Click" locator1="CPWebcontentCategorization#CATEGORIES_WINDOW_CLOSE_BUTTON" />
+		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#PUBLISH_BUTTON" value1="Publish" />
+
+		<execute function="AssertTextEquals" locator1="CPWebcontent#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addWithStructureAndWorkflowCP">
@@ -1263,6 +1302,22 @@
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute function="AssertTextEquals" locator1="CPWebcontentCategorization#CATEGORY" value1="${categoryName}" />
+	</command>
+
+	<command name="viewCategorizationCategoryNotVisibleCP">
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute function="Click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute function="AssertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute function="Click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
+		<execute function="AssertClick" locator1="CPWebcontent#ENTRY_MENULIST_EDIT" value1="Edit" />
+
+		<execute function="Click" locator1="CPWebcontentEditwebcontent#MENU_CATEGORIZATION" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute function="AssertElementNotPresent" locator1="CPWebcontentCategorization#CATEGORY" value1="${categoryName}" />
 	</command>
 
 	<command name="viewCategorizationSelectionCP">

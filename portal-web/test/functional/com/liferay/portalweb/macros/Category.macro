@@ -119,9 +119,6 @@
 		<execute function="AssertClick" locator1="CPCategoriesAdd#SAVE_BUTTON" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="Click" locator1="CPCategories#BACK_BUTTON" />
-		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_CATEGORY" value1="${categoryName}" />
 	</command>
 
 	<command name="addWithNullTitleCP">
@@ -253,10 +250,19 @@
 		<execute function="Click" locator1="CPCategories#CATEGORY_ENTRY_MENULIST_ARROW" />
 		<execute function="AssertClick" locator1="CPCategories#CATEGORY_ENTRY_MENULIST_MOVE" value1="Move" />
 
-		<execute function="Select" locator1="CPCategoriesEdit#TO_VOCABULARY_SELECT" value1="${vocabularyName2}" />
+		<execute function="Select" locator1="CPCategoriesEdit#VOCABULARY_SELECT" value1="${vocabularyName2}" />
 		<execute function="AssertClick" locator1="CPCategoriesEdit#MOVE_BUTTON" value1="Move" />
 
 		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="searchCP">
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+
+		<execute function="Type" locator1="CPCategories#SEARCH_FIELD" value1="${categorySearchEntry}" />
+		<execute function="Click" locator1="CPCategories#SEARCH_BUTTON" />
 	</command>
 
 	<command name="viewCategoryPropertyCP">
@@ -360,6 +366,22 @@
 		<execute function="AssertTextEquals" locator1="PGAssetpublisher#CATEGORIES_FILTER_CATEGORY" value1="${categoryName}" />
 	</command>
 
+	<command name="viewNavigationCP">
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute function="Click" locator1="CPCategories#CATEGORY_ENTRY_LINK" />
+
+		<execute function="AssertTextEquals" locator1="CPCategories#ENTRY_HEADER" value1="${categoryName}" />
+
+		<execute function="Click" locator1="CPCategories#BACK_BUTTON" />
+
+		<execute function="AssertTextEquals" locator1="CPCategories#ENTRY_HEADER" value1="${vocabularyName}" />
+	</command>
+
 	<command name="viewRemoveFilterViaCategoriesNavigationPG">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
@@ -368,5 +390,36 @@
 		<execute function="AssertClick" locator1="PGCategoriesnavigation#CATEGORY_NAME" value1="${categoryName}" />
 
 		<execute function="AssertElementNotPresent" locator1="PGAssetpublisher#CATEGORIES_FILTER_CATEGORY" value1="${categoryName}" />
+	</command>
+
+	<command name="viewSearchResultsCP">
+		<if>
+			<isset var="categoryNameList" />
+			<then>
+				<for list="${categoryNameList}" param="categoryName">
+					<var name="key_categoryName" value="${categoryName}" />
+
+					<execute function="AssertTextEquals" locator1="CPCategories#CATEGORY_ENTRY" value1="${categoryName}" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="categoryDescriptionList" />
+			<then>
+				<for list="${categoryDescriptionList}" param="categoryDescription">
+					<var name="key_categoryDescription" value="${categoryDescription}" />
+
+					<execute function="AssertTextEquals" locator1="CPCategories#CATEGORY_ENTRY_DESCRIPTION" value1="${categoryDescription}" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${nullResult}" arg2="true" />
+			<then>
+				<execute function="AssertTextEquals" locator1="CPCategories#SEARCH_NO_RESULTS_MESSAGE" value1="There are no categories." />
+			</then>
+		</if>
 	</command>
 </definition>

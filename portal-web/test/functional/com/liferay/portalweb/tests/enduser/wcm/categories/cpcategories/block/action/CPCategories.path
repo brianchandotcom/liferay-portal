@@ -74,6 +74,37 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_HEADER</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK_BUTTON</td>
+	<td>//span[@class='header-back-to']/a[@title='Back']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SEARCH-->
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@title='Search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_NO_RESULTS_MESSAGE</td>
+	<td>//div[contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -96,13 +127,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_ENTRY_LINK</td>
-	<td>//tr[contains(.,'${key_categoryName}')]/td[2]/a</td>
+	<td>CATEGORY_ENTRY_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_categoryDescription}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_ENTRY_MENULIST_ARROW</td>
-	<td>//tr[contains(.,'${key_categoryName}')]//a[contains(@id,'assetCategories')]</td>
+	<td>CATEGORY_ENTRY_LINK</td>
+	<td>//tr[contains(.,'${key_categoryName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -134,6 +165,11 @@
 <tr>
 	<td>CATEGORY_ENTRY_MENULIST_DELETE</td>
 	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_ENTRY_MENULIST_ARROW</td>
+	<td>//tr[contains(.,'${key_categoryName}')]//a[contains(@id,'assetCategories')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -204,18 +240,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBCATEGORY_ENTRY_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_subcategoryDescription}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBCATEGORY_ENTRY_LINK</td>
 	<td>//tr[contains(.,'${key_subcategoryName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SUBCATEGORY_ENTRY_MENULIST_ARROW</td>
-	<td>//tr[contains(.,'${key_subcategoryName}')]//a[contains(@id,'assetCategories')]</td>
+	<td>SUBCATEGORY_ENTRY_HEADER</td>
+	<td>//h3[@class='header-title']/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SUBCATEGORY_ENTRY_HEADER</td>
-	<td>//h3[@class='header-title']/span</td>
+	<td>SUBCATEGORY_ENTRY_ARROW</td>
+	<td>//tr[contains(.,'${key_subcategoryName}')]//a[contains(@id,'assetCategories')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -240,6 +281,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBCATEGORY_ENTRY_MENULIST_MOVE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -253,6 +299,11 @@
 <tr>
 	<td>VOCABULARY_ENTRY</td>
 	<td>//tr[contains(.,'${key_vocabularyName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOCABULARY_ENTRY_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_vocabularyDescription}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -310,6 +361,11 @@
 <tr>
 	<td>VOCABULARY_CATEGORY_LABEL</td>
 	<td>//div[@id='categoriesTreeContainer']/ul/li[contains(.,'${key_categoryName}')]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCATEGORY_ENTRY_MENULIST_ARROW</td>
+	<td>//tr[contains(.,'${key_subcategoryName}')]//a[contains(@id,'assetCategories')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -32,7 +32,7 @@
 		</if>
 
 		<if>
-			<equals arg1="${allowMultipleCategories}" arg2="False" />
+			<equals arg1="${allowMultipleCategories}" arg2="false" />
 			<then>
 				<execute function="Uncheck" locator1="CPVocabulariesAdd#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
 			</then>
@@ -103,9 +103,9 @@
 		<execute function="Select" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_SELECT" value1="${vocabularyAssociatedAssetType}" />
 
 		<if>
-			<equals arg1="${requiredCheckbox}" arg2="true" />
+			<equals arg1="${required}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="CPVocabulariesAdd#ASSOCIATED_ASSET_TYPES_REQUIRED_CHECKBOX" />
+				<execute function="Check" locator1="CPVocabulariesAdd#REQUIRED_CHECKBOX" />
 			</then>
 		</if>
 
@@ -170,13 +170,42 @@
 		<execute function="Click" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="CPVocabulariesEdit#NAME_FIELD" value1="${vocabularyNameEdit}" />
+		<if>
+			<isset var="vocabularyNameEdit" />
+			<then>
+				<execute function="Type" locator1="CPVocabulariesEdit#NAME_FIELD" value1="${vocabularyNameEdit}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${allowMultipleCategories}" arg2="false" />
+			<then>
+				<execute function="Uncheck" locator1="CPVocabulariesAdd#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
+			</then>
+			<elseif>
+				<equals arg1="${allowMultipleCategories}" arg2="true" />
+				<then>
+					<execute function="Check" locator1="CPVocabulariesAdd#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
+				</then>
+			</elseif>
+		</if>
+
 		<execute function="AssertClick" locator1="CPVocabulariesEdit#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<var name="key_vocabularyName" value="${vocabularyNameEdit}" />
+		<if>
+			<isset var="vocabularyNameEdit" />
+			<then>
+				<var name="key_vocabularyName" value="${vocabularyNameEdit}" />
 
-		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyNameEdit}" />
+				<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyNameEdit}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="searchCP">
+		<execute function="Type" locator1="CPCategories#SEARCH_FIELD" value1="${vocabularySearchEntry}" />
+		<execute function="Click" locator1="CPCategories#SEARCH_BUTTON" />
 	</command>
 
 	<command name="tearDownCP">
@@ -201,11 +230,42 @@
 		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 
 		<if>
-			<equals arg1="${allowMultipleCategories}" arg2="False" />
+			<equals arg1="${allowMultipleCategories}" arg2="false" />
 			<then>
 				<execute function="Click" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
 				<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 				<execute function="AssertNotChecked" locator1="CPVocabulariesEdit#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewSearchResultsCP">
+		<if>
+			<isset var="vocabularyNameList" />
+			<then>
+				<for list="${vocabularyNameList}" param="vocabularyName">
+					<var name="key_vocabularyName" value="${vocabularyName}" />
+
+					<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="vocabularyDescriptionList" />
+			<then>
+				<for list="${vocabularyDescriptionList}" param="vocabularyDescription">
+					<var name="key_vocabularyDescription" value="${vocabularyDescription}" />
+
+					<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY_DESCRIPTION" value1="${vocabularyDescription}" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${nullResult}" arg2="true" />
+			<then>
+				<execute function="AssertTextEquals" locator1="CPCategories#SEARCH_NO_RESULTS_MESSAGE" value1="There are no vocabularies." />
 			</then>
 		</if>
 	</command>

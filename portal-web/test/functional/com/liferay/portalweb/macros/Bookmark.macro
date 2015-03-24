@@ -442,6 +442,21 @@
 		<execute function="AssertTextEquals" locator1="CPBookmarks#BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
 	</command>
 
+	<command name="viewNoCategoryCP">
+		<execute function="AssertClick" locator1="CPBookmarks#FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
+
+		<if>
+			<condition function="IsNotVisible" locator1="CPBookmarksAddbookmark#CATEGORIZATION_TAGS" />
+			<then>
+				<execute function="Click#clickAt" locator1="CPBookmarksAddbookmark#CATEGORIZATION_DROPDOWN" />
+			</then>
+		</if>
+
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute function="AssertElementNotPresent" locator1="CPBookmarksAddbookmark#CATEGORIZATION_SELECT" />
+	</command>
+
 	<command name="viewNoPG">
 		<execute function="AssertTextNotPresent" value1="${bookmarkName}" />
 		<execute function="AssertTextNotPresent" value1="${bookmarkURL}" />

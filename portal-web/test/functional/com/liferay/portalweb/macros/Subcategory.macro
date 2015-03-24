@@ -7,7 +7,17 @@
 		<execute function="Click" locator1="CPCategories#CATEGORY_ENTRY_MENULIST_ARROW" />
 		<execute function="AssertClick" locator1="CPCategories#CATEGORY_ENTRY_MENULIST_ADD_SUBCATEGORY" value1="Add Subcategory" />
 
+		<var name="key_subcategoryName" value="${subCategoryName}" />
+
 		<execute function="Type" locator1="CPCategoriesAddSubcategory#NAME_FIELD" value1="${subcategoryName}" />
+
+		<if>
+			<isset var="subcategoryDescription" />
+			<then>
+				<execute function="Type" locator1="CPCategoriesAddSubcategory#DESCRIPTION_FIELD" value1="${subcategoryDescription}" />
+			</then>
+		</if>
+
 		<execute function="AssertClick" locator1="CPCategoriesAddSubcategory#SAVE_BUTTON" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -27,6 +37,35 @@
 		<execute function="AssertClick" locator1="CPCategoriesAddSubcategory#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="CPCategoriesAddSubcategory#ERROR_MESSAGE" value1="Your request failed to complete." />
 		<execute function="AssertTextEquals" locator1="CPCategoriesAddSubcategory#ERROR_MESSAGE_2" value1="Please enter a unique name." />
+	</command>
+
+	<command name="addWithPropertyCP">
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute function="Click" locator1="CPCategories#CATEGORY_ENTRY_MENULIST_ARROW" />
+		<execute function="AssertClick" locator1="CPCategories#CATEGORY_ENTRY_MENULIST_ADD_SUBCATEGORY" value1="Add Subcategory" />
+
+		<var name="key_subcategoryName" value="${subCategoryName}" />
+
+		<execute function="Type" locator1="CPCategoriesAddSubcategory#NAME_FIELD" value1="${subcategoryName}" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="CPCategoriesAddSubcategory#PROPERTIES_BAR_COLLAPSED" />
+			<then>
+				<execute function="Click" locator1="CPCategoriesAddSubcategory#PROPERTIES_BAR" />
+			</then>
+		</if>
+
+		<execute function="Type" locator1="CPCategoriesAddSubcategory#PROPERTIES_KEY_FIELD_DEFAULT" value1="${propertiesKeyField}" />
+		<execute function="Type" locator1="CPCategoriesAddSubcategory#PROPERTIES_VALUE_FIELD_DEFAULT" value1="${propertiesValueField}" />
+
+		<execute function="AssertClick" locator1="CPCategoriesAddSubcategory#SAVE_BUTTON" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deleteViaActionsCP">
@@ -59,7 +98,7 @@
 
 		<var name="key_subcategoryName" value="${subcategoryName}" />
 
-		<execute function="Click" locator1="CPCategories#SUBCATEGORY_ENTRY_MENULIST_ARROW" />
+		<execute function="Click" locator1="CPCategories#SUBCATEGORY_ENTRY_ARROW" />
 		<execute function="AssertClickNoError" locator1="CPCategories#SUBCATEGORY_ENTRY_MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" locator1="CPCategories#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -77,7 +116,7 @@
 
 		<var name="key_subcategoryName" value="${subcategoryName}" />
 
-		<execute function="Click" locator1="CPCategories#SUBCATEGORY_ENTRY_MENULIST_ARROW" />
+		<execute function="Click" locator1="CPCategories#SUBCATEGORY_ENTRY_ARROW" />
 		<execute function="AssertClick" locator1="CPCategories#SUBCATEGORY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="CPCategoriesEditSubcategory#NAME_FIELD" value1="${subcategoryNameEdit}" />
@@ -89,6 +128,67 @@
 		<execute function="AssertTextEquals" locator1="CPCategories#SUBCATEGORY_ENTRY" value1="${subcategoryNameEdit}" />
 	</command>
 
+	<command name="moveCP">
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute function="AssertClick" locator1="CPCategories#CATEGORY_ENTRY_LINK" value1="${categoryName}" />
+
+		<var name="key_subcategoryName" value="${subcategoryName}" />
+
+		<execute function="Click" locator1="CPCategories#SUBCATEGORY_ENTRY_ARROW" />
+
+		<execute function="AssertClick" locator1="CPCategories#SUBCATEGORY_ENTRY_MENULIST_MOVE" value1="Move" />
+
+		<execute function="Click" locator1="CPCategoriesEditSubcategory#CATEGORY_SELECT_BUTTON" />
+
+		<var name="key_categoryName" value="${categoryNameMove}" />
+
+		<execute function="Click" locator1="CPCategoriesEditSubcategory#MOVE_CATEGORIES_CATEGORY_CHECK_ICON" />
+
+		<execute function="MouseOver" locator1="CPCategoriesEditSubcategory#MOVE_CATEGORIES_CATEGORY_CLOSE_BUTTON" />
+
+		<execute function="Click#clickAt" locator1="CPCategoriesEditSubcategory#MOVE_CATEGORIES_CATEGORY_CLOSE_BUTTON" />
+
+		<execute function="AssertClick" locator1="CPCategoriesEditSubcategory#MOVE_BUTTON" value1="Move" />
+
+		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="searchCP">
+		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+		<execute function="Click" locator1="CPCategories#CATEGORY_ENTRY_LINK" />
+
+		<var name="key_subcategoryName" value="${subcategoryName}" />
+
+		<execute function="Type" locator1="CPCategories#SEARCH_FIELD" value1="${subcategorySearchEntry}" />
+		<execute function="Click" locator1="CPCategories#SEARCH_BUTTON" />
+	</command>
+
+	<command name="viewCategoryPropertyCP">
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute function="Click" locator1="CPCategories#CATEGORY_ENTRY_LINK" />
+
+		<var name="key_subcategoryName" value="${subcategoryName}" />
+
+		<execute function="Click" locator1="CPCategories#SUBCATEGORY_ENTRY_ARROW" />
+		<execute function="AssertClick" locator1="CPCategories#SUBCATEGORY_ENTRY_MENULIST_EDIT" value1="Edit" />
+
+		<execute function="AssertTextEquals" locator1="CPCategoriesEditSubcategory#PROPERTIES_KEY_FIELD_DEFAULT" value1="${propertiesKeyField}" />
+		<execute function="AssertTextEquals" locator1="CPCategoriesEditSubcategory#PROPERTIES_VALUE_FIELD_DEFAULT" value1="${propertiesValueField}" />
+	</command>
+
 	<command name="viewCP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
@@ -98,9 +198,37 @@
 
 		<var name="key_subcategoryName" value="${subcategoryName}" />
 
-		<execute function="Click" locator1="CPCategories#SUBCATEGORY_ENTRY_MENULIST_ARROW" />
-		<execute function="AssertClick" locator1="CPCategories#SUBCATEGORY_ENTRY_MENULIST_EDIT" value1="Edit" />
-		<execute function="AssertTextEquals" locator1="CPCategories#SUBCATEGORY_ENTRY_HEADER" value1="${subcategoryName}" />
-		<execute function="Type" locator1="CPCategoriesEditSubcategory#NAME_FIELD" value1="${subcategoryName}" />
+		<execute function="AssertTextEquals" locator1="CPCategories#SUBCATEGORY_ENTRY" value1="${subcategoryName}" />
+	</command>
+
+	<command name="viewSearchResultsCP">
+		<if>
+			<isset var="subCategoryNameList" />
+			<then>
+				<for list="${subCategoryNameList}" param="subCategoryName">
+					<var name="key_subCategoryName" value="${subCategoryName}" />
+
+					<execute function="AssertTextEquals" locator1="CPCategories#SUBCATEGORY_ENTRY" value1="${subcategoryName}" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="subcategoryDescriptionList" />
+			<then>
+				<for list="${subcategoryDescriptionList}" param="categoryDescription">
+					<var name="key_subcategoryDescription" value="${subcategoryDescription}" />
+
+					<execute function="AssertTextEquals" locator1="CPCategories#SUBCATEGORY_ENTRY_DESCRIPTION" value1="${subcategoryDescription}" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${nullResult}" arg2="true" />
+			<then>
+				<execute function="AssertTextEquals" locator1="CPCategories#SEARCH_NO_RESULTS_MESSAGE" value1="There are no categories." />
+			</then>
+		</if>
 	</command>
 </definition>

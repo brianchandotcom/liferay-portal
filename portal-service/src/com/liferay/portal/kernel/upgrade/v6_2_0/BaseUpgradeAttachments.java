@@ -551,7 +551,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				int folderId = rs.getInt(1);
+				long folderId = rs.getLong(1);
 
 				return folderId;
 			}
@@ -590,7 +590,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				int repositoryId = rs.getInt(1);
+				long repositoryId = rs.getLong(1);
 
 				return repositoryId;
 			}

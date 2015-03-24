@@ -1,0 +1,129 @@
+@import "mixins";
+
+.modify-pages {
+	li {
+		position: relative;
+
+		&.lfr-nav-hover {
+			.delete-tab {
+				opacity: 1;
+			}
+		}
+	}
+
+	.delete-tab {
+		color: #444;
+		cursor: pointer;
+		display: block;
+		font-size: 20px;
+		font-weight: bold;
+		height: 10px;
+		line-height: 6px;
+		margin-top: -8px;
+		overflow: hidden;
+
+		opacity: 0;
+
+		padding: 3px 0;
+		position: absolute;
+		right: 1px;
+		text-shadow: 0 1px #FFF;
+		top: 50%;
+
+		&:hover {
+			color: #B50303;
+		}
+	}
+
+	.drag-handle {
+		background-color: #555;
+
+		border-radius: 50%;
+
+		color: #FFF;
+		cursor: pointer;
+		font-size: 16px;
+		left: 3px;
+		line-height: 1em;
+		margin: 8px;
+		padding: 4px;
+		position: absolute;
+		text-align: center;
+		top: 2px;
+		width: 1em;
+	}
+
+	.lfr-nav-updateable {
+		.add-page-editor {
+			.add-page-editor-input {
+				width: 150px;
+			}
+
+			.btn {
+				width: auto;
+			}
+
+			@include respond-to(phone, tablet) {
+				margin: 0 5px;
+
+				.input-group {
+					margin: 6px 0 7px;
+					width: 100%;
+				}
+
+				.add-page-editor-input, .btn {
+					height: 32px;
+				}
+
+				.add-page-editor-input {
+					left: 5px;
+					position: relative;
+					top: 2px;
+					width: 70%;
+					z-index: 1;
+				}
+
+				.btn {
+					display: inline-block;
+					width: 30%;
+				}
+			}
+		}
+
+		&.selected a:hover span {
+			cursor: text;
+		}
+	}
+}
+
+.controls-hidden .modify-pages {
+	.lfr-nav-sortable > a > span {
+		padding-left: 0;
+	}
+
+	.drag-handle {
+		display: none;
+	}
+}
+
+.touch .modify-pages {
+	.lfr-nav-sortable > a > span {
+		padding-left: 28px;
+	}
+
+	@include respond-to(desktop) {
+		.lfr-nav-sortable > a > span {
+			padding-left: 0;
+		}
+
+		.drag-handle {
+			display: none;
+		}
+	}
+}
+
+.nav {
+	li .toolbar {
+		margin-top: 5px;
+	}
+}

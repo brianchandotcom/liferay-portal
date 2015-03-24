@@ -3,6 +3,78 @@
 <project name="portal-test-tck" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<macrodef name="replace-war-version">
+		<attribute name="filename" />
+		<attribute name="version" default="2.4" />
+		<sequential>
+			<mkdir dir="${basedir}/temp" />
+
+			<unwar src="@{filename}" dest="${basedir}/temp">
+				<patternset>
+					<include name="WEB-INF/web.xml" />
+				</patternset>
+			</unwar>
+
+			<fixcrlf file="${basedir}/temp/WEB-INF/web.xml" eol="lf" />
+
+			<replace file="${basedir}/temp/WEB-INF/web.xml">
+				<replacefilter>
+					<replacetoken><![CDATA[
+<!DOCTYPE web-app PUBLIC '-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN' 'http://java.sun.com/dtd/web-app_2_3.dtd'>
+]]></replacetoken>
+					<replacevalue></replacevalue>
+				</replacefilter>
+				<replacefilter token="&lt;web-app&gt;" value="&lt;web-app version=&quot;@{version}&quot;&gt;" />
+			</replace>
+
+			<zip destfile="@{filename}" update="true">
+				<fileset dir="${basedir}/temp" />
+			</zip>
+
+			<delete dir="${basedir}/temp" />
+		</sequential>
+	</macrodef>
+
+	<target name="deploy-tck-wars">
+		<antcall target="prepare-tck" />
+
+		<if>
+			<not>
+				<isset property="test.package" />
+			</not>
+			<then>
+				<property name="test.package" value="com.sun.ts.tests" />
+			</then>
+		</if>
+
+		<propertyregex
+			global="true"
+			input="${test.package}."
+			property="test.directory"
+			regexp="\."
+			replace="/"
+		/>
+
+		<fileset
+			dir="tools/tck/dist/${test.directory}"
+			id="tck-wars"
+			includes="**/*.war"
+		/>
+
+		<for param="file">
+			<path>
+				<fileset refid="tck-wars" />
+			</path>
+			<sequential>
+				<replace-war-version filename="@{file}" />
+			</sequential>
+		</for>
+
+		<copy todir="${liferay.home}/deploy" flatten="true">
+			<fileset refid="tck-wars" />
+		</copy>
+	</target>
+
 	<target name="prepare-tck">
 		<delete dir="tools/tck" />
 
@@ -97,31 +169,7 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 
 		<antcall target="rebuild-database" inheritAll="false" />
 
-		<antcall target="prepare-tck" />
-
-		<if>
-			<not>
-				<isset property="test.package" />
-			</not>
-			<then>
-				<property name="test.package" value="com.sun.ts.tests" />
-			</then>
-		</if>
-
-		<propertyregex
-			global="true"
-			input="${test.package}."
-			property="test.directory"
-			regexp="\."
-			replace="/"
-		/>
-
-		<copy todir="${liferay.home}/deploy" flatten="true">
-			<fileset
-				dir="tools/tck/dist/${test.directory}"
-				includes="**/*.war"
-			/>
-		</copy>
+		<antcall target="deploy-tck-wars" />
 
 		<parallel>
 			<exec dir="${app.server.tomcat.bin.dir}" executable="catalina${file.suffix.bat}" resolveexecutable="true">

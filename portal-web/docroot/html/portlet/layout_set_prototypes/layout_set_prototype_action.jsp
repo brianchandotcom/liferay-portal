@@ -51,17 +51,11 @@ Group group = layoutSetPrototype.getGroup();
 		</c:if>
 
 		<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
-			<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="viewPagesURL">
-				<portlet:param name="struts_action" value="/my_sites/view" />
-				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-				<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
-			</liferay-portlet:actionURL>
-
 			<liferay-ui:icon
 				iconCssClass="icon-search"
 				message="view-pages"
 				target="_blank"
-				url="<%= viewPagesURL %>"
+				url="<%= group.getDisplayURL(themeDisplay, true) %>"
 			/>
 		</c:if>
 	</c:if>

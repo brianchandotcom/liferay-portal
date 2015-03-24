@@ -70,13 +70,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
 		<c:if test="<%= hasViewPagesPermission %>">
-			<liferay-portlet:actionURL plid="<%= layoutsAdminDisplayContext.getSelPlid() %>" portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="viewPagesURL">
-				<portlet:param name="struts_action" value="/my_sites/view" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-			</liferay-portlet:actionURL>
-
-			<aui:nav-item href="<%= viewPagesURL %>" iconCssClass="icon-file" label="view-pages" target="_blank" />
+			<aui:nav-item href="<%= group.getDisplayURL(themeDisplay, privateLayout) %>" iconCssClass="icon-file" label="view-pages" target="_blank" />
 		</c:if>
 		<c:if test="<%= hasAddPageLayoutsPermission %>">
 			<portlet:renderURL var="addPagesURL">

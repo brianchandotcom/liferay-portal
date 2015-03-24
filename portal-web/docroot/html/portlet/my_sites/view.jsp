@@ -108,25 +108,13 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 		>
 
 			<%
-			PortletURL rowURL = null;
+			String rowURL = StringPool.BLANK;
 
 			if (group.getPublicLayoutsPageCount() > 0) {
-				rowURL = renderResponse.createActionURL();
-
-				rowURL.setParameter("struts_action", "/sites_admin/page");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("groupId", String.valueOf(group.getGroupId()));
-				rowURL.setParameter("privateLayout", Boolean.FALSE.toString());
-				rowURL.setWindowState(WindowState.NORMAL);
+				rowURL = group.getDisplayURL(themeDisplay, false);
 			}
 			else if (tabs1.equals("my-sites") && (group.getPrivateLayoutsPageCount() > 0)) {
-				rowURL = renderResponse.createActionURL();
-
-				rowURL.setParameter("struts_action", "/sites_admin/page");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("groupId", String.valueOf(group.getGroupId()));
-				rowURL.setParameter("privateLayout", Boolean.TRUE.toString());
-				rowURL.setWindowState(WindowState.NORMAL);
+				rowURL = group.getDisplayURL(themeDisplay, true);
 			}
 			%>
 
@@ -135,7 +123,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 				orderable="<%= true %>"
 			>
 				<c:choose>
-					<c:when test="<%= rowURL != null %>">
+					<c:when test="<%= Validator.isNotNull(rowURL) %>">
 						<a href="<%= rowURL %>" target="_blank">
 							<strong><%= HtmlUtil.escape(group.getDescriptiveName(locale)) %></strong>
 						</a>

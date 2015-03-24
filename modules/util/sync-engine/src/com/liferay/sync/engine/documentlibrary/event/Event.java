@@ -23,6 +23,8 @@ import java.util.Map;
  */
 public interface Event extends Runnable {
 
+	public void cancel();
+
 	public Handler<Void> getHandler();
 
 	public Map<String, Object> getParameters();

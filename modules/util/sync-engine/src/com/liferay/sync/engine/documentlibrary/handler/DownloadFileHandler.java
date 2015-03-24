@@ -183,11 +183,13 @@ public class DownloadFileHandler extends BaseHandler {
 			}
 
 			FileKeyUtil.writeFileKey(
-				tempFilePath, String.valueOf(syncFile.getSyncFileId()));
+				tempFilePath, String.valueOf(syncFile.getSyncFileId()), false);
 
 			FileUtil.setModifiedTime(tempFilePath, syncFile.getModifiedTime());
 
-			FileUtil.moveFile(tempFilePath, filePath);
+			Files.move(
+				tempFilePath, filePath, StandardCopyOption.ATOMIC_MOVE,
+				StandardCopyOption.REPLACE_EXISTING);
 
 			syncFile.setState(SyncFile.STATE_SYNCED);
 

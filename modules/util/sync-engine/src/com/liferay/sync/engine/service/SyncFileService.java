@@ -123,7 +123,8 @@ public class SyncFileService {
 		_syncFilePersistence.create(syncFile);
 
 		FileKeyUtil.writeFileKey(
-			Paths.get(filePathName), String.valueOf(syncFile.getSyncFileId()));
+			Paths.get(filePathName), String.valueOf(syncFile.getSyncFileId()),
+			true);
 
 		IODeltaUtil.checksums(syncFile);
 
@@ -571,7 +572,7 @@ public class SyncFileService {
 		// Local sync file
 
 		FileKeyUtil.writeFileKey(
-			filePath, String.valueOf(syncFile.getSyncFileId()));
+			filePath, String.valueOf(syncFile.getSyncFileId()), true);
 
 		Path deltaFilePath = null;
 

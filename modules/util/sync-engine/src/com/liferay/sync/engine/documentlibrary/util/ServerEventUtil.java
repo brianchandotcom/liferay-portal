@@ -40,7 +40,7 @@ public class ServerEventUtil {
 			_retryServerConnectionScheduledFutures.get(syncAccountId);
 
 		if (scheduledFuture != null) {
-			scheduledFuture.cancel(true);
+			scheduledFuture.cancel(false);
 		}
 
 		RetryServerConnectionEvent retryServerConnectionEvent =

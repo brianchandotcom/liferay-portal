@@ -39,6 +39,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NoHttpResponseException;
 import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.HttpHostConnectException;
@@ -98,17 +99,19 @@ public class BaseHandler implements Handler<Void> {
 
 			retryServerConnection(SyncAccount.UI_EVENT_CONNECTION_EXCEPTION);
 		}
-		else if (e instanceof HttpResponseException) {
-			HttpResponseException hre = (HttpResponseException)e;
+		else if (e instanceof ClientProtocolException) {
+			if (e instanceof HttpResponseException) {
+				HttpResponseException hre = (HttpResponseException)e;
 
-			int statusCode = hre.getStatusCode();
+				int statusCode = hre.getStatusCode();
 
-			if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
-				syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
-				syncAccount.setUiEvent(
-					SyncAccount.UI_EVENT_AUTHENTICATION_EXCEPTION);
+				if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+					syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
+					syncAccount.setUiEvent(
+						SyncAccount.UI_EVENT_AUTHENTICATION_EXCEPTION);
 
-				SyncAccountService.update(syncAccount);
+					SyncAccountService.update(syncAccount);
+				}
 			}
 
 			// Retry connection for now. We are periodically receiving

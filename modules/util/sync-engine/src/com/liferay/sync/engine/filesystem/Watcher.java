@@ -230,6 +230,8 @@ public abstract class Watcher implements Runnable {
 				sanitizedFilePathName = FileUtil.getNextFilePathName(
 					sanitizedFilePathName);
 
+				FileUtil.checkFilePath(filePath);
+
 				FileUtil.moveFile(
 					filePath, java.nio.file.Paths.get(sanitizedFilePathName));
 

@@ -18,8 +18,6 @@ import com.liferay.sync.engine.documentlibrary.handler.DownloadFilesHandler;
 import com.liferay.sync.engine.documentlibrary.handler.Handler;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.service.SyncAccountService;
-import com.liferay.sync.engine.session.Session;
-import com.liferay.sync.engine.session.SessionManager;
 
 import java.util.Map;
 
@@ -46,9 +44,7 @@ public class DownloadFilesEvent extends BaseEvent {
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			getSyncAccountId());
 
-		Session session = SessionManager.getSession(getSyncAccountId());
-
-		session.executeAsynchronousPost(
+		executeAsynchronousPost(
 			syncAccount.getUrl() + _URL_PATH, getParameters(), _handler);
 	}
 

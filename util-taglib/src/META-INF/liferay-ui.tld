@@ -1373,35 +1373,42 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a flag icon that lets users report inappropriate content.</description>
 		<name>flags</name>
 		<tag-class>com.liferay.taglib.ui.FlagsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Passes the java class name of the flagged asset.</description>
 			<name>className</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Passes the entry id of the flagged asset.</description>
 			<name>classPK</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Passes the title of the flagged asset.</description>
 			<name>contentTitle</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets whether to show message text as a label next to the flag icon or as a tooltip. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the text to be displayed next to the flag icon. The default text is Flag.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Passes the user id of the user who flagged the asset.</description>
 			<name>reportedUserId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

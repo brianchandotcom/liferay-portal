@@ -14,6 +14,8 @@
 
 package com.liferay.portal.nio.intraband.proxy;
 
+import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
+import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
@@ -42,6 +44,10 @@ import java.io.Serializable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -62,6 +68,11 @@ public class IntrabandProxyInstallationUtilTest {
 
 	@Before
 	public void setUp() {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+		Registry registry = RegistryUtil.getRegistry();
+
+		_portalExecutorManager = new MockPortalExecutorManager();
+
 		FileUtil fileUtil = new FileUtil();
 
 		fileUtil.setFile(new FileImpl());
@@ -101,6 +112,11 @@ public class IntrabandProxyInstallationUtilTest {
 		_stubProxyMethodSignatures =
 			IntrabandProxyUtil.getProxyMethodSignatures(
 				IntrabandProxyUtil.getStubClass(TestClass.class, "skeletonId"));
+	}
+
+	@After
+	public void tearDown() {
+		_portalExecutorManager.shutdown(true);
 	}
 
 	@NewEnv(type = NewEnv.Type.NONE)
@@ -239,10 +255,53 @@ public class IntrabandProxyInstallationUtilTest {
 		}
 	}
 
+
+	private class MockPortalExecutorManager implements PortalExecutorManager {
+
+		@Override
+		public ThreadPoolExecutor getPortalExecutor(String name) {
+			return _threadPoolExecutor;
+		}
+
+		@Override
+		public ThreadPoolExecutor getPortalExecutor(
+			String name, boolean createIfAbsent) {
+
+			return _threadPoolExecutor;
+		}
+
+		@Override
+		public ThreadPoolExecutor registerPortalExecutor(
+			String name, ThreadPoolExecutor threadPoolExecutor) {
+
+			return _threadPoolExecutor;
+		}
+
+		@Override
+		public void shutdown() {
+			shutdown(false);
+		}
+
+		@Override
+		public void shutdown(boolean interrupt) {
+			if (interrupt) {
+				_threadPoolExecutor.shutdownNow();
+			}
+			else {
+				_threadPoolExecutor.shutdown();
+			}
+		}
+
+		private final ThreadPoolExecutor _threadPoolExecutor =
+			new ThreadPoolExecutor(10, 10);
+
+	}
+
 	private static final ClassLoader _classLoader =
 		IntrabandProxyInstallationUtilTest.class.getClassLoader();
 
 	private MockRegistrationReference _mockRegistrationReference;
+	private PortalExecutorManager _portalExecutorManager;
 	private String[] _stubProxyMethodSignatures;
 	private final TargetLocator _targetLocator = new TestGenerateTargetLocator(
 		TestClass.class);

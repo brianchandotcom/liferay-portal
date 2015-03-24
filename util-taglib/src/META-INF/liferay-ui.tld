@@ -1400,9 +1400,10 @@
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Sets the text to be displayed next to the flag icon. The default text is Flag.</description>
+			<description>Sets the text to be displayed next to the flag icon. The default text is <![CDATA[<code>Flag</code>]]>.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

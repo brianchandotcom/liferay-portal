@@ -3404,10 +3404,10 @@
 			<name>cur</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>Int</type>
+			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>Sets the parameter name of the cur value.</description>
+			<description>Sets a variable name to refer to the cur value of the component.</description>
 			<name>curParam</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3417,7 +3417,7 @@
 			<name>delta</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>Int</type>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>Sets whether the user can choose the number of items displayed per page. The default value is <![CDATA[<code>false</code>]]>.</description>
@@ -3427,25 +3427,25 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Sets the parameter name of the delta value.</description>
+			<description>Sets a variable name to refer to the delta value of the component.</description>
 			<name>deltaParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets the name of the form.</description>
+			<description>Sets the form's name.</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets the id of the iterator container</description>
+			<description>Identifies the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets javascript to be called when the &quot;first&quot;, &quot;previous&quot;, &quot;next&quot;, or &quot;last&quot; links are clicked if the url property is not set.</description>
+			<description>Sets javascript to be called when the <![CDATA[<code>first</code>]]>, <![CDATA[<code>previous</code>]]>, <![CDATA[<code>next</code>]]>, or <![CDATA[<code>last</code>]]> links are clicked if the url property is not set.</description>
 			<name>jsCall</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3455,9 +3455,10 @@
 			<name>maxPages</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>Sets the target of the &quot;first&quot;, &quot;previous&quot;, &quot;next&quot;, and &quot;last&quot; link buttons.</description>
+			<description>Sets the target of the <![CDATA[<code>first</code>]]>, <![CDATA[<code>previous</code>]]>, <![CDATA[<code>next</code>]]>, and <![CDATA[<code>last</code>]]> link buttons.</description>
 			<name>target</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3467,10 +3468,10 @@
 			<name>total</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>Int</type>
+			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>Sets the type of iterator to display. Options are &quot;approximate&quot;, &quot;article&quot;, &quot;more&quot;, and &quot;regular&quot;.</description>
+			<description>Sets the type of iterator to display. Options are <![CDATA[<code>approximate</code>]]>, <![CDATA[<code>article</code>]]>, <![CDATA[<code>more</code>]]>, and <![CDATA[<code>regular</code>]]>.</description>
 			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

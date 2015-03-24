@@ -174,15 +174,14 @@ public class EhcacheConfigurationUtil {
 			return;
 		}
 
-		String properties = factoryConfiguration.getProperties();
-
 		BootstrapCacheLoaderFactoryConfiguration
 			bootstrapCacheLoaderFactoryConfiguration =
 				new BootstrapCacheLoaderFactoryConfiguration();
 
 		bootstrapCacheLoaderFactoryConfiguration.setClass(
 			EhcacheStreamBootstrapCacheLoaderFactory.class.getName());
-		bootstrapCacheLoaderFactoryConfiguration.setProperties(properties);
+		bootstrapCacheLoaderFactoryConfiguration.setProperties(
+			factoryConfiguration.getProperties());
 
 		cacheConfiguration.addBootstrapCacheLoaderFactory(
 			bootstrapCacheLoaderFactoryConfiguration);

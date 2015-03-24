@@ -23,7 +23,7 @@ FacetConfiguration facetConfiguration = searchFacet.getFacetConfiguration(search
 %>
 
 <aui:fieldset>
-	<aui:input label="static" name='<%= searchFacet.getClassName() + "static" %>' type="checkbox" value="<%= facetConfiguration.isStatic() %>" />
+	<aui:input label="display-facet" name='<%= searchFacet.getClassName() + "displayFacet" %>' type="checkbox" value="<%= !facetConfiguration.isStatic() %>" />
 
 	<div class="facet-configuration-options" id="<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>Options">
 		<aui:input label="weight" name='<%= searchFacet.getClassName() + "weight" %>' value="<%= facetConfiguration.getWeight() %>" />
@@ -35,5 +35,5 @@ FacetConfiguration facetConfiguration = searchFacet.getFacetConfiguration(search
 </aui:fieldset>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>static', '<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>Options', true);
+	Liferay.Util.toggleBoxes('<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>displayFacet', '<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>Options');
 </aui:script>

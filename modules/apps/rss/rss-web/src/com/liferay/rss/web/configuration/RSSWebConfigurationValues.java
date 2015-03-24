@@ -24,4 +24,7 @@ public class RSSWebConfigurationValues {
 	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
 		RSSWebConfigurationUtil.get("display.templates.config"));
 
+	public static final long FEED_REFRESH_TIME = GetterUtil.getLong(
+		RSSWebConfigurationUtil.get("feed.refresh.time"));
+
 }

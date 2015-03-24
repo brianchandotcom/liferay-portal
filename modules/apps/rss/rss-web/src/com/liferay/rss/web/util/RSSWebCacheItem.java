@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.rss.web.configuration.RSSWebConfigurationValues;
 
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
@@ -107,10 +108,8 @@ public class RSSWebCacheItem implements WebCacheItem {
 
 	@Override
 	public long getRefreshTime() {
-		return _REFRESH_TIME;
+		return Time.MINUTE * RSSWebConfigurationValues.FEED_REFRESH_TIME;
 	}
-
-	private static final long _REFRESH_TIME = Time.MINUTE * 20;
 
 	private final String _url;
 

@@ -650,14 +650,6 @@ body.portlet {
 	}
 }
 
-/* ---------- Add content dialog ---------- */
-
-.lfr-portlet-item {
-	&, & p a {
-		font-size: 1em;
-	}
-}
-
 /* ---------- Breadcrumb taglib ---------- */
 
 .breadcrumb.breadcrumb-vertical {

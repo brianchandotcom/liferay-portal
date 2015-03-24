@@ -107,52 +107,57 @@ public class PoshiRunnerGetterUtil {
 	}
 
 	public static Element getRootElementFromFilePath(String filePath)
-		throws Exception {
+		throws PoshiRunnerException {
 
 		StringBuilder sb = new StringBuilder();
 
 		int lineNumber = 1;
 
-		BufferedReader bufferedReader = new BufferedReader(
-			new StringReader(FileUtil.read(filePath)));
+		try {
+			BufferedReader bufferedReader = new BufferedReader(
+				new StringReader(FileUtil.read(filePath)));
 
-		String line = null;
+			String line = null;
 
-		while ((line = bufferedReader.readLine()) != null) {
-			Matcher matcher = _tagPattern.matcher(line);
+			while ((line = bufferedReader.readLine()) != null) {
+				Matcher matcher = _tagPattern.matcher(line);
 
-			if (matcher.find()) {
-				for (String reservedTag : _reservedTags) {
-					if (line.contains("<" + reservedTag)) {
-						line = StringUtil.replace(
-							line, matcher.group(),
-							matcher.group() + " line-number=\"" + lineNumber +
-								"\"");
+				if (matcher.find()) {
+					for (String reservedTag : _reservedTags) {
+						if (line.contains("<" + reservedTag)) {
+							line = StringUtil.replace(
+								line, matcher.group(),
+								matcher.group() + " line-number=\"" +
+								lineNumber + "\"");
 
-						break;
+							break;
+						}
 					}
 				}
+
+				sb.append(line);
+
+				lineNumber++;
 			}
 
-			sb.append(line);
+			String content = sb.toString();
 
-			lineNumber++;
+			InputStream inputStream = new ByteArrayInputStream(
+				content.getBytes("UTF-8"));
+
+			SAXReader saxReader = new SAXReader();
+
+			Document document = saxReader.read(inputStream);
+
+			return document.getRootElement();
 		}
-
-		String content = sb.toString();
-
-		InputStream inputStream = new ByteArrayInputStream(
-			content.getBytes("UTF-8"));
-
-		SAXReader saxReader = new SAXReader();
-
-		Document document = saxReader.read(inputStream);
-
-		return document.getRootElement();
+		catch (Exception e) {
+			throw new PoshiRunnerException(e);
+		}
 	}
 
 	public static String getVarMethodValue(String classCommandName)
-		throws Exception {
+		throws PoshiRunnerException {
 
 		Matcher matcher = _parameterPattern.matcher(classCommandName);
 
@@ -182,21 +187,26 @@ public class PoshiRunnerGetterUtil {
 			for (Method method : methods) {
 				String methodName = method.getName();
 
-				if (methodName.equals(commandName)) {
-					Class<?>[] parameterTypes = method.getParameterTypes();
+				try {
+					if (methodName.equals(commandName)) {
+						Class<?>[] parameterTypes = method.getParameterTypes();
 
-					if (parameterTypes.length > 1 ) {
-						Object returnObject = method.invoke(
-							null, (Object[])integers);
+						if (parameterTypes.length > 1 ) {
+							Object returnObject = method.invoke(
+								null, (Object[])integers);
 
-						return returnObject.toString();
+								return returnObject.toString();
+						}
+						else {
+							Object returnObject = method.invoke(
+								null, new Object[] {integers});
+
+							return returnObject.toString();
+						}
 					}
-					else {
-						Object returnObject = method.invoke(
-							null, new Object[] {integers});
-
-						return returnObject.toString();
-					}
+				}
+				catch (Exception e) {
+					throw new PoshiRunnerException(e);
 				}
 			}
 		}
@@ -221,17 +231,30 @@ public class PoshiRunnerGetterUtil {
 				object = liferaySelenium;
 			}
 			else {
-				clazz = Class.forName(
-					"com.liferay.poshi.runner.util." + className);
+				try {
+					clazz = Class.forName(
+						"com.liferay.poshi.runner.util." + className);
+				}
+				catch (Exception e) {
+					throw new PoshiRunnerException(
+						"\nBUILD FAILED: No such class " + className, e);
+				}
 			}
 
-			Method method = clazz.getMethod(
-				commandName,
-				parameterClasses.toArray(new Class[parameterClasses.size()]));
+			try {
+				Method method = clazz.getMethod(
+					commandName,
+					parameterClasses.toArray(
+						new Class[parameterClasses.size()]));
 
-			Object returnObject = method.invoke(object, (Object[])parameters);
+				Object returnObject = method.invoke(
+					object, (Object[])parameters);
 
-			return returnObject.toString();
+				return returnObject.toString();
+			}
+			catch (Exception e) {
+				throw new PoshiRunnerException(e);
+			}
 		}
 
 		return null;

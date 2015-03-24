@@ -54,7 +54,7 @@ public class PoshiRunnerContextTest extends TestCase {
 	}
 
 	@Test
-	public void testGetActionLocatorCount() {
+	public void testGetActionLocatorCount() throws Exception {
 		int locatorCount = PoshiRunnerContext.getActionLocatorCount(
 			"Action1#type");
 
@@ -99,7 +99,7 @@ public class PoshiRunnerContextTest extends TestCase {
 	}
 
 	@Test
-	public void testGetFunctionLocatorCount() {
+	public void testGetFunctionLocatorCount() throws Exception {
 		int locatorCount = PoshiRunnerContext.getFunctionLocatorCount("Click");
 
 		Assert.assertEquals(

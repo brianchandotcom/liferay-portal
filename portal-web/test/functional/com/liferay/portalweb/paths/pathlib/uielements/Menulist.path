@@ -100,7 +100,7 @@
 </tr>
 <tr>
 	<td>MANAGE_PAGES</td>
-	<td>//a[@role='menuitem' and contains(.,'Manage Site')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Pages')]</td>
 	<td></td>
 </tr>
 <tr>

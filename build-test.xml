@@ -2469,7 +2469,7 @@ ${marketplace.portlet.properties}</echo>
 					input="${jenkins.results.xml.suite.file.body}"
 					override="true"
 					property="jenkins.results.xml.suite.file.body"
-					regexp="&lt;\?xml[\s\S.]*&lt;testcase"
+					regexp="&lt;\?xml[\s\S]*?&lt;testcase"
 					replace="&lt;testcase"
 				/>
 
@@ -2477,7 +2477,7 @@ ${marketplace.portlet.properties}</echo>
 					input="${jenkins.results.xml.suite.file.body}"
 					override="true"
 					property="jenkins.results.xml.suite.file.body"
-					regexp="&lt;/testcase&gt;[\s\S.]*"
+					regexp="&lt;/testcase&gt;\s*&lt;system[\s\S]*"
 					replace="&lt;/testcase&gt;${line.separator}"
 				/>
 

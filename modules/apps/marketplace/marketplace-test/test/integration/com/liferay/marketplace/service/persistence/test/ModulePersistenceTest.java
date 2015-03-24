@@ -149,86 +149,56 @@ public class ModulePersistenceTest {
 	}
 
 	@Test
-	public void testCountByUuid() {
-		try {
-			_persistence.countByUuid(StringPool.BLANK);
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid(StringPool.BLANK);
 
-			_persistence.countByUuid(StringPool.NULL);
+		_persistence.countByUuid(StringPool.NULL);
 
-			_persistence.countByUuid((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByUuid((String)null);
 	}
 
 	@Test
-	public void testCountByAppId() {
-		try {
-			_persistence.countByAppId(RandomTestUtil.nextLong());
+	public void testCountByAppId() throws Exception {
+		_persistence.countByAppId(RandomTestUtil.nextLong());
 
-			_persistence.countByAppId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByAppId(0L);
 	}
 
 	@Test
-	public void testCountByBundleSymbolicName() {
-		try {
-			_persistence.countByBundleSymbolicName(StringPool.BLANK);
+	public void testCountByBundleSymbolicName() throws Exception {
+		_persistence.countByBundleSymbolicName(StringPool.BLANK);
 
-			_persistence.countByBundleSymbolicName(StringPool.NULL);
+		_persistence.countByBundleSymbolicName(StringPool.NULL);
 
-			_persistence.countByBundleSymbolicName((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByBundleSymbolicName((String)null);
 	}
 
 	@Test
-	public void testCountByContextName() {
-		try {
-			_persistence.countByContextName(StringPool.BLANK);
+	public void testCountByContextName() throws Exception {
+		_persistence.countByContextName(StringPool.BLANK);
 
-			_persistence.countByContextName(StringPool.NULL);
+		_persistence.countByContextName(StringPool.NULL);
 
-			_persistence.countByContextName((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByContextName((String)null);
 	}
 
 	@Test
-	public void testCountByA_CN() {
-		try {
-			_persistence.countByA_CN(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByA_CN() throws Exception {
+		_persistence.countByA_CN(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByA_CN(0L, StringPool.NULL);
+		_persistence.countByA_CN(0L, StringPool.NULL);
 
-			_persistence.countByA_CN(0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByA_CN(0L, (String)null);
 	}
 
 	@Test
-	public void testCountByA_BSN_BV() {
-		try {
-			_persistence.countByA_BSN_BV(RandomTestUtil.nextLong(),
-				StringPool.BLANK, StringPool.BLANK);
+	public void testCountByA_BSN_BV() throws Exception {
+		_persistence.countByA_BSN_BV(RandomTestUtil.nextLong(),
+			StringPool.BLANK, StringPool.BLANK);
 
-			_persistence.countByA_BSN_BV(0L, StringPool.NULL, StringPool.NULL);
+		_persistence.countByA_BSN_BV(0L, StringPool.NULL, StringPool.NULL);
 
-			_persistence.countByA_BSN_BV(0L, (String)null, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByA_BSN_BV(0L, (String)null, (String)null);
 	}
 
 	@Test
@@ -255,13 +225,8 @@ public class ModulePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<Module> getOrderByComparator() {

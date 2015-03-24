@@ -1530,41 +1530,65 @@ public class DDMStructureLocalServiceImpl
 			DDMStructureIndexer ddmStructureIndexer =
 				(DDMStructureIndexer)indexer;
 
-			List<Long> ddmStructureIds = getChildrenStructureIds(
+			List<Long> ddmStructuresIds = getChildrenStructureIds(
 				structure.getGroupId(), structure.getStructureId());
 
-			ddmStructureIndexer.reindexDDMStructures(ddmStructureIds);
+			ddmStructureIndexer.reindexDDMStructures(ddmStructuresIds);
 		}
+		
+		// Cache
+
+		List<DDMStructure> childrenStructures = getChildrenStructures(
+			structure.getGroupId(), structure.getStructureId());
+
+		ddmStructurePersistence.clearCache(childrenStructures);
 
 		return structure;
 	}
-
-	protected void getChildrenStructureIds(
-			List<Long> structureIds, long groupId, long parentStructureId)
+	
+	protected List<Long> getChildrenStructureIds(
+			long groupId, long structureId) 
 		throws PortalException {
-
-		List<DDMStructure> structures = ddmStructurePersistence.findByG_P(
-			groupId, parentStructureId);
-
+		
+		List<DDMStructure> structures = getChildrenStructures(
+			groupId, structureId);
+		
+		List<Long> structureIds = new ArrayList<>();
+		
 		for (DDMStructure structure : structures) {
 			structureIds.add(structure.getStructureId());
+		}
+		
+		return structureIds;
+	}
 
-			getChildrenStructureIds(
-				structureIds, structure.getGroupId(),
-				structure.getStructureId());
+	protected void getChildrenStructures(
+			List<DDMStructure> structures, long groupId, long parentStructureId)
+		throws PortalException {
+
+		List<DDMStructure> childrenStructures = 
+			ddmStructurePersistence.findByG_P(groupId, parentStructureId);
+
+		for (DDMStructure childrenStructure : childrenStructures) {
+			structures.add(childrenStructure);
+
+			getChildrenStructures(
+				structures, childrenStructure.getGroupId(),
+				childrenStructure.getStructureId());
 		}
 	}
 
-	protected List<Long> getChildrenStructureIds(long groupId, long structureId)
+	protected List<DDMStructure> getChildrenStructures(
+			long groupId, long structureId)
 		throws PortalException {
 
-		List<Long> structureIds = new ArrayList<>();
+		List<DDMStructure> structures = new ArrayList<>();
 
-		getChildrenStructureIds(structureIds, groupId, structureId);
+		getChildrenStructures(structures, groupId, structureId);
 
-		structureIds.add(0, structureId);
+		structures.add(0, fetchDDMStructure(structureId));
 
-		return structureIds;
+		return structures;
 	}
 
 	protected Set<String> getDDMFormFieldsNames(DDMForm ddmForm) {

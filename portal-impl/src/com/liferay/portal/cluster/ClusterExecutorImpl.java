@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.cluster.ClusterReceiver;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
+import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.memory.FinalizeManager;
@@ -62,6 +62,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tina Tian
@@ -204,7 +206,7 @@ public class ClusterExecutorImpl
 			return;
 		}
 
-		_executorService = PortalExecutorManagerUtil.getPortalExecutor(
+		_executorService = _portalExecutorManager.getPortalExecutor(
 			ClusterExecutorImpl.class.getName());
 
 		PortalUtil.addPortalInetSocketAddressEventListener(this);
@@ -310,6 +312,13 @@ public class ClusterExecutorImpl
 		}
 
 		_clusterEventListeners.addAllAbsent(clusterEventListeners);
+	}
+
+	@Reference
+	public void setPortalExecutorManager(
+		PortalExecutorManager portalExecutorManager) {
+
+		_portalExecutorManager = portalExecutorManager;
 	}
 
 	protected ClusterNodeResponse executeClusterRequest(
@@ -504,6 +513,7 @@ public class ClusterExecutorImpl
 		new ConcurrentReferenceValueHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private ClusterNodeStatus _localClusterNodeStatus;
+	private PortalExecutorManager _portalExecutorManager;
 
 	private static class ClusterNodeStatus implements Serializable {
 

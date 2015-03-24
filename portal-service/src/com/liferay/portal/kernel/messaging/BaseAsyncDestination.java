@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter;
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
+import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
@@ -37,6 +37,8 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -72,7 +74,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	@Override
 	public void close(boolean force) {
 		ThreadPoolExecutor threadPoolExecutor =
-			PortalExecutorManagerUtil.getPortalExecutor(getName());
+			portalExecutorManager.getPortalExecutor(getName());
 
 		if (force) {
 			threadPoolExecutor.shutdownNow();
@@ -139,7 +141,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 			new ThreadPoolHandlerAdapter());
 
 		ThreadPoolExecutor oldThreadPoolExecutor =
-			PortalExecutorManagerUtil.registerPortalExecutor(
+			portalExecutorManager.registerPortalExecutor(
 				getName(), threadPoolExecutor);
 
 		if (oldThreadPoolExecutor != null) {
@@ -182,6 +184,13 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 
 	public void setMaximumQueueSize(int maximumQueueSize) {
 		_maximumQueueSize = maximumQueueSize;
+	}
+
+	@Reference
+	public void setPortalExecutorManager(
+		PortalExecutorManager portalExecutorManager) {
+
+		this.portalExecutorManager = portalExecutorManager;
 	}
 
 	public void setRejectedExecutionHandler(
@@ -339,6 +348,8 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 			LocaleThreadLocal.setThemeDisplayLocale(themeDisplayLocale);
 		}
 	}
+
+	protected PortalExecutorManager portalExecutorManager;
 
 	private static final int _WORKERS_CORE_SIZE = 2;
 

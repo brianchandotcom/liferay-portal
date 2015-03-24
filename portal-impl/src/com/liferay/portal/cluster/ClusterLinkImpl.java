@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterReceiver;
 import com.liferay.portal.kernel.cluster.Priority;
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
+import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
@@ -37,6 +37,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -62,7 +64,7 @@ public class ClusterLinkImpl implements ClusterLink {
 			return;
 		}
 
-		_executorService = PortalExecutorManagerUtil.getPortalExecutor(
+		_executorService = _portalExecutorManager.getPortalExecutor(
 			ClusterLinkImpl.class.getName());
 
 		try {
@@ -120,6 +122,13 @@ public class ClusterLinkImpl implements ClusterLink {
 		ClusterChannelFactory clusterChannelFactory) {
 
 		_clusterChannelFactory = clusterChannelFactory;
+	}
+
+	@Reference
+	public void setPortalExecutorManager(
+		PortalExecutorManager portalExecutorManager) {
+
+		_portalExecutorManager = portalExecutorManager;
 	}
 
 	protected ClusterChannel getChannel(Priority priority) {
@@ -220,6 +229,7 @@ public class ClusterLinkImpl implements ClusterLink {
 	private List<ClusterReceiver> _clusterReceivers;
 	private ExecutorService _executorService;
 	private List<Address> _localTransportAddresses;
+	private PortalExecutorManager _portalExecutorManager;
 	private List<ClusterChannel> _transportChannels;
 
 }

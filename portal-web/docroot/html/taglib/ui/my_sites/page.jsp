@@ -33,15 +33,11 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 	<ul class="taglib-my-sites <%= cssClass %>">
 
 		<%
-		PortletURL portletURL = new PortletURLImpl(request, PortletKeys.SITE_REDIRECTOR, plid, PortletRequest.ACTION_PHASE);
-
-		portletURL.setParameter("struts_action", "/my_sites/view");
-		portletURL.setPortletMode(PortletMode.VIEW);
-		portletURL.setWindowState(WindowState.NORMAL);
-
 		for (Group mySiteGroup : mySiteGroups) {
 			boolean showPublicSite = mySiteGroup.isShowSite(permissionChecker, false);
 			boolean showPrivateSite = mySiteGroup.isShowSite(permissionChecker, true);
+
+			Group siteGroup = mySiteGroup;
 		%>
 
 			<c:if test="<%= showPublicSite || showPrivateSite %>">
@@ -49,8 +45,6 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 					<c:when test='<%= PropsValues.MY_SITES_DISPLAY_STYLE.equals("simple") %>'>
 
 						<%
-						portletURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
-
 						boolean firstSite = false;
 
 						if (mySiteGroups.indexOf(mySiteGroup) == 0) {
@@ -90,8 +84,6 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 
 						String iconCssClass = "icon-spacer";
 
-						portletURL.setParameter("privateLayout", Boolean.FALSE.toString());
-
 						long stagingGroupId = 0;
 
 						boolean showPublicSiteStaging = false;
@@ -118,12 +110,12 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 
 							<%
 							if (showPublicSiteStaging) {
-								portletURL.setParameter("groupId", String.valueOf(stagingGroupId));
+								siteGroup = GroupLocalServiceUtil.fetchGroup(stagingGroupId);
 							}
 							%>
 
 							<li class="<%= (selectedSite && layout.isPublicLayout()) ? "active" : "public-site" %> <%= itemCssClass %>">
-								<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;">
+								<a href="<%= HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, false)) %>" onclick="Liferay.Util.forcePost(this); return false;">
 
 									<%
 									String siteName = StringPool.BLANK;
@@ -159,29 +151,20 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 									</c:if>
 								</a>
 							</li>
-
-							<%
-							if (showPublicSiteStaging) {
-								portletURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
-							}
-							%>
-
 						</c:if>
-
-						<%
-						portletURL.setParameter("privateLayout", Boolean.TRUE.toString());
-						%>
 
 						<c:if test="<%= showPrivateSite && ((mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) %>">
 
 							<%
+							siteGroup = mySiteGroup;
+
 							if (showPrivateSiteStaging) {
-								portletURL.setParameter("groupId", String.valueOf(stagingGroupId));
+								siteGroup = GroupLocalServiceUtil.fetchGroup(stagingGroupId);
 							}
 							%>
 
 							<li class="<%= (selectedSite && layout.isPrivateLayout()) ? "active" : "private-site" %> <%= itemCssClass %>">
-								<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;">
+								<a href="<%= HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, true)) %>" onclick="Liferay.Util.forcePost(this); return false;">
 
 									<%
 									String siteName = StringPool.BLANK;
@@ -217,13 +200,6 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 									</c:if>
 								</a>
 							</li>
-
-							<%
-							if (showPrivateSiteStaging) {
-								portletURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
-							}
-							%>
-
 						</c:if>
 					</c:when>
 					<c:when test='<%= PropsValues.MY_SITES_DISPLAY_STYLE.equals("classic") %>'>
@@ -233,20 +209,8 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 						String privateAddPageHREF = null;
 
 						if (mySiteGroup.isSite() && GroupPermissionUtil.contains(permissionChecker, mySiteGroup, ActionKeys.ADD_LAYOUT)) {
-							PortletURL addPageURL = new PortletURLImpl(request, PortletKeys.SITE_REDIRECTOR, plid, PortletRequest.ACTION_PHASE);
-
-							addPageURL.setParameter("struts_action", "/my_sites/edit_layouts");
-							addPageURL.setParameter("redirect", currentURL);
-							addPageURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
-							addPageURL.setParameter("privateLayout", Boolean.FALSE.toString());
-							addPageURL.setPortletMode(PortletMode.VIEW);
-							addPageURL.setWindowState(WindowState.NORMAL);
-
-							publicAddPageHREF = addPageURL.toString();
-
-							addPageURL.setParameter("privateLayout", Boolean.TRUE.toString());
-
-							privateAddPageHREF = addPageURL.toString();
+							publicAddPageHREF = mySiteGroup.getDisplayURL(themeDisplay, false);
+							privateAddPageHREF = mySiteGroup.getDisplayURL(themeDisplay, true);
 						}
 						else if (mySiteGroup.isUser()) {
 							PortletURL publicAddPageURL = new PortletURLImpl(request, PortletKeys.MY_ACCOUNT, plid, PortletRequest.RENDER_PHASE);
@@ -305,15 +269,9 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 									</h3>
 
 									<ul>
-
-										<%
-										portletURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
-										portletURL.setParameter("privateLayout", Boolean.FALSE.toString());
-										%>
-
 										<c:if test="<%= showPublicSite %>">
 											<li>
-												<a href="<%= (mySiteGroup.getPublicLayoutsPageCount() > 0) ? HtmlUtil.escape(portletURL.toString()) : "javascript:;" %>"
+												<a href="<%= (mySiteGroup.getPublicLayoutsPageCount() > 0) ? HtmlUtil.escape(mySiteGroup.getDisplayURL(themeDisplay, false)) : "javascript:;" %>"
 
 												<c:if test="<%= mySiteGroup.isUser() %>">
 													id="my-site-public-pages"
@@ -331,14 +289,9 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 											</li>
 										</c:if>
 
-										<%
-										portletURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
-										portletURL.setParameter("privateLayout", Boolean.TRUE.toString());
-										%>
-
 										<c:if test="<%= showPrivateSite %>">
 											<li>
-												<a href="<%= (mySiteGroup.getPrivateLayoutsPageCount() > 0) ? HtmlUtil.escape(portletURL.toString()) : "javascript:;" %>"
+												<a href="<%= (mySiteGroup.getPrivateLayoutsPageCount() > 0) ? HtmlUtil.escape(mySiteGroup.getDisplayURL(themeDisplay, true)) : "javascript:;" %>"
 
 												<c:if test="<%= mySiteGroup.isUser() %>">
 													id="my-site-private-pages"

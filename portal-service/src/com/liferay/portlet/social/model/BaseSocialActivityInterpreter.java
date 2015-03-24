@@ -253,15 +253,15 @@ public abstract class BaseSocialActivityInterpreter
 				return HtmlUtil.escape(groupName);
 			}
 
-			String groupDisplayURL =
-				serviceContext.getPortalURL() + serviceContext.getPathMain() +
-					"/my_sites/view?groupId=" + group.getGroupId();
+			String groupDisplayURL = StringPool.BLANK;
 
 			if (group.hasPublicLayouts()) {
-				groupDisplayURL = groupDisplayURL + "&privateLayout=0";
+				groupDisplayURL = group.getDisplayURL(
+					serviceContext.getThemeDisplay(), false);
 			}
 			else if (group.hasPrivateLayouts()) {
-				groupDisplayURL = groupDisplayURL + "&privateLayout=1";
+				groupDisplayURL = group.getDisplayURL(
+					serviceContext.getThemeDisplay(), true);
 			}
 			else {
 				return HtmlUtil.escape(groupName);
@@ -297,15 +297,13 @@ public abstract class BaseSocialActivityInterpreter
 				return HtmlUtil.escape(groupName);
 			}
 
-			String groupDisplayURL =
-				themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-					"/my_sites/view?groupId=" + group.getGroupId();
+			String groupDisplayURL = StringPool.BLANK;
 
 			if (group.hasPublicLayouts()) {
-				groupDisplayURL = groupDisplayURL + "&privateLayout=0";
+				groupDisplayURL = group.getDisplayURL(themeDisplay, false);
 			}
 			else if (group.hasPrivateLayouts()) {
-				groupDisplayURL = groupDisplayURL + "&privateLayout=1";
+				groupDisplayURL = group.getDisplayURL(themeDisplay, true);
 			}
 			else {
 				return HtmlUtil.escape(groupName);

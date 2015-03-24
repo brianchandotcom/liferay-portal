@@ -91,19 +91,8 @@
 				%>
 
 					<c:if test="<%= mySiteGroup.getPublicLayoutsPageCount() > 0 %>">
-
-						<%
-						PortletURL myProfileURL = new PortletURLImpl(request, PortletKeys.SITE_REDIRECTOR, plid, PortletRequest.ACTION_PHASE);
-
-						myProfileURL.setParameter("struts_action", "/my_sites/view");
-						myProfileURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
-						myProfileURL.setParameter("privateLayout", Boolean.FALSE.toString());
-						myProfileURL.setPortletMode(PortletMode.VIEW);
-						myProfileURL.setWindowState(WindowState.NORMAL);
-						%>
-
 						<li class="my-sites-menu public-site">
-							<a href="<%= HtmlUtil.escapeHREF(myProfileURL.toString()) %>">
+							<a href="<%= HtmlUtil.escapeHREF(mySiteGroup.getDisplayURL(themeDisplay, false)) %>">
 								<span class="site-name"><liferay-ui:message key="my-profile" /></span>
 
 								<span class="badge site-type"><liferay-ui:message key="public" /></span>
@@ -112,19 +101,8 @@
 					</c:if>
 
 					<c:if test="<%= mySiteGroup.getPrivateLayoutsPageCount() > 0 %>">
-
-						<%
-						PortletURL myDashboardURL = new PortletURLImpl(request, PortletKeys.SITE_REDIRECTOR, plid, PortletRequest.ACTION_PHASE);
-
-						myDashboardURL.setParameter("struts_action", "/my_sites/view");
-						myDashboardURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
-						myDashboardURL.setParameter("privateLayout", Boolean.TRUE.toString());
-						myDashboardURL.setPortletMode(PortletMode.VIEW);
-						myDashboardURL.setWindowState(WindowState.NORMAL);
-						%>
-
 						<li class="my-sites-menu private-site">
-							<a href="<%= HtmlUtil.escapeHREF(myDashboardURL.toString()) %>">
+							<a href="<%= HtmlUtil.escapeHREF(mySiteGroup.getDisplayURL(themeDisplay, true)) %>">
 								<span class="site-name"><liferay-ui:message key="my-dashboard" /></span>
 
 								<span class="badge site-type"><liferay-ui:message key="private" /></span>

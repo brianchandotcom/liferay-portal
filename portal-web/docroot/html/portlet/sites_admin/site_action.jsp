@@ -167,34 +167,20 @@ if (row == null) {
 	</c:if>
 
 	<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">
-		<portlet:actionURL var="viewPublicPagesURL">
-			<portlet:param name="struts_action" value="/sites_admin/page" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-			<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
-		</portlet:actionURL>
-
 		<liferay-ui:icon
 			iconCssClass="icon-search"
 			message="go-to-public-pages"
 			target="_blank"
-			url="<%= viewPublicPagesURL %>"
+			url="<%= group.getDisplayURL(themeDisplay, false) %>"
 		/>
 	</c:if>
 
 	<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
-		<portlet:actionURL var="viewPrivatePagesURL">
-			<portlet:param name="struts_action" value="/sites_admin/page" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-			<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:actionURL>
-
 		<liferay-ui:icon
 			iconCssClass="icon-search"
 			message="go-to-private-pages"
 			target="_blank"
-			url="<%= viewPrivatePagesURL %>"
+			url="<%= group.getDisplayURL(themeDisplay, true) %>"
 		/>
 	</c:if>
 

@@ -488,14 +488,16 @@ public class AssetPublisherPortletDataHandler
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Ignoring scope " + newValue + " because the " +
-							"referenced group was not found");
+							"referenced group was not found",
+						nsge);
 				}
 			}
 			catch (NoSuchLayoutException nsle) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Ignoring scope " + newValue + " because the " +
-							"referenced layout was not found");
+							"referenced layout was not found",
+						nsle);
 				}
 			}
 			catch (PrincipalException pe) {
@@ -503,7 +505,8 @@ public class AssetPublisherPortletDataHandler
 					_log.info(
 						"Ignoring scope " + newValue + " because the " +
 							"referenced parent group no longer allows " +
-								"sharing content with child sites");
+								"sharing content with child sites",
+						pe);
 				}
 			}
 		}

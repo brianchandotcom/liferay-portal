@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.asset.util;
 
-import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.Group;
@@ -47,17 +46,15 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		if (!group.isCompany()) {
-			try {
-				Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-					group.getCompanyId());
+			Group companyGroup = GroupLocalServiceUtil.fetchCompanyGroup(
+				group.getCompanyId());
 
+			if (companyGroup != null) {
 				vocabularies = ListUtil.copy(vocabularies);
 
 				vocabularies.addAll(
 					AssetVocabularyLocalServiceUtil.getGroupVocabularies(
 						companyGroup.getGroupId()));
-			}
-			catch (NoSuchGroupException nsge) {
 			}
 		}
 

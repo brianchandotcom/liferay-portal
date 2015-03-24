@@ -15,6 +15,8 @@
 package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portlet.asset.NoSuchLinkException;
@@ -113,6 +115,9 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 					link.getEntryId2(), link.getEntryId1(), link.getType());
 			}
 			catch (NoSuchLinkException nsle) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to delete asset link", nsle);
+				}
 			}
 		}
 
@@ -378,5 +383,8 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetLinkLocalServiceImpl.class);
 
 }

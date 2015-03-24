@@ -265,7 +265,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			List<AssetEntry> childEntries = getChildEntries(entryId);
 
 			if (childEntries.isEmpty()) {
-				throw new NoSuchEntryException("{entryId=" + entryId + "}");
+				throw nsee;
 			}
 
 			return childEntries.get(0);

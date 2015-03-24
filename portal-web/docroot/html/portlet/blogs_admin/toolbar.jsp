@@ -33,7 +33,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 				<portlet:param name="backURL" value="<%= viewEntriesURL %>" />
 			</portlet:renderURL>
 
-			<aui:nav-item href="<%= addEntryURL %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
+			<aui:nav-item href="<%= addEntryURL %>" iconCssClass="icon-plus" label="add-blog-entry" selected='<%= toolbarItem.equals("add") %>' />
 		</c:if>
 
 		<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">

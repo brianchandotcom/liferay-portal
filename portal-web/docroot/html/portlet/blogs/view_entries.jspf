@@ -31,7 +31,7 @@ showSearch = showSearch && !results.isEmpty();
 						<portlet:param name="backURL" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
-					<aui:nav-item href="<%= editEntryURL %>" label="add-blog-entry" name="addEntryButton" />
+					<aui:nav-item href="<%= editEntryURL %>" iconCssClass="icon-plus" label="add-blog-entry" name="addEntryButton" />
 				</c:if>
 			</aui:nav>
 		</c:if>

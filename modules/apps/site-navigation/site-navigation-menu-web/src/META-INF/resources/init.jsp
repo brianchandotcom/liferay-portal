@@ -32,8 +32,8 @@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
-page import="com.liferay.site.navigation.menu.web.configuration.NavigationWebConfigurationUtil" %><%@
-page import="com.liferay.site.navigation.menu.web.configuration.NavigationWebConfigurationValues" %>
+page import="com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfigurationUtil" %><%@
+page import="com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfigurationValues" %>
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects />
@@ -42,7 +42,7 @@ page import="com.liferay.site.navigation.menu.web.configuration.NavigationWebCon
 String portletResource = ParamUtil.getString(request, "portletResource");
 
 String bulletStyle = PrefsParamUtil.getString(portletPreferences, renderRequest, "bulletStyle", GetterUtil.getString(themeDisplay.getThemeSetting("bullet-style"), "dots"));
-String displayStyle = PrefsParamUtil.getString(portletPreferences, renderRequest, "displayStyle", NavigationWebConfigurationValues.DISPLAY_STYLE_DEFAULT);
+String displayStyle = PrefsParamUtil.getString(portletPreferences, renderRequest, "displayStyle", NavigationMenuWebConfigurationValues.DISPLAY_STYLE_DEFAULT);
 String headerType = PrefsParamUtil.getString(portletPreferences, renderRequest, "headerType", "root-layout");
 String includedLayouts = PrefsParamUtil.getString(portletPreferences, renderRequest, "includedLayouts", "current");
 boolean nestedChildren = PrefsParamUtil.getBoolean(portletPreferences, renderRequest, "nestedChildren", true);

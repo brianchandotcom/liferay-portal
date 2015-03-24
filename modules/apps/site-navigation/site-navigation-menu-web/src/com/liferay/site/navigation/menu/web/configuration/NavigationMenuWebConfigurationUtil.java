@@ -14,17 +14,29 @@
 
 package com.liferay.site.navigation.menu.web.configuration;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.configuration.Filter;
 
 /**
  * @author Eudaldo Alonso
  */
-public class NavigationWebConfigurationValues {
+public class NavigationMenuWebConfigurationUtil {
 
-	public static final String DISPLAY_STYLE_DEFAULT = GetterUtil.getString(
-		NavigationWebConfigurationUtil.get("display.style.default"));
+	public static String get(String key) {
+		return _configuration.get(key);
+	}
 
-	public static final String[] DISPLAY_STYLE_OPTIONS =
-		NavigationWebConfigurationUtil.getArray("display.style.options");
+	public static String[] getArray(String key) {
+		return _configuration.getArray(key);
+	}
+
+	public static String[] getArray(String key, Filter filter) {
+		return _configuration.getArray(key, filter);
+	}
+
+	private static final Configuration _configuration =
+		ConfigurationFactoryUtil.getConfiguration(
+			NavigationMenuWebConfigurationUtil.class.getClassLoader(), "portlet");
 
 }

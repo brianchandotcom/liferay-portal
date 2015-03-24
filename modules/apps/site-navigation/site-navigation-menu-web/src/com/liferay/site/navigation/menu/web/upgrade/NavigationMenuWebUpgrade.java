@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
-import com.liferay.site.navigation.menu.web.constants.NavigationPortletKeys;
+import com.liferay.site.navigation.menu.web.constants.NavigationMenuPortletKeys;
 
 import java.util.Collections;
 
@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = NavigationWebUpgrade.class)
-public class NavigationWebUpgrade {
+@Component(immediate = true, service = NavigationMenuWebUpgrade.class)
+public class NavigationMenuWebUpgrade {
 
 	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
@@ -52,7 +52,7 @@ public class NavigationWebUpgrade {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {"71", NavigationPortletKeys.NAVIGATION}
+					new String[] {"71", NavigationMenuPortletKeys.NAVIGATION}
 				};
 			}
 

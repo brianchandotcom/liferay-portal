@@ -15,7 +15,7 @@
 package com.liferay.site.navigation.menu.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.site.navigation.menu.web.upgrade.NavigationWebUpgrade;
+import com.liferay.site.navigation.menu.web.upgrade.NavigationMenuWebUpgrade;
 
 import javax.portlet.Portlet;
 
@@ -50,11 +50,11 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class NavigationPortlet extends MVCPortlet {
+public class NavigationMenuPortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
 	protected void setNavigationWebUpgrade(
-		NavigationWebUpgrade navigationWebUpgrade) {
+		NavigationMenuWebUpgrade navigationWebUpgrade) {
 	}
 
 }

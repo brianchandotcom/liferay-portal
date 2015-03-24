@@ -16,7 +16,7 @@ package com.liferay.site.navigation.menu.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.site.navigation.menu.web.constants.NavigationPortletKeys;
+import com.liferay.site.navigation.menu.web.constants.NavigationMenuPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,9 +28,9 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + NavigationPortletKeys.NAVIGATION
+		"javax.portlet.name=" + NavigationMenuPortletKeys.NAVIGATION
 	},
 	service = ConfigurationAction.class
 )
-public class NavigationConfigurationAction extends DefaultConfigurationAction {
+public class NavigationMenuConfigurationAction extends DefaultConfigurationAction {
 }

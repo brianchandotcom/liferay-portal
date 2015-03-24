@@ -17,9 +17,9 @@ package com.liferay.site.navigation.menu.web.constants;
 /**
  * @author Eudaldo Alonso
  */
-public class NavigationPortletKeys {
+public class NavigationMenuPortletKeys {
 
 	public static final String NAVIGATION =
-		"com_liferay_site_navigation_menu_web_portlet_NavigationPortlet";
+		"com_liferay_site_navigation_menu_web_portlet_NavigationMenuPortlet";
 
 }

@@ -557,7 +557,7 @@ AUI.add(
 
 					var currentTarget = event.currentTarget;
 
-					InputLocalized._initializeInputLocalized(event, currentTarget);
+					InputLocalized._initializeInputLocalized(event, currentTarget, userLanguageId);
 				},
 
 				_registerConfiguration: function(id, config) {

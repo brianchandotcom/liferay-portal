@@ -22,30 +22,18 @@ SearchFacet searchFacet = (SearchFacet)request.getAttribute("facet_configuration
 FacetConfiguration facetConfiguration = searchFacet.getFacetConfiguration(searchDisplayContext.getSearchConfiguration());
 %>
 
-<aui:fieldset label="general-facet-configuration">
-	<aui:row>
-		<aui:col width="<%= 50 %>">
-			<aui:input label="class-name" name='<%= searchFacet.getClassName() + "className" %>' value="<%= facetConfiguration.getClassName() %>" />
-
-			<aui:input label="display-style" name='<%= searchFacet.getClassName() + "displayStyle" %>' value="<%= facetConfiguration.getDisplayStyle() %>" />
-
-			<aui:input label="fieldName" name='<%= searchFacet.getClassName() + "fieldName" %>' value="<%= facetConfiguration.getFieldName() %>" />
-		</aui:col>
-
-		<aui:col width="<%= 50 %>">
-			<aui:input label="label" name='<%= searchFacet.getClassName() + "label" %>' value="<%= facetConfiguration.getLabel() %>" />
-
-			<aui:input label="order" name='<%= searchFacet.getClassName() + "order" %>' value="<%= facetConfiguration.getOrder() %>" />
-
-			<aui:input label="weight" name='<%= searchFacet.getClassName() + "weight" %>' value="<%= facetConfiguration.getWeight() %>" />
-		</aui:col>
-	</aui:row>
-
+<aui:fieldset>
 	<aui:input label="static" name='<%= searchFacet.getClassName() + "static" %>' type="checkbox" value="<%= facetConfiguration.isStatic() %>" />
+
+	<div class="facet-configuration-options" id="<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>Options">
+		<aui:input label="weight" name='<%= searchFacet.getClassName() + "weight" %>' value="<%= facetConfiguration.getWeight() %>" />
+
+		<c:if test="<%= Validator.isNotNull(searchFacet.getConfigurationView()) %>">
+			<liferay-util:include page="<%= searchFacet.getConfigurationView() %>" servletContext="<%= application %>" />
+		</c:if>
+	</div>
 </aui:fieldset>
 
-<c:if test="<%= Validator.isNotNull(searchFacet.getConfigurationView()) %>">
-	<aui:fieldset label="specific-facet-configuration">
-		<liferay-util:include page="<%= searchFacet.getConfigurationView() %>" servletContext="<%= application %>" />
-	</aui:fieldset>
-</c:if>
+<aui:script>
+	Liferay.Util.toggleBoxes('<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>static', '<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>Options', true);
+</aui:script>

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.search.facet.config;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Raymond Augé
@@ -34,8 +35,12 @@ public class FacetConfiguration {
 		return _dataJSONObject;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String getDisplayStyle() {
-		return _displayStyle;
+		return StringPool.BLANK;
 	}
 
 	public String getFieldName() {
@@ -70,8 +75,11 @@ public class FacetConfiguration {
 		_dataJSONObject = dataJSONObject;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setDisplayStyle(String displayStyle) {
-		_displayStyle = displayStyle;
 	}
 
 	public void setFieldName(String fieldName) {
@@ -96,7 +104,6 @@ public class FacetConfiguration {
 
 	private String _className;
 	private JSONObject _dataJSONObject;
-	private String _displayStyle;
 	private String _fieldName;
 	private String _label;
 	private String _order;

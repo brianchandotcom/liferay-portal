@@ -78,10 +78,9 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 		jsonObject.put("values", assetTypesJSONArray);
 
 		facetConfiguration.setDataJSONObject(jsonObject);
-		facetConfiguration.setDisplayStyle("asset_entries");
-		facetConfiguration.setFieldName(Field.ENTRY_CLASS_NAME);
-		facetConfiguration.setLabel("asset-type");
-		facetConfiguration.setOrder("OrderHitsDesc");
+		facetConfiguration.setFieldName(getFieldName());
+		facetConfiguration.setLabel(getLabel());
+		facetConfiguration.setOrder(getOrder());
 		facetConfiguration.setStatic(false);
 		facetConfiguration.setWeight(1.5);
 
@@ -89,8 +88,17 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
+		public String getId() {
+			return AssetEntriesSearchFacet.class.getName();
+		}
+
 	public String getDisplayView() {
 		return "/facets/view/asset_entries.jsp";
+	}
+
+	@Override
+	public String getFieldName() {
+		return Field.ENTRY_CLASS_NAME;
 	}
 
 	@Override
@@ -116,6 +124,11 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 		jsonObject.put("values", assetTypesJSONArray);
 
 		return jsonObject;
+	}
+
+	@Override
+	public String getLabel() {
+		return "asset-type";
 	}
 
 	@Override

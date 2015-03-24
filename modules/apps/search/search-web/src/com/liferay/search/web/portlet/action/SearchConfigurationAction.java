@@ -52,16 +52,6 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 		JSONArray newFacetsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (SearchFacet searchFacet : _searchFacetTracker.getSearchFacets()) {
-			String className = ParamUtil.getString(
-				actionRequest, searchFacet.getClassName() + "className");
-			String displayStyle = ParamUtil.getString(
-				actionRequest, searchFacet.getClassName() + "displayStyle");
-			String fieldName = ParamUtil.getString(
-				actionRequest, searchFacet.getClassName() + "fieldName");
-			String label = ParamUtil.getString(
-				actionRequest, searchFacet.getClassName() + "label");
-			String order = ParamUtil.getString(
-				actionRequest, searchFacet.getClassName() + "order");
 			boolean isStatic = ParamUtil.getBoolean(
 				actionRequest, searchFacet.getClassName() + "static");
 			double weight = ParamUtil.getDouble(
@@ -69,14 +59,12 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 
 			JSONObject facetJSONObject = JSONFactoryUtil.createJSONObject();
 
-			facetJSONObject.put("className", className);
+			facetJSONObject.put("className", searchFacet.getClassName());
 			facetJSONObject.put("data", searchFacet.getJSONData(actionRequest));
-			facetJSONObject.put("displayStyle", displayStyle);
-			facetJSONObject.put("fieldName", fieldName);
-			facetJSONObject.put("label", label);
-			facetJSONObject.put("order", order);
-			facetJSONObject.put(
-				"searchFacetClassName", searchFacet.getClassName());
+			facetJSONObject.put("fieldName", searchFacet.getFieldName());
+			facetJSONObject.put("label", searchFacet.getLabel());
+			facetJSONObject.put("order", searchFacet.getOrder());
+			facetJSONObject.put("id", searchFacet.getId());
 			facetJSONObject.put("static", isStatic);
 			facetJSONObject.put("weight", weight);
 

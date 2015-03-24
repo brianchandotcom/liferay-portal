@@ -57,19 +57,27 @@ public class UserSearchFacet extends BaseSearchFacet {
 		jsonObject.put("showAssetCount", true);
 
 		facetConfiguration.setDataJSONObject(jsonObject);
-		facetConfiguration.setDisplayStyle("users");
-		facetConfiguration.setFieldName(Field.USER_NAME);
-		facetConfiguration.setLabel("user");
-		facetConfiguration.setOrder("OrderHitsDesc");
+		facetConfiguration.setFieldName(getFieldName());
+		facetConfiguration.setLabel(getLabel());
+		facetConfiguration.setOrder(getOrder());
 		facetConfiguration.setStatic(false);
 		facetConfiguration.setWeight(1.1);
 
 		return facetConfiguration;
 	}
 
-	@Override
 	public String getDisplayView() {
 		return "/facets/view/users.jsp";
+	}
+
+	@Override
+	public String getFieldName() {
+		return Field.USER_NAME;
+	}
+
+	@Override
+	public String getId() {
+		return UserSearchFacet.class.getName();
 	}
 
 	@Override
@@ -88,6 +96,11 @@ public class UserSearchFacet extends BaseSearchFacet {
 		jsonObject.put("showAssetCount", showAssetCount);
 
 		return jsonObject;
+	}
+
+	@Override
+	public String getLabel() {
+		return "user";
 	}
 
 	@Override

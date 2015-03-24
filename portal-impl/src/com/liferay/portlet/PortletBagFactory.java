@@ -579,7 +579,11 @@ public class PortletBagFactory {
 			(PortletDataHandler)newInstance(
 				PortletDataHandler.class, portletDataHandlerClass);
 
-		portletDataHandlerInstances.add(portletDataHandlerInstance);
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("service.ranking", Integer.MIN_VALUE);
+
+		portletDataHandlerInstances.add(portletDataHandlerInstance, properties);
 
 		return portletDataHandlerInstances;
 	}

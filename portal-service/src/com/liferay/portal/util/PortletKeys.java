@@ -82,7 +82,8 @@ public class PortletKeys {
 
 	public static final String IMAGE_UPLOADER = "195";
 
-	public static final String JOURNAL = "15";
+	public static final String JOURNAL =
+		"com_liferay_journal_web_portlet_JournalPortlet";
 
 	public static final String LAYOUT_PROTOTYPE = "146";
 

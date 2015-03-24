@@ -21,7 +21,8 @@
 
 <%@ page import="com.liferay.portal.DuplicateOpenIdException" %><%@
 page import="com.liferay.portal.UserEmailAddressException" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %>
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.sso.openid.constants.OpenIdWebKeys" %>
 
 <%@ page import="javax.portlet.WindowState" %>
 
@@ -31,5 +32,5 @@ page import="org.openid4java.discovery.DiscoveryException" %><%@
 page import="org.openid4java.message.MessageException" %>
 
 <%
-WindowState windowState = liferayPortletRequest.getWindowState();
+WindowState windowState = (WindowState)request.getAttribute(OpenIdWebKeys.WINDOW_STATE);
 %>

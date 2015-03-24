@@ -326,6 +326,11 @@ public class JMXProxyUtilTest {
 			public boolean equals(Object object) {
 				return super.equals(object);
 			}
+
+			@Override
+			public int hashCode() {
+				return super.hashCode();
+			}
 		}
 
 		Assert.assertFalse(
@@ -341,6 +346,11 @@ public class JMXProxyUtilTest {
 			JMXProxyUtil.isObjectHashCode(Object.class.getMethod("wait")));
 
 		class OverrideClass {
+
+			@Override
+			public boolean equals(Object object) {
+				return super.equals(object);
+			}
 
 			@Override
 			public int hashCode() {

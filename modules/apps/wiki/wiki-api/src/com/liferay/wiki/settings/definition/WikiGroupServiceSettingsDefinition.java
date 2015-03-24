@@ -25,10 +25,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Iván Zaera
  */
 @Component(immediate = true)
-public class WikiGroupServiceSettingsDefinition implements SettingsDefinition {
+public class WikiGroupServiceSettingsDefinition
+	implements SettingsDefinition<WikiGroupServiceSettings,
+		WikiGroupServiceConfiguration> {
 
 	@Override
-	public Class<?> getConfigurationBeanClass() {
+	public Class<WikiGroupServiceConfiguration> getConfigurationBeanClass() {
 		return WikiGroupServiceConfiguration.class;
 	}
 

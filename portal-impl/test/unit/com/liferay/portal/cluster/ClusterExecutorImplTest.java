@@ -396,6 +396,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 		clusterExecutorImpl.setClusterChannelFactory(
 			new TestClusterChannelFactory());
+		clusterExecutorImpl.setPortalExecutorManager(portalExecutorManager);
 
 		clusterExecutorImpl.initialize();
 

@@ -382,6 +382,8 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		clusterLinkImpl.setClusterChannelFactory(
 			new TestClusterChannelFactory());
 
+		clusterLinkImpl.setPortalExecutorManager(portalExecutorManager);
+
 		clusterLinkImpl.initialize();
 
 		return clusterLinkImpl;

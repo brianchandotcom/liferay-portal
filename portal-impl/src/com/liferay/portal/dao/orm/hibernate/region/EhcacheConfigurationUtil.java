@@ -14,7 +14,6 @@
 
 package com.liferay.portal.dao.orm.hibernate.region;
 
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
@@ -123,14 +122,7 @@ public class EhcacheConfigurationUtil {
 				cacheEventListenerConfigurations.remove(
 					cacheEventListenerFactoryConfiguration);
 
-				String properties =
-					cacheEventListenerFactoryConfiguration.getProperties();
-
-				if (properties == null) {
-					properties = StringPool.BLANK;
-				}
-
-				return properties;
+				return cacheEventListenerFactoryConfiguration.getProperties();
 			}
 		}
 
@@ -200,14 +192,10 @@ public class EhcacheConfigurationUtil {
 		CacheConfiguration cacheConfiguration,
 		String cacheEventListenerProperties) {
 
-		if ((cacheEventListenerProperties == null) ||
+		if (Validator.isNull(cacheEventListenerProperties) ||
 			!PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
 
 			return;
-		}
-
-		if (cacheEventListenerProperties.equals(StringPool.BLANK)) {
-			cacheEventListenerProperties = null;
 		}
 
 		CacheEventListenerFactoryConfiguration

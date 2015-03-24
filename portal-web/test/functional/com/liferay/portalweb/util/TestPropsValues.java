@@ -82,12 +82,6 @@ public class TestPropsValues
 	public static final boolean MOBILE_DEVICE_ENABLED = GetterUtil.getBoolean(
 		TestPropsUtil.get("mobile.device.enabled"));
 
-	public static final String MOBILE_DEVICE_RESOLUTION = TestPropsUtil.get(
-		"mobile.device.resolution");
-
-	public static final String MOBILE_DEVICE_USER_AGENT = TestPropsUtil.get(
-		"mobile.device.user.agent");
-
 	public static final String OUTPUT_DIR_NAME = TestPropsUtil.get(
 		"output.dir");
 

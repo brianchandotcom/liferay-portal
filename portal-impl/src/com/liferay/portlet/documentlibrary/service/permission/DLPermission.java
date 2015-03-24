@@ -17,7 +17,7 @@ package com.liferay.portlet.documentlibrary.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.BaseResourcePermission;
+import com.liferay.portal.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 
@@ -29,7 +29,7 @@ import com.liferay.portal.util.PortletKeys;
 		"resource.name=com.liferay.portlet.documentlibrary"
 	}
 )
-public class DLPermission extends BaseResourcePermission {
+public class DLPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =
 		"com.liferay.portlet.documentlibrary";

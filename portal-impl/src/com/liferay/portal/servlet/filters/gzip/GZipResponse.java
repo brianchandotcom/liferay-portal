@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse;
 import com.liferay.portal.kernel.servlet.ServletOutputStreamAdapter;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.RSSThreadLocal;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.RSSThreadLocal;
 
 import java.io.IOException;
 import java.io.OutputStream;

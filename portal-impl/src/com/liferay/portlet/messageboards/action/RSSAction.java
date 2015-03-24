@@ -16,12 +16,12 @@ package com.liferay.portlet.messageboards.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
-import com.liferay.util.RSSUtil;
 
 import javax.servlet.http.HttpServletRequest;
 

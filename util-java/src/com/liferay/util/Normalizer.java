@@ -14,47 +14,10 @@
 
 package com.liferay.util;
 
-import com.liferay.ibm.icu.text.Transliterator;
-import com.liferay.portal.kernel.util.StringUtil;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class Normalizer {
-
-	public static String normalizeToAscii(String s) {
-		if (!_hasNonASCIICode(s)) {
-			return s;
-		}
-
-		String normalizedText = _transliterator.transform(s);
-
-		return StringUtil.replace(
-			normalizedText, _UNICODE_TEXT, _NORMALIZED_TEXT);
-	}
-
-	private static boolean _hasNonASCIICode(String s) {
-		for (int i = 0; i < s.length(); i++) {
-			if (s.charAt(i) > 127) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private static final String[] _NORMALIZED_TEXT = new String[] {
-		"l", "'", "\""
-	};
-
-	private static final String[] _UNICODE_TEXT = new String[] {
-		"\u0142", "\u02B9", "\u02BA"
-	};
-
-	private static final Transliterator _transliterator =
-		Transliterator.getInstance(
-			"Greek-Latin; Cyrillic-Latin; NFD; [:Nonspacing Mark:] " +
-				"Remove; NFC");
-
+@Deprecated
+public class Normalizer extends com.liferay.portal.kernel.util.Normalizer {
 }

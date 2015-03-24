@@ -34,7 +34,6 @@ import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.StringServiceRegistrationMap;
@@ -88,14 +87,6 @@ public class TemplateHandlerRegistryUtil {
 		return Collections.unmodifiableList(templateHandlers);
 	}
 
-	public static void register(TemplateHandler templateHandler) {
-		_instance._register(templateHandler);
-	}
-
-	public static void unregister(TemplateHandler templateHandler) {
-		_instance._unregister(templateHandler);
-	}
-
 	private TemplateHandlerRegistryUtil() {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -104,25 +95,6 @@ public class TemplateHandlerRegistryUtil {
 			new TemplateHandlerServiceTrackerCustomizer());
 
 		_serviceTracker.open();
-	}
-
-	private void _register(TemplateHandler templateHandler) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<TemplateHandler> serviceRegistration =
-			registry.registerService(TemplateHandler.class, templateHandler);
-
-		_serviceRegistrations.put(
-			templateHandler.getClassName(), serviceRegistration);
-	}
-
-	private void _unregister(TemplateHandler templateHandler) {
-		ServiceRegistration<TemplateHandler> serviceRegistration =
-			_serviceRegistrations.remove(templateHandler.getClassName());
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

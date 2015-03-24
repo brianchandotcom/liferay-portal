@@ -40,7 +40,7 @@ import java.util.List;
 public class AggregateClassLoader extends ClassLoader {
 
 	public static ClassLoader getAggregateClassLoader(
-		ClassLoader parentClassLoader, ClassLoader[] classLoaders) {
+		ClassLoader parentClassLoader, ClassLoader... classLoaders) {
 
 		if (ArrayUtil.isEmpty(classLoaders)) {
 			return parentClassLoader;

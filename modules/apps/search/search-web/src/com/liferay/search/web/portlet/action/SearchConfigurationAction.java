@@ -52,8 +52,8 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 		JSONArray newFacetsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (SearchFacet searchFacet : _searchFacetTracker.getSearchFacets()) {
-			boolean isStatic = ParamUtil.getBoolean(
-				actionRequest, searchFacet.getClassName() + "static");
+			boolean displayFacet = ParamUtil.getBoolean(
+				actionRequest, searchFacet.getClassName() + "displayFacet");
 			double weight = ParamUtil.getDouble(
 				actionRequest, searchFacet.getClassName() + "weight");
 
@@ -65,7 +65,7 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 			facetJSONObject.put("label", searchFacet.getLabel());
 			facetJSONObject.put("order", searchFacet.getOrder());
 			facetJSONObject.put("id", searchFacet.getId());
-			facetJSONObject.put("static", isStatic);
+			facetJSONObject.put("static", !displayFacet);
 			facetJSONObject.put("weight", weight);
 
 			newFacetsJSONArray.put(facetJSONObject);

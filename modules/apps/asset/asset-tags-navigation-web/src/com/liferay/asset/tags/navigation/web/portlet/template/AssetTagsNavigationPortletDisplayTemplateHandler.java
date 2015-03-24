@@ -56,7 +56,7 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 	@Override
 	public String getName(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(
-			"content.Language");
+			"content.Language", locale);
 
 		String portletTitle = PortalUtil.getPortletTitle(
 			AssetTagsNavigationPortletKeys.ASSET_TAGS_NAVIGATION,

@@ -58,7 +58,7 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 	@Override
 	public String getName(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(
-			"content.Language");
+			"content.Language", locale);
 
 		String portletTitle = PortalUtil.getPortletTitle(
 			AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION,

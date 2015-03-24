@@ -53,10 +53,6 @@ searchContext.addFacet(scopeFacet);
 String searchConfiguration = searchDisplayContext.getSearchConfiguration();
 
 for (SearchFacet searchFacet : searchDisplayContext.getEnabledSearchFacets()) {
-	if (!searchDisplayContext.isDisplayFacet(searchFacet.getClassName())) {
-		continue;
-	}
-
 	Facet facet = searchFacet.getFacet(searchContext, searchConfiguration);
 
 	if (facet == null) {

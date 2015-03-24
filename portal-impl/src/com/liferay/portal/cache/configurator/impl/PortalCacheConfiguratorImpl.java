@@ -35,9 +35,7 @@ import java.util.Collection;
 public class PortalCacheConfiguratorImpl implements PortalCacheConfigurator {
 
 	@Override
-	public void reconfigureCaches(ClassLoader classLoader, URL url)
-		throws Exception {
-
+	public void reconfigureCaches(ClassLoader classLoader, URL url) {
 		if (Validator.isNull(url)) {
 			return;
 		}

@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.util;
-
-import com.liferay.portal.kernel.util.StringBundler;
+package com.liferay.portal.kernel.util;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,7 +20,7 @@ import org.junit.Test;
 /**
  * @author Mate Thurzo
  */
-public class NormalizerTest {
+public class NormalizerUtilTest {
 
 	@Test
 	public void testAscii() {
@@ -31,7 +29,7 @@ public class NormalizerTest {
 
 		Assert.assertEquals(
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-			Normalizer.normalizeToAscii(asciiAlphabet));
+			NormalizerUtil.normalizeToAscii(asciiAlphabet));
 	}
 
 	@Test
@@ -49,7 +47,7 @@ public class NormalizerTest {
 
 		Assert.assertEquals(
 			"ABGDEZETHIKLMN'XOPRSTYPHCHPSOabgdezethiklmn'xoprsstyphchpso",
-			Normalizer.normalizeToAscii(greekAlphabet));
+			NormalizerUtil.normalizeToAscii(greekAlphabet));
 	}
 
 	@Test
@@ -62,7 +60,7 @@ public class NormalizerTest {
 		Assert.assertEquals(
 			"AABCDEEFGHIIJKLMNOOOOPQRSTUUUUVWXYZaabcdeefghiijklmnoooopqrstuuu" +
 				"uvwxyz",
-			Normalizer.normalizeToAscii(hungarianAlphabet));
+			NormalizerUtil.normalizeToAscii(hungarianAlphabet));
 	}
 
 	@Test
@@ -83,7 +81,7 @@ public class NormalizerTest {
 		Assert.assertEquals(
 			"ABVGDEEZZIJKLMNOPRSTUFHCCSS\"Y'EUAabvgdeezzijklmnoprstufhccss\"y" +
 				"'eua",
-			Normalizer.normalizeToAscii(russianAlphabet));
+			NormalizerUtil.normalizeToAscii(russianAlphabet));
 	}
 
 	@Test
@@ -93,7 +91,7 @@ public class NormalizerTest {
 
 		Assert.assertEquals(
 			"ABCDEFGIJKLMNNOPQRSTUVWXYZabcdefghijklmnnopqrstuvwxyz",
-			Normalizer.normalizeToAscii(spanishAlphabet));
+			NormalizerUtil.normalizeToAscii(spanishAlphabet));
 	}
 
 }

@@ -407,6 +407,11 @@
 			<bean class="com.liferay.portal.util.MultiValueMapFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.util.NormalizerUtil" class="com.liferay.portal.kernel.util.NormalizerUtil">
+		<property name="normalizer">
+			<bean class="com.liferay.portal.util.NormalizerImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.util.PrefsPropsUtil" class="com.liferay.portal.kernel.util.PrefsPropsUtil">
 		<property name="prefsProps">
 			<bean class="com.liferay.portal.util.PrefsPropsImpl" />

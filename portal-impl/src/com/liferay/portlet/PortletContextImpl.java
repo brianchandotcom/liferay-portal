@@ -142,6 +142,11 @@ public class PortletContextImpl implements LiferayPortletContext {
 			requestDispatcher = _servletContext.getRequestDispatcher(path);
 		}
 		catch (Throwable t) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get request dispatcher for path :" + path, t);
+			}
+
 			return null;
 		}
 

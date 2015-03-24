@@ -16,6 +16,7 @@ package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,19 +45,13 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class TCKAction extends Action {
+public class TCKStrutsAction extends BaseStrutsAction {
 
 	@Override
-	public ActionForward execute(
-			ActionMapping actionMapping, ActionForm actionForm,
+	public String execute(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
@@ -137,8 +132,7 @@ public class TCKAction extends Action {
 				themeDisplay.getPathMain() + "/portal/layout?p_l_id=" +
 					layout.getPlid());
 
-			return actionMapping.findForward(
-				ActionConstants.COMMON_FORWARD_JSP);
+			return ActionConstants.COMMON_FORWARD_JSP;
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -196,6 +190,7 @@ public class TCKAction extends Action {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(TCKAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		TCKStrutsAction.class);
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.events;
 
+import com.liferay.portal.action.TCKStrutsAction;
 import com.liferay.portal.cache.bootstrap.ClusterLinkBootstrapLoaderHelperUtil;
 import com.liferay.portal.fabric.server.FabricServerUtil;
 import com.liferay.portal.jericho.CachedLoggerProvider;
@@ -47,6 +48,7 @@ import com.liferay.portal.plugin.PluginPackageIndexer;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
+import com.liferay.portal.struts.StrutsActionRegistryUtil;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -224,6 +226,11 @@ public class StartupAction extends SimpleAction {
 		// Jericho
 
 		CachedLoggerProvider.install();
+
+		if (PropsValues.TCK_URL) {
+			StrutsActionRegistryUtil.register(
+				"/portal/tck", new TCKStrutsAction());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(StartupAction.class);

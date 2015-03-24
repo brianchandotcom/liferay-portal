@@ -57,10 +57,9 @@ public class FolderSearchFacet extends BaseSearchFacet {
 		jsonObject.put("showAssetCount", true);
 
 		facetConfiguration.setDataJSONObject(jsonObject);
-		facetConfiguration.setDisplayStyle("folders");
-		facetConfiguration.setFieldName(Field.FOLDER_ID);
-		facetConfiguration.setLabel("folder");
-		facetConfiguration.setOrder("OrderHitsDesc");
+		facetConfiguration.setFieldName(getFieldName());
+		facetConfiguration.setLabel(getLabel());
+		facetConfiguration.setOrder(getOrder());
 		facetConfiguration.setStatic(false);
 		facetConfiguration.setWeight(1.2);
 
@@ -68,8 +67,17 @@ public class FolderSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
+		public String getId() {
+			return FolderSearchFacet.class.getName();
+		}
+
 	public String getDisplayView() {
 		return "/facets/view/folders.jsp";
+	}
+
+	@Override
+	public String getFieldName() {
+		return Field.FOLDER_ID;
 	}
 
 	@Override
@@ -88,6 +96,11 @@ public class FolderSearchFacet extends BaseSearchFacet {
 		jsonObject.put("showAssetCount", showAssetCount);
 
 		return jsonObject;
+	}
+
+	@Override
+	public String getLabel() {
+		return "folder";
 	}
 
 	@Override

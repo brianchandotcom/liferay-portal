@@ -44,7 +44,15 @@ public interface SearchFacet {
 	public FacetConfiguration getFacetConfiguration(String searchConfiguration)
 		throws JSONException;
 
+	public String getFieldName();
+
+	public String getId();
+
 	public JSONObject getJSONData(ActionRequest actionRequest);
+
+	public String getLabel();
+
+	public String getOrder();
 
 	public String getTitle();
 

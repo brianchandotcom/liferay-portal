@@ -57,10 +57,9 @@ public class ScopeSearchFacet extends BaseSearchFacet {
 		jsonObject.put("showAssetCount", true);
 
 		facetConfiguration.setDataJSONObject(jsonObject);
-		facetConfiguration.setDisplayStyle("scopes");
-		facetConfiguration.setFieldName(Field.GROUP_ID);
-		facetConfiguration.setLabel("site");
-		facetConfiguration.setOrder("OrderHitsDesc");
+		facetConfiguration.setFieldName(getFieldName());
+		facetConfiguration.setLabel(getLabel());
+		facetConfiguration.setOrder(getOrder());
 		facetConfiguration.setStatic(false);
 		facetConfiguration.setWeight(1.6);
 
@@ -68,8 +67,17 @@ public class ScopeSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
+		public String getId() {
+			return ScopeSearchFacet.class.getName();
+		}
+
 	public String getDisplayView() {
 		return "/facets/view/scopes.jsp";
+	}
+
+	@Override
+	public String getFieldName() {
+		return Field.GROUP_ID;
 	}
 
 	@Override
@@ -91,8 +99,13 @@ public class ScopeSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
+	public String getLabel() {
+		return "site";
+	}
+
+	@Override
 	public String getTitle() {
-		return "scopes";
+		return "sites";
 	}
 
 }

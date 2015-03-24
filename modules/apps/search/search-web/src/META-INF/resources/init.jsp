@@ -93,6 +93,7 @@ page import="com.liferay.search.web.context.SearchDisplayContext" %><%@
 page import="com.liferay.search.web.facets.AssetEntriesSearchFacet" %><%@
 page import="com.liferay.search.web.util.SearchFacet" %><%@
 page import="com.liferay.search.web.util.SearchFacetTracker" %><%@
+page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.util.PropertyComparator" %>
 

@@ -64,6 +64,11 @@ public abstract class BaseSearchFacet implements SearchFacet {
 		return getDefaultConfiguration();
 	}
 
+	@Override
+	public String getOrder() {
+		return "OrderHitsDesc";
+	}
+
 	private FacetConfiguration _getFacetConfiguration(String configuration)
 		throws JSONException {
 
@@ -84,10 +89,9 @@ public abstract class BaseSearchFacet implements SearchFacet {
 		for (int i = 0; i < facetsJSONArray.length(); i++) {
 			JSONObject facetJSONObject = facetsJSONArray.getJSONObject(i);
 
-			String searchFacetClassName = facetJSONObject.getString(
-				"searchFacetClassName");
+			String searchFacetId = facetJSONObject.getString("id");
 
-			if (!searchFacetClassName.equals(getClassName())) {
+			if (!searchFacetId.equals(getId())) {
 				continue;
 			}
 

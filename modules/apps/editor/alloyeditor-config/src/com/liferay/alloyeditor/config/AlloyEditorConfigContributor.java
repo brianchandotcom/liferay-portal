@@ -12,8 +12,11 @@
  * details.
  */
 
-package com.liferay.mentions.portlet.editor.conf;
+package com.liferay.alloyeditor.config;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -80,10 +83,9 @@ public class AlloyEditorConfigContributor
 
 		if (fileBrowserParamsMap != null) {
 			for (Map.Entry<String, String> entry :
-					fileBrowserParamsMap.entrySet()) {
+				fileBrowserParamsMap.entrySet()) {
 
-				documentSelectorURL.setParameter(
-					entry.getKey(), entry.getValue());
+				documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
 			}
 		}
 
@@ -102,6 +104,27 @@ public class AlloyEditorConfigContributor
 
 		jsonObject.put("language", languageId.replace("iw_", "he_"));
 		jsonObject.put("srcNode", "#" + name);
+
+		JSONObject toolbars = JSONFactoryUtil.createJSONObject();
+
+		try{
+			JSONArray toolbarAdd = JSONFactoryUtil.createJSONArray(
+				"['imageselector']");
+
+			JSONArray toolbarImage = JSONFactoryUtil.createJSONArray(
+				"['left', 'right']");
+
+			JSONArray toolbarStyles = JSONFactoryUtil.createJSONArray(
+				"['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']");
+
+			toolbars.put("add", toolbarAdd);
+			toolbars.put("image", toolbarImage);
+			toolbars.put("styles", toolbarStyles);
+		}
+		catch (JSONException jsone) {
+		}
+
+		jsonObject.put("toolbars", toolbars);
 	}
 
 	public void populateOptionsJSONObject(

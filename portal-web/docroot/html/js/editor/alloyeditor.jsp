@@ -181,17 +181,7 @@ if (showSource) {
 	var createInstance = function() {
 		document.getElementById('<%= name %>').setAttribute('contenteditable', true);
 
-		var defaultConfig = {
-			toolbars: {
-				add: ['imageselector'],
-				image: ['left', 'right'],
-				styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']
-			}
-		};
-
-		var customConfig = (<%= Validator.isNotNull(editorConfigJSONObject) %> ) ? <%= editorConfigJSONObject %> : {};
-
-		var config = A.merge(defaultConfig, customConfig);
+		var editorConfig = (<%= Validator.isNotNull(editorConfigJSONObject) %> ) ? <%= editorConfigJSONObject %> : {};
 
 		var plugins = [];
 
@@ -212,7 +202,7 @@ if (showSource) {
 
 		alloyEditor = new A.LiferayAlloyEditor(
 			{
-				editorConfig: config,
+				editorConfig: editorConfig,
 				editorOptions: <%= editorOptionsJSONObject %>,
 				initMethod: window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'],
 				namespace: '<%= name %>',

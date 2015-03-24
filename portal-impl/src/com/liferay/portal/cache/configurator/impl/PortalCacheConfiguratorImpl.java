@@ -26,10 +26,9 @@ import java.io.Serializable;
 
 import java.net.URL;
 
-import java.util.Collection;
-
 /**
  * @author Miguel Pastor
+ * @author Shuyang Zhou
  */
 public class PortalCacheConfiguratorImpl implements PortalCacheConfigurator {
 
@@ -39,24 +38,17 @@ public class PortalCacheConfiguratorImpl implements PortalCacheConfigurator {
 			return;
 		}
 
-		ClassLoader aggregateClassLoader =
-			AggregateClassLoader.getAggregateClassLoader(
-				new ClassLoader[] {
-					ClassLoaderUtil.getPortalClassLoader(), classLoader
-				});
-
 		ClassLoader contextClassLoader =
 			ClassLoaderUtil.getContextClassLoader();
 
+		ClassLoaderUtil.setContextClassLoader(
+			AggregateClassLoader.getAggregateClassLoader(
+				ClassLoaderUtil.getPortalClassLoader(), classLoader));
+
 		try {
-			ClassLoaderUtil.setContextClassLoader(aggregateClassLoader);
-
-			Collection<PortalCacheManager<? extends Serializable, ?>>
-				portalCacheManagers =
-					PortalCacheProvider.getPortalCacheManagers();
-
 			for (PortalCacheManager<? extends Serializable, ?>
-					portalCacheManager : portalCacheManagers) {
+					portalCacheManager :
+						PortalCacheProvider.getPortalCacheManagers()) {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(

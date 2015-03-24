@@ -159,16 +159,23 @@ public class PoshiRunnerGetterUtil {
 	public static String getVarMethodValue(String classCommandName)
 		throws PoshiRunnerException {
 
-		Matcher matcher = _parameterPattern.matcher(classCommandName);
+		int x = classCommandName.indexOf("(");
+		int y = classCommandName.lastIndexOf(")");
 
 		String[] parameters = null;
 
-		while (matcher.find()) {
-			String parameterString = matcher.group(1);
+		if (y > (x + 1)) {
+			String parameterString = classCommandName.substring(x + 1, y);
 
 			parameterString = parameterString.replaceAll("\"", "");
 
-			parameters = parameterString.split(",");
+			if (parameterString.contains("#")) {
+				parameters = new String[] {
+					PoshiRunnerContext.getPathLocator(parameterString)};
+			}
+			else {
+				parameters = parameterString.split(",");
+			}
 		}
 
 		String className = getClassNameFromClassCommandName(classCommandName);
@@ -215,7 +222,12 @@ public class PoshiRunnerGetterUtil {
 
 			if (parameters != null) {
 				for (int i = 0; i < parameters.length; i++) {
-					parameters[i] = parameters[i].trim();
+					if (parameters[i].length() != 1) {
+						parameters[i] = parameters[i].trim();
+					}
+					else {
+						parameters[i] = parameters[i];
+					}
 
 					parameterClasses.add(String.class);
 				}
@@ -260,8 +272,6 @@ public class PoshiRunnerGetterUtil {
 		return null;
 	}
 
-	private static final Pattern _parameterPattern = Pattern.compile(
-		"\\(([^)]+)\\)");
 	private static final List<String> _reservedTags = Arrays.asList(
 		new String[] {
 			"and", "case", "command", "condition", "contains", "default",

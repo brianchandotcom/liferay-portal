@@ -16,16 +16,24 @@ package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 
+import java.io.File;
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * @author Daniel Kocsis
@@ -63,13 +71,80 @@ public class PortletImportBackgroundTaskExecutor
 		List<FileEntry> attachmentsFileEntries =
 			backgroundTask.getAttachmentsFileEntries();
 
+		File file = null;
+
 		for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
-			LayoutLocalServiceUtil.importPortletInfo(
-				userId, targetPlid, targetGroupId, portletId, parameterMap,
-				attachmentsFileEntry.getContentStream());
+			try {
+				file = FileUtil.createTempFile("lar");
+
+				FileUtil.write(file, attachmentsFileEntry.getContentStream());
+
+				TransactionHandlerUtil.invoke(
+					transactionAttribute,
+					new PortletImportCallable(
+						file, parameterMap, portletId, targetGroupId,
+						targetPlid, userId));
+			}
+			catch (Throwable t) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(t, t);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn("Unable to import portlet: " + t.getMessage());
+				}
+
+				throw new SystemException(t);
+			}
+			finally {
+				FileUtil.delete(file);
+			}
 		}
 
 		return BackgroundTaskResult.SUCCESS;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletImportBackgroundTaskExecutor.class);
+
+	private class PortletImportCallable implements Callable<Void> {
+
+		public PortletImportCallable(
+			File file, Map<String, String[]> parameterMap, String portletId,
+			long targetGroupId, long targetPlid, long userId) {
+
+			_file = file;
+			_parameterMap = parameterMap;
+			_portletId = portletId;
+			_targetGroupId = targetGroupId;
+			_targetPlid = targetPlid;
+			_userId = userId;
+		}
+
+		@Override
+		public Void call() throws PortalException {
+			try {
+				LayoutLocalServiceUtil.importPortletDataDeletions(
+					_userId, _targetPlid, _targetGroupId, _portletId,
+					_parameterMap, _file);
+
+				LayoutLocalServiceUtil.importPortletInfo(
+					_userId, _targetPlid, _targetGroupId, _portletId,
+					_parameterMap, _file);
+			}
+			finally {
+				FileUtil.delete(_file);
+			}
+
+			return null;
+		}
+
+		private final File _file;
+		private final Map<String, String[]> _parameterMap;
+		private final String _portletId;
+		private final long _targetGroupId;
+		private final long _targetPlid;
+		private final long _userId;
+
 	}
 
 }

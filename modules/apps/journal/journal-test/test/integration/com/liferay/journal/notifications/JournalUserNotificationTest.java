@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journal.notifications;
+package com.liferay.journal.notifications;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;

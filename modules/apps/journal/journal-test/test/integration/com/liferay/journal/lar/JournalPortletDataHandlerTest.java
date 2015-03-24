@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.journal.lar;
+package com.liferay.journal.lar;
 
+import com.liferay.journal.web.lar.JournalPortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;

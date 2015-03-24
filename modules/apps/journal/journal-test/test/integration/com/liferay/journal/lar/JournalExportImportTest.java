@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.journal.lar;
+package com.liferay.journal.lar;
 
+import com.liferay.journal.web.lar.JournalPortletDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
@@ -72,8 +73,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
-	public String getNamespace() {
-		return JournalPortletDataHandler.NAMESPACE;
+	public String getNamespace() {return JournalPortletDataHandler.NAMESPACE;
 	}
 
 	@Override

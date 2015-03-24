@@ -30,13 +30,13 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.RSSUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.model.Group" %><%@
 page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portlet.social.model.SocialActivity" %><%@
-page import="com.liferay.portlet.social.service.SocialActivityLocalServiceUtil" %><%@
-page import="com.liferay.util.RSSUtil" %>
+page import="com.liferay.portlet.social.service.SocialActivityLocalServiceUtil" %>
 
 <%@ page import="java.util.List" %>
 

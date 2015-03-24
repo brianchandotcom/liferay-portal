@@ -35,6 +35,7 @@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %><%@
+page import="com.liferay.portal.kernel.util.RSSUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -77,8 +78,7 @@ page import="com.liferay.social.networking.service.WallEntryLocalServiceUtil" %>
 page import="com.liferay.social.networking.web.constants.SocialNetworkingWebKeys" %><%@
 page import="com.liferay.social.networking.web.meetups.util.MeetupsConstants" %><%@
 page import="com.liferay.social.networking.web.util.WallUtil" %><%@
-page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.util.RSSUtil" %>
+page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.text.Format" %>
 

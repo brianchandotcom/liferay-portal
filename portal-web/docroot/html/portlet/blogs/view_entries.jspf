@@ -16,14 +16,13 @@
 
 <%
 boolean showAddEntryButton = BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY);
-boolean showPermissionsButton = BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 boolean showSubscribeButton = BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && (blogsGroupServiceSettings.isEmailEntryAddedEnabled() || blogsGroupServiceSettings.isEmailEntryUpdatedEnabled());
 showSearch = showSearch && !results.isEmpty();
 %>
 
-<c:if test="<%= showAddEntryButton || showPermissionsButton || showSearch %>">
+<c:if test="<%= showAddEntryButton || showSearch %>">
 	<aui:nav-bar>
-		<c:if test="<%= showAddEntryButton || showPermissionsButton %>">
+		<c:if test="<%= showAddEntryButton %>">
 			<aui:nav cssClass="navbar-nav">
 				<c:if test="<%= showAddEntryButton %>">
 					<portlet:renderURL var="editEntryURL">
@@ -33,18 +32,6 @@ showSearch = showSearch && !results.isEmpty();
 					</portlet:renderURL>
 
 					<aui:nav-item href="<%= editEntryURL %>" label="add-blog-entry" name="addEntryButton" />
-				</c:if>
-
-				<c:if test="<%= showPermissionsButton %>">
-					<liferay-security:permissionsURL
-						modelResource="com.liferay.portlet.blogs"
-						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
-						resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
-						var="permissionsURL"
-						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-					/>
-
-					<aui:nav-item href="<%= permissionsURL %>" label="permissions" title="edit-permissions" useDialog="<%= true %>" />
 				</c:if>
 			</aui:nav>
 		</c:if>

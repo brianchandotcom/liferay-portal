@@ -26,7 +26,6 @@ import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
@@ -36,7 +35,6 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import java.util.Calendar;
@@ -56,10 +54,6 @@ public class TCKStrutsAction extends BaseStrutsAction {
 		throws Exception {
 
 		try {
-			if (!PropsValues.TCK_URL) {
-				throw new PrincipalException("TCK testing is disabled");
-			}
-
 			User user = _getUser(request);
 
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(

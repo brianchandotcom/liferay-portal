@@ -170,8 +170,7 @@ public class AssetDisplayTag extends IncludeTag {
 			}
 		}
 
-		request.setAttribute(
-			"liferay-ui:asset-display:assetEntry", _assetEntry);
+		request.setAttribute("liferay-ui:asset-display:assetEntry", assetEntry);
 
 		Renderer renderer = _renderer;
 

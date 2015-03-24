@@ -251,6 +251,10 @@
 			margin-top: 10px;
 			padding: 10px;
 		}
+
+		.facet-configuration-options {
+			margin: 1em;
+		}
 	}
 
 	.facet-configuration-container {

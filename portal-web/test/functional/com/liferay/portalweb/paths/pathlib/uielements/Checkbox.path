@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>Checkbox</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Checkbox</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Checkbox</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVE</td>
+	<td>//label[contains(.,'Active')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALLOW_SITE_ADMIN_MODIFY_PAGES</td>
+	<td>//label[contains(.,'Allow site administrators to modify pages')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

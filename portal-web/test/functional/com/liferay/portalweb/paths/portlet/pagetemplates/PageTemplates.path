@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIVE_CHECKBOX</td>
-	<td>//input[contains(@id,'active')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>OPEN_PAGE_TEMPLATE</td>
 	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(@class,'field-wrapper')]/span/a/span</td>
 	<td></td>

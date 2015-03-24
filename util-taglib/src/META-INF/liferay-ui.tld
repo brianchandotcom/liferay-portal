@@ -3395,70 +3395,88 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a page iterator for paginating through lists of items.</description>
 		<name>page-iterator</name>
 		<tag-class>com.liferay.taglib.ui.PageIteratorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Sets what page of items to display (first, second, third, etc.).</description>
 			<name>cur</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>Int</type>
 		</attribute>
 		<attribute>
+			<description>Sets the parameter name of the cur value.</description>
 			<name>curParam</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets how many items to display per page.</description>
 			<name>delta</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>Int</type>
 		</attribute>
 		<attribute>
+			<description>Sets whether the user can choose the number of items displayed per page. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>deltaConfigurable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Sets the parameter name of the delta value.</description>
 			<name>deltaParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the name of the form.</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the id of the iterator container</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets javascript to be called when the &quot;first&quot;, &quot;previous&quot;, &quot;next&quot;, or &quot;last&quot; links are clicked if the url property is not set.</description>
 			<name>jsCall</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the max number of pages to iterate through.</description>
 			<name>maxPages</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the target of the &quot;first&quot;, &quot;previous&quot;, &quot;next&quot;, and &quot;last&quot; link buttons.</description>
 			<name>target</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the total number of items in the iterator.</description>
 			<name>total</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>Int</type>
 		</attribute>
 		<attribute>
+			<description>Sets the type of iterator to display. Options are &quot;approximate&quot;, &quot;article&quot;, &quot;more&quot;, and &quot;regular&quot;.</description>
 			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the base url of the iterator. Parameters are added and removed from this as the user navigates through pages.</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -38,15 +38,15 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 import com.liferay.portal.util.FileImpl;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -255,6 +255,37 @@ public class IntrabandProxyInstallationUtilTest {
 		}
 	}
 
+	private static final ClassLoader _classLoader =
+		IntrabandProxyInstallationUtilTest.class.getClassLoader();
+
+	private MockRegistrationReference _mockRegistrationReference;
+	private PortalExecutorManager _portalExecutorManager;
+	private String[] _stubProxyMethodSignatures;
+	private final TargetLocator _targetLocator = new TestGenerateTargetLocator(
+		TestClass.class);
+
+	private static class TestGenerateTargetLocator implements TargetLocator {
+
+		public TestGenerateTargetLocator(Class<?> clazz) {
+			_clazz = clazz;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			TestGenerateTargetLocator testGenerateTargetLocator =
+				(TestGenerateTargetLocator)obj;
+
+			return _clazz.equals(testGenerateTargetLocator._clazz);
+		}
+
+		@Override
+		public Object getTarget(String id) {
+			return null;
+		}
+
+		private final Class<?> _clazz;
+
+	}
 
 	private class MockPortalExecutorManager implements PortalExecutorManager {
 
@@ -294,38 +325,6 @@ public class IntrabandProxyInstallationUtilTest {
 
 		private final ThreadPoolExecutor _threadPoolExecutor =
 			new ThreadPoolExecutor(10, 10);
-
-	}
-
-	private static final ClassLoader _classLoader =
-		IntrabandProxyInstallationUtilTest.class.getClassLoader();
-
-	private MockRegistrationReference _mockRegistrationReference;
-	private PortalExecutorManager _portalExecutorManager;
-	private String[] _stubProxyMethodSignatures;
-	private final TargetLocator _targetLocator = new TestGenerateTargetLocator(
-		TestClass.class);
-
-	private static class TestGenerateTargetLocator implements TargetLocator {
-
-		public TestGenerateTargetLocator(Class<?> clazz) {
-			_clazz = clazz;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			TestGenerateTargetLocator testGenerateTargetLocator =
-				(TestGenerateTargetLocator)obj;
-
-			return _clazz.equals(testGenerateTargetLocator._clazz);
-		}
-
-		@Override
-		public Object getTarget(String id) {
-			return null;
-		}
-
-		private final Class<?> _clazz;
 
 	}
 

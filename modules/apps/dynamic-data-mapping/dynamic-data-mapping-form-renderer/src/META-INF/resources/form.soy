@@ -1,0 +1,60 @@
+{namespace ddm}
+
+/**
+ * Prints all pages.
+ * @param pages
+ */
+{template .pages}
+	<div class="lfr-form-pages">
+		<ul class="nav nav-tabs">
+			{foreach $page in $pages}
+				<li>
+					<a href="javascript:;">{$page.title}</a>
+				</li>
+			{/foreach}
+		</ul>
+		<div class="tab-content">
+			{foreach $page in $pages}
+				<div class="tab-pane">
+					{call ddm.rows data="all"}
+						{param rows: $page.rows /}
+					{/call}
+				</div>
+			{/foreach}
+		</div>
+	</div>
+{/template}
+
+/**
+ * Prints all rows.
+ * @param rows
+ */
+{template .rows}
+	{foreach $row in $rows}
+		{call ddm.columns data="all"}
+			{param columns: $row.columns /}
+		{/call}
+	{/foreach}
+{/template}
+
+/**
+ * Prints all columns.
+ * @param columns
+ */
+{template .columns}
+	{foreach $column in $columns}
+		{call ddm.column data="all"}
+			{param column: $column /}
+		{/call}
+	{/foreach}
+{/template}
+
+/**
+ * Prints a column.
+ * @param column
+ */
+{template .column}
+	<div class="col-md-{$column.size}">
+		{$column.renderedDDMFormField|noAutoescape}
+	</div>
+{/template}

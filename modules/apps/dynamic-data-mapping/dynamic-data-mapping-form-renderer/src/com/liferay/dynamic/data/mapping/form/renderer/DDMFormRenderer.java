@@ -12,27 +12,20 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.registry;
+package com.liferay.dynamic.data.mapping.form.renderer;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderingContext;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 
 /**
- * @author Pablo Carvalho
+ * @author Marcellus Tavares
  */
-public interface DDMFormFieldRenderer {
-
-	public String getTemplateLanguage();
-
-	public String getTemplateNamespace();
-
-	public TemplateResource getTemplateResource();
+public interface DDMFormRenderer {
 
 	public String render(
-			DDMFormField ddmFormField,
-			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
+			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+			DDMFormRenderingContext ddmFormRenderingContext)
 		throws PortalException;
 
 }

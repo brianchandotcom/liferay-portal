@@ -27,6 +27,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DDMFormFieldRenderingContext {
 
+	public String getChildElementsHTML() {
+		return _childElementsHTML;
+	}
+
 	public Fields getFields() {
 		return _fields;
 	}
@@ -39,12 +43,20 @@ public class DDMFormFieldRenderingContext {
 		return _httpServletResponse;
 	}
 
+	public String getLabel() {
+		return _label;
+	}
+
 	public Locale getLocale() {
 		return _locale;
 	}
 
 	public String getMode() {
 		return _mode;
+	}
+
+	public String getName() {
+		return _name;
 	}
 
 	public String getNamespace() {
@@ -55,12 +67,20 @@ public class DDMFormFieldRenderingContext {
 		return _portletNamespace;
 	}
 
+	public String getValue() {
+		return _value;
+	}
+
 	public boolean isReadOnly() {
 		return _readOnly;
 	}
 
 	public boolean isShowEmptyFieldLabel() {
 		return _showEmptyFieldLabel;
+	}
+
+	public void setChildElementsHTML(String childElementsHTML) {
+		_childElementsHTML = childElementsHTML;
 	}
 
 	public void setField(Field field) {
@@ -85,12 +105,20 @@ public class DDMFormFieldRenderingContext {
 		_httpServletResponse = httpServletResponse;
 	}
 
+	public void setLabel(String label) {
+		_label = label;
+	}
+
 	public void setLocale(Locale locale) {
 		_locale = locale;
 	}
 
 	public void setMode(String mode) {
 		_mode = mode;
+	}
+
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public void setNamespace(String namespace) {
@@ -109,14 +137,22 @@ public class DDMFormFieldRenderingContext {
 		_showEmptyFieldLabel = showEmptyFieldLabel;
 	}
 
+	public void setValue(String value) {
+		_value = value;
+	}
+
+	private String _childElementsHTML;
 	private Fields _fields;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private String _label;
 	private Locale _locale;
 	private String _mode;
+	private String _name;
 	private String _namespace;
 	private String _portletNamespace;
 	private boolean _readOnly;
 	private boolean _showEmptyFieldLabel;
+	private String _value;
 
 }

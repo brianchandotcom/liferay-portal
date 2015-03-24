@@ -333,14 +333,14 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 			new String[] {
 				ddmFormFieldRenderingContext.getName(),
 				ddmFormFieldRenderingContext.getValue(),
-				ddmFormFieldRenderingContext.getRenderedNestedDDMFormFields()
+				ddmFormFieldRenderingContext.getRenderedChildElements()
 			}
 		);
 	}
 
 	protected String renderTextField(
 		String ddmFormFieldParameterName, String value,
-		String renderedNestedDDMFormFields) {
+		String renderedChildElements) {
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
@@ -349,8 +349,8 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 			ddmFormFieldParameterName);
 
 		ddmFormFieldRenderingContext.setName(name);
-		ddmFormFieldRenderingContext.setRenderedNestedDDMFormFields(
-			renderedNestedDDMFormFields);
+		ddmFormFieldRenderingContext.setRenderedChildElements(
+			renderedChildElements);
 		ddmFormFieldRenderingContext.setValue(value);
 
 		return renderTextField(ddmFormFieldRenderingContext);

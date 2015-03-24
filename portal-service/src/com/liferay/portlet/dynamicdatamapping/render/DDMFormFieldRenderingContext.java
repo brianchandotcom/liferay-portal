@@ -63,8 +63,8 @@ public class DDMFormFieldRenderingContext {
 		return _portletNamespace;
 	}
 
-	public String getRenderedNestedDDMFormFields() {
-		return _renderedNestedDDMFormFields;
+	public String getRenderedChildElements() {
+		return _renderedChildElements;
 	}
 
 	public String getValue() {
@@ -129,10 +129,8 @@ public class DDMFormFieldRenderingContext {
 		_readOnly = readOnly;
 	}
 
-	public void setRenderedNestedDDMFormFields(
-		String renderedNestedDDMFormFields) {
-
-		_renderedNestedDDMFormFields = renderedNestedDDMFormFields;
+	public void setRenderedChildElements(String renderedChildElements) {
+		_renderedChildElements = renderedChildElements;
 	}
 
 	public void setShowEmptyFieldLabel(boolean showEmptyFieldLabel) {
@@ -153,7 +151,7 @@ public class DDMFormFieldRenderingContext {
 	private String _namespace;
 	private String _portletNamespace;
 	private boolean _readOnly;
-	private String _renderedNestedDDMFormFields;
+	private String _renderedChildElements;
 	private boolean _showEmptyFieldLabel;
 	private String _value;
 

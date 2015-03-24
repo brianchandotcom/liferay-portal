@@ -81,8 +81,8 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 		template.put("label", ddmFormFieldRenderingContext.getLabel());
 		template.put("name", ddmFormFieldRenderingContext.getName());
 		template.put(
-			"renderedNestedDDMFormFields",
-			ddmFormFieldRenderingContext.getRenderedNestedDDMFormFields());
+			"renderedChildElements",
+			ddmFormFieldRenderingContext.getRenderedChildElements());
 		template.put("value", ddmFormFieldRenderingContext.getValue());
 	}
 

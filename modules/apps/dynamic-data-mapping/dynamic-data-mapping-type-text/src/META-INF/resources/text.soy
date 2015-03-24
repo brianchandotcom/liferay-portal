@@ -6,7 +6,7 @@
  * @param dir
  * @param label
  * @param name
- * @param renderedNestedDDMFormFields
+ * @param renderedChildElements
  * @param value
  */
 {template .text}
@@ -17,6 +17,6 @@
 
 		 <input class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" type="text" value="{$value}">
 
-		{$renderedNestedDDMFormFields}
+		{$renderedChildElements}
 	</div>
 {/template}

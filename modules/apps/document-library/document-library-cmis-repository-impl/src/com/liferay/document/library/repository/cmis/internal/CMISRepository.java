@@ -20,6 +20,7 @@ import com.liferay.document.library.repository.cmis.internal.constants.PortalPro
 import com.liferay.document.library.repository.cmis.internal.model.CMISFileEntry;
 import com.liferay.document.library.repository.cmis.internal.model.CMISFileVersion;
 import com.liferay.document.library.repository.cmis.internal.model.CMISFolder;
+import com.liferay.document.library.repository.cmis.search.CMISSearchQueryBuilder;
 import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryException;
-import com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -125,8 +125,12 @@ import org.apache.chemistry.opencmis.commons.impl.dataobjects.ContentStreamImpl;
  */
 public class CMISRepository extends BaseCmisRepository {
 
-	public CMISRepository(CMISRepositoryHandler cmisRepositoryHandler) {
+	public CMISRepository(
+		CMISRepositoryHandler cmisRepositoryHandler,
+		CMISSearchQueryBuilder cmisSearchQueryBuilder) {
+
 		_cmisRepositoryHandler = cmisRepositoryHandler;
+		_cmisSearchQueryBuilder = cmisSearchQueryBuilder;
 	}
 
 	@Override
@@ -1606,7 +1610,7 @@ public class CMISRepository extends BaseCmisRepository {
 		queryConfig.setAttribute("repositoryProductName", productName);
 		queryConfig.setAttribute("repositoryProductVersion", productVersion);
 
-		String queryString = CMISSearchQueryBuilderUtil.buildQuery(
+		String queryString = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, query);
 
 		if (_cmisRepositoryDetector.isNuxeo5_4()) {
@@ -2301,6 +2305,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 	private CMISRepositoryDetector _cmisRepositoryDetector;
 	private final CMISRepositoryHandler _cmisRepositoryHandler;
+	private final CMISSearchQueryBuilder _cmisSearchQueryBuilder;
 	private String _sessionKey;
 
 }

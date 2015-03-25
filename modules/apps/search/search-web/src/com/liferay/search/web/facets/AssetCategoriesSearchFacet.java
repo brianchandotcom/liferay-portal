@@ -36,7 +36,7 @@ public class AssetCategoriesSearchFacet extends BaseSearchFacet {
 
 	@Override
 	public String getClassName() {
-		return AssetCategoriesSearchFacet.class.getName();
+		return MultiValueFacet.class.getName();
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class AssetCategoriesSearchFacet extends BaseSearchFacet {
 	public FacetConfiguration getDefaultConfiguration() {
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-		facetConfiguration.setClassName(MultiValueFacet.class.getName());
+		facetConfiguration.setClassName(getClassName());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

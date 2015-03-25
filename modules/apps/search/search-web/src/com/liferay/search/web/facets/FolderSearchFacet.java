@@ -36,7 +36,7 @@ public class FolderSearchFacet extends BaseSearchFacet {
 
 	@Override
 	public String getClassName() {
-		return FolderSearchFacet.class.getName();
+		return MultiValueFacet.class.getName();
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class FolderSearchFacet extends BaseSearchFacet {
 	public FacetConfiguration getDefaultConfiguration() {
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-		facetConfiguration.setClassName(MultiValueFacet.class.getName());
+		facetConfiguration.setClassName(getClassName());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

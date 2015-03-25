@@ -150,14 +150,14 @@
 	<portlet>
 		<portlet-name>29</portlet-name>
 		<display-name>My Sites</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/my_sites/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/my_sites/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/my_sites/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

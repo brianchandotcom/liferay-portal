@@ -1147,8 +1147,6 @@
 
 		<!-- My Sites -->
 
-		<action path="/my_sites/edit_layouts" type="com.liferay.portlet.myplaces.action.EditPagesAction" />
-
 		<action path="/my_sites/view" forward="portlet.my_sites.view" />
 
 		<!-- My Workflow Instances -->

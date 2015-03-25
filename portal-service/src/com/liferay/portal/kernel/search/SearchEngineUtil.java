@@ -374,10 +374,6 @@ public class SearchEngineUtil {
 	public static String getQueryString(
 		SearchContext searchContext, Query query) {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Search query " + query.toString());
-		}
-
 		SearchEngine searchEngine = getSearchEngine(
 			searchContext.getSearchEngineId());
 
@@ -807,7 +803,7 @@ public class SearchEngineUtil {
 		throws SearchException {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Search query " + query.toString());
+			_log.debug("Search query " + getQueryString(searchContext, query));
 		}
 
 		SearchEngine searchEngine = getSearchEngine(

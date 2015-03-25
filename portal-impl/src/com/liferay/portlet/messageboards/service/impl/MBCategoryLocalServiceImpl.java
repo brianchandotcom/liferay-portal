@@ -17,6 +17,8 @@ package com.liferay.portlet.messageboards.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -247,6 +249,9 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 				category.getGroupId(), category.getCategoryId());
 		}
 		catch (NoSuchMailingListException nsmle) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to delete mailing list", nsmle);
+			}
 		}
 
 		// Subscriptions
@@ -1084,5 +1089,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			throw new CategoryNameException();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MBCategoryLocalServiceImpl.class);
 
 }

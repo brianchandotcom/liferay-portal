@@ -12,24 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.cmis.search;
+package com.liferay.document.library.repository.cmis.search;
 
 /**
  * @author Mika Koivisto
  */
-public enum CMISSimpleExpressionOperator {
+public class CMISInTreeExpression implements CMISCriterion {
 
-	EQ("="), GE(">="), GT(">"), LE("<="), LIKE("LIKE"), LT("<"), NE("<>");
+	public CMISInTreeExpression(String objectId) {
+		_objectId = objectId;
+	}
 
 	@Override
-	public String toString() {
-		return _value;
+	public String toQueryFragment() {
+		return "IN_TREE('".concat(_objectId).concat("')");
 	}
 
-	private CMISSimpleExpressionOperator(String value) {
-		_value = value;
-	}
-
-	private final String _value;
+	private final String _objectId;
 
 }

@@ -12,42 +12,41 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.cmis.search;
+package com.liferay.document.library.repository.cmis.search;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 /**
- * @author Mika Koivisto
+ * @author Iván Zaera
  */
-public class CMISSimpleExpression implements CMISCriterion {
+public class CMISContainsValueExpression implements CMISCriterion {
 
-	public CMISSimpleExpression(
-		String field, String value,
-		CMISSimpleExpressionOperator cmisSimpleExpressionOperator) {
-
-		_field = field;
+	public CMISContainsValueExpression(String value) {
 		_value = value;
-		_cmisSimpleExpressionOperator = cmisSimpleExpressionOperator;
 	}
 
 	@Override
 	public String toQueryFragment() {
-		StringBundler sb = new StringBundler(7);
+		boolean multipleTerms = _value.contains(StringPool.SPACE);
 
-		sb.append(_field);
-		sb.append(StringPool.SPACE);
-		sb.append(_cmisSimpleExpressionOperator);
-		sb.append(StringPool.SPACE);
-		sb.append(StringPool.APOSTROPHE);
+		StringBundler sb = new StringBundler(1 + (multipleTerms ? 4 : 0));
+
+		if (_value.contains(StringPool.SPACE)) {
+			sb.append(StringPool.BACK_SLASH);
+			sb.append(StringPool.APOSTROPHE);
+		}
+
 		sb.append(_value);
-		sb.append(StringPool.APOSTROPHE);
+
+		if (_value.contains(StringPool.SPACE)) {
+			sb.append(StringPool.BACK_SLASH);
+			sb.append(StringPool.APOSTROPHE);
+		}
 
 		return sb.toString();
 	}
 
-	private final CMISSimpleExpressionOperator _cmisSimpleExpressionOperator;
-	private final String _field;
 	private final String _value;
 
 }

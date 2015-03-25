@@ -12,41 +12,43 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.cmis.search;
+package com.liferay.document.library.repository.cmis.search;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-/**
- * @author Iván Zaera
- */
-public class CMISContainsValueExpression implements CMISCriterion {
+import java.util.List;
 
-	public CMISContainsValueExpression(String value) {
-		_value = value;
-	}
+/**
+ * @author Mika Koivisto
+ */
+public class CMISContainsExpression extends CMISJunction {
 
 	@Override
 	public String toQueryFragment() {
-		boolean multipleTerms = _value.contains(StringPool.SPACE);
-
-		StringBundler sb = new StringBundler(1 + (multipleTerms ? 4 : 0));
-
-		if (_value.contains(StringPool.SPACE)) {
-			sb.append(StringPool.BACK_SLASH);
-			sb.append(StringPool.APOSTROPHE);
+		if (isEmpty()) {
+			return StringPool.BLANK;
 		}
 
-		sb.append(_value);
+		List<CMISCriterion> cmisCriterions = list();
 
-		if (_value.contains(StringPool.SPACE)) {
-			sb.append(StringPool.BACK_SLASH);
-			sb.append(StringPool.APOSTROPHE);
+		StringBundler sb = new StringBundler(cmisCriterions.size() * 2 + 1);
+
+		sb.append("CONTAINS('");
+
+		for (int i = 0; i < cmisCriterions.size(); i++) {
+			CMISCriterion cmisCriterion = cmisCriterions.get(i);
+
+			if (i != 0) {
+				sb.append(" ");
+			}
+
+			sb.append(cmisCriterion.toQueryFragment());
 		}
+
+		sb.append("')");
 
 		return sb.toString();
 	}
-
-	private final String _value;
 
 }

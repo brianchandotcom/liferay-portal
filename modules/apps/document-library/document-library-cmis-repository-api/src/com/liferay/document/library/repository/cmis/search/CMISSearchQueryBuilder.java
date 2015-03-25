@@ -12,35 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.cmis.search;
+package com.liferay.document.library.repository.cmis.search;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 
 /**
  * @author Mika Koivisto
  */
-public abstract class CMISJunction implements CMISCriterion {
+public interface CMISSearchQueryBuilder {
 
-	public CMISJunction() {
-		_cmisCriterions = new ArrayList<>();
-	}
-
-	public void add(CMISCriterion cmisCriterion) {
-		_cmisCriterions.add(cmisCriterion);
-	}
-
-	public boolean isEmpty() {
-		return _cmisCriterions.isEmpty();
-	}
-
-	public List<CMISCriterion> list() {
-		return _cmisCriterions;
-	}
-
-	@Override
-	public abstract String toQueryFragment();
-
-	private final List<CMISCriterion> _cmisCriterions;
+	public String buildQuery(SearchContext searchContext, Query query)
+		throws SearchException;
 
 }

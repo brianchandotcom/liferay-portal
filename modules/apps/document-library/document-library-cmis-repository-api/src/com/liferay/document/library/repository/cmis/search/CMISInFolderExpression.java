@@ -12,18 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.cmis.search;
-
-import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
+package com.liferay.document.library.repository.cmis.search;
 
 /**
  * @author Mika Koivisto
  */
-public interface CMISSearchQueryBuilder {
+public class CMISInFolderExpression implements CMISCriterion {
 
-	public String buildQuery(SearchContext searchContext, Query query)
-		throws SearchException;
+	public CMISInFolderExpression(String objectId) {
+		_objectId = objectId;
+	}
+
+	@Override
+	public String toQueryFragment() {
+		return "IN_FOLDER('".concat(_objectId).concat("')");
+	}
+
+	private final String _objectId;
 
 }

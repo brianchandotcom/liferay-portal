@@ -12,20 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.cmis;
-
-import java.util.Set;
+package com.liferay.document.library.repository.cmis.search;
 
 /**
- * @author Alexander Chow
+ * @author Mika Koivisto
  */
-public interface Session {
+public enum CMISSimpleExpressionOperator {
 
-	public void setDefaultContext(
-		Set<String> filter, boolean includeAcls,
-		boolean includeAllowableActions, boolean includePolicies,
-		String includeRelationships, Set<String> renditionFilter,
-		boolean includePathSegments, String orderBy, boolean cacheEnabled,
-		int maxItemsPerPage);
+	EQ("="), GE(">="), GT(">"), LE("<="), LIKE("LIKE"), LT("<"), NE("<>");
+
+	@Override
+	public String toString() {
+		return _value;
+	}
+
+	private CMISSimpleExpressionOperator(String value) {
+		_value = value;
+	}
+
+	private final String _value;
 
 }

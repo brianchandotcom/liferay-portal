@@ -12,22 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.cmis.search;
+package com.liferay.document.library.repository.cmis.search;
 
 /**
  * @author Mika Koivisto
  */
-public class CMISInFolderExpression implements CMISCriterion {
+public interface CMISCriterion {
 
-	public CMISInFolderExpression(String objectId) {
-		_objectId = objectId;
-	}
-
-	@Override
-	public String toQueryFragment() {
-		return "IN_FOLDER('".concat(_objectId).concat("')");
-	}
-
-	private final String _objectId;
+	public String toQueryFragment();
 
 }

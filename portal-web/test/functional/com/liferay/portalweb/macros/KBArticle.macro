@@ -366,6 +366,38 @@
 		<execute function="AssertClick" locator1="PGKnowledgebasesectionConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
+	<command name="configureKBSocialBookmarkSites">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="PGKnowledgebasedisplayConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplayConfiguration#DISPLAY_SETTINGS" value1="Display Settings" />
+
+		<execute function="Check" locator1="PGKnowledgebasedisplayConfigurationDisplaysettings#ENABLE_SOCIAL_BOOKMARKS_CHECKBOX" />
+
+		<if>
+			<isset var="enableSocialBookmarkSites" />
+			<then>
+				<execute macro="KBArticle#enableSocialBookmarkSites">
+					<var name="enableSocialBookmarkSites" value="${enableSocialBookmarkSites}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="disableSocialBookmarkSites" />
+			<then>
+				<execute macro="KBArticle#disableSocialBookmarkSites">
+					<var name="disableSocialBookmarkSites" value="${disableSocialBookmarkSites}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplayConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplayConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
 	<command name="deleteCP">
 		<execute function="Click" locator1="CPKnowledgebaseadmin#ACTIONS_BUTTON" />
 		<execute function="AssertClickNoError" locator1="CPKnowledgebaseadmin#ACTIONS_MENULIST_DELETE" value1="Delete" />
@@ -386,6 +418,14 @@
 		<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_ACTIONS_BUTTON" />
 		<execute function="AssertClickNoError" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" locator1="PGKnowledgebasedisplay#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+	</command>
+
+	<command name="disableSocialBookmarkSites">
+		<for list="${disableSocialBookmarkSites}" param="socialBookmarkSite">
+			<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
+
+			<execute function="Uncheck" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_CONFIGURATION_CHECKBOX" />
+		</for>
 	</command>
 
 	<command name="editCP">
@@ -454,6 +494,14 @@
 		<execute function="AssertClick" locator1="xpath=//button[contains(@id,'_knowledgebaseportlet_publish')]" value1="Publicar" />
 
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUCCESS_MESSAGE" value1="${localizedSuccessMessage}" />
+	</command>
+
+	<command name="enableSocialBookmarkSites">
+		<for list="${enableSocialBookmarkSites}" param="socialBookmarkSite">
+			<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
+
+			<execute function="Check" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_CONFIGURATION_CHECKBOX" />
+		</for>
 	</command>
 
 	<command name="goBackCP">
@@ -1001,6 +1049,18 @@
 	<command name="viewDefaultViaKBDisplayPG">
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
 		<execute function="AssertElementNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_TITLE" />
+	</command>
+
+	<command name="viewDisabledKBSocialBookmarkSites">
+		<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
+
+		<execute function="AssertElementNotPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_SITE_LINK" />
+	</command>
+
+	<command name="viewEnabledKBSocialBookmarkSites">
+		<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
+
+		<execute function="AssertElementPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_SITE_LINK" />
 	</command>
 
 	<command name="viewHierarchyViaKBDisplayPG">

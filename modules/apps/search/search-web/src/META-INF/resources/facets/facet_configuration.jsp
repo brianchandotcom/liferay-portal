@@ -18,15 +18,13 @@
 
 <%
 SearchFacet searchFacet = (SearchFacet)request.getAttribute("facet_configuration.jsp-searchFacet");
-
-FacetConfiguration facetConfiguration = searchFacet.getFacetConfiguration(searchDisplayContext.getSearchConfiguration());
 %>
 
 <aui:fieldset>
-	<aui:input label="display-facet" name='<%= searchFacet.getClassName() + "displayFacet" %>' type="checkbox" value="<%= !facetConfiguration.isStatic() %>" />
+	<aui:input label="display-facet" name='<%= searchFacet.getClassName() + "displayFacet" %>' type="checkbox" value="<%= !searchFacet.isStatic() %>" />
 
 	<div class="facet-configuration-options" id="<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>Options">
-		<aui:input label="weight" name='<%= searchFacet.getClassName() + "weight" %>' value="<%= facetConfiguration.getWeight() %>" />
+		<aui:input label="weight" name='<%= searchFacet.getClassName() + "weight" %>' value="<%= searchFacet.getWeight() %>" />
 
 		<c:if test="<%= Validator.isNotNull(searchFacet.getConfigurationView()) %>">
 			<liferay-util:include page="<%= searchFacet.getConfigurationView() %>" servletContext="<%= application %>" />

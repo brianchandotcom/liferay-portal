@@ -19,9 +19,7 @@
 <%
 SearchFacet searchFacet = (SearchFacet)request.getAttribute("facet_configuration.jsp-searchFacet");
 
-FacetConfiguration facetConfiguration = searchFacet.getFacetConfiguration(searchDisplayContext.getSearchConfiguration());
-
-JSONObject dataJSONObject = facetConfiguration.getData();
+JSONObject dataJSONObject = searchFacet.getData();
 
 int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
 int maxTerms = dataJSONObject.getInt("maxTerms", 10);

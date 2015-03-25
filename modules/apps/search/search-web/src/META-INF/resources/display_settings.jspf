@@ -19,7 +19,11 @@
 	<%
 	List<SearchFacet> searchFacets = ListUtil.copy(SearchFacetTracker.getSearchFacets());
 
-	searchFacets = ListUtil.sort(searchFacets, new PropertyComparator("facetConfiguration.weight", false, false));
+	for (SearchFacet searchFacet : searchFacets) {
+		searchFacet.init(searchDisplayContext.getSearchConfiguration());
+	}
+
+	searchFacets = ListUtil.sort(searchFacets, new PropertyComparator("weight", false, false));
 
 	for (SearchFacet searchFacet : searchFacets) {
 	%>

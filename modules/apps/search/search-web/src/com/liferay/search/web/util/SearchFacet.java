@@ -14,7 +14,6 @@
 
 package com.liferay.search.web.util;
 
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -31,18 +30,15 @@ public interface SearchFacet {
 
 	public String getConfigurationView();
 
+	public JSONObject getData();
+
 	public FacetConfiguration getDefaultConfiguration();
 
 	public String getDisplayView();
 
-	public Facet getFacet(
-			SearchContext searchContext, String searchConfiguration)
-		throws Exception;
+	public Facet getFacet();
 
 	public FacetConfiguration getFacetConfiguration();
-
-	public FacetConfiguration getFacetConfiguration(String searchConfiguration)
-		throws JSONException;
 
 	public String getFieldName();
 
@@ -55,5 +51,14 @@ public interface SearchFacet {
 	public String getOrder();
 
 	public String getTitle();
+
+	public double getWeight();
+
+	public void init(String searchConfiguration) throws Exception;
+
+	public void init(String searchConfiguration, SearchContext searchContext)
+		throws Exception;
+
+	public boolean isStatic();
 
 }

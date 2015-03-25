@@ -52,8 +52,12 @@ searchContext.addFacet(scopeFacet);
 
 String searchConfiguration = searchDisplayContext.getSearchConfiguration();
 
-for (SearchFacet searchFacet : searchDisplayContext.getEnabledSearchFacets()) {
-	Facet facet = searchFacet.getFacet(searchContext, searchConfiguration);
+List<SearchFacet> searchFacets = searchDisplayContext.getEnabledSearchFacets();
+
+for (SearchFacet searchFacet : searchFacets) {
+	searchFacet.init(searchConfiguration, searchContext);
+
+	Facet facet = searchFacet.getFacet();
 
 	if (facet == null) {
 		continue;
@@ -72,18 +76,14 @@ Hits hits = indexer.search(searchContext);
 		<aui:col id="facetNavigation" span="<%= 2 %>">
 
 			<%
-			List<SearchFacet> searchFacets = searchDisplayContext.getEnabledSearchFacets();
-
-			searchFacets = ListUtil.sort(searchFacets, new PropertyComparator("facetConfiguration.weight", false, false));
+			searchFacets = ListUtil.sort(searchFacets, new PropertyComparator("weight", false, false));
 
 			for (SearchFacet searchFacet : searchFacets) {
-				FacetConfiguration facetConfiguration = searchFacet.getFacetConfiguration(searchConfiguration);
-
-				if (facetConfiguration.isStatic()) {
+				if (searchFacet.isStatic()) {
 					continue;
 				}
 
-				request.setAttribute("search.jsp-facet", searchFacet.getFacet(searchContext, searchConfiguration));
+				request.setAttribute("search.jsp-facet", searchFacet.getFacet());
 			%>
 
 				<liferay-util:include page="<%= searchFacet.getDisplayView() %>" servletContext="<%= application %>"  />

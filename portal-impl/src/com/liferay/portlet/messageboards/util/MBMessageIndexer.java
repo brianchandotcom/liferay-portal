@@ -47,6 +47,7 @@ import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
@@ -179,12 +180,14 @@ public class MBMessageIndexer extends BaseIndexer {
 				searchContext);
 
 			for (long categoryId : categoryIds) {
-				MBCategory category =
-					MBCategoryLocalServiceUtil.fetchMBCategory(categoryId);
-
-				if (category != null) {
-					categoriesQuery.addTerm(Field.CATEGORY_ID, categoryId);
+				try {
+					MBCategoryServiceUtil.getCategory(categoryId);
 				}
+				catch (Exception e) {
+					continue;
+				}
+
+				categoriesQuery.addTerm(Field.CATEGORY_ID, categoryId);
 			}
 
 			contextQuery.add(categoriesQuery, BooleanClauseOccur.MUST);

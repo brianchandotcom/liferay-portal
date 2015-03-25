@@ -160,7 +160,7 @@
 </#macro>
 
 <#macro getDiscussion>
-	<#if validator.isNotNull(assetRenderer.getDiscussionPath()) && wikiPortletInstanceSettings.isEnableComments()>
+	<#if validator.isNotNull(assetRenderer.getDiscussionPath()) && wikiPortletInstanceSettings.enableComments()>
 		<br />
 
 		<#assign discussionURL = renderResponse.createActionURL() />
@@ -172,7 +172,7 @@
 			classPK=entry.getResourcePrimKey()
 			formAction=discussionURL?string
 			formName="fm2"
-			ratingsEnabled=wikiPortletInstanceSettings.isEnableCommentRatings()
+			ratingsEnabled=wikiPortletInstanceSettings.enableCommentRatings()
 			redirect=currentURL
 			subject=assetRenderer.getTitle(locale)
 			userId=assetRenderer.getUserId()
@@ -230,7 +230,7 @@
 	cssClass
 	entry
 >
-	<#if wikiPortletInstanceSettings.isEnablePageRatings()>
+	<#if wikiPortletInstanceSettings.enablePageRatings()>
 		<div class="${cssClass}">
 			<@liferay_ui["ratings"]
 				className=wikiPageClassName
@@ -241,7 +241,7 @@
 </#macro>
 
 <#macro getRelatedAssets>
-	<#if assetEntry?? && wikiPortletInstanceSettings.isEnableRelatedAssets()>
+	<#if assetEntry?? && wikiPortletInstanceSettings.enableRelatedAssets()>
 		<@liferay_ui["asset-links"]
 			assetEntryId=assetEntry.getEntryId()
 		/>

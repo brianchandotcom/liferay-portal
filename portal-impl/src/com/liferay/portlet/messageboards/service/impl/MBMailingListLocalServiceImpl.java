@@ -135,8 +135,8 @@ public class MBMailingListLocalServiceImpl
 	}
 
 	@Override
-	public MBMailingList fetchCategoryMailingList(long groupId, long categoryId)
-		throws PortalException {
+	public MBMailingList fetchCategoryMailingList(
+		long groupId, long categoryId) {
 
 		return mbMailingListPersistence.fetchByG_C(groupId, categoryId);
 	}

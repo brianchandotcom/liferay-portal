@@ -129,8 +129,9 @@ public class MBThreadIndexer extends BaseIndexer {
 
 		Document document = getBaseModelDocument(CLASS_NAME, thread);
 
-		MBDiscussion discussion = MBDiscussionLocalServiceUtil.fetchDiscussion(
-			thread.getThreadId());
+		MBDiscussion discussion =
+			MBDiscussionLocalServiceUtil.fetchThreadDiscussion(
+				thread.getThreadId());
 
 		if (discussion == null) {
 			document.addKeyword("discussion", false);

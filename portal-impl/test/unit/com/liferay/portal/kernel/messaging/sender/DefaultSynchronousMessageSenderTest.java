@@ -16,10 +16,8 @@ package com.liferay.portal.kernel.messaging.sender;
 
 import com.liferay.portal.dao.orm.common.EntityCacheImpl;
 import com.liferay.portal.dao.orm.common.FinderCacheImpl;
-import com.liferay.portal.executor.PortalExecutorManagerImpl;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.messaging.DefaultMessageBus;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -30,17 +28,25 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.SerialDestination;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
+import com.liferay.portal.test.rule.PortalExecutorManagerTestRule;
 import com.liferay.portal.uuid.PortalUUIDImpl;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class DefaultSynchronousMessageSenderTest {
+
+	@ClassRule
+	@Rule
+	public static final PortalExecutorManagerTestRule aggregateTestRule =
+		PortalExecutorManagerTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {
@@ -61,12 +67,6 @@ public class DefaultSynchronousMessageSenderTest {
 		_defaultSynchronousMessageSender.setPortalUUID(new PortalUUIDImpl());
 		_defaultSynchronousMessageSender.setTimeout(10000);
 
-		PortalExecutorManagerUtil portalExecutorManagerUtil =
-			new PortalExecutorManagerUtil();
-
-		portalExecutorManagerUtil.setPortalExecutorManager(
-			new PortalExecutorManagerImpl());
-
 		EntityCacheUtil entityCacheUtil = new EntityCacheUtil();
 
 		entityCacheUtil.setEntityCache(new EntityCacheImpl());
@@ -79,8 +79,6 @@ public class DefaultSynchronousMessageSenderTest {
 	@After
 	public void tearDown() {
 		_messageBus.shutdown(true);
-
-		PortalExecutorManagerUtil.shutdown(true);
 	}
 
 	@Test

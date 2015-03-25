@@ -19,21 +19,16 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-ActionUtil.getGroup(request);
+long groupId = ParamUtil.getLong(request, "groupId");
 
-Group group = (Group)request.getAttribute(WebKeys.GROUP);
-
-long groupId = BeanParamUtil.getLong(group, request, "groupId");
+Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(WebKeys.MEMBERSHIP_REQUEST);
 %>
 
-<portlet:actionURL var="postMembershipRequestURL">
-	<portlet:param name="struts_action" value="/sites_admin/post_membership_request" />
-</portlet:actionURL>
+<portlet:actionURL name="postMembershipRequest" var="postMembershipRequestURL" />
 
 <aui:form action="<%= postMembershipRequestURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 

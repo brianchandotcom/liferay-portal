@@ -14,19 +14,15 @@
 
 package com.liferay.document.library.repository.cmis.internal;
 
-import com.liferay.document.library.repository.cmis.CMISRepositoryHandler;
 import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
 import com.liferay.document.library.repository.cmis.search.BaseCmisSearchQueryBuilder;
 import com.liferay.document.library.repository.cmis.search.CMISSearchQueryBuilder;
-import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
-import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.RepositoryLocalService;
@@ -69,47 +65,25 @@ public class CMISAtomPubRepositoryFactory implements RepositoryFactory {
 	protected BaseRepository createBaseRepository(long repositoryId)
 		throws PortalException {
 
-		BaseRepository baseRepository = new CMISAtomPubRepository();
-
-		CMISRepositoryHandler cmisRepositoryHandler = null;
-
-		if (baseRepository instanceof CMISRepositoryHandler) {
-			cmisRepositoryHandler = (CMISRepositoryHandler)baseRepository;
-		}
-		else if (baseRepository instanceof BaseRepositoryProxyBean) {
-			BaseRepositoryProxyBean baseRepositoryProxyBean =
-				(BaseRepositoryProxyBean)baseRepository;
-
-			ClassLoaderBeanHandler classLoaderBeanHandler =
-				(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
-					baseRepositoryProxyBean.getProxyBean());
-
-			Object bean = classLoaderBeanHandler.getBean();
-
-			if (bean instanceof CMISRepositoryHandler) {
-				cmisRepositoryHandler = (CMISRepositoryHandler)bean;
-			}
-		}
+		CMISAtomPubRepository cmisAtomPubRepository =
+			new CMISAtomPubRepository();
 
 		com.liferay.portal.model.Repository repository =
 			_repositoryLocalService.getRepository(repositoryId);
 
-		if (cmisRepositoryHandler != null) {
-			CMISRepository cmisRepository = new CMISRepository(
-				cmisRepositoryHandler, _cmisSearchQueryBuilder);
+		CMISRepository cmisRepository = new CMISRepository(
+			cmisAtomPubRepository, _cmisSearchQueryBuilder);
 
-			cmisRepositoryHandler.setCmisRepository(cmisRepository);
+		cmisAtomPubRepository.setCmisRepository(cmisRepository);
 
-			setupRepository(repositoryId, repository, cmisRepository);
-		}
-
-		setupRepository(repositoryId, repository, baseRepository);
+		setupRepository(repositoryId, repository, cmisRepository);
+		setupRepository(repositoryId, repository, cmisAtomPubRepository);
 
 		if (!ExportImportThreadLocal.isImportInProcess()) {
-			baseRepository.initRepository();
+			cmisAtomPubRepository.initRepository();
 		}
 
-		return baseRepository;
+		return cmisAtomPubRepository;
 	}
 
 	@Reference(unbind = "-")

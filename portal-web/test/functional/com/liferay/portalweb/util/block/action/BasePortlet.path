@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>TITLE</td>
-	<td>//h1[@class='portlet-title']/span[1]</td>
+	<td>//div[@id='main-content']//h1[@class='portlet-title']/span[1]</td>
 	<td>Portlet Header</td>
 </tr>
 <tr>
@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>SPECIFIC_TITLE</td>
-	<td>//h1[@class='portlet-title']//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletTitleName}')]</td>
+	<td>//div[@id='main-content']//h1[@class='portlet-title']//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletTitleName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -125,7 +125,7 @@
 </tr>
 <tr>
 	<td>PORTLET_BODY</td>
-	<td>//section[contains(.,'${key_portletName}')]//div[@class='portlet-body']</td>
+	<td>//div[@id='main-content']//section[contains(.,'${key_portletName}')]//div[@class='portlet-body']</td>
 	<td></td>
 </tr>
 <tr>

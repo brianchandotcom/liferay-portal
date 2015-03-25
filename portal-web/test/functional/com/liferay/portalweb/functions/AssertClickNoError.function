@@ -11,6 +11,14 @@
 		</if>
 	</command>
 
+	<command name="assertPartialTextClickAt">
+		<execute function="AssertTextEquals#assertPartialText" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="clickAt" />
+	</command>
+
 	<command name="assertTextClick">
 		<execute selenium="waitForVisible" />
 

@@ -166,6 +166,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_ASSIGN_MEMBERS_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portal.model.RoleASSIGN_MEMBERS']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -200,6 +205,16 @@
 <tr>
 	<td>CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_VIEW_STAGING_CHECKBOX</td>
 	<td>//input[@value='com.liferay.portal.model.GroupVIEW_STAGING']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_ASSIGN_MEMBERS_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portal.model.GroupASSIGN_MEMBERS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_ASSIGN_USER_ROLES_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portal.model.GroupASSIGN_USER_ROLES']</td>
 	<td></td>
 </tr>
 <tr>

@@ -14,12 +14,19 @@
 
 package com.liferay.document.library.repository.cmis.internal;
 
+import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
+import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
+import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
+@Component(immediate = true, service = RepositoryDefiner.class)
 public class CMISAtomPubRepositoryDefiner extends BaseRepositoryDefiner {
 
 	@Override
@@ -36,8 +43,17 @@ public class CMISAtomPubRepositoryDefiner extends BaseRepositoryDefiner {
 	public void registerRepositoryFactory(
 		RepositoryFactoryRegistry repositoryFactoryRegistry) {
 
-		repositoryFactoryRegistry.setRepositoryFactory(
-			new CMISAtomPubRepositoryFactory());
+		repositoryFactoryRegistry.setRepositoryFactory(_repositoryFactory);
 	}
+
+	@Reference(
+		target = "(repository.targetClassName=" + CMISRepositoryConstants.CMIS_ATOMPUB_REPOSITORY_CLASSNAME + ")",
+		unbind = "-"
+	)
+	protected void setRepositoryFactory(RepositoryFactory repositoryFactory) {
+		_repositoryFactory = repositoryFactory;
+	}
+
+	private RepositoryFactory _repositoryFactory;
 
 }

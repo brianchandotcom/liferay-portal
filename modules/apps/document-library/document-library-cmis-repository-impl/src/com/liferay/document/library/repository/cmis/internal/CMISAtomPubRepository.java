@@ -16,13 +16,13 @@ package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.document.library.repository.cmis.CMISRepositoryHandler;
 import com.liferay.document.library.repository.cmis.Session;
+import com.liferay.document.library.repository.cmis.internal.constants.PortalPropsValues;
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -60,8 +60,8 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 			password = PrincipalThreadLocal.getPassword();
 		}
 		else {
-			login = PropsValues.DL_REPOSITORY_GUEST_USERNAME;
-			password = PropsValues.DL_REPOSITORY_GUEST_PASSWORD;
+			login = PortalPropsValues.DL_REPOSITORY_GUEST_USERNAME;
+			password = PortalPropsValues.DL_REPOSITORY_GUEST_PASSWORD;
 		}
 
 		parameters.put(SessionParameter.PASSWORD, password);

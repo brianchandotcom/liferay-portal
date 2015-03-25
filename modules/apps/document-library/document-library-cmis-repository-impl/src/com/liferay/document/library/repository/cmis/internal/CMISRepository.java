@@ -16,6 +16,7 @@ package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.document.library.repository.cmis.BaseCmisRepository;
 import com.liferay.document.library.repository.cmis.CMISRepositoryHandler;
+import com.liferay.document.library.repository.cmis.internal.constants.PortalPropsValues;
 import com.liferay.document.library.repository.cmis.internal.model.CMISFileEntry;
 import com.liferay.document.library.repository.cmis.internal.model.CMISFileVersion;
 import com.liferay.document.library.repository.cmis.internal.model.CMISFolder;
@@ -57,7 +58,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileNameException;
@@ -1525,7 +1525,7 @@ public class CMISRepository extends BaseCmisRepository {
 	protected void deleteMappedFileEntry(Document document)
 		throws PortalException {
 
-		if (PropsValues.DL_REPOSITORY_CMIS_DELETE_DEPTH == _DELETE_NONE) {
+		if (PortalPropsValues.DL_REPOSITORY_CMIS_DELETE_DEPTH == _DELETE_NONE) {
 			return;
 		}
 
@@ -1547,7 +1547,7 @@ public class CMISRepository extends BaseCmisRepository {
 			org.apache.chemistry.opencmis.client.api.Folder cmisFolder)
 		throws PortalException {
 
-		if (PropsValues.DL_REPOSITORY_CMIS_DELETE_DEPTH == _DELETE_NONE) {
+		if (PortalPropsValues.DL_REPOSITORY_CMIS_DELETE_DEPTH == _DELETE_NONE) {
 			return;
 		}
 
@@ -1569,7 +1569,7 @@ public class CMISRepository extends BaseCmisRepository {
 					repositoryEntryLocalService.deleteRepositoryEntry(
 						getRepositoryId(), cmisObject.getId());
 
-					if (PropsValues.DL_REPOSITORY_CMIS_DELETE_DEPTH ==
+					if (PortalPropsValues.DL_REPOSITORY_CMIS_DELETE_DEPTH ==
 							_DELETE_DEEP) {
 
 						deleteMappedFolder(cmisSubfolder);

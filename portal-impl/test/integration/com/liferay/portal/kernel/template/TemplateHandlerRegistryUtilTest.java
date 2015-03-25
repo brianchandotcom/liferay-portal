@@ -80,15 +80,19 @@ public class TemplateHandlerRegistryUtilTest {
 		List<TemplateHandler> templateHandlers =
 			TemplateHandlerRegistryUtil.getTemplateHandlers();
 
+		boolean exists = false;
+
 		for (TemplateHandler templateHandler : templateHandlers) {
 			String className = templateHandler.getClassName();
 
 			if (className.equals(TestTemplateHandler.class.getName())) {
-				return;
+				exists = true;
+
+				break;
 			}
 		}
 
-		Assert.fail();
+		Assert.assertTrue(exists);
 	}
 
 }

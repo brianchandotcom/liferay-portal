@@ -310,11 +310,9 @@ public class FinalizeManagerTest {
 		long startTime = System.currentTimeMillis();
 
 		while (finalizeThread.getState() != Thread.State.WAITING) {
-			if ((System.currentTimeMillis() - startTime) > 10000) {
-				Assert.fail(
-					"Timeout on waiting finialize thread to enter waiting " +
-						"state");
-			}
+			Assert.assertTrue(
+				"Timeout on waiting finialize thread to enter waiting state",
+				(System.currentTimeMillis() - startTime) <= 10000);
 		}
 
 		// Interrupt to wake up
@@ -324,11 +322,9 @@ public class FinalizeManagerTest {
 		// Second waiting state
 
 		while (finalizeThread.getState() != Thread.State.WAITING) {
-			if ((System.currentTimeMillis() - startTime) > 10000) {
-				Assert.fail(
-					"Timeout on waiting finialize thread to enter waiting " +
-						"state");
-			}
+			Assert.assertTrue(
+				"Timeout on waiting finialize thread to enter waiting state",
+				(System.currentTimeMillis() - startTime) <= 10000);
 		}
 	}
 

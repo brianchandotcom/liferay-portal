@@ -123,9 +123,9 @@ public class JournalFolderFinderTest {
 
 				String title = article.getTitleCurrentValue();
 
-				if (!title.equals("Article 1") && !title.equals("Article 2")) {
-					Assert.fail(title);
-				}
+				Assert.assertTrue(
+					title,
+					title.equals("Article 1") || title.equals("Article 2"));
 			}
 		}
 

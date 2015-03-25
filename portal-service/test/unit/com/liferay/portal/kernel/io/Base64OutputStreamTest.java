@@ -47,9 +47,8 @@ public class Base64OutputStreamTest {
 			byteArrayInputStream.read(bytes);
 		}
 
-		if ((bytes[3] != CharPool.EQUAL) || (bytes[2] != CharPool.EQUAL)) {
-			Assert.fail();
-		}
+		Assert.assertTrue(
+			(bytes[3] == CharPool.EQUAL) && (bytes[2] == CharPool.EQUAL));
 	}
 
 	@Test

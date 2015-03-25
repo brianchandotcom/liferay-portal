@@ -227,9 +227,7 @@ public class ConvertDocumentLibraryTest {
 			fileEntries = ((MBMessage)object).getAttachmentsFileEntries(0, 1);
 		}
 
-		if (fileEntries.isEmpty()) {
-			Assert.fail();
-		}
+		Assert.assertFalse(fileEntries.isEmpty());
 
 		FileEntry fileEntry = fileEntries.get(0);
 

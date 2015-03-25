@@ -97,6 +97,7 @@ public class RoleFinderTest {
 			_resourceBlockPermission);
 	}
 
+	@SuppressWarnings("PMD.JUnitUseAssertFailPropertly")
 	@Test
 	public void testFindByC_N_S_P_A() throws Exception {
 		List<Role> roles = RoleFinderUtil.findByC_N_S_P_A(
@@ -104,17 +105,22 @@ public class RoleFinderTest {
 			_resourcePermission.getScope(), _resourcePermission.getPrimKey(),
 			_arbitraryResourceAction.getActionId());
 
+		boolean exists = false;
+
 		for (Role role : roles) {
 			if (role.getRoleId() == _arbitraryRole.getRoleId()) {
-				return;
+				exists = true;
+
+				break;
 			}
 		}
 
-		Assert.fail(
+		Assert.assertTrue(
 			"The method findByC_N_S_P_A should have returned the role " +
-				_arbitraryRole.getRoleId());
+				_arbitraryRole.getRoleId(), exists);
 	}
 
+	@SuppressWarnings("PMD.JUnitUseAssertFailPropertly")
 	@Test
 	public void testFindByR_N_A() throws Exception {
 		List<Role> roles = RoleFinderUtil.findByR_N_A(

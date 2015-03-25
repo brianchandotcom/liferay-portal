@@ -335,17 +335,14 @@ public class BlogsEntryLocalServiceTest {
 		Assert.assertEquals(initialCount + 1, groupsEntriesInTrash.size());
 
 		for (BlogsEntry groupsEntry : groupsEntriesInTrash) {
-			if (WorkflowConstants.STATUS_IN_TRASH != groupsEntry.getStatus()) {
-				Assert.fail(
-					"Entry " + groupsEntry.getEntryId() + " is not in trash");
-			}
+			Assert.assertEquals(
+				"Entry " + groupsEntry.getEntryId() + " is not in trash",
+				WorkflowConstants.STATUS_IN_TRASH, groupsEntry.getStatus());
 
-			if (groupsEntry.getCompanyId() != _user.getCompanyId()) {
-				Assert.fail(
-					"Entry belongs to company " + groupsEntry.getCompanyId() +
-						" but should belong to company " +
-							_user.getCompanyId());
-			}
+			Assert.assertEquals(
+				"Entry belongs to company " + groupsEntry.getCompanyId() +
+					" but should belong to company " + _user.getCompanyId(),
+				_user.getCompanyId(), groupsEntry.getCompanyId());
 		}
 	}
 
@@ -520,17 +517,16 @@ public class BlogsEntryLocalServiceTest {
 		List<BlogsEntry> entries, boolean statusInTrash) {
 
 		for (BlogsEntry entry : entries) {
-			if (statusInTrash &&
-				(WorkflowConstants.STATUS_IN_TRASH != entry.getStatus())) {
-
-				Assert.fail(
-					"The entry " + entry.getEntryId() + " should be in trash");
+			if (statusInTrash) {
+				Assert.assertEquals(
+					"The entry " + entry.getEntryId() + " should be in trash",
+					WorkflowConstants.STATUS_IN_TRASH, entry.getStatus());
 			}
-			else if (!statusInTrash &&
-					 (WorkflowConstants.STATUS_IN_TRASH == entry.getStatus())) {
-
-				Assert.fail(
-					"Entry " + entry.getEntryId() + " should not be in trash");
+			else {
+				Assert.assertNotEquals(
+					"The entry " + entry.getEntryId() +
+						" should not be in trash",
+					WorkflowConstants.STATUS_IN_TRASH, entry.getStatus());
 			}
 		}
 	}

@@ -356,14 +356,14 @@ public class DLCheckInCheckOutTest {
 			try {
 				DLAppServiceUtil.cancelCheckOut(fileEntryId);
 
-				if (!expectOverride) {
-					Assert.fail("Should not have succeeded cancel check out");
-				}
+				Assert.assertTrue(
+					"Should not have succeeded cancel check out",
+					expectOverride);
 			}
 			catch (Exception e) {
-				if (expectOverride) {
-					Assert.fail("Should not have failed cancel check out " + e);
-				}
+				Assert.assertFalse(
+					"Should not have failed cancel check out " + e,
+					expectOverride);
 			}
 
 			if (expectOverride) {
@@ -381,9 +381,8 @@ public class DLCheckInCheckOutTest {
 				DLAppServiceUtil.checkInFileEntry(
 					fileEntryId, false, StringPool.NULL, _serviceContext);
 
-				if (!expectOverride) {
-					Assert.fail("Should not have succeeded check in");
-				}
+				Assert.assertTrue(
+					"Should not have succeeded check in", expectOverride);
 
 				folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
 
@@ -395,9 +394,8 @@ public class DLCheckInCheckOutTest {
 				Assert.assertEquals("1.1", fileEntry.getVersion());
 			}
 			catch (Exception e) {
-				if (expectOverride) {
-					Assert.fail("Should not have failed check in " + e);
-				}
+				Assert.assertFalse(
+					"Should not have failed check in " + e, expectOverride);
 			}
 		}
 		finally {

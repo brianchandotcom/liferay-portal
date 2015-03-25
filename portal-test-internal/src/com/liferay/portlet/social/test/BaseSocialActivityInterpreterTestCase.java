@@ -134,9 +134,9 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 
 				title = activityFeedEntry.getTitle();
 
-				if (title.matches("\\{\\d\\}")) {
-					Assert.fail("Title contains parameters: " + title);
-				}
+				Assert.assertFalse(
+					"Title contains parameters: " + title,
+					title.matches("\\{\\d\\}"));
 			}
 		}
 	}

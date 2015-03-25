@@ -361,9 +361,9 @@ public class CompanyLocalServiceTest {
 		CompanyLocalServiceUtil.deleteCompany(company);
 
 		for (long companyId : PortalInstances.getCompanyIds()) {
-			if (companyId == company.getCompanyId()) {
-				Assert.fail("Company instance was not deleted");
-			}
+			Assert.assertNotEquals(
+				"Company instance was not deleted", company.getCompanyId(),
+				companyId);
 		}
 	}
 
@@ -587,14 +587,10 @@ public class CompanyLocalServiceTest {
 					account.getTickerSymbol(), account.getIndustry(),
 					account.getType(), account.getSize());
 
-				if (expectFailure) {
-					Assert.fail();
-				}
+				Assert.assertFalse(expectFailure);
 			}
 			catch (AccountNameException ane) {
-				if (!expectFailure) {
-					Assert.fail();
-				}
+				Assert.assertTrue(expectFailure);
 			}
 		}
 	}
@@ -636,9 +632,8 @@ public class CompanyLocalServiceTest {
 			}
 		}
 		catch (CompanyMxException cme) {
-			if (valid || !mailMxUpdate) {
-				Assert.fail();
-			}
+			Assert.assertFalse(valid);
+			Assert.assertTrue(mailMxUpdate);
 		}
 		finally {
 			CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
@@ -659,14 +654,10 @@ public class CompanyLocalServiceTest {
 					company.getCompanyId(), virtualHostName, company.getMx(),
 					company.getMaxUsers(), company.getActive());
 
-				if (expectFailure) {
-					Assert.fail();
-				}
+				Assert.assertFalse(expectFailure);
 			}
 			catch (CompanyVirtualHostException cvhe) {
-				if (!expectFailure) {
-					Assert.fail();
-				}
+				Assert.assertTrue(expectFailure);
 			}
 		}
 

@@ -53,15 +53,19 @@ public class OpenSearchRegistryUtilTest {
 		List<OpenSearch> openSearches =
 			OpenSearchRegistryUtil.getOpenSearchInstances();
 
+		boolean exists = false;
+
 		for (OpenSearch openSearch : openSearches) {
 			String openSearchClassName = openSearch.getClassName();
 
 			if (openSearchClassName.equals(TestOpenSearch.class.getName())) {
-				return;
+				exists = true;
+
+				break;
 			}
 		}
 
-		Assert.fail();
+		Assert.assertTrue(exists);
 	}
 
 }

@@ -2384,9 +2384,9 @@ public class LocalProcessExecutorTest {
 
 			int code = inputStream.read();
 
-			if (code != _CODE_NULL_OUT_OOS) {
-				Assert.fail("Unable to null out OOS because of code " + code);
-			}
+			Assert.assertEquals(
+				"Unable to null out OOS because of code " + code,
+				_CODE_NULL_OUT_OOS, code);
 		}
 
 		public ServerThread(Thread mainThread, String name, int serverPort)

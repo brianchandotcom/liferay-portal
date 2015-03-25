@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class BaseIGDisplayContextFactory extends BaseDisplayContextFactory
 	implements IGDisplayContextFactory {

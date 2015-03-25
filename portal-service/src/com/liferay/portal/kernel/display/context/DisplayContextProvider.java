@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.display.context;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public interface DisplayContextProvider {
 }

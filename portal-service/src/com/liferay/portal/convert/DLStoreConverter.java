@@ -17,7 +17,7 @@ package com.liferay.portal.convert;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public interface DLStoreConverter {
 

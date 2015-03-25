@@ -67,7 +67,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Iv�n Zaera
+ * @author Iván Zaera
  */
 public class UIItemsBuilder {
 

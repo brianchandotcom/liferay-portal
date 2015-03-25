@@ -15,7 +15,7 @@
 package com.liferay.wiki.upgrade.v1_0_0;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class UpgradePortletId
 	extends com.liferay.portal.upgrade.util.UpgradePortletId {

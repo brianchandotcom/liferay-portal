@@ -29,7 +29,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 

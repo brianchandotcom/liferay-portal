@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public abstract class BaseUIItem implements UIItem {
 

@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.repository;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class UndeployedExternalRepositoryException extends RepositoryException {
 

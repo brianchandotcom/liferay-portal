@@ -20,7 +20,7 @@ import com.liferay.taglib.util.IncludeTag;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class MenuItemTag extends IncludeTag {
 

@@ -57,6 +57,7 @@ public class BookmarksEntryStagedModelDataHandlerTest
 			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 

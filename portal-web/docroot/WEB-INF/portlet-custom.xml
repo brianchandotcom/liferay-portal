@@ -150,7 +150,7 @@
 	<portlet>
 		<portlet-name>29</portlet-name>
 		<display-name>My Sites</display-name>
-		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.myplaces.MySitesPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/my_sites/</value>

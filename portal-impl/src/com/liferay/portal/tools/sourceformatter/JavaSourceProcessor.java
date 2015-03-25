@@ -32,7 +32,9 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -264,6 +266,24 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
+	}
+
+	protected String formatAuthorNames(String line) {
+		if (!line.startsWith(" * @author ")) {
+			return line;
+		}
+
+		for (Map.Entry<Pattern, String> entry : _authorNames.entrySet()) {
+			Pattern pattern = entry.getKey();
+
+			Matcher matcher = pattern.matcher(line);
+
+			if (matcher.find(" * @author ".length())) {
+				return matcher.replaceFirst("Iván Zaera");
+			}
+		}
+
+		return line;
 	}
 
 	protected static int getLeadingTabCount(String line) {
@@ -1457,6 +1477,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						"Do not use @see with another annotation: " + fileName +
 							" " + lineCount);
 				}
+
+				line = formatAuthorNames(line);
 
 				checkInefficientStringMethods(
 					line, fileName, absolutePath, lineCount);
@@ -3116,6 +3138,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private static Pattern _annotationPattern = Pattern.compile(
 		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
+	private static final Map<Pattern, String> _authorNames =
+		Collections.singletonMap(Pattern.compile("Iv\\Wn Zaera"), "Iván Zaera");
 	private static Pattern _importsPattern = Pattern.compile(
 		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
 

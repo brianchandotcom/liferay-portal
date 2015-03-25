@@ -41,7 +41,7 @@ public class MBSubscriptionSender
 		throws PortalException {
 
 		if (_calledAddMailingListSubscriber) {
-			throw new IllegalArgumentException();
+			throw new IllegalStateException();
 		}
 
 		_calledAddMailingListSubscriber = true;

@@ -37,21 +37,13 @@ String displayStyle = BeanParamUtil.getString(category, request, "displayStyle",
 
 MBMailingList mailingList = null;
 
-try {
-	if (categoryId > 0) {
-		mailingList = MBMailingListLocalServiceUtil.getCategoryMailingList(scopeGroupId, categoryId);
-	}
-}
-catch (NoSuchMailingListException nsmle) {
+if (categoryId > 0) {
+	mailingList = MBMailingListLocalServiceUtil.fetchCategoryMailingList(scopeGroupId, categoryId);
 }
 
 if ((category == null) && (mailingList == null)) {
-	try {
-		if (parentCategoryId > 0) {
-			mailingList = MBMailingListLocalServiceUtil.getCategoryMailingList(scopeGroupId, parentCategoryId);
-		}
-	}
-	catch (NoSuchMailingListException nsmle) {
+	if (parentCategoryId > 0) {
+		mailingList = MBMailingListLocalServiceUtil.fetchCategoryMailingList(scopeGroupId, parentCategoryId);
 	}
 }
 

@@ -227,12 +227,9 @@ if ((category != null) && layout.isTypeControlPanel()) {
 						>
 
 							<%
-							MBMessage message = null;
+							MBMessage message = MBMessageLocalServiceUtil.fetchMBMessage(thread.getRootMessageId());
 
-							try {
-								message = MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
-							}
-							catch (NoSuchMessageException nsme) {
+							if (message == null) {
 								_log.error("Thread requires missing root message id " + thread.getRootMessageId());
 
 								message = new MBMessageImpl();
@@ -388,12 +385,9 @@ if ((category != null) && layout.isTypeControlPanel()) {
 				>
 
 					<%
-					MBMessage message = null;
+					MBMessage message = MBMessageLocalServiceUtil.fetchMBMessage(thread.getRootMessageId());
 
-					try {
-						message = MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
-					}
-					catch (NoSuchMessageException nsme) {
+					if (message == null) {
 						_log.error("Thread requires missing root message id " + thread.getRootMessageId());
 
 						continue;

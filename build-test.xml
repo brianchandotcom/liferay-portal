@@ -4353,6 +4353,7 @@ if (ppstate.equals("normal")) {
 						new String[] {
 							"modules/apps/bookmarks/bookmarks-test/test/integration/**/*Test.java",
 							"modules/apps/social/social-networking-test/test/integration/**/*Test.java",
+							"modules/apps/wiki/wiki-test/test/integration/**/*Test.java",
 							"modules/portal/portal-json-web-service-extender/test/integration/**/*Test.java",
 							"modules/portal/portal-template-freemarker/test/integration/**/*Test.java",
 							"modules/util/osgi-util/test/integration/**/*Test.java",

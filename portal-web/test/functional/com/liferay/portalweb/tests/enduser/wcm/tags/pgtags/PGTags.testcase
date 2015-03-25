@@ -224,8 +224,7 @@
 		<execute macro="Tag#addSelectTagMultipleViaBlogsPG">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
-			<var name="tagName1" value="${tagName1}" />
-			<var name="tagName2" value="${tagName3}" />
+			<var name="tagNameList" value="${tagName1},${tagName3}" />
 		</execute>
 	</command>
 

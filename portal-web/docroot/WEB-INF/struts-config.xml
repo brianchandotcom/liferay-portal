@@ -1494,7 +1494,7 @@
 
 		<action path="/sites_admin/page" type="com.liferay.portlet.myplaces.action.ViewAction" />
 
-		<action path="/sites_admin/post_membership_request" type="com.liferay.portlet.sites.action.PostMembershipRequestAction">
+		<action path="/sites_admin/post_membership_request" type="com.liferay.portlet.myplaces.action.PostMembershipRequestAction">
 			<forward name="portlet.sites_admin.error" path="portlet.sites_admin.error" />
 			<forward name="portlet.sites_admin.post_membership_request" path="portlet.sites_admin.post_membership_request" />
 		</action>

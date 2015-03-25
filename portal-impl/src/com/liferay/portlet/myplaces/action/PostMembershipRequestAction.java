@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.sites.action;
+package com.liferay.portlet.myplaces.action;
 
 import com.liferay.portal.MembershipRequestCommentsException;
 import com.liferay.portal.NoSuchGroupException;
@@ -24,6 +24,7 @@ import com.liferay.portal.service.MembershipRequestServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portlet.sites.action.ActionUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

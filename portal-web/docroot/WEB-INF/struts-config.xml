@@ -1149,9 +1149,7 @@
 
 		<action path="/my_sites/edit_layouts" type="com.liferay.portlet.myplaces.action.EditPagesAction" />
 
-		<action path="/my_sites/view" type="com.liferay.portlet.myplaces.action.ViewAction">
-			<forward name="portlet.my_sites.view" path="portlet.my_sites.view" />
-		</action>
+		<action path="/my_sites/view" forward="portlet.my_sites.view" />
 
 		<!-- My Workflow Instances -->
 

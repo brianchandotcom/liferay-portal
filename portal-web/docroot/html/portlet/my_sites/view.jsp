@@ -25,7 +25,6 @@ if (!tabs1.equals("my-sites") && !tabs1.equals("available-sites")) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/my_sites/view");
 portletURL.setParameter("tabs1", tabs1);
 
 pageContext.setAttribute("portletURL", portletURL);

@@ -30,6 +30,7 @@ import com.liferay.wiki.service.WikiPageService;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * @author Juan Fernández
@@ -44,8 +45,11 @@ public class WikiPortletDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language", locale);
+
 		String portletTitle = PortalUtil.getPortletTitle(
-			WikiPortletKeys.WIKI, locale);
+			WikiPortletKeys.WIKI, resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));

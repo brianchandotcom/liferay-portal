@@ -292,6 +292,13 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 
 	@Override
 	public com.liferay.portal.model.Subscription fetchSubscription(
+		long companyId, long userId, java.lang.String className, long classPK) {
+		return _subscriptionLocalService.fetchSubscription(companyId, userId,
+			className, classPK);
+	}
+
+	@Override
+	public com.liferay.portal.model.Subscription fetchSubscription(
 		long subscriptionId) {
 		return _subscriptionLocalService.fetchSubscription(subscriptionId);
 	}

@@ -209,6 +209,11 @@ public class MBMailingListLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBMailingList fetchCategoryMailingList(
+		long groupId, long categoryId) {
+		return getService().fetchCategoryMailingList(groupId, categoryId);
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchMBMailingList(
 		long mailingListId) {
 		return getService().fetchMBMailingList(mailingListId);

@@ -255,6 +255,10 @@ public interface SubscriptionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Subscription fetchSubscription(
+		long companyId, long userId, java.lang.String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Subscription fetchSubscription(
 		long subscriptionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

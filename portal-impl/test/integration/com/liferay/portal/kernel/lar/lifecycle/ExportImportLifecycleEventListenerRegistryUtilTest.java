@@ -20,13 +20,10 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
-import com.liferay.portal.util.test.AtomicState;
 
 import java.util.Set;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,16 +40,6 @@ public class ExportImportLifecycleEventListenerRegistryUtilTest {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			new SyntheticBundleRule(
 				"bundle.exportimportlifecycleeventlistenerregistryutil"));
-
-	@BeforeClass
-	public static void setUpClass() {
-		_atomicState = new AtomicState();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_atomicState.close();
-	}
 
 	@Test
 	public void testAsyncInstance() {
@@ -103,7 +90,5 @@ public class ExportImportLifecycleEventListenerRegistryUtilTest {
 
 		Assert.fail();
 	}
-
-	private static AtomicState _atomicState;
 
 }

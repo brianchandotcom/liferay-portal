@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.cmis.search;
+package com.liferay.document.library.repository.cmis;
+
+import java.util.Set;
 
 /**
- * @author Mika Koivisto
+ * @author Alexander Chow
  */
-public class CMISNotExpression implements CMISCriterion {
+public interface Session {
 
-	public CMISNotExpression(CMISCriterion cmisCriterion) {
-		_cmisCriterion = cmisCriterion;
-	}
-
-	@Override
-	public String toQueryFragment() {
-		return "NOT(".concat(_cmisCriterion.toQueryFragment().concat(")"));
-	}
-
-	private final CMISCriterion _cmisCriterion;
+	public void setDefaultContext(
+		Set<String> filter, boolean includeAcls,
+		boolean includeAllowableActions, boolean includePolicies,
+		String includeRelationships, Set<String> renditionFilter,
+		boolean includePathSegments, String orderBy, boolean cacheEnabled,
+		int maxItemsPerPage);
 
 }

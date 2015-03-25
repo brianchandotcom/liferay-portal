@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.cmis.search;
-
-import com.liferay.portal.kernel.util.StringPool;
+package com.liferay.document.library.repository.cmis.search;
 
 /**
  * @author Mika Koivisto
  */
-public class CMISContainsNotExpression implements CMISCriterion {
+public class CMISNotExpression implements CMISCriterion {
 
-	public CMISContainsNotExpression(CMISCriterion cmisCriterion) {
+	public CMISNotExpression(CMISCriterion cmisCriterion) {
 		_cmisCriterion = cmisCriterion;
 	}
 
 	@Override
 	public String toQueryFragment() {
-		return StringPool.DASH.concat(_cmisCriterion.toQueryFragment());
+		return "NOT(".concat(_cmisCriterion.toQueryFragment().concat(")"));
 	}
 
 	private final CMISCriterion _cmisCriterion;

@@ -12,47 +12,42 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.cmis.search;
+package com.liferay.document.library.repository.cmis.search;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.List;
-
 /**
  * @author Mika Koivisto
  */
-public class CMISDisjunction extends CMISJunction {
+public class CMISSimpleExpression implements CMISCriterion {
+
+	public CMISSimpleExpression(
+		String field, String value,
+		CMISSimpleExpressionOperator cmisSimpleExpressionOperator) {
+
+		_field = field;
+		_value = value;
+		_cmisSimpleExpressionOperator = cmisSimpleExpressionOperator;
+	}
 
 	@Override
 	public String toQueryFragment() {
-		if (isEmpty()) {
-			return StringPool.BLANK;
-		}
+		StringBundler sb = new StringBundler(7);
 
-		List<CMISCriterion> cmisCriterions = list();
-
-		StringBundler sb = new StringBundler(cmisCriterions.size() * 2 + 1);
-
-		if (cmisCriterions.size() > 1) {
-			sb.append(StringPool.OPEN_PARENTHESIS);
-		}
-
-		for (int i = 0; i < cmisCriterions.size(); i++) {
-			CMISCriterion cmisCriterion = cmisCriterions.get(i);
-
-			if (i != 0) {
-				sb.append(" OR ");
-			}
-
-			sb.append(cmisCriterion.toQueryFragment());
-		}
-
-		if (cmisCriterions.size() > 1) {
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-		}
+		sb.append(_field);
+		sb.append(StringPool.SPACE);
+		sb.append(_cmisSimpleExpressionOperator);
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.APOSTROPHE);
+		sb.append(_value);
+		sb.append(StringPool.APOSTROPHE);
 
 		return sb.toString();
 	}
+
+	private final CMISSimpleExpressionOperator _cmisSimpleExpressionOperator;
+	private final String _field;
+	private final String _value;
 
 }

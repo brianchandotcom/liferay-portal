@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.cmis.search;
+package com.liferay.document.library.repository.cmis.search;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;

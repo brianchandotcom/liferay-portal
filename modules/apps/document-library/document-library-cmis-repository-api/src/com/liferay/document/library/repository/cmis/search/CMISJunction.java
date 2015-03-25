@@ -12,22 +12,35 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.cmis.search;
+package com.liferay.document.library.repository.cmis.search;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Mika Koivisto
  */
-public class CMISInTreeExpression implements CMISCriterion {
+public abstract class CMISJunction implements CMISCriterion {
 
-	public CMISInTreeExpression(String objectId) {
-		_objectId = objectId;
+	public CMISJunction() {
+		_cmisCriterions = new ArrayList<>();
+	}
+
+	public void add(CMISCriterion cmisCriterion) {
+		_cmisCriterions.add(cmisCriterion);
+	}
+
+	public boolean isEmpty() {
+		return _cmisCriterions.isEmpty();
+	}
+
+	public List<CMISCriterion> list() {
+		return _cmisCriterions;
 	}
 
 	@Override
-	public String toQueryFragment() {
-		return "IN_TREE('".concat(_objectId).concat("')");
-	}
+	public abstract String toQueryFragment();
 
-	private final String _objectId;
+	private final List<CMISCriterion> _cmisCriterions;
 
 }

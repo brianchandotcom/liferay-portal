@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.cmis;
+package com.liferay.document.library.repository.cmis;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.BaseRepositoryImpl;

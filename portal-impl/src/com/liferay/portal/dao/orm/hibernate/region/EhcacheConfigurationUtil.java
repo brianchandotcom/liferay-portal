@@ -126,7 +126,7 @@ public class EhcacheConfigurationUtil {
 			}
 		}
 
-		return null;
+		return _NO_PROPERTIES;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -191,7 +191,7 @@ public class EhcacheConfigurationUtil {
 		CacheConfiguration cacheConfiguration,
 		String cacheEventListenerProperties) {
 
-		if (Validator.isNull(cacheEventListenerProperties) ||
+		if (cacheEventListenerProperties.equals(_NO_PROPERTIES) ||
 			!PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
 
 			return;
@@ -233,5 +233,7 @@ public class EhcacheConfigurationUtil {
 
 		return cacheConfigurations;
 	}
+
+	private static final String _NO_PROPERTIES = "_NO_PROPERTIES";
 
 }

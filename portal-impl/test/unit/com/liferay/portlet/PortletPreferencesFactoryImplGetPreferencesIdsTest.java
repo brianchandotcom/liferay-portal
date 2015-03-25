@@ -24,6 +24,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.PortletImpl;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -72,16 +73,6 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 		_layout.setCompanyId(RandomTestUtil.randomLong());
 		_layout.setPlid(RandomTestUtil.randomLong());
 		_layout.setPrivateLayout(true);
-
-		PowerMockito.mockStatic(LayoutPermissionUtil.class);
-
-		Mockito.when(
-			LayoutPermissionUtil.contains(
-				Mockito.any(PermissionChecker.class), Mockito.eq(_layout),
-				Mockito.eq(ActionKeys.UPDATE))
-		).thenReturn(
-			true
-		);
 	}
 
 	@Test
@@ -233,6 +224,100 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 		Assert.assertEquals(
 			"The plid should be that of the current layout", _layout.getPlid(),
 			portletPreferencesIds.getPlid());
+	}
+
+	@Test(expected = PrincipalException.class)
+	public void testPreferencesWithModeEditGuestInPrivateLayout()
+		throws Exception {
+
+		PowerMockito.mockStatic(PortletLocalServiceUtil.class);
+
+		Mockito.when(
+			PortletLocalServiceUtil.getPortletById(
+				_layout.getCompanyId(), _PORTLET_ID)
+		).thenReturn(
+			_getGroupPortlet()
+		);
+
+		PowerMockito.mockStatic(LayoutPermissionUtil.class);
+
+		Mockito.when(
+			LayoutPermissionUtil.contains(
+				Mockito.any(PermissionChecker.class), Mockito.eq(_layout),
+				Mockito.eq(ActionKeys.UPDATE))
+		).thenReturn(
+			true
+		);
+
+		boolean modeEditGuest = true;
+		long siteGroupId = _layout.getGroupId();
+
+		PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+			siteGroupId, _USER_ID, _layout, _PORTLET_ID, modeEditGuest);
+	}
+
+	@Test(expected = PrincipalException.class)
+	public void testPreferencesWithModeEditGuestInPubLayoutWithoutPermission()
+		throws Exception {
+
+		_layout.setPrivateLayout(false);
+
+		PowerMockito.mockStatic(PortletLocalServiceUtil.class);
+
+		Mockito.when(
+			PortletLocalServiceUtil.getPortletById(
+				_layout.getCompanyId(), _PORTLET_ID)
+		).thenReturn(
+			_getGroupPortlet()
+		);
+
+		PowerMockito.mockStatic(LayoutPermissionUtil.class);
+
+		Mockito.when(
+			LayoutPermissionUtil.contains(
+				Mockito.any(PermissionChecker.class), Mockito.eq(_layout),
+				Mockito.eq(ActionKeys.UPDATE))
+		).thenReturn(
+			false
+		);
+
+		boolean modeEditGuest = true;
+		long siteGroupId = _layout.getGroupId();
+
+		PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+			siteGroupId, _USER_ID, _layout, _PORTLET_ID, modeEditGuest);
+	}
+
+	@Test
+	public void testPreferencesWithModeEditGuestInPubLayoutWithPermission()
+		throws Exception {
+
+		_layout.setPrivateLayout(false);
+
+		PowerMockito.mockStatic(PortletLocalServiceUtil.class);
+
+		Mockito.when(
+			PortletLocalServiceUtil.getPortletById(
+				_layout.getCompanyId(), _PORTLET_ID)
+		).thenReturn(
+			_getGroupPortlet()
+		);
+
+		PowerMockito.mockStatic(LayoutPermissionUtil.class);
+
+		Mockito.when(
+			LayoutPermissionUtil.contains(
+				Mockito.any(PermissionChecker.class), Mockito.eq(_layout),
+				Mockito.eq(ActionKeys.UPDATE))
+		).thenReturn(
+			true
+		);
+
+		boolean modeEditGuest = true;
+		long siteGroupId = _layout.getGroupId();
+
+		PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+			siteGroupId, _USER_ID, _layout, _PORTLET_ID, modeEditGuest);
 	}
 
 	private Portlet _getCompanyPortlet() {

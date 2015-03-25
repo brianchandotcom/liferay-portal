@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.service.persistence.impl;
 
-import com.liferay.portal.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Subscription;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
@@ -152,16 +152,15 @@ public class MBCategoryFinderImpl
 				}
 			}
 
-			try {
-				Group group = GroupLocalServiceUtil.getGroup(groupId);
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-				SubscriptionLocalServiceUtil.getSubscription(
+			Subscription subscription =
+				SubscriptionLocalServiceUtil.fetchSubscription(
 					group.getCompanyId(), userId, MBCategory.class.getName(),
 					groupId);
 
+			if (subscription != null) {
 				count++;
-			}
-			catch (NoSuchSubscriptionException nsse) {
 			}
 
 			return count;
@@ -224,13 +223,14 @@ public class MBCategoryFinderImpl
 			List<MBCategory> list = (List<MBCategory>)QueryUtil.list(
 				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, false);
 
-			try {
-				Group group = GroupLocalServiceUtil.getGroup(groupId);
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-				SubscriptionLocalServiceUtil.getSubscription(
+			Subscription subscription =
+				SubscriptionLocalServiceUtil.fetchSubscription(
 					group.getCompanyId(), userId, MBCategory.class.getName(),
 					groupId);
 
+			if (subscription != null) {
 				int threadCount =
 					MBThreadLocalServiceUtil.getCategoryThreadsCount(
 						groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
@@ -250,8 +250,6 @@ public class MBCategoryFinderImpl
 				category.setMessageCount(messageCount);
 
 				list.add(category);
-			}
-			catch (NoSuchSubscriptionException nsse) {
 			}
 
 			return Collections.unmodifiableList(

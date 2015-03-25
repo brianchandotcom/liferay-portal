@@ -85,7 +85,7 @@ public class JSONWebServiceRegistrator {
 		try {
 			bean = beanLocator.locate(beanName);
 		}
-		catch (BeanLocatorException e) {
+		catch (BeanLocatorException ble) {
 			return;
 		}
 

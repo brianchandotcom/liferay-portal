@@ -47,6 +47,7 @@ public class BookmarksEntryPermissionTest extends BasePermissionTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 

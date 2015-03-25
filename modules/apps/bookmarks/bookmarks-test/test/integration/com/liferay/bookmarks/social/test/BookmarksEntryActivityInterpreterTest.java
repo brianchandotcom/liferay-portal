@@ -54,6 +54,7 @@ public class BookmarksEntryActivityInterpreterTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 

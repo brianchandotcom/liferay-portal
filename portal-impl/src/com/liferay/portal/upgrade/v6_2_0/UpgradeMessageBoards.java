@@ -16,10 +16,10 @@ package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.util.RSSUtil;
 
 import javax.portlet.PortletPreferences;
 

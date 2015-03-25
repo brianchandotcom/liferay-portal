@@ -57,6 +57,7 @@ import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleDisplayDateComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleModifiedDateComparator;
+import com.liferay.util.RSSUtil;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
@@ -416,7 +417,7 @@ public class JournalRSSUtil {
 
 			SyndContent syndContent = new SyndContentImpl();
 
-			syndContent.setType(com.liferay.util.RSSUtil.ENTRY_TYPE_DEFAULT);
+			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 
 			String value = article.getDescription(languageId);
 
@@ -477,7 +478,7 @@ public class JournalRSSUtil {
 		syndFeed.setUri(feedURL.toString());
 
 		try {
-			return com.liferay.util.RSSUtil.export(syndFeed);
+			return RSSUtil.export(syndFeed);
 		}
 		catch (FeedException fe) {
 			throw new SystemException(fe);

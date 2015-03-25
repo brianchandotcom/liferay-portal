@@ -178,6 +178,9 @@ public class BaseHandler implements Handler<Void> {
 		catch (Exception e) {
 			handleException(e);
 		}
+		finally {
+			processFinally();
+		}
 
 		return null;
 	}
@@ -231,6 +234,9 @@ public class BaseHandler implements Handler<Void> {
 
 			SyncSiteService.deleteSyncSite(syncSite.getSyncSiteId());
 		}
+	}
+
+	protected void processFinally() {
 	}
 
 	protected void retryServerConnection(int uiEvent) {

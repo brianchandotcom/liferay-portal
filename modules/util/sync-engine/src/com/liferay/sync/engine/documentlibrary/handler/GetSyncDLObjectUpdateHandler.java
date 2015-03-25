@@ -391,6 +391,9 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 	@Override
 	protected void processFinally() {
 		_scheduledFuture.cancel(false);
+
+		SyncEngineUtil.fireSyncEngineStateChanged(
+			getSyncAccountId(), SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSED);
 	}
 
 	protected void processSyncFile(SyncFile targetSyncFile) {

@@ -16,6 +16,7 @@ package com.liferay.portal.settings.impl;
 
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.TypedSettings;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.reflect.Constructor;
@@ -57,7 +58,7 @@ public class SettingsInvocationHandler<S, C> implements InvocationHandler {
 		}
 
 		try {
-			return _invokeTypedSettings(method);
+			return _invokeTypedSettings(method, args);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -65,46 +66,106 @@ public class SettingsInvocationHandler<S, C> implements InvocationHandler {
 	}
 
 	private Object _invokeSettingsExtra(Method method, Object[] args)
-		throws IllegalAccessException, InvocationTargetException {
+		throws IllegalAccessException, InvocationTargetException,
+			NoSuchMethodException {
+
+		Class<?> clazz = _settingsExtraImplementation.getClass();
+
+		method = clazz.getMethod(method.getName(), method.getParameterTypes());
 
 		return method.invoke(_settingsExtraImplementation, args);
 	}
 
-	private Object _invokeTypedSettings(Method method)
+	private Object _invokeTypedSettings(Method method, Object[] args)
 		throws NoSuchMethodException, IllegalAccessException,
 			InvocationTargetException, InstantiationException {
 
 		Class<?> returnType = method.getReturnType();
 
+		Object defaultValue = null;
+
+		if (ArrayUtil.isNotEmpty(args)) {
+			defaultValue = args[0];
+		}
+
 		if (returnType.equals(boolean.class)) {
-			return _typedSettings.getBooleanValue(method.getName());
+			if (defaultValue == null) {
+				return _typedSettings.getBooleanValue(method.getName());
+			}
+			else {
+				return _typedSettings.getBooleanValue(
+					method.getName(), (Boolean) defaultValue);
+			}
 		}
 		else if (returnType.equals(double.class)) {
-			return _typedSettings.getDoubleValue(method.getName());
+			if (defaultValue == null) {
+				return _typedSettings.getDoubleValue(method.getName());
+			}
+			else {
+				return _typedSettings.getDoubleValue(
+					method.getName(), (Double) defaultValue);
+			}
 		}
 		else if (returnType.equals(float.class)) {
-			return _typedSettings.getFloatValue(method.getName());
+			if (defaultValue == null) {
+				return _typedSettings.getFloatValue(method.getName());
+			}
+			else {
+				return _typedSettings.getFloatValue(
+					method.getName(), (Float) defaultValue);
+			}
 		}
 		else if (returnType.equals(int.class)) {
-			return _typedSettings.getIntegerValue(method.getName());
+			if (defaultValue == null) {
+				return _typedSettings.getIntegerValue(method.getName());
+			}
+			else {
+				return _typedSettings.getIntegerValue(
+					method.getName(), (Integer) defaultValue);
+			}
 		}
 		else if (returnType.equals(LocalizedValuesMap.class)) {
 			return _typedSettings.getLocalizedValuesMap(method.getName());
 		}
 		else if (returnType.equals(long.class)) {
-			return _typedSettings.getLongValue(method.getName());
+			if (defaultValue == null) {
+				return _typedSettings.getLongValue(method.getName());
+			}
+			else {
+				return _typedSettings.getLongValue(
+					method.getName(), (Long) defaultValue);
+			}
 		}
 		else if (returnType.equals(String.class)) {
-			return _typedSettings.getValue(method.getName());
+			if (defaultValue == null) {
+				return _typedSettings.getValue(method.getName());
+			}
+			else {
+				return _typedSettings.getValue(
+					method.getName(), (String) defaultValue);
+			}
 		}
 		else if (returnType.equals(String[].class)) {
-			return _typedSettings.getValues(method.getName());
+			if (defaultValue == null) {
+				return _typedSettings.getValues(method.getName());
+			}
+			else {
+				return _typedSettings.getValues(
+					method.getName(), (String[]) defaultValue);
+			}
 		}
 
 		Constructor<?> constructor = returnType.getConstructor(String.class);
 
-		return constructor.newInstance(
-			_typedSettings.getValue(method.getName()));
+		if (defaultValue == null) {
+			return constructor.newInstance(
+				_typedSettings.getValue(method.getName()));
+		}
+		else {
+			return constructor.newInstance(
+				_typedSettings.getValue(
+					method.getName(), (String) defaultValue));
+		}
 	}
 
 	private final Class<S> _settingsClass;

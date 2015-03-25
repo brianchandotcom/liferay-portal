@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsProvider;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.settings.WikiGroupServiceSettings;
-import com.liferay.wiki.settings.WikiPortletInstanceSettings;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -74,7 +73,7 @@ public class WikiWebSettingsProvider {
 	}
 
 	@Reference(
-		target = "(class.name=com.liferay.wiki.settings.WikiPortletInstanceSettings)"
+		target = "(class.name=com.liferay.wiki.web.settings.WikiPortletInstanceSettings)"
 	)
 	protected void setPortletInstanceSettingsProvider(
 		PortletInstanceSettingsProvider<WikiPortletInstanceSettings>

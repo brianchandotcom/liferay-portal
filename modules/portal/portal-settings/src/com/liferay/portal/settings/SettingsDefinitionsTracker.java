@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Iván Zaera
@@ -46,18 +46,7 @@ public class SettingsDefinitionsTracker {
 
 	@Deactivate
 	protected void deactivate() {
-		for (SettingsDefinition<?, ?> settingsDefinition :
-				_settingsDefinitionLifecycleHandlers.keySet()) {
-
-			SettingsDefinitionLifecycleHandler<?, ?>
-				settingsDefinitionLifecycleHandler =
-					_settingsDefinitionLifecycleHandlers.get(
-						settingsDefinition);
-
-			settingsDefinitionLifecycleHandler.stop();
-		}
-
-		_settingsDefinitionLifecycleHandlers.clear();
+		_bundleContext = null;
 	}
 
 	@Reference(unbind = "-")
@@ -69,7 +58,7 @@ public class SettingsDefinitionsTracker {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policyOption = ReferencePolicyOption.GREEDY
+		policy = ReferencePolicy.DYNAMIC
 	)
 	protected void setSettingsDefinition(
 		SettingsDefinition<?, ?> settingsDefinition) {

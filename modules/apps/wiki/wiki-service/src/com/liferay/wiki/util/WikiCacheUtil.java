@@ -146,4 +146,8 @@ public class WikiCacheUtil {
 	private static final PortalCache<String, Serializable> _portalCache =
 		MultiVMPoolUtil.getCache(_CACHE_NAME);
 
+	static {
+		_portalCache.removeAll();
+	}
+
 }

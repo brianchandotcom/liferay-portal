@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
-import com.liferay.wiki.settings.WikiPortletInstanceSettings;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
+import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
 
 import java.util.List;
 
@@ -57,7 +57,7 @@ public class WikiPortletInstanceSettingsHelper {
 				_wikiRequestHelper.getWikiPortletInstanceSettings();
 
 			_allPermittedNodes = WikiUtil.getNodes(
-				getAllNodes(), wikiPortletInstanceSettings.getHiddenNodes(),
+				getAllNodes(), wikiPortletInstanceSettings.hiddenNodes(),
 				_wikiRequestHelper.getPermissionChecker());
 		}
 
@@ -81,7 +81,7 @@ public class WikiPortletInstanceSettingsHelper {
 		WikiPortletInstanceSettings wikiPortletInstanceSettings =
 			_wikiRequestHelper.getWikiPortletInstanceSettings();
 
-		_visibleNodeNames = wikiPortletInstanceSettings.getVisibleNodes();
+		_visibleNodeNames = wikiPortletInstanceSettings.visibleNodes();
 
 		if (ArrayUtil.isNotEmpty(_visibleNodeNames)) {
 			_allNodes = WikiUtil.orderNodes(_allNodes, _visibleNodeNames);

@@ -344,6 +344,9 @@
 						</exec>
 					</then>
 				</elseif>
+				<else>
+					<fail message="Please set the property ${ip.address}" />
+				</else>
 			</if>
 		</sequential>
 	</macrodef>
@@ -474,6 +477,10 @@
 
 	<macrodef name="get-test-url">
 		<sequential>
+			<get-ip-address />
+
+			<get-testcase-property property.name="mobile.device.enabled" />
+
 			<get-testcase-property property.name="testcase.url" />
 
 			<if>
@@ -481,6 +488,12 @@
 				<then>
 					<var name="test.url" value="${test.url}" />
 				</then>
+				<elseif>
+					<equals arg1="${mobile.device.enabled}" arg2="true" />
+					<then>
+						<var name="test.url" value="http://${ip.address}:8080" />
+					</then>
+				</elseif>
 				<elseif>
 					<isset property="testcase.url" />
 					<then>
@@ -3567,24 +3580,9 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 
 		<get-test-url />
 
-		<if>
-			<equals arg1="${mobile.device.enabled}" arg2="true" />
-			<then>
-				<get-ip-address />
-
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					portal.url=http://${ip.address}:8080
-				</echo>
-			</then>
-			<elseif>
-				<isset property="test.url" />
-				<then>
-					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-						portal.url=${test.url}
-					</echo>
-				</then>
-			</elseif>
-		</if>
+		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+			portal.url=${test.url}
+		</echo>
 
 		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 			selenium.executable.dir=${basedir.unix}/tools/selenium/

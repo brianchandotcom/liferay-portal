@@ -15,11 +15,13 @@
 package com.liferay.portlet.myplaces;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
+import com.liferay.portal.service.MembershipRequestServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -36,6 +38,22 @@ import javax.portlet.ActionResponse;
  * @author Eudaldo Alonso
  */
 public class MySitesPortlet extends MVCPortlet {
+
+	public void postMembershipRequest(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		String comments = ParamUtil.getString(actionRequest, "comments");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		MembershipRequestServiceUtil.addMembershipRequest(
+			groupId, comments, serviceContext);
+
+		SessionMessages.add(actionRequest, "membershipRequestSent");
+	}
 
 	public void updateGroupUsers(
 			ActionRequest actionRequest, ActionResponse actionResponse)

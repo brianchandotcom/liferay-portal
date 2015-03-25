@@ -46,9 +46,7 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 			</c:if>
 
 			<c:if test="<%= ((group.getType() == GroupConstants.TYPE_SITE_OPEN) || (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED)) && GroupLocalServiceUtil.hasUserGroup(user.getUserId(), group.getGroupId(), false) && !SiteMembershipPolicyUtil.isMembershipRequired(user.getUserId(), group.getGroupId()) && group.isManualMembership() %>">
-				<portlet:actionURL var="leaveURL">
-					<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
-					<portlet:param name="<%= Constants.CMD %>" value="group_users" />
+				<portlet:actionURL name="updateGroupUsers" var="leaveURL">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 					<portlet:param name="removeUserIds" value="<%= String.valueOf(user.getUserId()) %>" />
@@ -66,9 +64,7 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 				<c:when test="<%= !GroupLocalServiceUtil.hasUserGroup(user.getUserId(), group.getGroupId()) && SiteMembershipPolicyUtil.isMembershipAllowed(user.getUserId(), group.getGroupId()) %>">
 					<c:choose>
 						<c:when test="<%= group.getType() == GroupConstants.TYPE_SITE_OPEN %>">
-							<portlet:actionURL var="joinURL">
-								<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
-								<portlet:param name="<%= Constants.CMD %>" value="group_users" />
+							<portlet:actionURL name="updateGroupUsers" var="joinURL">
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 								<portlet:param name="addUserIds" value="<%= String.valueOf(user.getUserId()) %>" />
@@ -103,9 +99,7 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 				</c:when>
 				<c:otherwise>
 					<c:if test="<%= ((group.getType() == GroupConstants.TYPE_SITE_OPEN) || (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED)) && GroupLocalServiceUtil.hasUserGroup(user.getUserId(), group.getGroupId(), false) && !SiteMembershipPolicyUtil.isMembershipRequired(user.getUserId(), group.getGroupId()) %>">
-						<portlet:actionURL var="leaveURL">
-							<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
-							<portlet:param name="<%= Constants.CMD %>" value="group_users" />
+						<portlet:actionURL name="updateGroupUsers" var="leaveURL">
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 							<portlet:param name="removeUserIds" value="<%= String.valueOf(user.getUserId()) %>" />

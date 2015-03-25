@@ -1094,10 +1094,6 @@
 		<put name="portlet_content" value="/portlet/sites_admin/error.jsp" />
 	</definition>
 
-	<definition name="portlet.sites_admin.post_membership_request" extends="portlet.sites_admin">
-		<put name="portlet_content" value="/portlet/sites_admin/post_membership_request.jsp" />
-	</definition>
-
 	<definition name="portlet.sites_admin.reply_membership_request" extends="portlet.sites_admin">
 		<put name="portlet_content" value="/portlet/sites_admin/reply_membership_request.jsp" />
 	</definition>

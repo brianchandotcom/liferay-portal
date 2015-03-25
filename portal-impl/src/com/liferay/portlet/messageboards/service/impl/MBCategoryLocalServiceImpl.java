@@ -17,8 +17,6 @@ package com.liferay.portlet.messageboards.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -29,7 +27,6 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.messageboards.CategoryNameException;
-import com.liferay.portlet.messageboards.NoSuchMailingListException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMailingList;
@@ -244,17 +241,12 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		// Mailing list
 
-		try {
-			mbMailingListLocalService.deleteCategoryMailingList(
+		MBMailingList mbMailingList =
+			mbMailingListLocalService.fetchCategoryMailingList(
 				category.getGroupId(), category.getCategoryId());
-		}
-		catch (NoSuchMailingListException nsmle) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Cannot delete mailing list for category " +
-						category.getCategoryId() + " because it does not " +
-							"exist");
-			}
+
+		if (mbMailingList != null) {
+			mbMailingListLocalService.deleteMailingList(mbMailingList);
 		}
 
 		// Subscriptions
@@ -1092,8 +1084,5 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			throw new CategoryNameException();
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MBCategoryLocalServiceImpl.class);
 
 }

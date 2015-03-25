@@ -176,6 +176,8 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 
 		<antcall target="deploy-tck-wars" />
 
+		<ant target="deploy" dir="modules/test/tck-activator" />
+
 		<parallel>
 			<exec dir="${app.server.tomcat.bin.dir}" executable="catalina${file.suffix.bat}" resolveexecutable="true">
 				<arg line="run" />

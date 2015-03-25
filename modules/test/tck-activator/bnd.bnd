@@ -1,0 +1,4 @@
+Bundle-Name: Liferay TCK Activator
+Bundle-SymbolicName: com.liferay.tck.activator
+Bundle-Version: 1.0.0
+Include-Resource: classes

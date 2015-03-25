@@ -79,8 +79,7 @@
 			</sequential>
 		</for>
 
-		<ant target="deploy" dir="modules/test/portlet-tck-bridge" />
-
+		<ant dir="modules/test/portlet-tck-bridge" target="deploy" />
 	</target>
 
 	<target name="prepare-tck">

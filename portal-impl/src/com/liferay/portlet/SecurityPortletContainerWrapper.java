@@ -175,7 +175,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			throw new PrincipalException();
 		}
 
-		if (portlet.isSystem() || portlet.isUndeployedPortlet()) {
+		if (portlet.isUndeployedPortlet()) {
 			return;
 		}
 

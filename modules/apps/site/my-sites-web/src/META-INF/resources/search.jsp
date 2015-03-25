@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/my_sites/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 GroupSearch searchContainer = (GroupSearch)request.getAttribute("liferay-ui:search:searchContainer");

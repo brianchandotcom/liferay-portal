@@ -99,13 +99,8 @@ public class Session {
 
 		RequestConfig.Builder builder = RequestConfig.custom();
 
-		if (connectionTimeout >= 0) {
-			builder.setConnectTimeout(PropsValues.SYNC_HTTP_CONNECTION_TIMEOUT);
-		}
-
-		if (socketTimeout >= 0) {
-			builder.setSocketTimeout(PropsValues.SYNC_HTTP_SOCKET_TIMEOUT);
-		}
+		builder.setConnectTimeout(connectionTimeout);
+		builder.setSocketTimeout(socketTimeout);
 
 		httpClientBuilder.setDefaultRequestConfig(builder.build());
 		httpClientBuilder.setMaxConnPerRoute(maxConnections);
@@ -132,7 +127,8 @@ public class Session {
 		}
 
 		HttpClientBuilder httpClientBuilder = createHttpClientBuilder(
-			true, 1000, PropsValues.SYNC_HTTP_CONNECTION_TIMEOUT, -1);
+			true, 1000, PropsValues.SYNC_HTTP_CONNECTION_TIMEOUT,
+			PropsValues.SYNC_HTTP_CONNECTION_TIMEOUT * 2);
 
 		_anonymousHttpClient = httpClientBuilder.build();
 
@@ -375,7 +371,7 @@ public class Session {
 
 		_trackTransferRateScheduledFuture =
 			_scheduledExecutorService.scheduleAtFixedRate(
-				runnable, 0, 1000, TimeUnit.MILLISECONDS);
+				runnable, 0, 1, TimeUnit.SECONDS);
 	}
 
 	public void stopTrackTransferRate() {

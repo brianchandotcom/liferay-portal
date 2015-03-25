@@ -14,9 +14,7 @@
 
 package com.liferay.blogs.portlet.editor.config;
 
-import com.liferay.portal.kernel.editor.config.PortletEditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -32,32 +30,21 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"javax.portlet.name=33", "javax.portlet.name=161",
-		"editor.config.key=coverImageCaptionEditor"
+		"editor.config.key=descriptionEditor",
+		"editor.config.key=subtitleEditor", "editor.config.key=titleEditor"
 	}
 )
-public class BlogsPortletCoverImageCaptionEditorConfigContributor
-	implements PortletEditorConfigContributor {
+public class BlogsTextEditorConfigContributor
+	implements EditorConfigContributor {
 
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		jsonObject.put("allowedContent", "a");
+		jsonObject.put("allowedContent", "p");
 		jsonObject.put("disallowedContent", "br");
-
-		JSONObject toolbarJSONObject = JSONFactoryUtil.createJSONObject();
-
-		try {
-			JSONArray stylesJSONObject = JSONFactoryUtil.createJSONArray(
-				"['a']");
-
-			toolbarJSONObject.put("styles", stylesJSONObject);
-		}
-		catch (JSONException jsone) {
-		}
-
-		jsonObject.put("toolbars", toolbarJSONObject);
+		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
 	}
 
 	public void populateOptionsJSONObject(

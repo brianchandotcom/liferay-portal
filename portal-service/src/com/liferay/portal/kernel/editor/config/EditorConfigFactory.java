@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.editor.config;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Map;
@@ -23,34 +22,12 @@ import java.util.Map;
 /**
  * @author Sergio González
  */
-public class PortletEditorConfigFactoryUtil {
+public interface EditorConfigFactory {
 
-	public static PortletEditorConfig getPortletEditorConfig(
+	public EditorConfig getEditorConfig(
 		String portletName, String editorConfigKey, String editorImpl,
 		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
-
-		return getPortletEditorConfigFactory().getPortletEditorConfig(
-			portletName, editorConfigKey, editorImpl,
-			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
-	}
-
-	public static PortletEditorConfigFactory getPortletEditorConfigFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PortletEditorConfigFactoryUtil.class);
-
-		return _portletEditorConfigFactory;
-	}
-
-	public void setPortletEditorConfigFactory(
-		PortletEditorConfigFactory portletEditorConfigFactory) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_portletEditorConfigFactory = portletEditorConfigFactory;
-	}
-
-	private static PortletEditorConfigFactory _portletEditorConfigFactory;
+		LiferayPortletResponse liferayPortletResponse);
 
 }

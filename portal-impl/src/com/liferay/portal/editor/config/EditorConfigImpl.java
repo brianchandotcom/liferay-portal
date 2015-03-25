@@ -14,8 +14,8 @@
 
 package com.liferay.portal.editor.config;
 
-import com.liferay.portal.kernel.editor.config.PortletEditorConfig;
-import com.liferay.portal.kernel.editor.config.PortletEditorConfigContributor;
+import com.liferay.portal.kernel.editor.config.EditorConfig;
+import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -30,15 +30,15 @@ import java.util.Map;
 /**
  * @author Sergio González
  */
-public class PortletEditorConfigImpl implements PortletEditorConfig {
+public class EditorConfigImpl implements EditorConfig {
 
-	public PortletEditorConfigImpl(
-		List<PortletEditorConfigContributor> portletEditorConfigContributors,
+	public EditorConfigImpl(
+		List<EditorConfigContributor> editorConfigContributors,
 		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_portletEditorConfigContributors = portletEditorConfigContributors;
+		_editorConfigContributors = editorConfigContributors;
 
 		_populateConfigJSONObject(
 			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
@@ -61,14 +61,13 @@ public class PortletEditorConfigImpl implements PortletEditorConfig {
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		Iterator<PortletEditorConfigContributor> iterator =
-			ListUtil.reverseIterator(_portletEditorConfigContributors);
+		Iterator<EditorConfigContributor> iterator = ListUtil.reverseIterator(
+			_editorConfigContributors);
 
 		while (iterator.hasNext()) {
-			PortletEditorConfigContributor portletEditorConfigContributor =
-				iterator.next();
+			EditorConfigContributor editorConfigContributor = iterator.next();
 
-			portletEditorConfigContributor.populateConfigJSONObject(
+			editorConfigContributor.populateConfigJSONObject(
 				_configJSONObject, inputEditorTaglibAttributes, themeDisplay,
 				liferayPortletResponse);
 		}
@@ -81,14 +80,13 @@ public class PortletEditorConfigImpl implements PortletEditorConfig {
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		Iterator<PortletEditorConfigContributor> iterator =
-			ListUtil.reverseIterator(_portletEditorConfigContributors);
+		Iterator<EditorConfigContributor> iterator = ListUtil.reverseIterator(
+			_editorConfigContributors);
 
 		while (iterator.hasNext()) {
-			PortletEditorConfigContributor portletEditorConfigContributor =
-				iterator.next();
+			EditorConfigContributor editorConfigContributor = iterator.next();
 
-			portletEditorConfigContributor.populateOptionsJSONObject(
+			editorConfigContributor.populateOptionsJSONObject(
 				_optionsJSONObject, inputEditorTaglibAttributes, themeDisplay,
 				liferayPortletResponse);
 		}
@@ -98,9 +96,8 @@ public class PortletEditorConfigImpl implements PortletEditorConfig {
 
 	private final JSONObject _configJSONObject =
 		JSONFactoryUtil.createJSONObject();
+	private final List<EditorConfigContributor> _editorConfigContributors;
 	private final JSONObject _optionsJSONObject =
 		JSONFactoryUtil.createJSONObject();
-	private final List<PortletEditorConfigContributor>
-		_portletEditorConfigContributors;
 
 }

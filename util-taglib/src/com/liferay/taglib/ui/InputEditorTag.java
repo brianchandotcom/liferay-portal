@@ -15,8 +15,8 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.editor.EditorUtil;
-import com.liferay.portal.kernel.editor.config.PortletEditorConfig;
-import com.liferay.portal.kernel.editor.config.PortletEditorConfigFactoryUtil;
+import com.liferay.portal.kernel.editor.config.EditorConfig;
+import com.liferay.portal.kernel.editor.config.EditorConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -231,12 +231,11 @@ public class InputEditorTag extends IncludeTag {
 			(LiferayPortletResponse)request.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		PortletEditorConfig portletEditorConfig =
-			PortletEditorConfigFactoryUtil.getPortletEditorConfig(
-				portlet.getPortletId(), getConfigKey(), getEditorImpl(),
-				attributes, themeDisplay, portletResponse);
+		EditorConfig editorConfig = EditorConfigFactoryUtil.getEditorConfig(
+			portlet.getPortletId(), getConfigKey(), getEditorImpl(), attributes,
+			themeDisplay, portletResponse);
 
-		Map<String, Object> data = portletEditorConfig.getData();
+		Map<String, Object> data = editorConfig.getData();
 
 		if (MapUtil.isNotEmpty(_data)) {
 			MapUtil.merge(_data, data);

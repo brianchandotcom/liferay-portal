@@ -62,6 +62,7 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		_testMode = PortalRunMode.isTestMode();
 

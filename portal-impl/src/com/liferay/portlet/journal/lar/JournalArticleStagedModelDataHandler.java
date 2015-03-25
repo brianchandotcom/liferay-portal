@@ -781,10 +781,6 @@ public class JournalArticleStagedModelDataHandler
 		String articleImagePath = ExportImportPathUtil.getModelPath(
 			article, fileName);
 
-		if (!portletDataContext.isPathNotProcessed(articleImagePath)) {
-			return;
-		}
-
 		Element imageElement = portletDataContext.getExportDataElement(image);
 
 		imageElement.addAttribute("file-name", fileName);

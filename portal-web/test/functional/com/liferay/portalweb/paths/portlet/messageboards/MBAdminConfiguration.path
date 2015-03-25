@@ -1,0 +1,134 @@
+<html>
+<head>
+<title>MBConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MBConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>MBConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>IFRAME</td>
+	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'portlet_configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--GENERAL-->
+<tr>
+	<td>GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX</td>
+	<td>//input[contains(@id,'allowAnonymousPosting')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERAL_THREAD_AS_QUESTION_BY_DEFAULT_CHECKBOX</td>
+	<td>//input[contains(@id,'threadAsQuestionByDefault')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERAL_SHOW_RECENT_POSTS_FROM_LAST_DROPDOWN</td>
+	<td>//select[contains(@id,'recentPostsDateOffset')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>	
+	<td></td>
+</tr>
+<!--EMAIL_FROM-->
+<tr>
+	<td>EMAIL_FROM_NAME</td>
+	<td>//input[@id='_86_emailFromName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_FROM_ADDRESS</td>
+	<td>//input[@id='_86_emailFromAddress']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_FROM_HTML_FORMAT_CHECKBOX</td>
+	<td>//input[@id='_86_emailHtmlFormat']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>	
+	<td></td>
+</tr>
+<!--MESSAGE_ADDED_EMAIL-->
+<tr>
+	<td>MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_86_emailMessageAddedEnabled']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>	
+	<td></td>
+</tr>
+<!--MESSAGE_UPDATED_EMAIL-->
+<tr>
+	<td>MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_86_emailMessageUpdatedEnabled']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>	
+	<td></td>
+</tr>
+<!--SETUP_NAVIGATION-->
+<tr>
+	<td>SETUP_NAVIGATION_GENERAL</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li/a[contains(.,'General')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_NAVIGATION_EMAIL_FROM</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li/a[contains(.,'Email From')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li/a[contains(.,'Message Added Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li/a[contains(.,'Message Updated Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_NAVIGATION_THREAD_PRIORITIES</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li/a[contains(.,'Thread Priorities')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_NAVIGATION_USER_RANKS</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li/a[contains(.,'User Ranks')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_NAVIGATION_RSS</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li/a[contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

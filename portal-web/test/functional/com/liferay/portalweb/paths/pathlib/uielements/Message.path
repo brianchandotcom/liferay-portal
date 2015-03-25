@@ -64,6 +64,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_ADD_EXPLANATION</td>
+	<td>//div[contains(@id,'explanationPost')]/div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_SUCCESS</td>
+	<td>//div[contains(@class,'alert-success') and contains(@class,'trash')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>

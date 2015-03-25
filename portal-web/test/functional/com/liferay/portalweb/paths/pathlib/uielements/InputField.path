@@ -59,8 +59,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REQUIRED_ALERT</td>
+	<td>//div[@class=&quot;required&quot; and contains(.,'This field is required')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUMMARY</td>
 	<td>//textarea[contains(@id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBJECT</td>
+	<td>//input[contains(@id,'subject')]</td>
 	<td></td>
 </tr>
 <tr>

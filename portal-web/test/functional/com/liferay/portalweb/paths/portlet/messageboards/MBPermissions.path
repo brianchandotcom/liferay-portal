@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>MBPermissions</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MBPermissions</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>MBPermissions</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>IFRAME</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--GUEST_USER-->
+<tr>
+	<td>GUEST_REPLY_TO_MESSAGE_CHECKBOX</td>
+	<td>//input[contains(@type,'checkbox') and contains(@name,'ACTION_REPLY_TO_MESSAGE')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>MBMyPosts</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MBMyPosts</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>MBMyPosts</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--THREAD_TABLE-->
+<tr>
+	<td>THREAD_TABLE_THREAD</td>
+	<td>//tr[contains(.,'${key_threadSubject}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_THREAD_URGENT_IMAGE</td>
+	<td>//tr[contains(.,'${key_threadSubject}')]/td[1]/a/img[@title='Urgent']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_THREAD_STICKY_IMAGE</td>
+	<td>//tr[contains(.,'${key_threadSubject}')]/td[1]/a/img[@title='Sticky']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_STARTED_BY</td>
+	<td>//tr[contains(.,'${key_threadSubject}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_POSTS</td>
+	<td>//tr[contains(.,'${key_threadSubject}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_VIEWS</td>
+	<td>//tr[contains(.,'${key_threadSubject}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_LAST_POST</td>
+	<td>//tr[contains(.,'${key_threadSubject}')]/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_STATUS</td>
+	<td>//tr[contains(.,'${key_threadSubject}')]/td[6]/span/span/span/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_threadSubject}')]//div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_ACTIONS_GENERIC</td>
+	<td>//tr[1]//div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

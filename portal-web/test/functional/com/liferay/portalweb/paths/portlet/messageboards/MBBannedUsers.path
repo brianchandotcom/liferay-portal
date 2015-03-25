@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>MBBannedUsers</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MBBannedUsers</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>MBBannedUsers</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BANNED_USERS_TABLE-->
+<tr>
+	<td>BANNED_USERS_TABLE_BANNED_USER</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BANNED_USERS_TABLE_BANNED_BY</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BANNED_USERS_TABLE_BAN_DATE</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BANNED_USERS_TABLE_UNBAN_DATE</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BANNED_USERS_TABLE_UNBAN_THIS_USER</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[5]/span/a[contains(@id,'mbBansSearchContainer')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

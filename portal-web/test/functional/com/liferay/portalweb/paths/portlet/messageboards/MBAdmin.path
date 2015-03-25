@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>MBAdmin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MBAdmin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>MBAdmin</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>	
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVBAR_CONTAINER</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[contains(@class,'container')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CATEGORIES-->
+<tr>
+	<td>CATEGORIES_RECYCLE_BIN_BUTTON</td>
+	<td>//div[contains(@id,'messageBoardsCategoriesPanel')]//button[contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--THREADS-->
+<tr>
+	<td>THREADS_RECYCLE_BIN_BUTTON</td>
+	<td>//div[contains(@id,'messageBoardsThreadsPanel')]//button[contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

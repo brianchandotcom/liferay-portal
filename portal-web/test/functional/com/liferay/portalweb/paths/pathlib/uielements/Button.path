@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLOSE_IFRAME</td>
+	<td>//button[contains(.,'×')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMPARE_VERSIONS</td>
 	<td>//button[contains(@id,'compare')]</td>
 	<td></td>
@@ -114,13 +119,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MOVE_THREAD</td>
+	<td>//button[contains(.,'Move Thread')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREVIEW</td>
 	<td>//button[contains(.,'Preview')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OK</td>
-	<td>//button[.='OK']</td>
+	<td>//button[contains(.,'OK')]</td>
 	<td></td>
 </tr>
 <tr>

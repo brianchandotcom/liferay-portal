@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>MBSplitThread</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MBSplitThread</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>MBSplitThread</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_HEADER</td>
+	<td>//h3[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--THREAD_TABLE-->
+<tr>
+	<td>THREAD_TABLE_SUBJECT</td>
+	<td>//table[contains(@id,'message_boards_view_message_thread')]//tr[contains(.,'RE: ${key_threadSubject}')]/td/a/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_AUTHOR</td>
+	<td>//table[contains(@id,'message_boards_view_message_thread')]//td[contains(.,'${key_user}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_EXPLANATION_POST-->
+<tr>
+	<td>ADD_EXPLANATION_POST_CHECKBOX</td>
+	<td>//label[contains(@for,'addExplanationPost')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_EXPLANATION_POST_LABEL</td>
+	<td>//label[contains(@for,'addExplanationPost')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

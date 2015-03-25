@@ -15,6 +15,7 @@
 package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
@@ -43,41 +44,49 @@ public class PermissionCheckerBagImpl
 	extends UserPermissionCheckerBagImpl implements PermissionCheckerBag {
 
 	public PermissionCheckerBagImpl() {
-		this(UserConstants.USER_ID_DEFAULT);
+		super(
+			UserConstants.USER_ID_DEFAULT, Collections.<Group>emptySet(),
+			Collections.<Organization>emptyList(),
+			Collections.<Group>emptySet(), Collections.<Group>emptyList(),
+			Collections.<Role>emptySet());
 	}
 
 	public PermissionCheckerBagImpl(long userId) {
-		this(userId, Collections.<Role>emptyList());
-	}
-
-	public PermissionCheckerBagImpl(long userId, List<Role> roles) {
-		super(userId);
-
-		_roles = roles;
+		super(
+			userId, Collections.<Group>emptySet(),
+			Collections.<Organization>emptyList(),
+			Collections.<Group>emptySet(), Collections.<Group>emptyList(),
+			Collections.<Role>emptySet());
 	}
 
 	public PermissionCheckerBagImpl(
 		long userId, Set<Group> userGroups, List<Organization> userOrgs,
 		Set<Group> userOrgGroups, List<Group> userUserGroupGroups,
-		List<Role> roles) {
+		Set<Role> roles) {
 
-		super(userId, userGroups, userOrgs, userOrgGroups, userUserGroupGroups);
+		super(
+			userId, userGroups, userOrgs, userOrgGroups, userUserGroupGroups,
+			roles);
+	}
 
-		_roles = roles;
+	public PermissionCheckerBagImpl(long userId, Set<Role> roles) {
+		super(
+			userId, Collections.<Group>emptySet(),
+			Collections.<Organization>emptyList(),
+			Collections.<Group>emptySet(), Collections.<Group>emptyList(),
+			roles);
 	}
 
 	public PermissionCheckerBagImpl(
-		UserPermissionCheckerBag userPermissionCheckerBag, List<Role> roles) {
+		UserPermissionCheckerBag userPermissionCheckerBag, Set<Role> roles) {
 
-		super(userPermissionCheckerBag);
-
-		_roles = roles;
+		super(userPermissionCheckerBag, roles);
 	}
 
 	@Override
 	public long[] getRoleIds() {
 		if (_roleIds == null) {
-			List<Role> roles = getRoles();
+			List<Role> roles = ListUtil.fromCollection(getRoles());
 
 			long[] roleIds = new long[roles.size()];
 
@@ -93,11 +102,6 @@ public class PermissionCheckerBagImpl
 		}
 
 		return _roleIds;
-	}
-
-	@Override
-	public List<Role> getRoles() {
-		return _roles;
 	}
 
 	/**
@@ -164,7 +168,7 @@ public class PermissionCheckerBagImpl
 			PermissionChecker permissionChecker, Group group)
 		throws Exception {
 
-		for (Role role : _roles) {
+		for (Role role : getRoles()) {
 			String roleName = role.getName();
 
 			if (roleName.equals(RoleConstants.SITE_MEMBER)) {
@@ -464,6 +468,5 @@ public class PermissionCheckerBagImpl
 	private final Map<Long, Boolean> _organizationAdmins = new HashMap<>();
 	private final Map<Long, Boolean> _organizationOwners = new HashMap<>();
 	private long[] _roleIds;
-	private final List<Role> _roles;
 
 }

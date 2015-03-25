@@ -16,6 +16,7 @@ package com.liferay.portal.security.permission;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.UserConstants;
 
 import java.util.ArrayList;
@@ -30,38 +31,43 @@ import java.util.Set;
 public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 
 	public UserPermissionCheckerBagImpl() {
-		this(UserConstants.USER_ID_DEFAULT);
+		this(
+			UserConstants.USER_ID_DEFAULT, Collections.<Group>emptySet(),
+			Collections.<Organization>emptyList(),
+			Collections.<Group>emptySet(), Collections.<Group>emptyList(),
+			Collections.<Role>emptySet());
 	}
 
 	public UserPermissionCheckerBagImpl(long userId) {
-		_userId = userId;
-
-		_userGroups = Collections.<Group>emptySet();
-		_userOrgGroups = Collections.<Group>emptySet();
-		_userOrgs = Collections.<Organization>emptyList();
-		_userUserGroupGroups = Collections.<Group>emptyList();
+		this(
+			userId, Collections.<Group>emptySet(),
+			Collections.<Organization>emptyList(),
+			Collections.<Group>emptySet(), Collections.<Group>emptyList(),
+			Collections.<Role>emptySet());
 	}
 
 	public UserPermissionCheckerBagImpl(
 		long userId, Set<Group> userGroups, List<Organization> userOrgs,
-		Set<Group> userOrgGroups, List<Group> userUserGroupGroups) {
+		Set<Group> userOrgGroups, List<Group> userUserGroupGroups,
+		Set<Role> userRoles) {
 
 		_userId = userId;
 		_userGroups = userGroups;
 		_userOrgs = userOrgs;
 		_userOrgGroups = userOrgGroups;
 		_userUserGroupGroups = userUserGroupGroups;
+		_userRoles = userRoles;
 	}
 
 	public UserPermissionCheckerBagImpl(
-		UserPermissionCheckerBag userPermissionCheckerBag) {
+		UserPermissionCheckerBag userPermissionCheckerBag, Set<Role> roles) {
 
 		this(
 			userPermissionCheckerBag.getUserId(),
 			userPermissionCheckerBag.getUserGroups(),
 			userPermissionCheckerBag.getUserOrgs(),
 			userPermissionCheckerBag.getUserOrgGroups(),
-			userPermissionCheckerBag.getUserUserGroupGroups());
+			userPermissionCheckerBag.getUserUserGroupGroups(), roles);
 	}
 
 	@Override
@@ -99,6 +105,11 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 	}
 
 	@Override
+	public Set<Role> getRoles() {
+		return _userRoles;
+	}
+
+	@Override
 	public Set<Group> getUserGroups() {
 		return _userGroups;
 	}
@@ -123,11 +134,17 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 		return _userUserGroupGroups;
 	}
 
+	@Override
+	public boolean hasRole(Role role) {
+		return _userRoles.contains(role);
+	}
+
 	private List<Group> _groups;
 	private final Set<Group> _userGroups;
 	private final long _userId;
 	private final Set<Group> _userOrgGroups;
 	private final List<Organization> _userOrgs;
+	private final Set<Role> _userRoles;
 	private final List<Group> _userUserGroupGroups;
 
 }

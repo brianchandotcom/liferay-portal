@@ -27,6 +27,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.site.mysites.web.upgrade.MySitesWebUpgrade;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -36,6 +37,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -137,6 +139,10 @@ public class MySitesPortlet extends MVCPortlet {
 
 		return ArrayUtil.toArray(
 			filteredUserIds.toArray(new Long[filteredUserIds.size()]));
+	}
+
+	@Reference(unbind = "-")
+	protected void setMySitesWebUpgrade(MySitesWebUpgrade mySitesWebUpgrade) {
 	}
 
 }

@@ -62,14 +62,14 @@ public class BookmarksEntryLocalServiceTest {
 
 	@Test
 	public void testGetNoAssetFolders() throws Exception {
+		List<BookmarksEntry> initialBookmarksEntries =
+			BookmarksEntryLocalServiceUtil.getNoAssetEntries();
+
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
 			_group.getGroupId(), true);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			BookmarksEntry.class.getName(), entry.getEntryId());
-
-		List<BookmarksEntry> initialBookmarksEntries =
-			BookmarksEntryLocalServiceUtil.getNoAssetEntries();
 
 		Assert.assertNotNull(assetEntry);
 

@@ -36,7 +36,7 @@ public class ScopeSearchFacet extends BaseSearchFacet {
 
 	@Override
 	public String getClassName() {
-		return ScopeSearchFacet.class.getName();
+		return ScopeFacet.class.getName();
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class ScopeSearchFacet extends BaseSearchFacet {
 	public FacetConfiguration getDefaultConfiguration() {
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-		facetConfiguration.setClassName(ScopeFacet.class.getName());
+		facetConfiguration.setClassName(getClassName());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

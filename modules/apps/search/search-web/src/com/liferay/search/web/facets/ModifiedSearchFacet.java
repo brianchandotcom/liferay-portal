@@ -38,7 +38,7 @@ public class ModifiedSearchFacet extends BaseSearchFacet {
 
 	@Override
 	public String getClassName() {
-		return ModifiedSearchFacet.class.getName();
+		return ModifiedFacet.class.getName();
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class ModifiedSearchFacet extends BaseSearchFacet {
 	public FacetConfiguration getDefaultConfiguration() {
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-		facetConfiguration.setClassName(ModifiedFacet.class.getName());
+		facetConfiguration.setClassName(getClassName());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

@@ -38,8 +38,6 @@ import com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler;
 import com.liferay.portlet.dynamicdatalists.asset.DDLRecordAssetRendererFactory;
 import com.liferay.portlet.dynamicdatalists.util.DDLIndexer;
 import com.liferay.portlet.dynamicdatalists.workflow.DDLRecordWorkflowHandler;
-import com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory;
-import com.liferay.portlet.journal.asset.JournalFolderAssetRendererFactory;
 import com.liferay.portlet.journal.trash.JournalArticleTrashHandler;
 import com.liferay.portlet.journal.util.JournalArticleIndexer;
 import com.liferay.portlet.journal.util.JournalFolderIndexer;
@@ -149,8 +147,6 @@ public class PortalRegisterTestUtil {
 		DDLRecordAssetRendererFactory.class,
 		DLFileEntryAssetRendererFactory.class,
 		DLFolderAssetRendererFactory.class,
-		JournalArticleAssetRendererFactory.class,
-		JournalFolderAssetRendererFactory.class,
 		LayoutRevisionAssetRendererFactory.class,
 		MBCategoryAssetRendererFactory.class,
 		MBDiscussionAssetRendererFactory.class,

@@ -54,6 +54,10 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			return;
 		}
 
+		if (name == null) {
+			throw new NullPointerException("Name is null");
+		}
+
 		initPortalCacheManager();
 
 		_portalCacheManagerConfiguration = getPortalCacheManagerConfiguration();
@@ -165,6 +169,11 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
 	public boolean isClusterAware() {
 		return clusterAware;
 	}
@@ -190,6 +199,10 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	public void setMpiOnly(boolean mpiOnly) {
 		_mpiOnly = mpiOnly;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
@@ -259,6 +272,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	protected final AggregatedCacheManagerListener
 		aggregatedCacheManagerListener = new AggregatedCacheManagerListener();
 	protected boolean clusterAware;
+	protected String name;
 	protected final ConcurrentMap<String, PortalCache<K, V>> portalCaches =
 		new ConcurrentHashMap<>();
 

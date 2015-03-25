@@ -54,11 +54,6 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public String getName() {
-		return _name;
-	}
-
-	@Override
 	public void reconfigureCaches(URL configurationURL) {
 		throw new UnsupportedOperationException();
 	}
@@ -71,10 +66,6 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 		int cacheManagerInitialCapacity) {
 
 		_cacheManagerInitialCapacity = cacheManagerInitialCapacity;
-	}
-
-	public void setName(String name) {
-		_name = name;
 	}
 
 	@Override
@@ -164,10 +155,6 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	protected void initPortalCacheManager() {
-		if (_name == null) {
-			throw new NullPointerException("Name is null");
-		}
-
 		_memoryPortalCaches = new ConcurrentHashMap<>(
 			_cacheManagerInitialCapacity);
 
@@ -177,6 +164,5 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	private int _cacheInitialCapacity = 10000;
 	private int _cacheManagerInitialCapacity = 10000;
 	private ConcurrentMap<String, MemoryPortalCache<K, V>> _memoryPortalCaches;
-	private String _name;
 
 }

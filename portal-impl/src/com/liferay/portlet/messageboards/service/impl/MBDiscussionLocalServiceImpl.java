@@ -86,6 +86,11 @@ public class MBDiscussionLocalServiceImpl
 	}
 
 	@Override
+	public MBDiscussion fetchThreadDiscussion(long threadId) {
+		return mbDiscussionPersistence.fetchByThreadId(threadId);
+	}
+
+	@Override
 	public MBDiscussion getDiscussion(long discussionId)
 		throws PortalException {
 

@@ -216,6 +216,9 @@ public class BaseJSONHandler extends BaseHandler {
 		catch (Exception e) {
 			handleException(e);
 		}
+		finally {
+			processFinally();
+		}
 
 		return null;
 	}

@@ -61,7 +61,7 @@ public abstract class BaseEvent implements Event {
 
 		_httpGet = new HttpGet(urlPath);
 
-		session.execute(_httpGet, _handler);
+		session.asynchronousExecute(_httpGet, _handler);
 	}
 
 	public void executeAsynchronousPost(
@@ -85,7 +85,7 @@ public abstract class BaseEvent implements Event {
 
 		_httpPost = new HttpPost(urlPath);
 
-		session.execute(_httpPost, parameters, handler);
+		session.asynchronousExecute(_httpPost, parameters, handler);
 	}
 
 	public void executeGet(String urlPath) throws Exception {

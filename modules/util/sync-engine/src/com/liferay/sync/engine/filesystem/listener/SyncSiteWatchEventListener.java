@@ -101,24 +101,25 @@ public class SyncSiteWatchEventListener extends BaseWatchEventListener {
 			}
 
 			String previousEventType = null;
-
 			Path previousFilePath = null;
+			long previousRepositoryId = 0;
 
 			SyncWatchEvent lastSyncWatchEvent =
 				SyncWatchEventService.getLastSyncWatchEvent(getSyncAccountId());
 
 			if (lastSyncWatchEvent != null) {
 				previousEventType = lastSyncWatchEvent.getEventType();
-
 				previousFilePath = Paths.get(
 					lastSyncWatchEvent.getFilePathName());
+				previousRepositoryId = getRepositoryId(previousFilePath);
 			}
 
 			String fileType = getFileType(eventType, filePath);
 
 			if ((lastSyncWatchEvent == null) ||
 				!previousEventType.equals(
-					SyncWatchEvent.EVENT_TYPE_RENAME_FROM)) {
+					SyncWatchEvent.EVENT_TYPE_RENAME_FROM) ||
+				(previousRepositoryId != repositoryId)) {
 
 				eventType = SyncWatchEvent.EVENT_TYPE_CREATE;
 

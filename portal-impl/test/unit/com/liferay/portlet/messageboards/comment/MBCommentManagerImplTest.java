@@ -122,8 +122,6 @@ public class MBCommentManagerImplTest extends Mockito {
 		_mbCommentManagerImpl.addComment(
 			_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _BODY,
 			_serviceContext);
-
-		Assert.fail();
 	}
 
 	@Test

@@ -251,16 +251,7 @@ public class JSONFactoryTest {
 
 		initializePrimitives(fooBean6);
 
-		String json = null;
-
-		try {
-			json = JSONFactoryUtil.serialize(fooBean6);
-		}
-		catch (IllegalArgumentException iae) {
-			Assert.fail("Unable to serialize " + fooBean6);
-		}
-
-		return json;
+		return JSONFactoryUtil.serialize(fooBean6);
 	}
 
 	protected void checkJSONPrimitiveArrays(String json) {

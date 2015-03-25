@@ -108,8 +108,6 @@ public class TrackbackActionTest extends PowerMockito {
 		initValidURL();
 
 		addTrackback();
-
-		Assert.fail();
 	}
 
 	@Test

@@ -606,8 +606,6 @@ public class GroupServiceTest {
 			group1.isManualMembership(), group1.getMembershipRestriction(),
 			group1.getFriendlyURL(), group1.isInheritContent(),
 			group1.isActive(), ServiceContextTestUtil.getServiceContext());
-
-		Assert.fail("A child group cannot be its parent group");
 	}
 
 	@Test(expected = GroupParentException.MustNotHaveChildParent.class)
@@ -626,8 +624,6 @@ public class GroupServiceTest {
 			group1.isManualMembership(), group1.getMembershipRestriction(),
 			group1.getFriendlyURL(), group1.isInheritContent(),
 			group1.isActive(), ServiceContextTestUtil.getServiceContext());
-
-		Assert.fail("A child group cannot be its parent group");
 	}
 
 	@Test(expected = GroupParentException.MustNotHaveStagingParent.class)
@@ -648,8 +644,6 @@ public class GroupServiceTest {
 			stagingGroup.getFriendlyURL(), stagingGroup.isInheritContent(),
 			stagingGroup.isActive(),
 			ServiceContextTestUtil.getServiceContext());
-
-		Assert.fail("A group cannot have its live group as parent");
 	}
 
 	@Test(expected = GroupParentException.MustNotBeOwnParent.class)
@@ -662,8 +656,6 @@ public class GroupServiceTest {
 			group.isManualMembership(), group.getMembershipRestriction(),
 			group.getFriendlyURL(), group.isInheritContent(), group.isActive(),
 			ServiceContextTestUtil.getServiceContext());
-
-		Assert.fail("A group cannot be its own parent");
 	}
 
 	@Test

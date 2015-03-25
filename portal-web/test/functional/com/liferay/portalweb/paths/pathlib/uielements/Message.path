@@ -63,6 +63,11 @@
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUCCESS_RECYCLE_BIN</td>
+	<td>//form[contains(@id,'undoForm')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

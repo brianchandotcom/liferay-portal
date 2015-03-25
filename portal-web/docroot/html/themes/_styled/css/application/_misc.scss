@@ -1,0 +1,45 @@
+.app-view-drop-active {
+	background-color: #00A2EA;
+	font-weight: bold;
+
+	.category-portlets & {
+		background-color: #00A2EA;
+		color: #FFF;
+	}
+}
+
+.basecelleditor [class~="form-validator-message"] {
+	clip: rect(auto auto auto auto);
+	width: auto;
+}
+
+.document-library-file-entry-cell-editor-hidden {
+	display: none;
+}
+
+.previous-level {
+	display: inline-block;
+	font-size: 21px;
+	line-height: 21px;
+	margin-right: 5px;
+	text-decoration: none;
+	vertical-align: middle;
+}
+
+.lfr-url-error {
+	display: inline-block;
+	white-space: normal;
+
+	@include word-wrap(break-all);
+}
+
+.lfr-page-layouts .lfr-layout-template .layout-template-entry {
+	height: 25px;
+	width: 25px;
+}
+
+/* LPS-44925 */
+
+.modal-content .dialog-iframe-node {
+	border: 1px solid transparent;
+}

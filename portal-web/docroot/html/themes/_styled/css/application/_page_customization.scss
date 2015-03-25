@@ -1,0 +1,29 @@
+.dragging .portlet-column.customizable {
+	background-color: #CFFCCF;
+	outline: 3px solid #9CC97B;
+}
+
+.customizable-layout-column-content {
+	background-color: #C92C3C;
+
+	&.yui3-widget-content-expanded {
+		border: 3px solid #333;
+		margin: 0.2em;
+	}
+}
+
+.customizable .customizable-layout-column-content {
+	background-color: #9CC97B;
+}
+
+.layout-customizable-controls {
+	background-color: #FFF;
+	font-size: 1.5em;
+	margin: 1em;
+
+	opacity: 0.9;
+
+	padding: 1em;
+	position: absolute;
+	z-index: 15;
+}

@@ -1,0 +1,55 @@
+.alloy-editor {
+	&.alloy-editor-placeholder {
+		color: #2B4259;
+		padding-left: 10px;
+
+		&:empty:not(:focus) {
+			background: transparent;
+			border-left: 2px solid #DBDDE1;
+			color: #B0B4BB;
+		}
+
+		&.readonly {
+			color: #CCC;
+		}
+	}
+
+	outline: 0;
+
+	a {
+		cursor: auto;
+	}
+}
+
+.alloy-editor-switch {
+	border: dashed 0 #DDD;
+	border-bottom-width: 1px;
+	position: relative;
+
+	&.show-source {
+		border-bottom-width: 2px;
+		border-style: solid;
+	}
+
+	.btn {
+		bottom: 20px;
+		float: right;
+		position: relative;
+	}
+}
+
+.alloy-editor-wrapper {
+	.lfr-source-editor {
+		display: none;
+	}
+
+	&.show-source {
+		.alloy-editor-placeholder {
+			display: none;
+		}
+
+		.lfr-source-editor {
+			display: block;
+		}
+	}
+}

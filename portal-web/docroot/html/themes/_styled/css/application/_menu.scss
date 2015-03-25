@@ -1,0 +1,86 @@
+.lfr-page-templates li {
+	a {
+		padding: 0;
+
+		label {
+			cursor: pointer;
+			display: block;
+			padding: 5px 0 5px 5px;
+		}
+	}
+}
+
+.menu {
+	position: absolute;
+	width: auto;
+
+	.notice-message {
+		background-image: none;
+		margin: 3px;
+		padding: 6px;
+	}
+}
+
+.menu-content {
+	background: #FFF;
+	list-style: none;
+	min-width: 150px;
+
+	li {
+		margin: 0;
+		padding: 0;
+
+		.disabled {
+			color: #999;
+		}
+	}
+}
+
+.menu-content {
+	background: #CCC9C9 url(../images/application/menu_bg.png) repeat-x 0 0;
+	border: 1px solid;
+	border-color: #AEAFB1 #777879 #777879 #AEAFB1;
+	padding: 2px 0;
+}
+
+.menugroup-content .menu-label {
+	background: #D2D6DE;
+	color: #5B677D;
+	display: block;
+	padding: 5px 3px;
+	text-shadow: 1px 1px #FFF;
+}
+
+.menugroup-content ul {
+	display: block;
+	min-width: 0;
+}
+
+.menu-content li {
+	border-bottom: 1px solid #BCBBBB;
+	border-top: 1px solid #EEE;
+	display: block;
+	margin: 0;
+	padding: 0;
+
+	&.first {
+		border-top-width: 0;
+	}
+
+	&.last {
+		border-bottom-width: 0;
+	}
+}
+
+.menu-content li a, .menu-content li .disabled {
+	color: #2C2F34;
+	display: block;
+	padding: 4px 5px;
+	text-decoration: none;
+}
+
+.menu-content li a.focus, .lfr-menu-expanded li a:focus {
+	background-color: #5B677D;
+	color: #FFF;
+	text-shadow: -1px -1px #2C2F34;
+}

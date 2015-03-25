@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.myplaces;
+package com.liferay.site.mysites.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionMessages;

@@ -851,7 +851,12 @@ public class PortletURLImpl
 			WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay == null) {
-			_log.error("themeDisplay is null, cannot generate URL to string");
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to generate to string because themeDisplay is " +
+						"null");
+			}
+
 			return StringPool.BLANK;
 		}
 

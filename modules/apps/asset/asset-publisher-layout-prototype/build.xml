@@ -6,4 +6,5 @@
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
 
+	<property name="import.shared" value="asset-publisher-web" />
 </project>

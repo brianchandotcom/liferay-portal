@@ -165,12 +165,12 @@ public class PortletPreferencesFactoryUtil {
 	}
 
 	public static PortletPreferencesIds getPortletPreferencesIds(
-			long scopeGroupId, long userId, Layout layout, String portletId,
+			long siteGroupId, long userId, Layout layout, String portletId,
 			boolean modeEditGuest)
 		throws PortalException {
 
 		return getPortletPreferencesFactory().getPortletPreferencesIds(
-			scopeGroupId, userId, layout, portletId, modeEditGuest);
+			siteGroupId, userId, layout, portletId, modeEditGuest);
 	}
 
 	public static PortletPreferencesIds getPortletPreferencesIds(
@@ -206,11 +206,11 @@ public class PortletPreferencesFactoryUtil {
 	}
 
 	public static PortletPreferences getPortletSetup(
-		long scopeGroupId, Layout layout, String portletId,
+		long siteGroupId, Layout layout, String portletId,
 		String defaultPreferences) {
 
 		return getPortletPreferencesFactory().getPortletSetup(
-			scopeGroupId, layout, portletId, defaultPreferences);
+			siteGroupId, layout, portletId, defaultPreferences);
 	}
 
 	public static PortletPreferences getPortletSetup(

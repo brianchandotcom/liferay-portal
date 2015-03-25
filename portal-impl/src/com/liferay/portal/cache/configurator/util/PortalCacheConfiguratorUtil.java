@@ -23,10 +23,12 @@ import java.net.URL;
  */
 public class PortalCacheConfiguratorUtil {
 
-	public static void reconfigureCaches(ClassLoader classLoader, URL url)
+	public static void reconfigureCaches(
+			String portalCacheManagerName, ClassLoader classLoader, URL url)
 		throws Exception {
 
-		_portalCacheConfigurator.reconfigureCaches(classLoader, url);
+		_portalCacheConfigurator.reconfigureCaches(
+			portalCacheManagerName, classLoader, url);
 	}
 
 	public void setPortalCacheConfigurator(

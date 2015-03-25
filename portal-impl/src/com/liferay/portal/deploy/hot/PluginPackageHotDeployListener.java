@@ -15,6 +15,7 @@
 package com.liferay.portal.deploy.hot;
 
 import com.liferay.portal.cache.configurator.util.PortalCacheConfiguratorUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
@@ -273,19 +274,19 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 		}
 
 		PortalCacheConfiguratorUtil.reconfigureCaches(
-			classLoader,
+			PortalCacheManagerNames.SINGLE_VM_PORTAL_CACHE_MANAGER, classLoader,
 			getPortalCacheConfigurationURL(
 				portletPropertiesConfiguration, classLoader,
 				PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION));
 
 		PortalCacheConfiguratorUtil.reconfigureCaches(
-			classLoader,
+			PortalCacheManagerNames.MULTI_VM_PORTAL_CACHE_MANAGER, classLoader,
 			getPortalCacheConfigurationURL(
 				portletPropertiesConfiguration, classLoader,
 				PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
 
 		PortalCacheConfiguratorUtil.reconfigureCaches(
-			classLoader,
+			PortalCacheManagerNames.HIBERNATE_PORTAL_CACHE_MANAGER, classLoader,
 			getPortalCacheConfigurationURL(
 				portletPropertiesConfiguration, classLoader,
 				PropsKeys.NET_SF_EHCACHE_CONFIGURATION_RESOURCE_NAME));

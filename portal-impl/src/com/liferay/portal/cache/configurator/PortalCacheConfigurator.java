@@ -21,6 +21,7 @@ import java.net.URL;
  */
 public interface PortalCacheConfigurator {
 
-	public void reconfigureCaches(ClassLoader classLoader, URL url);
+	public void reconfigureCaches(
+		String portalCacheManagerName, ClassLoader classLoader, URL url);
 
 }

@@ -33,8 +33,17 @@ import java.net.URL;
 public class PortalCacheConfiguratorImpl implements PortalCacheConfigurator {
 
 	@Override
-	public void reconfigureCaches(ClassLoader classLoader, URL url) {
+	public void reconfigureCaches(
+		String portalCacheManagerName, ClassLoader classLoader, URL url) {
+
 		if (url == null) {
+			return;
+		}
+
+		PortalCacheManager<? extends Serializable, ?> portalCacheManager =
+			PortalCacheProvider.getPortalCacheManager(portalCacheManagerName);
+
+		if (portalCacheManager == null) {
 			return;
 		}
 
@@ -46,18 +55,13 @@ public class PortalCacheConfiguratorImpl implements PortalCacheConfigurator {
 				ClassLoaderUtil.getPortalClassLoader(), classLoader));
 
 		try {
-			for (PortalCacheManager<? extends Serializable, ?>
-					portalCacheManager :
-						PortalCacheProvider.getPortalCacheManagers()) {
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Reconfiguring caches in cache manager " +
-							portalCacheManager.getName() + " using " + url);
-				}
-
-				portalCacheManager.reconfigureCaches(url);
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Reconfiguring caches in cache manager " +
+						portalCacheManager.getName() + " using " + url);
 			}
+
+			portalCacheManager.reconfigureCaches(url);
 		}
 		finally {
 			ClassLoaderUtil.setContextClassLoader(contextClassLoader);

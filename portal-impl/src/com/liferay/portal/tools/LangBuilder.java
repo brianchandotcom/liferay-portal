@@ -242,7 +242,9 @@ public class LangBuilder {
 
 					String translatedText = properties.getProperty(key);
 
-					if (_keysWithUpdatedValues.contains(key)) {
+					if (_keysWithUpdatedValues.contains(key) &&
+						!key.startsWith("lang.user.name.")) {
+
 						translatedText = null;
 					}
 

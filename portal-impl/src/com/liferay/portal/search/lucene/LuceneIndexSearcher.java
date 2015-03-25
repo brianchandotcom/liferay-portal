@@ -513,6 +513,10 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 		int total = browseResult.getNumHits();
 
+		if (total > PropsValues.INDEX_SEARCH_LIMIT) {
+			total = PropsValues.INDEX_SEARCH_LIMIT;
+		}
+
 		BrowseHit[] browseHits = browseResult.getHits();
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {

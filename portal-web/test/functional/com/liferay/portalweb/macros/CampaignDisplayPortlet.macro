@@ -47,8 +47,10 @@
 
 	<command name="savePG">
 		<execute function="SelectFrame" locator1="PGCampaigncontentdisplay#CAMPAIGN_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
-
 		<execute function="ClickNoError" locator1="PGCampaigncontentdisplay#SAVE_BUTTON" />
+
+		<execute function="Pause" locator1="3000" />
+
 		<execute function="AssertTextEquals" locator1="PGCampaigncontentdisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute function="SelectFrame" value1="relative=top" />

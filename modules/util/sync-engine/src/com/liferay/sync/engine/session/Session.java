@@ -261,7 +261,9 @@ public class Session {
 
 		_buildHttpPostBody(httpPost, parameters);
 
-		_signHttpRequest(httpPost);
+		if (_oAuthEnabled) {
+			_oAuthConsumer.sign(httpPost);
+		}
 
 		return _httpClient.execute(_httpHost, httpPost, _getBasicHttpContext());
 	}
@@ -275,7 +277,9 @@ public class Session {
 
 		_buildHttpPostBody(httpPost, parameters);
 
-		_signHttpRequest(httpPost);
+		if (_oAuthEnabled) {
+			_oAuthConsumer.sign(httpPost);
+		}
 
 		return _httpClient.execute(
 			_httpHost, httpPost, handler, _getBasicHttpContext());
@@ -298,7 +302,9 @@ public class Session {
 
 		httpRequest.setHeader("Sync-JWT", _token);
 
-		_signHttpRequest(httpRequest);
+		if (_oAuthEnabled) {
+			_oAuthConsumer.sign(httpRequest);
+		}
 
 		return _httpClient.execute(
 			_httpHost, httpRequest, handler, httpContext);
@@ -310,7 +316,9 @@ public class Session {
 
 		httpRequest.setHeader("Sync-JWT", _token);
 
-		_signHttpRequest(httpRequest);
+		if (_oAuthEnabled) {
+			_oAuthConsumer.sign(httpRequest);
+		}
 
 		return _httpClient.execute(_httpHost, httpRequest, httpContext);
 	}
@@ -528,12 +536,6 @@ public class Session {
 		return new UrlEncodedFormEntity(nameValuePairs);
 	}
 
-	private void _signHttpRequest(HttpRequest httpRequest) throws Exception {
-		if (_oAuthEnabled) {
-			_oAuthConsumer.sign(httpRequest);
-		}
-	}
-
 	private static final Logger _logger = LoggerFactory.getLogger(
 		Session.class);
 
@@ -553,7 +555,7 @@ public class Session {
 	private OAuthConsumer _oAuthConsumer;
 	private boolean _oAuthEnabled;
 	private String _token;
-	private ScheduledFuture _trackTransferRateScheduledFuture;
+	private ScheduledFuture<?> _trackTransferRateScheduledFuture;
 	private final AtomicInteger _uploadedBytes = new AtomicInteger(0);
 	private volatile int _uploadRate;
 

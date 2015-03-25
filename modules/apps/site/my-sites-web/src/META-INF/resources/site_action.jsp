@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -78,7 +78,7 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 						</c:when>
 						<c:when test="<%= (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) && !MembershipRequestLocalServiceUtil.hasMembershipRequest(user.getUserId(), group.getGroupId(), MembershipRequestConstants.STATUS_PENDING) && SiteMembershipPolicyUtil.isMembershipAllowed(user.getUserId(), group.getGroupId()) %>">
 							<portlet:renderURL var="membershipRequestURL">
-								<portlet:param name="mvcPath" value="/html/portlet/my_sites/post_membership_request.jsp" />
+								<portlet:param name="mvcPath" value="/post_membership_request.jsp" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 							</portlet:renderURL>

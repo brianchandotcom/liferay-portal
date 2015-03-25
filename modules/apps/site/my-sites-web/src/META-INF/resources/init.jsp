@@ -19,4 +19,4 @@
 <%@ page import="com.liferay.portal.MembershipRequestCommentsException" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupDisplayTerms" %>
 
-<%@ include file="/html/portlet/my_sites/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

@@ -383,6 +383,9 @@ public class SearchEngineUtil {
 			return indexSearcher.getQueryString(searchContext, query);
 		}
 		catch (ParseException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Error parsing the query", pe);
+			}
 		}
 
 		return StringPool.BLANK;

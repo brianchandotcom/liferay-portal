@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis;
+package com.liferay.document.library.repository.cmis.internal;
 
-import com.liferay.portal.kernel.repository.cmis.Session;
+import com.liferay.document.library.repository.cmis.Session;
 
 import java.util.Set;
 

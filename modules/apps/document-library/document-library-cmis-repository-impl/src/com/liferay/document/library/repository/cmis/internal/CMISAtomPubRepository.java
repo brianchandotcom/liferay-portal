@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis;
+package com.liferay.document.library.repository.cmis.internal;
 
+import com.liferay.document.library.repository.cmis.CMISRepositoryHandler;
+import com.liferay.document.library.repository.cmis.Session;
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
-import com.liferay.portal.kernel.repository.cmis.Session;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;

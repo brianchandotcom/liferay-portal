@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis;
+package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;

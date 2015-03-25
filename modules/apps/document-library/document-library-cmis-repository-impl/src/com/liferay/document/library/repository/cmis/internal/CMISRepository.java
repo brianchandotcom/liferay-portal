@@ -12,8 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis;
+package com.liferay.document.library.repository.cmis.internal;
 
+import com.liferay.document.library.repository.cmis.BaseCmisRepository;
+import com.liferay.document.library.repository.cmis.CMISRepositoryHandler;
+import com.liferay.document.library.repository.cmis.internal.model.CMISFileEntry;
+import com.liferay.document.library.repository.cmis.internal.model.CMISFileVersion;
+import com.liferay.document.library.repository.cmis.internal.model.CMISFolder;
 import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,8 +27,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryException;
-import com.liferay.portal.kernel.repository.cmis.BaseCmisRepository;
-import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
 import com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -50,9 +53,6 @@ import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.RepositoryEntry;
-import com.liferay.portal.repository.cmis.model.CMISFileEntry;
-import com.liferay.portal.repository.cmis.model.CMISFileVersion;
-import com.liferay.portal.repository.cmis.model.CMISFolder;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
@@ -695,7 +695,7 @@ public class CMISRepository extends BaseCmisRepository {
 			folderId);
 
 		if ((foldersAndFileEntries == null) || (mimeTypes != null)) {
-			foldersAndFileEntries = new ArrayList<Object>(getFolders(folderId));
+			foldersAndFileEntries = new ArrayList<>(getFolders(folderId));
 
 			List<FileEntry> fileEntries = getFileEntries(
 				folderId, mimeTypes, QueryUtil.ALL_POS, QueryUtil.ALL_POS,

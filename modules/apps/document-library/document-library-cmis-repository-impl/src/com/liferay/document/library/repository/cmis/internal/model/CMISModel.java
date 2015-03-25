@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis.model;
+package com.liferay.document.library.repository.cmis.internal.model;
 
+import com.liferay.document.library.repository.cmis.internal.CMISRepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;

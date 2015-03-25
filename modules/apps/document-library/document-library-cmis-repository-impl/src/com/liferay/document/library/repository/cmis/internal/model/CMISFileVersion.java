@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis.model;
+package com.liferay.document.library.repository.cmis.internal.model;
 
+import com.liferay.document.library.repository.cmis.internal.CMISRepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.log.Log;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
-import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;

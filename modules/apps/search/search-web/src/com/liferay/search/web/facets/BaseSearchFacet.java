@@ -37,36 +37,54 @@ public abstract class BaseSearchFacet implements SearchFacet {
 	}
 
 	@Override
-	public Facet getFacet(
-			SearchContext searchContext, String searchConfiguration)
-		throws Exception {
+	public JSONObject getData() {
+		return _facetConfiguration.getData();
+	}
 
-		return FacetFactoryUtil.create(
-			searchContext, getFacetConfiguration(searchConfiguration));
+	@Override
+	public Facet getFacet() {
+		return _facet;
 	}
 
 	@Override
 	public FacetConfiguration getFacetConfiguration() {
-		return getDefaultConfiguration();
-	}
-
-	@Override
-	public FacetConfiguration getFacetConfiguration(String searchConfiguration)
-		throws JSONException {
-
-		FacetConfiguration facetConfiguration = _getFacetConfiguration(
-			searchConfiguration);
-
-		if (facetConfiguration != null) {
-			return facetConfiguration;
-		}
-
-		return getDefaultConfiguration();
+		return _facetConfiguration;
 	}
 
 	@Override
 	public String getOrder() {
 		return "OrderHitsDesc";
+	}
+
+	@Override
+	public double getWeight() {
+		return _facetConfiguration.getWeight();
+	}
+
+	@Override
+	public void init(String searchConfiguration) throws Exception {
+		init(searchConfiguration, null);
+	}
+
+	@Override
+	public void init(String searchConfiguration, SearchContext searchContext)
+		throws Exception {
+
+		_facetConfiguration = _getFacetConfiguration(searchConfiguration);
+
+		if (_facetConfiguration == null) {
+			_facetConfiguration = getDefaultConfiguration();
+		}
+
+		if (searchContext != null) {
+			_facet = FacetFactoryUtil.create(
+				searchContext, _facetConfiguration);
+		}
+	}
+
+	@Override
+	public boolean isStatic() {
+		return _facetConfiguration.isStatic();
 	}
 
 	private FacetConfiguration _getFacetConfiguration(String configuration)
@@ -123,5 +141,8 @@ public abstract class BaseSearchFacet implements SearchFacet {
 
 		return facetConfiguration;
 	}
+
+	private Facet _facet;
+	private FacetConfiguration _facetConfiguration;
 
 }

@@ -19,9 +19,7 @@
 <%
 AssetEntriesSearchFacet assetEntriesSearchFacet = (AssetEntriesSearchFacet)request.getAttribute("facet_configuration.jsp-searchFacet");
 
-FacetConfiguration facetConfiguration = assetEntriesSearchFacet.getFacetConfiguration(searchDisplayContext.getSearchConfiguration());
-
-JSONObject dataJSONObject = facetConfiguration.getData();
+JSONObject dataJSONObject = assetEntriesSearchFacet.getData();
 
 int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
 

@@ -19,9 +19,7 @@
 <%
 SearchFacet searchFacet = (SearchFacet)request.getAttribute("facet_configuration.jsp-searchFacet");
 
-FacetConfiguration facetConfiguration = searchFacet.getFacetConfiguration(searchDisplayContext.getSearchConfiguration());
-
-JSONObject dataJSONObject = facetConfiguration.getData();
+JSONObject dataJSONObject = searchFacet.getData();
 
 String displayStyle = dataJSONObject.getString("displayStyle", "cloud");
 int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");

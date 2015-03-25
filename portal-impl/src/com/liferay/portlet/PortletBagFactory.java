@@ -17,6 +17,7 @@ package com.liferay.portlet;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.log.Log;
@@ -567,16 +568,22 @@ public class PortletBagFactory {
 		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
 			getServiceTrackerList(PortletDataHandler.class, portlet);
 
-		if (Validator.isNotNull(portlet.getPortletDataHandlerClass())) {
-			PortletDataHandler portletDataHandlerInstance =
-				(PortletDataHandler)newInstance(
-					PortletDataHandler.class,
-					portlet.getPortletDataHandlerClass());
+		String portletDataHandlerClass = portlet.getPortletDataHandlerClass();
 
-			portletDataHandlerInstance.setPortletId(portlet.getPortletId());
-
-			portletDataHandlerInstances.add(portletDataHandlerInstance);
+		if (Validator.isNull(portletDataHandlerClass)) {
+			portletDataHandlerClass =
+				DefaultConfigurationPortletDataHandler.class.getName();
 		}
+
+		PortletDataHandler portletDataHandlerInstance =
+			(PortletDataHandler)newInstance(
+				PortletDataHandler.class, portletDataHandlerClass);
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("service.ranking", Integer.MIN_VALUE);
+
+		portletDataHandlerInstances.add(portletDataHandlerInstance, properties);
 
 		return portletDataHandlerInstances;
 	}

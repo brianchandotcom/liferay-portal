@@ -78,6 +78,8 @@
 				/>
 			</sequential>
 		</for>
+
+		<ant dir="modules/test/portlet-tck-bridge" target="deploy" />
 	</target>
 
 	<target name="prepare-tck">
@@ -175,8 +177,6 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 		<antcall target="rebuild-database" inheritAll="false" />
 
 		<antcall target="deploy-tck-wars" />
-
-		<ant target="deploy" dir="modules/test/portlet-tck-bridge" />
 
 		<parallel>
 			<exec dir="${app.server.tomcat.bin.dir}" executable="catalina${file.suffix.bat}" resolveexecutable="true">

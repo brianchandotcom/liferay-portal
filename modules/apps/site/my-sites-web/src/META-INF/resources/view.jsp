@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "my-sites");
@@ -92,7 +92,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 		</liferay-ui:search-container-results>
 
 		<aui:nav-bar>
-			<aui:nav-bar-search file="/html/portlet/my_sites/search.jsp" searchContainer="<%= searchContainer %>" />
+			<aui:nav-bar-search file="/search.jsp" searchContainer="<%= searchContainer %>" />
 		</aui:nav-bar>
 
 		<liferay-ui:search-container-row
@@ -166,7 +166,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"
-				path="/html/portlet/my_sites/site_action.jsp"
+				path="/site_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

@@ -421,16 +421,12 @@ public class SPIAgentRequestTest {
 
 				@Override
 				public Map<String, FileItem[]> getMultipartParameterMap() {
-					Assert.fail();
-
-					return super.getMultipartParameterMap();
+					throw new Error();
 				}
 
 				@Override
 				public Map<String, List<String>> getRegularParameterMap() {
-					Assert.fail();
-
-					return super.getRegularParameterMap();
+					throw new Error();
 				}
 
 			};

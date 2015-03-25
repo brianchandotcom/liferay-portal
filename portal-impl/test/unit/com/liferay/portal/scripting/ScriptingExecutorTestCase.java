@@ -16,7 +16,6 @@ package com.liferay.portal.scripting;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
-import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -30,7 +29,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -69,7 +67,7 @@ public abstract class ScriptingExecutorTestCase extends PowerMockito {
 	}
 
 	@Test
-	public void testBindingInputVariables() throws ScriptingException {
+	public void testBindingInputVariables() throws Exception {
 		Map<String, Object> inputObjects = new HashMap<>();
 
 		inputObjects.put("variable", "string");
@@ -80,7 +78,7 @@ public abstract class ScriptingExecutorTestCase extends PowerMockito {
 	}
 
 	@Test
-	public void testSimpleScript() throws ScriptingException {
+	public void testSimpleScript() throws Exception {
 		Map<String, Object> inputObjects = Collections.emptyMap();
 		Set<String> outputNames = Collections.emptySet();
 
@@ -90,27 +88,20 @@ public abstract class ScriptingExecutorTestCase extends PowerMockito {
 	protected Map<String, Object> execute(
 			Map<String, Object> inputObjects, Set<String> outputNames,
 			String fileName)
-		throws ScriptingException {
+		throws Exception {
 
 		String script = getScript(fileName + getScriptExtension());
 
 		return _scriptingExecutor.eval(null, inputObjects, outputNames, script);
 	}
 
-	protected String getScript(String name) {
+	protected String getScript(String name) throws IOException {
 		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(
 			"dependencies/" + name);
 
-		String script = null;
-
-		try {
-			script = StringUtil.read(inputStream);
-		}
-		catch (IOException ioe) {
-			Assert.fail("Unable to read " + name);
-		}
+		String script = StringUtil.read(inputStream);
 
 		return script;
 	}

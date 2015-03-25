@@ -50,7 +50,6 @@ import java.util.List;
 
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.RecognitionException;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -75,7 +74,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseCorrectlyBoldContentInListItems() {
+	public void testParseCorrectlyBoldContentInListItems() throws Exception {
 		BaseListNode unorderedListNode = parseBaseListNode("list-6.creole");
 
 		Assert.assertEquals(1, unorderedListNode.getChildASTNodesCount());
@@ -101,7 +100,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseCorrectlyItalicContentInListItems() {
+	public void testParseCorrectlyItalicContentInListItems() throws Exception {
 		UnorderedListNode unorderedListNode =
 			(UnorderedListNode)parseBaseListNode("list-5.creole");
 
@@ -129,37 +128,39 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseCorrectlyOneItemFirstLevel() {
+	public void testParseCorrectlyOneItemFirstLevel() throws Exception {
 		executeFirstLevelItemListTests("list-1.creole", 1);
 	}
 
 	@Test
-	public void testParseCorrectlyOneOrderedItemFirstLevel() {
+	public void testParseCorrectlyOneOrderedItemFirstLevel() throws Exception {
 		executeFirstLevelItemListTests("list-7.creole", 1);
 	}
 
 	@Test
-	public void testParseCorrectlyThreeItemFirstLevel() {
+	public void testParseCorrectlyThreeItemFirstLevel() throws Exception {
 		executeFirstLevelItemListTests("list-3.creole", 3);
 	}
 
 	@Test
-	public void testParseCorrectlyThreeOrderedItemFirstLevel() {
+	public void testParseCorrectlyThreeOrderedItemFirstLevel()
+		throws Exception {
+
 		executeFirstLevelItemListTests("list-9.creole", 3);
 	}
 
 	@Test
-	public void testParseCorrectlyTwoItemFirstLevel() {
+	public void testParseCorrectlyTwoItemFirstLevel() throws Exception {
 		executeFirstLevelItemListTests("list-2.creole", 2);
 	}
 
 	@Test
-	public void testParseCorrectlyTwoOrderedItemFirstLevel() {
+	public void testParseCorrectlyTwoOrderedItemFirstLevel() throws Exception {
 		executeFirstLevelItemListTests("list-8.creole", 2);
 	}
 
 	@Test
-	public void testParseEmpyImageTag() {
+	public void testParseEmpyImageTag() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("image-4.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -181,14 +182,14 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseHeadingBlocksMultiple() {
+	public void testParseHeadingBlocksMultiple() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("heading-10.creole");
 
 		Assert.assertEquals(3, wikiPageNode.getChildASTNodesCount());
 	}
 
 	@Test
-	public void testParseHorizontalBlock() {
+	public void testParseHorizontalBlock() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("horizontal-1.creole");
 
 		Assert.assertEquals(1, wikiPageNode.getChildASTNodesCount());
@@ -197,7 +198,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseHorizontalMixedBlocks() {
+	public void testParseHorizontalMixedBlocks() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("horizontal-3.creole");
 
 		Assert.assertEquals(3, wikiPageNode.getChildASTNodesCount());
@@ -206,7 +207,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseHorizontalTwoBlocks() {
+	public void testParseHorizontalTwoBlocks() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("horizontal-2.creole");
 
 		Assert.assertEquals(2, wikiPageNode.getChildASTNodesCount());
@@ -217,7 +218,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseMultilineTextParagraph() {
+	public void testParseMultilineTextParagraph() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("text-2.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -249,7 +250,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseMultipleImageTags() {
+	public void testParseMultipleImageTags() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("image-5.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -271,14 +272,14 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseNoWikiBlock() {
+	public void testParseNoWikiBlock() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("nowikiblock-1.creole");
 
 		Assert.assertEquals(1, wikiPageNode.getChildASTNodesCount());
 	}
 
 	@Test
-	public void testParseNoWikiBlockEmpty() {
+	public void testParseNoWikiBlockEmpty() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("nowikiblock-3.creole");
 
 		NoWikiSectionNode noWikiSectionNode =
@@ -288,14 +289,14 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseNoWikiBlockMultiple() {
+	public void testParseNoWikiBlockMultiple() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("nowikiblock-2.creole");
 
 		Assert.assertEquals(3, wikiPageNode.getChildASTNodesCount());
 	}
 
 	@Test
-	public void testParseNoWikiBlockNonEmpty() {
+	public void testParseNoWikiBlockNonEmpty() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("nowikiblock-4.creole");
 
 		NoWikiSectionNode noWikiSectionNode =
@@ -306,7 +307,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseOnlySpacesContentInImageTag() {
+	public void testParseOnlySpacesContentInImageTag() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("image-3.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -328,7 +329,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseSimpleImageTag() {
+	public void testParseSimpleImageTag() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("image-1.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -362,7 +363,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseSimpleImageTagWithNoAlternative() {
+	public void testParseSimpleImageTagWithNoAlternative() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("image-2.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -384,7 +385,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseSimpleLinkTag() {
+	public void testParseSimpleLinkTag() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("link-1.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -420,7 +421,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseSimpleLinkTagWithoutDescription() {
+	public void testParseSimpleLinkTagWithoutDescription() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("link-2.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -439,7 +440,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseSimpleLinkTagWithoutDescription2() {
+	public void testParseSimpleLinkTagWithoutDescription2() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("link-3.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -482,7 +483,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseSimpleTextBoldAndItalics() {
+	public void testParseSimpleTextBoldAndItalics() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("text-6.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -521,7 +522,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseSimpleTextParagraph() {
+	public void testParseSimpleTextParagraph() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("text-1.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -549,7 +550,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseSimpleTextWithBold() {
+	public void testParseSimpleTextWithBold() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("text-4.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -588,7 +589,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseSimpleTextWithBoldAndItalics() {
+	public void testParseSimpleTextWithBoldAndItalics() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("text-5.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -628,7 +629,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseSimpleTextWithForcedEndline() {
+	public void testParseSimpleTextWithForcedEndline() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("text-7.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -666,7 +667,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseSimpleTextWithItalics() {
+	public void testParseSimpleTextWithItalics() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("text-3.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -709,14 +710,16 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseSimpleTextWithItalicTextInMultipleLines() {
+	public void testParseSimpleTextWithItalicTextInMultipleLines()
+		throws Exception {
+
 		WikiPageNode wikiPageNode = getWikiPageNode("text-8.creole");
 
 		Assert.assertNotNull(wikiPageNode);
 	}
 
 	@Test
-	public void testParseTableMultipleRowsAndCOlumns() {
+	public void testParseTableMultipleRowsAndCOlumns() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("table-2.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -780,7 +783,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseTableOneRowOneColumn() {
+	public void testParseTableOneRowOneColumn() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("table-1.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -834,7 +837,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testSimpleEscapedCharacter() {
+	public void testSimpleEscapedCharacter() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("escape-1.creole");
 
 		Assert.assertNotNull(wikiPageNode);
@@ -865,7 +868,9 @@ public class AntlrCreoleParserTest {
 		Assert.assertEquals("SCAPED1", unformattedTextNode.getContent());
 	}
 
-	protected void executeFirstLevelItemListTests(String fileName, int count) {
+	protected void executeFirstLevelItemListTests(String fileName, int count)
+		throws Exception {
+
 		BaseListNode baseListNode = parseBaseListNode(fileName);
 
 		Assert.assertEquals(count, baseListNode.getChildASTNodesCount());
@@ -896,23 +901,15 @@ public class AntlrCreoleParserTest {
 		return new Creole10Parser(commonTokenStream);
 	}
 
-	protected WikiPageNode getWikiPageNode(String fileName) {
-		try {
-			_creole10parser = getCreole10Parser(fileName);
+	protected WikiPageNode getWikiPageNode(String fileName) throws Exception {
+		_creole10parser = getCreole10Parser(fileName);
 
-			_creole10parser.wikipage();
-		}
-		catch (IOException ioe) {
-			Assert.fail("File does not exist");
-		}
-		catch (RecognitionException re) {
-			Assert.fail("File could not be parsed");
-		}
+		_creole10parser.wikipage();
 
 		return _creole10parser.getWikiPageNode();
 	}
 
-	protected BaseListNode parseBaseListNode(String fileName) {
+	protected BaseListNode parseBaseListNode(String fileName) throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode(fileName);
 
 		ListNode listNode = (ListNode)wikiPageNode.getChildASTNode(0);

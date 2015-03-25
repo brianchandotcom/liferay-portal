@@ -8,5 +8,4 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources,\
-	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
+	META-INF/resources=src/META-INF/resources

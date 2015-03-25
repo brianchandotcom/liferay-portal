@@ -17,6 +17,7 @@ package com.liferay.portlet;
 import com.liferay.portal.cache.SingleVMPoolImpl;
 import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
@@ -51,7 +52,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws PortalException {
 		SingleVMPoolUtil singleVMPoolUtil = new SingleVMPoolUtil();
 
 		SingleVMPoolImpl singleVMPoolImpl = new SingleVMPoolImpl();
@@ -67,51 +68,217 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 		portletPreferencesFactoryUtil.setPortletPreferencesFactory(
 			new PortletPreferencesFactoryImpl());
-	}
 
-	@Test
-	public void testWhenPreferencesOwnedByCompany() throws Exception {
-		Layout layout = new LayoutImpl();
-
-		layout.setCompanyId(RandomTestUtil.randomLong());
-		layout.setPlid(RandomTestUtil.randomLong());
-		layout.setPrivateLayout(true);
-
-		boolean modeEditGuest = false;
-
-		PowerMockito.mockStatic(PortletLocalServiceUtil.class);
-
-		Mockito.when(
-			PortletLocalServiceUtil.getPortletById(
-				layout.getCompanyId(), _PORTLET_ID)
-		).thenReturn(
-			_getPortlet()
-		);
+		_layout.setCompanyId(RandomTestUtil.randomLong());
+		_layout.setPlid(RandomTestUtil.randomLong());
+		_layout.setPrivateLayout(true);
 
 		PowerMockito.mockStatic(LayoutPermissionUtil.class);
 
 		Mockito.when(
 			LayoutPermissionUtil.contains(
-				Mockito.any(PermissionChecker.class), Mockito.eq(layout),
+				Mockito.any(PermissionChecker.class), Mockito.eq(_layout),
 				Mockito.eq(ActionKeys.UPDATE))
 		).thenReturn(
 			true
 		);
+	}
+
+	@Test
+	public void testPreferencesOwnedByCompany() throws Exception {
+		PowerMockito.mockStatic(PortletLocalServiceUtil.class);
+
+		Mockito.when(
+			PortletLocalServiceUtil.getPortletById(
+				_layout.getCompanyId(), _PORTLET_ID)
+		).thenReturn(
+			_getCompanyPortlet()
+		);
+
+		boolean modeEditGuest = false;
+		long siteGroupId = _layout.getGroupId();
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				0, _USER_ID, layout, _PORTLET_ID, modeEditGuest);
+				siteGroupId, _USER_ID, _layout, _PORTLET_ID, modeEditGuest);
 
 		Assert.assertEquals(
-			"The owner type was not the one expected",
-			PortletKeys.PREFS_OWNER_TYPE_USER,
+			"The owner type should be of type company",
+			PortletKeys.PREFS_OWNER_TYPE_COMPANY,
 			portletPreferencesIds.getOwnerType());
+		Assert.assertEquals(
+			"The ownerId should be the id of the company",
+			_layout.getCompanyId(), portletPreferencesIds.getOwnerId());
+		Assert.assertEquals(
+			"The plid shouldn't have a real value",
+			PortletKeys.PREFS_PLID_SHARED, portletPreferencesIds.getPlid());
 	}
 
-	private Portlet _getPortlet() {
+	@Test
+	public void testPreferencesOwnedByGroup() throws Exception {
+		PowerMockito.mockStatic(PortletLocalServiceUtil.class);
+
+		Mockito.when(
+			PortletLocalServiceUtil.getPortletById(
+				_layout.getCompanyId(), _PORTLET_ID)
+		).thenReturn(
+			_getGroupPortlet()
+		);
+
+		boolean modeEditGuest = false;
+		long siteGroupId = _layout.getGroupId();
+
+		PortletPreferencesIds portletPreferencesIds =
+			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+				siteGroupId, _USER_ID, _layout, _PORTLET_ID, modeEditGuest);
+
+		Assert.assertEquals(
+			"The owner type should be of type group",
+			PortletKeys.PREFS_OWNER_TYPE_GROUP,
+			portletPreferencesIds.getOwnerType());
+		Assert.assertEquals(
+			"The ownerId should be the id of the group", siteGroupId,
+			portletPreferencesIds.getOwnerId());
+		Assert.assertEquals(
+			"The plid shouldn't have a real value",
+			PortletKeys.PREFS_PLID_SHARED, portletPreferencesIds.getPlid());
+	}
+
+	@Test
+	public void testPreferencesOwnedByGroupLayout() throws Exception {
+		PowerMockito.mockStatic(PortletLocalServiceUtil.class);
+
+		Mockito.when(
+			PortletLocalServiceUtil.getPortletById(
+				_layout.getCompanyId(), _PORTLET_ID)
+		).thenReturn(
+			_getGroupLayoutPortlet()
+		);
+
+		boolean modeEditGuest = false;
+		long siteGroupId = _layout.getGroupId();
+
+		PortletPreferencesIds portletPreferencesIds =
+			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+				siteGroupId, _USER_ID, _layout, _PORTLET_ID, modeEditGuest);
+
+		Assert.assertEquals(
+			"The owner type should be of type layout",
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+			portletPreferencesIds.getOwnerType());
+		Assert.assertEquals(
+			"The ownerId should have the default value",
+			PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			portletPreferencesIds.getOwnerId());
+		Assert.assertEquals(
+			"The plid should be that of the current layout", _layout.getPlid(),
+			portletPreferencesIds.getPlid());
+	}
+
+	@Test
+	public void testPreferencesOwnedByUser() throws Exception {
+		PowerMockito.mockStatic(PortletLocalServiceUtil.class);
+
+		Mockito.when(
+			PortletLocalServiceUtil.getPortletById(
+				_layout.getCompanyId(), _PORTLET_ID)
+		).thenReturn(
+			_getUserPortlet()
+		);
+
+		boolean modeEditGuest = false;
+		long siteGroupId = _layout.getGroupId();
+
+		PortletPreferencesIds portletPreferencesIds =
+			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+				siteGroupId, _USER_ID, _layout, _PORTLET_ID, modeEditGuest);
+
+		Assert.assertEquals(
+			"The owner type should be of type user",
+			PortletKeys.PREFS_OWNER_TYPE_USER,
+			portletPreferencesIds.getOwnerType());
+		Assert.assertEquals(
+			"The ownerId should be the id of the user who added it", _USER_ID,
+			portletPreferencesIds.getOwnerId());
+		Assert.assertEquals(
+			"The plid shouldn't have a real value",
+			PortletKeys.PREFS_PLID_SHARED, portletPreferencesIds.getPlid());
+	}
+
+	@Test
+	public void testPreferencesOwnedByUserLayout() throws Exception {
+		PowerMockito.mockStatic(PortletLocalServiceUtil.class);
+
+		Mockito.when(
+			PortletLocalServiceUtil.getPortletById(
+				_layout.getCompanyId(), _PORTLET_ID)
+		).thenReturn(
+			_getUserLayoutPortlet()
+		);
+
+		boolean modeEditGuest = false;
+		long siteGroupId = _layout.getGroupId();
+
+		PortletPreferencesIds portletPreferencesIds =
+			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+				siteGroupId, _USER_ID, _layout, _PORTLET_ID, modeEditGuest);
+
+		Assert.assertEquals(
+			"The owner type should be of type user",
+			PortletKeys.PREFS_OWNER_TYPE_USER,
+			portletPreferencesIds.getOwnerType());
+		Assert.assertEquals(
+			"The ownerId should be the id of the user who added it", _USER_ID,
+			portletPreferencesIds.getOwnerId());
+		Assert.assertEquals(
+			"The plid should be that of the current layout", _layout.getPlid(),
+			portletPreferencesIds.getPlid());
+	}
+
+	private Portlet _getCompanyPortlet() {
+		Portlet portlet = new PortletImpl();
+
+		portlet.setPreferencesCompanyWide(true);
+
+		return portlet;
+	}
+
+	private Portlet _getGroupLayoutPortlet() {
 		Portlet portlet = new PortletImpl();
 
 		portlet.setPreferencesCompanyWide(false);
+		portlet.setPreferencesUniquePerLayout(true);
+		portlet.setPreferencesOwnedByGroup(true);
+
+		return portlet;
+	}
+
+	private Portlet _getGroupPortlet() {
+		Portlet portlet = new PortletImpl();
+
+		portlet.setPreferencesCompanyWide(false);
+		portlet.setPreferencesUniquePerLayout(false);
+		portlet.setPreferencesOwnedByGroup(true);
+
+		return portlet;
+	}
+
+	private Portlet _getUserLayoutPortlet() {
+		Portlet portlet = new PortletImpl();
+
+		portlet.setPreferencesCompanyWide(false);
+		portlet.setPreferencesUniquePerLayout(true);
+		portlet.setPreferencesOwnedByGroup(false);
+
+		return portlet;
+	}
+
+	private Portlet _getUserPortlet() {
+		Portlet portlet = new PortletImpl();
+
+		portlet.setPreferencesCompanyWide(false);
+		portlet.setPreferencesUniquePerLayout(false);
+		portlet.setPreferencesOwnedByGroup(false);
 
 		return portlet;
 	}
@@ -119,5 +286,7 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 	private static final String _PORTLET_ID = RandomTestUtil.randomString(10);
 
 	private static final long _USER_ID = RandomTestUtil.randomLong();
+
+	private final Layout _layout = new LayoutImpl();
 
 }

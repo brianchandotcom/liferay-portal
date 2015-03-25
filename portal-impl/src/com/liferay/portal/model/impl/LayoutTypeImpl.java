@@ -86,12 +86,10 @@ public class LayoutTypeImpl implements LayoutType {
 		String url = _layoutTypeController.getURL();
 
 		if (Validator.isNull(url)) {
-			url = _URL;
+			url = getDefaultURL();
 		}
 
-		return StringUtil.replace(
-			url, StringPool.DOLLAR_AND_OPEN_CURLY_BRACE,
-			StringPool.CLOSE_CURLY_BRACE, variables);
+		return replaceVariables(url, variables);
 	}
 
 	@Override
@@ -127,6 +125,18 @@ public class LayoutTypeImpl implements LayoutType {
 		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
 
 		typeSettingsProperties.setProperty(key, value);
+	}
+
+	protected String getDefaultURL() {
+		return _URL;
+	}
+
+	protected String replaceVariables(
+		String url, Map<String, String> variables) {
+
+		return StringUtil.replace(
+			url, StringPool.DOLLAR_AND_OPEN_CURLY_BRACE,
+			StringPool.CLOSE_CURLY_BRACE, variables);
 	}
 
 	private static final String _URL =

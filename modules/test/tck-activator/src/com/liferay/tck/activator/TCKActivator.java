@@ -20,7 +20,6 @@ import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
@@ -28,27 +27,27 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Tambara
  */
-@Component(
-	configurationPolicy = ConfigurationPolicy.OPTIONAL
-)
+@Component
 public class TCKActivator {
 
 	@Activate
 	@Modified
 	protected void activate() {
-		StrutsActionRegistryUtil.register(_tckPath, _tckStrutsAction);
+		StrutsActionRegistryUtil.register(_TCK_PATH, _tckStrutsAction);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		StrutsActionRegistryUtil.unregister(_tckPath);
+		StrutsActionRegistryUtil.unregister(_TCK_PATH);
 	}
 
 	@Reference(target = "(original.bean=*)", unbind = "-")
 	protected void setServletContext(ServletContext servletContext) {
 	}
 
-	private final String _tckPath = "/portal/tck";
-	private final TCKStrutsAction _tckStrutsAction = new TCKStrutsAction();
+	private static final String _TCK_PATH = "/portal/tck";
+
+	private static final TCKStrutsAction _tckStrutsAction =
+		new TCKStrutsAction();
 
 }

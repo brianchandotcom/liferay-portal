@@ -38,6 +38,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -1525,7 +1530,44 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"[a-z]+[-_a-zA-Z0-9]*");
 	protected static Pattern emptyCollectionPattern = Pattern.compile(
 		"Collections\\.EMPTY_(LIST|MAP|SET)");
-	protected static FileImpl fileUtil = FileImpl.getInstance();
+	protected static FileImpl fileUtil = new FileImpl() {
+
+		@Override
+		public String read(File file, boolean raw) throws IOException {
+			byte[] bytes = getBytes(file);
+
+			if (bytes == null) {
+				return null;
+			}
+
+			Charset charset = Charset.forName(StringPool.UTF8);
+
+			CharsetDecoder charsetDecoder = charset.newDecoder();
+
+			CharBuffer charBuffer = null;
+
+			try {
+				charBuffer = charsetDecoder.decode(ByteBuffer.wrap(bytes));
+			}
+			catch (CharacterCodingException cce) {
+				throw new Error(
+					file.getCanonicalPath()+
+						" contains invalid UTF-8 byte sequence",
+					cce);
+			}
+
+			String content = charBuffer.toString();
+
+			if (!raw) {
+				content = StringUtil.replace(
+					content, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+			}
+
+			return content;
+		}
+
+	};
+
 	protected static Pattern languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
 	protected static boolean portalSource;

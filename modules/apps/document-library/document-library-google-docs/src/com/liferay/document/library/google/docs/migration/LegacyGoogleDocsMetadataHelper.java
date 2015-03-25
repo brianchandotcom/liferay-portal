@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class LegacyGoogleDocsMetadataHelper {
 

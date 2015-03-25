@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.security.auth;
 import java.util.Collection;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public interface AlwaysAllowDoAsUser {
 

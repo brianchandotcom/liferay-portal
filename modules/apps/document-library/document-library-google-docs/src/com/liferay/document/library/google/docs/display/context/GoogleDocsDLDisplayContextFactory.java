@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 @Component(
 	immediate = true, service = DLDisplayContextFactory.class

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.ServiceReference;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class DLDisplayContextFactoryReference
 	implements Comparable<DLDisplayContextFactoryReference> {

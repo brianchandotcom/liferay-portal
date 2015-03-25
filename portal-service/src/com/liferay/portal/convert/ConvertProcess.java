@@ -15,7 +15,7 @@
 package com.liferay.portal.convert;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public interface ConvertProcess {
 

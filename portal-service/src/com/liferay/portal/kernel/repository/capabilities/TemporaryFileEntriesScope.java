@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.repository.capabilities;
 import java.util.UUID;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class TemporaryFileEntriesScope {
 

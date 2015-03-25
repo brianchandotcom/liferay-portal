@@ -23,7 +23,7 @@ import java.util.Collection;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 @Component(
 	service = AlwaysAllowDoAsUser.class

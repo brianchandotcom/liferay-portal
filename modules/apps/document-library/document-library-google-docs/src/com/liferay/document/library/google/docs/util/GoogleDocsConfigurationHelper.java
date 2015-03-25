@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class GoogleDocsConfigurationHelper {
 

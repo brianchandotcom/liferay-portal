@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 @Component(
 	immediate = true, service = WikiEngineTracker.class

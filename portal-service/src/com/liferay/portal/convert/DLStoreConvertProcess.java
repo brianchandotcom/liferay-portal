@@ -17,7 +17,7 @@ package com.liferay.portal.convert;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public interface DLStoreConvertProcess {
 

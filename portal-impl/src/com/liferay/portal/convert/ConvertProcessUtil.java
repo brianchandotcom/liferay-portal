@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class ConvertProcessUtil {
 

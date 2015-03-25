@@ -31,7 +31,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class LegacyGoogleDocsMigration {
 

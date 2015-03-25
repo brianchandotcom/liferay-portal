@@ -15,7 +15,7 @@
 package com.liferay.document.library.google.docs.display.context;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class GoogleDocsUIItemKeys {
 

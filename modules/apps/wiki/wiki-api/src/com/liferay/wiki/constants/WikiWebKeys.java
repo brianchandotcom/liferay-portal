@@ -15,7 +15,7 @@
 package com.liferay.wiki.constants;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class WikiWebKeys {
 

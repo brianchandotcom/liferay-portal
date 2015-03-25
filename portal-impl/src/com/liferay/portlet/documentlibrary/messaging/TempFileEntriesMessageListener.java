@@ -26,7 +26,7 @@ import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class TempFileEntriesMessageListener extends BaseMessageListener {
 

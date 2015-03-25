@@ -24,7 +24,7 @@ import org.junit.Test;
 import org.powermock.api.mockito.PowerMockito;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class CMISRepositoryDetectorTest extends PowerMockito {
 

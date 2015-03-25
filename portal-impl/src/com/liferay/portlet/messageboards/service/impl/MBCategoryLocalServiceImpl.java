@@ -249,8 +249,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 				category.getGroupId(), category.getCategoryId());
 		}
 		catch (NoSuchMailingListException nsmle) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to delete mailing list", nsmle);
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Cannot delete mailing list for category " +
+						category.getCategoryId() + " because it does not " +
+							"exist");
 			}
 		}
 

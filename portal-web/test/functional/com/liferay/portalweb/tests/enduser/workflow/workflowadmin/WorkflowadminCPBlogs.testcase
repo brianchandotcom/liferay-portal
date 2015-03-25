@@ -25,7 +25,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command name="ApproveBlogsEntryCP" priority="5">
+	<command known-issues="LRQA-12687" name="ApproveBlogsEntryCP" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -86,7 +86,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectBlogsEntryCP" priority="5">
+	<command known-issues="LRQA-12687" name="RejectBlogsEntryCP" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 

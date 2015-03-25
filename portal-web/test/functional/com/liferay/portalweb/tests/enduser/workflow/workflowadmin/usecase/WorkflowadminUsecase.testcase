@@ -34,7 +34,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddBlogsEntriesWithPortalScopeWorkflowAndAssertWorkflowScope" priority="5">
+	<command known-issues="LRQA-12687" name="AddBlogsEntriesWithPortalScopeWorkflowAndAssertWorkflowScope" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Workflow" />
 		</execute>
@@ -185,7 +185,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntriesWithSiteScopeWorkflowAndAssertWorkflowScope" priority="5">
+	<command known-issues="LRQA-12687" name="AddBlogsEntriesWithSiteScopeWorkflowAndAssertWorkflowScope" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -513,7 +513,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryWorkflowViaNotifications" priority="5">
+	<command known-issues="LRQA-12687" name="ViewBlogsEntryWorkflowViaNotifications" priority="5">
 		<property name="portlet.plugins.includes" value="notifications-portlet" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -593,7 +593,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewTaskCount" priority="3">
+	<command known-issues="LPS-51687" name="ViewTaskCount" priority="3">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="webContentContent" value="WC WebContent Content" />
@@ -694,7 +694,7 @@
 		</execute>
 	</command>
 
-	<command name="XSSScriptWebContent" priority="5">
+	<command known-issues="LPS-51687" name="XSSScriptWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

@@ -14,22 +14,9 @@
 
 package com.liferay.util;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
-
 /**
  * @author Shuyang Zhou
  */
+@Deprecated
 public class RSSThreadLocal {
-
-	public static boolean isExportRSS() {
-		return _exportRSS.get();
-	}
-
-	public static void setExportRSS(boolean exportRSS) {
-		_exportRSS.set(exportRSS);
-	}
-
-	private static final ThreadLocal<Boolean> _exportRSS =
-		new AutoResetThreadLocal<>(RSSThreadLocal.class + "._exportRSS", false);
-
 }

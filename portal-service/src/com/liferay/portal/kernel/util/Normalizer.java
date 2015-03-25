@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.portal.kernel.util;
 
 /**
  * @author Brian Wing Shun Chan
- * @author Eduardo Garcia
+ * @author Shuyang Zhou
  */
-@Deprecated
-public class RSSUtil extends com.liferay.portal.kernel.util.RSSUtil {
+public interface Normalizer {
+
+	public String normalizeToAscii(String s);
+
 }

@@ -12,12 +12,22 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.portal.kernel.util;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Eduardo Garcia
+ * @author Shuyang Zhou
  */
-@Deprecated
-public class RSSUtil extends com.liferay.portal.kernel.util.RSSUtil {
+public class RSSThreadLocal {
+
+	public static boolean isExportRSS() {
+		return _exportRSS.get();
+	}
+
+	public static void setExportRSS(boolean exportRSS) {
+		_exportRSS.set(exportRSS);
+	}
+
+	private static final ThreadLocal<Boolean> _exportRSS =
+		new AutoResetThreadLocal<>(RSSThreadLocal.class + "._exportRSS", false);
+
 }

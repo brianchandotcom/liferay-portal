@@ -12,12 +12,32 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.portal.kernel.util;
+
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 /**
  * @author Brian Wing Shun Chan
- * @author Eduardo Garcia
+ * @author Shuyang Zhou
  */
-@Deprecated
-public class RSSUtil extends com.liferay.portal.kernel.util.RSSUtil {
+public class NormalizerUtil {
+
+	public static Normalizer getNormalizer() {
+		PortalRuntimePermission.checkGetBeanProperty(NormalizerUtil.class);
+
+		return _normalizer;
+	}
+
+	public static String normalizeToAscii(String s) {
+		return getNormalizer().normalizeToAscii(s);
+	}
+
+	public void setNormalizer(Normalizer normalizer) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
+		_normalizer = normalizer;
+	}
+
+	private static Normalizer _normalizer;
+
 }

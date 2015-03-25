@@ -46,4 +46,8 @@ public interface LayoutTypeAccessPolicy extends Serializable {
 			PermissionChecker permissionChecker, Layout layout)
 		throws PortalException;
 
+	public boolean isViewLayoutAllowed(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException;
+
 }

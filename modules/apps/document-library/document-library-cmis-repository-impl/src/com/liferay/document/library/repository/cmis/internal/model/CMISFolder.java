@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis.model;
+package com.liferay.document.library.repository.cmis.internal.model;
 
+import com.liferay.document.library.repository.cmis.internal.CMISRepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
-import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFolder;

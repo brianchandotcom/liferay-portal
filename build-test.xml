@@ -26,21 +26,6 @@
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
 
-	<if>
-		<os family="unix" />
-		<then>
-			<exec executable="/bin/bash" os="${os.unix}" outputproperty="ip.address">
-				<arg value="-c" />
-				<arg value="ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'" />
-			</exec>
-		</then>
-		<else>
-			<hostinfo host="${env.COMPUTERNAME}.local" prefix="host.info" />
-
-			<property name="ip.address" value="${host.info.ADDR4}" />
-		</else>
-	</if>
-
 	<macrodef name="check-config">
 		<sequential>
 			<if>
@@ -340,6 +325,26 @@
 				name="env.option.operating.system"
 				override="true"
 			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-ip-address">
+		<sequential>
+			<if>
+				<isset property="ip.address" />
+				<then>
+					<var name="ip.address" value="${ip.address}" />
+				</then>
+				<elseif>
+					<os family="unix" />
+					<then>
+						<exec executable="/bin/bash" os="${os.unix}" outputproperty="ip.address">
+							<arg value="-c" />
+							<arg value="ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -2849,6 +2854,8 @@ portal.security.manager.strategy=liferay</echo>
 		<if>
 			<equals arg1="${mobile.device.enabled}" arg2="true" />
 			<then>
+				<get-ip-address />
+
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
 virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}</echo>
@@ -3570,6 +3577,8 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			<elseif>
 				<equals arg1="${mobile.device.enabled}" arg2="true" />
 				<then>
+					<get-ip-address />
+
 					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 						portal.url=http://${ip.address}:8080
 					</echo>

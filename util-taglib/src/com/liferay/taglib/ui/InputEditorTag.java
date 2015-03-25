@@ -15,6 +15,8 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.editor.EditorUtil;
+import com.liferay.portal.kernel.editor.config.PortletEditorConfig;
+import com.liferay.portal.kernel.editor.config.PortletEditorConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -22,8 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.editor.config.PortletEditorConfig;
-import com.liferay.portlet.editor.config.PortletEditorConfigFactoryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Enumeration;

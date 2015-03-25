@@ -14,10 +14,10 @@
 
 package com.liferay.blogs.portlet.editor.config;
 
+import com.liferay.portal.kernel.editor.config.PortletEditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.editor.config.PortletEditorConfigContributor;
 
 import java.util.Map;
 

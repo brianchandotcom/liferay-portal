@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.editor.config;
+package com.liferay.portal.kernel.editor.config;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;

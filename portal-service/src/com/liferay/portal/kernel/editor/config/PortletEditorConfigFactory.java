@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portlet.editor.config;
+package com.liferay.portal.kernel.editor.config;
 
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -23,15 +22,11 @@ import java.util.Map;
 /**
  * @author Sergio González
  */
-public interface PortletEditorConfigContributor {
+public interface PortletEditorConfigFactory {
 
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse);
-
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public PortletEditorConfig getPortletEditorConfig(
+		String portletName, String editorConfigKey, String editorImpl,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse);
 

@@ -137,6 +137,11 @@
 			<bean class="com.liferay.portal.diff.DiffImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.editor.config.PortletEditorConfigFactory" class="com.liferay.portal.kernel.editor.config.PortletEditorConfigFactoryUtil">
+		<property name="portletEditorConfigFactory">
+			<bean class="com.liferay.portal.editor.config.PortletEditorConfigFactoryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.expression.ExpressionFactoryUtil" class="com.liferay.portal.kernel.expression.ExpressionFactoryUtil">
 		<property name="expressionFactory">
 			<bean class="com.liferay.portal.expression.ExpressionFactoryImpl" />
@@ -1091,11 +1096,6 @@
 	<bean id="com.liferay.portlet.dynamicdatamapping.validator.DDMFormValuesValidatorUtil" class="com.liferay.portlet.dynamicdatamapping.validator.DDMFormValuesValidatorUtil">
 		<property name="DDMFormValuesValidator">
 			<bean class="com.liferay.portlet.dynamicdatamapping.validator.DDMFormValuesValidatorImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portlet.editor.config.PortletEditorConfigFactory" class="com.liferay.portlet.editor.config.PortletEditorConfigFactoryUtil">
-		<property name="portletEditorConfigFactory">
-			<bean class="com.liferay.portlet.editor.config.PortletEditorConfigFactoryImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil">

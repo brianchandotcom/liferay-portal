@@ -12,8 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.editor.config;
+package com.liferay.portal.editor.config;
 
+import com.liferay.portal.kernel.editor.config.PortletEditorConfig;
+import com.liferay.portal.kernel.editor.config.PortletEditorConfigContributor;
+import com.liferay.portal.kernel.editor.config.PortletEditorConfigFactory;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;

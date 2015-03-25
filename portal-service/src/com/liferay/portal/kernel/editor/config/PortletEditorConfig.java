@@ -12,22 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.editor.config;
-
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.theme.ThemeDisplay;
+package com.liferay.portal.kernel.editor.config;
 
 import java.util.Map;
 
 /**
  * @author Sergio González
  */
-public interface PortletEditorConfigFactory {
+public interface PortletEditorConfig {
 
-	public PortletEditorConfig getPortletEditorConfig(
-		String portletName, String editorConfigKey, String editorImpl,
-		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse);
+	public Map<String, Object> getData();
 
 }

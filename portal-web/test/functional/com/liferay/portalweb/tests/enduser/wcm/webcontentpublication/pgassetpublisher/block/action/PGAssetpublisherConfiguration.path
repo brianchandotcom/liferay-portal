@@ -99,7 +99,7 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SUBSCRIPTIONs-->
+<!--SUBSCRIPTIONS-->
 <tr>
 	<td>SUBSCRIPTIONS_ENABLE_RSS_SUBSCRIPTION_LABEL</td>
 	<td>//label[@for='_86_enableRss']</td>

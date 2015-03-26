@@ -130,6 +130,19 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			permissionChecker, layout, ActionKeys.UPDATE);
 	}
 
+	@Override
+	public boolean isViewLayoutAllowed(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException {
+
+		if (layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		return LayoutPermissionUtil.contains(
+			permissionChecker, layout, ActionKeys.VIEW);
+	}
+
 	protected boolean hasAccessPermission(
 			HttpServletRequest request, Layout layout, Portlet portlet)
 		throws PortalException {

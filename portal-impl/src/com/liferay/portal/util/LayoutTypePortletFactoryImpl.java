@@ -20,6 +20,7 @@ import com.liferay.portal.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.impl.LayoutTypePortletImpl;
+import com.liferay.portal.model.impl.LayoutTypeURLImpl;
 
 /**
  * @author Raymond Augé
@@ -35,6 +36,11 @@ public class LayoutTypePortletFactoryImpl implements LayoutTypePortletFactory {
 
 		LayoutTypeAccessPolicy layoutTypeAccessPolicy =
 			LayoutTypeAccessPolicyTracker.getLayoutTypeAccessPolicy(layout);
+
+		if (layout.isTypeURL()) {
+			return new LayoutTypeURLImpl(
+				layout, layoutTypeController, layoutTypeAccessPolicy);
+		}
 
 		return new LayoutTypePortletImpl(
 			layout, layoutTypeController, layoutTypeAccessPolicy);

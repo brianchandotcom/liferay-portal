@@ -16,6 +16,7 @@ package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.document.library.repository.cmis.CMISRepositoryHandler;
 import com.liferay.document.library.repository.cmis.Session;
+import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
 import com.liferay.document.library.repository.cmis.internal.constants.PortalPropsValues;
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,7 +42,9 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 		Map<String, String> parameters = new HashMap<>();
 
 		parameters.put(
-			SessionParameter.ATOMPUB_URL, getTypeSettingsValue(_ATOMPUB_URL));
+			SessionParameter.ATOMPUB_URL,
+			getTypeSettingsValue(
+				CMISRepositoryConstants.CMIS_ATOMPUB_URL_PARAMETER));
 		parameters.put(
 			SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
 		parameters.put(SessionParameter.COMPRESSION, Boolean.TRUE.toString());
@@ -69,7 +72,7 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 
 		CMISRepositoryUtil.checkRepository(
 			getRepositoryId(), parameters, getTypeSettingsProperties(),
-			_REPOSITORY_ID);
+			CMISRepositoryConstants.CMIS_ATOMPUB_REPOSITORY_ID_PARAMETER);
 
 		return CMISRepositoryUtil.createSession(parameters);
 	}
@@ -82,9 +85,5 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 		return CMISRepositoryUtil.getTypeSettingsValue(
 			typeSettingsProperties, typeSettingsKey);
 	}
-
-	private static final String _ATOMPUB_URL = "ATOMPUB_URL";
-
-	private static final String _REPOSITORY_ID = "REPOSITORY_ID";
 
 }

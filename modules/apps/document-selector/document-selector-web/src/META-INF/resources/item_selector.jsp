@@ -17,15 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-	String itemSelectedCallback = liferayPortletResponse.getNamespace()+"itemSelectedCallback";
-	ItemSelectorViewRenderers itemSelectorViewRenderers = ItemSelectorViewRenderers.get(liferayPortletRequest);
+String itemSelectedCallback = liferayPortletResponse.getNamespace() + "itemSelectedCallback";
+
+ItemSelectorViewRenderers itemSelectorViewRenderers = ItemSelectorViewRenderers.get(liferayPortletRequest);
 %>
 
-<script>
-	window.<portlet:namespace />itemSelectedCallback = function(type, item) {
-		alert("Item of type "+type+" selected: "+item);
+<aui:script>
+	function <%= itemSelectedCallback %>(type, item) {
 	}
-</script>
+</aui:script>
 
 <liferay-ui:tabs names="<%= StringUtil.merge(itemSelectorViewRenderers.getTitles()) %>" param="tabs1" refresh="<%= false %>" type="pills">
 

@@ -585,7 +585,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 	private static final ScheduledExecutorService _scheduledExecutorService =
 		Executors.newScheduledThreadPool(5);
-	private static SyncDLObjectUpdate _syncDLObjectUpdate;
+	private SyncDLObjectUpdate _syncDLObjectUpdate;
 
 	private final Map<Long, List<SyncFile>> _dependentSyncFilesMap =
 		new HashMap<>();

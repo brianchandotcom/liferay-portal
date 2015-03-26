@@ -190,7 +190,8 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 			String name = (String)serviceReference.getProperty("name");
 
 			if (Validator.isNotNull(name)) {
-				registerPortalExecutor(name, threadPoolExecutor);
+				threadPoolExecutor = registerPortalExecutor(
+					name, threadPoolExecutor);
 			}
 
 			return threadPoolExecutor;

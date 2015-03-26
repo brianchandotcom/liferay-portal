@@ -40,4 +40,11 @@ public class PortalExecutorManagerUtilAdvice {
 		};
 	}
 
+	@Around(
+		"execution(private com.liferay.portal.kernel.executor." +
+			"PortalExecutorManagerUtil.new())"
+	)
+	public void PortalExecutorManagerUtil() {
+	}
+
 }

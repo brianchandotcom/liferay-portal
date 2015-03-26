@@ -34,6 +34,10 @@ public final class LoggerUtil {
 	public static void addChildLoggerElement(
 		LoggerElement parentLoggerElement, LoggerElement childLoggerElement) {
 
+		if (!isLoggerStarted()) {
+			return;
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("var parentNode = document.getElementById('");
@@ -70,7 +74,15 @@ public final class LoggerUtil {
 		_javascriptExecutor.executeScript(sb.toString());
 	}
 
+	public static boolean isLoggerStarted() {
+		return _webDriver != null;
+	}
+
 	public static void setClassName(LoggerElement loggerElement) {
+		if (!isLoggerStarted()) {
+			return;
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("var node = document.getElementById('");
@@ -86,6 +98,10 @@ public final class LoggerUtil {
 	}
 
 	public static void setID(LoggerElement loggerElement) {
+		if (!isLoggerStarted()) {
+			return;
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("var node = document.getElementById('");
@@ -100,6 +116,10 @@ public final class LoggerUtil {
 	}
 
 	public static void setText(LoggerElement loggerElement) {
+		if (!isLoggerStarted()) {
+			return;
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("var node = document.getElementById('");
@@ -114,7 +134,7 @@ public final class LoggerUtil {
 	}
 
 	public static void startLogger() throws Exception {
-		if (_webDriver != null) {
+		if (isLoggerStarted()) {
 			return;
 		}
 
@@ -138,7 +158,7 @@ public final class LoggerUtil {
 
 		FileUtil.write(_CURRENT_DIR + "/test-results/report.html", content);
 
-		if (_webDriver != null) {
+		if (isLoggerStarted()) {
 			_webDriver.quit();
 
 			_webDriver = null;

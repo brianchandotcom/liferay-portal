@@ -1,5 +1,5 @@
 <definition>
-	<command name="runSmoke">
+	<command name="runSmoke" summary-ignore="true">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Page1" />
 		</execute>

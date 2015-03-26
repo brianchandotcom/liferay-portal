@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.logger.LoggerUtil;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 
@@ -62,6 +63,8 @@ public class PoshiRunner {
 	}
 
 	public PoshiRunner(String classCommandName) throws PoshiRunnerException {
+		LoggerUtil.startLogger();
+
 		SeleniumUtil.startSelenium();
 
 		System.out.println("\nRunning " + classCommandName);
@@ -129,6 +132,8 @@ public class PoshiRunner {
 			throw e;
 		}
 		finally {
+			LoggerUtil.stopLogger();
+
 			SeleniumUtil.stopSelenium();
 		}
 	}

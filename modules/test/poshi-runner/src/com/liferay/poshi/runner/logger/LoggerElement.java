@@ -44,8 +44,8 @@ public class LoggerElement {
 		_childLoggerElements.add(childLoggerElement);
 	}
 
-	public String getClass() {
-		return _class;
+	public String getClassName() {
+		return _className;
 	}
 
 	public String getID() {
@@ -60,8 +60,8 @@ public class LoggerElement {
 		return _text;
 	}
 
-	public void setClass(String class) {
-		_class = class;
+	public void setClassName(String className) {
+		_className = className;
 	}
 
 	public void setID(String id) {
@@ -85,9 +85,9 @@ public class LoggerElement {
 		sb.append(_id);
 		sb.append("\"");
 
-		if (Validator.isNotNull(_class)) {
+		if (Validator.isNotNull(_className)) {
 			sb.append(" class=\"");
-			sb.append(_class);
+			sb.append(_className);
 			sb.append("\"");
 		}
 
@@ -119,7 +119,7 @@ public class LoggerElement {
 	}
 
 	private final List<LoggerElement> _childLoggerElements = new ArrayList<>();
-	private String _class = "";
+	private String _className = "";
 	private String _id;
 	private String _name = "div";
 	private String _text = "";

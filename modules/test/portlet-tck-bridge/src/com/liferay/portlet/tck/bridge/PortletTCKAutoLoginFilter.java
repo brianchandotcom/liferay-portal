@@ -24,6 +24,7 @@ import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -46,6 +47,41 @@ public class PortletTCKAutoLoginFilter extends BasePortalFilter {
 			FilterChain filterChain)
 		throws Exception {
 
+		// TCK tests have 2 GetRemoteUserNullTestPortlet, one for ActionRequest,
+		// the other one for RenderRequest. Those 2 tests are special ones that
+		// requires the current user is not login.
+		// Technically those tests are not well designed, as they are
+		// supposed to do an explicitly logout before performing the test
+		// logic, rather than assuming current user has not login.
+		// Since we have no way to change the TCK tests, we have to use this
+		// hacky way to skip auto login for these 2 tests.
+
+		HttpSession httpSession = request.getSession();
+
+		if (httpSession.getAttribute(_TCK_SKIP_LOGIN) == Boolean.TRUE) {
+			processFilter(
+				PortletTCKAutoLoginFilter.class, request, response,
+				filterChain);
+
+			return;
+		}
+
+		String[] portletIds = request.getParameterValues("portletName");
+
+		if (portletIds != null) {
+			for (String portlet : portletIds) {
+				if (portlet.endsWith("GetRemoteUserNullTestPortlet")) {
+					httpSession.setAttribute(_TCK_SKIP_LOGIN, Boolean.TRUE);
+
+					processFilter(
+						PortletTCKAutoLoginFilter.class, request, response,
+						filterChain);
+
+					return;
+				}
+			}
+		}
+
 		User tckUser = UserLocalServiceUtil.fetchUserByEmailAddress(
 			PortalUtil.getCompanyId(request), "tck@liferay.com");
 
@@ -56,5 +92,7 @@ public class PortletTCKAutoLoginFilter extends BasePortalFilter {
 		processFilter(
 			PortletTCKAutoLoginFilter.class, request, response, filterChain);
 	}
+
+	private static final String _TCK_SKIP_LOGIN = "TCK_SKIP_LOGIN";
 
 }

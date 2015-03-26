@@ -14,22 +14,13 @@
 
 package com.liferay.wiki.translator;
 
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Jorge Ferrer
  */
 public class ClassicToCreoleTranslatorTest {
-
-	@ClassRule
-	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
 
 	public ClassicToCreoleTranslatorTest() {
 		_classicToCreoleTranslator = new ClassicToCreoleTranslator();

@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.HtmlImpl;
+import com.liferay.wiki.engine.creole.util.test.CreoleTestUtil;
 import com.liferay.wiki.parser.creole.ast.WikiPageNode;
 import com.liferay.wiki.parser.creole.parser.Creole10Lexer;
 import com.liferay.wiki.parser.creole.parser.Creole10Parser;
 import com.liferay.wiki.parser.creole.visitor.impl.XhtmlTranslationVisitor;
+import com.liferay.wiki.service.settings.WikiServiceSettingsProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +32,7 @@ import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,6 +48,13 @@ public class TranslationToXHTMLTest {
 		HtmlUtil htmlUtil = new HtmlUtil();
 
 		htmlUtil.setHtml(new HtmlImpl());
+
+		_wikiServiceSettingsProvider = CreoleTestUtil.getWikiSettingsProvider();
+	}
+
+	@After
+	public void tearDown() {
+		_wikiServiceSettingsProvider.deactivate();
 	}
 
 	@Test
@@ -765,6 +775,7 @@ public class TranslationToXHTMLTest {
 	private static final String _NEW_LINE = StringPool.NEW_LINE;
 
 	private Creole10Parser _creole10parser;
+	private WikiServiceSettingsProvider _wikiServiceSettingsProvider;
 	private final XhtmlTranslationVisitor _xhtmlTranslationVisitor =
 		new XhtmlTranslationVisitor();
 

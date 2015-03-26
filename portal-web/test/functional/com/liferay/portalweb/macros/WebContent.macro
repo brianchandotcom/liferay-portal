@@ -41,12 +41,25 @@
 			<equals arg1="${uploadAudio}" arg2="true" />
 			<then>
 				<execute function="Click" locator1="CPWebcontentAddwebcontent#AUDIO_BUTTON" />
-				<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#AUDIO_BROWSE_SERVER_BUTTON" value1="Browse Server" />
+				<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#BROWSE_SERVER_BUTTON" value1="Browse Server" />
 				<execute function="Pause" locator1="10000" />
 				<execute function="SelectFrame" locator1="CPWebcontentAddwebcontent#BROWSE_IFRAME" />
 				<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#CHOOSE_BUTTON" value1="Choose" />
 				<execute function="SelectFrame" value1="relative=top" />
-				<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#AUDIO_OK_BUTTON" value1="OK" />
+				<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#OK_BUTTON" value1="OK" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${linkContent}" arg2="true" />
+			<then>
+				<execute function="Click" locator1="CKEditor#TOOLBAR_LINK_BUTTON" />
+				<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#BROWSE_SERVER_BUTTON" value1="Browse Server" />
+				<execute function="Pause" locator1="10000" />
+				<execute function="SelectFrame" locator1="CPWebcontentAddwebcontent#BROWSE_IFRAME" />
+				<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#CHOOSE_BUTTON" value1="Choose" />
+				<execute function="SelectFrame" value1="relative=top" />
+				<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#OK_BUTTON" value1="OK" />
 			</then>
 		</if>
 

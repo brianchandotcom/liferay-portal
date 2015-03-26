@@ -279,31 +279,22 @@ public class GroupImpl extends GroupBaseImpl {
 
 		if (!privateLayout && (getPublicLayoutsPageCount() > 0)) {
 			try {
-				LayoutSet publicLayoutSet = getPublicLayoutSet();
+				String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
+					getPublicLayoutSet(), themeDisplay);
 
-				if (publicLayoutSet != null) {
-					String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-						publicLayoutSet, themeDisplay);
-
-					return PortalUtil.addPreservedParameters(
-						themeDisplay, groupFriendlyURL);
-				}
+				return PortalUtil.addPreservedParameters(
+					themeDisplay, groupFriendlyURL);
 			}
 			catch (PortalException pe) {
 			}
 		}
-
-		if (privateLayout && (getPrivateLayoutsPageCount() > 0)) {
+		else if (privateLayout && (getPrivateLayoutsPageCount() > 0)) {
 			try {
-				LayoutSet privateLayoutSet = getPrivateLayoutSet();
+				String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
+					getPrivateLayoutSet(), themeDisplay);
 
-				if (privateLayoutSet != null) {
-					String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-						privateLayoutSet, themeDisplay);
-
-					return PortalUtil.addPreservedParameters(
-						themeDisplay, groupFriendlyURL);
-				}
+				return PortalUtil.addPreservedParameters(
+					themeDisplay, groupFriendlyURL);
 			}
 			catch (PortalException pe) {
 			}

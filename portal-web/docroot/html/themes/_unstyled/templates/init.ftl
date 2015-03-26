@@ -247,11 +247,11 @@
 
 	<#assign css_class = css_class + " " + site_type />
 
-	<#assign site_default_public_url = htmlUtil.escape(page.getGroup().getDisplayURL(theme_display, false)) />
+	<#assign site_default_public_url = htmlUtil.escape(page_group.getDisplayURL(theme_display, false)) />
 
 	<#assign community_default_public_url = site_default_public_url />
 
-	<#assign site_default_private_url = htmlUtil.escape(page.getGroup().getDisplayURL(theme_display, true)) />
+	<#assign site_default_private_url = htmlUtil.escape(page_group.getDisplayURL(theme_display, true)) />
 
 	<#assign community_default_private_url = site_default_private_url />
 

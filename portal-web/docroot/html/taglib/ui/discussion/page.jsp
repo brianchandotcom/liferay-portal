@@ -83,14 +83,7 @@ int messagesCount = messages.size();
 							</div>
 
 							<c:if test="<%= messagesCount == 1 %>">
-								<c:choose>
-									<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-										<liferay-ui:message key="no-comments-yet" />
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:message key="no-comments-yet" /> <a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
-									</c:otherwise>
-								</c:choose>
+								<liferay-ui:message key="no-comments-yet" />
 							</c:if>
 						</c:if>
 

@@ -2097,6 +2097,10 @@ ${marketplace.portlet.properties}</echo>
 			</then>
 		</if>
 
+		<get-test-method-name />
+
+		<get-test-simple-class-name />
+
 		<if>
 			<isset property="test.evaluate.logs" />
 			<then>
@@ -2105,6 +2109,39 @@ ${marketplace.portlet.properties}</echo>
 				<ant dir="portal-web" target="test-class">
 					<property name="test.class" value="EvaluateLogTestSuite" />
 				</ant>
+			</then>
+		</if>
+
+		<if>
+			<isset property="test.method.name" />
+			<then>
+				<property name="test.class" value="${test.simple.class.name}#${test.method.name}" />
+			</then>
+			<else>
+				<property name="test.class" value="${test.simple.class.name}" />
+			</else>
+		</if>
+
+		<if>
+			<isset property="env.JENKINS_HOME" />
+			<then>
+				<antcall target="build-test-results-xml" />
+
+				<if>
+					<isset property="jenkins.shared.user.content.dir" />
+					<then>
+						<var name="jenkins.shared.results.dir" value="${jenkins.shared.user.content.dir}/jobs" />
+					</then>
+					<else>
+						<var name="jenkins.shared.results.dir" value="." />
+					</else>
+				</if>
+
+				<copy
+					failonerror="false"
+					file="portal-web/test-results/functional/TEST-com.liferay.portalweb.portal.evaluatelog.EvaluateLogTestSuite.xml"
+					tofile="${jenkins.shared.results.dir}/${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}_EvaluateLog.xml"
+				/>
 			</then>
 		</if>
 

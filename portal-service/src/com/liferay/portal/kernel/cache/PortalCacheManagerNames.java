@@ -12,16 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.cache.configurator;
-
-import java.net.URL;
+package com.liferay.portal.kernel.cache;
 
 /**
- * @author Miguel Pastor
+ * @author Tina Tian
  */
-public interface PortalCacheConfigurator {
+public interface PortalCacheManagerNames {
 
-	public void reconfigureCaches(
-		String portalCacheManagerName, ClassLoader classLoader, URL url);
+	public static final String HIBERNATE_PORTAL_CACHE_MANAGER =
+		"HIBERNATE_PORTAL_CACHE_MANAGER";
+
+	public static final String MULTI_VM_PORTAL_CACHE_MANAGER =
+		"MULTI_VM_PORTAL_CACHE_MANAGER";
+
+	public static final String SINGLE_VM_PORTAL_CACHE_MANAGER =
+		"SINGLE_VM_PORTAL_CACHE_MANAGER";
 
 }

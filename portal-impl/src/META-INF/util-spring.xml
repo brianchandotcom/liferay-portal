@@ -54,6 +54,9 @@
 				<property name="clusterAware" value="true" />
 				<property name="configPropertyKey" value="ehcache.multi.vm.config.location" />
 				<property name="mpiOnly" value="true" />
+				<property name="name">
+					<util:constant static-field="com.liferay.portal.kernel.cache.PortalCacheManagerNames.MULTI_VM_PORTAL_CACHE_MANAGER" />
+				</property>
 			</bean>
 		</constructor-arg>
 	</bean>
@@ -65,6 +68,9 @@
 	</bean>
 	<bean id="com.liferay.portal.kernel.cache.SingleVMPortalCacheManager" class="com.liferay.portal.cache.ehcache.EhcachePortalCacheManager">
 		<property name="configPropertyKey" value="ehcache.single.vm.config.location" />
+		<property name="name">
+			<util:constant static-field="com.liferay.portal.kernel.cache.PortalCacheManagerNames.SINGLE_VM_PORTAL_CACHE_MANAGER" />
+		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil" class="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil">
 		<property name="cacheKeyGenerators">

@@ -64,22 +64,11 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public String getName() {
-		return _name;
-	}
-
-	@Override
 	public void reconfigureCaches(URL configurationURL) {
 		_configurationPair = EhcacheConfigurationHelperUtil.getConfiguration(
 			configurationURL, clusterAware, _usingDefault);
 
-		Configuration ehcacheConfiguration = _configurationPair.getKey();
-
-		if (!_name.equals(ehcacheConfiguration.getName())) {
-			return;
-		}
-
-		reconfigEhcache(ehcacheConfiguration);
+		reconfigEhcache(_configurationPair.getKey());
 
 		reconfigPortalCache(_configurationPair.getValue());
 	}
@@ -167,7 +156,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_cacheManager = CacheManagerUtil.createCacheManager(
 			_configurationPair.getKey());
 
-		_name = _cacheManager.getName();
+		_cacheManager.setName(name);
 
 		FailSafeTimer failSafeTimer = _cacheManager.getTimer();
 
@@ -269,7 +258,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 		_configurationPair;
 	private ManagementService _managementService;
-	private String _name;
 	private boolean _registerCacheConfigurations = true;
 	private boolean _registerCacheManager = true;
 	private boolean _registerCaches = true;

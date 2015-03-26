@@ -15,6 +15,7 @@
 package com.liferay.portal.service.configuration.configurator.impl;
 
 import com.liferay.portal.cache.configurator.PortalCacheConfigurator;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -212,19 +213,19 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 		}
 
 		_portalCacheConfigurator.reconfigureCaches(
-			classLoader,
+			PortalCacheManagerNames.SINGLE_VM_PORTAL_CACHE_MANAGER, classLoader,
 			getPortalCacheConfigurationURL(
 				configuration, classLoader,
 				PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION));
 
 		_portalCacheConfigurator.reconfigureCaches(
-			classLoader,
+			PortalCacheManagerNames.MULTI_VM_PORTAL_CACHE_MANAGER, classLoader,
 			getPortalCacheConfigurationURL(
 				configuration, classLoader,
 				PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
 
 		_portalCacheConfigurator.reconfigureCaches(
-			classLoader,
+			PortalCacheManagerNames.HIBERNATE_PORTAL_CACHE_MANAGER, classLoader,
 			getPortalCacheConfigurationURL(
 				configuration, classLoader,
 				PropsKeys.NET_SF_EHCACHE_CONFIGURATION_RESOURCE_NAME));

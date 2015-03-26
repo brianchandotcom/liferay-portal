@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Gradle SDK
+Bundle-SymbolicName: com.liferay.sdk.gradle
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.sdk.gradle
+Include-Resource: classes

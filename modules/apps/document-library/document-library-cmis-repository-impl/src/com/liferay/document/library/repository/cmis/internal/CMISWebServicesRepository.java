@@ -16,6 +16,7 @@ package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.document.library.repository.cmis.CMISRepositoryHandler;
 import com.liferay.document.library.repository.cmis.Session;
+import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -59,35 +60,53 @@ public class CMISWebServicesRepository extends CMISRepositoryHandler {
 
 		parameters.put(
 			SessionParameter.WEBSERVICES_ACL_SERVICE,
-			getTypeSettingsValue(_WEBSERVICES_ACL_SERVICE));
+			getTypeSettingsValue(
+				CMISRepositoryConstants.
+					CMIS_WEBSERVICES_ACL_SERVICE_PARAMETER));
 		parameters.put(
 			SessionParameter.WEBSERVICES_DISCOVERY_SERVICE,
-			getTypeSettingsValue(_WEBSERVICES_DISCOVERY_SERVICE));
+			getTypeSettingsValue(
+				CMISRepositoryConstants.
+					CMIS_WEBSERVICES_DISCOVERY_SERVICE_PARAMETER));
 		parameters.put(
 			SessionParameter.WEBSERVICES_MULTIFILING_SERVICE,
-			getTypeSettingsValue(_WEBSERVICES_MULTIFILING_SERVICE));
+			getTypeSettingsValue(
+				CMISRepositoryConstants.
+					CMIS_WEBSERVICES_MULTIFILING_SERVICE_PARAMETER));
 		parameters.put(
 			SessionParameter.WEBSERVICES_NAVIGATION_SERVICE,
-			getTypeSettingsValue(_WEBSERVICES_NAVIGATION_SERVICE));
+			getTypeSettingsValue(
+				CMISRepositoryConstants.
+					CMIS_WEBSERVICES_NAVIGATION_SERVICE_PARAMETER));
 		parameters.put(
 			SessionParameter.WEBSERVICES_OBJECT_SERVICE,
-			getTypeSettingsValue(_WEBSERVICES_OBJECT_SERVICE));
+			getTypeSettingsValue(
+				CMISRepositoryConstants.
+					CMIS_WEBSERVICES_OBJECT_SERVICE_PARAMETER));
 		parameters.put(
 			SessionParameter.WEBSERVICES_POLICY_SERVICE,
-			getTypeSettingsValue(_WEBSERVICES_POLICY_SERVICE));
+			getTypeSettingsValue(
+				CMISRepositoryConstants.
+					CMIS_WEBSERVICES_POLICY_SERVICE_PARAMETER));
 		parameters.put(
 			SessionParameter.WEBSERVICES_RELATIONSHIP_SERVICE,
-			getTypeSettingsValue(_WEBSERVICES_RELATIONSHIP_SERVICE));
+			getTypeSettingsValue(
+				CMISRepositoryConstants.
+					CMIS_WEBSERVICES_RELATIONSHIP_SERVICE_PARAMETER));
 		parameters.put(
 			SessionParameter.WEBSERVICES_REPOSITORY_SERVICE,
-			getTypeSettingsValue(_WEBSERVICES_REPOSITORY_SERVICE));
+			getTypeSettingsValue(
+				CMISRepositoryConstants.
+					CMIS_WEBSERVICES_REPOSITORY_SERVICE_PARAMETER));
 		parameters.put(
 			SessionParameter.WEBSERVICES_VERSIONING_SERVICE,
-			getTypeSettingsValue(_WEBSERVICES_VERSIONING_SERVICE));
+			getTypeSettingsValue(
+				CMISRepositoryConstants.
+					CMIS_WEBSERVICES_VERSIONING_SERVICE_PARAMETER));
 
 		CMISRepositoryUtil.checkRepository(
 			getRepositoryId(), parameters, getTypeSettingsProperties(),
-			_REPOSITORY_ID);
+			CMISRepositoryConstants.CMIS_WEBSERVICES_REPOSITORY_ID_PARAMETER);
 
 		return CMISRepositoryUtil.createSession(parameters);
 	}
@@ -113,54 +132,29 @@ public class CMISWebServicesRepository extends CMISRepositoryHandler {
 			typeSettingsProperties, typeSettingsKey);
 	}
 
-	private static final String _CONFIGURATION_WEBSERVICES = "WEBSERVICES";
-
-	private static final String _REPOSITORY_ID = "REPOSITORY_ID";
-
 	private static final String[] _SUPPORTED_CONFIGURATIONS = {
-		_CONFIGURATION_WEBSERVICES
+		CMISRepositoryConstants.CMIS_WEBSERVICES_CONFIGURATION
 	};
 
 	private static final String[][] _SUPPORTED_PARAMETERS = new String[][] {
 		{
-			CMISWebServicesRepository._REPOSITORY_ID,
-			CMISWebServicesRepository._WEBSERVICES_ACL_SERVICE,
-			CMISWebServicesRepository._WEBSERVICES_DISCOVERY_SERVICE,
-			CMISWebServicesRepository._WEBSERVICES_MULTIFILING_SERVICE,
-			CMISWebServicesRepository._WEBSERVICES_NAVIGATION_SERVICE,
-			CMISWebServicesRepository._WEBSERVICES_OBJECT_SERVICE,
-			CMISWebServicesRepository._WEBSERVICES_POLICY_SERVICE,
-			CMISWebServicesRepository._WEBSERVICES_RELATIONSHIP_SERVICE,
-			CMISWebServicesRepository._WEBSERVICES_REPOSITORY_SERVICE,
-			CMISWebServicesRepository._WEBSERVICES_VERSIONING_SERVICE
+			CMISRepositoryConstants.CMIS_WEBSERVICES_REPOSITORY_ID_PARAMETER,
+			CMISRepositoryConstants.CMIS_WEBSERVICES_ACL_SERVICE_PARAMETER,
+			CMISRepositoryConstants.
+				CMIS_WEBSERVICES_DISCOVERY_SERVICE_PARAMETER,
+			CMISRepositoryConstants.
+				CMIS_WEBSERVICES_MULTIFILING_SERVICE_PARAMETER,
+			CMISRepositoryConstants.
+				CMIS_WEBSERVICES_NAVIGATION_SERVICE_PARAMETER,
+			CMISRepositoryConstants.CMIS_WEBSERVICES_OBJECT_SERVICE_PARAMETER,
+			CMISRepositoryConstants.CMIS_WEBSERVICES_POLICY_SERVICE_PARAMETER,
+			CMISRepositoryConstants.
+				CMIS_WEBSERVICES_RELATIONSHIP_SERVICE_PARAMETER,
+			CMISRepositoryConstants.
+				CMIS_WEBSERVICES_REPOSITORY_SERVICE_PARAMETER,
+			CMISRepositoryConstants.
+				CMIS_WEBSERVICES_VERSIONING_SERVICE_PARAMETER
 		}
 	};
-
-	private static final String _WEBSERVICES_ACL_SERVICE =
-		"WEBSERVICES_ACL_SERVICE";
-
-	private static final String _WEBSERVICES_DISCOVERY_SERVICE =
-		"WEBSERVICES_DISCOVERY_SERVICE";
-
-	private static final String _WEBSERVICES_MULTIFILING_SERVICE =
-		"WEBSERVICES_MULTIFILING_SERVICE";
-
-	private static final String _WEBSERVICES_NAVIGATION_SERVICE =
-		"WEBSERVICES_NAVIGATION_SERVICE";
-
-	private static final String _WEBSERVICES_OBJECT_SERVICE =
-		"WEBSERVICES_OBJECT_SERVICE";
-
-	private static final String _WEBSERVICES_POLICY_SERVICE =
-		"WEBSERVICES_POLICY_SERVICE";
-
-	private static final String _WEBSERVICES_RELATIONSHIP_SERVICE =
-		"WEBSERVICES_RELATIONSHIP_SERVICE";
-
-	private static final String _WEBSERVICES_REPOSITORY_SERVICE =
-		"WEBSERVICES_REPOSITORY_SERVICE";
-
-	private static final String _WEBSERVICES_VERSIONING_SERVICE =
-		"WEBSERVICES_VERSIONING_SERVICE";
 
 }

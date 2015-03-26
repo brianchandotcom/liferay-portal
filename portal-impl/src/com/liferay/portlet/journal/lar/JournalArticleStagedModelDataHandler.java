@@ -596,10 +596,10 @@ public class JournalArticleStagedModelDataHandler
 			for (Element imageElement : imagesElements) {
 				String imagePath = imageElement.attributeValue("path");
 
-				String fileName = imageElement.attributeValue("file-name");
+				String imageKey = imageElement.attributeValue("image-key");
 
 				images.put(
-					fileName,
+					imageKey,
 					portletDataContext.getZipEntryAsByteArray(imagePath));
 			}
 
@@ -776,14 +776,17 @@ public class JournalArticleStagedModelDataHandler
 			sb.append(articleImage.getLanguageId());
 		}
 
-		String fileName = sb.toString();
+		String imageKey = sb.toString();
+
+		Element imageElement = portletDataContext.getExportDataElement(image);
+
+		imageElement.addAttribute("image-key", imageKey);
+
+		String fileName = String.valueOf(articleImage.getArticleImageId());
 
 		String articleImagePath = ExportImportPathUtil.getModelPath(
 			article, fileName);
 
-		Element imageElement = portletDataContext.getExportDataElement(image);
-
-		imageElement.addAttribute("file-name", fileName);
 		imageElement.addAttribute("path", articleImagePath);
 
 		portletDataContext.addZipEntry(articleImagePath, image.getTextObj());

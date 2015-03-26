@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.service.tree.test;
+package com.liferay.portal.service.test;
 
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;

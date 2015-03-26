@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.bookmarks.subscription;
+package com.liferay.bookmarks.subscription.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
@@ -26,26 +27,26 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionRootContainerModelTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 @Sync
-public class BookmarksSubscriptionAuthorTest
-	extends BaseSubscriptionAuthorTestCase {
+public class BookmarksSubscriptionRootContainerModelTest
+	extends BaseSubscriptionRootContainerModelTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			SynchronousMailTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
 	@Override
 	protected long addBaseModel(long userId, long containerModelId)
@@ -82,11 +83,11 @@ public class BookmarksSubscriptionAuthorTest
 	}
 
 	@Override
-	protected void addSubscription(long userId, long containerModelId)
+	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
 		BookmarksFolderLocalServiceUtil.subscribeFolder(
-			userId, group.getGroupId(), containerModelId);
+			user.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override

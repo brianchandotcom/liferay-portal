@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.bookmarks.trash;
+package com.liferay.bookmarks.trash.test;
 
-import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -26,34 +24,55 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Eudaldo Alonso
  */
+@RunWith(Arquillian.class)
 @Sync
-public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
+public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		_testMode = PortalRunMode.isTestMode();
+
+		PortalRunMode.setTestMode(true);
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		super.setUp();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PortalRunMode.setTestMode(_testMode);
+	}
 
 	@Ignore()
 	@Override
@@ -71,6 +90,18 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	@Test
 	public void testTrashDuplicate() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashMyBaseModel() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashRecentBaseModel() throws Exception {
 	}
 
 	@Ignore()
@@ -103,11 +134,13 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		BookmarksFolder folder = (BookmarksFolder)parentBaseModel;
+		BookmarksFolder parentFolder = (BookmarksFolder)parentBaseModel;
 
-		return addBaseModelWithWorkflow(
-			folder.getUserId(), folder.getGroupId(), folder.getFolderId(),
-			serviceContext);
+		String name = getSearchKeywords();
+
+		return BookmarksFolderLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), parentFolder.getFolderId(), name,
+			StringPool.BLANK, serviceContext);
 	}
 
 	@Override
@@ -115,22 +148,12 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 			boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
-		return addBaseModelWithWorkflow(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
-	}
-
-	protected BaseModel<?> addBaseModelWithWorkflow(
-			long userId, long groupId, long folderId,
-			ServiceContext serviceContext)
-		throws Exception {
-
 		String name = getSearchKeywords();
-		String url = "http://www.liferay.com";
-		String description = "Content: Enterprise. Open Source.";
 
-		return BookmarksEntryLocalServiceUtil.addEntry(
-			userId, groupId, folderId, name, url, description, serviceContext);
+		return BookmarksFolderLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(),
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, name,
+			StringPool.BLANK, serviceContext);
 	}
 
 	@Override
@@ -145,36 +168,30 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected BaseModel<?> getBaseModel(long primaryKey) throws Exception {
-		return BookmarksEntryLocalServiceUtil.getEntry(primaryKey);
+		return BookmarksFolderLocalServiceUtil.getFolder(primaryKey);
 	}
 
 	@Override
 	protected Class<?> getBaseModelClass() {
-		return BookmarksEntry.class;
+		return BookmarksFolder.class;
 	}
 
 	@Override
 	protected String getBaseModelName(ClassedModel classedModel) {
-		BookmarksEntry entry = (BookmarksEntry)classedModel;
+		BookmarksFolder folder = (BookmarksFolder)classedModel;
 
-		return entry.getName();
-	}
-
-	@Override
-	protected int getMineBaseModelsCount(long groupId, long userId)
-		throws Exception {
-
-		return BookmarksEntryServiceUtil.getGroupEntriesCount(groupId, userId);
+		return folder.getName();
 	}
 
 	@Override
 	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
-		BookmarksFolder folder = (BookmarksFolder)parentBaseModel;
+		BookmarksFolder parentFolder = (BookmarksFolder)parentBaseModel;
 
-		return BookmarksEntryServiceUtil.getEntriesCount(
-			folder.getGroupId(), folder.getFolderId());
+		return BookmarksFolderLocalServiceUtil.getFoldersCount(
+			parentFolder.getGroupId(), parentFolder.getFolderId(),
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
@@ -198,16 +215,6 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected Class<?> getParentBaseModelClass() {
-		return BookmarksFolder.class;
-	}
-
-	@Override
-	protected int getRecentBaseModelsCount(long groupId) throws Exception {
-		return BookmarksEntryServiceUtil.getGroupEntriesCount(groupId, 0);
-	}
-
-	@Override
 	protected String getSearchKeywords() {
 		return "Title";
 	}
@@ -215,15 +222,6 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
 		return null;
-	}
-
-	@Override
-	protected WorkflowedModel getWorkflowedModel(ClassedModel baseModel)
-		throws Exception {
-
-		BookmarksEntry entry = (BookmarksEntry)baseModel;
-
-		return entry;
 	}
 
 	@Override
@@ -235,7 +233,7 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		BookmarksEntryServiceUtil.moveEntryFromTrash(
+		BookmarksFolderServiceUtil.moveFolderFromTrash(
 			(Long)classedModel.getPrimaryKeyObj(),
 			(Long)parentBaseModel.getPrimaryKeyObj());
 
@@ -244,7 +242,7 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		BookmarksEntryServiceUtil.moveEntryToTrash(primaryKey);
+		BookmarksFolderServiceUtil.moveFolderToTrash(primaryKey);
 	}
 
 	@Override
@@ -259,18 +257,20 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 			long primaryKey, ServiceContext serviceContext)
 		throws Exception {
 
-		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
+		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
 			primaryKey);
 
 		if (serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_SAVE_DRAFT) {
 
-			entry = BookmarksEntryLocalServiceUtil.updateStatus(
-				TestPropsValues.getUserId(), entry,
+			folder = BookmarksFolderLocalServiceUtil.updateStatus(
+				TestPropsValues.getUserId(), folder,
 				WorkflowConstants.STATUS_DRAFT);
 		}
 
-		return entry;
+		return folder;
 	}
+
+	private boolean _testMode;
 
 }

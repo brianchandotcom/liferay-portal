@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.portal.service.permission.test,\
 	com.liferay.portal.service.test,\
 	com.liferay.portal.test.log,\
+	com.liferay.portal.test.randomizerbumpers,\
 	com.liferay.portal.test.rule,\
 	com.liferay.portal.test.rule.callback,\
 	com.liferay.portal.util.test,\

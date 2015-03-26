@@ -12,77 +12,98 @@
  * details.
  */
 
-package com.liferay.bookmarks.social;
+package com.liferay.bookmarks.social.test;
 
-import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksEntryServiceUtil;
+import com.liferay.bookmarks.social.BookmarksActivityKeys;
+import com.liferay.bookmarks.social.BookmarksEntryActivityInterpreter;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
 
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
  */
+@RunWith(Arquillian.class)
 @Sync
-public class BookmarksFolderActivityInterpreterTest
+public class BookmarksEntryActivityInterpreterTest
 	extends BaseSocialActivityInterpreterTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		super.setUp();
+	}
 
 	@Override
 	protected void addActivities() throws Exception {
-		_folder = BookmarksTestUtil.addFolder(group.getGroupId(), "Folder");
+		_entry = BookmarksTestUtil.addEntry(group.getGroupId(), true);
 	}
 
 	@Override
 	protected SocialActivityInterpreter getActivityInterpreter() {
-		return new BookmarksFolderActivityInterpreter();
+		return new BookmarksEntryActivityInterpreter();
 	}
 
 	@Override
 	protected int[] getActivityTypes() {
 		return new int[] {
+			BookmarksActivityKeys.ADD_ENTRY, BookmarksActivityKeys.UPDATE_ENTRY,
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH
 		};
 	}
 
 	@Override
-	protected boolean isSupportsRename(String className) {
-		return false;
-	}
-
-	@Override
 	protected void moveModelsToTrash() throws Exception {
-		BookmarksFolderLocalServiceUtil.moveFolderToTrash(
-			TestPropsValues.getUserId(), _folder.getFolderId());
+		BookmarksEntryLocalServiceUtil.moveEntryToTrash(
+			TestPropsValues.getUserId(), _entry.getEntryId());
 	}
 
 	@Override
-	protected void renameModels() {
+	protected void renameModels() throws Exception {
+		_entry.setName(RandomTestUtil.randomString());
+
+		serviceContext.setCommand(Constants.UPDATE);
+
+		BookmarksEntryServiceUtil.updateEntry(
+			_entry.getEntryId(), serviceContext.getScopeGroupId(),
+			_entry.getFolderId(), _entry.getName(), _entry.getUrl(),
+			_entry.getUrl(), serviceContext);
 	}
 
 	@Override
 	protected void restoreModelsFromTrash() throws Exception {
-		BookmarksFolderLocalServiceUtil.restoreFolderFromTrash(
-			TestPropsValues.getUserId(), _folder.getFolderId());
+		BookmarksEntryLocalServiceUtil.restoreEntryFromTrash(
+			TestPropsValues.getUserId(), _entry.getEntryId());
 	}
 
-	private BookmarksFolder _folder;
+	private BookmarksEntry _entry;
 
 }

@@ -778,14 +778,15 @@ public class JournalArticleStagedModelDataHandler
 
 		String imageKey = sb.toString();
 
+		Element imageElement = portletDataContext.getExportDataElement(image);
+
+		imageElement.addAttribute("image-key", imageKey);
+
 		String fileName = String.valueOf(articleImage.getArticleImageId());
 
 		String articleImagePath = ExportImportPathUtil.getModelPath(
 			article, fileName);
 
-		Element imageElement = portletDataContext.getExportDataElement(image);
-
-		imageElement.addAttribute("image-key", imageKey);
 		imageElement.addAttribute("path", articleImagePath);
 
 		portletDataContext.addZipEntry(articleImagePath, image.getTextObj());

@@ -420,11 +420,13 @@ public abstract class BaseRepositoryImpl
 		return _repositoryId;
 	}
 
+	@Deprecated
 	@Override
 	public String[] getSupportedConfigurations() {
 		return _EMPTY_CONFIGURATIONS;
 	}
 
+	@Deprecated
 	@Override
 	public String[][] getSupportedParameters() {
 		return _EMPTY_PARAMETERS;

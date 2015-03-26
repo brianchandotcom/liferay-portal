@@ -73,7 +73,7 @@ public class ResourceBlockPermissionTestUtil {
 			if (roleName.equals(RoleConstants.GUEST)) {
 				List<String> unsupportedActionIds =
 					ResourceActionsUtil.getResourceGuestUnsupportedActions(
-						resourceName, resourceName);
+						portletResource, resourceName);
 
 				roleActions.removeAll(unsupportedActionIds);
 			}

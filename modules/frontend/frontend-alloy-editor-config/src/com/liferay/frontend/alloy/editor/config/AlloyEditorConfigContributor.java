@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(property = {"editor.impl=alloyeditor"})
+@Component(property = {"editor.name=alloyeditor"})
 public class AlloyEditorConfigContributor implements EditorConfigContributor {
 
 	@Override

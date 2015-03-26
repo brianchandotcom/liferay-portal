@@ -15,12 +15,17 @@
 package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.RepositoryEntryLocalService;
+import com.liferay.portal.service.RepositoryLocalService;
+import com.liferay.portal.service.UserLocalService;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -32,20 +37,59 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = RepositoryFactory.class
 )
-public class CMISWebServicesRepositoryFactory implements RepositoryFactory {
+public class CMISWebServicesRepositoryFactory
+	extends BaseCMISRepositoryFactory<CMISWebServicesRepository> {
 
 	@Override
-	public LocalRepository createLocalRepository(long repositoryId)
-		throws PortalException {
-
-		throw new UnsupportedOperationException();
+	protected CMISWebServicesRepository createBaseRepository() {
+		return new CMISWebServicesRepository();
 	}
 
-	@Override
-	public Repository createRepository(long repositoryId)
-		throws PortalException {
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
 
-		throw new UnsupportedOperationException();
+		super.setAssetEntryLocalService(assetEntryLocalService);
+	}
+
+	@Reference(unbind = "-")
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		super.setCompanyLocalService(companyLocalService);
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppHelperLocalService(
+		DLAppHelperLocalService dlAppHelperLocalService) {
+
+		super.setDLAppHelperLocalService(dlAppHelperLocalService);
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFolderLocalService(
+		DLFolderLocalService dlFolderLocalService) {
+
+		super.setDLFolderLocalService(dlFolderLocalService);
+	}
+
+	@Reference(unbind = "-")
+	protected void setRepositoryEntryLocalService(
+		RepositoryEntryLocalService repositoryEntryLocalService) {
+
+		super.setRepositoryEntryLocalService(repositoryEntryLocalService);
+	}
+
+	@Reference(unbind = "-")
+	protected void setRepositoryLocalService(
+		RepositoryLocalService repositoryLocalService) {
+
+		super.setRepositoryLocalService(repositoryLocalService);
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		super.setUserLocalService(userLocalService);
 	}
 
 }

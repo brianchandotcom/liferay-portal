@@ -15,6 +15,7 @@
 package com.liferay.taglib.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.provider.PortletProvider;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
@@ -1145,14 +1146,26 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	@Override
 	public void runtime(String portletName) throws Exception {
-		runtime(portletName, null);
+		runtime(portletName, (String)null);
+	}
+
+	@Override
+	public void runtime(
+			String portletProviderClassName,
+			PortletProvider.Action portletProviderAction)
+		throws Exception {
+
+		RuntimeTag.doTag(
+			portletProviderClassName, portletProviderAction, null, null,
+			_pageContext, _request, _response);
 	}
 
 	@Override
 	public void runtime(String portletName, String queryString)
 		throws Exception {
 
-		RuntimeTag.doTag(portletName, queryString, null, _request, _response);
+		RuntimeTag.doTag(
+			portletName, queryString, _pageContext, _request, _response);
 	}
 
 	@Override
@@ -1161,8 +1174,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		throws Exception {
 
 		RuntimeTag.doTag(
-			portletName, queryString, defaultPreferences, null, _request,
-			_response);
+			portletName, queryString, defaultPreferences, _pageContext,
+			_request, _response);
 	}
 
 	@Override

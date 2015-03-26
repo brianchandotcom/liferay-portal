@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.portal.kernel.provider.PortletProvider;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
@@ -647,6 +648,13 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public void runtime(String portletName) throws Exception {
+	}
+
+	@Override
+	public void runtime(
+			String portletProviderClassName,
+			PortletProvider.Action portletProviderAction)
+		throws Exception {
 	}
 
 	@Override

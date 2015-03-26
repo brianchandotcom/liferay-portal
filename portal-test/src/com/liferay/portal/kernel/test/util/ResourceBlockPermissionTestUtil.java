@@ -66,8 +66,7 @@ public class ResourceBlockPermissionTestUtil {
 		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
 
 		for (String roleName : roleNames) {
-			Role role = RoleLocalServiceUtil.getRole(
-				TestPropsValues.getCompanyId(), roleName);
+			Role role = RoleLocalServiceUtil.getRole(companyId, roleName);
 
 			List<String> roleActions = ListUtil.copy(actionsList);
 

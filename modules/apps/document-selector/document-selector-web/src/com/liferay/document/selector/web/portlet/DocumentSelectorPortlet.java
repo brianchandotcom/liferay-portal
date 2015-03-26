@@ -14,6 +14,8 @@
 
 package com.liferay.document.selector.web.portlet;
 
+import com.liferay.document.selector.ItemSelector;
+import com.liferay.document.selector.ItemSelectorViewRenderer;
 import com.liferay.document.selector.web.util.DocumentSelectorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -53,6 +55,8 @@ import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 
 import java.io.InputStream;
 
+import java.util.List;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
@@ -60,6 +64,7 @@ import javax.portlet.Portlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jose A. Jimenez
@@ -69,6 +74,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-document-selector",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
@@ -86,6 +92,8 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class DocumentSelectorPortlet extends MVCPortlet {
+
+	public static final String ACTION_SHOW_ITEM_SELECTOR = "showItemSelector";
 
 	public void addFileEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -129,6 +137,22 @@ public class DocumentSelectorPortlet extends MVCPortlet {
 				throw e;
 			}
 		}
+	}
+
+	public void showItemSelector(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderersList =
+			_itemSelector.getItemSelectorViewRenderers(
+				actionRequest.getParameterMap());
+
+		ItemSelectorViewRenderers itemSelectorViewRenderers =
+			new ItemSelectorViewRenderers(
+				actionRequest.getLocale(), itemSelectorViewRenderersList);
+
+		itemSelectorViewRenderers.store(actionRequest);
+
+		actionResponse.setRenderParameter("mvcPath", "/item_selector.jsp");
 	}
 
 	protected FileEntry doAddFileEntryAction(ActionRequest actionRequest)
@@ -237,7 +261,14 @@ public class DocumentSelectorPortlet extends MVCPortlet {
 		return false;
 	}
 
+	@Reference
+	protected void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentSelectorPortlet.class);
+
+	private ItemSelector _itemSelector;
 
 }

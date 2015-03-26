@@ -16,6 +16,8 @@ package com.liferay.document.selector.impl;
 
 import com.liferay.document.selector.ItemSelectorView;
 
+import java.util.Locale;
+
 /**
  * @author Iván Zaera
  */
@@ -27,7 +29,8 @@ public class MediaItemSelectorView
 
 	@Override
 	public String getHTML(
-		MediaItemSelectorCriterion mediaItemSelectorCriterion) {
+		MediaItemSelectorCriterion mediaItemSelectorCriterion,
+		String itemSelectedCallback) {
 
 		return HTML;
 	}
@@ -35,6 +38,11 @@ public class MediaItemSelectorView
 	@Override
 	public Class<MediaItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return MediaItemSelectorCriterion.class;
+	}
+
+	@Override
+	public String getTitle(Locale locale) {
+		return MediaItemSelectorView.class.getName();
 	}
 
 }

@@ -26,8 +26,9 @@ public class ItemSelectorViewRenderer<T extends ItemSelectorCriterion> {
 		_itemSelectorCriterion = itemSelectorCriterion;
 	}
 
-	public String getHTML() {
-		return _itemSelectorView.getHTML(_itemSelectorCriterion);
+	public String getHTML(String itemSelectedCallback) {
+		return _itemSelectorView.getHTML(
+			_itemSelectorCriterion, itemSelectedCallback);
 	}
 
 	public T getItemSelectorCriterion() {

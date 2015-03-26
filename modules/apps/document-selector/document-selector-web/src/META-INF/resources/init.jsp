@@ -25,7 +25,9 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.document.selector.web.search.FileEntryDisplayTerms" %><%@
+<%@ page import="com.liferay.document.selector.ItemSelectorViewRenderer" %><%@
+page import="com.liferay.document.selector.web.portlet.ItemSelectorViewRenderers" %><%@
+page import="com.liferay.document.selector.web.search.FileEntryDisplayTerms" %><%@
 page import="com.liferay.document.selector.web.search.FileEntrySearch" %><%@
 page import="com.liferay.document.selector.web.util.DocumentSelectorUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@

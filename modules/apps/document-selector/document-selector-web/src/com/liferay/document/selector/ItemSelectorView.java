@@ -14,13 +14,17 @@
 
 package com.liferay.document.selector;
 
+import java.util.Locale;
+
 /**
  * @author Iván Zaera
  */
 public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 
-	public String getHTML(T itemSelectorCriterion);
+	public String getHTML(T itemSelectorCriterion, String itemSelectedCallback);
 
 	public Class<T> getItemSelectorCriterionClass();
+
+	public String getTitle(Locale locale);
 
 }

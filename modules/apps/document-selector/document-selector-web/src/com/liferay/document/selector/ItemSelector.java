@@ -30,6 +30,6 @@ public interface ItemSelector {
 		ItemSelectorCriterion... itemSelectorCriteria);
 
 	public List<ItemSelectorViewRenderer<?>> getItemSelectorViewRenderers(
-		Map<String, String> parameters);
+		Map<String, String[]> parameters);
 
 }

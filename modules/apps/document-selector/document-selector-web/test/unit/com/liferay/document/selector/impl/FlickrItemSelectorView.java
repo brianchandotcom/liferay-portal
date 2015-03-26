@@ -16,6 +16,8 @@ package com.liferay.document.selector.impl;
 
 import com.liferay.document.selector.ItemSelectorView;
 
+import java.util.Locale;
+
 /**
  * @author Iván Zaera
  */
@@ -27,7 +29,8 @@ public class FlickrItemSelectorView
 
 	@Override
 	public String getHTML(
-		FlickrItemSelectorCriterion flickrItemSelectorCriterion) {
+		FlickrItemSelectorCriterion flickrItemSelectorCriterion,
+		String itemSelectedCallback) {
 
 		return HTML;
 	}
@@ -35,6 +38,11 @@ public class FlickrItemSelectorView
 	@Override
 	public Class<FlickrItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return FlickrItemSelectorCriterion.class;
+	}
+
+	@Override
+	public String getTitle(Locale locale) {
+		return FlickrItemSelectorView.class.getName();
 	}
 
 }

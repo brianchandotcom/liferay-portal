@@ -46,7 +46,7 @@ import java.util.regex.Pattern;
  */
 public class JavaSourceProcessor extends BaseSourceProcessor {
 
-	public static String _stripFullyQualifiedClassNames(
+	public static String stripFullyQualifiedClassNames(
 			String content, File file)
 		throws IOException {
 
@@ -56,7 +56,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return content;
 		}
 
-		String filePath = StringUtil.replace(file.getCanonicalPath(), "\\", "/");
+		String filePath = StringUtil.replace(
+			file.getCanonicalPath(), "\\", "/");
 
 		filePath = filePath.substring(filePath.lastIndexOf("/src/") + 5);
 
@@ -66,7 +67,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		JavaDocBuilder javadocBuilder = new JavaDocBuilder();
 		javadocBuilder.addSource(new UnsyncStringReader(content));
 
-		JavaClass javaClass = javadocBuilder.getClassByName(fullyQualifiedClassName);
+		JavaClass javaClass = javadocBuilder.getClassByName(
+			fullyQualifiedClassName);
+
 		JavaSource javaSource = javaClass.getSource();
 		String[] imports = javaSource.getImports();
 

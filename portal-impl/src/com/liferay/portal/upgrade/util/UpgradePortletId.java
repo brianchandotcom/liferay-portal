@@ -71,10 +71,8 @@ public class UpgradePortletId extends UpgradeProcess {
 				continue;
 			}
 
-			String instanceId = PortletConstants.generateInstanceId();
-
-			PortletInstance newPortletInstance = new PortletInstance(
-				portletId, instanceId);
+			PortletInstance newPortletInstance = PortletInstance.newInstanceFor(
+				portletId);
 
 			String newPortletInstanceId = newPortletInstance.toString();
 

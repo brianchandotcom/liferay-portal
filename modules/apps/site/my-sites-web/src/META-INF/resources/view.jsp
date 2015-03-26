@@ -93,7 +93,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 
 		<aui:nav-bar>
 			<aui:nav-bar-search>
-				<%@ include file="/search.jsp" %>
+				<%@ include file="/search.jspf" %>
 			</aui:nav-bar-search>
 		</aui:nav-bar>
 

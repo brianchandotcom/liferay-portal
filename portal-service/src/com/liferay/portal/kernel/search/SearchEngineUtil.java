@@ -374,10 +374,6 @@ public class SearchEngineUtil {
 	public static String getQueryString(
 		SearchContext searchContext, Query query) {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Search query " + query.toString());
-		}
-
 		SearchEngine searchEngine = getSearchEngine(
 			searchContext.getSearchEngineId());
 
@@ -387,6 +383,9 @@ public class SearchEngineUtil {
 			return indexSearcher.getQueryString(searchContext, query);
 		}
 		catch (ParseException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Error parsing the query", pe);
+			}
 		}
 
 		return StringPool.BLANK;
@@ -807,7 +806,7 @@ public class SearchEngineUtil {
 		throws SearchException {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Search query " + query.toString());
+			_log.debug("Search query " + getQueryString(searchContext, query));
 		}
 
 		SearchEngine searchEngine = getSearchEngine(

@@ -1,7 +1,7 @@
 <definition>
 	<command name="addADTviaPortletPG">
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
-		<execute function="AssertClick#assertTextClickAndWait" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
 
@@ -13,7 +13,7 @@
 		</if>
 
 		<execute function="Select" locator1="PGADTConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${adtType} Test ADT" />
-		<execute function="AssertClick#assertTextClickAndWait" locator1="PGADTConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="PGADTConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="PGADTConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute function="SelectFrameTop" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" value1="relative=top" />
 	</command>
@@ -36,7 +36,7 @@
 
 	<command name="addPG">
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
-		<execute function="AssertClick#assertTextClickAndWait" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
 
@@ -49,7 +49,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick#assertTextClickAndWait" locator1="PGADTConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
+		<execute function="AssertClick" locator1="PGADTConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
 
 		<var name="key_adtType" value="${adtType}" />
 
@@ -59,11 +59,11 @@
 
 		<var name="key_adtType" value="${adtType}" />
 
-		<execute function="AssertClick#assertTextClickAndWait" locator1="PGApplicationdisplaytemplates#ADD_MENULIST_ADT_TEMPLATE" value1="${adtType} Template" />
+		<execute function="AssertClick" locator1="PGApplicationdisplaytemplates#ADD_MENULIST_ADT_TEMPLATE" value1="${adtType} Template" />
 
 		<execute function="Type" locator1="PGApplicationdisplaytemplatesAdd#NAME_FIELD" value1="${adtType} Test ADT" />
 		<execute function="UploadCommonFile" locator1="PGApplicationdisplaytemplatesAdd#SCRIPT_FIELD" value1="${adtFile}" />
-		<execute function="AssertClick#assertTextClickAndWait" locator1="PGApplicationdisplaytemplatesAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="PGApplicationdisplaytemplatesAdd#SAVE_BUTTON" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="PGApplicationdisplaytemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="PGApplicationdisplaytemplates#ADT_TABLE_NAME_1" value1="${adtType} Test ADT" />
@@ -75,7 +75,7 @@
 			<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_ICON" />
 			<then>
 				<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
-				<execute function="AssertClick#assertTextClickAndWait" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+				<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 				<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
 
@@ -87,7 +87,7 @@
 				</if>
 
 				<execute function="Select" locator1="PGADTConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${defaultADT}" />
-				<execute function="AssertClick#assertTextClickAndWait" locator1="PGADTConfiguration#SAVE_BUTTON" value1="Save" />
+				<execute function="AssertClick" locator1="PGADTConfiguration#SAVE_BUTTON" value1="Save" />
 				<execute function="AssertTextEquals" locator1="PGADTConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 				<execute function="SelectFrameTop" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" value1="relative=top" />
 			</then>
@@ -96,7 +96,7 @@
 
 	<command name="tearDownPG">
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
-		<execute function="AssertClick#assertTextClickAndWait" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 		<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
 
 		<if>
@@ -129,7 +129,7 @@
 			<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_ICON" />
 			<then>
 				<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
-				<execute function="AssertClick#assertTextClickAndWait" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+				<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 				<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
 

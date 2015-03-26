@@ -113,12 +113,12 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick#assertTextClickAndWait" locator1="PGStaging#STAGING_MENU_MANAGE_PAGE_VARIATION" value1="Manage Page Variations" />
+		<execute function="AssertClick" locator1="PGStaging#STAGING_MENU_MANAGE_PAGE_VARIATION" value1="Manage Page Variations" />
 
 		<execute function="SelectFrame" locator1="PGStagingManagepagevariations#MANAGE_PAGE_VARIATIONS_IFRAME" />
-		<execute function="AssertClick#assertTextClickAndWait" locator1="PGStagingManagepagevariations#ADD_PAGE_VARIATION_BUTTON" value1="Add Page Variation" />
+		<execute function="AssertClick" locator1="PGStagingManagepagevariations#ADD_PAGE_VARIATION_BUTTON" value1="Add Page Variation" />
 		<execute function="Type" locator1="PGStagingManagepagevariations#ADD_PAGE_VARIATION_NAME_FIELD" value1="${pageVariationName}" />
-		<execute function="AssertClick#assertTextClickAndWait" locator1="PGStagingManagepagevariations#ADD_PAGE_VARIATION_ADD_BUTTON" value1="Add" />
+		<execute function="AssertClick" locator1="PGStagingManagepagevariations#ADD_PAGE_VARIATION_ADD_BUTTON" value1="Add" />
 		<execute function="AssertTextEquals" locator1="PGStagingManagepagevariations#SUCCESS_MESSAGE" value1="Page variation was added." />
 	</command>
 
@@ -142,7 +142,7 @@
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
 		<execute function="SelectFrame" locator1="PGStagingManagesitepagesvariations#MANAGE_SITE_PAGES_VARIATIONS_IFRAME" />
-		<execute function="AssertClick#assertTextClickAndWait" locator1="PGStagingManagesitepagesvariations#ADD_SITE_PAGES_VARIATIONS_BUTTON" value1="Add Site Pages Variation" />
+		<execute function="AssertClick" locator1="PGStagingManagesitepagesvariations#ADD_SITE_PAGES_VARIATIONS_BUTTON" value1="Add Site Pages Variation" />
 		<execute function="Type" locator1="PGStagingManagesitepagesvariations#ADD_SITE_PAGES_VARIATION_NAME_FIELD" value1="${sitePagesVariationName}" />
 
 		<if>
@@ -416,7 +416,7 @@
 		<execute function="AssertClick" locator1="PGStagingManagesitepagesvariations#SITE_PAGES_VARIATIONS_TABLE_ACTIONS" value1="Actions" />
 		<execute function="AssertClick" locator1="PGStagingManagesitepagesvariations#SITE_PAGES_VARIATIONS_TABLE_ACTIONS_MENULIST_EDIT" value1="Edit" />
 		<execute function="Type" locator1="PGStagingManagesitepagesvariations#EDIT_SITE_PAGES_VARIATION_NAME_FIELD" value1="${sitePagesVariationName} Edit" />
-		<execute function="AssertClick#assertTextClickAndWait" locator1="PGStagingManagesitepagesvariations#EDIT_SITE_PAGES_VARIATION_UPDATE_BUTTON" value1="Update" />
+		<execute function="AssertClick" locator1="PGStagingManagesitepagesvariations#EDIT_SITE_PAGES_VARIATION_UPDATE_BUTTON" value1="Update" />
 		<execute function="SelectFrameTop" value1="relative=top" />
 		<execute function="SelectFrame" locator1="PGStagingManagesitepagesvariations#MANAGE_SITE_PAGES_VARIATIONS_IFRAME" />
 		<execute function="AssertTextEquals" locator1="PGStagingManagesitepagesvariations#SUCCESS_MESSAGE" value1="Site page variation was updated." />

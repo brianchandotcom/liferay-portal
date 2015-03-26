@@ -16,6 +16,9 @@ package com.liferay.poshi.runner.logger;
 
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.FileUtil;
+import com.liferay.poshi.runner.util.Validator;
+
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -27,6 +30,88 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  * @author Michael Hashimoto
  */
 public final class LoggerUtil {
+
+	public static void addChildLoggerElement(
+		LoggerElement parentLoggerElement, LoggerElement childLoggerElement) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("var parentNode = document.getElementById('");
+		sb.append(parentLoggerElement.getID());
+		sb.append("');");
+
+		sb.append("var childNode = document.createElement('");
+		sb.append(childLoggerElement.getName());
+		sb.append("');");
+
+		if (Validator.isNotNull(childLoggerElement.getClassName())) {
+			sb.append("childNode.setAttribute('class', '");
+			sb.append(
+				StringEscapeUtils.escapeEcmaScript(
+					childLoggerElement.getClassName()));
+			sb.append("');");
+		}
+
+		if (Validator.isNotNull(childLoggerElement.getText())) {
+			sb.append("childNode.innerHTML = '");
+			sb.append(
+				StringEscapeUtils.escapeEcmaScript(
+					childLoggerElement.getText()));
+			sb.append("';");
+		}
+
+		sb.append("childNode.setAttribute('id', '");
+		sb.append(
+			StringEscapeUtils.escapeEcmaScript(childLoggerElement.getID()));
+		sb.append("');");
+
+		sb.append("parentNode.appendChild(childNode);");
+
+		_javascriptExecutor.executeScript(sb.toString());
+	}
+
+	public static void setClassName(LoggerElement loggerElement) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("var node = document.getElementById('");
+		sb.append(loggerElement.getID());
+		sb.append("');");
+
+		sb.append("childNode.setAttribute('class', '");
+		sb.append(
+			StringEscapeUtils.escapeEcmaScript(loggerElement.getClassName()));
+		sb.append("');");
+
+		_javascriptExecutor.executeScript(sb.toString());
+	}
+
+	public static void setID(LoggerElement loggerElement) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("var node = document.getElementById('");
+		sb.append(loggerElement.getID());
+		sb.append("');");
+
+		sb.append("childNode.setAttribute('id', '");
+		sb.append(StringEscapeUtils.escapeEcmaScript(loggerElement.getID()));
+		sb.append("');");
+
+		_javascriptExecutor.executeScript(sb.toString());
+	}
+
+	public static void setText(LoggerElement loggerElement) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("var node = document.getElementById('");
+		sb.append(loggerElement.getID());
+		sb.append("');");
+
+		sb.append("node.innerHTML = '");
+		sb.append(StringEscapeUtils.escapeEcmaScript(loggerElement.getText()));
+		sb.append("';");
+
+		_javascriptExecutor.executeScript(sb.toString());
+	}
 
 	public static void startLogger() throws Exception {
 		if (_webDriver != null) {

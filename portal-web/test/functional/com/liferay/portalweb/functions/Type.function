@@ -105,7 +105,7 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="type">
+	<command name="type" summary="Type '${value1}' to '${locator1}'">
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />

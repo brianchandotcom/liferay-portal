@@ -129,14 +129,6 @@ AUI.add(
 							);
 						}
 
-						var previewButton = instance.one('#previewButton');
-
-						if (previewButton) {
-							eventHandles.push(
-								previewButton.on(STR_CLICK, instance._previewEntry, instance)
-							);
-						}
-
 						var customAbstractOptions = instance.one('#entryAbstractOptions');
 
 						if (customAbstractOptions) {
@@ -226,51 +218,6 @@ AUI.add(
 						instance._oldContent = entry ? entry.content : STR_BLANK;
 						instance._oldSubtitle = entry ? entry.subtitle : STR_BLANK;
 						instance._oldTitle = entry ? entry.title : STR_BLANK;
-					},
-
-					_previewEntry: function() {
-						var instance = this;
-
-						var constants = instance.get('constants');
-
-						var form = instance._getPrincipalForm();
-
-						instance.one('#' + constants.CMD).val(instance.get('entry') ? constants.UPDATE : constants.ADD);
-
-						instance.one('#preview').val('true');
-						instance.one('#workflowAction').val(constants.ACTION_SAVE_DRAFT);
-
-						var contentEditor = window[instance.ns('contentEditor')];
-
-						if (contentEditor) {
-							instance.one('#content').val(contentEditor.getHTML());
-						}
-
-						var coverImageCaptionEditor = window[instance.ns('coverImageCaptionEditor')];
-
-						if (coverImageCaptionEditor) {
-							instance.one('#coverImageCaption').val(coverImageCaptionEditor.getHTML());
-						}
-
-						var descriptionEditor = window[instance.ns('descriptionEditor')];
-
-						if (descriptionEditor) {
-							instance.one('#description').val(descriptionEditor.getHTML());
-						}
-
-						var subtitleEditor = window[instance.ns('subtitleEditor')];
-
-						if (subtitleEditor) {
-							instance.one('#subtitle').val(subtitleEditor.getHTML());
-						}
-
-						var titleEditor = window[instance.ns('titleEditor')];
-
-						if (titleEditor) {
-							instance.one('#title').val(titleEditor.getHTML());
-						}
-
-						submitForm(form);
 					},
 
 					_removeCaption: function() {

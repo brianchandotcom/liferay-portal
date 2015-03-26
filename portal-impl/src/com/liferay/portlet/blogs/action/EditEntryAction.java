@@ -414,8 +414,6 @@ public class EditEntryAction extends PortletAction {
 
 		String backURL = ParamUtil.getString(actionRequest, "backURL");
 
-		boolean preview = ParamUtil.getBoolean(actionRequest, "preview");
-
 		PortletURLImpl portletURL = new PortletURLImpl(
 			actionRequest, portletConfig.getPortletName(),
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
@@ -436,7 +434,6 @@ public class EditEntryAction extends PortletAction {
 			"groupId", String.valueOf(entry.getGroupId()), false);
 		portletURL.setParameter(
 			"entryId", String.valueOf(entry.getEntryId()), false);
-		portletURL.setParameter("preview", String.valueOf(preview), false);
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();

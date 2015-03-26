@@ -111,18 +111,6 @@ public class CMISWebServicesRepository extends CMISRepositoryHandler {
 		return CMISRepositoryUtil.createSession(parameters);
 	}
 
-	@Deprecated
-	@Override
-	public String[] getSupportedConfigurations() {
-		return _SUPPORTED_CONFIGURATIONS;
-	}
-
-	@Deprecated
-	@Override
-	public String[][] getSupportedParameters() {
-		return _SUPPORTED_PARAMETERS;
-	}
-
 	protected String getTypeSettingsValue(String typeSettingsKey)
 		throws InvalidRepositoryException {
 
@@ -131,30 +119,5 @@ public class CMISWebServicesRepository extends CMISRepositoryHandler {
 		return CMISRepositoryUtil.getTypeSettingsValue(
 			typeSettingsProperties, typeSettingsKey);
 	}
-
-	private static final String[] _SUPPORTED_CONFIGURATIONS = {
-		CMISRepositoryConstants.CMIS_WEBSERVICES_CONFIGURATION
-	};
-
-	private static final String[][] _SUPPORTED_PARAMETERS = new String[][] {
-		{
-			CMISRepositoryConstants.CMIS_WEBSERVICES_REPOSITORY_ID_PARAMETER,
-			CMISRepositoryConstants.CMIS_WEBSERVICES_ACL_SERVICE_PARAMETER,
-			CMISRepositoryConstants.
-				CMIS_WEBSERVICES_DISCOVERY_SERVICE_PARAMETER,
-			CMISRepositoryConstants.
-				CMIS_WEBSERVICES_MULTIFILING_SERVICE_PARAMETER,
-			CMISRepositoryConstants.
-				CMIS_WEBSERVICES_NAVIGATION_SERVICE_PARAMETER,
-			CMISRepositoryConstants.CMIS_WEBSERVICES_OBJECT_SERVICE_PARAMETER,
-			CMISRepositoryConstants.CMIS_WEBSERVICES_POLICY_SERVICE_PARAMETER,
-			CMISRepositoryConstants.
-				CMIS_WEBSERVICES_RELATIONSHIP_SERVICE_PARAMETER,
-			CMISRepositoryConstants.
-				CMIS_WEBSERVICES_REPOSITORY_SERVICE_PARAMETER,
-			CMISRepositoryConstants.
-				CMIS_WEBSERVICES_VERSIONING_SERVICE_PARAMETER
-		}
-	};
 
 }

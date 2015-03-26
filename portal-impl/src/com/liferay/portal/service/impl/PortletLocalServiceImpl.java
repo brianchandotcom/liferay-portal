@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.SpriteProcessor;
 import com.liferay.portal.kernel.image.SpriteProcessorUtil;
-import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
@@ -1374,11 +1373,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		String portletDataHandlerClass = GetterUtil.getString(
 			portletElement.elementText("portlet-data-handler-class"),
 			portletModel.getPortletDataHandlerClass());
-
-		if (Validator.isNull(portletDataHandlerClass)) {
-			portletDataHandlerClass =
-				DefaultConfigurationPortletDataHandler.class.getName();
-		}
 
 		portletModel.setPortletDataHandlerClass(portletDataHandlerClass);
 

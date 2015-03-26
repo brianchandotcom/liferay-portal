@@ -25,7 +25,7 @@ import java.util.Map;
 public interface EditorConfigFactory {
 
 	public EditorConfig getEditorConfig(
-		String portletName, String editorConfigKey, String editorImpl,
+		String portletName, String editorConfigKey, String editorName,
 		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse);

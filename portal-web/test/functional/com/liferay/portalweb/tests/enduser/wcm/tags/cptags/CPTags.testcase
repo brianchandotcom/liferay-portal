@@ -7,8 +7,6 @@
 
 	<tear-down>
 		<execute macro="Tag#tearDownCP" />
-
-		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
 	<command name="AddTag" priority="5">
@@ -19,7 +17,7 @@
 		</execute>
 
 		<execute macro="Tag#addCP">
-			<var name="tagName" value="${tagName}" />
+			<var name="tagName" value="tag name" />
 		</execute>
 	</command>
 
@@ -33,9 +31,9 @@
 		</execute>
 
 		<execute macro="Tag#addTagsCP">
-			<var name="tagName1" value="${tagName1}" />
-			<var name="tagName2" value="${tagName2}" />
-			<var name="tagName3" value="${tagName3}" />
+			<var name="tagName1" value="tag name 1" />
+			<var name="tagName2" value="tag name 2" />
+			<var name="tagName3" value="tag name 3" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -43,9 +41,9 @@
 		</execute>
 
 		<execute macro="Tag#viewTagsCP">
-			<var name="tagName1" value="${tagName1}" />
-			<var name="tagName2" value="${tagName2}" />
-			<var name="tagName3" value="${tagName3}" />
+			<var name="tagName1" value="tag name 1" />
+			<var name="tagName2" value="tag name 2" />
+			<var name="tagName3" value="tag name 3" />
 		</execute>
 	</command>
 
@@ -280,15 +278,13 @@
 		</execute>
 	</command>
 
-	<command name="DeleteTag" priority="5">
-		<var name="tagName" value="tag name" />
-
+	<command name="DeleteTagFromList" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#addCP">
-			<var name="tagName" value="${tagName}" />
+			<var name="tagName" value="tag name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -296,61 +292,114 @@
 		</execute>
 
 		<execute macro="Tag#deleteCP">
-			<var name="tagName" value="${tagName}" />
+			<var name="deleteMethod" value="From List" />
+			<var name="tagName" value="tag name" />
+		</execute>
+	</command>
+
+	<command name="DeleteTagFromToolbar" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tag name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#deleteCP">
+			<var name="deleteMethod" value="From Toolbar" />
+			<var name="tagName" value="tag name" />
 		</execute>
 	</command>
 
 	<command name="EditTag" priority="5">
-		<var name="tagName" value="tag name" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#addCP">
-			<var name="tagName" value="${tagName}" />
+			<var name="tagName" value="tag name" />
 		</execute>
 
 		<execute macro="Tag#editCP">
-			<var name="tagName" value="${tagName}" />
+			<var name="tagName" value="tag name" />
 		</execute>
 	</command>
 
 	<command name="EditTagCancel" priority="5">
-		<var name="tagName" value="tag name" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#addCP">
-			<var name="tagName" value="${tagName}" />
+			<var name="tagName" value="tag name" />
 		</execute>
 
 		<execute macro="Tag#editCancelCP">
-			<var name="tagName" value="${tagName}" />
+			<var name="tagName" value="tag name" />
+		</execute>
+	</command>
+
+	<command name="MergeMultipleTags" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tag name 1" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tag name 2" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tag name 3" />
+		</execute>
+
+		<execute macro="Tag#mergeMultipleTags">
+			<var name="mergeConfirmation">
+				<![CDATA[Are you sure you want to merge "tag name 1,tag name 2,tag name 3" into "tag name 2"? This will change all items tagged with "tag name 1,tag name 2,tag name 3" to instead be tagged with "tag name 2".]]>
+			</var>
+			<var name="tagName1" value="tag name 1" />
+			<var name="tagName2" value="tag name 2" />
+			<var name="tagName3" value="tag name 3" />
+		</execute>
+	</command>
+
+	<command name="MergeSingleTagWarning" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tag name" />
+		</execute>
+
+		<execute macro="Tag#mergeSingleTagWarning">
+			<var name="tagName" value="tag name" />
 		</execute>
 	</command>
 
 	<command name="SearchTag" priority="5">
-		<var name="tagName1" value="tag name 1" />
-		<var name="tagName2" value="tag name 2" />
-		<var name="tagName3" value="tag name 3" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#addCP">
-			<var name="tagName" value="${tagName1}" />
+			<var name="tagName" value="tag name 1" />
 		</execute>
 
 		<execute macro="Tag#addCP">
-			<var name="tagName" value="${tagName2}" />
+			<var name="tagName" value="tag name 2" />
 		</execute>
 
 		<execute macro="Tag#addCP">
-			<var name="tagName" value="${tagName3}" />
+			<var name="tagName" value="tag name 3" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -358,9 +407,9 @@
 		</execute>
 
 		<execute macro="Tag#searchTagCP">
-			<var name="tagName1" value="${tagName1}" />
-			<var name="tagName2" value="${tagName2}" />
-			<var name="tagName3" value="${tagName3}" />
+			<var name="tagName1" value="tag name 1" />
+			<var name="tagName2" value="tag name 2" />
+			<var name="tagName3" value="tag name 3" />
 		</execute>
 	</command>
 </definition>

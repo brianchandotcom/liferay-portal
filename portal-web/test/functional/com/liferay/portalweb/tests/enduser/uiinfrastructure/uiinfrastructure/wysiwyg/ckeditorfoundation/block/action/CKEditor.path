@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOOLBAR_LINK_BUTTON</td>
+	<td>//a[contains(@class,'cke_button') and contains(@title,'Link')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLBAR_FONT_BUTTON_PORTLET</td>
 	<td>//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]/../../..//a[contains(@class,'cke_combo_button') and contains(.,'Font')]/span</td>
 	<td></td>

@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>OPTIONS</td>
-	<td>//a[@title='Options']/i</td>
+	<td>//div[@id='main-content']//a[@title='Options']/i</td>
 	<td></td>
 </tr>
 <tr>

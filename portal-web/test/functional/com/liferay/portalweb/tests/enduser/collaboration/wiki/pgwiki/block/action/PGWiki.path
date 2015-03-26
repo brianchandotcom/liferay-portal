@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_ICON</td>
-	<td>//div[contains(@class,'portlet-options')]/a</td>
+	<td>//div[@id='main-content']//div[contains(@class,'portlet-options')]/a</td>
 	<td></td>
 </tr>
 <tr>

@@ -112,17 +112,6 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 		return layout;
 	}
 
-	protected void addWebContentPage(
-			long companyId, long defaultUserId,
-			List<LayoutPrototype> layoutPrototypes)
-		throws Exception {
-
-		addLayoutPrototype(
-			companyId, defaultUserId, "layout-prototype-web-content-title",
-			"layout-prototype-web-content-description", "2_columns_ii",
-			layoutPrototypes);
-	}
-
 	protected void doRun(long companyId) throws Exception {
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
 
@@ -131,7 +120,6 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		addBlogPage(companyId, defaultUserId, layoutPrototypes);
-		addWebContentPage(companyId, defaultUserId, layoutPrototypes);
 	}
 
 }

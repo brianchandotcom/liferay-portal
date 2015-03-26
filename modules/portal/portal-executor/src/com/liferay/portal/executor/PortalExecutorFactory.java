@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.executor;
+package com.liferay.portal.executor;
 
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 

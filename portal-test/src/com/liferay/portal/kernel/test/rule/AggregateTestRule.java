@@ -61,6 +61,7 @@ public class AggregateTestRule implements TestRule {
 	private static final String[] _ORDERED_RULE_CLASS_NAMES = new String[] {
 		HeapDumpTestRule.class.getName(), CodeCoverageAssertor.class.getName(),
 		NewEnvTestRule.class.getName(),
+		"com.liferay.portal.test.rule.PortalExecutorManagerTestRule",
 		"com.liferay.portal.test.rule.LiferayIntegrationTestRule",
 		"com.liferay.portal.test.rule.MainServletTestRule",
 		"com.liferay.portal.test.rule.PersistenceTestRule",

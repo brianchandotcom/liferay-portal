@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
+import com.liferay.portal.test.rule.PortalExecutorManagerTestRule;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -41,7 +42,9 @@ public class BaseAsyncDatagramReceiveHandlerTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE,
+			PortalExecutorManagerTestRule.INSTANCE
+		);
 
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
 	@Test

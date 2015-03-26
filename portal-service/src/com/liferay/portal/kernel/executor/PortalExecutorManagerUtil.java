@@ -17,6 +17,9 @@ package com.liferay.portal.kernel.executor;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Shuyang Zhou
@@ -42,7 +45,15 @@ public class PortalExecutorManagerUtil {
 		PortalRuntimePermission.checkGetBeanProperty(
 			PortalExecutorManagerUtil.class);
 
-		return _portalExecutorManager;
+		try {
+			while (_instance._serviceTracker.getService() == null) {
+				Thread.sleep(500);
+			}
+		}
+		catch (InterruptedException e) {
+		}
+
+		return _instance._serviceTracker.getService();
 	}
 
 	public static ThreadPoolExecutor registerPortalExecutor(
@@ -68,14 +79,18 @@ public class PortalExecutorManagerUtil {
 		getPortalExecutorManager().shutdown(interrupt);
 	}
 
-	public void setPortalExecutorManager(
-		PortalExecutorManager portalExecutorManager) {
+	private PortalExecutorManagerUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+		_serviceTracker = registry.trackServices(PortalExecutorManager.class);
 
-		_portalExecutorManager = portalExecutorManager;
+		_serviceTracker.open();
 	}
 
-	private static PortalExecutorManager _portalExecutorManager;
+	private static final PortalExecutorManagerUtil _instance =
+		new PortalExecutorManagerUtil();
+
+	private final ServiceTracker<PortalExecutorManager, PortalExecutorManager>
+		_serviceTracker;
 
 }

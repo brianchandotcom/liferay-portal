@@ -2309,13 +2309,13 @@
 
 		<execute macro="KBArticle#gotoViaKBAdminCP">
 			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle1" value="Knowledge Base Article Parent Title 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
 		<execute macro="KBArticle#editCP">
 			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edit. This article should remain priority three." />
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 3" />
-			<var name="kbArticleTitleEdited" value="Knowledge Base Article Parent Title 1 Child 3" />
+			<var name="kbArticleTitleEdit" value="Knowledge Base Article Parent Title 1 Child 3" />
 		</execute>
 
 		<execute macro="KBArticle#viewKBArticlePriorityCP">
@@ -2338,7 +2338,7 @@
 		</execute>
 
 		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
 		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">

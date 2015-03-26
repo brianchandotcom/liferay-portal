@@ -1344,7 +1344,7 @@
 			<condition function="IsElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_GENERIC" />
 			<then>
 				<var name="count" value="${count?increment()}" />
-				<var name="kbArticleTitle" value="Knowledge Base Article Parent Title ${count}" />
+				<var name="kbArticleTitle" value="${kbArticleTitle} ${count}" />
 				<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 				<if>

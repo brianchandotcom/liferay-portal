@@ -312,7 +312,7 @@
 		</execute>
 
 		<execute macro="KBArticle#addChildPGViaKBAdmin">
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 			<var name="kbChildArticleContent" value="Knowledge Base Article Parent Title 1 Child Content 1" />
 			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child 1" />
 		</execute>
@@ -329,27 +329,31 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
 		<execute macro="KBArticle#editPGViaKBDisplay">
-			<var name="kbArticleContentEdit" value="Knowledge Base Article Parent Content 1 Edited" />
-			<var name="kbArticleTitle Edit" value="Knowledge Base Article Parent Title 1" />
+			<var name="kbArticleContentEdit" value="Knowledge Base Article Parent Content Edited 1" />
+			<var name="kbArticleTitleEdit" value="Knowledge Base Article Parent Title Edited 1" />
 		</execute>
 
 		<execute macro="KBArticle#gotoKBChildArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title Edited 1" />
 			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child 1" />
 		</execute>
 
 		<execute macro="KBArticle#editPGViaKBDisplay">
-			<var name="kbArticleContentEdit" value="Knowledge Base Child Article Content 1 Edited" />
-			<var name="kbArticleTitleEdit" value="Knowledge Base Article Parent Title 1 Child 1" />
+			<var name="kbArticleContentEdit" value="Knowledge Base Child Article Content Edited 1" />
+			<var name="kbArticleTitleEdit" value="Knowledge Base Article Parent Title Edited 1 Child 1" />
 		</execute>
 
 		<execute macro="KBArticle#viewParentArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title Edited" />
 		</execute>
 
 		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title Edited 1" />
 		</execute>
 	</command>
 

@@ -25,8 +25,7 @@ import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.IOException;
-
+import java.util.Arrays;
 import java.util.Properties;
 
 import net.sf.ehcache.CacheManager;
@@ -67,39 +66,27 @@ public class LiferayCacheManagerPeerProviderFactory
 			throw new RuntimeException("portalPropertyKey is null");
 		}
 
-		Properties propsUtilProperties = PropsUtil.getProperties();
-
-		String portalPropertiesString = propsUtilProperties.getProperty(
-			portalPropertyKey);
+		String[] portalPropertiesArray = PropsUtil.getArray(portalPropertyKey);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"portalPropertyKey " + portalPropertyKey + " has value " +
-					portalPropertiesString);
+					Arrays.toString(portalPropertiesArray));
 		}
 
-		portalPropertiesString = StringUtil.replace(
-			portalPropertiesString, CharPool.COMMA, CharPool.NEW_LINE);
+		Properties portalProperties = new Properties();
 
-		Properties portalProperties = null;
+		for (String portalProperty : portalPropertiesArray) {
+			String[] elements = StringUtil.split(
+				portalProperty, CharPool.EQUAL);
 
-		try {
-			portalProperties = PropertiesUtil.load(portalPropertiesString);
-		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+			if (elements.length != 2) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Ignore deformed property :" + portalProperty);
+				}
+			}
 
-			throw new RuntimeException(ioe.getMessage());
-		}
-
-		Object[] keys = portalProperties.keySet().toArray();
-
-		for (Object key : keys) {
-			String value = (String)portalProperties.remove(key);
-
-			value = _htmlUtil.unescape(value);
-
-			portalProperties.put(key, value);
+			portalProperties.put(elements[0], _htmlUtil.unescape(elements[1]));
 		}
 
 		if (_log.isDebugEnabled()) {

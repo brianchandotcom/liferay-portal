@@ -1238,7 +1238,7 @@ public class ServicePreAction extends Action {
 					request, myAccountPortlet.getPortletId(), controlPanelPlid,
 					PortletRequest.RENDER_PHASE);
 
-				if (user != null) {
+				if (signedIn) {
 					myAccountURL.setDoAsGroupId(user.getGroupId());
 				}
 				else if (scopeGroupId > 0) {

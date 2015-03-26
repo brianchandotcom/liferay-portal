@@ -220,14 +220,14 @@ public class VerifyPermission extends VerifyProcess {
 			joinSB.append("resourcePermission2.scope and ");
 			joinSB.append("resourcePermission2.roleId = ");
 			joinSB.append(userRole.getRoleId());
-			joinSB.append(" inner join Layout layout on ");
-			joinSB.append("resourcePermission1.companyId = layout.companyId ");
+			joinSB.append(" inner join Layout on ");
+			joinSB.append("resourcePermission1.companyId = Layout.companyId ");
 			joinSB.append("and resourcePermission1.primKey like ");
 			joinSB.append("replace('[$PLID$]");
 			joinSB.append(PortletConstants.LAYOUT_SEPARATOR);
-			joinSB.append("%', '[$PLID$]', cast_text(layout.plid)) inner ");
-			joinSB.append("join Group_ group on layout.groupId = ");
-			joinSB.append("group.groupId and layout.type_ = '");
+			joinSB.append("%', '[$PLID$]', cast_text(Layout.plid)) inner ");
+			joinSB.append("join Group_ on Layout.groupId = ");
+			joinSB.append("Group_.groupId and Layout.type_ = '");
 			joinSB.append(LayoutConstants.TYPE_PORTLET);
 			joinSB.append(StringPool.APOSTROPHE);
 
@@ -240,9 +240,9 @@ public class VerifyPermission extends VerifyProcess {
 			whereSB.append("%' and resourcePermission1.roleId = ");
 			whereSB.append(powerUserRole.getRoleId());
 			whereSB.append(" and resourcePermission2.roleId is null and ");
-			whereSB.append("(group.classNameId = ");
+			whereSB.append("(Group_.classNameId = ");
 			whereSB.append(userClassNameId);
-			whereSB.append(" or group.classNameId = ");
+			whereSB.append(" or Group_.classNameId = ");
 			whereSB.append(userGroupClassNameId);
 			whereSB.append(StringPool.CLOSE_PARENTHESIS);
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.taglib.FileAvailabilityUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Enumeration;
@@ -278,6 +279,10 @@ public class InputEditorTag extends IncludeTag {
 		String editorName = getEditorType(request);
 
 		_page = "/html/js/editor/" + editorName + ".jsp";
+
+		if (!FileAvailabilityUtil.isAvailable(servletContext, _page)) {
+			_page = "/html/js/editor/" + _EDITOR_WYSIWYG_DEFAULT + ".jsp";
+		}
 
 		request.setAttribute(
 			"liferay-ui:input-editor:allowBrowseDocuments",

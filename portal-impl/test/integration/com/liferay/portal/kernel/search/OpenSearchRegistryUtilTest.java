@@ -50,16 +50,6 @@ public class OpenSearchRegistryUtilTest {
 	}
 
 	@Test
-	public void testGetOpenSearch2() {
-		OpenSearch openSearch = OpenSearchRegistryUtil.getOpenSearch(
-			TestOpenSearch.class.getName());
-
-		String testOpenSearchClassName = TestOpenSearch.class.getName();
-
-		Assert.assertEquals(testOpenSearchClassName, openSearch.getClassName());
-	}
-
-	@Test
 	public void testGetOpenSearchInstances() {
 		List<OpenSearch> openSearches =
 			OpenSearchRegistryUtil.getOpenSearchInstances();

@@ -15,6 +15,9 @@
 package com.liferay.portlet.journal.workflow;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.provider.PortletProvider;
+import com.liferay.portal.kernel.provider.PortletProviderUtil;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -24,7 +27,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -44,6 +46,11 @@ import java.util.Map;
  * @author Juan Fernández
  * @author Julio Camarero
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
+	}
+)
 public class JournalArticleWorkflowHandler
 	extends BaseWorkflowHandler<JournalArticle> {
 
@@ -113,8 +120,11 @@ public class JournalArticleWorkflowHandler
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
+		String portletId = PortletProviderUtil.getPortletId(
+			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
+
 		String articleURL = PortalUtil.getControlPanelFullURL(
-			serviceContext.getScopeGroupId(), PortletKeys.JOURNAL, null);
+			serviceContext.getScopeGroupId(), portletId, null);
 
 		return JournalArticleLocalServiceUtil.updateStatus(
 			userId, article, status, articleURL, serviceContext,

@@ -15,6 +15,8 @@
 package com.liferay.journal.content.web.portlet.action;
 
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
+import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
+import com.liferay.journal.web.asset.JournalArticleAssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -24,8 +26,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
-import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
-import com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 import javax.portlet.ActionRequest;

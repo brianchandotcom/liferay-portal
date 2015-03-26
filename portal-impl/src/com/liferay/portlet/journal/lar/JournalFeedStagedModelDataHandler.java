@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -49,6 +50,7 @@ import java.util.Map;
 /**
  * @author Daniel Kocsis
  */
+@OSGiBeanProperties
 public class JournalFeedStagedModelDataHandler
 	extends BaseStagedModelDataHandler<JournalFeed> {
 

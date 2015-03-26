@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal;
 
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.journal.model.JournalFolder;
@@ -21,6 +22,11 @@ import com.liferay.portlet.journal.model.JournalFolder;
 /**
  * @author Eudaldo Alonso
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.journal.model.JournalFolder"
+	}
+)
 public class JournalFolderCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 

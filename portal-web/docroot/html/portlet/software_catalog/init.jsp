@@ -16,8 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.search.Document" %><%@
-page import="com.liferay.portal.kernel.search.DocumentComparator" %><%@
+<%@ page import="com.liferay.portal.kernel.search.DocumentComparator" %><%@
 page import="com.liferay.portal.plugin.PluginPackageUtil" %><%@
 page import="com.liferay.portlet.softwarecatalog.DuplicateProductEntryModuleIdException" %><%@
 page import="com.liferay.portlet.softwarecatalog.DuplicateProductVersionDirectDownloadURLException" %><%@

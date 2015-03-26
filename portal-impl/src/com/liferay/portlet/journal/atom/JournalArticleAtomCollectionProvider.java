@@ -19,13 +19,15 @@ import com.liferay.portal.atom.AtomUtil;
 import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomRequestContext;
 import com.liferay.portal.kernel.atom.BaseAtomCollectionAdapter;
+import com.liferay.portal.kernel.provider.PortletProvider;
+import com.liferay.portal.kernel.provider.PortletProviderUtil;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
@@ -42,6 +44,11 @@ import java.util.Map;
 /**
  * @author Igor Spasic
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
+	}
+)
 public class JournalArticleAtomCollectionProvider
 	extends BaseAtomCollectionAdapter<JournalArticle> {
 
@@ -89,8 +96,11 @@ public class JournalArticleAtomCollectionProvider
 
 	@Override
 	public String getFeedTitle(AtomRequestContext atomRequestContext) {
+		String portletId = PortletProviderUtil.getPortletId(
+			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
+
 		return AtomUtil.createFeedTitleFromPortletName(
-			atomRequestContext, PortletKeys.JOURNAL);
+			atomRequestContext, portletId);
 	}
 
 	@Override

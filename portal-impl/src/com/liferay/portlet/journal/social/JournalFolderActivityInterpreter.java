@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.social;
 
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
@@ -28,6 +29,11 @@ import javax.portlet.PortletURL;
 /**
  * @author Zsolt Berentey
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.journal.model.JournalFolder"
+	}
+)
 public class JournalFolderActivityInterpreter
 	extends BaseSocialActivityInterpreter {
 

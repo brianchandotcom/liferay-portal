@@ -47,8 +47,8 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
-import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
@@ -254,8 +254,16 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 	@Override
 	protected Long getBaseModelClassPK(ClassedModel classedModel) {
-		return JournalArticleAssetRenderer.getClassPK(
-			(JournalArticle)classedModel);
+		JournalArticle article = (JournalArticle)classedModel;
+
+		if ((article.isDraft() || article.isPending()) &&
+			(article.getVersion() != JournalArticleConstants.VERSION_DEFAULT)) {
+
+			return article.getPrimaryKey();
+		}
+		else {
+			return article.getResourcePrimKey();
+		}
 	}
 
 	@Override

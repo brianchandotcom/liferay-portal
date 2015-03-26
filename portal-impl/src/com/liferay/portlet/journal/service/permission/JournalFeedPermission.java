@@ -15,12 +15,14 @@
 package com.liferay.portlet.journal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.provider.PortletProvider;
+import com.liferay.portal.kernel.provider.PortletProviderUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 
@@ -67,9 +69,12 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 		PermissionChecker permissionChecker, JournalFeed feed,
 		String actionId) {
 
+		String portletId = PortletProviderUtil.getPortletId(
+			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
+
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, feed.getGroupId(), JournalFeed.class.getName(),
-			feed.getPrimaryKey(), PortletKeys.JOURNAL, actionId);
+			feed.getPrimaryKey(), portletId, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

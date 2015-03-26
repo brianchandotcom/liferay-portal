@@ -92,6 +92,8 @@
 										else {
 											startCalendar.add(Calendar.DATE, -1);
 										}
+
+										Date now = new Date();
 										%>
 
 										<ul class="date-range-options hide list-unstyled" id="<portlet:namespace />startEndDate">
@@ -102,6 +104,7 @@
 														dayValue="<%= startCalendar.get(Calendar.DATE) %>"
 														disabled="<%= false %>"
 														firstDayOfWeek="<%= startCalendar.getFirstDayOfWeek() - 1 %>"
+														lastEnabledDate="<%= exportImportConfigurationEditing ? null : now %>"
 														monthParam="startDateMonth"
 														monthValue="<%= startCalendar.get(Calendar.MONTH) %>"
 														name="startDate"
@@ -133,6 +136,7 @@
 														dayValue="<%= endCalendar.get(Calendar.DATE) %>"
 														disabled="<%= false %>"
 														firstDayOfWeek="<%= endCalendar.getFirstDayOfWeek() - 1 %>"
+														lastEnabledDate="<%= exportImportConfigurationEditing ? null : now %>"
 														monthParam="endDateMonth"
 														monthValue="<%= endCalendar.get(Calendar.MONTH) %>"
 														name="endDate"

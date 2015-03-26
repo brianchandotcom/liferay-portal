@@ -298,6 +298,7 @@
 				<classpath mode="compile">lib/development/junit.jar</classpath>
 				<classpath mode="compile">lib/development/jutf7.jar</classpath>
 				<classpath mode="compile">lib/development/jymsg.jar</classpath>
+				<classpath mode="compile">lib/development/liferay-doclet.jar</classpath>
 				<classpath mode="compile">lib/development/mail.jar</classpath>
 				<classpath mode="compile">lib/development/maven-ant-tasks.jar</classpath>
 				<classpath mode="compile">lib/development/mockito.jar</classpath>
@@ -330,6 +331,7 @@
 				<classpath mode="compile">lib/development/spring-instrument.jar</classpath>
 				<classpath mode="compile">lib/development/spring-instrument-tomcat.jar</classpath>
 				<classpath mode="compile">lib/development/spring-test.jar</classpath>
+				<classpath mode="compile">lib/development/tlddoc.jar</classpath>
 				<classpath mode="compile">lib/development/tomcat-coyote.jar</classpath>
 				<classpath mode="compile">lib/development/velocity.jar</classpath>
 				<classpath mode="compile">lib/development/velocity-tools.jar</classpath>
@@ -405,7 +407,7 @@
 				<classpath mode="compile">lib/portal/gif89.jar</classpath>
 				<classpath mode="compile">lib/portal/groovy.jar</classpath>
 				<classpath mode="compile">lib/portal/hessian.jar</classpath>
-				<classpath mode="compile">lib/portal/hibernate-commons-annotations</classpath>
+				<classpath mode="compile">lib/portal/hibernate-commons-annotations.jar</classpath>
 				<classpath mode="compile">lib/portal/hibernate-core.jar</classpath>
 				<classpath mode="compile">lib/portal/htmlparser.jar</classpath>
 				<classpath mode="compile">lib/portal/httpclient.jar</classpath>
@@ -453,6 +455,7 @@
 				<classpath mode="compile">lib/portal/jrcs-diff.jar</classpath>
 				<classpath mode="compile">lib/portal/jruby.jar</classpath>
 				<classpath mode="compile">lib/portal/json-java.jar</classpath>
+				<classpath mode="compile">lib/portal/json-schema-validator.jar</classpath>
 				<classpath mode="compile">lib/portal/jsonrpc.jar</classpath>
 				<classpath mode="compile">lib/portal/jspwiki.jar</classpath>
 				<classpath mode="compile">lib/portal/jsqlparser.jar</classpath>
@@ -467,6 +470,7 @@
 				<classpath mode="compile">lib/portal/liferay-icu4j.jar</classpath>
 				<classpath mode="compile">lib/portal/liferay-yui-compressor.jar</classpath>
 				<classpath mode="compile">lib/portal/log4j.jar</classpath>
+				<classpath mode="compile">lib/portal/log4j-extras.jar</classpath>
 				<classpath mode="compile">lib/portal/lucene-analyzers.jar</classpath>
 				<classpath mode="compile">lib/portal/lucene-core.jar</classpath>
 				<classpath mode="compile">lib/portal/lucene-grouping.jar</classpath>
@@ -554,7 +558,7 @@
 				<classpath mode="compile">lib/portal/xmpcore.jar</classpath>
 				<classpath mode="compile">lib/portal/xpp3.jar</classpath>
 				<classpath mode="compile">lib/portal/xstream.jar</classpath>
-				<classpath mode="compile">lib/portal/xuggle-xuggler.jar</classpath>
+				<classpath mode="compile">lib/portal/xuggle-xuggler-noarch.jar</classpath>
 				<classpath mode="compile">lib/portal/xz.jar</classpath>
 				<classpath mode="compile">modules/core/registry-impl/lib/org.eclipse.osgi.jar</classpath>
 				<source-level>1.5</source-level>

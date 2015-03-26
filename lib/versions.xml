@@ -1044,7 +1044,7 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>global/portlet.jar</file-name>
+				<file-name>lib/global/portlet.jar</file-name>
 				<version>2.0</version>
 				<project-name>JSR 286 Portlet 2.0 Specification</project-name>
 				<project-url>http://jcp.org/en/jsr/detail?id=286</project-url>
@@ -2683,7 +2683,7 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/liferay-yuicompressor.jar</file-name>
+				<file-name>lib/portal/liferay-yui-compressor.jar</file-name>
 				<version>2.4.7</version>
 				<project-name>YUI Compressor</project-name>
 				<project-url>http://developer.yahoo.com/yui/compressor</project-url>

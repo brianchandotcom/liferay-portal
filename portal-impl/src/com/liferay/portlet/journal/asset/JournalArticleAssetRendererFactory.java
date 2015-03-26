@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -51,6 +52,11 @@ import javax.portlet.WindowStateException;
  * @author Raymond Augé
  * @author Sergio González
  */
+@OSGiBeanProperties(
+	property = {
+		"search.asset.type=com.liferay.portlet.journal.model.JournalArticle"
+	}
+)
 public class JournalArticleAssetRendererFactory
 	extends BaseAssetRendererFactory {
 

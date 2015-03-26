@@ -118,10 +118,16 @@ public class GoogleDocsDLDisplayContextFactory
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion) {
 
+		Object model = fileVersion.getModel();
+
+		if (!(model instanceof DLFileVersion)) {
+			return parentDLViewFileVersionDisplayContext;
+		}
+
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
 			new GoogleDocsMetadataHelper(
-				(DLFileVersion)fileVersion.getModel(),
-				_dlFileEntryMetadataLocalService, _storageEngine);
+				(DLFileVersion)model, _dlFileEntryMetadataLocalService,
+				_storageEngine);
 
 		if (googleDocsMetadataHelper.isGoogleDocs()) {
 			return new GoogleDocsDLViewFileVersionDisplayContext(

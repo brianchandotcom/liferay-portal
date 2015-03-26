@@ -17,9 +17,11 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency conf="internal->default" name="gradle-core" org="org.gradle" rev="2.2.1" />
-		<dependency conf="internal->default" name="gradle-plugins" org="org.gradle" rev="2.2.1" />
-		<dependency conf="internal->default" name="groovy-all" org="org.codehaus.groovy" rev="2.3.6" />
+		<dependency conf="internal->default" name="groovy-all" org="org.codehaus.groovy" rev="2.3.9" />
+		<dependency conf="internal->default" name="org.gradle.gradle-base-services" org="com.liferay" rev="2.3" />
+		<dependency conf="internal->default" name="org.gradle.gradle-base-services-groovy" org="com.liferay" rev="2.3" />
+		<dependency conf="internal->default" name="org.gradle.gradle-core" org="com.liferay" rev="2.3" />
+		<dependency conf="internal->default" name="org.gradle.gradle-plugins" org="com.liferay" rev="2.3" />
 		<dependency name="portal-service" org="com.liferay.portal" rev="7.0.0-SNAPSHOT" />
 	</dependencies>
 </ivy-module>

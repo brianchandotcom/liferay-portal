@@ -92,7 +92,9 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 		</liferay-ui:search-container-results>
 
 		<aui:nav-bar>
-			<aui:nav-bar-search file="/search.jsp" searchContainer="<%= searchContainer %>" />
+			<aui:nav-bar-search>
+				<%@ include file="/search.jsp" %>
+			</aui:nav-bar-search>
 		</aui:nav-bar>
 
 		<liferay-ui:search-container-row

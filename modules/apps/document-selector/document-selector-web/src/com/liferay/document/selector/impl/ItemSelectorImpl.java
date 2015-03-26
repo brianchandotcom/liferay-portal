@@ -57,9 +57,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Iván Zaera
  */
-@Component(
-	service = ItemSelector.class
-)
+@Component(service = ItemSelector.class)
 public class ItemSelectorImpl implements ItemSelector {
 
 	public static final String PARAM_CRITERIA = "criteria";
@@ -81,8 +79,6 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		_setPopup(portletURL);
 
-		portletURL.setParameter(
-			"mvcPath", DocumentSelectorPortlet.MVC_PATH_SHOW_ITEM_SELECTOR);
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME,
 			DocumentSelectorPortlet.ACTION_SHOW_ITEM_SELECTOR);

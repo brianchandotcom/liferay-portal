@@ -95,9 +95,6 @@ public class DocumentSelectorPortlet extends MVCPortlet {
 
 	public static final String ACTION_SHOW_ITEM_SELECTOR = "showItemSelector";
 
-	public static final String MVC_PATH_SHOW_ITEM_SELECTOR =
-		"/item_selector.jsp";
-
 	public void addFileEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -154,6 +151,8 @@ public class DocumentSelectorPortlet extends MVCPortlet {
 				actionRequest.getLocale(), itemSelectorViewRenderersList);
 
 		itemSelectorViewRenderers.store(actionRequest);
+
+		actionResponse.setRenderParameter("mvcPath", "/item_selector.jsp");
 	}
 
 	protected FileEntry doAddFileEntryAction(ActionRequest actionRequest)

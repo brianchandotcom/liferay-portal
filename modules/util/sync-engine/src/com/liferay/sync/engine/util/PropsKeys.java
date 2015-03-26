@@ -72,6 +72,18 @@ public interface PropsKeys {
 	public static final String SYNC_NOTIFICATION_FIELD_NAMES_PREFIX =
 		"sync.notification.field.names";
 
+	public static final String SYNC_OAUTH_ACCESS_TOKEN_URL =
+		"sync.oauth.access.token.url";
+
+	public static final String SYNC_OAUTH_AUTHORIZATION_URL =
+		"sync.oauth.authorization.url";
+
+	public static final String SYNC_OAUTH_REQUEST_TOKEN_URL =
+		"sync.oauth.request.token.url";
+
+	public static final String SYNC_OAUTH_WEBSITE_URL =
+		"sync.oauth.website.url";
+
 	public static final String SYNC_PRODUCT_NAME = "sync.product.name";
 
 }

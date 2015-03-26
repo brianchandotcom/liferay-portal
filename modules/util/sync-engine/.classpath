@@ -44,11 +44,14 @@
 	<classpathentry kind="lib" path="lib/jackson-core.jar" />
 	<classpathentry kind="lib" path="lib/jackson-databind.jar" />
 	<classpathentry kind="lib" path="lib/jna.jar" />
+	<classpathentry kind="lib" path="lib/jpathwatch.jar" />
 	<classpathentry kind="lib" path="lib/logback-classic.jar" />
 	<classpathentry kind="lib" path="lib/logback-core.jar" />
 	<classpathentry kind="lib" path="lib/net.sf.jpathwatch.jar" />
 	<classpathentry kind="lib" path="lib/ormlite-core.jar" />
 	<classpathentry kind="lib" path="lib/ormlite-jdbc.jar" />
+	<classpathentry kind="lib" path="lib/signpost-commonshttp4.jar" />
+	<classpathentry kind="lib" path="lib/signpost-core.jar" />
 	<classpathentry kind="lib" path="lib/slf4j-api.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

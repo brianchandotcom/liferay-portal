@@ -38,6 +38,7 @@
 		<dependency name="net.sf.jpathwatch" org="com.liferay" rev="0.95.LIFERAY-PATCHED-2" />
 		<dependency name="ormlite-core" org="com.j256.ormlite" rev="4.47" />
 		<dependency name="ormlite-jdbc" org="com.j256.ormlite" rev="4.47" />
+		<dependency name="signpost-commonshttp4" org="oauth.signpost" rev="1.2.1.2" />
 		<dependency name="slf4j-api" org="org.slf4j" rev="1.7.6" />
 	</dependencies>
 </ivy-module>

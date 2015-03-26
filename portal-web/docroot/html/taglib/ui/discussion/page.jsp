@@ -82,14 +82,10 @@ int messagesCount = messages.size();
 								<aui:input name="parentMessageId0" type="hidden" value="<%= message.getMessageId() %>" />
 							</div>
 
-							<%
-							String taglibPostReplyURL = "javascript:" + randomNamespace + "showEl('" + randomNamespace + "postReplyForm0');";
-							%>
-
 							<c:if test="<%= messagesCount == 1 %>">
 								<c:choose>
 									<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-										<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
+										<liferay-ui:message key="no-comments-yet" />
 									</c:when>
 									<c:otherwise>
 										<liferay-ui:message key="no-comments-yet" /> <a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>

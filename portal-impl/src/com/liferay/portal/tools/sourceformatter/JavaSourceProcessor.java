@@ -79,8 +79,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				int endPos = pos + importToExclude.length();
 				String charAfter = content.substring(endPos, endPos + 1);
 
+				String charBefore = StringPool.BLANK;
+
+				if (pos > 0) {
+					charBefore = content.substring(pos - 1, pos);
+				}
+
 				if ((content.length() > endPos) &&
-					!charAfter.matches("[a-zA-Z;]")) {
+					!charAfter.matches("[a-zA-Z;\"]") &&
+					!charBefore.matches("[\"]")) {
 
 					String importClassName = importToExclude.substring(
 						importToExclude.lastIndexOf(StringPool.PERIOD) + 1);

@@ -1,5 +1,5 @@
 <definition default="open">
-	<command name="open">
+	<command name="open" summary="Open browser to '${locator1}'">
 		<execute argument1="null" selenium="selectWindow" />
 
 		<execute argument1="relative=top" selenium="selectFrame" />

@@ -78,7 +78,8 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
-	public String getNamespace() {return JournalPortletDataHandler.NAMESPACE;
+	public String getNamespace() {
+		return JournalPortletDataHandler.NAMESPACE;
 	}
 
 	@Override

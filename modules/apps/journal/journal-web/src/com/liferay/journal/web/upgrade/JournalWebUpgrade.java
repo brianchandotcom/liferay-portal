@@ -61,7 +61,7 @@ public class JournalWebUpgrade {
 		};
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.journal.content.web",
+			"com.liferay.journal.web",
 			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}

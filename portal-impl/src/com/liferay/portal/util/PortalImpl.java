@@ -2800,7 +2800,8 @@ public class PortalImpl implements Portal {
 			PortletInstance portletInstance = PortletInstance.newInstanceFor(
 				"com_liferay_asset_publisher_web_AssetPublisherPortlet");
 
-			defaultAssetPublisherPortletId = portletInstance.toString();
+			defaultAssetPublisherPortletId =
+				portletInstance.getPortletInstanceKey();
 		}
 
 		HttpServletRequest request = (HttpServletRequest)requestContext.get(

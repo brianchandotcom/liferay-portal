@@ -145,7 +145,7 @@ public class FindActionTest {
 			com.liferay.portlet.util.test.PortletKeys.TEST,
 			RandomTestUtil.randomString());
 
-		_testPortletId = portletInstance.toString();
+		_testPortletId = portletInstance.getPortletInstanceKey();
 
 		LayoutTestUtil.addPortletToLayout(
 			TestPropsValues.getUserId(), _assetLayout, _testPortletId,

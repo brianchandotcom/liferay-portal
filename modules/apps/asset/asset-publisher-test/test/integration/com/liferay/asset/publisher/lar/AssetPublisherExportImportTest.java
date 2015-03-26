@@ -93,7 +93,7 @@ public class AssetPublisherExportImportTest
 			AssetPublisherPortletKeys.ASSET_PUBLISHER,
 			RandomTestUtil.randomString());
 
-		return portletInstance.toString();
+		return portletInstance.getPortletInstanceKey();
 	}
 
 	@Before

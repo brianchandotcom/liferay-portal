@@ -62,6 +62,24 @@ public class PortletInstance {
 		return _instanceId;
 	}
 
+	public String getPortletInstanceKey() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(_rootPortletId);
+
+		if (_userId > 0) {
+			sb.append(_USER_SEPARATOR);
+			sb.append(_userId);
+		}
+
+		if (Validator.isNotNull(_instanceId)) {
+			sb.append(_INSTANCE_SEPARATOR);
+			sb.append(_instanceId);
+		}
+
+		return sb.toString();
+	}
+
 	public String getRootPortletId() {
 		return _rootPortletId;
 	}
@@ -87,21 +105,7 @@ public class PortletInstance {
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(_rootPortletId);
-
-		if (_userId > 0) {
-			sb.append(_USER_SEPARATOR);
-			sb.append(_userId);
-		}
-
-		if (Validator.isNotNull(_instanceId)) {
-			sb.append(_INSTANCE_SEPARATOR);
-			sb.append(_instanceId);
-		}
-
-		return sb.toString();
+		return getPortletInstanceKey();
 	}
 
 	private static String _getInstanceId(String portletInstance) {

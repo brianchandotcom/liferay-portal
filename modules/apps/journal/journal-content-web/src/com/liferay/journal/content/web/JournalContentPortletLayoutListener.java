@@ -191,7 +191,7 @@ public class JournalContentPortletLayoutListener
 		PortletInstance portletInstance = new PortletInstance(
 			portletId, instanceId);
 
-		return portletInstance.toString();
+		return portletInstance.getPortletInstanceKey();
 	}
 
 	protected String[] getRuntimePortletIds(

@@ -83,7 +83,7 @@ public class PortletConstants {
 		PortletInstance portletInstance = new PortletInstance(
 			portletId, userId);
 
-		return portletInstance.toString();
+		return portletInstance.getPortletInstanceKey();
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class PortletConstants {
 		PortletInstance portletInstance = new PortletInstance(
 			portletId, userId, instanceId);
 
-		return portletInstance.toString();
+		return portletInstance.getPortletInstanceKey();
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class PortletConstants {
 		PortletInstance portletInstance = new PortletInstance(
 			portletId, instanceId);
 
-		return portletInstance.toString();
+		return portletInstance.getPortletInstanceKey();
 	}
 
 	public static String generateInstanceId() {

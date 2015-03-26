@@ -299,7 +299,8 @@ public class AssetPublisherUtil {
 						AssetPublisherPortletKeys.ASSET_PUBLISHER,
 						StringPool.PERCENT);
 
-					dynamicQuery.add(property.like(portletInstance.toString()));
+					dynamicQuery.add(
+						property.like(portletInstance.getPortletInstanceKey()));
 				}
 
 			});

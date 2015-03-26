@@ -351,7 +351,7 @@ public class PortletInstanceTest {
 		PortletInstance portletInstance = new PortletInstance(
 			rootPortletId, userId, null);
 
-		return portletInstance.toString();
+		return portletInstance.getPortletInstanceKey();
 	}
 
 	protected String getId(
@@ -360,14 +360,14 @@ public class PortletInstanceTest {
 		PortletInstance portletInstance = new PortletInstance(
 			rootPortletId, userId, instanceKey);
 
-		return portletInstance.toString();
+		return portletInstance.getPortletInstanceKey();
 	}
 
 	protected String getId(String rootPortletId, String instanceKey) {
 		PortletInstance portletInstance = new PortletInstance(
 			rootPortletId, instanceKey);
 
-		return portletInstance.toString();
+		return portletInstance.getPortletInstanceKey();
 	}
 
 	protected String getWarPortletId() {

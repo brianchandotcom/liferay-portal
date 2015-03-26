@@ -25,6 +25,16 @@ public abstract class BaseRepositoryDefiner implements RepositoryDefiner {
 	public abstract String getClassName();
 
 	@Override
+	public String[] getSupportedConfigurations() {
+		return _EMPTY_CONFIGURATIONS;
+	}
+
+	@Override
+	public String[][] getSupportedParameters() {
+		return _EMPTY_PARAMETERS;
+	}
+
+	@Override
 	public abstract boolean isExternalRepository();
 
 	@Override
@@ -40,5 +50,9 @@ public abstract class BaseRepositoryDefiner implements RepositoryDefiner {
 	@Override
 	public abstract void registerRepositoryFactory(
 		RepositoryFactoryRegistry repositoryFactoryRegistry);
+
+	private static final String[] _EMPTY_CONFIGURATIONS = {};
+
+	private static final String[][] _EMPTY_PARAMETERS = {};
 
 }

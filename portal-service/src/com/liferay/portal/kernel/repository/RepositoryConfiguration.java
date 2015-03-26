@@ -12,30 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.registry;
-
-import com.liferay.portal.kernel.repository.DocumentRepository;
+package com.liferay.portal.kernel.repository;
 
 /**
  * @author Adolfo Pérez
  */
-public interface RepositoryDefiner {
-
-	public String getClassName();
+public interface RepositoryConfiguration {
 
 	public String[] getSupportedConfigurations();
 
 	public String[][] getSupportedParameters();
-
-	public boolean isExternalRepository();
-
-	public void registerCapabilities(
-		CapabilityRegistry<DocumentRepository> capabilityRegistry);
-
-	public void registerRepositoryEventListeners(
-		RepositoryEventRegistry repositoryEventRegistry);
-
-	public void registerRepositoryFactory(
-		RepositoryFactoryRegistry repositoryFactoryRegistry);
 
 }

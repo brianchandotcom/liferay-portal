@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
 import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
@@ -34,7 +35,8 @@ import com.liferay.portal.repository.capabilities.LiferayRepositoryEventTriggerC
  * @author Adolfo Pérez
  */
 public class RepositoryClassDefinition
-	implements RepositoryFactory, RepositoryFactoryRegistry {
+	implements RepositoryConfiguration, RepositoryFactory,
+		RepositoryFactoryRegistry {
 
 	public static final RepositoryClassDefinition fromRepositoryDefiner(
 		RepositoryDefiner repositoryDefiner) {
@@ -128,6 +130,16 @@ public class RepositoryClassDefinition
 			capabilityRepository);
 
 		return capabilityRepository;
+	}
+
+	@Override
+	public String[] getSupportedConfigurations() {
+		return _repositoryDefiner.getSupportedConfigurations();
+	}
+
+	@Override
+	public String[][] getSupportedParameters() {
+		return _repositoryDefiner.getSupportedParameters();
 	}
 
 	@Override

@@ -19,8 +19,15 @@ package com.liferay.document.library.repository.cmis.internal.constants;
  */
 public class CMISRepositoryConstants {
 
+	public static final String CMIS_ATOMPUB_CONFIGURATION = "ATOMPUB";
+
 	public static final String CMIS_ATOMPUB_REPOSITORY_CLASSNAME =
 		"com.liferay.document.library.repository.cmis.internal." +
 			"CMISAtomPubRepository";
+
+	public static final String CMIS_ATOMPUB_REPOSITORY_ID_PARAMETER =
+		"REPOSITORY_ID";
+
+	public static final String CMIS_ATOMPUB_URL_PARAMETER = "ATOMPUB_URL";
 
 }

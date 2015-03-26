@@ -614,7 +614,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			types = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR;
 		}
 		else if (group.isLayout() || group.isLayoutSetPrototype() ||
-				 group.isSite()) {
+				 group.isSite() || group.isUser()) {
 
 			types = RoleConstants.TYPES_REGULAR_AND_SITE;
 		}

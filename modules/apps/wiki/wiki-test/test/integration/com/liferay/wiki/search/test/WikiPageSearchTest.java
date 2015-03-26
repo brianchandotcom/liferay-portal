@@ -69,6 +69,7 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		_testMode = PortalRunMode.isTestMode();
 

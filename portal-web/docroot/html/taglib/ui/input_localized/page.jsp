@@ -108,7 +108,7 @@ if ((exception != null) && fieldName.equals(focusField)) {
 				contents="<%= mainLanguageValue %>"
 				contentsLanguageId="<%= languageId %>"
 				cssClass='<%= \"language-value \" + cssClass %>'
-				editorImpl="ckeditor"
+				editorName="ckeditor"
 				name="<%= fieldName %>"
 				onBlurMethod='<%= randomNamespace + \"OnBlurEditor\" %>'
 				onChangeMethod='<%= randomNamespace + \"OnChangeEditor\" %>'

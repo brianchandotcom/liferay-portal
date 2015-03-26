@@ -125,23 +125,23 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 					<aui:input name="coverImageCaption" type="hidden" />
 
 					<div class="entry-cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %>">
-						<liferay-ui:input-editor contents="<%= coverImageCaption %>" editorType="alloyeditor" name="coverImageCaptionEditor" placeholder="caption" showSource="<%= false %>" />
+						<liferay-ui:input-editor contents="<%= coverImageCaption %>" editorName="alloyeditor" name="coverImageCaptionEditor" placeholder="caption" showSource="<%= false %>" />
 					</div>
 
 					<div class="entry-title">
-						<h2><liferay-ui:input-editor contents="<%= title %>" editorType="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h2>
+						<h2><liferay-ui:input-editor contents="<%= title %>" editorName="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h2>
 					</div>
 
 					<aui:input name="title" type="hidden" />
 
 					<div class="entry-subtitle">
-						<liferay-ui:input-editor contents="<%= subtitle %>" editorType="alloyeditor" name="subtitleEditor" placeholder="subtitle" showSource="<%= false %>" />
+						<liferay-ui:input-editor contents="<%= subtitle %>" editorName="alloyeditor" name="subtitleEditor" placeholder="subtitle" showSource="<%= false %>" />
 					</div>
 
 					<aui:input name="subtitle" type="hidden" />
 
 					<div class="entry-body">
-						<liferay-ui:input-editor contents="<%= content %>" editorType="<%= PropsUtil.get(EDITOR_IMPL_KEY) %>" name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" />
+						<liferay-ui:input-editor contents="<%= content %>" editorName="<%= CONTENT_EDITOR_NAME %>" name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" />
 					</div>
 
 					<aui:input name="content" type="hidden" />
@@ -438,5 +438,5 @@ else {
 %>
 
 <%!
-public static final String EDITOR_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp";
+public static final String CONTENT_EDITOR_NAME = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp");
 %>

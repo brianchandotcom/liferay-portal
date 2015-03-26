@@ -46,10 +46,11 @@ public class MentionsPortletEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		JSONObject trigger = JSONFactoryUtil.createJSONObject();
-		trigger.put(
+		JSONObject triggerJSONObject = JSONFactoryUtil.createJSONObject();
+
+		triggerJSONObject.put(
 			"resultFilters", "function(query, results) {return results;}");
-		trigger.put("resultTextLocator", "screenName");
+		triggerJSONObject.put("resultTextLocator", "screenName");
 
 		LiferayPortletURL autoCompleteUserURL =
 			liferayPortletResponse.createResourceURL("1_WAR_mentionsportlet");
@@ -58,9 +59,9 @@ public class MentionsPortletEditorConfigContributor
 			autoCompleteUserURL.toString() + "&" +
 				PortalUtil.getPortletNamespace("1_WAR_mentionsportlet");
 
-		trigger.put("source", source);
-		trigger.put("term", "@");
-		trigger.put("tplReplace", "{mention}");
+		triggerJSONObject.put("source", source);
+		triggerJSONObject.put("term", "@");
+		triggerJSONObject.put("tplReplace", "{mention}");
 
 		StringBundler sb = new StringBundler(8);
 
@@ -68,18 +69,19 @@ public class MentionsPortletEditorConfigContributor
 		sb.append("<span>");
 		sb.append("<span class=\"user-profile-image\" ");
 		sb.append("style=\"background-image: url('{portraitURL}');");
-		sb.append("background-size: 32px 32px; height: 32px; width: 32px;\"></span>");
-		sb.append("<span class=\"user-name\">{fullName}</span>");
+		sb.append("background-size: 32px 32px; height: 32px; width: 32px;\">");
+		sb.append("</span><span class=\"user-name\">{fullName}</span>");
 		sb.append("<span class=\"user-details\">@{screenName}</span></span>");
 		sb.append("</div>");
 
-		trigger.put("tplResults", sb.toString());
+		triggerJSONObject.put("tplResults", sb.toString());
 
-		JSONArray triggersArr = JSONFactoryUtil.createJSONArray();
+		JSONArray triggerJSONArray = JSONFactoryUtil.createJSONArray();
 
-		triggersArr.put(trigger);
+		triggerJSONArray.put(triggerJSONObject);
 
-		JSONObject autoCompleteConfig = JSONFactoryUtil.createJSONObject();
+		JSONObject autoCompleteConfigJSONObject =
+			JSONFactoryUtil.createJSONObject();
 
 		String extraPlugins = jsonObject.getString("extraPlugins");
 
@@ -90,11 +92,11 @@ public class MentionsPortletEditorConfigContributor
 			extraPlugins = "autocomplete";
 		}
 
-		autoCompleteConfig.put("requestTemplate", "query={query}");
-		autoCompleteConfig.put("trigger", triggersArr);
+		autoCompleteConfigJSONObject.put("requestTemplate", "query={query}");
+		autoCompleteConfigJSONObject.put("trigger", triggerJSONArray);
 
 		jsonObject.put("extraPlugins", extraPlugins);
-		jsonObject.put("autocomplete", autoCompleteConfig);
+		jsonObject.put("autocomplete", autoCompleteConfigJSONObject);
 	}
 
 	public void populateOptionsJSONObject(

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -85,7 +87,8 @@ public class AlloyEditorConfigContributor
 			for (Map.Entry<String, String> entry :
 				fileBrowserParamsMap.entrySet()) {
 
-				documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
+				documentSelectorURL.setParameter(
+					entry.getKey(), entry.getValue());
 			}
 		}
 
@@ -105,26 +108,29 @@ public class AlloyEditorConfigContributor
 		jsonObject.put("language", languageId.replace("iw_", "he_"));
 		jsonObject.put("srcNode", "#" + name);
 
-		JSONObject toolbars = JSONFactoryUtil.createJSONObject();
+		JSONObject toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
 
 		try{
-			JSONArray toolbarAdd = JSONFactoryUtil.createJSONArray(
+			JSONArray toolbarAddJSONArray = JSONFactoryUtil.createJSONArray(
 				"['imageselector']");
 
-			JSONArray toolbarImage = JSONFactoryUtil.createJSONArray(
+			JSONArray toolbarImageJSONArray = JSONFactoryUtil.createJSONArray(
 				"['left', 'right']");
 
-			JSONArray toolbarStyles = JSONFactoryUtil.createJSONArray(
+			JSONArray toolbarStylesJSONArray = JSONFactoryUtil.createJSONArray(
 				"['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']");
 
-			toolbars.put("add", toolbarAdd);
-			toolbars.put("image", toolbarImage);
-			toolbars.put("styles", toolbarStyles);
+			toolbarsJSONObject.put("add", toolbarAddJSONArray);
+			toolbarsJSONObject.put("image", toolbarImageJSONArray);
+			toolbarsJSONObject.put("styles", toolbarStylesJSONArray);
 		}
 		catch (JSONException jsone) {
+			if (_log.isErrorEnabled()) {
+				_log.error("Unable to create a JSON array from string");
+			}
 		}
 
-		jsonObject.put("toolbars", toolbars);
+		jsonObject.put("toolbarsJSONObject", toolbarsJSONObject);
 	}
 
 	public void populateOptionsJSONObject(
@@ -132,5 +138,8 @@ public class AlloyEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AlloyEditorConfigContributor.class);
 
 }

@@ -45,6 +45,7 @@ public class WikiPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 

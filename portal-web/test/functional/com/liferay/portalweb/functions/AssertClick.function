@@ -57,18 +57,6 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="assertTextClickAndWait">
-		<execute function="AssertTextEquals#assertText" />
-
-		<execute selenium="mouseOver" />
-
-		<execute selenium="clickAndWait" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="assertTextClickAt">
 		<execute function="AssertTextEquals#assertText" />
 

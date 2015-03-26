@@ -115,8 +115,6 @@ public class PortletKeys {
 
 	public static final String MY_PAGES = "140";
 
-	public static final String MY_SITES = "29";
-
 	public static final String MY_SITES_DIRECTORY = "188";
 
 	public static final String MY_WORKFLOW_INSTANCES = "158";
@@ -175,8 +173,6 @@ public class PortletKeys {
 	public static final String SITE_MEMBERS_DIRECTORY = "187";
 
 	public static final String SITE_MEMBERSHIPS_ADMIN = "174";
-
-	public static final String SITE_REDIRECTOR = "49";
 
 	public static final String SITE_SETTINGS = "165";
 

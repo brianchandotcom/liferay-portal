@@ -326,28 +326,6 @@ public class UserImpl extends UserBaseImpl {
 				profileFriendlyURL);
 		}
 
-		Group group = getGroup();
-
-		int publicLayoutsPageCount = group.getPublicLayoutsPageCount();
-
-		if (publicLayoutsPageCount > 0) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(portalURL);
-			sb.append(mainPath);
-			sb.append("/my_sites/view?groupId=");
-			sb.append(group.getGroupId());
-
-			if (privateLayout) {
-				sb.append("&privateLayout=1");
-			}
-			else {
-				sb.append("&privateLayout=0");
-			}
-
-			return sb.toString();
-		}
-
 		return StringPool.BLANK;
 	}
 

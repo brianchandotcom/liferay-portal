@@ -7,6 +7,8 @@ Liferay = window.Liferay || {};
 
 	var REGEX_METHOD_GET = /^get$/i;
 
+	var STR_MULTIPART = 'multipart/form-data';
+
 	Liferay.namespace = _.namespace;
 
 	$.ajaxSetup(
@@ -135,7 +137,7 @@ Liferay = window.Liferay || {};
 				if (isNode(form)) {
 					ioConfig.form = form;
 
-					if (ioConfig.form.enctype == 'multipart/form-data') {
+					if (ioConfig.form.enctype == STR_MULTIPART) {
 						ioConfig.contentType = false;
 						ioConfig.processData = false;
 					}
@@ -177,7 +179,7 @@ Liferay = window.Liferay || {};
 		);
 
 		if (ioConfig.form) {
-			if (ioConfig.form.enctype == 'multipart/form-data') {
+			if (ioConfig.form.enctype == STR_MULTIPART && _.isFunction(window.FormData)) {
 				ioConfig.data = new FormData(ioConfig.form);
 
 				ioConfig.data.append('cmd', cmd);

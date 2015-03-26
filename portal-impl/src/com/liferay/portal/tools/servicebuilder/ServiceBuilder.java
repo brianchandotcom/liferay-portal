@@ -4248,16 +4248,9 @@ public class ServiceBuilder {
 	}
 
 	private JavaClass _getJavaClass(String fileName) throws IOException {
-		int pos = fileName.indexOf(_implDir + "/");
+		fileName = StringUtil.replace(fileName, "\\", "/");
 
-		if (pos != -1) {
-			pos += _implDir.length();
-		}
-		else {
-			pos = fileName.indexOf(_apiDir + "/") + _apiDir.length();
-		}
-
-		String srcFile = fileName.substring(pos + 1);
+		String srcFile = fileName.substring(fileName.lastIndexOf("/src/") + 5);
 		String className = StringUtil.replace(
 			srcFile.substring(0, srcFile.length() - 5), "/", ".");
 

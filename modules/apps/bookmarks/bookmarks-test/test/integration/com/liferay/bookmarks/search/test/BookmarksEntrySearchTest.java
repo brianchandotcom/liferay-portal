@@ -144,9 +144,7 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 			folderId = folder.getFolderId();
 		}
 
-		return BookmarksTestUtil.addEntry(
-			folderId, true, serviceContext.isAddGroupPermissions(),
-			serviceContext.isAddGuestPermissions(), serviceContext);
+		return BookmarksTestUtil.addEntry(folderId, true, serviceContext);
 	}
 
 	@Override

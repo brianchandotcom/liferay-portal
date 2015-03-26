@@ -16,6 +16,7 @@ package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -30,6 +31,10 @@ public class PortletInstance {
 
 	public static final int PORTLET_INSTANCE_KEY_MAX_LENGTH =
 		255 - _INSTANCE_SEPARATOR.length() + _USER_SEPARATOR.length() + 39;
+
+	public static PortletInstance newInstanceFor(String rootPortletId) {
+		return new PortletInstance(rootPortletId, StringUtil.randomString(12));
+	}
 
 	public PortletInstance(String portletInstanceId) {
 		this(

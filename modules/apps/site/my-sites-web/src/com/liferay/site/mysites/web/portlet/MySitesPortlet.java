@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.css-class-wrapper=portlet-communities",
+		"com.liferay.portlet.css-class-wrapper=portlet-my-sites",
 		"com.liferay.portlet.display-category=category.community",
 		"com.liferay.portlet.icon=/icons/communities.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",

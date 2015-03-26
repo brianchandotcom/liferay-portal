@@ -889,6 +889,13 @@
 				<execute function="AssertTextNotPresent" value1="${relatedAssetTitleHidden}" />
 			</then>
 		</if>
+
+		<if>
+			<isset var="tagName" />
+			<then>
+				<execute function="AssertTextEquals" locator1="PGAssetpublisher#METADATA_TAGS" value1="${tagName}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewRate4StarsPG">
@@ -938,6 +945,23 @@
 
 				<execute function="AssertSelectedLabel" locator1="PGAssetpublisherConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAssetConfiguration}" />
 			</else>
+		</if>
+	</command>
+
+	<command name="viewTagFocusPG">
+		<for list="${assetTitleList}" param="assetTitle">
+			<var name="key_assetTitle" value="${assetTitle}" />
+
+			<execute function="AssertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
+		</for>
+
+		<if>
+			<isset var="nonTaggedAsset" />
+			<then>
+				<var name="key_assetTitle" value="${assetTitle}" />
+
+				<execute function="AssertTextNotPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
+			</then>
 		</if>
 	</command>
 </definition>

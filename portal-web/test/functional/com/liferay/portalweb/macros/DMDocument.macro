@@ -43,6 +43,20 @@
 		</if>
 
 		<if>
+			<isset var="tagNameList" />
+			<then>
+				<execute macro="DMDocument#showCategorization" />
+
+				<for list="${tagNameList}" param="tagName">
+					<execute function="AssertClick" locator1="CPDocumentsandmediaAdddocument#CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
+					<execute function="Type" locator1="CPDocumentsandmediaAdddocument#CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+				</for>
+
+				<execute function="AssertClick" locator1="CPDocumentsandmediaAdddocument#CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="vocabularyName" />
 			<then>
 				<execute macro="DMDocument#showCategorization" />

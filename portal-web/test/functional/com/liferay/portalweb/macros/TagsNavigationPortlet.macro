@@ -1,4 +1,62 @@
 <definition>
+	<command name="clickTagView">
+		<var name="key_tagName" value="${tagName}" />
+
+		<if>
+			<isset var="tagAssetCount" />
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGTagsNavigationPortlet#TAG_NAME" value1="${tagAssetCount}" />
+			</then>
+		</if>
+
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGTagsNavigationPortlet#TAG_NAME" value1="${tagName}" />
+	</command>
+
+	<command name="configureDisplayStylePG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Tags Navigation" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="PGTagsNavigationPortletConfiguration#TAGS_NAVIGATION_IFRAME" />
+
+		<if>
+			<isset var="displayTemplate" />
+			<then>
+				<execute function="Select" locator1="PGTagsNavigationPortletConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${displayTemplate}" />
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="PGTagsNavigationPortletConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="PGAssetpublisherConfigurationDisplaysettings#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="configureFlaggableSettingsPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Tags Navigation" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="PGTagsNavigationPortletConfiguration#TAGS_NAVIGATION_IFRAME" />
+
+		<if>
+			<equals arg1="${showUnusedTags}" arg2="true" />
+			<then>
+				<execute function="Check" locator1="PGTagsNavigationPortletConfiguration#SHOW_UNUSED_TAGS_CHECKBOX" value1="Show Unused Tags" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${showAssetCount}" arg2="true" />
+			<then>
+				<execute function="Check" locator1="PGTagsNavigationPortletConfiguration#SHOW_ASSET_COUNT_CHECKBOX" value1="Show Asset Count" />
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="PGTagsNavigationPortletConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="PGAssetpublisherConfigurationDisplaysettings#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
 	<command name="viewADTColorByPopularityPG">
 		<var name="key_adtTagColor" value="${adtTagColor}" />
 		<var name="key_tagName" value="${tagName}" />
@@ -12,5 +70,41 @@
 
 			<execute function="AssertTextEquals" locator1="PGTagsNavigationPortlet#TAG_NAME" value1="${tagName}" />
 		</for>
+	</command>
+
+	<command name="viewTagCloud">
+		<var name="key_tagPopularityLevel" value="${tagPopularityLevel}" />
+
+		<execute function="AssertTextEquals" locator1="PGTagsNavigationPortlet#TAG_CLOUD_POPULARITY" value1="${tagName}" />
+	</command>
+
+	<command name="viewTagCloudConfiguration">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Tag Cloud" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="PGTagsNavigationPortletConfiguration#TAG_CLOUD_IFRAME" />
+
+		<if>
+			<isset var="displayTemplate" />
+			<then>
+				<execute function="AssertSelectedLabel" locator1="PGTagsNavigationPortletConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${displayTemplate}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${showUnusedTags}" arg2="true" />
+			<then>
+				<execute function="AssertChecked" locator1="PGTagsNavigationPortletConfiguration#SHOW_UNUSED_TAGS_CHECKBOX" value1="Show Unused Tags" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${showAssetCount}" arg2="true" />
+			<then>
+				<execute function="AssertChecked" locator1="PGTagsNavigationPortletConfiguration#SHOW_ASSET_COUNT_CHECKBOX" value1="Show Asset Count" />
+			</then>
+		</if>
 	</command>
 </definition>

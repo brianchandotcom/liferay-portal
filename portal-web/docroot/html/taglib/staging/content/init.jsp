@@ -23,6 +23,7 @@ page import="com.liferay.portal.lar.LayoutExporter" %>
 <liferay-staging:defineObjects />
 
 <%
+String cmd = GetterUtil.getString(request.getAttribute("liferay-staging:content:cmd"));
 boolean disableInputs = GetterUtil.getBoolean(request.getAttribute("liferay-staging:content:disableInputs"));
 PortletRequest renderRequest = (PortletRequest)request.getAttribute("liferay-staging:content:renderRequest");
 Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("liferay-staging:content:parameterMap"), Collections.emptyMap());
@@ -53,4 +54,6 @@ Date startDate = dateRange.getStartDate();
 Date endDate = dateRange.getEndDate();
 
 List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId(), false);
+
+boolean exportImportConfigurationEditing = !cmd.equals(Constants.PUBLISH_TO_LIVE) && !cmd.equals(Constants.PUBLISH_TO_REMOTE);
 %>

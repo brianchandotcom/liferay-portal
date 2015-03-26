@@ -31,6 +31,12 @@
 		<tag-class>com.liferay.taglib.staging.ContentTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>cmd</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<name>disableInputs</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

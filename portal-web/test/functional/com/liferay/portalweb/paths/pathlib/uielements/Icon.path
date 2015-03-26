@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>COG</td>
-	<td>//i[contains(@class,'icon-cog') and contains(@class,'lfr-icon-menu-icon')]</td>
+	<td>//div[@id='main-content']//i[contains(@class,'icon-cog') and contains(@class,'lfr-icon-menu-icon')]</td>
 	<td></td>
 </tr>
 </tbody>

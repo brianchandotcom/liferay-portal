@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_ICON</td>
-	<td>//menu[@class='portlet-topper-toolbar']/div/a/i</td>
+	<td>//div[@id='main-content']//menu[@class='portlet-topper-toolbar']/div/a/i</td>
 	<td></td>
 </tr>
 <tr>

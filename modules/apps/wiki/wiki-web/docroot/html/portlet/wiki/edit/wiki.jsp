@@ -49,7 +49,7 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 				<liferay-ui:input-editor
 					configParams="<%= configParams %>"
 					contents="<%= content %>"
-					editorName="<%= CREOLE_EDITOR_NAME %>"
+					editorName="<%= wikiGroupServiceConfiguration.getCreoleEditor() %>"
 					fileBrowserParams="<%= fileBrowserParams %>"
 					toolbarSet="creole"
 					width="100%"
@@ -59,7 +59,7 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 				<liferay-ui:input-editor
 					configParams="<%= configParams %>"
 					contents="<%= content %>"
-					editorName="<%= SIMPLE_EDITOR_NAME %>"
+					editorName="<%= wikiGroupServiceConfiguration.getSimpleEditor() %>"
 					fileBrowserParams="<%= fileBrowserParams %>"
 					name="content"
 					width="100%"
@@ -113,9 +113,3 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 		}
 	);
 </aui:script>
-
-<%!
-public static final String SIMPLE_EDITOR_NAME = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.wiki.edit.mediawiki.jsp");
-
-public static final String CREOLE_EDITOR_NAME = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.wiki.edit.creole.jsp");
-%>

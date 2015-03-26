@@ -40,6 +40,8 @@ public class LoggerElement {
 
 	public void addChildLoggerElement(LoggerElement childLoggerElement) {
 		_childLoggerElements.add(childLoggerElement);
+
+		LoggerUtil.addChildLoggerElement(this, childLoggerElement);
 	}
 
 	public String getClassName() {
@@ -60,10 +62,14 @@ public class LoggerElement {
 
 	public void setClassName(String className) {
 		_className = className;
+
+		LoggerUtil.setClassName(this);
 	}
 
 	public void setID(String id) {
 		_id = id;
+
+		LoggerUtil.setID(this);
 	}
 
 	public void setName(String name) {
@@ -72,6 +78,8 @@ public class LoggerElement {
 
 	public void setText(String text) {
 		_text = text;
+
+		LoggerUtil.setText(this);
 	}
 
 	public String toString() {

@@ -522,7 +522,7 @@
 </tr>
 <tr>
 	<td>METADATA_TAGS</td>
-	<td>//span[@class='metadata-entry metadata-tags']</td>
+	<td>//span[contains(@class,'metadata-tags')]</td>
 	<td></td>
 </tr>
 <tr>

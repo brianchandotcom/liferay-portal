@@ -28,6 +28,11 @@
 	<td>//li[contains(@class,'tags-summary')]/a[contains(.,'${key_tagName}') and contains(@style,'color: ${key_adtTagColor}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TAG_CLOUD_POPULARITY</td>
+	<td>//li[@class='tag-popularity-${key_tagPopularityLevel}']//a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

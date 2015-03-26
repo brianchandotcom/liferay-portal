@@ -406,6 +406,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_DESCRIPTIVE_TAG</td>
+	<td>//div[@data-title='${key_webContentTitle}']//span[contains(@class,'asset-tags') and contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_DESCRIPTIVE_WORKFLOW_STATUS</td>
 	<td>//div[@data-title='${key_webContentTitle}']//span[@class='workflow-status']/strong</td>
 	<td></td>

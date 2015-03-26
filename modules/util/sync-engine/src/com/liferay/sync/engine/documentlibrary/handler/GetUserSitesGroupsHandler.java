@@ -120,6 +120,6 @@ public class GetUserSitesGroupsHandler extends BaseJSONHandler {
 	private static final Logger _logger = LoggerFactory.getLogger(
 		GetUserSitesGroupsHandler.class);
 
-	private static List<SyncSite> _remoteSyncSites;
+	private List<SyncSite> _remoteSyncSites;
 
 }

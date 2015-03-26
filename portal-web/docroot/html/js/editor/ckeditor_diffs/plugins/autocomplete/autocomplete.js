@@ -60,13 +60,15 @@
 		_getACPositionBase: function() {
 			var instance = this;
 
+			var inline = this.get(STR_EDITOR).editable().isInline();
+
 			if (!instance._contentsContainer) {
 				var inputElement = instance._getInputElement();
 
 				instance._contentsContainer = inputElement.siblings('.cke').one('.cke_contents') || inputElement;
 			}
 
-			return instance._contentsContainer.getXY();
+			return inline ? [0, 0] : instance._contentsContainer.getXY();
 		},
 
 		_getACPositionOffset: function() {

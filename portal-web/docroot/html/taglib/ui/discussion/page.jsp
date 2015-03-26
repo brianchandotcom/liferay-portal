@@ -39,8 +39,6 @@ MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 MBMessage rootMessage = treeWalker.getRoot();
 List<MBMessage> messages = treeWalker.getMessages();
 int messagesCount = messages.size();
-
-CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDisplayContext();
 %>
 
 <section>
@@ -144,7 +142,7 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 										</div>
 
 										<div class="lfr-discussion-body">
-											<liferay-ui:input-editor contents="" data="<%= commentsEditorDisplayContext.getEditorData() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
+											<liferay-ui:input-editor configKey="commentsEditor" contents="" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" showSource="<%= false %>" />
 
 											<aui:input name="postReplyBody0" type="hidden" />
 
@@ -206,7 +204,6 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
 							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, message);
 
-							request.setAttribute("liferay-ui:discussion:commentsEditorDisplayContext", commentsEditorDisplayContext);
 							request.setAttribute("liferay-ui:discussion:messageDisplay", messageDisplay);
 							request.setAttribute("liferay-ui:discussion:randomNamespace", randomNamespace);
 							request.setAttribute("liferay-ui:discussion:ratingsEntries", ratingsEntries);

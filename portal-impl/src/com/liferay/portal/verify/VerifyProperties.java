@@ -1019,7 +1019,7 @@ public class VerifyProperties extends VerifyProcess {
 		"ratings.max.score", "ratings.min.score", "scheduler.classes",
 		"schema.run.minimal", "shard.available.names",
 		"siteminder.auth.enabled", "siteminder.import.from.ldap",
-		"siteminder.user.header", "staging.lock.enabled",
+		"siteminder.user.header", "staging.lock.enabled", "tck.url",
 		"webdav.storage.class", "webdav.storage.show.edit.url",
 		"webdav.storage.show.view.url", "webdav.storage.tokens",
 		"wiki.email.page.added.signature", "wiki.email.page.updated.signature",

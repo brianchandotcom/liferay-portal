@@ -3038,8 +3038,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
-tck.url=true
-
 hot.deploy.dependency.management.enabled=false</echo>
 			</then>
 		</if>

@@ -146,6 +146,10 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 					Group group = groupPersistence.fetchByPrimaryKey(
 						trashEntry.getGroupId());
 
+					if (group == null) {
+						return;
+					}
+
 					Date date = getMaxAge(group);
 
 					if (createDate.before(date) ||
@@ -164,6 +168,15 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 			BaseActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_ATTRIBUTE);
 
 		actionableDynamicQuery.performActions();
+	}
+
+	@Override
+	public void deleteEntries(long groupId) throws PortalException {
+		List<TrashEntry> trashEntries = getEntries(groupId);
+
+		for (TrashEntry trashEntry : trashEntries) {
+			deleteEntry(trashEntry);
+		}
 	}
 
 	/**

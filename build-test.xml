@@ -1702,6 +1702,18 @@ go]]></replacevalue>
 					</else>
 				</if>
 
+				<if>
+					<contains string="@{file.name}" substring="EvaluateLog" />
+					<then>
+						<replaceregexp
+							file="@{file.name}"
+							flags="g"
+							match="testray\.testcase\.name.*(?=&quot;)"
+							replace="\0_EvaluateLog"
+						/>
+					</then>
+				</if>
+
 				<replaceregexp
 					file="@{file.name}"
 					flags="g"

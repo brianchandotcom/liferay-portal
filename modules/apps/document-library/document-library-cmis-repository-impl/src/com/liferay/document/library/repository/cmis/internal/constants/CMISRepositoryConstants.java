@@ -30,4 +30,8 @@ public class CMISRepositoryConstants {
 
 	public static final String CMIS_ATOMPUB_URL_PARAMETER = "ATOMPUB_URL";
 
+	public static final String CMIS_WEB_SERVICES_REPOSITORY_CLASSNAME =
+		"com.liferay.document.library.repository.cmis.internal." +
+			"CMISWebServicesRepository";
+
 }

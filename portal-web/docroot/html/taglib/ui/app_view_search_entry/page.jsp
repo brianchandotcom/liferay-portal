@@ -18,6 +18,7 @@
 
 <%
 String actionJsp = (String)request.getAttribute("liferay-ui:app-view-search-entry:actionJsp");
+ServletContext actionJspServletContext = (ServletContext)request.getAttribute("liferay-ui:app-view-entry:actionJspServletContext");
 String containerName = (String)request.getAttribute("liferay-ui:app-view-search-entry:containerName");
 String containerType = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-search-entry:containerType"), LanguageUtil.get(locale, "folder"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:app-view-search-entry:cssClass"));
@@ -186,7 +187,7 @@ summary.setQueryTerms(queryTerms);
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(actionJsp) %>">
-		<liferay-util:include page="<%= actionJsp %>">
+		<liferay-util:include page="<%= actionJsp %>" servletContext="<%= actionJspServletContext %>">
 			<liferay-util:param name="showMinimalActionButtons" value="<%= String.valueOf(Boolean.TRUE) %>" />
 		</liferay-util:include>
 	</c:if>

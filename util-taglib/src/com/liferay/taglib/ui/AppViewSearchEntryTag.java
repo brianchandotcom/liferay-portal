@@ -24,6 +24,7 @@ import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -39,6 +40,12 @@ public class AppViewSearchEntryTag extends IncludeTag {
 
 	public void setActionJsp(String actionJsp) {
 		_actionJsp = actionJsp;
+	}
+
+	public void setActionJspServletContext(
+		ServletContext actionJspServletContext) {
+
+		_actionJspServletContext = actionJspServletContext;
 	}
 
 	public void setContainerName(String containerName) {
@@ -131,6 +138,14 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_versions = null;
 	}
 
+	protected ServletContext getActionJspServletContext() {
+		if (_actionJspServletContext != null) {
+			return _actionJspServletContext;
+		}
+
+		return servletContext;
+	}
+
 	@Override
 	protected String getPage() {
 		return _PAGE;
@@ -145,6 +160,9 @@ public class AppViewSearchEntryTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:actionJsp", _actionJsp);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:actionJspServletContext",
+			getActionJspServletContext());
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:containerName", _containerName);
 		request.setAttribute(
@@ -190,6 +208,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		"/html/taglib/ui/app_view_search_entry/page.jsp";
 
 	private String _actionJsp;
+	private ServletContext _actionJspServletContext;
 	private String _containerName;
 	private String _containerType;
 	private String _cssClass;

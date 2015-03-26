@@ -74,18 +74,6 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 		return CMISRepositoryUtil.createSession(parameters);
 	}
 
-	@Deprecated
-	@Override
-	public String[] getSupportedConfigurations() {
-		return _SUPPORTED_CONFIGURATIONS;
-	}
-
-	@Deprecated
-	@Override
-	public String[][] getSupportedParameters() {
-		return _SUPPORTED_PARAMETERS;
-	}
-
 	protected String getTypeSettingsValue(String typeSettingsKey)
 		throws InvalidRepositoryException {
 
@@ -97,16 +85,6 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 
 	private static final String _ATOMPUB_URL = "ATOMPUB_URL";
 
-	private static final String _CONFIGURATION_ATOMPUB = "ATOMPUB";
-
 	private static final String _REPOSITORY_ID = "REPOSITORY_ID";
-
-	private static final String[] _SUPPORTED_CONFIGURATIONS = {
-		_CONFIGURATION_ATOMPUB
-	};
-
-	private static final String[][] _SUPPORTED_PARAMETERS = {
-		{_ATOMPUB_URL, _REPOSITORY_ID}
-	};
 
 }

@@ -35,6 +35,16 @@ public class CMISAtomPubRepositoryDefiner extends BaseRepositoryDefiner {
 	}
 
 	@Override
+	public String[] getSupportedConfigurations() {
+		return _SUPPORTED_CONFIGURATIONS;
+	}
+
+	@Override
+	public String[][] getSupportedParameters() {
+		return _SUPPORTED_PARAMETERS;
+	}
+
+	@Override
 	public boolean isExternalRepository() {
 		return true;
 	}
@@ -53,6 +63,20 @@ public class CMISAtomPubRepositoryDefiner extends BaseRepositoryDefiner {
 	protected void setRepositoryFactory(RepositoryFactory repositoryFactory) {
 		_repositoryFactory = repositoryFactory;
 	}
+
+	private static final String _ATOMPUB_URL = "ATOMPUB_URL";
+
+	private static final String _CONFIGURATION_ATOMPUB = "ATOMPUB";
+
+	private static final String _REPOSITORY_ID = "REPOSITORY_ID";
+
+	private static final String[] _SUPPORTED_CONFIGURATIONS = {
+		_CONFIGURATION_ATOMPUB
+	};
+
+	private static final String[][] _SUPPORTED_PARAMETERS = {
+		{_ATOMPUB_URL, _REPOSITORY_ID}
+	};
 
 	private RepositoryFactory _repositoryFactory;
 

@@ -96,7 +96,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						content, importToExclude, importClassName, pos);
 				}
 
-				fromIndex = pos + importToExclude.length();
+				fromIndex = pos + 1;
 			}
 		}
 

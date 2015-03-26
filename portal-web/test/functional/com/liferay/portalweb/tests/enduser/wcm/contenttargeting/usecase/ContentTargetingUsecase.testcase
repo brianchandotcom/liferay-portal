@@ -1,4 +1,5 @@
 <definition component-name="extra-apps-content-targeting">
+	<property name="custom.properties" value="javascript.fast.load=false" />
 	<property name="testray.main.component.name" value="Content Targeting" />
 
 	<tear-down>
@@ -1385,12 +1386,12 @@
 		</execute>
 
 		<execute macro="LAR#configureExportSiteOptions">
-			<var name="contentName" value="User Segment Content Display" />
+			<var name="mainApplication" value="User Segment Content Display" />
 			<var name="uncheckSubApplicationList" value="Referenced User Segments,Referenced Content" />
 		</execute>
 
 		<execute macro="LAR#configureExportSiteOptions">
-			<var name="contentName" value="Campaign Content Display" />
+			<var name="mainApplication" value="Campaign Content Display" />
 			<var name="uncheckSubApplicationList" value="Referenced Campaigns,Referenced Content" />
 		</execute>
 
@@ -1507,12 +1508,12 @@
 		</execute>
 
 		<execute macro="LAR#configureExportSiteOptions">
-			<var name="contentName" value="User Segment Content Display" />
+			<var name="mainApplication" value="User Segment Content Display" />
 			<var name="uncheckSubApplicationList" value="Referenced User Segments,Referenced Content" />
 		</execute>
 
 		<execute macro="LAR#configureExportSiteOptions">
-			<var name="contentName" value="Campaign Content Display" />
+			<var name="mainApplication" value="Campaign Content Display" />
 			<var name="uncheckSubApplicationList" value="Referenced Campaigns,Referenced Content" />
 		</execute>
 

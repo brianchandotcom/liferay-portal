@@ -538,6 +538,8 @@
 				</then>
 			</elseif>
 		</if>
+
+		<execute function="Pause" locator1="3000" />
 	</command>
 
 	<command name="deleteCommentPG">

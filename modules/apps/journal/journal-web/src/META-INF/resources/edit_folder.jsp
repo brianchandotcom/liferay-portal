@@ -405,9 +405,9 @@ if (folder != null) {
 }
 else {
 	if (parentFolderId > 0) {
-		JournalUtil.addPortletBreadcrumbEntries(parentFolderId, request, renderResponse);
+		JournalPortletUtil.addPortletBreadcrumbEntries(parentFolderId, request, renderResponse);
 	}
 
-	JournalPortletUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-folder"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-folder"), currentURL);
 }
 %>

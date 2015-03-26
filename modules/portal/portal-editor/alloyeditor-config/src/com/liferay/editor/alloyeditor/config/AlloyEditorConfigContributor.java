@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.alloyeditor.config;
+package com.liferay.editor.alloyeditor.config;
 
+import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.editor.config.PortletEditorConfigContributor;
 
 import java.util.Locale;
 import java.util.Map;
@@ -39,8 +39,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(property = {"editor.impl=alloyeditor"})
-public class AlloyEditorConfigContributor
-	implements PortletEditorConfigContributor {
+public class AlloyEditorConfigContributor implements EditorConfigContributor {
 
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
@@ -85,7 +84,7 @@ public class AlloyEditorConfigContributor
 
 		if (fileBrowserParamsMap != null) {
 			for (Map.Entry<String, String> entry :
-				fileBrowserParamsMap.entrySet()) {
+					fileBrowserParamsMap.entrySet()) {
 
 				documentSelectorURL.setParameter(
 					entry.getKey(), entry.getValue());
@@ -110,7 +109,7 @@ public class AlloyEditorConfigContributor
 
 		JSONObject toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
 
-		try{
+		try {
 			JSONArray toolbarAddJSONArray = JSONFactoryUtil.createJSONArray(
 				"['imageselector']");
 
@@ -139,7 +138,7 @@ public class AlloyEditorConfigContributor
 		LiferayPortletResponse liferayPortletResponse) {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AlloyEditorConfigContributor.class);
 
 }

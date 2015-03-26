@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.mentions.portlet.editor.conf;
+package com.liferay.mentions.editor.config;
 
+import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.editor.config.PortletEditorConfigContributor;
 
 import java.util.Map;
 
@@ -34,12 +34,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"editor.config.key=commentsEditor",
-		"service.ranking:Integer=10"
+		"editor.config.key=commentsEditor", "service.ranking:Integer=10"
 	}
 )
-public class MentionsPortletEditorConfigContributor
-	implements PortletEditorConfigContributor {
+public class MentionsEditorConfigContributor
+	implements EditorConfigContributor {
 
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,

@@ -12,19 +12,14 @@
  * details.
  */
 
-package com.liferay.comments.portlet.editor.config;
+package com.liferay.comments.editor.config;
 
-import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.editor.config.PortletEditorConfigContributor;
 
 import java.util.Map;
 
@@ -35,12 +30,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"editor.config.key=commentsEditor",
-		"service.ranking:Integer=0"
+		"editor.config.key=commentsEditor", "service.ranking:Integer=0"
 	}
 )
-public class CommentsPortletEditorConfigContributor
-	implements PortletEditorConfigContributor {
+public class CommentsEditorConfigContributor
+	implements EditorConfigContributor {
 
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
@@ -49,8 +43,7 @@ public class CommentsPortletEditorConfigContributor
 
 		jsonObject.put(
 			"allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
-		jsonObject.put(
-			"toolbars", JSONFactoryUtil.createJSONObject());
+		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
 	}
 
 	public void populateOptionsJSONObject(

@@ -36,7 +36,7 @@ LPS-30525.
 </#function>
 
 <#macro breadcrumbs>
-	${theme.runtime("com_liferay_site_navigation_breadcrumb_web_portlet_BreadcrumbPortlet")}
+	${theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", portletProviderAction.VIEW)}
 </#macro>
 
 <#macro css

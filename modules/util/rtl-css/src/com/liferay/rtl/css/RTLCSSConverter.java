@@ -49,10 +49,10 @@ public class RTLCSSConverter {
 		"background", "background-image");
 
 	private static final List<String> _shorthandRadiusStyles = Arrays.asList(
-		"-webkit-border-radius", "-moz-border-radius", "border-radius");
+		"-moz-border-radius", "-webkit-border-radius", "border-radius");
 
 	private static final List<String> _shorthandStyles = Arrays.asList(
-		"padding", "margin", "border-color", "border-width", "border-style");
+		"border-color", "border-style", "border-width", "margin", "padding");
 
 	public RTLCSSConverter() {
 		_cssWriterSettings = new CSSWriterSettings(ECSSVersion.CSS30, true);

@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -48,9 +47,9 @@ import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 import java.util.List;
@@ -181,16 +180,14 @@ public class MBMessageIndexer extends BaseIndexer {
 				searchContext);
 
 			for (long categoryId : categoryIds) {
-				MBCategory category =
-					MBCategoryLocalServiceUtil.fetchMBCategory(categoryId);
-
-				if ((category != null) &&
-					MBCategoryPermission.contains(
-						PermissionThreadLocal.getPermissionChecker(), category,
-						ActionKeys.VIEW)) {
-
-					categoriesQuery.addTerm(Field.CATEGORY_ID, categoryId);
+				try {
+					MBCategoryServiceUtil.getCategory(categoryId);
 				}
+				catch (Exception e) {
+					continue;
+				}
+
+				categoriesQuery.addTerm(Field.CATEGORY_ID, categoryId);
 			}
 
 			contextQuery.add(categoriesQuery, BooleanClauseOccur.MUST);

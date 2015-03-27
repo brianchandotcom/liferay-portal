@@ -12,22 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cluster;
+package com.liferay.portal.cluster.internal;
 
-import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.cluster.ClusterChannel;
+import com.liferay.portal.cluster.ClusterChannelFactory;
+import com.liferay.portal.cluster.ClusterReceiver;
 
 /**
- * @author Shuyang Zhou
+ * @author Tina Tian
  */
-public interface ClusterLink {
+public class TestClusterChannelFactory implements ClusterChannelFactory {
 
-	public static final int MAX_CHANNEL_COUNT = Priority.values().length;
+	@Override
+	public ClusterChannel createClusterChannel(
+		String channelProperties, String clusterName,
+		ClusterReceiver clusterReceiver) {
 
-	public boolean isEnabled();
-
-	public void sendMulticastMessage(Message message, Priority priority);
-
-	public void sendUnicastMessage(
-		Address address, Message message, Priority priority);
+		return new TestClusterChannel(
+			channelProperties, clusterName, clusterReceiver);
+	}
 
 }

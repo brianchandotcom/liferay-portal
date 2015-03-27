@@ -99,12 +99,6 @@ public class ClusterSchedulerEngineTest {
 
 		_mockClusterMasterExecutor = new MockClusterMasterExecutor();
 
-		ClusterMasterExecutorUtil clusterMasterExecutorUtil =
-			new ClusterMasterExecutorUtil();
-
-		clusterMasterExecutorUtil.setClusterMasterExecutor(
-			_mockClusterMasterExecutor);
-
 		_mockSchedulerEngine = new MockSchedulerEngine();
 
 		_clusterSchedulerEngine = new ClusterSchedulerEngine(
@@ -139,6 +133,7 @@ public class ClusterSchedulerEngineTest {
 
 	@AdviseWith(
 		adviceClasses = {
+			ClusterMasterExecutorUtilAdvice.class,
 			EnableClusterLinkEnabledAdvice.class,
 			EnableSchedulerEnabledAdvice.class
 		}
@@ -154,6 +149,7 @@ public class ClusterSchedulerEngineTest {
 
 	@AdviseWith(
 		adviceClasses = {
+			ClusterMasterExecutorUtilAdvice.class,
 			EnableClusterLinkEnabledAdvice.class,
 			DisableSchedulerEnabledAdvice.class
 		}
@@ -169,6 +165,7 @@ public class ClusterSchedulerEngineTest {
 
 	@AdviseWith(
 		adviceClasses = {
+			ClusterMasterExecutorUtilAdvice.class,
 			DisableClusterLinkEnabledAdvice.class,
 			EnableSchedulerEnabledAdvice.class
 		}
@@ -184,6 +181,7 @@ public class ClusterSchedulerEngineTest {
 
 	@AdviseWith(
 		adviceClasses = {
+			ClusterMasterExecutorUtilAdvice.class,
 			DisableClusterLinkEnabledAdvice.class,
 			DisableSchedulerEnabledAdvice.class
 		}
@@ -197,7 +195,12 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertSame(_mockSchedulerEngine, schedulerEngine);
 	}
 
-	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			ClusterableContextThreadLocalAdvice.class,
+			ClusterMasterExecutorUtilAdvice.class
+		}
+	)
 	@Test
 	public void testDeleteOnMaster() throws SchedulerException {
 
@@ -291,7 +294,12 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			ClusterableContextThreadLocalAdvice.class,
+			ClusterMasterExecutorUtilAdvice.class
+		}
+	)
 	@Test
 	public void testDeleteOnSlave() throws SchedulerException {
 
@@ -373,7 +381,7 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@NewEnv(type = NewEnv.Type.NONE)
+	@AdviseWith(adviceClasses = {ClusterMasterExecutorUtilAdvice.class})
 	@Test
 	public void testGetSchedulerJobs() throws SchedulerException {
 		_mockClusterMasterExecutor.reset(true, 0, 0);
@@ -388,7 +396,7 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertEquals(6, schedulerResponses.size());
 	}
 
-	@NewEnv(type = NewEnv.Type.NONE)
+	@AdviseWith(adviceClasses = {ClusterMasterExecutorUtilAdvice.class})
 	@Test
 	public void testGetSetBeanIdentifier() {
 		String beanIdentifier = "BeanIdentifier";
@@ -399,7 +407,7 @@ public class ClusterSchedulerEngineTest {
 			beanIdentifier, _clusterSchedulerEngine.getBeanIdentifier());
 	}
 
-	@NewEnv(type = NewEnv.Type.NONE)
+	@AdviseWith(adviceClasses = {ClusterMasterExecutorUtilAdvice.class})
 	@Test
 	public void testMasterToSlave() throws SchedulerException {
 
@@ -489,7 +497,12 @@ public class ClusterSchedulerEngineTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			ClusterableContextThreadLocalAdvice.class,
+			ClusterMasterExecutorUtilAdvice.class
+		}
+	)
 	@Test
 	public void testPauseAndResumeOnMaster() throws SchedulerException {
 
@@ -688,7 +701,12 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			ClusterableContextThreadLocalAdvice.class,
+			ClusterMasterExecutorUtilAdvice.class
+		}
+	)
 	@Test
 	public void testPauseAndResumeOnSlave() throws SchedulerException {
 
@@ -863,7 +881,12 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			ClusterableContextThreadLocalAdvice.class,
+			ClusterMasterExecutorUtilAdvice.class
+		}
+	)
 	@Test
 	public void testScheduleOnMaster() throws SchedulerException {
 
@@ -931,7 +954,12 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			ClusterableContextThreadLocalAdvice.class,
+			ClusterMasterExecutorUtilAdvice.class
+		}
+	)
 	@Test
 	public void testScheduleOnSlave() throws SchedulerException {
 		_mockClusterMasterExecutor.reset(false, 1, 0);
@@ -968,7 +996,7 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@NewEnv(type = NewEnv.Type.NONE)
+	@AdviseWith(adviceClasses = {ClusterMasterExecutorUtilAdvice.class})
 	@Test
 	public void testShutdown() throws SchedulerException {
 		_clusterSchedulerEngine.start();
@@ -984,7 +1012,7 @@ public class ClusterSchedulerEngineTest {
 				getClusterMasterTokenTransitionListener());
 	}
 
-	@NewEnv(type = NewEnv.Type.NONE)
+	@AdviseWith(adviceClasses = {ClusterMasterExecutorUtilAdvice.class})
 	@Test
 	public void testSlaveToMaster() throws SchedulerException {
 
@@ -1084,7 +1112,12 @@ public class ClusterSchedulerEngineTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			ClusterableContextThreadLocalAdvice.class,
+			ClusterMasterExecutorUtilAdvice.class
+		}
+	)
 	@Test
 	public void testStart() {
 		_mockClusterMasterExecutor.reset(false, 0, 0);
@@ -1102,7 +1135,12 @@ public class ClusterSchedulerEngineTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			ClusterableContextThreadLocalAdvice.class,
+			ClusterMasterExecutorUtilAdvice.class
+		}
+	)
 	@Test
 	public void testSuppressErrorOnMaster() throws SchedulerException {
 
@@ -1170,7 +1208,12 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			ClusterableContextThreadLocalAdvice.class,
+			ClusterMasterExecutorUtilAdvice.class
+		}
+	)
 	@Test
 	public void testSuppressErrorOnSlave() throws SchedulerException {
 		_mockClusterMasterExecutor.reset(false, 1, 0);
@@ -1210,7 +1253,12 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			ClusterableContextThreadLocalAdvice.class,
+			ClusterMasterExecutorUtilAdvice.class
+		}
+	)
 	@Test
 	public void testThreadLocal() throws SchedulerException {
 
@@ -1385,7 +1433,12 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			ClusterableContextThreadLocalAdvice.class,
+			ClusterMasterExecutorUtilAdvice.class
+		}
+	)
 	@Test
 	public void testUnscheduleOnMaster() throws SchedulerException {
 
@@ -1524,7 +1577,12 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			ClusterableContextThreadLocalAdvice.class,
+			ClusterMasterExecutorUtilAdvice.class
+		}
+	)
 	@Test
 	public void testUnscheduleOnSlave() throws SchedulerException {
 
@@ -1595,7 +1653,12 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			ClusterableContextThreadLocalAdvice.class,
+			ClusterMasterExecutorUtilAdvice.class
+		}
+	)
 	@Test
 	public void testUpdateOnMaster() throws SchedulerException {
 
@@ -1667,7 +1730,12 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			ClusterableContextThreadLocalAdvice.class,
+			ClusterMasterExecutorUtilAdvice.class
+		}
+	)
 	@Test
 	public void testUpdateOnSlave() throws SchedulerException {
 
@@ -1766,6 +1834,26 @@ public class ClusterSchedulerEngineTest {
 
 		private static final Map<String, Serializable> _threadLocals =
 			new HashMap<>();
+
+	}
+
+	@Aspect
+	public static class ClusterMasterExecutorUtilAdvice {
+
+		@Around(
+			"execution(private com.liferay.portal.kernel.cluster." +
+				"ClusterMasterExecutorUtil.new())"
+		)
+		public void ClusterMasterExecutorUtil() {
+		}
+
+		@Around(
+			"execution(* com.liferay.portal.kernel.cluster." +
+				"ClusterMasterExecutorUtil.getClusterMasterExecutor(..))"
+		)
+		public ClusterMasterExecutor getClusterMasterExecutor() {
+			return _mockClusterMasterExecutor;
+		}
 
 	}
 
@@ -1913,16 +2001,25 @@ public class ClusterSchedulerEngineTest {
 
 	private static final MethodKey _getScheduledJobsMethodKey = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJobs", StorageType.class);
+	private static MockClusterMasterExecutor _mockClusterMasterExecutor;
 
 	private ClusterInvokeAcceptor _clusterInvokeAcceptor;
 	private ClusterSchedulerEngine _clusterSchedulerEngine;
 	private Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
 		_memoryClusteredJobs;
-	private MockClusterMasterExecutor _mockClusterMasterExecutor;
 	private MockSchedulerEngine _mockSchedulerEngine;
 
 	private static class MockClusterMasterExecutor
 		implements ClusterMasterExecutor {
+
+		@Override
+		public void addClusterMasterTokenTransitionListener(
+			ClusterMasterTokenTransitionListener
+				clusterMasterTokenAcquisitionListener) {
+
+			_clusterMasterTokenTransitionListener =
+				clusterMasterTokenAcquisitionListener;
+		}
 
 		@Override
 		public <T> NoticeableFuture<T> executeOnMaster(
@@ -1958,10 +2055,6 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		@Override
-		public void initialize() {
-		}
-
-		@Override
 		public boolean isEnabled() {
 			return true;
 		}
@@ -1972,12 +2065,15 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		@Override
-		public void registerClusterMasterTokenTransitionListener(
+		public void removeClusterMasterTokenTransitionListener(
 			ClusterMasterTokenTransitionListener
 				clusterMasterTokenAcquisitionListener) {
 
-			_clusterMasterTokenTransitionListener =
-				clusterMasterTokenAcquisitionListener;
+			if (_clusterMasterTokenTransitionListener ==
+					clusterMasterTokenAcquisitionListener) {
+
+				_clusterMasterTokenTransitionListener = null;
+			}
 		}
 
 		public void reset(
@@ -1990,18 +2086,6 @@ public class ClusterSchedulerEngineTest {
 
 		public void setException(boolean exception) {
 			_exception = exception;
-		}
-
-		@Override
-		public void unregisterClusterMasterTokenTransitionListener(
-			ClusterMasterTokenTransitionListener
-				clusterMasterTokenAcquisitionListener) {
-
-			if (_clusterMasterTokenTransitionListener ==
-					clusterMasterTokenAcquisitionListener) {
-
-				_clusterMasterTokenTransitionListener = null;
-			}
 		}
 
 		private ClusterMasterTokenTransitionListener

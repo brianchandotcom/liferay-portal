@@ -8566,4 +8566,57 @@ public class PortalImpl implements Portal {
 
 	}
 
+	private class PortalInetSocketAddressEventListenerServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<PortalInetSocketAddressEventListener,
+				PortalInetSocketAddressEventListener> {
+
+		@Override
+		public PortalInetSocketAddressEventListener addingService(
+			ServiceReference<PortalInetSocketAddressEventListener>
+				serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			PortalInetSocketAddressEventListener
+				portalInetSocketAddressEventListener = registry.getService(
+					serviceReference);
+
+			addPortalInetSocketAddressEventListener(
+				portalInetSocketAddressEventListener);
+
+			return portalInetSocketAddressEventListener;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<PortalInetSocketAddressEventListener>
+				serviceReference,
+			PortalInetSocketAddressEventListener
+				portalInetSocketAddressEventListener) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<PortalInetSocketAddressEventListener>
+				serviceReference,
+			PortalInetSocketAddressEventListener
+				portalInetSocketAddressEventListener) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			removePortalInetSocketAddressEventListener(
+				portalInetSocketAddressEventListener);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"There are " + _alwaysAllowDoAsUsers.size() +
+						" alway sallow do as user instances");
+			}
+		}
+
+	}
+
 }

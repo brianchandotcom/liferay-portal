@@ -12,22 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cluster;
+package com.liferay.portal.cluster;
 
-import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.cluster.Address;
+
+import java.io.Serializable;
+
+import java.net.InetAddress;
 
 /**
- * @author Shuyang Zhou
+ * @author Tina Tian
  */
-public interface ClusterLink {
+public interface ClusterChannel {
 
-	public static final int MAX_CHANNEL_COUNT = Priority.values().length;
+	public void close();
 
-	public boolean isEnabled();
+	public InetAddress getBindInetAddress();
 
-	public void sendMulticastMessage(Message message, Priority priority);
+	public String getClusterName();
 
-	public void sendUnicastMessage(
-		Address address, Message message, Priority priority);
+	public Address getLocalAddress();
+
+	public void sendMulticastMessage(Serializable message);
+
+	public void sendUnicastMessage(Serializable message, Address address);
 
 }

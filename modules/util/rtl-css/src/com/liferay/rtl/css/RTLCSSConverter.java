@@ -40,18 +40,18 @@ import java.util.regex.Pattern;
  */
 public class RTLCSSConverter {
 
-	public static final Pattern REGEX_PERCENT = Pattern.compile("\\d+%");
+	private static final Pattern REGEX_PERCENT = Pattern.compile("\\d+%");
 
-	public static final Pattern REGEX_PERCENT_OR_LENGTH = Pattern.compile(
+	private static final Pattern REGEX_PERCENT_OR_LENGTH = Pattern.compile(
 		"(\\d+)([a-z]{2}|%)");
 
-	public static final List<String> REVERSE_IMAGE_STYLES = Arrays.asList(
+	private static final List<String> REVERSE_IMAGE_STYLES = Arrays.asList(
 		"background", "background-image");
 
-	public static final List<String> SHORTHAND_RADIUS_STYLES = Arrays.asList(
+	private static final List<String> SHORTHAND_RADIUS_STYLES = Arrays.asList(
 		"-webkit-border-radius", "-moz-border-radius", "border-radius");
 
-	public static final List<String> SHORTHAND_STYLES = Arrays.asList(
+	private static final List<String> SHORTHAND_STYLES = Arrays.asList(
 		"padding", "margin", "border-color", "border-width", "border-style");
 
 	public RTLCSSConverter() {
@@ -378,7 +378,7 @@ public class RTLCSSConverter {
 	private static final Map<String, String> _replacementStyles =
 		new HashMap<>();
 	private static final List<String> _reverseStyles = Arrays.asList(
-		"text-align", "float", "clear", "direction");
+		"clear", "direction", "float", "text-align");
 
 	static {
 		_replacementStyles.put(

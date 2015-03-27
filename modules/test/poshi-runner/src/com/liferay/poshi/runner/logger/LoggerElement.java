@@ -36,12 +36,17 @@ public class LoggerElement {
 
 	public LoggerElement(String id) {
 		_id = id;
+		_writtenToLogger = true;
 	}
 
 	public void addChildLoggerElement(LoggerElement childLoggerElement) {
 		_childLoggerElements.add(childLoggerElement);
 
-		LoggerUtil.addChildLoggerElement(this, childLoggerElement);
+		if (_writtenToLogger) {
+			LoggerUtil.addChildLoggerElement(this, childLoggerElement);
+
+			childLoggerElement.setWrittenToLogger(true);
+		}
 	}
 
 	public String getClassName() {
@@ -63,13 +68,17 @@ public class LoggerElement {
 	public void setClassName(String className) {
 		_className = className;
 
-		LoggerUtil.setClassName(this);
+		if (_writtenToLogger) {
+			LoggerUtil.setClassName(this);
+		}
 	}
 
 	public void setID(String id) {
 		_id = id;
 
-		LoggerUtil.setID(this);
+		if (_writtenToLogger) {
+			LoggerUtil.setID(this);
+		}
 	}
 
 	public void setName(String name) {
@@ -79,7 +88,13 @@ public class LoggerElement {
 	public void setText(String text) {
 		_text = text;
 
-		LoggerUtil.setText(this);
+		if (_writtenToLogger) {
+			LoggerUtil.setText(this);
+		}
+	}
+
+	public void setWrittenToLogger(boolean writtenToLogger) {
+		_writtenToLogger = writtenToLogger;
 	}
 
 	@Override
@@ -131,5 +146,6 @@ public class LoggerElement {
 	private String _id;
 	private String _name = "div";
 	private String _text = "";
+	private boolean _writtenToLogger = false;
 
 }

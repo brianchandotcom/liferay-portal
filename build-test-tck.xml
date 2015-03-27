@@ -122,49 +122,90 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 		<ant antfile="build-test-tck.xml" target="prepare-tck" />
 
 		<script classpathref="project.classpath" language="beanshell">
-			import org.apache.tools.ant.DirectoryScanner;
+			<![CDATA[
+				import org.apache.tools.ant.DirectoryScanner;
 
-			DirectoryScanner directoryScanner = new DirectoryScanner();
+				DirectoryScanner directoryScanner = new DirectoryScanner();
 
-			directoryScanner.setBasedir(project.getBaseDir());
-			directoryScanner.setIncludes(new String[] {"**/com/sun/ts/tests/**/*.war"});
+				List getClassGroups(int groupsSize) {
+					List classGroups = new ArrayList(groupsSize);
 
-			directoryScanner.scan();
+					for (int i = 0; i < groupsSize; i++) {
+						classGroups.add(new ArrayList());
+					}
 
-			String[] fileNames = directoryScanner.getIncludedFiles();
-
-			Arrays.sort(fileNames);
-
-			Set packageNames = new TreeSet();
-
-			for (String fileName : fileNames) {
-				int x = fileName.indexOf("com" + File.separator);
-				int y = fileName.lastIndexOf(File.separatorChar);
-
-				String packageName = fileName.substring(x, y);
-
-				if (packageName.endsWith("PortletSessionSecondapp")) {
-					continue;
+					return classGroups;
 				}
 
-				packageNames.add(packageName.replace(File.separatorChar, '.'));
-			}
+				directoryScanner.setBasedir(project.getBaseDir());
+				directoryScanner.setIncludes(new String[] {"**/com/sun/ts/tests/**/*.war"});
 
-			StringBuilder sb = new StringBuilder();
+				directoryScanner.scan();
 
-			for (String packageName : packageNames) {
-				sb.append(packageName);
-				sb.append(' ');
-			}
+				String[] fileNames = directoryScanner.getIncludedFiles();
 
-			if (!packageNames.isEmpty()) {
-				sb.setLength(sb.length() - 1);
-			}
+				Arrays.sort(fileNames);
 
-			project.setProperty("test.tck.package.names", sb.toString());
+				int allTestClassGroupsSize = Integer.parseInt(project.getProperty("test.class.groups.size"));
+
+				List testClassGroups = getClassGroups(allTestClassGroupsSize);
+
+				int classGroupIndex = 0;
+
+				for (String fileName : fileNames) {
+					int x = fileName.indexOf("com" + File.separator);
+					int y = fileName.lastIndexOf(File.separatorChar);
+
+					String packageName = fileName.substring(x, y);
+
+					if (packageName.endsWith("PortletSessionSecondapp")) {
+						continue;
+					}
+
+					List testClassGroup = testClassGroups.get(classGroupIndex % allTestClassGroupsSize);
+
+					testClassGroup.add(packageName.replace(File.separatorChar, '.'));
+
+					classGroupIndex++;
+				}
+
+				StringBuilder sb = new StringBuilder();
+
+				for (int i = 0; i < allTestClassGroupsSize; i++) {
+					List classGroup = testClassGroups.get(i);
+
+					sb.append("TEST_CLASS_GROUP_");
+					sb.append(i);
+					sb.append("=");
+
+					for (String testPackage : classGroup) {
+						sb.append(testPackage);
+						sb.append(",");
+					}
+
+					if (!classGroup.isEmpty()) {
+						sb.setLength(sb.length() - 1);
+					}
+
+					sb.append("\n\n");
+				}
+
+				sb.append("TEST_CLASS_GROUPS=");
+
+				for (int i = 0; i < allTestClassGroupsSize; i++) {
+					sb.append(i);
+					sb.append(" ");
+				}
+
+				if (allTestClassGroupsSize > 0) {
+					sb.setLength(sb.length() - 1);
+				}
+
+				project.setProperty("test.tck.package.names", sb.toString());
+			]]>
 		</script>
 
-		<echo file="test.tck.package.names.properties">TEST_TCK_PACKAGE_NAMES=${test.tck.package.names}</echo>
+		<echo file="test.tck.package.names.properties">${test.tck.package.names}</echo>
 	</target>
 
 	<target name="run-tck-tomcat">

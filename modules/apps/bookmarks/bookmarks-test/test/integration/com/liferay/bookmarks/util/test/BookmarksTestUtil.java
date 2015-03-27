@@ -67,9 +67,6 @@ public class BookmarksTestUtil {
 
 			serviceContext = (ServiceContext)serviceContext.clone();
 
-			serviceContext.setAddGroupPermissions(true);
-			serviceContext.setAddGuestPermissions(true);
-
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 

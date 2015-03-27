@@ -75,10 +75,6 @@ public class ResourceBlockPermissionsContainer {
 		return DigesterUtil.digestHex(Digester.SHA_1, byteBuffer);
 	}
 
-	public boolean hasPermission(long roleId, long actionIdsLong) {
-		return (getActionIds(roleId) & actionIdsLong) == actionIdsLong;
-	}
-
 	public void removePermission(long roleId, long actionIdsLong) {
 		actionIdsLong = getActionIds(roleId) & (~actionIdsLong);
 

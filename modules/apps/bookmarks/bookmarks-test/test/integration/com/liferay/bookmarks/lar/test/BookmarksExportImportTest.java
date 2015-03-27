@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.bookmarks.lar;
+package com.liferay.bookmarks.lar.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.bookmarks.lar.BookmarksPortletDataHandler;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
@@ -24,21 +26,25 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.lar.test.BasePortletExportImportTestCase;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 
 import java.util.Date;
 import java.util.Map;
 
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Juan Fernández
  */
+@RunWith(Arquillian.class)
 @Sync
 public class BookmarksExportImportTest extends BasePortletExportImportTestCase {
 
@@ -46,7 +52,7 @@ public class BookmarksExportImportTest extends BasePortletExportImportTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
@@ -57,6 +63,14 @@ public class BookmarksExportImportTest extends BasePortletExportImportTestCase {
 	@Override
 	public String getPortletId() {
 		return BookmarksPortletKeys.BOOKMARKS;
+	}
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		super.setUp();
 	}
 
 	@Override

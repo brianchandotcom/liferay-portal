@@ -477,8 +477,6 @@
 
 	<macrodef name="get-test-url">
 		<sequential>
-			<get-ip-address />
-
 			<get-testcase-property property.name="mobile.device.enabled" />
 
 			<get-testcase-property property.name="testcase.url" />
@@ -491,6 +489,8 @@
 				<elseif>
 					<equals arg1="${mobile.device.enabled}" arg2="true" />
 					<then>
+						<get-ip-address />
+
 						<var name="test.url" value="http://${ip.address}:8080" />
 					</then>
 				</elseif>

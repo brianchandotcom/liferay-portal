@@ -1586,7 +1586,7 @@ public class DDMStructureLocalServiceImpl
 
 		getChildrenStructures(structures, groupId, structureId);
 
-		structures.add(0, fetchDDMStructure(structureId));
+		structures.add(0, getStructure(structureId));
 
 		return structures;
 	}

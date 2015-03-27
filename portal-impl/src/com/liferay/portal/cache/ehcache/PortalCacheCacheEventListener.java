@@ -48,6 +48,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 
 	@Override
 	public void dispose() {
+		_cacheListener.dispose();
 	}
 
 	public CacheListener<K, V> getCacheListener() {

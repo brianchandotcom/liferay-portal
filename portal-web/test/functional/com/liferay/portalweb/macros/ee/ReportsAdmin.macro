@@ -136,7 +136,7 @@
 		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
 		<execute function="Click" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_ACTIONS" />
 		<execute function="AssertClickNoError" locator1="CPReportsadminViewreportentry#ENTRY_FILE_MENULIST_DELETE" value1="Delete" />
-		<execute function="Confirm" locator1="CPReportsadminViewreportentry#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertElementNotPresent" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_FILE" />
 	</command>
@@ -258,7 +258,7 @@ Sincerely,<br />
 			<then>
 				<execute function="Click" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS_1" />
 				<execute function="AssertClickNoError" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_MENULIST_DELETE" value1="Delete" />
-				<execute function="Confirm" locator1="CPReportsadmin#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="CPReportsadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
@@ -276,7 +276,7 @@ Sincerely,<br />
 			<then>
 				<execute function="Click" locator1="CPReportsadmin#REPORTS_ENTRY_TABLE_ACTIONS_1" />
 				<execute function="AssertClickNoError" locator1="CPReportsadmin#REPORTS_ENTRY_MENULIST_DELETE" value1="Delete" />
-				<execute function="Confirm" locator1="CPReportsadmin#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="CPReportsadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
@@ -296,7 +296,7 @@ Sincerely,<br />
 			<then>
 				<execute function="Click" locator1="CPReportsadmin#SOURCES_SOURCE_TABLE_ACTIONS_1" />
 				<execute function="AssertClickNoError" locator1="CPReportsadmin#SOURCES_SOURCE_MENULIST_DELETE" value1="Delete" />
-				<execute function="Confirm" locator1="CPReportsadmin#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="CPReportsadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>

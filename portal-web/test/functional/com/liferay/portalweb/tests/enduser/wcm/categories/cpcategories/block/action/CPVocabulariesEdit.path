@@ -29,11 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>EDIT_ICON</td>
 	<td>//li[@data-vocabulary='${key_vocabularyName}']/a/span[@class='vocabulary-item-actions-trigger']</td>
 	<td></td>

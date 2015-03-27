@@ -46,7 +46,7 @@
 	<command name="attemptDeleteRecordViaDDLDisplayPG">
 		<execute function="Click" locator1="PGDynamicdatalists#RECORD_TABLE_ACTIONS_1" />
 		<execute function="AssertClickNoError" locator1="PGDynamicdatalists#RECORD_MENULIST_DELETE" value1="Delete" />
-		<execute function="Confirm" locator1="PGDynamicdatalists#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsConfiguration#FAILURE_MESSAGE" value1="You do not have the required permissions." />
 	</command>
 
@@ -56,7 +56,7 @@
 		<execute function="AssertTextEquals" locator1="CPDynamicdatalists#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 		<execute function="AssertClick" locator1="CPDynamicdatalists#LIST_TABLE_ACTIONS_1" />
 		<execute function="AssertClickNoError" locator1="CPDynamicdatalists#LIST_MENULIST_DELETE" value1="Delete" />
-		<execute function="Confirm" locator1="CPDynamicdatalists#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="CPDynamicdatalists#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertTextNotPresent" value1="${ddlListName}" />
 	</command>
@@ -70,7 +70,7 @@
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsConfiguration#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 		<execute function="AssertClick" locator1="PGDynamicdatalistsConfiguration#LIST_TABLE_ACTIONS_1" />
 		<execute function="AssertClickNoError" locator1="PGDynamicdatalistsConfiguration#LIST_MENULIST_DELETE" value1="Delete" />
-		<execute function="Confirm" locator1="PGDynamicdatalistsConfiguration#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextNotPresent" value1="${ddlListNameEdit}" />
 
 		<execute function="SelectFrameTop" />
@@ -169,7 +169,7 @@
 			<then>
 				<execute function="Click" locator1="CPDynamicdatalists#LIST_TABLE_ACTIONS_1" />
 				<execute function="AssertClickNoError" locator1="CPDynamicdatalists#LIST_MENULIST_DELETE" value1="Delete" />
-				<execute function="Confirm" locator1="CPDynamicdatalists#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="CPDynamicdatalists#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>

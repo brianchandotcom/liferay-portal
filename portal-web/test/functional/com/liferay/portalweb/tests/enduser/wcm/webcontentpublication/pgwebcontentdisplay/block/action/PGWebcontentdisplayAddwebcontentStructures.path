@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>STRUCTURE_IFRAME</td>
 	<td>//iframe[contains(@src,'select_structure')]</td>
 	<td></td>

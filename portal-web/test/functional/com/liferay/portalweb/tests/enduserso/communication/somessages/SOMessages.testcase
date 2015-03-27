@@ -73,7 +73,7 @@
 
 		<execute function="Check" locator1="SOMessages#MESSAGE_CHECKBOX" />
 		<execute function="AssertClickNoError" locator1="SOMessages#DELETE_BUTTON" value1="Delete" />
-		<execute function="Confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
+		<execute function="Confirm" value1="Are you sure you want to delete the selected messages?" />
 		<execute function="AssertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
 	</command>
 
@@ -128,7 +128,7 @@
 		</execute>
 
 		<execute function="AssertClickNoError" locator1="SOMessagesMessage#DELETE_BUTTON" value1="Delete" />
-		<execute function="Confirm" locator1="SOMessagesMessage#CONFIRMATION" value1="Are you sure you want to delete the message?" />
+		<execute function="Confirm" value1="Are you sure you want to delete the message?" />
 
 		<execute function="AssertTextEquals" locator1="SOMessages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="SOMessagesMessage#INFO_MESSAGE" value1="No messages found." />
@@ -225,7 +225,7 @@
 
 		<execute function="Check" locator1="SOMessages#MESSAGE_CHECKBOX" />
 		<execute function="AssertClickNoError" locator1="SOMessages#DELETE_BUTTON" value1="Delete" />
-		<execute function="Confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
+		<execute function="Confirm" value1="Are you sure you want to delete the selected messages?" />
 		<execute function="AssertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
 
 		<execute macro="Page#gotoPG">
@@ -307,7 +307,7 @@
 		</execute>
 
 		<execute function="AssertClickNoError" locator1="SOMessagesMessage#DELETE_BUTTON" value1="Delete" />
-		<execute function="Confirm" locator1="SOMessagesMessage#CONFIRMATION" value1="Are you sure you want to delete the message?" />
+		<execute function="Confirm" value1="Are you sure you want to delete the message?" />
 
 		<execute function="AssertTextEquals" locator1="SOMessages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
@@ -400,7 +400,7 @@
 
 		<execute function="Check" locator1="SOMessages#SELECT_ALL_CHECKBOX" />
 		<execute function="AssertClickNoError" locator1="SOMessages#DELETE_BUTTON" value1="Delete" />
-		<execute function="Confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
+		<execute function="Confirm" value1="Are you sure you want to delete the selected messages?" />
 		<execute function="AssertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
 	</command>
 
@@ -457,7 +457,7 @@
 
 		<execute function="Check" locator1="SOMessages#MESSAGE_CHECKBOX" />
 		<execute function="AssertClickNoError" locator1="SOMessages#MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
-		<execute function="Confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to mark the selected messages as unread?" />
+		<execute function="Confirm" value1="Are you sure you want to mark the selected messages as unread?" />
 		<execute function="Pause" locator1="1000" />
 		<execute function="AssertElementPresent" locator1="SOMessages#MESSAGE_UNREAD" />
 	</command>
@@ -513,7 +513,7 @@
 		</execute>
 
 		<execute function="AssertClickNoError" locator1="SOMessagesMessage#MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
-		<execute function="Confirm" locator1="SOMessagesMessage#CONFIRMATION" value1="Are you sure you want to mark the message as unread?" />
+		<execute function="Confirm" value1="Are you sure you want to mark the message as unread?" />
 		<execute function="Pause" locator1="1000" />
 
 		<var name="key_messageBody" value="${messageBody}" />
@@ -622,7 +622,7 @@
 
 		<execute function="Check" locator1="SOMessages#SELECT_ALL_CHECKBOX" />
 		<execute function="AssertClickNoError" locator1="SOMessages#MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
-		<execute function="Confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to mark the selected messages as unread?" />
+		<execute function="Confirm" value1="Are you sure you want to mark the selected messages as unread?" />
 		<execute function="Pause" locator1="1000" />
 
 		<var name="key_messageBody" value="${messageBody1}" />

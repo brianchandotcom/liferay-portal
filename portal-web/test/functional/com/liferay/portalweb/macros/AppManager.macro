@@ -11,7 +11,7 @@
 
 		<execute function="AssertClick" locator1="CPAppmanager#APP_ACTIONS" value1="Actions" />
 		<execute function="AssertClickNoError" locator1="CPAppmanager#APP_ACTIONS_MENULIST_UNINSTALL" value1="Uninstall" />
-		<execute function="Confirm" locator1="CPAppmanager#CONFIRMATION" value1="Are you sure you want to uninstall this?" />
+		<execute function="Confirm" value1="Are you sure you want to uninstall this?" />
 		<execute function="Pause" locator1="15000" />
 	</command>
 

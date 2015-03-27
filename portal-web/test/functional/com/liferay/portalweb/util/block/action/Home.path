@@ -154,11 +154,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>NODE_NAME</td>
 	<td>//section[@id='content']/div[contains(.,'${key_nodePort}')]</td>
 	<td></td>

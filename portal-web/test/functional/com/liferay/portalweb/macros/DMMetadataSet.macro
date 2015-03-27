@@ -49,7 +49,7 @@
 
 		<execute function="AssertClickNoError" locator1="PGDocumentsandmediaManageMetadatasets#ACTIONS_MENULIST_DELETE" value1="Delete" />
 
-		<execute function="Confirm" locator1="PGDocumentsandmedia#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaManageDocumenttypes#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
@@ -65,7 +65,7 @@
 
 		<execute function="AssertClickNoError" locator1="PGDocumentsandmediaManageMetadatasets#ACTIONS_MENULIST_DELETE" value1="Delete" />
 
-		<execute function="Confirm" locator1="PGDocumentsandmedia#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaManageMetadatasets#ERROR_MESSAGE" value1="Your request failed to complete." />
 
@@ -110,7 +110,7 @@
 			<then>
 				<execute function="AssertClick" locator1="PGDocumentsandmediaManageMetadatasets#METADATA_SETS_TABLE_ACTIONS_1" value1="Actions" />
 				<execute function="AssertClickNoError" locator1="PGDocumentsandmediaManageMetadatasets#ACTIONS_MENULIST_DELETE" value1="Delete" />
-				<execute function="Confirm" locator1="PGDocumentsandmediaManageMetadatasets#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="PGDocumentsandmediaManageMetadatasets#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>

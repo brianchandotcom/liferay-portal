@@ -332,7 +332,7 @@
 				<equals arg1="${preview}" arg2="true" />
 				<then>
 					<execute function="AssertClickNoError" locator1="PGMessageboardsPostthread#PREVIEW_BUTTON" value1="Preview" />
-					<execute function="Confirm" locator1="PGMessageboardsPostthread#CONFIRMATION" value1="In order to preview your changes, the message will be saved as a draft and other users may not be able to see it. Are you sure you want to do this?" />
+					<execute function="Confirm" value1="In order to preview your changes, the message will be saved as a draft and other users may not be able to see it. Are you sure you want to do this?" />
 
 					<var name="key_threadSubject" value="${threadSubject}" />
 

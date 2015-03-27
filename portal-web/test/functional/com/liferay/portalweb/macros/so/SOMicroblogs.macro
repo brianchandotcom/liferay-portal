@@ -312,7 +312,7 @@
 	<command name="deleteMicroblogsEntry">
 		<execute function="MakeVisible" locator1="SOMicroblogs#MICROBLOGS_ENTRY_DELETE" />
 		<execute function="ClickNoError#makeVisibleClick" locator1="SOMicroblogs#MICROBLOGS_ENTRY_DELETE_LINK" value1="Delete" />
-		<execute function="Confirm" locator1="SOMicroblogs#CONFIRMATION" value1="Are you sure you want to delete this post?" />
+		<execute function="Confirm" value1="Are you sure you want to delete this post?" />
 	</command>
 
 	<command name="deleteMicroblogsEntryComment">
@@ -331,7 +331,7 @@
 
 		<execute function="MakeVisible" locator1="SOMicroblogs#MICROBLOGS_ENTRY_COMMENT_DELETE" />
 		<execute function="ClickNoError" locator1="SOMicroblogs#MICROBLOGS_ENTRY_COMMENT_DELETE_LINK" value1="Delete" />
-		<execute function="Confirm" locator1="SOMicroblogs#CONFIRMATION" value1="Are you sure you want to delete this post?" />
+		<execute function="Confirm" value1="Are you sure you want to delete this post?" />
 	</command>
 
 	<command name="deleteMicroblogsEntryCommentViaProfile">
@@ -355,7 +355,7 @@
 
 		<execute function="MakeVisible" locator1="SOMicroblogsProfile#MICROBLOGS_ENTRY_COMMENT_DELETE" />
 		<execute function="ClickNoError" locator1="SOMicroblogsProfile#MICROBLOGS_ENTRY_COMMENT_DELETE_LINK" value1="Delete" />
-		<execute function="Confirm" locator1="SOMicroblogsProfile#CONFIRMATION" value1="Are you sure you want to delete this post?" />
+		<execute function="Confirm" value1="Are you sure you want to delete this post?" />
 	</command>
 
 	<command name="deleteMicroblogsEntryViaProfile">
@@ -366,7 +366,7 @@
 
 		<execute function="MakeVisible" locator1="SOMicroblogsProfile#MICROBLOGS_ENTRY_DELETE" />
 		<execute function="ClickNoError#makeVisibleClick" locator1="SOMicroblogsProfile#MICROBLOGS_ENTRY_DELETE_LINK" value1="Delete" />
-		<execute function="Confirm" locator1="SOMicroblogsProfile#CONFIRMATION" value1="Are you sure you want to delete this post?" />
+		<execute function="Confirm" value1="Are you sure you want to delete this post?" />
 	</command>
 
 	<command name="deleteMicroblogsTextFieldCmd">
@@ -524,7 +524,7 @@
 			<then>
 				<execute function="MakeVisible" locator1="SOMicroblogs#MICROBLOGS_ENTRY_DELETE" />
 				<execute function="ClickNoError#makeVisibleClick" locator1="SOMicroblogs#MICROBLOGS_ENTRY_DELETE_LINK" value1="Delete" />
-				<execute function="Confirm" locator1="SOMicroblogs#CONFIRMATION" value1="Are you sure you want to delete this post?" />
+				<execute function="Confirm" value1="Are you sure you want to delete this post?" />
 			</then>
 		</while>
 	</command>

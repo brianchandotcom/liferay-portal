@@ -1200,7 +1200,7 @@
 
 		<execute function="AssertClick" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_1" value1="Blank Page" />
 		<execute function="AssertClickNoError" locator1="CPSitepages#TOOLBAR_DELETE" value1="Delete" />
-		<execute function="Confirm" locator1="CPSitepages#CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
+		<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 		<execute function="AssertTextEquals" locator1="CPSitepages#INFO_MESSAGE_1" value1="Your request failed to complete." />
 		<execute function="AssertTextEquals" locator1="CPSitepages#INFO_MESSAGE_2" value1="The first page cannot be of type Link to URL." />
 		<execute function="AssertTextEquals" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_1" value1="Blank Page" />

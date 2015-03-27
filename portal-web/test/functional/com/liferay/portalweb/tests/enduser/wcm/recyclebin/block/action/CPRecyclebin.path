@@ -49,11 +49,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>STAGING_TOOLBAR</td>
 	<td>//ul[contains(@class,'nav-tabs')]//li/a[contains(.,'Staging')]</td>
 	<td></td>

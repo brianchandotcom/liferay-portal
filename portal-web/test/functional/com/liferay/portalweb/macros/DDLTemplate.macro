@@ -104,7 +104,7 @@
 		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TOOLBAR_SEARCH_BUTTON" value1="Search" />
 		<execute function="Check" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_ALL_CHECKBOX" />
 		<execute function="AssertClickNoError" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#DELETE_BUTTON" value1="Delete" />
-		<execute function="Confirm" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute macro="Page#gotoContentCP">
@@ -271,7 +271,7 @@
 					<then>
 						<execute function="Check" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_ALL_CHECKBOX" />
 						<execute function="ClickNoError" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#DELETE_BUTTON" />
-						<execute function="Confirm" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+						<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 						<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 					</then>
 				</if>

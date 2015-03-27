@@ -619,7 +619,7 @@
 		<var name="key_structureName" value="${structureName}" />
 
 		<execute function="AssertClickNoError" locator1="PGWebcontentdisplayAddwebcontentStructures#STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
-		<execute function="Confirm" locator1="PGWebcontentdisplayAddwebcontentStructures#CONFIRMATION" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
+		<execute function="Confirm" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="PGWebcontentdisplayAddwebcontent#WEB_CONTENT_IFRAME" />
@@ -1151,7 +1151,7 @@
 		</for>
 
 		<execute function="AssertClickNoError" locator1="CPWebcontentEditwebcontent#VIEW_HISTORY_EXPIRE_BUTTON" value1="Expire" />
-		<execute function="Confirm" locator1="CPWebcontentEditwebcontent#CONFIRMATION" value1="Are you sure you want to expire the selected version?" />
+		<execute function="Confirm" value1="Are you sure you want to expire the selected version?" />
 	</command>
 
 	<command name="gotoCP">
@@ -1298,7 +1298,7 @@
 
 		<execute function="SelectFrame" locator1="CPWebcontentSelecttemplate#TEMPLATES_IFRAME" />
 		<execute function="AssertClickNoError" locator1="CPWebcontentSelecttemplate#TEMPLATE_TABLE_CHOOSE" value1="Choose" />
-		<execute function="Confirm" locator1="CPWebcontentSelecttemplate#CONFIRMATION" value1="Selecting a new template deletes all unsaved content. Do you want to proceed?" />
+		<execute function="Confirm" value1="Selecting a new template deletes all unsaved content. Do you want to proceed?" />
 
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#PUBLISH_BUTTON" value1="Publish" />
 

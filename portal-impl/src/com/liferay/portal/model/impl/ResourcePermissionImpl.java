@@ -99,11 +99,7 @@ public class ResourcePermissionImpl extends ResourcePermissionBaseImpl {
 	}
 
 	@Override
-	public boolean hasActionId(String actionId) {
-		ResourceAction resourceAction =
-			ResourceActionLocalServiceUtil.fetchResourceAction(
-				getName(), actionId);
-
+	public boolean hasAction(ResourceAction resourceAction) {
 		if (resourceAction != null) {
 			long actionIds = getActionIds();
 			long bitwiseValue = resourceAction.getBitwiseValue();
@@ -114,6 +110,15 @@ public class ResourcePermissionImpl extends ResourcePermissionBaseImpl {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean hasActionId(String actionId) {
+		ResourceAction resourceAction =
+			ResourceActionLocalServiceUtil.fetchResourceAction(
+				getName(), actionId);
+
+		return hasAction(resourceAction);
 	}
 
 	@Override

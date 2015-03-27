@@ -111,6 +111,7 @@
 		</execute>
 
 		<execute macro="KBArticle#importCP">
+			<var name="applyNumericalPrefix" value="true" />
 			<var name="kbZipFile" value="KBArticlesWithMetadata.zip" />
 		</execute>
 
@@ -119,15 +120,19 @@
 		</execute>
 
 		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
-		<execute macro="KBArticle#viewHierarchyViaKBDisplayPG">
-			<var name="kbArticle1ChildArticleTitle1" value="Implementing Application Display Templates" />
-			<var name="kbArticle2ChildArticleTitle1" value="Using liferay-ui:success and liferay-ui:error Messages" />
-			<var name="kbArticle2ChildArticleTitle2" value="Using Liferay UI Tabs and Sections" />
-			<var name="kbArticleTitle1" value="Application Display Templates" />
-			<var name="kbArticleTitle2" value="Liferay UI Taglibs" />
+		<execute macro="KBArticle#viewParentArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title" />
+		</execute>
+
+		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -884,6 +889,7 @@
 		</execute>
 
 		<execute macro="KBArticle#importCP">
+			<var name="applyNumericalPrefix" value="true" />
 			<var name="kbZipFile" value="KBArticlesWithMarkdown.zip" />
 		</execute>
 
@@ -892,21 +898,36 @@
 		</execute>
 
 		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
-		<execute macro="KBArticle#viewHierarchyViaKBDisplayPG">
-			<var name="kbArticle2ChildArticleTitle1" value="Developing Applications with Liferay Developer Studio" />
-			<var name="kbArticle2ChildArticleTitle2" value="Developing Apps with Liferay IDE" />
-			<var name="kbArticle2ChildArticleTitle3" value="Writing Your First Liferay Application" />
-			<var name="kbArticleTitle1" value="Learning Paths" />
-			<var name="kbArticleTitle2" value="Beginning Liferay Development" />
-			<var name="kbArticleTitle3" value="Writing a Data-Driven Application" />
+		<execute macro="KBArticle#viewParentArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title" />
+		</execute>
+
+		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
+		</execute>
+
+		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
+		</execute>
+
+		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 4" />
+		</execute>
+
+		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 5" />
 		</execute>
 
 		<execute macro="KBArticle#gotoKBChildArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Beginning Liferay Development" />
-			<var name="kbChildArticleTitle" value="Developing Applications with Liferay Developer Studio" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
+			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 2 Child 1" />
 		</execute>
 
 		<execute macro="KBArticle#viewImageViaContentCmd">
@@ -933,7 +954,8 @@
 		</execute>
 
 		<execute macro="KBArticle#importCP">
-			<var name="kbZipFile" value="KBArticlesWithMetadata.zip" />
+			<var name="applyNumericalPrefix" value="true" />
+			<var name="kbZipFile" value="KBArticlesWithMarkdown.zip" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -941,15 +963,31 @@
 		</execute>
 
 		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
-		<execute macro="KBArticle#viewHierarchyViaKBDisplayPG">
-			<var name="kbArticle1ChildArticleTitle1" value="Implementing Application Display Templates" />
-			<var name="kbArticle2ChildArticleTitle1" value="Using liferay-ui:success and liferay-ui:error Messages" />
-			<var name="kbArticle2ChildArticleTitle2" value="Using Liferay UI Tabs and Sections" />
-			<var name="kbArticleTitle1" value="Application Display Templates" />
-			<var name="kbArticleTitle2" value="Liferay UI Taglibs" />
+		<execute macro="KBArticle#viewParentArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title" />
+		</execute>
+
+		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
+		</execute>
+
+		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
+		</execute>
+
+		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 4" />
+		</execute>
+
+		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 5" />
 		</execute>
 	</command>
 
@@ -971,6 +1009,7 @@
 		</execute>
 
 		<execute macro="KBArticle#importCP">
+			<var name="applyNumericalPrefix" value="true" />
 			<var name="kbZipFile" value="KBArticlesWithMetadata.zip" />
 		</execute>
 
@@ -979,12 +1018,12 @@
 		</execute>
 
 		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Application Display Templates" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
 		<execute macro="KBArticle#gotoKBChildArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Liferay UI Taglibs" />
-			<var name="kbChildArticleTitle" value="Using Liferay UI Tabs and Sections" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
+			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 2 Child 2" />
 		</execute>
 
 		<execute macro="KBArticle#viewImageViaContentCmd" />
@@ -1001,11 +1040,11 @@
 
 		<execute macro="KBArticle#gotoViaKBAdminCP">
 			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Liferay UI Taglibs" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
 		</execute>
 
 		<execute macro="KBArticle#viewAttachmentCP">
-			<var name="kbArticleTitle" value="Using Liferay UI Tabs and Sections" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2 Child 2" />
 		</execute>
 	</command>
 
@@ -1029,21 +1068,18 @@
 		</execute>
 
 		<execute macro="KBArticle#importCP">
+			<var name="applyNumericalPrefix" value="true" />
 			<var name="kbZipFile" value="KBArticlesWithMetadata.zip" />
 		</execute>
 
 		<execute macro="KBArticle#gotoViaKBAdminCP">
 			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Liferay UI Taglibs" />
-		</execute>
-
-		<execute macro="KBArticle#gotoViaKBAdminCP">
-			<var name="kbArticleTitle" value="Using Liferay UI Tabs and Sections" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
 		</execute>
 
 		<execute macro="KBArticle#viewSourceURLCP">
-			<var name="kbArticleSourceURL" value="https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/liferayui-taglibs/using-liferay-ui-tabs-and-sections.markdown" />
-			<var name="kbArticleTitle" value="Using Liferay UI Tabs and Sections" />
+			<var name="kbArticleSourceURL" value="https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/liferayui-taglibs/knowledge-base-article-parent-title-2-child-2.markdown" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2 Child 2" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1052,7 +1088,7 @@
 
 		<execute macro="KBArticle#viewSourceURLPG">
 			<var name="kbArticleSourceURL" value="https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/adt/intro.markdown" />
-			<var name="kbArticleTitle" value="Application Display Templates" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 1" />
 		</execute>
 	</command>
 
@@ -1933,32 +1969,32 @@
 		</execute>
 
 		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Priority 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Priority 1" />
+			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
 		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Priority 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Priority 2" />
+			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
 		</execute>
 
 		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Edited Priority 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Edited Priority 1" />
+			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 3" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
 		</execute>
 
 		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Priority 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 			<var name="kbPriority" value="1.0" />
 		</execute>
 
 		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Priority 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
 			<var name="kbPriority" value="2.0" />
 		</execute>
 
 		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Edited Priority 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
 			<var name="kbPriority" value="3.0" />
 		</execute>
 
@@ -1966,55 +2002,53 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="KBArticle#viewHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle1" value="Knowledge Base Article Title Priority 1" />
-			<var name="kbArticleTitle2" value="Knowledge Base Article Title Priority 2" />
-			<var name="kbArticleTitle3" value="Knowledge Base Article Title Edited Priority 1" />
+		<execute macro="KBArticle#viewParentArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title" />
 		</execute>
 
 		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Priority 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Priority 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Priority 1" />
+			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
 		<execute macro="KBArticle#gotoNextArticlePG">
-			<var name="kbDisplayNextArticle" value="Knowledge Base Article Title Priority 2" />
+			<var name="kbDisplayNextArticle" value="Knowledge Base Article Parent Title 2" />
 		</execute>
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Priority 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Priority 2" />
+			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
 		</execute>
 
 		<execute macro="KBArticle#gotoNextArticlePG">
-			<var name="kbDisplayNextArticle" value="Knowledge Base Article Title Edited Priority 1" />
+			<var name="kbDisplayNextArticle" value="Knowledge Base Article Parent Title 3" />
 		</execute>
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Edited Priority 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Edited Priority 1" />
+			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 3" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
 		</execute>
 
 		<execute macro="KBArticle#gotoPreviousArticle">
-			<var name="kbDisplayPreviousArticle" value="Knowledge Base Article Title Priority 2" />
+			<var name="kbDisplayPreviousArticle" value="Knowledge Base Article Parent Title 2" />
 		</execute>
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Priority 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Priority 2" />
+			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
 		</execute>
 
 		<execute macro="KBArticle#gotoPreviousArticle">
-			<var name="kbDisplayPreviousArticle" value="Knowledge Base Article Title Priority 1" />
+			<var name="kbDisplayPreviousArticle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Priority 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Priority 1" />
+			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -2022,11 +2056,11 @@
 		</execute>
 
 		<execute macro="KBArticle#selectArticleCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Edited Priority 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
 		</execute>
 
 		<execute macro="KBArticle#editKBArticlePriorityViaEnterKeyCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Edited Priority 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
 			<var name="kbNewPriority" value="1.0" />
 			<var name="kbPriority" value="3.0" />
 		</execute>
@@ -2035,55 +2069,53 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="KBArticle#viewHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle1" value="Knowledge Base Article Title Priority 1" />
-			<var name="kbArticleTitle2" value="Knowledge Base Article Title Edited Priority 1" />
-			<var name="kbArticleTitle3" value="Knowledge Base Article Title Priority 2" />
+		<execute macro="KBArticle#viewParentArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
 		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Priority 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Priority 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Priority 1" />
+			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
 		<execute macro="KBArticle#gotoNextArticlePG">
-			<var name="kbDisplayNextArticle" value="Knowledge Base Article Title Edited Priority 1" />
+			<var name="kbDisplayNextArticle" value="Knowledge Base Article Parent Title 3" />
 		</execute>
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Edited Priority 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Edited Priority 1" />
+			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 3" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
 		</execute>
 
 		<execute macro="KBArticle#gotoNextArticlePG">
-			<var name="kbDisplayNextArticle" value="Knowledge Base Article Title Priority 2" />
+			<var name="kbDisplayNextArticle" value="Knowledge Base Article Parent Title 2" />
 		</execute>
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Priority 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Priority 2" />
+			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
 		</execute>
 
 		<execute macro="KBArticle#gotoPreviousArticle">
-			<var name="kbDisplayPreviousArticle" value="Knowledge Base Article Title Edited Priority 1" />
+			<var name="kbDisplayPreviousArticle" value="Knowledge Base Article Parent Title 3" />
 		</execute>
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Edited Priority 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Edited Priority 1" />
+			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 3" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
 		</execute>
 
 		<execute macro="KBArticle#gotoPreviousArticle">
-			<var name="kbDisplayPreviousArticle" value="Knowledge Base Article Title Priority 1" />
+			<var name="kbDisplayPreviousArticle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbArticleContent" value="Knowledge Base Article Content Priority 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title Priority 1" />
+			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 	</command>
 
@@ -2217,45 +2249,45 @@
 		</execute>
 
 		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Parent Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
+			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
 		<execute macro="KBArticle#addChildPGViaKBAdmin">
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
-			<var name="kbChildArticleContent" value="Knowledge Base Child Article Content Priority 1" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Child Article Title Priority 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
+			<var name="kbChildArticleContent" value="Knowledge Base Article Parent Content 1 Child 1" />
+			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child 1" />
 		</execute>
 
 		<execute macro="KBArticle#addChildPGViaKBAdmin">
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
-			<var name="kbChildArticleContent" value="Knowledge Base Child Article Content Priority 2" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Child Article Title Priority 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
+			<var name="kbChildArticleContent" value="Knowledge Base Article Parent Content 1 Child 2" />
+			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child 2" />
 		</execute>
 
 		<execute macro="KBArticle#addChildPGViaKBAdmin">
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
-			<var name="kbChildArticleContent" value="Knowledge Base Child Article Content Priority 3" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Child Article Title Priority 3" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
+			<var name="kbChildArticleContent" value="Knowledge Base Article Parent Content 1 Child 3" />
+			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child 3" />
 		</execute>
 
 		<execute macro="KBArticle#gotoViaKBAdminCP">
 			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
 		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Child Article Title Priority 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 1" />
 			<var name="kbPriority" value="1.0" />
 		</execute>
 
 		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Child Article Title Priority 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 2" />
 			<var name="kbPriority" value="2.0" />
 		</execute>
 
 		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Child Article Title Priority 3" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 3" />
 			<var name="kbPriority" value="3.0" />
 		</execute>
 
@@ -2264,14 +2296,11 @@
 		</execute>
 
 		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
-		<execute macro="KBArticle#viewHierarchyViaKBDisplayPG">
-			<var name="kbArticle1ChildArticleTitle1" value="Knowledge Base Child Article Title Priority 1" />
-			<var name="kbArticle1ChildArticleTitle2" value="Knowledge Base Child Article Title Priority 2" />
-			<var name="kbArticle1ChildArticleTitle3" value="Knowledge Base Child Article Title Priority 3" />
-			<var name="kbArticleTitle1" value="Knowledge Base Parent Article Title" />
+		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -2280,27 +2309,27 @@
 
 		<execute macro="KBArticle#gotoViaKBAdminCP">
 			<var name="hasChildArticle" value="true" />
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
 		<execute macro="KBArticle#editCP">
-			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edit" />
-			<var name="kbArticleTitle" value="Knowledge Base Child Article Title Priority 3" />
-			<var name="kbArticleTitleEdit" value="KB Article Should Remain Priority 3" />
+			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edit. This article should remain priority three." />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 3" />
+			<var name="kbArticleTitleEdit" value="Knowledge Base Article Parent Title 1 Child 3" />
 		</execute>
 
 		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Child Article Title Priority 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 1" />
 			<var name="kbPriority" value="1.0" />
 		</execute>
 
 		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Child Article Title Priority 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 2" />
 			<var name="kbPriority" value="2.0" />
 		</execute>
 
 		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="KB Article Should Remain Priority 3" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 3" />
 			<var name="kbPriority" value="3.0" />
 		</execute>
 
@@ -2309,14 +2338,11 @@
 		</execute>
 
 		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Parent Article Title" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
-		<execute macro="KBArticle#viewHierarchyViaKBDisplayPG">
-			<var name="kbArticle1ChildArticleTitle1" value="Knowledge Base Child Article Title Priority 1" />
-			<var name="kbArticle1ChildArticleTitle2" value="Knowledge Base Child Article Title Priority 2" />
-			<var name="kbArticle1ChildArticleTitle3" value="KB Article Should Remain Priority 3" />
-			<var name="kbArticleTitle1" value="Knowledge Base Parent Article Title" />
+		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 	</command>
 

@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Gradle Plugins
+Bundle-SymbolicName: com.liferay.sdk.gradle.plugins
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.sdk.gradle.plugins
+Include-Resource: classes
+Private-Package: com.liferay.sdk.gradle.plugins.internal.*

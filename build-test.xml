@@ -1307,7 +1307,12 @@
 			/>
 
 			<if>
-				<equals arg1="@{app.server.bundle.index}" arg2="0" />
+				<and>
+					<equals arg1="@{app.server.bundle.index}" arg2="0" />
+					<not>
+						<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
+					</not>
+				</and>
 				<then>
 					<antcall target="clean-up-logs" />
 

@@ -381,30 +381,30 @@ public class RTLCSSConverter {
 		"text-align", "float", "clear", "direction");
 
 	static {
-		_replacementStyles.put("margin-left", "margin-right");
-		_replacementStyles.put("padding-left", "padding-right");
-		_replacementStyles.put("border-left", "border-right");
-		_replacementStyles.put("border-left-color", "border-right-color");
-		_replacementStyles.put("border-left-width", "border-right-width");
-		_replacementStyles.put(
-			"border-radius-bottomleft", "border-radius-bottomright");
-		_replacementStyles.put(
-			"border-bottom-right-radius", "border-bottom-left-radius");
-		_replacementStyles.put(
-			"-webkit-border-bottom-right-radius",
-			"-webkit-border-bottom-left-radius");
 		_replacementStyles.put(
 			"-moz-border-radius-bottomright", "-moz-border-radius-bottomleft");
+		_replacementStyles.put(
+			"-moz-border-radius-topright", "-moz-border-radius-topleft");
 		_replacementStyles.put(
 			"border-radius-topleft", "border-radius-topright");
 		_replacementStyles.put(
 			"border-top-right-radius", "border-top-left-radius");
 		_replacementStyles.put(
+			"-webkit-border-bottom-right-radius",
+			"-webkit-border-bottom-left-radius");
+		_replacementStyles.put(
 			"-webkit-border-top-right-radius",
 			"-webkit-border-top-left-radius");
 		_replacementStyles.put(
-			"-moz-border-radius-topright", "-moz-border-radius-topleft");
+			"border-bottom-right-radius", "border-bottom-left-radius");
+		_replacementStyles.put("border-left", "border-right");
+		_replacementStyles.put("border-left-color", "border-right-color");
+		_replacementStyles.put("border-left-width", "border-right-width");
+		_replacementStyles.put(
+			"border-radius-bottomleft", "border-radius-bottomright");
 		_replacementStyles.put("left", "right");
+		_replacementStyles.put("margin-left", "margin-right");
+		_replacementStyles.put("padding-left", "padding-right");
 	}
 
 	private final CSSWriterSettings _cssWriterSettings;

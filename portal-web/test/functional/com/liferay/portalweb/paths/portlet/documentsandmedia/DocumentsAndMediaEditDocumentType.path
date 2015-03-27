@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>DocumentsAndMediaEditDocumentType</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DocumentsAndMediaEditDocumentType</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>DocumentsAndMediaEditDocumentType</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME_FIELD</td>
+	<td>//input[contains(@id,'name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS</td>
+	<td>//div[@id='detailsMetadataFields']/div/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_METADATA_SET_BUTTON</td>
+	<td>//span[contains(.,'Select Metadata Set')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE_METADATA_SET_BUTTON</td>
+	<td>//tbody[contains(.,'${key_metadataSetName}')]/tr/td[contains(.,'Remove')]/a/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS-->
+<tr>
+	<td>DETAILS_DESCRIPTION_FIELD</td>
+	<td>//textarea[contains(@id,'_description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PARENT_SELECT_BUTTON</td>
+	<td>//button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PARENT_REMOVE_BUTTON</td>
+	<td>//button[contains(@id,'_removeParentStructureButton')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

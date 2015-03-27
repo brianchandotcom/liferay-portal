@@ -234,6 +234,52 @@
 	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Sort By']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SEARCH-->
+<tr>
+	<td>SEARCH_MESSAGE</td>
+	<td>//div[contains(@class,'search-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_LOCAL_TAB</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Local')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_REPOSITORY_TAB</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'${key_dmRepositoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_TITLE</td>
+	<td>//a[@class='entry-link' and contains(.,'${dmDocumentTitle}')]/div/span[@class='entry-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_WORD_HIGHLIGHT</td>
+	<td>//a[@class='entry-link' and contains(.,'${dmDocumentTitle}')]/div/span[@class='entry-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_PARENT_FOLDER</td>
+	<td>//a[@class='entry-link' and contains(.,'${dmDocumentTitle}')]//dd</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_CONTENT</td>
+	<td>//a[@class='entry-link' and contains(.,'${dmDocumentTitle}')]/div/span[@class='entry-description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_ACTIONS</td>
+	<td>//a[@class='entry-link' and contains(.,'${dmDocumentTitle}')]/../span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a/i</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

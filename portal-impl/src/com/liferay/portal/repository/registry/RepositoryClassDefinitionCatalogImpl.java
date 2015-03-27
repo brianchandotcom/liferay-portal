@@ -14,7 +14,6 @@
 
 package com.liferay.portal.repository.registry;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -34,7 +33,6 @@ import com.liferay.registry.collections.StringServiceRegistrationMap;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -52,7 +50,7 @@ public class RepositoryClassDefinitionCatalogImpl
 
 	@Override
 	public Collection<String> getExternalRepositoryClassNames() {
-		return _externalRepositoriesClassNames;
+		return _externalRepositoryClassDefinitions.keySet();
 	}
 
 	@Override
@@ -139,14 +137,11 @@ public class RepositoryClassDefinitionCatalogImpl
 	}
 
 	protected void unregisterRepositoryDefiner(String className) {
-		_externalRepositoriesClassNames.remove(className);
 		_externalRepositoryClassDefinitions.remove(className);
 
 		_repositoryClassDefinitions.remove(className);
 	}
 
-	private final Set<String> _externalRepositoriesClassNames =
-		new ConcurrentHashSet<>();
 	private final Map<String, RepositoryClassDefinition>
 		_externalRepositoryClassDefinitions = new ConcurrentHashMap<>();
 	private RepositoryFactory _legacyExternalRepositoryFactory;
@@ -178,8 +173,6 @@ public class RepositoryClassDefinitionCatalogImpl
 			String className = repositoryDefiner.getClassName();
 
 			if (repositoryDefiner.isExternalRepository()) {
-				_externalRepositoriesClassNames.add(className);
-
 				_externalRepositoryClassDefinitions.put(
 					className, repositoryClassDefinition);
 			}
@@ -202,14 +195,10 @@ public class RepositoryClassDefinitionCatalogImpl
 			String className = repositoryDefiner.getClassName();
 
 			if (repositoryDefiner.isExternalRepository()) {
-				_externalRepositoriesClassNames.add(className);
-
 				_externalRepositoryClassDefinitions.put(
 					className, repositoryClassDefinition);
 			}
 			else {
-				_externalRepositoriesClassNames.remove(className);
-
 				_externalRepositoryClassDefinitions.remove(className);
 			}
 

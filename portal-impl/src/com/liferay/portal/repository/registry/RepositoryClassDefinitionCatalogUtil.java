@@ -25,14 +25,23 @@ import java.util.Collection;
 public class RepositoryClassDefinitionCatalogUtil {
 
 	public static Collection<String> getExternalRepositoryClassNames() {
-		return
-			_repositoryClassDefinitionCatalog.getExternalRepositoryClassNames();
+		return getRepositoryClassDefinitionCatalog().
+			getExternalRepositoryClassNames();
+	}
+
+	public static RepositoryClassDefinitionCatalog
+		getRepositoryClassDefinitionCatalog() {
+
+		PortalRuntimePermission.checkGetBeanProperty(
+			RepositoryClassDefinitionCatalogUtil.class);
+
+		return _repositoryClassDefinitionCatalog;
 	}
 
 	public static void registerLegacyExternalRepositoryFactory(
 		String className, ExternalRepositoryFactory externalRepositoryFactory) {
 
-		_repositoryClassDefinitionCatalog.
+		getRepositoryClassDefinitionCatalog().
 			registerLegacyExternalRepositoryFactory(
 				className, externalRepositoryFactory);
 	}
@@ -40,7 +49,7 @@ public class RepositoryClassDefinitionCatalogUtil {
 	public static void unregisterLegacyExternalRepositoryFactory(
 		String className) {
 
-		_repositoryClassDefinitionCatalog.
+		getRepositoryClassDefinitionCatalog().
 			unregisterLegacyExternalRepositoryFactory(className);
 	}
 

@@ -36,6 +36,13 @@ public class RepositoryClassDefinitionCatalogUtil {
 			getExternalRepositoryClassNames();
 	}
 
+	public static RepositoryClassDefinition getRepositoryClassDefinition(
+		String repositoryTypeKey) {
+
+		return getRepositoryClassDefinitionCatalog().
+			getRepositoryClassDefinition(repositoryTypeKey);
+	}
+
 	public static RepositoryClassDefinitionCatalog
 		getRepositoryClassDefinitionCatalog() {
 

@@ -1063,7 +1063,7 @@
 			<var name="virtualHostsURL" value="http://www.able.com:8080/" />
 		</execute>
 
-		<execute function="Confirm#waitForConfirmation" locator1="Home#PAGE_CONFIRM" value1="Welcome to Russia." />
+		<execute function="Confirm#waitForConfirmation" value1="Welcome to Russia." />
 
 		<execute macro="Page#viewCustomThemePG">
 			<var name="customTheme" value="Dark" />

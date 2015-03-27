@@ -41,11 +41,11 @@ import java.util.regex.Pattern;
 public class RTLCSSConverter {
 
 	public RTLCSSConverter() {
-		_writerSettings = new CSSWriterSettings (ECSSVersion.CSS30, true);
+		_cssWriterSettings = new CSSWriterSettings(ECSSVersion.CSS30, true);
 	}
 
 	public RTLCSSConverter(boolean compress) {
-		_writerSettings = new CSSWriterSettings (ECSSVersion.CSS30, compress);
+		_cssWriterSettings = new CSSWriterSettings(ECSSVersion.CSS30, compress);
 	}
 
 	public String process(String cssString) {
@@ -86,7 +86,7 @@ public class RTLCSSConverter {
 				}
 			}
 
-			sb.append(styleRule.getAsCSSString(_writerSettings, 1));
+			sb.append(styleRule.getAsCSSString(_cssWriterSettings, 1));
 		}
 
 		return sb.toString();
@@ -285,7 +285,7 @@ public class RTLCSSConverter {
 		return property.replaceAll("\\**\\b", "");
 	}
 
-	private final CSSWriterSettings _writerSettings;
+	private final CSSWriterSettings _cssWriterSettings;
 
 	private static final List<String> BGPOSITION_STYLES = Arrays.asList(
 			"background-position"

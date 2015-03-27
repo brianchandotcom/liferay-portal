@@ -18,6 +18,7 @@ import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.PropsValues;
+import com.liferay.poshi.runner.util.StringPool;
 
 import java.lang.reflect.Method;
 
@@ -595,18 +596,25 @@ public class PoshiRunnerExecutor {
 					classCommandName);
 			}
 			else if ((element.attributeValue("group") != null) &&
-					 (element.attributeValue("pattern") != null) &&
-					 (element.attributeValue("input") != null)) {
+					 (element.attributeValue("input") != null) &&
+					 (element.attributeValue("pattern") != null)) {
 
-				String input = element.attributeValue("input");
 				String group = element.attributeValue("group");
+				String input = element.attributeValue("input");
 				String pattern = element.attributeValue("pattern");
 
-				String method =
-					"RegexUtil#replace(" + input + "," + pattern + "," + group +
-					")";
+				StringBuilder sb = new StringBuilder();
 
-				varValue = PoshiRunnerGetterUtil.getVarMethodValue(method);
+				sb.append("RegexUtil#replace(");
+				sb.append(input);
+				sb.append(StringPool.COMMA);
+				sb.append(pattern);
+				sb.append(StringPool.COMMA);
+				sb.append(group);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				varValue = PoshiRunnerGetterUtil.getVarMethodValue(
+					sb.toString());
 			}
 			else {
 				varValue = element.elementText("var");

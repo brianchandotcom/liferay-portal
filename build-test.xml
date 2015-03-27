@@ -26,21 +26,6 @@
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
 
-	<if>
-		<os family="unix" />
-		<then>
-			<exec executable="/bin/bash" os="${os.unix}" outputproperty="ip.address">
-				<arg value="-c" />
-				<arg value="ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'" />
-			</exec>
-		</then>
-		<else>
-			<hostinfo host="${env.COMPUTERNAME}.local" prefix="host.info" />
-
-			<property name="ip.address" value="${host.info.ADDR4}" />
-		</else>
-	</if>
-
 	<macrodef name="check-config">
 		<sequential>
 			<if>
@@ -343,6 +328,29 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-ip-address">
+		<sequential>
+			<if>
+				<isset property="ip.address" />
+				<then>
+					<var name="ip.address" value="${ip.address}" />
+				</then>
+				<elseif>
+					<os family="unix" />
+					<then>
+						<exec executable="/bin/bash" os="${os.unix}" outputproperty="ip.address">
+							<arg value="-c" />
+							<arg value="ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'" />
+						</exec>
+					</then>
+				</elseif>
+				<else>
+					<fail message="Please set the property ${ip.address}" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-test-class-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}" unless="test.class" />
@@ -469,6 +477,8 @@
 
 	<macrodef name="get-test-url">
 		<sequential>
+			<get-testcase-property property.name="mobile.device.enabled" />
+
 			<get-testcase-property property.name="testcase.url" />
 
 			<if>
@@ -476,6 +486,14 @@
 				<then>
 					<var name="test.url" value="${test.url}" />
 				</then>
+				<elseif>
+					<equals arg1="${mobile.device.enabled}" arg2="true" />
+					<then>
+						<get-ip-address />
+
+						<var name="test.url" value="http://${ip.address}:8080" />
+					</then>
+				</elseif>
 				<elseif>
 					<isset property="testcase.url" />
 					<then>
@@ -2854,6 +2872,8 @@ portal.security.manager.strategy=liferay</echo>
 		<if>
 			<equals arg1="${mobile.device.enabled}" arg2="true" />
 			<then>
+				<get-ip-address />
+
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
 virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}</echo>
@@ -3565,30 +3585,9 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 
 		<get-test-url />
 
-		<if>
-			<equals arg1="${test.selenium.unit.enabled}" arg2="true" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					portal.url=file:///${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/selenium/dependencies/Site.html
-				</echo>
-			</then>
-			<elseif>
-				<equals arg1="${mobile.device.enabled}" arg2="true" />
-				<then>
-					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-						portal.url=http://${ip.address}:8080
-					</echo>
-				</then>
-			</elseif>
-			<elseif>
-				<isset property="test.url" />
-				<then>
-					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-						portal.url=${test.url}
-					</echo>
-				</then>
-			</elseif>
-		</if>
+		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+			portal.url=${test.url}
+		</echo>
 
 		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 			selenium.executable.dir=${basedir.unix}/tools/selenium/

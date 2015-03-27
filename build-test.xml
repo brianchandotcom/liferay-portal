@@ -5411,6 +5411,12 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<antcall target="rebuild-database" inheritAll="false" />
 
 		<ant dir="modules" target="test-class-group" inheritAll="false" />
+
+		<ant antfile="build-test-tck.xml" target="record-test-tck-package-names" />
+
+		<ant antfile="build-test-tck.xml" target="test-class-group" />
+
+		<antcall target="stop-app-server" />
 	</target>
 
 	<target name="test-integration">

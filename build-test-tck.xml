@@ -248,7 +248,29 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 				</java>
 			</sequential>
 		</for>
+	</target>
 
-		<antcall target="stop-app-server" />
+	<target name="test-class-group">
+		<if>
+			<not>
+				<isset property="test.class.group.index" />
+			</not>
+			<then>
+				<fail>Use "ant test-class-group -Dtest.class.group.index=0".</fail>
+			</then>
+		</if>
+
+		<property file="${project.dir}/test.tck.package.names.properties" />
+
+		<propertycopy from="TEST_CLASS_GROUP_${test.class.group.index}" name="test.packages" />
+
+		<if>
+			<not>
+				<equals arg1="${test.packages}" arg2="" />
+			</not>
+			<then>
+				<antcall target="run-tck-tomcat" />
+			</then>
+		</if>
 	</target>
 </project>

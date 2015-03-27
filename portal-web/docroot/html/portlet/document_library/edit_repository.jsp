@@ -62,10 +62,10 @@ long folderId = ParamUtil.getLong(request, "folderId");
 				<aui:select id="repositoryTypes" label="repository-type" name="className">
 
 					<%
-					for (String dlRepositoryImpl : RepositoryClassDefinitionCatalogUtil.getExternalRepositoryClassNames()) {
+					for (RepositoryClassDefinition repositoryClassDefinition : RepositoryClassDefinitionCatalogUtil.getExternalRepositoryClassDefinitions()) {
 					%>
 
-						<aui:option label="<%= HtmlUtil.escape(ResourceActionsUtil.getModelResource(locale, dlRepositoryImpl)) %>" value="<%= HtmlUtil.escapeAttribute(dlRepositoryImpl) %>" />
+						<aui:option label="<%= HtmlUtil.escape(repositoryClassDefinition.getRepositoryTypeLabel(locale)) %>" value="<%= HtmlUtil.escapeAttribute(repositoryClassDefinition.getClassName()) %>" />
 
 					<%
 					}
@@ -78,12 +78,17 @@ long folderId = ParamUtil.getLong(request, "folderId");
 				<div id="<portlet:namespace />settingsParameters"></div>
 			</c:when>
 			<c:otherwise>
+
+				<%
+				RepositoryClassDefinition repositoryClassDefinition = RepositoryClassDefinitionCatalogUtil.getRepositoryClassDefinition(repository.getClassName());
+				%>
+
 				<div class="repository-settings-display">
 					<dt>
 						<liferay-ui:message key="repository-type" />
 					</dt>
 					<dd>
-						<%= ResourceActionsUtil.getModelResource(locale, repository.getClassName()) %>
+						<%= repositoryClassDefinition.getRepositoryTypeLabel(locale) %>
 					</dd>
 
 					<%
@@ -91,7 +96,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 					String configuration = typeSettingsProperties.get("configuration-type");
 
-					String[] supportedParameters = RepositoryServiceUtil.getSupportedParameters(repository.getClassNameId(), configuration);
+					String[] supportedParameters = RepositoryServiceUtil.getSupportedParameters(repositoryClassDefinition.getClassName(), configuration);
 
 					for (String supportedParameter : supportedParameters) {
 						String supportedParameterValue = typeSettingsProperties.getProperty(supportedParameter);
@@ -133,26 +138,26 @@ long folderId = ParamUtil.getLong(request, "folderId");
 <div class="hide" id="<portlet:namespace />settingsSupported">
 
 	<%
-	for (String dlRepositoryImpl : RepositoryClassDefinitionCatalogUtil.getExternalRepositoryClassNames()) {
-		String className = HtmlUtil.escapeAttribute(dlRepositoryImpl.substring(dlRepositoryImpl.lastIndexOf(StringPool.PERIOD) + 1));
-
-		long classNameId = PortalUtil.getClassNameId(dlRepositoryImpl);
-
+	for (RepositoryClassDefinition repositoryClassDefinition : RepositoryClassDefinitionCatalogUtil.getExternalRepositoryClassDefinitions()) {
 		try {
-			String[] supportedConfigurations = RepositoryServiceUtil.getSupportedConfigurations(classNameId);
+			String className = repositoryClassDefinition.getClassName();
+
+			String unqualifiedClassName = HtmlUtil.escapeAttribute(className.substring(className.lastIndexOf(StringPool.PERIOD) + 1));
+
+			String[] supportedConfigurations = repositoryClassDefinition.getSupportedConfigurations();
 
 			for (String supportedConfiguration : supportedConfigurations) {
 		%>
 
-			<div class="settings-configuration <%= ((supportedConfigurations.length == 1) ? "hide" : "") %>" id="<portlet:namespace />repository-<%= className %>-wrapper">
-				<aui:select cssClass="repository-configuration" id='<%= "repository-" + className %>' label="repository-configuration" name="settings--configuration-type--">
+			<div class="settings-configuration <%= ((supportedConfigurations.length == 1) ? "hide" : "") %>" id="<portlet:namespace />repository-<%= unqualifiedClassName %>-wrapper">
+				<aui:select cssClass="repository-configuration" id='<%= "repository-" + unqualifiedClassName %>' label="repository-configuration" name="settings--configuration-type--">
 					<aui:option label="<%= LanguageUtil.get(request, HtmlUtil.escape(StringUtil.replace(StringUtil.toLowerCase(supportedConfiguration), CharPool.UNDERLINE, CharPool.DASH))) %>" selected="<%= supportedConfiguration.equals(supportedConfigurations[0]) %>" value="<%= HtmlUtil.escapeAttribute(supportedConfiguration) %>" />
 				</aui:select>
 			</div>
-			<div class="settings-parameters" id="<portlet:namespace />repository-<%= className %>-configuration-<%= HtmlUtil.escapeAttribute(supportedConfiguration) %>">
+			<div class="settings-parameters" id="<portlet:namespace />repository-<%= unqualifiedClassName %>-configuration-<%= HtmlUtil.escapeAttribute(supportedConfiguration) %>">
 
 				<%
-				String[] supportedParameters = RepositoryServiceUtil.getSupportedParameters(classNameId, supportedConfiguration);
+				String[] supportedParameters = RepositoryServiceUtil.getSupportedParameters(className, supportedConfiguration);
 
 				for (String supportedParameter : supportedParameters) {
 				%>

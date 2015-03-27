@@ -27,7 +27,21 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
  */
 public class MBMessageAttachmentsUtil {
 
+	public static MBMessage fetchMessage(long fileEntryId)
+		throws PortalException {
+
+		return MBMessageLocalServiceUtil.fetchMBMessage(
+			getMessageId(fileEntryId));
+	}
+
 	public static MBMessage getMessage(long fileEntryId)
+		throws PortalException {
+
+		return MBMessageLocalServiceUtil.getMBMessage(
+			getMessageId(fileEntryId));
+	}
+
+	protected static long getMessageId(long fileEntryId)
 		throws PortalException {
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
@@ -36,9 +50,7 @@ public class MBMessageAttachmentsUtil {
 		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
 			fileEntry.getFolderId());
 
-		long messageId = GetterUtil.getLong(folder.getName());
-
-		return MBMessageLocalServiceUtil.getMBMessage(messageId);
+		return GetterUtil.getLong(folder.getName());
 	}
 
 }

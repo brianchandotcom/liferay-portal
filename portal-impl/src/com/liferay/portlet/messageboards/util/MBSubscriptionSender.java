@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.GroupSubscriptionCheckSubscriptionSender;
-import com.liferay.portlet.messageboards.NoSuchMailingListException;
 import com.liferay.portlet.messageboards.model.MBMailingList;
 import com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil;
 
@@ -42,22 +41,16 @@ public class MBSubscriptionSender
 		throws PortalException {
 
 		if (_calledAddMailingListSubscriber) {
-			throw new IllegalArgumentException();
+			throw new IllegalStateException();
 		}
 
 		_calledAddMailingListSubscriber = true;
 
-		MBMailingList mailingList = null;
-
-		try {
-			mailingList = MBMailingListLocalServiceUtil.getCategoryMailingList(
+		MBMailingList mailingList =
+			MBMailingListLocalServiceUtil.fetchCategoryMailingList(
 				groupId, categoryId);
-		}
-		catch (NoSuchMailingListException nsmle) {
-			return;
-		}
 
-		if (!mailingList.isActive()) {
+		if ((mailingList == null) || !mailingList.isActive()) {
 			return;
 		}
 

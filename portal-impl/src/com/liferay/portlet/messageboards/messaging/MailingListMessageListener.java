@@ -28,7 +28,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -201,13 +200,9 @@ public class MailingListMessageListener extends BaseMessageListener {
 
 		MBMessage parentMessage = null;
 
-		try {
-			if (parentMessageId > 0) {
-				parentMessage = MBMessageLocalServiceUtil.getMessage(
-					parentMessageId);
-			}
-		}
-		catch (NoSuchMessageException nsme) {
+		if (parentMessageId > 0) {
+			parentMessage = MBMessageLocalServiceUtil.fetchMBMessage(
+				parentMessageId);
 		}
 
 		if (_log.isDebugEnabled()) {

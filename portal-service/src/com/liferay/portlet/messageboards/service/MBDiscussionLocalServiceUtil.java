@@ -224,6 +224,11 @@ public class MBDiscussionLocalServiceUtil {
 		return getService().fetchMBDiscussionByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBDiscussion fetchThreadDiscussion(
+		long threadId) {
+		return getService().fetchThreadDiscussion(threadId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

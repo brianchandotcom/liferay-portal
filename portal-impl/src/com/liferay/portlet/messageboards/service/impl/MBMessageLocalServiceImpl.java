@@ -76,7 +76,6 @@ import com.liferay.portlet.messageboards.DiscussionMaxCommentsException;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
-import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.NoSuchThreadException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -536,32 +535,36 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public void deleteDiscussionMessages(String className, long classPK)
 		throws PortalException {
 
-		try {
-			long classNameId = classNameLocalService.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
-			MBDiscussion discussion = mbDiscussionPersistence.findByC_C(
-				classNameId, classPK);
+		MBDiscussion discussion = mbDiscussionPersistence.fetchByC_C(
+			classNameId, classPK);
 
-			List<MBMessage> messages = mbMessagePersistence.findByT_P(
-				discussion.getThreadId(),
-				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, 0, 1);
-
-			if (!messages.isEmpty()) {
-				MBMessage message = messages.get(0);
-
-				deleteDiscussionSocialActivities(
-					BlogsEntry.class.getName(), message);
-
-				mbThreadLocalService.deleteThread(message.getThreadId());
+		if (discussion == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Cannot delete discussion message for class name " +
+						className + " and class pk " + classPK +
+							" because it does not exist");
 			}
 
-			mbDiscussionPersistence.remove(discussion);
+			return;
 		}
-		catch (NoSuchDiscussionException nsde) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsde.getMessage());
-			}
+
+		List<MBMessage> messages = mbMessagePersistence.findByT_P(
+			discussion.getThreadId(),
+			MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, 0, 1);
+
+		if (!messages.isEmpty()) {
+			MBMessage message = messages.get(0);
+
+			deleteDiscussionSocialActivities(
+				BlogsEntry.class.getName(), message);
+
+			mbThreadLocalService.deleteThread(message.getThreadId());
 		}
+
+		mbDiscussionPersistence.remove(discussion);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

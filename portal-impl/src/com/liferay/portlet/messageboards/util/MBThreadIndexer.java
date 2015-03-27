@@ -33,9 +33,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
@@ -129,14 +129,15 @@ public class MBThreadIndexer extends BaseIndexer {
 
 		Document document = getBaseModelDocument(CLASS_NAME, thread);
 
-		try {
-			MBDiscussionLocalServiceUtil.getThreadDiscussion(
+		MBDiscussion discussion =
+			MBDiscussionLocalServiceUtil.fetchThreadDiscussion(
 				thread.getThreadId());
 
-			document.addKeyword("discussion", true);
-		}
-		catch (NoSuchDiscussionException nsde) {
+		if (discussion == null) {
 			document.addKeyword("discussion", false);
+		}
+		else {
+			document.addKeyword("discussion", true);
 		}
 
 		document.addKeyword("lastPostDate", thread.getLastPostDate().getTime());

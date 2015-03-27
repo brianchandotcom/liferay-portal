@@ -42,9 +42,9 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
@@ -85,13 +85,10 @@ public class MBMessageIndexer extends BaseIndexer {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)obj;
 
-		MBMessage message = null;
+		MBMessage message = MBMessageAttachmentsUtil.fetchMessage(
+			dlFileEntry.getFileEntryId());
 
-		try {
-			message = MBMessageAttachmentsUtil.getMessage(
-				dlFileEntry.getFileEntryId());
-		}
-		catch (Exception e) {
+		if (message == null) {
 			return;
 		}
 
@@ -229,14 +226,15 @@ public class MBMessageIndexer extends BaseIndexer {
 			document.remove(Field.USER_NAME);
 		}
 
-		try {
-			MBDiscussionLocalServiceUtil.getThreadDiscussion(
+		MBDiscussion discussion =
+			MBDiscussionLocalServiceUtil.fetchThreadDiscussion(
 				message.getThreadId());
 
-			document.addKeyword("discussion", true);
-		}
-		catch (NoSuchDiscussionException nsde) {
+		if (discussion == null) {
 			document.addKeyword("discussion", false);
+		}
+		else {
+			document.addKeyword("discussion", true);
 		}
 
 		document.addKeyword("threadId", message.getThreadId());

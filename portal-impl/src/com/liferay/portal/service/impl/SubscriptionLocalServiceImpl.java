@@ -314,6 +314,16 @@ public class SubscriptionLocalServiceImpl
 		}
 	}
 
+	@Override
+	public Subscription fetchSubscription(
+		long companyId, long userId, String className, long classPK) {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return subscriptionPersistence.fetchByC_U_C_C(
+			companyId, userId, classNameId, classPK);
+	}
+
 	/**
 	 * Returns the subscription of the user to the entity.
 	 *

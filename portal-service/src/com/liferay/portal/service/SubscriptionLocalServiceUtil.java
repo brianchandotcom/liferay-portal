@@ -282,6 +282,12 @@ public class SubscriptionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.Subscription fetchSubscription(
+		long companyId, long userId, java.lang.String className, long classPK) {
+		return getService()
+				   .fetchSubscription(companyId, userId, className, classPK);
+	}
+
+	public static com.liferay.portal.model.Subscription fetchSubscription(
 		long subscriptionId) {
 		return getService().fetchSubscription(subscriptionId);
 	}

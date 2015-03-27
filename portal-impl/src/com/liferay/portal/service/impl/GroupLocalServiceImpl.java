@@ -3757,16 +3757,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		Boolean site = (Boolean)params.remove("site");
 		List<Integer> types = (List<Integer>)params.remove("types");
 
-		Collection<Group> groups = null;
+		Collection<Group> groups = new HashSet<>();
 
 		Long userId = (Long)params.remove("usersGroups");
-
-		if (userId == null) {
-			groups = new ArrayList<>();
-		}
-		else {
-			groups = new HashSet<>();
-		}
 
 		for (long classNameId : classNameIds) {
 			groups.addAll(groupPersistence.findByC_C(companyId, classNameId));
@@ -3933,45 +3926,51 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					resourceName, resourceActionId);
 
 			if (resourceAction != null) {
-				long bitwiseValue = resourceAction.getBitwiseValue();
+				Set<Long> rolePermissionsGroupIds = new HashSet<>();
 
 				if (resourceBlockLocalService.isSupported(resourceName)) {
-					iterator = groups.iterator();
+					List<ResourceTypePermission> resourceTypePermissions =
+						resourceTypePermissionPersistence.findByRoleId(
+							resourceRoleId);
 
-					while (iterator.hasNext()) {
-						Group group = iterator.next();
+					for (ResourceTypePermission permission
+							: resourceTypePermissions) {
 
-						ResourceTypePermission resourceTypePermission =
-							resourceTypePermissionPersistence.fetchByC_G_N_R(
-								companyId, group.getGroupId(), resourceName,
-								resourceRoleId);
+						if ((permission.getCompanyId() == companyId) &&
+							resourceName.equals(permission.getName()) &&
+							permission.hasAction(resourceAction)) {
 
-						if ((resourceTypePermission == null) ||
-							((resourceTypePermission.getActionIds() &
-							  bitwiseValue) == 0)) {
+							long groupId = permission.getGroupId();
 
-							iterator.remove();
+							rolePermissionsGroupIds.add(groupId);
 						}
 					}
 				}
 				else {
-					iterator = groups.iterator();
+					List<ResourcePermission> resourcePermissions =
+						resourcePermissionPersistence.findByC_N_S(
+							companyId, resourceName, resourceScope);
 
-					while (iterator.hasNext()) {
-						Group group = iterator.next();
+					for (ResourcePermission permission : resourcePermissions) {
+						if ((permission.getRoleId() == resourceRoleId) &&
+							permission.hasAction(resourceAction)) {
 
-						ResourcePermission resourcePermission =
-							resourcePermissionPersistence.fetchByC_N_S_P_R(
-								companyId, resourceName, resourceScope,
-									String.valueOf(group.getGroupId()),
-									resourceRoleId);
+							String primKey = permission.getPrimKey();
 
-						if ((resourcePermission == null) ||
-							((resourcePermission.getActionIds() &
-							  bitwiseValue) == 0)) {
+							long groupId = GetterUtil.getLong(primKey);
 
-							iterator.remove();
+							rolePermissionsGroupIds.add(groupId);
 						}
+					}
+				}
+
+				iterator = groups.iterator();
+
+				while (iterator.hasNext()) {
+					Group group = iterator.next();
+
+					if (!rolePermissionsGroupIds.contains(group.getGroupId())) {
+						iterator.remove();
 					}
 				}
 			}

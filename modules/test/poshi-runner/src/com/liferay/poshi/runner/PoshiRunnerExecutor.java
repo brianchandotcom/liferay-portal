@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.logger.SummaryLoggerHandler;
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
@@ -418,14 +419,25 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerStackTraceUtil.pushFilePath(classCommandName, "function");
 
+		SummaryLoggerHandler.startSummary(executeElement);
+
 		Element commandElement = PoshiRunnerContext.getFunctionCommandElement(
 			classCommandName);
 
-		parseElement(commandElement);
+		try {
+			parseElement(commandElement);
+		}
+		catch (Exception e) {
+			SummaryLoggerHandler.failSummary(executeElement);
+
+			throw new PoshiRunnerException(e);
+		}
 
 		PoshiRunnerVariablesUtil.popCommandMap();
 
 		PoshiRunnerStackTraceUtil.popFilePath();
+
+		SummaryLoggerHandler.passSummary(executeElement);
 	}
 
 	public static void runIfElement(Element element)
@@ -502,14 +514,25 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerStackTraceUtil.pushFilePath(classCommandName, "macro");
 
+		SummaryLoggerHandler.startSummary(executeElement);
+
 		Element commandElement = PoshiRunnerContext.getMacroCommandElement(
 			classCommandName);
 
-		parseElement(commandElement);
+		try {
+			parseElement(commandElement);
+		}
+		catch (Exception e) {
+			SummaryLoggerHandler.failSummary(executeElement);
+
+			throw new PoshiRunnerException(e);
+		}
 
 		PoshiRunnerVariablesUtil.popCommandMap();
 
 		PoshiRunnerStackTraceUtil.popFilePath();
+
+		SummaryLoggerHandler.passSummary(executeElement);
 	}
 
 	public static void runSeleniumElement(Element executeElement)

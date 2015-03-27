@@ -15,12 +15,8 @@
 package com.liferay.portal.kernel.lock.bundle.locklistenerregistryutil;
 
 import com.liferay.portal.kernel.lock.LockListener;
-import com.liferay.portal.kernel.util.StackTraceUtil;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
@@ -38,29 +34,18 @@ public class TestLockListener implements LockListener {
 
 	@Override
 	public void onAfterExpire(String key) {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
 	}
 
 	@Override
 	public void onAfterRefresh(String key) {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
 	}
 
 	@Override
 	public void onBeforeExpire(String key) {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
 	}
 
 	@Override
 	public void onBeforeRefresh(String key) {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
 	}
-
-	@Reference(target = "(test=AtomicState)")
-	protected void getAtomicReference(AtomicReference<String> atomicReference) {
-		_atomicReference = atomicReference;
-	}
-
-	private AtomicReference<String> _atomicReference;
 
 }

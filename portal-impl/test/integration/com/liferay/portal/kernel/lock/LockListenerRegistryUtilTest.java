@@ -19,11 +19,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
-import com.liferay.portal.util.test.AtomicState;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,16 +37,6 @@ public class LockListenerRegistryUtilTest {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			new SyntheticBundleRule("bundle.locklistenerregistryutil"));
 
-	@BeforeClass
-	public static void setUpClass() {
-		_atomicState = new AtomicState();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_atomicState.close();
-	}
-
 	@Test
 	public void testGetLockListener() {
 		String className = TestLockListener.class.getName();
@@ -59,7 +46,5 @@ public class LockListenerRegistryUtilTest {
 
 		Assert.assertEquals(lockListener.getClassName(), className);
 	}
-
-	private static AtomicState _atomicState;
 
 }

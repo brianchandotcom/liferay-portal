@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.wiki.service;
+package com.liferay.wiki.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -30,8 +31,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -49,6 +50,7 @@ import com.liferay.wiki.exception.NoSuchPageResourceException;
 import com.liferay.wiki.exception.NodeChangeException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.util.test.WikiTestUtil;
 
 import java.util.ArrayList;
@@ -59,11 +61,13 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
  * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 @Sync
 public class WikiPageLocalServiceTest {
 
@@ -71,11 +75,13 @@ public class WikiPageLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
 		_group = GroupTestUtil.addGroup();
 
 		_node = WikiTestUtil.addNode(_group.getGroupId());
@@ -531,6 +537,9 @@ public class WikiPageLocalServiceTest {
 
 	@Test
 	public void testGetNoAssetPages() throws Exception {
+		List<WikiPage> initialPages =
+			WikiPageLocalServiceUtil.getNoAssetPages();
+
 		WikiTestUtil.addPage(_group.getGroupId(), _node.getNodeId(), true);
 
 		WikiPage page = WikiTestUtil.addPage(
@@ -545,8 +554,8 @@ public class WikiPageLocalServiceTest {
 
 		List<WikiPage> pages = WikiPageLocalServiceUtil.getNoAssetPages();
 
-		Assert.assertEquals(1, pages.size());
-		Assert.assertEquals(page, pages.get(0));
+		Assert.assertEquals(initialPages.size() + 1, pages.size());
+		Assert.assertEquals(page, pages.get(pages.size() - 1));
 	}
 
 	@Test

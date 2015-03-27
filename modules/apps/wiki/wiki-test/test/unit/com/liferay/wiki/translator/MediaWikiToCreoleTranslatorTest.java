@@ -14,22 +14,19 @@
 
 package com.liferay.wiki.translator;
 
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.DigesterUtil;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 /**
  * @author Jorge Ferrer
  */
 public class MediaWikiToCreoleTranslatorTest {
-
-	@ClassRule
-	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testAngleBracketsUnscape() throws Exception {
@@ -301,6 +298,19 @@ public class MediaWikiToCreoleTranslatorTest {
 			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS +
 				"previous line\n{{{{\nmonospace\n''second'' line\n}}}}\nnext" +
 					" line";
+
+		DigesterUtil digesterUtil = new DigesterUtil();
+
+		Digester digester = Mockito.mock(Digester.class);
+
+		Mockito.when(
+			digester.digest(Mockito.anyString())
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		digesterUtil.setDigester(digester);
+
 		String actual = _mediaWikiToCreoleTranslator.translate(content);
 
 		Assert.assertEquals(expected, actual);

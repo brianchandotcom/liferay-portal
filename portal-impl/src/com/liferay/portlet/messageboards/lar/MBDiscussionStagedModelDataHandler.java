@@ -26,6 +26,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -122,20 +123,23 @@ public class MBDiscussionStagedModelDataHandler
 			MBDiscussionLocalServiceUtil.fetchDiscussion(
 				discussion.getClassName(), newClassPK);
 
-		if ((existingDiscussion == null) &&
-			className.equals(Layout.class.getName()) &&
-			PropsValues.LAYOUT_COMMENTS_ENABLED) {
+		if (existingDiscussion == null) {
+			if (className.equals(Layout.class.getName()) &&
+				PropsValues.LAYOUT_COMMENTS_ENABLED) {
 
-			MBMessage rootMessage =
-				MBMessageLocalServiceUtil.addDiscussionMessage(
-					userId, discussion.getUserName(),
-					portletDataContext.getScopeGroupId(),
-					Layout.class.getName(), newClassPK,
-					WorkflowConstants.ACTION_PUBLISH);
+				MBMessage rootMessage =
+					MBMessageLocalServiceUtil.addDiscussionMessage(
+						userId, discussion.getUserName(),
+						portletDataContext.getScopeGroupId(), className,
+						newClassPK, WorkflowConstants.ACTION_PUBLISH);
 
-			existingDiscussion =
-				MBDiscussionLocalServiceUtil.getThreadDiscussion(
-					rootMessage.getThreadId());
+				existingDiscussion =
+					MBDiscussionLocalServiceUtil.getThreadDiscussion(
+						rootMessage.getThreadId());
+			}
+			else {
+				throw new NoSuchDiscussionException();
+			}
 		}
 
 		Map<Long, Long> discussionIds =

@@ -35,6 +35,16 @@ public class WikiServiceSettingsProvider {
 		return _wikiServiceSettingsProvider;
 	}
 
+	@Activate
+	public void activate() {
+		_wikiServiceSettingsProvider = this;
+	}
+
+	@Deactivate
+	public void deactivate() {
+		_wikiServiceSettingsProvider = null;
+	}
+
 	public GroupServiceSettingsProvider<WikiGroupServiceSettings>
 		getGroupServiceSettingsProvider() {
 
@@ -45,14 +55,24 @@ public class WikiServiceSettingsProvider {
 		return _wikiGroupServiceConfiguration;
 	}
 
-	@Activate
-	protected void activate() {
-		_wikiServiceSettingsProvider = this;
+	@Reference
+	public void setWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_wikiServiceSettingsProvider = null;
+	public void unsetGroupServiceSettingsProvider(
+		GroupServiceSettingsProvider<WikiGroupServiceSettings>
+			groupServiceSettingsProvider) {
+
+		_groupServiceSettingsProvider = null;
+	}
+
+	public void unsetWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = null;
 	}
 
 	@Reference(
@@ -63,26 +83,6 @@ public class WikiServiceSettingsProvider {
 			groupServiceSettingsProvider) {
 
 		_groupServiceSettingsProvider = groupServiceSettingsProvider;
-	}
-
-	@Reference
-	protected void setWikiGroupServiceConfiguration(
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
-
-		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
-	}
-
-	protected void unsetGroupServiceSettingsProvider(
-		GroupServiceSettingsProvider<WikiGroupServiceSettings>
-			groupServiceSettingsProvider) {
-
-		_groupServiceSettingsProvider = null;
-	}
-
-	protected void unsetWikiGroupServiceConfiguration(
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
-
-		_wikiGroupServiceConfiguration = null;
 	}
 
 	private static WikiServiceSettingsProvider _wikiServiceSettingsProvider;

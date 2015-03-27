@@ -74,7 +74,7 @@ public class GetMethodImpl implements Method {
 				is = flashMagicBytesUtilResult.getInputStream();
 
 				try {
-					ServletResponseUtil.sendFile(
+					ServletResponseUtil.sendFileWithRangeHeader(
 						request, response, fileName, is, resource.getSize(),
 						resource.getContentType());
 				}

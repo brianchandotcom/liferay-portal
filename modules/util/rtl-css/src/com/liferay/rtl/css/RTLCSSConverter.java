@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
 public class RTLCSSConverter {
 
 	public RTLCSSConverter() {
-		_cssWriterSettings = new CSSWriterSettings(ECSSVersion.CSS30, true);
+		this(true);
 	}
 
 	public RTLCSSConverter(boolean compress) {

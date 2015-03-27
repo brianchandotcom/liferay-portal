@@ -107,7 +107,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() + "/editor/alloyeditor/alloy-editor-core.js", javaScriptLastModified)) %>" type="text/javascript"></script>
 
 		<script type="text/javascript">
-			Liferay.namespace('EDITORS')['<%= editorImpl %>'] = true;
+			Liferay.namespace('EDITORS')['<%= editorName %>'] = true;
 		</script>
 	</liferay-util:html-top>
 </c:if>

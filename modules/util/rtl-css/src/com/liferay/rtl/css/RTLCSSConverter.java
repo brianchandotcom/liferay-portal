@@ -40,9 +40,9 @@ import java.util.regex.Pattern;
  */
 public class RTLCSSConverter {
 
-	private static final Pattern REGEX_PERCENT = Pattern.compile("\\d+%");
+	private static final Pattern _percentPattern = Pattern.compile("\\d+%");
 
-	private static final Pattern REGEX_PERCENT_OR_LENGTH = Pattern.compile(
+	private static final Pattern _percentOrLengthPattern = Pattern.compile(
 		"(\\d+)([a-z]{2}|%)");
 
 	private static final List<String> _reverseImageStyles = Arrays.asList(
@@ -140,7 +140,7 @@ public class RTLCSSConverter {
 
 			String value = cssExpressionMemberTermSimple.getValue();
 
-			Matcher matcher = REGEX_PERCENT_OR_LENGTH.matcher(value);
+			Matcher matcher = _percentOrLengthPattern.matcher(value);
 
 			if (matcher.matches()) {
 				cssExpression.addTermSimple(value);
@@ -154,7 +154,7 @@ public class RTLCSSConverter {
 
 			String value = cssExpressionMemberTermSimple.getValue();
 
-			Matcher matcher = REGEX_PERCENT.matcher(value);
+			Matcher matcher = _percentPattern.matcher(value);
 
 			if (matcher.matches()) {
 				int delta = Integer.valueOf(value.replaceAll("[^\\d]", ""), 10);

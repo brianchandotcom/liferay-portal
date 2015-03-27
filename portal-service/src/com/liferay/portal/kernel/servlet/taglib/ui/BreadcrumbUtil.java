@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.provider.PortletProvider;
+import com.liferay.portal.kernel.provider.PortletProviderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -187,10 +189,14 @@ public class BreadcrumbUtil {
 		String name = WebKeys.PORTLET_BREADCRUMBS;
 
 		if (Validator.isNotNull(portletDisplay.getId()) &&
-			!portletDisplay.isFocused()) {
+			!portletDisplay.isFocused() &&
+			!portletDisplay.getId().equals(
+				PortletProviderUtil.getPortletId(
+					BreadcrumbEntry.class.getName(),
+					PortletProvider.Action.VIEW))) {
 
-			name = name.concat(
-				StringPool.UNDERLINE.concat(portletDisplay.getId()));
+				name = name.concat(
+					StringPool.UNDERLINE.concat(portletDisplay.getId()));
 		}
 
 		List<BreadcrumbEntry> portletBreadcrumbEntries =

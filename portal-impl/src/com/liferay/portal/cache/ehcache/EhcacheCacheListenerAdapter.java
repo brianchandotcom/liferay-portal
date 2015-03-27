@@ -34,6 +34,11 @@ public class EhcacheCacheListenerAdapter<K extends Serializable, V>
 	}
 
 	@Override
+	public void dispose() {
+		_cacheEventListener.dispose();
+	}
+
+	@Override
 	public void notifyEntryEvicted(
 			PortalCache<K, V> portalCache, K key, V value, int timeToLive)
 		throws PortalCacheException {

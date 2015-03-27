@@ -22,6 +22,8 @@ import java.io.Serializable;
  */
 public interface CacheListener<K extends Serializable, V> {
 
+	public void dispose();
+
 	public void notifyEntryEvicted(
 			PortalCache<K, V> portalCache, K key, V value, int timeToLive)
 		throws PortalCacheException;

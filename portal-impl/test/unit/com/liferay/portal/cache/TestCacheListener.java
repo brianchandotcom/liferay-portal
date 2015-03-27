@@ -78,6 +78,10 @@ public class TestCacheListener<K extends Serializable, V>
 	}
 
 	@Override
+	public void dispose() {
+	}
+
+	@Override
 	public void notifyEntryEvicted(
 			PortalCache<K, V> portalCache, K key, V value, int timeToLive)
 		throws PortalCacheException {

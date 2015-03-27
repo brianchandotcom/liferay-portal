@@ -50,6 +50,10 @@ public class PortalCacheMapSynchronizeUtil {
 		}
 
 		@Override
+		public void dispose() {
+		}
+
+		@Override
 		public void notifyEntryEvicted(
 			PortalCache<K, V> portalCache, K key, V value, int timeToLive) {
 

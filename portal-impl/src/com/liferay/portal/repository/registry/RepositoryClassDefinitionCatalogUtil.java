@@ -24,6 +24,13 @@ import java.util.Collection;
  */
 public class RepositoryClassDefinitionCatalogUtil {
 
+	public static Iterable<RepositoryClassDefinition>
+		getExternalRepositoryClassDefinitions() {
+
+		return getRepositoryClassDefinitionCatalog().
+			getExternalRepositoryClassDefinitions();
+	}
+
 	public static Collection<String> getExternalRepositoryClassNames() {
 		return getRepositoryClassDefinitionCatalog().
 			getExternalRepositoryClassNames();

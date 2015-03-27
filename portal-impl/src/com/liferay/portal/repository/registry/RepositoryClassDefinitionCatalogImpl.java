@@ -44,6 +44,13 @@ public class RepositoryClassDefinitionCatalogImpl
 	implements RepositoryClassDefinitionCatalog {
 
 	@Override
+	public Iterable<RepositoryClassDefinition>
+		getExternalRepositoryClassDefinitions() {
+
+		return _externalRepositoryClassDefinitions.values();
+	}
+
+	@Override
 	public Collection<String> getExternalRepositoryClassNames() {
 		return _externalRepositoriesClassNames;
 	}
@@ -133,12 +140,15 @@ public class RepositoryClassDefinitionCatalogImpl
 
 	protected void unregisterRepositoryDefiner(String className) {
 		_externalRepositoriesClassNames.remove(className);
+		_externalRepositoryClassDefinitions.remove(className);
 
 		_repositoryClassDefinitions.remove(className);
 	}
 
 	private final Set<String> _externalRepositoriesClassNames =
 		new ConcurrentHashSet<>();
+	private final Map<String, RepositoryClassDefinition>
+		_externalRepositoryClassDefinitions = new ConcurrentHashMap<>();
 	private RepositoryFactory _legacyExternalRepositoryFactory;
 	private final Map<String, RepositoryClassDefinition>
 		_repositoryClassDefinitions = new ConcurrentHashMap<>();
@@ -161,16 +171,21 @@ public class RepositoryClassDefinitionCatalogImpl
 			RepositoryDefiner repositoryDefiner = registry.getService(
 				serviceReference);
 
+			RepositoryClassDefinition repositoryClassDefinition =
+				RepositoryClassDefinition.fromRepositoryDefiner(
+					repositoryDefiner);
+
 			String className = repositoryDefiner.getClassName();
 
 			if (repositoryDefiner.isExternalRepository()) {
 				_externalRepositoriesClassNames.add(className);
+
+				_externalRepositoryClassDefinitions.put(
+					className, repositoryClassDefinition);
 			}
 
 			_repositoryClassDefinitions.put(
-				className,
-				RepositoryClassDefinition.fromRepositoryDefiner(
-					repositoryDefiner));
+				className, repositoryClassDefinition);
 
 			return repositoryDefiner;
 		}
@@ -180,19 +195,26 @@ public class RepositoryClassDefinitionCatalogImpl
 			ServiceReference<RepositoryDefiner> serviceReference,
 			RepositoryDefiner repositoryDefiner) {
 
+			RepositoryClassDefinition repositoryClassDefinition =
+				RepositoryClassDefinition.fromRepositoryDefiner(
+					repositoryDefiner);
+
 			String className = repositoryDefiner.getClassName();
 
 			if (repositoryDefiner.isExternalRepository()) {
 				_externalRepositoriesClassNames.add(className);
+
+				_externalRepositoryClassDefinitions.put(
+					className, repositoryClassDefinition);
 			}
 			else {
 				_externalRepositoriesClassNames.remove(className);
+
+				_externalRepositoryClassDefinitions.remove(className);
 			}
 
 			_repositoryClassDefinitions.put(
-				repositoryDefiner.getClassName(),
-				RepositoryClassDefinition.fromRepositoryDefiner(
-					repositoryDefiner));
+				className, repositoryClassDefinition);
 		}
 
 		@Override

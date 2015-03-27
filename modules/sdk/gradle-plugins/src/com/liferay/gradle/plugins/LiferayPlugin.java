@@ -14,9 +14,9 @@
 
 package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.internal.extensions.LiferayExtension;
-import com.liferay.gradle.plugins.internal.util.StringUtil;
-import com.liferay.gradle.plugins.internal.util.Validator;
+import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.util.StringUtil;
+import com.liferay.gradle.plugins.util.Validator;
 
 import java.io.File;
 

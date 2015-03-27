@@ -301,6 +301,10 @@ public abstract class BasePortletExportImportTestCase
 
 		MapUtil.merge(getImportParameterMap(), importParameterMap);
 
+		LayoutLocalServiceUtil.importPortletDataDeletions(
+			TestPropsValues.getUserId(), importedLayout.getPlid(),
+			importedGroup.getGroupId(), portletId, importParameterMap, larFile);
+
 		LayoutLocalServiceUtil.importPortletInfo(
 			TestPropsValues.getUserId(), importedLayout.getPlid(),
 			importedGroup.getGroupId(), portletId, importParameterMap, larFile);

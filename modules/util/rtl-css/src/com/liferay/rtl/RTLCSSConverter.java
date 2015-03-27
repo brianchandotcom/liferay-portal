@@ -313,32 +313,32 @@ public class RTLCSSConverter {
 
 	public static final Pattern REGEX_PERCENT_OR_LENGTH = Pattern.compile(
 		"(\\d+)([a-z]{2}|%)");
-    
-    static {
-        REPLACEMENT_STYLES.put("margin-left", "margin-right");
-        REPLACEMENT_STYLES.put("padding-left", "padding-right");
-        REPLACEMENT_STYLES.put("border-left", "border-right");
-        REPLACEMENT_STYLES.put("border-left-color", "border-right-color");
-        REPLACEMENT_STYLES.put("border-left-width", "border-right-width");
-        REPLACEMENT_STYLES.put(
-                "border-radius-bottomleft", "border-radius-bottomright");
-        REPLACEMENT_STYLES.put(
-                "border-bottom-right-radius", "border-bottom-left-radius");
-        REPLACEMENT_STYLES.put(
-                "-webkit-border-bottom-right-radius",
-                "-webkit-border-bottom-left-radius");
-        REPLACEMENT_STYLES.put(
-                "-moz-border-radius-bottomright",
-                "-moz-border-radius-bottomleft");
-        REPLACEMENT_STYLES.put(
-                "border-radius-topleft", "border-radius-topright");
-        REPLACEMENT_STYLES.put(
-                "border-top-right-radius", "border-top-left-radius");
-        REPLACEMENT_STYLES.put(
-                "-webkit-border-top-right-radius",
-                "-webkit-border-top-left-radius");
-        REPLACEMENT_STYLES.put(
-                "-moz-border-radius-topright", "-moz-border-radius-topleft");
-        REPLACEMENT_STYLES.put("left", "right");
-    }
+
+	static {
+		REPLACEMENT_STYLES.put("margin-left", "margin-right");
+		REPLACEMENT_STYLES.put("padding-left", "padding-right");
+		REPLACEMENT_STYLES.put("border-left", "border-right");
+		REPLACEMENT_STYLES.put("border-left-color", "border-right-color");
+		REPLACEMENT_STYLES.put("border-left-width", "border-right-width");
+		REPLACEMENT_STYLES.put(
+			"border-radius-bottomleft", "border-radius-bottomright");
+		REPLACEMENT_STYLES.put(
+			"border-bottom-right-radius", "border-bottom-left-radius");
+		REPLACEMENT_STYLES.put(
+				"-webkit-border-bottom-right-radius",
+				"-webkit-border-bottom-left-radius");
+		REPLACEMENT_STYLES.put(
+				"-moz-border-radius-bottomright",
+				"-moz-border-radius-bottomleft");
+		REPLACEMENT_STYLES.put(
+			"border-radius-topleft", "border-radius-topright");
+		REPLACEMENT_STYLES.put(
+			"border-top-right-radius", "border-top-left-radius");
+		REPLACEMENT_STYLES.put(
+				"-webkit-border-top-right-radius",
+				"-webkit-border-top-left-radius");
+		REPLACEMENT_STYLES.put(
+			"-moz-border-radius-topright", "-moz-border-radius-topleft");
+		REPLACEMENT_STYLES.put("left", "right");
+	}
 }

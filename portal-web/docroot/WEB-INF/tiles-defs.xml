@@ -754,14 +754,6 @@
 		<put name="portlet_content" value="/portlet/my_account/view.jsp" />
 	</definition>
 
-	<!-- My Sites -->
-
-	<definition name="portlet.my_sites" extends="portlet" />
-
-	<definition name="portlet.my_sites.view" extends="portlet.my_sites">
-		<put name="portlet_content" value="/portlet/my_sites/view.jsp" />
-	</definition>
-
 	<!-- News -->
 
 	<definition name="portlet.news" extends="portlet" />
@@ -1100,10 +1092,6 @@
 
 	<definition name="portlet.sites_admin.error" extends="portlet.sites_admin">
 		<put name="portlet_content" value="/portlet/sites_admin/error.jsp" />
-	</definition>
-
-	<definition name="portlet.sites_admin.post_membership_request" extends="portlet.sites_admin">
-		<put name="portlet_content" value="/portlet/sites_admin/post_membership_request.jsp" />
 	</definition>
 
 	<definition name="portlet.sites_admin.reply_membership_request" extends="portlet.sites_admin">

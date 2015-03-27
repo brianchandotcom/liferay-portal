@@ -179,14 +179,12 @@
 	<portlet>
 		<portlet-name>29</portlet-name>
 		<icon>/html/icons/communities.png</icon>
-		<struts-path>my_sites</struts-path>
-		<parent-struts-path>sites_admin</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<asset-renderer-factory>com.liferay.portal.asset.LayoutAssetRendererFactory</asset-renderer-factory>
 		<asset-renderer-factory>com.liferay.portal.asset.LayoutRevisionAssetRendererFactory</asset-renderer-factory>
 		<workflow-handler>com.liferay.portal.workflow.LayoutRevisionWorkflowHandler</workflow-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
@@ -293,20 +291,6 @@
 		<css-class-wrapper>portlet-hello-world</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>49</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<parent-struts-path>my_sites</parent-struts-path>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<show-portlet-access-denied>false</show-portlet-access-denied>
-		<show-portlet-inactive>false</show-portlet-inactive>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<add-default-resource>true</add-default-resource>
-		<system>true</system>
-	</portlet>
-	<portlet>
 		<portlet-name>58</portlet-name>
 		<icon>/html/icons/login.png</icon>
 		<struts-path>login</struts-path>
@@ -403,6 +387,8 @@
 		<staged-model-data-handler-class>com.liferay.portlet.layoutsadmin.lar.LayoutFriendlyURLStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.layoutsadmin.lar.LayoutStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.layoutsadmin.lar.StagedThemeStagedModelDataHandler</staged-model-data-handler-class>
+		<asset-renderer-factory>com.liferay.portal.asset.LayoutAssetRendererFactory</asset-renderer-factory>
+		<asset-renderer-factory>com.liferay.portal.asset.LayoutRevisionAssetRendererFactory</asset-renderer-factory>
 		<trash-handler>com.liferay.portlet.layoutsadmin.trash.ExportImportConfigurationTrashHandler</trash-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>

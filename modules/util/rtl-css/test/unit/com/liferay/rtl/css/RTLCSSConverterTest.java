@@ -48,11 +48,13 @@ public class RTLCSSConverterTest {
 
 		Assert.assertNotNull(rtlCssConverter);
 
-		String css = "a{*margin-right: 5px}";
 		String expected = "a{*margin-left:5px}";
-		String result = rtlCssConverter.process(css);
 
-		Assert.assertEquals(expected, result);
+		String css = "a{*margin-right: 5px}";
+
+		String actual = rtlCssConverter.process(css);
+
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -61,13 +63,15 @@ public class RTLCSSConverterTest {
 
 		Assert.assertNotNull(rtlCssConverter);
 
-		String css =
-			"a{background-position:right top}b{background-position:10%}";
 		String expected =
 			"a{background-position:left top}b{background-position:right 10%}";
-		String result = rtlCssConverter.process(css);
 
-		Assert.assertEquals(expected, result);
+		String css =
+			"a{background-position:right top}b{background-position:10%}";
+
+		String actual = rtlCssConverter.process(css);
+
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -76,11 +80,13 @@ public class RTLCSSConverterTest {
 
 		Assert.assertNotNull(rtlCssConverter);
 
-		String css = read("main.css");
 		String expected = formatCss(read("main_rtl.css"));
-		String result = rtlCssConverter.process(css);
 
-		Assert.assertEquals(expected, result);
+		String css = read("main.css");
+
+		String actual = rtlCssConverter.process(css);
+
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -89,11 +95,13 @@ public class RTLCSSConverterTest {
 
 		Assert.assertNotNull(rtlCssConverter);
 
-		String css = "a{left:5px;right:15px}b{margin-left:5px}";
 		String expected = "a{right:5px;left:15px}b{margin-right:5px}";
-		String result = rtlCssConverter.process(css);
 
-		Assert.assertEquals(expected, result);
+		String css = "a{left:5px;right:15px}b{margin-left:5px}";
+
+		String actual = rtlCssConverter.process(css);
+
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -102,55 +110,62 @@ public class RTLCSSConverterTest {
 
 		Assert.assertNotNull(rtlCssConverter);
 
-		String css = "a{text-align:left}";
 		String expected = "a{text-align:right}";
-		String result = rtlCssConverter.process(css);
 
-		Assert.assertEquals(expected, result);
+		String css = "a{text-align:left}";
+
+		String actual = rtlCssConverter.process(css);
+
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
-	public void testShortHand() throws Exception {
+	public void testShorthand() throws Exception {
 		RTLCSSConverter rtlCssConverter = new RTLCSSConverter();
 
 		Assert.assertNotNull(rtlCssConverter);
+
+		String expected = "a{padding:1px 4px 3px 2px}";
 
 		String css = "a{padding:1px 2px 3px 4px}";
-		String expected = "a{padding:1px 4px 3px 2px}";
-		String result = rtlCssConverter.process(css);
 
-		Assert.assertEquals(expected, result);
+		String actual = rtlCssConverter.process(css);
+
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
-	public void testShortHandRadius() throws Exception {
+	public void testShorthandRadius() throws Exception {
 		RTLCSSConverter rtlCssConverter = new RTLCSSConverter();
 
 		Assert.assertNotNull(rtlCssConverter);
+
+		String expected =
+			"a{border-radius:2px 1px 4px 3px}" +
+				"b{border-radius:10px 5px 10px 20px}";
 
 		String css =
 			"a{border-radius:1px 2px 3px 4px}b{border-radius:5px 10px 20px}";
-		String expected =
-			"a{border-radius:2px 1px 4px 3px}" +
-			"b{border-radius:10px 5px 10px 20px}";
-		String result = rtlCssConverter.process(css);
 
-		Assert.assertEquals(expected, result);
+		String actual = rtlCssConverter.process(css);
+
+		Assert.assertEquals(expected, actual);
 	}
 
 	protected String formatCss(String css) {
-		CascadingStyleSheet cssObject = CSSReader.readFromString(
+		CascadingStyleSheet cascadingStyleSheet = CSSReader.readFromString(
 			css, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30);
 
-		List<CSSStyleRule> styleRules = cssObject.getAllStyleRules();
+		List<CSSStyleRule> cssStyleRules =
+			cascadingStyleSheet.getAllStyleRules();
 
-		StringBundler sb = new StringBundler(styleRules.size());
+		StringBundler sb = new StringBundler(cssStyleRules.size());
 
-		CSSWriterSettings writerSettings = new CSSWriterSettings(
+		CSSWriterSettings cssWriterSettings = new CSSWriterSettings(
 			ECSSVersion.CSS30, true);
 
-		for (CSSStyleRule styleRule : styleRules) {
-			sb.append(styleRule.getAsCSSString(writerSettings, 1));
+		for (CSSStyleRule cssStyleRule : cssStyleRules) {
+			sb.append(cssStyleRule.getAsCSSString(cssWriterSettings, 1));
 		}
 
 		return sb.toString();
@@ -161,8 +176,9 @@ public class RTLCSSConverterTest {
 	}
 
 	protected String read(String fileName) throws Exception {
-		return read(
-			this.getClass().getResourceAsStream("dependencies/" + fileName));
+		Class<?> clazz = getClass();
+
+		return read(clazz.getResourceAsStream("dependencies/" + fileName));
 	}
 
 }

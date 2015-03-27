@@ -33,6 +33,9 @@ public interface ResourceTypePermission extends ResourceTypePermissionModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.ResourceTypePermissionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public boolean hasAction(
+		com.liferay.portal.model.ResourceAction resourceAction);
+
 	public boolean isCompanyScope();
 
 	public boolean isGroupScope();

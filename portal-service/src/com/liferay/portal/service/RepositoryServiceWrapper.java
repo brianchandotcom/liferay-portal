@@ -106,6 +106,17 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	}
 
 	@Override
+	public java.lang.String[] getSupportedParameters(
+		java.lang.String className, java.lang.String configuration) {
+		return _repositoryService.getSupportedParameters(className,
+			configuration);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getSupportedParameters(String, String)}
+	*/
+	@Deprecated
+	@Override
 	public java.lang.String[] getSupportedParameters(long classNameId,
 		java.lang.String configuration) {
 		return _repositoryService.getSupportedParameters(classNameId,

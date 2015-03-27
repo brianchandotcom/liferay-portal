@@ -94,6 +94,14 @@ public interface RepositoryService extends BaseService {
 	public java.lang.String[] getSupportedConfigurations(long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getSupportedParameters(
+		java.lang.String className, java.lang.String configuration);
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getSupportedParameters(String, String)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getSupportedParameters(long classNameId,
 		java.lang.String configuration);
 

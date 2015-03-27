@@ -116,10 +116,30 @@ public class RepositoryServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getSupportedParameters(String, String)}
+	*/
+	@Deprecated
 	public static java.lang.String[] getSupportedParameters(long classNameId,
 		java.lang.String configuration) throws RemoteException {
 		try {
 			java.lang.String[] returnValue = RepositoryServiceUtil.getSupportedParameters(classNameId,
+					configuration);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String[] getSupportedParameters(
+		java.lang.String className, java.lang.String configuration)
+		throws RemoteException {
+		try {
+			java.lang.String[] returnValue = RepositoryServiceUtil.getSupportedParameters(className,
 					configuration);
 
 			return returnValue;

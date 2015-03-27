@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>CalendarResources</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CalendarResources</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CalendarResources</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_RESOURCE_BUTTON</td>
+	<td>//a[contains(@class,'btn') and contains (.,'Add Resource')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RESOURCE_TABLE-->
+<tr>
+	<td>RESOURCE_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_ACTIVE</td>
+	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[4]/div/a/i[@class='lfr-icon-menu-arrow caret']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_ACTIONS_GENERIC</td>
+	<td>//tr//i[@class='lfr-icon-menu-arrow caret']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RESOURCE_MENULIST-->
+<tr>
+	<td>RESOURCE_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_MENULIST_VIEW_CALENDARS</td>
+	<td>//a[@role='menuitem' and contains(.,'View Calendars')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

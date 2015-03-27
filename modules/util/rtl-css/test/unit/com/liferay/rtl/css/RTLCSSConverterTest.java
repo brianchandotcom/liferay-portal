@@ -58,7 +58,7 @@ public class RTLCSSConverterTest {
 	}
 
 	@Test
-	public void testBGPosition() throws Exception {
+	public void testBackgroundPosition() throws Exception {
 		RTLCSSConverter rtlCssConverter = new RTLCSSConverter();
 
 		Assert.assertNotNull(rtlCssConverter);

@@ -15,7 +15,7 @@
 package com.liferay.wiki.web.display.path;
 
 import com.liferay.portal.kernel.struts.path.AuthPublicPath;
-import com.liferay.wiki.web.path.BaseAuthPublicPath;
+import com.liferay.portal.kernel.struts.path.BaseAuthPublicPath;
 
 import java.util.Map;
 

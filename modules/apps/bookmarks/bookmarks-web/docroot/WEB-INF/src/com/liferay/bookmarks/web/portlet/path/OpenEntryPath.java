@@ -15,6 +15,7 @@
 package com.liferay.bookmarks.web.portlet.path;
 
 import com.liferay.portal.kernel.struts.path.AuthPublicPath;
+import com.liferay.portal.kernel.struts.path.BaseAuthPublicPath;
 
 import java.util.Map;
 

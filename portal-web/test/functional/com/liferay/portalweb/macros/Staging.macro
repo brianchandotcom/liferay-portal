@@ -568,7 +568,7 @@
 		<execute function="SelectFrame" locator1="BasePortletStaging#EXPORT_IMPORT_STAGING_IFRAME" />
 		<execute function="AssertClick" locator1="BasePortletStaging#STAGING_NAVIGATION" value1="Staging" />
 		<execute function="AssertClickNoError" locator1="BasePortletStaging#STAGING_PUBLISH_TO_LIVE_BUTTON" value1="Publish to Live" />
-		<execute function="Confirm" locator1="BasePortletStaging#STAGING_CONFIRMATION" value1="Are you sure you want to publish to live and update the existing portlet data?" />
+		<execute function="Confirm" value1="Are you sure you want to publish to live and update the existing portlet data?" />
 		<execute function="SelectFrameTop" />
 	</command>
 

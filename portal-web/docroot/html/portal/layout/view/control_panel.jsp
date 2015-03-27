@@ -136,38 +136,14 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 												<ul class="visit-links">
 													<li><liferay-ui:message key="visit" />:</li>
 
-													<%
-													PortletURL portletURL = new PortletURLImpl(request, PortletKeys.SITE_REDIRECTOR, plid, PortletRequest.ACTION_PHASE);
-
-													portletURL.setParameter("struts_action", "/my_sites/view");
-													portletURL.setParameter("groupId", String.valueOf(group.getGroupId()));
-													portletURL.setPortletMode(PortletMode.VIEW);
-													portletURL.setWindowState(WindowState.NORMAL);
-													%>
-
 													<c:choose>
 														<c:when test="<%= group.hasPrivateLayouts() && group.hasPublicLayouts() %>">
-
-															<%
-															portletURL.setParameter("privateLayout", Boolean.FALSE.toString());
-															%>
-
-															<li><a href="<%= portletURL.toString() %>"><liferay-ui:message key="public-pages" /></a></li>
+															<li><a href="<%= group.getDisplayURL(themeDisplay, false) %>"><liferay-ui:message key="public-pages" /></a></li>
 															<li class="divider"></li>
-
-															<%
-															portletURL.setParameter("privateLayout", Boolean.TRUE.toString());
-															%>
-
-															<li><a href="<%= portletURL.toString() %>"><liferay-ui:message key="private-pages" /></a></li>
+															<li><a href="<%= group.getDisplayURL(themeDisplay, true) %>"><liferay-ui:message key="private-pages" /></a></li>
 														</c:when>
 														<c:otherwise>
-
-															<%
-															portletURL.setParameter("privateLayout", group.hasPrivateLayouts() ? Boolean.TRUE.toString() : Boolean.FALSE.toString());
-															%>
-
-															<li><a href="<%= portletURL.toString() %>"><liferay-ui:message key="site-pages" /></a></li>
+															<li><a href="<%= group.getDisplayURL(themeDisplay, group.hasPrivateLayouts()) %>"><liferay-ui:message key="site-pages" /></a></li>
 														</c:otherwise>
 													</c:choose>
 												</ul>

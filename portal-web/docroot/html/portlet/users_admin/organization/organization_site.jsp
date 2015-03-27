@@ -131,12 +131,6 @@ if (organization != null) {
 						<aui:field-wrapper label="public-pages">
 							<c:choose>
 								<c:when test="<%= organization != null %>">
-									<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="publicPagesURL">
-										<portlet:param name="struts_action" value="/my_sites/view" />
-										<portlet:param name="groupId" value="<%= String.valueOf(organization.getGroup().getGroupId()) %>" />
-										<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
-									</liferay-portlet:actionURL>
-
 									<c:choose>
 										<c:when test="<%= organization.getPublicLayoutsPageCount() > 0 %>">
 											<liferay-ui:icon
@@ -145,7 +139,7 @@ if (organization != null) {
 												message="open-public-pages"
 												method="get"
 												target="_blank"
-												url="<%= publicPagesURL.toString() %>"
+												url="<%= organizationGroup.getDisplayURL(themeDisplay, false) %>"
 											/>
 										</c:when>
 										<c:otherwise>
@@ -207,12 +201,6 @@ if (organization != null) {
 						<aui:field-wrapper label="private-pages">
 							<c:choose>
 								<c:when test="<%= organization != null %>">
-									<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="privatePagesURL">
-										<portlet:param name="struts_action" value="/my_sites/view" />
-										<portlet:param name="groupId" value="<%= String.valueOf(organization.getGroup().getGroupId()) %>" />
-										<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
-									</liferay-portlet:actionURL>
-
 									<c:choose>
 										<c:when test="<%= organization.getPrivateLayoutsPageCount() > 0 %>">
 											<liferay-ui:icon
@@ -221,7 +209,7 @@ if (organization != null) {
 												message="open-private-pages"
 												method="get"
 												target="_blank"
-												url="<%= privatePagesURL.toString() %>"
+												url="<%= organizationGroup.getDisplayURL(themeDisplay, true) %>"
 											/>
 										</c:when>
 										<c:otherwise>

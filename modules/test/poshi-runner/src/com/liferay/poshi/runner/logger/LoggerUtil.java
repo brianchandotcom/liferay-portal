@@ -93,7 +93,7 @@ public final class LoggerUtil {
 		sb.append(loggerElement.getID());
 		sb.append("');");
 
-		sb.append("childNode.setAttribute('class', '");
+		sb.append("node.setAttribute('class', '");
 		sb.append(
 			StringEscapeUtils.escapeEcmaScript(loggerElement.getClassName()));
 		sb.append("');");
@@ -112,7 +112,7 @@ public final class LoggerUtil {
 		sb.append(loggerElement.getID());
 		sb.append("');");
 
-		sb.append("childNode.setAttribute('id', '");
+		sb.append("node.setAttribute('id', '");
 		sb.append(StringEscapeUtils.escapeEcmaScript(loggerElement.getID()));
 		sb.append("');");
 

@@ -15,14 +15,15 @@
 							CKEDITOR.getUrl(path + 'autocomplete.js')
 						];
 
-						CKEDITOR.scriptLoader.loadScripts(
+						CKEDITOR.scriptLoader.load(
 							dependencies,
 							function() {
 								new Liferay.AutoCompleteCKEditor(
 									A.merge(
 										editor.config.autocomplete,
 										{
-											editor: editor
+											editor: editor,
+											width: 300
 										}
 									)
 								).render();

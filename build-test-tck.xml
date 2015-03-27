@@ -129,65 +129,75 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 			<![CDATA[
 				import org.apache.tools.ant.DirectoryScanner;
 
-				DirectoryScanner directoryScanner = new DirectoryScanner();
-
-				List getClassGroups(int groupsSize) {
-					List classGroups = new ArrayList(groupsSize);
+				List getPackageGroups(List packageNames, int groupsSize) {
+					List packageGroups = new ArrayList(groupsSize);
 
 					for (int i = 0; i < groupsSize; i++) {
-						classGroups.add(new ArrayList());
+						packageGroups.add(new ArrayList());
 					}
 
-					return classGroups;
+					int packageGroupIndex = 0;
+
+					for (String packageName : packageNames) {
+						List packageGroup = packageGroups.get(packageGroupIndex % groupsSize);
+
+						packageGroup.add(packageName);
+
+						packageGroupIndex++;
+					}
+
+					return packageGroups;
 				}
 
-				directoryScanner.setBasedir(project.getBaseDir());
-				directoryScanner.setIncludes(new String[] {"**/com/sun/ts/tests/**/*.war"});
+				List getPackageNames() {
+					DirectoryScanner directoryScanner = new DirectoryScanner();
 
-				directoryScanner.scan();
+					directoryScanner.setBasedir(project.getBaseDir());
+					directoryScanner.setIncludes(new String[] {"**/com/sun/ts/tests/**/*.war"});
 
-				String[] fileNames = directoryScanner.getIncludedFiles();
+					directoryScanner.scan();
 
-				Arrays.sort(fileNames);
+					String[] fileNames = directoryScanner.getIncludedFiles();
+
+					Arrays.sort(fileNames);
+
+					List packageNames = new ArrayList();
+
+					for (String fileName : fileNames) {
+						int x = fileName.indexOf("com" + File.separator);
+						int y = fileName.lastIndexOf(File.separatorChar);
+
+						String packageName = fileName.substring(x, y);
+
+						if (packageName.endsWith("PortletSessionSecondapp")) {
+							continue;
+						}
+
+						packageNames.add(packageName.replace(File.separatorChar, '.'));
+					}
+
+					return packageNames;
+				}
 
 				int allTestClassGroupsSize = Integer.parseInt(project.getProperty("test.class.groups.size"));
 
-				List testClassGroups = getClassGroups(allTestClassGroupsSize);
-
-				int classGroupIndex = 0;
-
-				for (String fileName : fileNames) {
-					int x = fileName.indexOf("com" + File.separator);
-					int y = fileName.lastIndexOf(File.separatorChar);
-
-					String packageName = fileName.substring(x, y);
-
-					if (packageName.endsWith("PortletSessionSecondapp")) {
-						continue;
-					}
-
-					List testClassGroup = testClassGroups.get(classGroupIndex % allTestClassGroupsSize);
-
-					testClassGroup.add(packageName.replace(File.separatorChar, '.'));
-
-					classGroupIndex++;
-				}
+				List packageGroups = getPackageGroups(getPackageNames(), allTestClassGroupsSize);
 
 				StringBuilder sb = new StringBuilder();
 
 				for (int i = 0; i < allTestClassGroupsSize; i++) {
-					List classGroup = testClassGroups.get(i);
+					List packageGroup = packageGroups.get(i);
 
 					sb.append("TEST_CLASS_GROUP_");
 					sb.append(i);
 					sb.append("=");
 
-					for (String testPackage : classGroup) {
-						sb.append(testPackage);
+					for (String packageName : packageGroup) {
+						sb.append(packageName);
 						sb.append(",");
 					}
 
-					if (!classGroup.isEmpty()) {
+					if (!packageGroup.isEmpty()) {
 						sb.setLength(sb.length() - 1);
 					}
 

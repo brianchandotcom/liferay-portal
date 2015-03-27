@@ -45,13 +45,13 @@ public class RTLCSSConverter {
 	private static final Pattern REGEX_PERCENT_OR_LENGTH = Pattern.compile(
 		"(\\d+)([a-z]{2}|%)");
 
-	private static final List<String> REVERSE_IMAGE_STYLES = Arrays.asList(
+	private static final List<String> _reverseImageStyles = Arrays.asList(
 		"background", "background-image");
 
-	private static final List<String> SHORTHAND_RADIUS_STYLES = Arrays.asList(
+	private static final List<String> _shorthandRadiusStyles = Arrays.asList(
 		"-webkit-border-radius", "-moz-border-radius", "border-radius");
 
-	private static final List<String> SHORTHAND_STYLES = Arrays.asList(
+	private static final List<String> _shorthandStyles = Arrays.asList(
 		"padding", "margin", "border-color", "border-width", "border-style");
 
 	public RTLCSSConverter() {
@@ -83,16 +83,16 @@ public class RTLCSSConverter {
 
 				String strippedProperty = stripProperty(property);
 
-				if (SHORTHAND_STYLES.contains(strippedProperty)) {
+				if (_shorthandStyles.contains(strippedProperty)) {
 					convertShorthand(cssStyleRule, property);
 				}
-				else if (SHORTHAND_RADIUS_STYLES.contains(strippedProperty)) {
+				else if (_shorthandRadiusStyles.contains(strippedProperty)) {
 					convertShorthandRadius(cssStyleRule, property);
 				}
 				else if (_reverseStyles.contains(strippedProperty)) {
 					reverseStyle(cssStyleRule, property);
 				}
-				else if (REVERSE_IMAGE_STYLES.contains(strippedProperty)) {
+				else if (_reverseImageStyles.contains(strippedProperty)) {
 					reverseImage(cssStyleRule, property);
 				}
 				else if (_backgroundPositionStyles.contains(strippedProperty)) {

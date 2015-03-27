@@ -26,9 +26,18 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
+		"com.liferay.portlet.friendly-url-routes=com/liferay/journal/web/portlet/route/journal-friendly-url-routes.xml",
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
 	},
 	service = FriendlyURLMapper.class
 )
 public class JournalFriendlyURLMapper extends DefaultFriendlyURLMapper {
+
+	@Override
+	public String getMapping() {
+		return _MAPPING;
+	}
+
+	private static final String _MAPPING = "journal";
+
 }

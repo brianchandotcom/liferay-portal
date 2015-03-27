@@ -145,8 +145,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.control-panel-entry-category=site_administration.content",
 		"com.liferay.portlet.control-panel-entry-weight=2.0",
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.friendly-url-mapping=journal",
-		"com.liferay.portlet.friendly-url-routes=com/liferay/journal/web/portlet/route/journal-friendly-url-routes.xml",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.header-portlet-javascript=/js/modules.js",
 		"com.liferay.portlet.icon=/icons/journal.png",

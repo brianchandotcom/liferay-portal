@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,8 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/my_places/init.jsp" %>
+package com.liferay.site.mysites.web.constants;
 
-<liferay-ui:my-sites />
+/**
+ * @author Eudaldo Alonso
+ */
+public class MySitesPortletKeys {
+
+	public static final String MY_SITES =
+		"com_liferay_site_mysites_web_portlet_MySitesPortlet";
+
+}

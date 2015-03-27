@@ -66,11 +66,10 @@ request.setAttribute("edit_layout_prototype.jsp-redirect", redirect);
 
 		<c:if test="<%= !layoutPrototype.isNew() %>">
 			<aui:field-wrapper label="configuration">
-				<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="viewURL">
-					<portlet:param name="struts_action" value="/my_sites/view" />
-					<portlet:param name="groupId" value="<%= String.valueOf(layoutPrototype.getGroupId()) %>" />
-					<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
-				</liferay-portlet:actionURL>
+
+				<%
+				Group layoutPrototypeGroup = layoutPrototype.getGroup();
+				%>
 
 				<liferay-ui:icon
 					iconCssClass="icon-search"
@@ -78,7 +77,7 @@ request.setAttribute("edit_layout_prototype.jsp-redirect", redirect);
 					message="open-page-template"
 					method="get"
 					target="_blank"
-					url="<%= viewURL %>"
+					url="<%= layoutPrototypeGroup.getDisplayURL(themeDisplay, true) %>"
 				/>
 			</aui:field-wrapper>
 		</c:if>

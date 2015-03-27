@@ -41,8 +41,6 @@ pageContext.setAttribute("searchURL", searchURL);
 String searchURLString = searchURL.toString();
 %>
 
-<liferay-ui:success key="membershipRequestSent" message="your-request-was-sent-you-will-receive-a-reply-by-email" />
-
 <aui:form action="<%= searchURLString %>" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

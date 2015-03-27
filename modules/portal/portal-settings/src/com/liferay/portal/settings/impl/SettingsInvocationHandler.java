@@ -48,13 +48,15 @@ public class SettingsInvocationHandler<S, C> implements InvocationHandler {
 	public Object invoke(Object proxy, Method method, Object[] args)
 		throws InvocationTargetException {
 
-		try {
-			return _invokeSettingsExtra(method, args);
-		}
-		catch (InvocationTargetException ite) {
-			throw ite;
-		}
-		catch (Exception e) {
+		if (_settingsExtraInstance != null) {
+			try {
+				return _invokeSettingsExtra(method, args);
+			}
+			catch (InvocationTargetException ite) {
+				throw ite;
+			}
+			catch (Exception e) {
+			}
 		}
 
 		try {

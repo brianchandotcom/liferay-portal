@@ -97,12 +97,16 @@ public class PortletInstanceSettingsProviderBuilder
 		Class<?> settingsExtraClass =
 			_settingsDefinition.getSettingsExtraClass();
 
-		Constructor<?> constructor = settingsExtraClass.getConstructor(
-			TypedSettings.class);
-
 		TypedSettings typedSettings = new TypedSettings(settings);
 
-		Object settingsExtraInstance = constructor.newInstance(typedSettings);
+		Object settingsExtraInstance = null;
+
+		if (settingsExtraClass != null) {
+			Constructor<?> constructor = settingsExtraClass.getConstructor(
+				TypedSettings.class);
+
+			settingsExtraInstance = constructor.newInstance(typedSettings);
+		}
 
 		SettingsInvocationHandler<P, C> settingsInvocationHandler =
 			new SettingsInvocationHandler<>(

@@ -48,115 +48,137 @@ public class RTLCSSConverter {
 		_cssWriterSettings = new CSSWriterSettings(ECSSVersion.CSS30, compress);
 	}
 
-	public String process(String cssString) {
-		CascadingStyleSheet css = CSSReader.readFromString(
-			cssString, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30);
+	public String process(String css) {
+		CascadingStyleSheet cascadingStyleSheet = CSSReader.readFromString(
+			css, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30);
 
-		List<CSSStyleRule> styleRules = css.getAllStyleRules();
+		List<CSSStyleRule> cssStyleRules =
+			cascadingStyleSheet.getAllStyleRules();
 
-		StringBundler sb = new StringBundler(styleRules.size());
+		StringBundler sb = new StringBundler(cssStyleRules.size());
 
-		for (CSSStyleRule styleRule : styleRules) {
-
-			//prevent replacing a property twice it must be in its own loop
-
+		for (CSSStyleRule cssStyleRule : cssStyleRules) {
 			for (String property : REPLACEMENT_STYLES.keySet()) {
-				replaceStyle(styleRule, property);
+				replaceStyle(cssStyleRule, property);
 			}
 
-			for (CSSDeclaration declaration : styleRule.getAllDeclarations()) {
-				String property = declaration.getProperty();
+			for (CSSDeclaration cssDeclaration :
+					cssStyleRule.getAllDeclarations()) {
+
+				String property = cssDeclaration.getProperty();
 
 				String strippedProperty = stripProperty(property);
 
 				if (SHORTHAND_STYLES.contains(strippedProperty)) {
-					convertShortHand(styleRule, property);
+					convertShorthand(cssStyleRule, property);
 				}
 				else if (SHORTHAND_RADIUS_STYLES.contains(strippedProperty)) {
-					convertShortHandRadius(styleRule, property);
+					convertShorthandRadius(cssStyleRule, property);
 				}
 				else if (REVERSE_STYLES.contains(strippedProperty)) {
-					reverseStyle(styleRule, property);
+					reverseStyle(cssStyleRule, property);
 				}
 				else if (REVERSE_IMAGE_STYLES.contains(strippedProperty)) {
-					reverseImage(styleRule, property);
+					reverseImage(cssStyleRule, property);
 				}
 				else if (BGPOSITION_STYLES.contains(strippedProperty)) {
-					convertBGPosition(styleRule, property);
+					convertBGPosition(cssStyleRule, property);
 				}
 			}
 
-			sb.append(styleRule.getAsCSSString(_cssWriterSettings, 1));
+			sb.append(cssStyleRule.getAsCSSString(_cssWriterSettings, 1));
 		}
 
 		return sb.toString();
 	}
 
-	private void convertBGPosition(CSSStyleRule style, String property) {
-		CSSDeclaration declaration =
-			style.getDeclarationOfPropertyNameCaseInsensitive(property);
+	protected void convertBGPosition(CSSStyleRule cssStyleRule, String property) {
+		CSSDeclaration cssDeclaration =
+			cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
 
-		if (declaration != null) {
-			CSSExpression expression = declaration.getExpression();
-			List<CSSExpressionMemberTermSimple> members =
-				expression.getAllSimpleMembers();
+		if (cssDeclaration == null) {
+			return;
+		}
 
-			for (CSSExpressionMemberTermSimple member : members) {
-				String value = member.getValue();
+		CSSExpression cssExpression = cssDeclaration.getExpression();
 
-				if (value.contains("right")) {
-					member.setValue("left");
-				}
-				else if (value.contains("left")) {
-					member.setValue("right");
-				}
+		List<CSSExpressionMemberTermSimple> cssExpressionMemberTermSimples =
+			cssExpression.getAllSimpleMembers();
+
+		for (CSSExpressionMemberTermSimple cssExpressionMemberTermSimple :
+				cssExpressionMemberTermSimples) {
+
+			String value = cssExpressionMemberTermSimple.getValue();
+
+			if (value.contains("right")) {
+				cssExpressionMemberTermSimple.setValue("left");
 			}
-
-			if (members.size() == 1) {
-				CSSExpressionMemberTermSimple member1 = members.get(0);
-				String value = member1.getValue();
-				Matcher m = REGEX_PERCENT_OR_LENGTH.matcher(value);
-
-				if (m.matches()) {
-					member1.setValue("right");
-					expression.addTermSimple(value);
-				}
+			else if (value.contains("left")) {
+				cssExpressionMemberTermSimple.setValue("right");
 			}
-			else if (members.size() == 2) {
-				CSSExpressionMemberTermSimple member = members.get(0);
-				String value = member.getValue();
+		}
 
-				Matcher m = REGEX_PERCENT.matcher(value);
+		if (cssExpressionMemberTermSimples.size() == 1) {
+			CSSExpressionMemberTermSimple cssExpressionMemberTermSimple =
+				cssExpressionMemberTermSimples.get(0);
 
-				if (m.matches()) {
-					value = (100 - Integer.valueOf(
-						value.replaceAll("[^\\d]", ""), 10)) + "%";
-					member.setValue(value);
-				}
+			String value = cssExpressionMemberTermSimple.getValue();
+
+			Matcher matcher = REGEX_PERCENT_OR_LENGTH.matcher(value);
+
+			if (matcher.matches()) {
+				cssExpression.addTermSimple(value);
+
+				cssExpressionMemberTermSimple.setValue("right");
+			}
+		}
+		else if (cssExpressionMemberTermSimples.size() == 2) {
+			CSSExpressionMemberTermSimple cssExpressionMemberTermSimple =
+				cssExpressionMemberTermSimples.get(0);
+
+			String value = cssExpressionMemberTermSimple.getValue();
+
+			Matcher matcher = REGEX_PERCENT.matcher(value);
+
+			if (matcher.matches()) {
+				int delta = Integer.valueOf(value.replaceAll("[^\\d]", ""), 10);
+
+				value = (100 - delta) + "%";
+
+				cssExpressionMemberTermSimple.setValue(value);
 			}
 		}
 	}
 
-	private void convertShortHand(CSSStyleRule style, String property) {
-		CSSDeclaration declaration =
-			style.getDeclarationOfPropertyNameCaseInsensitive(property);
+	protected void convertShorthand(CSSStyleRule cssStyleRule, String property) {
+		CSSDeclaration cssDeclaration =
+			cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(property);
 
-		if (declaration != null) {
-			CSSExpression expression = declaration.getExpression();
-			List< CSSExpressionMemberTermSimple> members =
-				expression.getAllSimpleMembers();
+		if (cssDeclaration == null) {
+			return;
+		}
 
-			if (members.size() == 4) {
-				CSSExpressionMemberTermSimple member2 = members.get(1);
-				CSSExpressionMemberTermSimple member4 = members.get(3);
-				String temp = member2.getValue();
-				member2.setValue(member4.getValue());
-				member4.setValue(temp);
-			}
+		CSSExpression cssExpression = cssDeclaration.getExpression();
+
+		List<CSSExpressionMemberTermSimple> cssExpressionMemberTermSimples =
+			cssExpression.getAllSimpleMembers();
+
+		if (cssExpressionMemberTermSimples.size() == 4) {
+			CSSExpressionMemberTermSimple cssExpressionMemberTermSimple2 =
+				cssExpressionMemberTermSimples.get(1);
+			CSSExpressionMemberTermSimple cssExpressionMemberTermSimple4 =
+				cssExpressionMemberTermSimples.get(3);
+
+			String value = cssExpressionMemberTermSimple2.getValue();
+
+			cssExpressionMemberTermSimple2.setValue(
+				cssExpressionMemberTermSimple4.getValue());
+
+			cssExpressionMemberTermSimple4.setValue(value);
 		}
 	}
 
-	private void convertShortHandRadius(CSSStyleRule style, String property) {
+	protected void convertShorthandRadius(CSSStyleRule style, String property) {
 		CSSDeclaration declaration =
 			style.getDeclarationOfPropertyNameCaseInsensitive(property);
 
@@ -191,12 +213,12 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private void replaceStyle(CSSStyleRule style, String property) {
+	protected void replaceStyle(CSSStyleRule style, String property) {
 		replaceStyle(style, property, false);
 		replaceStyle(style, property, true);
 	}
 
-	private void replaceStyle(
+	protected void replaceStyle(
 		CSSStyleRule style, String property, boolean addAsterisk) {
 
 		String asterisk = addAsterisk ? "*" : "";
@@ -220,7 +242,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private void reverseImage(CSSStyleRule style, String property) {
+	protected void reverseImage(CSSStyleRule style, String property) {
 		CSSDeclaration declaration =
 			style.getDeclarationOfPropertyNameCaseInsensitive(property);
 
@@ -248,7 +270,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private void reverseStyle(CSSStyleRule style, String property) {
+	protected void reverseStyle(CSSStyleRule style, String property) {
 		CSSDeclaration declaration =
 			style.getDeclarationOfPropertyNameCaseInsensitive(property);
 
@@ -281,7 +303,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	private String stripProperty(String property) {
+	protected String stripProperty(String property) {
 		return property.replaceAll("\\**\\b", "");
 	}
 

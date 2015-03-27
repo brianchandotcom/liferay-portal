@@ -23,12 +23,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortlet;
-import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -158,7 +156,7 @@ public class PortletTCKStrutsAction extends BaseStrutsAction {
 			long facebookId = 0;
 			String openId = StringPool.BLANK;
 			Locale locale = LocaleUtil.US;
-			String firstName = "TCK";
+			String firstName = _TCK;
 			String middleName = StringPool.BLANK;
 			String lastName = "User";
 			long prefixId = 0;
@@ -184,15 +182,17 @@ public class PortletTCKStrutsAction extends BaseStrutsAction {
 				groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
 				serviceContext);
 
-			PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+			long userId = user.getUserId();
 
-			passwordPolicy.setChangeRequired(false);
-
-			PasswordPolicyLocalServiceUtil.updatePasswordPolicy(passwordPolicy);
+			UserLocalServiceUtil.updateAgreedToTermsOfUse(userId, true);
+			UserLocalServiceUtil.updatePasswordReset(userId, false);
+			UserLocalServiceUtil.updateReminderQuery(userId, _TCK, _TCK);
 
 			return user;
 		}
 	}
+
+	private static final String _TCK = "TCK";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletTCKStrutsAction.class);

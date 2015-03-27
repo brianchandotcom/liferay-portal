@@ -40,42 +40,46 @@
 	</macrodef>
 
 	<target name="deploy-tck-wars">
-		<antcall target="prepare-tck" />
-
 		<if>
 			<not>
-				<isset property="test.package" />
+				<isset property="test.packages" />
 			</not>
 			<then>
-				<property name="test.package" value="com.sun.ts.tests" />
+				<property name="test.packages" value="com/sun/ts/tests" />
 			</then>
 		</if>
 
 		<propertyregex
-			global="true"
-			input="${test.package}."
-			property="test.directory"
-			regexp="\."
-			replace="/"
+				global="true"
+				input="${test.packages}."
+				property="test.directories"
+				regexp="\."
+				replace="/"
 		/>
 
-		<for param="tck.war.file">
-			<path>
-				<fileset
-					dir="tools/tck/dist/${test.directory}"
-					includes="**/*.war"
-				/>
-			</path>
-			<sequential>
-				<update-tck-war-version
-					tck.war.file="@{tck.war.file}"
-				/>
+		<antcall target="prepare-tck" />
 
-				<copy
-					file="@{tck.war.file}"
-					flatten="true"
-					todir="${liferay.home}/deploy"
-				/>
+		<for list="${test.directories}" param="test.directory">
+			<sequential>
+				<for param="tck.war.file">
+					<path>
+						<fileset
+							dir="tools/tck/dist/@{test.directory}"
+							includes="**/*.war"
+						/>
+					</path>
+					<sequential>
+						<update-tck-war-version
+							tck.war.file="@{tck.war.file}"
+						/>
+
+						<copy
+							file="@{tck.war.file}"
+							flatten="true"
+							todir="${liferay.home}/deploy"
+						/>
+					</sequential>
+				</for>
 			</sequential>
 		</for>
 
@@ -208,7 +212,7 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 		<echo file="test.tck.package.names.properties">${test.tck.package.names}</echo>
 	</target>
 
-	<target name="run-tck-tomcat">
+	<target name="run-tck-tomcat" depends="deploy-tck-wars">
 		<antcall target="clean-up-java-processes" inheritAll="false" />
 
 		<antcall target="prepare-portal-ext-properties">
@@ -217,42 +221,34 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 
 		<antcall target="rebuild-database" inheritAll="false" />
 
-		<antcall target="deploy-tck-wars" />
+		<antcall target="start-app-server" />
 
-		<parallel>
-			<exec dir="${app.server.tomcat.bin.dir}" executable="catalina${file.suffix.bat}" resolveexecutable="true">
-				<arg line="run" />
-			</exec>
+		<condition property="tsant.file.suffix.bat" value=".bat" else="">
+			<contains string="${os.name}" substring="Windows" casesensitive="false" />
+		</condition>
 
+		<for list="${test.directories}" param="test.directory">
 			<sequential>
-				<waitfor>
-					<http url="http://localhost:8080" />
-				</waitfor>
-
-				<condition property="tsant.file.suffix.bat" value=".bat" else="">
-					<contains string="${os.name}" substring="Windows" casesensitive="false" />
-				</condition>
-
-				<exec dir="tools/tck/src/${test.directory}" executable="${basedir}/tools/tck/bin/tsant${tsant.file.suffix.bat}">
+				<exec dir="tools/tck/src/@{test.directory}" executable="${basedir}/tools/tck/bin/tsant${tsant.file.suffix.bat}">
 					<arg line="runclient" />
 					<env key="TS_HOME" value="${basedir}/tools/tck" />
 				</exec>
 
-				<exec dir="${app.server.tomcat.bin.dir}" executable="shutdown${file.suffix.bat}" resolveexecutable="true" />
+				<mkdir dir="portal-impl/test-results" />
+
+				<java
+					classname="com.liferay.portal.tools.TCKtoJUnitConverter"
+					classpathref="project.classpath"
+					fork="true"
+					newenvironment="true"
+				>
+					<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+					<arg value="tools/tck/work/jtData/harness.trace" />
+					<arg value="portal-impl/test-results" />
+				</java>
 			</sequential>
-		</parallel>
+		</for>
 
-		<mkdir dir="portal-impl/test-results" />
-
-		<java
-			classname="com.liferay.portal.tools.TCKtoJUnitConverter"
-			classpathref="project.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg value="tools/tck/work/jtData/harness.trace" />
-			<arg value="portal-impl/test-results" />
-		</java>
+		<antcall target="stop-app-server" />
 	</target>
 </project>

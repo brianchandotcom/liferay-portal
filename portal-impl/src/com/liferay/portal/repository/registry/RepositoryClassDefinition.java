@@ -31,6 +31,8 @@ import com.liferay.portal.repository.capabilities.CapabilityRepository;
 import com.liferay.portal.repository.capabilities.ConfigurationCapabilityImpl;
 import com.liferay.portal.repository.capabilities.LiferayRepositoryEventTriggerCapability;
 
+import java.util.Locale;
+
 /**
  * @author Adolfo Pérez
  */
@@ -130,6 +132,14 @@ public class RepositoryClassDefinition
 			capabilityRepository);
 
 		return capabilityRepository;
+	}
+
+	public String getClassName() {
+		return _repositoryDefiner.getClassName();
+	}
+
+	public String getRepositoryTypeLabel(Locale locale) {
+		return _repositoryDefiner.getRepositoryTypeLabel(locale);
 	}
 
 	@Override

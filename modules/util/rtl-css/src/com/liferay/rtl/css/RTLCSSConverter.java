@@ -271,13 +271,14 @@ public class RTLCSSConverter {
 
 		String replacementProperty = _replacementStyles.get(property);
 
+		//grab the declaration if it exists before its gets replace
+		CSSDeclaration replacementCSSDeclaration =
+				cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(
+						asterisk + replacementProperty);
+
 		if (cssDeclaration != null) {
 			cssDeclaration.setProperty(asterisk + replacementProperty);
 		}
-
-		CSSDeclaration replacementCSSDeclaration =
-			cssStyleRule.getDeclarationOfPropertyNameCaseInsensitive(
-				asterisk + replacementProperty);
 
 		if (replacementCSSDeclaration != null) {
 			replacementCSSDeclaration.setProperty(asterisk + property);

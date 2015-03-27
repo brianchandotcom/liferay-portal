@@ -512,7 +512,7 @@
 
 		<execute function="AssertTextEquals" locator1="PGStagingManagesitepagesvariations#MERGE_SITE_PAGES_VARIATION_TABLE_BRANCH" value1="${sitePagesVariationMergeName}" />
 		<execute function="AssertClickNoError" locator1="PGStagingManagesitepagesvariations#MERGE_SITE_PAGES_VARIATION_TABLE_SELECT_LINK" value1="Select" />
-		<execute function="Confirm" locator1="PGStagingManagesitepagesvariations#MERGE_SITE_PAGES_VARIATION_TABLE_CONFIRMATION" value1="Are you sure you want to merge changes from ${sitePagesVariationMergeName}?" />
+		<execute function="Confirm" value1="Are you sure you want to merge changes from ${sitePagesVariationMergeName}?" />
 		<execute function="SelectFrameTop" value1="relative=top" />
 		<execute function="SelectFrame" locator1="PGStagingManagesitepagesvariations#MANAGE_SITE_PAGES_VARIATIONS_IFRAME" />
 		<execute function="AssertTextEquals" locator1="PGStagingManagesitepagesvariations#SUCCESS_MESSAGE" value1="Site page variation was merged." />

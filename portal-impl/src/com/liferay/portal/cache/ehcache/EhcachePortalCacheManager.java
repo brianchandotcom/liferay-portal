@@ -153,8 +153,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_configurationPair = EhcacheConfigurationHelperUtil.getConfiguration(
 			configurationPath, clusterAware, _usingDefault);
 
-		_cacheManager = CacheManagerUtil.createCacheManager(
-			_configurationPair.getKey());
+		_cacheManager = new CacheManager(_configurationPair.getKey());
 
 		_cacheManager.setName(name);
 

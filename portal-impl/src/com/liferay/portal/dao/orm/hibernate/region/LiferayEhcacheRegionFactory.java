@@ -14,7 +14,6 @@
 
 package com.liferay.portal.dao.orm.hibernate.region;
 
-import com.liferay.portal.cache.ehcache.CacheManagerUtil;
 import com.liferay.portal.cache.ehcache.ModifiableEhcacheWrapper;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
@@ -177,7 +176,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 			configuration.setDefaultTransactionManager(transactionManager);*/
 
-			manager = CacheManagerUtil.createCacheManager(configuration);
+			manager = new CacheManager(configuration);
 
 			boolean skipUpdateCheck = GetterUtil.getBoolean(
 				SystemProperties.get("net.sf.ehcache.skipUpdateCheck"));

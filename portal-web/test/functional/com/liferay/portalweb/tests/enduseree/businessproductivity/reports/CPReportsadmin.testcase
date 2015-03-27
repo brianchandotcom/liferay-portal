@@ -193,7 +193,7 @@
 		</execute>
 	</command>
 
-	<command name="DeliverReportToEmail" priority="5">
+	<command known-issues="LRQA-13709" name="DeliverReportToEmail" priority="5">
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<var name="emailAddress1" property-value="email.address.1" />

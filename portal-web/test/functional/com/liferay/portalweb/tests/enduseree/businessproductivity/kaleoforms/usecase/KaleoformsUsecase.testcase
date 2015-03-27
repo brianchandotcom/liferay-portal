@@ -1878,7 +1878,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="CompleteProcessAndViewEmailNotifications" priority="5">
+	<command known-issues="LRQA-13709" name="CompleteProcessAndViewEmailNotifications" priority="5">
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<var name="field" value="Text" />

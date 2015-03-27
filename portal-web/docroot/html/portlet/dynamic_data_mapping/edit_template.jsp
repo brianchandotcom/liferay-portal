@@ -49,7 +49,7 @@ String mode = BeanParamUtil.getString(template, request, "mode", DDMTemplateCons
 String language = BeanParamUtil.getString(template, request, "language", PropsValues.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_DEFAULT);
 String script = BeanParamUtil.getString(template, request, "script");
 
-if (Validator.isNull(script)) {
+if (Validator.isNull(script) && type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
 	TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 
 	if ((templateHandler == null) && (structure != null)) {
@@ -59,7 +59,7 @@ if (Validator.isNull(script)) {
 	if (templateHandler != null) {
 		script = templateHandler.getTemplatesHelpContent(language);
 	}
-	else if (!type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
+	else {
 		script = ContentUtil.get(PropsUtil.get(PropsKeys.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_CONTENT, new Filter(language)));
 	}
 }

@@ -30,12 +30,12 @@ public class EhcacheCacheListenerAdapter<K extends Serializable, V>
 	implements CacheListener<K, V> {
 
 	public EhcacheCacheListenerAdapter(CacheEventListener cacheEventListener) {
-		_cacheEventListener = cacheEventListener;
+		this.cacheEventListener = cacheEventListener;
 	}
 
 	@Override
 	public void dispose() {
-		_cacheEventListener.dispose();
+		cacheEventListener.dispose();
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class EhcacheCacheListenerAdapter<K extends Serializable, V>
 			element.setTimeToLive(timeToLive);
 		}
 
-		_cacheEventListener.notifyElementEvicted(
+		cacheEventListener.notifyElementEvicted(
 			EhcacheUnwrapUtil.getEhcache(portalCache), element);
 	}
 
@@ -64,7 +64,7 @@ public class EhcacheCacheListenerAdapter<K extends Serializable, V>
 			element.setTimeToLive(timeToLive);
 		}
 
-		_cacheEventListener.notifyElementExpired(
+		cacheEventListener.notifyElementExpired(
 			EhcacheUnwrapUtil.getEhcache(portalCache), element);
 	}
 
@@ -79,7 +79,7 @@ public class EhcacheCacheListenerAdapter<K extends Serializable, V>
 			element.setTimeToLive(timeToLive);
 		}
 
-		_cacheEventListener.notifyElementPut(
+		cacheEventListener.notifyElementPut(
 			EhcacheUnwrapUtil.getEhcache(portalCache), element);
 	}
 
@@ -94,7 +94,7 @@ public class EhcacheCacheListenerAdapter<K extends Serializable, V>
 			element.setTimeToLive(timeToLive);
 		}
 
-		_cacheEventListener.notifyElementRemoved(
+		cacheEventListener.notifyElementRemoved(
 			EhcacheUnwrapUtil.getEhcache(portalCache), element);
 	}
 
@@ -109,7 +109,7 @@ public class EhcacheCacheListenerAdapter<K extends Serializable, V>
 			element.setTimeToLive(timeToLive);
 		}
 
-		_cacheEventListener.notifyElementUpdated(
+		cacheEventListener.notifyElementUpdated(
 			EhcacheUnwrapUtil.getEhcache(portalCache), element);
 	}
 
@@ -117,10 +117,10 @@ public class EhcacheCacheListenerAdapter<K extends Serializable, V>
 	public void notifyRemoveAll(PortalCache<K, V> portalCache)
 		throws PortalCacheException {
 
-		_cacheEventListener.notifyRemoveAll(
+		cacheEventListener.notifyRemoveAll(
 			EhcacheUnwrapUtil.getEhcache(portalCache));
 	}
 
-	private final CacheEventListener _cacheEventListener;
+	protected final CacheEventListener cacheEventListener;
 
 }

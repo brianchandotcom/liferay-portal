@@ -51,7 +51,7 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="makeFocusedType">
+	<command name="mouseOverFocusType">
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />

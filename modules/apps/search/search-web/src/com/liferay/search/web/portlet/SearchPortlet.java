@@ -111,7 +111,7 @@ public class SearchPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			"searchFacets", _searchFacetTracker.getSearchFacets());
+			"searchFacets", SearchFacetTracker.getSearchFacets());
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

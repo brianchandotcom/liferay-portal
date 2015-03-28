@@ -51,7 +51,7 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 
 		JSONArray newFacetsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		for (SearchFacet searchFacet : _searchFacetTracker.getSearchFacets()) {
+		for (SearchFacet searchFacet : SearchFacetTracker.getSearchFacets()) {
 			boolean displayFacet = ParamUtil.getBoolean(
 				actionRequest, searchFacet.getClassName() + "displayFacet");
 			double weight = ParamUtil.getDouble(

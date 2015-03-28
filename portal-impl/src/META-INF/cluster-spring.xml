@@ -26,28 +26,5 @@
 		</property>
 		<property name="parentChainableMethodAdvice" ref="serviceAdvice" />
 	</bean>
-	<bean id="com.liferay.portal.cluster.JGroupsClusterChannelFactory" class="com.liferay.portal.cluster.JGroupsClusterChannelFactory" />
-	<bean id="com.liferay.portal.kernel.cluster.ClusterExecutor" class="com.liferay.portal.cluster.ClusterExecutorImpl" >
-		<property name="clusterChannelFactory" ref="com.liferay.portal.cluster.JGroupsClusterChannelFactory" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.cluster.ClusterExecutorUtil" class="com.liferay.portal.kernel.cluster.ClusterExecutorUtil">
-		<property name="clusterExecutor" ref="com.liferay.portal.kernel.cluster.ClusterExecutor" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.cluster.ClusterLink" class="com.liferay.portal.cluster.ClusterLinkImpl" >
-		<property name="clusterChannelFactory" ref="com.liferay.portal.cluster.JGroupsClusterChannelFactory" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.cluster.ClusterLinkUtil" class="com.liferay.portal.kernel.cluster.ClusterLinkUtil">
-		<property name="clusterLink" ref="com.liferay.portal.kernel.cluster.ClusterLink" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.cluster.ClusterMasterExecutor" class="com.liferay.portal.cluster.ClusterMasterExecutorImpl">
-		<property name="clusterExecutor" ref="com.liferay.portal.kernel.cluster.ClusterExecutor" />
-		<property name="clusterMasterTokenTransitionListeners">
-			<util:set>
-				<bean class="com.liferay.portal.backgroundtask.BackgroundTaskClusterMasterTokenTransitionListener" />
-			</util:set>
-		</property>
-	</bean>
-	<bean id="com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil" class="com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil">
-		<property name="clusterMasterExecutor" ref="com.liferay.portal.kernel.cluster.ClusterMasterExecutor" />
-	</bean>
+	<bean id="com.liferay.portal.backgroundtask.BackgroundTaskClusterMasterTokenTransitionListener" class="com.liferay.portal.backgroundtask.BackgroundTaskClusterMasterTokenTransitionListener" />
 </beans>

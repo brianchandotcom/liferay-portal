@@ -12,22 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cluster;
+package com.liferay.portal.cluster.configuration;
 
-import com.liferay.portal.kernel.messaging.Message;
+import aQute.bnd.annotation.metatype.Meta;
 
 /**
- * @author Shuyang Zhou
+ * @author Michael C. Han
  */
-public interface ClusterLink {
+@Meta.OCD(
+	id = "com.liferay.portal.cluster.configuration.ClusterExecutorConfiguration"
+)
+public interface ClusterExecutorConfiguration {
 
-	public static final int MAX_CHANNEL_COUNT = Priority.values().length;
-
-	public boolean isEnabled();
-
-	public void sendMulticastMessage(Message message, Priority priority);
-
-	public void sendUnicastMessage(
-		Address address, Message message, Priority priority);
+	@Meta.AD(deflt = "false", required = false)
+	public boolean debugEnabled();
 
 }

@@ -12,31 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cluster;
+package com.liferay.portal.cluster;
+
+import com.liferay.portal.kernel.cluster.Address;
 
 import java.util.List;
 
 /**
- * @author Shuyang Zhou
+ * @author Tina Tian
  */
-public interface ClusterExecutor {
+public interface ClusterReceiver {
 
-	public void addClusterEventListener(
-		ClusterEventListener clusterEventListener);
+	public void addressesUpdated(List<Address> addresses);
 
-	public FutureClusterResponses execute(ClusterRequest clusterRequest);
+	public List<Address> getAddresses();
 
-	public List<ClusterEventListener> getClusterEventListeners();
+	public void openLatch();
 
-	public List<ClusterNode> getClusterNodes();
-
-	public ClusterNode getLocalClusterNode();
-
-	public boolean isClusterNodeAlive(String clusterNodeId);
-
-	public boolean isEnabled();
-
-	public void removeClusterEventListener(
-		ClusterEventListener clusterEventListener);
+	public void receive(Object messagePayload, Address srcAddress);
 
 }

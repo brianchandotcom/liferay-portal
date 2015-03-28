@@ -354,9 +354,8 @@ public class ClusterSchedulerEngine
 	public void shutdown() throws SchedulerException {
 		_portalReady = false;
 
-		ClusterMasterExecutorUtil.
-			unregisterClusterMasterTokenTransitionListener(
-				_schedulerClusterMasterTokenTransitionListener);
+		ClusterMasterExecutorUtil.removeClusterMasterTokenTransitionListener(
+			_schedulerClusterMasterTokenTransitionListener);
 
 		_schedulerEngine.shutdown();
 	}
@@ -371,9 +370,8 @@ public class ClusterSchedulerEngine
 			_schedulerClusterMasterTokenTransitionListener =
 				new SchedulerClusterMasterTokenTransitionListener();
 
-			ClusterMasterExecutorUtil.
-				registerClusterMasterTokenTransitionListener(
-					_schedulerClusterMasterTokenTransitionListener);
+			ClusterMasterExecutorUtil.addClusterMasterTokenTransitionListener(
+				_schedulerClusterMasterTokenTransitionListener);
 		}
 		catch (Exception e) {
 			throw new SchedulerException("Unable to initialize scheduler", e);

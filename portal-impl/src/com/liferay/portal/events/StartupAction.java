@@ -18,8 +18,6 @@ import com.liferay.portal.cache.bootstrap.ClusterLinkBootstrapLoaderHelperUtil;
 import com.liferay.portal.fabric.server.FabricServerUtil;
 import com.liferay.portal.jericho.CachedLoggerProvider;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
-import com.liferay.portal.kernel.cluster.ClusterLinkUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
@@ -36,7 +34,6 @@ import com.liferay.portal.kernel.nio.intraband.messaging.MessageDatagramReceiveH
 import com.liferay.portal.kernel.nio.intraband.proxy.IntrabandProxyDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.rpc.RPCDatagramReceiveHandler;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
-import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.DistributedRegistry;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.MatchType;
@@ -178,18 +175,6 @@ public class StartupAction extends SimpleAction {
 			DoPrivilegedUtil.wrap(messageBus),
 			DoPrivilegedUtil.wrap(messageSender),
 			DoPrivilegedUtil.wrap(synchronousMessageSender));
-
-		// Cluster link
-
-		ClusterLinkUtil.initialize();
-
-		// Cluster executor
-
-		ClusterExecutorUtil.initialize();
-
-		if (!SPIUtil.isSPI()) {
-			ClusterMasterExecutorUtil.initialize();
-		}
 
 		// Ehache bootstrap
 

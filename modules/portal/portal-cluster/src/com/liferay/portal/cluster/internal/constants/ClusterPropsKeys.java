@@ -12,31 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cluster;
-
-import java.util.List;
+package com.liferay.portal.cluster.internal.constants;
 
 /**
- * @author Shuyang Zhou
+ * @author Michael C. Han
  */
-public interface ClusterExecutor {
+public class ClusterPropsKeys {
 
-	public void addClusterEventListener(
-		ClusterEventListener clusterEventListener);
+	public static final String AUTODETECT_ADDRESS = "autodetect.address";
 
-	public FutureClusterResponses execute(ClusterRequest clusterRequest);
+	public static final String CHANNEL_NAME_PREFIX_DEFAULT = "liferay-channel-";
 
-	public List<ClusterEventListener> getClusterEventListeners();
+	public static final String CHANNEL_PROPERTIES_CONTROL =
+		"channel.properties.control";
 
-	public List<ClusterNode> getClusterNodes();
+	public static final String CHANNEL_PROPERTIES_TRANSPORT_PREFIX =
+		"channel.properties.transport";
 
-	public ClusterNode getLocalClusterNode();
-
-	public boolean isClusterNodeAlive(String clusterNodeId);
-
-	public boolean isEnabled();
-
-	public void removeClusterEventListener(
-		ClusterEventListener clusterEventListener);
+	public static final String CHANNEL_SYSTEM_PROPERTIES =
+		"channel.system.properties";
 
 }

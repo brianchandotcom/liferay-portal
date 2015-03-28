@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -327,7 +328,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(
 			new ServiceTrackerMapFactoryImpl(_framework.getBundleContext()));
 
-		_setupInitialBundles();
+		_setUpPrerequisiteFrameworkServices(_framework.getBundleContext());
+
+		_setUpInitialBundles();
 	}
 
 	@Override
@@ -863,12 +866,20 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			properties);
 	}
 
-	private void _setupInitialBundles() throws Exception {
+	private void _setUpInitialBundles() throws Exception {
 		for (String initialBundle :
 				PropsValues.MODULE_FRAMEWORK_INITIAL_BUNDLES) {
 
 			_installInitialBundle(initialBundle);
 		}
+	}
+
+	private void _setUpPrerequisiteFrameworkServices(
+		BundleContext bundleContext) {
+
+		bundleContext.registerService(
+			Props.class, PropsUtil.getProps(),
+			new HashMapDictionary<String, Object>());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

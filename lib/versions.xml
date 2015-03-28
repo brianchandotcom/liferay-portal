@@ -2395,21 +2395,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jgroups.jar</file-name>
-				<version>3.2.10</version>
-				<project-name>JGroups</project-name>
-				<project-url>http://www.jgroups.org/javagroupsnew/docs</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-				<comments>
-					See LPS-4474.
-				</comments>
-			</library>
-			<library>
 				<file-name>lib/portal/jhighlight.jar</file-name>
 				<version>1.0</version>
 				<project-name>JHighlight</project-name>

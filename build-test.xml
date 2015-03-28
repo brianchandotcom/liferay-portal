@@ -5416,7 +5416,14 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 
 		<ant antfile="build-test-tck.xml" target="test-class-group" />
 
-		<antcall target="stop-app-server" />
+		<if>
+			<available file=".testable.portal.started" />
+			<then>
+				<antcall target="stop-app-server" />
+
+				<delete file=".testable.portal.started" failonerror="false" />
+			</then>
+		</if>
 	</target>
 
 	<target name="test-integration">

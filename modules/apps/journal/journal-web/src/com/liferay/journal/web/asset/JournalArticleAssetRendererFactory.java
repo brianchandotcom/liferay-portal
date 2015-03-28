@@ -57,8 +57,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"search.asset.type=com.liferay.portlet.journal.model.JournalArticle",
-		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+		"search.asset.type=com.liferay.portlet.journal.model.JournalArticle"
 	},
 	service = AssetRendererFactory.class
 )

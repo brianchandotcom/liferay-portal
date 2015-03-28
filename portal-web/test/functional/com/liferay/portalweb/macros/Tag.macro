@@ -410,7 +410,7 @@
 	</command>
 
 	<command name="viewMultipleViaBlogsPG">
-		<for list ="${tagNameList}" param="tagName">
+		<for list="${tagNameList}" param="tagName">
 			<var name="key_tagName" value="${tagName}" />
 
 			<execute function="AssertTextEquals" locator1="PGBlogs#TAG" value1="${tagName}" />

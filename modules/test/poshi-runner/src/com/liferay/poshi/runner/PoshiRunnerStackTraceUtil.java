@@ -47,7 +47,8 @@ public final class PoshiRunnerStackTraceUtil {
 		}
 
 		_filePaths.push(
-			PoshiRunnerContext.getFilePath(className + "." + classType));
+			PoshiRunnerContext.getFilePathFromFileName(
+				className + "." + classType));
 	}
 
 	public static void pushStackTrace(String lineNumber) {

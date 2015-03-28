@@ -239,6 +239,10 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 		return _maxPoolSize;
 	}
 
+	public String getName() {
+		return _name;
+	}
+
 	public int getPendingTaskCount() {
 		return _taskQueue.size();
 	}
@@ -327,6 +331,10 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 		}
 
 		_keepAliveTime = timeUnit.toNanos(keepAliveTime);
+	}
+
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public void setRejectedExecutionHandler(
@@ -616,6 +624,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 	private volatile int _largestPoolSize;
 	private final ReentrantLock _mainLock = new ReentrantLock();
 	private volatile int _maxPoolSize;
+	private String _name;
 	private volatile int _poolSize;
 	private volatile RejectedExecutionHandler _rejectedExecutionHandler;
 	private volatile int _runState;

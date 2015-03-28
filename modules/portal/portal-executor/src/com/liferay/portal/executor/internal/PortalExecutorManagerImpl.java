@@ -26,15 +26,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Future;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.ComponentContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Shuyang Zhou
@@ -95,20 +92,6 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 		_portalExecutorFactory = portalExecutorFactory;
 	}
 
-	public void setPortalExecutors(
-		Map<String, ThreadPoolExecutor> threadPoolExecutors) {
-
-		if (threadPoolExecutors != null) {
-			shutdown(true);
-
-			for (Map.Entry<String, ThreadPoolExecutor> entry :
-					threadPoolExecutors.entrySet()) {
-
-				registerPortalExecutor(entry.getKey(), entry.getValue());
-			}
-		}
-	}
-
 	@Override
 	public void shutdown() {
 		shutdown(false);
@@ -128,28 +111,31 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 		}
 	}
 
-	@Activate
-	protected void activate(ComponentContext componentContext) {
-		_componentContext = componentContext;
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addThreadPoolExecutor(
+		ThreadPoolExecutor threadPoolExecutor,
+		Map<String, Object> properties) {
 
-		BundleContext bundleContext = _componentContext.getBundleContext();
+		String name = (String)properties.get("name");
 
-		_serviceTracker = new ServiceTracker<>(
-			bundleContext, ThreadPoolExecutor.class,
-			new ThreadPoolExecutorServiceTrackerCustomizer());
+		if (Validator.isNull(name)) {
+			name = threadPoolExecutor.getName();
+		}
 
-		_serviceTracker.open();
+		registerPortalExecutor(name, threadPoolExecutor);
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		shutdown(true);
+	}
 
-		_serviceTracker.close();
-
-		_serviceTracker = null;
-
-		_componentContext = null;
+	protected void removeThreadPoolExecutor(
+		ThreadPoolExecutor threadPoolExecutor, Map<String, Object> properties) {
 	}
 
 	protected class UnregisterFutureListener implements FutureListener<Void> {
@@ -167,48 +153,8 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 
 	}
 
-	private ComponentContext _componentContext;
 	private PortalExecutorFactory _portalExecutorFactory;
-	private ServiceTracker<ThreadPoolExecutor, ThreadPoolExecutor>
-		_serviceTracker;
 	private final ConcurrentMap<String, ThreadPoolExecutor>
 		_threadPoolExecutors = new ConcurrentHashMap<>();
-
-	private class ThreadPoolExecutorServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<ThreadPoolExecutor, ThreadPoolExecutor> {
-
-		@Override
-		public ThreadPoolExecutor addingService(
-			ServiceReference<ThreadPoolExecutor> serviceReference) {
-
-			BundleContext bundleContext = _componentContext.getBundleContext();
-
-			ThreadPoolExecutor threadPoolExecutor = bundleContext.getService(
-				serviceReference);
-
-			String name = (String)serviceReference.getProperty("name");
-
-			if (Validator.isNotNull(name)) {
-				threadPoolExecutor = registerPortalExecutor(
-					name, threadPoolExecutor);
-			}
-
-			return threadPoolExecutor;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<ThreadPoolExecutor> serviceReference,
-			ThreadPoolExecutor threadPoolExecutor) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<ThreadPoolExecutor> serviceReference,
-			ThreadPoolExecutor threadPoolExecutor) {
-		}
-
-	}
 
 }

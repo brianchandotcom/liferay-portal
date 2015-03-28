@@ -45,7 +45,7 @@
 				<isset property="test.packages" />
 			</not>
 			<then>
-				<property name="test.packages" value="com/sun/ts/tests" />
+				<property name="test.packages" value="com.sun.ts.tests" />
 			</then>
 		</if>
 
@@ -68,6 +68,7 @@
 							includes="**/*.war"
 						/>
 					</path>
+
 					<sequential>
 						<update-tck-war-version
 							tck.war.file="@{tck.war.file}"

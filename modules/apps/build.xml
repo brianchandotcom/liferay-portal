@@ -29,6 +29,7 @@
 		<dirset dir="quick-note" includes="*" />
 		<dirset dir="rss" includes="*" />
 		<dirset dir="search" includes="*" />
+		<dirset dir="service-ac-profile" includes="*" />
 		<dirset dir="site" includes="*" />
 		<dirset dir="site-navigation" includes="*" />
 		<dirset dir="social" includes="*" />

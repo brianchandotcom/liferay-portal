@@ -1,0 +1,5 @@
+lib/development/com.liferay.ant.bnd.jar
+lib/development/liferay-doclet.jar
+lib/portal/com.liferay.ruby.gems.jar
+lib/portal/com.liferay.sass.compiler.jar
+lib/portal/portal-client.jar

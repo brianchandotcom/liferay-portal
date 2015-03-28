@@ -28,6 +28,16 @@
 	<td>//label[contains(.,'Allow site administrators to modify pages')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>HIDDE_FROM_NAVIGATION_MENU</td>
+	<td>//label[contains(.,'Hide from Navigation Menu')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS</td>
+	<td>//label[contains(.,'Permissions')]/input[contains(@id,'PERMISSIONS')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

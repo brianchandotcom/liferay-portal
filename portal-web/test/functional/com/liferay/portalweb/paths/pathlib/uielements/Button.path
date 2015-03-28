@@ -28,6 +28,15 @@
 	<td>//a[contains(.,'Add Folder')]</td>
 	<td></td>
 </tr>
+	<td>ADD_PAGE</td>
+	<td>//button[contains(.,'Add Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BROWSE</td>
+	<td>//input[@id='_195_fileName']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>CANCEL</td>
 	<td>//a[contains(@id,'cancel') and contains(@class,'btn')]|//button[contains(.,'Cancel')]</td>
@@ -36,6 +45,11 @@
 <tr>
 	<td>CANCEL_CHECKOUT</td>
 	<td>//button[contains(.,'Cancel Checkout')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGE</td>
+	<td>//button[contains(.,'Change')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>CalendarCalendarSettings</title>
+<title>CalendarEditCalendar</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CalendarCalendarSettings</td></tr>
+<tr><td rowspan="1" colspan="3">CalendarEditCalendar</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>CalendarCalendarSettings</td>
+	<td>CalendarEditCalendar</td>
 </tr>
 <tr>
 	<td></td>
@@ -19,7 +19,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CALENDAR_SETTING_IFRAME</td>
+	<td>EDIT_CALENDAR_IFRAME</td>
 	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
 	<td></td>
 </tr>

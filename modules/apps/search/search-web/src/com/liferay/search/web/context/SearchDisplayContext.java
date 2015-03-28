@@ -92,7 +92,8 @@ public class SearchDisplayContext {
 		}
 
 		_enabledSearchFacets = ListUtil.filter(
-			_searchFacets, new PredicateFilter<SearchFacet>() {
+			_searchFacets,
+			new PredicateFilter<SearchFacet>() {
 
 				@Override
 				public boolean filter(SearchFacet searchFacet) {

@@ -1,31 +1,21 @@
 <html>
 <head>
-<title>ReportsAdminAddScheduleEntry</title>
+<title>ReportsAdminEditReportEntry</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ReportsAdminAddScheduleEntry</td></tr>
+<tr><td rowspan="1" colspan="3">ReportsAdminEditReportEntry</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>ReportsAdminAddScheduleEntry</td>
+	<td>ReportsAdminEditReportEntry</td>
 </tr>
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>START_DATE_DATE_FIELD</td>
-	<td>//span[@class='lfr-input-date ']/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>START_DATE_TIME_FIELD</td>
-	<td>//span[@class='lfr-input-time ']/input</td>
 	<td></td>
 </tr>
 <tr>
@@ -49,8 +39,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SCHEDULE_BUTTON</td>
-	<td>//button[contains(.,'Schedule')]</td>
+	<td>GENERATE_BUTTON</td>
+	<td>//button[contains(.,'Generate')]</td>
 	<td></td>
 </tr>
 <tr>

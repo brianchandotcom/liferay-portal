@@ -59,6 +59,8 @@
 
 		<antcall target="prepare-tck" />
 
+		<var name="servlet.context.names" value="" />
+
 		<for list="${test.directories}" param="test.directory">
 			<sequential>
 				<for param="tck.war.file">
@@ -70,6 +72,20 @@
 					</path>
 
 					<sequential>
+						<local name="servlet.context.name" />
+
+						<basename property="servlet.context.name" file="@{tck.war.file}" suffix=".war" />
+
+						<if>
+							<equals arg1="${servlet.context.names}" arg2="" />
+							<then>
+								<var name="servlet.context.names" value="${servlet.context.name}" />
+							</then>
+							<else>
+								<var name="servlet.context.names" value="${servlet.context.names}|${servlet.context.name}" />
+							</else>
+						</if>
+
 						<update-tck-war-version
 							tck.war.file="@{tck.war.file}"
 						/>
@@ -83,6 +99,9 @@
 				</for>
 			</sequential>
 		</for>
+
+		<echo file="${liferay.home}/osgi/modules/com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration.cfg">servletContextNames=${servlet.context.names}
+handShakeServerPort=${portlet.tck.bridge.handshake.port}</echo>
 
 		<ant dir="modules/test/portlet-tck-bridge" target="deploy" />
 	</target>
@@ -238,6 +257,12 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 		</if>
 
 		<antcall target="start-app-server" />
+
+		<waitfor checkevery="100" checkeveryunit="millisecond" maxwait="5" maxwaitunit="minute" timeoutproperty="tck.wars.deployment.timeout">
+			<socket server="localhost" port="${portlet.tck.bridge.handshake.port}" />
+		</waitfor>
+
+		<fail message="Timeout on waiting TCK wars deployment!" if="tck.wars.deployment.timeout" />
 
 		<condition property="tsant.file.suffix.bat" value=".bat" else="">
 			<contains string="${os.name}" substring="Windows" casesensitive="false" />

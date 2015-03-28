@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -41,6 +42,11 @@ import javax.portlet.WindowStateException;
  * @author Raymond Augé
  * @author Sergio González
  */
+@OSGiBeanProperties(
+	property = {
+		"search.asset.type=com.liferay.portlet.blogs.model.BlogsEntry"
+	}
+)
 public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public static final String TYPE = "blog";

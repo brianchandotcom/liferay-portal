@@ -214,6 +214,10 @@ public class ClusterExecutorImpl
 	public void portalLocalInetSocketAddressConfigured(
 		InetSocketAddress inetSocketAddress, boolean secure) {
 
+		if (!isEnabled() || (_localClusterNodeStatus == null)) {
+			return;
+		}
+
 		ClusterNode localClusterNode = _localClusterNodeStatus.getClusterNode();
 
 		if (!isEnabled() || (localClusterNode.getPortalProtocol() != null)) {

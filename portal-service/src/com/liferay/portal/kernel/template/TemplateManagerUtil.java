@@ -91,9 +91,12 @@ public class TemplateManagerUtil {
 	private TemplateManagerUtil() {
 		Registry registry = RegistryUtil.getRegistry();
 
+		com.liferay.registry.Filter filter = registry.getFilter(
+			"(&(language.type=*)(objectClass=" +
+				TemplateManager.class.getName() + "))");
+
 		_serviceTracker = registry.trackServices(
-			TemplateManager.class,
-			new TemplateManagerServiceTrackerCustomizer());
+			filter, new TemplateManagerServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}

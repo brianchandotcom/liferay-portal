@@ -63,39 +63,6 @@ public class JavaDetector {
 		return _instance._ibm;
 	}
 
-	public static boolean isJDK4() {
-		String javaVersion = getJavaVersion();
-
-		if (javaVersion.startsWith(_JAVA_VERSION_JDK_4)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	public static boolean isJDK5() {
-		String javaVersion = getJavaVersion();
-
-		if (javaVersion.startsWith(_JAVA_VERSION_JDK_5)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	public static boolean isJDK6() {
-		String javaVersion = getJavaVersion();
-
-		if (javaVersion.startsWith(_JAVA_VERSION_JDK_6)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	public static boolean isJDK7() {
 		String javaVersion = getJavaVersion();
 
@@ -158,12 +125,6 @@ public class JavaDetector {
 			LogUtil.debug(_log, new SortedProperties(System.getProperties()));
 		}
 	}
-
-	private static final String _JAVA_VERSION_JDK_4 = "1.4.";
-
-	private static final String _JAVA_VERSION_JDK_5 = "1.5.";
-
-	private static final String _JAVA_VERSION_JDK_6 = "1.6.";
 
 	private static final String _JAVA_VERSION_JDK_7 = "1.7.";
 

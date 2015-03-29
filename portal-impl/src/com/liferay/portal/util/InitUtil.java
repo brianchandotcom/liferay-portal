@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.SanitizerLogWrapper;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -113,10 +112,6 @@ public class InitUtil {
 		// Log sanitizer
 
 		SanitizerLogWrapper.init();
-
-		// Java properties
-
-		JavaDetector.isJDK5();
 
 		// Security manager
 

@@ -47,12 +47,12 @@ public class EhcacheCacheReplicatorAdapter
 			return;
 		}
 
-		RMIAsynchronousCacheReplicator asynchronousCacheReplicator =
+		RMIAsynchronousCacheReplicator rmiAsynchronousCacheReplicator =
 			(RMIAsynchronousCacheReplicator)cacheEventListener;
 
 		try {
 			Thread replicationThread = (Thread)_REPLICATION_THREAD_FIELD.get(
-				asynchronousCacheReplicator);
+				rmiAsynchronousCacheReplicator);
 
 			replicationThread.interrupt();
 

@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.jmx.hot.deploy.register;
+package com.liferay.hot.deploy.jmx.listener;
 
+import com.liferay.hot.deploy.jmx.statistics.PluginStatistics;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;

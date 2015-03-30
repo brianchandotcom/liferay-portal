@@ -41,6 +41,12 @@ public class LiferayExtension {
 		}
 
 		_pluginSrcDir = pluginSrcDir;
+
+		String projectName = project.getName();
+
+		int index = projectName.lastIndexOf("-");
+
+		_pluginType = projectName.substring(index + 1);
 	}
 
 	public String getBndProperty(String key) {
@@ -53,6 +59,18 @@ public class LiferayExtension {
 
 	public File getPluginSrcDir() {
 		return _pluginSrcDir;
+	}
+
+	public String getPluginType() {
+		return _pluginType;
+	}
+
+	public boolean isOsgiPlugin() {
+		if (_bndProperties != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private Properties _loadProperties(String fileName) throws IOException {
@@ -72,6 +90,7 @@ public class LiferayExtension {
 	private final Properties _bndProperties;
 	private final Properties _pluginPackageProperties;
 	private final File _pluginSrcDir;
+	private final String _pluginType;
 	private final Project _project;
 
 }

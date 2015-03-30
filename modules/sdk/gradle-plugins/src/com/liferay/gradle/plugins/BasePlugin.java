@@ -101,6 +101,9 @@ public abstract class BasePlugin implements Plugin<Project> {
 
 	protected static final String PORTAL_VERSION = "7.0.0";
 
+	protected static final String REPOSITORY_URL =
+		"http://cdn.repository.liferay.com/nexus/content/groups/public";
+
 	protected Project project;
 
 }

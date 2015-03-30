@@ -16,10 +16,10 @@ package com.liferay.portlet.dynamicdatalists.model.impl;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
@@ -47,9 +47,12 @@ public class DDLRecordSetImplTest extends BaseDDMTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpDDMFormJSONDeserializerUtil();
+		setUpDDMFormJSONSerializerUtil();
 		setUpDDMStructureLocalServiceUtil();
 		setUpDDMTemplateLocalServiceUtil();
 		setUpHtmlUtil();
+		setUpJSONFactoryUtil();
 		setUpLocaleUtil();
 		setUpPropsUtil();
 		setUpSAXReaderUtil();
@@ -57,23 +60,18 @@ public class DDLRecordSetImplTest extends BaseDDMTestCase {
 
 	@Test
 	public void testGetDDMStructure() throws Exception {
-		Document document = createDocument("Text 1", "Text 2", "Text 3");
-
 		DDMStructure ddmStructure = createStructure(
 			"Test Structure", "Text 1", "Text 2", "Text 3");
 
 		DDLRecordSet recordSet = createRecordSet(
 			ddmStructure.getStructureId(), "Test Record Set");
 
-		Element rootElement = document.getRootElement();
-
-		Element dynamicElement = rootElement.element("dynamic-element");
-
-		rootElement.remove(dynamicElement);
+		DDMForm ddmForm = createDDMForm("Text 2", "Text 3");
 
 		DDMTemplate template = createTemplate(
 			RandomTestUtil.randomLong(), "Test Form Template",
-			DDMTemplateConstants.TEMPLATE_MODE_CREATE, document.asXML());
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE,
+			DDMFormJSONSerializerUtil.serialize(ddmForm));
 
 		Set<String> fieldNames = ddmStructure.getFieldNames();
 

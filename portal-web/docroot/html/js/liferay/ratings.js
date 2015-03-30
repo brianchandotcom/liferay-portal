@@ -390,8 +390,8 @@ AUI.add(
 						var negativeVotes = entries - positiveVotes;
 
 						return {
-							negativeVotes : negativeVotes,
-							positiveVotes : positiveVotes
+							negativeVotes: negativeVotes,
+							positiveVotes: positiveVotes
 						};
 					},
 
@@ -505,7 +505,7 @@ AUI.add(
 						var instance = this;
 
 						return {
-							positiveVotes : entries
+							positiveVotes: entries
 						};
 					}
 				}

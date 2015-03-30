@@ -305,10 +305,9 @@ AUI.add(
 						if (i != 'insert' && !n.options) {
 							var imagePath = themeDisplay.getPathThemeImages() + '/' + n.image;
 
-							html +=
-								'<a buttonId="' + i + '" class="lfr-button ' + buttonClass + '" href="javascript:;" title="' + buttonText + '">' +
-								'<img alt="' + buttonText + '" buttonId="' + i + '" src="' + imagePath + '" >' +
-								'</a>';
+							html += '<a buttonId="' + i + '" class="lfr-button ' + buttonClass + '" href="javascript:;" title="' + buttonText + '">' +
+							'<img alt="' + buttonText + '" buttonId="' + i + '" src="' + imagePath + '" >' +
+							'</a>';
 						}
 						else if (n.options && n.options.length) {
 							html += '<select class="' + buttonClass + '" selectId="' + i + '" title="' + buttonText + '">';

@@ -20,8 +20,7 @@ AUI.add(
 
 		var TPL_DELETE_BUTTON = '<button type="button" class="delete-row btn-content btn btn-icon-only toolbar-last toolbar-item" title=""><span class="btn-icon icon icon-minus"></span></button>';
 
-		var TPL_AUTOROW_CONTROLS =
-			'<span class="lfr-autorow-controls toolbar toolbar-horizontal"><span class="toolbar-content">' +
+		var TPL_AUTOROW_CONTROLS = '<span class="lfr-autorow-controls toolbar toolbar-horizontal"><span class="toolbar-content">' +
 				TPL_ADD_BUTTON +
 				TPL_DELETE_BUTTON +
 			'</span></span>';

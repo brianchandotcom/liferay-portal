@@ -276,7 +276,7 @@ AUI.add(
 
 				if (node.layoutRevisionId) {
 					if (!node.layoutRevisionHead) {
-						title =  Liferay.Language.get('there-is-not-a-version-of-this-page-marked-as-ready-for-publication');
+						title = Liferay.Language.get('there-is-not-a-version-of-this-page-marked-as-ready-for-publication');
 					}
 					else if (node.layoutBranchName) {
 						node.layoutBranchName = LString.escapeHTML(node.layoutBranchName);

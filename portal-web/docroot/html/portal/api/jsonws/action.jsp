@@ -499,7 +499,7 @@ String signature = ParamUtil.getString(request, "signature");
 					scriptTpl.render(tplScriptData, jsExample);
 
 					var urlTplData = {
-						data : [],
+						data: [],
 						extraData: []
 					};
 

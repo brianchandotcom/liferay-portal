@@ -115,11 +115,11 @@ AUI.add(
 		var STR_THUMBNAIL_PATH = PATH_THEME_IMAGES + '/file_system/large/';
 
 		var TPL_ENTRY_ROW_TITLE = '<span class="' + CSS_APP_VIEW_ENTRY + STR_SPACE + CSS_ENTRY_DISPLAY_STYLE + '">' +
-			'<a class="' + CSS_TAGLIB_ICON + '">' +
-				'<img alt="" class="' + CSS_ICON + '" src="' + PATH_THEME_IMAGES + '/file_system/small/page.png" />' +
-				'<span class="' + CSS_TAGLIB_TEXT + '">{0}</span>' +
-			'</a>' +
-		'</span>';
+				'<a class="' + CSS_TAGLIB_ICON + '">' +
+					'<img alt="" class="' + CSS_ICON + '" src="' + PATH_THEME_IMAGES + '/file_system/small/page.png" />' +
+					'<span class="' + CSS_TAGLIB_TEXT + '">{0}</span>' +
+				'</a>' +
+			'</span>';
 
 		var TPL_ERROR_FOLDER = new A.Template(
 			'<span class="lfr-status-success-label">{validFilesLength}</span>',
@@ -131,7 +131,7 @@ AUI.add(
 			'</ul>'
 		);
 
-		var TPL_HIDDEN_CHECK_BOX =  '<input class="hide ' + CSS_ENTRY_SELECTOR + '" name="{0}" type="checkbox" value="">';
+		var TPL_HIDDEN_CHECK_BOX = '<input class="hide ' + CSS_ENTRY_SELECTOR + '" name="{0}" type="checkbox" value="">';
 
 		var TPL_IMAGE_THUMBNAIL = themeDisplay.getPathContext() + '/documents/{0}/{1}/{2}';
 

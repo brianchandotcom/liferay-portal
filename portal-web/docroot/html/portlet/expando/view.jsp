@@ -59,7 +59,7 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 			name="resource"
 		>
 			<liferay-ui:icon
-		   		iconCssClass="<%= customAttributesDisplay.getIconCssClass() %>"
+				iconCssClass="<%= customAttributesDisplay.getIconCssClass() %>"
 				label="<%= true %>"
 				message="<%= ResourceActionsUtil.getModelResource(locale, customAttributesDisplay.getClassName()) %>"
 			/>

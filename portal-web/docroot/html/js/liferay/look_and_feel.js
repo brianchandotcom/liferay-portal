@@ -552,10 +552,9 @@ AUI.add(
 
 				var portletClasses = instance._getCSSClasses(portletBoundary, portlet);
 
-				var portletInfoText =
-					Liferay.Language.get('your-current-portlet-information-is-as-follows') + '<br />' +
-						Liferay.Language.get('portlet-id') + ': <strong>#' + portletId + '</strong><br />' +
-							Liferay.Language.get('portlet-classes') + ': <strong>' + portletClasses + '</strong>';
+				var portletInfoText = Liferay.Language.get('your-current-portlet-information-is-as-follows') + '<br />' +
+					Liferay.Language.get('portlet-id') + ': <strong>#' + portletId + '</strong><br />' +
+					Liferay.Language.get('portlet-classes') + ': <strong>' + portletClasses + '</strong>';
 
 				var customNote = A.one('#lfr-refresh-styles');
 
@@ -585,11 +584,13 @@ AUI.add(
 
 				var customStyleBlock = A.one('#lfr-custom-css-block-' + portletId);
 
+				var styleEl;
+
 				if (!customStyleBlock) {
 
 					// Do not modify. This is a workaround for an IE bug.
 
-					var styleEl = document.createElement(STYLE);
+					styleEl = document.createElement(STYLE);
 
 					styleEl.id = 'lfr-custom-css-block-' + portletId;
 					styleEl.className = 'lfr-custom-css-block';
@@ -2054,6 +2055,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-color-picker-popover', 'aui-io-plugin-deprecated', 'aui-io-request', 'aui-tabview',  'liferay-util-window', 'liferay-widget-zindex']
+		requires: ['aui-color-picker-popover', 'aui-io-plugin-deprecated', 'aui-io-request', 'aui-tabview', 'liferay-util-window', 'liferay-widget-zindex']
 	}
 );

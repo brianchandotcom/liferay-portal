@@ -249,10 +249,6 @@ if (Validator.isNotNull(scriptContent)) {
 			var cursorPos;
 			var processed;
 
-			var aceAutocomplete = richEditor['ace-autocomplete-plugin'];
-
-			aceAutocomplete._lockEditor = true;
-
 			AObject.each(
 				fragments,
 				function(item, index) {

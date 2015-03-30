@@ -79,7 +79,7 @@ if ((hiddenMessagesCount == 0) && (visibleMessagesCount == 0) && portletName.equ
 		Liferay.Service(
 			'/announcementsflag/add-flag',
 			{
-				entryId : entryId,
+				entryId: entryId,
 				value: <%= AnnouncementsFlagConstants.HIDDEN %>
 			},
 			AUI.$.proxy(Liferay.Portlet, 'refresh', '#p_p_id<portlet:namespace />')

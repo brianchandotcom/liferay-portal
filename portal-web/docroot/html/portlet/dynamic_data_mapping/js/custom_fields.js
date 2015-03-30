@@ -32,16 +32,16 @@ AUI.add(
 		var STR_SPACE = ' ';
 
 		var TPL_BUTTON = '<div class="field-labels-inline">' +
-							'<input type="button" value="' + A.Escape.html(Liferay.Language.get('select')) + '" />' +
-						'<div>';
+				'<input type="button" value="' + A.Escape.html(Liferay.Language.get('select')) + '" />' +
+			'<div>';
 
 		var TPL_GEOLOCATION = '<div class="field-labels-inline">' +
-									'<img src="' + themeDisplay.getPathThemeImages() + '/common/geolocation.png" title="' + A.Escape.html(Liferay.Language.get('geolocate')) + '" />' +
-								'<div>';
+				'<img src="' + themeDisplay.getPathThemeImages() + '/common/geolocation.png" title="' + A.Escape.html(Liferay.Language.get('geolocate')) + '" />' +
+			'<div>';
 
 		var TPL_LINK_TO_PAGE = '<div class="lfr-ddm-link-to-page">' +
-								'<a href="javascript:;">' + Liferay.Language.get('link') + '</a>' +
-							'</div>';
+				'<a href="javascript:;">' + Liferay.Language.get('link') + '</a>' +
+			'</div>';
 
 		var TPL_PARAGRAPH = '<p></p>';
 

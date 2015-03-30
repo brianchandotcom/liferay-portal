@@ -16,7 +16,7 @@ YUI.add(
 			);
 		};
 
-		var DEFAULTS_VERSION = ['0','0'];
+		var DEFAULTS_VERSION = ['0', '0'];
 
 		var getVersion = function(regex, userAgent) {
 			var version = (userAgent.match(regex) || DEFAULTS_VERSION)[1];

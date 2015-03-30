@@ -24,7 +24,7 @@
 					}
 
 					var headers = {
-						"X-CSRF-Token": Liferay.authToken
+						'X-CSRF-Token': Liferay.authToken
 					};
 
 					var value = '';

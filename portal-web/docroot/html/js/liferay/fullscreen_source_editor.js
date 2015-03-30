@@ -4,20 +4,20 @@ AUI.add(
 		var Lang = A.Lang;
 
 		var CONTENT_TEMPLATE = '<div class="lfr-fullscreen-source-editor-header row">' +
-			'<div class="col-md-6">HTML</div>' +
-			'<div class="col-md-6 layout-selector">' +
-				'<span class="icon-pause" data-layout="vertical"></span>' +
-				'<span class="icon-pause icon-rotate-90" data-layout="horizontal"></span>' +
-				'<span class="icon-stop" data-layout="simple"></span>' +
+				'<div class="col-md-6">HTML</div>' +
+				'<div class="col-md-6 layout-selector">' +
+					'<span class="icon-pause" data-layout="vertical"></span>' +
+					'<span class="icon-pause icon-rotate-90" data-layout="horizontal"></span>' +
+					'<span class="icon-stop" data-layout="simple"></span>' +
+				'</div>' +
 			'</div>' +
-		'</div>' +
-		'<div class="lfr-fullscreen-source-editor-content">' +
-			'<div class="source-panel">' +
-				'<div class="source-html"></div>' +
-			'</div>' +
-			'<div class="preview-panel"></div>' +
-			'<div class="panel-splitter"></div>' +
-		'</div>';
+			'<div class="lfr-fullscreen-source-editor-content">' +
+				'<div class="source-panel">' +
+					'<div class="source-html"></div>' +
+				'</div>' +
+				'<div class="preview-panel"></div>' +
+				'<div class="panel-splitter"></div>' +
+			'</div>';
 
 		var CSS_PREVIEW_PANEL = '.preview-panel';
 

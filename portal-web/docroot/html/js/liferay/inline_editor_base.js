@@ -23,8 +23,7 @@ AUI.add(
 
 		var RESPONSE_DATA = 'responseData';
 
-		var TPL_NOTICE =
-			'<div class="alert alert-success lfr-editable-notice">' +
+		var TPL_NOTICE = '<div class="alert alert-success lfr-editable-notice">' +
 				'<span class="lfr-editable-notice-text yui3-widget-bd"></span>' +
 				'<a class="lfr-editable-notice-close yui3-widget-ft" href="javascript:;" tabindex="0"></a>' +
 			'</div>';
@@ -64,13 +63,13 @@ AUI.add(
 				validator: Lang.isObject
 			},
 
+			editorName: {
+				validator: isString
+			},
+
 			editorPrefix: {
 				validator: isString,
 				value: '#cke_'
-			},
-
-			editorName: {
-				validator: isString
 			},
 
 			editorSuffix: {

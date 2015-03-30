@@ -55,7 +55,7 @@ AUI.add(
 
 		var TPL_AVAILABLE_TRANSLATION_LINK = '<span class="' + CSS_TRANSLATION + ' {cssClass}" locale="{locale}">' + TPL_LOCALE_IMAGE + '{displayName} <i class="' + CSS_DELETE_TRANSLATION + ' icon icon-remove"></i></span>';
 
-		var TPL_CHANGE_DEFAULT_LOCALE = '<a href="javascript:;">' +  Liferay.Language.get('change') + '</a>';
+		var TPL_CHANGE_DEFAULT_LOCALE = '<a href="javascript:;">' + Liferay.Language.get('change') + '</a>';
 
 		var TPL_DEFAULT_LOCALE_LABEL_NODE = '<label>' + Liferay.Language.get('default-language') + ':</label>';
 

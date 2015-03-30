@@ -42,7 +42,7 @@
 
 	var userDetailsURL = Liferay.PortletURL.createURL('<%= userDetailsURL %>');
 
-	var userNameFields =$('#<portlet:namespace />userNameFields');
+	var userNameFields = $('#<portlet:namespace />userNameFields');
 
 	select.on(
 		'change',
@@ -85,7 +85,7 @@
 					},
 					timeout: 5000
 				}
-			)
+			);
 		}
 	);
 </aui:script>

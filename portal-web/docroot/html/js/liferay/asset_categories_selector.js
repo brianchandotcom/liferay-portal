@@ -29,8 +29,7 @@ AUI.add(
 
 		var TPL_CHECKED = ' checked="checked" ';
 
-		var TPL_INPUT =
-			'<label title="{titleCurrentValue}">' +
+		var TPL_INPUT = '<label title="{titleCurrentValue}">' +
 				'<span class="lfr-categories-selector-category-name" title="{titleCurrentValue}">' +
 					'<input data-categoryId="{categoryId}" data-vocabularyid="{vocabularyId}" name="{inputName}" type="{type}" value="{titleCurrentValue}" {checked} />' +
 					'{titleCurrentValue}' +

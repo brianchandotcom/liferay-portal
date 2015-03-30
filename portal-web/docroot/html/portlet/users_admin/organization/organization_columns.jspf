@@ -46,7 +46,7 @@
 			</c:if>
 
 			<c:if test="<%= (suborganizationsCount > 0) && (organizationUserCount > 0) %>">
-			   <%= StringUtil.toLowerCase(LanguageUtil.get(request, "and")) %>
+				<%= StringUtil.toLowerCase(LanguageUtil.get(request, "and")) %>
 			</c:if>
 
 			<c:if test="<%= organizationUserCount > 0 %>">

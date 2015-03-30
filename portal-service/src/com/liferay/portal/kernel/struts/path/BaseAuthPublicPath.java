@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.portlet.path;
-
-import com.liferay.portal.kernel.struts.path.AuthPublicPath;
+package com.liferay.portal.kernel.struts.path;
 
 import java.util.Map;
 

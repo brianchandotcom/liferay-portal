@@ -12,36 +12,35 @@
  * details.
  */
 
-package com.liferay.wiki.web.path;
+package com.liferay.wiki.web.wiki.portlet.path;
 
 import com.liferay.portal.kernel.struts.path.AuthPublicPath;
+import com.liferay.portal.kernel.struts.path.BaseAuthPublicPath;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+
 /**
- * @author Iván Zaera
+ * @author Roberto Díaz
  */
-public class BaseAuthPublicPath implements AuthPublicPath {
+@Component(
+	immediate = true,
+	property = BaseAuthPublicPath.AUTH_PUBLIC_PATH + "=/wiki/edit_page",
+	service = AuthPublicPath.class
+)
+public class EditPagePath extends BaseAuthPublicPath {
 
-	public static final String AUTH_PUBLIC_PATH = "auth.public.path";
-
-	@Override
-	public String path() {
-		return _path;
+	@Activate
+	protected void activate(Map<String, String> properties) {
+		updatePath(properties);
 	}
 
-	protected void updatePath(Map<String, String> properties) {
-		if (!properties.containsKey(AUTH_PUBLIC_PATH)) {
-			_path = null;
-
-			return;
-		}
-
-		String path = properties.get(AUTH_PUBLIC_PATH);
-
-		_path = path;
+	@Modified
+	protected void modified(Map<String, String> properties) {
+		updatePath(properties);
 	}
-
-	private String _path;
 
 }

@@ -27,9 +27,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Array;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * Provides the OSGi service properties used when publishing Spring beans as
@@ -72,6 +75,13 @@ public @interface OSGiBeanProperties {
 	 * @return the service properties
 	 */
 	public String[] property() default {};
+
+	/**
+	 * Returns the types under which the bean should be published as a service.
+	 *
+	 * @return the service types
+	 */
+	public Class<?>[] service() default {};
 
 	/**
 	 * Converts OSGi bean properties from the {@link OSGiBeanProperties}
@@ -163,6 +173,63 @@ public @interface OSGiBeanProperties {
 			Object previousValue = properties.get(key);
 
 			properties.put(key, type._convert(value, previousValue));
+		}
+
+	}
+
+	/**
+	 * Utility to obtain types under which the bean is published as a service.
+	 */
+	public static class Service {
+
+		/**
+		 * Returns the types under which the bean should be published as a
+		 * service. If no types are specified they will be calculated through
+		 * class introspection.
+		 *
+		 * @return the service types
+		 * @throws java.lang.ClassCastException if the bean is not assignable to
+		 *         a specified service type
+		 */
+		public static Set<Class<?>> interfaces(Object object) {
+			Class<? extends Object> clazz = object.getClass();
+
+			OSGiBeanProperties osgiBeanProperties = clazz.getAnnotation(
+				OSGiBeanProperties.class);
+
+			if (osgiBeanProperties == null) {
+				return _getInterfaces(clazz, new HashSet<Class<?>>());
+			}
+
+			Class<?>[] service = osgiBeanProperties.service();
+
+			if (service.length == 0) {
+				return _getInterfaces(clazz, new HashSet<Class<?>>());
+			}
+
+			for (Class<?> serviceClazz : service) {
+				serviceClazz.cast(object);
+			}
+
+			return new HashSet<>(Arrays.asList(osgiBeanProperties.service()));
+		}
+
+		private static Set<Class<?>> _getInterfaces(
+			Class<?> clazz, Set<Class<?>> interfaces) {
+
+			if (clazz.isInterface()) {
+				interfaces.add(clazz);
+			}
+
+			for (Class<?> interfaceClass : clazz.getInterfaces()) {
+				_getInterfaces(interfaceClass, interfaces);
+			}
+
+			if ((clazz = clazz.getSuperclass()) != null) {
+				_getInterfaces(clazz, interfaces);
+			}
+
+			return interfaces;
 		}
 
 	}

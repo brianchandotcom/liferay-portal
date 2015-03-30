@@ -17,7 +17,11 @@ package com.liferay.portal.kernel.spring.osgi;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.PropsImpl;
 
+import java.io.Serializable;
+
+import java.util.EventListener;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,6 +50,194 @@ public class OSGiBeanPropertiesTest {
 		class C {}
 
 		Assert.assertNull(OSGiBeanProperties.Convert.fromObject(new C()));
+	}
+
+	@Test
+	public void testServicesAnnotated() {
+		@OSGiBeanProperties(service = Serializable.class)
+		class C implements Serializable {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(1, interfaces.size());
+	}
+
+	@Test
+	public void testServicesAnnotatedButExtends() {
+		class B implements Serializable {}
+		@OSGiBeanProperties(service = Serializable.class)
+		class C extends B {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(1, interfaces.size());
+	}
+
+	@Test
+	public void testServicesAnnotatedButExtendsMutliple() {
+		class B implements EventListener, Serializable {}
+		@OSGiBeanProperties(service = Serializable.class)
+		class C extends B {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(1, interfaces.size());
+	}
+
+	@Test
+	public void testServicesAnnotatedButImplements() {
+		@OSGiBeanProperties(service = Serializable.class)
+		class C implements Serializable {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(1, interfaces.size());
+	}
+
+	@Test
+	public void testServicesAnnotatedButImplementsMultiple() {
+		@OSGiBeanProperties(service = Serializable.class)
+		class C implements EventListener, Serializable {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(1, interfaces.size());
+	}
+
+	@Test(expected = ClassCastException.class)
+	public void testServicesAnnotatedButNotImplements() {
+		@OSGiBeanProperties(service = Serializable.class)
+		class C {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(1, interfaces.size());
+	}
+
+	@Test(expected = ClassCastException.class)
+	public void testServicesAnnotatedButNotImplementsMultiple() {
+		@OSGiBeanProperties(service = {EventListener.class, Serializable.class})
+		class C implements Serializable {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(1, interfaces.size());
+	}
+
+	@Test
+	public void testServicesAnnotatedNoneSet() {
+		@OSGiBeanProperties()
+		class C {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(0, interfaces.size());
+	}
+
+	@Test
+	public void testServicesAnnotatedNoneSetButExtends() {
+		class B implements Serializable {}
+		@OSGiBeanProperties()
+		class C extends B {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(1, interfaces.size());
+	}
+
+	@Test
+	public void testServicesAnnotatedNoneSetButExtendsMultiple() {
+		class B implements EventListener, Serializable {}
+		@OSGiBeanProperties()
+		class C extends B {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(2, interfaces.size());
+	}
+
+	@Test
+	public void testServicesAnnotatedNoneSetButImplements() {
+		@OSGiBeanProperties()
+		class C implements Serializable {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(1, interfaces.size());
+	}
+
+	@Test
+	public void testServicesAnnotatedNoneSetButImplementsMultiple() {
+		@OSGiBeanProperties()
+		class C implements EventListener, Serializable {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(2, interfaces.size());
+	}
+
+	@Test
+	public void testServicesNotAnnotated() {
+		class C {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(0, interfaces.size());
+	}
+
+	@Test
+	public void testServicesNotAnnotatedButExtends() {
+		class B implements Serializable {}
+		class C extends B {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(1, interfaces.size());
+	}
+
+	@Test
+	public void testServicesNotAnnotatedButExtendsMultiple() {
+		class B implements EventListener, Serializable {}
+		class C extends B {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(2, interfaces.size());
+	}
+
+	@Test
+	public void testServicesNotAnnotatedButImplements() {
+		class C implements Serializable {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(1, interfaces.size());
+	}
+
+	@Test
+	public void testServicesNotAnnotatedButImplementsMultiple() {
+		class C implements EventListener, Serializable {}
+
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(
+			new C());
+
+		Assert.assertEquals(2, interfaces.size());
 	}
 
 	@Test

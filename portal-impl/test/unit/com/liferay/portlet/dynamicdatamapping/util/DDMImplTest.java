@@ -45,9 +45,10 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormXSDDeserializerUtil();
-		setUpDDMFormXSDSerializerUtil();
+		setUpDDMFormJSONDeserializerUtil();
+		setUpDDMFormJSONSerializerUtil();
 		setUpDDMStructureLocalServiceUtil();
+		setUpJSONFactoryUtil();
 		setUpHtmlUtil();
 		setUpLocaleUtil();
 		setUpPropsUtil();

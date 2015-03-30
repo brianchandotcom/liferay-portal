@@ -28,7 +28,7 @@ if (Validator.isNull(script)) {
 JSONArray fieldsJSONArray = _getFormTemplateFieldsJSONArray(structure, script);
 %>
 
-<aui:input name="language" type="hidden" value="xsd" />
+<aui:input name="language" type="hidden" value="json" />
 <aui:input name="scriptContent" type="hidden" />
 
 <%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>
@@ -140,7 +140,7 @@ public JSONArray _getFieldReadOnlyAttributes(DDMStructure structure, String fiel
 }
 
 public JSONArray _getFormTemplateFieldsJSONArray(DDMStructure structure, String script) throws Exception {
-	JSONArray jsonArray = DDMXSDUtil.getJSONArray(script);
+	JSONArray jsonArray = DDMUtil.getDDMFormFieldsJSONArray(structure, script);
 
 	_addFormTemplateFieldAttributes(structure, jsonArray);
 

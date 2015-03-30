@@ -34,7 +34,6 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverte
 import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesTransformerTest;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImplTest;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLImplTest;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXSDImplTest;
 import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterTest;
 
 import org.junit.runner.RunWith;
@@ -58,7 +57,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		DDMFormValuesTransformerTest.class, DDMFormValuesValidatorTest.class,
 		DDMFormXSDDeserializerTest.class, DDMFormXSDDeserializerTest.class,
 		DDMImplTest.class, DDMStructureImplTest.class, DDMXMLImplTest.class,
-		DDMXSDImplTest.class, FieldsToDDMFormValuesConverterTest.class,
+		FieldsToDDMFormValuesConverterTest.class,
 		GeolocationFieldRendererTest.class, LocalizedValueTest.class,
 		UnlocalizedValueTest.class
 	}

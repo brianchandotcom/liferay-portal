@@ -143,8 +143,10 @@ public class BaseDDMServiceTestCase {
 			String definition, String storageType, int type)
 		throws Exception {
 
+		DDMForm ddmForm = ddmStructureTestHelper.toDDMForm(definition);
+
 		return ddmStructureTestHelper.addStructure(
-			classNameId, structureKey, name, definition, storageType, type);
+			classNameId, structureKey, name, ddmForm, storageType, type);
 	}
 
 	protected DDMTemplate addTemplate(

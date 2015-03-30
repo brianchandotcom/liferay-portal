@@ -15,15 +15,23 @@
 --%>
 
 <%
-String[] availableLanguageIds = LocalizationUtil.getAvailableLanguageIds(script);
+String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
-Locale[] availableLocales = new Locale[availableLanguageIds.length];
+Locale[] availableLocales = new Locale[] {LocaleUtil.getSiteDefault()};
 
-for (int i = 0; i < availableLanguageIds.length; i++) {
-	availableLocales[i] = LocaleUtil.fromLanguageId(availableLanguageIds[i]);
+if (Validator.isNotNull(script)) {
+	try {
+		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(script);
+
+		defaultLanguageId = LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
+
+		Set<Locale> ddmFormAvailableLocales = ddmForm.getAvailableLocales();
+
+		availableLocales = ddmFormAvailableLocales.toArray(new Locale[ddmFormAvailableLocales.size()]);
+	}
+	catch (Exception e) {
+	}
 }
-
-String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(script, LocaleUtil.getSiteDefault());
 %>
 
 <div class="separator"><!-- --></div>

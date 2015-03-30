@@ -34,7 +34,6 @@ import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordSetTestHelper;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestHelper;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -232,10 +231,8 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 	}
 
 	protected DDLRecordSet addRecordSet(DDMForm ddmForm) throws Exception {
-		String definition = DDMFormXSDSerializerUtil.serialize(ddmForm);
-
 		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
-			definition, StorageType.JSON.toString());
+			ddmForm, StorageType.JSON.toString());
 
 		return _recordSetTestHelper.addRecordSet(ddmStructure);
 	}

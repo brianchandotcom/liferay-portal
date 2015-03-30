@@ -32,6 +32,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
@@ -107,10 +108,10 @@ public class JournalArticleScheduledTest {
 
 		String content = DDMStructureTestUtil.getSampleStructuredContent();
 
-		String definition = DDMStructureTestUtil.getSampleStructureDefinition();
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm();
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			groupId, JournalArticle.class.getName(), definition);
+			groupId, JournalArticle.class.getName(), ddmForm);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			groupId, ddmStructure.getStructureId());

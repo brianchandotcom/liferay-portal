@@ -33,8 +33,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
@@ -62,7 +62,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public DDMForm createFullHierarchyDDMForm() throws PortalException {
-		DDMForm fullHierarchyDDMForm = DDMFormXSDDeserializerUtil.deserialize(
+		DDMForm fullHierarchyDDMForm = DDMFormJSONDeserializerUtil.deserialize(
 			getDefinition());
 
 		DDMStructure parentDDMStructure = getParentDDMStructure();
@@ -103,7 +103,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public DDMForm getDDMForm() {
 		if (_ddmForm == null) {
 			try {
-				_ddmForm = DDMFormXSDDeserializerUtil.deserialize(
+				_ddmForm = DDMFormJSONDeserializerUtil.deserialize(
 					getDefinition());
 			}
 			catch (Exception e) {
@@ -435,7 +435,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public void updateDDMForm(DDMForm ddmForm) {
-		setDefinition(DDMFormXSDSerializerUtil.serialize(ddmForm));
+		setDefinition(DDMFormJSONSerializerUtil.serialize(ddmForm));
 	}
 
 	protected List<DDMFormField> filterTransientDDMFormFields(

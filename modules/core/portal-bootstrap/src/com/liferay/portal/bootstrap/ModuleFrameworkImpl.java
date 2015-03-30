@@ -588,6 +588,26 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return String.valueOf(level);
 	}
 
+	private Dictionary<String, Object> _getProperties(
+		Object bean, String beanName) {
+
+		HashMapDictionary<String, Object> properties =
+			new HashMapDictionary<>();
+
+		Map<String, Object> osgiBeanProperties =
+			OSGiBeanProperties.Convert.fromObject(bean);
+
+		if (osgiBeanProperties != null) {
+			properties.putAll(osgiBeanProperties);
+		}
+
+		properties.put(ServicePropsKeys.BEAN_ID, beanName);
+		properties.put(ServicePropsKeys.ORIGINAL_BEAN, Boolean.TRUE);
+		properties.put(ServicePropsKeys.VENDOR, ReleaseInfo.getVendor());
+
+		return properties;
+	}
+
 	private String _getSystemPackagesExtra() {
 		String[] systemPackagesExtra =
 			PropsValues.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA;
@@ -808,37 +828,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			return;
 		}
 
-		HashMapDictionary<String, Object> properties =
-			new HashMapDictionary<>();
-
-		Map<String, Object> osgiBeanProperties =
-			OSGiBeanProperties.Convert.fromObject(bean);
-
-		if (osgiBeanProperties != null) {
-			properties.putAll(osgiBeanProperties);
-		}
-
-		properties.put(ServicePropsKeys.BEAN_ID, beanName);
-		properties.put(ServicePropsKeys.ORIGINAL_BEAN, Boolean.TRUE);
-		properties.put(ServicePropsKeys.VENDOR, ReleaseInfo.getVendor());
-
 		bundleContext.registerService(
-			names.toArray(new String[names.size()]), bean, properties);
+			names.toArray(new String[names.size()]), bean,
+			_getProperties(bean, beanName));
 	}
 
 	private void _registerServletContext(ServletContext servletContext) {
 		BundleContext bundleContext = _framework.getBundleContext();
 
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			ServicePropsKeys.BEAN_ID, ServletContext.class.getName());
-		properties.put(ServicePropsKeys.ORIGINAL_BEAN, Boolean.TRUE);
-		properties.put(ServicePropsKeys.VENDOR, ReleaseInfo.getVendor());
-
 		bundleContext.registerService(
 			new String[] {ServletContext.class.getName()}, servletContext,
-			properties);
+			_getProperties(servletContext, "liferayServletContext"));
 	}
 
 	private void _setUpInitialBundles() throws Exception {
@@ -852,9 +852,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private void _setUpPrerequisiteFrameworkServices(
 		BundleContext bundleContext) {
 
+		Props props = PropsUtil.getProps();
+
 		bundleContext.registerService(
-			Props.class, PropsUtil.getProps(),
-			new HashMapDictionary<String, Object>());
+			Props.class, props, _getProperties(props, Props.class.getName()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

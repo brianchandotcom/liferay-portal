@@ -416,6 +416,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="exportProcessesURL">
 		<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+		<portlet:param name="tabs2" value="export" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getScopeGroupId()) %>" />

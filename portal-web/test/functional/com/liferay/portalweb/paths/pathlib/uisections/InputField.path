@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_IMMEDIATELY_CHECKBOX</td>
-	<td>//input[contains(@id,'84') and contains(@id,'fmdisplayDate')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EXPIRATION_DATE</td>
 	<td>//input[contains(@id,'expirationDate')]</td>
 	<td></td>
@@ -61,11 +56,6 @@
 <tr>
 	<td>URL</td>
 	<td>//input[contains(@id,'url')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

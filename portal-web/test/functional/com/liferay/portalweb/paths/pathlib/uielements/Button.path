@@ -37,6 +37,7 @@
 	<td>ADD_ENTRY_BUTTON</td>
 	<td>//button[contains(.,'Add Entry')]</td>
 	<td></td>
+</tr>
 <tr>
 	<td>CANCEL</td>
 	<td>//a[contains(@id,'cancel') and contains(@class,'btn')]|//button[contains(.,'Cancel')]</td>

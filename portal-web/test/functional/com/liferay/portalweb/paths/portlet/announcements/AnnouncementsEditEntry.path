@@ -23,61 +23,9 @@
 	<td>//select[contains(@id,'84') and contains(@id,'priority')]</td>
 	<td></td>
 </tr>
-<!--NAVIGATION-->
 <tr>
-	<td>NAVIGATION_ENTRIES</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Entries')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_MANAGE_ENTRIES</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Manage Entries')]</td>
-	<td></td>
-</tr>
-<!--ENTRY-->
-<tr>
-	<td>ENTRY_TITLE</td>
-	<td>//h3[@class='entry-title' and contains(.,'${key_entryTitle}')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_EDIT</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//li[@class='edit-entry']/span/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DELETE</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//li[@class='delete-entry']/span/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_MARK_AS_READ</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//li[@class='control-entry' and contains(.,'Mark as Read')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_SHOW</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//li[@class='control-entry' and contains(.,'Show')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_HIDE</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//li[@class='control-entry' and contains(.,'Hide')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_SCOPE</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//span[@class='entry-scope']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_CONTENT</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//div[contains(@class,'entry-content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
+	<td>DISPLAY_IMMEDIATELY_CHECKBOX</td>
+	<td>//input[contains(@id,'84') and contains(@id,'fmdisplayDate')]</td>
 	<td></td>
 </tr>
 </tbody>

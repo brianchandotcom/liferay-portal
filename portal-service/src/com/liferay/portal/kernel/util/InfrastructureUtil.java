@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 import javax.mail.Session;
 
@@ -24,6 +25,7 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @author Michael Young
  */
+@OSGiBeanProperties(service = InfrastructureUtil.class)
 public class InfrastructureUtil {
 
 	public static DataSource getDataSource() {

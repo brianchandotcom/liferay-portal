@@ -59,7 +59,6 @@ import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -589,28 +588,24 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return String.valueOf(level);
 	}
 
-	private Set<Class<?>> _getInterfaces(Object bean) {
-		Set<Class<?>> interfaces = new HashSet<>();
+	private Dictionary<String, Object> _getProperties(
+		Object bean, String beanName) {
 
-		Class<?> beanClass = bean.getClass();
+		HashMapDictionary<String, Object> properties =
+			new HashMapDictionary<>();
 
-		interfaces.add(beanClass);
+		Map<String, Object> osgiBeanProperties =
+			OSGiBeanProperties.Convert.fromObject(bean);
 
-		for (Class<?> interfaceClass : beanClass.getInterfaces()) {
-			interfaces.add(interfaceClass);
+		if (osgiBeanProperties != null) {
+			properties.putAll(osgiBeanProperties);
 		}
 
-		while ((beanClass = beanClass.getSuperclass()) != null) {
-			interfaces.add(beanClass);
+		properties.put(ServicePropsKeys.BEAN_ID, beanName);
+		properties.put(ServicePropsKeys.ORIGINAL_BEAN, Boolean.TRUE);
+		properties.put(ServicePropsKeys.VENDOR, ReleaseInfo.getVendor());
 
-			for (Class<?> interfaceClass : beanClass.getInterfaces()) {
-				if (!interfaces.contains(interfaceClass)) {
-					interfaces.add(interfaceClass);
-				}
-			}
-		}
-
-		return interfaces;
+		return properties;
 	}
 
 	private String _getSystemPackagesExtra() {
@@ -813,7 +808,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private void _registerService(
 		BundleContext bundleContext, String beanName, Object bean) {
 
-		Set<Class<?>> interfaces = _getInterfaces(bean);
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(bean);
 
 		if (interfaces.isEmpty()) {
 			return;
@@ -833,37 +828,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			return;
 		}
 
-		HashMapDictionary<String, Object> properties =
-			new HashMapDictionary<>();
-
-		Map<String, Object> osgiBeanProperties =
-			OSGiBeanProperties.Convert.fromObject(bean);
-
-		if (osgiBeanProperties != null) {
-			properties.putAll(osgiBeanProperties);
-		}
-
-		properties.put(ServicePropsKeys.BEAN_ID, beanName);
-		properties.put(ServicePropsKeys.ORIGINAL_BEAN, Boolean.TRUE);
-		properties.put(ServicePropsKeys.VENDOR, ReleaseInfo.getVendor());
-
 		bundleContext.registerService(
-			names.toArray(new String[names.size()]), bean, properties);
+			names.toArray(new String[names.size()]), bean,
+			_getProperties(bean, beanName));
 	}
 
 	private void _registerServletContext(ServletContext servletContext) {
 		BundleContext bundleContext = _framework.getBundleContext();
 
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			ServicePropsKeys.BEAN_ID, ServletContext.class.getName());
-		properties.put(ServicePropsKeys.ORIGINAL_BEAN, Boolean.TRUE);
-		properties.put(ServicePropsKeys.VENDOR, ReleaseInfo.getVendor());
-
 		bundleContext.registerService(
 			new String[] {ServletContext.class.getName()}, servletContext,
-			properties);
+			_getProperties(servletContext, "liferayServletContext"));
 	}
 
 	private void _setUpInitialBundles() throws Exception {
@@ -877,9 +852,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private void _setUpPrerequisiteFrameworkServices(
 		BundleContext bundleContext) {
 
+		Props props = PropsUtil.getProps();
+
 		bundleContext.registerService(
-			Props.class, PropsUtil.getProps(),
-			new HashMapDictionary<String, Object>());
+			Props.class, props, _getProperties(props, Props.class.getName()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

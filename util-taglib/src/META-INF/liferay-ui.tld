@@ -523,6 +523,16 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>asset-addon-entry-display</name>
+		<tag-class>com.liferay.taglib.ui.AssetAddonEntryDisplayTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>assetAddonEntries</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>asset-addon-entry-selector</name>
 		<tag-class>com.liferay.taglib.ui.AssetAddonEntrySelectorTag</tag-class>
 		<body-content>JSP</body-content>

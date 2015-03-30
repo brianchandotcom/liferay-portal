@@ -855,6 +855,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 					fork="true"
 					newenvironment="true"
 				>
+					<arg value="module.name=${module.name}" />
 					<arg value="upgrade.base.dir=." />
 					<arg value="upgrade.table.dir=${upgrade.table.dir}" />
 				</java>

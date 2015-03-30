@@ -44,6 +44,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+
 /**
  * @author Eduardo Garcia
  */
@@ -188,10 +190,11 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 		Assert.assertEquals(structure.getGroupId(), copyStructure.getGroupId());
 		Assert.assertEquals(
-			structure.getDefinition(), copyStructure.getDefinition());
-		Assert.assertEquals(
 			structure.getStorageType(), copyStructure.getStorageType());
 		Assert.assertEquals(structure.getType(), copyStructure.getType());
+
+		JSONAssert.assertEquals(
+			structure.getDefinition(), copyStructure.getDefinition(), false);
 	}
 
 	@Test

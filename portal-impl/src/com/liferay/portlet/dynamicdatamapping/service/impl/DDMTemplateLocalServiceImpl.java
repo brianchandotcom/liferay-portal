@@ -1427,9 +1427,7 @@ public class DDMTemplateLocalServiceImpl
 	protected String formatScript(String type, String language, String script)
 		throws PortalException {
 
-		if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) ||
-			language.equals(TemplateConstants.LANG_TYPE_XSL)) {
-
+		if (language.equals(TemplateConstants.LANG_TYPE_XSL)) {
 			try {
 				script = DDMXMLUtil.validateXML(script);
 			}

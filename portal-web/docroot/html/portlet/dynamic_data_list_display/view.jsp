@@ -104,7 +104,7 @@ boolean showEditFormTemplateIcon = (formDDMTemplateId != 0) && DDMTemplatePermis
 					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 					<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(recordSet.getDDMStructureId()) %>" />
-					<portlet:param name="resourceClassNameId" value="<%= String.valueOf(recordSet.getDDMStructure().getClassNameId()) %>" />
+					<portlet:param name="resourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDLRecordSet.class)) %>" />
 					<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "getAvailableFields" %>' />
 				</liferay-portlet:renderURL>
 
@@ -124,7 +124,7 @@ boolean showEditFormTemplateIcon = (formDDMTemplateId != 0) && DDMTemplatePermis
 					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 					<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(recordSet.getDDMStructureId()) %>" />
-					<portlet:param name="resourceClassNameId" value="<%= String.valueOf(recordSet.getDDMStructure().getClassNameId()) %>" />
+					<portlet:param name="resourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDLRecordSet.class)) %>" />
 					<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
 				</liferay-portlet:renderURL>
 

@@ -28,6 +28,7 @@
 	<td>//a[contains(.,'Add Folder')]</td>
 	<td></td>
 </tr>
+<tr>
 	<td>ADD_PAGE</td>
 	<td>//button[contains(.,'Add Page')]</td>
 	<td></td>

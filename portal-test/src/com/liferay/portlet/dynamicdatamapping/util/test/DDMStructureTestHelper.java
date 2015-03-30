@@ -54,6 +54,15 @@ public class DDMStructureTestHelper {
 			StorageType.JSON.toString(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 
+	public DDMStructure addStructure(DDMForm ddmForm, String storageType)
+		throws Exception {
+
+		return addStructure(
+			PortalUtil.getClassNameId(DDLRecordSet.class), null,
+			"Test Structure", ddmForm, storageType,
+			DDMStructureConstants.TYPE_DEFAULT);
+	}
+
 	public DDMStructure addStructure(
 			long parentStructureId, long classNameId, String structureKey,
 			String name, String description, DDMForm ddmForm,
@@ -69,11 +78,9 @@ public class DDMStructureTestHelper {
 	}
 
 	public DDMStructure addStructure(
-			long classNameId, String structureKey, String name,
-			String definition, String storageType, int type)
+			long classNameId, String structureKey, String name, DDMForm ddmForm,
+			String storageType, int type)
 		throws Exception {
-
-		DDMForm ddmForm = toDDMForm(definition);
 
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 
@@ -83,20 +90,13 @@ public class DDMStructureTestHelper {
 			storageType, type);
 	}
 
-	public DDMStructure addStructure(String definition, String storageType)
-		throws Exception {
-
-		return addStructure(
-			PortalUtil.getClassNameId(DDLRecordSet.class), null,
-			"Test Structure", definition, storageType,
-			DDMStructureConstants.TYPE_DEFAULT);
-	}
-
 	public DDMStructure addStructureXsd(Class<?> testClass) throws Exception {
 		String definition = DDLRecordTestUtil.read(
 			testClass, "test-structure.xsd");
 
-		return addStructure(definition, StorageType.JSON.toString());
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+
+		return addStructure(ddmForm, StorageType.JSON.toString());
 	}
 
 	public DDMForm toDDMForm(String definition) throws Exception {

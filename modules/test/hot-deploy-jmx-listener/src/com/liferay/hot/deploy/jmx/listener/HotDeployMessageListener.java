@@ -17,7 +17,11 @@ package com.liferay.hot.deploy.jmx.listener;
 import com.liferay.hot.deploy.jmx.statistics.PluginStatisticsManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.*;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageListener;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

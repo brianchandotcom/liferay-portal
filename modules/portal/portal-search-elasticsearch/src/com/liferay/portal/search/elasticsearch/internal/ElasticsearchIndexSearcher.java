@@ -379,23 +379,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
-	protected SearchResponse doRequest(
-		Client client, SearchRequestBuilder searchRequestBuilder) {
-
-		SearchRequest searchRequest = searchRequestBuilder.request();
-
-		ActionFuture<SearchResponse> future = client.search(searchRequest);
-
-		return future.actionGet();
-	}
-
-	protected SearchResponse doSearch(
-			SearchContext searchContext, Query query, int start, int end)
-		throws Exception {
-
-		return doSearch(searchContext, query, start, end, false);
-	}
-
 	protected SearchResponse doSearch(
 			SearchContext searchContext, Query query, int start, int end,
 			boolean count)
@@ -428,7 +411,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		searchRequestBuilder.setQuery(queryBuilder);
 
-		SearchResponse searchResponse = doRequest(client, searchRequestBuilder);
+		SearchResponse searchResponse = executeSearchRequest(
+			client, searchRequestBuilder);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -456,11 +440,21 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		throws Exception {
 
 		SearchResponse searchResponse = doSearch(
-			searchContext, query, start, end);
+			searchContext, query, start, end, false);
 
 		Hits hits = processResponse(searchResponse, searchContext, query);
 
 		return hits;
+	}
+
+	protected SearchResponse executeSearchRequest(
+		Client client, SearchRequestBuilder searchRequestBuilder) {
+
+		SearchRequest searchRequest = searchRequestBuilder.request();
+
+		ActionFuture<SearchResponse> future = client.search(searchRequest);
+
+		return future.actionGet();
 	}
 
 	protected String[] getSelectedIndexNames(

@@ -51,6 +51,11 @@ public class LanguagePortletDisplayTemplateHandler
 	}
 
 	@Override
+	public String getDefaultTemplateKey() {
+		return LanguageWebConfigurationValues.DDM_TEMPLATE_KEY_DEFAULT;
+	}
+
+	@Override
 	public String getName(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(
 			"content.Language", locale);

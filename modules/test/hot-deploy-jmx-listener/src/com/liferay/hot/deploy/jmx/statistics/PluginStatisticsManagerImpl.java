@@ -14,8 +14,9 @@
 
 package com.liferay.hot.deploy.jmx.statistics;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,26 +24,26 @@ import org.osgi.service.component.annotations.Component;
  * @author Cristina González
  */
 @Component(
-	immediate = true, service = PluginStatistics.class
+	immediate = true, service = PluginStatisticsManager.class
 )
-public class PluginStatistics {
+public class PluginStatisticsManagerImpl implements PluginStatisticsManager {
 
-	public void addDeployedLegacyPlugins(String deployedLegacyPlugin) {
-		getDeployedLegacyPlugins().add(deployedLegacyPlugin);
+	@Override
+	public List<String> getRegisteredLegacyPlugins() {
+		return Collections.unmodifiableList(_registeredLegacyPlugins);
 	}
 
-	public List<String> getDeployedLegacyPlugins() {
-		if (deployedLegacyPlugins == null) {
-			deployedLegacyPlugins = new ArrayList<>();
-		}
-
-		return deployedLegacyPlugins;
+	@Override
+	public void registerLegacyPlugin(String legacyPlugin) {
+		_registeredLegacyPlugins.add(legacyPlugin);
 	}
 
-	public void removeDeployedLegacyPlugins(String deployedLegacyPlugin) {
-		getDeployedLegacyPlugins().remove(deployedLegacyPlugin);
+	@Override
+	public void unregisterLegacyPlugin(String legacyPlugin) {
+		_registeredLegacyPlugins.remove(legacyPlugin);
 	}
 
-	private List<String> deployedLegacyPlugins;
+	private final List<String> _registeredLegacyPlugins =
+		new CopyOnWriteArrayList<>();
 
 }

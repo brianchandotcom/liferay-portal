@@ -29,7 +29,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
@@ -80,18 +79,5 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
-
-	@Reference(unbind = "-")
-	protected void setSearchFacetTracker(
-		SearchFacetTracker searchFacetTracker) {
-
-		_searchFacetTracker = searchFacetTracker;
-	}
-
-	protected void unsetSearchFacetTracker() {
-		_searchFacetTracker = null;
-	}
-
-	private SearchFacetTracker _searchFacetTracker;
 
 }

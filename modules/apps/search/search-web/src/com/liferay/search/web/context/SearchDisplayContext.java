@@ -25,6 +25,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.search.web.util.SearchFacet;
+import com.liferay.search.web.util.SearchFacetTracker;
 
 import java.util.List;
 
@@ -42,9 +43,6 @@ public class SearchDisplayContext {
 
 		_request = request;
 		_portletPreferences = portletPreferences;
-
-		_searchFacets = (List<SearchFacet>)_request.getAttribute(
-			"searchFacets");
 	}
 
 	public String checkViewURL(String viewURL, String currentURL) {
@@ -92,7 +90,7 @@ public class SearchDisplayContext {
 		}
 
 		_enabledSearchFacets = ListUtil.filter(
-			_searchFacets,
+			SearchFacetTracker.getSearchFacets(),
 			new PredicateFilter<SearchFacet>() {
 
 				@Override
@@ -274,7 +272,7 @@ public class SearchDisplayContext {
 	}
 
 	public boolean isShowMenu() {
-		for (SearchFacet searchFacet : _searchFacets) {
+		for (SearchFacet searchFacet : SearchFacetTracker.getSearchFacets()) {
 			if (isDisplayFacet(searchFacet.getClassName())) {
 				return true;
 			}
@@ -310,7 +308,6 @@ public class SearchDisplayContext {
 	private Integer _querySuggestionsMax;
 	private final HttpServletRequest _request;
 	private String _searchConfiguration;
-	private final List<SearchFacet> _searchFacets;
 	private Boolean _viewInContext;
 
 }

@@ -876,17 +876,21 @@
 	<bean id="com.liferay.portlet.asset.util.AssetCategoryIndexer" class="com.liferay.portlet.asset.util.AssetCategoryIndexer" />
 	<bean id="com.liferay.portlet.asset.util.AssetIndexer" class="com.liferay.portlet.asset.util.AssetIndexer" />
 	<bean id="com.liferay.portlet.asset.util.AssetVocabularyIndexer" class="com.liferay.portlet.asset.util.AssetVocabularyIndexer" />
+	<bean id="com.liferay.portlet.blogs.asset.BlogsEntryAssetRendererFactory" class="com.liferay.portlet.blogs.asset.BlogsEntryAssetRendererFactory" />
 	<bean id="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" class="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" />
 	<bean id="com.liferay.portlet.blogs.service.permission.BlogsPermission" class="com.liferay.portlet.blogs.service.permission.BlogsPermission" />
 	<bean id="com.liferay.portlet.blogs.util.BlogsIndexer" class="com.liferay.portlet.blogs.util.BlogsIndexer" />
 	<bean id="com.liferay.portlet.blogs.util.BlogsOpenSearchImpl" class="com.liferay.portlet.blogs.util.BlogsOpenSearchImpl" />
 	<bean id="com.liferay.portlet.calendar.util.CalIndexer" class="com.liferay.portlet.calendar.util.CalIndexer" />
+	<bean id="com.liferay.portlet.directory.asset.UserAssetRendererFactory" class="com.liferay.portlet.directory.asset.UserAssetRendererFactory" />
 	<bean id="com.liferay.portlet.directory.util.DirectoryOpenSearchImpl" class="com.liferay.portlet.directory.util.DirectoryOpenSearchImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil" class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil">
 		<property name="antivirusScanner">
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory" class="com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory" />
+	<bean id="com.liferay.portlet.documentlibrary.asset.DLFolderAssetRendererFactory" class="com.liferay.portlet.documentlibrary.asset.DLFolderAssetRendererFactory" />
 	<bean id="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextFactoryProviderUtil" class="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextProviderUtil">
 		<property name="DLDisplayContextFactoryProvider">
 			<bean class="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextProviderImpl" />
@@ -1152,6 +1156,7 @@
 			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory" class="com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory" />
 	<bean id="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" class="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" />
 	<bean id="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" class="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" />
 	<bean id="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" class="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" />

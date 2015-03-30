@@ -14,39 +14,41 @@
  */
 --%>
 
-<div class="configuration-style" id="<portlet:namespace />configurationStyle">
-	<aui:field-wrapper>
-		<aui:input checked="<%= !searchDisplayContext.isAdvancedConfiguration() %>" id="basic" label="basic" name="preferences--advancedConfiguration--" type="radio" value="false" />
-		<aui:input checked="<%= searchDisplayContext.isAdvancedConfiguration() %>" id="advanced" label="advanced" name="preferences--advancedConfiguration--" type="radio" value="true" />
-	</aui:field-wrapper>
-</div>
-
-<div class="basic-configuration <%= (searchDisplayContext.isAdvancedConfiguration() ? "hide" : StringPool.BLANK) %>" id="<portlet:namespace />basicConfiguration">
-	<aui:input name="preferences--displayScopeFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayScopeFacet() %>" />
-
-	<aui:input name="preferences--displayAssetTypeFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayAssetTypeFacet() %>" />
-
-	<aui:input name="preferences--displayAssetTagsFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayAssetTagsFacet() %>" />
-
-	<aui:input name="preferences--displayAssetCategoriesFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayAssetCategoriesFacet() %>" />
-
-	<aui:input name="preferences--displayFolderFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayFolderFacet() %>" />
-
-	<aui:input name="preferences--displayUserFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayUserFacet() %>" />
-
-	<aui:input name="preferences--displayModifiedRangeFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayModifiedRangeFacet() %>" />
-</div>
-
-<div class="advanced-configuration <%= (!searchDisplayContext.isAdvancedConfiguration() ? "hide" : StringPool.BLANK) %>" id="<portlet:namespace />advancedConfiguration">
+<div class="facet-configuration-container">
 
 	<%
-	JSONObject searchConfigurationJSONObject = JSONFactoryUtil.createJSONObject(searchDisplayContext.getSearchConfiguration());
+	List<SearchFacet> searchFacets = ListUtil.copy(SearchFacetTracker.getSearchFacets());
+
+	for (SearchFacet searchFacet : searchFacets) {
+		searchFacet.init(searchDisplayContext.getSearchConfiguration());
+	}
+
+	searchFacets = ListUtil.sort(searchFacets, new PropertyComparator("weight", false, false));
+
+	for (SearchFacet searchFacet : searchFacets) {
 	%>
 
-	<aui:input cssClass="search-configuration-text" helpMessage="search-configuration-help" name="preferences--searchConfiguration--" type="textarea" value="<%= searchConfigurationJSONObject.toString(4) %>" />
-</div>
+		<aui:input label="<%= searchFacet.getTitle() %>" name='<%= "preferences--" + searchFacet.getClassName() + "--" %>' type="checkbox" value="<%= searchDisplayContext.isDisplayFacet(searchFacet.getClassName()) %>" />
 
-<aui:script>
-	Liferay.Util.toggleRadio('<portlet:namespace />advanced', '<portlet:namespace />advancedConfiguration', '<portlet:namespace />basicConfiguration');
-	Liferay.Util.toggleRadio('<portlet:namespace />basic', '<portlet:namespace />basicConfiguration', '<portlet:namespace />advancedConfiguration');
-</aui:script>
+		<div class="facet-configuration" id="<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>FacetConfiguration">
+			<liferay-ui:toggle-area align="none" defaultShowContent="hide" hideMessage='<%= LanguageUtil.get(request, "configure") %>' id="<%= StringUtil.replace(searchFacet.getClassName(), StringPool.PERIOD, StringPool.UNDERLINE) %>" showMessage='<%= LanguageUtil.get(request, "configure") %>'>
+
+				<%
+				request.setAttribute("facet_configuration.jsp-searchFacet", searchFacet);
+				%>
+
+				<div class="advance-configuration">
+					<liferay-util:include page="/facets/facet_configuration.jsp" servletContext="<%= application %>" />
+				</div>
+			</liferay-ui:toggle-area>
+		</div>
+
+		<aui:script>
+			Liferay.Util.toggleBoxes('<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>', '<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>FacetConfiguration');
+		</aui:script>
+
+	<%
+	}
+	%>
+
+</div>

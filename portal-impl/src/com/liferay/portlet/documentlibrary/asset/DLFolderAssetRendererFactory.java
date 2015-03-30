@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
@@ -35,6 +36,11 @@ import javax.portlet.WindowStateException;
 /**
  * @author Alexander Chow
  */
+@OSGiBeanProperties(
+	property = {
+		"search.asset.type=com.liferay.portlet.documentlibrary.model.DLFolder"
+	}
+)
 public class DLFolderAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public static final String TYPE = "document_folder";

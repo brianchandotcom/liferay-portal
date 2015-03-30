@@ -1858,12 +1858,6 @@ go]]></replacevalue>
 		</delete>
 	</target>
 
-	<target name="clean-up-android-device">
-		<execute>
-			android delete avd -n deviceName"
-		</execute>
-	</target>
-
 	<target name="clean-up-bundles">
 		<delete file="test.${user.name}.properties" />
 
@@ -2701,16 +2695,6 @@ ${marketplace.portlet.properties}</echo>
 				<echo message="File ${file} does not exist." />
 			</else>
 		</if>
-	</target>
-
-	<target name="prepare-android-device">
-		<execute>
-			echo no | android create avd -n deviceName -t android-19
-		</execute>
-
-		<echo file="${user.home}/.android/avd/deviceName.avd/config.ini" append="true">
-hw.keyboard=yes
-		</echo>
 	</target>
 
 	<target name="prepare-portal-ext-properties">
@@ -5097,8 +5081,6 @@ if (ppstate.equals("normal")) {
 		<if>
 			<equals arg1="${mobile.device.enabled}" arg2="true" />
 			<then>
-				<antcall target="prepare-android-device" />
-
 				<antcall target="start-android-device" />
 
 				<antcall target="start-appium" />
@@ -5331,8 +5313,6 @@ if (ppstate.equals("normal")) {
 			<then>
 				<antcall target="stop-android-device" />
 
-				<antcall target="clean-up-android-device" />
-
 				<antcall target="stop-appium" />
 			</then>
 		</if>
@@ -5357,6 +5337,14 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="start-android-device">
+		<execute>
+			echo no | android create avd -n deviceName -t android-19
+		</execute>
+
+		<echo file="${user.home}/.android/avd/deviceName.avd/config.ini" append="true">
+hw.keyboard=yes
+		</echo>
+
 		<exec executable="/bin/bash" os="${os.unix}" spawn="true">
 			<arg value="-c" />
 			<arg value="emulator -avd deviceName -no-boot-anim" />
@@ -5500,6 +5488,7 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	<target name="stop-android-device">
 		<execute>
 			adb emu kill
+			android delete avd -n deviceName
 		</execute>
 	</target>
 

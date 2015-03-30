@@ -35,11 +35,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class HotDeployMessageListener extends BaseMessageListener {
 
-	@Reference
-	public void setMessageBus(MessageBus messageBus) {
-		_messageBus = messageBus;
-	}
-
 	@Activate
 	protected void activate() {
 		_messageBus.registerMessageListener(DestinationNames.HOT_DEPLOY, this);
@@ -72,6 +67,11 @@ public class HotDeployMessageListener extends BaseMessageListener {
 					_log.info("Unknown command " + command);
 				}
 		}
+	}
+
+	@Reference
+	protected void setMessageBus(MessageBus messageBus) {
+		_messageBus = messageBus;
 	}
 
 	@Reference

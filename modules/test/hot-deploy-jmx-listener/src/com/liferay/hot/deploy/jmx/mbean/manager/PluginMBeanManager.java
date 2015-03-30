@@ -14,47 +14,13 @@
 
 package com.liferay.hot.deploy.jmx.mbean.manager;
 
-import com.liferay.hot.deploy.jmx.statistics.PluginStatisticsManager;
-
 import java.util.List;
-
-import javax.management.DynamicMBean;
-import javax.management.NotCompliantMBeanException;
-import javax.management.StandardMBean;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
  */
-@Component(
-	immediate = true,
-	property = {
-		"object-name=com.liferay.portal.monitoring:classification=plugin_statistics,name=PluginsManager",
-		"object-name-cache-key=PluginsManager"
-	},
-	service = DynamicMBean.class
-)
-public class PluginMBeanManager extends StandardMBean
-	implements PluginManagerRemoteOperations {
+public interface PluginMBeanManager {
 
-	public PluginMBeanManager() throws NotCompliantMBeanException {
-		super(PluginManagerRemoteOperations.class);
-	}
-
-	@Override
-	public List<String> listLegacyPlugins() {
-		return _pluginStatisticsManager.getRegisteredLegacyPlugins();
-	}
-
-	@Reference
-	protected void setPluginStatistics(
-		PluginStatisticsManager pluginStatisticsManager) {
-
-		_pluginStatisticsManager = pluginStatisticsManager;
-	}
-
-	private PluginStatisticsManager _pluginStatisticsManager;
+	public List<String> listLegacyPlugins();
 
 }

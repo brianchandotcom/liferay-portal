@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>BASIC_PREVIEW_BUTTON</td>
-	<td>//button[@id='_15_basicPreviewButton']</td>
+	<td>//button[contains(@id,'basicPreviewButton')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,33 +86,28 @@
 </tr>
 <!--MENU-->
 <tr>
-	<td>MENU_ABSTRACT</td>
-	<td>//a[@id='_15_abstractLink']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MENU_CATEGORIZATION</td>
-	<td>//a[@id='_15_categorizationLink']</td>
+	<td>//a[contains(@id,'categorizationLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_SCHEDULE</td>
-	<td>//a[@id='_15_scheduleLink']</td>
+	<td>//a[contains(@id,'scheduleLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_DISPLAY_PAGE</td>
-	<td>//a[@id='_15_displayPageLink']</td>
+	<td>//a[contains(@id,'displayPageLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_RELATED_ASSETS</td>
-	<td>//a[@id='_15_relatedAssetsLink']</td>
+	<td>//a[contains(@id,'relatedAssetsLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_CUSTOM_FIELDS</td>
-	<td>//a[@id='_15_customFieldsLink']</td>
+	<td>//a[contains(@id,'customFieldsLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -122,23 +117,18 @@
 </tr>
 <!--VIEW_HISTORY-->
 <tr>
-	<td>VIEW_HISTORY_COMPARE_VERSIONS_BUTTON</td>
-	<td>//button[@id='_15_compare']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>VIEW_HISTORY_EXPIRE_BUTTON</td>
-	<td>//button[@id='_15_expire']</td>
+	<td>//button[contains(@id,'expire')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VIEW_HISTORY_DELETE_BUTTON</td>
-	<td>//button[@id='_15_delete']</td>
+	<td>//button[contains(@id,'delete')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VIEW_HISTORY_ALL_CHECKBOX</td>
-	<td>//input[@name='_15_allRowIds']</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>

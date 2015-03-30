@@ -26,27 +26,27 @@
 <!--SCHEDULE-->
 <tr>
 	<td>SCHEDULE_DISPLAY_DATE_FIELD</td>
-	<td>//input[contains(@id,'15') and contains(@id,'displayDate')]</td>
+	<td>//input[contains(@id,'displayDate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCHEDULE_EXPIRATION_DATE_FIELD</td>
-	<td>//input[contains(@id,'15') and contains(@id,'expirationDate')]</td>
+	<td>//input[contains(@id,'expirationDate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCHEDULE_EXPIRATION_DATE_NEVER_EXPIRE_CHECKBOX</td>
-	<td>//input[contains(@name,'15') and contains(@name,'neverExpire')]</td>
+	<td>//input[contains(@name,'neverExpire')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCHEDULE_REVIEW_DATE_FIELD</td>
-	<td>//input[contains(@id,'15') and contains(@id,'reviewDate')]</td>
+	<td>//input[contains(@id,'reviewDate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCHEDULE_REVIEW_DATE_NEVER_REVIEW_CHECKBOX</td>
-	<td>//input[contains(@name,'15') and contains(@name,'neverReview')]</td>
+	<td>//input[contains(@name,'neverReview')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -78,17 +78,17 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_SELECT_ALL_CHECKBOX</td>
-	<td>//input[@id='_15_allRowIds']</td>
+	<td>//input[contains(@id,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ACTIONS</td>
-	<td>//li[@id='_15_actionsButtonContainer']/a</td>
+	<td>//li[contains(@id,'actionsButtonContainer')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD</td>
-	<td>//li[@id='_15_addButtonContainer']/a</td>
+	<td>//li[contains(@id,'addButtonContainer')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -98,12 +98,12 @@
 </tr>
 <tr>
 	<td>TOOLBAR_DISPLAY_STYLE_BUTTON</td>
-	<td>//div[@id='_15_displayStyleButtons']/li/a</td>
+	<td>//div[contains(@id,'displayStyleButtons')]/li/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_SEARCH_FIELD</td>
-	<td>//input[@id='_15_keywords']</td>
+	<td>//input[contains(@id,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -113,7 +113,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_ADVANCED_SEARCH_BUTTON</td>
-	<td>//a[@id='_15_toggleAdvanced']/i</td>
+	<td>//a[contains(@id,'toggleAdvanced')]/i</td>
 	<td></td>
 </tr>
 <tr>
@@ -150,22 +150,22 @@
 <!--ADD_MENULIST-->
 <tr>
 	<td>ADD_MENULIST_FOLDER</td>
-	<td>//li[@id='_15_addButtonContainer']/ul/li/a[contains(.,'Folder')]</td>
+	<td>//li[contains(@id,'addButtonContainer')]/ul/li/a[contains(.,'Folder')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_SUBFOLDER</td>
-	<td>//li[@id='_15_addButtonContainer']/ul/li/a[contains(.,'Subfolder')]</td>
+	<td>//li[contains(@id,'addButtonContainer')]/ul/li/a[contains(.,'Subfolder')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_BASIC_WEB_CONTENT</td>
-	<td>//li[@id='_15_addButtonContainer']/ul/li/a[contains(.,'Basic Web Content')]</td>
+	<td>//li[contains(@id,'addButtonContainer')]/ul/li/a[contains(.,'Basic Web Content')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_STRUCTURE_NAME</td>
-	<td>//li[@id='_15_addButtonContainer']/ul/li/a[contains(.,'${key_structureName}')]</td>
+	<td>//li[contains(@id,'addButtonContainer')]/ul/li/a[contains(.,'${key_structureName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -218,12 +218,12 @@
 <!--SEARCH_RESULTS-->
 <tr>
 	<td>SEARCH_RESULTS_NONE</td>
-	<td>//div[@id='_15_entriesContainer']//div[contains(.,'No web content was found that matched the keywords: ${searchQuery}.')]</td>
+	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'No web content was found that matched the keywords: ${searchQuery}.')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_RESULTS_FILTER_REMOVE_BUTTON</td>
-	<td>//div[@id='_15_entriesContainer']//a[contains(.,'Remove')]</td>
+	<td>//div[contains(@id,'entriesContainer')]//a[contains(.,'Remove')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>NAME_FIELD_REQUIRED</td>
-	<td>//span[@id='_166_nameBoundingBox']/div/div[@class='required']</td>
+	<td>//span[contains(@id,'nameBoundingBox')]/div/div[@class='required']</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,17 +55,17 @@
 </tr>
 <tr>
 	<td>STRUCTURE</td>
-	<td>//input[@id='_166_structure']</td>
+	<td>//input[contains(@id,'structure')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_SELECT</td>
-	<td>//select[@id='_166_language']</td>
+	<td>//select[contains(@id,'language')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_166_description']</td>
+	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>

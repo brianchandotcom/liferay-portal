@@ -1,5 +1,0 @@
-Bundle-Name: Liferay JMX Hot Deploy Register
-Bundle-SymbolicName: com.liferay.jmx.hot.deploy.register
-Bundle-Version: 1.0.0
-Include-Resource:\
-	classes

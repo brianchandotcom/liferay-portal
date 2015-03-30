@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jmx.hot.deploy.register;
+package com.liferay.hot.deploy.jmx.manager;
 
 import java.util.List;
 

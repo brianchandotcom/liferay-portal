@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.jmx.hot.deploy.register;
+package com.liferay.hot.deploy.jmx.manager;
+
+import com.liferay.hot.deploy.jmx.statistics.PluginStatistics;
 
 import java.util.List;
 
@@ -34,8 +36,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = DynamicMBean.class
 )
-public class PluginsManager
-	extends StandardMBean implements PluginsManagerMBean {
+public class PluginsManager extends StandardMBean
+	implements PluginsManagerMBean {
 
 	public PluginsManager() throws NotCompliantMBeanException {
 		super(PluginsManagerMBean.class);

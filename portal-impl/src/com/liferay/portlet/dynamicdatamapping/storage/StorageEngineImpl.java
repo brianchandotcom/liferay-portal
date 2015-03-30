@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.StorageException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
@@ -24,6 +25,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 /**
  * @author Eduardo Lundgren
  */
+@OSGiBeanProperties(service = StorageEngine.class)
 public class StorageEngineImpl implements StorageEngine {
 
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.cache;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 import java.io.Serializable;
 
@@ -22,6 +23,7 @@ import java.io.Serializable;
  * @author Brian Wing Shun Chan
  * @author Michael Young
  */
+@OSGiBeanProperties(service = SingleVMPoolUtil.class)
 public class SingleVMPoolUtil {
 
 	public static void clear() {

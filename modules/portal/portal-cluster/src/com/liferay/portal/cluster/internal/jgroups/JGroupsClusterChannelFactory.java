@@ -43,13 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tina Tian
  */
-@Component(
-	immediate = true,
-	property = {
-		"autodetect.address=www.google.com:80"
-	},
-	service = ClusterChannelFactory.class
-)
+@Component(immediate = true, service = ClusterChannelFactory.class)
 public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 
 	@Override

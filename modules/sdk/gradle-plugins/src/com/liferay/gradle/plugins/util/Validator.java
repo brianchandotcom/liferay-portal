@@ -12,21 +12,31 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.internal.util;
+package com.liferay.gradle.plugins.util;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class StringUtil {
+public class Validator {
 
-	public static String capitalize(String s) {
-		char firstChar = s.charAt(0);
+	public static boolean isNotNull(String s) {
+		return !isNull(s);
+	}
 
-		if (Character.isLowerCase(firstChar)) {
-			s = Character.toUpperCase(firstChar) + s.substring(1);
+	public static boolean isNull(String s) {
+		if (s == null) {
+			return true;
 		}
 
-		return s;
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			if (!Character.isWhitespace(c)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 }

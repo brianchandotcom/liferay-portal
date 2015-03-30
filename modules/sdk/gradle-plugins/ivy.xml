@@ -21,6 +21,7 @@
 		<dependency conf="internal->default" name="org.gradle.gradle-base-services" org="com.liferay" rev="2.3" />
 		<dependency conf="internal->default" name="org.gradle.gradle-base-services-groovy" org="com.liferay" rev="2.3" />
 		<dependency conf="internal->default" name="org.gradle.gradle-core" org="com.liferay" rev="2.3" />
+		<dependency conf="internal->default" name="org.gradle.gradle-platform-jvm" org="com.liferay" rev="2.3" />
 		<dependency conf="internal->default" name="org.gradle.gradle-plugins" org="com.liferay" rev="2.3" />
 	</dependencies>
 </ivy-module>

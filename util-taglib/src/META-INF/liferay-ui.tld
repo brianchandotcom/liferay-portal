@@ -523,6 +523,36 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>asset-addon-entry-selector</name>
+		<tag-class>com.liferay.taglib.ui.AssetAddonEntrySelectorTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>entries</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>hiddenInput</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>selectedAssetAddonEntries</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>asset-categories-available</name>
 		<tag-class>com.liferay.taglib.ui.AssetCategoriesAvailableTag</tag-class>
 		<body-content>JSP</body-content>

@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>CreateAccount</title>
+<title>SignInCreateAccount</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CreateAccount</td></tr>
+<tr><td rowspan="1" colspan="3">SignInCreateAccount</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>CreateAccount</td>
+	<td>SignInCreateAccount</td>
 </tr>
 <tr>
 	<td></td>
@@ -19,7 +19,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CREATE_ACCOUNT_LINk</td>
+	<td>CREATE_ACCOUNT_LINK</td>
 	<td>//div[@class='navigation']//span[contains(.,'Create Account')]</td>
 	<td></td>
 </tr>

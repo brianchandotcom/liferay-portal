@@ -25,11 +25,11 @@
 </tr>
 <tr>
 	<td>ALLOW_SITE_ADMIN_MODIFY_PAGES</td>
-	<td>//label[contains(.,'Allow site administrators to modify pages')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Allow site administrators to modify')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>HIDDE_FROM_NAVIGATION_MENU</td>
+	<td>HIDE_FROM_NAVIGATION_MENU</td>
 	<td>//label[contains(.,'Hide from Navigation Menu')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>

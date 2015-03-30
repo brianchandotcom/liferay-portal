@@ -177,21 +177,6 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>29</portlet-name>
-		<icon>/html/icons/communities.png</icon>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<asset-renderer-factory>com.liferay.portal.asset.LayoutAssetRendererFactory</asset-renderer-factory>
-		<asset-renderer-factory>com.liferay.portal.asset.LayoutRevisionAssetRendererFactory</asset-renderer-factory>
-		<workflow-handler>com.liferay.portal.workflow.LayoutRevisionWorkflowHandler</workflow-handler>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/layouts_admin/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-communities</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>31</portlet-name>
 		<icon>/html/icons/image_gallery.png</icon>
 		<struts-path>image_gallery_display</struts-path>

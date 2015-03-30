@@ -28,13 +28,13 @@
 		<aui:input name="preferences--languageIds--" type="hidden" />
 
 		<%
-		Set<String> availableLanguageIdsSet = SetUtil.fromArray(availableLanguageIds);
+		Set<String> availableLanguageIdsSet = SetUtil.fromArray(languageDisplayContext.getAvailableLanguageIds());
 
 		// Left list
 
 		List leftList = new ArrayList();
 
-		for (String languageId : languageIds) {
+		for (String languageId : languageDisplayContext.getLanguageIds()) {
 			leftList.add(new KeyValuePair(languageId, LocaleUtil.fromLanguageId(languageId).getDisplayName(locale)));
 		}
 
@@ -42,10 +42,10 @@
 
 		List rightList = new ArrayList();
 
-		Arrays.sort(languageIds);
+		Arrays.sort(languageDisplayContext.getLanguageIds());
 
 		for (String languageId : availableLanguageIdsSet) {
-			if (Arrays.binarySearch(languageIds, languageId) < 0) {
+			if (Arrays.binarySearch(languageDisplayContext.getLanguageIds(), languageId) < 0) {
 				rightList.add(new KeyValuePair(languageId, LocaleUtil.fromLanguageId(languageId).getDisplayName(locale)));
 			}
 		}
@@ -67,18 +67,15 @@
 	<aui:fieldset>
 		<div class="display-template">
 			<liferay-ui:ddm-template-selector
-				className="<%= Locale.class.getName() %>"
-				defaultDisplayStyle="<%= PropsValues.LANGUAGE_DISPLAY_STYLE_DEFAULT %>"
-				displayStyle="<%= displayStyle %>"
-				displayStyleGroupId="<%= displayStyleGroupId %>"
-				displayStyles="<%= Arrays.asList(PropsValues.LANGUAGE_DISPLAY_STYLE_OPTIONS) %>"
-				label="display-template"
+				className="<%= LanguageEntry.class.getName() %>"
+				displayStyle="<%= languageDisplayContext.getDisplayStyle() %>"
+				displayStyleGroupId="<%= languageDisplayContext.getDisplayStyleGroupId() %>"
 				refreshURL="<%= configurationRenderURL %>"
 			/>
 		</div>
 	</aui:fieldset>
 
-	<aui:input name="preferences--displayCurrentLocale--" type="checkbox" value="<%= displayCurrentLocale %>" />
+	<aui:input name="preferences--displayCurrentLocale--" type="checkbox" value="<%= languageDisplayContext.isDisplayCurrentLocale() %>" />
 
 	<aui:button-row>
 		<aui:button type="submit" />

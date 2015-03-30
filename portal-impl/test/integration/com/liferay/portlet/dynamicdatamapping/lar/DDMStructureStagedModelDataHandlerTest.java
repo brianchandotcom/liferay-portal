@@ -58,7 +58,7 @@ public class DDMStructureStagedModelDataHandlerTest
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), DDLRecordSet.class.getName(),
-			DDMStructureTestUtil.getSampleStructureDefinition(
+			DDMStructureTestUtil.getSampleDDMForm(
 				RandomTestUtil.randomString()));
 
 		addDependentStagedModel(

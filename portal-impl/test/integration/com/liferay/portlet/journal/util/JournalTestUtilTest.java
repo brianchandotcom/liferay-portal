@@ -236,8 +236,7 @@ public class JournalTestUtilTest {
 
 	@Test
 	public void testGetSampleStructureDefinition() {
-		Assert.assertNotNull(
-			DDMStructureTestUtil.getSampleStructureDefinition());
+		Assert.assertNotNull(DDMStructureTestUtil.getSampleDDMForm());
 	}
 
 	@Test

@@ -2137,8 +2137,20 @@
 			<type>int</type>
 		</attribute>
 		<attribute>
+			<description>Sets the first date to be able to select in the datepicker.</description>
+			<name>firstEnabledDate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Sets the name of the date input's form.</description>
 			<name>formName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Sets the latest date to be able to select in the datepicker.</description>
+			<name>lastEnabledDate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

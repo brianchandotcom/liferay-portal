@@ -25,6 +25,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ContentTag extends IncludeTag {
 
+	public void setCmd(String cmd) {
+		_cmd = cmd;
+	}
+
 	public void setDisableInputs(boolean disableInputs) {
 		_disableInputs = disableInputs;
 	}
@@ -39,6 +43,7 @@ public class ContentTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_cmd = null;
 		_disableInputs = false;
 		_parameterMap = null;
 		_type = null;
@@ -51,6 +56,7 @@ public class ContentTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute("liferay-staging:content:cmd", _cmd);
 		request.setAttribute(
 			"liferay-staging:content:disableInputs", _disableInputs);
 		request.setAttribute(
@@ -63,6 +69,7 @@ public class ContentTag extends IncludeTag {
 
 	private static final String _PAGE = "/html/taglib/staging/content/page.jsp";
 
+	private String _cmd;
 	private boolean _disableInputs;
 	private Map<String, String[]> _parameterMap;
 	private String _type;

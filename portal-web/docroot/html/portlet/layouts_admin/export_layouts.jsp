@@ -213,7 +213,7 @@ if (!cmd.equals(Constants.ADD)) {
 						</aui:fieldset>
 					</c:if>
 
-					<liferay-staging:content parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
+					<liferay-staging:content cmd="<%= cmd %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
 
 					<aui:fieldset cssClass="options-group" label="permissions">
 						<%@ include file="/html/portlet/layouts_admin/export_configuration/permissions.jspf" %>

@@ -64,6 +64,8 @@ public class ExportImportLifecycleEventListenerRegistryUtilTest {
 					TestAsyncExportImportLifecycleListener.class.getName())) {
 
 				found = true;
+
+				break;
 			}
 		}
 
@@ -93,6 +95,8 @@ public class ExportImportLifecycleEventListenerRegistryUtilTest {
 					TestSyncExportImportLifecycleListener.class.getName())) {
 
 				found = true;
+
+				break;
 			}
 		}
 

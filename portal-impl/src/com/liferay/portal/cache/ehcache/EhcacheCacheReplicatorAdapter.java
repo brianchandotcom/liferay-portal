@@ -15,9 +15,15 @@
 package com.liferay.portal.cache.ehcache;
 
 import com.liferay.portal.kernel.cache.CacheReplicator;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
+import net.sf.ehcache.distribution.RMIAsynchronousCacheReplicator;
 import net.sf.ehcache.event.CacheEventListener;
 
 /**
@@ -31,6 +37,58 @@ public class EhcacheCacheReplicatorAdapter
 		CacheEventListener cacheEventListener) {
 
 		super(cacheEventListener);
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+
+		if (!(cacheEventListener instanceof RMIAsynchronousCacheReplicator)) {
+			return;
+		}
+
+		RMIAsynchronousCacheReplicator rmiAsynchronousCacheReplicator =
+			(RMIAsynchronousCacheReplicator)cacheEventListener;
+
+		try {
+			Thread replicationThread = (Thread)_REPLICATION_THREAD_FIELD.get(
+				rmiAsynchronousCacheReplicator);
+
+			replicationThread.interrupt();
+
+			replicationThread.join(_WAIT_TIME);
+
+			if (replicationThread.isAlive() && _log.isWarnEnabled()) {
+				_log.warn(
+					"Give up waiting on thread " + replicationThread +
+						" after waiting for " + _WAIT_TIME + "ms");
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to dispose cache event listener " +
+						cacheEventListener,
+					e);
+			}
+		}
+	}
+
+	private static final Field _REPLICATION_THREAD_FIELD;
+
+	private static final long _WAIT_TIME = 1000;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EhcacheCacheReplicatorAdapter.class);
+
+	static {
+		try {
+			_REPLICATION_THREAD_FIELD = ReflectionUtil.getDeclaredField(
+				RMIAsynchronousCacheReplicator.class, "replicationThread");
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
 	}
 
 }

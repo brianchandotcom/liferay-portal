@@ -37,6 +37,10 @@ public class TemplateResourceCacheListener
 	}
 
 	@Override
+	public void dispose() {
+	}
+
+	@Override
 	public void notifyEntryEvicted(
 			PortalCache<String, TemplateResource> portalCache, String key,
 			TemplateResource templateResource, int timeToLive)

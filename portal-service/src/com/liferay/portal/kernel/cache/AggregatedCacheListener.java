@@ -49,7 +49,16 @@ public class AggregatedCacheListener<K extends Serializable, V>
 	}
 
 	public void clearAll() {
+		dispose();
+
 		_cacheListeners.clear();
+	}
+
+	@Override
+	public void dispose() {
+		for (CacheListener<K, V> cacheListener : _cacheListeners.keySet()) {
+			cacheListener.dispose();
+		}
 	}
 
 	public Map<CacheListener<K, V>, CacheListenerScope> getCacheListeners() {
@@ -157,6 +166,8 @@ public class AggregatedCacheListener<K extends Serializable, V>
 	}
 
 	public void removeCacheListener(CacheListener<K, V> cacheListener) {
+		cacheListener.dispose();
+
 		_cacheListeners.remove(cacheListener);
 	}
 

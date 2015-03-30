@@ -12,31 +12,36 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.util;
+package com.liferay.gradle.plugins.extensions;
 
-import java.util.Arrays;
+import org.gradle.api.Project;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class StringUtil {
+public class LiferayThemeExtension extends LiferayExtension {
 
-	public static String capitalize(String s) {
-		char firstChar = s.charAt(0);
-
-		if (Character.isLowerCase(firstChar)) {
-			s = Character.toUpperCase(firstChar) + s.substring(1);
-		}
-
-		return s;
+	public LiferayThemeExtension(Project project) throws Exception {
+		super(project);
 	}
 
-	public static String repeat(char c, int length) {
-		char[] chars = new char[length];
-
-		Arrays.fill(chars, c);
-
-		return new String(chars);
+	public String getThemeParent() {
+		return _themeParent;
 	}
+
+	public String getThemeType() {
+		return _themeType;
+	}
+
+	public void setThemeParent(String themeParent) {
+		_themeParent = themeParent;
+	}
+
+	public void setThemeType(String themeType) {
+		_themeType = themeType;
+	}
+
+	private String _themeParent;
+	private String _themeType;
 
 }

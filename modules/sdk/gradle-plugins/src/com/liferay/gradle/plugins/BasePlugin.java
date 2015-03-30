@@ -61,6 +61,19 @@ public abstract class BasePlugin implements Plugin<Project> {
 		}
 	}
 
+	protected <T> T addExtension(String name, Class<T> clazz) {
+		ExtensionContainer extensionContainer = project.getExtensions();
+
+		return extensionContainer.create(name, clazz, project);
+	}
+
+	protected <T extends Task> void addTask(String name, Class<T> clazz) {
+		Map<String, Class<T>> args = Collections.singletonMap(
+			Task.TASK_TYPE, clazz);
+
+		project.task(args, name);
+	}
+
 	protected <T extends Plugin<Project>> void applyPlugin(Class<T> clazz) {
 		Map<String, Class<T>> args = Collections.singletonMap("plugin", clazz);
 
@@ -81,19 +94,6 @@ public abstract class BasePlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	protected <T> T createExtension(String name, Class<T> clazz) {
-		ExtensionContainer extensionContainer = project.getExtensions();
-
-		return extensionContainer.create(name, clazz, project);
-	}
-
-	protected <T extends Task> void createTask(String name, Class<T> clazz) {
-		Map<String, Class<T>> args = Collections.singletonMap(
-			Task.TASK_TYPE, clazz);
-
-		project.task(args, name);
 	}
 
 	protected abstract void doApply() throws Exception;

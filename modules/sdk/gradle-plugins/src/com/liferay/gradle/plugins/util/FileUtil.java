@@ -14,29 +14,37 @@
 
 package com.liferay.gradle.plugins.util;
 
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+
+import java.nio.charset.StandardCharsets;
+
+import java.util.List;
+
+import org.gradle.api.Project;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class StringUtil {
+public class FileUtil {
 
-	public static String capitalize(String s) {
-		char firstChar = s.charAt(0);
+	public static boolean exists(Project project, String fileName) {
+		File file = project.file(fileName);
 
-		if (Character.isLowerCase(firstChar)) {
-			s = Character.toUpperCase(firstChar) + s.substring(1);
-		}
-
-		return s;
+		return file.exists();
 	}
 
-	public static String repeat(char c, int length) {
-		char[] chars = new char[length];
+	public static void write(File file, List<String> lines) throws Exception {
+		try (PrintWriter printWriter = new PrintWriter(
+				new OutputStreamWriter(
+					new FileOutputStream(file), StandardCharsets.UTF_8))) {
 
-		Arrays.fill(chars, c);
-
-		return new String(chars);
+			for (String line : lines) {
+				printWriter.println(line);
+			}
+		}
 	}
 
 }

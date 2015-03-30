@@ -16,6 +16,7 @@ package com.liferay.portal.comment;
 
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.registry.Filter;
@@ -28,6 +29,7 @@ import com.liferay.registry.ServiceTracker;
  * @author Alexander Chow
  * @author Raymond Augé
  */
+@OSGiBeanProperties(service = CommentManagerImpl.class)
 public class CommentManagerImpl implements CommentManager {
 
 	public CommentManagerImpl() {

@@ -95,6 +95,26 @@
 	<td></td>
 </tr>
 <!--REQUESTS-->
+<tr>
+	<td>REQUESTS_LINK</td>
+	<td>//div[@class='clearfix user-notifications-header']/span/a[contains(.,'${key_requestsLink}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUESTS_CONTENT</td>
+	<td>//div[@class='clearfix user-notification-delete']//div[@class='title' and contains (.,'${key_requestsContent}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUESTS_CONFIRM_BUTTON</td>
+	<td>//div[@class='clearfix user-notification-delete']//a[contains(.,'Confirm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUESTS_IGNORE_BUTTON</td>
+	<td>//div[@class='clearfix user-notification-delete']//a[contains(.,'Ignore')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

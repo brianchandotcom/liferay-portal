@@ -66,7 +66,6 @@ import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import java.io.File;
 import java.io.InputStream;
 
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -137,8 +136,10 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			group.getGroupId());
 
-		int initialBaseModelsSearchCount = searchBaseModelsCount(
-			getBaseModelClass(), group.getGroupId(), "Word", searchContext);
+		int initialBaseModelsSearchCount = 0;
+
+		assertBaseModelsCount(
+			initialBaseModelsSearchCount, "Word", searchContext);
 
 		String fileName = "OSX_Test.docx";
 
@@ -162,11 +163,8 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			FileUtil.delete(file);
 		}
 
-		Assert.assertEquals(
-			initialBaseModelsSearchCount + 1,
-			searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId(), "Word",
-				searchContext));
+		assertBaseModelsCount(
+			initialBaseModelsSearchCount + 1, "Word", searchContext);
 	}
 
 	protected BaseModel<?> addBaseModel(

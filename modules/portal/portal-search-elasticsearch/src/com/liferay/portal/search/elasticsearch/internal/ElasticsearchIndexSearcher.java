@@ -24,16 +24,15 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.QuerySuggester;
-import com.liferay.portal.kernel.search.QueryTranslator;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
+import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.search.util.SearchUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -85,10 +84,9 @@ import org.osgi.service.component.annotations.Reference;
 public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	@Override
-	public String getQueryString(SearchContext searchContext, Query query)
-		throws ParseException {
-
-		QueryBuilder queryBuilder = _queryTranslator.translate(query);
+	public String getQueryString(SearchContext searchContext, Query query) {
+		QueryBuilder queryBuilder = _queryTranslator.translate(
+			query, searchContext);
 
 		return queryBuilder.toString();
 	}
@@ -118,11 +116,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			start = startAndEnd[0];
 			end = startAndEnd[1];
 
-			SearchResponse searchResponse = doSearch(
-				searchContext, query, start, end);
-
-			Hits hits = processSearchResponse(
-				searchResponse, searchContext, query);
+			Hits hits = doSearchHits(searchContext, query, start, end);
 
 			hits.setStart(stopWatch.getStartTime());
 
@@ -158,13 +152,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		stopWatch.start();
 
 		try {
-			SearchResponse searchResponse = doSearch(
-				searchContext, query, searchContext.getStart(),
-				searchContext.getEnd(), true);
-
-			SearchHits searchHits = searchResponse.getHits();
-
-			return searchHits.getTotalHits();
+			return doSearchCount(searchContext, query);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -392,32 +380,18 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected SearchResponse doSearch(
-			SearchContext searchContext, Query query, int start, int end)
-		throws ParseException {
-
-		return doSearch(searchContext, query, start, end, false);
-	}
-
-	protected SearchResponse doSearch(
 			SearchContext searchContext, Query query, int start, int end,
 			boolean count)
-		throws ParseException {
-
-		Client client = _elasticsearchConnectionManager.getClient();
-
-		SearchRequestBuilder searchRequestBuilder = null;
+		throws Exception {
 
 		QueryConfig queryConfig = query.getQueryConfig();
 
-		String[] selectedIndexNames = queryConfig.getSelectedIndexNames();
+		Client client = _elasticsearchConnectionManager.getClient();
 
-		if (ArrayUtil.isEmpty(selectedIndexNames)) {
-			searchRequestBuilder = client.prepareSearch(
-				String.valueOf(searchContext.getCompanyId()));
-		}
-		else {
-			searchRequestBuilder = client.prepareSearch(selectedIndexNames);
-		}
+		SearchRequestBuilder searchRequestBuilder = client.prepareSearch(
+			getSelectedIndexNames(queryConfig, searchContext));
+
+		searchRequestBuilder.setTypes(getSelectedTypes(queryConfig));
 
 		if (!count) {
 			addFacets(searchRequestBuilder, searchContext);
@@ -432,62 +406,80 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			searchRequestBuilder.setSize(0);
 		}
 
-		QueryBuilder queryBuilder = _queryTranslator.translate(query);
+		QueryBuilder queryBuilder = _queryTranslator.translate(
+			query, searchContext);
 
 		searchRequestBuilder.setQuery(queryBuilder);
 
-		String[] selectedTypes = queryConfig.getSelectedTypes();
-
-		if (ArrayUtil.isEmpty(selectedTypes)) {
-			searchRequestBuilder.setTypes(DocumentTypes.LIFERAY);
-		}
-		else {
-			searchRequestBuilder.setTypes(selectedTypes);
-		}
-
-		SearchRequest searchRequest = searchRequestBuilder.request();
-
-		ActionFuture<SearchResponse> future = client.search(searchRequest);
-
-		SearchResponse searchResponse = future.actionGet();
+		SearchResponse searchResponse = executeSearchRequest(
+			client, searchRequestBuilder);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"The search engine processed " + queryBuilder.toString() +
-					"in " + searchResponse.getTook());
+					" in " + searchResponse.getTook());
 		}
 
 		return searchResponse;
 	}
 
-	protected Document processSearchHit(
-		SearchHit searchHit, QueryConfig queryConfig) {
+	protected long doSearchCount(SearchContext searchContext, Query query)
+		throws Exception {
 
-		Document document = new DocumentImpl();
+		SearchResponse searchResponse = doSearch(
+			searchContext, query, searchContext.getStart(),
+			searchContext.getEnd(), true);
 
-		Map<String, SearchHitField> searchHitFields = searchHit.getFields();
+		SearchHits searchHits = searchResponse.getHits();
 
-		for (Map.Entry<String, SearchHitField> entry :
-				searchHitFields.entrySet()) {
-
-			SearchHitField searchHitField = entry.getValue();
-
-			Collection<Object> fieldValues = searchHitField.getValues();
-
-			Field field = new Field(
-				entry.getKey(),
-				ArrayUtil.toStringArray(
-					fieldValues.toArray(new Object[fieldValues.size()])));
-
-			document.add(field);
-		}
-
-		populateUID(document, queryConfig);
-
-		return document;
+		return searchHits.getTotalHits();
 	}
 
-	protected Hits processSearchResponse(
+	protected Hits doSearchHits(
+			SearchContext searchContext, Query query, int start, int end)
+		throws Exception {
+
+		SearchResponse searchResponse = doSearch(
+			searchContext, query, start, end, false);
+
+		Hits hits = processResponse(searchResponse, searchContext, query);
+
+		return hits;
+	}
+
+	protected SearchResponse executeSearchRequest(
+		Client client, SearchRequestBuilder searchRequestBuilder) {
+
+		SearchRequest searchRequest = searchRequestBuilder.request();
+
+		ActionFuture<SearchResponse> future = client.search(searchRequest);
+
+		return future.actionGet();
+	}
+
+	protected String[] getSelectedIndexNames(
+		QueryConfig queryConfig, SearchContext searchContext) {
+
+		String[] selectedIndexNames = queryConfig.getSelectedIndexNames();
+
+		if (ArrayUtil.isNotEmpty(selectedIndexNames)) {
+			return selectedIndexNames;
+		}
+
+		return new String[] {String.valueOf(searchContext.getCompanyId())};
+	}
+
+	protected String[] getSelectedTypes(QueryConfig queryConfig) {
+		String[] selectedTypes = queryConfig.getSelectedTypes();
+
+		if (ArrayUtil.isNotEmpty(selectedTypes)) {
+			return selectedTypes;
+		}
+
+		return new String[] {DocumentTypes.LIFERAY};
+	}
+
+	protected Hits processResponse(
 		SearchResponse searchResponse, SearchContext searchContext,
 		Query query) {
 
@@ -528,6 +520,33 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		hits.setSearchTime((float)timeValue.getSecondsFrac());
 
 		return hits;
+	}
+
+	protected Document processSearchHit(
+		SearchHit searchHit, QueryConfig queryConfig) {
+
+		Document document = new DocumentImpl();
+
+		Map<String, SearchHitField> searchHitFields = searchHit.getFields();
+
+		for (Map.Entry<String, SearchHitField> entry :
+				searchHitFields.entrySet()) {
+
+			SearchHitField searchHitField = entry.getValue();
+
+			Collection<Object> fieldValues = searchHitField.getValues();
+
+			Field field = new Field(
+				entry.getKey(),
+				ArrayUtil.toStringArray(
+					fieldValues.toArray(new Object[fieldValues.size()])));
+
+			document.add(field);
+		}
+
+		populateUID(document, queryConfig);
+
+		return document;
 	}
 
 	protected void updateFacetCollectors(

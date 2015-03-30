@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -39,6 +40,9 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestHelper;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -227,12 +231,26 @@ public class DDLRecordSearchTest {
 			ddmStructureTestHelper.addStructureXsd(this.getClass()));
 	}
 
-	protected void assertSearch(String keywords, int length) {
-		_searchContext.setKeywords(keywords);
+	protected void assertSearch(final String keywords, final int length)
+		throws Exception {
 
-		Hits hits = DDLRecordLocalServiceUtil.search(_searchContext);
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			new Callable<Void>() {
 
-		Assert.assertEquals(length, hits.getLength());
+				@Override
+				public Void call() throws Exception {
+					_searchContext.setKeywords(keywords);
+
+					Hits hits = DDLRecordLocalServiceUtil.search(
+						_searchContext);
+
+					Assert.assertEquals(length, hits.getLength());
+
+					return null;
+				}
+
+			});
 	}
 
 	protected DDMFormValues createDDMFormValues() throws Exception {

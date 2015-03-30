@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.RandomUtil;
+import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -60,6 +61,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -629,7 +632,9 @@ public abstract class BaseAssetSearchTestCase {
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
-		int initialEntries = searchCount(assetEntryQuery, searchContext);
+		int initialEntries = 0;
+
+		assertCount(initialEntries, assetEntryQuery, searchContext);
 
 		ServiceContext serviceContext1 =
 			ServiceContextTestUtil.getServiceContext(group1.getGroupId());
@@ -647,8 +652,7 @@ public abstract class BaseAssetSearchTestCase {
 
 		addBaseModel(parentBaseModel2, getSearchKeywords(), serviceContext2);
 
-		Assert.assertEquals(
-			initialEntries + 2, searchCount(assetEntryQuery, searchContext));
+		assertCount(initialEntries + 2, assetEntryQuery, searchContext);
 	}
 
 	@Test
@@ -1153,6 +1157,38 @@ public abstract class BaseAssetSearchTestCase {
 		return addBaseModel(parentBaseModel, keywords, serviceContext);
 	}
 
+	protected void assertCount(
+			int expected, AssetEntryQuery assetEntryQuery,
+			SearchContext searchContext)
+		throws Exception {
+
+		assertCount(
+			expected, assetEntryQuery, searchContext, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+	}
+
+	protected void assertCount(
+			final int expected, final AssetEntryQuery assetEntryQuery,
+			final SearchContext searchContext, final int start, final int end)
+		throws Exception {
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					int count = searchCount(
+						assetEntryQuery, searchContext, start, end);
+
+					Assert.assertEquals(expected, count);
+
+					return null;
+				}
+
+			});
+	}
+
 	protected Date[] generateRandomDates(Date startDate, int size) {
 		Date[] dates = new Date[size];
 
@@ -1212,15 +1248,6 @@ public abstract class BaseAssetSearchTestCase {
 	}
 
 	protected int searchCount(
-			AssetEntryQuery assetEntryQuery, SearchContext searchContext)
-		throws Exception {
-
-		return searchCount(
-			assetEntryQuery, searchContext, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-	}
-
-	protected int searchCount(
 			AssetEntryQuery assetEntryQuery, SearchContext searchContext,
 			int start, int end)
 		throws Exception {
@@ -1248,7 +1275,9 @@ public abstract class BaseAssetSearchTestCase {
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
-		int initialEntries = searchCount(assetEntryQuery, searchContext);
+		int initialEntries = 0;
+
+		assertCount(initialEntries, assetEntryQuery, searchContext);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groups[0].getGroupId());
@@ -1263,9 +1292,8 @@ public abstract class BaseAssetSearchTestCase {
 
 		addBaseModels(groups, getSearchKeywords(), serviceContext);
 
-		Assert.assertEquals(
-			initialEntries + expectedResults,
-			searchCount(assetEntryQuery, searchContext));
+		assertCount(
+			initialEntries + expectedResults, assetEntryQuery, searchContext);
 	}
 
 	protected void testClassNames(
@@ -1282,13 +1310,14 @@ public abstract class BaseAssetSearchTestCase {
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
-		int initialEntries = searchCount(assetEntryQuery, searchContext);
+		int initialEntries = 0;
+
+		assertCount(initialEntries, assetEntryQuery, searchContext);
 
 		addBaseModel(parentBaseModel, getSearchKeywords(), serviceContext);
 
-		Assert.assertEquals(
-			initialEntries + expectedResult,
-			searchCount(assetEntryQuery, searchContext));
+		assertCount(
+			initialEntries + expectedResult, assetEntryQuery, searchContext);
 	}
 
 	protected void testClassTypeIds(
@@ -1305,7 +1334,9 @@ public abstract class BaseAssetSearchTestCase {
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
-		int initialEntries = searchCount(assetEntryQuery, searchContext);
+		int initialEntries = 0;
+
+		assertCount(initialEntries, assetEntryQuery, searchContext);
 
 		addBaseModelWithClassType(
 			parentBaseModel, getSearchKeywords(), serviceContext);
@@ -1313,15 +1344,12 @@ public abstract class BaseAssetSearchTestCase {
 		if (classType) {
 			assetEntryQuery.setClassTypeIds(getClassTypeIds());
 
-			Assert.assertEquals(
-				initialEntries + 1,
-				searchCount(assetEntryQuery, searchContext));
+			assertCount(initialEntries + 1, assetEntryQuery, searchContext);
 		}
 		else {
 			assetEntryQuery.setClassTypeIds(new long[] {0});
 
-			Assert.assertEquals(
-				initialEntries, searchCount(assetEntryQuery, searchContext));
+			assertCount(initialEntries, assetEntryQuery, searchContext);
 		}
 	}
 
@@ -1469,8 +1497,7 @@ public abstract class BaseAssetSearchTestCase {
 				parentBaseModel, RandomTestUtil.randomString(), serviceContext);
 		}
 
-		Assert.assertEquals(
-			size, searchCount(assetEntryQuery, searchContext, 0, 1));
+		assertCount(size, assetEntryQuery, searchContext, 0, 1);
 	}
 
 	private long[] _assetCategoryIds1;

@@ -59,6 +59,24 @@ public class JournalFolderSearchTest extends BaseSearchTestCase {
 	public void testSearchAttachments() throws Exception {
 	}
 
+	@Override
+	@Test
+	public void testSearchBaseModel() throws Exception {
+		searchBaseModel(1);
+	}
+
+	@Override
+	@Test
+	public void testSearchBaseModelWithDelete() throws Exception {
+		searchBaseModelWithDelete(1);
+	}
+
+	@Override
+	@Test
+	public void testSearchBaseModelWithTrash() throws Exception {
+		searchBaseModelWithTrash(1);
+	}
+
 	@Ignore()
 	@Override
 	@Test

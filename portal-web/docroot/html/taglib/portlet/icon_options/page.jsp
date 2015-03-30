@@ -72,7 +72,6 @@
 
 		boolean iGoogleShowAddAppLink = GetterUtil.getBoolean(portletSetup.getValue("lfrIgoogleShowAddAppLink", StringPool.BLANK));
 		boolean netvibesShowAddAppLinks = GetterUtil.getBoolean(portletSetup.getValue("lfrNetvibesShowAddAppLink", StringPool.BLANK));
-		boolean appShowShareWithFriendsLink = GetterUtil.getBoolean(portletSetup.getValue("lfrAppShowShareWithFriendsLink", StringPool.BLANK));
 
 		PortletURL basePortletURL = PortletURLFactoryUtil.create(request, PortletKeys.PORTLET_SHARING, layout.getPlid(), PortletRequest.RESOURCE_PHASE);
 		%>
@@ -129,16 +128,6 @@
 				message="add-to-netvibes"
 				method="get"
 				url="<%= netvibesHREF %>"
-			/>
-		</c:if>
-
-		<c:if test="<%= appShowShareWithFriendsLink %>">
-			<liferay-ui:icon
-				iconCssClass="icon-share"
-				label="<%= true %>"
-				message="share-this-application-with-friends"
-				method="get"
-				url="javascript:;"
 			/>
 		</c:if>
 	</c:if>

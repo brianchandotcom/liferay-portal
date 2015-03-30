@@ -190,15 +190,4 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 			);
 		}
 	);
-
-	$('#<portlet:namespace />saveButton').on(
-		'click',
-		function(event) {
-			event.preventDefault();
-
-			form.fm('extensions').val(Liferay.Util.listSelect(form.fm('currentExtensions')));
-
-			submitForm(form);
-		}
-	);
 </aui:script>

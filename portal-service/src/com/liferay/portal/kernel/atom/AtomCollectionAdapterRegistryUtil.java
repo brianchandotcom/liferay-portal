@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
@@ -47,38 +46,6 @@ public class AtomCollectionAdapterRegistryUtil {
 		return _instance._getAtomCollectionAdapters();
 	}
 
-	public static void register(
-		AtomCollectionAdapter<?> atomCollectionAdapter) {
-
-		_instance._register(atomCollectionAdapter);
-	}
-
-	public static void register(
-		List<AtomCollectionAdapter<?>> atomCollectionAdapters) {
-
-		for (AtomCollectionAdapter<?> atomCollectionAdapter :
-				atomCollectionAdapters) {
-
-			register(atomCollectionAdapter);
-		}
-	}
-
-	public static void unregister(
-		AtomCollectionAdapter<?> atomCollectionAdapter) {
-
-		_instance._unregister(atomCollectionAdapter);
-	}
-
-	public static void unregister(
-		List<AtomCollectionAdapter<?>> atomCollectionAdapters) {
-
-		for (AtomCollectionAdapter<?> atomCollectionAdapter :
-				atomCollectionAdapters) {
-
-			unregister(atomCollectionAdapter);
-		}
-	}
-
 	private AtomCollectionAdapterRegistryUtil() {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -98,27 +65,6 @@ public class AtomCollectionAdapterRegistryUtil {
 
 	private List<AtomCollectionAdapter<?>> _getAtomCollectionAdapters() {
 		return ListUtil.fromMapValues(_atomCollectionAdapters);
-	}
-
-	private void _register(AtomCollectionAdapter<?> atomCollectionAdapter) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<AtomCollectionAdapter<?>> serviceRegistration =
-			registry.registerService(
-				(Class<AtomCollectionAdapter<?>>)(Class<?>)
-					AtomCollectionAdapter.class,
-				atomCollectionAdapter);
-
-		_serviceRegistrations.put(atomCollectionAdapter, serviceRegistration);
-	}
-
-	private void _unregister(AtomCollectionAdapter<?> atomCollectionAdapter) {
-		ServiceRegistration<AtomCollectionAdapter<?>> serviceRegistration =
-			_serviceRegistrations.remove(atomCollectionAdapter);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

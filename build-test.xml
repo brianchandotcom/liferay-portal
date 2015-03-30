@@ -1565,6 +1565,19 @@ go]]></replacevalue>
 		<get-testray-team-name />
 
 		<if>
+			<isset property="env.TEST_BUILD_FIX_PACK_NAME" />
+			<then>
+				<propertyregex
+					input="${testray.build.name}"
+					override="true"
+					property="testray.build.name"
+					regexp="(-\s)\d+(\s-)"
+					replace="\1${env.TEST_BUILD_FIX_PACK_NAME}\2"
+				/>
+			</then>
+		</if>
+
+		<if>
 			<available file="portal-web/test-results/functional/report.html" />
 			<then>
 				<property name="test.case.attachments">

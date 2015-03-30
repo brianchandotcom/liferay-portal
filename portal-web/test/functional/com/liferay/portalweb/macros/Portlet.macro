@@ -148,7 +148,7 @@
 
 		<execute function="AssertClick" locator1="${portletLocator}" value1="Options" />
 		<execute function="AssertClickNoError" locator1="BasePortlet#REMOVE" value1="Remove" />
-		<execute function="Confirm" locator1="BasePortlet#PORTLET_CONFIRM" value1="Are you sure you want to remove this component?" />
+		<execute function="Confirm" value1="Are you sure you want to remove this component?" />
 	</command>
 
 	<command name="dragAndDropPortletToColumnPG">

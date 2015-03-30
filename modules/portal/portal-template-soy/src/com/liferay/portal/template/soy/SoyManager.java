@@ -32,7 +32,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bruno Basto
  */
-@Component(immediate = true, service = TemplateManager.class)
+@Component(
+	immediate = true,
+	property = {"language.type=" + TemplateConstants.LANG_TYPE_SOY},
+	service = TemplateManager.class
+)
 public class SoyManager extends BaseTemplateManager {
 
 	@Override

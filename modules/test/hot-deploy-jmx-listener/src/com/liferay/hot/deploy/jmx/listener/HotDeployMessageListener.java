@@ -14,14 +14,10 @@
 
 package com.liferay.hot.deploy.jmx.listener;
 
-import com.liferay.hot.deploy.jmx.statistics.PluginStatistics;
+import com.liferay.hot.deploy.jmx.statistics.PluginStatisticsManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.messaging.*;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -35,10 +31,14 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class HotDeployMessageListener extends BaseMessageListener {
 
+	@Reference
+	public void setMessageBus(MessageBus messageBus) {
+		_messageBus = messageBus;
+	}
+
 	@Activate
 	protected void activate() {
-		MessageBusUtil.getMessageBus().registerMessageListener(
-			DestinationNames.HOT_DEPLOY, this);
+		_messageBus.registerMessageListener(DestinationNames.HOT_DEPLOY, this);
 	}
 
 	@Override
@@ -46,30 +46,41 @@ public class HotDeployMessageListener extends BaseMessageListener {
 		String command = message.getString("command");
 		String servletContextName = message.getString("servletContextName");
 
-		if (command.equals("deploy")) {
-			if (_log.isInfoEnabled()) {
-				_log.info(servletContextName + " was deployed");
-			}
+		switch (command) {
+			case "deploy":
+				if (_log.isInfoEnabled()) {
+					_log.info(servletContextName + " was deployed");
+				}
 
-			_pluginStatistics.addDeployedLegacyPlugins(servletContextName);
-		}
-		else if (command.equals("undeploy")) {
-			if (_log.isInfoEnabled()) {
-				_log.info(servletContextName + " was undeployed");
-			}
+				_pluginStatisticsManager.registerLegacyPlugin(
+					servletContextName);
 
-			_pluginStatistics.removeDeployedLegacyPlugins(servletContextName);
+			case "undeploy":
+				if (_log.isInfoEnabled()) {
+					_log.info(servletContextName + " was undeployed");
+				}
+
+				_pluginStatisticsManager.unregisterLegacyPlugin(
+					servletContextName);
+
+			default:
+				if (_log.isInfoEnabled()) {
+					_log.info("Unknown command " + command);
+				}
 		}
 	}
 
 	@Reference
-	protected void setPluginStatistics(PluginStatistics pluginStatistics) {
-		_pluginStatistics = pluginStatistics;
+	protected void setPluginStatisticsManager(
+		PluginStatisticsManager pluginStatisticsManager) {
+
+		_pluginStatisticsManager = pluginStatisticsManager;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		HotDeployMessageListener.class);
 
-	private PluginStatistics _pluginStatistics;
+	private MessageBus _messageBus;
+	private PluginStatisticsManager _pluginStatisticsManager;
 
 }

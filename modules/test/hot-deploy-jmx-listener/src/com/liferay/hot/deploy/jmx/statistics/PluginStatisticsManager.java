@@ -12,15 +12,19 @@
  * details.
  */
 
-package com.liferay.hot.deploy.jmx.manager;
+package com.liferay.hot.deploy.jmx.statistics;
 
 import java.util.List;
 
 /**
- * @author Cristina González
+ * @author Miguel Pastor
  */
-public interface PluginsManagerMBean {
+public interface PluginStatisticsManager {
 
-	public List<String> listLegacyPlugins();
+	public List<String> getRegisteredLegacyPlugins();
+
+	public void registerLegacyPlugin(String legacyPlugin);
+
+	public void unregisterLegacyPlugin(String legacyPlugin);
 
 }

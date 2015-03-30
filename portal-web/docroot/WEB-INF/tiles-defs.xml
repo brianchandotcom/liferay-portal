@@ -918,16 +918,6 @@
 		<put name="portlet_content" value="/portlet/portlet_configuration/publish_portlet.jsp" />
 	</definition>
 
-	<!-- Portlet CSS -->
-
-	<definition name="portlet.portlet_css" extends="portlet">
-		<put name="portlet_decorate" value="false" />
-	</definition>
-
-	<definition name="portlet.portlet_css.view" extends="portlet.portlet_css">
-		<put name="portlet_content" value="/portlet/portlet_css/view.jsp" />
-	</definition>
-
 	<!-- Portlet Sharing -->
 
 	<definition name="portlet.portlet_sharing" extends="portlet">

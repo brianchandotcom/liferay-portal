@@ -563,14 +563,14 @@
 	<portlet>
 		<portlet-name>113</portlet-name>
 		<display-name>Portlet CSS</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/portlet_css/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/portlet_css/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/portlet_css/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -59,27 +61,21 @@ public class JournalTransformerTest {
 
 	@Test
 	public void testContentTransformerListener() throws Exception {
-		Document document = SAXReaderUtil.createDocument();
+		DDMForm ddmForm = new DDMForm();
 
-		Element rootElement = document.addElement("root");
+		ddmForm.addAvailableLocale(LocaleUtil.US);
+		ddmForm.setDefaultLocale(LocaleUtil.US);
 
-		rootElement.addAttribute("available-locales", "en_US");
-		rootElement.addAttribute("default-locale", "en_US");
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField(
+				"name", false, false, false));
 
-		Element nameElement = JournalTestUtil.addDynamicElementElement(
-			rootElement, "text", "name");
-
-		JournalTestUtil.addMetadataElement(nameElement, "en_US", "name");
-
-		Element linkElement = JournalTestUtil.addDynamicElementElement(
-			rootElement, "text", "link");
-
-		JournalTestUtil.addMetadataElement(linkElement, "en_US", "link");
-
-		String definition = document.asXML();
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField(
+				"link", false, false, false));
 
 		_ddmStructure = DDMStructureTestUtil.addStructure(
-			JournalArticle.class.getName(), definition);
+			JournalArticle.class.getName(), ddmForm);
 
 		String xsl = "$name.getData()";
 
@@ -102,7 +98,7 @@ public class JournalTransformerTest {
 
 		Assert.assertEquals("Joe Bloggs", content);
 
-		document = SAXReaderUtil.read(xml);
+		Document document = SAXReaderUtil.read(xml);
 
 		Element element = (Element)document.selectSingleNode(
 			"//dynamic-content");

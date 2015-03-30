@@ -42,6 +42,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
@@ -142,11 +143,11 @@ public class JournalTestUtil {
 		String content = DDMStructureTestUtil.getSampleStructuredContent(
 			contentMap, LocaleUtil.toLanguageId(defaultLocale));
 
-		String definition = DDMStructureTestUtil.getSampleStructureDefinition(
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
 			_locales, defaultLocale);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			groupId, JournalArticle.class.getName(), definition, defaultLocale);
+			groupId, JournalArticle.class.getName(), ddmForm, defaultLocale);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			groupId, ddmStructure.getStructureId());

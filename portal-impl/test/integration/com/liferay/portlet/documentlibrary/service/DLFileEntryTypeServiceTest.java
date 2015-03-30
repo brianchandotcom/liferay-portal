@@ -41,6 +41,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 
@@ -116,7 +118,10 @@ public class DLFileEntryTypeServiceTest {
 		byte[] testFileBytes = FileUtil.getBytes(
 			getClass(), _TEST_DDM_STRUCTURE);
 
-		serviceContext.setAttribute("definition", new String(testFileBytes));
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
+			new String(testFileBytes));
+
+		serviceContext.setAttribute("ddmForm", ddmForm);
 
 		User user = TestPropsValues.getUser();
 

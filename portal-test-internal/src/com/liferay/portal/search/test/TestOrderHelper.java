@@ -34,6 +34,7 @@ import com.liferay.portlet.asset.model.DDMFormValuesReader;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.service.persistence.test.AssetEntryQueryTestUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
@@ -96,13 +97,13 @@ public abstract class TestOrderHelper {
 	protected DDMStructure addDDMStructure(String dataType, String type)
 		throws Exception {
 
-		String definition = DDMStructureTestUtil.getSampleStructureDefinition(
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
 			"name", dataType, false, type, new Locale[] {LocaleUtil.US},
 			LocaleUtil.US);
 
 		return DDMStructureTestUtil.addStructure(
 			_serviceContext.getScopeGroupId(),
-			getSearchableAssetEntryStructureClassName(), definition);
+			getSearchableAssetEntryStructureClassName(), ddmForm);
 	}
 
 	protected DDMTemplate addDDMTemplate(DDMStructure ddmStructure)

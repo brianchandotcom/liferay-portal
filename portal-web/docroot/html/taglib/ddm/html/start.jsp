@@ -17,12 +17,10 @@
 <%@ include file="/html/taglib/ddm/html/init.jsp" %>
 
 <div class="lfr-ddm-container" id="<%= randomNamespace %>">
-	<c:if test="<%= Validator.isNotNull(xsd) %>">
+	<c:if test="<%= ddmForm != null %>">
 
 		<%
 		pageContext.setAttribute("checkRequired", checkRequired);
-
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(xsd);
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext = new DDMFormFieldRenderingContext();
 

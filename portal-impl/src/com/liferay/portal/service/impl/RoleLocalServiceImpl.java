@@ -1040,6 +1040,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				else {
 					value = false;
 				}
+
+				PermissionCacheUtil.putHasUserRole(userId, role, value);
 			}
 
 			threadLocalCache.put(key, value);

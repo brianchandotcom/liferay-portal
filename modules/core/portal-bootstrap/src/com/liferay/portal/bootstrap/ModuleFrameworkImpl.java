@@ -59,7 +59,6 @@ import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -589,30 +588,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return String.valueOf(level);
 	}
 
-	private Set<Class<?>> _getInterfaces(Object bean) {
-		Set<Class<?>> interfaces = new HashSet<>();
-
-		Class<?> beanClass = bean.getClass();
-
-		interfaces.add(beanClass);
-
-		for (Class<?> interfaceClass : beanClass.getInterfaces()) {
-			interfaces.add(interfaceClass);
-		}
-
-		while ((beanClass = beanClass.getSuperclass()) != null) {
-			interfaces.add(beanClass);
-
-			for (Class<?> interfaceClass : beanClass.getInterfaces()) {
-				if (!interfaces.contains(interfaceClass)) {
-					interfaces.add(interfaceClass);
-				}
-			}
-		}
-
-		return interfaces;
-	}
-
 	private String _getSystemPackagesExtra() {
 		String[] systemPackagesExtra =
 			PropsValues.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA;
@@ -813,7 +788,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private void _registerService(
 		BundleContext bundleContext, String beanName, Object bean) {
 
-		Set<Class<?>> interfaces = _getInterfaces(bean);
+		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(bean);
 
 		if (interfaces.isEmpty()) {
 			return;

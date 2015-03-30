@@ -20,4 +20,10 @@
 			service.test.dir="../bookmarks-test/test/integration"
 		/>
 	</target>
+
+	<target name="build-upgrade-table">
+		<ant dir="../../../../portal-impl/" target="build-upgrade-table">
+			<property name="module.name" value="bookmarks" />
+		</ant>
+	</target>
 </project>

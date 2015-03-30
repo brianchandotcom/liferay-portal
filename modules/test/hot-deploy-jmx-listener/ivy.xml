@@ -18,6 +18,5 @@
 
 	<dependencies defaultconf="default">
 		<dependency name="log4j" org="log4j" rev="1.2.17" />
-		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 	</dependencies>
 </ivy-module>

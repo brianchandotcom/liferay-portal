@@ -27,9 +27,8 @@ import org.osgi.service.component.annotations.Modified;
  * @author Roberto Díaz
  */
 @Component(
-	immediate = true, property =
-		BaseAuthPublicPath.AUTH_PUBLIC_PATH +
-			"=/wiki_display/edit_page_discussion",
+	immediate = true,
+	property = BaseAuthPublicPath.AUTH_PUBLIC_PATH + "=/wiki_display/edit_page_discussion",
 	service = AuthPublicPath.class
 )
 public class EditPageDiscussionPath extends BaseAuthPublicPath {

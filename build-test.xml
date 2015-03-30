@@ -1201,6 +1201,43 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-android-device">
+		<sequential>
+			<execute>
+				echo no | android create avd -n deviceName -t android-19
+			</execute>
+
+			<echo file="${user.home}/.android/avd/deviceName.avd/config.ini" append="true">
+	hw.keyboard=yes
+			</echo>
+
+			<exec executable="/bin/bash" os="${os.unix}" spawn="true">
+				<arg value="-c" />
+				<arg value="emulator -avd deviceName -no-boot-anim" />
+			</exec>
+
+			<exec executable="cmd.exe" os="${os.windows}">
+				<arg value="/c" />
+				<arg value="emulator -avd deviceName -no-boot-anim" />
+			</exec>
+
+			<sleep seconds="120" />
+
+			<execute>
+				adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_down.sh /data/local
+				adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_up.sh /data/local
+				adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/tap.sh /data/local
+
+				adb -s emulator-5554 shell chmod 0777 /data/local/swipe_down.sh
+				adb -s emulator-5554 shell chmod 0777 /data/local/swipe_up.sh
+				adb -s emulator-5554 shell chmod 0777 /data/local/tap.sh
+
+				adb -s emulator-5554 shell settings put system pointer_location 1
+				adb -s emulator-5554 shell settings put system show_touches 1
+			</execute>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-app-server">
 		<attribute default="0" name="app.server.bundle.index" />
 		<attribute default="" name="testable.portal.started.marker.file" />
@@ -1329,6 +1366,15 @@
 					</if>
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-android-device">
+		<sequential>
+			<execute>
+				adb emu kill
+				android delete avd -n deviceName
+			</execute>
 		</sequential>
 	</macrodef>
 
@@ -5081,7 +5127,7 @@ if (ppstate.equals("normal")) {
 		<if>
 			<equals arg1="${mobile.device.enabled}" arg2="true" />
 			<then>
-				<antcall target="start-android-device" />
+				<start-android-device />
 
 				<antcall target="start-appium" />
 			</then>
@@ -5311,7 +5357,7 @@ if (ppstate.equals("normal")) {
 		<if>
 			<equals arg1="${mobile.device.enabled}" arg2="true" />
 			<then>
-				<antcall target="stop-android-device" />
+				<stop-android-device />
 
 				<antcall target="stop-appium" />
 			</then>
@@ -5334,41 +5380,6 @@ if (ppstate.equals("normal")) {
 				<antcall target="stop-ie-driver" />
 			</then>
 		</if>
-	</target>
-
-	<target name="start-android-device">
-		<execute>
-			echo no | android create avd -n deviceName -t android-19
-		</execute>
-
-		<echo file="${user.home}/.android/avd/deviceName.avd/config.ini" append="true">
-hw.keyboard=yes
-		</echo>
-
-		<exec executable="/bin/bash" os="${os.unix}" spawn="true">
-			<arg value="-c" />
-			<arg value="emulator -avd deviceName -no-boot-anim" />
-		</exec>
-
-		<exec executable="cmd.exe" os="${os.windows}">
-			<arg value="/c" />
-			<arg value="emulator -avd deviceName -no-boot-anim" />
-		</exec>
-
-		<sleep seconds="120" />
-
-		<execute>
-			adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_down.sh /data/local
-			adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_up.sh /data/local
-			adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/tap.sh /data/local
-
-			adb -s emulator-5554 shell chmod 0777 /data/local/swipe_down.sh
-			adb -s emulator-5554 shell chmod 0777 /data/local/swipe_up.sh
-			adb -s emulator-5554 shell chmod 0777 /data/local/tap.sh
-
-			adb -s emulator-5554 shell settings put system pointer_location 1
-			adb -s emulator-5554 shell settings put system show_touches 1
-		</execute>
 	</target>
 
 	<target name="start-appium">
@@ -5483,13 +5494,6 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		>
 			<arg line="-port 14444 -singleWindow" />
 		</java>
-	</target>
-
-	<target name="stop-android-device">
-		<execute>
-			adb emu kill
-			android delete avd -n deviceName
-		</execute>
 	</target>
 
 	<target name="stop-appium">

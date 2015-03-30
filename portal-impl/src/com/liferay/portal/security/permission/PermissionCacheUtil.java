@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
@@ -61,6 +62,16 @@ public class PermissionCacheUtil {
 		BagKey bagKey = new BagKey(userId, groupId);
 
 		return _permissionCheckerBagPortalCache.get(bagKey);
+	}
+
+	public static Boolean getHasUserRole(long userId, Role role) {
+		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag(userId);
+
+		if (userPermissionCheckerBag == null) {
+			return null;
+		}
+
+		return userPermissionCheckerBag.hasRole(role);
 	}
 
 	public static Boolean getPermission(

@@ -58,7 +58,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
-import com.liferay.portal.security.permission.UserPermissionCheckerBag;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RoleLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
@@ -1030,13 +1029,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				return value;
 			}
 
-			UserPermissionCheckerBag userPermissionCheckerBag =
-				PermissionCacheUtil.getUserBag(userId);
+			value = PermissionCacheUtil.getHasUserRole(userId, role);
 
-			if (userPermissionCheckerBag != null) {
-				value = userPermissionCheckerBag.hasRole(role);
-			}
-			else {
+			if (value == null) {
 				int count = roleFinder.countByR_U(role.getRoleId(), userId);
 
 				if (count > 0) {

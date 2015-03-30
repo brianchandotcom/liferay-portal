@@ -19,7 +19,7 @@
 		<dirset dir="invitation" includes="*" />
 		<dirset dir="journal" includes="*" />
 		<dirset dir="loan-calculator" includes="*" />
-		<dirset dir="mentions" includes="*" />
+		<dirset dir="mentions" includes="*" excludes="mentions-editor-config" />
 		<dirset dir="message-boards" includes="*" />
 		<dirset dir="nested-portlets" includes="*" />
 		<dirset dir="network-utilities" includes="*" />

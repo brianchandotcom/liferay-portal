@@ -19,7 +19,7 @@
 		<dirset dir="apps/invitation" includes="*" />
 		<dirset dir="apps/journal" includes="*" />
 		<dirset dir="apps/loan-calculator" includes="*" />
-		<dirset dir="apps/mentions" includes="*" />
+		<dirset dir="apps/mentions" includes="*" excludes="mentions-editor-config" />
 		<dirset dir="apps/message-boards" includes="*" />
 		<dirset dir="apps/nested-portlets" includes="*" />
 		<dirset dir="apps/network-utilities" includes="*" />

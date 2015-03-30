@@ -1326,7 +1326,14 @@ public class LayoutTypePortletImpl
 			}
 		}
 		catch (Exception e) {
-			_log.error("Unable to fire portlet layout listener event", e);
+			String sb = "";
+
+			for (StackTraceElement stackTraceElement : e.getStackTrace()) {
+				sb += stackTraceElement.toString();
+			}
+
+			_log.error(
+				"Unable to fire portlet layout listener event: " + sb, e);
 		}
 
 		return portletId;

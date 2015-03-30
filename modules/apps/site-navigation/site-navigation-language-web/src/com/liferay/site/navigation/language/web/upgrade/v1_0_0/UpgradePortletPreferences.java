@@ -14,11 +14,14 @@
 
 package com.liferay.site.navigation.language.web.upgrade.v1_0_0;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
 import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
-import com.liferay.taglib.ui.LanguageTag;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
@@ -37,21 +40,47 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	protected void upgradeDisplayStyle(PortletPreferences portletPreferences)
 		throws ReadOnlyException {
 
-		int displayStyle = GetterUtil.getInteger(
-			portletPreferences.getValue("displayStyle", null),
-			LanguageTag.LIST_ICON);
+		String displayStylePreference = portletPreferences.getValue(
+			"displayStyle", null);
 
-		if (displayStyle == LanguageTag.LIST_LONG_TEXT) {
-			portletPreferences.setValue("displayStyle", "long-text");
+		if (Validator.isNull(displayStylePreference)) {
+			return;
 		}
-		else if (displayStyle == LanguageTag.LIST_SHORT_TEXT) {
-			portletPreferences.setValue("displayStyle", "short-text");
+
+		int displayStyle = GetterUtil.getInteger(displayStylePreference);
+
+		if (displayStyle == LIST_ICON) {
+			portletPreferences.setValue(
+				"displayStyle",
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+					"language-icon-ftl");
 		}
-		else if (displayStyle == LanguageTag.SELECT_BOX) {
-			portletPreferences.setValue("displayStyle", "select-box");
+		else if (displayStyle == LIST_LONG_TEXT) {
+			portletPreferences.setValue(
+				"displayStyle",
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+					"language-long-text-ftl");
+		}
+		else if (displayStyle == LIST_SHORT_TEXT) {
+			portletPreferences.setValue(
+				"displayStyle",
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+					"language-short-text-ftl");
+		}
+		else if (displayStyle == SELECT_BOX) {
+			portletPreferences.setValue(
+				"displayStyle",
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+					"language-select-box-ftl");
 		}
 		else {
-			portletPreferences.setValue("displayStyle", "icon");
+			portletPreferences.reset("displayStyle");
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Display styles for breadcrumbs are deprecated in favor " +
+						"of application display templates");
+			}
 		}
 	}
 
@@ -69,5 +98,16 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
+
+	protected final int LIST_ICON = 0;
+
+	protected final int LIST_LONG_TEXT = 1;
+
+	protected final int LIST_SHORT_TEXT = 2;
+
+	protected final int SELECT_BOX = 3;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradePortletPreferences.class);
 
 }

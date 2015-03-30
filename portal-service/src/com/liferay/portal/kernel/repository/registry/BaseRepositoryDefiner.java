@@ -15,6 +15,9 @@
 package com.liferay.portal.kernel.repository.registry;
 
 import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
+
+import java.util.Locale;
 
 /**
  * @author Adolfo Pérez
@@ -23,6 +26,11 @@ public abstract class BaseRepositoryDefiner implements RepositoryDefiner {
 
 	@Override
 	public abstract String getClassName();
+
+	@Override
+	public String getRepositoryTypeLabel(Locale locale) {
+		return ResourceActionsUtil.getModelResource(locale, getClassName());
+	}
 
 	@Override
 	public String[] getSupportedConfigurations() {

@@ -150,6 +150,10 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getSupportedParameters(String, String)}
+	 */
+	@Deprecated
 	@Override
 	public String[] getSupportedParameters(
 		long classNameId, String configuration) {
@@ -160,9 +164,22 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 
 			String repositoryImplClassName = className.getValue();
 
+			return getSupportedParameters(
+				repositoryImplClassName, configuration);
+		}
+		catch (PortalException e) {
+			throw new SystemException(e);
+		}
+	}
+
+	@Override
+	public String[] getSupportedParameters(
+		String className, String configuration) {
+
+		try {
 			RepositoryClassDefinition repositoryClassDefinition =
 				_repositoryClassDefinitionCatalog.getRepositoryClassDefinition(
-					repositoryImplClassName);
+					className);
 
 			String[] supportedConfigurations =
 				repositoryClassDefinition.getSupportedConfigurations();
@@ -177,8 +194,8 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 			}
 
 			throw new RepositoryException(
-				"Configuration not found for repository with class name id " +
-					classNameId);
+				"Configuration not found for repository with class name " +
+					className);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

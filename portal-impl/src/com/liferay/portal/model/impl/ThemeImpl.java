@@ -16,6 +16,8 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
+import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ContextPathUtil;
@@ -305,7 +307,8 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 			return proxyPath.concat(virtualPath);
 		}
 
-		String contextPath = getContextPath();
+		String contextPath = PortalWebResourcesUtil.getContextPath(
+			PortalWebResourceConstants.RESOURCE_TYPE_CSS);
 
 		if (!isWARFile()) {
 			return contextPath;

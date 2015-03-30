@@ -1859,15 +1859,9 @@ go]]></replacevalue>
 	</target>
 
 	<target name="clean-up-android-device">
-		<exec executable="/bin/bash" os="${os.unix}">
-			<arg value="-c" />
-			<arg value="android delete avd -n deviceName" />
-		</exec>
-
-		<exec executable="cmd.exe" os="${os.windows}">
-			<arg value="/c" />
-			<arg value="android delete avd -n deviceName" />
-		</exec>
+		<execute>
+			android delete avd -n deviceName"
+		</execute>
 	</target>
 
 	<target name="clean-up-bundles">
@@ -2710,15 +2704,9 @@ ${marketplace.portlet.properties}</echo>
 	</target>
 
 	<target name="prepare-android-device">
-		<exec executable="/bin/bash" os="${os.unix}">
-			<arg value="-c" />
-			<arg value="echo no | android create avd -n deviceName -t android-19" />
-		</exec>
-
-		<exec executable="cmd.exe" os="${os.windows}">
-			<arg value="/c" />
-			<arg value="echo no | android create avd -n deviceName -t android-19" />
-		</exec>
+		<execute>
+			echo no | android create avd -n deviceName -t android-19
+		</execute>
 
 		<echo file="${user.home}/.android/avd/deviceName.avd/config.ini" append="true">
 hw.keyboard=yes
@@ -5510,15 +5498,9 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="stop-android-device">
-		<exec executable="/bin/bash" os="${os.unix}">
-			<arg value="-c" />
-			<arg value="adb emu kill" />
-		</exec>
-
-		<exec executable="cmd.exe" os="${os.windows}">
-			<arg value="/c" />
-			<arg value="adb emu kill" />
-		</exec>
+		<execute>
+			adb emu kill
+		</execute>
 	</target>
 
 	<target name="stop-appium">

@@ -82,10 +82,11 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
+			{ "allowedServices", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table SACPEntry (uuid_ VARCHAR(75) null,sacpEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table SACPEntry (uuid_ VARCHAR(75) null,sacpEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,allowedServices STRING null,name VARCHAR(75) null,title STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table SACPEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY sacpEntry.sacpEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SACPEntry.sacpEntryId ASC";
@@ -152,6 +153,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("allowedServices", getAllowedServices());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 
@@ -203,6 +205,12 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String allowedServices = (String)attributes.get("allowedServices");
+
+		if (allowedServices != null) {
+			setAllowedServices(allowedServices);
 		}
 
 		String name = (String)attributes.get("name");
@@ -332,6 +340,21 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+	}
+
+	@Override
+	public String getAllowedServices() {
+		if (_allowedServices == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _allowedServices;
+		}
+	}
+
+	@Override
+	public void setAllowedServices(String allowedServices) {
+		_allowedServices = allowedServices;
 	}
 
 	@Override
@@ -562,6 +585,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		sacpEntryImpl.setUserName(getUserName());
 		sacpEntryImpl.setCreateDate(getCreateDate());
 		sacpEntryImpl.setModifiedDate(getModifiedDate());
+		sacpEntryImpl.setAllowedServices(getAllowedServices());
 		sacpEntryImpl.setName(getName());
 		sacpEntryImpl.setTitle(getTitle());
 
@@ -681,6 +705,14 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 			sacpEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		sacpEntryCacheModel.allowedServices = getAllowedServices();
+
+		String allowedServices = sacpEntryCacheModel.allowedServices;
+
+		if ((allowedServices != null) && (allowedServices.length() == 0)) {
+			sacpEntryCacheModel.allowedServices = null;
+		}
+
 		sacpEntryCacheModel.name = getName();
 
 		String name = sacpEntryCacheModel.name;
@@ -702,7 +734,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -718,6 +750,8 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", allowedServices=");
+		sb.append(getAllowedServices());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", title=");
@@ -729,7 +763,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.service.access.control.profile.model.SACPEntry");
@@ -764,6 +798,10 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>allowedServices</column-name><column-value><![CDATA[");
+		sb.append(getAllowedServices());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
@@ -791,6 +829,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _allowedServices;
 	private String _name;
 	private String _originalName;
 	private String _title;

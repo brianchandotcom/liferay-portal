@@ -66,7 +66,7 @@ public class SACPEntryCacheModel implements CacheModel<SACPEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -82,6 +82,8 @@ public class SACPEntryCacheModel implements CacheModel<SACPEntry>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", allowedServices=");
+		sb.append(allowedServices);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", title=");
@@ -127,6 +129,13 @@ public class SACPEntryCacheModel implements CacheModel<SACPEntry>,
 			sacpEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (allowedServices == null) {
+			sacpEntryImpl.setAllowedServices(StringPool.BLANK);
+		}
+		else {
+			sacpEntryImpl.setAllowedServices(allowedServices);
+		}
+
 		if (name == null) {
 			sacpEntryImpl.setName(StringPool.BLANK);
 		}
@@ -155,6 +164,7 @@ public class SACPEntryCacheModel implements CacheModel<SACPEntry>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		allowedServices = objectInput.readUTF();
 		name = objectInput.readUTF();
 		title = objectInput.readUTF();
 	}
@@ -183,6 +193,13 @@ public class SACPEntryCacheModel implements CacheModel<SACPEntry>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (allowedServices == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(allowedServices);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -205,6 +222,7 @@ public class SACPEntryCacheModel implements CacheModel<SACPEntry>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String allowedServices;
 	public String name;
 	public String title;
 }

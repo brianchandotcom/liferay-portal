@@ -19,6 +19,7 @@
 
 		<!-- Other fields -->
 
+		<column name="allowedServices" type="String" />
 		<column name="name" type="String" />
 		<column name="title" type="String" localized="true" />
 

@@ -60,6 +60,7 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("allowedServices", getAllowedServices());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 
@@ -110,6 +111,12 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 			setModifiedDate(modifiedDate);
 		}
 
+		String allowedServices = (String)attributes.get("allowedServices");
+
+		if (allowedServices != null) {
+			setAllowedServices(allowedServices);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -132,6 +139,16 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 	public int compareTo(
 		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry) {
 		return _sacpEntry.compareTo(sacpEntry);
+	}
+
+	/**
+	* Returns the allowed services of this s a c p entry.
+	*
+	* @return the allowed services of this s a c p entry
+	*/
+	@Override
+	public java.lang.String getAllowedServices() {
+		return _sacpEntry.getAllowedServices();
 	}
 
 	@Override
@@ -367,6 +384,16 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {
 		_sacpEntry.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	/**
+	* Sets the allowed services of this s a c p entry.
+	*
+	* @param allowedServices the allowed services of this s a c p entry
+	*/
+	@Override
+	public void setAllowedServices(java.lang.String allowedServices) {
+		_sacpEntry.setAllowedServices(allowedServices);
 	}
 
 	@Override

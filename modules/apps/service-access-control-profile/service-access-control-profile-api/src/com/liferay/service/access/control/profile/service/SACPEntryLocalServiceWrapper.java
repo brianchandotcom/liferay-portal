@@ -33,6 +33,17 @@ public class SACPEntryLocalServiceWrapper implements SACPEntryLocalService,
 		_sacpEntryLocalService = sacpEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.service.access.control.profile.model.SACPEntry addSACPEntry(
+		long companyId, long userId, java.lang.String allowedServices,
+		java.lang.String name,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sacpEntryLocalService.addSACPEntry(companyId, userId,
+			allowedServices, name, titleMap, serviceContext);
+	}
+
 	/**
 	* Adds the s a c p entry to the database. Also notifies the appropriate model listeners.
 	*
@@ -43,6 +54,24 @@ public class SACPEntryLocalServiceWrapper implements SACPEntryLocalService,
 	public com.liferay.service.access.control.profile.model.SACPEntry addSACPEntry(
 		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry) {
 		return _sacpEntryLocalService.addSACPEntry(sacpEntry);
+	}
+
+	@Override
+	public void addSACPEntryResources(
+		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_sacpEntryLocalService.addSACPEntryResources(sacpEntry,
+			addGroupPermissions, addGuestPermissions);
+	}
+
+	@Override
+	public void addSACPEntryResources(
+		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_sacpEntryLocalService.addSACPEntryResources(sacpEntry,
+			groupPermissions, guestPermissions);
 	}
 
 	/**
@@ -91,6 +120,13 @@ public class SACPEntryLocalServiceWrapper implements SACPEntryLocalService,
 		long sacpEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sacpEntryLocalService.deleteSACPEntry(sacpEntryId);
+	}
+
+	@Override
+	public com.liferay.service.access.control.profile.model.SACPEntry delteSACPEntry(
+		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sacpEntryLocalService.delteSACPEntry(sacpEntry);
 	}
 
 	@Override
@@ -213,6 +249,26 @@ public class SACPEntryLocalServiceWrapper implements SACPEntryLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> getCompanySACPEntries(
+		long companyId, int start, int end) {
+		return _sacpEntryLocalService.getCompanySACPEntries(companyId, start,
+			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> getCompanySACPEntries(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> obc) {
+		return _sacpEntryLocalService.getCompanySACPEntries(companyId, start,
+			end, obc);
+	}
+
+	@Override
+	public int getCompanySACPEntryCount(long companyId) {
+		return _sacpEntryLocalService.getCompanySACPEntryCount(companyId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return _sacpEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
@@ -250,6 +306,13 @@ public class SACPEntryLocalServiceWrapper implements SACPEntryLocalService,
 	@Override
 	public int getSACPEntriesCount() {
 		return _sacpEntryLocalService.getSACPEntriesCount();
+	}
+
+	@Override
+	public com.liferay.service.access.control.profile.model.SACPEntry getSACPEntry(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sacpEntryLocalService.getSACPEntry(companyId, name);
 	}
 
 	/**
@@ -302,6 +365,26 @@ public class SACPEntryLocalServiceWrapper implements SACPEntryLocalService,
 	public com.liferay.service.access.control.profile.model.SACPEntry updateSACPEntry(
 		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry) {
 		return _sacpEntryLocalService.updateSACPEntry(sacpEntry);
+	}
+
+	@Override
+	public com.liferay.service.access.control.profile.model.SACPEntry updateSACPEntry(
+		long sacpEntryId, java.lang.String allowedServices,
+		java.lang.String name,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sacpEntryLocalService.updateSACPEntry(sacpEntryId,
+			allowedServices, name, titleMap, serviceContext);
+	}
+
+	@Override
+	public void updateSACPEntryResources(
+		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_sacpEntryLocalService.updateSACPEntryResources(sacpEntry,
+			groupPermissions, guestPermissions);
 	}
 
 	/**

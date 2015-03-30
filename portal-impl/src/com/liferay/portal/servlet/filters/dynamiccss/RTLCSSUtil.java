@@ -18,63 +18,38 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.regex.PatternFactory;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.rtl.css.RTLCSSConverter;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.Function;
-import org.mozilla.javascript.ScriptableObject;
-
 /**
  * @author Eduardo Garcia
+ * @author David Truong
  */
 public class RTLCSSUtil {
 
 	public static String getRtlCss(String fileName, String css)
 		throws Exception {
 
-		Context context = Context.enter();
-
 		String rtlCss = css;
 
 		try {
-			ScriptableObject scope = context.initStandardObjects();
+			RTLCSSConverter rtlCSSConverter = new RTLCSSConverter();
 
-			context.evaluateString(scope, _jsScript, "script", 1, null);
-
-			Function function = (Function)scope.get("r2", scope);
-
-			Object result = function.call(
-				context, scope, scope, new Object[] {css});
-
-			rtlCss = (String)Context.jsToJava(result, String.class);
+			rtlCss = rtlCSSConverter.process(rtlCss);
 		}
 		catch (Exception e) {
 			_log.error(
 				"Unable to generate RTL version for " + fileName +
 					StringPool.COMMA_AND_SPACE + e.getMessage());
 		}
-		finally {
-			Context.exit();
-		}
 
 		return rtlCss;
 	}
 
 	public static void init() {
-		try {
-			_jsScript = StringUtil.read(
-				ClassLoaderUtil.getPortalClassLoader(),
-				"com/liferay/portal/servlet/filters/dynamiccss" +
-					"/dependencies/r2.js");
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 	}
 
 	public static boolean isExcludedPath(String filePath) {
@@ -91,7 +66,6 @@ public class RTLCSSUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(RTLCSSUtil.class);
 
-	private static String _jsScript;
 	private static final Pattern[] _patterns = PatternFactory.compile(
 		PropsValues.RTL_CSS_EXCLUDED_PATHS_REGEXP);
 

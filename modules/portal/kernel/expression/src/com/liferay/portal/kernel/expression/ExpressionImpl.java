@@ -12,11 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.expression;
+package com.liferay.portal.kernel.expression;
 
-import com.liferay.portal.kernel.expression.Expression;
-import com.liferay.portal.kernel.expression.ExpressionEvaluationException;
-import com.liferay.portal.kernel.expression.VariableDependencies;
 import com.liferay.portal.kernel.util.MathUtil;
 
 import java.util.ArrayList;

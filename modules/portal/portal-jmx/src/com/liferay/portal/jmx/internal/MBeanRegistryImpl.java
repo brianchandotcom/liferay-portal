@@ -18,6 +18,7 @@ import com.liferay.portal.jmx.MBeanRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.management.ManagementFactory;
@@ -34,6 +35,11 @@ import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -41,6 +47,8 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -116,8 +124,27 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 	}
 
 	@Activate
-	protected void activate() {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	protected void activate(ComponentContext componentContext) {
+		_bundleContext = componentContext.getBundleContext();
+
 		_mBeanServer = ManagementFactory.getPlatformMBeanServer();
+
+		Filter filter = null;
+
+		try {
+			filter = _bundleContext.createFilter(
+				"(&(object-name=*)(objectClass=*MBean)" +
+					"(!(objectClass=javax.management.DynamicMBean)))");
+		}
+		catch (InvalidSyntaxException ise) {
+			ReflectionUtil.throwException(ise);
+		}
+
+		_serviceTracker = new ServiceTracker(
+			_bundleContext, filter, new MBeanServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 	@Reference(
@@ -150,6 +177,8 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 
 	@Deactivate
 	protected void deactivate() throws Exception {
+		_serviceTracker.close();
+
 		synchronized (_objectNameCache) {
 			for (ObjectName objectName : _objectNameCache.values()) {
 				try {
@@ -194,8 +223,76 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBeanRegistryImpl.class);
 
+	private BundleContext _bundleContext;
 	private MBeanServer _mBeanServer;
 	private final Map<String, ObjectName> _objectNameCache =
 		new ConcurrentHashMap<>();
+	@SuppressWarnings("rawtypes")
+	private ServiceTracker _serviceTracker;
+
+	@SuppressWarnings("rawtypes")
+	private class MBeanServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer {
+
+		@Override
+		public Object addingService(ServiceReference serviceReference) {
+			String objectName = GetterUtil.getString(
+				serviceReference.getProperty("object-name"));
+
+			String objectNameCacheKey = GetterUtil.getString(
+				serviceReference.getProperty("object-name-cache-key"));
+
+			if (Validator.isNull(objectNameCacheKey)) {
+				objectNameCacheKey = objectName;
+			}
+
+			@SuppressWarnings("unchecked")
+			Object service = _bundleContext.getService(serviceReference);
+
+			try {
+				return register(
+					objectNameCacheKey, service, new ObjectName(objectName));
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to register mbean", e);
+				}
+			}
+
+			return null;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference serviceReference, Object service) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference serviceReference, Object service) {
+
+			String objectName = GetterUtil.getString(
+				serviceReference.getProperty("object-name"));
+
+			String objectNameCacheKey = GetterUtil.getString(
+				serviceReference.getProperty("object-name-cache-key"));
+
+			if (Validator.isNull(objectNameCacheKey)) {
+				objectNameCacheKey = objectName;
+			}
+
+			_bundleContext.ungetService(serviceReference);
+
+			try {
+				unregister(objectNameCacheKey, new ObjectName(objectName));
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to register mbean", e);
+				}
+			}
+		}
+
+	}
 
 }

@@ -152,22 +152,22 @@
 <!--TEMPLATE_MENULIST-->
 <tr>
 	<td>TEMPLATE_MENULIST_EDIT</td>
-	<td>//a[@id='_166_ddmTemplatesSearchContainer_1_menu_edit']</td>
+	<td>//a[contains(@id,'ddmTemplatesSearchContainer_1_menu_edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_MENULIST_PERMISSIONS</td>
-	<td>//a[contains(@id,'_166_ddmTemplatesSearchContainer') and contains(@id,'menu_permissions')]</td>
+	<td>//a[contains(@id,'ddmTemplatesSearchContainer') and contains(@id,'menu_permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_MENULIST_COPY</td>
-	<td>//a[id='_166_ddmTemplatesSearchContainer_1_menu_copy']</td>
+	<td>//a[contains(@id,'ddmTemplatesSearchContainer_1_menu_copy')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_MENULIST_DELETE</td>
-	<td>//a[contains(@id,'_166_ddmTemplatesSearchContainer') and contains(.,'Delete')]/span</td>
+	<td>//a[contains(@id,'ddmTemplatesSearchContainer') and contains(.,'Delete')]/span</td>
 	<td></td>
 </tr>
 </tbody>

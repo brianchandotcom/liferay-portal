@@ -105,12 +105,12 @@
 </tr>
 <tr>
 	<td>STRUCTURE_MENULIST_TABLE</td>
-	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]</td>
+	<td>//div[contains(@id,'ddmStructuresSearchContainerSearchContainer')]/table/tbody/tr[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STRUCTURE_TABLE_CHECKBOX</td>
-	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[1]/input</td>
+	<td>//div[contains(@id,'ddmStructuresSearchContainerSearchContainer')]/table/tbody/tr[1]/td[1]/input</td>
 	<td></td>
 </tr>
 <tr>
@@ -151,32 +151,32 @@
 <!--STRUCTURE_MENULIST-->
 <tr>
 	<td>STRUCTURE_MENULIST_EDIT</td>
-	<td>//a[@id='_166_ddmStructuresSearchContainer_1_menu_edit']</td>
+	<td>//a[contains(@id,'ddmStructuresSearchContainer_1_menu_edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STRUCTURE_MENULIST_EDIT_DEFAULT_VALUES</td>
-	<td>//a[@id='_166_ddmStructuresSearchContainer_1_menu_edit-default-values']</td>
+	<td>//a[contains(@id,'ddmStructuresSearchContainer_1_menu_edit-default-values')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STRUCTURE_MENULIST_MANAGE_TEMPLATES</td>
-	<td>//a[@id='_166_ddmStructuresSearchContainer_1_menu_manage-templates']</td>
+	<td>//a[contains(@id,'ddmStructuresSearchContainer_1_menu_manage-templates')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STRUCTURE_MENULIST_PERMISSIONS</td>
-	<td>//a[contains(@id,'_166_ddmStructuresSearchContainer') and contains(@id,'menu_permissions')]</td>
+	<td>//a[contains(@id,'ddmStructuresSearchContainer') and contains(@id,'menu_permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STRUCTURE_MENULIST_COPY</td>
-	<td>//a[@id='_166_ddmStructuresSearchContainer_1_menu_copy']</td>
+	<td>//a[contains(@id,'ddmStructuresSearchContainer_1_menu_copy')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STRUCTURE_MENULIST_DELETE</td>
-	<td>//a[contains(@id,'_166_ddmStructuresSearchContainer') and contains(.,'Delete')]/span</td>
+	<td>//a[contains(@id,'ddmStructuresSearchContainer') and contains(.,'Delete')]/span</td>
 	<td></td>
 </tr>
 </tbody>

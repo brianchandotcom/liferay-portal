@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>TYPE_SELECT</td>
-	<td>//select[@id='_15_type']</td>
+	<td>//select[contains(@id,'type')]</td>
 	<td></td>
 </tr>
 <tr>

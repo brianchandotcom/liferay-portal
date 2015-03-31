@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUMMARY_FIELD</td>
+	<td>//textarea[contains(@id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_FIELD</td>
 	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td></td>

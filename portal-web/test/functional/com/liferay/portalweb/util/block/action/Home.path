@@ -154,11 +154,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>NODE_NAME</td>
 	<td>//section[@id='content']/div[contains(.,'${key_nodePort}')]</td>
 	<td></td>
@@ -309,11 +304,6 @@
 <tr>
 	<td>PAGE_TEMPLATE_7</td>
 	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[7]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_CONFIRM</td>
-	<td></td>
 	<td></td>
 </tr>
 <tr>

@@ -657,7 +657,7 @@
 			<then>
 				<execute function="Click" locator1="CPRoles#ROLE_TABLE_ACTIONS_1" />
 				<execute function="AssertClickNoError" locator1="CPRoles#ROLE_MENULIST_DELETE" value1="Delete" />
-				<execute function="Confirm" locator1="CPRoles#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</while>
 	</command>

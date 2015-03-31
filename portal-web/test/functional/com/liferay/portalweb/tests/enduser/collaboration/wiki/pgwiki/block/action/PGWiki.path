@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>PORTLET_BODY</td>
 	<td>//section[contains(.,'${key_portletName}')]//div[@class='portlet-body']</td>
 	<td></td>

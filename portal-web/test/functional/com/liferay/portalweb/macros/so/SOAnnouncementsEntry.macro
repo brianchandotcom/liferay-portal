@@ -216,7 +216,7 @@
 		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="ClickNoError" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_DELETE_LINK" />
-		<execute function="Confirm#waitForConfirmation" locator1="SOAnnouncements#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
+		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected entry?" />
 		<execute function="AssertTextNotPresent" value1="{entryTitle}" />
 		<execute function="AssertTextNotPresent" value1="{entryContent}" />
 	</command>
@@ -231,7 +231,7 @@
 		<execute function="SelectFrame" locator1="SOAnnouncementsManage#MANAGE_ENTRY_IFRAME" />
 		<execute function="Select" locator1="SOAnnouncementsManage#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 		<execute function="AssertClickNoError" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
-		<execute function="Confirm" locator1="SOAnnouncementsManage#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
+		<execute function="Confirm" value1="Are you sure you want to delete the selected entry?" />
 		<execute function="AssertTextNotPresent" value1="{entryTitle}" />
 		<execute function="AssertTextNotPresent" value1="{entryContent}" />
 		<execute function="SelectFrameTop" />
@@ -519,7 +519,7 @@
 			<condition function="IsElementPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_GENERIC_DELETE_LINK" />
 			<then>
 				<execute function="AssertClickNoError" locator1="SOAnnouncements#ANNOUNCEMENTS_ENTRY_GENERIC_DELETE_LINK" value1="Delete" />
-				<execute function="Confirm#waitForConfirmation" locator1="SOAnnouncements#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
+				<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected entry?" />
 			</then>
 		</while>
 
@@ -532,7 +532,7 @@
 			<condition function="IsElementPresent" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" />
 			<then>
 				<execute function="AssertClickNoError" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
-				<execute function="Confirm" locator1="SOAnnouncementsManage#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
+				<execute function="Confirm" value1="Are you sure you want to delete the selected entry?" />
 			</then>
 		</while>
 

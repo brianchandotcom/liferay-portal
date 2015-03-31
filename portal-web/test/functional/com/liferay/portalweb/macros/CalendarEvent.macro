@@ -589,11 +589,11 @@
 			<equals arg1="${soPage}" arg2="true" />
 			<then>
 				<execute function="AssertClickNoError" locator1="PGCalendarVieweventdetails#COMMENTS_COMMENT_DELETE" value1="Delete" />
-				<execute function="Confirm" locator1="PGCalendarVieweventdetails#CONFIRMATION" value1="Are you sure you want to delete the selected comment?" />
+				<execute function="Confirm" value1="Are you sure you want to delete the selected comment?" />
 			</then>
 			<else>
 				<execute function="AssertClickNoError" locator1="PGCalendarVieweventdetails#COMMENTS_COMMENT_DELETE" value1="Delete" />
-				<execute function="Confirm" locator1="PGCalendarVieweventdetails#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</else>
 		</if>
 
@@ -614,7 +614,7 @@
 		<execute macro="CalendarEvent#viewEventDetailsCmd" />
 
 		<execute function="AssertClickNoError" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
-		<execute function="Confirm#waitForConfirmation" locator1="PGCalendar#CONFIRMATION" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
+		<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_SPECIFIC" />
 		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 	</command>
@@ -688,7 +688,7 @@
 		<execute macro="CalendarEvent#viewEventDetailsCmd" />
 
 		<execute function="AssertClickNoError" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
-		<execute function="Confirm#waitForConfirmation" locator1="PGCalendar#CONFIRMATION" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
+		<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 
 		<execute function="AssertElementNotPresent" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_SPECIFIC" />
 		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
@@ -1186,7 +1186,7 @@
 
 		<execute function="Pause" value1="1000" />
 		<execute function="ClickNoError" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
-		<execute function="Confirm" locator1="PGCalendarAgendaView#CONFIRMATION" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
+		<execute function="Confirm" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="PGCalendarRecurringEventDialogBox#ALL_EVENTS_IN_THE_SERIES_BUTTON" />

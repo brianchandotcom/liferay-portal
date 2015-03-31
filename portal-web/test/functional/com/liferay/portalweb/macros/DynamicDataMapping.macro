@@ -100,7 +100,7 @@
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#FORM_FIELD" />
 		<execute function="MouseOver" locator1="Dynamicdatamapping#FORM_FIELD" />
 		<execute function="ClickNoError" locator1="Dynamicdatamapping#FORM_FIELD_DELETE_ICON" />
-		<execute function="Confirm" locator1="Dynamicdatamapping#CONFIRMATION" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
+		<execute function="Confirm" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

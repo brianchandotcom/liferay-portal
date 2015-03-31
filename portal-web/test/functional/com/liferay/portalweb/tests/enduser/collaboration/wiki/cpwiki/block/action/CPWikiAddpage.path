@@ -48,11 +48,6 @@
 	<td>//button[@id='_154_publishButton' and contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

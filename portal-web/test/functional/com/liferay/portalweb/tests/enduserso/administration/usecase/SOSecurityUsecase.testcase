@@ -357,7 +357,7 @@
 		<execute function="AssertElementPresent" locator1="SOMessages#MESSAGE_UNREAD" />
 		<execute function="Check" locator1="SOMessages#MESSAGE_CHECKBOX" />
 		<execute function="AssertClickNoError" locator1="SOMessages#MARK_AS_READ_BUTTON" value1="Mark as Read" />
-		<execute function="Confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to mark the selected messages as read?" />
+		<execute function="Confirm" value1="Are you sure you want to mark the selected messages as read?" />
 		<execute function="Pause" locator1="1000" />
 		<execute function="AssertElementNotPresent" locator1="SOMessages#MESSAGE_UNREAD" />
 
@@ -375,7 +375,7 @@
 
 		<execute function="Check" locator1="SOMessages#MESSAGE_CHECKBOX" />
 		<execute function="AssertClickNoError" locator1="SOMessages#DELETE_BUTTON" value1="Delete" />
-		<execute function="Confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
+		<execute function="Confirm" value1="Are you sure you want to delete the selected messages?" />
 		<execute function="AssertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
 
 		<execute macro="Page#gotoPG">

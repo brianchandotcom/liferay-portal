@@ -12,7 +12,7 @@
 			<then>
 				<execute function="Click" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_8" />
 				<execute function="AssertClickNoError" locator1="CPSitepages#TOOLBAR_DELETE" value1="Delete" />
-				<execute function="Confirm" locator1="CPSitepages#CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
+				<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 			</then>
 		</if>
 
@@ -45,7 +45,7 @@
 			<then>
 				<execute function="MouseOver" locator1="SODashboard#NAVIGATION_USER_ADDED_PAGE" />
 				<execute function="ClickNoError" locator1="SODashboard#NAVIGATION_PAGE_DELETE" />
-				<execute function="Confirm#waitForConfirmation" locator1="SODashboard#CONFIRMATION" value1="Are you sure you want to delete this page?" />
+				<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this page?" />
 			</then>
 		</while>
 
@@ -67,7 +67,7 @@
 			<then>
 				<execute function="Click" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_7" />
 				<execute function="ClickNoError" locator1="CPSitepages#TOOLBAR_DELETE" />
-				<execute function="Confirm" locator1="CPSitepages#CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
+				<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 			</then>
 		</if>
 

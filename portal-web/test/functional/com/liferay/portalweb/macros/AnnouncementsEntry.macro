@@ -32,7 +32,7 @@
 		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
 		<execute function="AssertClickNoError" locator1="PGAnnouncements#ENTRY_DELETE" value1="Delete" />
-		<execute function="Confirm" locator1="PGAnnouncements#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute function="AssertTextNotPresent" value1="{entryTitle}" />
 		<execute function="AssertTextNotPresent" value1="{entryContent}" />
@@ -83,7 +83,7 @@
 			<then>
 				<execute function="Click" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_ACTIONS_GENERIC" />
 				<execute function="AssertClickNoError" locator1="PGAnnouncementsManageentries#ACTIONS_MENULIST_DELETE" value1="Delete" />
-				<execute function="Confirm" locator1="PGAnnouncementsManageentries#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</while>
 	</command>

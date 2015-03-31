@@ -58,12 +58,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!---->
-<tr>
-	<td>SEARCH</td>
-	<td></td>
-	<td></td>
-</tr>
 <tr>
 	<td>BASIC_SEARCH_FIELD</td>
 	<td>//input[@name='_191_keywords']</td>

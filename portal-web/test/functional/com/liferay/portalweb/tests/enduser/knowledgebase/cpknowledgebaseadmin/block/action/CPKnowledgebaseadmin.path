@@ -49,11 +49,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SCOPE_SELECTOR_BUTTON</td>
 	<td>//div[contains(@class,'lfr-title-scope-selector')]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>

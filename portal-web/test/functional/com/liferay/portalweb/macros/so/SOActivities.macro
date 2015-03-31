@@ -179,7 +179,7 @@
 		</if>
 
 		<execute function="AssertClickNoError" locator1="SOActivities#ACTIVITIES_COMMENT_DELETE" value1="Delete" />
-		<execute function="Confirm" locator1="SOActivities#CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
+		<execute function="Confirm" value1="Are you sure you want to delete the selected entry?" />
 		<execute function="AssertTextNotPresent" value1="${commentContent}" />
 	</command>
 

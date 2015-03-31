@@ -23,11 +23,6 @@
 	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
-<tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
 <!--BOOKMARKS-->
 <tr>
 	<td>BOOKMARKS_PORTLET_TITLE</td>

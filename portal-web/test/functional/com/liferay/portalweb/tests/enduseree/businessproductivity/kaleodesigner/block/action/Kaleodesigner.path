@@ -79,11 +79,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>VIEW_TAB</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'View')]</td>
 	<td></td>

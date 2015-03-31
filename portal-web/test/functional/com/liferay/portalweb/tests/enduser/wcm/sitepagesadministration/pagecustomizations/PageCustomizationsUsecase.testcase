@@ -480,7 +480,7 @@
 
 		<execute function="AssertClick" locator1="Home#PAGE_CUSTOMIZATION_VIEW_MY_CUSTOMIZED_PAGE" value1="View My Customized Page" />
 		<execute function="AssertClickNoError" locator1="Home#PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
-		<execute function="Confirm" locator1="Home#CONFIRMATION" value1="Are you sure you want to reset your customizations to default?" />
+		<execute function="Confirm" value1="Are you sure you want to reset your customizations to default?" />
 
 		<execute macro="Portlet#viewNoSpecificPG">
 			<var name="portletName" value="Language" />
@@ -525,7 +525,7 @@
 		</execute>
 
 		<execute function="AssertClickNoError" locator1="Home#PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
-		<execute function="Confirm" locator1="Home#CONFIRMATION" value1="Are you sure you want to reset your customizations to default?" />
+		<execute function="Confirm" value1="Are you sure you want to reset your customizations to default?" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="Language" />

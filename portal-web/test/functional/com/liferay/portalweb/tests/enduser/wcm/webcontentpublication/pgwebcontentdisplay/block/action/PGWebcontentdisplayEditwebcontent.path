@@ -29,11 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ARTICLE_ID</td>
 	<td>//span[@class='workflow-id']/span[@class='workflow-value']</td>
 	<td></td>

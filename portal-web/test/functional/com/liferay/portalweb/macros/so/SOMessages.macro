@@ -95,7 +95,7 @@
 			<then>
 				<execute function="Check" locator1="SOMessages#SELECT_ALL_CHECKBOX" />
 				<execute function="ClickNoError" locator1="SOMessages#DELETE_BUTTON" />
-				<execute function="Confirm" locator1="SOMessages#CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
+				<execute function="Confirm" value1="Are you sure you want to delete the selected messages?" />
 				<execute function="AssertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
 			</then>
 		</if>

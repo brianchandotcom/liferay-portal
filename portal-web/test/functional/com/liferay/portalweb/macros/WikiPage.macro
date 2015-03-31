@@ -102,7 +102,7 @@
 
 		<execute function="Type" locator1="PGWikiAddpage#TITLE_FIELD" value1="${wikiChildPageTitle}" />
 		<execute function="SelectNoError#pauseSelect" locator1="PGWikiAddpage#FORMAT_DROPDOWN" value1="HTML" />
-		<execute function="Confirm" locator1="PGWikiAddpage#CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
+		<execute function="Confirm" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
 		<execute function="AssertClick" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON" value1="Source" />
 		<execute function="Type#type" locator1="CKEditor#BODY_FIELD_SOURCE_ON" value1="${welcomeToLiferay}" />
 		<execute function="AssertClick" locator1="PGWikiAddpage#PUBLISH_BUTTON" value1="Publish" />
@@ -115,7 +115,7 @@
 
 		<execute function="Type" locator1="PGWikidisplayAddpage#TITLE_FIELD" value1="${wikiChildPageTitle}" />
 		<execute function="SelectNoError" locator1="PGWikidisplayAddpage#FORMAT_DROPDOWN" value1="HTML" />
-		<execute function="Confirm" locator1="PGWikidisplayAddpage#CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
+		<execute function="Confirm" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
 		<execute function="AssertClick" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON" value1="Source" />
 		<execute function="Type#type" locator1="CKEditor#BODY_FIELD_SOURCE_ON" value1="${welcomeToLiferay}" />
 		<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" locator1="PGWikidisplayAddpage#PUBLISH_BUTTON" value1="Publish" />
@@ -196,7 +196,7 @@
 				<equals arg1="${htmlSource}" arg2="true" />
 				<then>
 					<execute function="SelectNoError#pauseSelect" locator1="PGWikiAddpage#FORMAT_DROPDOWN" value1="HTML" />
-					<execute function="Confirm" locator1="PGWikiAddpage#CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
+					<execute function="Confirm" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
 					<execute function="AssertClick" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON" value1="Source" />
 					<execute function="Type#type" locator1="CKEditor#BODY_FIELD_SOURCE_ON" value1="${wikiPageContent}" />
 				</then>
@@ -229,7 +229,7 @@
 		<execute function="AssertClick" locator1="PGWikidisplay#ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
 
 		<execute function="SelectNoError" locator1="PGWikidisplayAddpage#FORMAT_DROPDOWN" value1="HTML" />
-		<execute function="Confirm" locator1="PGWikidisplayAddpage#CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
+		<execute function="Confirm" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
 		<execute function="AssertClick" locator1="PGWikidisplayAddpage#FORMAT_DROPDOWN" value1="Source" />
 		<execute function="Type#type" locator1="CKEditor#BODY_FIELD_SOURCE_ON" value1="${wikiPageContent}" />
 		<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" locator1="PGWikidisplayAddpage#PUBLISH_BUTTON" value1="Publish" />
@@ -357,7 +357,7 @@
 				<equals arg1="${htmlSource}" arg2="true" />
 				<then>
 					<execute function="SelectNoError#pauseSelect" locator1="PGWikiAddpage#FORMAT_DROPDOWN" value1="HTML" />
-					<execute function="Confirm" locator1="PGWikiAddpage#CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
+					<execute function="Confirm" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
 					<execute function="AssertClick" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON" value1="Source" />
 					<execute function="Type#type" locator1="CKEditor#BODY_FIELD_SOURCE_ON" value1="${welcomeToLiferay}" />
 				</then>
@@ -366,7 +366,7 @@
 				<equals arg1="${mediawikiSource}" arg2="true" />
 				<then>
 					<execute function="SelectNoError#pauseSelect" locator1="PGWikiAddpage#FORMAT_DROPDOWN" value1="MediaWiki" />
-					<execute function="Confirm" locator1="PGWikiAddpage#CONFIRMATION" value1="You may lose some formatting when switching from Creole to MediaWiki. Do you want to continue?" />
+					<execute function="Confirm" value1="You may lose some formatting when switching from Creole to MediaWiki. Do you want to continue?" />
 					<execute function="Type" locator1="PGWikiAddpage#BODY_FIELD_MEDIAWIKI" value1="${wikiPageMediaWikiContent}" />
 				</then>
 			</elseif>
@@ -574,7 +574,7 @@
 				<equals arg1="${html}" arg2="true" />
 				<then>
 					<execute function="SelectNoError#pauseSelect" locator1="PGWikiAddpage#FORMAT_DROPDOWN" value1="HTML" />
-					<execute function="Confirm" locator1="PGWikiAddpage#CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
+					<execute function="Confirm" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
 					<execute function="AssertClick" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON" value1="Source" />
 					<execute function="Type#type" locator1="CKEditor#BODY_FIELD_SOURCE_ON" value1="${welcomeToLiferay}" />
 				</then>
@@ -583,7 +583,7 @@
 				<equals arg1="${mediawiki}" arg2="true" />
 				<then>
 					<execute function="SelectNoError#pauseSelect" locator1="PGWikiAddpage#FORMAT_DROPDOWN" value1="MediaWiki" />
-					<execute function="Confirm" locator1="PGWikiAddpage#CONFIRMATION" value1="You may lose some formatting when switching from Creole to MediaWiki. Do you want to continue?" />
+					<execute function="Confirm" value1="You may lose some formatting when switching from Creole to MediaWiki. Do you want to continue?" />
 					<execute function="AssertClick" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON" value1="Source" />
 					<execute function="Type#type" locator1="CKEditor#BODY_FIELD_SOURCE_ON" value1="${wikiPageMediaWikiContent}" />
 				</then>
@@ -606,11 +606,11 @@
 			<equals arg1="${soPage}" arg2="true" />
 			<then>
 				<execute function="AssertClickNoError" locator1="PGWiki#COMMENTS_COMMENT_DELETE" value1="Delete" />
-				<execute function="Confirm" locator1="PGWiki#CONFIRMATION" value1="Are you sure you want to delete the selected comment?" />
+				<execute function="Confirm" value1="Are you sure you want to delete the selected comment?" />
 			</then>
 			<else>
 				<execute function="AssertClickNoError" locator1="PGWiki#COMMENTS_COMMENT_DELETE" value1="Delete" />
-				<execute function="Confirm" locator1="PGWiki#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</else>
 		</if>
 
@@ -815,7 +815,7 @@
 		<execute function="AssertClick" locator1="PGWikiAllpages#WIKI_PAGE_MENULIST_EDIT" value1="Edit" />
 
 		<execute function="SelectNoError#pauseSelect" locator1="PGWikiAddpage#FORMAT_DROPDOWN" value1="HTML" />
-		<execute function="Confirm" locator1="PGWikiAddpage#CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
+		<execute function="Confirm" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
 		<execute function="AssertClick" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON" value1="Source" />
 
 		<if>
@@ -1193,7 +1193,7 @@
 			<equals arg1="${changeWikiFormat}" arg2="true" />
 			<then>
 				<execute function="SelectNoError#pauseSelect" locator1="PGWikiAddpage#FORMAT_DROPDOWN" value1="${newFormat}" />
-				<execute function="Confirm" locator1="PGWikiAddpage#CONFIRMATION" value1="You may lose some formatting when switching from ${oldFormat} to ${newFormat}. Do you want to continue?" />
+				<execute function="Confirm" value1="You may lose some formatting when switching from ${oldFormat} to ${newFormat}. Do you want to continue?" />
 			</then>
 		</if>
 

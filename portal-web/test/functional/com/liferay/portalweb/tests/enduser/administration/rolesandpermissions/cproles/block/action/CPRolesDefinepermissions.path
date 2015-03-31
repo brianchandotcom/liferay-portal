@@ -39,11 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>NAVIGATION_HEADER_COLLAPSED</td>
 	<td>//div[contains(@class,'permission-navigation-item-header') and contains(@class,'toggler-header-collapsed')]</td>
 	<td></td>

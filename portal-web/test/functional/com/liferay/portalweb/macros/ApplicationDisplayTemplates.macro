@@ -116,7 +116,7 @@
 			<then>
 				<execute function="Click" locator1="PGApplicationdisplaytemplates#ADT_TABLE_ALL_CHECKBOX" />
 				<execute function="AssertClickNoError" locator1="PGApplicationdisplaytemplates#DELETE_BUTTON" value1="Delete" />
-				<execute function="Confirm" locator1="PGApplicationdisplaytemplates#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="PGApplicationdisplaytemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</if>

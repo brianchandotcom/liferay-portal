@@ -25,11 +25,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>WIKIS_NOT_SPAM_BUTTON</td>
 	<td>//div[@class='button-holder ']/button[contains(.,'Not Spam')]</td>
 	<td></td>
@@ -37,11 +32,6 @@
 <tr>
 	<td>WIKIS_SPAM_BUTTON</td>
 	<td>//div[@class='button-holder ']/button[contains(.,'Spam')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFIRMATION</td>
-	<td></td>
 	<td></td>
 </tr>
 <tr>

@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>HEADER_TITLE</td>
 	<td>//h3[@class='header-title']/span</td>
 	<td></td>

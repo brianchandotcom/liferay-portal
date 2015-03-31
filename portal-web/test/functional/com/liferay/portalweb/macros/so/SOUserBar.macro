@@ -242,7 +242,7 @@
 		<execute function="Pause" locator1="1000" />
 		<execute function="AssertTextEquals" locator1="SOUserBarSitesDirectory#SITE_NAME_LINK" value1="${siteName}" />
 		<execute function="ClickNoError#pauseClick" locator1="SOUserBarSitesDirectory#DELETE_SITE_ICON" />
-		<execute function="Confirm" locator1="SOUserBarSitesDirectory#CONFIRMATION" value1="Are you sure you want to delete ${siteName}?" />
+		<execute function="Confirm" value1="Are you sure you want to delete ${siteName}?" />
 		<execute function="AssertElementNotPresent" locator1="SOUserBarSitesDirectory#SITE_NAME_LINK" />
 	</command>
 
@@ -302,7 +302,7 @@
 		<execute function="Pause" locator1="1000" />
 		<execute function="AssertTextEquals" locator1="SOUserBarSitesDirectory#SITE_NAME_LINK" value1="${siteName}" />
 		<execute function="ClickNoError" locator1="SOUserBarSitesDirectory#JOIN_SITE_ICON" />
-		<execute function="Confirm" locator1="SOUserBarSitesDirectory#CONFIRMATION" value1="Are you sure you want to join ${siteName}?" />
+		<execute function="Confirm" value1="Are you sure you want to join ${siteName}?" />
 		<execute function="AssertElementPresent" locator1="SOUserBarSitesDirectory#LEAVE_SITE_ICON" />
 	</command>
 
@@ -319,7 +319,7 @@
 		<execute function="Pause" locator1="1000" />
 		<execute function="AssertTextEquals" locator1="SOUserBarSitesDirectory#SITE_NAME_LINK" value1="${siteName}" />
 		<execute function="ClickNoError" locator1="SOUserBarSitesDirectory#LEAVE_SITE_ICON" />
-		<execute function="Confirm" locator1="SOUserBarSitesDirectory#CONFIRMATION" value1="Are you sure you want to leave ${siteName}?" />
+		<execute function="Confirm" value1="Are you sure you want to leave ${siteName}?" />
 
 		<if>
 			<equals arg1="${siteType}" arg2="Open" />
@@ -426,7 +426,7 @@
 		</if>
 
 		<execute function="ClickNoError" locator1="SOUserBarSitesDirectory#REQUEST_MEMBERSHIP_ICON" />
-		<execute function="Confirm" locator1="SOUserBarSitesDirectory#CONFIRMATION" value1="This is a restricted site. Do you want to send a membership request to ${siteName}?" />
+		<execute function="Confirm" value1="This is a restricted site. Do you want to send a membership request to ${siteName}?" />
 		<execute function="AssertElementPresent" locator1="SOUserBarSitesDirectory#MEMBERSHIP_REQUESTED_ICON" />
 	</command>
 

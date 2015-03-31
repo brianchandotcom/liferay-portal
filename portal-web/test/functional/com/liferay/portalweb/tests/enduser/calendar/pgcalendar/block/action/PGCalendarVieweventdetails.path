@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>EVENT_TITLE</td>
 	<td>//h3[@class='header-title']/span</td>
 	<td></td>

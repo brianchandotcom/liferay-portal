@@ -281,7 +281,7 @@
 		<execute function="Click" locator1="CPSites#SITE_TABLE_ACTIONS" />
 		<execute function="AssertElementNotPresent" locator1="CPSites#SITE_MENULIST_DELETE" value1="Delete" />
 		<execute function="AssertClickNoError" locator1="CPSites#SITE_MENULIST_DEACTIVATE" value1="Deactivate" />
-		<execute function="Confirm" locator1="CPSites#CONFIRMATION" value1="Are you sure you want to deactivate this?" />
+		<execute function="Confirm" value1="Are you sure you want to deactivate this?" />
 
 		<execute function="AssertTextEquals" locator1="CPSites#ERROR_MESSAGE_1" value1="Your request failed to complete." />
 		<execute function="AssertTextEquals" locator1="CPSites#ERROR_MESSAGE_2" value1="The site cannot be deleted or deactivated because you are accessing the site." />

@@ -144,7 +144,7 @@
 		<execute function="Check" locator1="CPCategories#ALL_VOCABULARIES_CHECKBOX" />
 		<execute function="Click" locator1="CPCategories#ACTIONS_BUTTON" />
 		<execute function="AssertClickNoError" locator1="CPCategories#ACTIONS_MENULIST_DELETE" value1="Delete" />
-		<execute function="Confirm" locator1="CPCategories#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertTextNotPresent" value1="${vocabularyName}" />
 	</command>
@@ -157,7 +157,7 @@
 		<execute function="Click" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_ARROW" />
 		<execute function="AssertClickNoError" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_DELETE" value1="Delete" />
 
-		<execute function="Confirm" locator1="CPVocabulariesEdit#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertTextNotPresent" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
@@ -219,7 +219,7 @@
 				<execute function="Check" locator1="CPCategories#ALL_VOCABULARIES_CHECKBOX" />
 				<execute function="Click" locator1="CPCategories#ACTIONS_BUTTON" />
 				<execute function="AssertClickNoError" locator1="CPCategories#ACTIONS_MENULIST_DELETE" value1="Delete" />
-				<execute function="Confirm" locator1="CPCategories#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</if>
 	</command>

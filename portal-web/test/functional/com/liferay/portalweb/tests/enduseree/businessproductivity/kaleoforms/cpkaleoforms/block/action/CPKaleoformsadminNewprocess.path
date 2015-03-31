@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>CANCEL_BUTTON</td>
 	<td>//a[contains(.,'Cancel')]</td>
 	<td></td>

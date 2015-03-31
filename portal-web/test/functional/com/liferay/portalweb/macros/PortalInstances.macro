@@ -43,7 +43,7 @@
 		<execute function="Click" locator1="CPPortalinstances#INSTANCE_TABLE_ACTIONS" />
 		<execute function="AssertClickNoError" locator1="CPPortalinstances#INSTANCE_MENULIST_DELETE" value1="Delete" />
 
-		<execute function="Confirm" locator1="CPPortalinstances#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="CPPortalinstances#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertTextNotPresent" locator1="CPPortalinstances#INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
 	</command>
@@ -70,7 +70,7 @@
 			<then>
 				<execute function="Click" locator1="CPPortalinstances#INSTANCE_TABLE_ACTIONS_GENERIC" />
 				<execute function="AssertClickNoError" locator1="CPPortalinstances#INSTANCE_MENULIST_DELETE" value1="Delete" />
-				<execute function="Confirm" locator1="CPPortalinstances#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="CPPortalinstances#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>

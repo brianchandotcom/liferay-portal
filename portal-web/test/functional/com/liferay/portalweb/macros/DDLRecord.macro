@@ -34,7 +34,7 @@
 
 		<execute function="Click" locator1="CPDynamicdatalistsList#RECORD_TABLE_ACTIONS_1" />
 		<execute function="AssertClickNoError" locator1="CPDynamicdatalistsList#RECORD_MENULIST_DELETE" value1="Delete" />
-		<execute function="Confirm" locator1="CPDynamicdatalistsList#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsList#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPDynamicdatalistsList#INFO_MESSAGE" value1="No" />
 	</command>
@@ -49,7 +49,7 @@
 	<command name="deleteViaDDLDisplayPG">
 		<execute function="Click" locator1="PGDynamicdatalists#RECORD_TABLE_ACTIONS_1" />
 		<execute function="AssertClickNoError" locator1="PGDynamicdatalists#RECORD_MENULIST_DELETE" value1="Delete" />
-		<execute function="Confirm" locator1="PGDynamicdatalists#CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#INFO_MESSAGE" value1="No ${ddlDataDefinitionName} records were found" />
 	</command>

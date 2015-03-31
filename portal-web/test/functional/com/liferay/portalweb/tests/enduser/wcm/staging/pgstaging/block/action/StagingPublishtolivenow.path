@@ -39,11 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>CUSTOM_BUTTON</td>
 	<td>//a[@title='Custom']</td>
 	<td></td>

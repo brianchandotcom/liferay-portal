@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.util.OSDetector;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -140,7 +141,7 @@ public class FIFOUtilTest {
 								checkFlag.set(false);
 							}
 							catch (IOException ioe) {
-								Assert.fail(ioe.getMessage());
+								ReflectionUtil.throwException(ioe);
 							}
 						}
 					}

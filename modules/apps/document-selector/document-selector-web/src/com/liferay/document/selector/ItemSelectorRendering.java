@@ -14,21 +14,30 @@
 
 package com.liferay.document.selector;
 
-import java.util.Map;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
+import java.util.List;
 
 /**
  * @author Iván Zaera
  */
-public interface ItemSelector {
+public class ItemSelectorRendering {
 
-	public ItemSelectorRendering getItemSelectorRendering(
-		Map<String, String[]> parameters);
+	public ItemSelectorRendering(
+		String itemSelectedCallback,
+		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderers) {
 
-	public PortletURL getItemSelectorURL(
-		PortletRequest portletRequest, String itemSelectedCallback,
-		ItemSelectorCriterion... itemSelectorCriteria);
+		_itemSelectedCallback = itemSelectedCallback;
+		_itemSelectorViewRenderers = itemSelectorViewRenderers;
+	}
+
+	public String getItemSelectedCallback() {
+		return _itemSelectedCallback;
+	}
+
+	public List<ItemSelectorViewRenderer<?>> getItemSelectorViewRenderers() {
+		return _itemSelectorViewRenderers;
+	}
+
+	private final String _itemSelectedCallback;
+	private final List<ItemSelectorViewRenderer<?>> _itemSelectorViewRenderers;
 
 }

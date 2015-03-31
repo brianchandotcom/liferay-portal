@@ -58,6 +58,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class IndexBackgroundTaskExecutor extends BaseBackgroundTaskExecutor {
 
+	public IndexBackgroundTaskExecutor() {
+		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_COMPANY);
+	}
+
 	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {

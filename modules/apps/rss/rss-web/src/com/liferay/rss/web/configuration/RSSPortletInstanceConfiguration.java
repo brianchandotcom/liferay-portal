@@ -26,7 +26,7 @@ public interface RSSPortletInstanceConfiguration {
 
 	/**
 	 * Set a DDM template ID that starts with the prefix "ddmTemplate_" (i.e.
-	 * ddmTemplate_06cd7b42-e8a4-4b5e-8d5a-b4f4dbba5618) to use as the display
+	 * ddmTemplate_rss-navigation-ftl) to use as the display
 	 * style.
 	 */
 	@Meta.AD(

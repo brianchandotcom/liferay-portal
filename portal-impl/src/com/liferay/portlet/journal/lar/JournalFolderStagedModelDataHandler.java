@@ -135,7 +135,8 @@ public class JournalFolderStagedModelDataHandler
 			}
 			else {
 				importedFolder = JournalFolderLocalServiceUtil.updateFolder(
-					userId, existingFolder.getFolderId(), parentFolderId,
+					userId, serviceContext.getScopeGroupId(),
+					existingFolder.getFolderId(), parentFolderId,
 					folder.getName(), folder.getDescription(), false,
 					serviceContext);
 			}

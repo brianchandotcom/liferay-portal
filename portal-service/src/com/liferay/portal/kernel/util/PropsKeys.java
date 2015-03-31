@@ -2279,6 +2279,8 @@ public interface PropsKeys {
 
 	public static final String SETUP_LIFERAY_POOL_PROVIDER_JAR_URL = "setup.liferay.pool.provider.jar.url";
 
+	public static final String SETUP_WIZARD_ADD_SAMPLE_DATA = "setup.wizard.add.sample.data";
+
 	public static final String SETUP_WIZARD_ENABLED = "setup.wizard.enabled";
 
 	public static final String SHARD_DEFAULT_NAME = "shard.default.name";

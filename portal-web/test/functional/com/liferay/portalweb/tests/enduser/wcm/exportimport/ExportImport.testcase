@@ -35,8 +35,6 @@
 			<var name="exportTemplateName" value="Export Template Name" />
 		</execute>
 
-		<execute macro="LAR#gotoExportTemplateCP" />
-
 		<execute macro="LAR#viewExportTemplateCP">
 			<var name="exportTemplateDescription" value="Export Template Description" />
 			<var name="exportTemplateName" value="Export Template Name" />
@@ -221,6 +219,11 @@
 		<execute macro="DMFolder#addCP">
 			<var name="dmFolderDescription" value="DM Folder Description" />
 			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="LAR#configureExportSiteCP" />
@@ -632,8 +635,6 @@
 			<var name="exportTemplateDescription" value="Export Template Description" />
 			<var name="exportTemplateName" value="Export Template Name" />
 		</execute>
-
-		<execute macro="LAR#gotoExportTemplateCP" />
 
 		<execute macro="LAR#viewExportTemplateCP">
 			<var name="exportTemplateDescription" value="Export Template Description" />

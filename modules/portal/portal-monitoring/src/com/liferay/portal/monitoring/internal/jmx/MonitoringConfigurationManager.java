@@ -44,8 +44,8 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.portal.monitoring.configuration.MonitoringConfiguration",
 	immediate = true,
 	property = {
-		"object-name=com.liferay.portal.monitoring:classification=monitoring_service,name=MonitoringConfigurationManager",
-		"object-name-cache-key=MonitoringProcessorManager"
+		"jmx.objectname=com.liferay.portal.monitoring:classification=monitoring_service,name=MonitoringConfigurationManager",
+		"jmx.objectname.cache.key=MonitoringProcessorManager"
 	},
 	service = DynamicMBean.class
 )

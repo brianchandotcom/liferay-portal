@@ -42,12 +42,8 @@
 		<constructor-arg ref="liferayHibernateSessionFactory" />
 		<constructor-arg name="shardSessionFactoryTargetSource" value="#{shardDetector.shardSessionFactoryTargetSource}" />
 	</bean>
-	<bean id="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsJmxAdapter" class="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsJmxAdapter">
-		<property name="hibernateStatisticsService">
-			<bean class="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService">
-				<property name="sessionFactory" ref="liferaySessionFactory" />
-			</bean>
-		</property>
+	<bean id="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService" class="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService">
+		<property name="sessionFactory" ref="liferaySessionFactory" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil" class="com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil">
 		<property name="dynamicQueryFactory">

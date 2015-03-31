@@ -6,8 +6,6 @@
 	}
 </style>
 
-<#assign aui = taglibLiferayHash["/WEB-INF/tld/aui.tld"] />
-
 <#if entries?has_content>
 	<#list entries as entry>
 		<@aui["a"]

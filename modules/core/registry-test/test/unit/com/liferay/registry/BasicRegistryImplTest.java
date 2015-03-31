@@ -15,6 +15,7 @@
 package com.liferay.registry;
 
 import java.util.Collections;
+import java.util.EventListener;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
@@ -29,6 +30,18 @@ public class BasicRegistryImplTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
+	}
+
+	@Test
+	public void testEmptyTrackerNPE() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceTracker<EventListener, Object> serviceTracker =
+			registry.trackServices(EventListener.class);
+
+		serviceTracker.open();
+
+		Assert.assertNull(serviceTracker.getService());
 	}
 
 	@Test

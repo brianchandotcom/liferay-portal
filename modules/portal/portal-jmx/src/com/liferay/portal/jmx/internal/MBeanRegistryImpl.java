@@ -134,7 +134,7 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 
 		try {
 			filter = _bundleContext.createFilter(
-				"(&(object-name=*)(objectClass=*MBean)" +
+				"(&(jmx.objectname=*)(objectClass=*MBean)" +
 					"(!(objectClass=javax.management.DynamicMBean)))");
 		}
 		catch (InvalidSyntaxException ise) {
@@ -150,15 +150,17 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(jmx.objectname=*)"
 	)
 	protected void addDynamicMBean(
 		DynamicMBean dynamicMBean, Map<String, Object> properties) {
 
-		String objectName = GetterUtil.getString(properties.get("object-name"));
+		String objectName = GetterUtil.getString(
+			properties.get("jmx.objectname"));
 
 		String objectNameCacheKey = GetterUtil.getString(
-			properties.get("object-name-cache-key"));
+			properties.get("jmx.objectname.cache.key"));
 
 		if (Validator.isNull(objectNameCacheKey)) {
 			objectNameCacheKey = objectName;
@@ -201,10 +203,11 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 	protected void removeDynamicMBean(
 		DynamicMBean dynamicMBean, Map<String, Object> properties) {
 
-		String objectName = GetterUtil.getString(properties.get("object-name"));
+		String objectName = GetterUtil.getString(
+			properties.get("jmx.objectname"));
 
 		String objectNameCacheKey = GetterUtil.getString(
-			properties.get("object-name-cache-key"));
+			properties.get("jmx.objectname.cache.key"));
 
 		if (Validator.isNull(objectNameCacheKey)) {
 			objectNameCacheKey = objectName;
@@ -227,6 +230,7 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 	private MBeanServer _mBeanServer;
 	private final Map<String, ObjectName> _objectNameCache =
 		new ConcurrentHashMap<>();
+
 	@SuppressWarnings("rawtypes")
 	private ServiceTracker _serviceTracker;
 
@@ -237,10 +241,10 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 		@Override
 		public Object addingService(ServiceReference serviceReference) {
 			String objectName = GetterUtil.getString(
-				serviceReference.getProperty("object-name"));
+				serviceReference.getProperty("jmx.objectname"));
 
 			String objectNameCacheKey = GetterUtil.getString(
-				serviceReference.getProperty("object-name-cache-key"));
+				serviceReference.getProperty("jmx.objectname.cache.key"));
 
 			if (Validator.isNull(objectNameCacheKey)) {
 				objectNameCacheKey = objectName;
@@ -272,10 +276,10 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 			ServiceReference serviceReference, Object service) {
 
 			String objectName = GetterUtil.getString(
-				serviceReference.getProperty("object-name"));
+				serviceReference.getProperty("jmx.objectname"));
 
 			String objectNameCacheKey = GetterUtil.getString(
-				serviceReference.getProperty("object-name-cache-key"));
+				serviceReference.getProperty("jmx.objectname.cache.key"));
 
 			if (Validator.isNull(objectNameCacheKey)) {
 				objectNameCacheKey = objectName;

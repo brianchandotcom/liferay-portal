@@ -121,18 +121,11 @@ public class LayoutImportBackgroundTaskExecutor
 
 		@Override
 		public Void call() throws PortalException {
-			try {
-				LayoutLocalServiceUtil.importLayoutsDataDeletions(
-					_userId, _targetGroupId, _privateLayout, _parameterMap,
-					_file);
+			LayoutLocalServiceUtil.importLayoutsDataDeletions(
+				_userId, _targetGroupId, _privateLayout, _parameterMap, _file);
 
-				LayoutLocalServiceUtil.importLayouts(
-					_userId, _targetGroupId, _privateLayout, _parameterMap,
-					_file);
-			}
-			finally {
-				FileUtil.delete(_file);
-			}
+			LayoutLocalServiceUtil.importLayouts(
+				_userId, _targetGroupId, _privateLayout, _parameterMap, _file);
 
 			return null;
 		}

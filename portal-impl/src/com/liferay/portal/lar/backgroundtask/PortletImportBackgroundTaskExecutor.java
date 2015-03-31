@@ -122,18 +122,13 @@ public class PortletImportBackgroundTaskExecutor
 
 		@Override
 		public Void call() throws PortalException {
-			try {
-				LayoutLocalServiceUtil.importPortletDataDeletions(
-					_userId, _targetPlid, _targetGroupId, _portletId,
-					_parameterMap, _file);
+			LayoutLocalServiceUtil.importPortletDataDeletions(
+				_userId, _targetPlid, _targetGroupId, _portletId, _parameterMap,
+				_file);
 
-				LayoutLocalServiceUtil.importPortletInfo(
-					_userId, _targetPlid, _targetGroupId, _portletId,
-					_parameterMap, _file);
-			}
-			finally {
-				FileUtil.delete(_file);
-			}
+			LayoutLocalServiceUtil.importPortletInfo(
+				_userId, _targetPlid, _targetGroupId, _portletId, _parameterMap,
+				_file);
 
 			return null;
 		}

@@ -14,13 +14,95 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BACK_TO_HEADER</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER</td>
+	<td>//h2[contains(@class,'asset-links-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and contains(.,'Related Assets')]/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'Related Assets')]/div/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RELATED_ASSETS_SELECT_MENULIST_ASSET</td>
 	<td>//a[@data-title='Select ${key_assetType}']</td>
 	<td></td>
 </tr>
 <tr>
+	<td>RELATED_ASSETS_LINKS</td>
+	<td>//ul[@class='asset-links-list']/li/span/a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ASSET_IFRAME</td>
+	<td>//iframe[contains(@id,'selectAsset')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IFRAME</td>
 	<td>//iframe[contains(@id,'selectAsset')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSET_TABLE-->
+<tr>
+	<td>ASSET_TABLE_TITLE</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_DESCRIPTION</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_USER_NAME</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_MODIFIED_DATE</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[4]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_SITE</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_ACTION</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[6]/button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BLOGS_ENTRY-->
+<tr>
+	<td>BLOGS_ENTRY_TITLE</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_ENTRY_CONTENT</td>
+	<td>//div[@class='asset-content']/p</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,6 +129,38 @@
 <tr>
 	<td>RELATED_ASSETS_TABLE_REMOVE_LINK</td>
 	<td>//tr[contains(.,'${key_assetTitle}')]//td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MESSAGE_BOARDS_THREAD-->
+<tr>
+	<td>MESSAGE_BOARDS_THREAD_TITLE</td>
+	<td>//div[@class='subject']/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_BOARDS_THREAD_CONTENT</td>
+	<td>//div[@class='thread-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RELATED_ASSETS-->
+<tr>
+	<td>RELATED_ASSETS_HEADER</td>
+	<td>//h2[contains(@class,'asset-links-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_LINKS</td>
+	<td>//ul[@class='asset-links-list']/li/span/a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
 	<td></td>
 </tr>
 </tbody>

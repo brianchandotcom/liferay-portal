@@ -24,6 +24,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT</td>
+	<td>//body[contains(@class,'cke_editable')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_IFRAME</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_SOURCE_ON</td>
+	<td>//textarea[contains(@class,'cke_editable')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DESCRIPTION</td>
 	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
@@ -74,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SOURCE_URL</td>
+	<td>//input[contains(@id,'sourceURL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUMMARY</td>
 	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
@@ -86,6 +106,11 @@
 <tr>
 	<td>TITLE</td>
 	<td>//input[contains(@id,'title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPLOAD_FILE</td>
+	<td>//input[contains(@class,'field') and (@type='file')]</td>
 	<td></td>
 </tr>
 <tr>

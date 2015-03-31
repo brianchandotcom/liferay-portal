@@ -241,6 +241,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			tempDir.getAbsolutePath();
 
 		try {
+			ModuleFrameworkUtilAdapter.initFramework();
+
 			ModuleFrameworkUtilAdapter.startFramework();
 		}
 		catch (Exception e) {

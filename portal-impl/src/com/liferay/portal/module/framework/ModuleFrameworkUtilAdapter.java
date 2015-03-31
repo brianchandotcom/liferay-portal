@@ -47,6 +47,20 @@ public class ModuleFrameworkUtilAdapter {
 		return _moduleFramework.getState(bundleId);
 	}
 
+	public static void initFramework() throws Exception {
+		ClassLoader classLoader = ClassLoaderUtil.getContextClassLoader();
+
+		ClassLoaderUtil.setContextClassLoader(
+			ModuleFrameworkAdapterHelper.getClassLoader());
+
+		try {
+			_moduleFramework.initFramework();
+		}
+		finally {
+			ClassLoaderUtil.setContextClassLoader(classLoader);
+		}
+	}
+
 	public static void registerContext(Object context) {
 		_moduleFramework.registerContext(context);
 	}
@@ -76,17 +90,7 @@ public class ModuleFrameworkUtilAdapter {
 	}
 
 	public static void startFramework() throws Exception {
-		ClassLoader classLoader = ClassLoaderUtil.getContextClassLoader();
-
-		ClassLoaderUtil.setContextClassLoader(
-			ModuleFrameworkAdapterHelper.getClassLoader());
-
-		try {
-			_moduleFramework.startFramework();
-		}
-		finally {
-			ClassLoaderUtil.setContextClassLoader(classLoader);
-		}
+		_moduleFramework.startFramework();
 	}
 
 	public static void startRuntime() throws Exception {

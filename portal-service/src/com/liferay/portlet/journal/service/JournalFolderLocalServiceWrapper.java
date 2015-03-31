@@ -702,24 +702,26 @@ public class JournalFolderLocalServiceWrapper
 
 	@Override
 	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
-		long userId, long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, long[] ddmStructureIds,
-		int restrictionType, boolean mergeWithParentFolder,
+		long userId, long groupId, long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		long[] ddmStructureIds, int restrictionType,
+		boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalFolderLocalService.updateFolder(userId, folderId,
-			parentFolderId, name, description, ddmStructureIds,
+		return _journalFolderLocalService.updateFolder(userId, groupId,
+			folderId, parentFolderId, name, description, ddmStructureIds,
 			restrictionType, mergeWithParentFolder, serviceContext);
 	}
 
 	@Override
 	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
-		long userId, long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentFolder,
+		long userId, long groupId, long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalFolderLocalService.updateFolder(userId, folderId,
-			parentFolderId, name, description, mergeWithParentFolder,
+		return _journalFolderLocalService.updateFolder(userId, groupId,
+			folderId, parentFolderId, name, description, mergeWithParentFolder,
 			serviceContext);
 	}
 

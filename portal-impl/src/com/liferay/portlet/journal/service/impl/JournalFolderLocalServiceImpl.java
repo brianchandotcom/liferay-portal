@@ -740,23 +740,24 @@ public class JournalFolderLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalFolder updateFolder(
-			long userId, long folderId, long parentFolderId, String name,
-			String description, boolean mergeWithParentFolder,
+			long userId, long groupId, long folderId, long parentFolderId,
+			String name, String description, boolean mergeWithParentFolder,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return updateFolder(
-			userId, folderId, parentFolderId, name, description, new long[0],
-			JournalFolderConstants.RESTRICTION_TYPE_INHERIT,
+			userId, groupId, folderId, parentFolderId, name, description,
+			new long[0], JournalFolderConstants.RESTRICTION_TYPE_INHERIT,
 			mergeWithParentFolder, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalFolder updateFolder(
-			long userId, long folderId, long parentFolderId, String name,
-			String description, long[] ddmStructureIds, int restrictionType,
-			boolean mergeWithParentFolder, ServiceContext serviceContext)
+			long userId, long groupId, long folderId, long parentFolderId,
+			String name, String description, long[] ddmStructureIds,
+			int restrictionType, boolean mergeWithParentFolder,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		JournalFolder folder = null;
@@ -829,9 +830,8 @@ public class JournalFolderLocalServiceImpl
 		}
 
 		workflowDefinitionLinkLocalService.updateWorkflowDefinitionLinks(
-			serviceContext.getUserId(), serviceContext.getCompanyId(),
-			serviceContext.getScopeGroupId(), JournalFolder.class.getName(),
-			folderId, workflowDefinitionOVPs);
+			userId, serviceContext.getCompanyId(), groupId,
+			JournalFolder.class.getName(), folderId, workflowDefinitionOVPs);
 
 		return folder;
 	}

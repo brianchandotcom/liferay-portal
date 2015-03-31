@@ -178,11 +178,15 @@ public class AssetPublisherServiceTest {
 		new LiferayIntegrationTestRule();
 
 	protected void addAssetCategories(long vocabularyId) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
 		for (String assetCategoryName : _ASSET_CATEGORY_NAMES) {
 			AssetCategory assetCategory =
 				AssetCategoryLocalServiceUtil.addCategory(
-					TestPropsValues.getUserId(), assetCategoryName,
-					vocabularyId, ServiceContextTestUtil.getServiceContext());
+					TestPropsValues.getUserId(),
+					serviceContext.getScopeGroupId(), assetCategoryName,
+					vocabularyId, serviceContext);
 
 			_assetCategoryIds = ArrayUtil.append(
 				_assetCategoryIds, assetCategory.getCategoryId());
@@ -237,8 +241,8 @@ public class AssetPublisherServiceTest {
 
 		AssetVocabulary assetVocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
 
 		addAssetCategories(assetVocabulary.getVocabularyId());
 	}

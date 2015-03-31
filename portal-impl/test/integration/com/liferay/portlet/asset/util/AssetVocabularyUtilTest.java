@@ -65,8 +65,8 @@ public class AssetVocabularyUtilTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		_vocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
-			TestPropsValues.getUserId(), _TITLE, titleMap, null, null,
-			serviceContext);
+			TestPropsValues.getUserId(), _group.getGroupId(), _TITLE, titleMap,
+			null, null, serviceContext);
 
 		Company company = CompanyLocalServiceUtil.getCompany(
 			_group.getCompanyId());
@@ -77,8 +77,8 @@ public class AssetVocabularyUtilTest {
 			_companyGroup.getGroupId(), TestPropsValues.getUserId());
 
 		_companyVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
-			TestPropsValues.getUserId(), _TITLE, titleMap, null, null,
-			serviceContext);
+			TestPropsValues.getUserId(), _companyGroup.getGroupId(), _TITLE,
+			titleMap, null, null, serviceContext);
 	}
 
 	@Test

@@ -41,8 +41,8 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		throws PortalException {
 
 		JournalFolderPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			parentFolderId, ActionKeys.ADD_FOLDER);
+			getPermissionChecker(), groupId, parentFolderId,
+			ActionKeys.ADD_FOLDER);
 
 		return journalFolderLocalService.addFolder(
 			getUserId(), groupId, parentFolderId, name, description,
@@ -336,8 +336,9 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 	@Override
 	public JournalFolder updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			boolean mergeWithParentFolder, ServiceContext serviceContext)
+			long groupId, long folderId, long parentFolderId, String name,
+			String description, boolean mergeWithParentFolder,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		JournalFolder folder = journalFolderLocalService.getFolder(folderId);
@@ -346,23 +347,22 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
 
 		return journalFolderLocalService.updateFolder(
-			getUserId(), folderId, parentFolderId, name, description,
+			getUserId(), groupId, folderId, parentFolderId, name, description,
 			mergeWithParentFolder, serviceContext);
 	}
 
 	@Override
 	public JournalFolder updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			long[] ddmStructureIds, int restrictionType,
+			long groupId, long folderId, long parentFolderId, String name,
+			String description, long[] ddmStructureIds, int restrictionType,
 			boolean mergeWithParentFolder, ServiceContext serviceContext)
 		throws PortalException {
 
 		JournalFolderPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(), folderId,
-			ActionKeys.UPDATE);
+			getPermissionChecker(), groupId, folderId, ActionKeys.UPDATE);
 
 		return journalFolderLocalService.updateFolder(
-			getUserId(), folderId, parentFolderId, name, description,
+			getUserId(), groupId, folderId, parentFolderId, name, description,
 			ddmStructureIds, restrictionType, mergeWithParentFolder,
 			serviceContext);
 	}

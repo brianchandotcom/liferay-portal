@@ -80,15 +80,15 @@ public class AssetCategoryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AssetCategory addCategory(
-			long userId, long parentCategoryId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, long vocabularyId,
-			String[] categoryProperties, ServiceContext serviceContext)
+			long userId, long groupId, long parentCategoryId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			long vocabularyId, String[] categoryProperties,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Category
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		long groupId = serviceContext.getScopeGroupId();
 
 		String name = titleMap.get(LocaleUtil.getSiteDefault());
 
@@ -174,7 +174,7 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public AssetCategory addCategory(
-			long userId, String title, long vocabularyId,
+			long userId, long groupId, String title, long vocabularyId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -189,8 +189,8 @@ public class AssetCategoryLocalServiceImpl
 		descriptionMap.put(locale, StringPool.BLANK);
 
 		return assetCategoryLocalService.addCategory(
-			userId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
-			descriptionMap, vocabularyId, null, serviceContext);
+			userId, groupId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			titleMap, descriptionMap, vocabularyId, null, serviceContext);
 	}
 
 	@Override

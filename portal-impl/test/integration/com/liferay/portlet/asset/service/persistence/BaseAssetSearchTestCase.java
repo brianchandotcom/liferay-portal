@@ -86,46 +86,46 @@ public abstract class BaseAssetSearchTestCase {
 	public void setUp() throws Exception {
 		_group1 = GroupTestUtil.addGroup();
 
-		ServiceContext group1ServiceContext =
+		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		AssetVocabulary vocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				group1ServiceContext);
+				TestPropsValues.getUserId(), _group1.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
 
 		_vocabularyId = vocabulary.getVocabularyId();
 
 		AssetCategory fashionCategory =
 			AssetCategoryLocalServiceUtil.addCategory(
-				TestPropsValues.getUserId(), "Fashion", _vocabularyId,
-				group1ServiceContext);
+				TestPropsValues.getUserId(), _group1.getGroupId(), "Fashion",
+				_vocabularyId, serviceContext);
 
 		_fashionCategoryId = fashionCategory.getCategoryId();
 
 		AssetCategory foodCategory = AssetCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), "Food", _vocabularyId,
-			group1ServiceContext);
+			TestPropsValues.getUserId(), _group1.getGroupId(), "Food",
+			_vocabularyId, serviceContext);
 
 		_foodCategoryId = foodCategory.getCategoryId();
 
 		AssetCategory healthCategory =
 			AssetCategoryLocalServiceUtil.addCategory(
-				TestPropsValues.getUserId(), "Health", _vocabularyId,
-				group1ServiceContext);
+				TestPropsValues.getUserId(), _group1.getGroupId(), "Health",
+				_vocabularyId, serviceContext);
 
 		_healthCategoryId = healthCategory.getCategoryId();
 
 		AssetCategory sportCategory = AssetCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), "Sport", _vocabularyId,
-			group1ServiceContext);
+			TestPropsValues.getUserId(), _group1.getGroupId(), "Sport",
+			_vocabularyId, serviceContext);
 
 		_sportCategoryId = sportCategory.getCategoryId();
 
 		AssetCategory travelCategory =
 			AssetCategoryLocalServiceUtil.addCategory(
-				TestPropsValues.getUserId(), "Travel", _vocabularyId,
-				group1ServiceContext);
+				TestPropsValues.getUserId(), _group1.getGroupId(), "Travel",
+				_vocabularyId, serviceContext);
 
 		_travelCategoryId = travelCategory.getCategoryId();
 
@@ -138,27 +138,30 @@ public abstract class BaseAssetSearchTestCase {
 
 		_group2 = GroupTestUtil.addGroup();
 
-		ServiceContext group2ServiceContext =
-			ServiceContextTestUtil.getServiceContext(_group2.getGroupId());
+		long[] groupIds = new long[] {
+			_group1.getGroupId(), _group2.getGroupId()};
 
-		ServiceContext[] serviceContexts = new ServiceContext[] {
-			group1ServiceContext, group2ServiceContext};
-
-		for (ServiceContext serviceContext : serviceContexts) {
-			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), "liferay", serviceContext);
+		for (long groupId : groupIds) {
+			serviceContext = ServiceContextTestUtil.getServiceContext(groupId);
 
 			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), "architecture", serviceContext);
+				TestPropsValues.getUserId(), groupId, "liferay",
+				serviceContext);
 
 			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), "modularity", serviceContext);
+				TestPropsValues.getUserId(), groupId, "architecture",
+				serviceContext);
 
 			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), "osgi", serviceContext);
+				TestPropsValues.getUserId(), groupId, "modularity",
+				serviceContext);
 
 			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), "services", serviceContext);
+				TestPropsValues.getUserId(), groupId, "osgi", serviceContext);
+
+			AssetTagLocalServiceUtil.addTag(
+				TestPropsValues.getUserId(), groupId, "services",
+				serviceContext);
 		}
 
 		_assetTagsNames1 =

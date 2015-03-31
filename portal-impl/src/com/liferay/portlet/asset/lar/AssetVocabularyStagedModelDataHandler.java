@@ -165,7 +165,7 @@ public class AssetVocabularyStagedModelDataHandler
 			serviceContext.setUuid(vocabulary.getUuid());
 
 			importedVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
-				userId, StringPool.BLANK,
+				userId, portletDataContext.getScopeGroupId(), StringPool.BLANK,
 				getVocabularyTitleMap(
 					portletDataContext.getScopeGroupId(), vocabulary, name),
 				vocabulary.getDescriptionMap(), vocabulary.getSettings(),

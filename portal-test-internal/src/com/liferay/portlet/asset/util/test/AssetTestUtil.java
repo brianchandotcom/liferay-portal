@@ -92,7 +92,7 @@ public class AssetTestUtil {
 				groupId, TestPropsValues.getUserId());
 
 		return AssetCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), parentCategoryId, titleMap,
+			TestPropsValues.getUserId(), groupId, parentCategoryId, titleMap,
 			descriptionMap, vocabularyId, categoryProperties, serviceContext);
 	}
 
@@ -103,7 +103,7 @@ public class AssetTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId, userId);
 
 		return AssetTagLocalServiceUtil.addTag(
-			userId, RandomTestUtil.randomString(), serviceContext);
+			userId, groupId, RandomTestUtil.randomString(), serviceContext);
 	}
 
 	public static AssetVocabulary addVocabulary(long groupId) throws Exception {
@@ -113,7 +113,7 @@ public class AssetTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId, userId);
 
 		return AssetVocabularyLocalServiceUtil.addVocabulary(
-			userId, RandomTestUtil.randomString(), serviceContext);
+			userId, groupId, RandomTestUtil.randomString(), serviceContext);
 	}
 
 	public static AssetVocabulary addVocabulary(
@@ -143,7 +143,7 @@ public class AssetTestUtil {
 				groupId, TestPropsValues.getUserId());
 
 		AssetVocabulary vocabulary = AssetVocabularyServiceUtil.addVocabulary(
-			RandomTestUtil.randomString(), titleMap, descriptionMap,
+			groupId, RandomTestUtil.randomString(), titleMap, descriptionMap,
 			vocabularySettingsHelper.toString(), serviceContext);
 
 		return vocabulary;

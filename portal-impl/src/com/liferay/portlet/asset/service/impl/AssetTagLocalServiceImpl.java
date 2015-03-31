@@ -54,13 +54,13 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 	@Override
 	public AssetTag addTag(
-			long userId, String name, ServiceContext serviceContext)
+			long userId, long groupId, String name,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Tag
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		long groupId = serviceContext.getScopeGroupId();
 
 		Date now = new Date();
 
@@ -164,7 +164,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 				serviceContext.setAddGuestPermissions(true);
 				serviceContext.setScopeGroupId(group.getGroupId());
 
-				tag = addTag(userId, name, serviceContext);
+				tag = addTag(userId, group.getGroupId(), name, serviceContext);
 			}
 
 			if (tag != null) {

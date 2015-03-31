@@ -53,18 +53,30 @@ public class HotDeployMessageListener extends BaseMessageListener {
 		String servletContextName = message.getString("servletContextName");
 
 		if ("deploy".equals(command)) {
-			if (_log.isInfoEnabled()) {
-				_log.info(servletContextName + " was deployed");
-			}
+			if (_pluginStatisticsManager.registerLegacyPlugin(
+					servletContextName)) {
 
-			_pluginStatisticsManager.registerLegacyPlugin(servletContextName);
+				if (_log.isInfoEnabled()) {
+					_log.info(servletContextName + " was deployed");
+				}
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn("Duplicated deployment of " + servletContextName);
+			}
 		}
 		else if ("undeploy".equals(command)) {
-			if (_log.isInfoEnabled()) {
-				_log.info(servletContextName + " was undeployed");
-			}
+			if (_pluginStatisticsManager.unregisterLegacyPlugin(
+					servletContextName)) {
 
-			_pluginStatisticsManager.unregisterLegacyPlugin(servletContextName);
+				if (_log.isInfoEnabled()) {
+					_log.info(servletContextName + " was undeployed");
+				}
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to undeploy " + servletContextName +
+						", as it was not deployed");
+			}
 		}
 		else if (_log.isWarnEnabled()) {
 			_log.warn("Unknown command " + command);

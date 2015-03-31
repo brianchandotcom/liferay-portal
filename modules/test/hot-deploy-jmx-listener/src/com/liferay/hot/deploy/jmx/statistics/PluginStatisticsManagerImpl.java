@@ -34,16 +34,16 @@ public class PluginStatisticsManagerImpl implements PluginStatisticsManager {
 	}
 
 	@Override
-	public void registerLegacyPlugin(String servletContextName) {
-		_servletContextNames.add(servletContextName);
+	public boolean registerLegacyPlugin(String servletContextName) {
+		return _servletContextNames.addIfAbsent(servletContextName);
 	}
 
 	@Override
-	public void unregisterLegacyPlugin(String servletContextName) {
-		_servletContextNames.remove(servletContextName);
+	public boolean unregisterLegacyPlugin(String servletContextName) {
+		return _servletContextNames.remove(servletContextName);
 	}
 
-	private final List<String> _servletContextNames =
+	private final CopyOnWriteArrayList<String> _servletContextNames =
 		new CopyOnWriteArrayList<>();
 
 }

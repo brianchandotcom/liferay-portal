@@ -222,6 +222,33 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	@Override
+	public void initFramework() throws Exception {
+		List<ServiceLoaderCondition> serviceLoaderConditions =
+			ServiceLoader.load(ServiceLoaderCondition.class);
+
+		ServiceLoaderCondition serviceLoaderCondition =
+			serviceLoaderConditions.get(0);
+
+		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
+			FrameworkFactory.class, serviceLoaderCondition);
+
+		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
+
+		Map<String, String> properties = _buildFrameworkProperties(
+			frameworkFactory.getClass());
+
+		_framework = frameworkFactory.newFramework(properties);
+
+		_framework.init();
+
+		RegistryUtil.setRegistry(
+			new RegistryImpl(_framework.getBundleContext()));
+
+		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(
+			new ServiceTrackerMapFactoryImpl(_framework.getBundleContext()));
+	}
+
+	@Override
 	public void registerContext(Object context) {
 		if (context == null) {
 			return;
@@ -301,31 +328,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	@Override
 	public void startFramework() throws Exception {
-		List<ServiceLoaderCondition> serviceLoaderConditions =
-			ServiceLoader.load(ServiceLoaderCondition.class);
-
-		ServiceLoaderCondition serviceLoaderCondition =
-			serviceLoaderConditions.get(0);
-
-		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
-			FrameworkFactory.class, serviceLoaderCondition);
-
-		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
-
-		Map<String, String> properties = _buildFrameworkProperties(
-			frameworkFactory.getClass());
-
-		_framework = frameworkFactory.newFramework(properties);
-
-		_framework.init();
-
 		_framework.start();
-
-		RegistryUtil.setRegistry(
-			new RegistryImpl(_framework.getBundleContext()));
-
-		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(
-			new ServiceTrackerMapFactoryImpl(_framework.getBundleContext()));
 
 		_setUpPrerequisiteFrameworkServices(_framework.getBundleContext());
 

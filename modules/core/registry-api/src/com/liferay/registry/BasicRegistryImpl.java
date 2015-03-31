@@ -694,7 +694,14 @@ public class BasicRegistryImpl implements Registry {
 
 		@Override
 		public T getService() {
-			return _trackedServices.get(_trackedServices.firstKey());
+			Entry<ServiceReference<S>, T> firstEntry =
+				_trackedServices.firstEntry();
+
+			if (firstEntry == null) {
+				return null;
+			}
+
+			return firstEntry.getValue();
 		}
 
 		@Override

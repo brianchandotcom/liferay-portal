@@ -14,13 +14,11 @@
 
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -44,11 +42,6 @@ import javax.tools.JavaFileManager;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import com.liferay.portal.kernel.util.StringBundler;
 import org.apache.felix.utils.log.Logger;
 import org.apache.jasper.Constants;
 import org.apache.jasper.JspCompilationContext;
@@ -58,7 +51,6 @@ import org.apache.jasper.compiler.Jsr199JavaCompiler;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.wiring.BundleRequirement;
 import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWire;
@@ -66,14 +58,6 @@ import org.osgi.framework.wiring.BundleWiring;
 
 import org.phidias.compile.BundleJavaManager;
 import org.phidias.compile.ResourceResolver;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * @author Raymond Augé
@@ -199,8 +183,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		}
 	}
 
-	protected void collectTLDMappings(
-		SAXParser saxParser, Map<String, String[]> tldMappings, Bundle bundle) {
+	protected void collectTLDMappings(Map<String, String[]> tldMappings, Bundle bundle) {
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
@@ -210,7 +193,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		for (String resourcePath : resourcePaths) {
 			URL url = bundle.getResource(resourcePath);
 
-			String uri = getTldUri(saxParser, url);
+			String uri = getTldUri(url);
 
 			if (uri == null) {
 				continue;
@@ -249,15 +232,13 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		return super.getJavaFileManager(javaFileManager);
 	}
 
-	protected String getTldUri(SAXParser saxParser, URL url) {
+	protected String getTldUri(URL url) {
 		try (InputStream inputStream = url.openStream()) {
-
 			StringBundler sb = new StringBundler();
 			byte[] buffer = new byte[4096];
 			int length = 0;
 
-			while((length = inputStream.read(buffer)) > 0) {
-
+			while ((length = inputStream.read(buffer)) > 0) {
 				String xml = new String(buffer, 0, length);
 				sb.append(xml);
 
@@ -310,35 +291,9 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		tldMappings = new HashMap<>();
 
-		BundleContext _jspBundleContext = _jspBundle.getBundleContext();
-
-		ServiceReference<SAXParserFactory> saxParserFactoryServiceReference =
-			_jspBundleContext.getServiceReference(SAXParserFactory.class);
-
-		SAXParserFactory saxParserFactory = _jspBundleContext.getService(
-			saxParserFactoryServiceReference);
-
-		saxParserFactory.setNamespaceAware(false);
-		saxParserFactory.setValidating(false);
-		saxParserFactory.setXIncludeAware(false);
-
 		try {
-			saxParserFactory.setFeature(_SAX_EXTERNAL_GENERAL_ENTITIES, false);
-			saxParserFactory.setFeature(
-				_SAX_EXTERNAL_PARAMETER_ENTITIES, false);
-			saxParserFactory.setFeature(_SAX_LOAD_EXTERNAL_DTD, false);
-		}
-		catch (ParserConfigurationException | SAXNotRecognizedException |
-			SAXNotSupportedException e) {
-
-			ReflectionUtil.throwException(e);
-		}
-
-		try {
-			SAXParser saxParser = saxParserFactory.newSAXParser();
-
 			for (Bundle bundle : _allParticipatingBundles) {
-				collectTLDMappings(saxParser, tldMappings, bundle);
+				collectTLDMappings(tldMappings, bundle);
 			}
 		}
 		catch (Exception e) {
@@ -398,74 +353,11 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		"javax.servlet.ServletException"
 	};
 
-	private static final String _SAX_EXTERNAL_GENERAL_ENTITIES =
-		"http://xml.org/sax/features/external-general-entities";
-	private static final String _SAX_EXTERNAL_PARAMETER_ENTITIES =
-		"http://xml.org/sax/features/external-parameter-entities";
-	private static final String _SAX_LOAD_EXTERNAL_DTD =
-		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
-
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;
 	private final List<File> _classPath = new ArrayList<>();
 	private Bundle _jspBundle;
 	private Logger _logger;
 	private ResourceResolver _resourceResolver;
-
-	private class URIHandler extends DefaultHandler {
-
-		@Override
-		public void characters(char[] c, int start, int length) {
-			if (inTaglib && inURI) {
-				_sb = new StringBuilder();
-
-				_sb.append(c, start, length);
-			}
-		}
-
-		@Override
-		public void endElement(String uri, String localName, String qName)
-			throws SAXException {
-
-			if (qName.equals("uri") && (_sb != null)) {
-				throw new URISAXException(_sb.toString());
-			}
-		}
-
-		@Override
-		public InputSource resolveEntity(String publicId, String systemId)
-			throws IOException {
-
-			_reader.reset();
-
-			return new InputSource(_reader);
-		}
-
-		@Override
-		public void startElement(
-			String uri, String localName, String qName, Attributes attributes) {
-
-			if (qName.equals("taglib")) {
-				inTaglib = true;
-			}
-			else if (qName.equals("uri") && inTaglib) {
-				inURI = true;
-			}
-		}
-
-		private final Reader _reader = new StringReader("");
-		private StringBuilder _sb;
-		private boolean inTaglib = false;
-		private boolean inURI = false;
-
-	}
-
-	private class URISAXException extends SAXException {
-
-		public URISAXException(String uri) {
-			super(uri);
-		}
-
-	}
 
 }

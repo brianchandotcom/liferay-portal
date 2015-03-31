@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.util.Validator;
+
 import java.util.Stack;
 
 /**
@@ -22,11 +24,31 @@ import java.util.Stack;
  */
 public final class PoshiRunnerStackTraceUtil {
 
+	public static void emptyStackTrace() {
+		while (!_stackTrace.isEmpty()) {
+			_stackTrace.pop();
+		}
+	}
+
 	public static String getStackTrace() {
+		return getStackTrace(null);
+	}
+
+	public static String getStackTrace(String msg) {
 		StringBuilder sb = new StringBuilder();
 
-		while (!_stackTrace.isEmpty()) {
-			sb.append(_stackTrace.pop());
+		sb.append("\nBUILD FAILED:");
+
+		if (Validator.isNotNull(msg)) {
+			sb.append(" ");
+			sb.append(msg);
+		}
+
+		Stack<String> stackTrace = (Stack<String>)_stackTrace.clone();
+
+		while (!stackTrace.isEmpty()) {
+			sb.append("\n");
+			sb.append(stackTrace.pop());
 		}
 
 		return sb.toString();
@@ -38,6 +60,14 @@ public final class PoshiRunnerStackTraceUtil {
 
 	public static String popStackTrace() {
 		return _stackTrace.pop();
+	}
+
+	public static void printStackTrace() {
+		printStackTrace(null);
+	}
+
+	public static void printStackTrace(String msg) {
+		System.out.println(getStackTrace(msg));
 	}
 
 	public static void pushFilePath(String className, String classType) {
@@ -52,7 +82,7 @@ public final class PoshiRunnerStackTraceUtil {
 	}
 
 	public static void pushStackTrace(String lineNumber) {
-		_stackTrace.push(_filePaths.peek() + ":" + lineNumber + "\n");
+		_stackTrace.push(_filePaths.peek() + ":" + lineNumber);
 	}
 
 	private static final Stack<String> _filePaths = new Stack<>();
